@@ -1,4 +1,7 @@
 .fatal {
     color: red;
-    background-color: yellow;
+}
+
+.salute {
+    background: yellow;
 }
