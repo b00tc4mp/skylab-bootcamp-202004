@@ -5,3 +5,14 @@
 .danger {
     background-color: orange;
 }
+  
+.salute {
+    border: 2px solid red;
+    padding: 1em
+}
+      
+h1 {
+    border: 2px solid red;
+    width: 190px;
+    padding: 10px;
+}
