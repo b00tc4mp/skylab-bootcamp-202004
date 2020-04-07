@@ -8,7 +8,8 @@
   
 .salute {
     border: 2px solid red;
-    padding: 1em
+    padding: 1em;
+    background-color: yellow;
 }
       
 h1 {
