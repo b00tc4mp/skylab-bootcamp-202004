@@ -16,3 +16,6 @@ Blah blah blah
 
 ![alt Use Cases](./images/bingo-use-cases.png)
 
+### Activity
+
+![alt Activity](./images/bingo-activity.png)
