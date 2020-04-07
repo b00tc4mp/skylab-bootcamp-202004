@@ -12,4 +12,7 @@ Blah blah blah
 - new turn
 - ...
 
+### Use Cases
+
+![alt Use Cases](./images/bingo-use-cases.png)
 
