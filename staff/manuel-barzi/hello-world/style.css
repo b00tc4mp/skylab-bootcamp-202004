@@ -2,6 +2,10 @@
     color: red;
 }
 
+.danger {
+    background-color: orange;
+}
+  
 .salute {
     border: 2px solid red;
     padding: 1em
