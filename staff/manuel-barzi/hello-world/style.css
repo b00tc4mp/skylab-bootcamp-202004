@@ -1,3 +1,7 @@
 .fatal {
     color: red;
 }
+
+.danger {
+    background-color: yellow;
+}
