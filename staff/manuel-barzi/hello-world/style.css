@@ -1,3 +1,10 @@
 .fatal {
     color: red;
 }
+
+h1 {
+    border: 1px solid red;
+    border-radius: 5px;
+    width: 190px;
+    padding: 5px;
+}
