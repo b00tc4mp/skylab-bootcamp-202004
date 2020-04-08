@@ -1,0 +1,95 @@
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+    body {
+        background: url(../images/pattern.jpg);
+        height: 100%;
+        width: 80%;
+    }
+    
+    .wrap {
+        margin-top: 10%;
+    }
+    
+    .rosco-wrap {
+        display: flex;
+        position: relative;
+        border-radius: 50%;
+        align-items: center;
+        width: 46vw;
+        height: 46vw;
+        margin-left: 5%;
+        float: left;
+        /* margin: 20px; */
+        margin-right: 30px;
+        fill: currentColor;
+        border-radius: 50%;
+        margin-left: 1vw;
+        object-fit: cover;
+        shape-outside: circle();
+    }
+    
+    div .tittle {
+        color: ivory;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 4vw;
+        position: relative;
+        left: 10vw;
+        text-shadow: 10px black;
+        transition-property: initial;
+        -moz-transition-duration: 2s;
+    }
+    
+    .letters {
+        width: 3.2vw;
+        height: 3.2vw;
+        position: absolute;
+        overflow: hidden;
+        vertical-align: middle;
+        transition: all .3s ease-in-out;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        background: radial-gradient(circle, #85A6FF, #004b8d);
+        color: #fff;
+        text-shadow: black;
+        text-align: center;
+        line-height: 3.2vw;
+        -moz-box-align: center;
+        text-decoration: none;
+        cursor: default;
+        -webkit-user-select: none;
+        list-style: none;
+        font-family: 'Montserrat', sans-serif;
+        /* margin-left: 9vw; */
+        bottom: 21vw;
+        left: 21vw;
+    }
+    
+    #nickname {
+        width: 30vw;
+        justify-content: center;
+    }
+    
+    #start {
+        width: 30vw;
+        margin-top: 10px;
+    }
+    
+    .answer,
+    .question,
+    .instructions,
+    .hint,
+    footer {
+        font-family: 'Montserrat', sans-serif;
+        color: white;
+    }
+    
+    .instructions>h3 {
+        position: relative;
+        left: 30vw;
+    }
+    
+    footer {
+        position: absolute;
+        bottom: 0vw;
+    }
+    /* Nightbot
+​Enter this code in the Teamspeak Client to get your Overwatch League Badge: Z63S0XVHZF */
