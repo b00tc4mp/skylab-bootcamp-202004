@@ -53,7 +53,7 @@ function validateParameters(args) {
 function doOperations(args) { 
     let operationResults = [];
 
-    if (validateParameters(args) ===  false) {
+    if (!validateParameters(args)) {
         console.error(`One of the assigned values is not a number`);
     } else if (args.length === 1) {
         let firstParam = args[0];
