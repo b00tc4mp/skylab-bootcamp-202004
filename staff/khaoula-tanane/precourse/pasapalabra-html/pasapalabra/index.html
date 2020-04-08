@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+
+
+  
+    <div class="leftSide">
+      <div class="leftSide__modal">
+        <div class="leftSide__modal__info">
+          <p>BIENVENIDOS AL JUEGO DE PASAPALABRA DE SKYLAB CODERS ACADEMY!</p>
+          <br />
+          <input
+            type="text"
+            id="userName"
+            required="escrive tu nombre"
+            placeholder="Please enter you name"
+          />
+          <button id="start">JUGAR!</button>
+        </div>
+      </div>
+
+      <div class="leftSide__question">
+          <p class="leftSide__question__text"></p>
+          <input type="text" id="userAnswer" placeholder="Write your answer" />
+          <button onclick="pasapalabra.next()">Siguiente</button>
+          <button id="pasapalabra">Pasapalabra</button>
+          <div class="leftSide__question__result"></div>
+      </div>
+
+    </div>
+
+
+    <div class="rightSide__rosco">
+      <div class="rightSide__time"></div>
+      <ul>
+        <li>A</li>
+        <li>B</li>
+        <li>C</li>
+        <li>D</li>
+        <li>E</li>
+        <li>F</li>
+        <li>G</li>
+        <li>H</li>
+        <li>I</li>
+        <li>J</li>
+        <li>K</li>
+        <li>L</li>
+        <li>M</li>
+        <li>N</li>
+        <li>Ñ</li>
+        <li>O</li>
+        <li>P</li>
+        <li>Q</li>
+        <li>R</li>
+        <li>S</li>
+        <li>T</li>
+        <li>U</li>
+        <li>V</li>
+        <li>W</li>
+        <li>X</li>
+        <li>Y</li>
+        <li>Z</li>
+      </ul>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
