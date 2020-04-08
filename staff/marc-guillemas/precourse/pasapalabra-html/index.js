@@ -103,7 +103,7 @@ var correctAnswers = 0;
 var failedAnswers = 0;
 var obj = {};
 var ranking = [{
-    name: 'Sergi',
+    name: 'Sergio Luis',
     points: 30
 },
 {
