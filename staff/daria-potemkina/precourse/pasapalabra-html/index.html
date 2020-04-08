@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pasapalabra HTML</title>
+    <link rel="stylesheet" href="index.css" type="text/css">
+</head>
+<body>
+    <section class="alfabet">
+        <h1>PASAPALABRA</h1>
+        <h1 id="gamerName">Juego de  </h1>
+        <p class="letter" id="a">A</p>
+        <p class="letter" id="b">B</p>
+        <p class="letter" id="c">C</p>
+        <p class="letter" id="d">D</p>
+        <p class="letter" id="e">E</p>
+        <p class="letter" id="f">F</p>
+        <p class="letter" id="g">G</p>
+        <p class="letter" id="h">H</p>
+        <p class="letter" id="i">I</p>
+        <p class="letter" id="j">J</p>
+        <p class="letter" id="k">K</p>
+        <p class="letter" id="l">L</p>
+        <p class="letter" id="m">M</p>
+        <p class="letter" id="n">N</p>
+        <p class="letter" id="ñ">Ñ</p>
+        <p class="letter" id="o">O</p>
+        <p class="letter" id="p">P</p>
+        <p class="letter" id="q">Q</p>
+        <p class="letter" id="r">R</p>
+        <p class="letter" id="s">S</p>
+        <p class="letter" id="t">T</p>
+        <p class="letter" id="u">U</p>
+        <p class="letter" id="v">V</p>
+        <p class="letter" id="w">W</p>
+        <p class="letter" id="x">X</p>
+        <p class="letter" id="y">Y</p>
+        <p class="letter" id="z">Z</p>
+        <section class="result">
+            <p id="success">0</p>
+            <p id="timer">180</p>
+        </section>
+    </section>
+    <section id="rules">
+        <h1>Reglas del juego:</h1>
+        <p>El juego consiste en acertar las veintisiete palabras, cada una de las cuales se corresponde con una letra del rosco para la que se ofrece una definición relativa a un concepto.</p>
+        <p>Los aciertos se reflejarán en las letras mediante el color verde, mientras que los fallos se mostrarán en color rojo. Las cuestiones no respondidas o "pasapalabra" se mostrarán en color azul.</p>
+        <p>Cada pregunta respnidida en blanco contará como "pasapalabra".</p>
+        <p>Para completar el rosco se dispone de 3 minutos.</p>
+        <div class="submitText">
+            <label for="fname">Introduce tu nombre:</label><br><br>
+            <input type="text" id="fname" name="fname" autofocus><br><br>
+            <input id="play" type="button" value="Start">
+        </div>
+    </section>
+    <section id="questions">
+        <p id ="question"></p>
+        <div class ="submitText">
+            <input type="text" id="answer" name="answer" autofocus><br><br>
+            <input id="submit" type="button" value="Submit">
+            <input id="end" type="button" value="Exit">
+        </div>
+    </section>
+    <section id="ranking">
+        <h1>Ranking de los jugadores</h1>
+        <table id='playeranking'>
+            <tr id="col-name">
+                <td>Position</td>
+                <td>Name</td>
+                <td>Successes</td>
+                <td>Fails</td>
+            </tr>
+        </table>
+        <input id='reset' type = 'button' value = "Reset">
+    </section>
+    <section id='timeover'>
+        <h1>EL TIEMPO HA ACABADO</h1>
+        <p>Pulse "Volver a jugar" para empezar de nuevo o "Ver ranking" para ver el ranking de los jugadores</p>
+        <input id="playagain" type="button" value="Reset">
+        <input id="showranking" type="button" value="Show ranking">
+    </section>
+    <script src="index.js"></script>
+</body>
+</html>
