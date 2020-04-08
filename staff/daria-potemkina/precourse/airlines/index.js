@@ -1,4 +1,4 @@
-let flights = [
+var flights = [
     { id: 00, to: 'Bilbao', from: 'Barcelona', cost: 1600, scale: false },
     { id: 01, to: 'New York', from: 'Barcelona', cost: 700, scale: false },
     { id: 02, to: 'Los Angeles', from: 'Madrid', cost: 1100, scale: true },
@@ -19,12 +19,12 @@ function printFligths(f){
 }
 
 function reserve (flight){
-    let bookId = prompt('Introduzca el id de vuelo para realizar la reserva',0);
+    var bookId = prompt('Introduzca el id de vuelo para realizar la reserva',0);
     if(bookId === null){
         return;
     }else{
-    let bookingId = Number(bookId);
-    let booking = flight.map(fly => fly.id).indexOf(bookingId);
+    var bookingId = Number(bookId);
+    var booking = flight.map(fly => fly.id).indexOf(bookingId);
     while (booking === -1 || isNaN(bookId) || bookId === 'undefined'){
         alert('El id introducido no existe');
         bookId = prompt('Introduzca el id de vuelo para realizar la reserva',0);
@@ -41,18 +41,18 @@ function reserve (flight){
 
 function admin (flight){
    
-    let addFlight = confirm('¿Quiere añadir un vuelo nuevo?');
+    var addFlight = confirm('¿Quiere añadir un vuelo nuevo?');
     while (flight.length < 17 && addFlight === true) {
         if (flight.length === 16) {
             alert("No es posible intrducir más de 15 id's de vuelos.");
             break;
         } else {
-            let newFlight ={
+            var newFlight ={
                 id: flights[flights.length-1].id+1,
                 to: prompt('Destino')
             }
             
-            let ifStringTo = Number(newFlight.to);
+            var ifStringTo = Number(newFlight.to);
 
             while(isNaN(ifStringTo) === false || newFlight.to === '' || newFlight.to === null){
                 alert('El valor introducido es vacío o numérico. Vuelva a probar de nuevo.');
@@ -61,7 +61,7 @@ function admin (flight){
             }
 
             newFlight.from = prompt('Origen');
-            let ifStringFrom = Number(newFlight.from);
+            var ifStringFrom = Number(newFlight.from);
 
             while(isNaN(ifStringFrom) === false || newFlight.from === '' || newFlight.from === null){
                 alert('El valor introducido es vacío o numérico. Vuelva a probar de nuevo.');
@@ -77,23 +77,23 @@ function admin (flight){
 
             newFlight.scale = confirm('Vuelo con escala?\nPulse Aceptar si vuelo tiene escala y Cancelar en caso contrario.');
             flight.push(newFlight);
-            for (let f in flight) {
+            for (var f in flight) {
                 printFligths(flight[f]);
             };
             addFlight = confirm('¿Quiere añadir un vuelo nuevo?');
         }
     }
     if (addFlight === false) {
-        let execute = true;
+        var execute = true;
         while (execute) {
-            let deleteFlight = confirm('¿Quere eliminar un vuelo?');
+            var deleteFlight = confirm('¿Quere eliminar un vuelo?');
             if (deleteFlight === true){
-                let ids = Number(prompt('Introduzca el id de vuelo a eliminar.',0));
-                let indexId = flight.map(fly => fly.id).indexOf(ids);
+                var ids = Number(prompt('Introduzca el id de vuelo a eliminar.',0));
+                var indexId = flight.map(fly => fly.id).indexOf(ids);
                 if(indexId >= 0){
                     flight.splice(indexId, 1);
                     alert('El vuelo con el id: ' + ids + ' ha sido eliminado!');
-                    for (let f in flight){
+                    for (var f in flight){
                     printFligths(flight[f]);
                     execute = false;
                     }
@@ -109,8 +109,8 @@ function admin (flight){
 
 
 function client (flight){
-    let menu = String(prompt('Bienvenid@ a Skylab Airlines!\n\n Introduzca BUSCAR si quiere buscar los vuelos según su precio. \n Introduzca COMPRAR si quiere realizar la compra. \n Pulse Cancel si quiere salir del programa.')).toUpperCase();
-    let execute = true;
+    var menu = String(prompt('Bienvenid@ a Skylab Airlines!\n\n Introduzca BUSCAR si quiere buscar los vuelos según su precio. \n Introduzca COMPRAR si quiere realizar la compra. \n Pulse Cancel si quiere salir del programa.')).toUpperCase();
+    var execute = true;
     while(execute){
         if(['BUSCAR', 'COMPRAR', 'NULL'].indexOf(menu) === -1){
             alert('Texto introducido no es correcto. Deba introducir "BUSCAR" o "COMPRAR". Vuelva a intenentar.');
@@ -121,14 +121,14 @@ function client (flight){
     }
     if(menu === 'BUSCAR'){
 
-    let orden = confirm('Quiere mostrar los precios superiores a un precio determinado?');
+    var orden = confirm('Quiere mostrar los precios superiores a un precio determinado?');
     if (orden === true){
-        let price = Number(prompt('Introzuca el precio para mostrar los vuelos con precio superior al introducido.'));
+        var price = Number(prompt('Introzuca el precio para mostrar los vuelos con precio superior al introducido.'));
         while (isNaN(price)){
             alert('El precio debe ser un valor numérico');
             price = Number(prompt('Introzuca el precio para mostrar los vuelos con precio superior al introducido.'));
         }
-        for (let f in flight) {
+        for (var f in flight) {
             if(flight[f].cost > price){
             printFligths(flight[f]);
             }
@@ -142,7 +142,7 @@ function client (flight){
             alert('El precio debe ser un valor numérico');
             price = Number(prompt('Introzuca el precio para mostrar los vuelos con precio inferior al introducido.'));
         }
-        for (let f in flight) {
+        for (var f in flight) {
             if(flight[f].cost < price){
             printFligths(flight[f]);
             }
@@ -156,7 +156,7 @@ function client (flight){
             alert('El precio debe ser un valor numérico');
             price = Number(prompt('Introzuca el precio para mostrar los vuelos con precio igual al intorducido.'));
         }
-        for (let f in flight) {
+        for (var f in flight) {
             if(flight[f].cost === price){
             printFligths(flight[f]);
             }
@@ -169,18 +169,18 @@ function client (flight){
 
 function dailyFlights(flight) {
 
-    let name = prompt("Por favor, introduzca su nombre.");
-    let numName = Number(name);
-    let totalCost = 0;
-    let averageCost;
-    let scaleFlights = 0;
-    let lastFlights;
+    var name = prompt("Por favor, introduzca su nombre.");
+    var numName = Number(name);
+    var totalCost = 0;
+    var averageCost;
+    var scaleFlights = 0;
+    var lastFlights;
 
     if(isNaN(numName)){
         console.log(name + ', bienvenido/a a Skylab Airlines!');
         
     }else{ 
-        let execute = true;
+        var execute = true;
         while(execute){
         alert('El nombre no puede ser un valor numérico! Vuelva a intentar!');
         name = prompt("Por favor, introduzca su nombre.");
@@ -193,7 +193,7 @@ function dailyFlights(flight) {
         
     }
 
-    for (let f in flight) {
+    for (var f in flight) {
         printFligths(flight[f]);
     };
 
@@ -217,7 +217,7 @@ function dailyFlights(flight) {
     lastFlights = flight.slice(-5);
     console.log('Los últimos vuelos del día son:');
 
-    for (let i = 0; i < lastFlights.length; i++) {
+    for (var i = 0; i < lastFlights.length; i++) {
         printFligths(lastFlights[i]);
     }
 }
@@ -225,7 +225,7 @@ function dailyFlights(flight) {
 dailyFlights(flight);
 
 function confirmExit (){
-    let exit = confirm('¿Desea salir del programa?')
+    var exit = confirm('¿Desea salir del programa?')
     while(exit === false){
         adminOUSer(flight);
         exit = confirm('¿Desea salir del programa?')
@@ -235,8 +235,8 @@ alert('Gracias por elegir a Skylab Airlines!');
 
 function adminOUSer(flight){
 
-let execute = true;
-let user = String(prompt('Confirme si es ADMIN o USER')).toUpperCase();
+var execute = true;
+var user = String(prompt('Confirme si es ADMIN o USER')).toUpperCase();
 
 
 while(execute){
