@@ -1,0 +1,157 @@
+body {
+    background-image: url("https://i.promecal.es/IMG/2019/2D0685C6-CC0A-877C-7AA5060D9098327A.JPG");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-color: dodgerblue;
+    background-size: cover;  /* expande la imgen y la adapta al tamaño actual de la pagina  */
+}
+#init{
+    background-color: white;
+    border: 8px solid;
+    border-color: cornflowerblue;
+    position: relative;
+    width: 500px;
+    height: 200px;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    left: 35%;
+    margin-top: 50px;
+    border-radius:30%;
+}
+/* #titulo{
+    margin-bottom: 2%;
+    font-size: 60px;
+    position:absolute;
+    color: white;
+    right: 70%;
+   
+} */
+.modi{
+    height: 60px; /* Alto del botón */
+    width: 60px; /* Ancho del botón */
+    border-radius: 100%;
+    font-size: large;
+    font-weight: bold;
+    position:absolute;
+    bottom: 50%;
+    right: 50%;
+    display: block;
+    visibility: hidden;
+    transition-timing-function: ease-in;
+    /* transition: all 3s; */
+   
+}
+#play{
+    
+    position:absolute;
+    bottom: 20%;
+    right: 40%;
+    height: 50px;
+    width: 100px;
+    font-size: x-large;
+    background-color: cadetblue;
+}
+#play:hover{
+    background-color: greenyellow;
+}
+#group1{
+    position: absolute;
+    bottom: 50%;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 50px;
+    
+}
+#error_nombre{
+    /* display: none; */
+    visibility: hidden;
+    color: #AC3D07;
+     margin-left: 43%;
+    position: relative;
+
+}
+
+#pregunta{
+    /*
+    position: absolute;
+    bottom: 50%;
+    right: 50%; */
+    font-size: large;
+    font-weight: bold;
+    height: 200px;
+    width: 250px;
+    position: absolute;
+    left: 46%;
+    margin-left: -125px;
+    top: 47%;
+    margin-top: -100px;
+    display: none;
+    border: dashed 2px black;
+    padding: 5px;
+
+}
+#container{
+    bottom: 0px;
+    position: absolute;
+    
+}
+
+ /*#prueba{
+    height: 600px;
+    width: 600px;
+    position:absolute;
+    bottom: 50%;
+    right: 50%;
+    border: solid 1px black;
+}*/
+#div_contador{
+    font-size: 60px;
+    width: 150px;
+    height: 150px;
+    background-color: black;
+    bottom: 10%;
+    left: 10%;
+    position: absolute;
+    display: none;
+    text-align: center;
+    border-radius: 100%;
+}
+
+#lista{
+    font-size: 30px;
+    height: 400px;
+    width: 250px;
+    position: absolute;
+    left: 47%;
+    margin-left: -125px;
+    top: 31%;
+    margin-top: -100px;
+    display: none;
+    border: dashed 2px white;
+    padding: 5px;
+    
+}
+ul{
+    font-size: 20px;
+}
+em{
+    text-decoration: underline;
+}
+#replay{
+    top:50%;
+    left: 50%;
+    margin-left: 125px;
+}
+#nombre{
+    /* display: inline-block; */
+    font-size: 25px;
+    height: 25px;
+    width: 180px;
+
+    /* font-weight: bolder; */
+}
+#contador{
+   text-align: center;
+   color: aliceblue;
+   bottom: 50%;
+   position: absolute;
+}
