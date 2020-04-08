@@ -60,7 +60,7 @@ function hello() {
     var namePrompt = prompt('Bienvenido al Bingo millonario\nPor favor indica tu nombre:');
     if (namePrompt === null) {
         return alert('Esperamos verlo pronto');
-    } else if (namePrompt == "") {
+    } else if (namePrompt === "") {
         alert('No has introducido ningun nombre');
         hello();
     } else {
@@ -157,14 +157,12 @@ function lineWinninCheck() {
         finishline2 = true;
         finishline3 = true;
         alert("Felicidades!!! Has completado la linea 1");
-    }
-     else if (line2win && !finishline2) {
+    } else if (line2win && !finishline2) {
         finishline2 = true;
         finishline1 = true;
         finishline3 = true;
         alert("Felicidades!!! Has completado la linea 2");
-    }
-     else if (line3win && !finishline3) {
+    } else if (line3win && !finishline3) {
         finishline3 = true;
         finishline1 = true;
         finishline2 = true;
