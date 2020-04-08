@@ -45,7 +45,7 @@ window.onload = function () {
     //append to the screen every number or separator clicked
     for (let i = 0; i < operators.length; i++) {
         operators[i].addEventListener("click", function () {
-            if (lastOperationEqual == true) {
+            if (lastOperationEqual) {
                 result = "";
                 lastOperationEqual = false;
             }
