@@ -52,7 +52,7 @@ function bienvenida() {//llamamos a soloLetras() y si devuelve true nos muestra 
     bienve=("Bienvenido " + user);
     console.log(bienve);
     //lINEA ESTETICA (no queda muy bien);
-    for (let index = 0; index < bienve.length; index++) {
+    for (var index = 0; index < bienve.length; index++) {
         stetic+="_";  
     }
     console.log(stetic);

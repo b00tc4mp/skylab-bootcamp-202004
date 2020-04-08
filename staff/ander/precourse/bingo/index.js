@@ -151,7 +151,7 @@ function lineas() { // Verificar lineas y bingo
             lin3=false;
         }
     }
-    if (lin1==true && linea1==false){
+    if (lin1 && !linea1){
         linea1=true;
     }
     if (lin2==true && linea2==false){

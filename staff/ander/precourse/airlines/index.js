@@ -63,6 +63,7 @@ function soloLetras (userr){//Recorre el nombre en busca de numeros
 
 
 function vuelos(){
+    var n=0;
 for(n in flights){
     if(flights[n].scale==false ){
     console.log("El vuelo con origen: " + flights[n].to + " y destino: " + flights[n].from + " tiene un coste de " + flights[n].cost + " y NO realiza ninguna escala.");
