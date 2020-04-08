@@ -1,12 +1,12 @@
-var card=[]
-var line1
-var line2
-var line3
-var continuePlaying=true
-var line=false
-var bingo=false
-var board=[]
-var bomboNumber=[]
+var card=[];
+var line1;
+var line2;
+var line3;
+var continuePlaying=true;
+var line=false;
+var bingo=false;
+var board=[];
+var bomboNumber=[];
 
 
 function greeting(){
@@ -65,7 +65,7 @@ function createBomboNumber(){
 
 function matching(random){
     for(var i=0;i<card.length;i++){
-        if(card[i].number==random){
+        if(card[i].number===random){
             card[i].number= "x";
             card[i].matched=true;
             alert("You got a number!");
@@ -93,11 +93,9 @@ function checkBingoCard(){
    
     var checks=0
     for(var i=0;i<card.length;i++){
-        debugger
         if(card[i].matched==true){
             checks += 1
         }
-
     }
 
     if(checks==15){

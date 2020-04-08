@@ -127,8 +127,6 @@ function pasapalabra(){
 
     continuePlaying=confirm("quieres seguir jugando?")
     if(continuePlaying){
-        
-        debugger
         for(var i=0;i<questions.length;i++){
            questions[i].status=0
        }

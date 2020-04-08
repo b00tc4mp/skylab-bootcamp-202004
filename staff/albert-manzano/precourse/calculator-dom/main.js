@@ -9,7 +9,6 @@ var previousNumber = null
 
 
 for (var i = 0; i < idNumbers.length; i++) {
-    debugger
     var number = document.getElementById(idNumbers[i]);
     number.addEventListener('click', function (event) {
         currentNumber += event.target.innerText;

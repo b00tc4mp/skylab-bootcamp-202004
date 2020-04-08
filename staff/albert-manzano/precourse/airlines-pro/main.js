@@ -10,49 +10,49 @@ var flights = [
     { id: 08, to: 'Shangai', from: 'Barcelona', cost: 800, scale: true },
     { id: 09, to: 'Sydney', from: 'Barcelona', cost: 150, scale: true },
     { id: 10, to: 'Tel-Aviv', from: 'Madrid', cost: 150, scale: false }
-    ]
+    ],
     
-var eraseId
-var confirm3
+var eraseId;
+var confirm3;
 
 function presentFlights() {
     for(var i=0;i<flights.length;i++){
         flightDisplay= `flight ${flights[i].id}: from ${flights[i].from} to ${flights[i].to} costs ${flights[i].cost} and `   
-        concatenate(flights[i].scale)
+        concatenate(flights[i].scale);
     }  
 }
 
 function concatenate(scale) {
     if(scale===true){
-        console.log(flightDisplay.concat(" has scales."))
+        console.log(flightDisplay.concat(" has scales."));
     }else{
-        console.log(flightDisplay.concat(" has no scales."))
+        console.log(flightDisplay.concat(" has no scales."));
     }    
 }
 
 function byeBye() {
     var bye=confirm("Do you want quit the program?")
     if(bye){
-        console.log("Thanks! cya around!")
+        console.log("Thanks! cya around!");
     }else{
-        detectUser()
+        detectUser();
     }
 }
 
 function eraseFlight(eraseId){
-    eraseId=parseInt(eraseId)
+    eraseId=parseInt(eraseId);
     for(var i=0;i<flights.length;i++){
         if(flights[i].id===eraseId){
-            flights.splice([i],1)
-            presentFlights()
+            flights.splice([i],1);
+            presentFlights();
             return
         } 
     }
     var confirm4=("Do you want to keep erasing flights?")
         if(confirm4){
-            eraseFlight()
+            eraseFlight();
         }else{
-            eraseOrAdd()
+            eraseOrAdd();
         }   
 }
 
@@ -67,17 +67,17 @@ function newFlight() {
                 scale: confirm("the flight realizes scales?"),   
                 }
             
-            flightDisplay=(`flight ${flight.id}: from ${flight.from} to ${flight.to} costs ${flight.cost} and `)
-            concatenate(flight.scale)
-            flights.push(flight)
+            flightDisplay=(`flight ${flight.id}: from ${flight.from} to ${flight.to} costs ${flight.cost} and `);
+            concatenate(flight.scale);
+            flights.push(flight);
             // presentFlights()
-            confirm1=confirm("Do you want to add more flights?")
+            confirm1=confirm("Do you want to add more flights?");
         }else if(flights.length=15){
-            alert("can not add more flights")
-            alert("erase some flights first")
-            eraseOrAdd("erase")
+            alert("can not add more flights");
+            alert("erase some flights first");
+            eraseOrAdd("erase");
         }else if(confirm1==false,null){
-            eraseOrAdd("erase")
+            eraseOrAdd("erase");
     }
 }
 
@@ -87,36 +87,36 @@ function eraseOrAdd(){
         case "erase":
             eraseId=prompt("select and ID number to erase the flight")
                 if (isNaN(eraseId)) { 
-                    alert("number not detected")
-                    eraseId=prompt("select and ID number to erase the flight")
+                    alert("number not detected");
+                    eraseId=prompt("select and ID number to erase the flight");
                 }else{
-                    eraseFlight(eraseId)   
+                    eraseFlight(eraseId);
                 }
 
             break;
-        case "add":
+            case "add":
                 var add=confirm("do you want to add a flight?")
                 if(flights.length<16 && add==true) {
                     newFlight()
                 }else if(flights.length=16 && add== true){
-                    alert("can not add more flights")
-                    alert("erase some flights first")
-                    eraseOrAdd=prompt("You can erase or add flights, what do you want to do? delete or add?")
+                    alert("can not add more flights");
+                    alert("erase some flights first");
+                    eraseOrAdd=prompt("You can erase or add flights, what do you want to do? delete or add?");
                 }else{
-                    confirm3=confirm("do you want to keep operating as ADMIN?")
+                    confirm3=confirm("do you want to keep operating as ADMIN?");
                     if(confirm3){
-                        eraseOrAdd()
+                        eraseOrAdd();
                     }else{
-                        userOrAdmin=prompt("Please introduce if you are User or Admin?")
+                        userOrAdmin=prompt("Please introduce if you are User or Admin?");
                     }
                 }
              break;                     
-        case null:
-            confirm3=confirm("do you want to keep operating as ADMIN?")
+            case null:
+            confirm3=confirm("do you want to keep operating as ADMIN?");
                 if(confirm3){
-                    eraseOrAdd()
+                    eraseOrAdd();
                 }else{
-                    userOrAdmin=prompt("Please introduce if you are User or Admin?")
+                    userOrAdmin=prompt("Please introduce if you are User or Admin?");
                 }
                 break;
     }   
@@ -124,40 +124,39 @@ function eraseOrAdd(){
 
 function userDisplay() {
     var flightsCopy=flights
-    flightsCopy.sort((a, b) => a.cost - b.cost)
-    alert("thanks for your purchase!")
-    var confirm5=confirm("Do you want to do something else?")
+    flightsCopy.sort((a, b) => a.cost - b.cost);
+    alert("thanks for your purchase!");
+    var confirm5=confirm("Do you want to do something else?");
     if(confirm5==true){
-        detectUser()
+        detectUser();
     }else{
-        byeBye()
+        byeBye();
     }
 }
 
 function detectUser(userOrAdmin){
-    var userOrAdmin=prompt("Please introduce if you are User or Admin?")
+    var userOrAdmin=prompt("Please introduce if you are User or Admin?");
     switch (userOrAdmin.toUpperCase()) {
         case "USER":
-            debugger
-            userDisplay()
+            userDisplay();
             break;
         case "ADMIN":
-            eraseOrAdd()
+            eraseOrAdd();
             break;
         case null:
             byeBye()
             break;
         default:
-            alert ("Option not detected!")
+            alert ("Option not detected!");
             break;
     }
     byeBye()
 }
 
 function skyLabAirlinesPro(){
-    alert("these are the flights for today")
-    presentFlights() 
-    detectUser()  
+    alert("these are the flights for today");
+    presentFlights() ;
+    detectUser()  ;
 }
 
 skyLabAirlinesPro()

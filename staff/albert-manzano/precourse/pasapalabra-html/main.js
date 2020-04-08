@@ -91,7 +91,6 @@ function confirmKeyPad(e){
 
 function checkAnswer(){
     var userAnswer= (document.getElementById('input')).value.toLowerCase();
-    debugger
     if(keepPlaying==false){
         name=userAnswer
         showScoreboard(name)
@@ -127,7 +126,6 @@ function checkAnswer(){
 }
 
 function showQuestion(){
-    debugger
     display.innerHTML=''
     if((errors+points)===questions.length){
         return finish();
@@ -168,7 +166,6 @@ function activateTimer(){
 }
 
 function replay(){
-    debugger
     for (const letter of idLetters) {
         document.getElementById(letter).style.border= '1px solid grey';
         document.getElementById(letter).style.background= 'white';    
@@ -182,7 +179,6 @@ function replay(){
 }
 
 function finish(){
-    debugger
     time=0;
     count=0;
     for (const letter of idLetters) {
