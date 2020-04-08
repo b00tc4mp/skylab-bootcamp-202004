@@ -1,0 +1,341 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+#linkWeb{
+    position: absolute;
+    top: -192px;
+    left: -190px;
+    height: 430px;
+    width: 430px;
+    border-radius: 50%;
+}
+
+#fondo{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#wrongMsg {
+    position: absolute;
+    color: red;
+    font-size: 15px;
+    top: 120px;
+    left: 10%;
+    background-color: rgb(178, 219, 247);
+}
+.promptBox{
+    position: fixed;
+    margin: auto;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+    width: 500px;
+    height: 200px;
+    background-color: rgb(178, 219, 247);
+    font-size: 20px;
+    border: 2px solid black;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 7px;
+}
+
+.promptBox #acepto{
+    position: absolute;
+    left: 10%;
+    top: 140px;
+    font-size: 23px;
+    border: 2px solid black;
+    border-radius: 10px;
+    text-decoration: none;
+    padding: 5px 50px;
+}
+
+.promptBox #cancelo{
+    position: absolute;
+    right: 10%;
+    top: 140px;
+    font-size: 23px;
+    border: 2px solid black;
+    border-radius: 10px;
+    text-decoration: none;
+    padding: 5px 50px;
+}
+
+#acepto:hover, #cancelo:hover {
+    background-color: #bbb;
+    color: white;
+}
+
+.promptBox #inputName{
+    position: absolute;
+    width: 80%;
+    height: 35px;
+    top: 80px;
+    left: 10%;
+    right: 10%;
+    border-radius: 7px;
+    font-size: 15px;
+    
+}
+
+.promptBox #promptAsk {
+    position: absolute;
+    background-color: rgb(178, 219, 247);
+    left: 50px;
+    top: 25px;
+    font-size: 30px;
+}
+
+.answerBox{
+    position: fixed;
+    margin-left: 45%;
+    margin-top: 10%;
+    margin-right: 2%;
+    background-color: red;
+    position: relative;
+}
+
+.answerBox #pregunta {
+    position: absolute;
+    background-color: #006239;
+    height: 75px;
+    font-size: 30px;
+    padding: 20px 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: lavender;
+}
+
+.answerBox #respuesta {
+    position: absolute;
+    height: 50px;
+    text-align: center;
+    width: 100%;
+    top: 150px;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.answerBox #intro {
+    position: absolute;
+    text-align: center;
+    width: 250px;
+    top: 250px;
+    left: 1%;
+    height: 65px;
+    background-color: lavender;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 28px;
+    border: 2px solid black;
+    border-radius: 20px;
+    text-decoration: none;
+    transition-duration: 0.2s;
+}
+
+.answerBox #pasapalabra {
+    position: absolute;
+    width: 250px;
+    top: 250px;
+    left: 34.5%;
+    height: 65px;
+    background-color: lavender;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 28px;
+    border: 2px solid black;
+    border-radius: 20px;
+    text-decoration: none;
+    transition-duration: 0.2s;
+}
+
+.answerBox #again {
+    position: absolute;
+    width: 250px;
+    height: 65px;
+    top: 250px;
+    right: 1%;
+    background-color: lavender;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 28px;
+    border: 2px solid black;
+    border-radius: 20px;
+    text-decoration: none;
+    transition-duration: 0.2s;
+}
+
+#ranking {
+    position: fixed;
+    margin-left: 88%;
+    top: 33%;
+    font-size: 28px;
+    border: 2px solid black;
+    border-radius: 20px;
+    text-decoration: none;
+    padding: 15px 20px;
+}
+
+
+#intro:hover, #pasapalabra:hover, #again:hover, #ranking:hover{
+    background-color: #006239;
+    color: white;
+}
+
+
+.dots{
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1.6px solid black;
+    color: white;
+    text-align: center;
+    line-height: 45px;
+    height: 45px;
+    width: 45px;
+    background-color: #006239;
+    border-radius: 50%;
+    overflow: visible;
+    white-space: pre;
+    display: block;
+}
+
+.rosco{
+    position: relative;
+    margin-top: 20%;
+    margin-left: 25%;
+    width: default;
+}
+
+.rosco #logo{
+    position: absolute;
+    top: -192px;
+    left: -190px;
+    height: 430px;
+    width: 430px;
+    background: none;
+}
+
+.timer{
+    position: fixed;
+    text-align: center;
+    display: inline-block;
+    font-size: 50px;
+    top: 80%;
+    left: 8%;
+    background-color: #006239;
+    width: 100px;
+    color: white;
+    border: 2px solid black;
+}
+
+
+#letterA{
+    position: absolute;
+    transform: rotate(-89.6deg) translate(230px) rotate(89.6deg);
+}
+#letterB{
+    position: absolute;
+    transform: rotate(-75.6deg) translate(230px) rotate(75.6deg);
+}
+#letterC{
+    position: absolute;
+    transform: rotate(-61.8deg) translate(230px) rotate(61.8deg);
+}
+#letterD{
+    position: absolute;
+    transform: rotate(-48.0deg) translate(230px) rotate(48deg);
+}
+#letterE{
+    position: absolute;
+    transform: rotate(-34.2deg) translate(230px) rotate(34.2deg);
+}
+#letterF{
+    position: absolute;
+    transform: rotate(-20.4deg) translate(230px) rotate(20.4deg);
+}
+#letterG{
+    position: absolute;
+    transform: rotate(-6.6deg) translate(230px) rotate(6.6deg);
+}
+#letterH{
+    position: absolute;
+    transform: rotate(7.20deg) translate(230px) rotate(-7.2deg);
+}
+#letterI{
+    position: absolute;
+    transform: rotate(21.0deg) translate(230px) rotate(-21deg);
+}
+#letterJ{
+    position: absolute;
+    transform: rotate(34.8deg) translate(230px) rotate(-34.8deg);
+}
+#letterK{
+    position: absolute;
+    transform: rotate(48.6deg) translate(230px) rotate(-48.6deg);
+}
+#letterL{
+    position: absolute;
+    transform: rotate(62.4deg) translate(230px) rotate(-62.4deg);
+}
+#letterM{
+    position: absolute;
+    transform: rotate(76.2deg) translate(230px) rotate(-76.2deg);
+}
+#letterN{
+    position: absolute;
+    transform: rotate(90.0deg) translate(230px) rotate(-90deg);
+}
+#letterÑ{
+    position: absolute;
+    transform: rotate(103.8deg) translate(230px) rotate(-103.8deg);
+}
+#letterO{
+    position: absolute;
+    transform: rotate(117.6deg) translate(230px) rotate(-117.6deg);
+}
+#letterP{
+    position: absolute;
+    transform: rotate(131.4deg) translate(230px) rotate(-131.4deg);
+}
+#letterQ{
+    position: absolute;
+    transform: rotate(145.2deg) translate(230px) rotate(-145.2deg);
+}
+#letterR{
+    position: absolute;
+    transform: rotate(159.0deg) translate(230px) rotate(-159.0deg);
+}
+#letterS{
+    position: absolute;
+    transform: rotate(172.8deg) translate(230px) rotate(-172.8deg);
+}
+#letterT{
+    position: absolute;
+    transform: rotate(186.6deg) translate(230px) rotate(-186.6deg);
+}
+#letterU{
+    position: absolute;
+    transform: rotate(200.4deg) translate(230px) rotate(-200.4deg);
+}
+#letterV{
+    position: absolute;
+    transform: rotate(214.2deg) translate(230px) rotate(-214.2deg);
+}
+#letterX{
+    position: absolute;
+    transform: rotate(228.0deg) translate(230px) rotate(-228.0deg);
+}
+#letterY{
+    position: absolute;
+    transform: rotate(241.8deg) translate(230px) rotate(-241.8deg);
+}
+#letterZ{
+    position: absolute;
+    transform: rotate(255.6deg) translate(230px) rotate(-255.6deg);
+}
+
+
+
+
+
+
