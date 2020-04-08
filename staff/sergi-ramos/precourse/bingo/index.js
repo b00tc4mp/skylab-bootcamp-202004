@@ -39,7 +39,7 @@ function bingo() {
     function generarNumero() {
         var numero;
         numero = Math.random() * (91 - 1) + 1;
-        numero = Math.trunc(numero)
+        numero = Math.trunc(numero);
         return numero;
     }
     //Comprueba que no haya salido ya el numero random dos veces y lanza el alert del numero salido
@@ -79,7 +79,7 @@ function bingo() {
     //Controla el mensaje que sale despues de que salga una bola, ya sea no encontrado, encontrado, linea o bingo
 
     function cartonDespuesBola() {
-        if (bingoWin == true) {
+        if (bingoWin) {
             alert("BINGOOOOOOOOOOOOOOO!!");
             linia = false;
             aciertoBola = false;
