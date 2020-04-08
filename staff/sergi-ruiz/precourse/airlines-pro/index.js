@@ -125,7 +125,7 @@ if (login == "admin") {
                 break;
         }
     }
-} else if (login == "user") {
+} else if (login === "user") {
     var selection = prompt("Flight finder by price, select: 1.MORE PRICE 2.SAME PRICE 3.LESS PRICE");
     var price = parseInt(prompt("price in euros?"));
     switch (selection) {
