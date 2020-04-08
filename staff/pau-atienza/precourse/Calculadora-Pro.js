@@ -4,38 +4,38 @@ function calculatorPro() {
     //We declare the four main operations as function expressions (could also just be functions)
     //Addition
     const addition = function() {
-        let add = args[0];
-        for ( let i = 1; i < args.length; i++) {
+        var add = args[0];
+        for ( var i = 1; i < args.length; i++) {
             add += args[i];
         };
         return add;
     };
     //Subtraction
     const subtraction = function() {
-        let sub = args[0];
-        for ( let i = 1; i < args.length; i++) {
+        var sub = args[0];
+        for ( var i = 1; i < args.length; i++) {
             sub -= args[i];
         };
         return sub;
     };
     //Multiplication
     const multiplication = function() {
-        let mul = args[0];
-        for ( let i = 1; i < args.length; i++) {
+        var mul = args[0];
+        for ( var i = 1; i < args.length; i++) {
             mul *= args[i];
         };
         return mul;
     };
     //Division
     const division = function() {
-        let div = args[0];
-        for ( let i = 1; i < args.length; i++) {
+        var div = args[0];
+        for ( var i = 1; i < args.length; i++) {
             div /= args[i];
         };
         return div;
     };
     do {
-        for ( let i = 0; i < args.length; i++) {
+        for ( var i = 0; i < args.length; i++) {
             if (args[i]/args[i] !== 1) {
                 console.log (`Variable ${i+1} is not numerical`);
                 return;
@@ -43,13 +43,13 @@ function calculatorPro() {
         };
         //If so and the second argument is undefined, we do the square root only 
         if (typeof args[1] == 'undefined') {
-            let rootResult = { SquareRoot : Number.isInteger(Math.sqrt(args[0])) ? Math.sqrt(args[0]) : (Math.sqrt(args[0])).toFixed(3)}
+            var rootResult = { SquareRoot : Number.isInteger(Math.sqrt(args[0])) ? Math.sqrt(args[0]) : (Math.sqrt(args[0])).toFixed(3)}
             console.log(rootResult);
         }
         // Otherwise, we proceed to do the normal operations and display the results
         // For each result, we check if it is an Integer, otherwise we show only 3 decimal numbers. 
         // I decided to use an object literal instead of an array so that I could easily 'label' each result in the output to make it more user friendly.
-        else { let results = {Addition: Number.isInteger(addition(args)) ? addition(args) : addition(args).toFixed(3), 
+        else { var results = {Addition: Number.isInteger(addition(args)) ? addition(args) : addition(args).toFixed(3), 
             Subtraction: Number.isInteger(subtraction(args)) ? subtraction(args) : (subtraction(args)).toFixed(3), 
             Multiplication: Number.isInteger(multiplication(args)) ? multiplication(args) : (multiplication(args)).toFixed(3), 
             Division: Number.isInteger(division(args)) ? division(args) : (division(args)).toFixed(3)};
@@ -61,7 +61,7 @@ function calculatorPro() {
             numberString = prompt('Please introduce the new numbers separated by spaces');
             numberArrayOfStrings = numberString.split(' ');
             args = [];
-            for (let i = 0; i < numberArrayOfStrings.length; i++ ) {
+            for (var i = 0; i < numberArrayOfStrings.length; i++ ) {
                 args[i] = parseFloat(numberArrayOfStrings[i]);
             };
         };
