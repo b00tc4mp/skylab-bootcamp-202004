@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conecta 4</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <header>
+        <h1 class="row title">
+            <span class='red'>C</span>
+            <span class='yellow'>O</span>
+            <span class='red'>N</span>
+            <span class='yellow'>E</span>
+            <span class='red'>C</span>
+            <span class='yellow'>T</span>
+            <span class='red'>A</span>
+            <span class='yellow'>-</span>
+            <span class='red'>4</span>
+        </h1>
+    </header>
+    <main class="column">
+        <div id='choiseGame'>
+            <button id='humanPlayer'>Player One <span class='vs'>vs</span> Player Two</button>
+            <button id='computerPlayer'>Player One <span class='vs'>vs</span> Computer</button>
+        </div>
+        <div class="column none" id='game'>
+            <div class="row">
+                <button id='restart'>Restart</button>
+                <p class="writeRed" id='player'>Player 1</p>
+                <button id='exit'>Exit</button>
+            </div>
+            <div class="board none" id='restartBoard'>
+                <div class="column">
+                    <br><br>
+                    <h2>Are you safe?</h2>
+                    <div class="row">
+                        <button id='restartYes'>Yes</button>
+                        <button id='restartNo'>No</button>
+                    </div>
+                </div>
+            </div>
+            <div class="board none" id='exitBoard'>
+                <div class="column">
+                    <br><br>
+                    <h2>Are you safe?</h2>
+                    <div class="row">
+                        <button id='exitYes'>Yes</button>
+                        <button id='exitNo'>No</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <i class="fas fa-chevron-circle-down button" id='a'></i>
+                <i class="fas fa-chevron-circle-down button" id='b'></i>
+                <i class="fas fa-chevron-circle-down button" id='c'></i>
+                <i class="fas fa-chevron-circle-down button" id='d'></i>
+                <i class="fas fa-chevron-circle-down button" id='e'></i>
+                <i class="fas fa-chevron-circle-down button" id='f'></i>
+                <i class="fas fa-chevron-circle-down button" id='g'></i>
+            </div>
+            <div class="row background">
+                <div class='column'>
+                    <div class="item a" id='a6'></div>
+                    <div class="item a" id='a5'></div>
+                    <div class="item a" id='a4'></div>
+                    <div class="item a" id='a3'></div>
+                    <div class="item a" id='a2'></div>
+                    <div class="item a" id='a1'></div>
+                </div>
+                <div class='column'>
+                    <div class="item b" id='b6'></div>
+                    <div class="item b" id='b5'></div>
+                    <div class="item b" id='b4'></div>
+                    <div class="item b" id='b3'></div>
+                    <div class="item b" id='b2'></div>
+                    <div class="item b" id='b1'></div>
+                </div>
+                <div class='column'>
+                    <div class="item c" id='c6'></div>
+                    <div class="item c" id='c5'></div>
+                    <div class="item c" id='c4'></div>
+                    <div class="item c" id='c3'></div>
+                    <div class="item c" id='c2'></div>
+                    <div class="item c" id='c1'></div>
+                </div>
+                <div class='column'>
+                    <div class="item d" id='d6'></div>
+                    <div class="item d" id='d5'></div>
+                    <div class="item d" id='d4'></div>
+                    <div class="item d" id='d3'></div>
+                    <div class="item d" id='d2'></div>
+                    <div class="item d" id='d1'></div>
+                </div>
+                <div class='column'>
+                    <div class="item e" id='e6'></div>
+                    <div class="item e" id='e5'></div>
+                    <div class="item e" id='e4'></div>
+                    <div class="item e" id='e3'></div>
+                    <div class="item e" id='e2'></div>
+                    <div class="item e" id='e1'></div>
+                </div>
+                <div class='column'>
+                    <div class="item f" id='f6'></div>
+                    <div class="item f" id='f5'></div>
+                    <div class="item f" id='f4'></div>
+                    <div class="item f" id='f3'></div>
+                    <div class="item f" id='f2'></div>
+                    <div class="item f" id='f1'></div>
+                </div>
+                <div class='column'>
+                    <div class="item g" id='g6'></div>
+                    <div class="item g" id='g5'></div>
+                    <div class="item g" id='g4'></div>
+                    <div class="item g" id='g3'></div>
+                    <div class="item g" id='g2'></div>
+                    <div class="item g" id='g1'></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column red font-size padding">
+                    <div>Player 1</div>
+                    <div id='resulthumanPlayer'>0</div>
+                </div>
+                <div class="column yellow font-size padding">
+                    <div id='computer'>Player 2</div>
+                    <div id='resultPlayer2'>0</div>
+                </div>
+            </div>
+            <div class='board none' id='winBoard'>
+                <div class="column">
+                    <div class="row">
+                        <p class='font-size row' id='winResult'></p>
+                        <span class="smille" id='emoji'></span>
+
+                    </div>
+
+                    <h2>Play Again?</h1>
+                        <div class="row">
+                            <button id='yes'>YES</button>
+                            <button id='no'>NO</button>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <script src="index.js"></script>
+</body>
+
+</html>
