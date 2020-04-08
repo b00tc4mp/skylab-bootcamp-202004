@@ -63,11 +63,21 @@ function createCard() {
 
 // Function showCart() by console
 function showCard() {
-    console.log('***********************************')
-    console.log(bingoCard[0].number + '  ' + bingoCard[1].number + '  ' + bingoCard[2].number + '  ' + bingoCard[3].number + '  ' + bingoCard[4].number)
-    console.log(bingoCard[5].number + '  ' + bingoCard[6].number + '  ' + bingoCard[7].number + '  ' + bingoCard[8].number + '  ' + bingoCard[9].number)
-    console.log(bingoCard[10].number + '  ' + bingoCard[11].number + '  ' + bingoCard[12].number + '  ' + bingoCard[13].number + '  ' + bingoCard[14].number)
-    console.log('***********************************')
+    var txt1 ='';
+    var txt2 ='';
+    var txt3 ='';
+    for(var i =0;i< bingoCard.length;i++){
+        if(i<5){
+           txt1+= bingoCard[i].number + ' ';
+        }else if(i<10){
+            txt2+= bingoCard[i].number + ' ';
+        }else{
+            txt3+= bingoCard[i].number + ' ';
+        }
+    }
+    console.log('***********************************');
+    console.log(txt1 +'\n'+txt2 +'\n'+txt3);
+    console.log('***********************************');
 };
 
 
