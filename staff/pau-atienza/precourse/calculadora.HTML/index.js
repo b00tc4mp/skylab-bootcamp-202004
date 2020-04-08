@@ -1,26 +1,26 @@
-const one = document.querySelector('.one');
-const two = document.querySelector('.two');
-const three = document.querySelector('.three');
-const four = document.querySelector('.four');
-const five = document.querySelector('.five');
-const six = document.querySelector('.six');
-const seven = document.querySelector('.seven');
-const eight = document.querySelector('.eight');
-const nine = document.querySelector('.nine');
-const zero = document.querySelector('.zero');
+var one = document.querySelector('.one');
+var two = document.querySelector('.two');
+var three = document.querySelector('.three');
+var four = document.querySelector('.four');
+var five = document.querySelector('.five');
+var six = document.querySelector('.six');
+var seven = document.querySelector('.seven');
+var eight = document.querySelector('.eight');
+var nine = document.querySelector('.nine');
+var zero = document.querySelector('.zero');
 
-const div = document.querySelector('.div');
-const times = document.querySelector('.times');
-const minus = document.querySelector('.minus');
-const add = document.querySelector('.add');
-const dot = document.querySelector('.dot');
+var div = document.querySelector('.div');
+var times = document.querySelector('.times');
+var minus = document.querySelector('.minus');
+var add = document.querySelector('.add');
+var dot = document.querySelector('.dot');
 
-const ac = document.querySelector('.ac');
-const c = document.querySelector('.c');
+var ac = document.querySelector('.ac');
+var c = document.querySelector('.c');
 
-const equals = document.querySelector('.equals');
+var equals = document.querySelector('.equals');
 
-const screen = document.querySelector('.screen');
+var screen = document.querySelector('.screen');
 
 screen.textContent = '';
 
