@@ -1,4 +1,4 @@
-const LINE = 5;
+var LINE = 5;
 
 function bingo() {
     function player() {
