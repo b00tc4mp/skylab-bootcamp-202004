@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pasapalabra Skylab</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="index.css" />
+    <link
+      href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- NAV BAR -->
+    <nav class="navbar">
+      <ul class="navbar-nav">
+        <!-- game -->
+        <li class="nav-item" onclick="gameClick()">
+          <a href="#" class="nav-link">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fas"
+              data-icon="gamepad"
+              class="svg-inline--fa fa-gamepad fa-w-20"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 640 512"
+            >
+              <path
+                fill="currentColor"
+                d="M480.07 96H160a160 160 0 1 0 114.24 272h91.52A160 160 0 1 0 480.07 96zM248 268a12 12 0 0 1-12 12h-52v52a12 12 0 0 1-12 12h-24a12 12 0 0 1-12-12v-52H84a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h52v-52a12 12 0 0 1 12-12h24a12 12 0 0 1 12 12v52h52a12 12 0 0 1 12 12zm216 76a40 40 0 1 1 40-40 40 40 0 0 1-40 40zm64-96a40 40 0 1 1 40-40 40 40 0 0 1-40 40z"
+              ></path>
+            </svg>
+            <span class="link-text">Game</span>
+          </a>
+        </li>
+        <!-- rules -->
+        <li class="nav-item" onclick="rulesClick()">
+          <a href="#" class="nav-link rules-nav">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fas"
+              data-icon="chalkboard-teacher"
+              class="svg-inline--fa fa-chalkboard-teacher fa-w-20"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 640 512"
+            >
+              <path
+                fill="currentColor"
+                d="M208 352c-2.39 0-4.78.35-7.06 1.09C187.98 357.3 174.35 360 160 360c-14.35 0-27.98-2.7-40.95-6.91-2.28-.74-4.66-1.09-7.05-1.09C49.94 352-.33 402.48 0 464.62.14 490.88 21.73 512 48 512h224c26.27 0 47.86-21.12 48-47.38.33-62.14-49.94-112.62-112-112.62zm-48-32c53.02 0 96-42.98 96-96s-42.98-96-96-96-96 42.98-96 96 42.98 96 96 96zM592 0H208c-26.47 0-48 22.25-48 49.59V96c23.42 0 45.1 6.78 64 17.8V64h352v288h-64v-64H384v64h-76.24c19.1 16.69 33.12 38.73 39.69 64H592c26.47 0 48-22.25 48-49.59V49.59C640 22.25 618.47 0 592 0z"
+              ></path>
+            </svg>
+            <span class="link-text">Rules</span>
+          </a>
+        </li>
+        <!-- ranking -->
+        <li class="nav-item" onclick="rankingClick()">
+          <a href="#" class="nav-link">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fas"
+              data-icon="trophy"
+              class="svg-inline--fa fa-trophy fa-w-18"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 576 512"
+            >
+              <path
+                fill="currentColor"
+                d="M552 64H448V24c0-13.3-10.7-24-24-24H152c-13.3 0-24 10.7-24 24v40H24C10.7 64 0 74.7 0 88v56c0 35.7 22.5 72.4 61.9 100.7 31.5 22.7 69.8 37.1 110 41.7C203.3 338.5 240 360 240 360v72h-48c-35.3 0-64 20.7-64 56v12c0 6.6 5.4 12 12 12h296c6.6 0 12-5.4 12-12v-12c0-35.3-28.7-56-64-56h-48v-72s36.7-21.5 68.1-73.6c40.3-4.6 78.6-19 110-41.7 39.3-28.3 61.9-65 61.9-100.7V88c0-13.3-10.7-24-24-24zM99.3 192.8C74.9 175.2 64 155.6 64 144v-16h64.2c1 32.6 5.8 61.2 12.8 86.2-15.1-5.2-29.2-12.4-41.7-21.4zM512 144c0 16.1-17.7 36.1-35.3 48.8-12.5 9-26.7 16.2-41.8 21.4 7-25 11.8-53.6 12.8-86.2H512v16z"
+              ></path>
+            </svg>
+            <span class="link-text">Ranking</span>
+          </a>
+        </li>
+        <li class="nav-item" onclick="toTheDarkSide()">
+          <a href="#" class="nav-link">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fas"
+              data-icon="moon"
+              class="svg-inline--fa fa-moon fa-w-16"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+            >
+              <path
+                fill="currentColor"
+                d="M283.211 512c78.962 0 151.079-35.925 198.857-94.792 7.068-8.708-.639-21.43-11.562-19.35-124.203 23.654-238.262-71.576-238.262-196.954 0-72.222 38.662-138.635 101.498-174.394 9.686-5.512 7.25-20.197-3.756-22.23A258.156 258.156 0 0 0 283.211 0c-141.309 0-256 114.511-256 256 0 141.309 114.511 256 256 256z"
+              ></path>
+            </svg>
+            <span class="link-text">Dark Mode</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- RULES PAGE -->
+    <div id="rules-page">
+      <h1>Pasapalabra Rules</h1>
+      <div class="rules-container">
+        <p>
+          Bienvenido a Pasapalabra. Las normas son las siguientes:
+        </p>
+        <ul>
+          <li>
+            Pulsa el botón START para iniciar el juego.
+          </li>
+          <li>
+            Se mostrará una letra y una descripción que corresponde a una
+            palabra.
+          </li>
+          <li>
+            Deberás introducir la palabra en el recuadro y pulsar enter.
+          </li>
+          <li>
+            Puedes usar el botón PASAPALABRA para pasar a la siguiente palabra y
+            retomarla en la próxima ronda.
+          </li>
+          <li>
+            Tienes 120 segundos para acertar cada una de las palabras del rosco.
+          </li>
+          <li>
+            En el panel de las letras inferiores podrás ver el transcurso del
+            juego. Se mostrarán en <span>verde</span> las letras acertadas, en
+            <span>rojo</span> las falladas y en <span>azul</span> las que aún no
+            has respondido.
+          </li>
+          <li>
+            SUERTE!
+          </li>
+          <div>
+            <img
+              src="https://media.giphy.com/media/1lk1IcVgqPLkA/giphy.gif"
+              alt=""
+            />
+          </div>
+        </ul>
+      </div>
+    </div>
+
+    <!-- GAME PAGE -->
+    <div id="game-page">
+      <h1>Pasapalabra Skylab</h1>
+      <div class="end-announce-container">
+        <h2 class="end-time">Se ha acabado el tiempo...</h2>
+        <h2 class="end-game">¡Has terminado el rosco!</h2>
+        <h2>
+          Has logrado una puntuación de:
+          <span class="points-display"></span>
+          <button onclick="rankingClick()" class="question-element">
+            Ver Ranking
+          </button>
+        </h2>
+      </div>
+
+      <div class="game-container">
+        <!-- Bouncing Letter -->
+        <button id="current-letter" class="start-game" onclick="start()">
+          START
+        </button>
+
+        <!-- Question & time Display -->
+        <div id="questions-container">
+          <div class="question-element">
+            <div class="timer">
+              120
+            </div>
+          </div>
+          <div class="question-element" id="question-display">
+            ¡Pulsa START cuando estés listo para empezar a jugar!
+          </div>
+          <input
+            type="text"
+            id="player-answer"
+            class="question-element"
+            onchange="checkAnswer()"
+          />
+          <br />
+          <button
+            id="pasapalabra-btn"
+            class="question-element"
+            onclick="showDefinition()"
+            disabled
+          >
+            pasapalabra
+          </button>
+        </div>
+      </div>
+
+      <!-- Letters Display -->
+      <div id="letters-container">
+        <button class="letters-default" disabled>a</button>
+        <button class="letters-default" disabled>b</button>
+        <button class="letters-default" disabled>c</button>
+        <button class="letters-default" disabled>d</button>
+        <button class="letters-default" disabled>e</button>
+        <button class="letters-default" disabled>f</button>
+        <button class="letters-default" disabled>g</button>
+        <button class="letters-default" disabled>h</button>
+        <button class="letters-default" disabled>i</button>
+        <button class="letters-default" disabled>j</button>
+        <button class="letters-default" disabled>k</button>
+        <button class="letters-default" disabled>l</button>
+        <button class="letters-default" disabled>m</button>
+        <button class="letters-default" disabled>n</button>
+        <button class="letters-default" disabled>ñ</button>
+        <button class="letters-default" disabled>o</button>
+        <button class="letters-default" disabled>p</button>
+        <button class="letters-default" disabled>q</button>
+        <button class="letters-default" disabled>r</button>
+        <button class="letters-default" disabled>s</button>
+        <button class="letters-default" disabled>t</button>
+        <button class="letters-default" disabled>u</button>
+        <button class="letters-default" disabled>v</button>
+        <button class="letters-default" disabled>w</button>
+        <button class="letters-default" disabled>x</button>
+        <button class="letters-default" disabled>y</button>
+        <button class="letters-default" disabled>z</button>
+      </div>
+    </div>
+
+    <!-- RANKING PAGE -->
+    <div id="ranking-page">
+      <h1>Ranking</h1>
+      <div class="ranking-container">
+        <div class="ranking-head-container">
+          <div class="ranking-head">
+            <span class="head-position">Position</span
+            ><span class="head-name">Player</span
+            ><span class="head-points">Points</span>
+          </div>
+        </div>
+        <div id="ranking-players-container"></div>
+      </div>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>
