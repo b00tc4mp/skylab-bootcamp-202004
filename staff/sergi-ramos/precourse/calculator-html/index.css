@@ -1,0 +1,132 @@
+
+.container {
+    display: grid;
+    max-width: 400px;
+max-height: 700px;
+    grid-template-areas: "display display display display"
+                         "display display display display"
+                         "ac ac return divide"
+                         "seven eight nine multi"
+                         "four five six resta"
+                         "one two three plus"
+                         "ze ze coma equal";
+                  
+    font-size: 70px;
+    text-align: center;
+    border: 1px solid black;
+    
+}
+.container div {
+    border: 1px solid black;
+
+
+}
+.grey  {
+    user-select: none;
+    cursor: pointer;
+}
+.orange {
+    user-select: none;
+    cursor: pointer;
+}
+.grey:active {
+    color: white;
+}
+.grey:hover {
+    background-color: #ACADAD;
+}
+
+.orange:active {
+    color: white;
+}
+
+.orange:hover {
+    background-color: #CF8418;
+}
+
+.item1 {
+    grid-area: display;
+    background-color: #042239;
+    height: 120px;
+    color: white;
+    text-align: end;
+    padding-top: 40px;
+    padding-right: 10px
+       
+}
+
+.item2 {
+    grid-area: ac;
+    background-color: #EEF0EE;
+}
+.item3 {
+    font-size: 40px;
+    padding-top: 18px;
+    grid-area: return;
+    background-color: #EEF0EE;
+}
+.item4 {
+    grid-area: divide;
+    background-color: #FFA70D;
+}
+.item5 {
+    grid-area: seven;
+    background-color: #EEF0EE;
+}
+.item6 {
+    grid-area: eight;
+    background-color: #EEF0EE;
+}
+.item7 {
+    grid-area: nine;
+    background-color: #EEF0EE;
+}
+.item8 {
+    grid-area: multi;
+    background-color: #FFA70D;
+}
+.item9 {
+    grid-area: four;
+    background-color: #EEF0EE;
+    }
+.item10 {
+    grid-area: five;
+    background-color: #EEF0EE;
+}
+.item11 {
+    grid-area: six;
+    background-color: #EEF0EE;
+}
+.item12 {
+    grid-area: resta;
+    background-color: #FFA70D;
+}
+
+.item13 {
+    grid-area: one;
+    background-color: #EEF0EE;
+}
+.item14 {
+    grid-area: two;
+    background-color: #EEF0EE;
+}
+.item15 {
+    grid-area: three;
+    background-color: #EEF0EE;
+}
+.item16 {
+    grid-area: plus;
+    background-color: #FFA70D;
+}
+.item17 {
+    grid-area: ze;
+    background-color: #EEF0EE;
+}
+.item18 {
+    grid-area: coma;
+    background-color: #EEF0EE;
+}
+.item19 {
+    grid-area: equal;
+    background-color: #FFA70D;
+}

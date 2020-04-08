@@ -1,0 +1,431 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #36a9e1;
+    user-select: none;
+}
+h1 {
+    font-size: 50px;
+    color: #3c3c3b;
+    display: inline-block;  
+}
+header {
+    text-align: center;  
+}
+
+ol {
+    display: block;
+}
+li {
+    list-style: none;
+    font-size: 17px;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 10px;
+}
+p {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-left: 35px;
+    display: block;  
+}
+h2 {
+    display: block;
+    font-size: 30px;
+    text-align: center;
+    margin-left: 35px; 
+}
+
+th {
+    background-color: #3c3c3b;
+    color: white;
+    font-weight: 400;
+    border: 1px solid #36a9e1;
+    text-align: left;
+    padding-right: 20px;
+    padding-left: 10px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+}
+td{
+    background-color: white;
+    color: #3c3c3b;
+    padding-right: 155px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 1px solid #36a9e1;  
+}
+#ranking-area {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+#display-donut {
+    display: none;   
+    position: relative;
+    text-align: center;  
+}
+#display-rules {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;    
+}
+.donut .letter {
+    
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    color: #36a9e1;
+    font-weight: bold;
+    font-size: 30px;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    border: 1px solid white;
+    text-align: center;
+    line-height: 50px;
+}
+.donut {
+    width: 100px;
+    /*border: 1px solid black;*/
+    display:inline-block;
+    position: absolute;
+    top: 350px;
+    left: 330px;
+}
+#logo {
+    position: absolute;
+    top: 250px;
+    left: 220px;
+    width: 270px;
+}
+.title-logo {
+    width: 55px;
+    display: inline-block;   
+}
+.rules {
+    width: 550px;
+    color: white;
+    text-align: justify;
+}
+#letter-logo {
+    display: block;
+    width: 290px;
+    margin-left: auto;
+    margin-right: auto;   
+}
+#left {
+    position: static;
+}
+#right {
+    position: static;
+}
+#exit {
+    display: block;
+    margin-left: 90%;
+    margin-top: 10px;
+    font-size: 20px;
+    color: #3c3c3b;
+}
+.audio {
+    display: block;
+    margin-left: 90%;
+    margin-top: 10px;
+    font-size: 20px;
+    color: #3c3c3b; 
+} 
+#exit-ranking {
+    display: none;
+    margin-left: 90%;
+    margin-top: 10px;
+    font-size: 20px; 
+    color: #3c3c3b;
+}
+#exit-ranking:hover {
+    color: white;
+}
+#exit-donut {
+    font-size: 20px;
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    left: 94.7%;
+    color: #3c3c3b;
+}
+#exit:hover {
+    color: white;
+}
+#exit-donut:hover {
+    color: white;
+}
+.numbers-menu {
+    color: #3c3c3b;
+}
+#play-button {
+    border: 1px solid #3c3c3b;
+    width: 180px;
+    height: 70px;
+    border-radius: 20px;
+    color: white;
+    text-align: center;
+    line-height: 70px;
+    font-size: 30px;
+    font-weight: bold;
+    background-color: #3c3c3b;
+    margin-top: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    outline: none;
+    cursor: pointer;
+}
+#play-button:hover {
+    background-color: white;
+    color: #3c3c3b;
+    border: 1px solid white;
+}
+.ask-area {
+    width: 600px;
+    display: inline-block;
+    position: absolute;
+    top: 700px;
+    left: 700px;
+}
+#crono {
+    width: 100px;
+    position: absolute;
+    bottom: 450px;
+    left: 50px;  
+}
+#points {
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    bottom: 455px;
+    left: 170px;
+    border: 1px solid #3c3c3b;
+    text-align: center;
+    line-height: 90px;
+    border-radius: 25px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 50px;
+    background-color: #3c3c3b;
+    color: #36a9e1;
+    font-weight: bold;
+}
+#ranking {
+    position: absolute;
+    text-align: center;
+    bottom: 485px;
+    left: 465px;
+    border-radius: 20px;
+    width: 170px;
+    height: 60px;
+    border: 0;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    background-color: grey;
+    outline: none;
+    cursor: pointer;
+    position: absolute; 
+}
+#crono-number {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 50px;
+    position: absolute;
+    bottom: 470px;
+    left: 55px;
+    font-weight: bold;
+    color:  #36a9e1;
+}
+#question {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    color: white;
+    width: 570px;
+    font-weight: bold;
+    padding-bottom: 30px;
+    position: fixed;
+    bottom: 330px;
+    position: static;
+}
+#form-question {
+    position: absolute;
+    bottom: 70px;
+    left:50px;
+}
+#answer {
+    border-radius: 20px;
+    width: 570px;
+    height: 60px;
+    border: 0;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #3c3c3b;
+    outline: none;
+    margin-bottom: 40px;
+    padding-left: 15px;
+}
+#name {
+    border-radius: 10px;
+    border: 0;
+    font-size: 30px;
+    width: 250px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #3c3c3b;
+    outline: none;
+    color: grey;    
+    margin-left: 28%;
+    margin-top: 10px;
+    text-align: center;
+}
+#send {
+    display: inline-block;
+    position: static;
+    background-color: #3c3c3b;
+    width: 150px;
+    height: 60px;
+    border-radius: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    border: none;
+    color: white;
+    font-weight: 550;
+    outline: none;
+    cursor: pointer;
+}
+#pasapalabra {
+    display: inline-block;
+    position: static;
+    background-color: #3c3c3b;
+    width: 220px;
+    height: 60px;
+    border-radius: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    border: none;
+    color: white;
+    font-weight: 550;
+    outline: none;
+    cursor: pointer;
+}
+#continue {
+    display: inline-block;
+    position: static;
+    background-color: #878787;
+    width: 205px;
+    height: 60px;
+    border-radius: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    border: none;
+    color: white;
+    font-weight: 550;
+    outline: none;
+    cursor: pointer;
+}
+
+.donut .letter:nth-child(1) {
+    position: absolute;
+    transform: rotate(270deg) translate(250px) rotate(-270deg);
+}
+   .donut .letter:nth-child(2) {
+    position: absolute;
+    transform: rotate(284.4deg) translate(250px) rotate(-284.4deg);
+}
+   .donut .letter:nth-child(3) {
+    position: absolute;
+    transform: rotate(298.8deg) translate(250px) rotate(-298.8deg);
+}
+ .donut .letter:nth-child(4) {
+    position: absolute;
+    transform: rotate(313.2deg) translate(250px) rotate(-313.2deg);
+}
+ .donut .letter:nth-child(5) {
+    position: absolute;
+    transform: rotate(327.6deg) translate(250px) rotate(-327.6deg);
+}
+ .donut .letter:nth-child(6) {
+    position: absolute;
+    transform: rotate(342deg) translate(250px) rotate(-342deg);
+}
+ .donut .letter:nth-child(7) {
+    position: absolute;
+    transform: rotate(356.4deg) translate(250px) rotate(-356.4deg);
+}
+ .donut .letter:nth-child(8) {
+    position: absolute;
+    transform: rotate(10.8deg) translate(250px) rotate(-10.8deg);
+}
+ .donut .letter:nth-child(9) {
+    position: absolute;
+    transform: rotate(25.2deg) translate(250px) rotate(-25.2deg);
+}
+ .donut .letter:nth-child(10) {
+    position: absolute;
+    transform: rotate(39.6deg) translate(250px) rotate(-39.6deg);
+}
+ .donut .letter:nth-child(11) {
+    position: absolute;
+    transform: rotate(54deg) translate(250px) rotate(-54deg);
+}
+ .donut .letter:nth-child(12) {
+    position: absolute;
+    transform: rotate(68.4deg) translate(250px) rotate(-68.4deg);
+}
+ .donut .letter:nth-child(13) {
+    position: absolute;
+    transform: rotate(82.8deg) translate(250px) rotate(-82.8deg);
+}
+ .donut .letter:nth-child(14) {
+    position: absolute;
+    transform: rotate(97.2deg) translate(250px) rotate(-97.2deg);
+}
+ .donut .letter:nth-child(15) {
+    position: absolute;
+    transform: rotate(111.6deg) translate(250px) rotate(-111.6deg);
+}
+ .donut .letter:nth-child(16) {
+    position: absolute;
+    transform: rotate(126deg) translate(250px) rotate(-126deg);
+}
+ .donut .letter:nth-child(17) {
+    position: absolute;
+    transform: rotate(140.4deg) translate(250px) rotate(-140.4deg);
+}
+ .donut .letter:nth-child(18) {
+    position: absolute;
+    transform: rotate(154.8deg) translate(250px) rotate(-154.8deg);
+}
+ .donut .letter:nth-child(19) {
+    position: absolute;
+    transform: rotate(169.2deg) translate(250px) rotate(-169.2deg);
+}
+ .donut .letter:nth-child(20) {
+    position: absolute;
+    transform: rotate(183.6deg) translate(250px) rotate(-183.6deg);
+}
+ .donut .letter:nth-child(21) {
+    position: absolute;
+    transform: rotate(198deg) translate(250px) rotate(-198deg);
+}
+ .donut .letter:nth-child(22) {
+    position: absolute;
+    transform: rotate(212.4deg) translate(250px) rotate(-212.4deg);
+}
+ .donut .letter:nth-child(23) {
+    position: absolute;
+    transform: rotate(226.8deg) translate(250px) rotate(-226.8deg);
+}
+ .donut .letter:nth-child(24) {
+    position: absolute;
+    transform: rotate(241.2deg) translate(250px) rotate(-241.2deg);
+}
+ .donut .letter:nth-child(25) {
+    position: absolute;
+    transform: rotate(255.6deg) translate(250px) rotate(-255.6deg);
+}
+  
