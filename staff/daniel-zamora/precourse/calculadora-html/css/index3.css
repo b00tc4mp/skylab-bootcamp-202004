@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css?family=Baloo+2&display=swap');
+* {
+    font-family: 'Baloo 2'
+}
+
+body {
+    background: url(../images/pattern.jpg);
+    background-attachment: fixed;
+}
+
+#calculator {
+    display: grid;
+    align-items: center;
+    align-content: space-around;
+    grid-template-columns: repeat(4, 80px);
+    grid-template-rows: minmax(120px, auto) repeat(4, 80px);
+    width: 300px;
+    height: auto;
+    background: black;
+    padding: 20px;
+    border-radius: 20px;
+    height: auto;
+    margin: 0 auto;
+    margin-top: 15%;
+    margin-bottom: 60%;
+    margin-bottom: 40%;
+    -webkit-transition: all 1.5s;
+    transition: all 1.5s;
+    border: groove white;
+    user-select: none;
+}
+
+#calculator:hover {
+    box-shadow: 3px 7px 64px -12px #FAB27A;
+}
+
+.number_0 {
+    grid-column: span 2;
+}
+
+#calculator button {
+    font-size: 32px;
+    outline: none;
+    cursor: pointer;
+    margin: 4px;
+}
+
+#result {
+    display: flex;
+    grid-column: 1 / -1;
+    width: 90%;
+    height: auto;
+    text-align: right;
+    user-select: none;
+    color: whitesmoke;
+    justify-content: space-around;
+    flex-direction: column;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-size: 32px;
+}
+
+.result .previous_number {
+    color: #B6B6B4;
+    font-size: 25px;
+}
+
+.result .current_number {
+    color: whitesmoke;
+    font-size: 32px;
+}
+
+.numbers {
+    background-color: #575757;
+    color: #eeeeee;
+    text-align: center;
+    border-radius: 50%;
+    width: 60px;
+}
+
+.number_0:hover,
+.numbers:hover {
+    background-color: #A9A8A8;
+}
+
+.operators {
+    background-color: #FDB626;
+    border-radius: 50%;
+    color: #eeeeee;
+    text-align: center;
+    width: 60px;
+}
+
+.operators:hover {
+    background-color: #C08103;
+}
+
+.special_operators {
+    background-color: #A9A8A8;
+    border-radius: 50%;
+    color: #eeeeee;
+    text-align: center;
+    width: 60px;
+}
+
+.special_operators:hover {
+    background-color: #575757;
+}
+
+.number_0 {
+    background-color: #575757;
+    border-radius: 20px;
+    color: #eeeeee;
+    text-align: center;
+    grid-column: span 2;
+    justify-content: left;
+    margin-right: 2vw;
+}
