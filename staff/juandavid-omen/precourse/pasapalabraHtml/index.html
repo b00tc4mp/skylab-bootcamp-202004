@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Pasapalabra</title>
+</head>
+<body>
+	<main class="game">
+		<div class="circle-container">
+			<a class='deg266'><div class="letter">A</div></a>
+			<a class='deg279_3'><div class="letter">B</div></a>
+			<a class='deg292_6'><div class="letter">C</div></a>
+			<a class='deg305_9'><div class="letter">D</div></a>
+			<a class='deg319_2'><div class="letter">E</div></a>
+			<a class='deg332_5'><div class="letter">F</div></a>
+			<a class='deg345_8'><div class="letter">G</div></a>
+			<a class='deg359_1'><div class="letter">H</div></a>
+			<a class='deg13_3'><div class="letter">I</div></a>
+			<a class='deg26_6'><div class="letter">J</div></a>
+			<a class='deg39_9'><div class="letter">K</div></a>
+			<a class='deg53_2'><div class="letter">L</div></a>
+			<a class='deg66_5'><div class="letter">M</div></a>
+			<a class='deg79_8'><div class="letter">N</div></a>
+			<a class='deg93_1'><div class="letter">Ñ</div></a>
+			<a class='deg106_4'><div class="letter">O</div></a>
+			<a class='deg119_7'><div class="letter">P</div></a>
+			<a class='deg133'><div class="letter">Q</div></a>
+			<a class='deg146_3'><div class="letter">R</div></a>
+			<a class='deg159_6'><div class="letter">S</div></a>
+			<a class='deg172_9'><div class="letter">T</div></a>
+			<a class='deg186_2'><div class="letter">U</div></a>
+			<a class='deg199_5'><div class="letter">V</div></a>
+			<a class='deg212_8'><div class="letter">W</div></a>
+			<a class='deg226_1'><div class="letter">X</div></a>
+			<a class='deg239_4'><div class="letter">Y</div></a>
+			<a class='deg252_7'><div class="letter">Z</div></a>
+		</div>
+		<div class ='scoreboard'>
+			<div  id="time" class="timer_score">150</div>
+			<div id="score" class="timer_score center">0</div>
+		</div>
+		<div class="right-container">
+			<div id="instructions">
+				<h4>Bienvenidos al juego de Pasapalabra!</h4>
+				<p>Las normas son muy sencillas:</p>
+				<p>Se mostraran unas definiciones por pantalla y el usuario deberá responder con la palabra a la que corresponden.</p>
+				<p>El usuario tiene la opción de decir Pasapalabra y dejar esa definición para mas adelante.</p>
+				<p>Tendras 150 segundos para responder la totalidad de las preguntas</p>
+				<p>El programa acepta acentuación, asi que se debe introducir la palabra con tilde. </p>
+				<p>posible utilizar la tecla ENTER para enviar la palabra y el SPACE para hacer pasapalabra.</p>
+				<button id="play" class="btn">Play</button>
+			</div>
+			<div id="main-controls" class="hidden">
+				<p id="letter-definition"></p>
+				<div>
+					<input id="answer" type="text" placeholder="Introduce tu respuesta">
+					<button id="send" class="btn" href="#"><img src="icon-arrow.png"></button>
+				</div>
+				<div>
+					<button id="pasapalabra" class="btn" href="#">Pasapalabra</button>
+					<button  class="btn icon-close">Restart</button>
+				</div>
+			</div>
+		</div>
+	</main>
+	<footer>
+		<p>Juan David Omen</p>
+	</footer>
+	<script src="pasapalabra.js"></script>
+</body>
+</html>
