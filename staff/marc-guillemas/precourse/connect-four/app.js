@@ -32,7 +32,7 @@ function paintBackground() {
 //     btnGame[button].addEventListener('click',throwCoin);
 // });
 
-for(let i = 0; i<btnGame.length;i++){
+for(var i = 0; i<btnGame.length;i++){
     
     btnGame[i].addEventListener('click',function(){
         throwCoin(i);

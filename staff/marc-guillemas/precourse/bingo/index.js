@@ -25,7 +25,7 @@ function newTurn(bingoCard,bomboCont) {
     // console.log(bombo[j]);
     console.log(bomboCont);
     
-    for(let i = 0; i < bingoCard.length; i++){
+    for(var i = 0; i < bingoCard.length; i++){
         if(bomboCont === bingoCard[i]){
             bingoCard[i] = "x";
         }
@@ -71,7 +71,7 @@ function bingo() {
 }
 
 function bingoCheck(bingoCard){
-    for(let i = 0; i < bingoCard.length; i++){
+    for(var i = 0; i < bingoCard.length; i++){
         if(bingoCard[i] != "x"){
             return false;            
         }

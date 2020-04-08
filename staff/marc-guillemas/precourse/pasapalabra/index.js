@@ -17,7 +17,7 @@ function game(questions) {
     var repeat = true;
     var random = randomizer();
     while(repeat){
-        for(let i in questions[random]){
+        for(var i in questions[random]){
             
             // console.log(random);
             
@@ -72,10 +72,10 @@ function randomizer() {
 
 function compare(a, b) {
     // Use toUpperCase() to ignore character casing
-    const correctA = a.correct;
-    const correctB = b.correct;
+    var correctA = a.correct;
+    var correctB = b.correct;
   
-    let comparison = 0;
+    var comparison = 0;
     if (correctA > correctB) {
       comparison = -1;
     } else if (correctA < correctB) {

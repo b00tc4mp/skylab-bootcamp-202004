@@ -33,7 +33,7 @@ clearBtn.onclick = () => {
 // BACKSPACE FUNCTION
 
 backspaceBtn.onclick = () => {
-    let displayValLength = displayVal.length
+    var displayValLength = displayVal.length
     displayVal = displayVal.slice(0,displayValLength-1);
     
     if(displayVal === ''){
@@ -68,9 +68,9 @@ for(let i = 0; i < numBtns.length; i++){
 
 // SET FUNCTIONALITY TO OPERATOR BUTTONS 
 
-for(let i = 0; i < operatorBtns.length; i++){
+for(var i = 0; i < operatorBtns.length; i++){
     operatorBtns[i].onclick = () => {
-        let operatorHtml = operatorBtns[i].textContent
+        var operatorHtml = operatorBtns[i].textContent
         switch (operatorHtml) {
             
             case '+':

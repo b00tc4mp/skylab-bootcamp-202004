@@ -33,7 +33,7 @@ function add(nums) {
 function subs(nums) {
 
     var result = nums[0];
-    for(let i = 1; i < nums.length; i++){
+    for(var i = 1; i < nums.length; i++){
         result -= nums[i];
     };
     result = Math.floor(result * 100) / 100;
@@ -44,7 +44,7 @@ function subs(nums) {
 function mult(nums) {
 
     var result = nums[0];
-    for(let i = 1; i < nums.length; i++){
+    for(var i = 1; i < nums.length; i++){
         result = result * nums[i];
     };
     result = Math.floor(result * 100) / 100;
@@ -55,7 +55,7 @@ function mult(nums) {
 function div(nums) {
 
     var result = nums[0];
-    for(let i = 1; i < nums.length; i++){
+    for(var i = 1; i < nums.length; i++){
         result = result/nums[i];
     };
     result = Math.floor(result * 100) / 100;
@@ -90,7 +90,7 @@ function calc() {
             results[2] = mult(nums);
             results[3] = div(nums);
 
-            for(let i = 0; i < results.length; i++){
+            for(var i = 0; i < results.length; i++){
             console.log(results[i]);    
             }
 

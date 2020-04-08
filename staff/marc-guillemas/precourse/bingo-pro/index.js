@@ -30,7 +30,7 @@ function lineCheck(card) {
 
     var eachArray = [one,two,three];
    
-    for(let i = 0; i < eachArray.length; i++){
+    for(var i = 0; i < eachArray.length; i++){
         var checked = (num) => num === "X";
         var check = eachArray[i].every(checked);
         if(check){

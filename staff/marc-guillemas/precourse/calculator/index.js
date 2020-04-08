@@ -11,7 +11,7 @@ function calc(){
         result[2] = n1 * n2;
         result[3] = n1 / n2;
 
-        for(let i = 0; i < result.length; i++){
+        for(var i = 0; i < result.length; i++){
             result[i] = Math.floor(result[i] * 100) / 100;
         }
     

@@ -19,7 +19,7 @@ console.log("Welcome "+id+"! \n");
 
 var average = 0;
 var scalecont = 0;
-for(let i = 0; i < flights.length; i++){
+for(var i = 0; i < flights.length; i++){
   if(flights[i].scale === true){
     console.log("Flight with origin "+flights[i].from+", and destination: "+flights[i].to+" it has a cost "+flights[i].cost+"€ and it's done with scale");
     scalecont++;

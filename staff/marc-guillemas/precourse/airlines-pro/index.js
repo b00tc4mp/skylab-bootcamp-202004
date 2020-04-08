@@ -28,7 +28,7 @@ function signIn() {
 function showFlights() {
   var average = 0;
   var scalecont = 0;
-  for (let i = 0; i < flights.length; i++) {
+  for (var i = 0; i < flights.length; i++) {
       if (flights[i].scale === true) {
           console.log("(ID: " + flights[i].id + ") -> Flight with origin " + flights[i].from + ", and destination: " + flights[i].to + " it has a cost " + flights[i].cost + "€ and it's done with scale");
           scalecont++;
@@ -45,7 +45,7 @@ function showFlights() {
   console.log("\nThere are " + scalecont + " flights with scale");
   
   console.log("\nDestination of the last 5 flights:\n");
-  for (let i = flights.length-5; i < flights.length; i++) {
+  for (var i = flights.length-5; i < flights.length; i++) {
       console.log(flights[i].to);
   }
 }
@@ -149,7 +149,7 @@ function adminPrivileges() {
 //Compara els id's dels vols filtrats per rang de preu amb el id del vol a comprar.
 
 function compareID(arr,id) {
-  for(let i = 0; i < arr.length; i++){
+  for(var i = 0; i < arr.length; i++){
       if(id === arr[i]){
           return true;
       }
@@ -173,7 +173,7 @@ function userPrivileges() {
       search = prompt("Indicate if you want to search by upper price, lower price or equal price: \n Type upper, lower or equals");
   }
   var arr = [];
-  for (let i = 0; i < flights.length; i++) {
+  for (var i = 0; i < flights.length; i++) {
       if (search === "upper") {
           if (flights[i].cost > pricesearch && flights[i].scale === true) {
               console.log("(ID: " + flights[i].id + ") -> Flight with origin " + flights[i].from + ", and destination: " + flights[i].to + " it has a cost " + flights[i].cost + "€ and it's done with scale");
@@ -225,7 +225,7 @@ function userPrivileges() {
       search = prompt("Indicate if you want to search by upper price, lower price or equal price: \n Type upper, lower or equals");
   }
   var arr = [];
-  for (let i = 0; i < flights.length; i++) {
+  for (var i = 0; i < flights.length; i++) {
       if (search === "upper") {
           if (flights[i].cost > pricesearch && flights[i].scale === true) {
               console.log("(ID: " + flights[i].id + ") -> Flight with origin " + flights[i].from + ", and destination: " + flights[i].to + " it has a cost " + flights[i].cost + "€ and it's done with scale");
