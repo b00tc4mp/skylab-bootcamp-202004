@@ -5,7 +5,7 @@ function calculator(num1, num2) {
         num1 = prompt("Enter the first number")
     }
     let confirmationNum1 = confirm("Do you want to enter a second number?")
-    if (confirmationNum1 === false) {
+    if (!confirmationNum1) {
         squareRootNum1 = Math.sqrt(num1)
         return squareRootNum1.toFixed(3)
     }
