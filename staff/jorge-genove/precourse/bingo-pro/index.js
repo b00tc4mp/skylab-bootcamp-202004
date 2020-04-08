@@ -13,7 +13,7 @@ var lineaCheck = false;
 var controlName = false;
 var stop = false;
 function impCarton() {
-  for (let i = 0; i < carton.length; i++) {
+  for (var i = 0; i < carton.length; i++) {
     console.log(carton[i].join(" "));
   }
 }
