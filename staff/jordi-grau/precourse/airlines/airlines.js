@@ -23,6 +23,7 @@ var flights = [
     var totalCost = 0;
     
     //Mostra tots els vols, informant de si fan escala o no.
+    // comparant arrays
     for (var i = 0; i< flights.length; i++){
         totalCost = totalCost + flights[i].cost;
         if(flights[i].scale == false){ 
