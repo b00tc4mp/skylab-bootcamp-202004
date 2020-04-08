@@ -1,4 +1,4 @@
-let flights = [
+var flights = [
     { id : 00 , to : 'Bilbao' , from : 'Barcelona' , cost : 1600 , scale : false },
     { id : 01 , to : 'New York' , from : 'Barcelona' , cost : 700 , scale : false },
     { id : 02 , to : 'Los Angeles' , from : 'Madrid' , cost : 1100 , scale : true },
@@ -15,7 +15,7 @@ let flights = [
 const MAX_FLIGHTS = 15; 
 function showFligths(flights) {
     for (flight of flights) {
-        let scale = '';
+        var scale = '';
         if (flight.scale === true) {
             scale = 'realiza alguna';
         } else {
@@ -26,16 +26,16 @@ function showFligths(flights) {
 } 
 
 function averageCost() {
-    let sum = 0;
-    for (let i = 0; i < flights.length; i++) {
+    var sum = 0;
+    for (var i = 0; i < flights.length; i++) {
      sum += flights[i].cost;
     }
-    let totalAverageCost = sum / flights.length;
+    var totalAverageCost = sum / flights.length;
     return totalAverageCost.toFixed(3);
 }
 function flightsScale() {
-    let withScale = 0;
-    for (let i = 0; i < flights.length; i++) {
+    var withScale = 0;
+    for (var i = 0; i < flights.length; i++) {
         if (flights[i].scale) {
           withScale++;
         } 
@@ -44,8 +44,8 @@ function flightsScale() {
 }
 
 function lastFlights() {
-    let lastFlightsOfTheDay = '';
-    for (let i = flights.length - 1; i > 5; i--) {
+    var lastFlightsOfTheDay = '';
+    for (var i = flights.length - 1; i > 5; i--) {
         lastFlightsOfTheDay += flights[i].to;
         if (i > 5 + 1) {
             lastFlightsOfTheDay += ', ';
@@ -55,7 +55,7 @@ function lastFlights() {
 }
 
 function getNewId() {
-    let id = flights[flights.length - 1].id;
+    var id = flights[flights.length - 1].id;
     id += 1;
     return id;
 }
@@ -64,12 +64,12 @@ function createFlight() {
     if (flights.length === MAX_FLIGHTS) {
         alert('Has superado el limite de vuelos.');
     } else {
-        let id = getNewId();
-        let to = prompt('Escribe el destino');
-        let from = prompt('Escribe el origen');
-        let cost = prompt('Escribe el coste');
-        let scale = confirm('Tiene escala?');
-        let newFlight = {
+        var id = getNewId();
+        var to = prompt('Escribe el destino');
+        var from = prompt('Escribe el origen');
+        var cost = prompt('Escribe el coste');
+        var scale = confirm('Tiene escala?');
+        var newFlight = {
             id : id , 
             to : to , 
             from : from, 
@@ -82,7 +82,7 @@ function createFlight() {
 }
 
 function searchIndexFlight(id) {
-    for(let i = 0; i < flights.length; i++) {
+    for(var i = 0; i < flights.length; i++) {
         if(flights[i].id == id) {
             return i;          
         } 
@@ -91,8 +91,8 @@ function searchIndexFlight(id) {
 }
 
 function deleteFlight() {
-    let deleteId = prompt('Indica el ID del vuelo a eliminar');
-    let i = searchIndexFlight(deleteId);
+    var deleteId = prompt('Indica el ID del vuelo a eliminar');
+    var i = searchIndexFlight(deleteId);
     if ( i !== -1 ) {
         flights.splice(i, 1);
         alert(`El vuelo con el ID '${deleteId}' se ha eliminado.`);
@@ -102,9 +102,9 @@ function deleteFlight() {
 }
 
 function doAdminAction() {
-    let moreActions;
+    var moreActions;
     do { 
-        let option = prompt('Que accion sobre los vuelos quieres ejecutar?\n1 - Crear vuelos.\n2 - Eliminar vuelos.\nIndica un numero.');
+        var option = prompt('Que accion sobre los vuelos quieres ejecutar?\n1 - Crear vuelos.\n2 - Eliminar vuelos.\nIndica un numero.');
         switch(option) {
             case '1':
                 createFlight();
@@ -122,8 +122,8 @@ function doAdminAction() {
 }
 
 function searchFlightsByPrice(price, priceFilter){
-    let searchResults = [];
-    for (let i = 0; i < flights.length; i++) {
+    var searchResults = [];
+    for (var i = 0; i < flights.length; i++) {
         if (priceFilter === '1' && price < flights[i].cost) {
            searchResults.push(flights[i]);
         } else if (priceFilter === '2' && price > flights[i].cost) {
@@ -136,15 +136,15 @@ function searchFlightsByPrice(price, priceFilter){
 }
 
 function doUserAction() {
-    let price = parseFloat(prompt('Con qué precio quieres filtrar los vuelos?'));
-    let priceFilter = prompt(`Elige una opcion:\n1 - Mayor que ${price}€.\n2 - Menor que ${price}€.\n3 - Igual que ${price}€.`);
-    let searchResults = searchFlightsByPrice(price, priceFilter);
+    var price = parseFloat(prompt('Con qué precio quieres filtrar los vuelos?'));
+    var priceFilter = prompt(`Elige una opcion:\n1 - Mayor que ${price}€.\n2 - Menor que ${price}€.\n3 - Igual que ${price}€.`);
+    var searchResults = searchFlightsByPrice(price, priceFilter);
     console.log("Estos són los resultados de la búsqueda:\n");
     showFligths(searchResults);
     if (searchResults.length === 0) {
         alert('No se encuentran resultados');
     } else {
-        let idToBuy = parseFloat(prompt('Indica el ID del vuelo que quieres comprar.'));
+        var idToBuy = parseFloat(prompt('Indica el ID del vuelo que quieres comprar.'));
         if (searchIndexFlight(idToBuy) !== -1) {
             alert('Gracias por su compra.');
         } else {
@@ -155,13 +155,13 @@ function doUserAction() {
 }
 
 function skylabAirlines() {
-    let userName = prompt('Su nombre por favor.');
+    var userName = prompt('Su nombre por favor.');
     userName = userName.toLocaleUpperCase();
     console.log(`Sr/a ${userName} sea bienvenido/a. \nEstos son los vuelos disponibles para el dia de hoy: `);
     showFligths(flights);
     console.log(`Sr/a ${userName} el coste medio de los vuelos es: ${averageCost()}€, ${flightsScale()} vuelos son los que realizan escala y \nestos son los ultimos vuelos del dia: ${lastFlights()}.`);
 
-    let userRole = prompt('Indica si eres: ADMIN/USER');
+    var userRole = prompt('Indica si eres: ADMIN/USER');
     userRole = userRole.toLocaleUpperCase();
     if (userRole === 'ADMIN') {
         doAdminAction();

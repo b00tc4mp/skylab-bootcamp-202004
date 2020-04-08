@@ -16,7 +16,7 @@ var flights = [
   
 function showFlights() {
     for (flight of flights) {
-        let scale = '';
+        var scale = '';
         if (flight.scale) {
             scale ='realiza escala';
         } else {
@@ -27,17 +27,17 @@ function showFlights() {
 }
 
 function averageCost() {
-    let sum = 0;
+    var sum = 0;
     for (flight of flights) {
         sum += flight.cost;
     }
 
-    let average = (sum / flights.length).toFixed(3);
+    var average = (sum / flights.length).toFixed(3);
     console.log(`El coste medio de los vuelos es: ${average}`);
 }
 
 function scaleFlightsCount() {
-    let flightsCount = 0;
+    var flightsCount = 0;
     for (flight of flights) {
         if(flight.scale) {
             flightsCount++;
@@ -47,8 +47,8 @@ function scaleFlightsCount() {
 }
 
 function showLastFlightsDestinations() {
-    let flightsDestinations = '';
-    for (let i = flights.length - 1; i > 5; i--) {
+    var flightsDestinations = '';
+    for (var i = flights.length - 1; i > 5; i--) {
         flightsDestinations += flights[i].to;
         if (i > 5 + 1){
             flightsDestinations += ', ';
@@ -58,9 +58,9 @@ function showLastFlightsDestinations() {
 }
 
 function getCostFlight() {
-    let costFlight;
+    var costFlight;
     do {
-        let costInput = prompt('Escribe el costo');
+        var costInput = prompt('Escribe el costo');
         
         if( costInput === null) {
             return null;
@@ -76,8 +76,8 @@ function getCostFlight() {
 }
 
 function searchFlightsByPrice(price, searchPrice) {
-    let searchResults = [];
-    for (let i = 0; i < flights.length; ++i) {
+    var searchResults = [];
+    for (var i = 0; i < flights.length; ++i) {
         if ((flights[i].cost > price && searchPrice == 1) 
         || (flights[i].cost < price && searchPrice == 2)
         || (flights[i].cost == price && searchPrice == 3)) {
@@ -88,7 +88,7 @@ function searchFlightsByPrice(price, searchPrice) {
 }
 
 function searchBy(id, flights) {
-    for (let i = 0; i < flights.length; i++) {
+    for (var i = 0; i < flights.length; i++) {
         if (flights[i].id == id) {
             return i;
         } 
@@ -97,17 +97,17 @@ function searchBy(id, flights) {
 }
 
 function doUserOption() {
-    let price = getCostFlight();
-    let searchPrice = prompt(`Elige una opcion:\n1.Mayor que ${price}€.\n2.Menor que ${price}€.\n3.Igual que ${price}€.`);
+    var price = getCostFlight();
+    var searchPrice = prompt(`Elige una opcion:\n1.Mayor que ${price}€.\n2.Menor que ${price}€.\n3.Igual que ${price}€.`);
     if (searchPrice != 1 && searchPrice != 2 && searchPrice != 3) {
         alert(`La opción de búsqueda ${searchPrice} es incorrecta`);
         return;
     }
-    let searchResults = searchFlightsByPrice(price, searchPrice);
+    var searchResults = searchFlightsByPrice(price, searchPrice);
 
     console.log(searchResults);
 
-    let buyId = prompt('Indica el ID del vuelo que quieres comprar');
+    var buyId = prompt('Indica el ID del vuelo que quieres comprar');
     if (searchBy(buyId, searchResults) === -1) {
         alert(`El vuelo con el ID '${buyId}' no existe`);
     } else {
@@ -117,7 +117,7 @@ function doUserOption() {
 }
 
 function getFromFlight() {
-    let fromFlight; 
+    var fromFlight; 
     do {
         fromFlight = prompt('Escribe el origen');
         if( fromFlight === null) {
@@ -131,7 +131,7 @@ function getFromFlight() {
 }
 
 function getToFlight() {
-    let toFlight; 
+    var toFlight; 
     do {
         toFlight = prompt('Escribe el destino');
         if( toFlight === null) {
@@ -149,7 +149,7 @@ function createNewId() {
     if (flights.length == 0) {
         return 0;
     }
-    let lastFlightId = flights[flights.length - 1].id;
+    var lastFlightId = flights[flights.length - 1].id;
     return lastFlightId + 1;
 }
 
@@ -158,21 +158,21 @@ function createFlight() {
     if (flights.length === MAX_FLIGHT) {
         alert('No puedes crear mas vuelos')
     } else {  
-        let id = createNewId();
-        let from = getFromFlight();
+        var id = createNewId();
+        var from = getFromFlight();
         if (from == null) {
             throw "El origen no puede estar vacío";
         }
-        let to = getToFlight();
+        var to = getToFlight();
         if (to == null) {
             throw "El destino no puede estar vacío";
         }
-        let cost = getCostFlight();
+        var cost = getCostFlight();
         if (cost == null) {
             throw "El precio no puede estar vacío";
         }
-        let scale = confirm('Tiene escala?');
-        let flight = { 
+        var scale = confirm('Tiene escala?');
+        var flight = { 
             id: id,
             to: to,
             from: from,
@@ -187,8 +187,8 @@ function createFlight() {
 
 
 function removeFlight() {
-    let id = prompt('Indica el numero de "ID" que quieres elimanar');
-    let positionFlight = searchBy(id, flights);
+    var id = prompt('Indica el numero de "ID" que quieres elimanar');
+    var positionFlight = searchBy(id, flights);
     if (positionFlight === - 1){
         alert(`no se encuentra el vuelo con ID: ${id}.`)
     } else {
@@ -199,9 +199,9 @@ function removeFlight() {
 }
 
 function doAdminOption() {
-    let moreOperationsAdmin;
+    var moreOperationsAdmin;
     do {
-        let adminOption = prompt('Elige una opcion a realizar sobre los vuelos:\n1. Crear.\n2. Eliminar.\nIndica un numero!');
+        var adminOption = prompt('Elige una opcion a realizar sobre los vuelos:\n1. Crear.\n2. Eliminar.\nIndica un numero!');
         
         if (adminOption === null) {
             break;
@@ -224,8 +224,8 @@ function doAdminOption() {
 }
 
 function doUserOrAdminOption() {
-    let moreOptions;
-    do { let userOrAdmin = prompt('Indica si eres: ADMIN/USER').toLowerCase();
+    var moreOptions;
+    do { var userOrAdmin = prompt('Indica si eres: ADMIN/USER').toLowerCase();
         if (userOrAdmin === 'admin') {
             doAdminOption();
         } else if (userOrAdmin === 'user') {
@@ -239,7 +239,7 @@ function doUserOrAdminOption() {
 }
 
 function skyAirlines() {
-    let userName = prompt('Escribe tu nombre por favor.'); 
+    var userName = prompt('Escribe tu nombre por favor.'); 
     console.log(`Sr/a ${userName}, sea bienvenido/a a SkyAirlines`);
     showFlights();
     averageCost();

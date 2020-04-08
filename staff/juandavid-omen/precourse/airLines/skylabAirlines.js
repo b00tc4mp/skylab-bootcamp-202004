@@ -1,4 +1,4 @@
-let flights = [
+var flights = [
     { id : 00 , to : 'Bilbao' , from : 'Barcelona' , cost : 1600 , scale : false },
     { id : 01 , to : 'New York' , from : 'Barcelona' , cost : 700 , scale : false },
     { id : 02 , to : 'Los Angeles' , from : 'Madrid' , cost : 1100 , scale : true },
@@ -15,7 +15,7 @@ let flights = [
 function showFligths() {
 
     for (flight of flights) {
-        let scale = '';
+        var scale = '';
         if (flight.scale === true) {
             scale = 'realiza alguna';
         } else {
@@ -26,16 +26,16 @@ function showFligths() {
 }
 
 function averageCost() {
-    let sum = 0;
-    for (let i = 0; i < flights.length; i++) {
+    var sum = 0;
+    for (var i = 0; i < flights.length; i++) {
      sum += flights[i].cost;
     }
-    let totalAverageCost = sum / flights.length;
+    var totalAverageCost = sum / flights.length;
     return totalAverageCost.toFixed(3);
 }
 function flightsScale() {
-    let withScale = 0;
-    for (let i = 0; i < flights.length; i++) {
+    var withScale = 0;
+    for (var i = 0; i < flights.length; i++) {
         if (flights[i].scale) {
           withScale++;
         } 
@@ -44,8 +44,8 @@ function flightsScale() {
 }
 
 function lastFlights() {
-    let lastFlightsOfTheDay = '';
-    for (let i = flights.length - 1; i > 5; i--) {
+    var lastFlightsOfTheDay = '';
+    for (var i = flights.length - 1; i > 5; i--) {
         lastFlightsOfTheDay += flights[i].to;
         if (i > 5 + 1) {
             lastFlightsOfTheDay += ', ';
@@ -56,7 +56,7 @@ function lastFlights() {
 
 function skylabAirlines() {
     console.log('Su nombre por favor.');
-    let userName = 'juan'.toLocaleUpperCase();
+    var userName = 'juan'.toLocaleUpperCase();
     console.log(`Sr/a ${userName} sea bienvenido/a. \nEstos son los vuelos disponibles para el dia de hoy: `);
     showFligths();
     console.log(`Sr/a ${userName} el coste medio de los vuelos es: ${averageCost()}€, ${flightsScale()} vuelos son los que realizan escala y \nestos son los ultimos vuelos del dia: ${lastFlights()}.`);

@@ -14,7 +14,7 @@ var flights = [
   
 function showFlights() {
     for (flight of flights) {
-        let scale = '';
+        var scale = '';
         if (flight.scale) {
             scale ='realiza escala';
         } else {
@@ -25,17 +25,17 @@ function showFlights() {
 }
 
 function averageCost() {
-    let sum = 0;
+    var sum = 0;
     for (flight of flights) {
         sum += flight.cost;
     }
 
-    let average = (sum / flights.length).toFixed(3);
+    var average = (sum / flights.length).toFixed(3);
     console.log(`El coste medio de los vuelos es: ${average}`);
 }
 
 function scaleFlightsCount() {
-    let flightsCount = 0;
+    var flightsCount = 0;
     for (flight of flights) {
         if(flight.scale) {
             flightsCount++;
@@ -45,8 +45,8 @@ function scaleFlightsCount() {
 }
 
 function showLastFlightsDestinations() {
-    let flightsDestinations = '';
-    for (let i = flights.length - 1; i > 5; i--){
+    var flightsDestinations = '';
+    for (var i = flights.length - 1; i > 5; i--){
         flightsDestinations += flights[i].to;
         if (i > 5 + 1){
             flightsDestinations += ', ';
@@ -56,7 +56,7 @@ function showLastFlightsDestinations() {
 }
 
 function skyAirlines() {
-    let userName = prompt('Escribe tu nombre por favor.'); 
+    var userName = prompt('Escribe tu nombre por favor.'); 
     console.log(`Sr/a ${userName}, sea bienvenido/a a SkyAirlines`);
     showFlights();
     averageCost();
