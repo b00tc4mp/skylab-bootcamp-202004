@@ -1,0 +1,158 @@
+body {
+    background-color: whitesmoke;
+}
+
+.all{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 3.5em;
+    margin-bottom: 20px;
+}
+
+h2{
+    font-style: italic;
+}
+
+.choice, .end{
+    position:absolute;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.774);
+    width: 100%;
+    height: 100%;
+}
+
+.choice{
+    background: whitesmoke;
+}
+
+.PvP, .PvB {
+    font-weight: bold;
+    font-size: 3em;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    border-radius: 5px;
+    width: 400px;
+    height: 400px;
+} 
+
+.Play{
+    font-weight: bold;
+    font-size: 1.5em;
+    border-radius: 5px;
+    width: 150px;
+    height: 100px;
+}
+
+.endbox{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.game{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-style: solid;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.board{
+    background-color: rgb(50, 50, 179);
+    width: 550px;
+    height: 440px;
+    margin-top: 4px;
+    padding: 1%;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    display:flex;
+    align-items: flex-start;
+    border-radius: 5px;
+}
+
+.circle {
+    border-radius: 35px;
+    background-color: whitesmoke;
+    width: 60px;
+    height: 60px;
+    margin-top: 5.5px;
+    margin-bottom: 5.5px;
+    margin-left: 8.5px;
+    margin-right: 8.5px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+}
+
+.red {
+    background-color: red;
+}
+
+.yellow {
+    background-color: rgb(255, 196, 0);
+}
+
+.turndisplay {
+    display:flex;
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
+    justify-content: center;
+    font-size: 1.5em;
+    width: 200px;
+    margin: 5px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.tips{
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
+}
+
+.player1 {
+    color: red;
+    font-style: bold;
+    font-size: 1.5em;
+}
+
+.player2 {
+    color: rgb(255, 196, 0);
+    font-style: bold;
+    font-size: 1.5em;
+}
+
+.endsentence {
+    font-size: 2em;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.column {
+    display:flex;
+    flex-direction: column-reverse;
+}
+
+.winspot {
+    background-color: rgb(0, 0, 0);
+}
+
+.mouseoncolumn{
+    background-color: black;
+}
+
+.hidden{
+    display: none;
+}

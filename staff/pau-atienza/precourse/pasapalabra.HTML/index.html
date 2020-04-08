@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html lang = 'en'>
+    <head>
+        <meta charset = 'UTF-8'/>
+        <title>PASAPALABRA HTML BY PAU ATIENZA</title>
+        <link rel='stylesheet' type='text/css'href='index.css'>
+    </head>
+
+    <body>
+        <div class='all' id='all'>
+            <div id='header' class = 'header'>
+                <p>Pasapalabra<br><em>by Pau Atienza</em></p>
+            </div>
+
+            <div id = 'block' class = 'block'>
+                <div id='introduction' class = 'introduction'>
+                    <p> <strong>Bienvenidos al Juego de Pasapalabra de Skylab Coders Academy!</strong><br><br>
+                        El juego está basado en el exitoso concurso de televisión Pasapalabra.<br><br>
+                        Las normas son muy sencillas:<br><br>
+                        Se mostraran unas definiciones por pantalla y el usuario deberá responder con la palabra a la que corresponden. El usuario tiene 
+                        la opción de decir Pasapalabra y dejar esa definición para más adelante.<br><br>
+                    
+                        El programa es sensible a la acentuación, así que se debe introducir la palabra sin tilde.
+                        Debe utilizarse la tecla <strong>ENTER para enviar la palabra</strong>, y se puede utilizar la tecla <strong>SPACE para hacer Pasapalabra</strong> en cualquier momento.
+                    </p>
+                    <button type='start' id='start button' class = 'introduction start button'><strong>EMPEZAR</strong></button>
+                </div>
+
+                <div class = 'game hidden' id = 'game'>
+                    <h2>Pregunta:</h2>
+                    <strong><p id = 'question' class = 'question'>  </p></strong>
+                    <form class = 'form' id = 'form'>
+                        <label for = 'answer'><strong>Respuesta:</strong></label>
+                        <input type = 'text' id = 'answer' class = 'answer'>
+                    </form>
+                    <p>
+                        <em>
+                            El programa es sensible a la acentuación, así que se debe introducir la palabra sin tilde.
+                            Debe utilizarse la tecla <strong>ENTER para enviar la palabra</strong>, y se puede utilizar la tecla <strong>SPACE para hacer Pasapalabra</strong>.
+                        </em>
+                    </p>
+                </div>
+                <div class = 'game stats hidden'>
+                    <div class= 'game circle hidden' id = 'circle'>
+                        <div class= 'displacement'>
+                            <div id = 'game letters' class = 'game letters hidden'>A</div>
+                            <div id = 'game letters' class = 'game letters hidden'>B</div>
+                            <div id = 'game letters' class = 'game letters hidden'>C</div>
+                            <div id = 'game letters' class = 'game letters hidden'>D</div>
+                            <div id = 'game letters' class = 'game letters hidden'>E</div>
+                            <div id = 'game letters' class = 'game letters hidden'>F</div>
+                            <div id = 'game letters' class = 'game letters hidden'>G</div>
+                            <div id = 'game letters' class = 'game letters hidden'>H</div>
+                            <div id = 'game letters' class = 'game letters hidden'>I</div>
+                            <div id = 'game letters' class = 'game letters hidden'>J</div>
+                            <div id = 'game letters' class = 'game letters hidden'>K</div>
+                            <div id = 'game letters' class = 'game letters hidden'>L</div>
+                            <div id = 'game letters' class = 'game letters hidden'>M</div>
+                            <div id = 'game letters' class = 'game letters hidden'>N</div>
+                            <div id = 'game letters' class = 'game letters hidden'>Ñ</div>
+                            <div id = 'game letters' class = 'game letters hidden'>O</div>
+                            <div id = 'game letters' class = 'game letters hidden'>P</div>
+                            <div id = 'game letters' class = 'game letters hidden'>Q</div>
+                            <div id = 'game letters' class = 'game letters hidden'>R</div>
+                            <div id = 'game letters' class = 'game letters hidden'>S</div>
+                            <div id = 'game letters' class = 'game letters hidden'>T</div>
+                            <div id = 'game letters' class = 'game letters hidden'>U</div>
+                            <div id = 'game letters' class = 'game letters hidden'>V</div>
+                            <div id = 'game letters' class = 'game letters hidden'>W</div>
+                            <div id = 'game letters' class = 'game letters hidden'>X</div>
+                            <div id = 'game letters' class = 'game letters hidden'>Y</div>
+                            <div id = 'game letters' class = 'game letters hidden'>Z</div>     
+                            <div id = 'game timer' class = 'game timer hidden'></div>       
+                        </div>
+                    </div>
+                </div>
+                
+                <div id = 'ending' class = 'ending hidden'>
+                    <p id = 'endsentence' class = 'endsentence'>
+                    </p>
+                    <button type='restart' id='restart' class = 'restart'><strong>VOLVER A JUGAR</strong></button>
+                </div>
+            </div>
+        </div>  
+        <script src = 'index.js'></script>
+    </body>
+</html>
