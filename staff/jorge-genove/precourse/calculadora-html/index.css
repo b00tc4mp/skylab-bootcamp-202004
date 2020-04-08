@@ -1,0 +1,62 @@
+body{
+    background-color:grey ;
+   
+}
+header{
+    background-color: black;
+    font-size: 50px;
+    font-weight: bold;
+    color:orange;
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    padding-top: 50px;
+}
+table{
+    text-align: center;
+    border-collapse: collapse;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+.centraTabla {
+    text-align: center;
+    padding-top: 50px;
+}
+.centraTabla table {
+    margin: 0 auto;
+    text-align: left;
+}    
+thead{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+td {
+    height: 50px;
+    width: 60px;
+    border: 1px solid grey;
+    text-align: center;
+    background-color:#D1D5DA;
+    font-size: 25px;
+    cursor:pointer;
+}
+#screen{
+    background-color: #242339;
+    height: 75px;
+    text-align: right;
+    color:white;
+    font-size: 40px;
+    cursor: default;
+}
+.ac{
+    text-align: left;
+    padding-right:3px;
+    cursor: pointer;
+}
+.num0{
+    text-align: center;
+    padding-right:3px;
+}    
+.symbols{
+    background-color: #F28227;
+}
