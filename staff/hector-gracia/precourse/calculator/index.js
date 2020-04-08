@@ -1,12 +1,20 @@
-let num1="3";
-let num2="5";
-let result=[];
+var num1="3";
+var num2="5";
+var result=[];
 
-const sum = (n1,n2)=> n1+n2;
-const res = (n1,n2)=> n1-n2;
-const mul = (n1,n2)=> n1*n2;
-const div = (n1,n2)=> n1/n2;
-const calculate= (n1,n2)=>
+function sum(n1,n2){
+    return n1+n2;
+}
+function res(n1,n2){
+    return n1-n2;
+}
+function mul(n1,n2){
+    n1*n2;
+}
+function div(n1,n2){
+    n1/n2;
+}
+function calculate(n1,n2)
 {
     if(n1!== NaN && n2!== NaN){
     n1= +n1.toFixed(3);
@@ -15,7 +23,7 @@ const calculate= (n1,n2)=>
     result.push(n1-n2);
     result.push(n1*n2);
     result.push(n1/n2);
-        for(let i=0;i<result.length;i++){
+        for(var i=0;i<result.length;i++){
             console.log(result[i]);
         }
     }else if(typeof n1!= NaN){
@@ -26,7 +34,7 @@ const calculate= (n1,n2)=>
         console.log(result[0]);
     }else {
         console.log("No se ha insertado ningún número");
-        let volver= prompt("New numbers? y/n","n")
+        var volver= prompt("New numbers? y/n","n")
         if(volver=="y"){
             console.log("Ahora le atiendo");
         }else{

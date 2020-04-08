@@ -11,7 +11,7 @@ var flights = [
     { id: 09, to: 'Sydney', from: 'Barcelona', cost: 150, scale: true },
     { id: 10, to: 'Tel-Aviv', from: 'Madrid', cost: 150, scale: false }
 ];
-const program=()=>{
+function program(){
     greet();
     show();
     price();
@@ -20,12 +20,14 @@ const program=()=>{
 
 }
 //Pide el nombre al usuario y le saluda
-const greet=()=>{
-    let name= prompt("Introduce nombre de usuario", "administrador");
-    console.log("Bienvenido "+name);
+function greet(){
+    var name="";
+    do{
+        name= prompt("Introduce nombre de usuario", "");
+    }while(isNaN(parseFloat(name))==false || name=="");
 }
 //Muestra la informacion de los vuelos
-const show=()=>{
+function show(){
     flights.forEach(vuelo => {
         if(vuelo.scale==true){
             console.log("El vuelo con origen "+vuelo.from+" y destino "+vuelo.to+" tiene un coste de "+vuelo.cost+"€ y  realiza escalas");
@@ -36,8 +38,8 @@ const show=()=>{
     //console.log("El vuelo con origen aa y destino bb tiene un coste de xxxx€ y no realiza escalas")
 }
 //Calcula el precio medio de los vuelos
-const price=()=>{
-    let precio=0;
+function price(){
+    var precio=0;
     flights.forEach(vuelo => {
         precio+=vuelo.cost;
     });
@@ -46,8 +48,8 @@ const price=()=>{
     console.log("El precio medio de los vuelos es de "+precio+"€");
 }
 //Cuenta cuantos vuelos tienen escalas
-const scales=()=>{
-    let s=0;
+function scales(){
+    var s=0;
     flights.forEach(vuelo=>{
         if(vuelo.scale==true){
             s++;
@@ -56,9 +58,9 @@ const scales=()=>{
     console.log("Hay un total de "+s+" vuelos con escala");
 }
 //Muestra el destino de los últimos 5 vuelos del día
-const lastFive=()=>{
-    let destino="Los últimos 5 vuelos del día van a "
-    for(let i=flights.length-5;i<flights.length;i++){
+function lastFive(){
+    var destino="Los últimos 5 vuelos del día van a "
+    for(var i=flights.length-5;i<flights.length;i++){
         if(i==flights.length-1){
             destino+= "y "+flights[i].to+" respectivamente"
         }else{

@@ -11,8 +11,8 @@ var flights = [
     { id: 09, to: 'Sydney', from: 'Barcelona', cost: 150, scale: true },
     { id: 10, to: 'Tel-Aviv', from: 'Madrid', cost: 150, scale: false }
 ];
-const program=()=>{
-    let admin=false;// Si es el administrador o un usuario
+function program(){
+    var admin=false;// Si es el administrador o un usuario
     greet();
     show();
     price();
@@ -29,8 +29,8 @@ const program=()=>{
 
 }
 //Saluda al usuario
-const greet=()=>{
-    let name="";
+function greet(){
+    var name="";
     do{
         name= prompt("Introduce nombre de usuario", "");
     }while(isNaN(parseFloat(name))==false || name=="");
@@ -38,7 +38,7 @@ const greet=()=>{
     console.log("Bienvenido "+name);
 }
 //Muestra la informacion de los vuelos 
-const show=()=>{
+function show(){
     flights.forEach(vuelo => {
         if(vuelo.scale==true){
             console.log("El vuelo "+vuelo.id+" con origen "+vuelo.from+" y destino "+vuelo.to+" tiene un coste de "+vuelo.cost+"€ y  realiza escalas");
@@ -49,8 +49,8 @@ const show=()=>{
     //console.log("El vuelo con origen aa y destino bb tiene un coste de xxxx€ y no realiza escalas")
 }
 //Calcula el precio medio de los vuelos
-const price=()=>{
-    let precio=0;
+function price(){
+    var precio=0;
     flights.forEach(vuelo => {
         precio+=vuelo.cost;
     });
@@ -59,8 +59,8 @@ const price=()=>{
     console.log("El precio medio de los vuelos es de "+precio+"€");
 }
 //Cuenta cuantos vuelos tienen escalas
-const scales=()=>{
-    let s=0;
+function scales(){
+    var s=0;
     flights.forEach(vuelo=>{
         if(vuelo.scale==true){
             s++;
@@ -69,9 +69,9 @@ const scales=()=>{
     console.log("Hay un total de "+s+" vuelos con escala");
 }
 //Muestra el destino de los últimos 5 vuelos del día
-const lastFive=()=>{
-    let destino="Los últimos 5 vuelos del día van a "
-    for(let i=flights.length-5;i<flights.length;i++){
+function lastFive(){
+    var destino="Los últimos 5 vuelos del día van a "
+    for(var i=flights.length-5;i<flights.length;i++){
         if(i==flights.length-1){
             destino+= "y "+flights[i].to+" respectivamente"
         }else{
@@ -81,8 +81,8 @@ const lastFive=()=>{
     console.log(destino);
 }
 //Pregunta si es in administrador
-const askAdmin=()=>{
-    let r="";
+function askAdmin(){
+    var r="";
     do{
         r=prompt("¿Eres administrador? y/n","");
     if (r=="n"){
@@ -94,8 +94,8 @@ const askAdmin=()=>{
     
 }
 //Pregunta al administrador que quiere hacer
-const edit=()=>{
-    let e= "Message";
+function edit(){
+    var e= "Message";
     do{
         e=prompt("Introduce 'a' para añadir vuelos, introduce 'e' para eliminar, introduce 's' para salir");
         if(e=="a"){
@@ -119,8 +119,8 @@ const edit=()=>{
     
 }
 //Pide información para crear un nuevo vuelo
-const addFlight=()=>{
-    let flight=["id","to","from","cost","scale"];
+function addFlight(){
+    var flight=["id","to","from","cost","scale"];
     //Crea una id para el vuelo automaticamente
     flight[0]=flights[flights.length-1].id+1;
     do{
@@ -145,21 +145,21 @@ const addFlight=()=>{
     flights.push({ id: flight[0], to: flight[1], from: flight[2], cost: flight[3], scale: flight[4] });
 }
 //Elimina vuelo
-const deleteFlight=()=>{
-    let id=prompt("Introduzca id del vuelo que desea eliminar");
+function deleteFlight(){
+    var id=prompt("Introduzca id del vuelo que desea eliminar");
     id= parseInt(id,10);
-    for(let i=0;i<flights.length;i++){
+    for(var i=0;i<flights.length;i++){
         if(flights[i].id==id){
             flights.splice(i,1);
         }
     }
 }
 //Busqueda de vuelos
-const search=()=>{
-    let precio= prompt("Introduce precio de busqueda");
-    let filtered=flights;
+function search(){
+    var precio= prompt("Introduce precio de busqueda");
+    var filtered=flights;
     precio= parseFloat(precio);
-    let criterio=prompt("¿Buscar precio mayor, menor o igual? a/b/i");
+    var criterio=prompt("¿Buscar precio mayor, menor o igual? a/b/i");
     //Aplica el filtro
     switch(criterio){
         case "a": 
@@ -186,7 +186,7 @@ const search=()=>{
     
 }
 //Muestra la informacion de los vuelos 
-const showFiltered=(filtered)=>{
+function showFiltered(filtered){
     filtered.forEach(vuelo => {
         if(vuelo.scale==true){
             console.log("El vuelo "+vuelo.id+" con origen "+vuelo.from+" y destino "+vuelo.to+" tiene un coste de "+vuelo.cost+"€ y  realiza escalas");
@@ -196,11 +196,11 @@ const showFiltered=(filtered)=>{
     });
 }
 //Reserva el vuelo
-const booking=()=>{
-    let vuelo=prompt("Introduzca el numero del vuelo que desea comprar");
+function booking(){
+    var vuelo=prompt("Introduzca el numero del vuelo que desea comprar");
     vuelo=parseInt(vuelo,10);
-    let exist=false;
-    for(let i=0;i<flights.length;i++){
+    var exist=false;
+    for(var i=0;i<flights.length;i++){
         if(flights[i].id==vuelo){
             exist=true;
         }

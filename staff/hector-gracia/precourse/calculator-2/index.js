@@ -1,32 +1,32 @@
 // JavaScript Document
-let current=0;//El numero que inserta el usuario
-let value=0; //El resultado de los calculos
-let action="wait";//La accion que tiene que va a realizar
+var current=0;//El numero que inserta el usuario
+var value=0; //El resultado de los calculos
+var action="wait";//La accion que tiene que va a realizar
 //Limpia los valores de la calculadora
-const clean=()=>{
+function clean(){
     action="wait";
     current=0;
     value=0;
     document.form.textview.value="";
 }
 //Introduce los numeros a la calculadora
-const insert=(num)=>{
+function insert(num){
     document.form.textview.value+=num;
 }
 //Hace la operacion correspondiente al boton pulsado
-const operate=(operation)=>{
+function operate(operation){
     solve();
     current=0;
     action=operation;
     document.form.textview.value="";
 }
 //Muestra los resultados
-const show=()=>{
+function show(){
     document.form.textview.value=value.toString();
     action="wait";
 }
 //Realiza los calculos
-const solve=()=>{
+function solve(){
     current= parseFloat(document.form.textview.value);
     if(isNaN(current))current=0;
     switch(action){

@@ -6,8 +6,8 @@
 //Añadir puntuación
 //Repetir hasta hacer tocas o end
 //Mostrar Ranking
-let finalQuestions=[]; //Array con las preguntas que usará el jugador en esta ronda
-let allQuestions=[
+var finalQuestions=[]; //Array con las preguntas que usará el jugador en esta ronda
+var allQuestions=[
     { letter: "a", answer: "abrir", status: 0, question: "Separar del marco la hoja o las hojas de una puerta o ventana, haciéndolas girar sobre sus goznes, o quitar o separar cualquier otra cosa con que esté cerrada una abertura, para que deje de estarlo."},
     { letter: "a", answer: "asunto", status: 0, question: "Materia de que se trata"},
     { letter: "a", answer: "acertijo", status: 0, question: "Enigma o adivinanza que se propone como acertijo"},
@@ -90,10 +90,10 @@ let allQuestions=[
     { letter: "z", answer: "zanahoria", status: 0, question: "Planta herbácea umbelífera, con flores blancas y purpúrea la central de la umbela, con fruto seco y comprimido y raíz fusiforme, de unos 20 cm de largo, amarilla o rojiza, jugosa y comestible"},
     { letter: "z", answer: "zambuyir", status: 0, question: "Meter debajo del agua con ímpetu o de golpe"},
 ]
-let ranking=[];
-let playerName="";
-let topScores=[];
-let pasapalabra=()=>{
+var ranking=[];
+var playerName="";
+var topScores=[];
+function pasapalabra(){
     askName();
     console.log(playerName);
     initializeQuestions();
@@ -109,23 +109,23 @@ let pasapalabra=()=>{
     //showQuestions();
 }
 //Le pide el nombre al jugador para el ranking
-let askName=()=>{
+function askName(){
     playerName=prompt("Introduce nombre del jugador","Jugador");
 }
 //Elige una pregunta por cada palabra
-let initializeQuestions=()=>{
-    let rand;
+function initializeQuestions(){
+    var rand;
     
     finalQuestions.length=0;
-    for(let i=0;i<allQuestions.length;i+=3){
+    for(var i=0;i<allQuestions.length;i+=3){
         rand= Math.floor(Math.random()*3);
         finalQuestions.push(allQuestions[i+rand]);
     }
 }
 //Le hace la pregunta al jugador y comprueba su respuesta
-let askQuestion=()=>{
-    let answer="";
-    for(let i=0;i<finalQuestions.length;i++){
+function askQuestion(){
+    var answer="";
+    for(var i=0;i<finalQuestions.length;i++){
         if(finalQuestions[i].status==0){
             answer=prompt("Con la '"+finalQuestions[i].letter+"', " +finalQuestions[i].question).toLocaleLowerCase().trim();
             if(answer==finalQuestions[i].answer){
@@ -139,17 +139,17 @@ let askQuestion=()=>{
     }
 }
 //Comprueba si el quedan preguntas por responder
-let gameCompleted=()=>{
-    for(let i=0;i<finalQuestions.length;i++){
+function gameCompleted(){
+    for(var i=0;i<finalQuestions.length;i++){
         if(finalQuestions[i].status==0)
         {return false;}
     }
     return true;
 }
 //Da la puntuacion del jugador
-let getScore=()=>{
-    let score=0;
-    for(let i=0;i<finalQuestions.length;i++){
+function getScore(){
+    var score=0;
+    for(var i=0;i<finalQuestions.length;i++){
         if(finalQuestions[i].status==1)
         {
             score+=1;
@@ -161,16 +161,16 @@ let getScore=()=>{
     return score;
 }
 //Añade la partida actual al ranking
-let addRank=()=>{
-    let rank=[];
+function addRank(){
+    var rank=[];
     
     rank[0]=playerName;
     rank[1]=getScore();
     topScores.push(rank);
     
-    topScores.sort((a,b)=> b[1]-a[1]);
+    topScores.sort(function(a,b){return b[1]-a[1]} );
     
-   for(let j=0; j<topScores.length;j++){
+   for(var j=0; j<topScores.length;j++){
        console.log(topScores[j][0]+": "+topScores[j][1]);
    }
 }
