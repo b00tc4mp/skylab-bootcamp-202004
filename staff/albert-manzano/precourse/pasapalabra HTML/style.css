@@ -1,0 +1,276 @@
+@-webkit-keyframes pulse {
+    from {
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
+    }
+  
+    50% {
+      -webkit-transform: scale3d(1.05, 1.05, 1.05);
+      transform: scale3d(1.05, 1.05, 1.05);
+    }
+  
+    to {
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
+    }
+  }
+
+@keyframes pulse {
+    from {
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
+    }
+  
+    50% {
+      -webkit-transform: scale3d(1.05, 1.05, 1.05);
+      transform: scale3d(1.05, 1.05, 1.05);
+    }
+  
+    to {
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
+    }
+  }
+  
+.pulser {
+    animation: pulse 1s ease-in-out infinite;
+}
+
+header{
+    font-family: sans-serif;
+    align-items: center;
+    align-content: center;
+    font-weight: bold;
+    font-size: 50px;
+    align-self: flex-start;
+    color: orange;
+}
+
+body {
+    background-color: #158aeec4;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    justify-self: start;
+    min-width: 800px;
+    min-height: 500px;
+}
+
+#timer{
+    position: absolute;
+    top: 253px;
+    left: 151px;
+    font-size: 200px;
+    color: rgb(0, 255, 0);
+}
+
+#wrapped{
+    width: 60%;
+    height: 100%;
+    align-items: center;
+    align-content: center;
+    align-self: flex-end;
+}   
+
+#start{
+    display: block;
+    opacity: 0.5;
+    position: absolute;
+    font-size: 400px;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+#window{
+    width: 500px;
+    height: 100%;
+    align-items: center;
+    align-content: center;
+    padding: 10px;
+    padding-left: auto;
+    margin-right: 10px;
+}
+
+#display{
+    text-align: center;
+    height: 100px;
+    width: 400px;
+    align-items: center;
+    align-content: center;
+    margin-top: 100px;
+    font-size: medium;
+    padding-bottom: 15px;
+}
+
+#input{
+    width: 440px;
+    height: 40px;
+    align-items: center;
+    align-content: center;
+    padding: 20px;
+    margin-top: 200px;
+    text-align: center;
+    font-size: 50px;
+    
+}
+
+#buttons{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 10px;
+    align-items: center;
+    align-content: center;
+    
+}
+
+#pasapalabra{
+    width: 100px;
+    font-weight: bolder;
+}
+
+#confirm{
+    width: 100px;
+    font-weight: bolder;
+}
+#restart{
+    width: 100px;
+    font-weight: bolder;
+}
+
+#end{
+    width: 100px;
+    font-weight: bolder;
+}
+
+#confirmScore{
+    width: 100px;
+    font-weight: bolder;
+    display: none;
+}
+
+.letters{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 50;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border:solid 2px grey;
+    border-radius: 50%;
+    padding: 10px;
+    width: 30px;
+    height: 30px;
+    font-weight: bold;
+    outline: none;
+    position: absolute;
+}
+
+
+#letterA{
+    top: 96px;
+    left: 296px;
+}
+
+#letterB{
+    top: 116px;
+    left: 352px;
+}
+
+#letterC{
+    top: 142px;
+    left: 399px;
+}
+#letterD{
+    top: 178px;
+    left: 441px;
+}
+#letterE{
+    top: 223px;
+    left: 475px;
+}
+#letterF{
+    top: 275px;
+    left: 499px;
+}
+#letterG{
+    top: 329px;
+    left: 513px;
+}
+#letterH{
+    top: 383px;
+    left: 505px;
+}
+#letterI{
+    top: 437px;
+    left: 488px;
+}
+#letterJ{
+    top: 487px;
+    left: 464px;
+}
+#letterK{
+    top: 536px;
+    left: 426px;
+}
+#letterL{
+    top: 572px;
+    left: 378px;
+}
+#letterM{
+    top: 589px;
+    left: 321px;
+}
+#letterN{
+    top: 591px;
+    left: 265px;
+}
+#letterO{
+    top: 580px;
+    left: 212px;
+}
+#letterP{
+    top: 559px;
+    left: 162px;
+}
+#letterQ{
+    top: 527px;
+    left: 117px;
+}
+#letterR{
+    top: 484px;
+    left: 81px;
+}
+#letterS{
+    top: 433px;
+    left: 54px;
+}
+#letterT{
+    top: 376px;
+    left: 36px;
+}
+#letterU{
+    top: 316px;
+    left: 43px;
+}
+#letterV{
+    top: 258px;
+    left: 60px;
+}
+#letterW{
+    top: 205px;
+    left: 87px;
+}
+#letterX{
+    top: 157px;
+    left: 127px;
+}
+#letterY{
+    top: 121px;
+    left: 177px;
+}
+#letterZ{
+    top: 98px;
+    left: 236px;
+}
