@@ -1,0 +1,46 @@
+.smiley {
+    background-color: yellow;
+    border-radius: 50%;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    height: 100px;
+    width: 100px;
+}
+
+.smiley__eye {
+    background-color: black;
+    border-radius: 50%;
+    border-color: white;
+    border-style: solid;
+    border-width: 10px;
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    box-sizing: border-box;
+    margin-left: 10%;
+    margin-top: 10%;
+}
+
+.smiley__nose {
+    /* background-color: black; */
+    border-radius: 0 0 50% 50%;
+    border-color: transparent transparent transparent black;
+    border-style: solid;
+    border-width: 1px;
+    height: 10px;
+    width: 20px;
+    margin: 0 50% 0 50%;
+}
+
+.smiley__smile {
+    /* background-color: black; */
+    border-radius: 0 0 50% 50%;
+    border-color: transparent transparent black transparent;
+    border-style: solid;
+    border-width: 1px;
+    height: 20px;
+    width: 60px;
+    margin: 0 20% 0 20%;
+}
+

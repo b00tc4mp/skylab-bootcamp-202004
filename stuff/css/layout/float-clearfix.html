@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+        }
+
+        header,
+        nav,
+        aside,
+        footer,
+        main {
+            border: 1px solid black;
+        }
+
+        nav, aside {
+            float: left;
+            width: 20%;
+        }
+
+        nav,
+        aside {
+            height: 50%;
+        }
+
+        main {
+            width: 80%;
+            height: 100%;
+            float: right;
+        }
+
+        header,
+        footer {
+            height: 15%;
+        }
+
+        aside {
+            clear: left;
+        }
+
+        section {
+            height: 70%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>HEADER</header>
+    <section>
+        <nav>NAV</nav>
+        <main>MAIN</main>
+        <aside>ASIDE</aside>
+    </section>
+    <footer>FOOTER</footer>
+
+    <!--
+        HEADER
+        ------------------
+        NAV   |
+        -------   MAIN
+        ASIDE |
+        ------------------
+        FOOTER
+    -->
+</body>
+
+</html>
