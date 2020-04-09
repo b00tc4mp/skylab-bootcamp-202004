@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pasapalabra</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link href="https://fonts.googleapis.com/css?family=Righteous&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="index.js"></script>
+</head>
+<body>
+    <div id="grid">
+        <div id="game-screen">
+            <div id="circle">
+                <ul id="letters">
+                    <div id="game-title">
+                        <p>PASAPALABRA</p>
+                    </div>
+                    <li id="a"><div class="letter"><span>A</span></div></li>
+                    <li id="b"><div class="letter"><span>B</span></div></li>
+                    <li id="c"><div class="letter"><span>C</span></div></li>
+                    <li id="d"><div class="letter"><span>D</span></div></li>
+                    <li id="e"><div class="letter"><span>E</span></div></li>
+                    <li id="f"><div class="letter"><span>F</span></div></li>
+                    <li id="g"><div class="letter"><span>G</span></div></li>
+                    <li id="h"><div class="letter"><span>H</span></div></li>
+                    <li id="i"><div class="letter"><span>I</span></div></li>
+                    <li id="j"><div class="letter"><span>J</span></div></li>
+                    <li id="k"><div class="letter"><span>K</span></div></li>
+                    <li id="l"><div class="letter"><span>L</span></div></li>
+                    <li id="m"><div class="letter"><span>M</span></div></li>
+                    <li id="n"><div class="letter"><span>N</span></div></li>
+                    <li id="ñ"><div class="letter"><span>Ñ</span></div></li>
+                    <li id="o"><div class="letter"><span>O</span></div></li>
+                    <li id="p"><div class="letter"><span>P</span></div></li>
+                    <li id="q"><div class="letter"><span>Q</span></div></li>
+                    <li id="r"><div class="letter"><span>R</span></div></li>
+                    <li id="s"><div class="letter"><span>S</span></div></li>
+                    <li id="t"><div class="letter"><span>T</span></div></li>
+                    <li id="u"><div class="letter"><span>U</span></div></li>
+                    <li id="v"><div class="letter"><span>V</span></div></li>
+                    <li id="w"><div class="letter"><span>W</span></div></li>
+                    <li id="x"><div class="letter"><span>X</span></div></li>
+                    <li id="y"><div class="letter"><span>Y</span></div></li>
+                    <li id="z"><div class="letter"><span>Z</span></div></li>
+                </ul>
+            </div>
+        </div>
+        <div id="timer">
+            250
+        </div>
+        <div id="instructions-screen">
+            <div id="instructions">
+                <p id="text">
+                    <span>¡Bienvenido a esta versión del juego de pasalabra creada 
+                    por un estudiante de Skylab Coders Academy!</span><br><br>
+                    Este juego del pasapalabra ha sido creado utilizando los conceptos aprendidos de 
+                    JS, HTML y CSS durante la realización del precurso. Si quieres probar esta versión del juego
+                    haz click en el botón jugar que aparece a continuación. <br><br>
+                    Las reglas son sencillas:<br> 
+                    Aparecerá una letra y se tendrá que adivinar 
+                    la palabra que empezará o contendrá dicha letra (se especificará en el 
+                    enunciado). En el caso de que queramos responder más adelante a la pregunta 
+                    solo tendremos que escribir "pasapalabra", por cada acierto 
+                    se otorgará un punto, por cada fallo o respuesta en blanco 
+                    se otorgarán cero puntos. Al final aparecerá tu usuario dentro de la 
+                    clasificación según el balance de respuestas acertadas respecto del total. <br><br>
+                    ¿Llegarás a ser el mejor?<br><br>
+                    <button id="jugar">Jugar <i class="fa fa-play"></i></button>
+                    <button id="ranking-button">Ver Ranking Actual</button>
+                </p>
+                <p id="login">Introduce el nombre de usuario con el que se registrarán los resultados:<br><br>
+                <input type="text" id="user" name="playerName" value="Neo" required>
+                <button id="empezar">Empezar <i class="fa fa-play"></i></button></p>
+                <div id = "playing-screen">
+                    <span id="user-results">
+                        <p id="show-user"></p> <hr>
+                        <p id="points"></p> <hr>
+                        <p id="last-mistake"></p> <hr>
+                    </span>
+                    <span><p id="questions"></p><br>
+                    <input type="text" id="answer">
+                    <button id="answer-button">Enviar</button></span>  
+                </div>
+                <div id="ranking-screen">
+                    <table id="ranking">
+
+                    </table>
+                    <p id="final-results"></p> 
+                    <button id="atras">Volver al Menú</button> 
+                </div>
+            </div>
+            <button id="exit">Salir del juego</button>            
+        </div>
+    </div>
+</body>
+</html>

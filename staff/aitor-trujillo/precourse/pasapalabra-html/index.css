@@ -1,0 +1,331 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap");
+
+:root {
+  font-family: "Roboto Mono", monospace;
+  font-size: 16px;
+}
+/* Colors */
+
+body.dark,
+body.dark #player-answer,
+body.dark .timer,
+body.dark .ranked-player-container,
+body.dark .rules-container,
+body.dark #player-answer,
+body.dark button.question-element {
+  background-color: rgb(24, 26, 27);
+  color: white;
+  transition: 0.6s ease all;
+}
+
+body.dark .ranking-container,
+body.dark h1 {
+  color: white;
+  transition: 0.6s ease all;
+}
+
+/* DOCUMENT CSS */
+
+* {
+  font-family: "Roboto Mono", monospace;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 75%;
+  max-height: 100vh;
+  margin: 0;
+  transition: 0.6s ease all;
+}
+
+/* NavBar */
+
+.navbar {
+  width: 5rem;
+  height: 100vh;
+  position: fixed;
+  transition: width 200ms ease;
+  background-color: #1c1c1c;
+}
+
+body.dark .navbar {
+  background-color: #263238;
+  transition: 0.5 ease all;
+}
+
+.navbar:hover {
+  width: 16rem;
+}
+
+.navbar:hover .link-text {
+  display: block;
+}
+
+.navbar-nav {
+  /* list-style: none; */
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+.nav-item {
+  width: 100%;
+}
+
+.nav-item:last-child {
+  margin-top: auto;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  height: 5rem;
+  color: white;
+  text-decoration: none;
+  transition: 500ms;
+}
+.nav-link:hover {
+  background-color: #363636;
+}
+
+.link-text {
+  display: none;
+  margin-left: 1rem;
+}
+.nav-link svg {
+  min-width: 2rem;
+  margin: 0 1.5rem;
+}
+
+/* PAGES */
+
+#rules-page {
+  margin-left: 5rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding-top: 8%;
+}
+
+#game-page {
+  margin-left: 5rem;
+  height: 80%;
+  display: block;
+}
+
+body.dark #game-page {
+  color: white;
+}
+
+#ranking-page {
+  display: none;
+  margin-left: 5rem;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2%;
+}
+
+body.dark #ranking-page {
+  color: white;
+}
+/* RANKING PAGE */
+
+.ranking-container {
+  font-size: 25px;
+  width: 60%;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.ranking-head-container {
+  display: flex;
+  justify-content: center;
+}
+
+.ranking-head {
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  padding: 20px 0px;
+}
+
+.ranked-player-container {
+  display: flex;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  padding: 30px 0px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  justify-content: center;
+}
+
+.ranked-player {
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+}
+
+/* GAME PAGE */
+h1 {
+  text-align: center;
+  height: 15%;
+  margin-top: 0px;
+  padding-top: 21.44px;
+}
+
+.end-announce-container {
+  display: none;
+  text-align: center;
+}
+.end-announce-container h2 {
+  font-size: 20px;
+}
+
+.end-time {
+  color: red;
+}
+.end-game {
+  color: green;
+}
+
+.game-container {
+  height: 50%;
+  display: flex;
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer {
+  display: flex;
+  background-color: white;
+  border-radius: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  font-size: large;
+}
+
+/* Current letter */
+
+#current-letter {
+  margin: 0 auto;
+  background-color: #0088cc;
+  border-color: #0088cc;
+  color: white;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  max-width: 50%;
+  animation: bounce 3s ease-out infinite;
+  font-size: 18px;
+}
+
+@keyframes bounce {
+  50% {
+    transform: translate(0, 20px);
+  }
+}
+
+/* Question CSS */
+
+#questions-container {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+}
+
+.question-element {
+  margin: 10px;
+  font-size: 18px;
+}
+
+/* Letters CSS */
+
+#letters-container {
+  text-align: center;
+  margin: 0 auto;
+  height: 25%;
+  bottom: 0;
+  right: 0;
+  left: 5rem;
+}
+
+#letters-container button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  text-transform: capitalize;
+  font-size: 16px;
+  color: white;
+}
+
+.letters-default {
+  background-color: #0088cc;
+  border-color: #0088cc;
+}
+
+.correct-answer {
+  background-color: green;
+  border-color: green;
+}
+
+.wrong-answer {
+  background-color: red;
+  border-color: red;
+}
+
+/* RULES PAGE */
+
+.rules-container {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  width: 60%;
+}
+
+div.rules-container li {
+  margin: 0 2%;
+  padding: 5px 0px;
+  text-align: justify;
+}
+
+div.rules-container p {
+  margin: 0 2%;
+  padding-top: 20px;
+  text-align: center;
+  font-size: 18px;
+}
+
+#rules-page h1 {
+  display: none;
+}
+
+div.rules-container div {
+  display: flex;
+  justify-content: center;
+}
+div.rules-container div img {
+  border-radius: 15%;
+}
+
+#rules-page li span:nth-child(1) {
+  color: green;
+}
+#rules-page li span:nth-child(2) {
+  color: red;
+}
+#rules-page li span:nth-child(3) {
+  color: #0088cc;
+}

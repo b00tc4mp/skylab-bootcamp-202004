@@ -1,0 +1,376 @@
+body {
+    width: 1250px;
+    height: 700px;
+    color: white;
+    justify-content: center;
+    background-color: rgb(68, 42, 241);
+    }
+
+section {
+    display: inline-block;
+}
+
+.alfabet{
+    width: 630px;
+    height: 600px;
+    margin-left: 50px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.alfabet h1{
+    position: absolute;
+    padding: 10px;
+    margin: 260px 210px;
+}
+
+#gamerName{
+    position: absolute;
+    width: 250px;
+    height: 50px;
+    font-size: 18px;
+    text-align: center;
+    line-height: 50px;
+    margin: 150px 170px;
+    visibility: hidden;
+}
+
+.result {
+    width: 200px;
+    height: 300px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    display: flex;    
+    left: 200px;
+    bottom: 1300px;
+}
+
+
+.result p{
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    margin: 0px 10px;
+    border: 1px solid black;
+}
+
+
+#success{
+    border-radius: 25%;
+    background-color: limegreen;
+}
+
+#timer{
+    background-color: darkorange;
+}
+
+.letter{
+    color: white;
+    background-color: rgb(46, 27, 170);
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border: 1px black solid;
+    border-radius: 100%;
+    text-align: center;
+}
+
+#a{
+    position: relative;
+    left: 270px;
+}
+
+#b{
+    position: relative;
+    left: 330px;
+    bottom: 50px;
+}
+
+#c{
+    position: relative;
+    left: 390px;
+    bottom: 90px;
+}
+
+#d{
+    position: relative;
+    left: 440px;
+    bottom: 115px;
+
+}
+
+#e{
+    position: relative;
+    left: 480px;
+    bottom: 130px;
+
+}
+
+#f{
+    position: relative;
+    left: 510px;
+    bottom: 135px;
+}
+
+#g{
+    position: relative;
+    left: 530px;
+    bottom: 130px;
+}
+
+#h{
+    position: relative;
+    left: 540px;
+    bottom: 120px;
+}
+
+#i{
+    position: relative;
+    left: 530px;
+    bottom: 110px;
+}
+
+#j{
+    position: relative;
+    left: 500px;
+    bottom: 110px;
+}
+
+#k{
+    position: relative;
+    left: 460px;
+    bottom: 120px;
+}
+
+#l{
+    position: relative;
+    left: 410px;
+    bottom: 140px;
+}
+
+#m{
+    position: relative;
+    left: 360px;
+    bottom: 170px;
+}
+
+#n{
+    position: relative;
+    left: 300px;
+    bottom: 210px;
+}
+
+#ñ{
+    position: relative;
+    left: 240px;
+    bottom: 270px;
+
+}
+
+#o{
+    position: relative;
+    left: 180px;
+    bottom: 340px;
+}
+
+#p{
+    position: relative;
+    left: 120px;
+    bottom: 430px;
+}
+
+#q{
+    position: relative;
+    left: 70px;
+    bottom: 530px;
+}
+
+#r{
+    position: relative;
+    left: 30px;
+    bottom: 640px;
+}
+
+#s{
+    position: relative;
+    left: 10px;
+    bottom: 760px;
+}
+
+#t{
+    position: relative;
+    bottom: 880px;
+}
+
+#u{
+    position: relative;
+    left: 10px;
+    bottom: 1000px;
+
+}
+
+#v{
+    position: relative;
+    left: 30px;
+    bottom: 1120px;
+}
+
+#w{
+    position: relative;
+    left: 60px;
+    bottom: 1230px;
+
+}
+
+#x{
+    position: relative;
+    left: 100px;
+    bottom: 1330px;
+}
+
+#y{
+    position: relative;
+    left: 150px;
+    bottom: 1420px;
+}
+
+#z{
+    position: relative;
+    left: 210px;
+    bottom: 1500px;
+}
+
+#rules, #ranking{
+    width: 400px;
+    height: 500px;
+    padding: 20px;
+    border-radius: 10%;
+    float: right;
+    margin-top: 50px;
+    margin-right: 100px;
+    background-color: #4B80FE;
+    text-align: center;
+    font-family: Gill Sans, sans-serif;
+    font-size: 16px;
+}
+
+#rules h1{
+    text-align: center;
+}
+
+.submitText{
+    margin: 30px 80px;
+}
+
+label{
+    width: 190px;
+    height: 60px;
+    padding: 10px;
+    font-size: 20px;
+    border-style: inset;
+    font-size: 19px;
+}
+
+#fname{
+    font-size: 18px;
+}
+
+#questions, #timeover{
+    width: 400px;
+    height: 200px;
+    padding: 100px 20px;
+    float: right;
+    margin-top: 100px;
+    margin-right: 100px;
+    background-color: #4B80FE;
+    text-align: center;
+    border-radius: 10%;
+    font-family: Gill Sans, sans-serif;
+    font-size: 16px;
+    display: none;
+}
+
+#question{
+    height: 80px;
+}
+
+input{
+    display: inline-block;
+}
+
+#answer{
+    font-size: 18px;
+}
+
+#ranking h1{
+    text-align: center;
+}
+
+#ranking{
+    display: none;
+}
+
+#ranking table{
+    width: 300px;
+    height: 200px;
+    padding: 20px;
+    font-size: 16px;
+    overflow: scroll;
+    margin: 50px auto;
+}
+
+#col-name{
+    background-color: rgb(46, 27, 170);
+}
+
+td{
+    width: 100px;
+    height: 30px;
+    box-sizing: border-box;
+    border: 1px solid white;
+    text-align: center;
+}
+
+#timeover h1{
+    text-align: center;
+}
+
+#play{
+    background-color: rgb(46, 27, 170);
+    color: white;
+    font-size: 15px;
+    width: 100px;
+    height: 50px;
+    margin: 0px 50px;
+}
+
+#play:hover, #submit:hover, #end:hover, #reset:hover, #timeover input:hover{
+    background-color: limegreen;
+}
+
+#play, #submit, #end, #reset, #timeover input{
+    background-color: rgb(46, 27, 170);
+    color: white;
+    font-size: 15px;
+}
+
+#submit, #end{
+    width: 70px;
+    height: 50px;
+    margin: 10px 10px;
+}
+
+#reset{
+    width: 150px;
+    height: 50px;
+    margin: 5px 120px;
+}
+
+#timeover input {
+    width: 110px;
+    height: 50px;
+    margin: 10px 40px;
+}
+
+

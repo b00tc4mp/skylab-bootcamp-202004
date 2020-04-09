@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet"> 
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pasapalabra</title>
+    <link rel="stylesheet" type="text/css" href="index.css" />
+  </head>
+  <main class="flex">
+    <header>PASAPALABRA</header>
+
+    <form id="usernameid" onsubmit="return false">
+      <label id="label" class="user" for="username">Username:</label>
+      <input
+        id="username"
+        name="username"
+        type="text"
+        required
+        minlength="3"
+        maxlength="10"
+        autofocus
+      />
+      <input type="button" value="Aceptar" id="valueuser" />
+    </form>
+
+    <div class="centrartabla">
+      <div id="saludo"></div>
+      <button id="rulesbutton">Ver reglas</button></div>
+     
+        
+        <ul id="rulesdisplay">
+          <p>Reglas:</p>
+          
+          <li>Cada acierto suma un punto</li>
+          <li>Cada fallo suma un error</li>
+          <li>Tienes 150 puntos para acabar la partida</li>
+          <li>El juego no distingue entre mayusculas y minusculas</li>
+          <li>El juego no distingue acentos</li>
+          <button id="startbutton">Start game</button>
+        </ul>
+       
+     
+      
+
+      <div class="mainscreen" id="mainscreenid">
+        <h3 id="questionstart"></h3>
+        <input autofocus id="answer" name="answer" type="text" required />
+        <input type="button" value="aceptar" id="answerbutton" />
+      </div>
+      <div class="score" id="scoreid">
+        <h3 id="score"></h3>
+        <button id="ranking">Ranking</button>
+      </div>
+
+      <div id="showranking" class="ranking">
+        
+        <ol id="ordenarlista"></ol>
+
+        <button id="returnplay">Volver a Jugar</button>
+        <button id="endgame">Finalizar</button>
+      </div>
+    </div>
+    <div class="box" id="a">A</div>
+    <div class="box" id="b">B</div>
+    <div class="box" id="c">C</div>
+    <div class="box" id="d">D</div>
+    <div class="box" id="e">E</div>
+    <div class="box" id="f">F</div>
+    <div class="box" id="g">G</div>
+    <div class="box" id="h">H</div>
+    <div class="box" id="i">I</div>
+    <div class="box" id="j">J</div>
+    <div class="box" id="k">K</div>
+    <div class="box" id="l">L</div>
+    <div class="box" id="m">M</div>
+    <div class="box" id="n">N</div>
+    <div class="box" id="ñ">Ñ</div>
+    <div class="box" id="o">O</div>
+    <div class="box" id="p">P</div>
+    <div class="box" id="q">Q</div>
+    <div class="box" id="r">R</div>
+    <div class="box" id="s">S</div>
+    <div class="box" id="t">T</div>
+    <div class="box" id="u">U</div>
+    <div class="box" id="v">V</div>
+    <div class="box" id="w">W</div>
+    <div class="box" id="x">X</div>
+    <div class="box" id="y">Y</div>
+    <div class="box" id="z">Z</div>
+    <div>
+      <img
+        src="https://pbs.twimg.com/profile_images/718411051340079104/xJ-vRtnD.jpg"
+        class="logo"
+      />
+    </div>
+
+    <div class="scorebox" id="falsebox">0</div>
+    <div class="scorebox" id="truebox">0</div>
+<div id="countdown"></div>
+
+  </body>
+</main>
+<body>
+  <script src="index.js"></script>
+</html>

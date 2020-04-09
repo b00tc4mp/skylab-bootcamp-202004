@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pasapalabra</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+
+</head>
+
+<body>
+
+    <span class='audio'>AUDIO: OFF</span>
+    <header id='display-header'>
+        
+        <span id='exit'>X</span>
+        <span id='exit-ranking'>X</span>
+        <img id='left' class="title-logo" alt='title-logo' src='images/fletxa.svg'>
+        <h1>PASAPALABRA</h1>
+        <img id='right' class="title-logo" alt='title-logo' src='images/fletxa.svg'>
+        
+        
+    </header>
+    
+    <img id='letter-logo' alt='letter-logo' src='images/logo.svg'>
+    <section id='display-rules' class='rules'>
+        <h2>Reglas</h2>
+        <p>Bienvenido a pasapalabra de Skylab Coders Academy!</p>
+        <ol>
+            <li><span class='numbers-menu'>1.</span> El objetivo es completar el rosco con el mayor numero de aciertos posibles.</li>
+            <li><span class='numbers-menu'>2.</span> Se cuenta con un tiempo de 150 segundos para completarlo.</li>
+            <li><span class='numbers-menu'>3.</span> Si el concursante no sabe una palabra podra pasar palabra para posteriormente contestar, una vez
+                completado el rosco.</li>
+                <li><span class='numbers-menu'>4.</span> Puedes usar el raton o bien la tecla 'ENTER' para enviar respuesta y 'CTRL' para pasapalabra.</li>
+                <li><span class='numbers-menu'>5.</span> Pon tu nombre si quieres salir en el ranking y a jugar!</li>
+        </ol>
+        <input id='name' type="text" value='Nombre'>
+        <input id='play-button' type="button" value='JUGAR'>
+    </section>
+
+
+    <section id='display-donut'>
+        <img id='logo' alt="logo" src='images/fletxa.svg'>
+
+        <div class='donut'>
+
+            <div class='letter'>A</div>
+            <div class='letter'>B</div>
+            <div class='letter'>C</div>
+            <div class='letter'>D</div>
+            <div class='letter'>E</div>
+            <div class='letter'>F</div>
+            <div class='letter'>G</div>
+            <div class='letter'>H</div>
+            <div class='letter'>I</div>
+            <div class='letter'>J</div>
+            <div class='letter'>L</div>
+            <div class='letter'>M</div>
+            <div class='letter'>N</div>
+            <div class='letter'>Ñ</div>
+            <div class='letter'>O</div>
+            <div class='letter'>P</div>
+            <div class='letter'>Q</div>
+            <div class='letter'>R</div>
+            <div class='letter'>S</div>
+            <div class='letter'>T</div>
+            <div class='letter'>U</div>
+            <div class='letter'>V</div>
+            <div class='letter'>X</div>
+            <div class='letter'>Y</div>
+            <div class='letter'>Z</div>
+
+        </div>
+        <div class="ask-area">
+            
+            <img id='crono' alt='cronometer' src='images/rellotge.svg'>
+            <span id='crono-number'>250</span>
+            <div id='points'>0</div>
+            <input  id='ranking' type="button" value='RANKING'> 
+            <div id='form-question'>
+                <div id='question'></div>
+                <input type="text" id='answer' name='answer'>
+                <input id='send' type='button' value='ENVIAR'>
+                <input id='pasapalabra' type='button' value='PASAPALABRA'>
+                <input id='continue' type='button' value='OTRA PARTIDA'>
+            </div>
+        </div>
+        
+        <div id='exit-donut'>X</div>
+    </section>
+    <div id='ranking-area'></div>
+
+    <script type="text/javascript" src="index.js"></script>
+</body>
+
+</html>
