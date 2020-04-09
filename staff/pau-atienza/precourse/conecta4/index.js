@@ -697,7 +697,7 @@ function updateScore(simulatedBoard, score){
 
 //Función que coge un score, simula una posible jugada en una columna específica y devuelve el score de esa jugada
 function scoreForPlay(column, score){
-    simulatedBoard = JSON.parse(JSON.stringify(boardByColumns))
+    simulatedBoard = JSON.parse(JSON.stringify(boardByColumns));
     addPiece(simulatedBoard, column);
     score = updateScore(simulatedBoard, score);
     // console.log(score);
