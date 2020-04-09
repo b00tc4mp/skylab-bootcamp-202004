@@ -1,4 +1,6 @@
 
+//Solution by Tanane
+
    var semanticTags = ['IMG', 'HTML', 'HEAD', 'BODY', 'HEADER', 'NAV', 'ARTICLE', 'SECTION', 'ASIDE', 'FOOTER', 'MAIN']
    var tagsWithoutChildren = ['IMG']
 
