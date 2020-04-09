@@ -1,18 +1,18 @@
-var htmlString = document.getElementsByTagName('html')[0].innerHTML;
-var regexArray = /<(([a-z])+(\ |>))|<\/[a-z]+>/g
+var htmlString = document.getElementsByTagName("html")[0].innerHTML;
+var regexArray = /<(([a-z])+(\ |>))|<\/[a-z]+>/g;
 var regexTags = htmlString.match(regexArray);
-
+var tagsArray = regexTags.join('');
 var finalTags = [];
 
-//trial 1
-// regexTags.forEach(tag, index, array) {
-//     if(tag.includes(' ')){
-//         tag.replace(' ', '>');
-//         finalResult.push(tag);
-//     } else {
-//         finalResult.push(tag);
+// usar join con regextags para convertirlo en array
+// trial 1 (solo coge el primer tag)
+//join me dice que no es una funcion
+
+// tagsArray.forEach(function(tag,index, array) {
+//     if(tag.indexOf(' ' !== -1)) {
+//         tag.replace(' ', '>')
 //     }
-// }
+// })
 
 // trial 2
 // var i = 0;
@@ -38,13 +38,52 @@ var finalTags = [];
 
 //trial 5
 for (var i = 0; i < regexTags.length; i++) {
-    if (regexTags[i].indexOf(' ') !== -1) {
-        regexTags[i] = regexTags[i].slice(0, -1)
-        regexTags[i] += '>';
+    if (regexTags[i].indexOf(" ") !== -1) {
+        regexTags[i] = regexTags[i].slice(0, -1);
+        regexTags[i] += ">";
     }
 }
 
-var semanticTags = ["<head>", "</head>", "<article>", "</article>", "<audio>", "</audio>", "<button>", "</button>", "<form>", "</form>", "<video>", "</video>", "<aside>", "</aside>", "<details>", "</details>", "<figcaption>", "</figcaption>", "<figure>", "</figure>", "<footer>", "</footer>", "<header>", "</header>", "<img>", "<main>", "</main>", "<mark>", "</mark>", "<nav>", "</nav>", "<section>", "</section>", "<summary>", "</summary>", "<time>", "</time>", "</summary>"];
+var semanticTags = [
+    "<head>",
+    "</head>",
+    "<article>",
+    "</article>",
+    "<audio>",
+    "</audio>",
+    "<button>",
+    "</button>",
+    "<form>",
+    "</form>",
+    "<video>",
+    "</video>",
+    "<aside>",
+    "</aside>",
+    "<details>",
+    "</details>",
+    "<figcaption>",
+    "</figcaption>",
+    "<figure>",
+    "</figure>",
+    "<footer>",
+    "</footer>",
+    "<header>",
+    "</header>",
+    "<img>",
+    "<main>",
+    "</main>",
+    "<mark>",
+    "</mark>",
+    "<nav>",
+    "</nav>",
+    "<section>",
+    "</section>",
+    "<summary>",
+    "</summary>",
+    "<time>",
+    "</time>",
+    "</summary>",
+];
 
 regexTags.filter(function(tag) {
     if (semanticTags.includes(tag)) {
@@ -61,4 +100,4 @@ for (var j = 0; j < regexTags.length; j++) {
 
 htmlpage = finalTags.join("");
 
-var easyRead = document.getElementsByTagName('html')[0].innerHTML = htmlpage;
+var easyRead = (document.getElementsByTagName("html")[0].innerHTML = htmlpage);
