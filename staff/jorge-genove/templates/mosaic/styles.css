@@ -1,0 +1,27 @@
+.container{
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    
+    
+}
+.box{
+    
+    color: black;
+    text-align: center;
+    
+    
+    
+}
+.odd {
+    background-color: brown;
+}
+.even {
+    background-color: chartreuse;
+}
+.first {
+    grid-column: 1 / 3;
+    
+    
+}
