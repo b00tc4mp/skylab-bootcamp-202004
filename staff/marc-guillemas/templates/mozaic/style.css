@@ -1,0 +1,122 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+
+body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    height: 150vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+ 
+}
+.cubes {
+    display: flex;
+    /* border: 1px dashed red; */
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+}
+
+.one {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+    background-color: rgb(75, 255, 111);
+    position: sticky;
+    top: 0;
+}
+.two{
+    background-color: rgb(56, 255, 245);
+}
+.three{
+    background-color: rgb(255, 55, 55);
+}
+.four{
+    background-color: salmon;
+}
+.five{
+    background-color: seagreen;
+}
+.six{
+    background-color: slateblue;
+}
+.seven{
+    background-color: tomato;
+}
+.eight{
+    background-color: turquoise;
+}
+.nine{
+    background-color: wheat;
+}
+
+@media only screen and (min-width: 768px) {
+    .container {
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+    }
+    .one {
+        grid-column: 1;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    
+    .container{
+        height: 150vh;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        box-sizing: border-box;
+    }
+    .cubes {
+        height: 100%;
+    }
+    .one {
+        grid-column: 1 / span 12;
+        position: sticky;
+        top: 0;
+    }
+    .two {
+        grid-column: 1/span 4;
+    }
+    .three {
+        grid-column: 5/span 4;
+    }
+    .four {
+        grid-column: 9/span 4;
+    }
+    .five {
+        grid-column: 1/span 3;
+
+    }
+    .six {
+        grid-column: 4/span 3;
+
+    }
+    .seven {
+        grid-column: 7/span 3;
+
+    }
+    .eight {
+        grid-column: 10/span 3;
+
+    }
+    .nine {
+        grid-column: 1 / span 12;
+        grid-row: 4;
+        position: sticky;
+        bottom: 0;
+    }
+    
+}
+
+ 
