@@ -1,0 +1,126 @@
+     * {
+     margin: 0;
+     box-sizing: border-box;
+     font-size: 60px;
+ }
+ 
+ .container>* {
+     display: flex;
+     border: solid 2px black;
+     border-radius: 20px;
+     -webkit-text-stroke: 2px black;
+     color: blanchedalmond;
+     font-family: sans-serif;
+     align-items: center;
+     justify-content: center;
+     -moz-box-shadow: 2px 2px 3px 4px #ccc;
+     -webkit-box-shadow: 2px 2px 3px 4px #ccc;
+     box-shadow: 2px 2px 3px 4px #ccc;
+     margin: 1%;
+ }
+ 
+ .container {
+     display: grid;
+     grid-template-columns: repeat(2, 1fr);
+     grid-template-rows: repeat(5, 1fr);
+     column-gap: 0.1em;
+     row-gap: 0.1em;
+     width: 100vw;
+     height: 150vh;
+ }
+ 
+ #one {
+     position: sticky;
+     top: 0;
+     background-color: #F2E745;
+     grid-column: span 2;
+     align-items: center;
+     justify-items: center;
+ }
+ 
+ #nine {
+     padding-top: 5px;
+     padding-bottom: 5px;
+     background: repeating-linear-gradient( #ffffff, #ffffff 20%, #F2E745 0%, #F2E745 80%)
+ }
+ 
+ .square:nth-child(2) {
+     background-color: #0934DE;
+ }
+ 
+ .square:nth-child(3) {
+     background-color: #E06208;
+ }
+ 
+ .square:nth-child(4) {
+     background-color: #8106E2;
+ }
+ 
+ .square:nth-child(5) {
+     background-color: orange;
+ }
+ 
+ .square:nth-child(6) {
+     background-color: #19A809;
+ }
+ 
+ .square:nth-child(7) {
+     background-color: #8C0517;
+ }
+ 
+ .square:nth-child(8) {
+     background-color: #030303;
+ }
+ 
+ .square:nth-child(9) {
+     background-color: #F2E745;
+ }
+ 
+ @media only screen and (min-width: 768px) {
+     .container {
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         grid-template-rows: repeat(3, 1fr);
+         column-gap: 0.1em;
+         row-gap: 0.1em;
+         width: 100vw;
+         height: 100vh;
+     }
+     #one {
+         background-color: #F2E745;
+         grid-column: span 1;
+         align-items: center;
+         justify-items: center;
+     }
+     @media only screen and (min-width: 992px) {
+         .container {
+             display: grid;
+             grid-template-columns: repeat(4, 1fr);
+             grid-template-rows: repeat(4, 1fr);
+             column-gap: 0.2em;
+             row-gap: 0.3em;
+             width: 100vw;
+             height: 150vh;
+         }
+         #one {
+             background-color: #F2E745;
+             grid-column: span 4;
+             align-items: center;
+             justify-items: center;
+         }
+         #nine {
+             grid-column: span 4;
+             align-items: center;
+             justify-items: center;
+             padding-top: 5px;
+             padding-bottom: 5px;
+             background: repeating-linear-gradient( #ffffff, #ffffff 20%, #F2E745 0%, #F2E745 80%);
+             position: sticky;
+             bottom: 0;
+         }
+         #tree {
+             grid-column: span 2;
+             align-items: center;
+             justify-items: center;
+         }
+     }
