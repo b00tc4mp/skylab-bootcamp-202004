@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite:wght@400;600&display=swap');
+
+* {
+  font-size: 20px;
+  font-family: Raleway;
+}
+
+/* alert */
+
+.alert {
+  border: .3rem solid deepskyblue;
+  border-radius: 1rem;
+  background-color: skyblue;
+  padding: .5rem;
+}
+
+.alert__title {
+  color: dodgerblue;
+}
+
+.alert__body {
+  font-size: .75rem;
+  color: black;
+}
+
+.alert--danger {
+  border-color: crimson;
+  background-color: lightsalmon;
+}
+
+.alert--danger .alert__title {
+  color: red;
+} 
+
+
+/* my-panel */
+
+.my-panel {
+  background-color: red;
+  /* border: 1rem solid crimson;*/
+  border-radius: 1rem;
+  box-shadow: 0 0 0 1rem crimson;
+  margin: 2rem;
+}
+
+.my-panel__content {
+  font-family: Lobster;
+  color: white;
+  padding: 1rem;
+}
+
+.my-panel__content--formal {
+  font-family: Special Elite;
+}
+
+/* my-notifications */
+
+.my-notifications {
+  display: flex;
+  list-style: none;
+  padding: 1rem;
+  justify-content: center;
+  background-color: rgba(200, 200, 200, 0.5);
+  align-items: center;
+  border-radius: 1rem;
+}
+
+.my-notifications__item {
+  margin: .25rem;
+  text-align: center;
+}
+
+.my-notifications__item-title {
+  color: gray;
+}
+
+.my-notifications__item-title--clown:hover:after {
+  content: " 🤡"
+}
