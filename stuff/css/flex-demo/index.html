@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Space+Mono|Roboto:400,400i,700|Pacifico&display=swap"
+        rel="stylesheet">
+    <title>Basic Structure Web</title>
+</head>
+
+<body>
+    <div class="glass">
+
+        <header>
+            <div class="box top__container">
+                <div class="box__back top">
+                    <div class="top__title">
+                        <h1>Skylab Coders</h1>
+                        <h2>Flexbox demo</h2>
+                    </div>
+                    <div class="top__box">
+                        <div class="top__item boxes__container--red"></div>
+                        <div class="top__item boxes__container--yellow"></div>
+                        <div class="top__item boxes__container--orange"></div>
+                        <div class="top__item boxes__container--green"></div>
+                        <div class="top__item boxes__container--blue"></div>
+                        <div class="top__item boxes__container--purple"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+
+            <!-- what is flebox -->
+            <section class="box container">
+                <div class="box__back container__child">
+                    <!-- title -->
+                    <h3>¿Qué es Flexbox?</h3>
+                    <!-- content -->
+                    <p class="container__description">Es un método que nos ayuda a distribuir el espacio entre los ítems
+                        de una
+                        interfaz y mejorar las capacidades de alineación de los diferentes elementos del DOM a través de
+                        nuestra
+                        hoja de estilos.</p>
+                </div>
+            </section>
+
+            <!-- context -->
+            <section class="box container">
+                <div class="box__back container__child">
+                    <!-- title -->
+                    <h3>Contexto:</h3>
+                    <!-- content -->
+                    <p class="container__description">Para usar flexbox se trabaja en conjunto con el contenedor y sus
+                        hijos. No
+                        hay forma de manipular directamente un elemento con flexbox sin crear antes su contexto.</p>
+                    <!-- boxes -->
+                    <div class="boxes__container boxes__container--red  boxes__wrap">
+                        <p>flex container</p>
+                        <div class="boxes__item boxes__item--red">
+                            <p>flex item</p>
+                        </div>
+                        <div class="boxes__item boxes__item--red">
+                            <p>flex item</p>
+                        </div>
+                        <div class="boxes__item boxes__item--red">
+                            <p>flex item</p>
+                        </div>
+                        <div class="boxes__item boxes__item--red">
+                            <p>flex item</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Axis y Cross Axis -->
+            <section class="box container">
+                <div class="box__back container__child">
+                    <!-- title -->
+                    <h3>Main Axis <div class="maincross-arrow__main-box"></div> y Cross Axis <div
+                            class="maincross-arrow__cross-box"></div> :</h3>
+                    <!-- content -->
+                    <p class="container__description">Se crean dos ejes: el <strong>main </strong> (eje principal) y el
+                        <strong>cross axis</strong> (eje secundario). Estos ejes permiten distribuir y alinear los
+                        elementos
+                        respecto a ellos.</p>
+                    <!-- boxes -->
+                    <div class="boxes__container boxes__container--yellow boxes__wrap">
+                        <p>flex container</p>
+                        <div class="boxes__item boxes__item--yellow  boxes__item--one">
+                            <p>flex item</p>
+                        </div>
+                        <div class="boxes__item boxes__item--yellow boxes__item--two">
+                            <p>flex item</p>
+                        </div>
+                    </div>
+                    <hr class="maincross-arrow__main">
+                    <hr class="maincross-arrow__cross">
+                    <!-- <hr class="arrow__cross"> -->
+                </div>
+            </section>
+
+            <!-- flexbox properties -->
+            <section class="box container">
+                <div class="box__back container__child">
+                    <!-- title -->
+                    <h3>Propiedades de Flexbox</h3>
+                    <!-- content -->
+                    <p class="container__description">Flexbox se divide en dos grupos de propiedades:</p>
+                    <ul>
+                        <li>Las propiedades para los elementos del flex-container</li>
+                        <li>Propiedades para los elementos de los flex-items</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- activate flexbox -->
+            <section class="box container">
+                <div class="box__back container__child">
+                    <!-- title -->
+                    <div class="container__title">
+                        <h3>Activar Flexbox:</h3>
+                        <span class="flag flag__container">flex container</span>
+                    </div>
+                    <!-- code -->
+                    <pre
+                        class="code"><span class="code__coments">/* ----- SINTAX ----- */</span><br /><span class="code__class">display:</span> flex;</pre>
+                </div>
+            </section>
+
+            <!-- flexbox - flex-direction -->
+            <section class="box container">
+                <div class="box__back container__child">
+                    <!-- title -->
+                    <div class="container__title">
+                        <h3># Flex direction:</h3>
+                        <span class="flag flag__container">flex container</span>
+                    </div>
+                    <!-- content -->
+                    <p class="container__description">Nos permite modificar la dirección de los elementos. Según el
+                        valor
+                        indicado, el main axis será:</p>
+                    <ul>
+                        <li><strong>row:</strong> <i>(por defectro)</i> horizontal, izquierda a derecha</li>
+                        <li><strong>row-reverse:</strong> horizontal, derecha a izquierda</li>
+                        <li><strong>column:</strong> vertical, de arriba hacia abajo </li>
+                        <li><strong>column-reverse:</strong> vertical, de abajo hacia arriba</li>
+                    </ul>
+                    <!-- code -->
+                    <pre
+                        class="code"><span class="code__coments">/* ----- SINTAX ----- */</span><br /><span class="code__class">flex-direction:</span> row;</pre>
+                    <!-- content -->
+                    <p class="container__description">Puedes probarlo aquí. Clicka en el logo de CodePen para editar:
+                    </p>
+                    <!-- codepen -->
+                    <iframe height="265" style="width: 100%;" scrolling="no" title="demo flexbox - flex-direction"
+                        src="https://codepen.io/skylabcoders/embed/mddyyNg?height=265&theme-id=0&default-tab=css,result"
+                        frameborder="no" allowtransparency="true" allowfullscreen="true">
+                        See the Pen <a href='https://codepen.io/skylabcoders/pen/mddyyNg'>demo flexbox -
+                            flex-direction</a> by manuel barzi
+                        (<a href='https://codepen.io/skylabcoders'>@skylabcoders</a>) on <a
+                            href='https://codepen.io'>CodePen</a>.
+                    </iframe>
+                </div>
+            </section>
+
+            <!-- flexbox - justify content -->
+            <section class="box container">
+                <div class="box__back container__child">
+                    <!-- title -->
+                    <div class="container__title">
+                        <h3># Justify content:</h3>
+                        <div>
+                            <span class="flag flag__main-axis">relativo al main axis</span>
+                            <span class="flag flag__container">flex container</span>
+                        </div>
+                    </div>
+                    <!-- content -->
+                    <p class="container__description">Alinea horizontalmente o verticalmente los elementos dependiendo
+                        de la
+                        orientación marcada por flex-direction:</p>
+                    <ul>
+                        <li><strong>flex-start:</strong> (por defecto) al inicio del main axis</li>
+                        <li><strong>flex-end:</strong> al final del main axis </li>
+                        <li><strong>center:</strong> al medio del main axis</li>
+                        <li><strong>space-around:</strong> calcula el espacio libre y lo distribuye alrededor de los
+                            flex-items</li>
+                        <li><strong>space-between:</strong> calcula el espacio libre y lo distribuye entre los
+                            flex-items</li>
+                    </ul>
+                    <!-- code -->
+                    <pre
+                        class="code"><span class="code__coments">/* ----- SINTAX ----- */</span><br /><span class="code__class">justify-content:</span> flex-start;</pre>
+                    <!-- content -->
+                    <p class="container__description">Puedes probarlo aquí. Clicka en el logo de CodePen para editar:
+                    </p>
+                    <!-- codepen -->
+                    <iframe height="265" style="width: 100%;" scrolling="no" title="demo flexbox - justify-content"
+                        src="https://codepen.io/skylabcoders/embed/Poowoqp?height=265&theme-id=0&default-tab=css,result"
+                        frameborder="no" allowtransparency="true" allowfullscreen="true">
+                        See the Pen <a href='https://codepen.io/skylabcoders/pen/Poowoqp'>demo flexbox -
+                            justify-content</a> by manuel barzi
+                        (<a href='https://codepen.io/skylabcoders'>@skylabcoders</a>) on <a
+                            href='https://codepen.io'>CodePen</a>.
+                    </iframe>
+                </div>
+            </section>
+
+            <!-- flexbox - align items -->
+            <section class="box container">
+                <div class="box__back container__child">
+                    <!-- title -->
+                    <div class="container__title">
+                        <h3># Align items:</h3>
+                        <div>
+                            <span class="flag flag__cross-axis">relativo al cross axis</span>
+                            <span class="flag flag__container">flex container</span>
+                        </div>
+                    </div>
+                    <!-- content -->
+                    <p class="container__description">Nos permite alinear los flex-items respecto al cross axis. Lo
+                        utilizamos
+                        cuando tenemos los elementos en una sola linea.</p>
+                    <ul>
+                        <li><strong>stretch:</strong>(default) los flex-items rellenan todo el espacio disponible en el
+                            cross
+                            axis (si no se
+                            ha definido su dimensión)</li>
+                        <li><strong>flex-start:</strong> al inicio del cross axis</li>
+                        <li><strong>center:</strong> al medio del main axis</li>
+                        <li><strong>space-around:</strong> calcula el espacio libre y lo distribuye alrededor de los
+                            flex-items</li>
+                        <li><strong>space-between:</strong> calcula el espacio libre y lo distribuye entre los
+                            flex-items</li>
+                    </ul>
+                    <p class="container__description">Nuevamente, recuerda que aunque de manera predeterminada, el cross
+                        axis es
+                        vertical, podría ser también horizontal, si así lo definimos en flex-direction. Así que también
+                        en este
+                        caso, es un error decir que align-items se usa para alineación vertical.</p>
+                    <!-- code -->
+                    <pre
+                        class="code"><span class="code__coments">/* ----- SINTAX ----- */</span><br /><span class="code__class">align-items:</span> stretch;</pre>
+                    <!-- content -->
+                    <p class="container__description">Puedes probarlo aquí. Clicka en el logo de CodePen para editar:
+                    </p>
+                    <!-- codepen -->
+                    <iframe height="265" style="width: 100%;" scrolling="no" title="demo flexbox - align-items"
+                        src="https://codepen.io/skylabcoders/embed/RwwNbdr?height=265&theme-id=0&default-tab=css,result"
+                        frameborder="no" allowtransparency="true" allowfullscreen="true">
+                        See the Pen <a href='https://codepen.io/skylabcoders/pen/RwwNbdr'>demo flexbox - align-items</a>
+                        by manuel barzi
+                        (<a href='https://codepen.io/skylabcoders'>@skylabcoders</a>) on <a
+                            href='https://codepen.io'>CodePen</a>.
+                    </iframe>
+                </div>
+            </section>
+
+            <!-- flexbox - flex wrap -->
+            <section class="box container">
+                <div class="box__back container__child">
+                    <!-- title -->
+                    <div class="container__title">
+                        <h3># Flex wrap:</h3>
+                        <span class="flag flag__container">flex container</span>
+                    </div>
+                    <!-- content -->
+                    <p class="container__description">Nos permite meter en la misma caja los elementos que deberían
+                        ocupar varias lineas. De esta manera los elementos se irán adecuando. dependiendo el tamaño de
+                        la pantalla. Podemos utilizar los siguientes valores:</p>
+                    <ul>
+                        <li><strong>no-wrap:</strong> si no cabe se van adecuando abajo</li>
+                        <li><strong>wrap</strong> cada uno de los elementos tiene un ancho dinámico</li>
+                        <li><strong>wrap-reverse:</strong> lo mismo pero los elemento se ordenan a la inversa</li>
+                    </ul>
+                    <!-- code -->
+                    <pre
+                        class="code"><span class="code__coments">/* ----- SINTAX ----- */</span><br /><span class="code__class">flex-wrap:</span> wrap-reverse;</pre>
+                    <!-- content -->
+                    <p class="container__description">Puedes probarlo aquí. Clicka en el logo de CodePen para editar:
+                    </p>
+                    <!-- codepen -->
+                    <iframe height="265" style="width: 100%;" scrolling="no" title="demo flexbox - flex-wrap"
+                        src="https://codepen.io/skylabcoders/embed/QWWwwRy?height=265&theme-id=0&default-tab=css,result"
+                        frameborder="no" allowtransparency="true" allowfullscreen="true">
+                        See the Pen <a href='https://codepen.io/skylabcoders/pen/QWWwwRy'>demo flexbox - flex-wrap</a>
+                        by manuel barzi
+                        (<a href='https://codepen.io/skylabcoders'>@skylabcoders</a>) on <a
+                            href='https://codepen.io'>CodePen</a>.
+                    </iframe>
+                </div>
+            </section>
+
+
+            <!-- flexbox - align content -->
+            <section class="box container">
+                <div class="box__back container__child">
+                    <!-- title -->
+                    <div class="container__title">
+                        <h3># Align content:</h3>
+                        <div>
+                            <span class="flag flag__cross-axis">relativo al cross axis</span>
+                            <span class="flag flag__container">flex container</span>
+                        </div>
+                    </div>
+                    <!-- content -->
+                    <p class="container__description">Con la propiedad align-content podemos distribuir el espacio
+                        disponible
+                        entre los elementos respecto al cross size:</p>
+                    <ul>
+                        <li><strong>flex-start:</strong> te ajusta los elementos arriba</li>
+                        <li><strong>flex-end:</strong> te ajusta os elementos abajo </li>
+                        <li><strong>center:</strong> te ajusta los elementos en el centro</li>
+                        <li><strong>space-around:</strong> ajusta los valores arriba y abajo dejando el espacio sobrante
+                            en el
+                            centro</li>
+                        <li><strong>space-between:</strong> ajusta los valores arriba y abajo dejando el espacio
+                            sobrante en el
+                            centro y dejando márgenes arriba y abajo</li>
+                        <li><strong>stretch:</strong> (por defecto) estira las lineas para ocupar todo el contenedor
+                        </li>
+                    </ul>
+                    <p class="container__description">Actua de la misma manera que el align-items, pero en este caso lo
+                        utilizaremos cuando tenemos más de una línea.</p>
+                    <!-- code -->
+                    <pre
+                        class="code"><span class="code__coments">/* ----- SINTAX ----- */</span><br /><span class="code__class">flex-wrap:</span> wrap;<br /><span class="code__class">align-content:</span> space-between;</pre>
+                    <!-- content -->
+                    <p class="container__description">Puedes probarlo aquí. Clicka en el logo de CodePen para editar:
+                    </p>
+                    <!-- codepen -->
+                    <iframe height="265" style="width: 100%;" scrolling="no" title="demo flexbox - align-content"
+                        src="https://codepen.io/skylabcoders/embed/MWWYgZG?height=265&theme-id=0&default-tab=css,result"
+                        frameborder="no" allowtransparency="true" allowfullscreen="true">
+                        See the Pen <a href='https://codepen.io/skylabcoders/pen/MWWYgZG'>demo flexbox -
+                            align-content</a> by manuel barzi
+                        (<a href='https://codepen.io/skylabcoders'>@skylabcoders</a>) on <a
+                            href='https://codepen.io'>CodePen</a>.
+                    </iframe>
+                </div>
+            </section>
+
+            <!-- flexbox - order -->
+            <section class="box container">
+                <div class="box__back container__child">
+                    <!-- title -->
+                    <div class="container__title">
+                        <h3># Order:</h3>
+                        <span class="flag flag__item">flex item</span>
+                    </div>
+                    <!-- content -->
+                    <p class="container__description">Nos permite modificar el orden de un elemento concreto dentro de
+                        la caja.
+                        Para ello debemos tener identificado dicho elemento, asignarle la propiedad order con un valor
+                        concreto, y
+                        al resto del elemento, asignarle la propiedad order con el resto:</p>
+                    <!-- code -->
+                    <pre
+                        class="code"><span class="code__coments">/* ----- SINTAX ----- */</span><br /><span class="code__class">order:</span> #;</pre>
+                    <!-- content -->
+                    <p class="container__description">Puedes probarlo aquí. Clicka en el logo de CodePen para editar:
+                    </p>
+                    <!-- codepen -->
+                    <iframe height="265" style="width: 100%;" scrolling="no" title="demo flexbox - order"
+                        src="https://codepen.io/skylabcoders/embed/JjjodWm?height=265&theme-id=0&default-tab=html,result"
+                        frameborder="no" allowtransparency="true" allowfullscreen="true">
+                        See the Pen <a href='https://codepen.io/skylabcoders/pen/JjjodWm'>demo flexbox - order</a> by
+                        manuel barzi
+                        (<a href='https://codepen.io/skylabcoders'>@skylabcoders</a>) on <a
+                            href='https://codepen.io'>CodePen</a>.
+                    </iframe>
+                </div>
+            </section>
+
+            <!-- flexbox - align self -->
+            <section class="box container">
+                <div class="box__back container__child">
+                    <!-- title -->
+                    <div class="container__title">
+                        <h3># Align self:</h3>
+                        <span class="flag flag__item">flex item</span>
+                    </div>
+                    <!-- content -->
+                    <p class="container__description">Nos permite alinear un flex-item concreto.</p>
+                    <ul>
+                        <li><strong>flex-start:</strong> Pega el elemento arriba</li>
+                        <li><strong>flex-end:</strong> pega el elemento abajo</li>
+                        <li><strong>center:</strong> sitúa el elemento en el centro</li>
+                        <li><strong>baseline:</strong> alinea el flex-item con el contenido del mismo</li>
+                        <li><strong>stretch:</strong> el flex-item rellena todo el espacio vertical, muy útil por
+                            ejemplo para un
+                            aside.
+                        </li>
+                    </ul>
+                    <!-- code -->
+                    <pre
+                        class="code"><span class="code__coments">/* ----- SINTAX ----- */</span><br /><span class="code__class">align-self:</span> #;</pre>
+                    <!-- content -->
+                    <p class="container__description">Puedes probarlo aquí. Clicka en el logo de CodePen para editar:
+                    </p>
+                    <!-- codepen -->
+                    <iframe height="265" style="width: 100%;" scrolling="no" title="demo flexbox - align-self"
+                        src="https://codepen.io/skylabcoders/embed/BaayBEW?height=265&theme-id=0&default-tab=css,result"
+                        frameborder="no" allowtransparency="true" allowfullscreen="true">
+                        See the Pen <a href='https://codepen.io/skylabcoders/pen/BaayBEW'>demo flexbox - align-self</a>
+                        by manuel barzi
+                        (<a href='https://codepen.io/skylabcoders'>@skylabcoders</a>) on <a
+                            href='https://codepen.io'>CodePen</a>.
+                    </iframe>
+                </div>
+            </section>
+
+            <!-- flexbox - flex grow -->
+            <section class="box container">
+                <div class="box__back container__child">
+                    <!-- title -->
+                    <div class="container__title">
+                        <h3># Flex grow:</h3>
+                        <div>
+                            <span class="flag flag__relation">shorthand: flex</span>
+                            <span class="flag flag__item">flex item</span>
+                        </div>
+                    </div>
+                    <!-- content -->
+                    <p class="container__description">Esta propiedad especifica cuánto debe crecer nuestros flex-items
+                        al rellenar el espacio sobrante. Se especifica la proporción de crecimiento respecto a al resto
+                        de flex-items. para el siguiente CSS.</p>
+                    <!-- code -->
+                    <pre
+                        class="code"><span class="code__coments">/* ----- SINTAX ----- */</span><br /><span class="code__class">flex-grow:</span> #;</pre>
+                    <!-- content -->
+                    <p class="container__description">Puedes probarlo aquí. Clicka en el logo de CodePen para editar:
+                    </p>
+                    <!-- codepen -->
+                    <iframe height="265" style="width: 100%;" scrolling="no" title="demo flexbox - flex-grow"
+                        src="https://codepen.io/skylabcoders/embed/ZEEYEYq?height=265&theme-id=0&default-tab=css,result"
+                        frameborder="no" allowtransparency="true" allowfullscreen="true">
+                        See the Pen <a href='https://codepen.io/skylabcoders/pen/ZEEYEYq'>demo flexbox - flex-grow</a>
+                        by manuel barzi
+                        (<a href='https://codepen.io/skylabcoders'>@skylabcoders</a>) on <a
+                            href='https://codepen.io'>CodePen</a>.
+                    </iframe>
+                </div>
+            </section>
+
+            <!-- flexbox - flex shrink -->
+            <section class="box container">
+                <div class="box__back container__child">
+                    <!-- title -->
+                    <div class="container__title">
+                        <h3># Flex shrink:</h3>
+                        <div>
+                            <span class="flag flag__relation">shorthand: flex</span>
+                            <span class="flag flag__item">flex item</span>
+                        </div>
+                    </div>
+                    <!-- content -->
+                    <p class="container__description">Al contrario que la anterior propiedad, aquí marcamos cuánto debe
+                        encoger nuestros flex-items al rellenar el espacio sobrante. También se especifica la proporción
+                        de encogimiento respecto al resto de flex-items.</p>
+                    <!-- code -->
+                    <pre
+                        class="code"><span class="code__coments">/* ----- SINTAX ----- */</span><br /><span class="code__class">flex-shrink:</span> #;</pre>
+                    <!-- content -->
+                    <p class="container__description">Puedes probarlo aquí. Clicka en el logo de CodePen para editar:
+                    </p>
+                    <!-- codepen -->
+                    <iframe height="265" style="width: 100%;" scrolling="no" title="demo flexbox - flex-shrink"
+                        src="https://codepen.io/skylabcoders/embed/MWWYWgq?height=265&theme-id=0&default-tab=css,result"
+                        frameborder="no" allowtransparency="true" allowfullscreen="true">
+                        See the Pen <a href='https://codepen.io/skylabcoders/pen/MWWYWgq'>demo flexbox - flex-shrink</a>
+                        by manuel barzi
+                        (<a href='https://codepen.io/skylabcoders'>@skylabcoders</a>) on <a
+                            href='https://codepen.io'>CodePen</a>.
+                    </iframe>
+                </div>
+            </section>
+
+            <!-- flexbox - flex basis -->
+            <section class="box container">
+                <div class="box__back container__child">
+                    <!-- title -->
+                    <div class="container__title">
+                        <h3># Flex basis:</h3>
+                        <div>
+                            <span class="flag flag__relation">shorthand: flex</span>
+                            <span class="flag flag__item">flex item</span>
+                        </div>
+                    </div>
+                    <!-- content -->
+                    <p class="container__description">La propiedad flex-basis, como su nombre lo indica, define el main
+                        size base (tamaño base principal) para un flex-item. Cuando hablamos de main size base no
+                        especifica que necesariamente será su tamaño al dibujarse por el navegador, pero que será un
+                        punto de partida para calcular el tamaño final. En otras palabras, si el main axis es horizontal
+                        (predeterminado), flex-basis será equivalente a width; y si el main axis es vertical, flex-basis
+                        será equivalente a height. Ten en cuenta que el tamaño definido por flex-basis es, como su
+                        nombre lo dice, el tamaño base. Es decir, que podrá variar (crecer o encogerse), según los
+                        valores de flex-grow y flex-shrink que veremos más adelante. Importante:</p>
+                    <ul>
+                        <li>flex-basis siempre gana sobre el valor de width o height</li>
+                        <li>Si no se define el valor de flex-basis o se establece en auto, se tomará en cuenta el valor
+                            de width o height según sea el caso</li>
+                        <li>Si no se define un valor para flex-basis y tampoco se especifica el tamaño por width o
+                            height, se definirá el main-size según su contenido</li>
+                    </ul>
+                    <!-- code -->
+                    <pre
+                        class="code"><span class="code__coments">/* ----- SINTAX ----- */</span><br /><span class="code__class">flex-basis:</span> #;</pre>
+                    <!-- content -->
+                    <p class="container__description">Puedes probarlo aquí. Clicka en el logo de CodePen para editar:
+                    </p>
+                    <!-- codepen -->
+                    <iframe height="265" style="width: 100%;" scrolling="no" title="demo flexbox - flex-basis"
+                        src="https://codepen.io/skylabcoders/embed/bGGNbyR?height=265&theme-id=0&default-tab=css,result"
+                        frameborder="no" allowtransparency="true" allowfullscreen="true">
+                        See the Pen <a href='https://codepen.io/skylabcoders/pen/bGGNbyR'>demo flexbox - flex-basis</a>
+                        by manuel barzi
+                        (<a href='https://codepen.io/skylabcoders'>@skylabcoders</a>) on <a
+                            href='https://codepen.io'>CodePen</a>.
+                    </iframe>
+                </div>
+            </section>
+
+            <!-- flexbox - flex  (shorthand) -->
+            <section class="box container">
+                <div class="box__back container__child">
+                    <!-- title -->
+                    <div class="container__title">
+                        <h3># (shorthand) Flex:</h3>
+                        <div>
+                            <span class="flag flag__relation">!!shorthand</span>
+                            <span class="flag flag__item">flex item</span>
+                        </div>
+                    </div>
+                    <!-- content -->
+                    <p class="container__description">Es el shorthand (propiedad abreviada) para flex-grow, flex-shrink
+                        y
+                        flex-basis (en ese orden específico).</p>
+                    <!-- code -->
+                    <pre
+                        class="code"><span class="code__coments">/* ----- SINTAX ----- */</span><br /><span class="code__class">flex:</span> 1 0 200px;</pre>
+                    <!-- content -->
+                    <p class="container__description">Puedes probarlo aquí. Clicka en el logo de CodePen para editar:
+                    </p>
+                    <!-- codepen -->
+                    <iframe height="265" style="width: 100%;" scrolling="no" title="demo flexbox - flex"
+                        src="https://codepen.io/skylabcoders/embed/rNNaBbq?height=265&theme-id=0&default-tab=css,result"
+                        frameborder="no" allowtransparency="true" allowfullscreen="true">
+                        See the Pen <a href='https://codepen.io/skylabcoders/pen/rNNaBbq'>demo flexbox - flex</a> by
+                        manuel barzi
+                        (<a href='https://codepen.io/skylabcoders'>@skylabcoders</a>) on <a
+                            href='https://codepen.io'>CodePen</a>.
+                    </iframe>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>
