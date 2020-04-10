@@ -1,0 +1,48 @@
+body{
+	background-color: rgba(0,0,0,.1);
+	font: 1.1rem sans-serif;
+	
+	color: white;
+}
+
+img {
+  width: 50%;
+  display: block;
+  margin: 0 auto;
+}
+h3 {
+  color: black;
+}
+
+.info {
+  color: black;
+  font-size: 0.9rem;
+}
+
+.grid-item{
+	padding: 1.5rem;
+	border-radius: .3rem;
+	background-color: #E92763;
+}
+/*****************************/
+.grid{
+  display: grid;
+  gap: 0.4%;
+  grid-template-columns: [start] minmax(200px, 20%) [main] 1fr [end];
+  grid-template-rows:
+    [header] minmax(4rem, auto) [main] 400px [footer] minmax(4rem, auto) [end];
+}
+.header{
+  grid-column: start/end;
+}
+.footer{
+  grid-column: start/end;
+}
+
+@media screen and (max-width: 500px){
+  .grid{
+    grid-template-columns: [start] 1fr [end];
+    grid-template-rows: [start] minmax(4rem, auto) [sidebar] 5% [main] 25rem [footer] minmax(4rem, auto) [end]
+  }
+}
+  

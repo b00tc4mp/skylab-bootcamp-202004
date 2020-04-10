@@ -1,0 +1,233 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 10px auto;
+  width: 700px;
+  font-family: "Lato";
+  text-align: center;
+}
+
+h2 {
+  margin: 25px;
+  margin-bottom: 50px;
+  font-size: 2em;
+}
+
+.container-center {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+
+  font-family: "Lato";
+  text-align: center;
+  font-size: 1.4em;
+  margin: 3%;
+  background-color: chartreuse;
+
+  justify-items: center;
+}
+
+.item {
+  width: 100px;
+  
+  font-size: 1.5em;
+  border: 1px solid black;
+}
+
+.a {
+  background: lightgreen;
+  grid-area: 1/1/2/2;
+}
+
+.b {
+  background: lightgreen;
+  grid-area: 1/2/2/3;
+}
+
+.c {
+  background: orange;
+  grid-area: 2/1/3/2;
+}
+
+.d {
+  background: orange;
+  grid-area: 2/2/3/3;
+}
+
+.container-start {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+
+  font-family: "Lato";
+  text-align: center;
+  font-size: 1.4em;
+  margin: 3%;
+  background-color: chartreuse;
+
+  justify-items: start;
+}
+
+.e {
+  background: lightgreen;
+  grid-area: 1/1/2/2;
+}
+
+.f {
+  background: lightgreen;
+  grid-area: 1/2/2/3;
+}
+
+.g {
+  background: orange;
+  grid-area: 2/1/3/2;
+}
+
+.h {
+  background: orange;
+  grid-area: 2/2/3/3;
+}
+
+
+.container-end {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+
+  font-family: "Lato";
+  text-align: center;
+  font-size: 1.4em;
+  margin: 3%;
+  background-color: chartreuse;
+
+  justify-items: end;
+}
+.i {
+  background: lightgreen;
+  grid-area: 1/1/2/2;
+}
+
+.j {
+  background: lightgreen;
+  grid-area: 1/2/2/3;
+}
+
+.k {
+  background: orange;
+  grid-area: 2/1/3/2;
+}
+
+.l {
+  background: orange;
+  grid-area: 2/2/3/3;
+}
+
+
+.container-align-center {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  height: 400px;
+  font-family: "Lato";
+  text-align: center;
+  font-size: 1.4em;
+  margin: 3%;
+  background-color: yellow;
+
+  justify-items: center;
+  align-items: center;
+}
+
+.m {
+  background: lightgreen;
+  grid-area: 1/1/2/2;
+}
+
+.n {
+  background: lightgreen;
+  grid-area: 1/2/2/3;
+}
+
+.o {
+  background: orange;
+  grid-area: 2/1/3/2;
+}
+
+.p {
+  background: orange;
+  grid-area: 2/2/3/3;
+}
+
+.container-align-start {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  height: 400px;
+  font-family: "Lato";
+  text-align: center;
+  font-size: 1.4em;
+  margin: 3%;
+  background-color: yellow;
+
+  justify-items: center;
+  align-items: flex-start;
+}
+
+.q {
+  background: lightgreen;
+  grid-area: 1/1/2/2;
+}
+
+.r {
+  background: lightgreen;
+  grid-area: 1/2/2/3;
+}
+
+.s {
+  background: orange;
+  grid-area: 2/1/3/2;
+}
+
+.t {
+  background: orange;
+  grid-area: 2/2/3/3;
+}
+
+.container-align-stretch {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  height: 400px;
+  font-family: "Lato";
+  text-align: center;
+  font-size: 1.4em;
+  margin: 3%;
+  background-color: yellow;
+
+  justify-items: center;
+  align-items: stretch;
+}
+
+.u {
+  background: lightgreen;
+  grid-area: 1/1/2/2;
+}
+
+.v {
+  background: lightgreen;
+  grid-area: 1/2/2/3;
+}
+
+.w {
+  background: orange;
+  grid-area: 2/1/3/2;
+}
+
+.x {
+  background: orange;
+  grid-area: 2/2/3/3;
+}
