@@ -43,3 +43,20 @@ function isOneOfTheseTags(element, tags) {
 }
 
 extractSemanticHtml(document, 0)
+
+
+
+"terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
+"terminal.integrated.env.windows": {
+"CMDER_ROOT": "C:\\Users\\polpe\\Desktop\\escritorio\\skylab\\programas\\cmder"
+ },
+"terminal.integrated.shellArgs.windows": [
+"/k",
+"C:\\Users\\polpe\\Desktop\\escritorio\\skylab\\programas\\cmder\\vendor\\bin\\vscode_init.cmd"
+],
+"[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+},
+"[json]": {
+
+},
