@@ -1,3 +1,9 @@
+body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
 .mozaic {
     height: 100%;
     display: flex;
@@ -5,8 +11,8 @@
 }
 
 .box {
-    width: 100px;
-    height: 100px;
+    width: calc(50% - 40px);
+    height: calc(200px - 40px);
     margin: 10px;
     border: 10px solid black;
     font-family: sans-serif; 
@@ -19,6 +25,7 @@
 
 .one {
     background-color: blue;
+    width: 100%;
 }
 
 .two {
