@@ -1,0 +1,103 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+body {
+    min-width: 370px;
+    width: 100%;
+    color: cornsilk;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas: "one one" "two three" "four five" "six seven" "eight nine";
+}
+
+body div div {
+    border: 2px solid black;
+    height: 150px;
+    border-radius: 50px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.one {
+    grid-area: one;
+    background-color: red;
+    position: sticky;
+    top: 0;
+}
+
+.two {
+    grid-area: two;
+    background-color: green;
+}
+
+.three {
+    grid-area: three;
+    background-color: yellow;
+}
+
+.four {
+    grid-area: four;
+    background-color: blue;
+}
+
+.five {
+    grid-area: five;
+    background-color: purple;
+}
+
+.six {
+    grid-area: six;
+    background-color: orange;
+}
+
+.seven {
+    grid-area: seven;
+    background-color: silver;
+}
+
+.eight {
+    grid-area: eight;
+    background-color: pink;
+}
+
+.nine {
+    grid-area: nine;
+    background-color: cornflowerblue;
+}
+
+@media screen and (min-width: 600px) {
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-areas: "one two three" "four five six" "seven eight nine";
+    }
+    .one {
+        position: relative;
+ 
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        grid-template-areas: "one one one one one one one one one one one one" "two two two two three three three three four four four four" "five five five six six six seven seven seven eight eight eight" "nine nine nine nine nine nine nine nine nine nine nine nine";
+    }
+    .nine {
+        position: sticky;
+        bottom: 0;
+    }
+}
