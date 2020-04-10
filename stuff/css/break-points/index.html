@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            box-sizing: border-box;
+            color: white;
+        }
+
+        body {
+            height: 100vh;
+        }
+
+        header,
+        footer {
+            height: 10%;
+            background-color: red;
+        }
+
+        section {
+            height: 80%;
+        }
+
+        nav,
+        aside {
+            height: 15%;
+        }
+
+        nav {
+            background-color: green;
+        }
+
+        aside {
+            background-color: yellow;
+            color: black;
+        }
+
+        main {
+            height: 70%;
+            background-color: blue;
+        }
+
+        @media only screen and (min-width: 768px) {
+
+            nav,
+            aside {
+                float: left;
+                width: 20%;
+            }
+
+            nav,
+            aside {
+                height: 50%;
+            }
+
+            aside {
+                clear: left;
+            }
+
+            main {
+                width: 80%;
+                height: 100%;
+                float: right;
+            }
+        }
+
+        @media only screen and (min-width: 992px) {
+            aside {
+                clear: none;
+                float: right;
+            }
+
+            nav, aside {
+                height: 100%;
+            }
+
+            main {
+                float: left;
+                width: 60%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>HEADER</header>
+    <section>
+        <nav>NAV</nav>
+        <main>MAIN</main>
+        <aside>ASIDE</aside>
+    </section>
+    <footer>FOOTER</footer>
+
+    <!-- 
+        - Mobile
+
+        HEADER
+        ------------------
+        NAV   
+        ------------------
+        MAIN
+        ------------------
+        ASIDE
+        ------------------
+        FOOTER
+
+        - Tablet
+
+        HEADER
+        ------------------
+        NAV   |
+        -------   MAIN
+        ASIDE |
+        ------------------
+        FOOTER
+
+        - Desktop
+
+        HEADER
+        ------------------
+        NAV | MAIN | ASIDE
+        ------------------
+        FOOTER
+    -->
+</body>
+
+</html>
