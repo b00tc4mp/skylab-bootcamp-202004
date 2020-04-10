@@ -1,0 +1,119 @@
+﻿* {
+  margin: 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+body {
+  min-width: 370px;
+  background-color: rgb(59, 161, 161);
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 35px;
+}
+
+body div div {
+  border: 2px solid white;
+  height: 20vh;
+  border-radius: 10px;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  gap: 1px 1px;
+  grid-template-areas: 
+  "one one" 
+  "two three"
+  "four five" 
+  "six seven" 
+  "eight nine";
+}
+
+.one {
+  grid-area: one;
+  background-color: rgb(134, 29, 103);
+  position: sticky;
+  top: 0;
+}
+
+.two {
+  grid-area: two;
+  background-color: rgb(255, 104, 78);
+}
+
+.three {
+  grid-area: three;
+  background-color: rgb(194, 99, 83);
+}
+
+.four {
+  grid-area: four;
+  background-color: rgb(184, 122, 111);
+}
+
+.five {
+  grid-area: five;
+  background-color: rgb(235, 90, 186);
+}
+
+.six {
+  grid-area: six;
+  background-color: rgb(209, 87, 169);
+}
+
+.seven {
+  grid-area: seven;
+  background-color: rgb(194, 120, 169);
+}
+
+.eight {
+  grid-area: eight;
+  background-color: rgb(196, 145, 179);
+}
+
+.nine {
+  grid-area: nine;
+  background-color: rgb(209, 226, 112);
+}
+
+@media only screen and (min-width: 600px) {
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 1px 1px;
+    grid-template-areas: 
+    "one two three" 
+    "four five six" 
+    "seven eight nine";
+  }
+  .one {
+    position: relative;
+  }
+}
+
+@media only screen and (min-width: 961px) {
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 1px 1px;
+    grid-template-areas:
+    "one one one one one one one one one one one one" 
+    "two two two two three three three three four four four four" 
+    "five five five six six six seven seven seven eight eight eight"
+    "nine nine nine nine nine nine nine nine nine nine nine nine";
+  }
+  .nine {
+    position: sticky;
+    bottom: 0;
+  }
+}

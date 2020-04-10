@@ -1,0 +1,186 @@
+*{
+     box-sizing: border-box;
+     margin: 0px;
+     margin-top: 0px;
+     margin-right: -4px;
+     padding: 0px;
+}
+.element{
+    width: 33vw;
+    height: 33vh;
+    background-color: red;
+    display: inline-block;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+#element-1{
+    position: sticky;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 20vh;
+}
+#element-2{
+    width: 50%;
+    height: 40vh;
+}
+#element-3{
+    width: 50%;
+    height: 40vh;
+    margin: 0px;
+}
+#element-4{
+    width: 50%;
+    height: 40vh;
+}
+#element-5{
+    width: 50%;
+    height: 40vh;
+    margin: 0px;
+}
+#element-6{
+    width: 50%;
+    height: 40vh;
+}
+#element-7{
+    width: 50%;
+    height: 40vh;
+    margin: 0px;
+}
+#element-8{
+    width: 50%;
+    height: 40vh;
+}
+#element-9{
+    width: 50%;
+    height: 40vh;
+    margin: 0px;
+}
+/* cuando la pantalla es de tablet*/
+@media only screen and (min-width: 768px) {
+    *{
+        box-sizing: border-box;
+        padding: 0px;
+    }
+   .element{
+    width: 33vw;
+    height: 33vh;
+    background-color: blue;
+    display: inline-block;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    }
+    #element-1{
+        position: relative;
+        width: 33.333%;
+        height: 33vh;
+        margin-left: 0px;
+    }
+    #element-2{
+        width: 33.333%;
+        height: 33vh;
+        margin-right: -4px;
+    }
+    #element-3{
+        width: 33.333%;
+        height: 33vh;
+        margin-right: -4px;
+    }
+    #element-4{
+        width: 33.333%;
+        height: 33vh;
+    }
+    #element-5{
+        width: 33.333%;
+        height: 33vh;
+        margin-right: -4px;
+    }
+    #element-6{
+        width: 33.333%;
+        height: 33vh;
+        margin: 0px;
+    }
+    #element-7{
+        width: 33.333%;
+        height: 33vh;
+        margin-right: -4px;
+    }
+    #element-8{
+        width: 33.333%;
+        height: 33vh;
+        margin-right: -4px;
+    }
+    #element-9{
+        width: 33.333%;
+        height: 33vh;
+        margin: 0px;
+    }
+}
+/* cuando es un ordenador*/
+@media only screen and (min-width: 992px) {
+    *{
+        box-sizing: border-box;
+        margin-left: 0;
+        padding: 0px;
+    }
+   .element{
+    width: 33vw;
+    height: 33vh;
+    background-color: green;
+    display: inline-block;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    }
+    #element-1{
+        width: 100%;
+        height: 33vh;
+        margin-right: -4px;
+    }
+    #element-2{
+        width: 33.333%;
+        height: 50vh;
+        margin-right: -4px;
+    }
+    #element-3{
+        width: 33.333%;
+        height: 50vh;
+        margin-right: -4px;
+        
+    }
+    #element-4{
+        width: 33.333%;
+        height: 50vh;
+        margin-right: -4px;
+    }
+    #element-5{
+        width: 25%;
+        height: 50vh;
+    }
+    #element-6{
+        width: 25%;
+        height: 50vh;
+        margin-right: -4px;
+    }
+    #element-7{
+        width: 25%;
+        height: 50vh;
+    }
+    #element-8{
+        width: 25%;
+        height: 50vh;
+        margin-right: -4px;
+    }
+    #element-9{
+        width: 100%;
+        height: 33vh;
+        margin-right: -4px;
+        position: sticky;
+        bottom: 0;
+        right: 0;
+    }
+}
+
