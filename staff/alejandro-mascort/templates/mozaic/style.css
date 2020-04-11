@@ -1,0 +1,110 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    height: 100vh;
+}
+
+.grid-container {
+    border: 5px solid black;
+    display: grid;
+    height: 100%;
+    grid-gap: 5px;
+    background-color: black;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-areas: 
+    "n1 n1"
+    "n2 n3"
+    "n4 n5"
+    "n6 n7"
+    "n8 n9";
+}
+
+
+@media only screen and (min-width: 600px) {
+    /* For tablets: */
+    .grid-container {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-areas: 
+        "n1 n2 n3"
+        "n4 n5 n6"
+        "n7 n8 n9";
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    /* For desktops: */
+    .grid-container {
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-rows: repeat(4, 1fr); 
+        grid-template-areas: 
+        "n1 n1 n1 n1 n1 n1 n1 n1 n1 n1 n1 n1"
+        "n2 n2 n2 n2 n3 n3 n3 n3 n4 n4 n4 n4" 
+        "n5 n5 n5 n6 n6 n6 n7 n7 n7 n8 n8 n8" 
+        "n9 n9 n9 n9 n9 n9 n9 n9 n9 n9 n9 n9"; 
+    }    
+}
+
+.red {
+    background-color: red;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.white {
+    background-color: white;
+}
+
+.green {
+    background-color: green;
+}
+
+.orange {
+    background-color: orange;
+}
+
+#n1 {
+    grid-area: n1;
+}
+
+#n2 {
+    grid-area: n2;
+}
+
+#n3 {
+    grid-area: n3;
+}
+
+#n4 {
+    grid-area: n4;
+}
+
+#n5 {
+    grid-area: n5;
+}
+
+#n6 {
+    grid-area: n6;
+}
+
+#n7 {
+    grid-area: n7;
+}
+
+#n8 {
+    grid-area: n8;
+}
+
+#n9 {
+    grid-area: n9;
+}
