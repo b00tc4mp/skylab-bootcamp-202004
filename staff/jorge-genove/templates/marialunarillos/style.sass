@@ -1,5 +1,147 @@
+/** variables **/
+$my-border: 1px solid red
+$my-width: 100%
+$my-section-color: green    
+*
+    padding: 0
+    margin: 0
+    
+    /** top nav bar **/
 .fixed-navigation-bar
     background-color: blue
-    width: 500px
+    width: $my-width
+    height: 50px
+    border: $my-border
+    display: flex
+    
+    &__user
+        height: 50px
+        width: 158px
+        margin-left: 15%
+        display: flex
+        justify-content: center
+        align-items: center
+    &__icons
+        height: 140px
+        width: 232px
+        display: flex
+        margin-left: 25%
+        flex-direction: row
+        justify-content: space-around
+    
+    &__menu
+        background-color: red
+        height: 140px
+        width: 80px
+       
+        
+     
+       
+    &__menu--blue
+        background-color: blue 
+        height: 70px
+        width: 70px
+        
+        
+    &__menu--yellow
+        background-color: purple
+        height: 70px
+        width: 70px
+    
+    &__social
+        display: flex
+        list-style: none 
+        justify-content: space-around
+        align-items: center
+        height: 35px
+        width: 275px
+        margin-top: 8px
+        
+        
+    &__twitter
+        display: inline 
+    &__facebook
+        display: inline
+        margin-left: 15px  
+    &__pinterest
+        display: inline
+        
+    &__instagram
+        display: inline
+        margin-left: 15%
+    &__youtube
+        display: inline
+        margin-left: 15%
+        
+             
+
+/** header **/
+.header
+    background-color: yellow
+    width: $my-width
+    height: 250px
+    border: $my-border
+
+/** slider **/
+.slider-bar
+    background-color: orange
+    width: $my-width
     height: 500px
-    border: 4px solid red
+    border: $my-border
+    position: relative
+    margin-top: 40px
+.slider-bar__nav
+    background-color: brown
+    width: $my-width
+    height: 18px
+    position: relative
+    margin-top: 18px  
+
+/** sections **/
+    
+=sections   
+    background-color: $my-section-color
+    display: grid
+    width: $my-width
+    margin-top: 150px
+
+.utensils
+    +sections
+    height: 2285px
+    
+.ingredients
+    +sections
+    height: 1655px
+.partys
+    +sections
+    height: 1025px
+.blog
+    +sections
+    height: 1137px
+.brands
+    +sections
+    height: 878px
+   
+/** navigation bar bottom **/
+
+.navigation-bar-bottom
+    width: $my-width
+    height: 215px
+    margin-top: 150px
+    background-color: red
+
+/** footer navigation **/
+
+.footer-navigation
+    width: $my-width
+    height: 257px
+    background-color: purple
+    padding-top: 20px
+
+.footer-navigation__copyrigth
+    width: $my-width
+    height: 50px
+    background-color: pink
+    margin-top: 257px
+    
+        

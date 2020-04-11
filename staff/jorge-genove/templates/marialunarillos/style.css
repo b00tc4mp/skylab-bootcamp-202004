@@ -1,8 +1,164 @@
+/** variables **/
+* {
+  padding: 0;
+  margin: 0;
+  /** top nav bar **/
+}
+
 .fixed-navigation-bar {
   background-color: blue;
-  width: 500px;
+  width: 100%;
+  height: 50px;
+  border: 1px solid red;
+  display: flex;
+}
+.fixed-navigation-bar__user {
+  height: 50px;
+  width: 158px;
+  margin-left: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fixed-navigation-bar__icons {
+  height: 140px;
+  width: 232px;
+  display: flex;
+  margin-left: 25%;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.fixed-navigation-bar__menu {
+  background-color: red;
+  height: 140px;
+  width: 80px;
+}
+.fixed-navigation-bar__menu--blue {
+  background-color: blue;
+  height: 70px;
+  width: 70px;
+}
+.fixed-navigation-bar__menu--yellow {
+  background-color: purple;
+  height: 70px;
+  width: 70px;
+}
+.fixed-navigation-bar__social {
+  display: flex;
+  list-style: none;
+  justify-content: space-around;
+  align-items: center;
+  height: 35px;
+  width: 275px;
+  margin-top: 8px;
+}
+.fixed-navigation-bar__twitter {
+  display: inline;
+}
+.fixed-navigation-bar__facebook {
+  display: inline;
+  margin-left: 15px;
+}
+.fixed-navigation-bar__pinterest {
+  display: inline;
+}
+.fixed-navigation-bar__instagram {
+  display: inline;
+  margin-left: 15%;
+}
+.fixed-navigation-bar__youtube {
+  display: inline;
+  margin-left: 15%;
+}
+
+/** header **/
+.header {
+  background-color: yellow;
+  width: 100%;
+  height: 250px;
+  border: 1px solid red;
+}
+
+/** slider **/
+.slider-bar {
+  background-color: orange;
+  width: 100%;
   height: 500px;
-  border: 4px solid red;
+  border: 1px solid red;
+  position: relative;
+  margin-top: 40px;
+}
+
+.slider-bar__nav {
+  background-color: brown;
+  width: 100%;
+  height: 18px;
+  position: relative;
+  margin-top: 18px;
+}
+
+/** sections **/
+.utensils {
+  background-color: green;
+  display: grid;
+  width: 100%;
+  margin-top: 150px;
+  height: 2285px;
+}
+
+.ingredients {
+  background-color: green;
+  display: grid;
+  width: 100%;
+  margin-top: 150px;
+  height: 1655px;
+}
+
+.partys {
+  background-color: green;
+  display: grid;
+  width: 100%;
+  margin-top: 150px;
+  height: 1025px;
+}
+
+.blog {
+  background-color: green;
+  display: grid;
+  width: 100%;
+  margin-top: 150px;
+  height: 1137px;
+}
+
+.brands {
+  background-color: green;
+  display: grid;
+  width: 100%;
+  margin-top: 150px;
+  height: 878px;
+}
+
+/** navigation bar bottom **/
+.navigation-bar-bottom {
+  width: 100%;
+  height: 215px;
+  margin-top: 150px;
+  background-color: red;
+}
+
+/** footer navigation **/
+.footer-navigation {
+  width: 100%;
+  height: 257px;
+  background-color: purple;
+  padding-top: 20px;
+}
+
+.footer-navigation__copyrigth {
+  width: 100%;
+  height: 50px;
+  background-color: pink;
+  margin-top: 257px;
 }
 
 /*# sourceMappingURL=style.css.map */
