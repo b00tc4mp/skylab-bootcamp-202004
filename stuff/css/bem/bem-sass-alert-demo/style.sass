@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Lobster:wght@400;600&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite:wght@400;600&display=swap')
+
+$danger-border-color: crimson
+$alert-border: .3rem solid deepskyblue
+
+=shadow-border($size, $color)
+  box-shadow: 0 0 0 $size $color
+
+*
+  font-size: 20px
+  font-family: Raleway
+
+/* alert */
+
+.alert
+  border: $alert-border
+  border-radius: 1rem
+  background-color: skyblue
+  padding: .5rem
+
+  &__title
+    color: dodgerblue
+
+  &__body
+    font-size: .75rem
+    color: black
+
+  &--danger
+    border-color: $danger-border-color
+    background-color: lightsalmon
+
+  &--danger &__title
+    color: red
+
+/* my-panel */
+
+.my-panel
+  background-color: red
+    // border: 1rem solid $danger-border-color
+  border-radius: 1rem
+  +shadow-border(1rem, $danger-border-color)
+  
+  margin: 2rem
+
+  &__content
+    font-family: Lobster
+    color: white
+    padding: 1rem
+
+    &--formal
+      font-family: Special Elite
+
+/* my-notifications */
+
+.my-notifications
+  display: flex
+  list-style: none
+  padding: 1rem
+  justify-content: center
+  background-color: rgba(200, 200, 200, 0.5)
+  align-items: center
+  border-radius: 1rem
+
+  &__item
+    margin: .25rem
+    text-align: center
+
+  &__item-title
+    color: gray
+
+    &--clown:hover:after
+      content: " 🤡"
