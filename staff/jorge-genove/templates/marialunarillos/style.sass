@@ -2,6 +2,8 @@
 $my-border: 1px solid red
 $my-width: 100%
 $my-section-color: green    
+li 
+    list-style: none
 *
     padding: 0
     margin: 0
@@ -11,7 +13,6 @@ $my-section-color: green
     background-color: blue
     width: $my-width
     height: 50px
-    border: $my-border
     display: flex
     
     &__user
@@ -62,40 +63,110 @@ $my-section-color: green
         display: inline 
     &__facebook
         display: inline
-        margin-left: 15px  
     &__pinterest
         display: inline
-        
     &__instagram
         display: inline
-        margin-left: 15%
     &__youtube
         display: inline
-        margin-left: 15%
+    &__buy
+        display: flex
+        height: 50px
+        width: 50px
+        margin-left: 8%
+        justify-content: center
+        align-items: center
+    &__number
+        height: 50px
+        width: 50px   
+        background-color: red
+        display: flex
+        justify-content: center
+        align-items: center
         
-             
+.link-text
+    display: inline
+    margin-left: 54%
+    &__blog
+        display: inline
+        margin-left: 79px
+    &__partys
+        display: inline
+        margin-left: 2%
+    &__brands
+        display: inline
+        margin-left: 3%
+    &__ingredients
+        display: inline
+        margin-left: 30px
+               
 
 /** header **/
-.header
+button
+    height: 28px
+    position: absolute
+    margin-top: 2%
+.header-container
     background-color: yellow
     width: $my-width
     height: 250px
-    border: $my-border
+    display: flex
+    justify-content: end
+    
+    &__main-menu
+        width: 1080px
+        height: 218px
+        display: flex
+        background-color: blue
+        align-self: end
+        margin-right: 18%
+        justify-content: end
+    &__text-box
+        height: 28px
+        width: 248px
+        position: absolute
+        margin-top: 2%
+        margin-right: 46px
+    &__blog      
+        height: 100px
+        width: 100px
+        background-color: purple
+        align-self: end 
+    &__logo 
+        margin-right: auto  
+    &__nav-container
+        width: 420px
+        height: 120px
+        background-color:  yellow
+        display: flex
+        align-self: end
+        justify-content: space-around
+        margin-right: 30px
+        
+    &__link
+        height: 100px
+        width: 100px
+        background-color: green
+        align-self: end
+        
 
 /** slider **/
 .slider-bar
     background-color: orange
     width: $my-width
-    height: 500px
-    border: $my-border
+    height: 600px
+    display: flex
     position: relative
     margin-top: 40px
-.slider-bar__nav
-    background-color: brown
-    width: $my-width
-    height: 18px
-    position: relative
-    margin-top: 18px  
+    justify-content: center
+    &__nav
+        background-color: brown
+        width: $my-width
+        height: 18px
+        position: relative
+        margin-top: 18px  
+    
+       
 
 /** sections **/
     
@@ -108,6 +179,41 @@ $my-section-color: green
 .utensils
     +sections
     height: 2285px
+    display: flex
+
+    &__header
+        background-color: yellow
+        width: 1080px
+        height: 184px
+        margin-left: 20%
+    &__icon
+        height: 125px
+        width: 1080px
+        background-color: purple
+        position: absolute
+        top: 1080px
+        justify-content: center
+        display: flex
+    &__image
+        width: 92,80px
+        height: 125px    
+    &__tittle
+        height: 74px
+        width: 1080px
+        background-color: pink
+        margin-top: 10%
+        display: flex
+        justify-content: center  
+    &__img-container
+        width: 945px
+        height: 1360px 
+        display: grid
+        background-color: purple
+        margin-top: 11%;
+        align-self: center;
+        position: absolute;
+        margin-left: 20%;
+  
     
 .ingredients
     +sections

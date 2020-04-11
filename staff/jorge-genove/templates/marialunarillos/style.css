@@ -1,4 +1,8 @@
 /** variables **/
+li {
+  list-style: none;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -9,7 +13,6 @@
   background-color: blue;
   width: 100%;
   height: 50px;
-  border: 1px solid red;
   display: flex;
 }
 .fixed-navigation-bar__user {
@@ -57,38 +60,119 @@
 }
 .fixed-navigation-bar__facebook {
   display: inline;
-  margin-left: 15px;
 }
 .fixed-navigation-bar__pinterest {
   display: inline;
 }
 .fixed-navigation-bar__instagram {
   display: inline;
-  margin-left: 15%;
 }
 .fixed-navigation-bar__youtube {
   display: inline;
-  margin-left: 15%;
+}
+.fixed-navigation-bar__buy {
+  display: flex;
+  height: 50px;
+  width: 50px;
+  margin-left: 8%;
+  justify-content: center;
+  align-items: center;
+}
+.fixed-navigation-bar__number {
+  height: 50px;
+  width: 50px;
+  background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.link-text {
+  display: inline;
+  margin-left: 54%;
+}
+.link-text__blog {
+  display: inline;
+  margin-left: 79px;
+}
+.link-text__partys {
+  display: inline;
+  margin-left: 2%;
+}
+.link-text__brands {
+  display: inline;
+  margin-left: 3%;
+}
+.link-text__ingredients {
+  display: inline;
+  margin-left: 30px;
 }
 
 /** header **/
-.header {
+button {
+  height: 28px;
+  position: absolute;
+  margin-top: 2%;
+}
+
+.header-container {
   background-color: yellow;
   width: 100%;
   height: 250px;
-  border: 1px solid red;
+  display: flex;
+  justify-content: end;
+}
+.header-container__main-menu {
+  width: 1080px;
+  height: 218px;
+  display: flex;
+  background-color: blue;
+  align-self: end;
+  margin-right: 18%;
+  justify-content: end;
+}
+.header-container__text-box {
+  height: 28px;
+  width: 248px;
+  position: absolute;
+  margin-top: 2%;
+  margin-right: 46px;
+}
+.header-container__blog {
+  height: 100px;
+  width: 100px;
+  background-color: purple;
+  align-self: end;
+}
+.header-container__logo {
+  margin-right: auto;
+}
+.header-container__nav-container {
+  width: 420px;
+  height: 120px;
+  background-color: yellow;
+  display: flex;
+  align-self: end;
+  justify-content: space-around;
+  margin-right: 30px;
+}
+.header-container__link {
+  height: 100px;
+  width: 100px;
+  background-color: green;
+  align-self: end;
 }
 
 /** slider **/
 .slider-bar {
   background-color: orange;
   width: 100%;
-  height: 500px;
-  border: 1px solid red;
+  height: 600px;
+  display: flex;
   position: relative;
   margin-top: 40px;
+  justify-content: center;
 }
-
 .slider-bar__nav {
   background-color: brown;
   width: 100%;
@@ -104,6 +188,40 @@
   width: 100%;
   margin-top: 150px;
   height: 2285px;
+  display: flex;
+}
+.utensils__header {
+  background-color: yellow;
+  width: 1080px;
+  height: 184px;
+  margin-left: 20%;
+}
+.utensils__icon {
+  height: 125px;
+  width: 1080px;
+  background-color: purple;
+  position: absolute;
+  top: 1080px;
+  justify-content: center;
+  display: flex;
+}
+.utensils__image {
+  width: 92, 80px;
+  height: 125px;
+}
+.utensils__tittle {
+  height: 74px;
+  width: 1080px;
+  background-color: pink;
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
+}
+.utensils__img-container {
+  width: 945px;
+  height: 1360px;
+  display: grid;
+  background-color: purple;
 }
 
 .ingredients {
