@@ -130,7 +130,10 @@ body {
     }
     
     .main {
-        &-section {    
+        &-section { 
+            padding-left: 80px;
+            padding-right: 80px;
+
             &__subsection {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
@@ -227,7 +230,10 @@ body {
     }
     
     .main {
-        &-section {    
+        &-section {   
+            padding-left: 200px;
+            padding-right: 200px;
+
             &__subsection {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);

@@ -101,6 +101,10 @@ body {
     font-size: 1em;
   }
 
+  .main-section {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
   .main-section__subsection {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -174,6 +178,10 @@ body {
     font-size: 1.5em;
   }
 
+  .main-section {
+    padding-left: 200px;
+    padding-right: 200px;
+  }
   .main-section__subsection {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
