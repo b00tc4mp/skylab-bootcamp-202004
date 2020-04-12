@@ -1,0 +1,266 @@
+body
+    margin: 0
+    padding: 0
+    background-color: lavender 
+
+
+/* Header */
+
+@mixin center 
+    display: flex
+    justify-content: center
+    align-items: center
+
+
+.header
+    background-color: white
+    display: flex
+    align-items: center
+    justify-content: space-between
+    padding: 15px
+    &__logo
+        width: 180px
+    &__nav 
+        display: none
+
+
+
+/* Hero */
+
+.hero
+    height: 700px
+    background-color: grey
+    background: url("./img/background.jpg")
+    background-repeat: no-repeat
+    background-position: center
+    background-size: cover
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+
+
+    &__top
+        display: flex
+        flex-wrap: wrap
+        padding: 20px
+
+        &__text
+            width: 50%
+            color: white
+            @media only screen and (min-width: 768px)
+                font-size: 2em
+                
+
+        &__imgcontainer
+            width: 50%
+            @include center
+            justify-content: flex-end
+            &__img
+                width: 150px
+                height: 150px 
+                @media only screen and (min-width: 768px) 
+                    width: 200px
+                    height: 200px
+                
+        
+        &__button
+            height: 40px 
+            width: 210px
+
+    &__bottom
+        background-color: rgba(0,0,0,.4)
+        color: white
+
+
+/* Statistics */
+
+.statistics
+    background-color: white
+    height: auto
+    @include center
+    flex-direction: column
+    justify-content: space-around
+    text-align: center
+    padding: 30px
+    @media only screen and (min-width: 768px) 
+        height: 400px
+        
+
+    &__items
+        background-color: white
+        @include center
+        flex-direction: column
+        width: 100%
+    
+        @media only screen and (min-width: 768px) 
+            flex-direction: row
+            display: flex
+            justify-content: space-around
+    &__button
+        margin: 10px
+        width: 200px
+        height: 40px
+        @media only screen and (min-width: 768px)
+            width: 250px
+
+
+
+/* Companies */
+
+.companies
+    background-color: skyblue
+    height: auto
+    display: flex
+    flex-direction: column
+    @include center
+    justify-content: space-around
+    color: white
+    padding: 20px
+
+    &__button
+        width: 300px
+        height: 40px
+        
+
+
+/* Us */
+
+
+.us
+    background: url("./img/blurrydavid.jpeg")
+    background-size: cover
+    background-repeat: no repeat
+    background-position: center
+    height: 400px
+    padding: 30px
+    display: flex
+    flex-direction: column
+    justify-content: space-around
+    @media only screen and (min-width: 768px) 
+        padding-left: 80px
+    &__text
+        color: white
+        @media only screen and (min-width: 768px) 
+            width: 350px
+        
+
+    &__button
+        height: 40px
+        width: 120px
+        background-color: Transparent
+
+
+
+/* Information */
+
+.information
+    height: auto
+    display: flex
+    align-items: stretch
+    padding: 50px
+    flex-direction: column
+    @media only screen and (min-width: 768px) 
+        height: auto
+
+    &__container
+        @media only screen and (min-width: 768px) 
+            display: flex
+            justify-content: space-between
+
+            
+
+
+    &__words
+        display: flex
+        justify-content: center
+        align-items: center
+        flex-direction: column
+        @media only screen and (min-width: 768px) 
+            @include center
+            padding: 10px
+
+
+        &__text
+            text-align: center
+
+           
+
+
+/* Concat */
+
+
+.contact
+    height: auto
+    display: flex
+    justify-content: space-around
+    flex-direction: column
+    background-color: #333333
+    padding: 10px
+
+    @media only screen and (min-width: 768px) 
+        flex-direction: row
+        padding: 20px
+
+
+    &__direction
+        display: flex
+        justify-content: center
+        align-items: center
+        flex-direction: column
+        @media only screen and (min-width: 768px) 
+            display: inline
+
+
+    &__container
+        @media only screen and (min-width: 768px)
+            width: 800px
+        
+
+    &__menu
+        list-style: none
+        display: flex
+        justify-content: center
+        align-items: center
+        flex-direction: column
+        color: white
+        padding: 0
+        @media only screen and (min-width: 768px)
+            flex-direction: row
+            justify-content: flex-end
+        &__item
+            padding: 5px
+        
+
+    
+    &__logos
+        display: flex
+        justify-content: center
+        align-items: center
+        @media only screen and (min-width: 768px)
+            display: flex
+            justify-content: flex-end
+
+
+
+    &__logos__buttons
+        border-radius: 50%
+        margin: 5px
+        outline: none
+        border: 0
+        width: 40px
+        height: 40px
+
+
+        
+        
+
+
+        
+
+
+
+        
+
+    
+
+
