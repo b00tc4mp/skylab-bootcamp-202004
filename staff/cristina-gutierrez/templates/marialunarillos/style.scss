@@ -94,3 +94,49 @@ body {
         text-align: center;
     }
 }
+
+@media all and (min-width: 768px) {
+    .box {
+       width: 200px;
+       height: 300px;
+    }
+}
+@media all and (min-width: 1024px) {
+   .one {
+       width: calc(100% - 40px);
+       height: calc(25% - 40px);
+   }
+   .two {
+       width: calc(30% - 40px);
+       height: calc(25% - 40px);
+   }
+   .three {
+       width: calc(30% - 40px);
+       height: calc(25% - 40px);
+   }
+   .four {
+       width: calc(30% - 40px);
+       height: calc(25% - 40px);
+   }
+   .five {
+       width: calc(20% - 40px);
+       height: calc(25% - 40px);
+   }
+   .six {
+       width: calc(20% - 40px);
+       height: calc(25% - 40px);
+   }
+   .seven {
+       width: calc(20% - 40px);
+       height: calc(25% - 40px);
+   }
+   .eight {
+       width: calc(20% - 40px);;
+       height: calc(25% - 40px);
+   }
+   .nine {
+       width: calc(100% - 40px);
+       height: calc(25% - 40px);
+   }
+
+}
