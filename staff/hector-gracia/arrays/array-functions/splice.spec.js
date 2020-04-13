@@ -1,4 +1,4 @@
-/*
+
 describe('splice', function () {
     it('should changes the contents of an array by removing or replacing existing elements and/or adding new elements in place', function () {
         var array = [1, 2, 3, 4, 5, 6];

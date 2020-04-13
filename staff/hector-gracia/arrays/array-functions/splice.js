@@ -1,24 +1,35 @@
-/*
-var array = ['Jan', 'March', 'April', 'June'];
+
+var array = [0,1,2,3,4,5,6,7,8,9];
 function splice(array,start,length,insert){
 
-    var newArray=[];
-    if(start>array.length)start=array.length;
-    if((array.length+start)<0){
-        start=0;
-        
+    var startingArray=[];
+    var finishingArray=[];
+    var insertArray=[insert];
+    var pos=1;
+    if(start<0) {
+        start=array.length+start;
+        length=0;
     }
-    var pos=-1;
-    for(var i=start+1;i<array.length;i++){
-        pos++;
-        newArray[pos]=array[i];
+    if((array.length+start)<0) start=0;
+    
+    for(var i=0;i<start;i++){
+        startingArray[i]=array[i];
     }
-    array[start]=insert;
-    for(var j=0;j<newArray.length;j++){
-        array[start+1+j]=newArray[j];
+    var pos=0;
+    for(var j=start+length; j<array.length;j++){
+        finishingArray[pos]=array[j];
+        pos+=1;
     }
+    array.length=0;
+    for(var i=0;i<startingArray.length;i++){
+        array[array.length]=startingArray[i];
+    }
+    array[array.length]=insert;
+    for(var j=0;j<finishingArray.length;j++){
+        array[array.length]=finishingArray[j];
+    }
+    console.log(startingArray);
+    console.log(finishingArray);
 }
 
-splice(array, 1, 2,'october')
-console.log(array)
-["Jan", "october", "June", "June"]]]]
+splice(array, -3, 1, "c");
