@@ -34,6 +34,80 @@ $ git merge develop
 $ git stash pop
 ```
 
+## How to sync your develop with upstream if by mistake you made commits while in your develop branch (be careful, ask if you have any doubts)
+
+If you need the changes made in develop, back them up somewhere safe like your desktop. Eg. You started a challenge while in develop and made a commit already. In this case, copy the folder of the challenge in the desktop.
+
+After this make shure you are in develop and, while in it, bring the updated remote develop from upstream
+
+```sh
+$ git checkout develop
+
+$ git fetch upstrem
+```
+
+Now you need to reset your develop to the latest commit of Manu's repo.
+
+```sh
+$ git reset --hard upstream/develop
+```
+
+Now your HEAD points to Manu's develop latest commit, so your commit history is the same. This basically ate your commits done in develop, that is why is important to backup wanted changes before.
+
+Next we need to also update YOUR remote develop to be the same as Manu's develop and YOUR local develop. A normal push will not work here since your local and remote branches have diverged, so we need to force it.
+
+```sh
+$ git push -f
+```
+And that's it. Now your develop (locally and remotely) is clean and the same as Manu's, how it should be.
+
+## How to correct a wrongly made Pull Request
+
+- First backup the folder somewhere safe like your desktop by copying the folder of the challenge. 
+
+Now you have to move to develop and, just in case, update it. IF YOU MADE COMMITS WHILE ON DEVELOP REPLACE THE NEXT STEP WITH THE MINI GUIDE ABOVE OF THIS ONE.
+
+```sh
+$ git checkout develop
+
+$ git fetch upstream
+
+$ git merge upstream/develop
+```
+
+Next, you need to delete the the branch of the PR, both remotely and locally
+
+```sh
+$ git branch -d <branch-name>
+
+$ git push origin :<branch-name>
+```
+
+Create the branch again and move into it.
+
+```sh
+$ git branch <branch-name>
+
+$ git checkout <branch-name>
+```
+
+While in the branch, copy the backed up folder into your name folder.
+
+After this, if you fo a  `git status` you will se the copied folder in red. So next we need to add it to the staging area, commit it and push it.
+
+```sh
+$ git add <path-to-new-folder> => the one that was shown red 
+
+$ git commit -m "<descriptive-message>"
+
+$ git push -u origin <branch-name>
+```
+
+Now you can go to github and create the pull request again.
+
+
+
+
 # Git Commands to have in mind
 
 Como hablamos ayer en la clase aca les dejo una lista con algunos comandos.

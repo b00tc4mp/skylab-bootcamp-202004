@@ -1,0 +1,242 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap')
+
+*
+    margin: 0
+    box-sizing: border-box
+    font-family: 'Ubuntu'
+
+@import './_header'
+@import './_footer'
+
+// MAIN
+
+.categories
+    display: flex
+    align-items: center
+    flex-direction: column
+    background: #f0f0f0
+    margin-top: 8em
+    width: 100%
+    position: relative
+    z-index: 999
+
+    &__img
+        height: 125px
+        width: 100px
+        position: absolute
+        top: -4em
+
+    & img
+        width: 100%
+        height: 100%
+
+    &__title
+        letter-spacing: .2em
+        margin-top: 4em
+        padding: .5em 1em
+        border-top: 1.5px solid black
+        border-bottom: 1.5px solid black
+
+.gridbox
+    margin-top: 2em
+    display: grid
+    & section
+        display: flex
+        margin: 0.1em
+
+    &-item
+        margin: 0 auto
+        display: inline-block
+        position: relative
+        width: 70%
+
+        &__img
+            width: 100%
+            max-height: 140px
+            // overflow: hidden
+
+        &__text
+            background: rgba(240, 240, 240, 0.85)
+            width: 70%
+            padding: 2em
+            position: absolute
+            margin: 0 auto
+            left: 0
+            bottom: 0
+            text-align: center
+            top: 40%
+
+        &--last
+            margin-bottom: 2em
+
+.blog-card
+    display: flex
+    &__container
+        background: white
+        margin: 0.5em
+
+    &__img
+        max-height: 500px
+        width: 100%
+
+    &__content
+        padding: 1.5em
+
+        & img
+            margin-top: 1.5em
+            width: 25%
+
+        & p
+            margin-left: .5em
+            display: inline-block
+
+            & span
+                display: block
+                color: #eb6560
+
+.see-more-btn
+    margin-top: 2em
+    display: flex
+    width: 100%
+    background: #f0f0f0
+    justify-content: center
+    & button
+        padding: 0.8em
+        background: rgb(235, 101, 96)
+        border-color: rgb(235, 101, 96)
+        font-size: 1.2em
+        color: white
+
+.display-on-tablet
+    display: none
+
+.display-on-desktop
+    display: none
+
+@media screen and ( min-width: 600px )
+
+    //HEADER
+    .display-on-tablet
+        display: block
+
+    .nav__container
+        justify-content: space-between
+
+    .nav__item:nth-of-type(1)
+        margin-right: 50%
+
+    .logo
+
+        display: flex
+        justify-content: space-around
+
+        &__img
+
+        & .header-btn
+            background: white
+            display: flex
+            justify-content: center
+            align-items: center
+
+        & .header-btn button:nth-of-type(1)
+            background: rgb(162, 169, 91)
+            margin-right: 0.5em
+            padding: 0.5em
+            font-size: 1.2em
+            color: white
+
+        & .header-btn button:nth-of-type(2)
+            background: rgb(138, 122, 155)
+            padding: 0.5em
+            font-size: 1.2em
+            color: white
+            margin-right: 1em
+
+    //MAIN
+
+    .slider
+        max-height: 24em
+
+        overflow: hidden
+
+        &__img
+            height: 0 auto
+
+    .gridbox
+        display: grid
+        grid-template-columns: 1fr 1fr 1fr
+        grid-template-rows: 1fr 1fr 1fr 1fr
+        grid-template-areas: "box1 box2 box2""box1 box3 box3""box4 box4 box6""box5 box5 box6"
+        width: 70%
+
+        & section:nth-of-type(1)
+            grid-area: box1
+        & section:nth-of-type(2)
+            grid-area: box2
+        & section:nth-of-type(3)
+            grid-area: box3
+        & section:nth-of-type(4)
+            grid-area: box4
+        & section:nth-of-type(5)
+            grid-area: box5
+        & section:nth-of-type(6)
+            grid-area: box6
+
+        &-item
+            margin: 0 auto
+            display: block
+            position: relative
+            width: 100%
+
+            &__img
+                width: 100%
+                max-height: 615px
+                // overflow: hidden
+
+@media screen and ( min-width: 992px )
+    .display-on-desktop
+        display: block
+
+    .nav__item:nth-of-type(1)
+        margin-right: 70%
+
+    .logo
+        flex-wrap: wrap
+
+        &__img
+            height: 5em
+            margin-top: 2em
+
+    .menu
+        margin-left: 60%
+        display: grid
+        flex-basis: 30%
+        grid-template-columns: 1fr 1fr 1fr 1fr
+
+        &__item
+            display: flex
+            flex-direction: column
+            align-items: center
+
+        &__btn
+            width: 6em
+            height: 6em
+            margin: 1em .6em
+
+            &--last
+                background: #eb6560
+
+            & img
+                width: 100%
+                height: 100%
+
+        &__text
+            font-size: 0.8em
+
+    .footer-features
+        grid-template-columns: 1fr 1fr 1fr 1fr
+        grid-template-rows: 1fr
+        grid-template-areas: "one two three four"
+
+        &__icon
+            margin: 2em 1em

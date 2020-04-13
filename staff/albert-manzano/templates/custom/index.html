@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="main-navigator">
+        <img src="assets/logo.jpg" alt="logo" class="nav__logo">  
+        <img class="nav__hamburger" id="hamburger" src="icons/hamburger.png" alt="icon hamburger">
+        <div class="side-nav-wrapper"> 
+            <ul class="side-nav" >
+                <li class="side-nav__item">
+                    <img class="side-nav__icon side-nav__icon--small side-nav__left-corner side-nav__icons--glow " id="close-nav" src="icons/close.png">
+                </li>
+                <li class="side-nav__item">
+                    <a href="greenhouses.html"><img class="side-nav__icon side-nav__icons--glow " src="icons/aquaponics.png"></a>
+                    Greenhouses
+                </li>
+                <li class="side-nav__item">
+                    <a href="forecast.html"><img class="side-nav__icon side-nav__icons--glow " src="icons/forecast.png"></a>
+                    Forecast
+                </li>
+                <li class="side-nav__item">
+                    <a href="charts.html"></a><img class="side-nav__icon side-nav__icons--glow " src="icons/chart.png"></a>
+                    Charts
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="form" id="form">
+        <input class="form__email" type="text" placeholder="Introduce your email">
+        <input class="form_pass" type="text" placeholder="Introduce your password">
+        <button class="form__submit">Confirm</button>
+    </div>
+    <h2 id="intro-text" class="intro-text intro-text--hidden">Welcome to Red Rock Aquaponics</h2>
+    <script src="main.js"></script>
+</body>
+</html>
