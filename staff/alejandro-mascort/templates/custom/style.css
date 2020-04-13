@@ -1,0 +1,202 @@
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap");
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: "Share Tech Mono";
+  overflow-x: hidden;
+}
+
+.fa:hover {
+  color: #f7de79;
+  cursor: pointer;
+}
+
+.top {
+  width: 100vw;
+}
+.top__nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #3f5efb;
+  background: radial-gradient(circle, #3f5efb 0%, #fc466b 100%);
+}
+.top__nav-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.top__nav-item-anchor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.top__nav-item-anchor-symbol {
+  height: 2rem;
+  width: auto;
+  margin: 0 0.3rem;
+}
+.top__nav-item-anchor-symbol--desktop {
+  display: none;
+}
+.top__nav-item-anchor-symbol:hover {
+  background-color: LightCoral;
+}
+.top__nav-item-anchor-logo {
+  height: 2rem;
+  width: auto;
+}
+.top__nav-item-form {
+  display: flex;
+  align-items: center;
+}
+.top__nav-item-form-input {
+  height: 1.65rem;
+  width: 8rem;
+  margin-right: 0.1rem;
+}
+.top__nav-item-form-button {
+  background-color: #f7de79;
+}
+.top__nav-item-form-button-search {
+  height: 1rem;
+  width: 1rem;
+}
+.top__nav-item-form-button:hover {
+  cursor: pointer;
+}
+.top__nav-item:hover {
+  cursor: pointer;
+}
+
+.main {
+  width: 100vw;
+  margin-top: 1rem;
+}
+.main__list {
+  width: 70%;
+  margin: auto;
+  list-style: none;
+  padding-left: 0;
+  display: grid;
+  grid-template-rows: repeat(9, 1fr);
+  grid-gap: 0.5rem;
+}
+.main__list-item {
+  height: 8rem;
+  color: white;
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-image: url("https://i2.wp.com/electronicgroove.com/wp-content/uploads/2018/03/D%C3%ADa-Internacional-del-DJ.jpg?fit=940%2C627&ssl=1");
+  background-size: 70vw 6rem;
+  border-radius: 3rem;
+}
+.main__list-item-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+}
+.main__list-item-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer {
+  margin-top: 1rem;
+  background: #3f5efb;
+  background: radial-gradient(circle, #3f5efb 0%, #fc466b 100%);
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer__element {
+  padding: 1rem;
+}
+.footer__element-media {
+  height: 4rem;
+  width: 4rem;
+}
+
+@media only screen and (min-width: 768px) {
+  .top__nav-item-anchor-symbol {
+    height: 3rem;
+    width: auto;
+  }
+  .top__nav-item-anchor-symbol--desktop {
+    display: flex;
+  }
+  .top__nav-item-anchor-logo {
+    height: 3rem;
+    width: auto;
+  }
+  .top__nav-item-form {
+    display: flex;
+    align-items: center;
+  }
+  .top__nav-item-form-input {
+    height: 2rem;
+    width: 20rem;
+    margin-right: 0.1rem;
+  }
+  .top__nav-item-form-button-search {
+    height: 1.5rem;
+    width: auto;
+  }
+
+  .main__list {
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: 1fr 1fr;
+  }
+  .main__list-item {
+    font-size: 1.1rem;
+    height: 10rem;
+    background-size: auto 10rem;
+    border-radius: 100rem;
+  }
+  .main__list-item-image {
+    font-size: 4rem;
+  }
+  .main__list-item-content-info {
+    font-size: 1rem;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .top__nav-item-anchor-symbol {
+    margin: 0 1rem;
+  }
+  .top__nav-item-anchor-logo {
+    margin-left: 4rem;
+  }
+  .top__nav-item-form-input {
+    height: 2rem;
+    width: 40rem;
+    margin-right: 0.1rem;
+  }
+  .top__nav-item-form-button-search {
+    height: 1.5rem;
+    width: auto;
+  }
+
+  .main__list {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .main__list-item {
+    font-size: 1.1rem;
+    height: 15rem;
+    background-size: 30rem 15rem;
+    border-radius: 100rem;
+  }
+  .main__list-item-image {
+    font-size: 5rem;
+  }
+  .main__list-item-content-info {
+    font-size: 1rem;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */

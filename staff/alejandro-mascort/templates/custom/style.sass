@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap')
+
+=size($height, $width)
+    height: $height
+    width: $width
+
+=align-horizontal()
+    display: flex
+    justify-content: space-between
+    align-items: center
+=align-column()
+    display: flex
+    flex-direction: column
+    align-items: center
+
+*
+    box-sizing: border-box
+    margin: 0
+    font-family: 'Share Tech Mono'
+    overflow-x: hidden
+    
+.fa:hover
+    color: rgb(247, 222, 121)
+    cursor: pointer
+
+.top
+    width: 100vw
+    
+    
+    &__nav
+        +align-horizontal()
+        background: rgb(63,94,251)
+        background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%)
+        
+        &-item
+            +align-horizontal()
+
+            &-anchor
+                +align-horizontal()
+
+                &-symbol
+                    +size(2rem, auto)
+                    margin: 0 0.3rem
+
+                    &--desktop
+                        display: none
+                
+                    &:hover
+                        background-color: LightCoral
+                    
+                &-logo
+                    +size(2rem, auto)
+            
+            &-form
+                display: flex
+                align-items: center
+
+                &-input
+                    +size(1.65rem, 8rem)
+                    margin-right: 0.1rem
+
+                &-button
+                    background-color: rgb(247, 222, 121)
+                    
+                    &-search
+                        +size(1rem, 1rem)
+                    
+                    &:hover
+                        cursor: pointer  
+
+            &:hover
+                cursor: pointer  
+
+.main 
+    width: 100vw
+    margin-top: 1rem
+    
+
+    &__list
+        width:70%
+        margin: auto
+        list-style: none    
+        padding-left: 0
+        display: grid
+        grid-template-rows: repeat(9, 1fr) 
+        grid-gap: 0.5rem
+
+        &-item
+            height: 8rem
+            color: white
+            border: 1px solid black
+            display: grid
+            grid-template-columns: 1fr 1fr
+            background-image: url("https://i2.wp.com/electronicgroove.com/wp-content/uploads/2018/03/D%C3%ADa-Internacional-del-DJ.jpg?fit=940%2C627&ssl=1")
+            background-size: 70vw 6rem
+            border-radius: 3rem
+
+            &-image
+                display: flex
+                justify-content: center
+                align-items: center
+                font-size: 3rem
+            
+            &-content
+                display: flex
+                flex-direction: column
+                justify-content: center
+                align-items: center
+
+.footer
+    margin-top: 1rem
+    background: rgb(63,94,251)
+    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%)
+    height: 5rem
+    display: flex
+    align-items: center
+    justify-content: center
+
+    &__element
+        padding: 1rem
+        &-media
+            height: 4rem
+            width: 4rem
+
+@media only screen and (min-width: 768px)
+
+    .top
+
+        &__nav
+
+            &-item
+
+                &-anchor
+
+                    &-symbol
+                        +size(3rem, auto)
+
+                        &--desktop
+                            display: flex
+
+                    &-logo
+                        +size(3rem, auto)
+
+                &-form
+                    display: flex
+                    align-items: center
+
+                    &-input
+                        +size(2rem, 20rem)
+                        margin-right: 0.1rem
+
+                    &-button
+                        
+                        &-search
+                            +size(1.5rem, auto)
+
+    .main 
+
+        &__list
+            grid-template-rows: repeat(5, 1fr)
+            grid-template-columns: 1fr 1fr  
+
+            &-item
+                font-size: 1.1rem
+                height: 10rem
+                background-size: auto 10rem
+                border-radius: 100rem
+
+                &-image
+                    font-size: 4rem
+                
+                &-content
+                    
+                    &-info
+                        font-size: 1rem
+
+
+@media only screen and (min-width: 992px)
+    
+    .top
+    
+        &__nav
+
+            &-item
+
+                &-anchor
+
+                    &-symbol
+                        margin: 0 1rem
+
+                    &-logo
+                        margin-left: 4rem
+
+                &-form
+
+                    &-input
+                        +size(2rem, 40rem)
+                        margin-right: 0.1rem
+
+                    &-button
+                        
+                        &-search
+                            +size(1.5rem, auto)
+    
+    .main 
+
+        &__list
+            grid-template-columns: 1fr 1fr 1fr 
+
+            &-item
+                font-size: 1.1rem
+                height: 15rem
+                background-size: 30rem 15rem
+                border-radius: 100rem
+
+                &-image
+                    font-size: 5rem
+                
+                &-content
+                    
+                    &-info
+                        font-size: 1rem
