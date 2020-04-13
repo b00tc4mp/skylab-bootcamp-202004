@@ -1,3 +1,4 @@
+
 # Created by https://www.gitignore.io/api/windows
 # Edit at https://www.gitignore.io/?templates=windows
 
@@ -63,17 +64,6 @@ Temporary Items
 
 # End of https://www.gitignore.io/api/macos
 
-# Created by https://www.gitignore.io/api/visualstudiocode
-# Edit at https://www.gitignore.io/?templates=visualstudiocode
-
-### VisualStudioCode ###
-.vscode
-
-### VisualStudioCode Patch ###
-# Ignore all local history of files
-.history
-
-# End of https://www.gitignore.io/api/visualstudiocode
 
 # Created by https://www.gitignore.io/api/linux
 # Edit at https://www.gitignore.io/?templates=linux
@@ -94,6 +84,18 @@ Temporary Items
 .nfs*
 
 # End of https://www.gitignore.io/api/linux
+
+# Created by https://www.gitignore.io/api/visualstudiocode
+# Edit at https://www.gitignore.io/?templates=visualstudiocode
+
+### VisualStudioCode ###
+.vscode
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+
+# End of https://www.gitignore.io/api/visualstudiocode
 
 
 # Created by https://www.gitignore.io/api/compressed

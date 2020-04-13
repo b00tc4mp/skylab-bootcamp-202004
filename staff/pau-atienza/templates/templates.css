@@ -1,0 +1,54 @@
+ *{
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-flow: wrap row;
+}
+
+section {
+    height: 50vh;
+    background-color: blue; 
+    font-size: 30vh;
+    border-style: solid;
+    box-sizing: border-box;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    width: 50%;
+}
+
+section:nth-child(1) {
+    width: 100%;
+    background-color: green;
+}
+
+/* Tablet breakpoint  */
+@media only screen and (min-width: 600px) and (max-width: 991px) {
+
+    section.square {
+        width: calc(100% / 3);
+        background-color: red;
+    }
+    
+}
+
+/* Large screen breakpoint  */
+@media only screen and (min-width: 992px) {
+
+    section:nth-child(2), section:nth-child(3), section:nth-child(4), section:nth-child(5)  {
+        width: 25%;
+        background-color: red;
+    }
+    
+    section:nth-child(6), section:nth-child(7), section:nth-child(8){
+        width: calc(100% / 3);
+        background-color: yellow;
+    }
+
+    section:nth-last-child(1) {
+        width: 100%;
+    }
+    
+}
