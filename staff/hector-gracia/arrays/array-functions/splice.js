@@ -1,5 +1,4 @@
 
-var array = [0,1,2,3,4,5,6,7,8,9];
 function splice(array,start,length,insert){
 
     var startingArray=[];
@@ -28,8 +27,4 @@ function splice(array,start,length,insert){
     for(var j=0;j<finishingArray.length;j++){
         array[array.length]=finishingArray[j];
     }
-    console.log(startingArray);
-    console.log(finishingArray);
 }
-
-splice(array, -3, 1, "c");
