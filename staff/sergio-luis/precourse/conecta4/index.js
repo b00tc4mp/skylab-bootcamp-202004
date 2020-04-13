@@ -345,6 +345,8 @@ function codeResetBoard() {
 function ramdonColumnComputer() {
     var randomColumn = Math.floor(Math.random() * 7);
 
+    
+
     iconClickComputer('humanPlayer', 'yellow', column[randomColumn], '1', '2', '3', '4', '5', '6');
     finishGame('yellow');
 }
