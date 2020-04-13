@@ -1,0 +1,70 @@
+
+.footer-features
+    margin-top: 4em
+    display: grid
+    background: #f0f0f0
+    grid-template-columns: 1fr 1fr
+    grid-template-rows: 1fr 1fr
+    grid-template-areas: "one two""three four"
+
+    &__icon
+        margin: 1em
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+
+        &:nth-child(1)
+            grid-area: one
+        &:nth-child(2)
+            grid-area: two
+        &:nth-child(3)
+            grid-area: three
+        &:nth-child(4)
+            grid-area: four
+
+        & i
+            font-size: 4em
+
+        & p
+            font-size: 1.5em
+
+.social-media
+    margin: 4em 0 2em 0
+    &__title
+        display: block
+        text-align: center
+        margin: 1em
+
+    &__icon
+        display: flex
+        justify-content: center
+
+        & i
+            margin: 0 0.5em
+
+hr
+    width: 70%
+    background: grey
+    margin: 0 auto
+
+.newsletter
+    margin-top: 2em
+    text-align: center
+
+    &__input
+        margin-top: 1em
+        width: 70%
+        height: 5%
+        font-size: 1.5em
+        text-align: center
+
+    & .see-more-btn
+        background: white
+
+.copyright
+    margin-top: 2em
+    padding: 1em
+    background: #eb6560
+    color: white
+    text-align: center
