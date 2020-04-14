@@ -4,7 +4,7 @@ function pop(array) {
         return undefined;
     }
     var lastElement = array[array.length-1]
-    array.length -= 1;
+    array.length --;
     return lastElement;
 
     // var lastElementIndex = array.length - 1;

@@ -69,6 +69,4 @@ describe('The method splice', function () {
         splice(numbers, 3, -3);
         expect(numbers.length).toBe(6);
     });
-
-
 });
