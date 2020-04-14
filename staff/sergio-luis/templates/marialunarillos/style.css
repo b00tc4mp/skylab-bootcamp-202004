@@ -1,0 +1,347 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.nav {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 3fr;
+  grid-template-areas: "items" "logo";
+}
+.nav__navbar {
+  grid-area: items;
+  background-color: #F5F5F5;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: ". item1 . item2 . item3 item4 item5 .";
+}
+.nav__logo {
+  grid-area: logo;
+}
+.nav__item-1 {
+  grid-area: item1;
+  background-color: pink;
+}
+.nav__item-2 {
+  grid-area: item2;
+  background-color: #BBB8B6;
+}
+.nav__item-3 {
+  grid-area: item3;
+  background-color: green;
+}
+.nav__item-4 {
+  grid-area: item4;
+  background-color: yellow;
+}
+.nav__item-5 {
+  grid-area: item5;
+  background-color: #FF5959;
+  color: #FFF;
+  font-size: 1.5rem;
+}
+
+.flex--center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav__item--size {
+  width: 3rem;
+  height: 3rem;
+}
+
+.carosel {
+  width: 145%;
+}
+.carosel__img {
+  width: 100%;
+}
+
+.section {
+  background-color: #F5F5F5;
+  margin-top: 5rem;
+}
+.section__logo {
+  position: relative;
+  bottom: 3rem;
+}
+.section__logo-img {
+  width: 5rem;
+}
+.section__title {
+  padding: 0.5rem 0;
+  margin: 1rem 10rem 5rem 10rem;
+  border-top: 0.1rem solid black;
+  border-bottom: 0.1rem solid black;
+}
+
+.section__first-item {
+  display: grid;
+  grid-template-columns: 15% 70% 15%;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: ". item1 ." ". item2 ." ". item3 ." ". item4 ." ". item5 ." ". item6 ." ". item7 ." ". item8 ." ". item9 ." ". button .";
+}
+
+.section__first-item-1 {
+  grid-area: item1;
+}
+
+.section__first-item-2 {
+  grid-area: item2;
+}
+
+.section__first-item-3 {
+  grid-area: item3;
+}
+
+.section__first-item-4 {
+  grid-area: item4;
+}
+
+.section__first-item-5 {
+  grid-area: item5;
+}
+
+.section__first-item-6 {
+  grid-area: item6;
+}
+
+.section__first-item-7 {
+  grid-area: item7;
+}
+
+.section__first-item-8 {
+  grid-area: item8;
+}
+
+.section__first-item-9 {
+  grid-area: item9;
+}
+
+.section__first-button {
+  grid-area: button;
+}
+
+.section__item-description {
+  position: relative;
+  width: 50%;
+  padding: 0.3rem 1rem;
+  top: 8rem;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.section__item-img {
+  width: 100%;
+  overflow: hidden;
+}
+
+.item--format {
+  width: 100%;
+  height: 20vh;
+  overflow: hidden;
+}
+
+.button {
+  color: #FFF;
+  background-color: #FF5959;
+  padding: 1rem 1rem;
+  margin: 1rem;
+}
+
+.section__second-item {
+  display: grid;
+  grid-template-columns: 15% 70% 15%;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: ". item1 ." ". item2 ." ". item3 ." ". item4 ." ". item5 ." ". item6 ." ". button .";
+}
+
+.section__second-item-1 {
+  grid-area: item1;
+}
+
+.section__second-item-2 {
+  grid-area: item2;
+}
+
+.section__second-item-3 {
+  grid-area: item3;
+}
+
+.section__second-item-4 {
+  grid-area: item4;
+}
+
+.section__second-item-5 {
+  grid-area: item5;
+}
+
+.section__second-item-6 {
+  grid-area: item6;
+}
+
+.section__second-button {
+  grid-area: button;
+}
+
+.section__third-item {
+  display: grid;
+  grid-template-columns: 15% 70% 15%;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-areas: ". item1 ." ". item2 ." ". item3 ." ". button .";
+}
+
+.section__third-item-1 {
+  grid-area: item1;
+}
+
+.section__third-item-2 {
+  grid-area: item2;
+}
+
+.section__third-item-3 {
+  grid-area: item3;
+}
+
+.section__third-button {
+  grid-area: button;
+}
+
+.section__fourth-item {
+  display: grid;
+  grid-template-columns: 15% 70% 15%;
+  grid-template-rows: 1fr 4fr 1fr 1fr;
+  grid-template-areas: ". button1 ." ". item1 ." ". item2 ." ". button2 .";
+}
+
+.section__fourth-button-1 {
+  grid-area: button1;
+}
+
+.section__fourth-item-1 {
+  grid-area: item1;
+  height: 100%;
+}
+
+.section__fourth-item-2 {
+  grid-area: item2;
+}
+
+.section__fourth-button-2 {
+  grid-area: button2;
+}
+
+.text--red {
+  color: #FF5959;
+}
+
+.section__fouth-item-img {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  padding: 1rem;
+}
+
+.section__item-person {
+  margin-right: 0.4rem;
+}
+
+.footer__icon {
+  background-color: silver;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "item1 item2" "item3 item4";
+  justify-self: center;
+}
+.footer__icon-item-1 {
+  grid-area: item1;
+}
+.footer__icon-item-2 {
+  grid-area: item2;
+}
+.footer__icon-item-3 {
+  grid-area: item3;
+}
+.footer__icon-item-4 {
+  grid-area: item2;
+}
+
+.icon--size {
+  width: 4rem;
+  height: 4rem;
+  background-color: green;
+  margin: 2rem;
+  display: grid;
+  justify-self: center;
+}
+
+.flex--column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex--row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer__follow {
+  margin: 4rem;
+}
+
+.footer__fallow-icon {
+  width: 2rem;
+  height: 2rem;
+  background-color: green;
+  margin: 0.3rem;
+  display: grid;
+  justify-self: center;
+}
+
+.footer__subscribe {
+  margin: 4rem;
+}
+
+.footer__subscribe-input {
+  width: 15rem;
+  height: 2rem;
+}
+
+.footer__subscribe-button {
+  width: 15rem;
+}
+
+.footer__contact {
+  margin: 3rem;
+}
+
+.footer__end {
+  padding: 1rem;
+  background-color: #FF5959;
+  color: #FFF;
+}
+
+.footer__contact-icon {
+  width: 2rem;
+  height: 2rem;
+  background-color: #FF5959;
+  margin: 0.3rem;
+  border-radius: 50%;
+}
+
+.footer__contact-text {
+  color: #FF5959;
+}
+
+/*# sourceMappingURL=style.css.map */
