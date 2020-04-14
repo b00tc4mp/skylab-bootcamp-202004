@@ -1,4 +1,4 @@
-function mySplice(array, index = 0, howmany) {
+function splice(array, index = 0, howmany) {
   var arr = [];
 
   // add until index

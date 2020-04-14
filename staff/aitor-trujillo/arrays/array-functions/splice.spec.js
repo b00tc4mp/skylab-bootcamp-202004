@@ -1,4 +1,4 @@
-describe("mySplice", function () {
+describe("splice", function () {
   it("should cut two items of the array and return the rest modifying the array", function () {
     var fruits = [
       "Banana",
@@ -10,7 +10,7 @@ describe("mySplice", function () {
       "Lemon",
     ];
 
-    mySplice(fruits, 2, 2);
+    splice(fruits, 2, 2);
 
     expect(fruits[3]).toBe("Berry");
     expect(fruits.length).toBe(5);
@@ -26,7 +26,7 @@ describe("mySplice", function () {
       "Lemon",
     ];
 
-    mySplice(fruits, 2, 2, "Avocado", "Peach");
+    splice(fruits, 2, 2, "Avocado", "Peach");
 
     expect(fruits[3]).toBe("Avocado");
     expect(fruits[4]).toBe("Peach");

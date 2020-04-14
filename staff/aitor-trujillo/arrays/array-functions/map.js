@@ -1,5 +1,4 @@
 // TODO
-
 function map(array, callback) {
   var newArr = [];
 
