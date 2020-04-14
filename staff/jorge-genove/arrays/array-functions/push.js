@@ -1,6 +1,5 @@
-function push(array, elementArray) {
-    // for (let i = 0; i < elementArray.length; i++) {
-        array[array.length] = elementArray
-    // }
-
+function push(array, elements) {
+    for (let i = 1; i <arguments.length; i++) {
+        array[array.length] = arguments[i];
+    }
 }
