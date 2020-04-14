@@ -1,6 +1,5 @@
 
 
-
 function splice(array, start, deleteCount, ...args) { // 1,2
     debugger
     
