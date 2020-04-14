@@ -1,4 +1,4 @@
-describe('include', function () {
+describe('includes', function () {
     it('it should return true because 3 is on the array ', function () {
         var array = [1, 2, 3, 4, 5, 6, 3];
         var result;

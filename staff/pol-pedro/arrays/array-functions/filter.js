@@ -1,5 +1,5 @@
 function filter (array, callback) {
-    arr = [];
+    var arr = [];
     cont = 0;
     for (var i = 0; i < array.length; i++) {
         if (callback(array[i])){
@@ -9,7 +9,3 @@ function filter (array, callback) {
     }
     return arr;
 };
-
-function callback(arrayI, condition) {
-
-}
