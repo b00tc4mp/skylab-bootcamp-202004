@@ -9,20 +9,11 @@ describe('push', function() {
         expect(array[1]).toBe('Hola');
 
     });
-    it('push return lenght', function() {
-        var array = []
-
-        push(array, 4)
-        push(array, 'Hola')
-
-        expect(array.length).toBe(2);
-    });
     
     it('push more values', function() {
-        var array = []
+        var array = [4,5]
 
-        push(array,)
-        push(array, ('hola','sergio'))
+        push(array, 'hola','sergio')
 
         expect(array[0]).toBe(4);
         expect(array[1]).toBe(5);

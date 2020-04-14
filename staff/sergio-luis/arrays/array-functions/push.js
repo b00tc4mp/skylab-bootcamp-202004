@@ -1,8 +1,5 @@
 function push(array, elements) {
-    var arrElements = [elements];
-
-    for (let i = 0; i < arrElements.length; i++) {
-        array[array.length] = arrElements[i]
+    for (let i = 1; i <arguments.length; i++) {
+        array[array.length] = arguments[i];
     }
-
 }
