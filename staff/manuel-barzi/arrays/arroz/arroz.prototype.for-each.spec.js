@@ -1,11 +1,11 @@
 'use strict';
 
-describe('forEach', function () {
+describe('Arroz.prototype.forEach', function () {
     it('should iterate on each element and keep each value multiplied by 10 in a new external array', function () {
-        var array = [1, 2, 3];
+        var array = new Arroz(1, 2, 3);
         var result = [];
 
-        forEach(array, function(element, index) {
+        array.forEach(function(element, index) {
             result[index] = element * 10;
         });
 
@@ -15,10 +15,10 @@ describe('forEach', function () {
     });
 
     it('should iterate on each element and keep each value in upper-case in a new external array', function () {
-        var array = ['hello', 'cruel', 'world'];
+        var array = new Arroz('hello', 'cruel', 'world');
         var result = [];
 
-        forEach(array, function(element, index) {
+        array.forEach(function(element, index) {
             result[index] = element.toUpperCase();
         });
 
@@ -28,10 +28,10 @@ describe('forEach', function () {
     });
 
     it('should iterate on each element provide the index from the second argument of the expression (callback)', function () {
-        var array = [1, 2, 3];
+        var array = new Arroz(1, 2, 3);
         var result = [];
 
-        forEach(array, function(element, index, array) {
+        array.forEach(function(element, index, array) {
             result[index] = index;
         });
 
@@ -41,10 +41,10 @@ describe('forEach', function () {
     });
 
     it('should iterate on each element provide the full array from the third argument of the expression (callback)', function () {
-        var array = [1, 2, 3];
+        var array = new Arroz(1, 2, 3);
         var result = [];
 
-        forEach(array, function(element, index, array) {
+        array.forEach(function(element, index, array) {
             result[index] = array;
         });
 

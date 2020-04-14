@@ -1,3 +1,5 @@
+'use strict';
+
 function reduce(array, expression, initialValue) {
     var accumulator = initialValue;
 

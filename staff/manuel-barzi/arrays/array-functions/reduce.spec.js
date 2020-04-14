@@ -1,3 +1,5 @@
+'use strict';
+
 describe('reduce', function () {
     it('should accumulate the total price of cart', function () {
         var tshirt = { color: 'blue', price: 10 };
