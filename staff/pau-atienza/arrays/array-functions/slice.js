@@ -1,22 +1,13 @@
-function slice(array,) {//arguments
+function slice(array,begin = 0, end = array.length) {//arguments
     var result = [];
-    var begin = 0;
-    var end = 0;
 
-    if (arguments.length == 3) {
-        begin = arguments[1];
-        end = arguments[2];
-    } else if (arguments.length == 2) {
-        end = arguments[1];
-    }
-    
     if (begin > array.length) {
         return result;
     }
 
-    for (var i = begin; i < end; i++) {
-        result[result.length] = array[i];
+    for (begin; begin< end; begin++) {
+        result[result.length] = array[begin];
     }
+
     return result;
-    
-}
+};

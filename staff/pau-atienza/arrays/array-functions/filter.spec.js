@@ -18,5 +18,13 @@ describe('the method filter', function () {
         expect(result[2]).toBe("present");
 
     });
+
+    it('should return an empty array if objects are compared in the condition', function () {
+        var array = ['spray', [1, 2], 'elite', 'exuberant', 'destruction', 'present'];
+
+        var result = filter(array, word => word === [1, 2]);
+
+        expect(result[0]).toBe(undefined);
+    });
    
 });

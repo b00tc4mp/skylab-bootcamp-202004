@@ -17,4 +17,11 @@ describe('some', function () {
 
         expect(result).toBe(false);
     });
+    
+    it('returns false when object comparisons are attempted' , function () {
+        var array = [[1, 1]];
+        var result = some(array, element => element === [1, 1]);
+
+        expect(result).toBe(false);
+    });
 });

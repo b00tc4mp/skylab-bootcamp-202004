@@ -17,4 +17,11 @@ describe('findIndex', function () {
 
         expect(result).toBe(-1);
     });
+    it('should return -1 if objects are compared in the condition', function () {
+        var array = ['spray', [1, 2], 'elite', 'exuberant', 'destruction', 'present'];
+
+        var result = findIndex(array, word => word === [1, 2]);
+
+        expect(result).toBe(-1);
+    });
 });
