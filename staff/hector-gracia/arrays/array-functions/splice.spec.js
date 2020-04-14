@@ -20,4 +20,14 @@ describe('splice', function () {
         splice(array,4,1,"May");
         expect(array[4]).toBe("May");
     });
+    it('should work when adding multiple elements', function () {
+        var array = ['Jan', 'March', 'April', 'June'];
+        var begin=1;
+        var insert=["Feb","March"];
+        var length=0;
+        splice(array, begin,length,insert);
+
+        expect(array[0]).toBe("Jan");
+        expect(array[1]).toBe("Feb");
+    });
 });
