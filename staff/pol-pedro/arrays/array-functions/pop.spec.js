@@ -8,6 +8,6 @@ describe('push', function () {
         expect(array[0]).toBe(1);
         expect(array[1]).toBe(2);
         expect(array[2]).toBe(undefined);
-        expect(Ipop).toBe(3);
+        expect(iPop).toBe(3);
     });
 });
