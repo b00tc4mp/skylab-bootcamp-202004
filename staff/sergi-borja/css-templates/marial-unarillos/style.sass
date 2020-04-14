@@ -129,7 +129,7 @@
     font-family: 'Gotu', sans-serif
     box-sizing: border-box
 
-.sticky-header
+.header
     width: 100vw
     background-color: #dadada
     height: 10vh
@@ -137,7 +137,7 @@
     top: 0
     z-index: 1
 
-.img
+.header__img
     height: 10vh
 
 .logo-phone
@@ -146,7 +146,7 @@
     height: 8vh
     max-width: 87vw
 
-.logo-pad
+.header__logo-pad
     display: none
 
 .pad-menu
@@ -187,25 +187,25 @@
     grid-template-rows: repeat(3, 1fr)
     margin-top: 9vh
 
-.follow-us
+.grid-footer__follow-us
     @include grid-elements(1)
 
-.mail
+.grid-footer__mail
     @include grid-elements(2)
 
-.input
+.grid-footer__mail--input
     width: 80vw
     height: 5vh
 
-.contact-us
+.grid-footer__contact-us
     @include grid-elements(3)
 
 @media only screen and (min-width: 700px)
-    .img
+    .header__img
         display: none
     .logo-phone
         display: none
-    .logo-pad
+    .header__logo-pad
         display: flex
         height: 15vh
 
@@ -343,7 +343,7 @@
             grid-row: 2         
     .extra
         height: 30vh
-    .input
+    .grid-footer__mail--input
         width: 30vh
     .grid-footer
         display: grid

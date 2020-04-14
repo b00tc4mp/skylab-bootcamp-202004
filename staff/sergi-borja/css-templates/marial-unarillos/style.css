@@ -13,7 +13,7 @@
   box-sizing: border-box;
 }
 
-.sticky-header {
+.header {
   width: 100vw;
   background-color: #dadada;
   height: 10vh;
@@ -22,7 +22,7 @@
   z-index: 1;
 }
 
-.img {
+.header__img {
   height: 10vh;
 }
 
@@ -33,7 +33,7 @@
   max-width: 87vw;
 }
 
-.logo-pad {
+.header__logo-pad {
   display: none;
 }
 
@@ -262,7 +262,7 @@
   margin-top: 9vh;
 }
 
-.follow-us {
+.grid-footer__follow-us {
   grid-row: 1;
   background-color: #f17650;
   text-align: center;
@@ -271,7 +271,7 @@
   margin-top: 0.5vh;
 }
 
-.mail {
+.grid-footer__mail {
   grid-row: 2;
   background-color: #f17650;
   text-align: center;
@@ -280,12 +280,12 @@
   margin-top: 0.5vh;
 }
 
-.input {
+.grid-footer__mail--input {
   width: 80vw;
   height: 5vh;
 }
 
-.contact-us {
+.grid-footer__contact-us {
   grid-row: 3;
   background-color: #f17650;
   text-align: center;
@@ -295,7 +295,7 @@
 }
 
 @media only screen and (min-width: 700px) {
-  .img {
+  .header__img {
     display: none;
   }
 
@@ -303,7 +303,7 @@
     display: none;
   }
 
-  .logo-pad {
+  .header__logo-pad {
     display: flex;
     height: 15vh;
   }
@@ -743,7 +743,7 @@
     height: 30vh;
   }
 
-  .input {
+  .grid-footer__mail--input {
     width: 30vh;
   }
 

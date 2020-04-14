@@ -20,11 +20,11 @@
   width: 100vw;
 }
 
-.input {
+.header-bar__input {
   display: none;
 }
 
-.banano {
+.header-bar__banano {
   display: none;
 }
 
@@ -37,7 +37,7 @@
   background-color: rgba(196, 192, 192, 0);
 }
 
-.lupa {
+.header-bar__lupa {
   position: absolute;
   height: 5vh;
   right: 4vh;
@@ -47,7 +47,7 @@
   background: rgba(196, 192, 192, 0.6);
 }
 
-.video-container {
+.wrapper__video-container {
   display: grid;
   grid-template-columns: 1;
   grid-template-rows: repeat(24, 1fr);
@@ -66,7 +66,7 @@ div {
 }
 
 @media only screen and (min-width: 650px) {
-  .video-container {
+  .wrapper__video-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(12, 1fr);
@@ -85,7 +85,7 @@ div {
     margin-top: 2.5vh;
   }
 
-  .input {
+  .header-bar__input {
     display: flex;
     position: absolute;
     right: 120px;
@@ -100,7 +100,7 @@ div {
   }
 }
 @media only screen and (min-width: 1000px) {
-  .banano {
+  .header-bar__banano {
     display: flex;
     position: absolute;
     height: 10vh;
@@ -108,13 +108,13 @@ div {
     left: 2vw;
   }
 
-  .video-container {
+  .wrapper__video-container {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(8, 1fr);
   }
 }
 @media only screen and (min-width: 1200px) {
-  .video-container {
+  .wrapper__video-container {
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(6, 1fr);
   }
