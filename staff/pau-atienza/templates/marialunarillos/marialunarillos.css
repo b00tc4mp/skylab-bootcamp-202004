@@ -1,0 +1,556 @@
+*{
+    margin: 0px;
+    padding: 0px; 
+}
+
+body, header, main, .utensils, .ingredients, .parties, .blog{
+    display:flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items:center;
+    width: 100%;
+}
+
+header {
+    height: 8vh;
+    flex-flow: row;
+    background-color: ghostwhite;
+    
+    width:100%;
+    order: 0;
+}
+
+.header__menu {
+    margin-left: 10%;
+    margin-right: 15%;
+    height: 3vh;
+    width: auto;
+}
+
+.header__register{
+    margin-right: 15%;
+    height: 5vh;
+}
+
+.header__search{
+    background-color: rgb(183, 183, 183);
+    height: 8vh;
+    width: 8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__search--image{
+    height: 3vh;
+}
+
+.header__chart{
+    background-color: white;
+    height: 8vh;
+    width: 8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__chart--image{
+    height: 4vh;
+}
+
+.header__chart--items{
+    background-color: rgb(248, 92, 92);
+    height: 8vh;
+    width: 8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__chart--items .header__chart--image{
+    height: 3vh;
+}
+
+.chat {
+    display:none;
+}
+
+.topmenu{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.topmenu--brandimage{
+    width: 270px;
+    margin-top: 5vh;
+    margin-bottom: 10vh;
+}
+
+.topmenu__extras{
+    display:none;
+}
+
+.menu__changing {
+    width:100%;
+    height: 400px;
+    overflow: scroll;
+}
+
+.menu__changing--image{
+    height: 400px;
+}
+
+.utensils, .ingredients, .parties, .blog{
+    margin-top: 90px;
+    background-color: ghostwhite;
+    width: 100%;
+}
+
+h1{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 1.1em;
+    letter-spacing: 6px;
+    color: rgb(41, 40, 40);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: solid black 2px;
+    border-bottom: solid black 2px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 220px;
+    display: flex;
+    justify-content: center;
+}
+
+.utensils--image, .ingredients--image, .parties--image, .blog--image {
+    width:100px;
+    
+}
+
+.utensils__moulds, .utensils__basic, .utensils__small, .utensils__capsules, .utensils__boxes, .utensils__cutters, .utensils__ceramics, .parties__accessories, .utensils__bread, .utensils__toppers, .ingredients__fondant, .ingredients__reposteria, .ingredients__printing, .ingredients__colors, .ingredients__paper, .ingredients__sprinkles, .parties__themed, .parties__character{
+    width: 320px;
+    height: 120px;
+    overflow: hidden;
+    display:flex;
+    flex-flow: column;
+    align-items:center;
+    margin-bottom: 8px;
+}
+
+.utensils__moulds--text, .utensils__basic--text, .utensils__small--text, .utensils__capsules--text, .utensils__boxes--text, .utensils__cutters--text, .utensils__ceramics--text, .parties__accessories--text, .utensils__bread--text, .utensils__toppers--text, .ingredients__fondant--text, .ingredients__reposteria--text, .ingredients__printing--text, .ingredients__colors--text, .ingredients__paper--text, .ingredients__sprinkles--text, .parties__themed--text, .parties__character--text{
+    
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1em;
+    color: rgb(86, 84, 84);
+    background-color: rgba(255, 255, 255, 0.809);
+    width: 160px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    
+    position: absolute;
+    padding-left: 3%;
+    margin-left: -75px;
+    margin-top: 50px;
+}
+
+.utensils__moulds--image, .utensils__basic--image, .utensils__small--image, .utensils__capsules--image, .utensils__boxes--image, .utensils__cutters--image, .utensils__ceramics--image, .parties__accessories--image, .utensils__bread--image, .utensils__toppers--image, .ingredients__fondant--image, .ingredients__reposteria--image, .ingredients__printing--image, .ingredients__colors--image, .ingredients__paper--image, .ingredients__sprinkles--image, .parties__themed--image, .parties__character--image{
+    width: 320px;
+}
+
+button{
+    color: white;
+    background-color: rgb(248, 92, 92);
+    border-style: none;
+    height: 58px;
+    width: 135px;
+    font-size: 1em;
+    margin-top: 20px;
+}
+
+.blog__top--button{
+    width: 320px;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.blog__entry1{
+    width: 320px;
+    height: 590px;
+    background-color: white;
+    
+}
+
+.blog__entry1--image{
+    width: 320px;
+}
+
+.blog__entry1--author{
+    padding-left: 20px;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+}
+
+.blog__entry1--authorimage{
+    height:52px;
+    margin-right: 5px;
+}
+
+p{
+    width: 50px;
+    font-size: 0.8em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h2{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8em;
+    color: rgb(86, 84, 84);
+    padding-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.footer {
+    margin-top: 150px;
+    background-color: ghostwhite;
+    width: 100%;
+    
+}
+
+.footer__delivery{
+    background-color: rgb(229, 225, 225);
+    
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+}
+
+.footer__delivery__price, .footer__delivery__time, .footer__delivery__return, .footer__delivery__card{
+    width: 180px;
+    height: 200px;
+    display:flex;
+    
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+.footer__delivery__price--image, .footer__delivery__time--image, .footer__delivery__return--image, .footer__delivery__card--image{
+    height: 60px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+} 
+
+.footer__delivery__price--image{
+    background: url(https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/sprite.svg) 0 -38px; 
+    width: 85px;
+}
+
+.footer__delivery__time--image{
+    background: url(https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/sprite.svg) -90px -38px;
+    width: 55px;
+}   
+
+.footer__delivery__return--image{
+    background: url(https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/sprite.svg) -150px -36px;
+    width: 70px;   
+}
+
+.footer__delivery__card--image{
+    background: url(https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/sprite.svg) -223px -38px;
+    width: 77px;  
+}
+
+h3, h4 {
+    color:  rgb(86, 84, 84);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 5px;
+}
+
+h3{
+    font-size: 0.8em;
+    
+}
+
+h4{
+    font-size: 0.7em;
+    width: 180px;
+    text-align: center;
+}
+
+.footer__contact{
+    display: flex;
+    flex-flow: wrap column;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer__contact__social {
+    height: 200px;
+    width: 300px;
+    border-bottom: solid grey 1px;
+    display: flex;
+    flex-flow: wrap column;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer__contact__social--images{
+    display:flex;
+    flex-flow:wrap row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.footer__contact__social--facebook, .footer__contact__social--twitter, .footer__contact__social--instagram, .footer__contact__social--pinterest, .footer__contact__social--youtube{
+    width: 33px;
+    height: 33px;
+}
+
+.footer__contact__social--facebook{
+    background: url(https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/sprite.svg) 0px -493px;
+}
+
+.footer__contact__social--twitter{
+    background: url(https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/sprite.svg) -35px -493px;
+}
+
+.footer__contact__social--instagram{
+    background: url(https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/sprite.svg) -70px -493px;
+}
+
+.footer__contact__social--pinterest{
+    background: url(https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/sprite.svg) -105px -493px;
+}
+
+.footer__contact__social--youtube{
+    background: url(https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/sprite.svg) -176px -493px;
+}
+
+.footer__contact__subscribe{
+    display:flex;
+    flex-flow: wrap column;
+    align-items: center;
+    margin-top: 50px;
+    border-bottom: solid grey 1px;
+    padding-bottom: 20px;
+}
+
+.footer__contact__subscribe--input{
+    width: 315px;
+    height: 40px;
+    margin-top: 10px;
+}
+
+.footer__contact__subscribe--checkbox{
+    display:flex;
+    margin-top: 10px;
+}
+
+.footer__contact__others{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    height: 350px;
+}
+
+h5 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8em;
+    color: rgb(248, 92, 92);
+}
+
+.footer__contact__others--mail, .footer__contact__others--aboutus, .footer__contact__others--conditions{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer__contact__others--mailimage {
+    background: url(https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/sprite.svg) 0px -205px;
+    height: 40px;
+    width: 30px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.footer__contact__others--aboutusimage {
+    background: url(https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/sprite.svg) 0px -243px;
+    height: 40px;
+    width: 30px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.footer__contact__others--conditionsimage {
+    background: url(https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/sprite.svg) 0px -280px;
+    height: 40px;
+    width: 30px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.footer__copyright{
+    width: 100%;
+    height: 8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(248, 92, 92);
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    font-size: 0.8em;
+}
+
+@media (min-width: 670px){
+    .topmenu__extras{
+        display:flex;
+        justify-content: space-between;
+        width: 270px;
+    }
+
+    .topmenu__extras1,.topmenu__extras2{
+        width: 130px;
+        border: solid 0.5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        font-family: Arial, Helvetica, sans-serif;
+        color: white;
+        font-size: 0.9em;
+        height: 30px;
+    }
+
+    .topmenu__extras1{
+        background-color: rgb(148, 185, 105);
+    }
+
+    .topmenu__extras2{
+        background-color: rgb(148, 87, 188);
+    }
+
+    .topmenu__extras1--image{
+        background: url(https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/sprite.svg) 104px 0px;
+        height: 25px;
+        width: 25px;
+    }
+
+    .topmenu__extras2--image{
+        background: url(https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/sprite.svg) 72px 0px;
+        height: 25px;
+        width: 25px;
+    }
+
+    .menu__changing--image{
+        width: 100%;
+        height: auto;
+    }
+    
+    .section{
+        
+        width: 640px;
+        height: 400px;
+        display:grid;
+        grid-template-columns: repeat(3, calc(100%/3));
+        grid-template-rows: 1fr 1fr;
+        grid-gap: 5px;
+        padding: 5px;
+        
+    }
+
+
+
+    .utensils__moulds, .utensils__ceramics, .ingredients__fondant{
+        grid-row-start: 1;
+        grid-row-end: 3;
+        width: auto;
+        height: auto;
+        margin:0px;
+        overflow:hidden;
+    }
+
+    .utensils__basic, .utensils__bread, .ingredients__reposteria{
+        grid-column-start: 2;
+        grid-column-end: 4;
+        width: auto;
+        height: auto;
+        margin:0px;
+        overflow:hidden;
+    }
+
+    .utensils__small, .utensils__toppers, .ingredients__printing{
+        grid-column-start: 2;
+        grid-column-end: 4;
+        grid-row-start: 2;
+        width: auto;
+        height: auto;
+        margin:0px;
+    }
+
+    .utensils__cutters, .ingredients__sprinkles, .parties__accessories {
+        grid-row-start: 1;
+        grid-row-end: 3;
+        grid-column-start: 3;
+        width: auto;
+        height: auto;
+        margin:0px;
+        overflow:hidden;
+    }
+
+    .utensils__capsules, .ingredients__colors, .parties__themed {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        width: auto;
+        height: auto;
+        margin:0px;
+        overflow:hidden;
+    }
+
+    .utensils__boxes, .ingredients__paper, .parties__character {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 2;
+        width: auto;
+        height: auto;
+        margin:0px;
+        overflow:hidden;
+    }
+
+    .utensils__moulds--image, .utensils__ceramics--image, .ingredients__fondant--image, .utensils__cutters--image, .ingredients__sprinkles--image, .parties__accessories--image{      
+        width: 250px;
+    }
+    .utensils__moulds--text, .utensils__ceramics--text, .ingredients__fondant--text, .utensils__cutters--text, .ingredients__sprinkles--text, .parties__accessories--text {
+        margin: 0px;
+        margin-top: 202px;
+        height: 198px;
+        width: 192px;
+    }
+
+    
+
+    .utensils__basic--image, .utensils__bread--image, .ingredients__reposteria--image, .utensils__capsules--image, .ingredients__colors--image, .parties__themed--image, .utensils__small--image, .utensils__toppers--image, .ingredients__printing--image, .utensils__boxes--image, .ingredients__paper--image, .parties__character--image {
+        width: 470px;
+    }
+
+    .utensils__basic--text, .utensils__bread--text, .ingredients__reposteria--text, .utensils__boxes--text, .ingredients__paper--text, .parties__character--text {
+        margin: 0px;
+        margin-left: -110px;
+        height: 198px;
+        width: 185px;
+    }
+
+    .utensils__small--text, .utensils__toppers--text, .ingredients__printing--text,  .utensils__capsules--text, .ingredients__colors--text, .parties__themed--text {
+        margin: 0px;
+        margin-left: 106px;
+        height: 198px;
+        width: 190px;
+    }
+
+}

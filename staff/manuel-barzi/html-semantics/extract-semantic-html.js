@@ -1,4 +1,7 @@
 function extractSemanticHtml(element, depth) {
+    if (typeof element === 'undefined') element = document
+    if (typeof depth === 'undefined') depth = 0
+
     var html = ''
 
     for (var k = 0; k < element.children.length; k++) {
@@ -48,4 +51,4 @@ function isOneOfTheseTags(element, tags) {
 
 }
 
-extractSemanticHtml(document, 0)
+extractSemanticHtml()
