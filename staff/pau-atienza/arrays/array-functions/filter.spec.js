@@ -3,7 +3,7 @@ describe('the method filter', function () {
         var array = [];
         var result = [];
         
-        result = filter(array, word => word.length > 6);
+        result = filter(array, function(word){ return word.length > 6});
 
         expect(result.length).toBe(0);
     });
@@ -11,7 +11,7 @@ describe('the method filter', function () {
     it('should return the values of an array than meet a condition', function () {
         var array = ['spray', 'limit', 'elite', 'exuberant', 'destruction', 'present'];
 
-        var result = filter(array, word => word.length > 6);
+        var result = filter(array, function(word){ return word.length > 6});
 
         expect(result[0]).toBe("exuberant");
         expect(result[1]).toBe("destruction");
@@ -22,7 +22,7 @@ describe('the method filter', function () {
     it('should return an empty array if objects are compared in the condition', function () {
         var array = ['spray', [1, 2], 'elite', 'exuberant', 'destruction', 'present'];
 
-        var result = filter(array, word => word === [1, 2]);
+        var result = filter(array, function(word){return word === [1, 2]});
 
         expect(result[0]).toBe(undefined);
     });
