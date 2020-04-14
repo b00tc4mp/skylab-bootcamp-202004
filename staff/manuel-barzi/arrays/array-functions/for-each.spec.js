@@ -1,3 +1,5 @@
+'use strict';
+
 describe('forEach', function () {
     it('should iterate on each element and keep each value multiplied by 10 in a new external array', function () {
         var array = [1, 2, 3];
