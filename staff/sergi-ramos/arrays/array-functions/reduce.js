@@ -1,8 +1,15 @@
 function reduce(array, callback, valorInicial) {
     debugger
-    var sum = 0;
+    var sum;
+    var notInitialValue = 0;
+    if(valorInicial === undefined){
+       notInitialValue = 1
+       sum = array[0]
+    } 
+    
+
     var checkValorInicial = true
-    for (var i = 0; i < array.length; i++) {
+    for (var i = notInitialValue; i < array.length; i++) {
 
         if (valorInicial === undefined && checkValorInicial === true) {
             sum = callback(sum, array[i], i, array)
