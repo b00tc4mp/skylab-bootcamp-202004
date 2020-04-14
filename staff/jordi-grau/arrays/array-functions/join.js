@@ -1,4 +1,6 @@
 
+'use strict'
+
 function join(array, parametre){
     var text = '';
     if(array.length!==0){
