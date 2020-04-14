@@ -1,8 +1,11 @@
-function splice(array, startingIndex, deleteCount, ...arguments) {
+function splice(array, startingIndex, deleteCount) {
     var copyArray = [];
     var newArray = [];
-    var index = 0;
-    var values = [...arguments];
+    if (arguments.length > 3) {
+        var values = [];
+
+        for (var i=3; i < arguments.length; i++) values[values.length] = arguments[i];
+    }
     
     if (!startingIndex) {
         startingIndex = 0;
@@ -19,11 +22,8 @@ function splice(array, startingIndex, deleteCount, ...arguments) {
     
     if (deleteCount <= 0) {
         for (var i = startingIndex; i < array.length; i++) {
-            copyArray[index] = array[i];
-            index++;
+            copyArray[copyArray.length] = array[i];
         }
-
-        index = 0;
 
         array.length = startingIndex;
 
@@ -44,8 +44,7 @@ function splice(array, startingIndex, deleteCount, ...arguments) {
             deleteCount = array.length;
 
             for (var i = startingIndex; i < deleteCount; i++) {
-                newArray[index] = array[i];
-                index++;
+                newArray[newArray.length] = array[i];
             }
     
             array.length = startingIndex;
@@ -53,15 +52,11 @@ function splice(array, startingIndex, deleteCount, ...arguments) {
         } else {
 
             for (var i = startingIndex + deleteCount; i < array.length; i++) {
-                copyArray[index] = array[i];
-                index++;
+                copyArray[copyArray.length] = array[i];
             }
 
-            index = 0;
-
             for (var i = startingIndex; i < startingIndex+deleteCount; i++) {
-                newArray[index] = array[i];
-                index++;
+                newArray[newArray.length] = array[i];
             }
 
             array.length = startingIndex;

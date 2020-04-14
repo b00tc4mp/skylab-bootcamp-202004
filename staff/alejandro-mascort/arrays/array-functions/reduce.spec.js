@@ -48,4 +48,34 @@ describe('reduce', function () {
         expect(result[1]).toBe(array);
         expect(result[2]).toBe(array);
     });
+
+    it('should give 1 then 3 and then 6 which are the values of the accum in each iteration', function () {
+        var array = [1, 2, 3];
+        var result = [];
+
+        reduce(array, function(accum, current, index, arr) {
+            accum = accum + current;
+            result[index] = accum;
+            return accum;
+        });
+
+        expect(result[0]).toBe(1);
+        expect(result[1]).toBe(3);
+        expect(result[2]).toBe(6);
+    });
+
+    it('should give 1 then 2 and then 3 which are the values of the current value in each iteration', function () {
+        var array = [1, 2, 3];
+        var result = [];
+
+        reduce(array, function(accum, current, index, arr) {
+            accum = accum + current;
+            result[index] = current;
+            return accum;
+        });
+
+        expect(result[0]).toBe(1);
+        expect(result[1]).toBe(2);
+        expect(result[2]).toBe(3);
+    });
 });

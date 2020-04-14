@@ -8,7 +8,7 @@ describe('every', function () {
             }
         });
 
-        expect(result).toBe(false);
+        expect(result).toBeFalsy();
     });
 
     it('should  return true because we are passing an empty array', function () {
@@ -20,19 +20,15 @@ describe('every', function () {
             }
         });
 
-        expect(result).toBe(true);
+        expect(result).toBeTruthy();
     });
 
     it('should iterate on each element and return true because all elements satisfy element equals 2', function () {
         var array = [2, 2, 2, 2, 2, 2];
 
-        var result = every(array, function(element, index) {
-            if (element !== 2) {
-                return false;
-            }
-        });
+        var result = every(array, function(element){ return element !== 2; });
 
-        expect(result).toBe(true);
+        expect(result).toBeTruthy();
     });
 
     it('should iterate on each element provide the index from the second argument of the expression (callback)', function () {

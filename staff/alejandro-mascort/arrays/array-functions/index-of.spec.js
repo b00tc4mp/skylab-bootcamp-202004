@@ -26,7 +26,7 @@ describe('indexOf', function () {
         expect(result).toBe(5);
     });
 
-    it('it should return 2 which is the position of the number 3 in the array starting the search in the position 0 because the index given is to much negative', function () {
+    it('it should return 5 which is the position of the number 3 in the array starting the search in the position 0 because the index given is too much negative', function () {
         var array = [1, 2, 3, 4, 5, 6, 3];
         var result;
 

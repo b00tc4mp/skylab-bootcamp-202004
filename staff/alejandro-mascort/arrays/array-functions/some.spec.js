@@ -8,7 +8,7 @@ describe('some', function () {
             }
         });
 
-        expect(result).toBe(true);
+        expect(result).toBeTruthy();
     });
 
     it('should  return false because we are passing an empty array', function () {
@@ -20,7 +20,7 @@ describe('some', function () {
             }
         });
 
-        expect(result).toBe(false);
+        expect(result).toBeFalsy();
     });
 
     it('should iterate on each element and return false because we want to element 24 which does not exist', function () {
@@ -32,7 +32,7 @@ describe('some', function () {
             }
         });
 
-        expect(result).toBe(false);
+        expect(result).toBeFalsy();
     });
 
     it('should iterate on each element provide the index from the second argument of the expression (callback)', function () {
