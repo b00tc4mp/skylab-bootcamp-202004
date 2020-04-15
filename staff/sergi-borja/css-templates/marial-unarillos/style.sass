@@ -1,9 +1,3 @@
-.wrapper
-    margin: 0
-    padding: 0
-    justify-items: center
-    display: grid
-    
 @import url('https://fonts.googleapis.com/css2?family=Gotu&display=swap')
 @mixin grid-elements($rowNumber)
     grid-row: $rowNumber
@@ -129,6 +123,12 @@
     font-family: 'Gotu', sans-serif
     box-sizing: border-box
 
+.wrapper
+    margin: 0
+    padding: 0
+    justify-items: center
+    display: grid
+
 .header
     width: 100vw
     background-color: #dadada
@@ -136,18 +136,16 @@
     position: sticky
     top: 0
     z-index: 1
-
-.header__img
-    height: 10vh
+    &__img
+        height: 10vh
+    &__logo-pad
+    display: none
 
 .logo-phone
     margin-top: 7vh
     margin-left: 5vw
     height: 8vh
     max-width: 87vw
-
-.header__logo-pad
-    display: none
 
 .pad-menu
     display: none
@@ -186,28 +184,26 @@
     grid-template-columns: 1
     grid-template-rows: repeat(3, 1fr)
     margin-top: 9vh
-
-.grid-footer__follow-us
-    @include grid-elements(1)
-
-.grid-footer__mail
-    @include grid-elements(2)
-
-.grid-footer__mail--input
-    width: 80vw
-    height: 5vh
-
-.grid-footer__contact-us
-    @include grid-elements(3)
+    &__follow-us
+        @include grid-elements(1)
+    &__mail
+        @include grid-elements(2)
+    &__mail--input
+        width: 80vw
+        height: 5vh
+    &__contact-us
+        @include grid-elements(3)
 
 @media only screen and (min-width: 700px)
-    .header__img
-        display: none
+    .header
+        &__img
+            display: none
+        &__logo-pad
+            display: flex
+            height: 15vh
+    
     .logo-phone
         display: none
-    .header__logo-pad
-        display: flex
-        height: 15vh
 
     .pad-menu
         display: grid
@@ -343,13 +339,14 @@
             grid-row: 2         
     .extra
         height: 30vh
-    .grid-footer__mail--input
-        width: 30vh
+    
     .grid-footer
         display: grid
         grid-template-columns: repeat(3, 1fr)
         grid-template-rows: 1
         height: 30vh
+        &__mail--input
+            width: 30vh
         div:nth-child(1)
             border: none
             border-right: 2px solid black
