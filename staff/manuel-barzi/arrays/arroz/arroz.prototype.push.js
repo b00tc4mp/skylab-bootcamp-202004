@@ -1,5 +1,8 @@
 'use strict';
 
-Arroz.prototype.push = function(element) {
-    this[this.length++] = element;
+Arroz.prototype.push = function() {
+    for (var i in arguments)
+        this[this.length++] = arguments[i];
+
+    return this.length;
 };
