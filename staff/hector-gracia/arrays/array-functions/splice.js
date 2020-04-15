@@ -6,13 +6,12 @@ function splice(array,start,length,insert){
     var insertArray=[];
     if(Array.isArray(insert)){
         for(var p=0;p<insert.length;p++){
-            debugger
+            
             insertArray[insertArray.length]=insert[p];
         }
     }else{
         insertArray[0]=insert;
     }
-    var pos=1;
     if(start<0) {
         start=array.length+start;
         length=0;
