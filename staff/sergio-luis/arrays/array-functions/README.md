@@ -11,6 +11,22 @@ locate files in folder `staff/<name>/arrays/array-functions`
 
 SEE demo code implementation `for-each.js` and its test `for-each.spec.js`.
 
-the methods from `Array.prototype` to implement are: `push`, `pop`, `map`, `indexOf`, `filter`, `includes`, `reduce`, `find`, `findIndex`, `some`, `every`, `slice`, `splice`, `join`
+the methods from `Array.prototype` to implement are:
+```sh
+ push
+ pop 
+ map
+ indexOf 
+ filter 
+ includes 
+ reduce 
+ find 
+ findIndex 
+ some 
+ every 
+ slice 
+ splice 
+ join
+ ```
 
 HINT [jasmine](https://jasmine.github.io/tutorials/your_first_suite)
