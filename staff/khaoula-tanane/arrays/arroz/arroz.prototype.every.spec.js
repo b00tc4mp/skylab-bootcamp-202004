@@ -1,4 +1,4 @@
-describe('every', function() {
+describe('Arroz.prototype.every', function() {
 
     it('should return true if every element passes the condition', function(){
         var animals = new Arroz('toro', 'vaca', 'perro', 'gato')
