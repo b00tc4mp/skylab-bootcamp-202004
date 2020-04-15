@@ -10,6 +10,7 @@ describe('find', function () {
         expect(result).toBe(12);
   
     });
+<<<<<<< Updated upstream
     it('The find() method returns undefined is array is empty', function () {
         var arrayEmpty = [];
   
@@ -22,6 +23,10 @@ describe('find', function () {
     });
   
     it('The find() method returns index of the find is array is empty', function () {
+=======
+  
+    false && it('The find() method returns index of the find is array is empty', function () {
+>>>>>>> Stashed changes
   
   
         var array = [1,2,3,4,5];
