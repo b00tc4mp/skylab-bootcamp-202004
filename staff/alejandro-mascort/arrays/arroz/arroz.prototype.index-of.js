@@ -1,7 +1,9 @@
 'use strict';
 
 Arroz.prototype.indexOf = function (element, startingIndex) {
-    if (!startingIndex) {
+    startingIndex = startingIndex/1;
+    
+    if ((typeof startingIndex != 'number') && (isNaN(startingIndex)) || (!startingIndex)) {
         startingIndex = 0;
     } else if (startingIndex < 0) {
         startingIndex = startingIndex + this.length;

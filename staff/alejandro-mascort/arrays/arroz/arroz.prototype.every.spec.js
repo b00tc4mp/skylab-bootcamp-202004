@@ -59,4 +59,43 @@ describe('Arroz.prototype.every', function () {
         expect(result[2]).toEqual(array);
     });
 
+    it('try to verify that no function argument throws the next error \' <arguments> is not a function', function () {
+        var array = new Arroz(1, 2, 3);
+        var result;
+
+        try {
+            array.every();
+
+        } catch(error) {
+            result = error;
+        }
+
+        expect(result).toBeDefined();
+        expect(result instanceof TypeError).toBeTruthy();
+        expect(result.message).toBe('undefined is not a function');
+
+        result = undefined;
+
+        try {
+            array.every(1);
+        } catch(error) {
+            result = error;
+        }
+
+        expect(result).toBeDefined();
+        expect(result instanceof TypeError).toBeTruthy();
+        expect(result.message).toBe('1 is not a function');
+
+        result = undefined;
+
+        try {
+            array.every(true);
+        } catch(error) {
+            result = error;
+        }
+
+        expect(result).toBeDefined();
+        expect(result instanceof TypeError).toBeTruthy();
+        expect(result.message).toBe('true is not a function');
+    });
 });

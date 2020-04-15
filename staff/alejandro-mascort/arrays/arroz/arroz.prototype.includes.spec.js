@@ -63,4 +63,22 @@ describe('Arroz.prototype.includes', function () {
 
         expect(result).toBeFalsy();
     });
+
+    it('it should return false because we want to find the index of 2 with a string starting index of 3', function () {
+        var array = new Arroz(1, 2, 3, 4, 5, 6, 3);
+        var result;
+
+        result = array.includes(2,"3"); 
+
+        expect(result).toBeFalsy();
+    });
+
+    it('it should return true because 2 is in the array ignoring the second argument', function () {
+        var array = new Arroz(1, 2, 3, 4, 5, 6, 3);
+        var result;
+
+        result = array.includes(2,[]); 
+
+        expect(result).toBeTruthy();
+    });
 });

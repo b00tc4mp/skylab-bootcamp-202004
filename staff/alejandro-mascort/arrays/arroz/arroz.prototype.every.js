@@ -1,6 +1,8 @@
 'use strict';
 
 Arroz.prototype.every = function(expression) {
+    if (typeof expression !== 'function') throw TypeError (expression + " is not a function");
+    
     if (this.length === 0) {
         return true;
     }
