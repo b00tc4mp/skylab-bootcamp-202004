@@ -21,4 +21,16 @@ describe('Arroz.prototype.every', function () {
         
         expect(result).toBe(true);
     });
+    it('should give an error when called without giving a callback parameter', function () {
+        var arroz = new Arroz(0,1,2,3,4,5,6,7,8,9);
+        var result=false;
+        var _error;
+        try{
+            result=arroz.every();
+        }catch(error){
+            _error=error;
+        }
+        
+        expect(_error.message).toBe("expresion is not a function");
+    });
 });

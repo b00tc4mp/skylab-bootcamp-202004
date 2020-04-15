@@ -47,5 +47,24 @@ describe('Arroz.prototype.splice', function () {
 
         expect(arroz[8]).toBe(10);
     });
+    it('should give an error when called without giving a start or length parameters', function () {
+        var arroz = new Arroz(0,1,2,3,4,5,6,7,8,9);
+        var begin=-2;
+        var _error;
+        try{
+            arroz.splice();
+        }catch(error){
+            _error=error;
+        }
+        
+        expect(_error.message).toBe("start is not an integer");
+        try{
+            arroz.splice(begin);
+        }catch(error){
+            _error=error;
+        }
+        expect(_error.message).toBe("span is not an integer");
+        
+    });
     
 });

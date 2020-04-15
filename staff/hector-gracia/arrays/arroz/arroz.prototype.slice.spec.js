@@ -27,5 +27,24 @@ describe('Arroz.prototype.slice', function () {
         expect(result[2]).toBe(3);
 
     });
+    it('should give an error when given a decimal number as the starting or ending point', function () {
+        var arroz = new Arroz(0,1,2,3,4,5,6,7,8,9);
+        var result;
+        var _error;
+        try{
+            result=arroz.slice(3,1.1);
+        }catch(error){
+            _error=error;
+        }
+        
+        expect(_error.message).toBe("end is not an integer");
+        try{
+            result=arroz.slice(1.1,3);
+        }catch(error){
+            _error=error;
+        }
+        
+        expect(_error.message).toBe("start is not an integer");
+    });
     
 });

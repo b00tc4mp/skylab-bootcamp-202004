@@ -24,4 +24,11 @@ describe('Arroz.prototype.pop', function () {
         result=arroz.pop();
         expect(result).toBe(9);
     });
+    it('should work wit an empty arroz', function () {
+        var arroz = new Arroz();
+        var result;
+
+        result=arroz.pop();
+        expect(result).toBe(undefined);
+    });
 });
