@@ -1,0 +1,615 @@
+/** variables **/
+$my-border: 1px solid red
+$my-width: 100%
+$my-section-color: #E8E6E5    
+$my-red: #FF5959
+/** mixins **/
+   
+body
+    height: 100vh   
+    
+li 
+    list-style: none
+*
+    padding: 0
+    margin: 0
+    
+    /** top nav bar **/
+.fixed-navigation-bar
+    background-color: $my-section-color 
+    width: $my-width
+    height: 50px
+    display: flex
+    
+    &__user
+        height: 50px
+        width: 158px
+        margin-left: 15%
+        display: flex
+        justify-content: center
+        align-items: center
+    &__icons
+        height: 140px
+        width: 232px
+        display: flex
+        margin-left: 25%
+        flex-direction: row
+        justify-content: space-around
+    
+    &__menu
+        background-color: $my-red
+        height: 140px
+        width: 80px
+        z-index: 2
+       
+        
+     
+       
+    &__menu--blue
+        background-color: #6199AF
+        height: 70px
+        width: 70px
+        
+        
+    &__menu--yellow
+        background-color: #F6B436
+        height: 70px
+        width: 70px
+    
+    &__social
+        display: flex
+        list-style: none 
+        justify-content: space-around
+        align-items: center
+        height: 35px
+        width: 275px
+        margin-top: 8px
+        
+        
+    &__twitter
+        display: inline 
+    &__facebook
+        display: inline
+    &__pinterest
+        display: inline
+    &__instagram
+        display: inline
+    &__youtube
+        display: inline
+    &__buy
+        display: flex
+        height: 50px
+        width: 50px
+        margin-left: 8%
+        justify-content: center
+        align-items: center
+    &__number
+        height: 50px
+        width: 50px   
+        background-color: $my-red
+        display: flex
+        justify-content: center
+        align-items: center
+        
+.link-text
+    display: inline
+    margin-left: 54%
+    &__blog
+        display: inline
+        margin-left: 79px
+    &__partys
+        display: inline
+        margin-left: 2%
+    &__brands
+        display: inline
+        margin-left: 3%
+    &__ingredients
+        display: inline
+        margin-left: 30px
+               
+
+/** header **/
+button
+    height: 28px
+    position: absolute
+    margin-top: 2%
+.display-tablet
+    display: none    
+.header-container
+    background-color: white
+    width: $my-width
+    height: 250px
+    display: flex
+    justify-content: end
+    
+    &__main-menu
+        width: 1080px
+        height: 218px
+        display: flex
+        background-color: white
+        align-self: end
+        margin-right: 18%
+        justify-content: end
+    &__text-box
+        height: 28px
+        width: 248px
+        position: absolute
+        margin-top: 2%
+        margin-right: 46px
+    &__blog      
+        height: 100px
+        width: 100px
+        background-color: $my-red
+        align-self: end 
+    &__logo 
+        margin-right: auto  
+    &__nav-container
+        width: 420px
+        height: 120px
+        background-color:  white
+        display: flex
+        align-self: end
+        justify-content: space-around
+        margin-right: 30px
+        
+    &__link
+        height: 100px
+        width: 100px
+        background-color: #F2F2F2
+        align-self: end
+        
+
+/** slider **/
+.slider-bar
+    background-color: $my-red
+    width: $my-width
+    height: 600px
+    display: flex
+    position: relative
+    margin-top: 40px
+    justify-content: center
+    &__nav
+        background-color: $my-section-color
+        width: $my-width
+        height: 18px
+        position: relative
+        margin-top: 18px  
+    
+       
+
+/** sections **/
+
+.expand-menu
+    height: 57px
+    width: 132px
+    display: flex
+    justify-content: center
+    align-items: center
+    align-self: end
+    background-color: $my-red
+    margin-left: 45%
+
+=sections   
+    background-color: $my-section-color
+    display: grid
+    width: $my-width
+    margin-top: 150px
+
+.utensils
+    +sections
+    height: 2285px
+    
+
+    &__header
+        background-color: $my-section-color
+        width: 1080px
+        height: 184px
+        margin-left: 20%
+    &__icon
+        height: 125px
+        width: 1080px
+        background-color: $my-section-color
+        position: absolute
+        top: 1080px
+        justify-content: center
+        display: flex
+    &__image
+        width: 92,80px
+        height: 125px    
+    &__tittle
+        height: 74px
+        width: 1080px
+        background-color: $my-section-color
+        margin-top: 10%
+        display: flex
+        justify-content: center  
+    &__img-container
+        width: 1095px
+        height: 1875px 
+        display: grid
+        background-color: white
+        margin-top: 11%
+        position: absolute
+        margin-left: 20%
+        grid-template-columns: 1fr 1fr 1fr
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 
+    &__imgs
+        grid-row: 1/3
+        grid-column: 1/2
+    &__imgs--2
+        grid-column: 2/4
+        grid-row: 1/2
+        background-color: $my-section-color
+    &__imgs--3
+        grid-column: 2/4 
+        grid-row: 2
+        background-color: $my-section-color
+    &__imgs--4
+        grid-column: 1/4
+        grid-row: 3
+        background-color: $my-section-color
+    &__imgs--5
+        grid-column: 1/3
+        grid-row: 4
+        background-color: $my-section-color
+    &__imgs--6
+        grid-column: 3
+        grid-row: 3/5
+        background-color: $my-section-color
+    &__imgs--7
+        grid-column: 2/4
+        grid-row: 5
+        background-color: $my-section-color
+    &__imgs--8
+        grid-column: 2/4
+        grid-row: 6
+        background-color: $my-section-color
+    &__imgs--9
+        grid-column: 1
+        grid-row: 5/7
+        
+
+     
+    
+.ingredients
+    +sections
+    height: 1655px
+    
+    &__header
+        background-color: $my-section-color
+        width: 1080px
+        height: 184px
+        margin-left: 20%
+    &__icon
+        height: 125px
+        width: 1080px
+        background-color: $my-section-color
+        position: absolute
+        top: 3515px
+        justify-content: center
+        display: flex
+    &__image
+        width: 92,80px
+        height: 125px    
+    &__tittle
+        height: 74px
+        width: 1080px
+        background-color: $my-section-color
+        margin-top: 10%
+        display: flex
+        justify-content: center
+    &__img-container
+        width: 1095px
+        height: 1260px 
+        display: grid
+        background-color: $my-section-color
+        margin-top: 11%
+        position: absolute
+        margin-left: 20%
+        grid-template-columns: 1fr 1fr 1fr
+        grid-template-rows: 1fr 1fr 1fr 1fr 
+    &__imgs
+        grid-row: 1/3
+        grid-column: 1/2
+    &__imgs--2
+        grid-column: 2/4
+        grid-row: 1/2
+        background-color: $my-section-color
+    &__imgs--3
+        grid-column: 2/4 
+        grid-row: 2
+        background-color: $my-section-color
+    &__imgs--4
+        grid-column: 1/4
+        grid-row: 3
+        background-color: $my-section-color
+    &__imgs--5
+        grid-column: 1/3
+        grid-row: 4
+        background-color: $my-section-color
+    &__imgs--6
+        grid-column: 3
+        grid-row: 3/5
+        background-color: $my-section-color
+    
+.partys
+    +sections
+    height: 1025px
+    
+    &__header
+        background-color: $my-section-color
+        width: 1080px
+        height: 184px
+        margin-left: 20%
+    &__icon
+        height: 125px
+        width: 1080px
+        background-color: $my-section-color
+        position: absolute
+        top: 5311px
+        justify-content: center
+        display: flex
+    &__image
+        width: 92,80px
+        height: 125px    
+    &__tittle
+        height: 74px
+        width: 1080px
+        background-color: $my-section-color
+        margin-top: 10%
+        display: flex
+        justify-content: center  
+    &__img-container
+        width: 1095px
+        height: 630px 
+        display: grid
+        background-color: $my-section-color
+        margin-top: 11%
+        position: absolute
+        margin-left: 20%
+        grid-template-columns: 1fr 1fr 1fr
+        grid-template-rows: 1fr 1fr 
+    &__imgs
+        grid-row: 1
+        grid-column: 1/3
+    &__imgs--2
+        grid-column: 1/3
+        grid-row: 2
+        background-color: $my-section-color
+    &__imgs--3
+        grid-column: 3
+        grid-row: 1/3
+        background-color: $my-section-color
+.blog
+    +sections
+    height: 1137px
+    &__header
+        background-color: $my-section-color
+        width: 1080px
+        height: 184px
+        margin-left: 20%
+    &__icon
+        height: 125px
+        width: 1080px
+        background-color: $my-section-color
+        position: absolute
+        top: 6499px
+        justify-content: center
+        display: flex
+    &__image
+        width: 92,80px
+        height: 125px    
+    &__tittle
+        height: 74px
+        width: 1080px
+        background-color: $my-section-color
+        margin-top: 10%
+        display: flex
+        justify-content: center 
+    &__img-container
+        width: 1095px
+        height: 662px 
+        display: grid
+        background-color: $my-section-color
+        margin-top: 11%
+        position: absolute
+        margin-left: 20%
+        grid-template-columns: 1fr 1fr 1fr
+        grid-template-rows: 1fr
+    &__imgs
+        grid-column: 1
+        
+    &__imgs--2
+        grid-column: 2
+       
+        
+    &__imgs--3
+        grid-column: 3
+    &__images--setup    
+        height: 525px
+        width: 350px
+
+.brands
+    +sections
+    height: 878px
+    &__header
+        background-color: $my-section-color
+        width: 1080px
+        height: 184px
+        margin-left: 20%
+    
+      
+    &__tittle
+        height: 74px
+        width: 1080px
+        background-color: $my-section-color
+        margin-top: 10%
+        display: flex
+        justify-content: center 
+    &__logo
+        width: 50%
+        height: 500px
+        margin-left: 24%
+        display: inline-block
+/** navigation bar bottom **/
+
+.navigation-bar-bottom
+    width: $my-width
+    height: 215px
+    margin-top: 150px
+    background-color: $my-section-color
+    display: flex
+    align-items: center
+
+    &__icons
+        height: 60px
+        width: 75px
+        margin-left: 16%
+        display: flex
+        justify-content: center
+        align-items: center
+        background-color: green
+
+/** footer navigation **/
+
+.footer-navigation
+    width: $my-width
+    height: 257px
+    background-color: #F8F8F8
+    padding-top: 20px
+
+    &__copyrigth
+        width: $my-width
+        height: 50px
+        background-color: pink
+        margin-top: 257px
+        
+    &__social
+       
+        height: 147px
+        width: 270px
+        border-right: 1px solid red
+        display: inline-block
+        margin-left: 20%
+        margin-top: 5%   
+        display: inline-block
+         
+    &__suscribe
+        width: 540px
+        height: 126px
+        display: inline-block
+        border-right: 1px solid red
+    &__button
+        display: inline-flex
+        height: 30px
+        width: 107px
+        display: flex
+        justify-content: center
+        align-items: center
+        background-color: $my-red
+    &__help
+        width: 270px
+        height: 140px
+        display: inline-block
+    &__text-box
+        display: block
+    &__copyrigth
+        background-color: $my-red
+        
+ 
+@media (min-width: 768px) and (max-width: 1024px)
+    
+    .fixed-navigation-bar
+         
+        &__twitter
+            display: none
+        &__facebook
+            display: none
+        &__pinterest
+            display: none
+        &__instagram
+            display: none
+        &__youtube
+            display: none
+        &__menu
+            display: none
+        &__menu--blue
+            display: none
+        &__menu--yellow
+            display: none
+        
+        &__number
+            height: 50px
+            width: 200px
+            margin-right: 15%
+                
+    .header-container
+        &__main-menu
+            display: none
+    .link-text
+        display: none
+        &__ingredients
+            display: none
+        &__partys
+            display: none
+        &__brands
+            display: none
+        &__blog
+            display: none
+    .display-tablet
+        display: block
+        margin-bottom: 20%
+    .horizontal-image
+        height: 191px
+        width: 408px
+    .vertical-image
+        height: 351px
+        width: 200px
+    .utensils
+        height: 1405px
+        width: 739px
+        &__icon
+            top: 1269px
+            
+        &__header
+            background-color: $my-section-color
+            width: 1080px
+            height: 184px
+            margin-left: 20%
+    
+         
+        &__tittle
+            height: 74px
+            width: 1080px
+            background-color: $my-section-color
+            margin-top: 10%
+            display: flex
+            justify-content: center  
+            
+        &__img-container
+            width: 625px
+            height: 1079.62px 
+            display: grid
+            background-color: white
+            margin-top: 11%
+            position: absolute
+            margin-left: 20%
+            grid-template-columns: 1fr 1fr 1fr
+            grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 
+        
+    .slider-bar
+        background-color: $my-red
+        width: 1096px
+        height: 609px
+        display: flex
+        position: relative
+        margin-top: 40px
+        justify-content: center
+        &__nav
+            background-color: $my-section-color
+            width: $my-width
+            height: 18px
+            position: relative
+            margin-top: 18px  
+        
+        

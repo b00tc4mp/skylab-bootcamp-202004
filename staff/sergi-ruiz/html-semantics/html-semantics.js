@@ -1,33 +1,30 @@
 function extractSemanticHtml(element, depth) {
-    if (typeof element === 'undefined') element = document
-    if (typeof depth === 'undefined') depth = 0
-
-    var html = ''
+    var html = '';
 
     for (var k = 0; k < element.children.length; k++) {
-        var child = element.children[k]
+        var child = element.children[k];
 
         if (!isNonSemanticTag(child))
-            html += getTabs(depth) + '<' + child.tagName + '>\n'
+            html += getTabs(depth) + '<' + child.tagName + '>\n';
 
         if (!isSelfClosingElement(child))
-            html += extractSemanticHtml(child, depth + 1)
+            html += extractSemanticHtml(child, depth + 1);
 
         if (!isNonSemanticTag(child) && !isSelfClosingElement(child))
-            html += getTabs(depth) + '</' + child.tagName + '>\n'
+            html += getTabs(depth) + '</' + child.tagName + '>\n';
 
     }
 
-    return html
+    return html;
 }
 
 function getTabs(num) {
     var tabs = ''
 
     for (var i = 0; i < num; i++)
-        tabs += '\t' // tabs = tabs + '\t'
+        tabs += '\t' // tabs = tabs + '\t';
 
-    return tabs
+    return tabs;
 }
 
 var SELF_CLOSING_TAGS = ['BR', 'IMG', 'INPUT']
@@ -43,12 +40,12 @@ function isNonSemanticTag(element) {
 }
 
 function isOneOfTheseTags(element, tags) {
-    var itIs = false
+    var itIs = false;
 
     for (var i = 0; i < tags.length && !(itIs = element.tagName === tags[i]); i++);
 
-    return itIs
+    return itIs;
 
 }
 
-extractSemanticHtml()
+extractSemanticHtml(document, 0);
