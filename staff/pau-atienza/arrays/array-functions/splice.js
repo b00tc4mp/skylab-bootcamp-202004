@@ -29,11 +29,12 @@ function splice(arrayTo, start, deleteCount){
         }
     }
 
-    for(i = start+deleteCount; i<arrayTo.length; i++){
+    for(var i = start+deleteCount; i<arrayTo.length; i++){
         newArray[newArray.length] = arrayTo[i];
     }
+
     arrayTo.length = 0;
-    for (var i =0; i<newArray.length; i++){
+    for (var i = 0; i<newArray.length; i++){
         arrayTo[arrayTo.length] = newArray[i]
     }
 };

@@ -31,6 +31,13 @@ describe('The method splice', function () {
 
         expect(numbers[4]).toBe(6);
         expect(numbers.length).toBe(5);
+        //Also if start is negative and its absolute value is higher than array.length, start becomes 0
+        var numbers = [ 1, 2, 4, 5, 6, 7];
+        
+        splice(numbers, -7, 1);
+
+        expect(numbers[1]).toBe(4);
+        expect(numbers.length).toBe(5);
     });
 
     it('with negative starting point, the function can still add elements to the array' , function () {
