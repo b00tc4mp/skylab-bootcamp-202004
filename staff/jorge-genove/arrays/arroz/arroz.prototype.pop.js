@@ -1,5 +1,7 @@
-Arroz.prototype.pop = function () {
-  if (this.length === 0) {
+Arroz.prototype.pop = function (expression) {
+  if(typeof expression === 'string') throw new TypeError( expression + ' is not a function')
+  
+    if (this.length === 0) {
     result = undefined;
     return result;
   }

@@ -29,5 +29,17 @@ expect(result).toBe(undefined)
 });
 });
 
+it('Should throw undefined error if u put an string as expression', function(){
+    var array = new Arroz(1,2,3,4)
 
- 
+    try{
+    
+    result = array.pop('d')
+}catch(error) {
+    var result = error
+    }
+expect(result instanceof TypeError).toBeTruthy();
+
+expect(result.message).toBe('d is not a function');
+
+});
