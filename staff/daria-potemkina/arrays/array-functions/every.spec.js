@@ -4,9 +4,7 @@ describe('every', function () {
 
         var array = [111, 20, 3]
         var e = every(array, function (element) {
-            if (element > 2) {
-                return true;
-            }
+            return element > 2;
         });
         expect(e).toEqual(true)
     });
@@ -15,9 +13,7 @@ describe('every', function () {
 
         var array = [1, 20, 3]
         var e = every(array, function (element) {
-            if (element > 10) {
-                return true;
-            }
+            return element > 10;
         });
         expect(e).toEqual(false)
     });
@@ -26,22 +22,21 @@ describe('every', function () {
 
         var array = ['hola', 'pepito', 'daria', 'elemento']
         var e = every(array, function (element) {
-            if (element.length >= 4) {
-                return true;
-            }
+            return (element.length >= 4);
         });
         expect(e).toEqual(true)
     });
 
-    it('should iterate on each element and return false because there are some elments that do not meet the condition', function () {
+    it('should iterate on each element and return false because there are some elments that do not meet the condition, check the index of element', function () {
 
         var array = ['hola', 'pepito', 'daria', 'elemento']
+        arr = []
         var e = every(array, function (element) {
-            if (element.length === 5) {
-                return true;
-            }
+            return element.length === 5;
+         
         });
         expect(e).toEqual(false)
+        
     });
 
 });

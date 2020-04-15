@@ -1,3 +1,5 @@
+'use strict';
+
 function includes(array, element, index){
     if(typeof index === 'undefined'){
     for(var i = 0; i < array.length; i++){

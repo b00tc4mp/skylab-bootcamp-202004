@@ -1,3 +1,5 @@
+'use strict';
+
 function indexOf(array, element, index) {
     if (index === undefined) {
         for (var i = 0; i < array.length; i++) {

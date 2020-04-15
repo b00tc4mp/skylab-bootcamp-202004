@@ -4,9 +4,7 @@ describe('some', function () {
 
         var array = [111, 20, 3]
         var e = some(array, function (element) {
-            if (element / 2 === 10) {
-                return true;
-            }
+            return element / 2 === 10;
         });
         expect(e).toEqual(true)
     });
@@ -15,9 +13,7 @@ describe('some', function () {
 
         var array = [1, 2, 3]
         var e = some(array, function (element) {
-            if (element > 10) {
-                return true;
-            }
+            return element > 10;
         });
         expect(e).toEqual(false)
     });
@@ -26,9 +22,7 @@ describe('some', function () {
 
         var array = ['hola', 'pepito', 'daria', 'elemento']
         var e = some(array, function (element) {
-            if (element === 'mundo') {
-                return true;
-            }
+            return element === 'mundo';
         });
         expect(e).toEqual(false)
     });
@@ -37,10 +31,9 @@ describe('some', function () {
 
         var array = ['hola', 'pepito', 'daria', 'elemento']
         var e = some(array, function (element) {
-            if (element.length === 4) {
-                return true;
-            }
+           return element.length === 4;
         });
+
         expect(e).toEqual(true)
     });
 
