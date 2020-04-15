@@ -1,3 +1,5 @@
+'use strinct';
+
 describe('indexOf', function () {
     it('returns the first position where the element is found within the array called upon', function () {
         var array = [2, 9, 9];

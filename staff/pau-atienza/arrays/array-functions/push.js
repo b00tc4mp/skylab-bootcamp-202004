@@ -1,3 +1,5 @@
+'use strinct';
+
 function push(array, element){
     for (var i = 1; i<arguments.length;i++){
         array[array.length] = arguments[i];

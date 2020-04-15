@@ -1,3 +1,5 @@
+'use strinct';
+
 describe('The pop method ', function () {
     it('should return undefined when the array is empty', function () {
         var array = [];

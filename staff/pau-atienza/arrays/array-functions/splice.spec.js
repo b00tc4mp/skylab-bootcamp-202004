@@ -1,3 +1,5 @@
+'use strinct';
+
 describe('The method splice', function () {
     it(' insert elements without removing elements from array' , function () {
         

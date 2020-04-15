@@ -1,4 +1,7 @@
+'use strinct';
+
 describe('join', function () {
+
     it('if an array of strings is introduced, it should return a single string including the subelements of the array separated by commas', function () {
         var array = ['a', 'b', 'c'];
 

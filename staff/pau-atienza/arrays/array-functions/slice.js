@@ -1,4 +1,6 @@
+'use strinct';
 function slice(array,begin = 0, end = array.length) {//arguments
+    
     var result = [];
 
     if (begin > array.length) {

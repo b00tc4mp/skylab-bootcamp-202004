@@ -1,3 +1,4 @@
+'use strinct';
 
 function filter(array, expression) {
     var result = [];

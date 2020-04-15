@@ -1,3 +1,5 @@
+'use strinct';
+
 function reduce(array, expression, initialValue){
     
     if(arguments.length>2){

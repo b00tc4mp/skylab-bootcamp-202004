@@ -1,3 +1,5 @@
+'use strinct';
+
 function every(array, expression) {
 
     if (array.length ===0){

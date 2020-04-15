@@ -1,3 +1,5 @@
+'use strinct';
+
 describe('push', function () {
     it('should add the string (pig) at the end of the array called upn', function () {
         var array = ['horse', 'cat', 'dog'];

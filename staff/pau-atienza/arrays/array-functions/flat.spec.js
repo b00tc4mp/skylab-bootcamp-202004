@@ -1,3 +1,5 @@
+'use strinct';
+
 describe('flat', function () {
     it('decomposes one level of the subarrays', function () {
         var array = [1, 2, 3, [1, 2]];

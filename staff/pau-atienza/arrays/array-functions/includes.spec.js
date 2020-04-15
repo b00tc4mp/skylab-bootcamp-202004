@@ -1,3 +1,5 @@
+'use strinct';
+
 describe('includes', function () {
     it('returns true if the element is found within the array called upon', function () {
         var array = [2, 9, 9];

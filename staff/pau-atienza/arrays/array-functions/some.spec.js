@@ -1,3 +1,5 @@
+'use strinct';
+
 describe('some', function () {
     it('returns true if an element in the provided array satisfies the provided testing function' , function () {
         var array = [5, 12, 8, 130, 44];

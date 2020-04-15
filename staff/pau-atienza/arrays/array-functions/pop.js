@@ -1,3 +1,5 @@
+'use strinct';
+
 function pop(array) {
     
     if (array.length-1 < 0) {

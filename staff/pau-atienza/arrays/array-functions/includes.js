@@ -1,3 +1,5 @@
+'use strinct';
+
 function includes(array,element, index = 0){
     
     if (index>= array.length){

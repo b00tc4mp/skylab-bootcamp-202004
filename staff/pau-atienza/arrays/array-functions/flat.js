@@ -1,5 +1,7 @@
+'use strinct';
+
 function flat(array, depth = 1, newArray = []){
-    depth -= 1;
+    depth--;
     for(var i =0; i<array.length; i++){
         if (array[i] === undefined){
             continue

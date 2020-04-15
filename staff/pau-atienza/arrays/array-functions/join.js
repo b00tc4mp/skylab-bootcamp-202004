@@ -1,3 +1,5 @@
+'use strinct';
+
 function join(array, separator = ','){
     var string = array[0];
 

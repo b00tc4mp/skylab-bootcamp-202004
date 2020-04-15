@@ -1,3 +1,5 @@
+'use strinct';
+
 describe('The method slice', function () {
     it('extracts the subsequence of an array from the parameter begin to the parameter end' , function () {
         var array = [5, 12, 8, 130, 44];

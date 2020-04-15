@@ -1,3 +1,5 @@
+'use strinct';
+
 function splice(arrayTo, start, deleteCount){
     if (start>arrayTo.length){
         start = arrayTo.length;

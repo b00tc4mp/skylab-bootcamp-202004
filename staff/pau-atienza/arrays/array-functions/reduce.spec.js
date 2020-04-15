@@ -1,3 +1,5 @@
+'use strinct';
+
 describe('reduce', function () {
     it('should return the sum of all the elements', function () {
         var array = [1, 2, 3];

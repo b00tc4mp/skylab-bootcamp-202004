@@ -1,3 +1,5 @@
+'use strinct';
+
 describe('every', function () {
     
     it('returns true if every element in the provided array satisfies the provided testing function' , function () {
