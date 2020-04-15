@@ -22,7 +22,6 @@ describe('Arroz.prototype.forEach', function () {
                 {result[result.length]=index;
                 result.length++;}
             });
-        console.log(result);
         expect(result[0]).toBe(6);
     });
 });
