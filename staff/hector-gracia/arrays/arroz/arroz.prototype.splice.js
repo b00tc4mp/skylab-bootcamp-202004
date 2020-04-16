@@ -9,13 +9,14 @@ Arroz.prototype.splice= function splice(start,span,insert){
 
     if(insert instanceof Arroz){
         for(var l=0;l<insert.length;l++){
-            
             addingArroz[addingArroz.length]=insert[l];
             addingArroz.length++;
         }
     }else{
-        addingArroz[addingArroz.length]=insert;
-        addingArroz.length++;
+        if(typeof insert!=="undefined"){
+            addingArroz[addingArroz.length]=insert;
+            addingArroz.length++;
+        }
     }
     if(start<0) {
         start=this.length+start;
