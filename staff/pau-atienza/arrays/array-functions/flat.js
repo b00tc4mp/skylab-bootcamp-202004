@@ -1,4 +1,4 @@
-'use strinct';
+'use strict';
 
 function flat(array, depth = 1, newArray = []){
     depth--;

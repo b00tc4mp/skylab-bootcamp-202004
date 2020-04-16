@@ -1,4 +1,4 @@
-'use strinct';
+'use strict';
 
 describe('push', function () {
     it('should add the string (pig) at the end of the array called upn', function () {

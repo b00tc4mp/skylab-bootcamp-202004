@@ -1,4 +1,4 @@
-'use strinct';
+'use strict';
 
 function every(array, expression) {
 

@@ -1,4 +1,4 @@
-'use strinct';
+'use strict';
 
 describe('the method filter', function () {
     it('should return an empty array when the filtered array is empty', function () {

@@ -1,4 +1,4 @@
-'use strinct';
+'use strict';
 
 describe('flat', function () {
     it('decomposes one level of the subarrays', function () {

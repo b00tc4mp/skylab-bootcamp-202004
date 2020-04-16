@@ -1,4 +1,4 @@
-'use strinct';
+'use strict';
 
 describe('includes', function () {
     it('returns true if the element is found within the array called upon', function () {

@@ -1,4 +1,4 @@
-'use strinct';
+'use strict';
 
 describe('some', function () {
     it('returns true if an element in the provided array satisfies the provided testing function' , function () {

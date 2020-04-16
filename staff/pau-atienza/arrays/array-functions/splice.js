@@ -1,4 +1,4 @@
-'use strinct';
+'use strict';
 
 function splice(arrayTo, start, deleteCount){
     if (start>arrayTo.length){

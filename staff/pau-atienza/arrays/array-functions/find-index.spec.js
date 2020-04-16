@@ -1,4 +1,4 @@
-'use strinct';
+'use strict';
 
 describe('findIndex', function () {
     it('returns the index of the first element in the provided array that satisfies the provided testing function' , function () {

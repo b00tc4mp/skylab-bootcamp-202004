@@ -1,4 +1,4 @@
-'use strinct';
+'use strict';
 
 describe('The method slice', function () {
     it('extracts the subsequence of an array from the parameter begin to the parameter end' , function () {

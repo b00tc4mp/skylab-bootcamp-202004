@@ -1,4 +1,4 @@
-'use strinct';
+'use strict';
 
 function indexOf(array, element, index){
     if(arguments.length>2){

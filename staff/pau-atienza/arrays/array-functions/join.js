@@ -1,4 +1,4 @@
-'use strinct';
+'use strict';
 
 function join(array, separator = ','){
     var string = array[0];

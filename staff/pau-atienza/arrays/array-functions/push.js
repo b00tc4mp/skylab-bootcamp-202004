@@ -1,4 +1,4 @@
-'use strinct';
+'use strict';
 
 function push(array, element){
     for (var i = 1; i<arguments.length;i++){

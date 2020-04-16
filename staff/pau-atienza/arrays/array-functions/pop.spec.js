@@ -1,4 +1,4 @@
-'use strinct';
+'use strict';
 
 describe('The pop method ', function () {
     it('should return undefined when the array is empty', function () {

@@ -1,4 +1,4 @@
-'use strinct';
+'use strict';
 
 describe('join', function () {
 
