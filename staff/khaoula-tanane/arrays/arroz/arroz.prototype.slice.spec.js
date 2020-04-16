@@ -12,22 +12,21 @@ describe('Arroz.prototype.slice', function() {
     it('should fail when start is not a number', function(){
         
         try{
-            var fruits = new Arroz('apple', 'orange', 'pineapple', 'coconut', 'banana')
+            var fruits = new Arroz('apple', 'orange', 'pineapple', 'coconut', 'banana');
             fruits.slice()
         }catch(error){
-            expect(error.message).toBe('undefined is not a number')
+            expect(error.message).toBe('undefined is not a number');
         }
     })
 
     it('should fail when end is not a number', function(){
         
         try{
-            var fruits = new Arroz('apple', 'orange', 'pineapple', 'coconut', 'banana')
+            var fruits = new Arroz('apple', 'orange', 'pineapple', 'coconut', 'banana');
             fruits.slice(1)
         }catch(error){
-            expect(error.message).toBe('undefined is not a number')
+            expect(error.message).toBe('undefined is not a number');
         }
     })
-
 
 }) 

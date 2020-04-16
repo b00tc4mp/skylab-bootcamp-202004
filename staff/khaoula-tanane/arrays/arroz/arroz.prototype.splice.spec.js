@@ -2,19 +2,18 @@ describe('Arroz.prototype.splice', function() {
 
     it('should remove elements from array', function(){
         var letters = new Arroz("a", "b", "c", "d", "k", "m");
-        var deleted = letters.splice(1,5)
+        var deleted = letters.splice(1,5);
 
-        expect(deleted.length).toBe(4)
-        expect(letters.length).toBe(2)
+        expect(deleted.length).toBe(4);
+        expect(letters.length).toBe(2);
     })
 
     it('should remove and replace', function(){
         var letters = new Arroz("a", "b", "c", "d", "k", "m");
-        var deleted = letters.splice(1, 5, '*', '__', '*')
+        var deleted = letters.splice(1, 5, '*', '__', '*');
 
-        expect(deleted.length).toBe(4)
-        console.log(letters)
-        expect(letters.length).toBe(5)
+        expect(deleted.length).toBe(4);
+        expect(letters.length).toBe(5);
 
     })
 
@@ -24,7 +23,7 @@ describe('Arroz.prototype.splice', function() {
             var letters = new Arroz("a", "b", "c", "d", "k", "m");
             letters.splice()
         }catch(error){
-            expect(error.message).toBe('undefined is not a number')
+            expect(error.message).toBe('undefined is not a number');
         }
     })
 

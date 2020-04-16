@@ -1,9 +1,11 @@
-Arroz.prototype.includes = function(element, start = 0){
+Arroz.prototype.includes = function(element, start){
+    var start = 0;
 
-    if (!element) throw TypeError(`${element} is not a function`) 
+    if (!element) throw TypeError(`${element} is not a function`);
 
     for(var i =start; i < this.length; i++){
-        if(this[i] === element) return true
+        if(this[i] === element) return true;
     }
-    return false
+    return false;
 } 
+

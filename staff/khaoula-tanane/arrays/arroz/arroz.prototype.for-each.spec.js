@@ -29,7 +29,7 @@ describe('Arroz.prototype.forEach', function () {
 
     it('should iterate on each element provide the index from the second argument of the expression (callback)', function () {
         var array = new Arroz(1, 2, 3);
-        var result = [];
+        var result = new Arroz();
 
         array.forEach(function(element, index, array) {
             result[index] = index;
@@ -42,7 +42,7 @@ describe('Arroz.prototype.forEach', function () {
 
     it('should iterate on each element provide the full array from the third argument of the expression (callback)', function () {
         var array = new Arroz(1, 2, 3);
-        var result = [];
+        var result = new Arroz();
 
         array.forEach(function(element, index, array) {
             result[index] = array;
@@ -56,10 +56,10 @@ describe('Arroz.prototype.forEach', function () {
     it('should fail when callback is not a function (try catch)', function(){
         
         try{
-            var names = new Arroz('manuel', 'juanito', 'alex', 'kaula')
+            var names = new Arroz('manuel', 'juanito', 'alex', 'kaula');
             names.forEach()
         }catch(error){
-            expect(error.message).toBe('undefined is not a function')
+            expect(error.message).toBe('undefined is not a function');
         }
 
     })
