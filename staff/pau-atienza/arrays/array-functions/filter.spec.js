@@ -3,9 +3,8 @@
 describe('the method filter', function () {
     it('should return an empty array when the filtered array is empty', function () {
         var array = [];
-        var result = [];
         
-        result = filter(array, function(word){ return word.length > 6});
+        var result = filter(array, function(word){ return word.length > 6});
 
         expect(result.length).toBe(0);
     });

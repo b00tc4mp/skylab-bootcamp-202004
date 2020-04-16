@@ -1,6 +1,11 @@
-'use strinct';
+'use strict';
 
 Arroz.prototype.splice = function (start, deleteCount = this.length - start){
+
+    if(typeof start !== 'number'){throw new TypeError (start + 'is not a number')};
+
+    if(typeof deleteCount !== 'number'){throw new TypeError (deleteCount + 'is not a number')};
+
     if (start > this.length){
         start = this.length;
         deleteCount = 0;
@@ -34,14 +39,14 @@ Arroz.prototype.splice = function (start, deleteCount = this.length - start){
     }
 
     for (var i = this.length; i<0; i--){
-        this[this.length] ///Hay que petar el key:value
+        delete this[this.length--]; 
 
     }
 
     this.length = 0;
 
     for (var i = 0; i<newArroz.length; i++){
-        this[this.length] = newArroz[i]
+        this[this.length++] = newArroz[i]
     }
 };
 

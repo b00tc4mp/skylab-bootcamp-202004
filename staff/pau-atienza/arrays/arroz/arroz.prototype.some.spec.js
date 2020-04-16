@@ -11,5 +11,18 @@ describe('some', function() {
         expect(result).toBe(true);
     });
 
+    it(' tests whether at least one element in the array passes the test implemented by the provided function. It returns a Boolean value.', function() {
+        var array = new Arroz (1, 2, 3, 4, 5);
+        var result =[];
+
+        array.some(function(element ,index ,array) {
+            result[index]= array;
+        });
+
+        expect(result[0]).toBe(array);
+        expect(result[1]).toBe(array);
+        expect(result[2]).toBe(array);
+    });
+
 });
 

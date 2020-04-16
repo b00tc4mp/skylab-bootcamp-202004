@@ -12,6 +12,17 @@ describe('Arroz.prototype.forEach', function () {
         expect(result[0]).toBe(10);
         expect(result[1]).toBe(20);
         expect(result[2]).toBe(30);
+
+        var array = new Arroz(1, 2, 3);
+        var result = [];
+
+        array.forEach(function(element, index, array) {
+            result[index] = index;
+        });
+
+        expect(result[0]).toBe(0);
+        expect(result[1]).toBe(1);
+        expect(result[2]).toBe(2);
     });
 
     it('should iterate on each element and keep each value in upper-case in a new external array', function () {

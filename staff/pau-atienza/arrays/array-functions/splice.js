@@ -6,7 +6,7 @@ function splice(arrayTo, start, deleteCount){
         deleteCount = 0;
     }
     else if(start <0){
-        start = arrayTo.length + start
+        start = arrayTo.length + start;
         if(start<0){
             start = 0;
         };
