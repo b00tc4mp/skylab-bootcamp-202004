@@ -1,8 +1,14 @@
 'use strict';
 
 Arroz.prototype.reduce = function (expression, accum) {
-    if (!accum) {
-        accum = 0;
+    if (typeof expression !== 'function' ) throw new TypeError (expression + ' is not a function');
+
+    if (typeof accum === 'undefined') {
+        if (typeof this[0] === 'number') accum = 0;
+        else if (typeof this[0] === 'string') accum = "";
+
+    } else if (typeof accum !== 'number') {
+        accum = accum.toString();
     }
 
     for (var i = 0; i < this.length; i++) {

@@ -80,4 +80,12 @@ describe('Arroz.prototype.reduce', function () {
         expect(result[1]).toBe(2);
         expect(result[2]).toBe(3);
     });
+
+    it('should return the string "function(x){}123" because the accumulator is function(x){}', function () {
+        var array = new Arroz(1, 2, 3);
+
+        var result= array.reduce(function(a,b){return a + b;}, function(x){});
+
+        expect(result).toBe("function(x){}123");
+    });
 });

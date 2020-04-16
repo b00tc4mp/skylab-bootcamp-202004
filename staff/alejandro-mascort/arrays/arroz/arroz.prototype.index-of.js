@@ -3,9 +3,11 @@
 Arroz.prototype.indexOf = function (element, startingIndex) {
     startingIndex = startingIndex/1;
     
-    if ((typeof startingIndex != 'number') && (isNaN(startingIndex)) || (!startingIndex)) {
+    if (isNaN(startingIndex)) {
         startingIndex = 0;
+
     } else if (startingIndex < 0) {
+        startingIndex = Math.floor(startingIndex);
         startingIndex = startingIndex + this.length;
         
         if (startingIndex < 0) {

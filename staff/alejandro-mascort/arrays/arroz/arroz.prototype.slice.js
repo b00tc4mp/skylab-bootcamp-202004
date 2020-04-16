@@ -2,10 +2,14 @@
 
 Arroz.prototype.slice = function (startingIndex, finishIndex) {
     var newArray = new Arroz();
+    startingIndex = startingIndex/1;
+    finishIndex = finishIndex/1;
     
-    if (!startingIndex) {
+    if (isNaN(startingIndex)) {
         startingIndex = 0;
+
     } else if (startingIndex < 0) {
+        startingIndex = Math.floor(startingIndex);
         startingIndex = startingIndex + this.length;
         
         if (startingIndex < 0) {
@@ -13,8 +17,9 @@ Arroz.prototype.slice = function (startingIndex, finishIndex) {
         }
     }
 
-    if (!finishIndex) {
+    if (isNaN(finishIndex)) {
         finishIndex = this.length;
+
     } else if (finishIndex < 0) {
         finishIndex = finishIndex + this.length-1;
         
@@ -22,6 +27,7 @@ Arroz.prototype.slice = function (startingIndex, finishIndex) {
             finishIndex = this.length;
         }
     }
+    finishIndex = Math.floor(finishIndex);
     
     for (var i = startingIndex; i < finishIndex; i++) {
         newArray[newArray.length++] = this[i];

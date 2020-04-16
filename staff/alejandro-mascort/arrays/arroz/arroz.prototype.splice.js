@@ -14,16 +14,16 @@ Arroz.prototype.splice = function (startingIndex, deleteCount) {
         for (var i=2; i < arguments.length; i++) values[values.length] = arguments[i];
     }
     
-    if (!startingIndex) {
+    if (isNaN(startingIndex)) {
         startingIndex = 0;
+
     } else if (startingIndex < 0) {
-        startingIndex = startingIndex + array.length;
+        startingIndex = Math.floor(startingIndex);
+        startingIndex = startingIndex + this.length;
         
         if (startingIndex < 0) {
             startingIndex = 0;
         }
-    } else if (startingIndex > array.length) {
-        startingIndex = array.length;
     }
 
     

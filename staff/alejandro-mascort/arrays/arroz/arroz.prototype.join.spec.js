@@ -1,6 +1,6 @@
 'use strict';
 
-describe('join', function () {
+describe('Arroz.prototype.join', function () {
     it('should return the string 1,2,3 because no separator is specified', function () {
         var array = new Arroz(1, 2, 3);
 
