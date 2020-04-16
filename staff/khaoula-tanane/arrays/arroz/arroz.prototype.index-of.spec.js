@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Arroz.prototype.indexOf', function() {
 
     it('should return position if element is found', function(){

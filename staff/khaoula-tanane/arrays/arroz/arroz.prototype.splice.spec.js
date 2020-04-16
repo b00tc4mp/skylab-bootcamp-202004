@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Arroz.prototype.splice', function() {
 
     it('should remove elements from array', function(){

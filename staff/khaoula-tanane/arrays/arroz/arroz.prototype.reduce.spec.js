@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Arroz.prototype.reduce', function() {
 
     it('should calculate total of number', function(){

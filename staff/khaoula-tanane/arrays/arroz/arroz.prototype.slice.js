@@ -1,3 +1,5 @@
+'use strict';
+
 Arroz.prototype.slice = function(start, end){
 
     if (typeof start !== 'number') throw TypeError(`${start} is not a number`);

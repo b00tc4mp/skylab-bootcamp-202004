@@ -1,4 +1,5 @@
 'use strict';
+
 describe('Arroz.prototype.push', function() {
 
     it('should add an element to the end of an array', function(){

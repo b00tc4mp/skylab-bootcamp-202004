@@ -1,3 +1,5 @@
+'use strict';
+
 Arroz.prototype.some = function(callback){
 
         if (typeof callback !== 'function') throw TypeError(`${callback} is not a function`) 

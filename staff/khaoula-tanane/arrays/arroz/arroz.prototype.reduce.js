@@ -1,3 +1,5 @@
+'use strict';
+
 Arroz.prototype.reduce = function(callback, initialValue){
 
     initialValue = 0;

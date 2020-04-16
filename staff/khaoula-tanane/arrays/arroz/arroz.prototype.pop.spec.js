@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Arroz.prototype.pop', function() {
 
     it('should delelte the last element of an array', function(){

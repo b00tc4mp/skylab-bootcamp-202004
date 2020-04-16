@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Arroz.prototype.map', function() {
 
     it('should map array and multiply * 2', function(){

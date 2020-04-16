@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Arroz.prototype.every', function() {
 
     it('should return true if every element passes the condition', function(){

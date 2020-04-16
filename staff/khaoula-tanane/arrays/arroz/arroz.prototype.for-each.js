@@ -1,6 +1,5 @@
 'use strict';
 
-
 Arroz.prototype.forEach = function (expression) {
 
     if (!expression) throw TypeError(`${expression} is not a function`);

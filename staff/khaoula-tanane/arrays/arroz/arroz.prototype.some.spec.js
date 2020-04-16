@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Arroz.prototype.some', function() {
 
     it('should return true some elements pass the condition', function(){

@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Arroz.prototype.find', function() {
 
     it('should find first element that passes condition', function(){

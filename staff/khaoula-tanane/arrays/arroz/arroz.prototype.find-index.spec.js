@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Arroz.prototype.findIndexOf', function() {
     
 

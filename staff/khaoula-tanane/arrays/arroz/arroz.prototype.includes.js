@@ -1,3 +1,5 @@
+'use strict';
+
 Arroz.prototype.includes = function(element, start){
     
     if (!start) start = 0 

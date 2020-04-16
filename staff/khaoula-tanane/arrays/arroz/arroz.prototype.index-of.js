@@ -1,3 +1,5 @@
+'use strict';
+
 Arroz.prototype.indexOf = function(string, start){
     
     if (!start) start = 0

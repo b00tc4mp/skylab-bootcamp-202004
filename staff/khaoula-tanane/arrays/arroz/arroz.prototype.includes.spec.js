@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Arroz.prototype.includes', function() {
 
     it('should return true  if it is available', function(){

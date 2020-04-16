@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Arroz.prototype.slice', function() {
 
     it('should return an new array with sliced elments', function(){

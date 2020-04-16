@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Arroz.prototype.filter', function() {
 
     it('should return element that passes condition', function(){
