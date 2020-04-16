@@ -1,5 +1,6 @@
 Arroz.prototype.includes = function(element, start){
-    var start = 0;
+    
+    if (!start) start = 0 
 
     if (!element) throw TypeError(`${element} is not a function`);
 

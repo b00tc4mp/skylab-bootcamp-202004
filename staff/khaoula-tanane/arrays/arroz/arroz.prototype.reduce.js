@@ -1,6 +1,6 @@
 Arroz.prototype.reduce = function(callback, initialValue){
 
-    var initialValue = 0;
+    initialValue = 0;
     
     if (typeof callback !== 'function') throw TypeError(`${callback} is not a function`);
 
