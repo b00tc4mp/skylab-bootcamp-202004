@@ -2,17 +2,20 @@ describe('pop', function () {
     it('it should delete the last element of an array, in this case number 8', function () {
 
         var array = [1, 2, 3, 4, 5, 6, 7, 8]
-        pop(array);
+        var newArray = pop(array);
+
+        expect(newArray).toEqual([8]);
+        expect(newArray.length).toBe(1);
         expect(array.length).toBe(7);
 
     });
 
 
     it('it should delete the last element of an array, in this case the string ', function () {
-        
-        var array = ['read', 'the', 'fucking', 'documentation']
+
+        var array = ['maria', 'anna', 'lucia', 'sofia']
         pop(array)
-        expect(array[array.length - 1]).toBe('fucking');
+        expect(array.length).toBe(3);
 
     });
 
@@ -24,4 +27,4 @@ describe('pop', function () {
         expect(a).toBe(undefined)
 
     });
-})
+}) 

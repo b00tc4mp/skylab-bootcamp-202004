@@ -7,6 +7,6 @@ function filter(array, expression) {
             result[result.length] = array[i];
         }
     }
-    return result
+    return result;
 }
 
