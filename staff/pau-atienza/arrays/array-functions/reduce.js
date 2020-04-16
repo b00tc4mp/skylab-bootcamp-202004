@@ -1,26 +1,22 @@
-'use strinct';
+'use strict';
 
-function reduce(array, expression, initialValue){
+function reduce(array, expression, initialValue = array[0]){
     
-    if(arguments.length>2){
-        if(initialValue>= array.length){
-            return undefined;
-        }
-        var i = initialValue + 1;
-        var accumulator = array[initialValue]
+    if (array.length === 0){
+        return undefined;
+    }
+    else if(arguments.length>2){
+        var i = 0;
     }
     else{
-        if (array.length === 0){
-            return undefined;
-        }
         var i = 1;
-        var accumulator = array[0]
     }
     
+    var accumulator = initialValue;
+    
     for (i; i<array.length; i++){
-        debugger;
         accumulator = expression(accumulator, array[i], i);
-        debugger;
     };
+
     return accumulator;
 };
