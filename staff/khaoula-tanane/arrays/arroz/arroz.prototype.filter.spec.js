@@ -9,4 +9,16 @@ describe('Arroz.prototype.filter', function() {
         expect(filtrado[0]).toBe('alex')
     })
 
+    it('should fail when callback is not a function (try catch)', function(){
+        
+        try{
+            var names = new Arroz('manuel', 'juanito', 'alex', 'kaula')
+            names.filter()
+        }catch(error){
+            expect(error.message).toBe('undefined is not a function')
+        }
+
+    })
+
 }) 
+

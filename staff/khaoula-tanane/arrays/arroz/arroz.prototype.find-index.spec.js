@@ -1,4 +1,5 @@
 describe('Arroz.prototype.findIndexOf', function() {
+    
 
     it('should return position of element that passes condition', function(){
         var names = new Arroz('manuel', 'juanito', 'alex', 'kaula')

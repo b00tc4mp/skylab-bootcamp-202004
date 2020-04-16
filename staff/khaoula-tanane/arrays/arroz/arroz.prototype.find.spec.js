@@ -16,4 +16,16 @@ describe('Arroz.prototype.find', function() {
         expect(found).not.toBeDefined();
     })
 
+    it('should fail when callback is not a function (try catch)', function(){
+        
+        try{
+            var names = new Arroz('manuel', 'juanito', 'alex', 'kaula')
+            names.find()
+        }catch(error){
+            expect(error.message).toBe('undefined is not a function')
+        }
+
+    })
+
+
 }) 

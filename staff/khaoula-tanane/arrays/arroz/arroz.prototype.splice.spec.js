@@ -1,4 +1,4 @@
-/*describe('Arroz.prototype.splice', function() {
+describe('Arroz.prototype.splice', function() {
 
     it('should remove elements from array', function(){
         var letters = new Arroz("a", "b", "c", "d", "k", "m");
@@ -6,7 +6,6 @@
 
         expect(deleted.length).toBe(4)
         expect(letters.length).toBe(2)
-        //expect(letters.join('')).toBe('am')
     })
 
     it('should remove and replace', function(){
@@ -14,10 +13,30 @@
         var deleted = letters.splice(1, 5, '*', '__', '*')
 
         expect(deleted.length).toBe(4)
+        console.log(letters)
         expect(letters.length).toBe(5)
-       // expect(letters.join('')).toBe('a*__*m')
 
     })
 
+    it('should fail when start is not a number', function(){
+        
+        try{
+            var letters = new Arroz("a", "b", "c", "d", "k", "m");
+            letters.splice()
+        }catch(error){
+            expect(error.message).toBe('undefined is not a number')
+        }
+    })
+
+    it('should fail when end is not a number', function(){
+        
+        try{
+            var letters = new Arroz("a", "b", "c", "d", "k", "m");
+            letters.splice(1)
+        }catch(error){
+            expect(error.message).toBe('undefined is not a number')
+        }
+    })
+
+
 }) 
-*/

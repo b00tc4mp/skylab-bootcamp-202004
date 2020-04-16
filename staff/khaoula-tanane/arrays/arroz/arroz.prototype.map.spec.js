@@ -28,5 +28,16 @@ describe('Arroz.prototype.map', function() {
 
     })
 
+    it('should fail when callback is not a function (try catch)', function(){
+        
+        try{
+            var names = new Arroz('manuel', 'juanito', 'alex', 'kaula')
+            names.map()
+        }catch(error){
+            expect(error.message).toBe('undefined is not a function')
+        }
+
+    })
+
 
 }) 

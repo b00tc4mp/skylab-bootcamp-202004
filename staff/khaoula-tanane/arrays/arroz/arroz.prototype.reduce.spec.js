@@ -17,4 +17,17 @@ describe('Arroz.prototype.reduce', function() {
     })
 
 
+    it('should fail when callback is not a function (try catch)', function(){
+        
+        try{
+            var numbers = new Arroz([1,2], [3], [4, 5])
+            numbers.reduce()
+        }catch(error){
+            expect(error.message).toBe('undefined is not a function')
+        }
+
+    })
+
+
+
 }) 

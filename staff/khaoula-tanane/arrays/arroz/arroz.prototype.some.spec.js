@@ -1,6 +1,6 @@
 describe('Arroz.prototype.some', function() {
 
-    it('should retutn true some elements pass the condition', function(){
+    it('should return true some elements pass the condition', function(){
         var ages = new Arroz({age: 12}, {age: 13}, {age: 15}, {age: 18})
         var someAdult = ages.some(function({age}){
             return age >= 18
@@ -17,3 +17,15 @@ describe('Arroz.prototype.some', function() {
     })
 
 }) 
+
+
+it('should fail when callback is not a function (try catch)', function(){
+        
+    try{
+        var ages = new Arroz({age: 12}, {age: 13}, {age: 15}, {age: 18})
+        var someAdult = ages.some()   
+    }catch(error){
+        expect(error.message).toBe('undefined is not a function')
+    }
+
+})

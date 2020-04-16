@@ -52,4 +52,16 @@ describe('Arroz.prototype.forEach', function () {
         expect(result[1]).toBe(array);
         expect(result[2]).toBe(array);
     });
+
+    it('should fail when callback is not a function (try catch)', function(){
+        
+        try{
+            var names = new Arroz('manuel', 'juanito', 'alex', 'kaula')
+            names.forEach()
+        }catch(error){
+            expect(error.message).toBe('undefined is not a function')
+        }
+
+    })
+
 });
