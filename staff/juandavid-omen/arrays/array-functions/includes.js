@@ -1,22 +1,19 @@
 function includes(array,element, index){
-    if(arguments.length>2){
-        if (index>= array.length){
+    var i = 0;
+
+    if(arguments.length > 2){
+        if (index >= array.length || -index >= array.length ){
             return false;
         }
-        else if (-index >= array.length){
-            return false;
-        }
-        else if(index < 0){
-         var i = array.length -1 + index;
-        }
-        else{
-            var i = index;
+        
+        if(index < 0){
+            i = array.length -1 + index;
+        } else{
+            i = index;
         }
     }
-    else{
-        var i = 0;
-    }
-    for (i; i<array.length; i++){
+
+    for (i; i < array.length; i++){
         if (array[i] === element){
             return true;
         };

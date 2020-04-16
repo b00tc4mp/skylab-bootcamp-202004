@@ -1,13 +1,11 @@
 function reduce(array, expression, initialValue){
-    
-    if(arguments.length>2){
-        if(initialValue>= array.length){
+    if(arguments.length >2 ){
+        if(initialValue >= array.length){
             return undefined;
         }
         var i = initialValue + 1;
         var accumulator = array[initialValue]
-    }
-    else{
+    } else{
         if (array.length === 0){
             return undefined;
         }

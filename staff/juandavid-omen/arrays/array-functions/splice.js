@@ -1,12 +1,13 @@
 function splice(arrayTo, start, deleteCount){
-    if (start>arrayTo.length){
+    if (start > arrayTo.length){
         start = arrayTo.length;
         deleteCount = 0;
     }
 
-    else if(start <0){
+    else if(start < 0){
         start = arrayTo.length + start
-        if(start<0){
+
+        if(start < 0) {
             start = 0;
         };
     }
@@ -21,12 +22,12 @@ function splice(arrayTo, start, deleteCount){
 
     var newArray = [];
 
-    for(var i=0; i<start; i++){
+    for(var i = 0; i < start; i++){
         newArray[newArray.length] = arrayTo[i];
     }
 
     if(arguments.length>3){
-        for(var i = 3; i<arguments.length; i++){
+        for(var i = 3; i < arguments.length; i++){
             newArray[newArray.length] = arguments[i];
         }
     }
@@ -36,7 +37,7 @@ function splice(arrayTo, start, deleteCount){
     }
     
     arrayTo.length = 0;
-    for (var i =0; i<newArray.length; i++){
+    for (var i = 0; i < newArray.length; i++){
         arrayTo[arrayTo.length] = newArray[i]
     }
 };

@@ -1,4 +1,4 @@
-function slice(array,) {//arguments
+function slice(array) {
     var result = [];
     var begin = 0;
     var end = 0;

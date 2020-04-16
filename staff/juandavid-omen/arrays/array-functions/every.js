@@ -1,5 +1,5 @@
 function every(array, expression) {
-    if (array.length == 0){
+    if (array.length === 0){
         return false;
     }
 

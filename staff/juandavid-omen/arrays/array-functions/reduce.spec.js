@@ -1,4 +1,4 @@
-describe("reduce", function () {
+describe("The reduce method", function () {
   it("should return the sum of all the elements", function () {
     var array = [1, 2, 3];
 
@@ -31,18 +31,21 @@ describe("reduce", function () {
 
   it("if an initial value is provided and it is higher than array.length, the operation will return undefined", function () {
     var array = [1, 2, 3];
+
     var result = reduce(array, function(accumulator,element) {
-        return accumulator + element
-    }, 3
-    );
+      return accumulator + element;
+    }, 3);
+
     expect(result).toBe(undefined);
   });
 
   it("if an empty array is introduced, it returns undefined (original function returns error)", function () {
     var array = [];
+
     var result = reduce(array, function(accumulator, element) { 
         return accumulator + element
     });
+    
     expect(result).toBe(undefined);
   });
 });

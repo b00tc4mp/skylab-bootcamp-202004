@@ -1,4 +1,4 @@
-describe("the method filter", function () {
+describe("The filter method", function () {
   it("should return an empty array when the filtered array is empty", function () {
     var array = [];
     var result = [];

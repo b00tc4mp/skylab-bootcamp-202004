@@ -1,7 +1,8 @@
 function join(array, separator){
     if(arguments.length === 1){
-        var separator = ','; 
+        var separator = ","; 
     };
+
     var string = array[0];
     for (i=1; i<array.length; i++){
         if (array[i] === undefined || array[i] === null){
