@@ -1,18 +1,21 @@
 function person(name) {
-    return {
-        toString: function() {
+    this.name=name
+  
+        toString= function() {
             return 'i am ' + name
-        },
+        }
         
-        setName: function(_name) {
+        setName= function(_name) {
             name = _name
         }
     }
+
+debugger
+var peter = new person('Peter')
+var mary = newperson('Mary')
+person.prototype.sex=function () {
+    console.log("i need some sex" + this.name)
 }
-
-var peter = person('Peter')
-var mary = person('Mary')
-
 console.log(peter.toString())
 peter.setName('John')
 console.log(peter.toString())
