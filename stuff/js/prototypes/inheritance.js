@@ -1,33 +1,63 @@
-function Product(type, id, name) {
-    this.type = type
-    this.id = id
+function Person(name, surname, gender) {
     this.name = name
+    this.surname = surname
+    this.gender = gender
 }
 
-Product.prototype.toString = function() { return 'Product { type: ' + this.type + ', id: ' + this.id + ', name: ' + this.name + ' }' } 
+Person.prototype.fart = function() {
+    console.log(this.name + ': 💨')
+};
 
-function ColoredProduct(type, id, name, color) {
-    Product.call(this, type, id, name) // WTF? and WTF is .apply?
+Person.prototype.poo = function() {
+    console.log(this.name + ': 💩')
+};
 
-    this.color = color
+Person.prototype.pee = function() {
+    console.log(this.name + ': 💦')
+};
+
+Person.prototype.toString = function() {
+    return this.name + ' ' + this.surname + ' (' + this.gender + ')';
+};
+
+function Woman(name, surname) {
+    Person.call(this, name, surname, '♀︎')
 }
 
-ColoredProduct.prototype = Object.create(Product.prototype)
-ColoredProduct.prototype.constructor = ColoredProduct
+Woman.prototype = Object.create(Person.prototype)
+Woman.prototype.constructor = Woman
 
-ColoredProduct.prototype.toString = function() { return 'ColoredProduct { type: ' + this.type + ', id: ' + this.id + ', name: ' + this.name + ', color: ' + this.color + ' }' } 
+Woman.prototype.giveBirth = function() {
+    console.log(this.name + ': 👶🏻')
+} 
 
-var cocacola = new Product('edible', 'cc-123', 'Coca-Cola')
-var cocacolaZero = new Product('edible', 'cc-123-z', 'Coca-Cola Zero')
-var levis501 = new ColoredProduct('clothes', 'lv-501', 'Levi\'s 501', 'denim blue')
-var vansOldSchool = new ColoredProduct('clothes', 'vns-os', 'Vans Old School', 'black & white')
-var macbookPro = new ColoredProduct('electronics', 'apl-mbp', 'Apple MacBook Pro', 'platinum')
-var playstation4 = new ColoredProduct('electronics', 'sn-ps', 'Sony Playstation 4', 'white')
+function Man(name, surname) {
+    Person.call(this, name, surname, '♂︎')
+}
 
-var products = [cocacola, cocacolaZero, levis501, vansOldSchool, macbookPro, playstation4]
+Man.prototype = Object.create(Person.prototype)
+Man.prototype.constructor = Man
 
-products.forEach(function(product) { console.log(product.toString()) })
+Man.prototype.monoDo = function() {
+    console.log(this.name + ': 📺🍺') 
+} 
 
-var coloredProducts = products.filter(function(product) { return product instanceof ColoredProduct })
+var peter = new Man('Peter', 'Grillo')
+var john = new Man('John', 'Wayne')
+var mary = new Woman('Mary', 'Garcia')
 
-console.table(coloredProducts)
+console.log(peter.toString())
+console.log(john.toString())
+console.log(mary.toString())
+
+console.log(peter.monoDo())
+console.log(mary.giveBirth())
+
+var anna = new Woman('Anna', 'Garcia')
+var jessica = new Woman('Jessica', 'Garcia')
+
+var people = [peter, john, mary, anna, jessica, { name: 'Alien', surname: '8 passenger' }]
+
+console.table(people.filter(function(person) { return person instanceof Woman }))
+console.table(people.filter(function(person) { return person instanceof Man }))
+console.table(people.filter(function(person) { return person instanceof Person }))
