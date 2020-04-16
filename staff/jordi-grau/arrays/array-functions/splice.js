@@ -1,5 +1,6 @@
-function splice(arrayTo,start, deleteCount, addItem){
+'use strict'
 
+function splice(arrayTo,start, deleteCount, addItem){
 
     if (start>arrayTo.length){
         start = arrayTo.length;

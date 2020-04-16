@@ -1,3 +1,5 @@
+'use strict'
+
 describe('findIndex', function () {
     it('The findIndex() method returns the index of the first element in the array that satisfies the provided testing function. Otherwise, it returns -1, indicating that no element passed the test.', function () {
         var array = [1,2,3,4,8,9,10];

@@ -1,3 +1,5 @@
+'use strict'
+
 function indexOf(array, value, indexFrom) {
   if (indexFrom === undefined) {
     indexFrom = 0;

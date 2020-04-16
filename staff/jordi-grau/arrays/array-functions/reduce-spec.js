@@ -1,3 +1,5 @@
+'use strict'
+
 describe('reduce', function() {
     it('The reduce() method executes a reducer function (that you provide) on each element of the array, resulting in a single output value.', function() {
         var array1 = [1, 2, 3, 4];

@@ -1,3 +1,5 @@
+'use strict'
+
 describe('filter', function () {
     it('filter a array and return an new array', function () {
         var array = [5,2,1];

@@ -1,3 +1,5 @@
+'use strict'
+
 describe('every', function () {
     it('delete the last index position of one array', function () {
         var array = [1,2,3,4,5,6,7];

@@ -1,3 +1,5 @@
+'use strict'
+
 describe('find', function () {
     it('The find() method returns the value of the first element in the provided array that satisfies the provided testing function', function () {
         var array = [1,2,3,4,8,9,10];

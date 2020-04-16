@@ -1,3 +1,5 @@
+'use strict'
+
 function pop(array){
     if(array.length===0){
         return undefined;

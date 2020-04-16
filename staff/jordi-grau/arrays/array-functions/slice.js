@@ -1,3 +1,5 @@
+'use strict'
+
 function slice(array,initialIndex, finalIndex){
     var result=[];
         if (initialIndex === undefined){

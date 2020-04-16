@@ -1,3 +1,5 @@
+'use strict'
+
 describe('includes', function () {
     it('includes return a bollean', function () {
         var array = [5,2,1];

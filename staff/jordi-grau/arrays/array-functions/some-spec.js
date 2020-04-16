@@ -1,4 +1,6 @@
 
+'use strict'
+
 describe('some', function() {
     it('The some() method tests whether at least one element in the array passes the test implemented by the provided function. It returns a Boolean value. ', function() {
         var array1 = [1, 2, 3, 4];

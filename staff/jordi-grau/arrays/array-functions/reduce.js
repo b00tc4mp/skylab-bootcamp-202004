@@ -1,3 +1,4 @@
+'use strict'
 function reduce(array, expression, initialValue) {
     var result = 0
     if (array.length !== 0) {

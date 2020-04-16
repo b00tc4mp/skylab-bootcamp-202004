@@ -1,3 +1,5 @@
+'use strict'
+
 describe('pop', function () {
     it('delete the last index position of one array', function () {
         var array = [1,2,3]

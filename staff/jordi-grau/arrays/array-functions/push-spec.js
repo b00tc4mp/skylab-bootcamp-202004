@@ -1,3 +1,5 @@
+'use strict'
+
 describe('push', function() {
     it('push nomal', function() {
         var array = []

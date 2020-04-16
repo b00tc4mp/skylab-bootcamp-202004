@@ -1,3 +1,5 @@
+'use strict'
+
 function some(array, callback) {
   var control = false;
   if (array.length === 0){

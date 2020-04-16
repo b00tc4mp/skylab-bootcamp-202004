@@ -1,3 +1,5 @@
+'use strict'
+
 describe('map', function () {
     it('should iterate on map element and keep each value multiplied by 10 in a new external array', function () {
         var array = [1,2,3]

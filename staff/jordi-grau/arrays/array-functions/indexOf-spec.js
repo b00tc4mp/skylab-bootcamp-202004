@@ -1,3 +1,5 @@
+'use strict'
+
 describe('indexOf', function () {
     it('Find index of position', function () {
         var array = [1,2,3,4,5,6,7]

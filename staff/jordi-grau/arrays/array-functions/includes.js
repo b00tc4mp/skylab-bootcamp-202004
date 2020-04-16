@@ -1,3 +1,5 @@
+'use strict'
+
 function includes(array, searchElement, fromIndex) {
     if (fromIndex === undefined) {
         fromIndex = 0;
