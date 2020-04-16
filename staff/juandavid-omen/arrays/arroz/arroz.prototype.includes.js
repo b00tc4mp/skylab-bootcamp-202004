@@ -1,13 +1,14 @@
 "use strict";
 
-Arroz.prototype.includes = function (element, index) {
+Arroz.prototype.includes = function(element, index) {
     var i = 0;
+    
     if (arguments.length > 1) {
-        if (index >= this.length || -index >= this.length) {
+        if(index >= this.length || -index >= this.length) {
             return false;
         } 
 
-        if (index < 0) {
+        if(index < 0) {
             i = this.length - 1 + index;
         } else {
             i = index;
@@ -15,7 +16,7 @@ Arroz.prototype.includes = function (element, index) {
     }
 
     for (i; i < this.length; i++) {
-        if (this[i] === element) {
+        if(this[i] === element) {
             return true;
         }
     }

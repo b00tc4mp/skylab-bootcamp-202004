@@ -1,16 +1,13 @@
 "use strict";
 
-Arroz.prototype.splice = function(start, deleteCount){
-    
-    if (start > this.length) {
+Arroz.prototype.splice = function(start, deleteCount) { 
+    if(start > this.length) {
         start = this.length;
         deleteCount = 0;
-    }
-
-    else if(start < 0) {
+    } else if(start < 0) {
         start = this.length + start
 
-        if(start < 0){
+        if(start < 0) {
             start = 0;
         };
     }
@@ -35,12 +32,12 @@ Arroz.prototype.splice = function(start, deleteCount){
         }
     }
 
-    for(var i = start + deleteCount; i < this.length; i++){
+    for(var i = start + deleteCount; i < this.length; i++) {
         newArray[newArray.length] = this[i];
     }
     
     this.length = 0;
-    for (var i =0; i < newArray.length; i++){
+    for(var i =0; i < newArray.length; i++) {
         this[this.length++] = newArray[i]
     }
 };

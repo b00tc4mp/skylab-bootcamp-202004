@@ -1,10 +1,10 @@
 "use strict";
 
-describe("Arroz.prototype.map", function () {
-  it("should iterate on each element and keep each value multiplied by 10 in a new external array", function () {
+describe("Arroz.prototype.map", function() {
+  it("should iterate on each element and keep each value multiplied by 10 in a new external array", function() {
     var array = new Arroz(1, 2, 3);
 
-    var result = array.map(function (element) {
+    var result = array.map(function(element) {
       return element * 10;
     });
 
@@ -13,10 +13,10 @@ describe("Arroz.prototype.map", function () {
     expect(result[2]).toBe(30);
   });
 
-  it("should iterate on each element and keep each value in upper-case in a new external array", function () {
+  it("should iterate on each element and keep each value in upper-case in a new external array", function() {
     var array = new Arroz("hello", "cruel", "world");
 
-    var result = array.map(function (element) {
+    var result = array.map(function(element) {
       return element.toUpperCase();
     });
 
@@ -25,10 +25,10 @@ describe("Arroz.prototype.map", function () {
     expect(result[2]).toBe("WORLD");
   });
 
-  it("should iterate on each element provide the index from the second argument of the expression (callback)", function () {
+  it("should iterate on each element provide the index from the second argument of the expression (callback)", function() {
     var array = new Arroz(1, 2, 3);
     
-    var result = array.map(function (element, index, array) {
+    var result = array.map(function(element, index, array) {
       return index;
     });
 
@@ -37,10 +37,10 @@ describe("Arroz.prototype.map", function () {
     expect(result[2]).toBe(2);
   });
 
-  it("should iterate on each element provide the full array from the third argument of the expression (callback)", function () {
+  it("should iterate on each element provide the full array from the third argument of the expression (callback)", function() {
     var array = new Arroz(1, 2, 3);
 
-    var result = array.map(function (element, index, array) {
+    var result = array.map(function(element, index, array) {
       return array;
     });
 

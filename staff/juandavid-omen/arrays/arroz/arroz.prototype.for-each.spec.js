@@ -1,7 +1,7 @@
 "use strict";
 
-describe('Arroz.prototype.forEach', function () {
-    it('should iterate on each element and keep each value multiplied by 10 in a new external array', function () {
+describe('Arroz.prototype.forEach', function() {
+    it('should iterate on each element and keep each value multiplied by 10 in a new external array', function() {
         var array = new Arroz(1, 2, 3);
         var result = [];
 
@@ -14,7 +14,7 @@ describe('Arroz.prototype.forEach', function () {
         expect(result[2]).toBe(30);
     });
 
-    it('should iterate on each element and keep each value in upper-case in a new external array', function () {
+    it('should iterate on each element and keep each value in upper-case in a new external array', function() {
         var array = new Arroz('hello', 'cruel', 'world');
         var result = [];
 
@@ -27,7 +27,7 @@ describe('Arroz.prototype.forEach', function () {
         expect(result[2]).toBe('WORLD');
     });
 
-    it('should iterate on each element provide the index from the second argument of the expression (callback)', function () {
+    it('should iterate on each element provide the index from the second argument of the expression (callback)', function() {
         var array = new Arroz(1, 2, 3);
         var result = [];
 

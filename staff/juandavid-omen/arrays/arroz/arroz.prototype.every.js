@@ -1,7 +1,7 @@
 "use strict";
 
 Arroz.prototype.every = function(expression) {
-    if (this.length == 0){
+    if (this.length === 0){
         return false;
     }
 

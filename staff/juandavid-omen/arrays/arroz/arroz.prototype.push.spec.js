@@ -1,6 +1,6 @@
 "use strict";
-describe("Arroz.prototype.push", function () {
-    it('should add elements into an empty instance', function () {
+describe("Arroz.prototype.push", function() {
+    it('should add elements into an empty instance', function() {
         var array = new Arroz();
 
         array.push(5);
@@ -10,7 +10,7 @@ describe("Arroz.prototype.push", function () {
  
     });
 
-    it("should return the new length on each addition", function () {
+    it("should return the new length on each addition", function() {
       var array = new Arroz();
 
       var length = array.push('juan');
@@ -21,7 +21,7 @@ describe("Arroz.prototype.push", function () {
     });
 
     
-    it("should add multiple values", function () {
+    it("should add multiple values", function() {
       var array = new Arroz();
 
       var length = array.push("juan", "pepe", "Hector");

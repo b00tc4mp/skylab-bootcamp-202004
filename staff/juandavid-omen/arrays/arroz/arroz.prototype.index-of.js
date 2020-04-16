@@ -1,20 +1,18 @@
 "use strict";
 
-Arroz.prototype.indexOf = function(element, index){
-    
+Arroz.prototype.indexOf = function(element, index) {
     var i = 0;
     
-    if(arguments.length>1){
-        if (index >= this.length){
+    if(arguments.length>1) {
+        if(index >= this.length) {
             return -1
-        }
-        else{
+        } else {
              i = index
         }
     }
 
-    for(i; i < this.length; i++){
-        if (this[i] === element){
+    for(i; i < this.length; i++) {
+        if(this[i] === element) {
             return i;
         };
     };
