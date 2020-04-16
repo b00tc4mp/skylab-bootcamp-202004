@@ -5,6 +5,7 @@ Arroz.prototype.pop = function () {
         var deleted = new Arroz();
         deleted.push(this[this.length - 1]);
         deleted.length = 1;
+        delete this[this.length-1];
         this.length--;
         return deleted;
     } else {

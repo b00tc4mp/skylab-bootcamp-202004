@@ -1,5 +1,6 @@
 'use strict'
-function splice(array, start, deleteCount, ...arg) {
+
+function splice(array, start, deleteCount, ...args) {
     var result = [];
     if (typeof deleteCount === 'undefined') {
         if (start > 0) {
@@ -25,21 +26,25 @@ function splice(array, start, deleteCount, ...arg) {
             }
         }
     } else {
-
         var newArray = [];
+
         for (var i = start; i < start + deleteCount; i++) {
             result[result.length] = array[i];
         }
 
         for (var j = start + deleteCount; j < array.length; j++) {
-            newArray[newArray.length] = array[j]
+            newArray[newArray.length] = array[j];
         }
 
         array.length = start;
-        for (var n in newArray) {
-            array[array.length] = newArray[n]
+
+        for (var a = 0; a <args.length; a++){
+            array[array.length] = args[a];
         }
 
+        for (var n in newArray) {
+            array[array.length] = newArray[n];
+        }
     }
     return result;
 }
