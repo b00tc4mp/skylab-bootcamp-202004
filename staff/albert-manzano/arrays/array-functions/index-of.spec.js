@@ -3,8 +3,8 @@ describe('indexOf', function() {
         var array = [1, 2, 3];
         var element = 1;
 
-        var i = indexOf(array, element);
-        expect(i).toBe(0);
+        var index = indexOf(array, element);
+        expect(index).toBe(0);
 
     });
 
@@ -12,8 +12,8 @@ describe('indexOf', function() {
         var array = [1, 2, 3];
         var element = 4;
 
-        var i = indexOf(array, element)
-        expect(i).toBe(-1);
+        var index = indexOf(array, element)
+        expect(index).toBe(-1);
 
     });
 });

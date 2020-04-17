@@ -1,5 +1,4 @@
 function splice(array, index, qy, elements) {
-    debugger
     var stanBy = [];
     var erased = [];
 

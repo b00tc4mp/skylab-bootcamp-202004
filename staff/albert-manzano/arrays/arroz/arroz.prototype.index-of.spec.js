@@ -1,4 +1,4 @@
-describe('indexOf', function () {
+describe('Arroz.prototype.indexOf', function () {
     it('return the index of the matching element', function () {
         var array = new Arroz(1, 2, 3);
 

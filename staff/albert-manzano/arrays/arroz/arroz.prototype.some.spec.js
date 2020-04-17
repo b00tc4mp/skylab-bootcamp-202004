@@ -1,6 +1,6 @@
 'use strict';
 
-describe('some', function() {
+describe('Arroz.prototype.some', function() {
     it(' tests whether at least one element in the array passes the test implemented by the provided function. It returns a Boolean value.', function() {
         var array = new Arroz (1, 2, 3, 4, 5);
 

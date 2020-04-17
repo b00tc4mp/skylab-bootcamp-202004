@@ -1,6 +1,6 @@
 'use strict'
 
-describe('find', function () {
+describe('Arroz.prototype.find', function () {
     it('return the first element in the array that satisfies the provided testing function. Otherwise, it returns undefind.', function () {
         var array = new Arroz(1, 2, 3, 4, 5);
 

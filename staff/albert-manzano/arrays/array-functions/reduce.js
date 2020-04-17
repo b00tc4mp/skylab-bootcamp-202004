@@ -1,5 +1,4 @@
 function reduce(array, acc) {
-    var count = 0
     var current = 0;
 
     for (var i = 0; i < array.length; i++) {

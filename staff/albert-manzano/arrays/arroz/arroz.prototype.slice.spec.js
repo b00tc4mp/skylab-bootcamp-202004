@@ -1,6 +1,6 @@
 'use strict';
 
-describe('slice', function() {
+describe('Arroz.prototype.slice', function() {
     it(' This method returns a shallow copy of a portion of an array into a new array object selected from begin.', function() {
         var array= new Arroz (1, 2, 3, 4, 5);
 

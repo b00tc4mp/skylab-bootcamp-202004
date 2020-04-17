@@ -1,6 +1,6 @@
 'use strict';
 
-describe('The method splice', function () {
+describe('Arroz.prototype.splice', function () {
     it(' insert elements without removing elements from array' , function () {
         
         var numbers = new Arroz(1, 2, 4, 5, 6, 7);

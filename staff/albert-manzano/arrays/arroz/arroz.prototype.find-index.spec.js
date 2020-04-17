@@ -1,6 +1,6 @@
 'use strict'
 
-describe('findIndex', function () {
+describe('Arroz.prototype.findIndex', function () {
     it('This method returns the first element in the array that satisfies the provided testing function.  it returns -1, indicating that no element passed the test.', function () {
         var array = new Arroz(1, 2, 3, 4, 5);
 
@@ -56,7 +56,7 @@ describe('findIndex', function () {
             result = error;
         }
 
-        expect(result instanceof Error).toBe(true);
+        expect(result instanceof TypeError).toBe(true);
         var array = new Arroz(1, 2, 3, 4, 5);
 
         var result;
@@ -81,7 +81,7 @@ describe('findIndex', function () {
             result = error;
         }
 
-        expect(result instanceof Error).toBe(true);
+        expect(result instanceof TypeError).toBe(true);
 
 
     });

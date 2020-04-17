@@ -1,6 +1,6 @@
 'use strict'
 
-describe('includes', function () {
+describe('Arroz.prototype.includes', function () {
     it('shall return true if a element matches the test', function () {
         var array = new Arroz(1, 2, 3, 4, 5);
 
