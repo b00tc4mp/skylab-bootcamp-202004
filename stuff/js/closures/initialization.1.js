@@ -1,6 +1,6 @@
 var algo;
 
-(function() {
+(function() { // IIFE alias "selfie"
     var cosa = { what: 'cosa' }
 
     var otraCosa = function() { return 'otra cosa' }
