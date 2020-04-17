@@ -1,22 +1,22 @@
 Arroz.prototype.slice = function (begin, end) {
   slicedValues = [];
-  if (begin > this.length) {
-    return sliceValues;
+  if (begin > this.length || typeof end === 'string') {
+    return slicedValues;
   }
-  if (typeof begin === "undefined") {
+  if (typeof begin === "undefined" || typeof begin === 'string') {
     begin = 0;
   }
   if (begin < 0) {
-    begin === slicedValues.length + begin;
+    begin = this.length + begin;
   }
   if (end < 0) {
-    end === sliceValues.length + end;
+    end = this.length + end;
   }
-  if (end === "undefined" || end > this.length) {
-    end = this.length;
+  if (typeof end === "undefined" || end > this.length) {
+    end = this.length
   }
 
-  for (var i = begin; i < end - 1; i++) {
+  for (var i = begin; i < end   ; i++) {
     slicedValues[slicedValues.length] = this[i];
   }
   return slicedValues;
