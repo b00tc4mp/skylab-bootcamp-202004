@@ -2,7 +2,7 @@
 
 # Full-Stack Web-Development Bootcamp 202004
 
-![alt timeline](https://fakeimg.pl/600x300/?text=TODO%20timeline%20here&font=Verdana)
+![alt timeline](stuff/misc/timeline.jpg)
 
 [Slides](https://docs.google.com/presentation/d/1hRUj2DeWIJ32H__IXMU-rJqyNDyS1vfA544k_ZIDXUI/edit?usp=sharing)
 
