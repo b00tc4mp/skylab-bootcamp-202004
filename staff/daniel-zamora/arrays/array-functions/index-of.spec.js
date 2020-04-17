@@ -21,11 +21,10 @@ describe("indexOf", function () {
 
     expect(matchIndex).toBe(-1);
   });
-<<<<<<< Updated upstream
-  it('ANDER  itereate on the array and return the index of the character matches with the value"', function(){
-=======
+
+
   it( 'Should itereate on the array and return the index of the character matches with the value"', function(){
->>>>>>> Stashed changes
+
     var array = [1, 2, 3, 3, 4, 1];
     
     var work = indexOf(array, 1, -2);
