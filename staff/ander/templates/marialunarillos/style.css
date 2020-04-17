@@ -1,0 +1,880 @@
+* {
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100vw;
+}
+
+.wrap {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 8fr 1fr;
+  grid-template-rows: 0.1fr 0.2fr 10fr 0.1fr;
+  border: 2px solid black;
+  padding: 4px;
+  background-color: red;
+}
+
+.toplinks {
+  display: grid;
+  grid-column: 2;
+  grid-row: 1;
+  max-width: 1080px;
+  min-width: 1079px;
+  grid-template-columns: 1fr 1fr;
+  background-color: grey;
+  position: sticky;
+  top: 0;
+}
+.toplinks__group1 {
+  display: flex;
+  list-style: none;
+}
+.toplinks__group1-item {
+  border: 2px solid black;
+  padding: 2px;
+}
+.toplinks__group2 {
+  list-style: none;
+  display: flex;
+  align-content: flex-end;
+}
+.toplinks__group2-enter {
+  border: 2px solid black;
+  padding: 2px;
+}
+.toplinks__group2-twiter {
+  border: 2px solid black;
+  padding: 2px;
+}
+.toplinks__group2-insta {
+  border: 2px solid black;
+  padding: 2px;
+}
+.toplinks__group2-youtube {
+  border: 2px solid black;
+  padding: 2px;
+}
+.toplinks__group2-user {
+  border: 2px solid black;
+  padding: 2px;
+}
+.toplinks__group2-basket {
+  border: 2px solid black;
+  padding: 2px;
+}
+
+.header {
+  display: grid;
+  grid-column: 2;
+  grid-row: 2;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  max-width: 1080px;
+  min-width: 1079px;
+  background-color: blue;
+}
+.header__lunarillos {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+}
+.header__lunarillos-img {
+  width: 300px;
+  height: 70px;
+}
+.header__articles {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+}
+.header__articles-img {
+  width: 100px;
+  height: 100px;
+}
+.header__search {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+}
+.header__search-news {
+  border: 2px solid black;
+  padding: 4px;
+}
+.header__search-offer {
+  border: 2px solid black;
+  padding: 4px;
+}
+.header__search-input {
+  border: 2px solid black;
+  padding: 4px;
+}
+.header__search-serch {
+  border: 2px solid black;
+  padding: 4px;
+}
+
+.main {
+  grid-column: 2;
+  grid-row: 3;
+  max-width: 1080px;
+  min-width: 1079px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: green;
+}
+.main__category {
+  display: flex;
+  flex-direction: column;
+}
+.main__category-header {
+  display: flex;
+  height: 185px;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+.main__category-header-img {
+  display: block;
+  /** width: 100px **/
+  margin: auto;
+  height: 120px;
+}
+.main__category-article {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  background-color: purple;
+}
+.main__category-article-basicuten {
+  grid-column: 2/2 span;
+  grid-row: 1;
+}
+.main__category-article-basicuten-img {
+  width: 715px;
+  height: 300px;
+}
+.main__category-article-pastrymolds {
+  grid-column: 1;
+  grid-row: 1/2 span;
+}
+.main__category-article-pastrymolds-img {
+  width: 350px;
+  height: 615px;
+}
+.main__category-article-smallelectro {
+  grid-column: 2/2 span;
+  grid-row: 2;
+}
+.main__category-article-smallelectro-img {
+  width: 715px;
+  height: 300px;
+}
+.main__category-article-cupcakecapsule {
+  grid-column: 1/2 span;
+  grid-row: 1;
+}
+.main__category-article-cupcakecapsule-img {
+  width: 715px;
+  height: 300px;
+}
+.main__category-article-boxesbases {
+  grid-column: 1/2 span;
+  grid-row: 2;
+}
+.main__category-article-boxesbases-img {
+  width: 715px;
+  height: 300px;
+}
+.main__category-article-cookiecut {
+  grid-column: 3;
+  grid-row: 1/2 span;
+}
+.main__category-article-cookiecut-img {
+  width: 350px;
+  height: 615px;
+}
+.main__category-article-ceramics {
+  grid-column: 1;
+  grid-row: 1/2 span;
+}
+.main__category-article-ceramics-img {
+  width: 350px;
+  height: 615px;
+}
+.main__category-article-bread {
+  grid-column: 2/2 span;
+  grid-row: 1;
+}
+.main__category-article-bread-img {
+  width: 715px;
+  height: 300px;
+}
+.main__category-article-toppers {
+  grid-column: 2/2 span;
+  grid-row: 2;
+}
+.main__category-article-toppers-img {
+  width: 715px;
+  height: 300px;
+}
+.main__category-article-fondant {
+  grid-column: 1;
+  grid-row: 1/2 span;
+}
+.main__category-article-fondant-img {
+  width: 350px;
+  height: 615px;
+}
+.main__category-article-ingrendients {
+  grid-column: 2/2 span;
+  grid-row: 1;
+}
+.main__category-article-ingredients-img {
+  width: 715px;
+  height: 300px;
+}
+.main__category-article-print {
+  grid-column: 2/2 span;
+  grid-row: 2;
+}
+.main__category-article-print-img {
+  width: 715px;
+  height: 300px;
+}
+.main__category-article-dyes {
+  grid-column: 1/2 span;
+  grid-row: 1;
+}
+.main__category-article-dyes-img {
+  width: 715px;
+  height: 300px;
+}
+.main__category-article-paper {
+  grid-column: 1/2 span;
+  grid-row: 2;
+}
+.main__category-article-paper-img {
+  width: 715px;
+  height: 300px;
+}
+.main__category-article-sprinkles {
+  grid-column: 3;
+  grid-row: 1/2 span;
+}
+.main__category-article-sprinkles-img {
+  width: 350px;
+  height: 615px;
+}
+.main__category-article-tematic {
+  grid-column: 1/2 span;
+  grid-row: 1;
+}
+.main__category-article-tematic-img {
+  width: 715px;
+  height: 300px;
+}
+.main__category-article-partypersons {
+  grid-column: 1/2 span;
+  grid-row: 2;
+}
+.main__category-article-partypersons-img {
+  width: 715px;
+  height: 300px;
+}
+.main__category-article-accessory {
+  grid-column: 3;
+  grid-row: 1/2 span;
+}
+.main__category-article-accesory-img {
+  width: 350px;
+  height: 615px;
+}
+.main__category-article-orangepim {
+  grid-column: 1;
+  grid-row: 1/2 span;
+}
+.main__category-article-orangepim-img {
+  width: 350px;
+  height: 525px;
+}
+.main__category-article-breadmilk {
+  grid-column: 2;
+  grid-row: 1/2 span;
+}
+.main__category-article-breadmilk-img {
+  width: 350px;
+  height: 525px;
+}
+.main__category-article-angelair {
+  grid-column: 3;
+  grid-row: 1/2 span;
+}
+.main__category-article-angelair-img {
+  width: 350px;
+  height: 525px;
+}
+
+.footer {
+  grid-column: 1/3 span;
+  grid-row: 4;
+  height: 300px;
+  display: flex;
+  justify-content: space-around;
+  background-color: grey;
+  align-items: center;
+}
+.footer__freesend {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.footer__freesend-img {
+  height: 60px;
+}
+.footer__sendhour {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.footer__sendhour-img {
+  height: 60px;
+}
+.footer__devolution {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.footer__devolution-img {
+  height: 60px;
+}
+.footer__reimbursement {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.footer__reimbursement-img {
+  height: 60px;
+}
+
+@media screen and (max-width: 992px) {
+  .wrap {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 8fr 1fr;
+    grid-template-rows: 0.1fr 0.2fr 10fr 0.1fr;
+    border: 2px solid black;
+    padding: 4px;
+    background-color: red;
+  }
+
+  .toplinks {
+    max-width: 700px;
+    min-width: 699px;
+  }
+  .toplinks__group1 {
+    display: flex;
+    list-style: none;
+  }
+  .toplinks__group2 {
+    list-style: none;
+    display: flex;
+    align-content: flex-end;
+  }
+  .toplinks__group-item {
+    border: 2px solid black;
+    padding: 2px;
+  }
+
+  .header {
+    display: grid;
+    grid-column: 2;
+    grid-row: 2;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    max-width: 700px;
+    min-width: 699px;
+  }
+  .header__lunarillos-img {
+    width: 250px;
+    height: 58px;
+  }
+  .header__articles-img {
+    width: 80px;
+    height: 80px;
+  }
+  .header__search {
+    grid-column: 2;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 135px 135px;
+    grid-template-rows: 1fr 1fr;
+    justify-self: end;
+    align-items: none;
+  }
+  .header__search-news {
+    grid-row: 2;
+  }
+  .header__search-offer {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .header__search-input {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .header__search-serch {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .main {
+    max-width: 700px;
+    min-width: 699px;
+  }
+  .main__category-article-basicuten-img {
+    width: 464px;
+    height: 195px;
+  }
+  .main__category-article-pastrymolds-img {
+    width: 228px;
+    height: 400px;
+  }
+  .main__category-article-smallelectro-img {
+    width: 464px;
+    height: 195px;
+  }
+  .main__category-article-cupcakecapsule-img {
+    width: 464px;
+    height: 195px;
+  }
+  .main__category-article-boxesbases-img {
+    width: 464px;
+    height: 195px;
+  }
+  .main__category-article-cookiecut-img {
+    width: 228px;
+    height: 400px;
+  }
+  .main__category-article-ceramics-img {
+    width: 228px;
+    height: 400px;
+  }
+  .main__category-article-bread-img {
+    width: 464px;
+    height: 195px;
+  }
+  .main__category-article-toppers-img {
+    width: 464px;
+    height: 195px;
+  }
+  .main__category-article-fondant-img {
+    width: 228px;
+    height: 400px;
+  }
+  .main__category-article-ingredients-img {
+    width: 464px;
+    height: 195px;
+  }
+  .main__category-article-print-img {
+    width: 464px;
+    height: 195px;
+  }
+  .main__category-article-dyes-img {
+    width: 464px;
+    height: 195px;
+  }
+  .main__category-article-paper-img {
+    width: 464px;
+    height: 195px;
+  }
+  .main__category-article-sprinkles-img {
+    width: 228px;
+    height: 400px;
+  }
+  .main__category-article-tematic-img {
+    width: 464px;
+    height: 195px;
+  }
+  .main__category-article-partypersons-img {
+    width: 464px;
+    height: 195px;
+  }
+  .main__category-article-accessory-img {
+    width: 228px;
+    height: 400px;
+  }
+  .main__category-article-orangepim-img {
+    width: 223px;
+    height: 335px;
+  }
+  .main__category-article-breadmilk-img {
+    width: 223px;
+    height: 335px;
+  }
+  .main__category-article-angelair-img {
+    width: 223px;
+    height: 335px;
+  }
+
+  .footer {
+    grid-column: 1/3 span;
+    grid-row: 4;
+    height: 300px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-content: none;
+    align-items: none;
+  }
+  .footer__freesend {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer__freesend-img {
+    height: 60px;
+  }
+  .footer__sendhour {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer__sendhour-img {
+    height: 60px;
+  }
+  .footer__devolution {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer__devolution-img {
+    height: 60px;
+  }
+  .footer__reimbursement {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer__reimbursement-img {
+    height: 60px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .wrap {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 340px 1fr;
+    grid-template-rows: 0.1fr 0.2fr 10fr 0.1fr;
+  }
+
+  .toplinks {
+    max-width: 340px;
+    min-width: 340px;
+  }
+  .toplinks__group1 {
+    display: none;
+    list-style: none;
+  }
+  .toplinks__group2 {
+    border: 2px solid black;
+    padding: 2px;
+  }
+  .toplinks__group2-twiter {
+    display: none;
+  }
+  .toplinks__group2-insta {
+    display: none;
+  }
+  .toplinks__group2-youtube {
+    display: none;
+  }
+
+  .header {
+    display: grid;
+    grid-column: 2;
+    grid-row: 2;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    max-width: 340px;
+    min-width: 340px;
+    background-color: blue;
+  }
+  .header__lunarillos {
+    grid-column: 1/2 span;
+    grid-row: 1/2 span;
+    display: flex;
+    justify-content: center;
+  }
+  .header__lunarillos-img {
+    width: 276px;
+    height: 50px;
+    align-self: center;
+  }
+  .header__articles {
+    display: none;
+  }
+  .header__search {
+    display: none;
+  }
+
+  .main {
+    max-width: 340px;
+    min-width: 340px;
+  }
+  .main__category-article {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+  .main__category-article-basicuten {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .main__category-article-basicuten-img {
+    width: 325px;
+    height: 136px;
+  }
+  .main__category-article-pastrymolds {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .main__category-article-pastrymolds-img {
+    width: 325px;
+    height: 136px;
+  }
+  .main__category-article-smallelectro {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .main__category-article-smallelectro-img {
+    width: 325px;
+    height: 136px;
+  }
+  .main__category-article-cupcakecapsule {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .main__category-article-cupcakecapsule-img {
+    width: 325px;
+    height: 136px;
+  }
+  .main__category-article-boxesbases {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .main__category-article-boxesbases-img {
+    width: 325px;
+    height: 136px;
+  }
+  .main__category-article-cookiecut {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .main__category-article-cookiecut-img {
+    width: 325px;
+    height: 136px;
+  }
+  .main__category-article-ceramics {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .main__category-article-ceramics-img {
+    width: 325px;
+    height: 136px;
+  }
+  .main__category-article-bread {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .main__category-article-bread-img {
+    width: 325px;
+    height: 136px;
+  }
+  .main__category-article-toppers {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .main__category-article-toppers-img {
+    width: 325px;
+    height: 136px;
+  }
+  .main__category-article-fondant {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .main__category-article-fondant-img {
+    width: 325px;
+    height: 136px;
+  }
+  .main__category-article-ingrendients {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .main__category-article-ingredients-img {
+    width: 325px;
+    height: 136px;
+  }
+  .main__category-article-print {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .main__category-article-print-img {
+    width: 325px;
+    height: 136px;
+  }
+  .main__category-article-dyes {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .main__category-article-dyes-img {
+    width: 325px;
+    height: 136px;
+  }
+  .main__category-article-paper {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .main__category-article-paper-img {
+    width: 325px;
+    height: 136px;
+  }
+  .main__category-article-sprinkles {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .main__category-article-sprinkles-img {
+    width: 325px;
+    height: 136px;
+  }
+  .main__category-article-tematic {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .main__category-article-tematic-img {
+    width: 325px;
+    height: 136px;
+  }
+  .main__category-article-partypersons {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .main__category-article-partypersons-img {
+    width: 325px;
+    height: 136px;
+  }
+  .main__category-article-accessory {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .main__category-article-accessory-img {
+    width: 325px;
+    height: 136px;
+  }
+  .main__category-article-orangepim {
+    display: flex;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .main__category-article-orangepim-img {
+    width: 325px;
+    height: 487px;
+  }
+  .main__category-article-breadmilk {
+    display: none;
+  }
+  .main__category-article-angelair {
+    display: none;
+  }
+
+  .footer {
+    grid-column: 1/3 span;
+    grid-row: 4;
+    height: 300px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-content: none;
+    align-items: none;
+  }
+  .footer__freesend {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .footer__freesend-img {
+    height: 60px;
+  }
+  .footer__sendhour {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .footer__sendhour-img {
+    height: 60px;
+  }
+  .footer__devolution {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .footer__devolution-img {
+    height: 60px;
+  }
+  .footer__reimbursement {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .footer__reimbursement-img {
+    height: 60px;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */
