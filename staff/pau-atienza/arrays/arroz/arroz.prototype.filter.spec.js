@@ -1,7 +1,7 @@
 'use strict'
 
 describe('Arroz.prototype.filter', function() {
-    it('This method creates a new array with all elements that pass the test implemented by the provided function.', function() {
+    it('This method creates a new arroz with all elements that pass the test implemented by the provided function.', function() {
         var input = new Arroz (1, 2, 3, 4, 5);
 
         var result = input.filter(function(element) {
@@ -24,7 +24,7 @@ describe('Arroz.prototype.filter', function() {
         expect(result[1]).toBe(5);
     });
     
-    it('should return an empty array when the filtered array is empty', function () {
+    it('should return an empty arroz when the filtered arroz is empty', function () {
         var array = new Arroz ();
       
         
@@ -35,7 +35,7 @@ describe('Arroz.prototype.filter', function() {
         
     });
 
-    it('shall return the index and the element', function() {
+    it('the callback has access to the index, thisArg and the arroz it is being iterated on', function() {
         var array = new Arroz(1, 2, 3, 4 ,5);
 
         var result = array.filter(function(element, index, array) {
@@ -45,14 +45,14 @@ describe('Arroz.prototype.filter', function() {
         expect(result[0]).toBe(1);
         expect(result[1]).toBe(2);
         expect(result[2]).toBe(3);
-    });
-
-    it('should iterate through all elements and compare them to an expression, if all are true, return true otherwise, returns false ', function() {
+        expect(result instanceof Arroz).toBeTruthy();
+        expect(result.length).toBe(5);
+        
         var array = new Arroz(1, 2, 3);
         var array2 = new Arroz(1, 2, 3);
         
         var result = array.filter(function(element, i, array, thisArg) {
-            return array[i] === thisArg[i];
+            return element === thisArg[i];
         }, array2);
 
         expect(result[0]).toBe(1);
@@ -75,9 +75,8 @@ describe('Arroz.prototype.filter', function() {
 
     });
 
-    it('handle error input', function () {
+    it('handle error input: non-function expressions', function () {
         var array = new Arroz(1, 2, 3, 4, 5);
-
         var result;
 
         try {
@@ -89,7 +88,6 @@ describe('Arroz.prototype.filter', function() {
         expect(result instanceof Error).toBe(true);
 
         var array = new Arroz(1, 2, 3, 4, 5);
-
         var result;
 
         try {
@@ -101,7 +99,6 @@ describe('Arroz.prototype.filter', function() {
         expect(result instanceof Error).toBe(true);
 
         var array = new Arroz(1, 2, 3, 4, 5);
-
         var result;
 
         try {
@@ -113,7 +110,6 @@ describe('Arroz.prototype.filter', function() {
         expect(result instanceof Error).toBe(true);
 
         var array = new Arroz(1, 2, 3, 4, 5);
-
         var result;
 
         try {
@@ -125,7 +121,6 @@ describe('Arroz.prototype.filter', function() {
         expect(result instanceof Error).toBe(true);
 
         var array = new Arroz(1, 2, 3, 4, 5);
-
         var result;
 
         try {

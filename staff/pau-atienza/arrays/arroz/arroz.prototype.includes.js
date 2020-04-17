@@ -19,3 +19,11 @@ Arroz.prototype.includes = function (element, index = 0) {
     };
     return false;
 };
+
+Object.defineProperty(Arroz.prototype, 'forEach', {
+    value: function(expression, thisArg) {
+        for (var i = 0; i < this.length; i++) expression(this[i], i, this, thisArg)
+    },
+    enumerable: false,
+    writable: true
+});

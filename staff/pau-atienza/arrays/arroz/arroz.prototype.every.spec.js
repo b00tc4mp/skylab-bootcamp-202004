@@ -1,6 +1,6 @@
 'use strict'
 
-describe('every', function() {
+describe('Arroz.prototype.every', function() {
       
     it('should iterate through all elements and compare them to an expression, if all are true, return true otherwise, returns false ', function() {
         var array = new Arroz(1, 2, 3);
@@ -13,18 +13,7 @@ describe('every', function() {
         expect(array[0]).toBe(1);
         expect(array[1]).toBe(2);
         expect(array[2]).toBe(3);
-    });
 
-    it('should iterate through all elements and compare them to an expression, if all are true, return true otherwise, returns false ', function() {
-        var array = new Arroz(1, 2, 3);
-        var array2 = new Arroz(1, 2, 3);
-        
-        var result = array.every(function(element, i, array, thisArg) {
-            return array[i] === thisArg[i];
-        }, array2);
-
-        expect(result).toBe(true);
-        
         var array = new Arroz(1, 2, 3);
         var array2 = new Arroz(1, 2, 4);
         
@@ -33,20 +22,20 @@ describe('every', function() {
         }, array2);
 
         expect(result).toBe(false);
-
-        // var array = new Arroz(1, 2, 3);
-        // var array2 = new Arroz(1, 2, 3);
-        // var array3 = new Arroz(0, 1, 2, 3)
-        
-        // var result = array.every(function(element, i, array, thisArg, thisArg2) {
-        //     return array[i] === thisArg[i] && array[i] === thisArg2[i+1];
-        // }, array2, array3);
-
-        // expect(result).toBe(true);
-
     });
 
-    it('handle error input', function () {
+    it('an additional variable(thisArg) can be introduced to the function if needed, and the callback has access to thisArg and the index', function() {
+        var array = new Arroz(1, 2, 3);
+        var array2 = new Arroz(1, 2, 3);
+        
+        var result = array.every(function(element, i, array, thisArg) {
+            return array[i] === thisArg[i];
+        }, array2);
+
+        expect(result).toBe(true);
+    });
+
+    it('handle error input non-function expressions', function () {
         var array = new Arroz(1, 2, 3, 4, 5);
 
         var result;

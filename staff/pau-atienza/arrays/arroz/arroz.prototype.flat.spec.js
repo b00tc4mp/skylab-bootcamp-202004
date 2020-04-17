@@ -39,7 +39,7 @@ describe('Arroz.prototype.flat', function () {
         expect(newArroz.length).toBe(5);
     });
 
-    it('when depth is 0, no changes are done on the array', function () {
+    it('when depth is 0, no changes are made in the arroz', function () {
         var arroz = new Arroz(1, 2, 3, new Arroz(1, new Arroz(1 , 1)));
 
         var newArroz = arroz.flat(0);
@@ -68,6 +68,16 @@ describe('Arroz.prototype.flat', function () {
         expect(newArroz[5]).toBe(1);
         expect(newArroz[6]).toBe(1);
         expect(newArroz.length).toBe(7);
+
+        var arroz = new Arroz (1, 2, 3, new Arroz (new Arroz(1), new Arroz(1)), new Arroz (1, 1));
+
+        var newArroz = arroz.flat(2);
+        expect(newArroz[2]).toBe(3);
+        expect(newArroz[3]).toBe(1);
+        expect(newArroz[4]).toBe(1);
+        expect(newArroz[5]).toBe(undefined);
+        expect(newArroz[6]).toBe(undefined);
+        expect(newArroz.length).toBe(5);
         
     });
 

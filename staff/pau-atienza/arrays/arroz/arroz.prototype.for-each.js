@@ -1,6 +1,9 @@
 'use strict';
 
-Arroz.prototype.forEach = function(expression) {
-    for (var i = 0; i < this.length; i++)
-        expression(this[i], i, this);
-};
+Object.defineProperty(Arroz.prototype, 'forEach', {
+    value: function(expression, thisArg) {
+        for (var i = 0; i < this.length; i++) expression(this[i], i, this, thisArg)
+    },
+    enumerable: false,
+    writable: true
+});

@@ -2,9 +2,9 @@
 
 Arroz.prototype.splice = function (start, deleteCount = this.length - start){
 
-    if(typeof start !== 'number'){throw new TypeError (start + 'is not a number')};
+    if(typeof start !== 'number'){throw new TypeError (start + ' is not a number')};
 
-    if(typeof deleteCount !== 'number'){throw new TypeError (deleteCount + 'is not a number')};
+    if(typeof deleteCount !== 'number'){throw new TypeError (deleteCount + ' is not a number')};
 
     if (start > this.length){
         start = this.length;

@@ -1,7 +1,7 @@
 'use strict';
 
 describe('Arroz.prototype.forEach', function () {
-    it('should iterate on each element and keep each value multiplied by 10 in a new external array', function () {
+    it('should iterate on each element and apply the expression on it', function () {
         var array = new Arroz(1, 2, 3);
         var result = [];
 
@@ -23,9 +23,7 @@ describe('Arroz.prototype.forEach', function () {
         expect(result[0]).toBe(0);
         expect(result[1]).toBe(1);
         expect(result[2]).toBe(2);
-    });
 
-    it('should iterate on each element and keep each value in upper-case in a new external array', function () {
         var array = new Arroz('hello', 'cruel', 'world');
         var result = [];
 
@@ -38,7 +36,7 @@ describe('Arroz.prototype.forEach', function () {
         expect(result[2]).toBe('WORLD');
     });
 
-    it('should iterate on each element provide the index from the second argument of the expression (callback)', function () {
+    it('should iterate on each element, and the callback should have access to the index and the arroz on each iteration', function () {
         var array = new Arroz(1, 2, 3);
         var result = [];
 
@@ -49,9 +47,7 @@ describe('Arroz.prototype.forEach', function () {
         expect(result[0]).toBe(0);
         expect(result[1]).toBe(1);
         expect(result[2]).toBe(2);
-    });
 
-    it('should iterate on each element provide the full array from the third argument of the expression (callback)', function () {
         var array = new Arroz(1, 2, 3);
         var result = [];
 
@@ -62,5 +58,16 @@ describe('Arroz.prototype.forEach', function () {
         expect(result[0]).toBe(array);
         expect(result[1]).toBe(array);
         expect(result[2]).toBe(array);
+
+        var array = new Arroz(1, 2, 3);
+        var array2 = new Arroz(1, 2, 3);
+        debugger
+        array.forEach(function(element, i, array, thisArg) {
+            array[i] = thisArg;
+        }, array2);
+
+        expect(array[0]).toBe(array2);
+        expect(array[1]).toBe(array2);
+        expect(array[2]).toBe(array2);
     });
 });
