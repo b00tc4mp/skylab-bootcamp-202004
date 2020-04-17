@@ -1,0 +1,338 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@900&display=swap')
+*
+    font-size: 15px
+    font-family: 'Source Sans Pro', sans-serif
+    margin: 0
+    // box-sizing: border-box
+
+.wrapper-page
+    background: none
+    display: grid
+    justify-items: center
+    position: relative
+    width: 100%
+
+// $display-icon: display: flex
+// $justify-icon: justify-content: center
+.header
+    height: 3em
+    width: 330px
+    max-width: 1200px
+    position: sticky
+    top: 0px
+    display: grid
+    background: #ffffff
+    z-index: 8
+    grid-template-columns: 15% 13% 15% 12% 15% 15% 15%
+    grid-template-rows: 1fr
+    grid-template-areas: "hamburger . user . search cart items"
+    justify-content: center
+
+    &__container-hamburger
+        grid-area: hamburger
+        display: flex
+        justify-content: center
+        // $display-icon
+        // $justify-icon
+
+    &__container-user
+        grid-area: user
+        display: flex
+        justify-content: center
+
+    &__container-search
+        grid-area: search
+        background: #BDBDBD
+        display: flex
+        justify-content: center
+
+    &__container-cart
+        grid-area: cart
+        display: flex
+        justify-content: center
+
+    &__container-items
+        grid-area: items
+        display: flex
+        justify-content: center
+        background: #E74242
+        color: white
+        font-size: 30px !important
+        align-items: center
+
+        // &__-letter
+        //     font-family: Source sans pro
+        //     font-size: 30px
+
+    &__container-icon
+        max-width: 100%
+        max-height: 90%
+        display: block
+
+.logo
+    width: 100%
+    position: relative
+    margin-top: 1.2em
+    margin-bottom: 1.2em
+    display: flex
+    justify-content: center
+    align-items: center
+    height: 108px
+
+    &__image
+        height: 50px
+        width: 276px
+
+.banner
+    min-height: 431px
+    max-height: 600px
+    width: 100%
+    background: #57759A
+    display: grid
+    justify-items: center
+.banner__main
+    backgroud: #AACEFA
+    position: relative
+.banner-main__link
+    display: flex
+    justify-content: space-between
+    align-items: flex-end
+    margin: 0px 0px 0px 0px
+    position: relative
+    bottom: 5em
+    text-align: center
+    min-width: 320px
+    max-width: 100%
+.banner-main__link-pages
+    text-align: center
+    background: none repeat scroll 0 0 #BBB8B6
+    text-decoration: none
+    display: inline-block
+    width: 13px
+    height: 13px
+    overflow: hidden
+    opacity: 1
+    float: none
+    border-radius: 50%
+    &:hover
+        background: #FF5959
+
+.main-wrapp
+    width: 80%
+
+=margins()
+    margin-top: 10%
+    margin-bottom: 10%
+
+.category
+    display: grid
+    justify-content: center
+    position: relative
+    text-align: center
+    width: 100%
+
+    &__icon
+        display: grid
+        justify-content: center
+        width: 325px
+        height: 125px
+        +margins()
+
+    &__icon-item
+        display: block
+        max-width: 100%
+        max-height: 100%
+        +margins()
+
+    &__title
+        display: grid
+        justify-content: center
+        align-content: center
+        margin-top: 0.83em
+        align-self: center
+        +margins()
+h2
+    display: relative
+    font-size: 1.5em
+    font-weight: bold
+    padding-top: 1.3em
+    margin-bottom: 1.5em
+    width: 100%
+.lines
+    content: ""
+    display: block
+    width: 218px
+    height: 0
+    border-top: 2px solid #2E2925
+
+.image
+    display: grid
+    flex-direction: colunm
+    justify-content: center
+    grid-row-gap: 5px
+    margin-top: 5px
+    margin-bottom: 5px
+.image__item
+    height: 140px
+    width: 330px
+    overflow: hidden
+.image__item-img
+    max-width: 100%
+    max-height: 100%
+    overflow: hidden
+.image__item-ver
+    height: 140px
+    width: 100%
+    overflow: hidden
+
+.widget-wrapper
+    display: flex
+    justify-content: center
+    text-align: center
+    margin-top: 50px
+    font-size: 18px
+
+.widget-wrapper__container
+    background: #FF5959
+    padding: 15px 30px
+    display: inline-block
+    color: #fff
+    text-transform: uppercase
+    letter-spacing: 1px
+
+.blog__widget-container
+    background: #FF5959
+    display: inline-block
+    color: #fff
+    text-transform: uppercase
+    letter-spacing: 1px
+    width: 100%
+    text-align: center
+    height: 45px
+    padding: 10px 20px 0px 20px
+    margin-bottom: 1.2em
+    font-size: 18px
+    font-weight: 900
+.blog 
+    display: block
+    
+
+.blog__content
+    // list-style: none
+    display: block
+    justify-content: center
+    list-style: none
+    flex-wrap: wrap
+    padding-inline-start: 6px
+    height: 611px
+.blog__content-container
+    height: 610px
+    width: 330px
+    overflow: hidden
+    flex-wrap: wrap
+    color: #67625f
+.blog__content-img
+    max-width: 100%
+    max-height: 100%
+    // padding-left: 2px
+.post__content-tittle
+    font-size: 15px
+    text-transform: uppercase
+    padding-left: 20px
+    padding-top: 30px
+    margin-top: 30px
+.info-blog
+    display: flex
+    width: 100%
+    padding: 0 20px 30px
+    overflow: hidden
+    align-items: center
+    width: 100%
+    &__img
+        margin-top: 1.3em
+.author
+    display: inline-block
+    height: 40px
+    width: 30px
+    padding-left: 10px
+    padding-top: 10px
+    &__by
+        color: #FF5959
+
+// .info-icons
+//     min-height: 431px
+//     max-height: 600px
+//     width: 100%
+//     background: #57759A
+//     display: grid
+//     justify-items: center
+
+.footer-condicions
+        margin-top: 5em
+        display: grid
+        background: #f0f0f0
+        width: 100%
+        grid-template-columns: 1fr 1fr
+        grid-template-rows: 1fr 1fr
+        grid-template-areas: "truck clock""envelop card"
+.footer-condicions__icon
+        display: flex
+        flex-direction: column
+        list-style: none
+        justify-content: center
+        align-items: center
+        font-size: 4em
+        font-size: 1.5em
+.footer-condicions__icon-container
+        width: 85px
+        height: 60px
+.footer-condicions__icon-truck
+        grid-area: truck
+        max-width: 100%
+        max-lentgh: 100%
+        display: block
+.footer-condicions__icon-clock
+        grid-area: clock
+        max-width: 100%
+        max-lentgh: 100%
+        display: block
+.footer-condicions__icon-envelop
+        grid-area: envelop
+        max-width: 100%
+        max-lentgh: 100%
+        display: block
+.footer-condicions__icon-card
+        grid-area: card
+        max-width: 100%
+        max-lentgh: 100%
+        display: block
+
+.social-media
+    margin: 4em 0 2em 0
+    &__title
+        display: block
+        text-align: center
+        margin: 1em
+
+    &__icon
+        display: flex
+        justify-content: center
+
+        & i
+            margin: 0 0.5em
+
+hr
+    width: 70%
+    background: grey
+    margin: 0 auto
+
+.newsletter
+    margin-top: 2em
+    text-align: center
+
+    &__input
+        margin-top: 1em
+        width: 70%
+        height: 5%
+        font-size: 1.5em
+        text-align: center
