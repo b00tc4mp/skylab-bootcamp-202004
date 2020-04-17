@@ -1,16 +1,22 @@
 body {
   font-family: Helvetica, sans-serif;
   font-size: 18px;
-  color: red; }
+  color: red;
+}
 
 #container {
-  width: 680px; }
+  width: 680px;
+}
 
 header {
-  color: red; }
+  color: red;
+}
 
 footer {
-  color: green; }
+  color: green;
+}
 
 h1 {
-  color: red; }
+  color: red;
+}
+/*# sourceMappingURL=prueba1.css.map */
