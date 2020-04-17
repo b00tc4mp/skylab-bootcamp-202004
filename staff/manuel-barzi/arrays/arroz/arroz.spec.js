@@ -14,4 +14,14 @@ describe('Arroz', function () {
         expect(array instanceof Arroz).toBeTruthy();
         expect(array.length).toBe(3);
     });
+
+    it('should instanciate an Arroz with length 10 on one numeric arguments with value 10', function () {
+        var array = new Arroz(10);
+
+        expect(array instanceof Arroz).toBeTruthy();
+        expect(array.length).toBe(10);
+
+        var keys = Object.keys(array);
+        expect(keys.length).toBe(0);
+    });
 });

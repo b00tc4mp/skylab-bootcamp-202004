@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css2?family=Gotu&display=swap");
+.wrapper {
+  margin: 0;
+  padding: 0;
+  justify-items: center;
+  display: grid;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  background-color: rgba(182, 214, 255, 0.9);
+}
+
+.header-bar {
+  background-color: rgba(196, 192, 192, 0.9);
+  height: 10vh;
+  position: sticky;
+  top: 0;
+  width: 100vw;
+}
+
+.header-bar__input {
+  display: none;
+}
+
+.header-bar__banano {
+  display: none;
+}
+
+.title {
+  position: absolute;
+  top: 3.5vh;
+  left: 2.5vh;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  background-color: rgba(196, 192, 192, 0);
+}
+
+.header-bar__lupa {
+  position: absolute;
+  height: 5vh;
+  right: 4vh;
+  top: 2vh;
+  border: 1px solid black;
+  border-radius: 40%;
+  background: rgba(196, 192, 192, 0.6);
+}
+
+.wrapper__video-container {
+  display: grid;
+  grid-template-columns: 1;
+  grid-template-rows: repeat(24, 1fr);
+  align-items: center;
+}
+
+div {
+  background-color: orange;
+  border: 2px solid black;
+  height: 25vh;
+  margin-top: 2.5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+}
+
+@media only screen and (min-width: 650px) {
+  .wrapper__video-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    align-items: center;
+  }
+
+  div {
+    background-color: orange;
+    border: 2px solid black;
+    height: 25vh;
+    margin: 0.2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    margin-top: 2.5vh;
+  }
+
+  .header-bar__input {
+    display: flex;
+    position: absolute;
+    right: 120px;
+    height: 4vh;
+    width: 35vw;
+    top: 2.5vh;
+    background-color: rgba(196, 192, 192, 0.9);
+  }
+
+  .title {
+    left: 9vw;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .header-bar__banano {
+    display: flex;
+    position: absolute;
+    height: 10vh;
+    background-color: rgba(196, 192, 192, 0);
+    left: 2vw;
+  }
+
+  .wrapper__video-container {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .wrapper__video-container {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+  }
+
+  div {
+    width: 330px;
+    margin-bottom: 0.5vh;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */
