@@ -1,4 +1,4 @@
- Arroz.prototype.slice=function(initValue,finalValue) {
+    Arroz.prototype.slice=function(initValue,finalValue) {
     var arr=new Arroz()
     if(finalValue<0)finalValue+=this.length
     if(finalValue>this.length)finalValue=this.length;

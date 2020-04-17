@@ -52,4 +52,19 @@ describe('Arroz.prototype.map', function () {
         for(var i = 0; i < arrays.length; i++)
             expect(arrays[i]).toBe(array);
     });
+    it('error', function () {
+        var array = new Arroz('a', 'b', 'c');
+        var indexes = [];
+        var arrays = [];
+        try {
+            var result = array.map();
+        
+        } catch (error) {
+            var resultError=error
+        }
+       
+
+        expect(resultError instanceof TypeError).toBeTruthy();
+       
+    });
 });
