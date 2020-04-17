@@ -1,13 +1,16 @@
-Arroz.prototype.reduce=function(element,initialValue) {
-    var acumulator;
-    var offset=0;
-     if(typeof initialValue==="undefined"){
-     acumulator= this[0];
-     offset=1; 
-    }else acumulator=initialValue;
-    // if arguments.length entonces usar la completa
-   for (var i = offset; i < this.length; i++) {
-       acumulator=element(acumulator, this[i])
-   } 
-   return acumulator;
+"use strict"
+
+Arroz.prototype.reduce = function (expression, initialValue = 0) {
+    if (this.length === 0) throw new TypeError('Reduce of empty array with no initial value at Arroz.reduce');
+    if (typeof expression === 'undefined') throw new TypeError(expression + ' is not a function');
+    if (typeof expression !== 'function') throw new TypeError(expression + ' is not a function');
+
+    var result = initialValue;
+
+    for (var i = 0; i < this.length; i++) {
+        var acumulator = result;
+        result = expression(acumulator, this[i]);
+    }
+    
+    return result;
 }
