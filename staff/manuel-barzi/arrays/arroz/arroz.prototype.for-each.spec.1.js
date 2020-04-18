@@ -53,17 +53,40 @@ describe('Arroz.prototype.forEach', function () {
 
     it('should throw error on non-function expression', function() {
         var array = new Arroz(1, 2, 3);
+        var result;
 
-        expect(function() {
+        try {
             array.forEach();
-        }).toThrowError(TypeError, 'undefined is not a function');
+        } catch(error) {
+            result = error;
+        }
 
-        expect(function() {
+        expect(result).toBeDefined();
+        expect(result instanceof TypeError).toBeTruthy();
+        expect(result.message).toBe('undefined is not a function');
+
+        result = undefined;
+
+        try {
             array.forEach(1);
-        }).toThrowError(TypeError, '1 is not a function');
+        } catch(error) {
+            result = error;
+        }
 
-        expect(function() {
+        expect(result).toBeDefined();
+        expect(result instanceof TypeError).toBeTruthy();
+        expect(result.message).toBe('1 is not a function');
+
+        result = undefined;
+
+        try {
             array.forEach(true);
-        }).toThrowError(TypeError, 'true is not a function');
+        } catch(error) {
+            result = error;
+        }
+
+        expect(result).toBeDefined();
+        expect(result instanceof TypeError).toBeTruthy();
+        expect(result.message).toBe('true is not a function');
     });
 });
