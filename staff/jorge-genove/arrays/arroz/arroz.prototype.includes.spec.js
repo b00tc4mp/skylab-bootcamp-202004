@@ -1,4 +1,4 @@
-
+'use strict'
 describe('arroz.prototype.includes', function(){
     it('should find and item in a array if it is finded it will return true, if not it will return false',function(){
      var array = new Arroz (1,3,4,5,6,7)
