@@ -18,16 +18,26 @@ describe('Arroz.prototype.some', function() {
         expect(someAdult).toBe(false);
     })
 
-}) 
+   /*
+    it('should fail when callback is not a function (try catch)', function(){
+            
+        try{
+            var ages = new Arroz({age: 12}, {age: 13}, {age: 15}, {age: 18});
+            var someAdult = ages.some();  
+        }catch(error){
+            expect(error.message).toBe('undefined is not a function');
+        }
+    }) */
 
-
-it('should fail when callback is not a function (try catch)', function(){
-        
-    try{
+    it("should fail when callback is not a function", function(){
+            
         var ages = new Arroz({age: 12}, {age: 13}, {age: 15}, {age: 18});
-        var someAdult = ages.some();  
-    }catch(error){
-        expect(error.message).toBe('undefined is not a function');
-    }
+        
+        expect(function(){
+        ages.some();                 
+        }).toThrowError(TypeError, "undefined is not a function");
+        
+    });
+
 
 })

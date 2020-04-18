@@ -19,7 +19,7 @@ describe('Arroz.prototype.splice', function() {
 
     })
 
-    it('should fail when start is not a number', function(){
+   /* it('should fail when start is not a number', function(){
         
         try{
             var letters = new Arroz("a", "b", "c", "d", "k", "m");
@@ -27,7 +27,7 @@ describe('Arroz.prototype.splice', function() {
         }catch(error){
             expect(error.message).toBe('undefined is not a number');
         }
-    })
+    }) */
 
     it('should fail when end is not a number', function(){
         
@@ -39,5 +39,16 @@ describe('Arroz.prototype.splice', function() {
         }
     })
 
+
+    it("should fail when start is not a number", function(){
+        
+        var letters = new Arroz("a", "b", "c", "d", "k", "m");
+        
+        expect(function(){
+           letters.splice();                 
+        }).toThrowError(TypeError, "undefined is not a number");
+        
+    });
+    
 
 }) 

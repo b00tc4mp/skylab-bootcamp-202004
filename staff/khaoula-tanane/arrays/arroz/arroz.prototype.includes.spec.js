@@ -14,15 +14,15 @@ describe('Arroz.prototype.includes', function() {
         expect(included).toBe(false)
     })
 
-    it('should fail when callback is not a function (try catch)', function(){
-        
-        try{
-            var names = new Arroz('manuel', 'juanito', 'alex', 'kaula')
-            names.includes()
-        }catch(error){
-            expect(error.message).toBe('undefined is not a function')
-        }
 
-    })
+    it("should fail when there is no element provided", function(){
+        
+        var names = new Arroz('manuel', 'juanito', 'alex', 'kaula')
+        
+        expect(function(){
+            names.includes()
+        }).toThrowError(TypeError, "undefined is required");
+        
+    });
 
 }) 

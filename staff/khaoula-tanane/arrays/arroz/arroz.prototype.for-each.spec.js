@@ -53,15 +53,25 @@ describe('Arroz.prototype.forEach', function () {
         expect(result[2]).toBe(array);
     });
 
-    it('should fail when callback is not a function (try catch)', function(){
+    /*it('should fail when callback is not a function (try catch)', function(){
         
         try{
-            var names = new Arroz('manuel', 'juanito', 'alex', 'kaula');
-            names.forEach()
+            var array = new Arroz(1, 2, 3);
+            array.forEach()
         }catch(error){
             expect(error.message).toBe('undefined is not a function');
         }
 
-    })
+    })*/
+
+    it("should fail when callback is not a function", function(){
+        
+        var array = new Arroz(1, 2, 3);
+        
+        expect(function(){
+            array.forEach();
+        }).toThrowError(TypeError, "undefined is not a function");
+        
+    });
 
 });

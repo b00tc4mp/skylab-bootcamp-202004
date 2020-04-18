@@ -11,4 +11,14 @@ describe('Arroz.prototype.every', function() {
         expect(everyAnimal).toBe(true);
     })
 
+    it("should fail when callback is not a function", function(){
+        
+        var animals = new Arroz('toro', 'vaca', 'perro', 'gato');
+        
+        expect(function(){
+           animals.every();                 
+        }).toThrowError(TypeError, "undefined is not a function");
+        
+    });
+
 }) 

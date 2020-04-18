@@ -19,4 +19,14 @@ describe('Arroz.prototype.findIndexOf', function() {
         expect(index).toBe(-1);
     })
 
+    it("should fail when callback is not a function", function(){
+        
+        var names = new Arroz('manuel', 'juanito', 'alex', 'kaula');
+        
+        expect(function(){
+           names.findIndexOf();                 
+        }).toThrowError(TypeError, "undefined is not a function");
+        
+    });
+
 }) 

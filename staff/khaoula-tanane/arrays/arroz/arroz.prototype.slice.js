@@ -2,6 +2,8 @@
 
 Arroz.prototype.slice = function(start, end){
 
+    
+
     if (typeof start !== 'number') throw TypeError(`${start} is not a number`);
     if (typeof end !== 'number') throw TypeError(`${end} is not a number`);
 

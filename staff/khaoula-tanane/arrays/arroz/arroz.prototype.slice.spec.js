@@ -11,7 +11,7 @@ describe('Arroz.prototype.slice', function() {
 
     })
 
-    it('should fail when start is not a number', function(){
+    /*it('should fail when start is not a number', function(){
         
         try{
             var fruits = new Arroz('apple', 'orange', 'pineapple', 'coconut', 'banana');
@@ -30,5 +30,27 @@ describe('Arroz.prototype.slice', function() {
             expect(error.message).toBe('undefined is not a number');
         }
     })
+    */
+
+   it("should fail when start is not a number", function(){
+        
+    var fruits = new Arroz('apple', 'orange', 'pineapple', 'coconut', 'banana');
+    
+    expect(function(){
+       fruits.slice();                 
+    }).toThrowError(TypeError, "undefined is not a number");
+    
+    });
+
+    it("should fail when end is not a number", function(){
+        
+        var fruits = new Arroz('apple', 'orange', 'pineapple', 'coconut', 'banana');
+        
+        expect(function(){
+           fruits.slice(1);                 
+        }).toThrowError(TypeError, "undefined is not a number");
+        
+        });
+
 
 }) 

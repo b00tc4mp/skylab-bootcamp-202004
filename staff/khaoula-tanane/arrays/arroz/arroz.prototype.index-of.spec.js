@@ -21,5 +21,14 @@ describe('Arroz.prototype.indexOf', function() {
         expect(position).toBe(4);
     })
 
+    it("should fail when element passed is not defined", function(){
+        
+        var names = new Arroz('manuel', 'juanito', 'alex', 'kaula');
+        
+        expect(function(){
+           names.indexOf();                 
+        }).toThrowError(TypeError, "search value is required");
+        
+    })
 
 }) 

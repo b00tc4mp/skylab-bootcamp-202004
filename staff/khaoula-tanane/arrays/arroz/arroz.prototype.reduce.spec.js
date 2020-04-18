@@ -18,7 +18,7 @@ describe('Arroz.prototype.reduce', function() {
         expect(simpleArray.length).toBe(5)
     })*/
 
-
+/*
     it('should fail when callback is not a function (try catch)', function(){
         
         try{
@@ -29,7 +29,17 @@ describe('Arroz.prototype.reduce', function() {
         }
 
     })
+*/
 
+    it("should fail when callback is not a function", function(){
+            
+        var numbers = new Arroz([1,2], [3], [4, 5]);
+        
+        expect(function(){
+        numbers.reduce();                 
+        }).toThrowError(TypeError, "undefined is not a function");
+        
+    });
 
 
 }) 

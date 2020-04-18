@@ -29,17 +29,26 @@ describe('Arroz.prototype.map', function() {
     }        
 
     })
-
+/*
     it('should fail when callback is not a function (try catch)', function(){
         
         try{
-            var names = new Arroz('manuel', 'juanito', 'alex', 'kaula');
-            names.map()
+            var numbers = new Arroz(1,2,3,4,5);
+            numbers.map()
         }catch(error){
             expect(error.message).toBe('undefined is not a function');
         }
+    }) */
 
-    })
-
-
+        
+        it("should fail when callback is not a function", function(){
+            
+            var numbers = new Arroz(1,2,3,4,5);
+            
+            expect(function(){
+                numbers.map();                 
+            }).toThrowError(TypeError, "undefined is not a function");
+            
+        });
+        
 }) 
