@@ -8,7 +8,7 @@
 .container
     display: flex
     flex-direction: column
-    height: 5000px
+    height: 100%
     align-items: center
 
     &__nav-bar
@@ -32,7 +32,7 @@
         &--hidden
             display: none
     
-    &__container-sections
+    &__sections
         display: flex
         flex-direction: column
     
@@ -54,6 +54,8 @@
     flex-direction: column
     height: 3800px
 
+    &__separation
+        width: 92px
 
     &__title
         display: flex
@@ -65,7 +67,7 @@
         justify-self: center
         background-color: #ECF0F1
 
-        &--border
+        &--framed
             display: flex
             align-items: center
             justify-content: center
@@ -159,6 +161,9 @@
 
     &__main
         grid-area: 1 / 1
+        width: 300px
+        height: 105px
+        // align-self: center
     
     &__title
         grid-area: 1 / 1
@@ -171,6 +176,7 @@
 
 .nav-bar-item
     margin: auto
+    width: 30px
 
     &--red
         display: flex
@@ -179,10 +185,17 @@
         background-color: #EC7063
         margin: 0
         color: white
+        width: 50px
 
 .image-logo
     padding: 5%
     width: auto
+
+    &__marca
+        width: 200px
+
+.sections-images
+    width: 50px
 
 .blog-title
     display: flex
@@ -206,6 +219,9 @@
     background-color: #D0D3D4
     font-size: 0.7rem
 
+    &__icon
+        width: 60px
+
 .social-networks
     display: flex
     flex-direction: column
@@ -214,8 +230,11 @@
     color: #546E7A
     font-size: .8rem
 
-    &__images
+    &__section
         margin-top: 1rem
+
+    &__images
+        width: 20px
 
 .e-mail
     display: flex
@@ -243,7 +262,6 @@
     align-items: center
     color: #546E7A
 
-
     &__item
         font-size: 10px
         margin: 1rem
@@ -251,6 +269,9 @@
         &--center
             display: flex
             justify-content: center
+    
+    &__images
+        width: 20px
 
 .copyright
     background-color: #EC7063
@@ -270,7 +291,7 @@
 
 @media only screen and (min-width: 768px)
     .container
-        height: 5400px
+        height: 100%
 
         &__nav-bar
             grid-template-columns: repeat(10, 1fr)
@@ -428,7 +449,7 @@
 
 @media only screen and (min-width: 992px)
     .container
-        height: 5600px
+        height: 100%
         &__logo
             width: 100vw
             display: flex

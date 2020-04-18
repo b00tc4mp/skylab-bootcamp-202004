@@ -7,7 +7,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  height: 5000px;
+  height: 100%;
   align-items: center;
 }
 .container__nav-bar {
@@ -31,7 +31,7 @@
 .container__logo--hidden {
   display: none;
 }
-.container__container-sections {
+.container__sections {
   display: flex;
   flex-direction: column;
 }
@@ -55,6 +55,9 @@
   flex-direction: column;
   height: 3800px;
 }
+.sections__separation {
+  width: 92px;
+}
 .sections__title {
   display: flex;
   height: 5%;
@@ -65,7 +68,7 @@
   justify-self: center;
   background-color: #ECF0F1;
 }
-.sections__title--border {
+.sections__title--framed {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -158,6 +161,8 @@
 }
 .image__main {
   grid-area: 1/1;
+  width: 300px;
+  height: 105px;
 }
 .image__title {
   grid-area: 1/1;
@@ -171,6 +176,7 @@
 
 .nav-bar-item {
   margin: auto;
+  width: 30px;
 }
 .nav-bar-item--red {
   display: flex;
@@ -179,11 +185,19 @@
   background-color: #EC7063;
   margin: 0;
   color: white;
+  width: 50px;
 }
 
 .image-logo {
   padding: 5%;
   width: auto;
+}
+.image-logo__marca {
+  width: 200px;
+}
+
+.sections-images {
+  width: 50px;
 }
 
 .blog-title {
@@ -209,6 +223,9 @@
   background-color: #D0D3D4;
   font-size: 0.7rem;
 }
+.footer-shipping__icon {
+  width: 60px;
+}
 
 .social-networks {
   display: flex;
@@ -218,8 +235,11 @@
   color: #546E7A;
   font-size: 0.8rem;
 }
-.social-networks__images {
+.social-networks__section {
   margin-top: 1rem;
+}
+.social-networks__images {
+  width: 20px;
 }
 
 .e-mail {
@@ -257,6 +277,9 @@
   display: flex;
   justify-content: center;
 }
+.subscription__images {
+  width: 20px;
+}
 
 .copyright {
   background-color: #EC7063;
@@ -277,7 +300,7 @@
 
 @media only screen and (min-width: 768px) {
   .container {
-    height: 5400px;
+    height: 100%;
   }
   .container__nav-bar {
     grid-template-columns: repeat(10, 1fr);
@@ -439,7 +462,7 @@
 }
 @media only screen and (min-width: 992px) {
   .container {
-    height: 5600px;
+    height: 100%;
   }
   .container__logo {
     width: 100vw;
