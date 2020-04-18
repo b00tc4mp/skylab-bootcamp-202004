@@ -1,0 +1,394 @@
+@import url('https://fonts.googleapis.com/css2?family=Gotu&display=swap')
+@mixin grid-elements($rowNumber)
+    grid-row: $rowNumber
+    background-color: rgb(241, 118, 80)
+    text-align: center
+    border: 2px solid black
+    padding: 11vh 0
+    margin-top: 0.5vh 
+
+@mixin phone-list()
+    border: 2px solid black
+    margin: 1vh
+    height: 13vh
+    background-color:  #d89820
+
+@mixin tab-list()
+    border: 2px solid black
+    margin: 1vh
+    height: 30vh
+    background-color:  #d89820
+
+@mixin grid-phone($columns, $rows)
+    display: grid
+    grid-template-columns: $columns
+    grid-template-rows: $rows
+    margin: 3vh
+    margin-top: 0
+    min-width: 360px
+    div:nth-child(1)
+        @include phone-list()
+    div:nth-child(2)
+        @include phone-list()
+    div:nth-child(3)
+        @include phone-list()
+    div:nth-child(4)
+        @include phone-list()
+    div:nth-child(5)
+        @include phone-list()
+    div:nth-child(6)
+        @include phone-list()
+    div:nth-child(7)
+        @include phone-list()
+    div:nth-child(8)
+        @include phone-list()
+    div:nth-child(9)
+        @include phone-list()
+
+@mixin grid-tab($columns, $rows)
+    display: grid
+    grid-template-columns: $columns
+    grid-template-rows: $rows
+    margin-top: 0
+    min-width: 700px
+    div:nth-child(1)
+        @include tab-list()
+    div:nth-child(2)
+        @include tab-list()
+    div:nth-child(3)
+        @include tab-list()
+    div:nth-child(4)
+        @include tab-list()
+    div:nth-child(5)
+        @include tab-list()
+    div:nth-child(6)
+        @include tab-list()
+    div:nth-child(7)
+        @include tab-list()
+    div:nth-child(8)
+        @include tab-list()
+    div:nth-child(9)
+        @include tab-list()
+@mixin green-menu()
+    div:nth-child(1)
+        border: 2px solid black
+        margin: 1vh
+        background: rgb(10, 112, 32)
+        overflow: hidden
+        display: flex
+        align-items: center
+        justify-content: center
+    div:nth-child(2)
+        border: 2px solid black
+        margin: 1vh
+        background: rgb(13, 150, 40)
+        overflow: hidden
+        display: flex
+        align-items: center
+        justify-content: center
+    div:nth-child(3)
+        border: 2px solid black
+        margin: 1vh
+        background: rgb(20, 200, 50)
+        overflow: hidden
+        display: flex
+        align-items: center
+        justify-content: center
+    div:nth-child(4)
+        border: 2px solid black
+        margin: 1vh
+        background: rgb(25, 250, 60)
+        overflow: hidden
+        display: flex
+        align-items: center
+        justify-content: center
+    div:nth-child(5)
+        border: 2px solid black
+        margin: 1vh
+        background: rgb(40, 300, 70)
+        overflow: hidden
+        display: flex
+        align-items: center
+        justify-content: center
+@mixin green-pc()
+    border: 2px solid black
+    margin: 1vh
+    background: rgb(66, 179, 90)
+    display: flex
+    align-items: center
+    justify-content: center
+*
+    margin: 0
+    padding: 0
+    font-family: 'Gotu', sans-serif
+    box-sizing: border-box
+
+.wrapper
+    margin: 0
+    padding: 0
+    justify-items: center
+    display: grid
+
+.header
+    width: 100vw
+    background-color: #dadada
+    height: 10vh
+    position: sticky
+    top: 0
+    z-index: 1
+    &__img
+        height: 10vh
+    &__logo-pad
+    display: none
+
+.logo-phone
+    margin-top: 7vh
+    margin-left: 5vw
+    height: 8vh
+    max-width: 87vw
+
+.pad-menu
+    display: none
+
+.recortado
+    display: none
+
+.sequencial
+    background-color: rgb(71, 69, 69)
+    height: 38vh
+    width: 100vw
+    margin-top: 2vh
+
+.title
+    text-align: center
+    margin-top: 10vh
+.grid-utensilios
+    @include grid-phone(1, repeat(9, 1fr))
+
+.grid-ingredients
+    @include grid-phone(1, repeat(6, 1fr))
+
+.grid-fiestas
+    @include grid-phone(1, repeat(3, 1fr))
+
+.extra
+    background-color: rgb(156, 156, 154)
+    height: 38vh
+    width: 100vw
+    margin-top: 9vh
+
+.grid-footer
+    display: grid
+    width: 100vw
+    height: 90vh
+    grid-template-columns: 1
+    grid-template-rows: repeat(3, 1fr)
+    margin-top: 9vh
+    &__follow-us
+        @include grid-elements(1)
+    &__mail
+        @include grid-elements(2)
+    &__mail--input
+        width: 80vw
+        height: 5vh
+    &__contact-us
+        @include grid-elements(3)
+
+@media only screen and (min-width: 700px)
+    .header
+        &__img
+            display: none
+        &__logo-pad
+            display: flex
+            height: 15vh
+    
+    .logo-phone
+        display: none
+
+    .pad-menu
+        display: grid
+        grid-template-columns: repeat(5, 1fr)
+        grid-template-rows: 1
+        height: 20vh
+        margin-top: 7vh
+        text-align: center
+        width: 100vw
+        @include green-menu()
+    .sequencial
+        height: 45vh
+    .grid-utensilios
+        @include grid-tab(repeat(3, 1fr), repeat(3, 1fr))
+    .grid-ingredients
+        @include grid-tab(repeat(3, 1fr), repeat(2, 1fr))
+    .grid-fiestas
+        @include grid-tab(repeat(3, 1fr), repeat(1, 1fr))
+
+@media only screen and (min-width: 1100px)
+    .pad-menu
+        margin-top: 10vh
+        display: grid
+        grid-template-columns: repeat(5, 1fr)
+        grid-template-rows: 1
+        text-align: center
+        width: 50vw
+        margin-left: 40vw
+        @include green-menu()
+    .sequencial
+        height: 60vh
+    .grid-utensilios
+        display: grid
+        grid-template-columns: repeat(3, 1fr)
+        grid-template-rows: repeat(6, 1fr)
+        margin-top: 0
+        max-width: 1000px
+        width: 1000px
+        div:nth-child(1)
+            border: 2px solid black
+            background-color: #d89820
+            grid-column: 1
+            grid-row: 1/3
+            height: auto
+        div:nth-child(2)
+            border: 2px solid black
+            grid-column: 2/4
+            grid-row: 1
+        div:nth-child(3)
+            border: 2px solid black
+            grid-column: 2/4
+            grid-row: 2
+        div:nth-child(4)
+            border: 2px solid black
+            grid-column: 1/3
+            grid-row: 3
+        div:nth-child(5)
+            border: 2px solid black
+            grid-column: 1/3
+            grid-row: 4
+        div:nth-child(6)
+            border: 2px solid black
+            grid-column: 3
+            grid-row: 3/5
+            height: auto
+        div:nth-child(7)
+            border: 2px solid black
+            grid-column: 1
+            grid-row: 5/7
+            height: auto
+        div:nth-child(8)
+            border: 2px solid black
+            grid-column: 2/4
+            grid-row: 5
+        div:nth-child(9)
+            border: 2px solid black
+            grid-column: 2/4
+            grid-row: 6
+    .grid-ingredients
+        display: grid
+        grid-template-columns: repeat(3, 1fr)
+        grid-template-rows: repeat(3, 1fr)
+        margin: 3vh
+        margin-top: 0
+        width: 1000px
+        div:nth-child(1)
+            border: 2px solid black
+            grid-column: 1
+            grid-row: 1/3
+            height: auto
+            background-color: #d89820
+        div:nth-child(2)
+            border: 2px solid black
+            grid-column: 2/4
+            grid-row: 1
+        div:nth-child(3)
+            border: 2px solid black
+            grid-column: 2/4
+            grid-row: 2
+        div:nth-child(4)
+            border: 2px solid black
+            grid-column: 1/3
+            grid-row: 3
+        div:nth-child(5)
+            border: 2px solid black
+            grid-column: 1/3
+            grid-row: 4
+        div:nth-child(6)
+            border: 2px solid black
+            grid-column: 3
+            grid-row: 3/5
+            height: auto 
+    .grid-fiestas
+        display: grid
+        grid-template-columns: repeat(3, 1fr)
+        grid-template-rows: 1
+        margin: 3vh
+        margin-top: 0
+        width: 1000px
+        div:nth-child(1)
+            border: 2px solid black
+            grid-column: 1
+            grid-row: 1/3
+            height: auto
+            background-color: #d89820
+        div:nth-child(2)
+            border: 2px solid black
+            grid-column: 2/4
+            grid-row: 1
+        div:nth-child(3)
+            border: 2px solid black
+            grid-column: 2/4
+            grid-row: 2         
+    .extra
+        height: 30vh
+    
+    .grid-footer
+        display: grid
+        grid-template-columns: repeat(3, 1fr)
+        grid-template-rows: 1
+        height: 30vh
+        &__mail--input
+            width: 30vh
+        div:nth-child(1)
+            border: none
+            border-right: 2px solid black
+            grid-column: 1
+            grid-row: 1
+            background: none
+            height: 20vh
+            padding: 10vh 0
+        div:nth-child(2)
+            border: none
+            border-right: 2px solid black
+            grid-column: 2
+            grid-row: 1
+            background: none
+            height: 20vh
+            padding: 5vh 0
+        div:nth-child(3)
+            border: none
+            grid-column: 3
+            grid-row: 1
+            background: none
+            height: 20vh
+            padding: 10vh 0
+    .pad-menu
+        margin-left: 50vh
+        max-width: 600px
+        width: 700px
+        font-size: 10px
+        height: 15vh
+        div:nth-child(1)
+            @include green-pc()  
+        div:nth-child(2)
+            @include green-pc()
+        div:nth-child(3)
+            @include green-pc()
+        div:nth-child(4)
+            @include green-pc()
+        div:nth-child(5)
+            @include green-pc()
+    .recortado
+        display: flex
+        position: absolute
+        top: 18vh
+        margin-left: 100px
+        max-width: 400px
