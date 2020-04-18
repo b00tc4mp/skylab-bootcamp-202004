@@ -1,6 +1,7 @@
 'use strict'
 
-Arroz.prototype.filter = function(callback) {
+Object.defineProperty (Arroz.prototype, 'filter' , {
+value: function(callback) {
     if(typeof callback !== 'function') throw new TypeError( callback + ' is not a function')
     var result =[]
     for (var i = 0; i < this.length; i++){
@@ -13,4 +14,8 @@ Arroz.prototype.filter = function(callback) {
     }else{
         return result
     }
-}
+},
+enumerable: false,
+writable: true,
+
+});

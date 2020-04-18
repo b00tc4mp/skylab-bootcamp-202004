@@ -1,6 +1,8 @@
 'use strict';
 
-Arroz.prototype.map = function(expression) {
+Object.defineProperty(Arroz.prototype,'map',  {
+value: function(expression) {
+    if( typeof expression !== 'function') throw new TypeError(expression + ' is not a function')
     var result = new Arroz()
 
     for (var i = 0; i < this.length; i++)
@@ -9,4 +11,10 @@ Arroz.prototype.map = function(expression) {
     result.length = this.length;
 
     return result;
-};
+
+},
+enumerable:false,
+writable:true
+
+
+});

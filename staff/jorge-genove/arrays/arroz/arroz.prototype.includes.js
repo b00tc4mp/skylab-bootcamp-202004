@@ -1,4 +1,5 @@
-Arroz.prototype.includes = function (searchValue, findIndex) {
+Object.defineProperty(Arroz.prototype,'includes', { 
+  value: function (searchValue, findIndex) {
     var control = false;
   
     if (findIndex >= this.length) {
@@ -8,9 +9,16 @@ Arroz.prototype.includes = function (searchValue, findIndex) {
       findIndex = 0;
     }
     for (var i = 0; i < this.length; i++) {
-      if (this[i] === searchValue) {
+      if (this[i] === searchValue || typeof this[i] === 'number' && Number.isNaN(this[i]) ) {
         control = true;
+      
       }
+      
+      
     }
+    
     return control;
-  };
+  },
+  enumerable:false,
+  writable:true
+  });

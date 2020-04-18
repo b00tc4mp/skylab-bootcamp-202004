@@ -1,4 +1,7 @@
-Arroz.prototype.join = function(separator){
+'use strict'
+
+Object.defineProperty(Arroz.prototype,'join', {
+value: function(separator){
     var emptyArr = []
     var fullString = ''
     if (typeof separator === 'undefined' || this.length === 0 || separator === null){
@@ -9,7 +12,7 @@ Arroz.prototype.join = function(separator){
         if(fullString.length === 0){
             fullString = this[i]
         }else{
-            fullString = fullString +','+ this[i]
+            fullString = fullString +''+ this[i]
         }
        
     }else{
@@ -21,4 +24,7 @@ Arroz.prototype.join = function(separator){
     }
 }
 return fullString
-}
+},
+enumerable:false,
+writable:true 
+})

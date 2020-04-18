@@ -18,6 +18,6 @@ describe ('Arroz.prototype.join', function () {
     it('if dont put a separator it mus return an empty array', function(){
         var array = new Arroz('hola', 'que', 'ase')
         var result = array.join('')
-        expect(result).toBe('hola,que,ase')
+        expect(result).toBe('holaquease')
     });
 });

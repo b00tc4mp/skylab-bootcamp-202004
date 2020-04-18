@@ -1,6 +1,7 @@
 "use strict";
 
-Arroz.prototype.indexOf = function (value, initialValue) {
+Object.defineProperty(Arroz.prototype,'indexOf', { 
+  value: function (value, initialValue) {
   if (initialValue === undefined) {
     initialValue = 0;
   }
@@ -18,4 +19,8 @@ Arroz.prototype.indexOf = function (value, initialValue) {
     }
   }
   return -1;
-};
+  },
+  enumerable:false,
+  writable:true
+
+});

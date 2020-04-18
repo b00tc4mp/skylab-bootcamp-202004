@@ -35,4 +35,9 @@ it('if initialValue its undefined will iterate throw the start of arroz', functi
 
     expect(result).toBe(3);
 });
+
+
+
+
+
 });

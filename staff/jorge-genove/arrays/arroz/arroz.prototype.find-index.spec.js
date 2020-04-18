@@ -24,7 +24,7 @@ describe('Arroz.prototype.findIndex', function () {
         
     });
 
-    it('if you pass an empty array it should return an empty array', function(){
+    it('return the index of the element finded', function(){
         var array = new Arroz( 'hola', 'pepito', 'deepclone')
         
 
@@ -45,16 +45,16 @@ describe('Arroz.prototype.findIndex', function () {
 
 it('If you dont declare a callback typeError:not a function must alert the user', function(){
     var array= new Arroz(1,2,4)
-    
-    try{
-        array.findIndex()
-           
-        
-            
-        }catch(error){
-        var result = error
-    }
-expect(result instanceof TypeError).toBeTruthy()
-});
+   
+    expect(function () {
+        array.every();
+      }).toThrowError(TypeError, "undefined is not a function");
+      expect(function () {
+        array.every(1);
+      }).toThrowError(TypeError, "1 is not a function");
+      expect(function () {
+        array.every(false);
+      }).toThrowError(TypeError, "false is not a function");
 
-});
+    })
+    });
