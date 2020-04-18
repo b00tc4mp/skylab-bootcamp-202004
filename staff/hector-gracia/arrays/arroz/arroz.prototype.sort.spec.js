@@ -11,14 +11,11 @@ describe('Arroz.prototype.sort', function () {
         expect(arroz[3]).toBe(1);
     });
     it('should be able to short a shuffled arroz', function () {
-        var arroz = Arroz.prototype.generic(10);
-        var copy= Arroz.prototype.generic(10);
+        var arroz = Arroz.generic(10);
+        var copy= Arroz.generic(10);
 
         arroz.shuffle();
-        console.log(arroz);
         arroz.sort();
-        console.log(arroz);
-        console.log(copy);
         for(var i=0;i<arroz.length;i++){
             expect(arroz[i]).toBe(copy[i]);
         }
