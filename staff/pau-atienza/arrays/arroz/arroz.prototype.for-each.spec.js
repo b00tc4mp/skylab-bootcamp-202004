@@ -61,7 +61,7 @@ describe('Arroz.prototype.forEach', function () {
 
         var array = new Arroz(1, 2, 3);
         var array2 = new Arroz(1, 2, 3);
-        debugger
+     
         array.forEach(function(element, i, array, thisArg) {
             array[i] = thisArg;
         }, array2);

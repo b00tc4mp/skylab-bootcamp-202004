@@ -96,6 +96,4 @@ describe('Arroz.prototype.every', function() {
 
         expect(result instanceof Error).toBe(true);
     });
-
-
 });

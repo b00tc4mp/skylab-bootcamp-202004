@@ -1,12 +1,18 @@
 'use strict';
 
-Arroz.prototype.join = function(element) {
-    var newString = this[0];
-    if ((element instanceof Function)) throw new TypeError(element + ' is  a function');
-    if (element === undefined) element = "";
+Object.defineProperty(Arroz.prototype, 'join', {
+    value: function(separator = ',') {
+        var string = this[0];
+        if ((separator instanceof Function)) throw new TypeError(separator + ' is  a function');
+        if (separator === undefined) separator = "";
+        
+        for (var i = 1; i < this.length; i++) 
+            (this[i] === undefined || this[i] === null) ? 
+            string += separator :
+            string += separator + this[i].toString()
     
-    for (var i = 1; i < this.length; i++) 
-        newString += element + this[i];
-
-    return newString;
-}
+        return string;
+    },
+    enumerable: false,
+    writable: true
+});

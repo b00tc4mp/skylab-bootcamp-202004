@@ -30,7 +30,7 @@ describe('Arroz.prototype.push', function() {
         expect(length).toBe(array.length);
     });
 
-    it('should add multiple values', function() {
+    it('should add multiple elements', function() {
         var array = new Arroz();
 
         var length = array.push('a', 'b', 'c');

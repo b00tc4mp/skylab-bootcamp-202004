@@ -1,8 +1,15 @@
 'use strict'
 
-Arroz.prototype.pop = function pop() {
+Object.defineProperty(Arroz.prototype, 'pop', {
+    value: function pop() {
     
-    var element = this[this.length - 1];
-    this.length = this.length - 1;
-    return element;
-}
+        if (this.length === 0) return undefined; 
+        
+        var element = this[--this.length];
+        delete this[this.length];
+    
+        return element;
+    },
+    enumerable: false,
+    writable: true
+});

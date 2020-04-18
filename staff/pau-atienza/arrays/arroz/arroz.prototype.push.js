@@ -1,8 +1,11 @@
 'use strict';
 
-Arroz.prototype.push = function() {
-    for (var i in arguments)
-        this[this.length++] = arguments[i];
+Object.defineProperty(Arroz.prototype, 'push', {
+    value: function() {
+        for (var i in arguments) this[this.length++] = arguments[i];
 
-    return this.length;
-};
+        return this.length;
+    },
+    enumerable: false,
+    writable: true
+});

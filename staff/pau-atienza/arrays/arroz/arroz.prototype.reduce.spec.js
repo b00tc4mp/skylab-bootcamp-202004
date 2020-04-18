@@ -1,6 +1,6 @@
 'use strict';
 
-describe('reduce', function () {
+describe('Arroz.prototype.reduce', function () {
     it('should return the sum of all the elements', function () {
         var array = new Arroz(1, 2, 3);
 
@@ -15,14 +15,14 @@ describe('reduce', function () {
 
         expect(result).toBe(6);
     });
-    it('if an initial value is provided, the operation will start at that index', function () {
+    it('if an initial value is provided, the accumulator will be set at that initial value', function () {
         var array = new Arroz(1, 2, 3);
 
         var result = array.reduce(function(accumulator, element) {return accumulator + element}, 1);
 
         expect(result).toBe(7);
     });
-    it('if an empty array is introduced, it returns an error', function () {
+    it('if an empty array is introduced and no initial value is provided, it returns an error, however, if an initial value is provided, the function will be executed', function () {
         var array = new Arroz();
 
         try {
@@ -32,6 +32,13 @@ describe('reduce', function () {
         }
 
         expect(result instanceof Error).toBe(true);
+
+        var array = new Arroz();
+    
+        var result = array.reduce(function(accumulator, element) {return accumulator + element}, 1);
+       
+
+        expect(result).toBe(1);
     });
 
     it('if an element that isnt a function is introduced, it returns an error', function () {
@@ -45,7 +52,7 @@ describe('reduce', function () {
             result = error;
         }
 
-        expect(result instanceof Error).toBe(true); //correcto
+        expect(result instanceof Error).toBe(true);
 
         var array = new Arroz(1, 2, 3, 4, 5);
         var result;

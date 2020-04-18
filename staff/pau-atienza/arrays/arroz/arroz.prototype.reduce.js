@@ -1,22 +1,23 @@
 'use strict';
 
-Arroz.prototype.reduce = function (expression, initialValue = this[0]){
-    if(!(expression instanceof Function)){return new TypeError(expression + ' is not a function')};
-
-    if(this.length === 0){return new TypeError('The introduced array is empty')};
-
+Object.defineProperty(Arroz.prototype, 'reduce', {
+    value: function (expression, initialValue = this[0]){
+        if(!(expression instanceof Function))   return new TypeError(expression + ' is not a function');
     
-    if(arguments.length>1){
-        var i = 0;
-    }
-    else{
-        var i = 1;
-    }
+        else if(this.length === 0 && initialValue === undefined)    return new TypeError('Reduce of empty array with no initial value');
     
-    var accumulator = initialValue;
+        else if(arguments.length>1) var i = 0;
     
-    for (i; i<this.length; i++){
-        accumulator = expression(accumulator, this[i], i);
-    };
-    return accumulator;
-};
+        else    var i = 1;
+        
+        var accumulator = initialValue;
+        
+        for (i; i<this.length; i++){
+            accumulator = expression(accumulator, this[i], i);
+        };
+        
+        return accumulator;
+    },
+    enumerable: false,
+    writable: true
+});
