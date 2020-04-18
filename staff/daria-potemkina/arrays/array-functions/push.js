@@ -1,9 +1,8 @@
 'use strict';
 
-function push(array, ...args){
-    for(var i = 0; i < args.length; i++)
-        array[array.length] = args[i];
+function push(array){
+    for(var i = 1; i < arguments.length; i++)
+        array[array.length] = arguments[i];
 
-    return length;
-
+    return array.length;
 }

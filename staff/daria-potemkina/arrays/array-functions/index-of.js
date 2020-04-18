@@ -1,19 +1,9 @@
 'use strict';
 
 function indexOf(array, element, index) {
-    if (index === undefined) {
-        for (var i = 0; i < array.length; i++) {
-            if (array[i] === element) {
-                return i
-            }
-        }
-    }else {
-        for (var j = index; j < array.length; j++) {
-            if (array[j] === element) {
-                return j
-            }
-        }
+    typeof index === 'undefined' ? index = 0 : index;
+    for(var i = index; i < array.length; i++){
+        if(array[i] === element) return i;
     }
-    return -1
-
-}
+        return -1;
+    }

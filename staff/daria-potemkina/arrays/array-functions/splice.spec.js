@@ -52,6 +52,29 @@ describe('splice', function () {
 
         expect(arr).toEqual([3, 4]);
         expect(array).toEqual([1, 2, 66, 88, 99, 5, 6, 7]);
+
+        var array = [1, 2, 3, 4, 5, 6, 7];
+
+        var arr = splice(array, 2, 0, 66,88,99);
+
+        expect(arr).toEqual([]);
+        expect(array).toEqual([1, 2, 66, 88, 99, 3, 4, 5, 6, 7]);
+    });
+
+    it('...', function () {
+        var array = [1, 2, 3, 4, 5, 6, 7];
+
+        var arr = splice(array, -2, 1, 'hola');
+
+        expect(arr).toEqual([6]);
+        expect(array).toEqual([1, 2, 3, 4, 5, 'hola', 7]);
+
+        array = [1, 2, 3, 4, 5, 6, 7];
+
+        arr = splice(array, -2, 0, 'hola');
+
+        expect(arr).toEqual([]);
+        expect(array).toEqual([1, 2, 3, 4, 5, 'hola', 6, 7]);
     });
 
 });

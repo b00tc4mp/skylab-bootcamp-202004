@@ -2,9 +2,7 @@
 
 Arroz.prototype.pop = function () {
     if (this.length > 0) {
-        var deleted = new Arroz();
-        deleted.push(this[this.length - 1]);
-        deleted.length = 1;
+        var deleted = this[this.length - 1];
         delete this[this.length-1];
         this.length--;
         return deleted;

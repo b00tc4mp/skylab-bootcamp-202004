@@ -34,9 +34,10 @@ describe('slice', function () {
     });
 
     it('it should put in the array between index 3 and 5 (both included)', function () {
-
         var array = [1, 2, 3, 4, 5, 6, 7];
-        var arr = slice(array, 3, -2)
+
+        var arr = slice(array, 3, -2);
+        
         expect(arr).toEqual([4, 5])
 
         expect(array[0]).toBe(1)

@@ -1,50 +1,65 @@
 'use strict'
 
-function splice(array, start, deleteCount, ...args) {
+function splice(array, start, deleteCount) {
     var result = [];
-    if (typeof deleteCount === 'undefined') {
-        if (start > 0) {
-            for (var i = start; i < array.length; i++) {
+
+    if (typeof start !== 'undefined' && typeof start === 'number') {
+        if (start > 0 && start < array.length) {
+            for (var i = start; i < array.length; i++)
                 result[result.length] = array[i];
+
+            array.length = start;
+
+            //--------------------
+
+            for (var newElement = 3; newElement < arguments.length; newElement++)
+                array[array.length] = arguments[newElement];
+
+            if (typeof deleteCount !== 'undefined' && typeof deleteCount === 'number') {
+                for (var j = deleteCount; j < result.length; j++)
+                    array[array.length] = result[j];
+
+                if (deleteCount !== 0) {
+                    result.length = deleteCount;
+                } else {
+                    result.length = 0;
+                }
             }
-            if (start <= array.length) {
-                array.length = start;
-            }
+            //-----------------------------
 
         } else if (start < 0) {
-            if (array.length + start < 0) {
-                for (var i in array) {
+            if (array.length > (-start)) {
+                for (var i = array.length + start; i < array.length; i++)
                     result[result.length] = array[i];
+
+                array.length += start;
+
+                //-------------------------
+
+                for (var newElement = 3; newElement < arguments.length; newElement++)
+                    array[array.length] = arguments[newElement];
+
+                if (typeof deleteCount !== 'undefined' && typeof deleteCount === 'number') {
+                    for (var j = deleteCount; j < result.length; j++)
+                        array[array.length] = result[j];
+
+                    if (deleteCount !== 0) {
+                        result.length = deleteCount;
+                    } else {
+                        result.length = 0;
+                    }
                 }
-                array.length = 0;
+
+                //-----------------------------
+
             } else {
-                var num = array.length + start;
-                for (var i = num; i < array.length; i++) {
+                for (var i in array)
                     result[result.length] = array[i];
-                }
-                array.length += start
+
+                array.length = 0;
             }
         }
-    } else {
-        var newArray = [];
-
-        for (var i = start; i < start + deleteCount; i++) {
-            result[result.length] = array[i];
-        }
-
-        for (var j = start + deleteCount; j < array.length; j++) {
-            newArray[newArray.length] = array[j];
-        }
-
-        array.length = start;
-
-        for (var a = 0; a <args.length; a++){
-            array[array.length] = args[a];
-        }
-
-        for (var n in newArray) {
-            array[array.length] = newArray[n];
-        }
     }
+
     return result;
 }

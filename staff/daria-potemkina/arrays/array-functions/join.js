@@ -1,13 +1,12 @@
-'use stict'
+'use strict'
 
 function join (array, separator){
-    var string = ''
+    var string = '';
+
+    typeof separator === 'undefined' ? separator = ',' : separator;
+    
     for (var i = 0; i < array.length; i++){
-        if(i === array.length - 1){
-            string += array[i]
-        }else{
-            string += array[i] + separator
-        }
+        i === array.length - 1 ? string += array[i] : string += array[i] + separator;
     }
     return string;
 }

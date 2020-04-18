@@ -11,10 +11,15 @@ describe('join', function () {
         expect(array[1]).toBe('mundo')
         expect(array[2]).toBe('!')
 
+        array = ['hola', 'mundo', '!'];
+        var str = join(array);
+
+        expect(str).toEqual('hola,mundo,!');
+
     });
 
 
-    it('it should return a tring with elements of array sin separation', function () {
+    it('it should return a string with elements of array sin separation', function () {
 
         var array = ['hola', 'mundo', '!'];
         var str = join(array, '');
@@ -28,12 +33,12 @@ describe('join', function () {
 
     });
 
-    it('it should put in the array between index 3 and 5 (both included)', function () {
+    it('it should return a string with elements of array separating by one space', function () {
 
         var array = [1, 2, 3, 4, 5, 6, 7];
         var str = join(array, ' ')
 
-        expect(str).toEqual('1 2 3 4 5 6 7')
+        expect(str).toEqual('1 2 3 4 5 6 7');
 
         expect(array[0]).toBe(1)
         expect(array[1]).toBe(2)
