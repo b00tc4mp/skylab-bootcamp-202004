@@ -1,4 +1,4 @@
-"use estrict"
+"use estrict";
 
 Arroz.prototype.filter = function(expression) {
     if(typeof expression !== "function") throw new TypeError(expression + ' is not a function');

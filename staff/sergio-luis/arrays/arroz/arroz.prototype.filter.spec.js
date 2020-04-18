@@ -1,5 +1,4 @@
-"use estrict"
-
+"use estrict";
 
 describe('Arroz.prototype.filter', function() {
     it('filter a array and return an new array', function() {
@@ -54,6 +53,7 @@ describe('Arroz.prototype.filter', function() {
         var array = new Arroz(1, 2, 3);
         var result;
 
+        
         try {
             array.filter();
         } catch (error) {
