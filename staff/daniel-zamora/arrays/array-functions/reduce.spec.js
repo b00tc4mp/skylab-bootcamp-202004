@@ -5,19 +5,19 @@ describe("reduce", function () {
 
     var total = reduce(array,function (arrayNumber, actualNumber) {
         return arrayNumber + actualNumber;
-      },0,array);
+    });
 
       expect(total).toBe(10);
   });
 
   it("should calculate the multiplication of the the elements of the array itself, starting from position 2", function () {
-    var array = [1, 2, 3, 4,5,6,7];
+    var array = [1, 2, 3, 4, 5, 6];
 
     var total = reduce(array,function (arrayNumber, actualNumber) {
-        return arrayNumber * actualNumber;
-      },2, array );
+        return arrayNumber + actualNumber;
+      });
 
-      expect(total).toBe(2520);
+      expect(total).toBe(21);
 
 
 });

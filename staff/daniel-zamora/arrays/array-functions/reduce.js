@@ -1,8 +1,8 @@
-function reduce(array, expression, index) {
-  if (typeof index === undefined) index = 0;
-  var acumulator = array[index];
-  for (var i = index + 1; i < array.length; i++) {
-    acumulator = expression(acumulator, array[i]);
+function reduce(array, expression, initialValue) {
+  if (typeof initialValue === "undefined") initialValue = 0;
+  var acumulator = initialValue;
+  for (var i = 0; i < array.length; i++) {
+    acumulator = expression(acumulator, array[i],i,array);
   }
 
   return acumulator;

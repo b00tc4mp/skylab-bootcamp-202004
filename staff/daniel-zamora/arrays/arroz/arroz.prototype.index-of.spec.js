@@ -1,25 +1,41 @@
-describe('Arroz.prototype.index-of', function () {
-    it('it should delete the last elment of in array and return it in a new variable', function () {
-        var array = new Arroz(1, 2, 3);
-        var iPop;
+describe("Arroz.prototype.index-of", function () {
+  it("Shoould find the index of the first match with the array", function () {
+    var array = new Arroz(1, 2, 3);
 
-        iPop = array.pop();
+    var matchIndex = array.indexOf(2);
 
-        expect(array[0]).toBe(1);
-        expect(array[1]).toBe(2);
-        expect(array[2]).toBe(undefined);
-        expect(iPop).toBe(3);
-    });
+    expect(matchIndex).toBe(1);
+  });
 
-    it('it should delete the last elment of in array and return it in a new variable', function () {
-        var array = new Arroz(['hola', 'pepito'], [1, 2, 3], ['hola', 'pepito']);
-        var iPop;
+  it("Shoould find the index of the first match in the array starting from position 2", function () {
+    var array = new Arroz(1, 2, 3, 4, 5, 6, 7, 8);
 
-        iPop = array.pop();
+    var matchIndex = array.indexOf(6, 2);
 
-        expect(array[0]).toEqual(['hola', 'pepito']);
-        expect(array[1]).toEqual([1, 2, 3]);
-        expect(array[2]).toBe(undefined);
-        expect(iPop).toEqual(['hola', 'pepito']);
-    });
+    expect(matchIndex).toBe(5);
+  });
+
+  it("Shoould find the index of the first match in the array starting from position -4", function () {
+    var array = new Arroz(1, 2, 3, 4, 5, 6, 7, 8);
+
+    var matchIndex = array.indexOf(5, -1);
+
+    expect(matchIndex).toBe(-1);
+  });
+
+  it("Shoould return -1, because doesn't match any result with the array", function () {
+    var array = new Arroz(1, 2, 3, 4, 5, 6, 7, 8);
+
+    var matchIndex = array.indexOf(9);
+
+    expect(matchIndex).toBe(-1);
+  });
+
+  it("Shoould return -1, because the position required is bigger than the length of the array", function () {
+    var array = new Arroz(1, 2, 3, 4, 5, 6, 7, 8);
+
+    var matchIndex = array.indexOf(4, 9);
+
+    expect(matchIndex).toBe(-1);
+  });
 });

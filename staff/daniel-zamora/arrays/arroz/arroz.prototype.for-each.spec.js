@@ -1,7 +1,7 @@
 'use strict';
 
 describe('Arroz.prototype.forEach', function () {
-    it('should iterate on each element and keep each value multiplied by 10 in a new external array', function () {
+    it('should iterate on each element and keep each value processed in callback in the external array', function () {
         var array = new Arroz(1, 2, 3);
         var result = [];
 
@@ -12,11 +12,9 @@ describe('Arroz.prototype.forEach', function () {
         expect(result[0]).toBe(10);
         expect(result[1]).toBe(20);
         expect(result[2]).toBe(30);
-    });
 
-    it('should iterate on each element and keep each value in upper-case in a new external array', function () {
-        var array = new Arroz('hello', 'cruel', 'world');
-        var result = [];
+        array = new Arroz('hello', 'cruel', 'world');
+        result = [];
 
         array.forEach(function(element, index) {
             result[index] = element.toUpperCase();
@@ -51,5 +49,21 @@ describe('Arroz.prototype.forEach', function () {
         expect(result[0]).toBe(array);
         expect(result[1]).toBe(array);
         expect(result[2]).toBe(array);
+    });
+
+    it('should throw error on non-function expression', function() {
+        var array = new Arroz(1, 2, 3);
+
+        expect(function() {
+            array.forEach();
+        }).toThrowError(TypeError, 'undefined is not a function');
+
+        expect(function() {
+            array.forEach(1);
+        }).toThrowError(TypeError, '1 is not a function');
+
+        expect(function() {
+            array.forEach(true);
+        }).toThrowError(TypeError, 'true is not a function');
     });
 });
