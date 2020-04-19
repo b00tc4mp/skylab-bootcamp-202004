@@ -13,7 +13,7 @@ function splice(array,start,length,insert){
         newArray[pos]=array[i];
     }
     array[start]=insert;
-    for(var j=0;j<newArray.length;j++){ vive macro
+    for(var j=0;j<newArray.length;j++){ 
         array[start+1+j]=newArray[j];
     }
 }

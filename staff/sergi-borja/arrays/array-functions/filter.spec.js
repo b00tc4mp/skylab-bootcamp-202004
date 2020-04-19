@@ -7,9 +7,7 @@ describe('filter', function () {
             return value>2;
         }
         filtred=filter(array,bigger);
-        function bigger(value,index,array,thisArg){
-            return value>2;
-        }
+
         expect(filtred[0]).toBe(3);
         expect(filtred[1]).toBe(4);
     });
@@ -21,9 +19,7 @@ describe('filter', function () {
             return value>2;
         }
         filtred=filter(array,bigger);
-        function bigger(value,index,array,thisArg){
-            return value>2;
-        }
+       
         expect(array[0]).toBe(1);
         expect(array[1]).toBe(2);
     });

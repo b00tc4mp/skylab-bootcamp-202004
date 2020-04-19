@@ -1,5 +1,5 @@
 describe('find-index', function () {
-    it('returns the first number of the array which accomplish the condition', function () {
+    it('returns the index of the first number of the array which accomplish the condition', function () {
         var array = [1,2,3,4,5]
         var condition = function(){
             for (var i=0; i<array.length; i++){
@@ -15,7 +15,7 @@ describe('find-index', function () {
         expect(result).toBe(3);
     });
 
-    it('returns the first number of the array which accomplish the condition', function () {
+    it('returns the index of the first number of the array which accomplish the condition', function () {
         var array = ['hello', 'biatch', 'world'];
         var condition = function(){
             for(var i=0; i<array.length; i++){
