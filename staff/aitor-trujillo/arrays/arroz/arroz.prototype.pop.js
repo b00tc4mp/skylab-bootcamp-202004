@@ -1,3 +1,5 @@
+"use strict";
+
 Arroz.prototype.pop = function () {
   var remove = this[this.length - 1];
 

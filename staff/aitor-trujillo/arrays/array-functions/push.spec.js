@@ -1,3 +1,5 @@
+"use strict";
+
 describe("push", function () {
   it("should iterate numbers in arguments and add them to the end of array", function () {
     var arr = [1, 2, 3, 4, 5];

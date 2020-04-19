@@ -1,4 +1,6 @@
-describe("join", function () {
+"use strict";
+
+describe("Arroz.prototype.join", function () {
   it("should join all items of array into string and return it", function () {
     var myArroz = new Arroz("hello", 1, 2, "world");
 

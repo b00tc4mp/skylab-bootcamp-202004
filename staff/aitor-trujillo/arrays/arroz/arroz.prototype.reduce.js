@@ -1,29 +1,17 @@
-// Arroz.prototype.reduce = function (callback, initialValue = 0) {
-//   var result = initialValue;
-
-//   for (var i = 0; i < array.length; i++) {
-//     result = callback(result, array[i], i, array);
-//   }
-
-//   return result;
-// };
-
-// // ==================
+"use strict";
 
 Arroz.prototype.reduce = function (callback, initialValue) {
   if (!(callback instanceof Function))
     throw new TypeError(callback + " is not a function");
-
+  var accumulator = initialValue;
   var i = 0;
 
   if (initialValue === undefined) {
-    initialValue = this[0];
+    accumulator = this[i];
     i = 1;
-  } else {
-    var result = initialValue;
   }
+  for (i; i < this.length; i++)
+    accumulator = callback(accumulator, this[i], i, this);
 
-  for (i; i < this.length; i++) result = callback(result, this[i], i, this);
-
-  return result;
+  return accumulator;
 };

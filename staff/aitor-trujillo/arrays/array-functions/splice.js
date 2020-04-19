@@ -1,3 +1,5 @@
+"use strict";
+
 function splice(array, index = 0, howmany) {
   var arr = [];
 

@@ -1,3 +1,5 @@
+"use strict";
+
 describe("splice", function () {
   it("should cut two items of the array and return the rest modifying the array", function () {
     var fruits = [

@@ -1,3 +1,5 @@
+"use strict";
+
 describe("pop", function () {
   it("should delete the last number of array", function () {
     var arr = [1, 2, 3];

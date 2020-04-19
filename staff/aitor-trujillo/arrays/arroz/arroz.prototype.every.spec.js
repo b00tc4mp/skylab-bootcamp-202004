@@ -1,6 +1,6 @@
 "use strict";
 
-describe("every", function () {
+describe("Arroz.prototype.every", function () {
   it("should return true if all elements are greater or equal than 18", function () {
     var arroz = new Arroz(18, 21, 25, 28, 40, 58, 60);
 

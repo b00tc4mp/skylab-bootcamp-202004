@@ -1,4 +1,6 @@
-describe("indexOf", function () {
+"use strict";
+
+describe("Arroz.prototype.indexOf", function () {
   it("should return the index 2 of the array", function () {
     var myArroz = new Arroz("I", "am", "a", "test");
 

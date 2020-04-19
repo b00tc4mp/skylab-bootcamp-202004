@@ -1,4 +1,4 @@
-// TODO
+"use strict";
 
 describe("map", function () {
   it("should return each element of array doubled", function () {

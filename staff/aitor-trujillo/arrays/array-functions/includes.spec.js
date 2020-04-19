@@ -1,3 +1,5 @@
+"use strict";
+
 describe("includes", function () {
   it("should return true if finds the string in the array myArr", function () {
     myArr = ["I", "am", "pretty"];

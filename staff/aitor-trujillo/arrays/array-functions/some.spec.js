@@ -1,3 +1,5 @@
+"use strict";
+
 describe("some", function () {
   it("should return true if it finds greater or equal than 18", function () {
     var peopleAge = [3, 4, 7, 10, 20, 18, 40];

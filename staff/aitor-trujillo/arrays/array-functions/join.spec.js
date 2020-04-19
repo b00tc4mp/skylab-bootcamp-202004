@@ -1,3 +1,5 @@
+"use strict";
+
 describe("join", function () {
   it("should join all items of array into string and return it", function () {
     var myArr = ["hello", 1, 2, "world"];

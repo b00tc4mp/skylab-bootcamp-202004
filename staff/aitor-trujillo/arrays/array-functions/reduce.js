@@ -1,3 +1,5 @@
+"use strict";
+
 function reduce(array, callback, initialValue = 0) {
   var result = initialValue;
 

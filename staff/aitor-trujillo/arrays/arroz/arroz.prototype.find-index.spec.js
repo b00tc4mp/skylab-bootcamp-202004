@@ -1,4 +1,6 @@
-describe("findIndex", function () {
+"use strict";
+
+describe("Arroz.prototype.findIndex", function () {
   it("should find the first element in the array greater or equal to 18 and returns it's index", function () {
     var peopleAge = new Arroz(3, 4, 7, 10, 20, 18, 40);
 

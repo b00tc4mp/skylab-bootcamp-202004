@@ -1,3 +1,5 @@
+"use strict";
+
 function filter(array, callback) {
   var newArr = [];
   for (var i = 0; i < array.length; i++) {

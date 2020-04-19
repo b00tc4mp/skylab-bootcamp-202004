@@ -1,4 +1,5 @@
-// TODO
+"use strict";
+
 function map(array, callback) {
   var newArr = [];
 

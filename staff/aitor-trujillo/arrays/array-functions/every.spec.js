@@ -1,3 +1,5 @@
+"use strict";
+
 describe("every", function () {
   it("should return true if all elements are greater or equal than 18", function () {
     var peopleAge = [18, 21, 25, 28, 40, 58, 60];

@@ -1,3 +1,5 @@
+"use strict";
+
 Arroz.prototype.find = function (callback) {
   if (!(callback instanceof Function))
     throw new TypeError(callback + " is not a function.");

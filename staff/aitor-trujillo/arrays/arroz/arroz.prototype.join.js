@@ -1,3 +1,5 @@
+"use strict";
+
 Arroz.prototype.join = function (separator = ",") {
   if (separator === undefined) separator = ",";
   var stringed = "";

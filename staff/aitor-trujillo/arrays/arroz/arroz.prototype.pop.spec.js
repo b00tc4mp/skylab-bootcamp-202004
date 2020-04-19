@@ -1,4 +1,6 @@
-describe("pop", function () {
+"use strict";
+
+describe("Arroz.prototype.pop", function () {
   it("should delete the last number of array", function () {
     var arroz = new Arroz(1, 2, 3);
 

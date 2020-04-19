@@ -1,3 +1,5 @@
+"use strict";
+
 describe("indexOf", function () {
   it("should return the index 2 of the array", function () {
     var myArray = ["I", "am", "a", "test"];

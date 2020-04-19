@@ -1,6 +1,6 @@
 "use strict";
 
-describe("includes", function () {
+describe("Arroz.prototype.includes", function () {
   it("should return true if finds the string in the Arroz myArr", function () {
     var myArr = new Arroz("I", "am", "pretty");
 
