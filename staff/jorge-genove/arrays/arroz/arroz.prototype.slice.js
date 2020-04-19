@@ -2,7 +2,7 @@
 
 Object.defineProperty(Arroz.prototype, "slice", {
   value: function (begin, end) {
-    slicedValues = [];
+   var slicedValues = [];
     if (begin > this.length || typeof end === "string") {
       return slicedValues;
     }

@@ -1,7 +1,8 @@
 "use stritc";
 
 Object.defineProperty(Arroz.prototype, "reduce", {
-  value: function (callback, initialValue = this[0]) {
+  value: function (callback, initialValue) {
+    if( typeof initialValue === 'undefined'){initialValue = this[0]}
     var accumulator = 0;
     if (typeof callback !== "function") {
       throw new TypeError(callback + " is not a function");
