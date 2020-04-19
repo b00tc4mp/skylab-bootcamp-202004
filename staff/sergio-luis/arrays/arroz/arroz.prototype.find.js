@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 Arroz.prototype.find = function find(expression){    
     if(typeof expression !== 'function') throw new TypeError (expression + ' is not a function');

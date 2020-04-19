@@ -2,7 +2,6 @@
 
 Arroz.prototype.reduce = function reduce(expression, initialValue = 0) {
     if (this.length === 0) throw new TypeError('Reduce of empty array with no initial value at Arroz.reduce');
-    if (typeof expression === 'undefined') throw new TypeError(expression + ' is not a function');
     if (typeof expression !== 'function') throw new TypeError(expression + ' is not a function');
 
     var result = initialValue;

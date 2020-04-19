@@ -51,41 +51,17 @@ describe('Arroz.prototype.filter', function() {
     });
     it('should throw error on non-function expression', function() {
         var array = new Arroz(1, 2, 3);
-        var result;
-
-        
-        try {
+    
+        expect(function(){
             array.filter();
-        } catch (error) {
-            result = error;
-        }
+        }).toThrowError(TypeError,'undefined is not a function');
 
-        expect(result).toBeDefined();
-        expect(result instanceof TypeError).toBeTruthy();
-        expect(result.message).toBe('undefined is not a function');
-
-        result = undefined;
-
-        try {
+        expect(function(){
             array.filter('hello');
-        } catch(error) {
-            result = error;
-        }
+        }).toThrowError(TypeError,'hello is not a function');
 
-        expect(result).toBeDefined();
-        expect(result instanceof TypeError).toBeTruthy();
-        expect(result.message).toBe('hello is not a function');
-
-        result = undefined;
-
-        try {
+        expect(function(){
             array.filter(true);
-        } catch(error) {
-            result = error;
-        }
-
-        expect(result).toBeDefined();
-        expect(result instanceof TypeError).toBeTruthy();
-        expect(result.message).toBe('true is not a function');
+        }).toThrowError(TypeError,'true is not a function')
     });
 });

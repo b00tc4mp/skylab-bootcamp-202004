@@ -11,50 +11,29 @@ describe('Arroz.prototype.reduce', function() {
             return acc + cur
         }, 10);
 
-
         expect(result1).toBe(10);
         expect(result2).toBe(20);
     });
     it('The reduce() Errors', function() {
         var array = new Arroz();
-        var resultError = undefined;
 
-        try {
+
+        expect(function(){
             array.reduce(function(acc, cur) {
-                return acc + cur
-            }, );
-        } catch (error) {
-            resultError = error
-        }
-
-        expect(resultError).toBeDefined();
-        expect(resultError instanceof TypeError).toBeTruthy();
-        expect(resultError.message).toBe('Reduce of empty array with no initial value at Arroz.reduce');
-
+                return acc + cur;
+            });
+        }).toThrowError(TypeError, 'Reduce of empty array with no initial value at Arroz.reduce');
+  
         var array = new Arroz(1,2,3,4);
-        var resultError = undefined;
-
-        try {
+        
+        expect(function() {
             array.reduce();
-        } catch (error) {
-            resultError = error
-        }
-
-        expect(resultError).toBeDefined();
-        expect(resultError instanceof TypeError).toBeTruthy();
-        expect(resultError.message).toBe('undefined is not a function');
+        }).toThrowError(TypeError, 'undefined is not a function');
 
         var array = new Arroz(1,2,3,4);
-        var resultError = undefined;
 
-        try {
-            array.reduce('hola mundo');
-        } catch (error) {
-            resultError = error
-        }
-
-        expect(resultError).toBeDefined();
-        expect(resultError instanceof TypeError).toBeTruthy();
-        expect(resultError.message).toBe('hola mundo is not a function');
+        expect(function() {
+            array.reduce('hello');
+        }).toThrowError(TypeError, 'hello is not a function');
     });
 });

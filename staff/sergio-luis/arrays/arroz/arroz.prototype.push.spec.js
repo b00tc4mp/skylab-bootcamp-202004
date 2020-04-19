@@ -20,7 +20,6 @@ describe('Arroz.prototype.push', function() {
 
     it('should return the new length on each addition', function() {
         var array = new Arroz();
-
         var length = array.push('a');
 
         expect(length).toEqual(array.length);
@@ -32,7 +31,6 @@ describe('Arroz.prototype.push', function() {
 
     it('should add multiple values', function() {
         var array = new Arroz();
-
         var length = array.push('a', 'b', 'c');
 
         expect(array.length).toBe(3);
@@ -43,7 +41,6 @@ describe('Arroz.prototype.push', function() {
     });
     it('If you dont pass any parameter sould be undefined', function() {
         var array = new Arroz();
-
         var length = array.push();
 
         expect(length).toBe(undefined);
@@ -54,7 +51,5 @@ describe('Arroz.prototype.push', function() {
 
         expect(length).toBe(undefined);
         expect(array.length).toBe(1);
-
-      
     });
 });

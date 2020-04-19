@@ -1,9 +1,8 @@
-"use estrict"
+"use estrict";
 
 describe('Arroz.prototype.includes', function() {
     it('includes return a bollean if find return true', function() {
         var array = new Arroz(5, 2, 1);
-
         var result1 = array.includes(2);
         var result2 = array.includes(6);
 
@@ -12,7 +11,6 @@ describe('Arroz.prototype.includes', function() {
     });
     it('includes test with string an with fromIndex return a bollean', function() {
         var array = new Arroz('Hola', 'que', 'Tal');
-
         var result1 = array.includes('que', 3);
         var result2 = array.includes('Hola', -1);
 
@@ -21,7 +19,6 @@ describe('Arroz.prototype.includes', function() {
     });
     it('If you don`t pass any arguments to includes sould return undefined', function() {
         var array = new Arroz('Hola', 'que', 'Tal');
-
         var result = array.includes();
 
         expect(result).toBe(undefined);

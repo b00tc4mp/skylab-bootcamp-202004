@@ -1,11 +1,5 @@
-"use strict"
-//HASTA MAÑANA!! okook!! gracias!!!
-//HASTA MAÑANA!! 
-//HASTA MAÑANA!! 
-//HASTA MAÑANA!! 
-//HASTA MAÑANA!! 
-//HASTA MAÑANA!! 
-//HASTA MAÑANA!!  :))))))))
+"use strict";
+
 Arroz.prototype.some = function (expression) {
     if (typeof expression !== 'function') throw new TypeError(expression + ' is not a function');
 

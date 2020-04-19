@@ -55,40 +55,15 @@ describe('Arroz.prototype.map', function () {
 
     it('should throw error on non-function expression', function() {
         var array = new Arroz(1, 2, 3);
-        var result;
-
-        try {
+        
+        expect(function(){
             array.map();
-        } catch(error) {
-            result = error;
-        }
-
-        expect(result).toBeDefined();
-        expect(result instanceof TypeError).toBeTruthy();
-        expect(result.message).toBe('undefined is not a function');
-
-        result = undefined;
-
-        try {
+        }).toThrowError(TypeError, 'undefined is not a function');
+        expect(function(){
             array.map(1);
-        } catch(error) {
-            result = error;
-        }
-
-        expect(result).toBeDefined();
-        expect(result instanceof TypeError).toBeTruthy();
-        expect(result.message).toBe('1 is not a function');
-
-        result = undefined;
-
-        try {
-            array.map(true);
-        } catch(error) {
-            result = error;
-        }
-
-        expect(result).toBeDefined();
-        expect(result instanceof TypeError).toBeTruthy();
-        expect(result.message).toBe('true is not a function');
+        }).toThrowError(TypeError, '1 is not a function');
+        expect(function(){
+            array.map('hello');
+        }).toThrowError(TypeError, 'hello is not a function');
     })
 });

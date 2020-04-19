@@ -1,4 +1,4 @@
-"use estrict"
+"use estrict";
 
 
 Arroz.prototype.includes = function (searchElement, fromIndex = 0) {

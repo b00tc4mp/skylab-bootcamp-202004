@@ -1,6 +1,6 @@
-"use strict"
+"use strict";
 
-describe('some', function() {
+describe('Arroz.prototype.some', function() {
     it('The some() method tests whether at least one element in the array passes the test implemented by the provided function. It returns a Boolean value. ', function() {
         var array1 = new Arroz (1, 2, 3, 4);
         var array2=[]
@@ -17,30 +17,17 @@ describe('some', function() {
     
     it('The some() Errors', function() {
         var array = new Arroz();
-        var resultError = undefined;
 
-        try {
+        expect(function(){
             array.some();
-        } catch (error) {
-            resultError = error
-        }
-
-        expect(resultError).toBeDefined();
-        expect(resultError instanceof TypeError).toBeTruthy();
-        expect(resultError.message).toBe('undefined is not a function');
-
-        var array = new Arroz(1,2,3,4);
-        var resultError = undefined;
-
-        try {
-            array.some('hola mundo');
-        } catch (error) {
-            resultError = error
-        }
-
-        expect(resultError).toBeDefined();
-        expect(resultError instanceof TypeError).toBeTruthy();
-        expect(resultError.message).toBe('hola mundo is not a function');
+        }).toThrowError(TypeError,'undefined is not a function');
+        expect(function(){
+            array.some(1);
+        }).toThrowError(TypeError,'1 is not a function');
+        expect(function(){
+            array.some('hello');
+        }).toThrowError(TypeError,'hello is not a function');
+     
     });
 
     
