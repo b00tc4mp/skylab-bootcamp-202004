@@ -1,3 +1,5 @@
+'use strict'
+
 Object.defineProperty(Arroz.prototype, "pop", {
   value: function (expression) {
     if (this.length === 0) {

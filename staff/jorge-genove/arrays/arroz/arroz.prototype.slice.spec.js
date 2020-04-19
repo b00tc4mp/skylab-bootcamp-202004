@@ -1,3 +1,5 @@
+ 'use strict'
+ 
  describe("Arroz.prototype.slice", function () {
     it("should iterate by the begin item to the end item, and return the values in a new array", function () {
     var array = new Arroz(1, 3, 5, 6, 7, 8, 65, 4, 3, 2, 3, 4, 5);

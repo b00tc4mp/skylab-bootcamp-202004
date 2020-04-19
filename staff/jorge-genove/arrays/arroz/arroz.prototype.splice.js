@@ -1,3 +1,5 @@
+'use strict'
+
 Object.defineProperty(Arroz.prototype, "splice", {
   value: function (startIndex, deleteCount, addItem) {
     var sliced = [];

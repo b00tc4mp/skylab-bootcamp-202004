@@ -1,3 +1,5 @@
+'use strict'
+
 Object.defineProperty(Arroz.prototype,'includes', { 
   value: function (searchValue, findIndex) {
     var control = false;

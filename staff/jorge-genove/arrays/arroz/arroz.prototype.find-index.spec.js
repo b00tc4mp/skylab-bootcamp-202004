@@ -1,4 +1,4 @@
-
+'use strict'
 
 describe('Arroz.prototype.findIndex', function () {
     it('It must iterate throw the whole array and return the first index that match', function () {

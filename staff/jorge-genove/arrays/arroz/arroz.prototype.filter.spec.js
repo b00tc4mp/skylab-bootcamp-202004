@@ -12,9 +12,10 @@ describe('Arroz.prototype.filter', function () {
         expect(result[0]).toBe(1);
         expect(result[1]).toBe(2);
         expect(result[2]).toBe(3);
+        expect(result).toEqual([1,2,3])
     });
 
-     it('if no matches nothing it will return a empty arroz', function () {
+     it('if no matches nothing it will return a empty array', function () {
         var array = new Arroz(1,2,3,4);
         var result = [];
 
@@ -23,6 +24,7 @@ describe('Arroz.prototype.filter', function () {
         });
 
         expect(result.length).toBe(0);
+        expect(result).toEqual([])
         
     });
 
@@ -35,6 +37,7 @@ describe('Arroz.prototype.filter', function () {
 
         });
         expect(result.length).toBe(0)
+        expect(result).toEqual([])
     });
 });
 
