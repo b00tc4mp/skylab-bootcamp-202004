@@ -17,7 +17,7 @@ describe("every", function () {
           return element > 4
       },1);
 
-      expect(matchIndex).toBeTruthy();
+      expect(matchIndex).toBeFalsy();
     });
 
   

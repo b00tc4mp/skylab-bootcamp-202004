@@ -15,7 +15,7 @@ describe("Arroz.prototype.includes", function () {
     expect(matchIndex).toBe(false);
   });
 
-  it("Should compare ", function () {
+  it("Should iterate on the array and find the value NaN and confirm is true", function () {
     var array = new Arroz(1, 2, 3, 4, 5, NaN);
 
     var matchIndex = array.includes(NaN);
@@ -23,7 +23,7 @@ describe("Arroz.prototype.includes", function () {
     expect(matchIndex).toBe(true);
   });
 
-  it("...", function () {
+  it("Returns true when comparing equal objects and false when they are different", function () {
     var objectToCompare = new Arroz ()
     var array = new Arroz(1, 2, 3, 4, 5, objectToCompare);
 
