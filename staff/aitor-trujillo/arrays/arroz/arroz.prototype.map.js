@@ -1,12 +1,14 @@
-'use strict';
+"use strict";
 
-Arroz.prototype.map = function(expression) {
-    var result = new Arroz()
+Arroz.prototype.map = function (callback) {
+  if (!(callback instanceof Function))
+    throw new TypeError(callback + " is not a function");
 
-    for (var i = 0; i < this.length; i++)
-        result[i] = expression(this[i], i, this);
+  var result = new Arroz();
 
-    result.length = this.length;
+  for (var i = 0; i < this.length; i++) result[i] = callback(this[i], i, this);
 
-    return result;
+  result.length = this.length;
+
+  return result;
 };

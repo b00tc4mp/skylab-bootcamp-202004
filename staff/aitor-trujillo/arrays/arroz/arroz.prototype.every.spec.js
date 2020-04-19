@@ -22,14 +22,8 @@ describe("Arroz.prototype.every", function () {
   it("should return error if every callback is empty", function () {
     var arroz = new Arroz(5, 21, 25, 28, 40, 58, 60);
 
-    var result;
-
-    try {
+    expect(function () {
       var result = arroz.every();
-    } catch (error) {
-      result = error;
-    }
-
-    expect(result instanceof Error).toBe(true);
+    }).toThrowError(TypeError, "undefined is not a function");
   });
 });

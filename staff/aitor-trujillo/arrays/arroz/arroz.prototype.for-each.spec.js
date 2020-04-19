@@ -1,55 +1,62 @@
-'use strict';
+"use strict";
 
-describe('Arroz.prototype.forEach', function () {
-    it('should iterate on each element and keep each value multiplied by 10 in a new external array', function () {
-        var array = new Arroz(1, 2, 3);
-        var result = [];
+describe("Arroz.prototype.forEach", function () {
+  it("should iterate on each element and keep each value multiplied by 10 in a new external array", function () {
+    var array = new Arroz(1, 2, 3);
+    var result = [];
 
-        array.forEach(function(element, index) {
-            result[index] = element * 10;
-        });
-
-        expect(result[0]).toBe(10);
-        expect(result[1]).toBe(20);
-        expect(result[2]).toBe(30);
+    array.forEach(function (element, index) {
+      result[index] = element * 10;
     });
 
-    it('should iterate on each element and keep each value in upper-case in a new external array', function () {
-        var array = new Arroz('hello', 'cruel', 'world');
-        var result = [];
+    expect(result[0]).toBe(10);
+    expect(result[1]).toBe(20);
+    expect(result[2]).toBe(30);
+  });
 
-        array.forEach(function(element, index) {
-            result[index] = element.toUpperCase();
-        });
+  it("should iterate on each element and keep each value in upper-case in a new external array", function () {
+    var array = new Arroz("hello", "cruel", "world");
+    var result = [];
 
-        expect(result[0]).toBe('HELLO');
-        expect(result[1]).toBe('CRUEL');
-        expect(result[2]).toBe('WORLD');
+    array.forEach(function (element, index) {
+      result[index] = element.toUpperCase();
     });
 
-    it('should iterate on each element provide the index from the second argument of the expression (callback)', function () {
-        var array = new Arroz(1, 2, 3);
-        var result = [];
+    expect(result[0]).toBe("HELLO");
+    expect(result[1]).toBe("CRUEL");
+    expect(result[2]).toBe("WORLD");
+  });
 
-        array.forEach(function(element, index, array) {
-            result[index] = index;
-        });
+  it("should iterate on each element provide the index from the second argument of the expression (callback)", function () {
+    var array = new Arroz(1, 2, 3);
+    var result = [];
 
-        expect(result[0]).toBe(0);
-        expect(result[1]).toBe(1);
-        expect(result[2]).toBe(2);
+    array.forEach(function (element, index, array) {
+      result[index] = index;
     });
 
-    it('should iterate on each element provide the full array from the third argument of the expression (callback)', function () {
-        var array = new Arroz(1, 2, 3);
-        var result = [];
+    expect(result[0]).toBe(0);
+    expect(result[1]).toBe(1);
+    expect(result[2]).toBe(2);
+  });
 
-        array.forEach(function(element, index, array) {
-            result[index] = array;
-        });
+  it("should iterate on each element provide the full array from the third argument of the expression (callback)", function () {
+    var array = new Arroz(1, 2, 3);
+    var result = [];
 
-        expect(result[0]).toBe(array);
-        expect(result[1]).toBe(array);
-        expect(result[2]).toBe(array);
+    array.forEach(function (element, index, array) {
+      result[index] = array;
     });
+
+    expect(result[0]).toBe(array);
+    expect(result[1]).toBe(array);
+    expect(result[2]).toBe(array);
+  });
+  it("should throw an error if there is no callback function on it", function () {
+    var peopleAge = new Arroz(3, 4, 7, 10, 20, 18, 40);
+
+    expect(function () {
+      var result = peopleAge.forEach("not a callback");
+    }).toThrowError(TypeError, "not a callback is not a function");
+  });
 });

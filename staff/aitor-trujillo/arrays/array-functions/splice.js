@@ -1,6 +1,7 @@
 "use strict";
 
 function splice(array, index = 0, howmany) {
+  if (typeof index === "undefined") index = 0;
   var arr = [];
 
   // add until index

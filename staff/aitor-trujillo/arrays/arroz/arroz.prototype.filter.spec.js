@@ -14,13 +14,9 @@ describe("Arroz.prototype.filter", function () {
   it("should throw an error if filter has no callback inside", function () {
     var arroz = new Arroz(0, 5, 10, 15, 20);
 
-    try {
+    expect(function () {
       var result = arroz.filter();
-    } catch (error) {
-      result = error;
-    }
-
-    expect(result instanceof Error).toBeTruthy();
+    }).toThrowError(TypeError, "undefined is not a function");
   });
   it("should return an empty Arroz if any element passes the filter", function () {
     var arroz = new Arroz(0, 5, 10, 15, 20);
