@@ -88,4 +88,33 @@ describe('Arroz.prototype.reduce', function () {
 
         expect(result).toBe("function(x){}123");
     });
+
+    it('try to verify that no function argument throws the next error --> arroz is empty', function () {
+        var array = new Arroz();
+
+        expect(function() {
+            array.reduce(function(accum, current, index, arr) {
+                accum = accum + current;
+                result[index] = current;
+                return accum;})
+        }).toThrowError(TypeError, 'Arroz is empty');
+    
+    });
+
+    it('try to verify that no function argument throws the next error \' <arguments> is not a function\'', function () {
+        var array = new Arroz(1, 2, 3);
+
+        expect(function() {
+            array.reduce()
+        }).toThrowError(TypeError, 'undefined is not a function');
+
+        expect(function() {
+            array.reduce(1);
+        }).toThrowError(TypeError, '1 is not a function');
+
+        expect(function() {
+            array.reduce(true);
+        }).toThrowError(TypeError, 'true is not a function');
+    
+    });
 });

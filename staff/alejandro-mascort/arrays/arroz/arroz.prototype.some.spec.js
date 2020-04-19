@@ -63,43 +63,20 @@ describe('Arroz.prototype.some', function () {
         expect(result[2]).toBe(array);
     });
     
-    it('try to verify that no function argument throws the next error \' <arguments> is not a function', function () {
+    it('try to verify that no function argument throws the next error \' <arguments> is not a function\'', function () {
         var array = new Arroz(1, 2, 3);
-        var result;
 
-        try {
-            array.forEach();
+        expect(function() {
+            array.some()
+        }).toThrowError(TypeError, 'undefined is not a function');
 
-        } catch(error) {
-            result = error;
-        }
+        expect(function() {
+            array.some(1);
+        }).toThrowError(TypeError, '1 is not a function');
 
-        expect(result).toBeDefined();
-        expect(result instanceof TypeError).toBeTruthy();
-        expect(result.message).toBe('undefined is not a function');
-
-        result = undefined;
-
-        try {
-            array.forEach(1);
-        } catch(error) {
-            result = error;
-        }
-
-        expect(result).toBeDefined();
-        expect(result instanceof TypeError).toBeTruthy();
-        expect(result.message).toBe('1 is not a function');
-
-        result = undefined;
-
-        try {
-            array.forEach(true);
-        } catch(error) {
-            result = error;
-        }
-
-        expect(result).toBeDefined();
-        expect(result instanceof TypeError).toBeTruthy();
-        expect(result.message).toBe('true is not a function');
+        expect(function() {
+            array.some(true);
+        }).toThrowError(TypeError, 'true is not a function');
+    
     });
 });

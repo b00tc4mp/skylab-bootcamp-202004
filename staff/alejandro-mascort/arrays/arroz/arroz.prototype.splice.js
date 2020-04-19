@@ -1,96 +1,42 @@
 'use strict';
 
 Arroz.prototype.splice = function (startingIndex, deleteCount) {
-    var copyArray = [];
-    var newArray = [];
-    var array = [];
-    var newArroz = new Arroz();
+    var copyArray = new Arroz();
+    var newArray = new Arroz();
+    var startArray = new Arroz();
 
-    for (var i = 0; i < this.length; i++) array[array.length] = this[i];
-
-    if (arguments.length > 2) {
-        var values = [];
-
-        for (var i=2; i < arguments.length; i++) values[values.length] = arguments[i];
-    }
+    startingIndex = startingIndex/1;
     
     if (isNaN(startingIndex)) {
         startingIndex = 0;
 
     } else if (startingIndex < 0) {
-        startingIndex = Math.floor(startingIndex);
         startingIndex = startingIndex + this.length;
         
         if (startingIndex < 0) {
             startingIndex = 0;
         }
     }
+    startingIndex = Math.floor(startingIndex);
 
-    
-    if (deleteCount <= 0) {
-        for (var i = startingIndex; i < array.length; i++) {
-            copyArray[copyArray.length] = array[i];
-        }
+    if (deleteCount < 0) deleteCount = 0;
+    else if (deleteCount > this.length || !Number.isInteger(deleteCount)) deleteCount = this.length;
 
-        array.length = startingIndex;
+    for (var i = 0; i < startingIndex; i++) startArray[startArray.length++] = this[i];
 
-        for (var i = 0; i < values.length; i++) {
-            array[startingIndex+i] = values[i];
-        }
+    for (var i = startingIndex + deleteCount; i < this.length; i++) copyArray[copyArray.length++] = this[i];
 
-        addAtTheEnd(this);
+    for (var i = startingIndex; i < startingIndex + deleteCount; i++) newArray[newArray.length++] = this[i];
 
-    } else {
+    for (var i = 2; i < arguments.length; i++) startArray[startArray.length++] = arguments[i]; 
 
-        if (!deleteCount || (array.length - startingIndex) <= deleteCount) {
-            deleteCount = array.length;
+    for (var i = 0; i < copyArray.length; i++) startArray[startArray.length++] = copyArray[i];
 
-            for (var i = startingIndex; i < deleteCount; i++) {
-                newArray[newArray.length] = array[i];
-            }
-    
-            array.length = startingIndex;
+    for (var i = 0; i < this.length; i++) delete this[i];
 
-        } else {
+    for (var i = 0; i < startArray.length; i++) this[i] = startArray[i];
 
-            for (var i = startingIndex + deleteCount; i < array.length; i++) {
-                copyArray[copyArray.length] = array[i];
-            }
+    this.length = startArray.length;
 
-            for (var i = startingIndex; i < startingIndex+deleteCount; i++) {
-                newArray[newArray.length] = array[i];
-            }
-
-            array.length = startingIndex;
-
-            addAtTheEnd(this);
-        }
-        for (var i = 0; i < newArray.length; i++) newArroz[newArroz.length++] = newArray[i];
-
-        return newArroz;
-    }
-
-    function addAtTheEnd(arroz) {
-        var arrLength = array.length;
-
-        for (var i = 0; i < copyArray.length; i++) 
-            array[arrLength+i] = copyArray[i];
-
-        for (var i = arroz.length-1; i >= 0; i--) delete arroz[i];
-
-        arroz.length = 0;
-
-        for (var i = 0; i < array.length; i++) arroz[i] = array[i];
-    }
-
+    return newArray;
 }
-
-
-
-
-
-
-
-
-
-

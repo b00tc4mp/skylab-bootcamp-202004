@@ -9,7 +9,6 @@ Arroz.prototype.slice = function (startingIndex, finishIndex) {
         startingIndex = 0;
 
     } else if (startingIndex < 0) {
-        startingIndex = Math.floor(startingIndex);
         startingIndex = startingIndex + this.length;
         
         if (startingIndex < 0) {
@@ -28,6 +27,7 @@ Arroz.prototype.slice = function (startingIndex, finishIndex) {
         }
     }
     finishIndex = Math.floor(finishIndex);
+    startingIndex = Math.floor(startingIndex);
     
     for (var i = startingIndex; i < finishIndex; i++) {
         newArray[newArray.length++] = this[i];

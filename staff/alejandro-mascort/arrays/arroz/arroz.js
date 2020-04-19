@@ -1,10 +1,16 @@
 'use strict';
 
 function Arroz() {
-    if (arguments.length) {
-        for (var i in arguments)
-            this[i] = arguments[i]
-    }
+    if (arguments.length == 1 && typeof arguments[0] == 'number') {
+        if (!Number.isInteger(arguments[0])) throw ReferenceError('Invalid arroz length');
+        
+        else this.length = arguments[0];
 
-    this.length = arguments.length;
+    } else {
+        if (arguments.length > 0) 
+            for (var i in arguments)
+                this[i] = arguments[i]
+
+        this.length = arguments.length;
+    }
 }

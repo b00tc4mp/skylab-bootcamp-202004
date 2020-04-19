@@ -2,6 +2,7 @@
 
 Arroz.prototype.reduce = function (expression, accum) {
     if (typeof expression !== 'function' ) throw new TypeError (expression + ' is not a function');
+    if (this.length === 0) throw TypeError ('Arroz is empty')
 
     if (typeof accum === 'undefined') {
         if (typeof this[0] === 'number') accum = 0;
