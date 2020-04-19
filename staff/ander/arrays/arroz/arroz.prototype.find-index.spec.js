@@ -14,4 +14,16 @@ describe("findIndex", function () {
           expect(match).toBe(2);
           
       });
+      it("collect the error if we don't pass a function", function () {
+        var array = new Arroz (1, 2, 3, 1, 4);
+
+          expect(function () {
+            var match=array.findIndex();
+          }).toThrowError(TypeError,"undefined is not a function");
+          
+      });
   });
+
+
+
+  

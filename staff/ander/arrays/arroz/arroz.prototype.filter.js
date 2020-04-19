@@ -1,4 +1,5 @@
 Arroz.prototype.filter=function (expression) {
+    if (!(expression instanceof Function)) throw new TypeError( expression + ' is not a function')
     var arr=[]
     for (var i = 0; i < this.length; i++){
         if(expression(this[i])){

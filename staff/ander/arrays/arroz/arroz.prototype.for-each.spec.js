@@ -52,4 +52,11 @@ describe('Arroz.prototype.forEach', function () {
         expect(result[1]).toBe(array);
         expect(result[2]).toBe(array);
     });
+    it("collect the error if we don't pass a function", function () {
+        var array = new Arroz(1, 2, 3);
+        
+         expect(function () {
+            array.forEach();
+          }).toThrowError(TypeError,"undefined is not a function");
+    });
 });
