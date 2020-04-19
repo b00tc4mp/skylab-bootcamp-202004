@@ -1,7 +1,7 @@
 'use strict'
 
 describe('index-of', function () {
-    it('should add one or more elements to the end of an array and returns the new length of the array', function () {
+    it('should return the index of the first element of the array that matches the searching elements, otherwise returns -1', function () {
         var array = new Arroz(1, 2, 3, 4);
 
         var result= array.indexOf(3, 2);
@@ -10,7 +10,7 @@ describe('index-of', function () {
 
     });
 
-    it('should iterate on each element and keep each value in upper-case in a new external array', function () {
+    it('should return the index of the first element of the array that matches the searching elements, otherwise returns -1', function () {
         var array = new Arroz('hello', 'cruel', 'world');
 
         var result= array.indexOf('world', 1);
@@ -18,7 +18,7 @@ describe('index-of', function () {
         expect(result).toBe(1);
     });
 
-    it('should iterate on each element and keep each value in upper-case in a new external array', function () {
+    it('should return the index of the first element of the array that matches the searching elements, otherwise returns -1', function () {
         var array = new Arroz('hello', 'cruel', 'world');
 
         var result= array.indexOf('world', 1);
@@ -27,7 +27,7 @@ describe('index-of', function () {
         expect(result).toBe(1);
     });
 
-    it('should iterate on each element and keep each value in upper-case in a new external array', function () {
+    it('should return the index of the first element of the array that matches the searching elements, otherwise returns -1', function () {
         var array = new Arroz(1, 2, 3, 4, 5, 6);
 
         var result= array.indexOf(3, -5);

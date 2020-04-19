@@ -9,6 +9,7 @@ describe('Arroz.prototype.find', function() {
         var result= array.find(expression);
 
         expect(result).toBe(6);
+        expect(array.length).toBe(10);
     });
 
     it('should catch the error', function() {

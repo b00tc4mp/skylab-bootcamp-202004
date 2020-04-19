@@ -8,7 +8,7 @@ describe('Arroz.prototype.some', function() {
         }
         var result= array.some(expression);
 
-        expect(result).toBe(true);
+        expect(result).toBeTruthy();
     });
 
     it('should catch the error', function() {

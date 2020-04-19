@@ -1,7 +1,7 @@
 'use strict';
 
 describe('Arroz.prototype.push', function() {
-    it('should add elements into an empty instance', function() {
+    it('Should add the parameter to the last position of the array', function() {
         var array = new Arroz();
 
         expect(array.length).toBe(0);
@@ -18,7 +18,7 @@ describe('Arroz.prototype.push', function() {
         expect(array[1]).toBe('b');
     });
 
-    it('should return the new length on each addition', function() {
+    it('Should add the parameter to the last position of the array', function() {
         var array = new Arroz();
 
         var length = array.push('a');
@@ -30,7 +30,7 @@ describe('Arroz.prototype.push', function() {
         expect(length).toBe(array.length);
     });
 
-    it('should add multiple values', function() {
+    it('Should add the parameter to the last position of the array', function() {
         var array = new Arroz();
 
         var length = array.push('a', 'b', 'c');

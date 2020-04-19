@@ -1,5 +1,5 @@
 describe('find-index', function () {
-    it('should add one or more elements to the end of an array and returns the new length of the array', function () {
+    it('returns the first number of the array which accomplish the condition', function () {
         var array = [1,2,3,4,5]
         var condition = function(){
             for (var i=0; i<array.length; i++){
@@ -15,7 +15,7 @@ describe('find-index', function () {
         expect(result).toBe(3);
     });
 
-    it('should iterate on each element and keep each value in upper-case in a new external array', function () {
+    it('returns the first number of the array which accomplish the condition', function () {
         var array = ['hello', 'biatch', 'world'];
         var condition = function(){
             for(var i=0; i<array.length; i++){
