@@ -4,6 +4,7 @@ Arroz.prototype.splice= function splice(start,span,insert){
     var beginingArroz= new Arroz();
     var endingArroz= new Arroz();
     var addingArroz= new Arroz();
+    var result= new Arroz();
     if(!Number.isInteger(start)) throw new TypeError("start is not an integer");
     if(!Number.isInteger(span)) throw new TypeError("span is not an integer");
 
@@ -17,6 +18,10 @@ Arroz.prototype.splice= function splice(start,span,insert){
             addingArroz[addingArroz.length]=insert;
             addingArroz.length++;
         }
+    }
+    for(var i=start;i<start+span;i++){
+        result[result.length]=this[i];
+        result.length++;
     }
     if(start<0) {
         start=this.length+start;
