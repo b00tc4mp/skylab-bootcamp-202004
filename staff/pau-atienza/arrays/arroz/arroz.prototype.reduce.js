@@ -13,10 +13,11 @@ Object.defineProperty(Arroz.prototype, 'reduce', {
         var accumulator = initialValue;
         
         for (i; i<this.length; i++){
-            accumulator = expression(accumulator, this[i], i);
+            accumulator = expression(accumulator, this[i], i, this);
         };
         
         return accumulator;
+
     },
     enumerable: false,
     writable: true
