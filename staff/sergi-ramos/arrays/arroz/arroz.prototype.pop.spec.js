@@ -1,13 +1,28 @@
-describe('arroz.prototype.pop', function () {
-    it('', function () {
+'use strict'
 
-
+describe("Arroz.prototype.pop", function () {
+    it("delete the last element of the array", function () {
         var array = new Arroz(1, 2, 3, 4, 5);
-        var array2 = array.pop();
-       
+        
+        var a =  array.pop();
+        expect(a).toBe(5);
+        expect(a.length)
 
-        expect(array2).toEqual([1,2,3,4])
+        var b = array.pop();
+        expect(b).toBe(4);   
+    });
+
+    it("should return undefined with an empty Arroz", function () {
+        var array = new Arroz( );
+        
+        var a =  array.pop();
+        expect(a).toBe(undefined);
+        
+          
+    });
 
 
-    })
-})
+
+
+
+});

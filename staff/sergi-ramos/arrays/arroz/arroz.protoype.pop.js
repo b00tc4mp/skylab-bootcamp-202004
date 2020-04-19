@@ -1,21 +1,17 @@
-Arroz.prototype.pop = function () {
+'use strict'
 
-    
-    var deletedValue = this[this.length - 1]
-    var newArray = this
-    this = new Arroz()
-    for (var i = 0; i < this.length - 1; i++) {
-        this[i] = newArray[i]
+Object.defineProperty(Arroz.prototype,'pop', {
+    value: function () {
+       if(this.length > 0){
+            var deletedValue = this[this.length - 1];
+            delete this[this.length - 1];
+            this.length = this.length - 1;
 
-    }
-
-    this.length = this.length - 1
-
-
-    return deletedValue
-}
-
-
-
-
-
+            return deletedValue;
+       }else{
+           return undefined
+       }
+    },
+    enumerable: false,
+    writable: true
+});
