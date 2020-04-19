@@ -1,56 +1,53 @@
-Arroz.prototype.splice = function(start, deleteCount, args) {
-    console.log(arguments.lenght)
-    var start = arguments[0];
-    var deleteCount = arguments[1];
-    var fixLength = this.length
-    var result = [];
-    var auxiliar = [];
+Arroz.prototype.splice = function(start, deleteCount) {
 
-    // first argument
-    if (typeof deleteCount === 'undefined' && typeof args === 'undefined') {
-        if (typeof start !== 'undefined' && typeof start === 'number') {
-            if (start > 0) {
-                for (var i = start; i < fixLength; i++) {
-                    result[result.length] = this[i];
-                    delete this[i];
-                    this.length--
-                }
+    var result = [];
+    var newArray = [];
+    //nedd introduce negative values of start!!! 
+    if (typeof deleteCount === 'undefined') {
+        for (var i = 0; i < this.length; i++) {
+            if (i < start) {
+                newArray[newArray.length] = this[i];
             } else {
-                for (var i = fixLength + start; i < fixLength; i++) {
-                    result[result.length] = this[i];
-                    delete this[i];
-                    this.length--
-                }
+                result[result.length] = this[i];
             }
         }
-    } else if (typeof args === 'undefined'){
-    // second argument
-        if (typeof deleteCount !== 'undefined' && typeof deleteCount === 'number' && deleteCount > 0) {
-            if (start > 0) {
-                for (var i = start; i < start + deleteCount; i++) {
-                    result[result.length] = this[i];
-                    delete this[i];
-                    this.length--
-                }
-          
-            } else {
-                for (var i =fixLength + start; i < (fixLength + start) + deleteCount; i++) {
-                    result[result.length] = this[i];
-                    delete this[i];
-                    this.length--
-                }
-         
+    } else if (arguments.length < 3) {
+        for (var i = 0; i < this.length; i++) {
+            if (i < start) {
+                newArray[newArray.length] = this[i];
+            } else if (i < start + deleteCount) {
+                result[result.length] = this[i];
+            } else if (i < this.length) {
+                newArray[newArray.length] = this[i];
             }
         }
-    }else{
-        for (var i = start; i < start + deleteCount; i++) {
-            result[result.length] = this[i];
-            delete this[i];
-            for(var j = 2; j< arguments.length;j++){
-             //// ???????????????????   
+    } else if (arguments.length > 2) {
+        for (var i = 0; i < this.length + 1; i++) {
+            if (i < start) {
+                newArray[newArray.length] = this[i];
+            } else if (i < start + deleteCount) {
+                result[result.length] = this[i];
+            } else if (i < start + deleteCount + 1) {
+                for (var j = 2; j < arguments.length; j++) {
+                    newArray[newArray.length] = arguments[j];
+                }
+            } else if (i < this.length + 1) {
+                newArray[newArray.length] = this[i - 1];
             }
-            this[i] = arguments[i]
-            this.length--
+        }
+    }
+    //change the original array
+    if (newArray.length > this.length) {
+        for (var i = 0; i < newArray.length; i++)
+            this[i] = newArray[i];
+    } else {
+        for (var i = 0; i < this.length; i++) {
+            if (i < newArray.length) {
+                this[i] = newArray[i]
+            } else {
+                delete this[i]
+                this.length--
+            }
         }
     }
 
