@@ -61,7 +61,7 @@ describe('splice', function () {
         expect(array).toEqual([1, 2, 66, 88, 99, 3, 4, 5, 6, 7]);
     });
 
-    it('...', function () {
+    it('it should insert one element in the origin array', function () {
         var array = [1, 2, 3, 4, 5, 6, 7];
 
         var arr = splice(array, -2, 1, 'hola');

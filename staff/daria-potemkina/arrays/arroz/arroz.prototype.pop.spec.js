@@ -23,6 +23,4 @@ describe('Arroz.prototype.pop', function () {
         expect(array[3]).toBe(undefined);
 
     });
-
-
 });

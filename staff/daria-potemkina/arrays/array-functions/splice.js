@@ -10,8 +10,6 @@ function splice(array, start, deleteCount) {
 
             array.length = start;
 
-            //--------------------
-
             for (var newElement = 3; newElement < arguments.length; newElement++)
                 array[array.length] = arguments[newElement];
 
@@ -25,7 +23,6 @@ function splice(array, start, deleteCount) {
                     result.length = 0;
                 }
             }
-            //-----------------------------
 
         } else if (start < 0) {
             if (array.length > (-start)) {
@@ -33,8 +30,6 @@ function splice(array, start, deleteCount) {
                     result[result.length] = array[i];
 
                 array.length += start;
-
-                //-------------------------
 
                 for (var newElement = 3; newElement < arguments.length; newElement++)
                     array[array.length] = arguments[newElement];
@@ -49,9 +44,7 @@ function splice(array, start, deleteCount) {
                         result.length = 0;
                     }
                 }
-
-                //-----------------------------
-
+                
             } else {
                 for (var i in array)
                     result[result.length] = array[i];

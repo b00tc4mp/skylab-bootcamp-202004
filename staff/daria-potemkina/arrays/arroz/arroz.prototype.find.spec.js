@@ -1,3 +1,5 @@
+'use strict';
+
 describe('arroz.prototype.find', function () {
 
     it('should iterate on each element and return a first element greater than 10', function () {
@@ -46,7 +48,20 @@ describe('arroz.prototype.find', function () {
 
     it('should throw error on non-function expression', function () {
         var array = new Arroz(1, 2, 3);
-        var result;
+        
+        expect(function(){
+            array.find(1);
+        }).toThrowError(TypeError, '1 is not a function!');
+
+        expect(function(){
+            array.find('hola');
+        }).toThrowError(TypeError, 'hola is not a function!');
+
+        expect(function(){
+            array.find(false);
+        }).toThrowError(TypeError, 'false is not a function!');
+        
+        /*var result;
 
         try {
             array.find('hola');
@@ -81,8 +96,7 @@ describe('arroz.prototype.find', function () {
 
         expect(result.message).toBe('true is not a function!');
         expect(result).toBeDefined();
-        expect(result instanceof TypeError).toBeTruthy();
+        expect(result instanceof TypeError).toBeTruthy();*/
+
     });
-
-
 });

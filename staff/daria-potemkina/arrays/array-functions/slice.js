@@ -1,7 +1,7 @@
 'use strict';
 
 function slice(array, elem1, elem2) {
-    
+    var result = [];
     
     if (typeof elem1 === 'undefined' && typeof elem2 === 'undefined') {
         for (var i = 0; i < array.length; i++) {

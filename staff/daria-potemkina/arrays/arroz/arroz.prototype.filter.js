@@ -11,4 +11,3 @@ Arroz.prototype.filter = function (expression) {
     }
     return result;
 }
-

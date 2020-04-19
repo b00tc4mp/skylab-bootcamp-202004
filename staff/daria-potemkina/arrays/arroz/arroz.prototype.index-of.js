@@ -1,19 +1,10 @@
-'use strict';
+'use strict'
 
-function indexOf(array, element, index) {
-    if (index === undefined) {
-        for (var i = 0; i < array.length; i++) {
-            if (array[i] === element) {
-                return i;
-            }
-        }
-    }else {
-        for (var j = index; j < array.length; j++) {
-            if (array[j] === element) {
-                return j
-            }
-        }
+Arroz.prototype.indexOf = function (element, index) {
+    typeof index === 'undefined' || typeof index === 'string' ? index = 0 : index;
+
+    for(var i = index; i < this.length; i++){
+        if(this[i] === element) return i;
     }
-    return -1;
-
-}
+        return -1;
+    }

@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Arroz.prototype.filter', function () {
 
     it('should iterate on each element and return a new instance with values greater than 10', function () {
@@ -29,18 +31,33 @@ describe('Arroz.prototype.filter', function () {
     });
 
     it('should iterate on each element and return a new instance with values greater than 5 characters', function () {
-        var array = new Array('hola', 'pepito', 'daria', 'elemento');
+        var array = new Arroz('hola', 'pepito', 'daria', 'elemento');
 
         var arr = array.filter(function (element) {
             return element.length > 5
         });
 
-        expect(arr).toEqual(['pepito', 'elemento']);
+        expect(arr.length).toBe(2)
+        expect(arr[0]).toEqual('pepito');
+        expect(arr[1]).toEqual('elemento');
     });
 
     it('should throw error on non-function expression', function () {
         var array = new Arroz(1, 2, 3);
-        var result;
+
+        expect(function(){
+            array.filter('hola');
+        }).toThrowError(TypeError, 'hola is not a function!');
+
+        expect(function(){
+            array.filter(1);
+        }).toThrowError(TypeError, '1 is not a function!');
+
+        expect(function(){
+            array.filter(true);
+        }).toThrowError(TypeError, 'true is not a function!');
+
+        /*var result;
 
         try {
             array.filter('hola');
@@ -75,7 +92,7 @@ describe('Arroz.prototype.filter', function () {
 
         expect(result.message).toBe('true is not a function!');
         expect(result).toBeDefined();
-        expect(result instanceof TypeError).toBeTruthy();
+        expect(result instanceof TypeError).toBeTruthy();*/
     });
 
 

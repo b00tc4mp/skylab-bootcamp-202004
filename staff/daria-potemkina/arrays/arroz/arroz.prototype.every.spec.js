@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Arroz.prototype.every', function () {
 
     it('should iterate on each element and return true because all elements meet the condition', function () {
@@ -46,9 +48,22 @@ describe('Arroz.prototype.every', function () {
 
     it('should throw error on non-function expression', function () {
         var array = new Arroz(1, 20, 3);
-        var result;
 
-        try {
+        expect(function(){
+            array.every(1)
+        }).toThrowError(TypeError, '1 is not a function');
+
+        expect(function(){
+            array.every();
+        }).toThrowError(TypeError, 'undefined is not a function');
+
+        expect(function(){
+            array.every(true);
+        }).toThrowError(TypeError, 'true is not a function');
+
+        /*var result;
+
+       try {
             array.every(1);
         } catch (error) {
             result = error;
@@ -81,7 +96,7 @@ describe('Arroz.prototype.every', function () {
 
         expect(result.message).toBe('true is not a function!');
         expect(result).toBeDefined();
-        expect(result instanceof TypeError).toBeTruthy();
+        expect(result instanceof TypeError).toBeTruthy();*/
     });
 
 

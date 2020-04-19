@@ -1,4 +1,5 @@
 'use strict';
+
 describe('Arroz.prototype.push', function () {
     it('it should add elements into an empty instance', function () {
         var array = new Arroz();
@@ -9,7 +10,7 @@ describe('Arroz.prototype.push', function () {
 
         expect(array.length).toBe(1);
         expect(array[0]).toBe('a');
-    })
+    });
 
     it('it should add a new element to the instance', function () {
         var array = new Arroz(1, 2, 3);
@@ -25,7 +26,7 @@ describe('Arroz.prototype.push', function () {
         expect(array[3]).toBe(4);
         expect(array[4]).toBe(undefined);
 
-    })
+    });
 
     it('it should add multiplies values', function () {
         var array = new Arroz('a', 'b', 'c')
@@ -39,6 +40,6 @@ describe('Arroz.prototype.push', function () {
         expect(array[3]).toBe('d');
         expect(array[4]).toBe('e');
 
-    })
+    });
 
-})
+});
