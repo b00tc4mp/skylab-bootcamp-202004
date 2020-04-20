@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utensilios de repostería - Maria Lunarillos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="container">
+    <nav class="container__nav-bar">
+        <img class="nav-bar-item nav-bar-item__menu" src="https://cdn0.iconfinder.com/data/icons/basic-web-ui-elements/295/menu_button-512.png">
+        <img class="container__nav-bar--hidden" src="https://dummyimage.com/60x50/e82121/e82121">
+        <img class="container__nav-bar--hidden" src="https://dummyimage.com/60x50/228ee6/228ee6">
+        <img class="container__nav-bar--hidden" src="https://dummyimage.com/60x50/f0d01d/f0d01d">
+        <div class="nav-bar-item"></div>
+        <img class="nav-bar-item" src="https://image.flaticon.com/icons/svg/1077/1077063.svg">
+        <div class="nav-bar-item"></div>
+        <img class="nav-bar-item" src="https://www.svgrepo.com/show/104763/magnifying-glass.svg">
+        <img class="nav-bar-item" src="https://loading.io/s/icon/4tk536.svg">
+        <div class="nav-bar-item nav-bar-item--red">0</div>
+    </nav>
+    <header class="container__logo">
+        <div class="image-logo">
+            <img class = "image-logo__marca" src="data:image/png;base64,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">
+        </div>
+        <div class="container__logo--hidden">
+            <img class = "sections-images" src="https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/icons/utensiliosML.png">
+            <img class = "sections-images" src="https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/icons/magdalena.png">
+            <img class = "sections-images" src="https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/icons/tarta-cumpleanos.png">
+            <img class = "sections-images" src="https://static3.marialunarillos.com/media/wysiwyg/blog.svg">
+        </div>
+    </header>
+    <section class = "container__sections">
+        <section class="scroll-images">
+        </section>
+        <section class="sections">
+            <div class="sections__imagen">
+                <div class="sections__imagen--center">
+                    <img class= "sections__separation" src="https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/icons/utensiliosML.png">
+                </div>
+            </div>
+            <section class="sections__title">
+                <h1 class="sections__title--framed">UTENSILIOS</h1>
+            </section>
+            <section class="sections__items sections__items--large">
+                <section class="sections__utensils">
+                    <div class="image image__expand-two-rows-one">
+                        <img class="image__main image__main--rotate" src="https://dummyimage.com/600x400/02f2ff/02f2ff.png">
+                        <h2 class="image__title image__title--end">MOLDES DE REPOSTERÍA</h2>
+                    </div>
+                    <div class="image image__two">
+                        <img class="image__main" src="https://dummyimage.com/600x400/d683de/d683de">
+                        <h2 class="image__title">UTENSILIOS BÁSICOS</h2>
+                    </div>
+                    <div class="image image__three">
+                        <img class="image__main" src="https://dummyimage.com/600x400/b6e683/b6e683">
+                        <h2 class="image__title image__title--rigth">PEQUEÑO ELECTRODOMÉSTICO</h2>
+                    </div>
+                    <div class="image image__four">
+                        <img class="image__main" src="https://dummyimage.com/600x400/d6c0d6/d6c0d6">
+                        <h2 class="image__title image__title--rigth">CÁPSULAS PARA MAGDALENAS</h2>
+                    </div>
+                    <div class="image image__five">
+                        <img class="image__main" src="https://dummyimage.com/600x400/5998eb/5998eb">
+                        <h2 class="image__title">CAJAS Y BASES</h2>
+                    </div>
+                    <div class="image image__expand-two-rows-two">
+                        <img class="image__main image__main--rotate" src="https://dummyimage.com/600x400/eb8359/eb8359">
+                        <h2 class="image__title image__title--end">CORTADORES DE GALLETAS</h2>
+                    </div>
+                    <div class="image image__expand-two-rows-three">
+                        <img class="image__main image__main--rotate" src="https://dummyimage.com/600x400/e2e874/e2e874">
+                        <h2 class="image__title image__title--end">CERÁMICA Y TEXTIL</h2>
+                    </div>
+                    <div class="image image__eigth">
+                        <img class="image__main" src="https://dummyimage.com/600x400/d65880/d65880">
+                        <h2 class="image__title">BANETONES PARA PAN</h2>
+                    </div>
+                    <div class="image image__nine">
+                        <img class="image__main" src="https://dummyimage.com/600x400/b159d4/b159d4">
+                        <h2 class="image__title image__title--rigth">TOPPERS Y FIGURITAS</h2>
+                    </div class="image">
+                    <button class="sections__button" type="button">VER MAS</button>
+                </section>
+            </section>
+            <div class="sections__imagen">
+                <div class="sections__imagen--center">
+            <img class= "sections__separation" src="https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/icons/magdalena.png">
+                </div>
+            </div>
+            <section class="sections__title">
+                <h1 class="sections__title--framed">INGREDIENTES</h1>
+            </section>
+            <section class="sections__items sections__items--medium">
+                <section class="sections__ingredients">
+                    <div class="image image__expand-two-rows-one">
+                        <img class="image__main image__main--rotate" src="https://dummyimage.com/600x400/d65880/d65880">
+                        <h2 class="image__title image__title--end">FONDANT</h2>
+                    </div>
+                    <div class="image image__two">
+                        <img class="image__main" src="https://dummyimage.com/600x400/b159d4/b159d4">
+                        <h2 class="image__title">INGREDIENTES DE REPOSTERÍA</h2>
+                    </div>
+                    <div class="image image__three">
+                        <img class="image__main" src="https://dummyimage.com/600x400/d6c0d6/d6c0d6">
+                        <h2 class="image__title image__title--rigth">IMPRESIÓN PERSONALIZADA</h2>
+                    </div>
+                    <div class="image image__four">
+                        <img class="image__main" src="https://dummyimage.com/600x400/02f2ff/02f2ff.png">
+                        <h2 class="image__title">COLORANTES ALIMENTARIOS</h2>
+                    </div>
+                    <div class="image image__five">
+                        <img class="image__main" src="https://dummyimage.com/600x400/d683de/d683de">
+                        <h2 class="image__title image__title--rigth">PAPEL COMESTIBLE</h2>
+                    </div>
+                    <div class="image image__expand-two-rows-two">
+                        <img class="image__main image__main--rotate" src="https://dummyimage.com/600x400/e2e874/e2e874">
+                        <h2 class="image__title image__title--end">SPRINKLES Y PURPURINAS</h2>
+                    </div>
+                    <button class="sections__button" type="button">VER MAS</button>
+                </section>
+            </section>
+            <div class="sections__imagen">
+                <div class="sections__imagen--center">
+                    <img class= "sections__separation" src="https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/icons/tarta-cumpleanos.png">
+                </div>
+            </div>
+            <section class="sections__title">
+                <h1 class="sections__title--framed">FIESTA</h1>
+            </section>
+            <section class="sections__items sections__items--small">
+                <section class="sections__party">
+                    <div class="image image__expand-two-rows-one">
+                        <img class="image__main image__main--rotate" src="https://dummyimage.com/600x400/eb8359/eb8359">
+                        <h2 class="image__title image__title--end">FIESTAS TEMÁTICAS</h2>
+                    </div>
+                    <div class="image image__two">
+                        <img class="image__main" src="https://dummyimage.com/600x400/d683de/d683de">
+                        <h2 class="image__title">FIESTAS PERSONAJES</h2>
+                    </div>
+                    <div class="image image__three">
+                        <img class="image__main" src="https://dummyimage.com/600x400/02f2ff/02f2ff.png">
+                        <h2 class="image__title image__title--rigth">ACCESORIOS PARA FIESTAS</h2>
+                    </div>
+                    <button class="sections__button" type="button">VER MAS</button>
+                </section>
+            </section>
+            <div class="sections__imagen">
+                <div class="sections__imagen--center">
+                    <img class= "sections__separation" src="https://static3.marialunarillos.com/media/wysiwyg/blog.svg">
+                </div>
+            </div>
+            <section class="sections__title">
+                <h1 class="sections__title--framed">BLOG</h1>
+            </section>
+            <section class="sections__items">
+                <section class="sections__blog">
+                    <div class="blog-title">ÚLTIMAS ENTRADAS EN EL BLOG</div>
+                    <div class="sections__blog--in-row">
+                        <img class="blog-image" src="https://dummyimage.com/300x570/11a6eb/11a6eb.png">
+                        <img class="sections__blog--hidden blog-image" src="https://dummyimage.com/300x570/1deba3/1deba3">
+                        <img class="sections__blog--hidden blog-image" src="https://dummyimage.com/300x570/c7eb15/c7eb15">
+                    </div>
+                    <button class="sections__button sections__button--flex" type="button">IR AL BLOG</button>
+                </section>
+            </section>
+        </section>
+    </section>
+    <footer class="container__footer">
+        <section class="footer-shipping">
+            <div>
+                <img class="footer-shipping__icon" src="https://image.flaticon.com/icons/svg/1758/1758578.svg">
+                <h3>ENVÍO GRATIS</h3>
+                <p>PEDIDOS SUPERIORES A 70€</p>
+            </div>
+            <div>
+                <img class="footer-shipping__icon" src="https://image.flaticon.com/icons/svg/2088/2088617.svg">
+                <h3>ENVÍO 24-48 HORAS</h3>
+                <p>HAZ TU PEDIDO ANTES DE LAS 18:00H</p>
+            </div>
+            <div>
+                <img class="footer-shipping__icon" src="https://image.flaticon.com/icons/svg/126/126516.svg">
+                <h3>DEVLUCIONES</h3>
+                <p>30 DÍAS PARA DEVOLVER TU COMPRA</p>
+            </div>
+            <div>
+                <img class="footer-shipping__icon" src="https://image.flaticon.com/icons/svg/747/747396.svg">
+                <h3>CONTRA REEMBOLSO</h3>
+                <p>SIN COMISIÓN</p>
+            </div>
+        </section>
+        <div class="social-networks">
+            <p>SÍGUENOS</p>
+            <div class = "social-networks__section">
+                <img class = "social-networks__images" src="https://image.flaticon.com/icons/svg/1051/1051360.svg">
+                <img class = "social-networks__images" src="https://image.flaticon.com/icons/svg/733/733635.svg">
+                <img class = "social-networks__images" src="https://image.flaticon.com/icons/svg/1384/1384031.svg">
+                <img class = "social-networks__images" src="https://image.flaticon.com/icons/svg/2111/2111601.svg">
+                <img class = "social-networks__images" src="https://image.flaticon.com/icons/svg/1077/1077046.svg">
+            </div>
+        </div>
+        <div class="e-mail">
+            <p class="e-mail__title">RECIBE LAS NOVEDADES EN TU E-MAIL<p><br>
+            <input type="text" id="fname" name="name" size="39"><br><br>
+            <p>Acepto la politica de privacidad</p>
+            <button class="e-mail__button" type="button">SUSCRÍBETE</button>
+        </div>
+        <div class="subscription">
+            <div class="subscription__item">
+                <div class="subscription__item--center">
+                    <img class = "subscription__images" src="https://image.flaticon.com/icons/svg/1250/1250663.svg">
+                </div>
+                <p>CONTACTO</p>
+            </div>
+            <div class="subscription__item">
+                <div class="subscription__item--center">
+                    <img class = "subscription__images"  src="https://image.flaticon.com/icons/svg/545/545674.svg">
+                </div>
+                <p>SOBRE NOSOTROS</p>
+            </div>
+            <div class="subscription__item">
+                <div class="subscription__item--center">
+                    <img class = "subscription__images" src="https://loading.io/s/icon/4tk536.svg">
+                </div>
+                <p>CONDICIONES DE VENTA</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p class="copyright__text">Copyright ©2020 María Lunarillos</p>
+        </div>
+    </footer>
+</section>
+</body>
+</html>
