@@ -23,11 +23,11 @@ Arroz.prototype.splice = function(start, end) {
       }
     }
     
-
+    
     this.length = 0;
     for (var i = 0; i < initial.length; i++) this[this.length++] = initial[i];
     for (var i = 2; i < arguments.length; i++) this[this.length++] = arguments[i];
     for (var i = 0; i < final.length; i++) this[this.length++] = final[i];
-  
+    
     return deleted;
   }
