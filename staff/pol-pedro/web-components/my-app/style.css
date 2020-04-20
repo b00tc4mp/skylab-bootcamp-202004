@@ -1,0 +1,23 @@
+.register {
+  padding: 0.5rem;
+  border: 0.3rem solid red;
+  border-radius: 15px;
+}
+
+.home {
+  top: 15vh;
+  margin-left: auto;
+  margin-right: auto;
+  height: 15vh;
+  width: 50vw;
+  text-align: center;
+  border: 0.5rem solid green;
+  border-radius: 15px;
+}
+
+.login {
+  border: 0.5rem solid blue;
+  border-radius: 15px;
+}
+
+/*# sourceMappingURL=style.css.map */
