@@ -8,4 +8,6 @@ Arroz.prototype.findIndex = function (expression) {
             return i;
         }
     }
+    
+    return -1
 }

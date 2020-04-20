@@ -13,7 +13,7 @@ describe('Arroz.prototype.findIndex', function () {
         expect(result).toBe(2);
     });
 
-    it('should iterate on each element and return undefined because we want to findIndex, element 24 which does not exist', function () {
+    it('should iterate on each element and return -1 because we want to findIndex, element 24 which does not exist', function () {
         var array = new Arroz(1, 2, 3, 4, 5, 6);
 
         var result = array.findIndex(function(element, index) {
@@ -22,7 +22,7 @@ describe('Arroz.prototype.findIndex', function () {
             }
         });
 
-        expect(result).toBe(undefined);
+        expect(result).toBe(-1);
     });
 
     it('should iterate on each element provide the index from the second argument of the expression (callback)', function () {

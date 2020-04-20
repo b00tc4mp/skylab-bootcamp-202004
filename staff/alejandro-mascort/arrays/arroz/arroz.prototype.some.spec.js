@@ -4,11 +4,7 @@ describe('Arroz.prototype.some', function () {
     it('should iterate on each element and return true because we want to obtain element 3', function () {
         var array = new Arroz(1, 2, 3, 4, 5, 6);
 
-        var result = array.some(function(element, index) {
-            if (element === 3) {
-                return true;
-            }
-        });
+        var result = array.some(function(element) { return element === 3 })
 
         expect(result).toBeTruthy();
     });
@@ -28,11 +24,7 @@ describe('Arroz.prototype.some', function () {
     it('should iterate on each element and return false because we want to element 24 which does not exist', function () {
         var array = new Arroz(1, 2, 3, 4, 5, 6);
 
-        var result = array.some(function(element, index) {
-            if (element === 24) {
-                return true;
-            }
-        });
+        var result = array.some(function(element) { return element === 24 });
 
         expect(result).toBeFalsy();
     });
