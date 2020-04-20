@@ -1,0 +1,20 @@
+.register, .login, .home {
+  display: inline-block;
+  border: 1rem dashed gray;
+  border-radius: 2rem;
+  padding: 1rem;
+}
+
+.home {
+  border-color: yellow;
+}
+
+.login {
+  border-color: blue;
+}
+
+.register {
+  border-color: red;
+}
+
+/*# sourceMappingURL=style.css.map */
