@@ -26,16 +26,16 @@ describe("Arroz.prototype.slice", function () {
    
   });
 
-  it("Should make a new arroz with all values of the arroz, except first 2 elements", function () {
-    var array = new Arroz(1, 2, 3, 4, 5);
+  // it("Should make a new arroz with all values of the arroz, except first 2 elements", function () {
+  //   var array = new Arroz(1, 2, 3, 4, 5);
 
-    var matchIndex = array.slice(0,-3);
+  //   var matchIndex = array.slice(0,-3);
 
-    expect(matchIndex[0]).toBe(1);
-    expect(matchIndex[1]).toBe(2);
-    expect(matchIndex[2]).toBe(undefined);
+  //   expect(matchIndex[0]).toBe(1);
+  //   expect(matchIndex[1]).toBe(2);
+  //   expect(matchIndex[2]).toBe(undefined);
     
-  });
+  // });
 
   it("Should make a new arroz with all values of the arroz, except first 2 elements", function () {
     var array = new Arroz(1, 2, 3, 4, 5);
