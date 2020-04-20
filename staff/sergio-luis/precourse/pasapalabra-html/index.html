@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="text-center background-blue">
+        <h1>Juego del Pasapalabra</h1>
+    </header>
+
+    <main>
+        <div id='menuContainer' class="align-center">
+            <button class="item-button white background-blue border-radius text-aligne  box-shadow" id='audioOn'>Music ON</button>
+            <button class="item-button white background-blue border-radius text-aligne  box-shadow" id='audioOff'>Music OFF</button>
+            <div id='displayMenu'>
+                
+                <p>El juego pasapalabra consiste en acertar las veinticinco palabras del rosco, cada una de las cuales se corresponde con una letra del rosco para la que se ofrece una definición relativa a un concepto Físico. Las palavras devem ser escritas
+                    sin acentos.
+                    <ol>
+                        <li>Cuando escriba la respuesta a la pergunta deve presionar la tecla "ok" o apertar "enter".</li>
+                        <li>Se acerta la palavra la letra del rosco se pondrá de color verde.</li>
+                        <li>Se falla la palavra la letra del rosco se pondrá de color rojo.</li>
+                        <li>Puede tambien pasar la palabra con la tecla "pasapalabra" o apertando "espacio".</li>
+                        <li>Para completar el rosco se dispone de un tiempo de 150 segundos.</li>
+                        <li>El juego termina cuando se haya terminado el tiempo o se haya completado el rosco.</li>
+                        <li>Para reiniciar el juego puede presionar la tecla "restart" o aprertando "esc".</li>
+                        <li>Para empezar a jugar presione la tecla "jugar".</li>
+                        <li>Introduce tu nombre por favor  <input type="text" id='name'>!</li>
+    
+                    </ol>
+                    <br>
+                    <h3 class="text-center">Buena Suerte!!!</h3>
+                    <button class="item-button white background-blue border-radius text-aligne box-shadow" id='play'>Jugar</button>
+            </div>
+
+        </div>
+        <div id='containerCircle' class="align-center display-none">
+            <div id='wordAndTimer'>
+                <div class='border background-blue itemTimer' id='contWordPosition'>
+                    <p id='rightWordsItem' class="text-center align-center">0</p>
+                </div>
+                <div class='border black itemTimer' id='timerPosition'>
+                    <p id='timer' class="text-center align-center">150</p>
+                </div>
+            </div>
+
+            <div class='item border text-center' id='a'>A</div>
+            <div class='item border text-center' id='b'>B</div>
+            <div class='item border text-center' id='c'>C</div>
+            <div class='item border text-center' id='d'>D</div>
+            <div class='item border text-center' id='e'>E</div>
+            <div class='item border text-center' id='f'>F</div>
+            <div class='item border text-center' id='g'>G</div>
+            <div class='item border text-center' id='h'>H</div>
+            <div class='item border text-center' id='i'>I</div>
+            <div class='item border text-center' id='j'>J</div>
+            <div class='item border text-center' id='l'>L</div>
+            <div class='item border text-center' id='m'>M</div>
+            <div class='item border text-center' id='n'>N</div>
+            <div class='item border text-center' id='ñ'>Ñ</div>
+            <div class='item border text-center' id='o'>O</div>
+            <div class='item border text-center' id='p'>P</div>
+            <div class='item border text-center' id='q'>Q</div>
+            <div class='item border text-center' id='r'>R</div>
+            <div class='item border text-center' id='s'>S</div>
+            <div class='item border text-center' id='t'>T</div>
+            <div class='item border text-center' id='u'>U</div>
+            <div class='item border text-center' id='v'>V</div>
+            <div class='item border text-center' id='x'>X</div>
+            <div class='item border text-center' id='y'>Y</div>
+            <div class='item border text-center' id='z'>Z</div>
+
+            <div id="containerPlay" class="align-center">
+                <div id='questionBord' class="align-center text-center background-blue border box-shadow border-radius"></div>
+                <input type="text" id='input' class="text-center align-center  black border border-radius box-shadow " placeholder="Introduce tu respuesta">
+                <button class='item-button white background-blue border-radius text-aligne box-shadow' id='ok'>OK</button>
+                <button class='item-button white background-blue border-radius text-aligne box-shadow' id='pasapalabra'>Pasapalabra</button>
+                <button class='item-button white background-blue border-radius text-aligne box-shadow' id='restart'>Restart</button>
+            </div>
+            <div id='restartMenu' class="align-center display-none">
+                <div id='restartMenuBord' class=' align-center background-blue border white box-shadow border-radius'>
+                    <p class="text-center">Esta Seguro que desea Reiniciar la partida?</p>
+                    <button class='item-button white background-blue border-radius text-aligne box-shadow' id='yes'>SI</button>
+                    <button class='item-button white background-blue border-radius text-aligne box-shadow' id='no'>NO</button>
+                </div>
+            </div>
+        </div>
+
+        </div>
+        <div id='containerFinal' class="align-center background-blue border white box-shadow border-radius">
+            <div id='result' class="text-center"></div>
+            <button class='item-button white align-center text-center background-blue border border-radius text-aligne box-shadow ' id='newGame'>New Game?</button>
+        </div>
+    </main>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
