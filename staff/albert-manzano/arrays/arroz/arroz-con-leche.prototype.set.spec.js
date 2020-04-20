@@ -1,44 +1,42 @@
 'use strict'
 
-// .describe('set', function () {
-//     it('if j is not arroz will throw error', function () {
-//         var a = new ArrozConLeche( new Arroz(1, 2, 3), new Arroz('a', 'b', 'c', 'd'), new Arroz(true, true, false, false, false))
-//         a.set(10,undefined,"techno")
+describe('ArrozConLechec.prototype.set', function () {
+    it('should add hola mundo at postion 10',function(){
+        var a = new ArrozConLeche(new Arroz(1, 2, 3), new Arroz('a', 'b', 'c', 'd'), new Arroz(true, true, false, false, false));
+        a.set(10, undefined, new Arroz('hola mundo'));
 
-//         expect(a[11]).toBe("techno");
-//     });
+        expect(a[10][0]).toBe('hola mundo');
+        expect(a.length).toBe(11);
+    });
 
-//     it('returns undefined if the length of the array is 0', function () {
-//         var array = new Arroz();
+    it('should add hola mundo at postion 20',function(){
+        var a = new ArrozConLeche(new Arroz(1, 2, 3), new Arroz('a', 'b', 'c', 'd'), new Arroz(true, true, false, false, false));
+        a.set(20, 20, 'hola mundo')
 
-//         var result = array.find(function (element) {
-//             return element < 4;
-//         });
+        expect(a[20][20]).toBe('hola mundo');
+        expect(a.length).toBe(21);
+    });
 
-//         expect(result).toBe(undefined);
-//     });
+    it('should turn 0,0 to undefined',function(){
+        var a = new ArrozConLeche(new Arroz(1, 2, 3), new Arroz('a', 'b', 'c', 'd'), new Arroz(true, true, false, false, false));
+        a.set(0, 0, undefined)
 
-//     it('should return undefined if objects are compared in the condition', function () {
-//         var array = new Arroz('spray', [1, 2], 'elite', 'exuberant', 'destruction', 'present');
+        expect(a[0][0]).toBe(undefined);
+        expect(a.length).toBe(3);
+    });
 
-//         var result = array.find(function (element, i, array) {
-//             return element === [1, 2]
-//         })
+    it('thrown Errors',function(){
+        var a = new ArrozConLeche(new Arroz(1, 2, 3));
+        
 
-//         expect(result).toBe(undefined);
-//     });
+        expect(function () {
+            a.set('a',1,"hola mundo")
+        }).toThrowError(TypeError,+ 'is not a number');
 
-//     it('return array in each iteration', function () {
-//         var array = new Arroz(1, 2, 3, 3, 4);
+        var a = new ArrozConLeche(new Arroz(1, 2, 3));
 
-
-//         var result = array.find(function (element, i, array) {
-//             return element === array[i + 1];
-//         });
-
-
-//         expect(result).toBe(3);
-//     });
-
-    
-// });
+        expect(function () {
+            a.set(1,true,"hola mundo")
+        }).toThrowError(TypeError,+ 'is not a number');
+    });
+});
