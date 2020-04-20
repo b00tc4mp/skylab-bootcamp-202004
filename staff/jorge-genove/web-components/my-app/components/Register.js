@@ -1,4 +1,4 @@
-function Register(callback) {
+function Register(onSubmit, onLogin) {
     const temp = document.createElement('div')
 
     temp.innerHTML = `<section class="register">
@@ -9,12 +9,15 @@ function Register(callback) {
         <input type="email" name="email" placeholder="e-mail">
         <input type="password" name="password" placeholder="password">
         <button>Submit</button>
+        or <a href="">Login</a>
     </form>
 </section>`
 
     const container = temp.firstChild
 
     const form = container.querySelector('form')
+
+    let feedback
 
     form.addEventListener('submit', function (event) {
         event.preventDefault()
@@ -24,7 +27,32 @@ function Register(callback) {
             email = event.target.email.value,
             password = event.target.password.value
 
-        callback(name, surname, email, password)
+    try{
+        onSubmit(name, surname, email, password)
+        
+        event.target.name.value = '';
+        event.target.surname.value = '';
+        event.target.email.value = '';
+        event.target.password.value = '';
+
+    }catch(error) {
+        if(!feedback) {
+            feedback= Feedback(error.message, 'error')
+
+            container.append(feedback)
+        }else{
+            feedback.innerText = error.message
+        }
+    }
+            
+    })
+
+    const login = container.querySelector('a')
+
+    login.addEventListener('click', function(event) {
+        event.preventDefault()
+
+        onLogin()
     })
 
     return container
