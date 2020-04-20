@@ -1,7 +1,7 @@
-function Login(callback) {
+function Login(users) {
     const temp = document.createElement('div')
 
-    temp.innerHTML = `<section class="login">
+    temp.innerHTML = `<section class="Hello ${users.name}">
     <h1>Login</h1>
     <form>
         <input type="email" name="email" placeholder="e-mail">
@@ -12,16 +12,5 @@ function Login(callback) {
 
     const container = temp.firstChild
 
-    const form = container.querySelector('form')
-
-    form.addEventListener('submit', function (event) {
-        event.preventDefault()
-
-        const email = event.target.email.value,
-            password = event.target.password.value
-
-        callback(email, password)
-    })
-
-    return container
+    return container;
 }

@@ -17,13 +17,11 @@ const login = Login(function(email, password) {
     })
 
     if (user) {
-        console.log('eureka! you can get in');
-        login.replaceWith(home);
-    } else console.error('wrong credentials')
-
+        const home = Home(user.name);
+        login.replaceWith(home)
+    } else {
+        console.error('wrong credentials')
+    }
 })
 
 document.getElementById('root').appendChild(register)
-
-
-const home = Home(users[0].name);
