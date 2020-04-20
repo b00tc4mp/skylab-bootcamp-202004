@@ -14,7 +14,7 @@ function Login(callback) {
 
     const form = container.querySelector('form')
 
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', function (event) {
         event.preventDefault()
 
         const email = event.target.email.value,
