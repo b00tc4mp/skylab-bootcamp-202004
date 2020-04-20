@@ -1,7 +1,4 @@
-
 "use strict"
-
-
 
 function find(array, callback) {
 
@@ -11,6 +8,4 @@ function find(array, callback) {
         }
     }
     return undefined;
-
-
 }

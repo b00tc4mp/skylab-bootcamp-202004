@@ -1,4 +1,3 @@
-
 function every(array, callback) { debugger
     var cont = 0;
     for (var i = 0; i < array.length; i++) {
@@ -11,5 +10,4 @@ function every(array, callback) { debugger
     } else {
         return false;
     }
-
 }

@@ -6,7 +6,6 @@ describe('every', function () {
         var boolean = every(array, function (element, index, array) {
 
             return element < 10
-
         })
 
         expect(boolean).toBe(true)
@@ -38,13 +37,6 @@ describe('every', function () {
         expect(result).toEqual(array)
 
     });
-
-
-
-
-
-
-
 });
 
 

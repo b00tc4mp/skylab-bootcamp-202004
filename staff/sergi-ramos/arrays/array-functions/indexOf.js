@@ -1,4 +1,3 @@
-
 function indexOf(array, element, index) {
 
     if (typeof index === 'undefined') {
@@ -13,7 +12,5 @@ function indexOf(array, element, index) {
                 return i
             }
         }
-
     } return -1
-
 }

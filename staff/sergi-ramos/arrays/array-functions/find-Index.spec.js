@@ -9,7 +9,6 @@ describe('find-index', function () {
         })
 
         expect(result).toBe(3);
-
     });
 
     it('The findIndex() method returns the value -1 for not find condicion in this array', function () {
@@ -23,5 +22,4 @@ describe('find-index', function () {
         expect(result).toBe(-1);
 
     });
-
 });

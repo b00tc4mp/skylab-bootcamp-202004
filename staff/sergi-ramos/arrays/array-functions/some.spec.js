@@ -31,10 +31,5 @@ describe('every', function () {
             return element > 5
         })
         expect(boolean).toBe(false)
-    });
-
-
-
-
-    
+    });   
 });

@@ -17,7 +17,6 @@ function includes(string, searchString,position) {
                 test = 0;
             }
         }
-    
    return false
 }
 

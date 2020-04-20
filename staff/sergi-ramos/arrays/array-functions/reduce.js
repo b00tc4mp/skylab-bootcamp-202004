@@ -2,12 +2,10 @@ function reduce(array, callback, valorInicial) {
     debugger
     var sum;
     var notInitialValue = 0;
-    if(valorInicial === undefined){
-       notInitialValue = 1
-       sum = array[0]
-    } 
-    
-
+    if (valorInicial === undefined) {
+        notInitialValue = 1
+        sum = array[0]
+    }
     var checkValorInicial = true
     for (var i = notInitialValue; i < array.length; i++) {
 

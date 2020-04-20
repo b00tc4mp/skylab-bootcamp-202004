@@ -1,4 +1,3 @@
-// TODO
 
 describe('map', function () {
     it('should iterate on each element and keep each value multiplied by 2 in a new external array', function () {
@@ -12,9 +11,6 @@ describe('map', function () {
         expect(array[2]).toBe(6);
     });
 
-
-
-
 it('should iterate on each element provide the index from the second argument of the expression (callback)', function () {
     
     var array = [1, 2, 3];
@@ -27,7 +23,6 @@ it('should iterate on each element provide the index from the second argument of
     expect(array[2]).toBe(2);
 });
 
-
 it('should iterate on each element provide the full array from the third argument of the expression (callback)', function () {
     
     var array = [1, 2, 3];
@@ -39,8 +34,6 @@ it('should iterate on each element provide the full array from the third argumen
     expect(array[1]).toBe(array);
     expect(array[2]).toBe(array);
 });
-
-
 
     it('should iterate on each element and keep each string by uppercase in a new external array', function () {
         

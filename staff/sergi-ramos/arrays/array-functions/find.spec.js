@@ -1,3 +1,4 @@
+'use strict'
 describe('find', function () {
     it('The find() method returns the value of the first element in the provided array that satisfies the provided testing function', function () {
 
@@ -18,22 +19,15 @@ describe('find', function () {
         })
 
         expect(result).toBe(undefined);
-
     });
 
     it('The find() method check the index element is working', function () {
-
 
         var numbers1 = [1, 2, 3, 4, 5];
         var count = 0;
         var result = find(numbers1, function (elemento, index) {
             expect(index).toBe(count++)
             return elemento > 22
-
-        })
-
-
-
+        });
     });
-
 });
