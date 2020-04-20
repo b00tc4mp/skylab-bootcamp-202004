@@ -1,0 +1,35 @@
+.home, .register, .login {
+  display: inline-block;
+  border: 1rem dashed gray;
+  border-radius: 2rem;
+  padding: 1rem;
+}
+
+.landing {
+  background-color: orange;
+  text-align: center;
+}
+
+.login {
+  border-color: blue;
+}
+
+.register {
+  border-color: red;
+}
+
+.home {
+  border-color: yellow;
+}
+
+.feedback {
+  color: green;
+}
+.feedback--warning {
+  color: orange;
+}
+.feedback--error {
+  color: red;
+}
+
+/*# sourceMappingURL=style.css.map */
