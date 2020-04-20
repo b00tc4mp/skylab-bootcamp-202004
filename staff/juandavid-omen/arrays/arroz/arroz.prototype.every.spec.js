@@ -30,4 +30,19 @@ describe("Arroz.prototype.every", function() {
 
       expect(result).toBe(false);
     });
+
+    it("throw an exeption if the parameter is not a function", function () {
+      var array = new Arroz();
+
+      var errorExeption;
+      try {
+        array.every('123');
+      } catch (error) {
+        errorExeption = error
+      } 
+
+      expect(errorExeption).toBeDefined();
+      expect(errorExeption instanceof TypeError).toBeTruthy();
+      expect(errorExeption.message).toBe("123 is not a function");
+    });
 });

@@ -20,3 +20,11 @@ Arroz.prototype.reduce = function(expression, initialValue){
     };
     return accumulator;
 };
+
+/* if (this.length === 0) {
+    throw new TypeError('Reduce of empty array with no initial value at Arroz.reduce');
+}
+
+if (typeof expression !== 'function') {
+    throw new TypeError(expression + ' is not a function');
+} */

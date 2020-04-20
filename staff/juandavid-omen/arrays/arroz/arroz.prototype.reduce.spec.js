@@ -52,4 +52,25 @@ describe("Arroz.prototype.reduce", function() {
 
     expect(result).toBe(undefined);
   });
-});
+ /*  it('Arroz.prototype.reduce() Errors', function () {
+  var array = new Arroz();
+
+  expect(function () {
+    array.reduce(function (accumulator, element) {
+      return accumulator + element;
+    });
+    }).toThrowError(TypeError, 'Reduce of empty array with no initial value at Arroz.reduce');
+
+    var array = new Arroz(1, 2, 3);
+
+    expect(function () {
+      array.reduce();
+    }).toThrowError(TypeError, 'undefined is not a function');
+
+    var array = new Arroz(1, 2, 3);
+
+    expect(function () {
+      array.reduce('hello');
+    }).toThrowError(TypeError, 'hello is not a function');
+  }); */
+}); 
