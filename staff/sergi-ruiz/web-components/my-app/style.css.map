@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,SAAS,CAAC;EACN,MAAM,EAAE,cAAc;EACtB,OAAO,EAAE,YAAY;CAAG;;AAE5B,AAAA,MAAM,CAAC;EACH,MAAM,EAAE,eAAe;EACvB,OAAO,EAAE,YAAY;CAAG",
-    "sources": [
-        "style.sass"
-    ],
-    "names": [],
-    "file": "style.css"
-}
+{"version":3,"sourceRoot":"","sources":["components/Panel.sass","utils.sass","components/Landing.sass","components/Login.sass","components/Register.sass","components/Home.sass","components/Feedback.sass"],"names":[],"mappings":"AAAA;EACI;ECAA;EACA,eDCkC;EAElC;;;AELJ;EACI;EACA;;;ACFJ;EAGI;;;ACHJ;EAGI;;;ACHJ;EAGI;;;ACHJ;EACI;;AAEA;EACI;;AAEJ;EACI","file":"style.css"}

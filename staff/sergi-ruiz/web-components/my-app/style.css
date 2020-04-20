@@ -1,18 +1,35 @@
-.register {
-    border: 1rem solid red;
-    display: inline-block;
-}
-
-.login {
-    border: 1rem solid blue;
-    display: inline-block;
+.home, .register, .login {
+  display: inline-block;
+  border: 1rem dashed gray;
+  border-radius: 2rem;
+  padding: 1rem;
 }
 
 .landing {
-    border: 1rem solid blue;
-    background-color: purple;
-    color: white;
+  background-color: orange;
+  text-align: center;
 }
 
+.login {
+  border-color: blue;
+}
 
-/*# sourceMappingURL=Landing.css.map */
+.register {
+  border-color: red;
+}
+
+.home {
+  border-color: yellow;
+}
+
+.feedback {
+  color: green;
+}
+.feedback--warning {
+  color: orange;
+}
+.feedback--error {
+  color: red;
+}
+
+/*# sourceMappingURL=style.css.map */
