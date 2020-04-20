@@ -14,7 +14,7 @@ describe("Arroz.prototype.filter", function(){
     it("should return a new array with the filtered elements", function(){
         var arr = new Arroz(4,56,23,65,21);
         var result = arr.filter(function(element) {
-
+            
             return element > 50;
         });
 
