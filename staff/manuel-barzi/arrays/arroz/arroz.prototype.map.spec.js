@@ -6,7 +6,7 @@ describe('Arroz.prototype.map', function () {
         var indexes = [];
         var arrays = [];
 
-        var result = array.map(function(element, index, array) {
+        var result = array.map(function (element, index, array) {
             indexes.push(index);
             arrays.push(array);
 
@@ -19,12 +19,15 @@ describe('Arroz.prototype.map', function () {
         expect(result[0]).toBe(10);
         expect(result[1]).toBe(20);
         expect(result[2]).toBe(30);
-        
-        for(var i = 0; i < indexes.length; i++)
+
+        for (var i = 0; i < indexes.length; i++)
             expect(indexes[i]).toBe(i);
 
-        for(var i = 0; i < arrays.length; i++)
+        for (var i = 0; i < arrays.length; i++)
             expect(arrays[i]).toBe(array);
+
+        for (var i = 0; i < arrays.length; i++)
+            expect(array[i]).toBe(i + 1);
     });
 
     it('should iterate on each string element and  return a new instance with each value multiplied by 10', function () {
@@ -32,7 +35,7 @@ describe('Arroz.prototype.map', function () {
         var indexes = [];
         var arrays = [];
 
-        var result = array.map(function(element, index, array) {
+        var result = array.map(function (element, index, array) {
             indexes.push(index);
             arrays.push(array);
 
@@ -46,20 +49,37 @@ describe('Arroz.prototype.map', function () {
         expect(result[1]).toBe('B');
         expect(result[2]).toBe('C');
 
-        for(var i = 0; i < indexes.length; i++)
+        for (var i = 0; i < indexes.length; i++)
             expect(indexes[i]).toBe(i);
 
-        for(var i = 0; i < arrays.length; i++)
+        for (var i = 0; i < arrays.length; i++)
             expect(arrays[i]).toBe(array);
+
+        // check original array hasn't been manipulated
+        expect(array[0]).toBe('a');
+        expect(array[1]).toBe('b');
+        expect(array[2]).toBe('c');
+
+        // or this way
+        ['a', 'b', 'c'].forEach(function (element, index) {
+            expect(array[index]).toEqual(element);
+        });
+
+        // or this other way
+        expect(array).toEqual(jasmine.objectContaining({
+            0: 'a',
+            1: 'b',
+            2: 'c'
+        }));
     });
 
-    it('should throw error on non-function expression', function() {
+    it('should throw error on non-function expression', function () {
         var array = new Arroz(1, 2, 3);
         var result;
 
         try {
             array.map();
-        } catch(error) {
+        } catch (error) {
             result = error;
         }
 
@@ -71,7 +91,7 @@ describe('Arroz.prototype.map', function () {
 
         try {
             array.map(1);
-        } catch(error) {
+        } catch (error) {
             result = error;
         }
 
@@ -83,7 +103,7 @@ describe('Arroz.prototype.map', function () {
 
         try {
             array.map(true);
-        } catch(error) {
+        } catch (error) {
             result = error;
         }
 
