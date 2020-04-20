@@ -1,0 +1,60 @@
+.home, .login, .register {
+  display: inline-block;
+  border: 1rem solid gray;
+  border: 1rem dashed gray;
+  border-radius: 2rem;
+  padding: 1rem;
+}
+
+.landing {
+  background-color: orange;
+  text-align: center;
+}
+
+.home, .login, .register {
+  display: inline-block;
+  border: 1rem solid gray;
+  border: 1rem dashed gray;
+  border-radius: 2rem;
+  padding: 1rem;
+}
+
+.register {
+  border-color: red;
+}
+
+.home, .login, .register {
+  display: inline-block;
+  border: 1rem solid gray;
+  border: 1rem dashed gray;
+  border-radius: 2rem;
+  padding: 1rem;
+}
+
+.login {
+  border-color: blue;
+}
+
+.home, .register, .login {
+  display: inline-block;
+  border: 1rem solid gray;
+  border: 1rem dashed gray;
+  border-radius: 2rem;
+  padding: 1rem;
+}
+
+.home {
+  border-color: yellow;
+}
+
+.feedback {
+  color: green;
+}
+.feedback--warning {
+  color: orange;
+}
+.feedback--error {
+  color: red;
+}
+
+/*# sourceMappingURL=style.css.map */
