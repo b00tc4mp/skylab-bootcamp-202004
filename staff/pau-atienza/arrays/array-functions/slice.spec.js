@@ -12,8 +12,8 @@ describe('The method slice', function () {
     
     it('should return and empty array when the begin param is higher than the index range' , function () {
         var array = [5, 12, 8, 130, 44];
-        var result = slice(array, 6, 10);
-        
+        var result = slice(array, 6);
+        debugger
         expect(result.length).toBe(0);
     });
 
@@ -32,9 +32,6 @@ describe('The method slice', function () {
         
         expect(result.length).toBe(0);
     });
-
-    
-
 
 })
 

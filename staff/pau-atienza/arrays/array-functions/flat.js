@@ -11,7 +11,7 @@ function flat(array, depth = 1, newArray = []){
         else if(depth<0){
             newArray[newArray.length] = array[i];
         }
-        else if (typeof array[i] !== 'object'){   
+        else if (!(array[i] instanceof Array)){   
             newArray[newArray.length] = array[i];
         }
         else{

@@ -75,15 +75,10 @@ describe('Arroz.prototype.slice', function() {
         expect(result[0]).toBe(2);
         expect(result.length).toBe(2);
 
-
         var array= new Arroz (1, 2, 3, 4, 5);
 
         var result = array.slice(-1, -8);
         expect(result[0]).toBe(undefined);
         expect(result instanceof Arroz).toBe(true);
-
-
     });
-
-
 });
