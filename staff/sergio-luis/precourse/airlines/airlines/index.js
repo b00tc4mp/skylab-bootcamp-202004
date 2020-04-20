@@ -19,7 +19,7 @@ program();
 //PROGRAM
 function program() {
 
-    welcome();
+    welcome()
 
     do {
         var firstMenu = prompt('Hola ' + name + ' eleija una de seguintes opciones:\n1 - Mostrar Vuelos.\n2 - Mostar vuelos que efecuan escalas.\n3 - Coste Medio de vuelos.\n4 - Mostar los ultimos vuelos del dia.\nexit - Escriba exit para salir.\n\nNota: Los valores salen por consola!');
@@ -37,7 +37,7 @@ function program() {
                 showLastFligths();
                 break;
             case 'exit':
-                alert('Gracias!!!');
+                alert('Gracias!!!')
                 break;
             default:
                 alert('La opcion introducida no es correcta! Vuelva a intentarlo');
@@ -63,7 +63,7 @@ function welcome() {
 //Show al Flights
 function showFlights() {
     var i = 0;
-    console.log('LISTA DE VUELOS :\n');
+    console.log('LISTA DE VUELOS :\n')
     for (i; i < flights.length; i++) {
 
         if (flights[i].scale) {
