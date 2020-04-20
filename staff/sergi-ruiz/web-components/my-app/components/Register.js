@@ -9,6 +9,7 @@ function Register(callback) {
         <input type="email" name="email" placeholder="e-mail">
         <input type="password" name="password" placeholder="password">
         <button>Submit</button>
+        or <a href="login">Login</a>
     </form>
 </section>`
 
@@ -25,6 +26,14 @@ function Register(callback) {
             password = event.target.password.value
 
         callback(name, surname, email, password)
+    })
+
+    const toLogin = container.querySelector('a')
+
+    toLogin.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        onRegister()
     })
 
     return container

@@ -1,5 +1,16 @@
 const users = []
 
+
+const landing = Landing(function() {
+    landing.replaceWith(register)
+}, function() {
+    landing.replaceWith(login)
+})
+
+
+
+
+
 const register = Register(function(name, surname, email, password) {
     users.push({
         name,
@@ -17,11 +28,12 @@ const login = Login(function(email, password) {
     })
 
     if (user) {
-        const home = Home(user.name);
+        const home = Home(user.name, function() {
+            home.replaceWith(register)
+        })
+
         login.replaceWith(home)
-    } else {
-        console.error('wrong credentials')
-    }
+    } else console.error('wrong credentials')
 })
 
-document.getElementById('root').appendChild(register)
+document.getElementById('root').appendChild(landing);

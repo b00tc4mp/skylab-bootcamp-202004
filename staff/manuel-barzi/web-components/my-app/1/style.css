@@ -1,4 +1,4 @@
-.register, .login, .home {
+.home, .login, .register {
   display: inline-block;
   border: 1rem dashed gray;
   border-radius: 2rem;
@@ -16,5 +16,4 @@
 .register {
   border-color: red;
 }
-
 /*# sourceMappingURL=style.css.map */
