@@ -19,6 +19,7 @@ function Login(callback) {
 
         const email = event.target.email.value,
             password = event.target.password.value
+            
 
         callback(email, password)
     })

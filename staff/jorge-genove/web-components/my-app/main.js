@@ -16,19 +16,13 @@ const login = Login(function (email, password) {
         return user.email === email && user.password === password 
     })
 
-    if (user) console.log('eureka! you can get in')
-    else console.error('wrong credentials')
+    if (user) {
+        const home = Home(user.name, function() {
+            home.replaceWith(register)
+        })
+
+        login.replaceWith(home)
+    } else console.error('wrong credentials')
 })
 
-
-login.replaceWith(Home)
-
-const Home = Home(function(name,surname,email){
-   const email = users.find(function(email){
-   return email
-    `hello ${email.name} ${email.surname}`
-   })
-    
-
-    
-    ocument.getElementById('root').appendChild(register)
+document.getElementById('root').appendChild(register)
