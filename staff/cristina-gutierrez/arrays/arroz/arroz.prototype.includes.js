@@ -1,4 +1,4 @@
-Arroz.prototype.includes = function (value, fromIndex) {
+Arroz.prototype.includes = function (value, fromIndex) {    
     if (fromIndex === undefined) {
         fromIndex = 0;
     };

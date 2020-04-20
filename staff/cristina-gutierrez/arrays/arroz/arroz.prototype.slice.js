@@ -6,7 +6,7 @@ Arroz.prototype.slice = function (start, end) {
     }
 
     for(var i = start; i < end; i++) {
-        newArroz.push(this[i]);
+        newArroz[newArroz.length] = this[i];
     };
     return newArroz;
 };
