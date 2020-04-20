@@ -1,0 +1,193 @@
+*
+    box-sizing: border-box
+    margin: 0
+    padding: 0
+    font-size: large
+    font-family: sans-serif
+    list-style-type: none
+
+html 
+    background: url(assets/lettuce1.jpg) no-repeat center center fixed
+    background-size: cover
+
+
+// this should be in another sass.style, shared with the other pages
+// to DRY and cleaner organization
+
+.main-navigator 
+    display: grid
+    grid-auto-flow: column
+    background-color: rgb(209, 64, 64)
+    width: 100vw
+    height: 60px
+    top: 0
+
+.side-nav-wrapper 
+    position: fixed
+    z-index: 1
+    background: rgba(100, 100, 100, 0.7)
+    right: 0
+    display: flex
+    height: 100%
+    margin-top: 60px
+    flex-direction: column
+    top: 0
+    overflow-x: hidden
+    transition: 0.5s
+    padding-top: 60px
+    width: 0
+
+.nav__logo  
+    width: auto
+    height:60px
+
+.nav__hamburger 
+    display: grid
+    width: 40px
+    height: 42px
+    justify-self: end
+    justify-content: end
+    align-content: center
+    margin-top: auto
+    margin-bottom: auto
+    margin-right: 15px
+
+.side-nav
+    display: grid
+    grid-auto-rows: auto
+
+.side-nav__icons--glow 
+    transition-duration: 0.3s
+    transition-property: box-shadow
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+    transform: translateZ(0)
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0)
+
+    &:hover
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.6)
+
+  
+
+
+.side-nav__icon
+    height: 50px
+    width: 50px
+    margin-top: 25%
+    margin-left: 30px
+    cursor: pointer
+    border: 0px solid #ffffff
+
+
+.side-nav__icon--small
+    height: 20px
+    width: 20px
+
+.side-nav__left-corner
+    margin-left: 5px
+
+//up to here
+
+
+.intro-text
+    display: none
+    margin-top: 50px
+    color: white
+    text-align: center
+    font-size: 3em
+
+.form
+    display: flex
+    text-align: center
+    height: 900px
+    background-color: rgba(100, 100, 100, 0.4)
+    margin-left: auto
+    margin-right: auto
+    flex-direction: column
+    justify-content: center
+
+.form__email
+    width: 300px
+    height: 50px
+    text-align: center
+    margin-left: auto
+    margin-right: auto
+    margin-top: 10px
+
+.form_pass
+    width: 300px
+    height: 50px
+    text-align: center
+    margin-left: auto
+    margin-right: auto
+    margin-top: 10px
+
+.form__submit
+    border-radius: 10px
+    height: 40px
+    width: 80px
+    margin-left: auto
+    margin-right: auto
+    margin-top: 10px
+
+@media only screen and (min-width: 620px)
+    
+    .intro-text
+        margin-top: 100px
+        font-size: 5em
+        margin-right: 30px
+        margin-left: 30px
+
+    .nav__logo
+        height:80px
+
+    .nav__hamburger 
+        width: 46px
+        height: 52px
+
+    .main-navigator
+        height:80px
+
+    .side-nav__icon
+        height: 70px
+        width: 70px
+
+    .side-nav__icon--small
+        height: 30px
+        width: 30px
+
+    .side-nav__left-corner
+        margin-left: 10px
+
+    .side-nav-wrapper
+        margin-top: 80px
+
+@media only screen and (min-width: 992px)
+    
+    .intro-text
+        font-size: 7em
+        margin-right: 50px
+        margin-left: 50px
+
+    .nav__logo
+        height:100px
+
+    .nav__hamburger 
+       width:66px
+        height: 72px
+
+    .main-navigator
+        height:100px
+
+    .side-nav-wrapper
+        margin-top: 100px
+
+    .side-nav__icon
+        height: 90px
+        width: 90px
+
+    .side-nav__icon--small
+        height: 40px
+        width: 40px
+
+    .side-nav__left-corner
+        margin-left: 15px

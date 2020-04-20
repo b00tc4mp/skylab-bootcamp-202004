@@ -1,0 +1,458 @@
+$section-color: #f8f8f8
+$red-color: #ff595a
+$height-large-links: 400px
+$border-infoweb: 1px solid black
+$text-color-grey: #67635F
+
+@mixin links-section()
+    background-color: $red-color
+    width: 325px
+    height: 140px
+@mixin links-tablet()
+    width: auto
+    height: auto
+@mixin buttons-section()
+    width: 100px
+    height: 100px
+    background-color: $red-color
+    
+*
+    margin: 0
+    padding: 0
+      
+
+
+
+
+header
+    height: 290px   
+nav
+    display: flex
+    justify-content: center
+    height: 50px
+    background-color: $section-color  
+section
+    display: flex
+    flex-direction: column
+    align-items: center
+    background-color: $section-color
+    margin-top: 170px
+span
+    color: $red-color
+hr
+    width: 300px
+    margin-bottom: 50px
+    margin-top: 50px
+
+
+
+
+.navbar
+    display: flex
+    justify-content: center
+    list-style-type: none
+    &__item
+        line-height: 50px
+        font-size: 14px
+    &__item-menu
+        display: flex
+        justify-content: flex-start
+        margin-left: 10px
+    &__item-user
+        margin-left: 100px
+        margin-right: 100px
+
+    &__item-user:hover
+        color: $red-color
+    &__item-search
+        background-color: #bbb8b6
+        color: white
+    &__item-cart
+        display: flex
+        justify-content: center
+        width: 50px
+    &__item-cart:hover
+        color: white
+        background-color: $red-color
+    &__item-cartnum
+        display: flex
+        justify-content: center
+        color: white
+        font-size: 25px
+        background-color: $red-color
+        width: 50px
+
+    &-two
+        margin-top: 80px
+        color: white
+        &__logo
+            display: flex
+            justify-content: center
+            align-items: center
+            height: 75%
+    &-three
+        display: none
+        
+.slider
+    width: 100%
+    background-color: #705d75
+    height: 500px
+.title-logo
+    display: flex
+    flex-direction: column
+    align-items: center
+
+    & > img
+        position: relative
+        width: 92px
+        height: 125px
+        bottom: 75px
+    & > p
+        border-top: 1px solid black
+        border-bottom: 1px solid black
+        padding-top: 20px
+        padding-bottom: 20px
+        font-size: 28px
+        font-weight: 700
+        margin-bottom: 80px
+.links-utensilios
+    display: grid
+    grid-template-rows: repeat(9, 1fr)
+    grid-gap: 10px  
+    &__color
+        @include links-section()
+.links-ingredientes
+    display: grid
+    grid-template-rows: repeat(6, 1fr)
+    grid-gap: 10px
+    &__color
+        @include links-section()
+.links-fiestas
+    display: grid
+    grid-template-rows: repeat(3, 1fr)
+    grid-gap: 10px
+
+    &__color
+        @include links-section() 
+.crop-image
+    width: 325px
+    height: 140px
+    object-fit: cover
+    object-position: 20% 10px
+    
+.button
+    display: flex
+    justify-content: center
+    align-items: center
+    text-align: center
+    width: 130px
+    height: 60px
+    background-color: $red-color
+    color: white
+    font-size: 18px
+    font-weight: 200
+    margin-top: 40px
+    &:hover
+        text-decoration: underline
+    
+    
+.footer
+    display: flex
+    flex-direction: column
+    align-items: center
+    &-infoweb
+        display: grid
+        grid-template-columns: 10% 35% 10% 35% 10%
+        grid-template-rows: 10% 30% 20% 30% 10%
+        width: 100%
+        height: 438px
+        background-color: #e8e6e5
+        margin-top: 150px
+        &__item1
+            grid-row: 2 / 3
+            grid-column: 2 / 3
+            border: $border-infoweb
+            background-color: grey
+        &__item2
+            grid-row: 2 / 3
+            grid-column: 4 / 5
+            border: $border-infoweb
+            background-color: grey
+        &__item3
+            grid-row: 4 / 5
+            grid-column: 2 / 3
+            border: $border-infoweb
+            background-color: grey
+        &__item4
+            grid-row: 4 / 5
+            grid-column: 4 / 5
+            border: $border-infoweb
+            background-color: grey
+.follow
+    display: flex
+    flex-direction: column
+    align-items: center
+    &__text
+        font-size: 15px
+        color: $text-color-grey
+        margin-top: 50px
+        
+    &__icon
+        width: 33px
+        height: 32px
+        background-color: $red-color
+        display: inline-block
+    
+.newsletter
+    display: flex
+    flex-direction: column
+    width: 300px
+    & > p
+        font-size: 15px
+        color: $text-color-grey
+        margin-bottom: 50px
+    & > input
+        width: 100%
+        height: 40px
+        border: 1px solid black
+        margin-bottom: 20px
+    &__button
+        display: flex
+        justify-content: center
+        align-items: center
+        height: 40px
+        background-color: $red-color
+        color: white
+        font-size: 17px
+        font-weight: 700
+        margin-bottom: 50px
+.contact
+    display: flex
+    flex-direction: column
+    align-items: center
+    &__item
+        width: 30px
+        height: 31px
+        background-color: $red-color
+        margin-bottom: 20px
+    & > p
+        color: $red-color
+        font-size: 12px
+        margin-bottom: 20px
+.copyright
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 100%
+    height: 50px
+    background-color: $red-color
+    & > p
+        font-size: 12px
+        color: white
+
+.blog
+    display: flex
+    flex-direction: column
+    align-items: center
+    &__image > img
+        width: 325px
+        height: 487px
+    &__image > p
+        background-color: white
+        padding-left: 20px
+        padding-top: 20px
+        padding-bottom: 20px
+    &__image-author
+        display: flex
+        align-items: flex-end
+        background-color: white
+        height: 80px
+        padding-left: 20px
+    &__image-author > p
+        margin-left: 5px
+    &--display
+        display: none
+
+@media (min-width: 768px)
+        .navbar__item-user
+            margin-left: 350px
+        .links-utensilios 
+            display: grid
+            grid-gap: 10px
+            grid-template-rows: repeat(6, 1fr)
+            grid-template-areas: "one two two" "one three three" "four four six" "five five six" "seven eight eight" "seven nine nine"
+            width: 80%
+            &__color
+                @include links-tablet()
+        .links-ingredientes 
+            display: grid
+            grid-gap: 10px
+            grid-template-rows: repeat(4, 1fr)
+            grid-template-areas: "one two two" "one three three" "four four six" "five five six" "seven eight eight" "seven nine nine"
+            width: 80%
+            &__color
+                @include links-tablet()
+            
+        .links-fiestas 
+            display: grid
+            grid-gap: 10px
+            grid-template-rows: repeat(2, 1fr)
+            grid-template-areas: "ten ten twelve"  "eleven eleven twelve"
+            width: 80%
+            &__color
+                @include links-tablet()            
+        .one 
+            grid-area: one
+            height: $height-large-links
+        .two  
+            grid-area: two
+        .three  
+            grid-area: three
+        .four 
+            grid-area: four
+        .five 
+            grid-area: five
+        .six 
+            grid-area: six
+            height: $height-large-links
+        .seven 
+            grid-area: seven
+            height: $height-large-links
+        .eight 
+            grid-area: eight
+        .nine 
+            grid-area: nine
+        .ten
+            grid-area: ten
+        .eleven
+            grid-area: eleven
+        .twelve
+            grid-area: twelve
+            height: $height-large-links
+        .contact
+            flex-direction: row
+            & > p
+                margin-left: 10px
+                margin-right: 10px
+        .navbar-two
+            display: flex
+            justify-content: space-around
+            align-items: center
+            margin-top: 80px
+            &__buttons
+                display: flex
+                width: 40%
+                &-new
+                    width: 130px
+                    height: 30px
+                    background-color: #8e789d
+                &-sales
+                    width: 130px
+                    height: 30px
+                    background-color: #80a8ab
+                    margin-left: 10px
+        
+        .newsletter
+            width: 60%
+            display: flex
+            justify-content: center
+            align-items: center
+            flex-direction: row
+            & > input
+                width: 250px
+                margin-bottom: 0
+                margin-right: 50px
+            &__button
+                width: 150px
+                margin-bottom: 0
+        .blog--tablet
+            display: flex
+            align-items: center
+        .blog--display
+            display: flex
+            margin-left: 20px
+       
+@media (min-width: 992px)
+    .footer
+        display: flex
+        flex-direction: column
+        align-items: center
+        &-infoweb
+            display: grid
+            grid-template-columns: 10% 20% 20% 20% 20% 10%
+            grid-template-rows: 25% 50% 25%
+            width: 100%
+            height: 438px
+            background-color: #e8e6e5
+            margin-top: 150px
+            column-gap: 10px
+            &__item1
+                grid-row: 2 / 3
+                grid-column: 2 / 3
+                border: $border-infoweb
+                background-color: grey
+            &__item2
+                grid-row: 2 / 3
+                grid-column: 3 / 4
+                border: $border-infoweb
+                background-color: grey
+            &__item3
+                grid-row: 2 / 3
+                grid-column: 4 / 5
+                border: $border-infoweb
+                background-color: grey
+            &__item4
+                grid-row: 2 / 3
+                grid-column: 5 / 6
+                border: $border-infoweb
+                background-color: grey
+    .navbar-two
+        display: none
+    .navbar-three
+        display: flex
+        justify-content: center
+        align-items: center
+        margin-top: 80px          
+        &__buttons
+            display: flex
+            width: 440px
+            &-new
+                width: 130px
+                height: 30px
+                background-color: #8e789d
+                margin-left: 150px
+            &-sales
+                width: 130px
+                height: 30px
+                background-color: #80a8ab
+                margin-left: 10px
+                margin-right: 20px
+        &__input
+            border: 1px solid #67635F
+            border-right-width: 40px
+            height: 30px
+            width: 20%
+        &__buttons-sections
+            display: flex
+            justify-content: center
+            width: 100%
+            &-utensilios
+                @include buttons-section()
+                margin-left: 440px
+            &-ingredientes
+                @include buttons-section()          
+                margin-left: 5px
+            &-fiestas
+                @include buttons-section()
+                margin-left: 5px
+            &-marca
+                @include buttons-section()
+                margin-left: 5px
+                margin-right: 30px
+            &-blog
+                @include buttons-section()
+                margin-left: 5px
+                    
+            
+
+   
