@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h1 class = "info">grid-column-gap
+                grid-row-gap<h1>
+                <h3>Specifies the size of the grid lines. You can think of it like setting the width of the gutters between the columns/rows.
+                <br>
+
+                .grid{<br>
+                    display: grid;<br>
+                    gap: 0.5%;<br>
+                    grid-template-columns: [start] minmax(200px, 20%) [main] 1fr [end];<br>
+                    grid-template-rows:<br>
+                      [header] minmax(4rem, auto) [main] 400px [footer] minmax(4rem, auto) [end];<br>
+                } </h3>
+                <br>
+                <h3>Values:
+
+                .container {
+                  grid-column-gap: <line-size>;
+                  grid-row-gap: <line-size>;
+                }</h3>
+                <img src="https://css-tricks.com/wp-content/uploads/2018/11/dddgrid-gap.svg" alt="" srcset="">
+    </div>
+    <div class="grid">
+        <header class="grid-item header">Header: grid-column: start/end;</header>
+        <aside class="grid-item sidebar">Sidebar</aside>
+        <main class="grid-item main">
+            Main
+        </main>
+        <footer class="grid-item footer">Footer: start/end</footer>
+       </div>
+</body>
+</html>
