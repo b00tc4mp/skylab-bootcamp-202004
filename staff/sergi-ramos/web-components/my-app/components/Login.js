@@ -1,4 +1,4 @@
-function Login(callback, toLogin) {
+function Login(onSubmit, toLogin) {
     const temp = document.createElement('div')
 
     temp.innerHTML = `<section class="login">
@@ -25,7 +25,7 @@ function Login(callback, toLogin) {
             password = event.target.password.value
 
         try {
-            callback(email, password)
+            onSubmit(email, password)
             if(feedBack){
                 container.removeChild(feedBack)
                 feedBack = undefined

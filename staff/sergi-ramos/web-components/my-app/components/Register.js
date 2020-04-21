@@ -1,4 +1,4 @@
-function Register(callback, toLogin) {
+function Register(onSubmit, toLogin) {
     const temp = document.createElement('div')
 
     temp.innerHTML = `<section class="register">
@@ -26,7 +26,7 @@ function Register(callback, toLogin) {
             email = event.target.email.value,
             password = event.target.password.value
 
-        callback(name, surname, email, password)
+        onSubmit(name, surname, email, password)
     })
     loginButton.addEventListener('click', function (event) {
         event.preventDefault()

@@ -1,0 +1,1 @@
+const users = [{name: 'sergi', surname:'ramos', email:'1@mail.com', password:'1'}]
