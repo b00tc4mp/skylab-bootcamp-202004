@@ -1,19 +1,36 @@
-.home, .login, .register {
+.home, .register, .login {
   display: inline-block;
-  border: 1rem dashed gray;
-  border-radius: 1rem;
+  border: 0.7rem dashed gray;
+  border-radius: 0.7rem;
   padding: 1rem;
 }
 
-.home {
-  border: aqua;
+.landing {
+  background-color: limegreen;
+  text-align: center;
+  height: 3rem;
 }
 
 .login {
-  border-color: teal;
+  border-color: aqua;
 }
 
 .register {
-  border-color: purple;
+  border-color: lightgreen;
 }
+
+.home {
+  border: darkmagenta;
+}
+
+.feedback {
+  color: teal;
+}
+.feedback--warning {
+  color: bisque;
+}
+.feedback--error {
+  color: crimson;
+}
+
 /*# sourceMappingURL=style.css.map */
