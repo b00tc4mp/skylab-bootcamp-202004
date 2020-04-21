@@ -1,38 +1,38 @@
+const users = []
+
 const landing = Landing(function() {
-    landing.replaceWith(register)
+
+    landing.replaceWith(login);
+
 }, function() {
-    landing.replaceWith(login)
-})
+
+    landing.replaceWith(register);
+
+});
 
 const register = Register(function(name, surname, email, password) {
-    // TODO if user already exists throw Error, otherwise proceed
 
-    users.push({
-        name,
-        surname,
-        email,
-        password
-    })
+    userDefine(users, name, surname, email, password);
 
     register.replaceWith(login)
 }, function() {
-    register.replaceWith(login)
+    register.replaceWith(login);
 })
 
 const login = Login(function(email, password) {
-    const user = users.find(function(user) {
-        return user.email === email && user.password === password
-    })
+
+    const user = findUser(email, password)
 
     if (user) {
-        const home = Home(user.name, function() {
-            home.replaceWith(landing)
+        const home = Home(user.name, user.surname, function() {
+            home.replaceWith(register)
         })
-
         login.replaceWith(home)
-    } else throw new Error('wrong credentials')
+    }
 }, function() {
-    login.replaceWith(register)
+    landing.replaceWith(register);
 })
+
+
 
 document.getElementById('root').appendChild(landing)

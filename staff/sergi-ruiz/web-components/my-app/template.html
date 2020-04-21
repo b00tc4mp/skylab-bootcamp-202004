@@ -9,10 +9,6 @@
 </head>
 
 <body>
-    <section class="landing">
-        <a href="">Register</a> or <a href="">Login</a>
-    </section>
-
     <section class="register">
         <h1>Register</h1>
         <form>
@@ -20,8 +16,8 @@
             <input type="text" name="surname" placeholder="surname">
             <input type="email" name="email" placeholder="e-mail">
             <input type="password" name="name" placeholder="password">
-            <button>Submit</button>
-            or <a href="">Login</a>
+            <button>Submit</button> or
+            <a href="">login</a>
         </form>
     </section>
 
@@ -30,14 +26,18 @@
         <form>
             <input type="email" name="email" placeholder="e-mail">
             <input type="password" name="name" placeholder="password">
-            <button>Submit</button>
-            or <a href="">Register</a>
+            <button>Submit</button> or
+            <a href="">register</a>
         </form>
-        <p class="feedback feedback--error">Wrong credentials</p>
+    </section>
+    <section class="home">
+        <h1>Welcome, ${name} ${surname} </h1><button>Logout</button>
     </section>
 
-    <section class="home">
-        <h1>Welcome, ${name}!</h1><button>Logout</button>
+    <section class="landing">
+        <h1>Welcome, to my App</h1>
+        <a href="">Login</a>
+        <a href="">Register</a>
     </section>
 </body>
 
