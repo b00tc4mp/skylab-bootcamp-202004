@@ -1,16 +1,9 @@
+function Feedback(message, level) {
+    const temp = document.createElement('div');
 
-function Home (user, callback) {
-    const temp = document.createElement('div')
-    
-    temp.innerHTML = ``
+    temp.innerHTML = `<p class="feedback feedback--${level}">${message}</p>`
 
     const container = temp.firstChild;
-
-    const button = container.querySelector("button");
-    
-    button.addEventListener("click", function() {
-        callback()
-    });
 
     return container;
 };

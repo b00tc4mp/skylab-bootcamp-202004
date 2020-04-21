@@ -1,5 +1,3 @@
-const users = []
-
 const landing = Landing(function() {
     landing.replaceWith(register)
 }, function() {
@@ -16,21 +14,16 @@ const register = Register(function (name, surname, email, password) {
 });
 
 const login = Login(function (email, password) {
+    authenticateUser(email, password)
 
-
-    
     const user = retrieveUser(email)
     
-    if (user) {
-        const home = Home(user, function() {
-            home.replaceWith(register)
-        });
+    const home = Home(user.name, function () {
+        home.replaceWith(landing)
+    })
 
-        login.replaceWith(home);
-    } else {
-        console.error('wrong credentials')
-    } 
-}, function() {
+    login.replaceWith(home)
+}, function () {
     login.replaceWith(register)
 });
 
