@@ -1,4 +1,4 @@
-function Register(callback) {
+function Register(checkRegister, callback) {
     const temp = document.createElement('div')
 
     temp.innerHTML = `<section class="register">
@@ -23,6 +23,23 @@ function Register(callback) {
             surname = event.target.surname.value,
             email = event.target.email.value,
             password = event.target.password.value
+
+
+    let success;
+
+    try {
+      checkRegister(email);
+      event.target.email.value = "";
+      event.target.password.value = "";
+      
+      if (success) container.removeChild(success);
+    } catch (error) {
+      if (!success) {
+        feedback = Feedback(error.message, "success");
+
+        container.append(success);
+      } else feedback.innerHTML = error.message;
+    }
 
         callback(name, surname, email, password)
     })

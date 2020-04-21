@@ -1,27 +1,20 @@
 // TODO show "Welcome, <name>!"
 
-function Home(callback) {
+function Home(name, surname, callback) {
     const temp = document.createElement('div')
 
-    temp.innerHTML = ` <section class="home">
-    <div id="fullname">
-    <h1>Bienvenido!</h1>
-        <p  title="name" ></p> <p title="surname"></p>
-    </div>
+    temp.innerHTML = `<section class="home">
+    <h1>Welcome, ${name} ${surname}!</h1><button>Logout</button>
 </section>`
 
     const container = temp.firstChild
 
-    const form = container.querySelector('form')
+    const button = container.querySelector('button')
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault()
-
-        const name = event.target.name.value,
-            surname = event.target.surname.value
-
-        callback(name, surname)
+    button.addEventListener('click', function() {
+        callback()
     })
+    
 
     return container
 }

@@ -1,27 +1,49 @@
-function Login(callback) {
-    const temp = document.createElement('div')
+function Login(checkLogin, inRegister) {
+  const temp = document.createElement("div");
 
-    temp.innerHTML = `<section class="login">
+  temp.innerHTML = `<section class="login">
     <h1>Login</h1>
     <form>
         <input type="email" name="email" placeholder="e-mail">
         <input type="password" name="password" placeholder="password">
         <button>Submit</button>
     </form>
-</section>`
+</section>`;
 
-    const container = temp.firstChild
+  const container = temp.firstChild;
 
-    const form = container.querySelector('form')
+  const form = container.querySelector("form");
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault()
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
 
-        const email = event.target.email.value,
-            password = event.target.password.value
+    const email = event.target.email.value,
+      password = event.target.password.value;
 
-        callback(email, password)
-    })
+    let feedback;
 
-    return container
+    try {
+      checkLogin(email, password);
+      event.target.email.value = "";
+      event.target.password.value = "";
+
+      if (feedback) container.removeChild(feedback);
+    } catch (error) {
+      if (!feedback) {
+        feedback = Feedback(error.message, "error");
+
+        container.append(feedback);
+      } else feedback.innerHTML = error.message;
+    }
+  });
+
+  const register = container.querySelector("a");
+
+  register.addEventListener("click", function (event) {
+
+    inRegister();
+    
+  });
+
+  return container;
 }

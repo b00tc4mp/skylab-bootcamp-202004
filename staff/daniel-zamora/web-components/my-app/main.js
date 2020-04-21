@@ -1,33 +1,45 @@
-const users = []
+const users = [{name: 'Daniel', surname: 'Zamora', email: 'da@nubar.com', password: '123' }];
+
+const landing = Landing(function () {
+    landing.replaceWith(register);
+  },
+  function () {
+    landing.replaceWith(login);
+  }
+);
 
 const register = Register(function (name, surname, email, password) {
-    users.push({
-        name,
-        surname,
-        email,
-        password
+    const actual = users.find(function(actual){
+        return user.email === email
     })
+    if (actual) {
+        throw new Error ('The email already exist');
+    }else {
+    users.push({name, surname, email, password,});
+    }
+    register.replaceWith(login);
+// }, function () {
+    const home = Home(user.name, user.surname, function () {
+        home.replaceWith(landing);
+      });
+}, function () {register.replaceWith(home);
 
-    register.replaceWith(login)
-})
+});
 
 const login = Login(function (email, password) {
-    const user = users.find(function(user) { 
-        return user.email === email && user.password === password 
-    })
+  const user = users.find(function (user) {
+    return user.email === email && user.password === password;
+  });
 
-    if (user) console.log('eureka! you can get in')
-    else console.error('wrong credentials')
+  if (user) {
+    const home = Home(user.name, user.surname, function () {
+      home.replaceWith(landing);
+    });
 
-    register.replaceWith(home);
-    
-})
+    login.replaceWith(home);
+  } else throw new Error("Wrong credentials");
+}, function () {
+    login.replaceWith(register);
+});
 
-const home = Home(function(name, surname){
-    const fullname = user.find(function ())
-    if(login)
-
-    
-})
-
-document.getElementById('root').appendChild(register)
+document.getElementById("root").appendChild(landing);
