@@ -7,14 +7,19 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <section class="landing">
+        <a href="">Register</a> or <a href="">Login</a>
+    </section>
+
     <section class="register">
         <h1>Register</h1>
         <form>
             <input type="text" name="name" placeholder="name">
             <input type="text" name="surname" placeholder="surname">
             <input type="email" name="email" placeholder="e-mail">
-            <input type="password" name="name" placeholder="password">
+            <input type="password" name="password" placeholder="password">
             <button>Submit</button>
+            or <a href="">Login</a>
         </form>
     </section>
 
@@ -22,9 +27,15 @@
         <h1>Login</h1>
         <form>
             <input type="email" name="email" placeholder="e-mail">
-            <input type="password" name="name" placeholder="password">
+            <input type="password" name="password" placeholder="password">
             <button>Submit</button>
+            or <a href="">Register</a>
         </form>
+    </section>
+
+    <section class="home">
+        <h1>Welcome, ${user.name} ${user.surname}</h1>
+        <button>Logout</button>
     </section>
 </body>
 </html>

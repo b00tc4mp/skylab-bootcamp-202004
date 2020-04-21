@@ -1,4 +1,4 @@
-function Login(callback) {
+function Login(onSubmit, onRegister) {
     const temp = document.createElement('div')
 
     temp.innerHTML = `<section class="login">
@@ -7,6 +7,7 @@ function Login(callback) {
         <input type="email" name="email" placeholder="e-mail">
         <input type="password" name="password" placeholder="password">
         <button>Submit</button>
+        or <a href="">Register</a>
     </form>
 </section>`
 
@@ -20,8 +21,16 @@ function Login(callback) {
         const email = event.target.email.value,
             password = event.target.password.value
 
-        callback(email, password)
-    })
+        onSubmit(email, password)
+    });
+
+    const register = container.querySelector("a");
+
+    register.addEventListener('click', function (event) {
+        event.preventDefault()
+
+        onRegister()
+    });
 
     return container
 }

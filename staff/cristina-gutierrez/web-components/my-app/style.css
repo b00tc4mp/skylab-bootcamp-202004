@@ -1,11 +1,25 @@
-.register {
-  border: 1rem solid red;
+.register, .login, .home {
   display: inline-block;
+  border: 1rem dashed gray;
+  border-radius: 2rem;
+  padding: 1rem;
+}
+
+.landing {
+  background-color: orange;
+  text-align: center;
+}
+
+.home {
+  border-color: yellow;
 }
 
 .login {
-  border: 1rem solid blue;
-  display: inline-block;
+  border-color: blue;
+}
+
+.register {
+  border-color: red;
 }
 
 /*# sourceMappingURL=style.css.map */
