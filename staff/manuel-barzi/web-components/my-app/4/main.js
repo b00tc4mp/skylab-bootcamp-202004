@@ -14,7 +14,7 @@ const register = Register(function (name, surname, email, password) {
 
 const login = Login(function (email, password) {
     authenticateUser(email, password)
-
+debugger
     const user = retrieveUser(email)
 
     const home = Home(user.name, function () {
