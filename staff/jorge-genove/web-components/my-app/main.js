@@ -1,12 +1,3 @@
-const users = [
-  {
-    name: "Manuel",
-    surname: "Barzi",
-    email: "manuelbarzi@gmail.com",
-    password: "123",
-  },
-];
-
 const landing = Landing(
   function () {
     landing.replaceWith(register);
@@ -18,21 +9,9 @@ const landing = Landing(
 
 const register = Register(
   function (name, surname, email, password) {
-    const repeatMail = users.find(function (user) {
-      return user.email === email;
-    });
+    registerUser(name, surname, email, password);
 
-    if (repeatMail) {
-      throw new Error("Email already exists MDRFUCKER");
-    } else {
-      users.push({
-        name,
-        surname,
-        email,
-        password,
-      });
-      register.replaceWith(login);
-    }
+    register.replaceWith(login);
   },
   function () {
     register.replaceWith(login);
@@ -41,17 +20,15 @@ const register = Register(
 
 const login = Login(
   function (email, password) {
-    const user = users.find(function (user) {
-      return user.email === email && user.password === password;
+    authenticateUser(email, password);
+
+    const user = retrieveUser(email);
+
+    const home = Home(user.name, function () {
+      home.replaceWith(landing);
     });
 
-    if (user) {
-      const home = Home(user.name, function () {
-        home.replaceWith(landing);
-      });
-
-      login.replaceWith(home);
-    } else throw new Error("wrong credentials");
+    login.replaceWith(home);
   },
   function () {
     login.replaceWith(register);
