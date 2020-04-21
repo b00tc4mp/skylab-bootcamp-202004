@@ -22,8 +22,12 @@ function Login(onSubmit, onRegister) {
 
         const email = event.target.email.value,
             password = event.target.password.value;
+         
+        try {
+            onSubmit(email, password)
 
-        onSubmit(email, password, function (error) {
+            cleanUp()
+        } catch(error) {
             if (!feedback) {
                 feedback = Feedback(error, 'error');
 
@@ -31,15 +35,20 @@ function Login(onSubmit, onRegister) {
             } else {
                 feedback.innerText = error;
             }
-        }, function () {
-            event.target.email.value = '';
-            event.target.password.value = '';
+        }    
+    })    
+    
+    function cleanUp() {
+        form.email.value = '';
+        form.password.value = '';
+        
+        if (feedback) {
+        container.removeChild(feedback);
 
-            if (feedback) {
-                container.removeChild(feedback);
-            }
-        })
-    })
+        feedback = undefined;
+        }
+        
+    }
 
     const register = container.querySelector('a');
 
@@ -47,6 +56,8 @@ function Login(onSubmit, onRegister) {
         event.preventDefault();
 
         onRegister();
+
+        cleanUp();
     })
 
     return container;

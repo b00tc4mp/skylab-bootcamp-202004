@@ -2,8 +2,8 @@ function Landing(onRegister, onLogin) {
     const temp = document.createElement('div');
 
     temp.innerHTML = `<section class="landing">
-    <a href="">Register</a> or <a href="">Login</a>
-</section>`
+        <a href="">Register</a> or <a href="">Login</a>
+    </section>`
 
     const container = temp.firstChild;
 
