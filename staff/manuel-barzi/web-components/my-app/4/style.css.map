@@ -1,0 +1,1 @@
+{"version":3,"sourceRoot":"","sources":["components/Panel.sass","utils.sass","components/Landing.sass","components/Login.sass","components/Register.sass","components/Home.sass","components/Feedback.sass"],"names":[],"mappings":"AAAA;EACI;ECAA;EACA,eDCkC;EAElC;;;AELJ;EACI;EACA;;;ACFJ;EAGI;;;ACHJ;EAGI;;;ACHJ;EAGI;;;ACHJ;EACI;;AAEA;EACI;;AAEJ;EACI","file":"style.css"}
