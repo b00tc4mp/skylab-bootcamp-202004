@@ -4,10 +4,10 @@ function Register(onSubmit, onLogin) {
 
     temp.innerHTML = `<section class="register"><h1>Register</h1>
     <form>
-        <input type="text" name="name" minlength="4" maxlength="10" placeholder="name">
-        <input type="text" name="surname" minlength="4" maxlength="10" placeholder="surname">
-        <input type="email" name="email" minlength="4" maxlength="18" placeholder="e-mail">
-        <input type="password" name="password" placeholder="password">
+        <input type="text" name="name" minlength="4" maxlength="10" placeholder="name" required>
+        <input type="text" name="surname" minlength="4" maxlength="10" placeholder="surname" required>
+        <input type="email" name="email" minlength="4" maxlength="18" placeholder="e-mail" required>
+        <input type="password" name="password" placeholder="password" required>
         <button>Submit</button>
         <a href="">Log in</a>
     </form><section>`
@@ -60,11 +60,3 @@ function Register(onSubmit, onLogin) {
 };
 
 
-// if (feedback) container.removeChild(feedback)
-// } catch (error) {
-//     if (!feedback) {
-//         feedback = Feedback(error.message, 'error')
-
-//         container.append(feedback)
-//     } else feedback.innerText = error.message
-// }
