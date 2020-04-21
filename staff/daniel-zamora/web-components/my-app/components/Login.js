@@ -40,7 +40,7 @@ function Login(checkLogin, inRegister) {
   const register = container.querySelector("a");
 
   register.addEventListener("click", function (event) {
-
+    event.preventDefault();
     inRegister();
     
   });

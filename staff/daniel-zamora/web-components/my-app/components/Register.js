@@ -4,12 +4,14 @@ function Register(checkRegister, callback) {
     temp.innerHTML = `<section class="register">
     <h1>Register</h1>
     <form>
-        <input type="text" name="name" placeholder="name">
-        <input type="text" name="surname" placeholder="surname">
-        <input type="email" name="email" placeholder="e-mail">
-        <input type="password" name="password" placeholder="password">
+        <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}>
+        <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}>
+        <input type="email" name="email" placeholder="e-mail" required>
+        <input type="password" name="password" placeholder="password" required pattern="[A-Za-z0-9]{1,20}>
         <button>Submit</button>
+        or <a href="">Login</a>
     </form>
+    <p class="feedback feedback--success"></p>
 </section>`
 
     const container = temp.firstChild
