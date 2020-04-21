@@ -1,6 +1,8 @@
 'use strict'
+ 
+Arroz.prototype.forEach = function forEach(expression) { 
 
-function forEach(array, expression) {
-    for (var i = 0; i < array.length; i++)
-        expression(array[i], i, array);
-}
+    for (var i = 0; i < this.length; i++)
+        expression(this[i], i, this);
+}; 
+
