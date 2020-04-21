@@ -7,7 +7,7 @@ function Register(onSubmit, onLogin) {
         <input type="text" name="name" placeholder="name">
         <input type="text" name="surname" placeholder="surname">
         <input type="email" name="email" placeholder="e-mail">
-        <input type="password" name="name" placeholder="password">
+        <input type="password" name="password" placeholder="password">
         <button>Submit</button>
         or <a href="">Login</a>
     </form>
