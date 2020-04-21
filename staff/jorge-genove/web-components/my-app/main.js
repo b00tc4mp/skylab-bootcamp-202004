@@ -24,10 +24,12 @@ const login = Login(
 
     const user = retrieveUser(email);
 
+  
     const home = Home(user.name, function () {
       home.replaceWith(landing);
+    
     });
-
+  
     login.replaceWith(home);
   },
   function () {
@@ -36,3 +38,4 @@ const login = Login(
 );
 
 document.getElementById("root").appendChild(landing);
+// document.getElementById("root").appendChild(home);
