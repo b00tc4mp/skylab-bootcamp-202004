@@ -1,20 +1,26 @@
 'use stric'
-function Landing(callback){ 
-const temp = document.createElement('div')
+function Landing(onRegister, onLogin) {
+    const temp = document.createElement('div')
 
-temp.innerHTML = `<section class="landing">
+    temp.innerHTML = `<section class="landing">
 <h1>Wellcome to my App</h1>
-<button class='register'>Register</button>
-<button class='login'>Login</button>
+<a href="">Register </a>or
+<a href="">Login</a>
 </section>`
 
-const container = temp.firstChild
+    const container = temp.firstChild
+    const [register, login] = container.querySelectorAll('a')
 
-const registerButton = container.querySelector('.register')
+    register.addEventListener('click', function () {
+        event.preventDefault()
+        onRegister()
 
-registerButton.addEventListener('click', function(){
+    })
+    login.addEventListener('click', function () {
+        event.preventDefault()
+        onLogin()
 
-    callback()
-})
-return container
+    })
+    return container
 }
+
