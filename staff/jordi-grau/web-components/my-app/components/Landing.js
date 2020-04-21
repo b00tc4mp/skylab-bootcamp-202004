@@ -1,23 +1,29 @@
-function Landing(inRegister, inLogin) {
+function Landing(onRegister, onLogin) {
     const temp = document.createElement('div')
 
-    temp.innerHTML = ` <section class="landing">
+    temp.innerHTML = `<section class="landing">
     <a href="">Register</a> or <a href="">Login</a>
-    </section>`
+</section>`
 
-    const container = temp.firstChild;
+    const container = temp.firstChild
 
-    const links = container.querySelectorAll('a')
-    const register = links[0];
-    const login = links[1];
+    // const anchors = container.querySelectorAll('a')
+    // const register = anchors[0]
+    // const login = anchors[1]
 
-    register.addEventListener ('click', function(event) {
-        inRegister();
-    });
+    const [register, login] = container.querySelectorAll('a')
 
+    register.addEventListener('click', function(event) {
+        event.preventDefault()
 
-    login.addEventListener ('click', function(event){
-        inLogin();
-    });
-    return container;
-} 
+        onRegister()
+    })
+
+    login.addEventListener('click', function(event) {
+        event.preventDefault()
+
+        onLogin()
+    })
+
+    return container
+}

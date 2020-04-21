@@ -1,4 +1,4 @@
-function Register(checkRegister, callback) {
+function Register(onSubmit, onLogin) {
   const temp = document.createElement('div')
 
   temp.innerHTML = `<section class="register">
@@ -9,12 +9,15 @@ function Register(checkRegister, callback) {
       <input type="email" name="email" placeholder="e-mail">
       <input type="password" name="password" placeholder="password">
       <button>Submit</button>
+      or <a href="">Login</a>
   </form>
 </section>`
 
   const container = temp.firstChild
 
   const form = container.querySelector('form')
+
+  let feedback
 
   form.addEventListener('submit', function (event) {
       event.preventDefault()
@@ -24,25 +27,33 @@ function Register(checkRegister, callback) {
           email = event.target.email.value,
           password = event.target.password.value
 
+  try{
+      onSubmit(name, surname, email, password)
+      
+      event.target.name.value = '';
+      event.target.surname.value = '';
+      event.target.email.value = '';
+      event.target.password.value = '';
 
-  let success;
+  }catch(error) {
+      if(!feedback) {
+          feedback= Feedback(error.message, 'error')
 
-  try {
-    checkRegister(email);
-    event.target.email.value = "";
-    event.target.password.value = "";
-
-    if (success) container.removeChild(success);
-  } catch (error) {
-    if (!success) {
-      feedback = Feedback(error.message, "success");
-
-      container.append(success);
-    } else feedback.innerHTML = error.message;
+          container.append(feedback)
+      }else{
+          feedback.innerText = error.message
+      }
   }
+          
+  })
 
-      callback(name, surname, email, password)
+  const login = container.querySelector('a')
+
+  login.addEventListener('click', function(event) {
+      event.preventDefault()
+
+      onLogin()
   })
 
   return container
-} 
+}

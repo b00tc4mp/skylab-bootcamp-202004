@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -18,12 +19,10 @@
             <input type="text" name="name" placeholder="name">
             <input type="text" name="surname" placeholder="surname">
             <input type="email" name="email" placeholder="e-mail">
-            <input type="password" name="password" placeholder="password">
+            <input type="password" name="name" placeholder="password">
             <button>Submit</button>
             or <a href="">Login</a>
         </form>
-        <p class="feedback feedback--success"></p>
-    </section>
     </section>
 
     <section class="login">
@@ -34,12 +33,24 @@
             <button>Submit</button>
             or <a href="">Register</a>
         </form>
-        <p class="feedback feedback--error"></p>
+        <p class="feedback feedback--error">Wrong credentials</p>
     </section>
 
     <section class="home">
         <h1>Welcome, ${name}!</h1><button>Logout</button>
+        <section>
+            <form>
+                <input type="text" name="querySearch"><button>Search</button>
+            </form>
+        </section>
+        <section>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </section>
     </section>
 </body>
 
-</html> 
+</html>

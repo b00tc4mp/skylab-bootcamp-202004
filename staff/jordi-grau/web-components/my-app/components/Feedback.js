@@ -1,10 +1,9 @@
-function Feedback (feedbackError, message) {
+function Feedback(message, level) {
+    const temp = document.createElement('div')
 
-    const temp = document.createElement('div');
-
-    temp.innerHTML = `<p class="feedback feedback--${feedbackError} ">${message}</p>`
+    temp.innerHTML = `<p class="feedback feedback--${level}">${message}</p>`
 
     const container = temp.firstChild
 
-    return container;
-} 
+    return container
+}
