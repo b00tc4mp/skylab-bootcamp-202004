@@ -48,4 +48,18 @@ describe("Arroz.prototype.map", function() {
     expect(result[1]).toBe(array);
     expect(result[2]).toBe(array);
   });
+
+  it("should throw an error when the parameter callback is not a function", function () {
+    var array = new Arroz(1, 2, 3);
+
+    expect(function() {
+      array.map(true);
+    }).toThrowError(TypeError, 'true is not a function');
+
+    expect(function () {
+      array.map(123);
+    }).toThrowError(TypeError, '123 is not a function');
+
+  });
+  
 });

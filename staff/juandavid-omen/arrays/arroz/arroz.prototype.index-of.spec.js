@@ -32,4 +32,12 @@ describe("Arroz.prototype.index-of", function() {
 
     expect(result).toBe(-1);
   });
+
+  it("throw an error when index is not numeric", function () {
+    var array = new Arroz(2, 9, 9);
+
+    expect(function () { 
+      array.indexOf(5, false);
+     }).toThrowError(TypeError, 'false must be numeric');
+  });
 });

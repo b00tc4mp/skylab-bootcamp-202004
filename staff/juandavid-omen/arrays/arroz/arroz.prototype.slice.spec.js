@@ -10,6 +10,15 @@ describe("Arroz.prototype.slice", function() {
     
   });
 
+  it("should throw an error when the end param is higher than the index range", function () {
+    var array = new Arroz(5, 12, 8, 130, 44);
+
+    expect(function () {
+      array.slice(1, 10);
+    }).toThrowError(RangeError, "10 is higher than the index range")
+
+  });
+
     it("extract the subsequence of an Arroz from index 0 to the parameter end", function() {
     var array = new Arroz(5, 12, 8, 130, 44);
     var result = array.slice(2);

@@ -12,8 +12,12 @@ Arroz.prototype.slice = function() {
         end = arguments[0];
     }
     
-    if(begin > this.length) {
-        return result;
+    if (begin > this.length) {
+        throw new RangeError(begin + " is higher than the index range");
+    }
+
+    if (end > this.length) {
+        throw new RangeError(end + " is higher than the index range");
     }
 
     for(var i = begin; i < end; i++) {

@@ -68,4 +68,22 @@ describe("Arroz.prototype.splice", function() {
     array.splice(3, -3);
     expect(array.length).toBe(6);
   });
+
+
+  it("if start is not a number, throw an error", function () {
+    var array = new Arroz(1, 2, 4, 5, 6, 7);
+ 
+     expect(function () {
+      array.splice(true, -3);
+    }).toThrowError(TypeError, 'true must be numeric');
+  });
+
+  it("if deleteCount is not a number, throw an error", function () {
+    var array = new Arroz(1, 2, 4, 5, 6, 7);
+
+    expect(function () { 
+      array.splice(3, 'hello');
+    }).toThrowError(TypeError, 'hello must be numeric');
+  });
+
 });

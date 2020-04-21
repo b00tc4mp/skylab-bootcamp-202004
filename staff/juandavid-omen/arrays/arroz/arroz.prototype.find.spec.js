@@ -30,4 +30,20 @@ describe("Arroz.prototype.find", function() {
 
     expect(result).toBe(undefined);
   });
+
+  it("Throw an error if the parameter is not a function", function () {
+    var array = new Arroz();
+
+    var result = array.find(function (element) {
+      return element > 0;
+    });
+
+    expect(function() {
+      array.find(undefined)
+    }).toThrowError(TypeError, 'undefined is not a function');
+
+    expect(function () {
+      array.find(2)
+    }).toThrowError(TypeError, '2 is not a function');
+  });
 });

@@ -57,4 +57,12 @@ describe("Arroz.prototype.join", function() {
 
     expect(result).toBe("5,true,function hello(){}");
   });
+
+  it("throw an error when the separator is not a string", function () {
+    var array = new Arroz(5, 7, 8);
+
+    expect(function () { 
+      array.join(1);
+     }).toThrowError(TypeError, '1 is not a string');
+  });
 });

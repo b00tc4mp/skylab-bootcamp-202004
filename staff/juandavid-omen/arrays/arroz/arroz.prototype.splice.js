@@ -1,6 +1,12 @@
 "use strict";
 
 Arroz.prototype.splice = function(start, deleteCount) { 
+    if (typeof start !== 'number') {
+        throw new TypeError(start + ' must be numeric');
+    }
+    if (arguments.length == 2 && typeof deleteCount !== 'number') {
+        throw new TypeError(deleteCount + ' must be numeric');
+    }
     if(start > this.length) {
         start = this.length;
         deleteCount = 0;

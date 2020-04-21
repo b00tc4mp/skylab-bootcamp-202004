@@ -3,7 +3,10 @@
 Arroz.prototype.indexOf = function(element, index) {
     var i = 0;
     
-    if(arguments.length>1) {
+    if (arguments.length > 1) {
+        if (typeof index !== 'number') {
+            throw new TypeError(index + ' must be numeric');
+        }
         if(index >= this.length) {
             return -1
         } else {

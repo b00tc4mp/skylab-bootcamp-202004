@@ -30,4 +30,21 @@ describe("Arroz.prototype.find-index", function() {
 
     expect(result).toBe(-1);
   });
+
+  it("Should throw an error if the parameter is not a function", function () {
+    var array = new Arroz();
+
+    expect(function() {
+      array.findIndex('123');
+    }).toThrowError(TypeError, '123 is not a function');
+
+    expect(function () {
+      array.findIndex(undefined);
+    }).toThrowError(TypeError, 'undefined is not a function');
+
+    expect(function () {
+      array.findIndex(true);
+    }).toThrowError(TypeError, 'true is not a function');
+
+  });
 });

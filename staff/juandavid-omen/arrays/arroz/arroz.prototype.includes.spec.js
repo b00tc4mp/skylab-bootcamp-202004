@@ -48,4 +48,12 @@ describe("Arroz.prototype.includes", function() {
 
     expect(result).toBe(false); 
   });
+
+  it("throw an error when index is not numeric", function () {
+    var array = new Arroz(2, 9, 9);
+
+    expect(function() {
+      array.includes(2, true);
+    }).toThrowError(TypeError, 'true must be a number');
+  });
 });

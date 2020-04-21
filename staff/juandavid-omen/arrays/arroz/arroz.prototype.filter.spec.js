@@ -22,4 +22,12 @@ describe("Arroz.prototype.filter", function() {
     expect(result[1]).toBe('destruction');
     expect(result[2]).toBe('present');
   });
+
+  it("should throw an error if the expression is not a function", function () {
+    var array = new Arroz("spray", "destruction", "present");
+
+    expect(function(){
+      array.filter('Hello')
+    }).toThrowError(TypeError, 'Hello is not a function');
+  });
 });
