@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utensilios de reposteria </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="main-header__static-nav static-nav">
+            <img class="static-nav__menu" src="https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/burger_menu.png" alt="hamburger">
+            <img class="static-nav__user" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS18YDZmgMSKH_YgxIl5xroBN0c0eJmq0u56Y2iPV-atZBf0xJk&usqp=CAU" alt="user icon">
+            <div class="static-nav__but-menu  buy-menu">
+                <img class="buy-menu__search" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQa3cZdxi-1EVJkG3vYaXrtHazMtU7_DvQ63SdWS8_pF2kK1KvE&usqp=CAU" alt="search icon">
+                <img class="buy-menu__shopping--cart" src="data:image/png;base64,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"
+                    alt="cart icon">
+                <p class="buy-menu__cart">0</p>
+            </div>
+        </div>
+
+        <img class="main-header__logo" src="https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/logo-small.svg" alt="logo marialunarillos">
+
+    </header>
+
+    <div class="slider-wrapper">
+        <div class="slider-wrapper__images-display">
+            <img class="slider-wrapper__images-display--image-slider" src="https://static3.marialunarillos.com/media/custom/advancedslider/resized/slide-5c2f5c969f181-png/1080X600.png" alt="" class="slider-wrapper__image-display--images">
+            <img src="" alt="" class="slider-wrapper__image-display--images">
+            <img src="" alt="" class="slider-wrapper__image-display--images">
+            <div class="slider-wrapper__image-display">
+                <div class="slide-wrapper_nav nav-list">
+
+                    <input class="nav-list__slide" type="radio">
+                    <input class="nav-list__slide" type="radio">
+                    <input class="nav-list__slide" type="radio">
+                    <input class="nav-list__slide" type="radio">
+                    <input class="nav-list__slide" type="radio">
+                    <input class="nav-list__slide" type="radio">
+                    <input class="nav-list__slide" type="radio">
+                    <input class="nav-list__slide" type="radio">
+
+                </div>
+            </div>
+
+            <main>
+                <div class="category">
+                    <div class="category__header">
+                        <img class="category__image-title" src="https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/icons/utensiliosML.png">
+                        <h2 class="category__title">UTENSILIOS</h2>
+                    </div>
+
+                    <div class="category__images category__images--utensilios">
+                        <div class="item category__image--moldes">
+                            <img class="item__image item__image--long" src="https://static3.marialunarillos.com/media/catalog/category/moldesnordic.jpg" alt="moldes">
+                            <h2 class="item__title">MOLDES DE REPOSTERIA</h2>
+                        </div>
+                        <div class="item category__images--utilidades">
+                            <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/utensiliosbasicos.jpg" alt="utilidades">
+                            <h2 class="item__title">UTILIDADES BÁSICOS</h2>
+                        </div>
+                        <div class="item category__images--pequenos">
+                            <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/pequenoelectrodomestico2.jpg" alt="electrodomesticos">
+                            <h2 class="item__title">PEQUEÑO ELECTRODOMESTICO</h2>
+                        </div>
+                        <div class="item category__images--capsulas">
+                            <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/capsulas-cupcakes.jpg" alt="cupcakes">
+                            <h2 class="item__title">CAPSULA PARA MAGDALENAS</h2>
+                        </div>
+                        <div class="item category__images--cajas">
+                            <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/cajas3.jpg" alt="cajas">
+                            <h2 class="item__title">CAJAS Y BASES</h2>
+                        </div>
+                        <div class="item category__images--cortadores">
+                            <img class="item__image item__image--crop item__image--long" src="https://static3.marialunarillos.com/media/wysiwyg/cortadoresgalletas2.jpg" alt="contador">
+                            <h2 class="item__title">CORTADORES DE GALLETAS</h2>
+                        </div>
+                        <div class="item category__images--ceramica">
+                            <img class="item__image item__image--crop item__image--long" src="https://static3.marialunarillos.com/media/wysiwyg/stands.jpg" alt="ceraytex">
+                            <h2 class="item__title">CERÁMICA Y TEXTIL</h2>
+                        </div>
+                        <div class="item category__images--banetones">
+                            <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/banetones.jpg" alt="panones">
+                            <h2 class="item__title">BANETONES PARA PAN</h2>
+                        </div>
+                        <div class="item category__images--toppers">
+                            <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/toppers3.jpg" alt="toppers">
+                            <h2 class="item__title">TOPPERS Y FIGURITAS</h2>
+                        </div>
+                    </div>
+                    <button class="category__click">
+                VER MAS
+            </button>
+
+                    <div class="category ">
+                        <div class="category__header">
+                            <img class="category__image-title" src="https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/icons/magdalena.png">
+                            <h2 class="category__title">INGREDIENTES</h2>
+                        </div>
+
+                        <div class="category__images category__images--ingredientes">
+                            <div class="item category__image--fondant">
+                                <img class="item__image  item__image--crop item__image--long" src="https://static3.marialunarillos.com/media/wysiwyg/fondant2.jpg" alt="fondant">
+                                <h2 class="item__title">FONDANT</h2>
+                            </div>
+                            <div class="item category__images--colorantes">
+                                <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/ingredientesreposteria.jpg" alt="ingredientesreposteria">
+                                <h2 class="item__title">INGREDIENTES DE REPOSTERIA</h2>
+                            </div>
+                            <div class="item category__images--impresion">
+                                <img class="item__image item__image--wide " src="https://static3.marialunarillos.com/media/wysiwyg/impresionpersonalizada.jpg" alt="impresionpersonalizada">
+                                <h2 class="item__title">IMPRESIÓN PERSONALIZADA</h2>
+                            </div>
+                            <div class="item category__images--ingredientes">
+                                <img class="item__image item__image--wide " src="https://static3.marialunarillos.com/media/wysiwyg/Colorantes-alimentarios.jpg" alt="Colorantes-alimentarios">
+                                <h2 class="item__title">COLORANTES ALIMENTARIOS</h2>
+                            </div>
+                            <div class="item category__images--papel">
+                                <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/papelcomestible.jpg" alt="nordic wtf dessert">
+                                <h2 class="item__title">PAPEL COMESTIBLE</h2>
+                            </div>
+                            <div class="item category__images--sprinkles">
+                                <img class="item__image item__image--crop item__image--long" src="https://static3.marialunarillos.com/media/wysiwyg/sprinkles3.jpg" alt="nordic wtf dessert">
+                                <h2 class="item__title">SPRINKLES Y PURPURINAS</h2>
+                            </div>
+                        </div>
+                        <button class="category__click">
+                VER MAS
+            </button>
+
+                        <div class="category ">
+                            <div class="category__header">
+                                <img class="category__image-title" src="https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/icons/tarta-cumpleanos.png">
+                                <h2 class="category__title">FIESTAS</h2>
+                            </div>
+
+                            <div class="category__images category__images--fiestas">
+                                <div class="item category__images--fiesta">
+                                    <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/fiestastematicas.jpg" alt="nordic wtf dessert">
+                                    <h2 class="item__title">FIESTAS TEMÁTICAS</h2>
+                                </div>
+                                <div class="item category__images--personajes">
+                                    <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/fiestaspersonajes.jpg" alt="nordic wtf dessert">
+                                    <h2 class="item__title">FIESTAS PERSONAJES</h2>
+                                </div>
+                                <div class="item category__images--accesorios">
+                                    <img class="item__image item__image--crop item__image--long" src="https://static3.marialunarillos.com/media/wysiwyg/pompones.jpg" alt="nordic wtf dessert">
+                                    <h2 class="item__title">ACCESORIOS PARA FIESTAS</h2>
+                                </div>
+                            </div>
+                            <button class="category__click">
+                                VER MAS
+                            </button>
+                            <div class="category">
+                                <div class="category__header">
+                                    <img class="category__image-title" src="https://static3.marialunarillos.com/media/wysiwyg/blog.svg">
+                                    <h2 class="category__title">ULTIMOS BLOG</h2>
+                                </div>
+
+                                <div class="category">
+
+                                    <div class="category__blog-wrapper">
+                                        <div class="item">
+                                            <img class="item__image item__image--blog" src="https://www.marialunarillos.com/blog/wp-content/uploads/2020/03/receta-galletas-pims-naranja-1.jpg">
+                                            <h2 class="item__description">GALLETAS PIM</h2>
+                                        </div>
+                                        <div class="item hidden">
+                                            <img class="item__image item__image--blog" src="https://www.marialunarillos.com/blog/wp-content/uploads/2020/03/receta-brazo-frambuesa-dia-madre-0.jpg">
+                                            <h2 class="item__description">BRAZO DE FRAMBUESA</h2>
+                                        </div>
+                                        <div class="item hidden">
+                                            <img class="item__image item__image--blog" src="https://www.marialunarillos.com/blog/wp-content/uploads/2020/04/receta-muffins-starbucks-chocolate-1.jpg">
+                                            <h2 class="item__description">MUFFINS DE CHOCOLATE</h2>
+                                        </div>
+                                    </div>
+                                    <button class="category__click">
+                    IR A BLOG
+                </button>
+                                    <div class="category__">
+                                        <h2 class="category__title">NUESTRAS MARCAS</h2>
+                                        <div class="brands-container">
+                                            <img class="item_image item__image--brands" src=https://static3.marialunarillos.com/media/catalog/category/Wilton_4.png>
+                                            <img class="item_image item__image--brands" src=https://static3.marialunarillos.com/media/catalog/category/Emile_Henry_2.png>
+                                            <img class="item_image item__image--brands" src=https://static3.marialunarillos.com/media/catalog/category/Silikomart_2.png>
+                                            <img class="item_image item__image--brands" src=https://static3.marialunarillos.com/media/catalog/category/Nordic_Ware_2.png>
+                                            <img class="item_image item__image--brands" src=https://static3.marialunarillos.com/media/catalog/category/Lekue_5.png>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+            </main>
+
+            <footer class="contact">
+
+            </footer>
+            <div class="copyright">
+                Copyright ©2020 María Lunarillos
+            </div>
+</body>
+
+</html>
