@@ -35,4 +35,17 @@ describe('Arroz.prototype.find', function () {
 
         expect(result).toBe(undefined);
     });
+
+    it('should return an error because typeof callback is not a function', function () {
+        var arroz = new Arroz(3, 9, 5, 2, 10);
+        var result;
+        
+        try {
+            arroz.find();
+        } catch (error) {
+            result = error.message
+        }
+
+        expect(result).toBe("undefined is not a function");
+    });
 });

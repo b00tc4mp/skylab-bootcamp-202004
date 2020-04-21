@@ -34,4 +34,17 @@ describe('Arroz.prototype.some', function () {
 
         expect(result).toBe(false);
     });
+
+    it('should return an error because typeof callback is not a function', function () {
+        var arroz = new Arroz(1, 2, 11, 4, 20, 5, 6, 12);
+        var result;
+        
+        try {
+            arroz.some();
+        } catch (error) {
+            result = error.message
+        }
+
+        expect(result).toBe("undefined is not a function");
+    });
 });

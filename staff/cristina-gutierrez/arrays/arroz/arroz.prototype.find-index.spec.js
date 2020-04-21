@@ -37,4 +37,17 @@ describe('Arroz.prototype.findIndex', function () {
 
         expect(result).toBe(-1);
     });
+
+    it('should return an error because typeof callback is not a function', function () {
+        var arroz = new Arroz(3, 9, 5, 2, 10);
+        var result;
+        
+        try {
+            arroz.findIndex();
+        } catch (error) {
+            result = error.message
+        }
+
+        expect(result).toBe("undefined is not a function");
+    });
 });

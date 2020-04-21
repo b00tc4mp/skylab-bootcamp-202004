@@ -37,4 +37,17 @@ describe('Arroz.prototype.every', function () {
 
         expect(result).toBe(true);
     });
+
+    it('should return an error because typeof callback is not a function', function () {
+        var arroz = new Arroz("chaqueta", "bufanda", "camiseta", "shorts");
+        var result;
+        
+        try {
+            arroz.every();
+        } catch (error) {
+            result = error.message
+        }
+
+        expect(result).toBe("undefined is not a function");
+    });
 });

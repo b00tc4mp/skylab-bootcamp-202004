@@ -33,4 +33,17 @@ describe('Arroz.prototype.filter', function() {
         expect(result).toEqual([])
         
     });
+
+    it('should return an error because typeof callback is not a function', function () {
+        var arroz = new Arroz(1, 2, 3, 4, 5);
+        var result;
+        
+        try {
+            arroz.filter();
+        } catch (error) {
+            result = error.message
+        }
+
+        expect(result).toBe("undefined is not a function");
+    });
 });
