@@ -43,26 +43,17 @@ describe("Arroz.prototype.reduce", function() {
     expect(result).toBe(undefined);
   });
 
-  it("if an empty array is introduced, it returns undefined (original function returns error)", function() {
+  it('Arroz.prototype.reduce() Errors', function () {
     var array = new Arroz();
     
-    var result = array.reduce(function(accumulator, element) {
-      return accumulator + element;
-    });
-
-    expect(result).toBe(undefined);
-  });
- /*  it('Arroz.prototype.reduce() Errors', function () {
-  var array = new Arroz();
-
-  expect(function () {
-    array.reduce(function (accumulator, element) {
-      return accumulator + element;
-    });
-    }).toThrowError(TypeError, 'Reduce of empty array with no initial value at Arroz.reduce');
+    expect(function () {
+      array.reduce(function (accumulator, element) {
+        return accumulator + element;
+      });
+    }).toThrowError(TypeError, 'Arroz has not values to do reduce');
 
     var array = new Arroz(1, 2, 3);
-
+    
     expect(function () {
       array.reduce();
     }).toThrowError(TypeError, 'undefined is not a function');
@@ -72,5 +63,5 @@ describe("Arroz.prototype.reduce", function() {
     expect(function () {
       array.reduce('hello');
     }).toThrowError(TypeError, 'hello is not a function');
-  }); */
-}); 
+  });
+});

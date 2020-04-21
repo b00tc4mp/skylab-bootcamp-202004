@@ -1,6 +1,14 @@
 "use strict";
 
-Arroz.prototype.reduce = function(expression, initialValue){
+Arroz.prototype.reduce = function(expression, initialValue) {
+    if (this.length === 0) {
+        throw new TypeError('Arroz has not values to do reduce');
+    }
+
+    if (typeof expression !== 'function') {
+        throw new TypeError(expression + ' is not a function');
+    }
+    
     if(arguments.length > 1) {
         if(initialValue >= this.length) {
             return undefined;
@@ -21,10 +29,3 @@ Arroz.prototype.reduce = function(expression, initialValue){
     return accumulator;
 };
 
-/* if (this.length === 0) {
-    throw new TypeError('Reduce of empty array with no initial value at Arroz.reduce');
-}
-
-if (typeof expression !== 'function') {
-    throw new TypeError(expression + ' is not a function');
-} */
