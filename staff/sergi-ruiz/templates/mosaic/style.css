@@ -1,0 +1,121 @@
+.gridbox {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-areas: "a b c d" "e f g h" "i j k l" "m n o p""q r s t";
+}
+
+.box {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    box-sizing: border-box;
+    color: white;
+    font-size: 20vh;
+    text-align: center;
+}
+
+.box1 {
+    grid-area: a;
+    background-color: red;
+}
+
+.box2 {
+    grid-area: e;
+    background-color: blue;
+}
+
+.box3 {
+    grid-area: f;
+    background-color: yellow;
+}
+
+.box4 {
+    grid-area: i;
+    background-color: orange;
+}
+
+.box5 {
+    grid-area: j;
+    background-color: lightcoral;
+}
+
+.box6 {
+    grid-area: m;
+    background-color: darkcyan;
+}
+
+.box7 {
+    grid-area: n;
+    background-color: bisque;
+}
+
+.box8 {
+    grid-area: q;
+    background-color: darkgreen;
+}
+
+.box9 {
+    grid-area: r;
+    background-color: sienna;
+}
+
+@media only screen and (min-width: 768px) {
+    .box1 {
+        grid-area: a;
+    }
+    .box2 {
+        grid-area: b;
+    }
+    .box3 {
+        grid-area: c;
+    }
+    .box4 {
+        grid-area: e;
+    }
+    .box5 {
+        grid-area: f;
+    }
+    .box6 {
+        grid-area: g;
+    }
+    .box7 {
+        grid-area: i;
+    }
+    .box8 {
+        grid-area: j;
+    }
+    .box9 {
+        grid-area: k;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .box1 {
+        grid-area: a;
+    }
+    .box2 {
+        grid-area: e;
+    }
+    .box3 {
+        grid-area: f;
+    }
+    .box4 {
+        grid-area: g;
+    }
+    .box5 {
+        grid-area: i;
+    }
+    .box6 {
+        grid-area: j;
+    }
+    .box7 {
+        grid-area: k;
+    }
+    .box8 {
+        grid-area: l;
+    }
+    .box9 {
+        grid-area: m;
+    }
+}
