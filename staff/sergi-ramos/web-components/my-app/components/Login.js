@@ -36,9 +36,7 @@ function Login(callback, toLogin) {
                 feedBack = Feedback(error.message)
                 container.appendChild(feedBack)
             }else{
-
-                co
-                
+                feedback.innerText = error.message
             }
 
 
