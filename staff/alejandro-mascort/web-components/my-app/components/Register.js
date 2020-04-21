@@ -32,23 +32,40 @@ function Register(onSubmit, onLogin) {
             try {
                 onSubmit(name, surname, email, password)
 
-                event.target.name.value = ''
-                event.targe.surname.value = ''
-                event.target.email.value.value = ''
-                event.target.password.value = ''
+                cleanUp()
 
             } catch(error) {
                 if (!feedback) {
                     feedback = Feedback(error.message, 'error')
-                    container.appendChild(feedback)
-                }
+                    container.append(feedback)
+
+                }else feedback.innerText = error.message
 
             }
     })
 
+    function cleanUp() {
+        form.name.value = ''
+        form.surname.value = ''
+        form.email.value = ''
+        form.password.value = ''
+        
+        if (feedback) {
+            container.removeChild(feedback)
+
+            feedbacK = undefined
+        }
+    }
+
+    debugger;
+
     login.addEventListener('click', function(event){
         event.preventDefault()
+
         onLogin()
+
+        cleanUp()
+
     })
 
     return container

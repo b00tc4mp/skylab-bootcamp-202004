@@ -4,8 +4,8 @@ function Login(onSubmit, onRegister) {
     temp.innerHTML = `<section class="login">
     <h1>Login</h1>
     <form>
-        <input type="email" name="email" placeholder="e-mail">
-        <input type="password" name="password" placeholder="password">
+        <input type="email" name="email" placeholder="e-mail" required>
+        <input type="password" name="password" placeholder="password" required>
         <button>Submit</button>
     </form>
     <a href="">Register</a>
@@ -29,13 +29,13 @@ function Login(onSubmit, onRegister) {
         try {
             onSubmit(email, password)
 
-            event.target.email.value=''
-            event.target.password.value = ''
+            cleanUp()
+            
         } catch(error) {
             if (!feedback) {
                 feedback = Feedback(error.message, 'error')
 
-                container.appendChild(feedback)
+                container.append(feedback)
             } else feedback.innerText = error.message
         }
 
@@ -43,8 +43,22 @@ function Login(onSubmit, onRegister) {
 
     register.addEventListener('click', function(event){
         event.preventDefault()
+
         onRegister()
+
+        cleanUp()
     })
+
+    function cleanUp() {
+        form.email.value = ''
+        form.password.value = ''
+        
+        if (feedback) {
+            container.removeChild(feedback)
+
+            feedbacK = undefined
+        }
+    }
 
     return container
 }
