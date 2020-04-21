@@ -16,9 +16,23 @@ function Login(callback, goRegister) {
 
     const form = container.querySelector('form')
 
+    let feedback
+    function cleanUp() {
+        form.email.value = ''
+        form.password.value = ''
+
+        if (feedback) {
+            container.removeChild(feedback)
+
+            feedback = undefined
+        }
+    }
+
     const register = container.querySelector("#gotoregister")
     register.addEventListener("click",function(){
+        event.preventDefault()
         goRegister()
+        cleanUp()
     })
 
     form.addEventListener('submit', function (event) {
@@ -27,7 +41,15 @@ function Login(callback, goRegister) {
         const email = event.target.email.value,
             password = event.target.password.value
 
-        callback(email, password)
+        try{
+            callback(email, password)
+            cleanUp()
+        } catch (error){
+            if(!feedback){
+                feedback = Feedback(error.message, 'error')
+                container.append(feedback)
+        } else feedback.innerText = error.message
+    }
     })
 
     return container

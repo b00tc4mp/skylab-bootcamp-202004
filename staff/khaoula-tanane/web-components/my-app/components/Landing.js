@@ -3,21 +3,24 @@ function Landing(goRegister, goLogin) {
 
     temp.innerHTML = `<section class="login">
     <h1>Welcome</h1>
-        <button>Register</button>
+        <button id>Register</button>
         <button>Login</button>
 
 </section>`
 
     const container = temp.firstChild
+    const [register, login] = container.querySelectorAll('button')
 
-    const register = container.firstChild.nextSibling.nextSibling.nextSibling
-    const login = register.nextSibling.nextSibling
+    /*const register = container.firstChild.nextSibling.nextSibling.nextSibling
+    const login = register.nextSibling.nextSibling*/
 
-    register.addEventListener("click",function(){
+    register.addEventListener("click",function(event){
+        event.preventDefault()
         goRegister()
     })
 
-    login.addEventListener("click",function(){
+    login.addEventListener("click",function(event){
+        event.preventDefault()
         goLogin()
     })
 
