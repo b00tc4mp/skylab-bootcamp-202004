@@ -4,5 +4,9 @@ function retrieveUser(email) {
 
     const user = users.find(function(user) { return user.email === email })
 
-    return user
+    // sanitize user (do not return password)
+    
+    const { name, surname, email: _email } = user
+
+    return { name, surname, email: _email }
 }
