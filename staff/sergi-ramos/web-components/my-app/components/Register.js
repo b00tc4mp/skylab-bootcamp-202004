@@ -18,7 +18,7 @@ function Register(onSubmit, toLogin) {
     const form = container.querySelector('form')
     const loginButton = container.querySelector('a')
 
-    form.addEventListener('submit', function (event) { 
+    form.addEventListener('submit', function (event) {
         event.preventDefault()
 
         const name = event.target.name.value,
@@ -26,7 +26,22 @@ function Register(onSubmit, toLogin) {
             email = event.target.email.value,
             password = event.target.password.value
 
-        onSubmit(name, surname, email, password)
+        try {
+            debugger
+            onSubmit(name, surname, email, password)
+
+            cleanUp()
+
+        } catch (error) {
+            if (!feedback) {
+                feedback = Feedback(error.message)
+                container.appendChild(feedback)
+            } else {
+                feedback.innerText = error.message
+            }
+        }
+
+
     })
     loginButton.addEventListener('click', function (event) {
         event.preventDefault()
@@ -34,6 +49,16 @@ function Register(onSubmit, toLogin) {
 
 
     })
+
+    function cleanUp(){
+        form.target.email = ''
+        form.target.password = ''
+
+        if(feedback){
+           container.removeChild(feedback)
+           feedback = undefined
+       }
+   }
 
     return container
 }

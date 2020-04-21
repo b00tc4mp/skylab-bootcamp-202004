@@ -1,4 +1,4 @@
-function Login(onSubmit, toLogin) {
+function Login(onSubmit, toRegister) {  
     const temp = document.createElement('div')
 
     temp.innerHTML = `<section class="login">
@@ -15,40 +15,45 @@ function Login(onSubmit, toLogin) {
 
     const form = container.querySelector('form')
     const register = container.querySelector('a')
-    let feedBack;
+    let feedback;
 
-    form.addEventListener('submit', function (event) { 
-        debugger
+    form.addEventListener('submit', function (event) { debugger
+        
         event.preventDefault()
 
         const email = event.target.email.value,
             password = event.target.password.value
 
-        try {
+        try { 
             onSubmit(email, password)
-            if(feedBack){
-                container.removeChild(feedBack)
-                feedBack = undefined
-            }
+
+            cleanUp()
 
         } catch (error) {
-            if (!feedBack) {
-                feedBack = Feedback(error.message)
-                container.appendChild(feedBack)
+            if (!feedback) {
+                feedback = Feedback(error.message)
+                container.appendChild(feedback)
             }else{
                 feedback.innerText = error.message
             }
-
-
         }
-
     })
     register.addEventListener('click', function (event) {
         event.preventDefault()
 
-        toLogin()
+        toRegister()
+        cleanUp()
     })
 
+    function cleanUp(){  debugger
+         form.target.email = ''
+         form.target.password = ''
+
+         if(feedback){
+            container.removeChild(feedback)
+            feedback = undefined
+        }
+    }
 
     return container
 }

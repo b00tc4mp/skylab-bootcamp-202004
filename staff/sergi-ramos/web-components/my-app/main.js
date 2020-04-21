@@ -5,7 +5,7 @@ const landing = Landing(function(){
 },function(){
     
     landing.replaceWith(login)
-},)
+})
 
 const register = Register(function (name, surname, email, password) {   debugger
     
