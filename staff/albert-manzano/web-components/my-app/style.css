@@ -1,11 +1,62 @@
+.home, .register, .login {
+  display: inline-block;
+  border: 1rem dashed gray;
+  border-radius: 2rem;
+  padding: 1rem;
+}
+
+.landing {
+  background-color: tomato;
+  text-align: center;
+}
+
+.login {
+  border-color: blue;
+}
+
+.register {
+  border-color: red;
+}
+
+.home {
+  border-color: yellow;
+}
+
+.feedback {
+  color: green;
+}
+.feedback--warning {
+  color: orange;
+}
+.feedback--error {
+  color: red;
+}
+
 .register {
   border: 1rem solid red;
   display: inline-block;
+  text-align: center;
+  margin-top: 100px;
+  margin-left: 30%;
+  padding: 5px;
 }
 
 .login {
   border: 1rem solid blue;
   display: inline-block;
+  text-align: center;
+  margin-top: 100px;
+  margin-left: 30%;
+  padding: 5px;
+}
+
+.landing {
+  border: 1rem solid tomato;
+  display: inline-block;
+  text-align: center;
+  margin-top: 100px;
+  margin-left: 30%;
+  padding: 5px;
 }
 
 /*# sourceMappingURL=style.css.map */
