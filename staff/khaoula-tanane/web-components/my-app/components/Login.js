@@ -4,8 +4,8 @@ function Login(callback, goRegister) {
     temp.innerHTML = `<section class="login">
     <h1>Login</h1>
     <form>
-        <input type="email" name="email" placeholder="e-mail">
-        <input type="password" name="password" placeholder="password">
+        <input type="email" name="email" placeholder="e-mail" value="a@a.com">
+        <input type="password" name="password" placeholder="password" value="12345678">
         <button>Submit</button>
         <button id="gotoregister">Register</button>
 

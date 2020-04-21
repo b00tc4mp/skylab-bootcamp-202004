@@ -3,8 +3,6 @@ function retrieveUser(email) {
     if (!EMAIL_REGEX.test(email)) throw new Error(email + ' is not an e-mail')
 
     const user = users.find(function(user) { return user.email === email })
-
-    // sanitize user (do not return password)
     
     const { name, surname, email: _email } = user
 

@@ -4,13 +4,31 @@ function Home(name, onLogout){
 
     temp.innerHTML = ` <section> 
     <span> Welcome ${name} </span>
+    <input id="search" type="text" name="search" placeholder="search">
     <button id="logout">Logout</button>
+    <div id="listusers"></div>
     </section>`
 
     const container = temp;
 
-    const logout = container.querySelector("#logout")
+    const input = container.querySelector("#search")
+
+    const listUsers = container.querySelector("#listusers")
     
+    input.addEventListener("keyup", (event)=>{
+        console.log(event.target.value)
+        const _users = searchUsers(event.target.value)
+        console.log(_users)
+
+        listUsers.innerHTML = ''
+
+        _users.forEach(user=>{
+            listUsers.innerHTML += `<p> ${user.name} </p>`
+        })
+        
+    })
+
+    const logout = container.querySelector("#logout")
     logout.addEventListener("click",function(){
         onLogout()
     })
