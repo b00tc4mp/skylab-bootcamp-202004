@@ -7,12 +7,8 @@ const landing = Landing(function() {
 });
 
 const register = Register(function (name, surname, email, password) {
-    users.push({
-        name,
-        surname,
-        email,
-        password
-    })
+    
+    registerUser(name, surname, email, password)
 
     register.replaceWith(login)
 }, function() {
@@ -20,10 +16,11 @@ const register = Register(function (name, surname, email, password) {
 });
 
 const login = Login(function (email, password) {
-    const user = users.find(function(user) { 
-        return user.email === email && user.password === password 
-    });
 
+
+    
+    const user = retrieveUser(email)
+    
     if (user) {
         const home = Home(user, function() {
             home.replaceWith(register)
