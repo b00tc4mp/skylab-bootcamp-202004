@@ -1,4 +1,4 @@
-.home, .login, .register {
+.home, .register, .login {
   display: inline-block;
   border: 1rem solid gray;
   border: 1rem dashed gray;
@@ -11,19 +11,7 @@
   text-align: center;
 }
 
-.home, .login, .register {
-  display: inline-block;
-  border: 1rem solid gray;
-  border: 1rem dashed gray;
-  border-radius: 2rem;
-  padding: 1rem;
-}
-
-.register {
-  border-color: red;
-}
-
-.home, .login, .register {
+.home, .register, .login {
   display: inline-block;
   border: 1rem solid gray;
   border: 1rem dashed gray;
@@ -43,8 +31,27 @@
   padding: 1rem;
 }
 
+.register {
+  border-color: red;
+}
+
+.home, .login, .register {
+  display: inline-block;
+  border: 1rem solid gray;
+  border: 1rem dashed gray;
+  border-radius: 2rem;
+  padding: 1rem;
+}
+
 .home {
   border-color: yellow;
+}
+
+.results__list {
+  border: 1rem solid green;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 .feedback {

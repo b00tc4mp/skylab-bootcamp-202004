@@ -1,5 +1,12 @@
 function retrieveUser(email) {
-    const user = users.find(user => user.email === email)
+    if (typeof email !== 'string') throw new TypeError(email + ' is not a string')
+    if (!EMAIL_REGEX.test(email)) throw new Error(email + ' is not an e-mail')
 
-    return user
-}
+    const user = users.find(function(user) { return user.email === email })
+
+    // sanitize user (do not return password)
+
+    const { name, surname, email: _email } = user
+
+    return { name, surname, email: _email }
+} 

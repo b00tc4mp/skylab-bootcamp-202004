@@ -57,8 +57,6 @@ function Register(onSubmit, onLogin) {
         }
     }
 
-    debugger;
-
     login.addEventListener('click', function(event){
         event.preventDefault()
 
