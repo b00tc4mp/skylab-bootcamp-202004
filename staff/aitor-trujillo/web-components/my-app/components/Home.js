@@ -1,19 +1,17 @@
-// TODO show "Welcome, <name>!"
-function Home(user, callback) {
-  const temp = document.createElement("div");
+function Home(name, callback) {
+    const temp = document.createElement('div')
 
-  temp.innerHTML = `<section class="home">
-        <h1>Welcome, ${user.name}!</h1>
-        <button class='logout'>Logout</button>
-  </section>`;
+    temp.innerHTML = `<section class="home">
+    <h1>Welcome, ${name}!</h1><button>Logout</button>
+</section>`
 
-  const container = temp.firstChild;
+    const container = temp.firstChild
 
-  const logout = container.querySelector(".logout");
+    const button = container.querySelector('button')
 
-  logout.style.background = "red";
+    button.addEventListener('click', function() {
+        callback()
+    })
 
-  logout.addEventListener("click", callback());
-
-  return container;
+    return container
 }
