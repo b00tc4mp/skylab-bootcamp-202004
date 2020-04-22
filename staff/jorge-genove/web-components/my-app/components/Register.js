@@ -1,7 +1,6 @@
-function Register(onSubmit, onLogin) {
-    const temp = document.createElement('div')
-
-    temp.innerHTML = `<section class="register">
+class Register extends Component {
+  constructor(onSubmit, onLogin) {
+    super(`<section class="register">
     <h1>Register</h1>
     <form>
         <input type="text" name="name" placeholder="name">
@@ -11,49 +10,60 @@ function Register(onSubmit, onLogin) {
         <button>Submit</button>
         or <a href="">Login</a>
     </form>
-</section>`
+</section>`);
 
-    const container = temp.firstChild
+    const form = this.container.querySelector("form");
 
-    const form = container.querySelector('form')
+    let feedback;
 
-    let feedback
+    const self = this;
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault()
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      let { name, surname, email, password } = event.target;
 
-        const name = event.target.name.value,
-            surname = event.target.surname.value,
-            email = event.target.email.value,
-            password = event.target.password.value
+      name = name.value 
+      surname = surname.value
+      email = email.value 
+      password = password.value
 
-    try{
-        onSubmit(name, surname, email, password)
-        
-        event.target.name.value = '';
-        event.target.surname.value = '';
-        event.target.email.value = '';
-        event.target.password.value = '';
+      try {
+        onSubmit(name, surname, email, password);
 
-    }catch(error) {
-        if(!feedback) {
-            feedback= Feedback(error.message, 'error')
+        cleanUp();
+      } catch (error) {
+        if (!feedback) {
+          feedback = new Feedback(error.message, "error");
 
-            container.append(feedback)
-        }else{
-            feedback.innerText = error.message
+          self.container.append(feedback.container);
+        } else {
+          feedback.innerText = error.message;
         }
+      }
+    });
+    function cleanUp() {
+      const { name, surname, email, password } = form;
+
+      name.value = "";
+      surname.value = "";
+      email.value = "";
+      password.value = "";
+
+      if (feedback) {
+        self.container.removeChild(feedback.container);
+
+        feedback = undefined;
+      }
     }
-            
-    })
 
-    const login = container.querySelector('a')
+    const login = this.container.querySelector("a");
 
-    login.addEventListener('click', function(event) {
-        event.preventDefault()
+    login.addEventListener("click", function (event) {
+      event.preventDefault();
 
-        onLogin()
-    })
+      onLogin();
 
-    return container
+      cleanUp();
+    });
+  }
 }

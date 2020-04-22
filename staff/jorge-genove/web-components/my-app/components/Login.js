@@ -1,19 +1,16 @@
-function Login(onSubmit, onRegister) {
-    const temp = document.createElement('div')
+class login extends Component {
+constructor(onSubmit, onRegister) {
+   super(`<section class="login">
+   <h1>Login</h1>
+   <form>
+       <input type="email" name="email" placeholder="e-mail">
+       <input type="password" name="password" placeholder="password">
+       <button>Submit</button>
+       or <a href="">Register</a>
+   </form>
+</section>`)
 
-    temp.innerHTML = `<section class="login">
-    <h1>Login</h1>
-    <form>
-        <input type="email" name="email" placeholder="e-mail">
-        <input type="password" name="password" placeholder="password">
-        <button>Submit</button>
-        or <a href="">Register</a>
-    </form>
-</section>`
-
-    const container = temp.firstChild
-
-    const form = container.querySelector('form')
+    const form = this.container.querySelector('form')
 
     let feedback
 
@@ -26,26 +23,40 @@ function Login(onSubmit, onRegister) {
         try {
             onSubmit(email, password)
 
-            event.target.email.value = ''
-            event.target.password.value = ''
-
-            if (feedback) container.removeChild(feedback)
+            cleanUp()
         } catch (error) {
             if (!feedback) {
-                feedback = Feedback(error.message, 'error')
+                feedback = new Feedback(error.message, 'error')
 
-                container.append(feedback)
+                self.container.append(feedback.container)
             } else feedback.innerText = error.message
         }
     })
 
-    const register = container.querySelector('a')
+function cleanUp(){
+    form.email.value = ''
+    form.password.value= ''
+
+    
+
+    if(feedback) {
+        self.container.removeChild(feedback.container)
+
+        feedback = undefined
+    }
+}
+
+
+    const register = this.container.querySelector('a')
 
     register.addEventListener('click', function (event) {
         event.preventDefault()
 
         onRegister()
+    
+        cleanUp()
     })
 
-    return container
+  
+}
 }

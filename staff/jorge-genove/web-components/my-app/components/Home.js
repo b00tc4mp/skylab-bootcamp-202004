@@ -1,22 +1,28 @@
-function Home(name, callback) {
-    const temp = document.createElement('div')
-
-    temp.innerHTML = `<section class="home">
-    <h1>Welcome, ${name}!</h1><button>Logout</button>
-</section>`
-
-    const container = temp.firstChild
-
-    const button = container.querySelector('button')
+class Home extends Component {
+  constructor(name, callback) {
+   super(`<section class="home">
+   <h1>Welcome, ${name}!</h1><button>Logout</button>
+</section>`)
     
-    const search = Search()
+const button = this.container.querySelector("button");
 
-    container.append(search)
+    button.addEventListener("click", function () {
+      callback();
+    });
 
-    button.addEventListener('click', function() {
-        callback()
-    })
-   
-    
-    return container
+    let results;
+    const self = this;
+    this.container.appendChild(new Search(function (query) {
+        const user = searchUsers(query);
+
+        if (!results) {
+          results = new Result(user);
+          self.container.appendChild(results.container);
+        } else {
+          const _results = results;
+          results = new Result(user);
+          _results.container.replaceWith(results.container);
+        }
+      }).container);
+  }
 }
