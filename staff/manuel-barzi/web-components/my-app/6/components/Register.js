@@ -1,5 +1,5 @@
 function Register(onSubmit, onLogin) {
-    const container = mount(`<section class="register">
+    Component.call(this, `<section class="register">
     <h1>Register</h1>
     <form>
         <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}">
@@ -11,9 +11,11 @@ function Register(onSubmit, onLogin) {
     </form>
 </section>`)
 
-    const form = container.querySelector('form')
+    const form = this.container.querySelector('form')
 
     let feedback
+
+    const self = this
 
     form.addEventListener('submit', function (event) {
         event.preventDefault()
@@ -31,9 +33,10 @@ function Register(onSubmit, onLogin) {
             cleanUp()
         } catch (error) {
             if (!feedback) {
-                feedback = Feedback(error.message, 'error')
+                feedback = new Feedback(error.message, 'error')
 
-                container.append(feedback)
+                //this.container.append(feedback.container)
+                self.container.append(feedback.container)
             } else feedback.innerText = error.message
         }
     })
@@ -47,13 +50,13 @@ function Register(onSubmit, onLogin) {
         password.value = ''
 
         if (feedback) {
-            container.removeChild(feedback)
+            self.container.removeChild(feedback.container)
 
             feedback = undefined
         }
     }
 
-    const login = container.querySelector('a')
+    const login = this.container.querySelector('a')
 
     login.addEventListener('click', function (event) {
         event.preventDefault()
@@ -62,6 +65,7 @@ function Register(onSubmit, onLogin) {
 
         cleanUp()
     })
-
-    return container
 }
+
+Register.prototype = Object.create(Component.prototype)
+Register.prototype.constructor = Register
