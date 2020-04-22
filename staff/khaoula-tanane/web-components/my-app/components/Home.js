@@ -6,24 +6,32 @@ function Home(name, onLogout){
     <span> Welcome ${name} </span>
     <input id="search" type="text" name="search" placeholder="search">
     <button id="logout">Logout</button>
-    <div id="listusers"></div>
+    <ul id="listusers"></ul>
     </section>`
+
+    
 
     const container = temp;
 
     const input = container.querySelector("#search")
 
     const listUsers = container.querySelector("#listusers")
+
+
+
     
     input.addEventListener("keyup", (event)=>{
-        console.log(event.target.value)
         const _users = searchUsers(event.target.value)
-        console.log(_users)
-
+        
         listUsers.innerHTML = ''
-
+        
         _users.forEach(user=>{
-            listUsers.innerHTML += `<p> ${user.name} </p>`
+
+            var listElements = document.createElement("li");
+            listElements.appendChild(document.createTextNode(user.name + ' ' + user.surname));
+            listUsers.appendChild(listElements);
+
+            //listUsers.innerHTML += `<p> ${user.name} </p>`
         })
         
     })
@@ -35,3 +43,4 @@ function Home(name, onLogout){
 
     return container;
 }
+

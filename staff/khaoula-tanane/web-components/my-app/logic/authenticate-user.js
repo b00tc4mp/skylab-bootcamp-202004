@@ -6,10 +6,17 @@ function authenticateUser(email, password) {
     if (typeof password !== 'string') throw new TypeError(password + ' is not a string')
     if (!password.trim().length) throw new Error('password is empty or blank')
 
-    const user = users.find(function(user) { 
+    const _user = users.find(function(user) { 
         return user.email === email && user.password === password 
     })
 
-    if (!user) throw new Error('wrong credentials')
+   /* console.log(user)
+    console.log(email , password)
+    console.log(users) */
+
+    if (!_user) throw new Error('wrong credentials')
+
+    const {name, username, surname} = _user
+    user = {name, username, surname}
 
 }
