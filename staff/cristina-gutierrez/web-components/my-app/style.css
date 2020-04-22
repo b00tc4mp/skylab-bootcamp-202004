@@ -1,4 +1,4 @@
-.register, .login, .home {
+.search, .register, .login, .home {
   display: inline-block;
   border: 1rem dashed gray;
   border-radius: 2rem;
@@ -30,6 +30,10 @@
 }
 .feedback--error {
   color: red;
+}
+
+.search {
+  border-color: skyblue;
 }
 
 /*# sourceMappingURL=style.css.map */

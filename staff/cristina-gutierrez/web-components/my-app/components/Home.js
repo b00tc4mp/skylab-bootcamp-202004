@@ -16,6 +16,7 @@ function Home(name, callback) {
    let results;
 
     container.appendChild(Search(function(query) {
+        debugger
         const users = searchUsers(query);
         if(!results) {
             results = Results(users)
