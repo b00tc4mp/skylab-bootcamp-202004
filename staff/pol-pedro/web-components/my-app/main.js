@@ -1,4 +1,4 @@
-const users = []
+const users = [{name: 'Pol', surname: 'Pepe', email: 'pol.pedro97@gmail.com', password: '123123123'}, {name: 'Pol', surname: 'yo', email: 'pol.pedro977@gmail.com', password: '123123123'}, {name: 'yo', surname: 'mamen', email: 'poul.pedro97@gmail.com', password: '123123123'}, {name: 'Pol', surname: 'Pepe', email: 'pol.pedro9777@gmail.com', password: '123123123'}]
 
 const landing = Landing(function() {
 
