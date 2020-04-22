@@ -4,15 +4,65 @@
   border-radius: 15px;
 }
 
+* {
+  margin: none;
+  box-sizing: border-box;
+}
+
 .home {
   top: 15vh;
   margin-left: auto;
   margin-right: auto;
-  height: 15vh;
+  height: 100%;
   width: 50vw;
   text-align: center;
   border: 0.5rem solid green;
   border-radius: 15px;
+  background-color: rgba(146, 196, 182, 0.6);
+}
+.home button {
+  border: none;
+  padding: 0.5rem 1rem;
+  transition: 0.3s;
+  background-color: gray;
+  border: 0.1rem solid gray;
+  border-radius: 0.2rem;
+}
+.home button:hover {
+  background-color: rgba(146, 196, 182, 0.6);
+  border: 0.1rem solid red;
+}
+.home .home__search button {
+  padding: 0.6rem 1rem;
+  margin-left: 0.6rem;
+}
+.home .home__search button:hover {
+  background-color: rgba(146, 196, 182, 0.6);
+  border: 0.1rem solid green;
+}
+.home .home__search input {
+  padding: 0.6rem;
+  border: none;
+  background-color: #3CBC8D;
+  color: white;
+  border: 0.1rem solid darkgreen;
+  border-radius: 0;
+  margin: 0.5rem;
+  margin-left: auto;
+}
+.home ul {
+  margin-right: 16px;
+  flex-direction: column;
+  margin: none;
+  list-style-type: none;
+  ustify-content: center;
+}
+.home ul li {
+  margin: 0.3rem;
+  margin-right: 16px;
+  background-color: #93c2bc;
+  text-align: center;
+  padding: 0.5rem;
 }
 
 .landing {
@@ -47,6 +97,53 @@
   border-radius: 15px;
   padding: 0.5rem;
   text-align: center;
+}
+.login a {
+  width: 10vw;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  text-decoration: none;
+  color: black;
+  margin: 1rem;
+  font-size: 1.2rem;
+  background-color: gray;
+  padding: 0.3rem;
+  border-radius: 5px;
+}
+.login a:hover {
+  background-color: green;
+  color: red;
+}
+.login button {
+  width: 8vw;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  border: none;
+  color: black;
+  margin: 1rem;
+  font-size: 1.1rem;
+  background-color: gray;
+  padding: 0.3rem;
+  border-radius: 5px;
+  background-color: gray;
+}
+.login button:hover {
+  background-color: green;
+  color: white;
+}
+.login input {
+  text-align: center;
+  height: 2.5vh;
+  border: none;
+  background-color: rgba(146, 175, 196, 0.81);
+}
+
+.feedback {
+  color: green;
+}
+.feedback--warning {
+  color: orange;
+}
+.feedback--error {
+  color: red;
 }
 
 /*# sourceMappingURL=style.css.map */

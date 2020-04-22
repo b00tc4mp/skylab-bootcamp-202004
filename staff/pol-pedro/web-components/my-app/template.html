@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <section class="register">
         <h1>Register</h1>
@@ -14,7 +16,8 @@
             <input type="text" name="surname" placeholder="surname">
             <input type="email" name="email" placeholder="e-mail">
             <input type="password" name="name" placeholder="password">
-            <button>Submit</button>
+            <button>Submit</button> or
+            <a href="">login</a>
         </form>
     </section>
 
@@ -23,11 +26,21 @@
         <form>
             <input type="email" name="email" placeholder="e-mail">
             <input type="password" name="name" placeholder="password">
-            <button>Submit</button>
+            <button>Submit</button> or
+            <a href="">register</a>
         </form>
     </section>
     <section class="home">
-    <h1>Welcome, ${name} ${surname} </h1><button>Logout</button>
+        <h1>Welcome, ${name} ${surname} </h1><button>Logout</button>
+        <section class="home__search">  
+            <form>
+                <input type="text" name="search"> 
+                <button>search</button>
+            </form>
+            <ul>
+                <li></li>
+            </ul>
+        </section>
     </section>
 
     <section class="landing">
@@ -36,4 +49,5 @@
         <a href="">Register</a>
     </section>
 </body>
+
 </html>
