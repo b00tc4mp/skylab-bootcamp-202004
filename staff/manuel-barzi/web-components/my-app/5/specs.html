@@ -11,14 +11,14 @@
 <body>
     <div id="mocha"></div>
 
-    <script src="https://unpkg.com/chai/chai.js"></script>
     <script src="https://unpkg.com/mocha/mocha.js"></script>
+    <script src="https://unpkg.com/chai/chai.js"></script>
 
     <script class="mocha-init">
         mocha.setup('bdd');
         mocha.checkLeaks();
 
-        const expect = chai.expect
+        const { expect } = chai
     </script>
 
     <script src="utils/regex.js"></script>
@@ -28,6 +28,8 @@
     <script src="data/users.js"></script>
     <script src="logic/register-user.js"></script>
     <script src="logic/register-user.spec.js"></script>
+    <script src="logic/authenticate-user.js"></script>
+    <script src="logic/authenticate-user.spec.js"></script>
 
     <script class="mocha-exec">
         mocha.run();
