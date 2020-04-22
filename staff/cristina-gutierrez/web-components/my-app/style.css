@@ -23,8 +23,10 @@
 }
 
 .feedback {
-  color: green .feedback --warning;
-  color-color: orange;
+  color: green;
+}
+.feedback--warning {
+  color: orange;
 }
 .feedback--error {
   color: red;
