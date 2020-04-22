@@ -22,10 +22,12 @@ function Register(onSubmit, onLogin) {
     form.addEventListener('submit', function (event) {
         event.preventDefault()
 
-        const name = event.target.name.value,
-            surname = event.target.surname.value,
-            email = event.target.email.value,
-            password = event.target.password.value
+        const { name, surname, email, password } = event.target
+
+        const name = name.value,
+            surname = surname.value,
+            email = email.value,
+            password = password.value
 
             try {
                 onSubmit(name, surname, email, password)
@@ -41,10 +43,12 @@ function Register(onSubmit, onLogin) {
     })
 
     function cleanUp() {
-        form.name.value = ''
-        form.surname.value = ''
-        form.email.value = ''
-        form.password.value = ''
+        const { name, surname, email, password } = form
+
+        name.value = ''
+        surname.value = ''
+        email.value = ''
+        password.value = ''
 
         if (feedback) {
             container.removeChild(feedback)

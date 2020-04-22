@@ -20,8 +20,10 @@ function Login(onSubmit, onRegister) {
     form.addEventListener('submit', function (event) {
         event.preventDefault()
 
-        const email = event.target.email.value,
-            password = event.target.password.value
+        const { email, password } = event.target
+
+        const email = email.value,
+            password = password.value
 
         try {
             onSubmit(email, password)
