@@ -42,7 +42,7 @@ function Login(onSubmit, onRegister) {
         form.password.value = ''
 
         if (feedback) {
-            this.container.removeChild(feedback)
+            self.container.removeChild(feedback.container)
 
             feedback = undefined
         }
