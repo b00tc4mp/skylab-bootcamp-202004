@@ -1,12 +1,19 @@
-// TODO show "Welcome, <name>!"
-function Home(name) {
-    const temp = document.createElement('div')
+function Home(name, callback){
 
-    temp.innerHTML = `<section class="home">
-    <h1>Welcome ${name}</h1>
-    </section>`
+    const template = document.createElement('div');
 
-    const container = temp.firstChild
+    template.innerHTML = `<main class='main'>
+    <h1 class='main__title'>Welcome ${name}</h1>
+    <button class="main__button">Exit</button>
+</main>`;
+
+    const container = template.firstChild;
+
+    const button = container.querySelector('button');
+
+    button.addEventListener('click', function() {
+        callback()
+    })
 
     return container
 }

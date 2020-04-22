@@ -1,27 +1,31 @@
-function Login(callback) {
-    const temp = document.createElement('div')
+function Login(onSubmit) {
 
-    temp.innerHTML = `<section class="login">
-    <h1>Login</h1>
-    <form>
-        <input type="email" name="email" placeholder="e-mail">
-        <input type="password" name="password" placeholder="password">
-        <button>Submit</button>
+    const template = document.createElement('div');
+
+    template.innerHTML = `<section class="login">
+    <h2 class='login__title'>LOGIN</h2>
+    <form action="" class="login__form">
+        <input class="login__input" type="email" name='email' placeholder="E-Mail">
+        <p></p>
+        <input class="login__input" type="password" name='password' placeholder="Password">
+        <p></p>
+        <button class='login__button'>On Submit</button>
     </form>
-</section>`
+</section>`;
 
-    const container = temp.firstChild
+    const container = template.firstChild;
 
-    const form = container.querySelector('form')
+    const form = container.querySelector('form');
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault()
-
-        const email = event.target.email.value,
-            password = event.target.password.value
-
-        callback(email, password)
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const email = event.target.email.value;
+        const password = event.target.password.value;
+        onSubmit(email,password);
     })
+
+
+
 
     return container
 }

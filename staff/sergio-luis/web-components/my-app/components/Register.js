@@ -1,31 +1,38 @@
-function Register(callback) {
-    const temp = document.createElement('div')
+function Register(onSubmit) {
 
-    temp.innerHTML = `<section class="register">
-    <h1>Register</h1>
-    <form>
-        <input type="text" name="name" placeholder="name">
-        <input type="text" name="surname" placeholder="surname">
-        <input type="email" name="email" placeholder="e-mail">
-        <input type="password" name="password" placeholder="password">
-        <button>Submit</button>
-    </form>
-</section>`
+    const template = document.createElement('div');
 
-    const container = temp.firstChild
+    template.innerHTML = `<section class="register">
+        <h2 class='register__title'>REGISTER</h2>
+        <form action="" class="register__form">
+            <input class="register__input" type="text" name='name' placeholder="Name">
+            <p></p>
+            <input class="register__input" type="text" name='surname' placeholder="Surname">
+            <p></p>
+            <input class="register__input" type="email" name='email' placeholder="E-Mail">
+            <p></p>
+            <input class="register__input" type="password" name='password' placeholder="Password">
+            <p></p>
+            <button class='register__button'>On Submit</button>
+        </form>
+    </section>`;
 
-    const form = container.querySelector('form')
+    const container = template.firstChild;
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault()
+    const form = container.querySelector('form');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
 
         const name = event.target.name.value,
-            surname = event.target.surname.value,
-            email = event.target.email.value,
-            password = event.target.password.value
+        surname = event.target.surname.value,
+        email = event.target.email.value,
+        password = event.target.password.value
 
-        callback(name, surname, email, password)
+        onSubmit(name,surname,email,password);
     })
+
+
 
     return container
 }
