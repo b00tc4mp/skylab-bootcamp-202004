@@ -1,5 +1,5 @@
 function Results(users) {
-    const container = mount(`<section class="results">
+    Component.call(this, `<section class="results">
     </section>`)
 
     if (users.length) {
@@ -16,8 +16,9 @@ function Results(users) {
             list.appendChild(item)
         })
 
-        container.appendChild(list)
-    } else container.appendChild(Feedback('sorry, no results :(', 'warning'))
-
-    return container
+        this.container.appendChild(list)
+    } else this.container.appendChild(Feedback('sorry, no results :(', 'warning'))
 }
+
+Results.prototype = Object.create(Component.prototype)
+Results.prototype.constructor = Results
