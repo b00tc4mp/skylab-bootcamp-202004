@@ -22,8 +22,7 @@ function Search() {
         const user = searchUsers(query);
         const result = Result(user)
         const resultList = document.getElementById('resultslist')
-        if(resultList !== null) resultList.remove()
-        
+        if(resultList !== null) resultList.remove()        
         if(result !== null)  container.appendChild(result)
        
         
