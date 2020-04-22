@@ -1,17 +1,31 @@
 function Home(name, callback) {
-    const temp = document.createElement('div')
-
-    temp.innerHTML = `<section class="home">
+    const container = mount(`<section class="home">
     <h1>Welcome, ${name}!</h1><button>Logout</button>
-</section>`
-
-    const container = temp.firstChild
+</section>`)
 
     const button = container.querySelector('button')
 
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function () {
         callback()
     })
+
+    let results
+
+    container.appendChild(Search(function (query) {
+        const users = searchUsers(query)
+
+        if (!results) {
+            results = Results(users)
+
+            container.appendChild(results)
+        } else {
+            const _results = results
+
+            results = Results(users)
+
+            _results.replaceWith(results)
+        }
+    }))
 
     return container
 }
