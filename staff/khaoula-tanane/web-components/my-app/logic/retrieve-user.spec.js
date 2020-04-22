@@ -1,5 +1,15 @@
+/*
 describe("retrieveUser", function(){
-    it("should return a specified user", function(){
+
+    it('should return email', function () {
+
+        const result = retrieveUser("a@aa.com")
+        expect(result).to.equal({name: 'a', surname: 'a', email: 'a@a.com'})
+        
+        
+    })
+  
+     it("should return a specified user", function(){
         const result = retrieveUser("graciaarriazuhector@gmail.com")
         expect(result).to.deep.equal({name: "Hector", surname:"Gracia", email:"graciaarriazuhector@gmail.com", password: "123123123"})
     })
@@ -24,4 +34,4 @@ describe("retrieveUser", function(){
         }).to.throw(TypeError, undefined+' is not a string') 
 
     })
-})
+})*/
