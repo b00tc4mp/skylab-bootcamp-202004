@@ -1,30 +1,23 @@
-function Result(user) {
+function Result(users) {
     debugger
     const temp = document.createElement('div')
-    let updateUser
-    if (user !== 'query is empty or blank') {
-        updateUser = ''
-        for (let i = 0; i < user.length; i++) {
-            updateUser += `<li>${user[i].name} ${user[i].surname} : ${user[i].email}</li>`
-        }
 
-        temp.innerHTML = `<search class="results" id='result-list'>
-        <ul>
-            ${updateUser}
-        </ul>
-    </search>`
+    let updateUser = ''
+    if (users.length) {
+        users.forEach(function (user) { updateUser += `\n<li>${user.name} ${user.surname} : ${user.email}</li>` })
+
+        temp.innerHTML = `<section class="results">
+                        <ul>
+                     ${updateUser}
+                        </ul>
+                    </section>`
     } else {
-        updateUser = `<p>${user}</p>`
-        temp.innerHTML = `<search class="results" id='result-list'>
-       
-            ${updateUser}
-       
-    </search>`
+        updateUser += '<p class="feedback--warning">No results obtained</p>'
+        temp.innerHTML = `<section class="results">
+                     ${updateUser}
+                    </section>`
     }
-
     const container = temp.firstChild
 
-
     return container
-
 }

@@ -11,23 +11,6 @@ function Search() {
 
 
     const container = temp.firstChild
-    const searchButton = container.querySelector('form')
-    searchButton.addEventListener('submit', function (event) { debugger
-                
-        event.preventDefault()
-        const query = event.target.query.value
-        try{
-            const user = searchUser(query)
-        }catch(error){
-            user = error.message          
-        }
-        
-        const result = Result(user)
-        
-        const resultList = document.getElementById('result-list')
-        if(resultList !== null) resultList.remove()        
-        if(result !== null)  container.appendChild(result)
-    })
-
+   
     return container
 }
