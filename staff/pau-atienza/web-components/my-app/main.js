@@ -1,34 +1,27 @@
-const users = []
-
 const landing = Landing()
 
+const register = Register(
+    function (name, surname, email, password) {
+        registerUser(name, surname, email, password)
 
-const register = Register(function (name, surname, email, password) {
-    users.push({
-        name,
-        surname,
-        email,
-        password
-    })
-
-    register.replaceWith(login)
+        register.replaceWith(login)
+}, function(){
+        register.replaceWith(login)
+        clearForms()
 })
 
-const loggeduser = {}
+const login = Login(
+    function (email, password) {
+        authenticateUser(email, password)
 
-const login = Login(function (email, password) {
-    const user = users.find(function(user) { 
-        return user.email === email && user.password === password 
-    })
-
-    if (user){
-        console.log('eureka! you can get in')
+        const user = retrieveUserByEmail(email)
         home = Home(user)
         login.replaceWith(home);
-    } else console.error('wrong credentials')
+        clearForms()
+
+}, function(){
+        login.replaceWith(register)
+        clearForms()
 });
-
-
-
 
 document.getElementById('root').appendChild(landing)
