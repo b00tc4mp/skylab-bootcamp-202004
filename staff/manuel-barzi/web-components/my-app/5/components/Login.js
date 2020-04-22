@@ -1,7 +1,5 @@
 function Login(onSubmit, onRegister) {
-    const temp = document.createElement('div')
-
-    temp.innerHTML = `<section class="login">
+    const container = mount(`<section class="login">
     <h1>Login</h1>
     <form>
     <input type="email" name="email" placeholder="e-mail" required>
@@ -9,9 +7,7 @@ function Login(onSubmit, onRegister) {
         <button>Submit</button>
         or <a href="">Register</a>
     </form>
-</section>`
-
-    const container = temp.firstChild
+</section>`)
 
     const form = container.querySelector('form')
 
@@ -20,8 +16,10 @@ function Login(onSubmit, onRegister) {
     form.addEventListener('submit', function (event) {
         event.preventDefault()
 
-        const email = event.target.email.value,
-            password = event.target.password.value
+        let { email, password } = event.target
+
+        email = email.value
+        password = password.value
 
         try {
             onSubmit(email, password)
