@@ -1,4 +1,4 @@
-function Landing(onRegister,onLogin) {
+function Landing(onLogin,onRegister) {
     const temp = document.createElement('div');
 
     temp.innerHTML = `<section class='landing'>

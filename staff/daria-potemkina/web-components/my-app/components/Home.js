@@ -15,7 +15,7 @@ function Home(name, onLogout) {
         event.preventDefault();
 
         onLogout()
-    })
+    });
 
     return container
 } 

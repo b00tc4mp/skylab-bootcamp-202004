@@ -1,50 +1,50 @@
-const users = [{ name: "daria", surname: "potemkina", email: "dariapotemkina@mail.ru", password: "123" }]
-
-const landing = Landing(function () {
-    landing.replaceWith(login)
-}, function () {
-    landing.replaceWith(register)
-})
-
-const register = Register(function (name, surname, email, password) {
-    for (let i = 0; i < users.length; i++) {
-        if (users[i].email === email) {
-            throw new Error('User already exists')
-
-        }
+const landing = Landing(
+    function () {
+        landing.replaceWith(register);
+    },
+    function () {
+        landing.replaceWith(login);
     }
+);
 
-    users.push({
-        name,
-        surname,
-        email,
-        password
-    })
+const register = Register(
+    function (name, surname, email, password) {
+        registerUser(name, surname, email, password);
 
-    register.replaceWith(login)
-    
-},function () {
-    register.replaceWith(login)
-})
+        register.replaceWith(login);
+    },
+    function () {
+        register.replaceWith(login);
+    }
+);
 
-const login = Login(function (email, password) {
-    const user = users.find(function (user) {
-        return user.email === email && user.password === password
-    })
+const login = Login(
+    function (email, password) {
+        authenticateUser(email, password);
 
-    if (user) {
+        const user = retrieveUser(email);
+
         const home = Home(user.name, function () {
-            home.replaceWith(landing)
-        })
-        login.replaceWith(home)
-    } else throw new Error('wrong credentials')
+            home.replaceWith(landing);
+        });
 
-}, function () {
-    login.replaceWith(register)
-})
 
-const home = Home(function () {
-    home.replaceWith(landing)
-})
+        let listDisplayed = false;
+        const search = Search(function (request) {
+            if (listDisplayed) home.removeChild(home.lastChild);
 
-document.getElementById('root').appendChild(landing)
+            const usersFound = searchUsers(request);
+            const results = Results(usersFound);
+            home.append(results);
+            listDisplayed = true;
+        });
+        home.append(search);
+
+        login.replaceWith(home);
+    },
+    function () {
+        login.replaceWith(register);
+    }
+);
+
+document.getElementById("root").appendChild(landing);
