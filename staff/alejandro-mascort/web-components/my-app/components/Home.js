@@ -1,20 +1,17 @@
-// TODO show "Welcome, <name>!"
+class Home extends Component {
+    constructor(name, toLanding) {
+        super(`<section class="home">
+        <h1>Welcome, ${name}!</h1><button>Logout</button>
+    </section>`)
+    
 
-function Home(name, toLanding) {
-    const temp = document.createElement('div')
+        const button = this.container.querySelector('button')
 
-    temp.innerHTML = `<section class="home">
-    <h1>Welcome, ${name}!</h1><button>Logout</button>
-</section>`
-    const container = temp.firstChild
+        button.addEventListener('click', function(){
+            toLanding()
+        })
 
-    const button = container.querySelector('button')
-
-    button.addEventListener('click', function(){
-        toLanding()
-    })
-
-    container.append(Search())
-
-    return container
+        this.container.append(new Search().container)
+    }   
 }
+

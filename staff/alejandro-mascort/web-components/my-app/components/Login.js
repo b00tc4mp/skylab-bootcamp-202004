@@ -1,64 +1,61 @@
-function Login(onSubmit, onRegister) {
-    const temp = document.createElement('div')
+class Login extends Component {
+    constructor(onSubmit, onRegister) {
+        super(`<section class="login">
+        <h1>Login</h1>
+        <form>
+            <input type="email" name="email" placeholder="e-mail" required>
+            <input type="password" name="password" placeholder="password" required>
+            <button>Submit</button>
+        </form>
+        <a href="">Register</a>
+    </section>`)
 
-    temp.innerHTML = `<section class="login">
-    <h1>Login</h1>
-    <form>
-        <input type="email" name="email" placeholder="e-mail" required>
-        <input type="password" name="password" placeholder="password" required>
-        <button>Submit</button>
-    </form>
-    <a href="">Register</a>
-</section>`
+        const form = this.container.querySelector('form')
 
-    const container = temp.firstChild
+        const register = this.container.querySelector('a')
 
-    const form = container.querySelector('form')
+        let feedback
 
-    const register = container.querySelector('a')
+        const self = this
 
-    let feedback
+        form.addEventListener('submit', function (event) {
+            event.preventDefault()
 
+            const email = event.target.email.value,
+                password = event.target.password.value
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault()
+            try {
+                onSubmit(email, password)
 
-        const email = event.target.email.value,
-            password = event.target.password.value
+                cleanUp()
+                
+            } catch(error) {
+                if (!feedback) {
+                    feedback = new Feedback(error.message, 'error')
 
-        try {
-            onSubmit(email, password)
+                    self.container.append(feedback.container)
+                } else feedback.innerText = error.message
+            }
+
+        })
+
+        register.addEventListener('click', function(event){
+            event.preventDefault()
+
+            onRegister()
 
             cleanUp()
+        })
+
+        function cleanUp() {
+            form.email.value = ''
+            form.password.value = ''
             
-        } catch(error) {
-            if (!feedback) {
-                feedback = Feedback(error.message, 'error')
+            if (feedback) {
+                self.container.removeChild(feedback.container)
 
-                container.append(feedback)
-            } else feedback.innerText = error.message
-        }
-
-    })
-
-    register.addEventListener('click', function(event){
-        event.preventDefault()
-
-        onRegister()
-
-        cleanUp()
-    })
-
-    function cleanUp() {
-        form.email.value = ''
-        form.password.value = ''
-        
-        if (feedback) {
-            container.removeChild(feedback)
-
-            feedbacK = undefined
+                feedback = undefined
+            }
         }
     }
-
-    return container
 }
