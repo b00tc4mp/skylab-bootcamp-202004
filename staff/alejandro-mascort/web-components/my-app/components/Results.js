@@ -1,8 +1,7 @@
 function Results(query) {
     const temp = document.createElement('div')
-    const regExp = new RegExp(query)
 
-    const usersFound = users.filter(user => regExp.test(user.name) || regExp.test(user.surname) || regExp.test(user.email))
+    const usersFound = searchUsers(query)
 
     if (usersFound.length) {
         temp.innerHTML = ''

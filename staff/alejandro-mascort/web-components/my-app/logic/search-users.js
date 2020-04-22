@@ -1,11 +1,7 @@
 function searchUsers(query) {
-    // TODO find users matching query in name, surname, email
+    const regExp = new RegExp(query.toLowerCase())
+    
+    const usersFound = users.filter(user => regExp.test(user.name.toLowerCase()) || regExp.test(user.surname.toLowerCase()) || regExp.test(user.email.toLowerCase()))
 
-    const _users = users.filter(function(user) {
-        // TODO match user.name contains query || user.surname contains query || ...
-    })
-
-    // TODO sanitize: create new objects of users without password
-
-    // TODO return _users
+    return usersFound
 }
