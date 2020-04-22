@@ -16,8 +16,14 @@ function Search() {
                 
         event.preventDefault()
         const query = event.target.query.value
-        const user = searchUser(query)
+        try{
+            const user = searchUser(query)
+        }catch(error){
+            user = error.message          
+        }
+        
         const result = Result(user)
+        
         const resultList = document.getElementById('result-list')
         if(resultList !== null) resultList.remove()        
         if(result !== null)  container.appendChild(result)
