@@ -15,6 +15,8 @@ function Register(onSubmit, onLogin) {
 
     let feedback
 
+    const self = this
+
     form.addEventListener('submit', function (event) {
         event.preventDefault()
 
@@ -31,9 +33,10 @@ function Register(onSubmit, onLogin) {
             cleanUp()
         } catch (error) {
             if (!feedback) {
-                feedback = Feedback(error.message, 'error')
+                feedback = new Feedback(error.message, 'error')
 
-                this.container.append(feedback)
+                //this.container.append(feedback.container)
+                self.container.append(feedback.container)
             } else feedback.innerText = error.message
         }
     })
@@ -47,7 +50,7 @@ function Register(onSubmit, onLogin) {
         password.value = ''
 
         if (feedback) {
-            this.container.removeChild(feedback)
+            self.container.removeChild(feedback.container)
 
             feedback = undefined
         }
