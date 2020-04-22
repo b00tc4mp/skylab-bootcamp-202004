@@ -1,12 +1,12 @@
 function Search(onSubmit) {
-    const container = mount(`<section class="search">
+    Component.call(this, `<section class="search">
     <form>
         <input type="text" name="query">
         <button>🔍</button>
     </form>
 </section>`)
 
-    const form = container.querySelector('form')
+    const form = this.container.querySelector('form')
 
     form.addEventListener('submit', function (event) {
         event.preventDefault()
@@ -15,6 +15,7 @@ function Search(onSubmit) {
 
         onSubmit(query)
     })
-
-    return container
 }
+
+Search.prototype = Object.create(Component.prototype)
+Search.prototype.constructor = Search
