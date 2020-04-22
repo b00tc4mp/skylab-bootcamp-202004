@@ -1,61 +1,62 @@
-function Login(onSubmit, onRegister) {
-    const temp = document.createElement('div')
+class Login extends Component {
+    constructor(onSubmit, onRegister) {
+        super(`<section class="login">
+        <h1>Login</h1>
+        <form>
+            <input type="email" name="email" placeholder="e-mail" required>
+            <input type="password" name="password" placeholder="password" required>
+            <button>Submit</button>
+            or <a href="">Register</a>
+        </form>
+    </section>`)
 
-    temp.innerHTML = `<section class="login">
-    <h1>Login</h1>
-    <form>
-        <input type="email" name="email" placeholder="e-mail" required>
-        <input type="password" name="password" placeholder="password" required>
-        <button>Submit</button>
-        or <a href="">Register</a>
-    </form>
-</section>`
+        const form = this.container.querySelector('form');
 
-    const container = temp.firstChild;
+        let feedback;
 
-    const form = container.querySelector('form');
+        const self = this;
 
-    let feedback;
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
+            let { email, password } = event.target
 
-        const email = event.target.email.value,
-            password = event.target.password.value;
+            email = email.value
+            password = password.value
 
-        try {
-            onSubmit(email, password)
+            try {
+                onSubmit(email, password)
 
-            cleanUp()
-        } catch(error) {
-            if(!feedback) {
-                feedback = Feedback(error.message, 'error')
+                cleanUp()
+            } catch(error) {
+                if(!feedback) {
+                    feedback = new Feedback(error.message, 'error')
 
-                container.append(feedback)
-            } else feedback.innerText = error.message
-        }
-    });
+                    self.container.append(feedback.container)
+                } else feedback.innerText = error.message
+            }
+        });
 
-    function cleanUp() {
-        form.email.value = ''
-        form.password.value = ''
+        function cleanUp() {
+            form.email.value = ''
+            form.password.value = ''
 
-        if (feedback) {
-            container.removeChild(feedback);
+            if (feedback) {
+                self.container.removeChild(feedback.container);
 
-            feedback = undefined;
+                feedback = undefined;
+            };
         };
+
+        const register = this.container.querySelector("a");
+
+        register.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            onRegister();
+
+            cleanUp();
+        });
+
     };
-
-    const register = container.querySelector("a");
-
-    register.addEventListener('click', function (event) {
-        event.preventDefault();
-
-        onRegister();
-
-        cleanUp();
-    });
-
-    return container;
-};
+}

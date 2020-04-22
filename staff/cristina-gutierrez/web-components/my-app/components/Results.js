@@ -1,28 +1,22 @@
-function Results(users) {
-    const temp = document.createElement('div');
+class Results extends Component {
+    constructor(users) {
+        super(`<section class="results">
+        </section>`)
 
-    temp.innerHTML = `<section class="results">
-</section>`
-
-const container = temp.firstChild;
-
-if(users.length) {
-    const list = document.createElement("ul");
-    
-    users.forEach(function(user) {
-        const item = document.createElement("li");
-
-        const { name, surname, email } = user;
-
-        item.innerText = `${name} ${surname} (${email})`
-
-        list.appendChild(item);
-    });
-
-    container.appendChild(list);
-} else {
-    container.appendChild(Feedback("sorry, no results", "warning"))
-};
-
-return container;
-};
+        if(users.length) {
+            const list = document.createElement("ul");
+            
+            users.forEach(function ({ name, surname, email }) {
+                const item = document.createElement("li");
+        
+                item.innerText = `${name} ${surname} (${email})`
+        
+                list.appendChild(item);
+            });
+        
+            this.container.appendChild(list);
+        } else {
+            this.container.appendChild(new Feedback("sorry, no results", "warning").container)
+        }
+    }
+}
