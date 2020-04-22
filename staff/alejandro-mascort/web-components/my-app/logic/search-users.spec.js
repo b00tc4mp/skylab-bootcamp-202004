@@ -1,26 +1,35 @@
-describe('searchUsers', function (){
-    let usersFound
+describe('searchUsers', function(){
+    let name, surname, email, password, usersFound
 
-    it('should return an empty array if there are no matches', function() {
-        usersFound = searchUsers('user')
+    beforeEach(function () {
+        users.length = 0
+
+        name = names.random()
+        surname = surnames.random()
+        email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('')}@mail.com`
+        password = passwords.random()
+
+        users.push({ name, surname, email, password })
+    })
+
+
+    it('should fail if is empty or blank', function(){
+
+        usersFound = searchUsers(' ')
         
         expect(usersFound).to.be.an('array')
         expect(usersFound.length).to.equal(0)
     })
 
-    it('should return an array with the matches', function() {
-        users.push({name: 'userone', surname: 'useronesurname', email: 'userone@email.com', password: '123'})
-        users.push({name: 'usertwo', surname: 'usertwosurname', email: 'usertwo@email.com', password: '123'})
+    it('should succes if registered user is searched', function(){
 
-        usersFound = searchUsers('user')
-
+        usersFound = searchUsers(name)
+        
         expect(usersFound).to.be.an('array')
-        expect(usersFound.length).to.equal(2)
-        expect(usersFound[0].name).to.equal('userone')
-        expect(usersFound[0].surname).to.equal('useronesurname')
-        expect(usersFound[0].email).to.equal('userone@email.com')
-        expect(usersFound[1].name).to.equal('usertwo')
-        expect(usersFound[1].surname).to.equal('usertwosurname')
-        expect(usersFound[1].email).to.equal('usertwo@email.com')
+        expect(usersFound.length).to.equal(1)
+        expect(usersFound[0].name).to.equal(name)
+        expect(usersFound[0].surname).to.equal(surname)
+        expect(usersFound[0].email).to.equal(email)
+        expect(usersFound[0].password).to.be.undefined
     })
 })
