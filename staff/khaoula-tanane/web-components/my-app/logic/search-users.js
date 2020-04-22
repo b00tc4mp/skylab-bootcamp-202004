@@ -16,5 +16,4 @@ function searchUsers(query) {
 
     return _users
     // TODO return _users
-
 }

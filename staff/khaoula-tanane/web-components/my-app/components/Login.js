@@ -17,6 +17,7 @@ function Login(callback, goRegister) {
     const form = container.querySelector('form')
 
     let feedback
+    
     function cleanUp() {
         form.email.value = ''
         form.password.value = ''
