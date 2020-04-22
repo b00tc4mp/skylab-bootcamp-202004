@@ -1,9 +1,9 @@
 function Home(name, callback) {
-    const container = mount(`<section class="home">
+    Component.call(this, `<section class="home">
     <h1>Welcome, ${name}!</h1><button>Logout</button>
 </section>`)
 
-    const button = container.querySelector('button')
+    const button = this.container.querySelector('button')
 
     button.addEventListener('click', function () {
         callback()
@@ -11,21 +11,22 @@ function Home(name, callback) {
 
     let results
 
-    container.appendChild(Search(function (query) {
+    this.container.appendChild(new Search(function (query) {
         const users = searchUsers(query)
 
         if (!results) {
-            results = Results(users)
+            results = new Results(users)
 
-            container.appendChild(results)
+            this.container.appendChild(results.container)
         } else {
             const _results = results
 
-            results = Results(users)
+            results = new Results(users)
 
-            _results.replaceWith(results)
+            _results.container.replaceWith(results.container)
         }
-    }))
-
-    return container
+    }).container)
 }
+
+Home.prototype = Object.create(Component.prototype)
+Home.prototype.constructor = Home

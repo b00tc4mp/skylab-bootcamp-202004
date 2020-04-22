@@ -13,6 +13,8 @@ function Login(onSubmit, onRegister) {
 
     let feedback
 
+    const self = this
+
     form.addEventListener('submit', function (event) {
         event.preventDefault()
 
@@ -29,8 +31,8 @@ function Login(onSubmit, onRegister) {
             if (!feedback) {
                 feedback = new Feedback(error.message, 'error')
 
-                debugger
-                this.container.append(feedback.container)
+                // this.container.append(feedback.container)
+                self.container.append(feedback.container)
             } else feedback.innerText = error.message
         }
     })
