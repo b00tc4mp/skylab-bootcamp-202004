@@ -12,7 +12,6 @@ describe('searchUser', function(){
         users.push({ name, surname, email, password })
     })
 
-
     it('should fail if is empty or blank', function(){    // do it with throw and try catch!!
 
         usersFound = searchUser(' ')

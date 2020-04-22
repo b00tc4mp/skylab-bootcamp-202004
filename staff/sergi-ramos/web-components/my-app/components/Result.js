@@ -1,23 +1,20 @@
-function Result(users) {
-    debugger
-    const temp = document.createElement('div')
+class Result extends Components {
+    constructor(users) {
 
-    let updateUser = ''
-    if (users.length) {
-        users.forEach(function (user) { updateUser += `\n<li>${user.name} ${user.surname} : ${user.email}</li>` })
+        let updateUser = ''
+        if (users.length) {
+            users.forEach(function (user) { updateUser += `\n<li>${user.name} ${user.surname} : ${user.email}</li>` })
 
-        temp.innerHTML = `<section class="results">
+            super(`<section class="results">
                         <ul>
                      ${updateUser}
                         </ul>
-                    </section>`
-    } else {
-        updateUser += '<p class="feedback--warning">No results obtained</p>'
-        temp.innerHTML = `<section class="results">
+                    </section>`)
+        } else {
+            updateUser += '<p class="feedback--warning">No results obtained</p>'
+            super(`<section class="results">
                      ${updateUser}
-                    </section>`
+                    </section>`)
+        } 
     }
-    const container = temp.firstChild
-
-    return container
 }

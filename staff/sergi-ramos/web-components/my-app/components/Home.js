@@ -1,50 +1,41 @@
 // TODO show "Welcome, <name>!"
-function Home(user, logOut) {
-    const temp = document.createElement('div')
+class Home extends Components {
 
-    temp.innerHTML = `<section class="home">
-    <h1>Bienvenido ${user}</h1>
-    <button>Logout</button>
-</section>`
+    constructor(user, logOut) {
+        super(`<section class="home">
+                    <h1>Bienvenido ${user}</h1>
+                    <button>Logout</button>
+                </section>`)
 
-    const container = temp.firstChild
+        const search = new Search()
 
-    const search = Search()
+        this.container.appendChild(search.container)
 
-    container.appendChild(search)
+        const logOutButton = this.container.querySelector('button')
 
+        logOutButton.addEventListener('click', function () {
 
+            logOut()
+        })
+        let result
+        const self = this
+        const searchButton = this.container.querySelector('form')
+        searchButton.addEventListener('submit', function (event) {
+            event.preventDefault()
 
-    const logOutButton = container.querySelector('button')
-
-    logOutButton.addEventListener('click', function () {
-
-        logOut()
-    })
-let result
-    const searchButton = container.querySelector('form')
-    searchButton.addEventListener('submit', function (event) {
-        debugger
-
-        event.preventDefault()
-        const query = event.target.query.value      
-        const user = searchUser(query)
-        if (!result) {
-            result = Result(user)
-            container.append(result)
-        }else{
-            container.removeChild(result)
-            result = undefined
-            result = Result(user)
-            container.append(result)
-        }
-        
-    })
-
-
-   
-
-    return container
+            const query = event.target.query.value
+            const user = searchUser(query)
+            if (!result) {
+                result = new Result(user)
+                self.container.append(result.container)
+            } else {
+                self.container.removeChild(result.container)
+                result.container = undefined
+                result = new Result(user)
+                self.container.append(result.container)
+            }
+        })
+    }
 }
 
 
