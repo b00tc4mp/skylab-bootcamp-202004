@@ -1,41 +1,30 @@
-const landing = new Landing(
-  function () {
-    landing.container.containerreplaceWith(register.container);
-  },
-  function () {
-    landing.container.replaceWith(login.container);
-  }
-);
+const landing = new Landing(function () {
+    landing.container.replaceWith(register.container)
+}, function () {
+    landing.container.replaceWith(login.container)
+})
 
-const register = new Register(
-  function (name, surname, email, password) {
-    registerUser(name, surname, email, password);
+const register = new Register(function (name, surname, email, password) {
+    registerUser(name, surname, email, password)
 
-    register.container.containerreplaceWith(login.container);
-  },
-  function () {
-    register.container.replaceWith(login.container);
-  }
-);
+    register.container.replaceWith(login.container)
+}, function () {
+    register.container.replaceWith(login.container)
+})
 
-const login = new Login(
-  function (email, password) {
-    authenticateUser(email, password);
+const login = new Login(function (email, password) {
+    authenticateUser(email, password)
 
-    const user = retrieveUser(email);
+    const user = retrieveUser(email)
 
-  
     const home = new Home(user.name, function () {
-      home.container.replaceWith(landing.container);
-    
-    });
-  
-    login.container.replaceWith(home.container);
-  },
-  function () {
-    login.container.replaceWith(register.container);
-  }
-);
+        home.container.replaceWith(landing.container)
+    })
 
-document.getElementById("root").appendChild(landing.container);
-// document.getElementById("root").appendChild(home);
+    login.container.replaceWith(home.container)
+}, function () {
+    login.container.replaceWith(register.container)
+})
+
+// document.getElementById('root').appendChild(Home('pepito', function() {}))
+document.getElementById('root').appendChild(landing.container)
