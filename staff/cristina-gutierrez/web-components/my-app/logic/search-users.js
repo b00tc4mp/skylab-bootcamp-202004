@@ -1,11 +1,17 @@
 function searchUsers(query) {
-    // TODO find users matching query in name, surname, email
-
+    query = query.toLowerCase();
+    
     const _users = users.filter(function(user) {
-        // TODO match user.name contains query || user.surname contains query || ...
+        const { name, surname, email } = user;
+
+        return name.toLowerCase().includes(query) || surname.toLowerCase().includes(query) || email.toLowerCase().includes(query)
     })
 
-    // TODO sanitize: create new objects of users without password
+    const __users = users.map(function(user) {
+        const { name, surname, email } = user;
 
-    // TODO return _users
+        return { name, surname, email}
+    })
+
+    return __users;
 }

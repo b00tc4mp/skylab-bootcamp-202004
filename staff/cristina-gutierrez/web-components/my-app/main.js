@@ -5,7 +5,6 @@ const landing = Landing(function() {
 });
 
 const register = Register(function (name, surname, email, password) {
-    
     registerUser(name, surname, email, password)
 
     register.replaceWith(login)
@@ -27,4 +26,4 @@ const login = Login(function (email, password) {
     login.replaceWith(register)
 });
 
-document.getElementById('root').appendChild(landing);
+document.getElementById('root').appendChild(landingx);
