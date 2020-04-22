@@ -20,8 +20,10 @@ function Login(onSubmit, onRegister) {
     form.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        const email = event.target.email.value,
-            password = event.target.password.value;
+        let {email, password} = event.target;
+
+        email = email.value,
+        password = password.value;
          
         try {
             onSubmit(email, password)
@@ -29,11 +31,11 @@ function Login(onSubmit, onRegister) {
             cleanUp()
         } catch(error) {
             if (!feedback) {
-                feedback = Feedback(error, 'error');
+                feedback = Feedback(error.message, 'error');
 
                 container.append(feedback);
             } else {
-                feedback.innerText = error;
+                feedback.innerText = error.message;
             }
         }    
     })    

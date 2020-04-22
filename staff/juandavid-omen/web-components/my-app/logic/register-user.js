@@ -4,7 +4,7 @@ function registerUser(name, surname, email, password) {
     }
     
     if (!TEXT_REGEX.test(name)) {
-        throw new Error(name + ' does not match the format');
+        throw new Error(name + ' is not alphabetic');
     }
     
     if (typeof surname !== 'string') {
@@ -12,7 +12,7 @@ function registerUser(name, surname, email, password) {
     }
     
     if (!TEXT_REGEX.test(surname)) {
-        throw new Error(surname + ' does not match the format');
+        throw new Error(surname + ' is not alphabetic');
     }
     
     if (typeof email !== 'string') {
