@@ -17,7 +17,7 @@ function Results(users) {
         })
 
         this.container.appendChild(list)
-    } else this.container.appendChild(Feedback('sorry, no results :(', 'warning'))
+    } else this.container.appendChild(new Feedback('sorry, no results :(', 'warning').container)
 }
 
 Results.prototype = Object.create(Component.prototype)
