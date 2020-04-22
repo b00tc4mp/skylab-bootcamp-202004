@@ -9,12 +9,20 @@ function Home(user, logOut) {
 
     const container = temp.firstChild
 
+    const search = Search()
+
+    container.appendChild(search)
+
+
+
     const logOutButton = container.querySelector('button')
 
-    logOutButton.addEventListener('click', function(){ 
+    logOutButton.addEventListener('click', function () {
 
         logOut()
     })
+
+   
 
     return container
 }

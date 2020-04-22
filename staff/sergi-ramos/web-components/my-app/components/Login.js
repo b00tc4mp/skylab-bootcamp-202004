@@ -17,7 +17,7 @@ function Login(onSubmit, toRegister) {
     const register = container.querySelector('a')
     let feedback;
 
-    form.addEventListener('submit', function (event) { debugger
+    form.addEventListener('submit', function (event) { 
         
         event.preventDefault()
 
@@ -45,9 +45,9 @@ function Login(onSubmit, toRegister) {
         cleanUp()
     })
 
-    function cleanUp(){  debugger
-         form.target.email = ''
-         form.target.password = ''
+    function cleanUp(){  
+         form.email.value = ''
+         form.password.value = ''
 
          if(feedback){
             container.removeChild(feedback)
