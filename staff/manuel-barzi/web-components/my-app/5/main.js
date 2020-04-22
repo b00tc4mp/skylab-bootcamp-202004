@@ -26,4 +26,4 @@ const login = Login(function (email, password) {
     login.replaceWith(register)
 })
 
-document.getElementById('root').appendChild(landing)
+document.getElementById('root').appendChild(Home('pepito', function() {}))
