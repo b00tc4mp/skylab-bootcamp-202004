@@ -22,24 +22,24 @@ function Register(onSubmit, onLogin) {
     form.addEventListener('submit', function (event) {
         event.preventDefault()
 
-        const { name, surname, email, password } = event.target
+        let { name, surname, email, password } = event.target
 
-        const name = name.value,
-            surname = surname.value,
-            email = email.value,
-            password = password.value
+        name = name.value
+        surname = surname.value
+        email = email.value
+        password = password.value
 
-            try {
-                onSubmit(name, surname, email, password)
-    
-                cleanUp()
-            } catch (error) {
-                if (!feedback) {
-                    feedback = Feedback(error.message, 'error')
-    
-                    container.append(feedback)
-                } else feedback.innerText = error.message
-            }
+        try {
+            onSubmit(name, surname, email, password)
+
+            cleanUp()
+        } catch (error) {
+            if (!feedback) {
+                feedback = Feedback(error.message, 'error')
+
+                container.append(feedback)
+            } else feedback.innerText = error.message
+        }
     })
 
     function cleanUp() {
@@ -59,7 +59,7 @@ function Register(onSubmit, onLogin) {
 
     const login = container.querySelector('a')
 
-    login.addEventListener('click', function(event) {
+    login.addEventListener('click', function (event) {
         event.preventDefault()
 
         onLogin()
