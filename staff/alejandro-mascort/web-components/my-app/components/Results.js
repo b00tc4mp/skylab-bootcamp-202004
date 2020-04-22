@@ -10,7 +10,7 @@ function Results(query) {
 
         temp.innerHTML = '<section class="results">\n<ul class="results__list">\n'+temp.innerHTML+'\n</ul>\n<section>'
     } else {
-        temp.innerHTML = '<p class="results__message">There are no matches with your request</p>'
+        temp.innerHTML = '<p class="results__message feedback--warning">There are no matches with your request</p>'
     }
     const container = temp.firstChild
 
