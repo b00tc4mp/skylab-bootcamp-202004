@@ -1,14 +1,25 @@
 describe('retrieveUser', function() {
-    const email = 'manuel1barzi@gmail.com'
-    const users = [{ name: 'Manuel', surname: 'Barzi', email: 'manuelbarzi@gmail.com', password: '123' }, { name: 'Manu', surname: 'Barzi', email: 'manubarzi@gmail.com', password: '123' }]
-    
-    // it('should return the user', function(){
-    //     let result = retrieveUser(email)
+    let name, surname, email, password
 
-    //     expect(result.name).to.equal('Manuel')
-    //     expect(result.surname).to.equal('Barzi')
-    //     expect(result.email).to.equal('manuelbarzi@gmail.com')
-    // })
+    beforeEach(function() {
+        users.length = 0;
+
+        name = names.random()
+        surname = surnames.random()
+        email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('')}@mail.com`
+        password = passwords.random()
+
+        users.push({ name, surname, email, password})
+    })
+
+    it('should succeed on correct credentials returning only public credentials', function(){       
+        const user = retrieveUser(email)
+        
+        expect(user.name).to.equal(name)
+        expect(user.surname).to.equal(surname)
+        expect(user.email).to.equal(email)
+        expect(user.password).to.be.undefined     
+    })
     
     it('should fail on non-string field', function () {
         expect(function () {

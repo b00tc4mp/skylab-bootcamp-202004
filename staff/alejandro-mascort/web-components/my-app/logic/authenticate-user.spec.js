@@ -1,15 +1,36 @@
 describe('authenticateUser', function() {
-    const email = 'manuel1barzi@gmail.com'
-    const password = '123'
-    const users = [{ name: 'Manuel', surname: 'Barzi', email: 'manuelbarzi@gmail.com', password: '123' }, { name: 'Manu', surname: 'Barzi', email: 'manubarzi@gmail.com', password: '123' }]
+    let name, surname, email, password
 
-    // it('should succeed on login with a registered user', function(){
-    //     const email = 'manuelbarzi@gmail.com'
-    //     const password = '123'
-    //     expect(function(){
-    //         authenticateUser(email,password)
-    //     }).not.to.throw(Error)
-    // })
+    beforeEach(function() {
+        users.length = 0;
+
+        name = names.random()
+        surname = surnames.random()
+        email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('')}@mail.com`
+        password = passwords.random()
+
+        users.push({ name, surname, email, password })
+    })
+
+    it('should succeed on correct credentials', function(){
+        expect(function(){
+            authenticateUser(email,password)
+        }).not.to.throw()
+    })
+
+    it('should fail on no correct credentials', function() {
+        const _email = email.substring(0, 3) + '_' + email.substring(3)
+
+        expect(function () {
+            authenticateUser(_email, password)
+        }).to.throw(Error, 'wrong credentials')
+
+        const _password = password + '1'
+
+        expect(function () {
+            authenticateUser(email, _password)
+        }).to.throw(Error, 'wrong credentials')
+    })
     
     it('should fail on non-string field', function () {
         expect(function () {
@@ -46,11 +67,5 @@ describe('authenticateUser', function() {
         expect(function () {
             authenticateUser(email, " ")
         }).to.throw(Error, 'password is empty or blank')
-    })
-
-    it('should succeed on login with a registered user', function(){
-        expect(function(){
-            authenticateUser(email,password)
-        }).to.throw(Error, 'wrong credentials')
     })
 })
