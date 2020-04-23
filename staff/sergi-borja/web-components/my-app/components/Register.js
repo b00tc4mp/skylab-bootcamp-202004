@@ -1,5 +1,6 @@
-function Register(onSubmit, onLogin) {
-    Component.call(this, `<section class="register">
+class Register extends Component {
+    constructor(onSubmit, onLogin) {
+    super(`<section class="register">
     <h1>Register</h1>
     <form>
         <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}">
@@ -9,63 +10,59 @@ function Register(onSubmit, onLogin) {
         <button>Submit</button>
         or <a href="">Login</a>
     </form>
-</section>`)
-    debugger
-    const form = this.container.querySelector('form')
+    </section>`);
 
-    let feedback
+    const form = this.container.querySelector("form");
 
-    const self = this
+    let feedback;
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault()
 
-        let { name, surname, email, password } = event.target
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
 
-        name = name.value
-        surname = surname.value
-        email = email.value
-        password = password.value
+      let { name, surname, email, password } = event.target;
 
-        try {
-            onSubmit(name, surname, email, password)
+      name = name.value;
+      surname = surname.value;
+      email = email.value;
+      password = password.value;
 
-            cleanUp()
-        } catch (error) {
-            if (!feedback) {
-                feedback = new Feedback(error.message, 'error')
+      try {
+        onSubmit(name, surname, email, password);
 
-                //this.container.append(feedback.container)
-                self.container.append(feedback.container)
-            } else feedback.innerText = error.message
-        }
+        cleanUp();
+      } catch (error) {
+        if (!feedback) {
+          feedback = new Feedback(error.message, "error");
+
+          this.container.append(feedback.container);
+        } else feedback.innerText = error.message;
+      }
+    }.bind(this));
+
+    const cleanUp= function() {
+      const { name, surname, email, password } = form;
+
+      name.value = "";
+      surname.value = "";
+      email.value = "";
+      password.value = "";
+
+      if (feedback) {
+        this.container.removeChild(feedback.container);
+
+        feedback = undefined;
+      }
+    }.bind(this)
+
+    const login = this.container.querySelector("a");
+
+    login.addEventListener("click", function (event) {
+      event.preventDefault()
+
+      onLogin()
+
+      cleanUp()
     })
-
-    function cleanUp() {
-        const { name, surname, email, password } = form
-
-        name.value = ''
-        surname.value = ''
-        email.value = ''
-        password.value = ''
-
-        if (feedback) {
-            self.container.removeChild(feedback.container)
-
-            feedback = undefined
-        }
-    }
-
-    const login = this.container.querySelector('a')
-
-    login.addEventListener('click', function (event) {
-        event.preventDefault()
-
-        onLogin()
-
-        cleanUp()
-    })
+  }
 }
-
-Register.prototype = Object.create(Component.prototype)
-Register.prototype.constructor = Register

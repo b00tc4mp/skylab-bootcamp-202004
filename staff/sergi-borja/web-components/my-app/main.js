@@ -26,5 +26,5 @@ const login = new Login(function (email, password) {
     login.container.replaceWith(register.container)
 })
 
-// document.getElementById('root').appendChild(Home('pepito', function() {}))
+
 document.getElementById('root').appendChild(landing.container)

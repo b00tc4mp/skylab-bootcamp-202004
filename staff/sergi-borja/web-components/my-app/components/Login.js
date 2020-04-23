@@ -1,5 +1,6 @@
-function Login(onSubmit, onRegister) {
-    Component.call(this, `<section class="login">
+class Login extends Component {
+    constructor(onSubmit, onRegister){
+    super( `<section class="login">
     <h1>Login</h1>
     <form>
     <input type="email" name="email" placeholder="e-mail" required>
@@ -7,13 +8,12 @@ function Login(onSubmit, onRegister) {
         <button>Submit</button>
         or <a href="">Register</a>
     </form>
-</section>`)
+    </section>`)
+    
 
     const form = this.container.querySelector('form')
 
     let feedback
-
-    const self = this
 
     form.addEventListener('submit', function (event) {
         event.preventDefault()
@@ -30,23 +30,22 @@ function Login(onSubmit, onRegister) {
         } catch (error) {
             if (!feedback) {
                 feedback = new Feedback(error.message, 'error')
-
-                // this.container.append(feedback.container)
-                self.container.append(feedback.container)
+                
+                this.container.append(feedback.container)
             } else feedback.innerText = error.message
         }
-    })
+    }.bind(this))
 
-    function cleanUp() {
+   const cleanUp= function(){
         form.email.value = ''
         form.password.value = ''
 
         if (feedback) {
-            self.container.removeChild(feedback.container)
+            this.container.removeChild(feedback.container)
 
             feedback = undefined
         }
-    }
+    }.bind(this)
 
     const register = this.container.querySelector('a')
 
@@ -58,6 +57,4 @@ function Login(onSubmit, onRegister) {
         cleanUp()
     })
 }
-
-Login.prototype = Object.create(Component.prototype)
-Login.prototype.constructor = Login
+}
