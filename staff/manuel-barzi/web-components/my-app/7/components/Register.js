@@ -39,7 +39,7 @@ class Register extends Component {
             }
         }.bind(this))
 
-        function cleanUp() {
+        const cleanUp = function() {
             const { name, surname, email, password } = form
 
             name.value = ''
@@ -48,11 +48,11 @@ class Register extends Component {
             password.value = ''
 
             if (feedback) {
-                self.container.removeChild(feedback.container)
+                this.container.removeChild(feedback.container)
 
                 feedback = undefined
             }
-        }
+        }.bind(this)
 
         const login = this.container.querySelector('a')
 
