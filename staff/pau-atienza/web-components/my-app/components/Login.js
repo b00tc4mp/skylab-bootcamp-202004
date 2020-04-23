@@ -11,18 +11,25 @@ function Login(onSubmit, onRegister) {
     </section>`
 
     const container = temp.firstChild
-
     const form = container.querySelector('form')
+    let feedback
 
     form.addEventListener('submit', function (event) {
         event.preventDefault()
 
-        const email = event.target.email.value,
-            password = event.target.password.value
-
-        onSubmit(email, password)
-
-
+        const [email, password ] = [event.target.email.value,event.target.password.value]
+        
+        try{
+            onSubmit(email, password)
+            
+        }catch(error){
+            if(!feedback){
+                feedback = Feedback(error.message, 'error')
+                container.appendChild(feedback)
+            }else{
+                feedback.innerText = error.message
+            }
+        }
     })
 
     const toRegister = container.querySelector('a')

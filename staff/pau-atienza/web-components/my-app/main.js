@@ -1,4 +1,8 @@
-const landing = Landing()
+const landing = Landing(function(){
+        landing.replaceWith(register)
+}, function(){
+        landing.replaceWith(login)
+})
 
 const register = Register(
     function (name, surname, email, password) {
@@ -14,14 +18,15 @@ const login = Login(
     function (email, password) {
         authenticateUser(email, password)
 
-        const user = retrieveUserByEmail(email)
+        const user = retrieveUser(email)
         home = Home(user)
         login.replaceWith(home);
         clearForms()
-
 }, function(){
         login.replaceWith(register)
+        
         clearForms()
 });
 
 document.getElementById('root').appendChild(landing)
+// document.getElementById('root').appendChild(Home('Pau'))

@@ -13,9 +13,9 @@ function Register(onSubmit, onLogin) {
     </section>`
 
     const container = temp.firstChild
-
     const form = container.querySelector('form')
-
+    let feedback;
+    
     form.addEventListener('submit', function (event) {
         event.preventDefault()
 
@@ -23,16 +23,23 @@ function Register(onSubmit, onLogin) {
             surname = event.target.surname.value,
             email = event.target.email.value,
             password = event.target.password.value
+        try{
+            onSubmit(name, surname, email, password)
+        } catch(error){
 
-        onSubmit(name, surname, email, password)
+            if(!feedback){
+                feedback= Feedback(error.message,"error");
+                container.appendChild(feedback);
+            }else{
+                feedback.innerText=error.message;
+            }
+        }
     })
-
     const toLogin = container.querySelector('a')
     
     toLogin.addEventListener('click', function (event) {
         event.preventDefault()
         onLogin()
     })
-
     return container
 }

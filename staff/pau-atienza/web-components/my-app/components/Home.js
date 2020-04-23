@@ -1,16 +1,16 @@
-function Home(user) {
-    const temp = document.createElement('div')
-    temp.innerHTML = `<section class="home">
-        <h1>Home</h1>
-        <p>Hello, ${user.name}</p>
-        <button>Logout</button>
-    </section>`
+class Home extends Component{
+    constructor(user){
+        super(`<span> 
+            <h1>Welcome ${name}</h1>
+            <button>Log out</button>
+        </span>`)
 
-    const container = temp.firstChild
-    const button = container.querySelector('button')
-    button.addEventListener('click', function(){ 
-        home.replaceWith(landing)
+        const button = this.container.querySelector('button')
     
-    })
-    return container
+        button.addEventListener('click', function(){ 
+            home.replaceWith(landing)
+        })
+        
+        this.container.appendChild(new Search())
+    }
 }

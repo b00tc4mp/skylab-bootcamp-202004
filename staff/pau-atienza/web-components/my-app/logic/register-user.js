@@ -12,7 +12,7 @@ function registerUser(name, surname, email, password){
     if (typeof password !== 'string') throw new TypeError(password + ' is not a string')
     if (password.length < 8) throw new Error('password does not have the min length')
 
-    const user = retrieveUserByEmail(email)
+    const user = retrieveUser(email)
 
     if (user) throw new Error('user already exists')
     

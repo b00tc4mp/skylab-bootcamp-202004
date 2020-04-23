@@ -1,30 +1,21 @@
-function Landing(callback) {
+function Landing(goRegister, goLogin) {
     const temp = document.createElement('div')
 
-    temp.innerHTML = `<section class="register">
-        <h1>Landing</h1>
-        <form>
-            <button>Login</button>
-            <button>Register</button>
-        </form>
+    temp.innerHTML = `<section class="landing">
+        <h1>Welcome</h1>
+        <a href="" >Register</a>
+        <a href="" >Login</a>
     </section>`
-
     const container = temp.firstChild
-
-    const loginButton = container.querySelectorAll('button')[0]
-    const registerButton = container.querySelectorAll('button')[1]
-
-    loginButton.addEventListener('click', function (event) {
-        event.preventDefault()
-
-        landing.replaceWith(login)
-    })
+    const [register, login] = container.querySelectorAll('a')
     
-    registerButton.addEventListener('click', function (event) {
+    register.addEventListener('click', function (event) {
         event.preventDefault()
-
-        landing.replaceWith(register)
+        goRegister()
     })
-
+    login.addEventListener('click', function (event) {
+        event.preventDefault()
+        goLogin()
+    })
     return container
 }
