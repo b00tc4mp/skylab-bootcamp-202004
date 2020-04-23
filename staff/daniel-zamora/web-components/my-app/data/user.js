@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-const users = [{name: 'Daniel', surname: 'Zamora', email: 'da@nubar.com', password: '123' }];
-=======
 const users = [
   { name: "Daniel", 
   surname: "Zamora", 
@@ -13,4 +10,4 @@ const users = [
     password: "123123123",
   },
 ];
->>>>>>> Stashed changes
+
