@@ -12,7 +12,7 @@ o.toString()
 
 window.name = 'Window'
 
-toString = o.toString
+const toString = o.toString
 
 toString()
 //"i am Window"
