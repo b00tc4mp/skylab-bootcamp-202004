@@ -18,8 +18,6 @@ class Register extends Component {
 
         let feedback
 
-        const self = this
-
         form.addEventListener('submit', function (event) {
             event.preventDefault()
 
@@ -36,26 +34,26 @@ class Register extends Component {
                 } catch(error) {
                     if (!feedback) {
                         feedback = new Feedback(error.message, 'error')
-                        debugger
-                        self.container.appendChild(feedback.container)
+
+                        this.container.appendChild(feedback.container)
 
                     }else feedback.innerText = error.message
 
                 }
-        })
+        }.bind(this))
 
-        function cleanUp() {
+        const cleanUp = function () {
             form.name.value = ''
             form.surname.value = ''
             form.email.value = ''
             form.password.value = ''
             
             if (feedback) {
-                self.container.removeChild(feedback.container)
+                this.container.removeChild(feedback.container)
 
                 feedback = undefined
             }
-        }
+        }.bind(this)
 
         login.addEventListener('click', function(event){
             event.preventDefault()
