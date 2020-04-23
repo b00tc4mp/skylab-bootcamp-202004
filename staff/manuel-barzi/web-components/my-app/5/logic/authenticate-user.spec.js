@@ -1,7 +1,7 @@
-describe('authenticateUser', function () {
+describe('authenticateUser', function() {
     let name, surname, email, password
 
-    beforeEach(function () {
+    beforeEach(function() {
         users.length = 0
 
         name = names.random()
@@ -12,7 +12,7 @@ describe('authenticateUser', function () {
         users.push({ name, surname, email, password })
     })
 
-    it('should succeed on correct credentials', function () {
+    it('should succeed on correct credentials', function() {
         // let _error
 
         // try {
@@ -23,12 +23,12 @@ describe('authenticateUser', function () {
 
         // expect(_error).to.be.undefined
 
-        expect(function () {
+        expect(function() {
             authenticateUser(email, password)
         }).not.to.throw()
     })
 
-    it('should fail on incorrect credentials', function () {
+    it('should fail on incorrect credentials', function() {
         // let _error
 
         // try {
@@ -41,13 +41,13 @@ describe('authenticateUser', function () {
 
         const _email = email.substring(0, 3) + '-' + email.substring(3)
 
-        expect(function () {
+        expect(function() {
             authenticateUser(_email, password)
         }).to.throw(Error, 'wrong credentials')
 
         const _password = password.substring(0, 3) + '-' + password.substring(3)
 
-        expect(function () {
+        expect(function() {
             authenticateUser(email, _password)
         }).to.throw(Error, 'wrong credentials')
     })
