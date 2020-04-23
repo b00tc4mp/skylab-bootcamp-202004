@@ -2,7 +2,7 @@
 'use strict';
 
 Object.defineProperty(Arroz.prototype, 'splice', {
-    value: function (start, deleteCount = this.length - start, nElementsToAdd){
+    value: function (start, deleteCount = this.length - start, newElement){
 
         if(typeof start !== 'number'){throw new TypeError (start + ' is not a number')};
     

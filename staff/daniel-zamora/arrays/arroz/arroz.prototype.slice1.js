@@ -3,8 +3,7 @@
 Object.defineProperty(Arroz.prototype, "slice", {
   value: function (start, end) {
     var result = new Arroz();
-    var i = 0;
-    for (i = start; i < this.length; i++) {
+    for (var i = 0; i < this.length; i++) {
       result[result.length] = this[i];
     if(start >= 0 && typeof end === 'undefined') {
       i = start;
