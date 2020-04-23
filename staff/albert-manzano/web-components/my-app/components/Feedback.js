@@ -7,4 +7,3 @@ function Feedback(message, level) {
 
     return container
 }
- 

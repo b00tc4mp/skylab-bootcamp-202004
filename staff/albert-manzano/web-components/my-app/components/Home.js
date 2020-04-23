@@ -1,21 +1,62 @@
-function Home(name,onLogout){
+function Home(name, callback) {
+    const temp = document.createElement('div')
 
-    const temp=document.createElement('div')
+    temp.innerHTML = `<section class="home">
+    <h1>Welcome, ${name}!</h1><button>Logout</button>
+</section>`
 
-    temp.innerHTML=  `<section class="home">
-    <h1>Welcome ${name} !</h1>
-    <button>Log out</button>
-    </section>`
+    const container = temp.firstChild
 
-    const container = temp.firstChild;
-        const button = container.querySelector('button');
+    const button = container.querySelector('button')
+    
+    // const search = Search()
 
+    let results
 
-    button.addEventListener('click',function(){
-        event.preventDefault();
-
-        onLogout()
+    button.addEventListener('click', function() {
+        callback()
     })
-
+   
+    container.appendChild(Search(function(query){
+        debugger
+        const users = searchUsers(query)
+        if(!results){
+            results=Results(users)
+            container.appendChild(result)
+        }else{
+            const _results = results
+            results = Results(users)
+            _results.replaceWith(results)
+        }
+    }))
+    
     return container
-} 
+}
+
+// const button = container.querySelector('button')
+
+//     button.addEventListener('click', function() {
+//     button.addEventListener('click', function () {
+//         callback()
+//     })
+
+//     let results
+
+//     container.appendChild(Search(function (query) {
+//         const users = searchUsers(query)
+
+//         if (!results) {
+//             results = Results(users)
+
+//             container.appendChild(results)
+//         } else {
+//             const _results = results
+
+//             results = Results(users)
+
+//             _results.replaceWith(results)
+//         }
+//     }))
+
+//     return container
+// } 
