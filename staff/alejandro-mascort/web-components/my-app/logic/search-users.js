@@ -1,11 +1,11 @@
 function searchUsers(query) {
-    const regExp = new RegExp(query.toLowerCase())
-    
-    const usersFound = users.filter(user => regExp.test(user.name.toLowerCase()) || regExp.test(user.surname.toLowerCase()) || regExp.test(user.email.toLowerCase()))
+    if (query.trim().length) {
+        const regExp = new RegExp(query.toLowerCase())
+        
+        const usersFound = users.filter(user => regExp.test(user.name.toLowerCase()) || regExp.test(user.surname.toLowerCase()) || regExp.test(user.email.toLowerCase()))
 
-    const results = usersFound.map(function({name, surname, email}){
-        return {name, surname, email}
-    }) 
+        const results = usersFound.map(({name, surname, email}) => ({name, surname, email}))
 
-    return results
+        return results
+    } else return []
 }

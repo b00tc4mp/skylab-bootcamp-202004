@@ -11,18 +11,16 @@ class Search extends Component {
 
         let result, query
 
-        const self = this
-
-        formSearch.addEventListener('submit', function(event){
+        formSearch.addEventListener('submit', event => {
             event.preventDefault()
 
             query = formSearch.query.value
 
             if (query.trim().length > 0 && typeof query != 'undefined') {
-                if (result) self.container.removeChild(result.container)
+                if (result) this.container.removeChild(result.container)
                 result = new Results(query)
                 
-                self.container.append(result.container)
+                this.container.append(result.container)
             }
         })
     }

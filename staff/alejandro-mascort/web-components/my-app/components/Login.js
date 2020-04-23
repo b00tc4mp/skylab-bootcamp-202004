@@ -16,7 +16,7 @@ class Login extends Component {
 
         let feedback
 
-        form.addEventListener('submit', function (event) {
+        form.addEventListener('submit', event => {
             event.preventDefault()
 
             const email = event.target.email.value,
@@ -35,7 +35,7 @@ class Login extends Component {
                 } else feedback.innerText = error.message
             }
 
-        }.bind(this))
+        })
 
         register.addEventListener('click', function(event){
             event.preventDefault()
@@ -45,7 +45,7 @@ class Login extends Component {
             cleanUp()
         })
 
-        const cleanUp = function() {
+        const cleanUp = () => {
             form.email.value = ''
             form.password.value = ''
             
@@ -54,6 +54,6 @@ class Login extends Component {
 
                 feedback = undefined
             }
-        }.bind(this)
+        }
     }
 }

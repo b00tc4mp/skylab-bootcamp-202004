@@ -13,9 +13,18 @@ describe('searchUsers', function(){
     })
 
 
-    it('should fail if is empty or blank', function(){
-
+    it('should return an empty array if argument is empty or blank', function(){
         usersFound = searchUsers(' ')
+        
+        expect(usersFound).to.be.an('array')
+        expect(usersFound.length).to.equal(0)
+
+        usersFound = searchUsers('')
+        
+        expect(usersFound).to.be.an('array')
+        expect(usersFound.length).to.equal(0)
+
+        usersFound = searchUsers('            ')
         
         expect(usersFound).to.be.an('array')
         expect(usersFound.length).to.equal(0)
