@@ -1,5 +1,7 @@
 function Feedback(message, level) {
-    Component.call(this, `<p class="feedback feedback--${level}">${message}</p>`)
+    const container = this.mount(`<p class="feedback feedback--${level}">${message}</p>`)
+
+    this.container = container;
 }
 
 Feedback.prototype = Object.create(Component.prototype)
