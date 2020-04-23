@@ -1,13 +1,13 @@
 'use strict'
-function reduce(array, expression, initialValue) {
+Arroz.prototype.reduce = function reduce(expression, initialValue) {
     var result = 0
-    if (array.length !== 0) {
+    if (this.length !== 0) {
         if (initialValue === undefined) {
             initialValue = 0
         }
-        for (var i = 0; i < array.length; i++) {
+        for (var i = 0; i < this.length; i++) {
             var acumulator = result
-            result = expression(acumulator, array[i])
+            result = expression(acumulator, this[i])
 
         }
 
