@@ -1,16 +1,12 @@
 function Search(onSubmit) {
-    const temp = document.createElement('div');
-
-    temp.innerHTML = `<section class="search">
+    Component.call(this, `<section class="search">
         <form>
             <input type="text" name="query">
             <button>🔍</button>
         </form>
-    </section>`
+    </section>`);
 
-    const container = temp.firstChild;
-
-    const form = container.querySelector('form');
+    const form = this.container.querySelector('form');
 
     form.addEventListener('submit', function (event) {
         event.preventDefault();

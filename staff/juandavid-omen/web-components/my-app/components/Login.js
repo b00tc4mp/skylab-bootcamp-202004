@@ -1,7 +1,5 @@
 function Login(onSubmit, onRegister) {
-    const temp = document.createElement('div');
-
-    temp.innerHTML = `<section class="login">
+    Component.call(this, `<section class="login">
         <h1>Login</h1>
         <form>
             <input type="email" name="email" placeholder="e-mail">
@@ -9,14 +7,13 @@ function Login(onSubmit, onRegister) {
             <button>Submit</button>
             or <a href="">Register</a>
         </form>
-    </section>`
+    </section>`)
 
-    const container = temp.firstChild;
-
-    const form = container.querySelector('form');
+    const form = this.container.querySelector('form');
 
     let feedback;
 
+    const self = this;
     form.addEventListener('submit', function (event) {
         event.preventDefault();
 
@@ -33,7 +30,7 @@ function Login(onSubmit, onRegister) {
             if (!feedback) {
                 feedback = Feedback(error.message, 'error');
 
-                container.append(feedback);
+                self.container.append(feedback.container);
             } else {
                 feedback.innerText = error.message;
             }
@@ -52,7 +49,7 @@ function Login(onSubmit, onRegister) {
         
     }
 
-    const register = container.querySelector('a');
+    const register = this.container.querySelector('a');
 
     register.addEventListener('click', function (event) {
         event.preventDefault();
@@ -64,3 +61,6 @@ function Login(onSubmit, onRegister) {
 
     return container;
 }
+
+Login.prototype = Object.create(Component.prototype);
+Login.prototype.Constructor = Login;

@@ -1,10 +1,6 @@
 function Results(users) {
-    const temp = document.createElement('div');
-    
-    temp.innerHTML = `<section class="results">
-    </section>`
-
-    const container = temp.firstChild;
+    Component.call(this,`<section class="results">
+    </section>`);
 
     if (users.length) {
         const list = document.createElement('ul');
@@ -17,7 +13,7 @@ function Results(users) {
             list.appendChild(item);
             
         })
-        container.appendChild(list);
+        this.container.appendChild(list);
 
     } else {
         container.appendChild(feedback('sorry, no results :(', 'warning'));

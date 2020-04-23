@@ -1,7 +1,5 @@
 function Register(onSubmit, onLogin) {
-    const temp = document.createElement('div')
-
-    temp.innerHTML = `<section class="register">
+    Component.call(this, `<section class="register">
          <h1>Register</h1>
         <form>
             <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}">
@@ -11,13 +9,13 @@ function Register(onSubmit, onLogin) {
             <button>Submit</button>
             or <a href="">Login</a>
          </form>
-    </section>`
+    </section>`);
 
-    const container = temp.firstChild;
-
-    const form = container.querySelector('form');
+    const form = this.container.querySelector('form');
 
     let feedback;
+
+    const self = this;
 
     form.addEventListener('submit', function (event) {
         event.preventDefault()

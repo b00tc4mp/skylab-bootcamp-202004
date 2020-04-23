@@ -1,13 +1,10 @@
 function Landing(onRegister, onLogin) {
-    const temp = document.createElement('div');
-
-    temp.innerHTML = `<section class="landing">
+    Component.call(this, `<section class="landing">
         <a href="">Register</a> or <a href="">Login</a>
-    </section>`
+    </section>`);
 
-    const container = temp.firstChild;
 
-    const [register, login] = container.querySelectorAll('a');
+    const [register, login] = this.container.querySelectorAll('a');
 
     register.addEventListener('click', function (event) {
         event.preventDefault();

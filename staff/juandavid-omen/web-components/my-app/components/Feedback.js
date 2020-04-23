@@ -1,9 +1,6 @@
 function Feedback(message, level) {
-    const temp = document.createElement('div');
-
-    temp.innerHTML = `<p class="feedback feedback--${level}">${message}</p>`
-
-    const container = temp.firstChild;
-
-    return container;
+    Component.call(this, `<p class="feedback feedback--${level}">${message}</p>`);
 }
+
+Feedback.prototype = Object.create(Component.prototype);
+Feedback.prototype.constructor = Feedback;
