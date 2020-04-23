@@ -1,26 +1,22 @@
-function Search(onSubmit) {
+class Search extends Component {
+  constructor(onSubmit) {
 
-    const temp = document.createElement('div');
-  
-    temp.innerHTML = `<section class ="search">
+    super(`<section class ="search">
           <form>
-              <input type="text" name="query" ><button>Search</button>
+              <input type="text" name="query" ><button>🔍Search🔍</button>
           </form>
-      </section>`
-  
-    const container = temp.firstChild;
+      </section>`)
 
-    const form = container.querySelector('form')
-       
-    form.addEventListener('submit', function(event){debugger
-        event.preventDefault();
-        const query = event.target.query.value  
-            
-        onSubmit(query)
-      })
-      return container;    
+      const form = this.container.querySelector('form')
+        form.addEventListener('submit', event => {
+          event.preventDefault();
+          const query = event.target.query.value
+
+          onSubmit(query)
+        })
   }
-  
+}
+
 //   function Search(onSubmit) {
 //     const temp = document.createElement('div')
 

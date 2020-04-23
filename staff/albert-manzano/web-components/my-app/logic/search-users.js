@@ -10,13 +10,20 @@ function searchUsers(query) {
     })
     //sanitaze
     //???? mirar debugger
-    _users = _users.map(function(user){
-        const {name,surname,email}=user
-        return {name,surname,email}
-    })
+    // _users = _users.map(function(user){
+    //     const {name,surname,email}=user
+    //     return {name,surname,email}
+    // })
 
-return _users
-}
+   
+        const __users = _users.map(function ({ name, surname, email }) {
+           
+
+            return { name, surname, email }
+        })
+    
+        return __users
+    }
 
 // const result = Result(user)
 // const resultList = document.getElementById('resultslist')

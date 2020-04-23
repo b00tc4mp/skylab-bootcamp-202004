@@ -1,62 +1,32 @@
-function Home(name, callback) {
-    const temp = document.createElement('div')
+class Home extends Component {
+    constructor(name, callback) {
 
-    temp.innerHTML = `<section class="home">
-    <h1>Welcome, ${name}!</h1><button>Logout</button>
-</section>`
+        super(`<section class="home">
+            <h1>Welcome, ${name}!</h1><button>Logout</button>
+            </section>`)
 
-    const container = temp.firstChild
+        const button = this.container.querySelector('button')
 
-    const button = container.querySelector('button')
-    
-    // const search = Search()
+        // const search = Search()
 
-    let results
+        let results
 
-    button.addEventListener('click', function() {
-        callback()
-    })
-   
-    container.appendChild(Search(function(query){
-        debugger
-        const users = searchUsers(query)
-        if(!results){
-            results=Results(users)
-            container.appendChild(result)
-        }else{
-            const _results = results
-            results = Results(users)
-            _results.replaceWith(results)
-        }
-    }))
-    
-    return container
+        button.addEventListener('click',()=> {
+            callback()
+        })
+
+        this.container.appendChild(new Search(query => {
+            const users = searchUsers(query)
+
+            if (!results) {
+                results = new Results(users)
+                debugger
+                this.container.appendChild(results.container)
+            } else {
+                const _results = results
+                results = new Results(users)
+                _results.container.replaceWith(results.container)
+            }
+        }).container)
+    }
 }
-
-// const button = container.querySelector('button')
-
-//     button.addEventListener('click', function() {
-//     button.addEventListener('click', function () {
-//         callback()
-//     })
-
-//     let results
-
-//     container.appendChild(Search(function (query) {
-//         const users = searchUsers(query)
-
-//         if (!results) {
-//             results = Results(users)
-
-//             container.appendChild(results)
-//         } else {
-//             const _results = results
-
-//             results = Results(users)
-
-//             _results.replaceWith(results)
-//         }
-//     }))
-
-//     return container
-// } 

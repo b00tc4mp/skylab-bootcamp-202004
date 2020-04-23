@@ -1,29 +1,23 @@
-function Landing(onRegister, onLogin) {
-    const temp = document.createElement('div')
+class Landing extends Component {
+    constructor(onRegister, onLogin) {
+        super(`<section class="landing">
+            <a href="">Register</a> or <a href="">Login</a>
+            </section>`)
 
-    temp.innerHTML = `<section class="landing">
-    <a href="">Register</a> or <a href="">Login</a>
-</section>`
+        const [register, login] = this.container.querySelectorAll('a')
 
-    const container = temp.firstChild
+        register.addEventListener('click', event=> {
+            event.preventDefault()
 
-    // const anchors = container.querySelectorAll('a')
-    // const register = anchors[0]
-    // const login = anchors[1]
+            onRegister()
+        })
 
-    const [register, login] = container.querySelectorAll('a')
+        login.addEventListener('click', event=> {
+            event.preventDefault()
 
-    register.addEventListener('click', function(event) {
-        event.preventDefault()
+            onLogin()
+        })
 
-        onRegister()
-    })
-
-    login.addEventListener('click', function(event) {
-        event.preventDefault()
-
-        onLogin()
-    })
-
-    return container
+    }
 }
+
