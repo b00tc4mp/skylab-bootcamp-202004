@@ -2,37 +2,37 @@ window.name = 'Window'
 
 // my anchor (emulator)
 const anchor = {
-listeners: {},
+  listeners: {},
 
-addEventListener(eventName, listener) {
-  (this.listeners[eventName] || (this.listeners[eventName] = [])).push(listener)
-},
+  addEventListener(eventName, listener) {
+    (this.listeners[eventName] || (this.listeners[eventName] = [])).push(listener)
+  },
 
-fireEvent(eventName) {
-  const eventListeners = this.listeners[eventName]
+  fireEvent(eventName) {
+    const eventListeners = this.listeners[eventName]
 
-  if (eventListeners)
+    if (eventListeners)
       for (const i in eventListeners) {
-          const listener = eventListeners[i]
+        const listener = eventListeners[i]
 
-          debugger // INSPECT this
+        debugger // INSPECT this
 
-          const event = { target: this }
+        const event = { target: this }
 
-          listener.call(this, event)
-      } 
-}
+        listener.call(this, event)
+      }
+  }
 }
 
 const anna = { name: 'Anna' }
 const charles = { name: 'Charles' }
 
-anchor.addEventListener('click', function(event) {
+anchor.addEventListener('click', function (event) {
   debugger // INSPECT this
 
-     hello('Peter') // Window: Hello, Peter!
-    hello.call(anna, 'Peter') // Anna: Hello, Peter!
-    hello.call(charles, 'Peter') // Charles: Hello, Peter!
+  hello('Peter') // Window: Hello, Peter!
+  hello.call(anna, 'Peter') // Anna: Hello, Peter!
+  hello.call(charles, 'Peter') // Charles: Hello, Peter!
 })
 
 anchor.fireEvent('click')
