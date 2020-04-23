@@ -7,7 +7,7 @@ function searchUsers(query) {
         return name.toLowerCase().includes(query) 
                 || surname.toLowerCase().includes(query) 
                 || email.toLowerCase().includes(query); 
-    })
+    });
 
     const __users = _users.map(function (user) {
         const {name, surname, email} = user;

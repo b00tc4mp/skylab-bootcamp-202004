@@ -1,32 +1,31 @@
-function Home(name, callback) {
-    Component.call(this, `<section class="home">
-        <h1>Welcome, ${name}!</h1><button>Logout</button>
+class Home extends Component {
+    constructor(name, callback) {
+        super(`<section class="home">
+        <h1>Hello ${name}, Welcome!</h1><button>Logout</button>
     </section>`);
 
-    const button = this.container.querySelector('button')
+        const button = this.container.querySelector('button');
 
-    button.addEventListener('click', function () {
-        callback()
-    });
+        button.addEventListener('click', function () {
+            callback()
+        });
 
-    let results;
+        let results;
 
-    container.appendChild(Search(function(query) {
-        const users = searchUsers(query);
-        
-        if (!results) {
-            results = Results(users);
+        this.container.appendChild(new Search(function (query) {
+            const users = searchUsers(query);
 
-            container.appendChild(results);
-        } else {
-            const _results = results;
+            if (!results) {
+                results = new Results(users);
 
-            results = Results(users);
+                this.container.appendChild(results.container);
+            } else {
+                const _results = results;
 
-            _results.replaceWith(results);
-        }
-    }))
+                results = new Results(users);
 
-    return container;
-
-}
+                _results.container.replaceWith(results.container);
+            }
+        }.bind(this)).container);
+    };
+};

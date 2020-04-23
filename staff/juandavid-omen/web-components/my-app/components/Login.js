@@ -1,5 +1,6 @@
-function Login(onSubmit, onRegister) {
-    Component.call(this, `<section class="login">
+class Login extends Component {
+    constructor(onSubmit, onRegister) {
+        super(`<section class="login">
         <h1>Login</h1>
         <form>
             <input type="email" name="email" placeholder="e-mail">
@@ -7,60 +8,54 @@ function Login(onSubmit, onRegister) {
             <button>Submit</button>
             or <a href="">Register</a>
         </form>
-    </section>`)
+    </section>`);
 
-    const form = this.container.querySelector('form');
+        const form = this.container.querySelector('form');
 
-    let feedback;
+        let feedback
 
-    const self = this;
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
 
-        let {email, password} = event.target;
+            let { email, password } = event.target;
 
-        email = email.value,
-        password = password.value;
-         
-        try {
-            onSubmit(email, password)
+            email = email.value,
+                password = password.value;
 
-            cleanUp()
-        } catch(error) {
-            if (!feedback) {
-                feedback = Feedback(error.message, 'error');
+            try {
+                onSubmit(email, password);
 
-                self.container.append(feedback.container);
-            } else {
-                feedback.innerText = error.message;
+                cleanUp();
+            } catch (error) {
+                if (!feedback) {
+                    feedback = new Feedback(error.message, 'error');
+
+                    this.container.append(feedback.container);
+                } else {
+                    feedback.innerText = error.message;
+                }
+            }      
+        }.bind(this));
+
+        const cleanUp = function () {
+            form.email.value = '';
+            form.password.value = '';
+
+            if (feedback) {
+                this.container.removeChild(feedback.container);
+
+                feedback = undefined;
             }
-        }    
-    })    
-    
-    function cleanUp() {
-        form.email.value = '';
-        form.password.value = '';
-        
-        if (feedback) {
-        container.removeChild(feedback);
+        }.bind(this);
 
-        feedback = undefined;
-        }
-        
-    }
+        const register = this.container.querySelector('a');
 
-    const register = this.container.querySelector('a');
+        register.addEventListener('click', function (event) {
+            event.preventDefault();
 
-    register.addEventListener('click', function (event) {
-        event.preventDefault();
+            onRegister();
 
-        onRegister();
-
-        cleanUp();
-    })
-
-    return container;
-}
-
-Login.prototype = Object.create(Component.prototype);
-Login.prototype.Constructor = Login;
+            cleanUp();
+        })  
+    };
+};

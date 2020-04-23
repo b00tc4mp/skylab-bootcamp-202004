@@ -1,11 +1,14 @@
-function Component(template) {
-    this.container = this.mount(template);
-}
+class Component{
+    constructor(template) {
+        this.container = this.mount(template);
 
-Component.prototype.mount = function (template) {
-    const temp = document.createElement('div');
-    
-    temp.innerHTML = template;
+    }
 
-    return temp.firstChild;
+    mount(template) {
+        const temp = document.createElement('div');
+
+        temp.innerHTML = template;
+
+        return temp.firstChild;
+    }
 }

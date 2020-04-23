@@ -1,5 +1,6 @@
-function Register(onSubmit, onLogin) {
-    Component.call(this, `<section class="register">
+class Register extends Component {
+    constructor(onSubmit, onLogin) {
+        super(`<section class="register">
          <h1>Register</h1>
         <form>
             <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}">
@@ -11,61 +12,58 @@ function Register(onSubmit, onLogin) {
          </form>
     </section>`);
 
-    const form = this.container.querySelector('form');
+        const form = this.container.querySelector('form');
 
-    let feedback;
+        let feedback;
 
-    const self = this;
+        form.addEventListener('submit', function (event) {
+            event.preventDefault()
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault()
-
-        let {name, surname, email, password} =event.target;
+            let { name, surname, email, password } = event.target;
 
             name = name.value,
-            surname = surname.value,
-            email = email.value,
-            password = password.value
+                surname = surname.value,
+                email = email.value,
+                password = password.value
 
-        try {
-            onSubmit(name, surname, email, password);
+            try {
+                onSubmit(name, surname, email, password);
 
-            cleanUp()
-        } catch (error) {
-            if (!feedback) {
-                feedback = Feedback(error.message, 'error');
+                cleanUp()
+            } catch (error) {
+                if (!feedback) {
+                    feedback = new Feedback(error.message, 'error');
 
-                container.append(feedback);
-            } else {
-                feedback.innerText = error.message;
+                    this.container.append(feedback);
+                } else {
+                    feedback.innerText = error.message;
+                }
             }
-        }
-    })
+        }.bind(this));
 
-    function cleanUp() {
-        const {name, surname, email,password} = form;
+        const cleanUp = function () {
+            const { name, surname, email, password } = form;
 
-        name.value = '';
-        surname.value = '';
-        email.value = '';
-        password.value = '';
+            name.value = '';
+            surname.value = '';
+            email.value = '';
+            password.value = '';
 
-        if (feedback) {
-            container.removeChild(feedback);
+            if (feedback) {
+                this.container.removeChild(feedback);
 
-            feedback = undefined;
-        }
-    }
+                feedback = undefined;
+            }
+        }.bind(this);
 
-    const login = container.querySelector('a');
+        const login = this.container.querySelector('a');
 
-    login.addEventListener('click', function (event) {
-        event.preventDefault();
+        login.addEventListener('click', function (event) {
+            event.preventDefault();
 
-        onLogin();
+            onLogin();
 
-        cleanUp();
-    })
-
-    return container;
-}
+            cleanUp();
+        });
+    };
+};

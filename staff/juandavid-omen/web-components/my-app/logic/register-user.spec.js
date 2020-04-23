@@ -85,10 +85,4 @@ describe('registerUser', function () {
 
         // TODO same for the other fields
     })
-    it('should throw an error if email does not match with the format', function () {
-        expect(function () {
-            registerUser(name, surname, true, password)
-        }).to.throw(Error, ' is not a string')
-    })
-
 })

@@ -12,7 +12,7 @@ function authenticateUser(email, password) {
     }
 
     if (!password.trim().length) {
-        throw new Error('password is empty or blank');
+        throw new Error('password is empty');
     }
 
     const user = users.find(function(user) {
@@ -21,6 +21,6 @@ function authenticateUser(email, password) {
     
     if(!user) {
         throw new Error('wrong credentials');
-    }
+    } 
     
 }
