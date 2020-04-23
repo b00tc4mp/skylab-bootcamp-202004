@@ -58,6 +58,7 @@
   ustify-content: center;
 }
 .home ul li {
+  transition: 1s;
   margin: 0.3rem;
   margin-right: 16px;
   background-color: #93c2bc;

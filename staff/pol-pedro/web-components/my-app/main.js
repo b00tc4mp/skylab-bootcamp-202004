@@ -1,44 +1,41 @@
 const users = [{name: 'Pol', surname: 'Pepe', email: 'pol.pedro97@gmail.com', password: '123123123'}, {name: 'Pol', surname: 'yo', email: 'pol.pedro977@gmail.com', password: '123123123'}, {name: 'yo', surname: 'mamen', email: 'poul.pedro97@gmail.com', password: '123123123'}, {name: 'Pol', surname: 'Pepe', email: 'pol.pedro9777@gmail.com', password: '123123123'}]
 
-const landing = Landing(function() {
+const landing = new Landing(function() {
 
-    landing.replaceWith(login);
+    landing.container.replaceWith(login.container);
 
 }, function() {
 
-    landing.replaceWith(register);
+    landing.container.replaceWith(register.container);
 
 });
 
-const register = Register(function(name, surname, email, password) {
+const register = new Register(function(name, surname, email, password) {
 
     userDefine(name, surname, email, password);
 
-    register.replaceWith(login)
+    register.container.replaceWith(login.container)
 }, function() {
-    register.replaceWith(login);
+    register.container.replaceWith(login.container);
 })
 
-const login = Login(function(email, password) {
+const login = new Login(function(email, password) {
 
     const user = findUser(email, password)
 
     if (user) {
         const home = Home(user.name, user.surname, function() {
-            home.replaceWith(landing)
+            home.replaceWith(landing.container)
         }, function(data) {
             var search = lookUsers(data, users)
             return search //para no pasar users a la parte de components
         })
-        login.replaceWith(home)
+        login.container.replaceWith(home)
     }
 }, function() {
-    login.replaceWith(register);
+    login.container.replaceWith(register.container);
 })
 
 
 
-document.getElementById('root').appendChild(landing)
-
-//hacer el sanityse (no enviar el pasword)
-//
+document.getElementById('root').appendChild(landing.container) //ACORDARSE DE PONER landing.container

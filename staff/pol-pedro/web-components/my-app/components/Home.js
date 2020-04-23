@@ -1,4 +1,4 @@
-function Home(name, surname, callback, onSearch) {
+function Home(name, surname, goBack, onSearch, timer) {
 
     
     const temp = document.createElement('div')
@@ -22,7 +22,7 @@ function Home(name, surname, callback, onSearch) {
     const input = searchContainer.querySelector('input')
     let feedback
     let searched
-
+    let num = 0
 // || Functions and event listeners ||
 
     function clean() { //cleans the inputs and error messages
@@ -43,7 +43,29 @@ function Home(name, surname, callback, onSearch) {
     }
 
     button.addEventListener('click', function() {
-        callback()
+        goBack()
+    })
+
+    form.addEventListener('input', function(event){
+        var theName = form.search.value
+        cleanSearch()
+        try{
+            let results = onSearch(theName)
+            for (var i = 0; i < results.length; i++){
+                searched = Results(results[i].name, results[i].surname, results[i].email)
+                searchContainer.children[1].append(searched);
+            }
+            //clean error message only
+            if (typeof feedback !== 'undefined') {
+                searchContainer.removeChild(feedback)
+                feedback = undefined
+            }
+        }catch(error){
+            if (!feedback) {
+                feedback = Feedback(error.message, 'error')
+                searchContainer.append(feedback)
+            }else feedback.innerText = error.message //cambia el mesaje de error si se da el caso
+        }
     })
 
     form.addEventListener('submit', function(event) {
