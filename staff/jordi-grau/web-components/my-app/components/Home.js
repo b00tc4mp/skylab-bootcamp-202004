@@ -9,14 +9,9 @@ function Home(name, callback) {
 
     const button = container.querySelector('button')
     
-    const search = Search()
-
-    container.append(search)
-
     button.addEventListener('click', function() {
         callback()
     })
-   
-    
+       
     return container
 }
