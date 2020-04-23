@@ -10,8 +10,6 @@ function searchUsers(query) {
       );
     });
   
-    if (_users.length < 1) throw new Error("You has 0 results.");
-  
     const usersFound = [];
     for (let i = 0; i < _users.length; i++) {
       usersFound.push({
@@ -20,7 +18,6 @@ function searchUsers(query) {
         email: _users[i].email,
       });
     }
-  
-    console.log(usersFound);
+    
     return usersFound;
   }

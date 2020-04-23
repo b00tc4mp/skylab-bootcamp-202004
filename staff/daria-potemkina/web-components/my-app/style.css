@@ -1,4 +1,4 @@
-.home, .register, .login {
+.result, .home, .register, .login {
   display: inline-block;
   border: 1rem solid gray;
   border-radius: 2rem;
@@ -30,6 +30,10 @@
 }
 .feedback--error {
   color: red;
+}
+
+.result {
+  border-color: green;
 }
 
 /*# sourceMappingURL=style.css.map */

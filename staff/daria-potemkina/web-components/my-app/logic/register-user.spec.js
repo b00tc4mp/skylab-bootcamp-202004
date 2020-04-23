@@ -1,10 +1,16 @@
 describe('registerUser', function () {
-    it('should succeed on correct data', function () {
-        const name = 'name-1',
-            surname = 'surname-1',
-            email = 'e@mail-1.com',
-            password = 'password-1'
+    let name, surname, email, password
 
+    beforeEach(function(){
+        users.length = 0
+
+        name = names.random()
+        surname = surnames.random()
+        email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('')}@mail.com`
+        password = passwords.random()
+    })
+
+    it('should succeed on correct data', function () {
         registerUser(name, surname, email, password)
 
         const user = users.find(function (user) { return user.email === email })
@@ -13,23 +19,14 @@ describe('registerUser', function () {
     })
 
     it('should fail on already existing user', function () {
-        const name = 'name-2',
-            surname = 'surname-2',
-            email = 'e@mail-2.com',
-            password = 'password-2'
-
         users.push({ name, surname, email, password })
+        
         expect(function () {
             registerUser(name, surname, email, password)
         }).to.throw(Error, 'User already exists')
     })
 
     it('should fail on undefined field', function () {
-        const name = 'name-3',
-            surname = 'surname-3',
-            email = 'e@mail-3.com',
-            password = 'password-3'
-
         expect(function () {
             registerUser(undefined, surname, email, password)
         }).to.throw(TypeError, 'undefined is not a string')
