@@ -1,11 +1,10 @@
 function searchUser(input){
     if (typeof input !== 'string') throw new TypeError(input + ' is not a string');
-    const tempUser = users.filter(
-        function({name: name, surname: surname, email, password}){
-            return name.includes(input) || surname.includes(input)
-    });// no email searches for security reasons (@, .com, gmail, etc.)
-
-    var results= tempUser.map((user) => {return {name: user.name, surname: user.surname, email: user.email}})//Sanitising
     
+    // no email searches for security reasons (@, .com, gmail, etc.)
+    const tempUser = users.filter(({name, surname}) => name.toLowerCase().includes(input.toLowerCase()) || surname.toLowerCase().includes(input.toLowerCase()));
+    //Sanitising
+    const results = tempUser.map(({name, surname, email}) => ({name, surname, email}))
+
     return results
 }

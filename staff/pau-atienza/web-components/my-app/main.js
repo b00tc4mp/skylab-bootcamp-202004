@@ -1,32 +1,31 @@
-const landing = Landing(function(){
-        landing.replaceWith(register)
+const landing = new Landing(function(){
+        landing.container.replaceWith(register.container)
 }, function(){
-        landing.replaceWith(login)
+        landing.container.replaceWith(login.container)
 })
 
-const register = Register(
+const register = new Register(
     function (name, surname, email, password) {
         registerUser(name, surname, email, password)
 
-        register.replaceWith(login)
+        register.container.replaceWith(login.container)
 }, function(){
-        register.replaceWith(login)
+        register.container.replaceWith(login.container)
         clearForms()
 })
 
-const login = Login(
+const login = new Login(
     function (email, password) {
         authenticateUser(email, password)
 
         const user = retrieveUser(email)
-        home = Home(user)
-        login.replaceWith(home);
+        home = new Home(user)
+        login.container.replaceWith(home.container)
         clearForms()
 }, function(){
-        login.replaceWith(register)
-        
+        login.container.replaceWith(register.container)
         clearForms()
 });
 
-document.getElementById('root').appendChild(landing)
+document.getElementById('root').appendChild(landing.container)
 // document.getElementById('root').appendChild(Home('Pau'))
