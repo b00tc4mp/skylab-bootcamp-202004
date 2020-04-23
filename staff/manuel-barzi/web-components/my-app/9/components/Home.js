@@ -12,16 +12,13 @@ class Home extends Component {
 
         let results
 
-        const self = this
-
-        this.container.appendChild(new Search(function (query) {
+        this.container.appendChild(new Search(query => {
             const users = searchUsers(query)
 
             if (!results) {
                 results = new Results(users)
 
-                //this.container.appendChild(results.container)
-                self.container.appendChild(results.container)
+                this.container.appendChild(results.container)
             } else {
                 const _results = results
 
