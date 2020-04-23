@@ -14,7 +14,7 @@ class Home extends Component {
 
         
 
-        this.container.appendChild(new Search(function (query) {
+        this.container.appendChild(new Search(query => {
             const users = searchUsers(query)
 
             if (!results) {
@@ -29,6 +29,6 @@ class Home extends Component {
 
                 _results.container.replaceWith(results.container)
             }
-        }.bind(this)).container)
+        }).container)
     }
 }

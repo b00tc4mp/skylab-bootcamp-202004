@@ -26,7 +26,10 @@ describe('retrieveUser', function () {
         expect(result).to.exist
         expect(result).to.eql( {name: name,
                  surname: surname,
-                 _email: email})      
+                 _email: email})   
+        expect(result.name).to.equal(name)
+        expect(result._email).to.equal(email)   
+        expect(result.surname).to.equal(surname)
         
     
     }) 

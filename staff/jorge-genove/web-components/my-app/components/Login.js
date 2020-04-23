@@ -14,9 +14,9 @@ class Login extends Component {
 
         let feedback
 
-        const self = this
+        
 
-        form.addEventListener('submit', function (event) {
+        form.addEventListener('submit', event => {
             event.preventDefault()
 
             let { email, password } = event.target
@@ -36,9 +36,9 @@ class Login extends Component {
                     this.container.append(feedback.container)
                 } else feedback.innerText = error.message
             }
-        }.bind(this))
+        })
 
-        const cleanUp = function () {
+        const cleanUp =  () => {
             form.email.value = ''
             form.password.value = ''
 
@@ -47,7 +47,7 @@ class Login extends Component {
 
                 feedback = undefined
             }
-        }.bind(this)
+        }
 
         const register = this.container.querySelector('a')
 
