@@ -1,18 +1,20 @@
-function Results(matchingList) {
-  const temp = document.createElement("div");
+class Results extends Component {
+  constructor(matchingList) {
+    super(`<section class="result">
+      </section>`);
+    let feedback;
+    if (matchingList.length) {
+      const list = document.createElement("ul");
+      const listItems = document.createElement("li");
 
-  temp.innerHTML = `<section class="results">
-    <ul>
-    </ul>
-  </section>`;
-
-  const container = temp.firstChild;
-
-  const listedItems = container.querySelector("ul");
-
-  for (let i = 0; i < matchingList.length; i++) {
-    listedItems.innerHTML += `<li>${matchingList[i].name} ${matchingList[i].surname} (${matchingList[i].email})</li>`;
+      for (let i = 0; i < matchingList.length; i++) {
+        listItems.innerHTML = `${matchingList[i].name} ${matchingList[i].surname} (${matchingList[i].email})`;
+        list.append(listItems);
+      }
+      this.container.appendChild(list);
+    } else {
+      feedback = new Feedback("You have 0 results :(", "warning");
+      this.container.appendChild(feedback.container);
+    }
   }
-
-  return container;
 }

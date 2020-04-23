@@ -1,49 +1,38 @@
-const landing = Landing(
+const landing = new Landing(
   function () {
-    landing.replaceWith(register);
+    landing.container.replaceWith(register.container);
   },
   function () {
-    landing.replaceWith(login);
+    landing.container.replaceWith(login.container);
   }
 );
 
-const register = Register(
+const register = new Register(
   function (name, surname, email, password) {
     registerUser(name, surname, email, password);
 
-    register.replaceWith(login);
+    register.container.replaceWith(login.container);
   },
   function () {
-    register.replaceWith(login);
+    register.container.replaceWith(login.container);
   }
 );
 
-const login = Login(
+const login = new Login(
   function (email, password) {
     authenticateUser(email, password);
 
     const user = retrieveUser(email);
 
-    const home = Home(user.name, function () {
-      home.replaceWith(landing);
+    const home = new Home(user.name, function () {
+      home.container.replaceWith(landing.container);
     });
 
-    let listDisplayed = false;
-    const search = Search(function (request) {
-      if (listDisplayed) home.removeChild(home.lastChild);
-
-      const usersFound = searchUsers(request);
-      const results = Results(usersFound);
-      home.append(results);
-      listDisplayed = true;
-    });
-
-    home.append(search);
-    login.replaceWith(home);
+    login.container.replaceWith(home.container);
   },
   function () {
-    login.replaceWith(register);
+    login.container.replaceWith(register.container);
   }
 );
 
-document.getElementById("root").appendChild(landing);
+document.getElementById("root").appendChild(landing.container);

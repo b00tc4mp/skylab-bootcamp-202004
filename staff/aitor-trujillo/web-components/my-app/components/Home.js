@@ -1,17 +1,29 @@
-function Home(name, callback) {
-  const temp = document.createElement("div");
+class Home extends Component {
+  constructor(name, onLogout) {
+    super(`<section class="home">
+              <h1>Welcome ${name} !</h1>
+          <button>Log out</button>
+      </section>`);
 
-  temp.innerHTML = `<section class="home">
-    <h1>Welcome, ${name}!</h1><button>Logout</button>
-</section>`;
+    const button = this.container.querySelector("button");
 
-  const container = temp.firstChild;
+    button.addEventListener("click", function () {
+      event.preventDefault();
 
-  const button = container.querySelector("button");
+      onLogout();
+    });
 
-  button.addEventListener("click", function () {
-    callback();
-  });
+    let listDisplayed = false;
 
-  return container;
+    const search = new Search((request) => {
+      if (listDisplayed) this.container.removeChild(this.container.lastChild);
+
+      const usersFound = searchUsers(request);
+      const results = new Results(usersFound);
+      this.container.append(results.container);
+      listDisplayed = true;
+    });
+
+    this.container.append(search.container);
+  }
 }

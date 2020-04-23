@@ -1,67 +1,61 @@
-function Register(onSubmit, onLogin) {
-    const temp = document.createElement('div')
+class Register extends Component {
+  constructor(onSubmit, onLogin) {
+    super(`<section class="register"><h1>Register</h1>
+  <form>
+      <input type="text" name="name" placeholder="name" required patern = "[A-Za-z]{1,20}">
+      <input type="text" name="surname" placeholder="surname" required patern = "[A-Za-z]{1,20}">
+      <input type="email" name="email" placeholder="e-mail" required>
+      <input type="password" name="password" placeholder="password" required minLength = "8">
+      <button>Submit</button>
+      <a href="">Log in</a>
+  </form><section>`);
 
-    temp.innerHTML = `<section class="register">
-    <h1>Register</h1>
-    <form>
-        <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}">
-        <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}">
-        <input type="email" name="email" placeholder="e-mail" required>
-        <input type="password" name="password" placeholder="password" required minLength="8">
-        <button>Submit</button>
-        or <a href="">Login</a>
-    </form>
-</section>`
+    const form = this.container.querySelector("form");
+    const login = this.container.querySelector("a");
 
-    const container = temp.firstChild
+    let feedback;
 
-    const form = container.querySelector('form')
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
 
-    let feedback
+      let { name, surname, email, password } = event.target;
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault()
+      (name = name.value),
+        (surname = surname.value),
+        (email = email.value),
+        (password = password.value);
 
-        const name = event.target.name.value,
-            surname = event.target.surname.value,
-            email = event.target.email.value,
-            password = event.target.password.value
+      try {
+        onSubmit(name, surname, email, password);
 
-            try {
-                onSubmit(name, surname, email, password)
-    
-                cleanUp()
-            } catch (error) {
-                if (!feedback) {
-                    feedback = Feedback(error.message, 'error')
-    
-                    container.append(feedback)
-                } else feedback.innerText = error.message
-            }
-    })
+        cleanUp();
+      } catch (error) {
+        if (!feedback) {
+          feedback = new Feedback(error.message, "error");
+          this.container.appendChild(feedback.container);
+        } else feedback.innerText = error.message;
+      }
+    });
 
-    function cleanUp() {
-        form.name.value = ''
-        form.surname.value = ''
-        form.email.value = ''
-        form.password.value = ''
+    const cleanUp = () => {
+      form.name.value = "";
+      form.surname.value = "";
+      form.email.value = "";
 
-        if (feedback) {
-            container.removeChild(feedback)
+      form.password.value = "";
 
-            feedback = undefined
-        }
-    }
+      if (feedback) {
+        this.container.removeChild(feedback.container);
+        feedback = undefined;
+      }
+    };
 
-    const login = container.querySelector('a')
+    login.addEventListener("click", function (event) {
+      event.preventDefault();
 
-    login.addEventListener('click', function(event) {
-        event.preventDefault()
+      onLogin();
 
-        onLogin()
-
-        cleanUp()
-    })
-
-    return container
+      cleanUp();
+    });
+  }
 }

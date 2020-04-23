@@ -1,61 +1,55 @@
-function Login(onSubmit, onRegister) {
-    const temp = document.createElement('div')
+class Login extends Component {
+  constructor(onSubmit, onRegister) {
+    super(`<section class="login">
+  <h1>Login</h1>
+  <form>
+      <input type="email" name="email" placeholder="e-mail" required>
+      <input type="password" name="password" placeholder="password" required minLength = "8">
+      <button>Submit</button>
+      <a href="">Register</a>
+  </form>
+</section>`);
 
-    temp.innerHTML = `<section class="login">
-    <h1>Login</h1>
-    <form>
-    <input type="email" name="email" placeholder="e-mail" required>
-        <input type="password" name="password" placeholder="password" required>
-        <button>Submit</button>
-        or <a href="">Register</a>
-    </form>
-</section>`
+    const form = this.container.querySelector("form");
+    const register = this.container.querySelector("a");
 
-    const container = temp.firstChild
+    let feedback;
 
-    const form = container.querySelector('form')
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
 
-    let feedback
+      const email = event.target.email.value,
+        password = event.target.password.value;
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault()
+      try {
+        onSubmit(email, password);
 
-        const email = event.target.email.value,
-            password = event.target.password.value
+        cleanUp();
+      } catch (error) {
+        if (!feedback) {
+          feedback = new Feedback(error.message, "error");
+          this.container.appendChild(feedback.container);
+        } else feedback.innerText = error.message;
+      }
+    });
 
-        try {
-            onSubmit(email, password)
+    const cleanUp = () => {
+      form.email.value = "";
+      form.password.value = "";
 
-            cleanUp()
-        } catch (error) {
-            if (!feedback) {
-                feedback = Feedback(error.message, 'error')
+      if (feedback) {
+        this.container.removeChild(feedback.container);
 
-                container.append(feedback)
-            } else feedback.innerText = error.message
-        }
-    })
+        feedback = undefined;
+      }
+    };
 
-    function cleanUp() {
-        form.email.value = ''
-        form.password.value = ''
+    register.addEventListener("click", function (event) {
+      event.preventDefault();
 
-        if (feedback) {
-            container.removeChild(feedback)
+      onRegister();
 
-            feedback = undefined
-        }
-    }
-
-    const register = container.querySelector('a')
-
-    register.addEventListener('click', function (event) {
-        event.preventDefault()
-
-        onRegister()
-
-        cleanUp()
-    })
-
-    return container
+      cleanUp();
+    });
+  }
 }
