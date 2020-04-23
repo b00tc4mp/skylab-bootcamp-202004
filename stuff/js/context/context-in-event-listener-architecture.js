@@ -44,7 +44,7 @@ anchor.addEventListener('click', function (event) {
   //hello.call(charles, 'Peter') // Charles: Hello, Peter!
   console.log(helloFromCharles('Peter'))
 
-  console.log(helloFromJohn('Peter'))
+  console.log(helloFromJohn('Peter')) // Anna: Hello, Peter! WARN!
 })
 
 anchor.fireEvent('click')
