@@ -13,8 +13,8 @@ class Login extends Components {
         const form = this.container.querySelector('form')
         const registerButton = this.container.querySelector('a')
         let feedback;
-        const self = this
-        form.addEventListener('submit', function (event) {
+        
+        form.addEventListener('submit',  (event) => {
 
             event.preventDefault()
 
@@ -26,27 +26,27 @@ class Login extends Components {
                 cleanUp()
 
             } catch (error) {
-                if (!feedback) {
+                if (!feedback) { debugger
                     feedback = new Feedback(error.message)
-                    self.container.appendChild(feedback.container)
+                    this.container.appendChild(feedback.container)
                 } else {
                     feedback.container.innerText = error.message
                 }
             }
         })
-        registerButton.addEventListener('click', function (event) {
+        registerButton.addEventListener('click', (event) => {
             event.preventDefault()
 
             toRegister()
             cleanUp()
         })
 
-        function cleanUp() {
+        const cleanUp =  () => {
             form.email.value = ''
             form.password.value = ''
 
             if (feedback) {
-                self.container.removeChild(feedback.container)
+                this.container.removeChild(feedback.container)
                 feedback.container = undefined
             }
         }

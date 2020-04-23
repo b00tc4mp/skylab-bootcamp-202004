@@ -13,7 +13,7 @@ function registerUser(name, surname, email, password) { debugger
     if (typeof password !== 'string') throw new TypeError(password + ' is not a string')
     if ( password.length < 8) throw new Error('password does not have min length')
 
-    const user = users.find(function (user){ return user.email === email })
+    const user = users.find((user) => { return user.email === email })
 
     if(user) throw new Error ('user already exists')
 

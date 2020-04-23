@@ -7,7 +7,7 @@ if(typeof password !== 'string') throw new TypeError('password is not a string')
 if(!password.trim().length) throw new Error('password is empty or blank')
 
 
-    const user = users.find(function (user) {
+    const user = users.find((user) => {
         return user.email === email && user.password === password
     })
     

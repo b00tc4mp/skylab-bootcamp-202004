@@ -13,28 +13,32 @@ class Home extends Components {
 
         const logOutButton = this.container.querySelector('button')
 
-        logOutButton.addEventListener('click', function () {
+        logOutButton.addEventListener('click',  () => {
 
             logOut()
         })
         let result
-        const self = this
+
         const searchButton = this.container.querySelector('form')
-        searchButton.addEventListener('submit', function (event) {
+        searchButton.addEventListener('submit',  (event) => { debugger
             event.preventDefault()
 
             const query = event.target.query.value
             const user = searchUser(query)
             if (!result) {
-                result = new Result(user)
-                self.container.append(result.container)
+                searchResults(user)
             } else {
-                self.container.removeChild(result.container)
+                this.container.removeChild(result.container)
                 result.container = undefined
-                result = new Result(user)
-                self.container.append(result.container)
+                searchResults(user)
             }
         })
+
+        const searchResults = (user) => { 
+            result = new Result(user)
+            this.container.append(result.container)
+        }
+
     }
 }
 

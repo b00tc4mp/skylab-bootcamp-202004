@@ -8,11 +8,11 @@ class Landing extends Components {
 
         const [register, login] = this.container.querySelectorAll('a')
 
-        register.addEventListener('click', function () {
+        register.addEventListener('click',  () => {
             event.preventDefault()
             onRegister()
         })
-        login.addEventListener('click', function () {
+        login.addEventListener('click', () => {
             event.preventDefault()
             onLogin()
 

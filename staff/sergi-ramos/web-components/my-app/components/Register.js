@@ -15,8 +15,8 @@ class Register extends Components {
         const form = this.container.querySelector('form')
         const loginButton = this.container.querySelector('a')
         let feedback
-        const self = this
-        form.addEventListener('submit', function (event) {
+
+        form.addEventListener('submit', (event) => {
             event.preventDefault()
 
             const name = event.target.name.value,
@@ -30,30 +30,32 @@ class Register extends Components {
 
             } catch (error) {
                 if (!feedback) {
-                    feedback = new Feedback(error.message)
-                    self.container.appendChild(feedback.container)
+                    debugger
+                    sendErrorMessage(error)
                 } else {
-                    self.container.removeChild(feedback.container)
+                    this.container.removeChild(feedback.container)
                     feedback = undefined
-                    feedback = new Feedback(error.message)
-                    self.container.append(feedback.container)
+                    sendErrorMessage(error)
                 }
             }
         })
-        loginButton.addEventListener('click', function (event) {
+        loginButton.addEventListener('click', (event) => {
             event.preventDefault()
             toLogin()
             cleanUp()
         })
-
-        function cleanUp() {
+        const sendErrorMessage = (error) => {
+            feedback = new Feedback(error.message)
+            this.container.appendChild(feedback.container)
+        }
+        const cleanUp = () => {
             form.email.value = ''
             form.password.value = ''
             form.name.value = ''
             form.surname.value = ''
 
             if (feedback) {
-                self.container.removeChild(feedback.container)
+                this.container.removeChild(feedback.container)
                 feedback = undefined
             }
         }

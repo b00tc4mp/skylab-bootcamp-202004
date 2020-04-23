@@ -3,7 +3,7 @@ class Result extends Components {
 
         let updateUser = ''
         if (users.length) {
-            users.forEach(function (user) { updateUser += `\n<li>${user.name} ${user.surname} : ${user.email}</li>` })
+            users.forEach( (user) => { updateUser += `\n<li>${user.name} ${user.surname} : ${user.email}</li>` })
 
             super(`<section class="results">
                         <ul>
