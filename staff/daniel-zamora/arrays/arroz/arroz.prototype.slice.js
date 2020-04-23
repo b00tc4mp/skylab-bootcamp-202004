@@ -2,23 +2,29 @@
 
 Object.defineProperty(Arroz.prototype, "slice", {
   value: function (start, end) {
-    var result = new Arroz();
-    var i = 0;
-    for (i = start; i < this.length; i++) {
-      result[result.length] = this[i];
-    if(start >= 0 && typeof end === 'undefined') {
-      i = start;
+    var result = [];
+    if (start >= 0 && typeof end === "undefined") {
+      var i = start
+      for (i; i < this.length; i++) {
+        result[result.length] = this[i];
+      }
+      return result;
     } else if (start < 0 && (typeof end === "undefined" || end > this.length)) {
-      i = this.length + start;
-    } else if (start >= 0 && end < 0){
-      i = start
-      this.length = this.length + end;
-    } else if (start > this.length || (typeof start === "undefined" && typeof end === "undefined"));
-    
-  }
-  return result
-  
-},
+      start = this.length + start;
+      for (var i = start; i < this.length; i++) {
+        result[result.length] = this[i];
+      }
+      return result;
+    } else if (start >= 0 && end < 0) {
+      end = this.length + end;
+      for (var i = start; i < end; i++) {
+        result[result.length] = this[i];
+      }
+      return result;
+    }
+    if (start > this.length || (typeof start === "undefined" && typeof end === "undefined"))
+      return result;
+  },
   enumerable: false,
   writable: true,
 });

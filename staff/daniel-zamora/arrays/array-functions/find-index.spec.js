@@ -5,10 +5,12 @@ describe('find-index', function () {
         var numbers = [2, 4, 8, 12, 15, 18, 20];
 
         var result = findIndex(numbers, function (elemento) {
-            return elemento > 10
+            return elemento === 18
         })
 
-        expect(result).toBe(12);
+        expect(result).toBe(5);
+
+    });
 
     it('Should method returns the value of index of the first number greater than 10', function () {
 
@@ -36,4 +38,3 @@ describe('find-index', function () {
 
 });
 
-});
