@@ -1,11 +1,7 @@
 function Landing(onRegister, onLogin) {
-    const temp = document.createElement('div')
-
-    temp.innerHTML = `<section class="landing">
+    const container = mount(`<section class="landing">
     <a href="">Register</a> or <a href="">Login</a>
-</section>`
-
-    const container = temp.firstChild
+</section>`)
 
     // const anchors = container.querySelectorAll('a')
     // const register = anchors[0]
@@ -13,13 +9,13 @@ function Landing(onRegister, onLogin) {
 
     const [register, login] = container.querySelectorAll('a')
 
-    register.addEventListener('click', function(event) {
+    register.addEventListener('click', function (event) {
         event.preventDefault()
 
         onRegister()
     })
 
-    login.addEventListener('click', function(event) {
+    login.addEventListener('click', function (event) {
         event.preventDefault()
 
         onLogin()

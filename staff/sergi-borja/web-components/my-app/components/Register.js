@@ -1,7 +1,5 @@
 function Register(onSubmit, onLogin) {
-    const temp = document.createElement('div')
-
-    temp.innerHTML = `<section class="register">
+    const container = mount(`<section class="register">
     <h1>Register</h1>
     <form>
         <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}">
@@ -11,9 +9,7 @@ function Register(onSubmit, onLogin) {
         <button>Submit</button>
         or <a href="">Login</a>
     </form>
-</section>`
-
-    const container = temp.firstChild
+</section>`)
 
     const form = container.querySelector('form')
 
@@ -22,37 +18,49 @@ function Register(onSubmit, onLogin) {
     form.addEventListener('submit', function (event) {
         event.preventDefault()
 
-        const name = event.target.name.value,
-            surname = event.target.surname.value,
-            email = event.target.email.value,
-            password = event.target.password.value
+        let { name, surname, email, password } = event.target
 
-    try{
-        onSubmit(name, surname, email, password)
-        
-        event.target.name.value = '';
-        event.target.surname.value = '';
-        event.target.email.value = '';
-        event.target.password.value = '';
+        name = name.value
+        surname = surname.value
+        email = email.value
+        password = password.value
 
-    }catch(error) {
-        if(!feedback) {
-            feedback= Feedback(error.message, 'error')
+        try {
+            onSubmit(name, surname, email, password)
 
-            container.append(feedback)
-        }else{
-            feedback.innerText = error.message
+            cleanUp()
+        } catch (error) {
+            if (!feedback) {
+                feedback = Feedback(error.message, 'error')
+
+                container.append(feedback)
+            } else feedback.innerText = error.message
+        }
+    })
+
+    function cleanUp() {
+        const { name, surname, email, password } = form
+
+        name.value = ''
+        surname.value = ''
+        email.value = ''
+        password.value = ''
+
+        if (feedback) {
+            container.removeChild(feedback)
+
+            feedback = undefined
         }
     }
-            
-    })
 
     const login = container.querySelector('a')
 
-    login.addEventListener('click', function(event) {
+    login.addEventListener('click', function (event) {
         event.preventDefault()
 
         onLogin()
+
+        cleanUp()
     })
 
     return container

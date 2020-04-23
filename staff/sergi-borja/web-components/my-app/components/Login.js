@@ -1,17 +1,13 @@
 function Login(onSubmit, onRegister) {
-    const temp = document.createElement('div')
-
-    temp.innerHTML = `<section class="login">
+    const container = mount(`<section class="login">
     <h1>Login</h1>
     <form>
-        <input type="email" name="email" placeholder="e-mail" required>
-        <input type="password" name="password" placeholder="password" required minLength="8">
+    <input type="email" name="email" placeholder="e-mail" required>
+        <input type="password" name="password" placeholder="password" required>
         <button>Submit</button>
         or <a href="">Register</a>
     </form>
-</section>`
-
-    const container = temp.firstChild
+</section>`)
 
     const form = container.querySelector('form')
 
@@ -20,20 +16,15 @@ function Login(onSubmit, onRegister) {
     form.addEventListener('submit', function (event) {
         event.preventDefault()
 
-        const email = event.target.email.value,
-            password = event.target.password.value
+        let { email, password } = event.target
+
+        email = email.value
+        password = password.value
 
         try {
             onSubmit(email, password)
 
-            event.target.email.value = ''
-            event.target.password.value = ''
-
-            if (feedback) {
-                container.removeChild(feedback)
-                feedback = undefined
-            }
-            
+            cleanUp()
         } catch (error) {
             if (!feedback) {
                 feedback = Feedback(error.message, 'error')
@@ -43,12 +34,25 @@ function Login(onSubmit, onRegister) {
         }
     })
 
+    function cleanUp() {
+        form.email.value = ''
+        form.password.value = ''
+
+        if (feedback) {
+            container.removeChild(feedback)
+
+            feedback = undefined
+        }
+    }
+
     const register = container.querySelector('a')
 
     register.addEventListener('click', function (event) {
         event.preventDefault()
 
         onRegister()
+
+        cleanUp()
     })
 
     return container
