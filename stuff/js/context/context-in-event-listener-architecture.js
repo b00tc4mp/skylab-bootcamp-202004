@@ -2,26 +2,26 @@ window.name = 'Window'
 
 // my anchor (emulator)
 const anchor = {
-listeners: {},
+  listeners: {},
 
-addEventListener(eventName, listener) {
-  (this.listeners[eventName] || (this.listeners[eventName] = [])).push(listener)
-},
+  addEventListener(eventName, listener) {
+    (this.listeners[eventName] || (this.listeners[eventName] = [])).push(listener)
+  },
 
-fireEvent(eventName) {
-  const eventListeners = this.listeners[eventName]
+  fireEvent(eventName) {
+    const eventListeners = this.listeners[eventName]
 
-  if (eventListeners)
+    if (eventListeners)
       for (const i in eventListeners) {
-          const listener = eventListeners[i]
+        const listener = eventListeners[i]
 
-          debugger // INSPECT this
+        debugger // INSPECT this
 
-          const event = { target: this }
+        const event = { target: this }
 
-          listener.call(this, event)
-      } 
-}
+        listener.call(this, event)
+      }
+  }
 }
 
 const anna = { name: 'Anna' }
@@ -35,16 +35,16 @@ const helloFromCharles = hello.bind(charles)
 //const helloFromJohn = helloFromAnna.bind(john)
 const helloFromJohn = bind(helloFromAnna, john)
 
-anchor.addEventListener('click', function(event) {
+anchor.addEventListener('click', function (event) {
   debugger // INSPECT this
 
-     console.log(hello('Peter')) // Window: Hello, Peter!
-    //hello.call(anna, 'Peter') // Anna: Hello, Peter!
-    console.log(helloFromAnna('Peter'))
-    //hello.call(charles, 'Peter') // Charles: Hello, Peter!
-    console.log(helloFromCharles('Peter'))
+  console.log(hello('Peter')) // Window: Hello, Peter!
+  //hello.call(anna, 'Peter') // Anna: Hello, Peter!
+  console.log(helloFromAnna('Peter'))
+  //hello.call(charles, 'Peter') // Charles: Hello, Peter!
+  console.log(helloFromCharles('Peter'))
 
-    console.log(helloFromJohn('Peter'))
+  console.log(helloFromJohn('Peter'))
 })
 
 anchor.fireEvent('click')
@@ -58,12 +58,12 @@ function hello(name) {
 
   console.log(salute)
 
-   return salute
+  return salute
 }
 
 // my utils
 function bind(func, context) {
-    return function() {
-        return func.apply(context, arguments)
-    }
+  return function () {
+    return func.apply(context, arguments)
+  }
 }
