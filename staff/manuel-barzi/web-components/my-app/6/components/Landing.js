@@ -1,5 +1,5 @@
 function Landing(onRegister, onLogin) {
-    const container = mount(`<section class="landing">
+    Component.call(this, `<section class="landing">
     <a href="">Register</a> or <a href="">Login</a>
 </section>`)
 
@@ -7,7 +7,7 @@ function Landing(onRegister, onLogin) {
     // const register = anchors[0]
     // const login = anchors[1]
 
-    const [register, login] = container.querySelectorAll('a')
+    const [register, login] = this.container.querySelectorAll('a')
 
     register.addEventListener('click', function (event) {
         event.preventDefault()
@@ -20,6 +20,7 @@ function Landing(onRegister, onLogin) {
 
         onLogin()
     })
-
-    return container
 }
+
+Landing.prototype = Object.create(Component.prototype)
+Landing.prototype.constructor = Landing
