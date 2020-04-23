@@ -33,21 +33,21 @@ class Login extends Component {
                     feedback = new Feedback(error.message, 'error')
 
                     // this.container.append(feedback.container)
-                    self.container.append(feedback.container)
+                    this.container.append(feedback.container)
                 } else feedback.innerText = error.message
             }
-        })
+        }.bind(this))
 
-        function cleanUp() {
+        const cleanUp = function () {
             form.email.value = ''
             form.password.value = ''
 
             if (feedback) {
-                self.container.removeChild(feedback.container)
+                this.container.removeChild(feedback.container)
 
                 feedback = undefined
             }
-        }
+        }.bind(this)
 
         const register = this.container.querySelector('a')
 

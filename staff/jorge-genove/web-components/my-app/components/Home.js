@@ -12,7 +12,7 @@ class Home extends Component {
 
         let results
 
-        const self = this
+        
 
         this.container.appendChild(new Search(function (query) {
             const users = searchUsers(query)
@@ -21,7 +21,7 @@ class Home extends Component {
                 results = new Results(users)
 
                 //this.container.appendChild(results.container)
-                self.container.appendChild(results.container)
+                this.container.appendChild(results.container)
             } else {
                 const _results = results
 
@@ -29,6 +29,6 @@ class Home extends Component {
 
                 _results.container.replaceWith(results.container)
             }
-        }).container)
+        }.bind(this)).container)
     }
 }
