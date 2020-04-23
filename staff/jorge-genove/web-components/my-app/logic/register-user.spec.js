@@ -18,15 +18,27 @@ describe('registerUser', function () {
         expect(user).to.exist
     })
 
+   
     describe('when user already exists', function () {
         beforeEach(function () {
+            beforeEach(function () {
+                users.length = 0
+        
+                name = names.random()
+                surname = surnames.random()
+                email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('')}@mail.com`
+                password = passwords.random()
+            })
+
+
+
             users.push({ name, surname, email, password })
         })                              
 
         it('should fail alerting user already exists', function () {
             expect(function () {
                 registerUser(name, surname, email, password)
-            }).to.throw(Error, 'user already exists')
+            }).to.throw(Error, 'Email already exists MDRFUCKER')
        
         })
         it('should fail on non-string field', function () {
@@ -112,8 +124,7 @@ describe('registerUser', function () {
                    registerUser(name, surname, '$', password)
                }).to.throw(Error, '$ is not an e-mail')
            })
-    
-    
+      
     
     
     
