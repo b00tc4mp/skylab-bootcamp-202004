@@ -16,8 +16,6 @@ class Register extends Component {
 
         let feedback
 
-        const self = this
-
         form.addEventListener('submit', function (event) {
             event.preventDefault()
 
@@ -36,11 +34,10 @@ class Register extends Component {
                 if (!feedback) {
                     feedback = new Feedback(error.message, 'error')
 
-                    //this.container.append(feedback.container)
-                    self.container.append(feedback.container)
+                    this.container.append(feedback.container)
                 } else feedback.innerText = error.message
             }
-        })
+        }.bind(this))
 
         function cleanUp() {
             const { name, surname, email, password } = form
