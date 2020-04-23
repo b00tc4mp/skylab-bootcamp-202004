@@ -42,7 +42,7 @@ anchor.addEventListener('click', function (event) {
   //hello.call(charles, 'Peter') // Charles: Hello, Peter!
   helloFromCharles('Peter')
 
-  helloFromJohn('Peter')
+  helloFromJohn('Peter') // Anna: Hello, Peter! WARN!
 })
 
 anchor.fireEvent('click')
