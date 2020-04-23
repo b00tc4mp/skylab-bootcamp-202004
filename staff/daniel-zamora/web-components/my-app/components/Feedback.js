@@ -1,10 +1,6 @@
-function Feedback (feedbackError, message) {
-    
-    const temp = document.createElement('div');
+class Feedback extends Component {
+    constructor (message, level) {
+    super (`<p class="feedback feedback--${level} ">${message}</p>`);
+    }
 
-    temp.innerHTML = `<p class="feedback feedback--${feedbackError} ">${message}</p>`
-
-    const container = temp.firstChild
-
-    return container;
 }

@@ -1,49 +1,58 @@
-function Login(checkLogin, inRegister) {
-  const temp = document.createElement("div");
-
-  temp.innerHTML = `<section class="login">
+class Login extends Component {
+  constructor(checkLogin, inRegister) {
+    super(`<section class="login">  
     <h1>Login</h1>
     <form>
         <input type="email" name="email" placeholder="e-mail">
         <input type="password" name="password" placeholder="password">
         <button>Submit</button>
     </form>
-</section>`;
+</section>`)
 
-  const container = temp.firstChild;
-
-  const form = container.querySelector("form");
-
-  form.addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    const email = event.target.email.value,
-      password = event.target.password.value;
+    const form = container.querySelector("form");
 
     let feedback;
 
-    try {
-      checkLogin(email, password);
-      event.target.email.value = "";
-      event.target.password.value = "";
+    const self = this;
 
-      if (feedback) container.removeChild(feedback);
-    } catch (error) {
-      if (!feedback) {
-        feedback = Feedback(error.message, "error");
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
 
-        container.append(feedback);
-      } else feedback.innerHTML = error.message;
+      let { email, password } = event.target;
+      email = email.value;
+      password = password.value;
+
+      try {
+        checkLogin(email, password);
+
+        cleanUp();
+      } catch (error) {
+        if (!feedback) {
+          feedback = new Feedback(error.message, "error");
+
+          self.container.append(feedback.container);
+        } else feedback.innerHTML = error.message;
+      }
+    });
+
+    function cleanUp() {
+      form.email.value = "";
+      form.password.value = "";
+
+      if (feedback) {
+        self.container.removeChild(feedback.container);
+
+        feedback = undefined;
+      }
     }
-  });
 
-  const register = container.querySelector("a");
+    const register = container.querySelector("a");
 
-  register.addEventListener("click", function (event) {
-    event.preventDefault();
-    inRegister();
-    
-  });
+    register.addEventListener("click", function (event) {
+      event.preventDefault();
+      inRegister();
 
-  return container;
+      cleanUp;
+    });
+  }
 }

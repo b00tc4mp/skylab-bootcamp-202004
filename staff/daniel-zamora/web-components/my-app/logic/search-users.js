@@ -6,12 +6,8 @@ function searchUsers(query) {
     });
 
     if(_users.length === 0) throw new Error ('The user don`t exist!');
-  
 
     // const { name, surname, email: _email } =_users
-
-   
-
     var txt='';
     for(var i = 0; i<_users.length;i++){
         txt+= _users[i].name + ' '
