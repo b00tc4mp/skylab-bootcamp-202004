@@ -1,31 +1,31 @@
-function Home(name, callback) {
-    const container = mount(`<section class="home">
+class Home extends Component {
+    constructor(name, callback) {
+        super(`<section class="home">
     <h1>Welcome, ${name}!</h1><button>Logout</button>
 </section>`)
 
-    const button = container.querySelector('button')
+        const button = this.container.querySelector('button')
 
-    button.addEventListener('click', function () {
-        callback()
-    })
+        button.addEventListener('click', function () {
+            callback()
+        })
 
-    let results
+        let results
 
-    container.appendChild(Search(function (query) {
-        const users = searchUsers(query)
+        this.container.appendChild(new Search(query => {
+            const users = searchUsers(query)
 
-        if (!results) {
-            results = Results(users)
+            if (!results) {
+                results = new Results(users)
 
-            container.appendChild(results)
-        } else {
-            const _results = results
+                this.container.appendChild(results.container)
+            } else {
+                const _results = results
 
-            results = Results(users)
+                results = new Results(users)
 
-            _results.replaceWith(results)
-        }
-    }))
-
-    return container
+                _results.container.replaceWith(results.container)
+            }
+        }).container)
+    }
 }

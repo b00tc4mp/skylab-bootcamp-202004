@@ -1,3 +1,5 @@
-function Feedback(message, level) {
-    return mount(`<p class="feedback feedback--${level}">${message}</p>`)
+class Feedback extends Component {
+    constructor(message, level) {
+        super(`<p class="feedback feedback--${level}">${message}</p>`)
+    }
 }
