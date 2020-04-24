@@ -9,7 +9,7 @@ class Search extends Component {
 
     const form = this.container.querySelector("form");
 
-    form.addEventListener("submit", function (event) {
+    form.addEventListener("submit", (event) =>{
       event.preventDefault();
 
       const query = event.target.query.value;

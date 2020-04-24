@@ -6,7 +6,7 @@ class Results extends Component {
     if (users.length) {
       const list = document.createElement("ul");
 
-      users.forEach(function ({ name, surname, email }) {
+      users.forEach(({ name, surname, email }) =>{
         const item = document.createElement("li");
 
         item.innerText = `${name} ${surname} (${email})`;

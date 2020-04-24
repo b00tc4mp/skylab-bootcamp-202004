@@ -6,14 +6,14 @@ class Home extends Component {
 
     const button = this.container.querySelector("button");
 
-    button.addEventListener("click", function () {
+    button.addEventListener("click", () =>{
       callback();
     });
 
     let results;
 
     this.container.appendChild(
-      new Search(function (query) {
+      new Search(query =>{
         const users = searchUsers(query);
 
         if (!results) {
@@ -27,7 +27,6 @@ class Home extends Component {
 
           _results.container.replaceWith(results.container);
         }
-      }.bind(this)).container
-    )
+      }).container)
   }
 }

@@ -17,7 +17,7 @@ class Register extends Component {
     let feedback;
 
 
-    form.addEventListener("submit", function (event) {
+    form.addEventListener("submit", (event) => {
       event.preventDefault();
 
       let { name, surname, email, password } = event.target;
@@ -38,9 +38,9 @@ class Register extends Component {
           this.container.append(feedback.container);
         } else feedback.innerText = error.message;
       }
-    }.bind(this));
+    })
 
-    const cleanUp= function() {
+    const cleanUp = () => {
       const { name, surname, email, password } = form;
 
       name.value = "";
@@ -53,11 +53,11 @@ class Register extends Component {
 
         feedback = undefined;
       }
-    }.bind(this)
-
+    }
+  
     const login = this.container.querySelector("a");
 
-    login.addEventListener("click", function (event) {
+    login.addEventListener("click", event =>{
       event.preventDefault()
 
       onLogin()
