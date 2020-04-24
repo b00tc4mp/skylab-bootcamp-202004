@@ -1,21 +1,17 @@
-function Search(callback){
+class Search extends Component {
+  constructor(callback) {
+    super(`<section>
+        <input type="text" name="search" placeholder="search">
+      </section>`)
+        
+    const input = this.container.querySelector("input");
 
-    const temp = document.createElement('div')
-    temp.innerHTML = ` <section> 
-    <input id="search" type="text" name="search" placeholder="search">
-    </section>`
+    input.addEventListener("keyup", (event) => {
+      event.preventDefault();
+      const query = event.target.value;
 
-    const container = temp
-    const input = container.querySelector("#search")
-    
-    
-    
-    input.addEventListener("keyup", (event)=>{
-       callback(event.target.value)
-
-    
+      callback(query);
     })
- 
-    return container
-
+  }
 }
+

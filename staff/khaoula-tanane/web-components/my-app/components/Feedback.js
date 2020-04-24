@@ -1,9 +1,7 @@
-function Feedback(message, level) {
-    const temp = document.createElement('div')
+class Feedback extends Component {
+    debugger
+    constructor(message ,level){
+        super(`<p class="feedback feedback--${level}">${message}</p>`)
 
-    temp.innerHTML = `<p class="feedback feedback--${level}">${message}</p>`
-
-    const container = temp.firstChild
-
-    return container
+    }
 }

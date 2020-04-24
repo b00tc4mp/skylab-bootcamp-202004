@@ -18,7 +18,7 @@ function Results(_users) {
         })
 
         container.appendChild(list)
-    } else container.appendChild(Feedback('sorry, no results :(', 'warning'))
+    } else container.appendChild(new Feedback('sorry, no results :(', 'warning').container)
 
     return container
 }

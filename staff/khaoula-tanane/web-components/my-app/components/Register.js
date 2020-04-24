@@ -1,7 +1,6 @@
-function Register(callback, goLogin) {
-    const temp = document.createElement('div')
-
-    temp.innerHTML = `<section class="register">
+class Register extends Component{
+    constructor(callback, goLogin) {
+    super(`<section class="register">
     <h1>Register</h1>
     <form>
         <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}">
@@ -12,11 +11,10 @@ function Register(callback, goLogin) {
         <button id="gotologin">Login</button>
         
     </form>
-</section>`
-
-    const container = temp.firstChild
+</section>`)
 
     let feedback
+    const self = this
 
     function cleanUp() {
         form.name.value = ''
@@ -25,14 +23,14 @@ function Register(callback, goLogin) {
         form.password.value = ''
 
         if (feedback) {
-            container.removeChild(feedback)
+            self.container.removeChild(feedback)
 
             feedback = undefined
         }
     }
 
-    const form = container.querySelector('form')
-    const login = container.querySelector("#gotologin")
+    const form = this.container.querySelector('form')
+    const login = this.container.querySelector("#gotologin")
     login.addEventListener("click",function(){
         goLogin()
     })
@@ -40,10 +38,12 @@ function Register(callback, goLogin) {
     form.addEventListener('submit', function (event) {
         event.preventDefault()
 
-        const name = event.target.name.value,
-            surname = event.target.surname.value,
-            email = event.target.email.value,
-            password = event.target.password.value
+        let { name, surname, email, password } = event.target
+
+        name = name.value
+        surname = surname.value
+        email = email.value
+        password = password.value
 
         try{
             callback(name, surname, email, password)
@@ -52,10 +52,10 @@ function Register(callback, goLogin) {
         } catch (error){
             if (!feedback){
                 feedback = Feedback(error.message, 'error')
-                container.appendChild(feedback)
+                self.container.appendChild(feedback.container)
             } else feedback.innerText = error.message
         }
     })
 
-    return container
+    }
 }
