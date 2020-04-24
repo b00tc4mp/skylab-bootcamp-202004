@@ -1,22 +1,15 @@
-function Search(callback) {
-    const temp = document.createElement('div')
-
-    temp.innerHTML = `<section class="search">
+class Search extends Component {
+    constructor (onSubmit) {
+  super( `<section class="search">
     <form>
         <input type="text" name="query">
         <button>🔍</button>
     </form>
-</section>`
-
-    const container = temp.firstChild
+</section>`)
 
     const form = container.querySelector('form')
-
-    let feedback
-    let result
-    let count=0;
    
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', event => {
         event.preventDefault();
 
         const query = event.target.query.value;
@@ -41,11 +34,6 @@ function Search(callback) {
         }
     })
 
-    function cleanUp() {
-        form.query.value = ''
-
 
     }
-
-    return container
 }

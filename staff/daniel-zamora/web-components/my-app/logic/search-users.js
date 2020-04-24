@@ -1,7 +1,7 @@
 function searchUsers(query) {
     // TODO find users matching query in name, surname, email
   
-    const _users = users.filter(function(user) {
+    const _users = users.filter(user => {
         return query === user.name || query === user.surname || query === user.email;
     });
 

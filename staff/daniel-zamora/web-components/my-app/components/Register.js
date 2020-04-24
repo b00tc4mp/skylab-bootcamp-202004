@@ -1,7 +1,6 @@
-function Register(checkRegister, callback) {
-    const temp = document.createElement('div')
-
-    temp.innerHTML = `<section class="register">
+class Register extends Component {
+  constructor (checkRegister, callback) {
+  super(`<section class="register">
     <h1>Register</h1>
     <form>
         <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}>
@@ -12,39 +11,57 @@ function Register(checkRegister, callback) {
         or <a href="">Login</a>
     </form>
     <p class="feedback feedback--success"></p>
-</section>`
-
-    const container = temp.firstChild
+</section>`)
 
     const form = container.querySelector('form')
 
-    form.addEventListener('submit', function (event) {
+    let feedback
+
+    form.addEventListener('submit', event => {
         event.preventDefault()
 
-        const name = event.target.name.value,
-            surname = event.target.surname.value,
-            email = event.target.email.value,
-            password = event.target.password.value
-
-
-    let success;
+        let {name, surname, email, password} = event.target
+            name = name.value,
+            surname = surname.value,
+            email = email.value,
+            password = password.value
 
     try {
-      checkRegister(email);
-      event.target.email.value = "";
-      event.target.password.value = "";
-      
-      if (success) container.removeChild(success);
+      checkRegister(name, surname, email, password);
+
+        cleanUp();
     } catch (error) {
-      if (!success) {
-        feedback = Feedback(error.message, "success");
+      if (!feedback) {
+        feedback = new Feedback(error.message, "success");
 
-        container.append(success);
+        this.container.append(feedback.container);
       } else feedback.innerHTML = error.message;
-    }
-
-        callback(name, surname, email, password)
+    }        
     })
 
-    return container
+      const cleanUp = () => {
+        name.value = '';
+        surname.value = '';
+        email.value = '';
+        password.value = '';
+
+        if(feedback) {
+          this.container.removeChild(feedback.container)
+
+          feedback = undefined
+        }
+    }
+
+    const login = this.container.querySelector('a')
+
+    login.addEventListener('click', event => {
+      event.preventDefault()
+
+      onLogin()
+
+      cleanUp()
+
+    })
+
+  }
 }

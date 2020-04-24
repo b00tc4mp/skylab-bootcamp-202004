@@ -1,11 +1,20 @@
-function Results(result) {
-    const temp = document.createElement('div')
+class Results extends Component {
+    constructor (users) {
+    super(`<search class="results">
+    </search>`)
 
-    temp.innerHTML = `<search class="results">
-    <ul>${result}</ul>
-    </search>`
+    if(.length) {
+        const list = document.createElement ('ul')
 
-    const container = temp.firstChild;
+        users.array.forEach(({name, surname, email}) => {
+            const item = document.createElement('li')
 
-    return container
+            item.innerText = `${name} ${surname} ${email}`
+
+            list.appendChild(item)
+        });
+    
+    this.container.appendChild(list)
+    } else this.container.appendChild(new Feedback ('sorry, any result was found').container)
+}
 }

@@ -13,9 +13,7 @@ class Login extends Component {
 
     let feedback;
 
-    const self = this;
-
-    form.addEventListener("submit", function (event) {
+    form.addEventListener("submit", event => {
       event.preventDefault();
 
       let { email, password } = event.target;
@@ -30,12 +28,12 @@ class Login extends Component {
         if (!feedback) {
           feedback = new Feedback(error.message, "error");
 
-          self.container.append(feedback.container);
+          this.container.append(feedback.container);
         } else feedback.innerHTML = error.message;
       }
-    });
+    })
 
-    function cleanUp() {
+    const cleanUp = () => {
       form.email.value = "";
       form.password.value = "";
 
@@ -46,7 +44,7 @@ class Login extends Component {
       }
     }
 
-    const register = container.querySelector("a");
+    const register = this.container.querySelector("a");
 
     register.addEventListener("click", function (event) {
       event.preventDefault();
