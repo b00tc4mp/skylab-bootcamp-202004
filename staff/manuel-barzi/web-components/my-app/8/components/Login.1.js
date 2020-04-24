@@ -25,7 +25,7 @@ class Login extends Component {
             try {
                 onSubmit(email, password)
 
-                cleanUp()
+                cleanUp.call(this)
             } catch (error) {
                 if (!feedback) {
                     feedback = new Feedback(error.message, 'error')
