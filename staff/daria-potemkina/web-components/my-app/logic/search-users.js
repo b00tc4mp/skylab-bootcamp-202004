@@ -9,7 +9,7 @@ function searchUsers(query) {
         user.surname.toLowerCase().includes(request)
       );
     });
-  
+    
     const usersFound = [];
     for (let i = 0; i < _users.length; i++) {
       usersFound.push({
