@@ -30,5 +30,24 @@ class Home extends Component {
                 _results.container.replaceWith(results.container)
             }
         }).container)
+    
+        let googleResults;
+
+        this.container.appendChild(new GoogleSearch(googleQuery => {
+            const appends = googleSearch(googleQuery)
+            if(!googleResults) {
+                googleResults = new GoogleResults(appends)
+
+                this.container.appendChild(googleResults.container)
+            }else{
+                const _googleResults = googleResults
+
+                results = new GoogleResults(appends)
+
+                _googleResults.container.replaceWith(googleResults.container)
+            }
+        }).container)
+    
     }
+
 }
