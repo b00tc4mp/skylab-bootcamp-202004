@@ -1,7 +1,8 @@
 class GoogleSearch extends Component {
     constructor(onGoogleSubmit) {
-        super(`<section class="search">
+        super(`<section class="googlesearch">
     <form>
+        <label>Google<label>
         <input type="text" name="googlequery">
         <button>🔍</button>
     </form>
@@ -9,7 +10,7 @@ class GoogleSearch extends Component {
 
         const form = this.container.querySelector('form')
 
-        form.addEventListener('submit', function (event) {
+        form.addEventListener('submit', function (event) {debugger
             event.preventDefault()
 
             const googleQuery = event.target.googlequery.value

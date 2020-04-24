@@ -2,6 +2,7 @@ class Search extends Component {
     constructor(onSubmit) {
         super(`<section class="search">
     <form>
+        <label>User<label>
         <input type="text" name="query">
         <button>🔍</button>
     </form>

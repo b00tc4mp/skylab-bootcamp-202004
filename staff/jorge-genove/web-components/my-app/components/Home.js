@@ -30,24 +30,28 @@ class Home extends Component {
                 _results.container.replaceWith(results.container)
             }
         }).container)
-    
-        let googleResults;
+        
+        
+
+        let googleresult;
 
         this.container.appendChild(new GoogleSearch(googleQuery => {
-            const appends = googleSearch(googleQuery)
-            if(!googleResults) {
-                googleResults = new GoogleResults(appends)
+              googleSearch(googleQuery, (error, results) => {
+                
+                if(!googleresult) {
+                    googleresult = new GoogleResults(results).container
+                
+                    this.container.appendChild(googleresult)
+                }else {
+                    const _googleresult = googleresult
 
-                this.container.appendChild(googleResults.container)
-            }else{
-                const _googleResults = googleResults
+                    googleresult = new GoogleResults(results).container
 
-                results = new GoogleResults(appends)
+                    _googleresult.replaceWith(googleresult)
+                }
+            })
+        }).container) 
+           
+        } 
 
-                _googleResults.container.replaceWith(googleResults.container)
-            }
-        }).container)
-    
-    }
-
-}
+    }       

@@ -1,9 +1,12 @@
-function googleSearch(googleQuery,onSearch) {
+function googleSearch(googleQuery, callback) {
   var xhr = new XMLHttpRequest();
 
-  xhr.open("GET", `https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?${googleQuery}`);
+  xhr.open(
+    "GET",
+    `https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?q=${googleQuery}`
+  );
 
-  xhr.onload = function () {
+  xhr.addEventListener('load', function () {
     //console.log(this.responseText)
 
     const parser = new DOMParser();
@@ -11,31 +14,24 @@ function googleSearch(googleQuery,onSearch) {
     const doc = parser.parseFromString(this.responseText, "text/html");
 
     const results = doc.querySelectorAll(".rc");
-    const appends = []
+    const appends = [];
     results.forEach((result) => {
-      const title = result.querySelector(".LC20lb");
+      const title = result.querySelector(".LC20lb").innerHTML;
 
-     // console.log(title.innerText);
-
-      const content = result.querySelector(".st");
-
-      //console.log(content.innerText);
+      const content = result.querySelector(".st").innerHTML;
 
       const { href: link } = result.querySelector(".r > a");
 
-      const append = {title, content, link}
-      
-     appends.push(append)
+      appends.push ({ title, content, link })
 
-      //console.log(link);
+     
     });
-  };
+    callback(undefined, appends);
+  });
 
-  xhr.onerror = function (error) {
-    console.error(error);
-  };
+  xhr.addEventListener("error", () => {
+    callback(new Error("network error"));
+  });
 
   xhr.send();
-
-  onSearch(appends)
 }
