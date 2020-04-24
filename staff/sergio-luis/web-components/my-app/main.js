@@ -1,38 +1,32 @@
-var users = [];
 
-
-const landing = Landing(function() {
-    landing.replaceWith(register);
-}, function() {
-    landing.replaceWith(login);
+const landing = new Landing(() => {
+    landing.container.replaceWith(register.container);
+}, () => {
+    landing.container.replaceWith(login.container);
 });
 
-const register = Register(function(name, surname, email, password) {
-    users.push({
-        name,
-        surname,
-        email,
-        password
+const register = new Register((name, surname, email, password) => {
+    registerUser(name, surname, email, password);
+    register.container.replaceWith(login.container);
+}, () => {
+    register.container.replaceWith(login.container);
+});
+
+const login = new Login((email, password) => {
+    authenticateUser(email, password);
+
+    const user = retrieveUser(email);
+
+    const home = new Home(user.name, () => {
+        home.container.replaceWith(landing.container);
     })
-    register.replaceWith(login);
-});
 
-const login = Login(function(email, password) {
-    let user;
-    for (var i = 0; i < users.length; i++) {
-        if (users[i].email === email && users[i].password === password) {
-            user = users[i].name
-        }
-    }
-    if(typeof user!== "undefined") {
-        const home = Home(user, function(){
-            login.replaceWith(register)
-        })
-        login.replaceWith(home)
-    }else{
-        console.log('ERROR');  
-    } 
-});
+    login.container.replaceWith(home.container);
+}, () => {
+    login.container.replaceWith(register.container);
+})
 
 
-document.getElementById('root').appendChild(landing)
+
+
+document.getElementById('root').appendChild(landing.container)

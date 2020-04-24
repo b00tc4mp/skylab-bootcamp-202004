@@ -1,20 +1,5 @@
-.navbar {
-  width: 100%;
-  height: 3rem;
-  border-bottom: 0.3rem solid white;
-  background: coral;
-  display: flex;
-  justify-content: space-between;
-}
-.navbar__item {
-  box-sizing: content-box;
-  border: 0.2rem solid white;
-  width: 3rem;
-  height: 3rem;
-  background-color: silver;
-}
-
 .main {
+  margin-top: 10rem;
   height: 20rem;
   display: flex;
   justify-content: center;
@@ -42,13 +27,14 @@
 }
 
 .landing {
-  margin: 20%;
+  min-width: 375px;
+  margin: 10%;
   border: 2px solid white;
   border-radius: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 3rem;
+  padding: 2rem;
   font-size: 2rem;
 }
 .landing__a {
@@ -59,9 +45,10 @@
 }
 
 .login {
+  min-width: 10rem;
   border: 5px solid white;
   border-radius: 1rem;
-  margin: 0 30%;
+  margin: 10% 5%;
 }
 .login__title {
   text-align: center;
@@ -92,10 +79,16 @@
   box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.3);
 }
 
+a {
+  text-align: center;
+  font-size: 2rem;
+}
+
 .register {
+  min-width: 10rem;
   border: 5px solid white;
   border-radius: 1rem;
-  margin: 0 30%;
+  margin: 10% 5%;
 }
 .register__title {
   text-align: center;
@@ -103,7 +96,7 @@
   padding: 1rem;
 }
 .register__form {
-  margin: 2rem;
+  margin: 0.5rem;
   display: flex;
   flex-direction: column;
 }
@@ -124,6 +117,53 @@
 }
 .register__button:hover {
   box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+a {
+  text-align: center;
+  font-size: 2rem;
+}
+
+.search {
+  min-width: 10rem;
+  border: 5px solid white;
+  border-radius: 1rem;
+  margin: 10% 5%;
+}
+.search__form {
+  margin: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.search__input {
+  padding: 0.5rem;
+  margin: 0.3rem 10%;
+  background-color: white;
+  font-size: 1rem;
+  text-align: center;
+}
+.search__button {
+  margin: 0.3rem 20%;
+  background-color: #3366ff;
+  color: white;
+  font-size: 1rem;
+  padding: 1rem;
+  border: 2px solid blue;
+}
+.search__button:hover {
+  box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+.feedback {
+  color: green;
+  text-align: center;
+  font-size: 1.3rem;
+}
+.feedback--warning {
+  color: orange;
+}
+.feedback--error {
+  color: red;
 }
 
 /*# sourceMappingURL=style.css.map */

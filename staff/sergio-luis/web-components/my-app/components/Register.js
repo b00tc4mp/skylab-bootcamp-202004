@@ -1,38 +1,62 @@
-function Register(onSubmit) {
-
-    const template = document.createElement('div');
-
-    template.innerHTML = `<section class="register">
+class Register extends Component {
+    constructor(onSubmit, onLogin) {
+        super(`<section class="register">
         <h2 class='register__title'>REGISTER</h2>
         <form action="" class="register__form">
             <input class="register__input" type="text" name='name' placeholder="Name">
-            <p></p>
             <input class="register__input" type="text" name='surname' placeholder="Surname">
-            <p></p>
             <input class="register__input" type="email" name='email' placeholder="E-Mail">
-            <p></p>
             <input class="register__input" type="password" name='password' placeholder="Password">
-            <p></p>
-            <button class='register__button'>On Submit</button>
+            <button class='register__button'>Submit</button>
+            <a href="">Login</a>
         </form>
-    </section>`;
+    </section>`)
 
-    const container = template.firstChild;
+        const form = this.container.querySelector('form');
 
-    const form = container.querySelector('form');
+        let feedback;
 
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+            let { name, surname, email, password } = event.target
+            name = name.value,
+                surname = surname.value,
+                email = email.value,
+                password = password.value
 
-        const name = event.target.name.value,
-        surname = event.target.surname.value,
-        email = event.target.email.value,
-        password = event.target.password.value
+            try {
+                onSubmit(name, surname, email, password);
+                cleanUp();
+            } catch (error) {
+                if (!feedback) {
+                    feedback = new Feedback(error.message, 'error');
 
-        onSubmit(name,surname,email,password);
-    })
+                    this.container.append(feedback.container);
+                } else {
+                    feedback.innerText = error.message;
+                }
+            }
+        })
 
+        const cleanUp = () => {
+            const {name,surname,email,password} = form; 
+            name.value = '';
+            surname.value = '';
+            email.value = '';
+            password.value = '';
 
+            if (feedback) {
+                this.container.removeChild(feedback.container);
+                feedback = undefined;
+            }
+        }
 
-    return container
+        const login = this.container.querySelector('a');
+
+        login.addEventListener('click', event => {
+            event.preventDefault();
+            onLogin();
+            cleanUp();
+        })
+    }
 }
