@@ -15,10 +15,11 @@ class Login extends Component{
 
         form.addEventListener('submit', event => {
             event.preventDefault()
-            debugger 
-            const [email, password ] = [event.target.email.value, event.target.password.value]
+            
+            const {email, password} = event.target
+
             try{
-                onSubmit(email, password)
+                onSubmit(email.value, password.value)
                 
             }catch(error){
                 if(!feedback){

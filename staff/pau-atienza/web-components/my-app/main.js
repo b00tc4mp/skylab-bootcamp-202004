@@ -27,5 +27,5 @@ const login = new Login(
         clearForms()
 });
 
-document.getElementById('root').appendChild(landing.container)
-// document.getElementById('root').appendChild(Home('Pau'))
+// document.getElementById('root').appendChild(landing.container)
+document.getElementById('root').appendChild(new Home({name: 'Pau'}).container)
