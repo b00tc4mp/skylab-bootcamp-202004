@@ -17,7 +17,7 @@ class Results extends Component {
             this.container.appendChild(list);
 
         } else {
-            this.container.appendChild(feedback('sorry, no results :(', 'warning'));
+            this.container.appendChild( new feedback('sorry, no results :(', 'warning'));
         }
     };
 };
