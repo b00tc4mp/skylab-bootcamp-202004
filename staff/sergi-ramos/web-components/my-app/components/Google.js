@@ -1,20 +1,16 @@
 class Google extends Components {
-    constructor(users) {
+    constructor(listResults) {
 
-        let updateUser = ''
-        if (users.length) {
-            users.forEach( (user) => { updateUser += `\n<li>${user.name} ${user.surname} : ${user.email}</li>` })
+        let updateResults = ''
+       
+            listResults.forEach( (singleResult) => { updateResults += `\n<h2>${singleResult.title} </h2><p>${singleResult.content}</p><a href="${singleResult.link}">${singleResult.link}</a>` })
 
             super(`<section class="results">
-                        <ul>
-                     ${updateUser}
-                        </ul>
+                        
+                     ${updateResults}
+                        
                     </section>`)
-        } else {
-            updateUser += '<p class="feedback--warning">No results obtained</p>'
-            super(`<section class="results">
-                     ${updateUser}
-                    </section>`)
-        } 
+      
+                
     }
 }

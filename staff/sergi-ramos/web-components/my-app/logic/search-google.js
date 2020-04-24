@@ -1,8 +1,8 @@
-function searchGoogle(query) {
-    let resultsGoogle = []
+function searchGoogle(query, callback) {
+    let listResults = []
     var xhr = new XMLHttpRequest()
 
-    xhr.open( 'GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?q=${query}` )
+    xhr.open( 'GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.google.es/search?q=${query}` )
 
     xhr.onload = function () {
         //console.log(this.responseText)
@@ -14,22 +14,18 @@ function searchGoogle(query) {
         const results = doc.querySelectorAll('.rc')
 
         results.forEach(result => {
-            const title = result.querySelector('.LC20lb')
+            const title = result.querySelector('.LC20lb').innerHTML
+            
+            const content = result.querySelector('.st').innerHTML
 
-            console.log(title.innerText)
+            const { href: link } = result.querySelector('.r > a')
 
-            const content = result.querySelector('.st')
-
-            console.log(content.innerText)
-
-            const { href: link } = result.querySelector('.r > a') 
-
-            console.log(link)
-            resultsGoogle.push(title)
-            console.log(resultsGoogle)
+            listResults.push({title, content, link})
         })
+       
+            
+           callback(listResults)
     }
-
     xhr.onerror = function(error) {
         console.error(error)
     }

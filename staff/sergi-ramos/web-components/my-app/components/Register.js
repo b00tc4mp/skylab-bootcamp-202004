@@ -3,12 +3,12 @@ class Register extends Components {
         super(`<section class="register">
             <h1>Register</h1>
             <form>
-                <input type="text" name="name" placeholder="name">
-                <input type="text" name="surname" placeholder="surname">
-                <input type="email" name="email" placeholder="e-mail">
-                <input type="password" name="password" placeholder="password">
+                <input type="text" name="name" placeholder="Name*">
+                <input type="text" name="surname" placeholder="Surname*">
+                <input type="email" name="email" placeholder="E-mail*">
+                <input type="password" name="password" placeholder="Password*">
                 <button>Submit</button>
-                to<a href="">Login</a>
+                to <a href=""> Login</a>
             </form>
         </section>`)
 
