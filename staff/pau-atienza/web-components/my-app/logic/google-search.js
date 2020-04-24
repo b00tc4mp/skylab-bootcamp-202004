@@ -4,7 +4,7 @@ function googleSearch(query, processResults) {
     var xhr = new XMLHttpRequest()
     xhr.resultArray = []
     // var resultArray = []
-    xhr.open( 'GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?q=${query}`)
+    xhr.open( 'GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?q=${query}`, false)
 
     xhr.onload = function () {
         //console.log(this.responseText)
@@ -22,7 +22,7 @@ function googleSearch(query, processResults) {
             const { href: link } = result.querySelector('.r > a') 
             xhr.resultArray[i] = {title, content, link}
         })
-        
+        processResults(xhr.resultArray)
     }
 
     xhr.onerror = function(error) {
