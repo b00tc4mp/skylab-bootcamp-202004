@@ -1,7 +1,7 @@
-describe('authenticateUser', function () {
+describe('authenticateUser', () => {
     let name, surname, email, password
 
-    beforeEach(function () {
+    beforeEach( () => {
         users.length = 0
 
         name = names.random()
@@ -12,52 +12,52 @@ describe('authenticateUser', function () {
         users.push({ name, surname, email, password })
     })
 
-    it('should succeed on correct credentials', function () {
+    it('should succeed on correct credentials',  () => {
 
-        expect(function () {
+        expect( () => {
             loginUser(email, password)
         }).not.to.throw()
     })
 
-    it('should fail on incorrect credentials', function () {
+    it('should fail on incorrect credentials', () => {
 
         const _email = email.substring(0, 3) + '-' + email.substring(3)
 
-        expect(function () {
+        expect( () => {
             loginUser(_email, password)
         }).to.throw(Error, 'wrong credentials')
 
         const _password = password.substring(0, 3) + '-' + password.substring(3)
 
-        expect(function () {
+        expect( () => {
             loginUser(email, _password)
         }).to.throw(Error, 'wrong credentials')
     })
 
-    it('should fail if arguments are not strings', function () {
+    it('should fail if arguments are not strings', () => {
 
-        expect(function () {
+        expect( () => {
             loginUser(true, password)
         }).to.throw(Error, 'is not a string')
 
-        expect(function () {
+        expect( () => {
             loginUser(email, 123)
         }).to.throw(TypeError, 'password is not a string')
     })
 
-    it('should fail using a non email string', function() {
+    it('should fail using a non email string', () => {
         
-        expect(function () {
+        expect( () => {
             loginUser('isNotAnEmail', password)
         }).to.throw(Error, 'isNotAnEmail is not an e-mail')
     })
 
-    it('should fail if password string is empty', function() {
-        expect(function () {
+    it('should fail if password string is empty', () => {
+        expect( () => {
             loginUser(email, '    ')
         }).to.throw(Error, 'password is empty or blank')
 
-        expect(function () {
+        expect( () => {
             loginUser(email, '')
         }).to.throw(Error, 'password is empty or blank')
     })   

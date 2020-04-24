@@ -1,4 +1,4 @@
-function registerUser(name, surname, email, password) { debugger
+const registerUser = (name, surname, email, password) => { debugger
 
     if (typeof name !== 'string') throw new TypeError(name + ' is not a string')
     if (!TEXT_REGEX.test(name)) throw new Error(name + ' is not alphabetic')

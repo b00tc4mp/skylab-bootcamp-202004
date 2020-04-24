@@ -1,4 +1,4 @@
-function searchUser(query) {
+const searchUser = (query) => {
 
     const user = users.filter((user) => {
         return user.name === query || user.email === query || user.surname === query

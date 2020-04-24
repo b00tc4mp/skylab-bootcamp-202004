@@ -1,8 +1,8 @@
-describe('retrieveUser', function () {
+describe('retrieveUser', () => {
 
     let name, surname, email, password
 
-    beforeEach(function () {
+    beforeEach( () => {
         users.length = 0
 
         name = names.random()
@@ -13,7 +13,7 @@ describe('retrieveUser', function () {
         users.push({ name, surname, email, password })
     })
 
-    it('should succeed if mail matches',function(){
+    it('should succeed if mail matches',() => {
         
         const user = retrieveUser(email)
        
@@ -23,20 +23,20 @@ describe('retrieveUser', function () {
         expect(user.password).to.equal(password)
     })
 
-    it('should return undefined if email is not registered', function() {
+    it('should return undefined if email is not registered', () => {
         const _email = 'e@email.com'
 
         expect(retrieveUser(_email)).to.be.undefined
     })
 
-    it('should fail if arguments are not strings', function () {
-        expect(function () {
+    it('should fail if arguments are not strings', () => {
+        expect( () => {
             retrieveUser(true, password)
         }).to.throw(Error, 'is not a string')
     })
     
-    it('should fail using a non email string', function() {
-        expect(function () {
+    it('should fail using a non email string', () => {
+        expect( () => {
             retrieveUser('isNotAnEmail', password)
         }).to.throw(Error, 'isNotAnEmail is not an e-mail')
     })    

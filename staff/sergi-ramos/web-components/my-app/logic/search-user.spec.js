@@ -1,7 +1,7 @@
-describe('searchUser', function(){
+describe('searchUser', () => {
     let name, surname, email, password, usersFound
 
-    beforeEach(function () {
+    beforeEach( () => {
         users.length = 0
 
         name = names.random()
@@ -12,7 +12,7 @@ describe('searchUser', function(){
         users.push({ name, surname, email, password })
     })
 
-    it('should fail if is empty or blank', function(){    // do it with throw and try catch!!
+    it('should fail if is empty or blank', () => {    // do it with throw and try catch!!
 
         usersFound = searchUser(' ')
         
@@ -20,7 +20,7 @@ describe('searchUser', function(){
         expect(usersFound.length).to.equal(0)
     })
 
-    it('should succes if registered user is searched', function(){     // do it with throw and try catch!!
+    it('should succes if registered user is searched', () => {     // do it with throw and try catch!!
 
         usersFound = searchUser(name)
         
