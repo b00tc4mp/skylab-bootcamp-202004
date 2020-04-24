@@ -25,3 +25,35 @@ f()
 const peter = { name: 'Peter' }
 
 f.call(peter)
+
+///
+
+function Person(name) {
+    this.name = name
+}
+
+Person.prototype.salute = function(name) {
+    console.log(`${this.name}: Hello, ${name}!`)
+}
+
+var peter = new Person('Peter')
+
+peter.salute('Anna')
+// Peter: Hello, Anna!
+
+/// WARN now
+
+window.name = 'Window'
+
+function Person(name) {
+    this.name = name
+}
+
+Person.prototype.salute = name => {
+    console.log(`${this.name}: Hello, ${name}!`)
+}
+
+var peter = new Person('Peter')
+
+peter.salute('Anna')
+/// Window: Hello, Anna!
