@@ -7,7 +7,8 @@ class Results extends Component {
             const list = document.createElement('ul')
 
             // users.forEach(function (user) {
-            users.forEach(function ({ name, surname, email }) {
+            //users.forEach(function ({ name, surname, email }) {
+            users.forEach(({ name, surname, email }) => {
                 const item = document.createElement('li')
 
                 // const { name, surname, email } = user
