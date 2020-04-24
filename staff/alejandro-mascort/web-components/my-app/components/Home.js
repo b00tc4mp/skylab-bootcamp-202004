@@ -7,7 +7,7 @@ class Home extends Component {
 
         const button = this.container.querySelector('button')
 
-        button.addEventListener('click', function(){
+        button.addEventListener('click', () => {
             toLanding()
         })
 

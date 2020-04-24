@@ -1,4 +1,4 @@
-function searchUsers(query) {
+const searchUsers = query => {
     if (query.trim().length) {
         const regExp = new RegExp(query.toLowerCase())
         

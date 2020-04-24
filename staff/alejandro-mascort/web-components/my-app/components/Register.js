@@ -55,7 +55,7 @@ class Register extends Component {
             }
         }
 
-        login.addEventListener('click', function(event){
+        login.addEventListener('click', event => {
             event.preventDefault()
 
             onLogin()

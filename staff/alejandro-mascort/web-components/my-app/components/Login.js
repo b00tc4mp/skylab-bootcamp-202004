@@ -37,7 +37,7 @@ class Login extends Component {
 
         })
 
-        register.addEventListener('click', function(event){
+        register.addEventListener('click', event => {
             event.preventDefault()
 
             onRegister()

@@ -6,14 +6,14 @@ class Landing extends Component {
 
         const [register, login] = this.container.querySelectorAll('a')
 
-        register.addEventListener('click', function(event) {
+        register.addEventListener('click', event => {
             event.preventDefault()
 
 
             onRegister()
         })
 
-        login.addEventListener('click', function() {
+        login.addEventListener('click', () => {
             event.preventDefault()
 
             onLogin() 
