@@ -26,5 +26,37 @@ class Home extends Component {
                 _results.container.replaceWith(results.container);
             }
         }).container)
+
+        let searchResults;
+        // const queryResult;
+        this.container.appendChild(new SearchGoogle(query =>{
+            const items = google(query, (error, results)=> {
+                if (error) console.error('KO', error.message)
+                else {
+                    searchResults = new ResultsGoogle(results);
+                    this.container.appendChild(searchResults.container);
+                }
+            });
+            // try {
+            //     search('hola mundo', function(error, results) {
+            //         if (error) console.error('KO', error.message)
+            //         else {
+            //             console.log('OK', 'hola mundo =>', results)
+            //         }
+            //     })
+            //     // do more stuff
+            // } catch(error) {
+            //     console.error('KO', error.message)
+            // }
+
+            if (!searchResults) {
+                searchResults = new ResultsGoogle(items);
+                this.container.appendChild(searchResults.container);
+            } else {
+                const _searchResults = searchResults;
+                searchResults = new ResultsGoogle(items);
+                _searchResults.container.replaceWith(searchResults.container);
+            }
+        }).container)
     }
 }

@@ -29,4 +29,4 @@ const login = new Login((email, password) => {
 
 
 
-document.getElementById('root').appendChild(landing.container)
+document.getElementById('root').appendChild(login.container)
