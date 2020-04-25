@@ -11,3 +11,4 @@ function authenticateUser(email, password) {
 
     if (!user) throw new Error('wrong credentials')
 }
+

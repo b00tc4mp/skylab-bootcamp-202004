@@ -23,7 +23,6 @@ class Login extends Component {
                 password = event.target.password.value
 
             try {
-                debugger
                 onSubmit(email, password)
 
                 cleanUp()

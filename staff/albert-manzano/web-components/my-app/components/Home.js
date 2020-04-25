@@ -16,17 +16,26 @@ class Home extends Component {
         })
 
         this.container.appendChild(new Search(query => {
-            const users = searchUsers(query)
 
-            if (!results) {
-                results = new Results(users)
-                debugger
-                this.container.appendChild(results.container)
-            } else {
-                const _results = results
-                results = new Results(users)
-                _results.container.replaceWith(results.container)
+            const items = google(query, (error, data) => {
+
+                if(error) {
+                    console.error(error.message)
+                } else {
+                     
+                    if (!results) {
+                        results = new ResultsGoogle(data)
+                        debugger
+                        this.container.appendChild(results.container)
+                    } else {
+                        const _results = results
+                        results = new ResultsGoogle(data)
+                        _results.container.replaceWith(results.container)
+                }
             }
+
+            })
+            
         }).container)
     }
 }
