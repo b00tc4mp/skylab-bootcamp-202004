@@ -1,7 +1,17 @@
-function Search(){
-    //Ventana con los mensajes de error y/o alerta que recibe el usuario
-    const temp= document.createElement("div");
-    temp.innerHTML=`<ul class= "search"></ul>`
-    const container= temp.firstChild;
-    return container;
+//Ventana para buscar usuarios
+class Search extends Component{
+    constructor(onSubmit){
+        super(`<section class="search">
+            <form>
+                <input type="text" name="query">
+                <button>🔍</button>
+            </form>
+        </section>`);
+    //Añade el evento de buscar
+    const form =this.container.querySelector("form");
+    form.addEventListener("submit",function(event){
+        event.preventDefault();
+        onSubmit(event.target.query.value);
+    })
+    }
 }

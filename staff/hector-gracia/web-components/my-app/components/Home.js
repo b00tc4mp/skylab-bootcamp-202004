@@ -1,50 +1,33 @@
-
-function Home(name,onLogOut){
-    const temp=document.createElement("div");
-
-    temp.innerHTML = `<span> 
-    <h1>Welcome ${name}</h1>
-    <button>Log out</button>
-    <form method="GET">
-    <input type="text" name = 'text'>
-    <button>🦗</button>
-    </form>
-    </span>`
-
-    const container=temp.firstChild;
-    let button=container.querySelector("button");
-    button.addEventListener("click",function(event){
-        event.preventDefault();
+//Ventana que ve el usuario tras loguearse
+class Home extends Component{
+    constructor(name,onLogOut){
+        //Le pasa el template para crear el container
+        super(`<section class="home">
+        <h1>Welcome, ${name}!</h1><button>Logout</button>
+    </section>`);
+    const self=this; //Guarda una referencia a la instancia para poder usarla al crear Search
+    //Recoge el boton de logout para poder asignarle un evento
+    const button =this.container.querySelector("button");
+    button.addEventListener("click",function(){
         onLogOut();
-    })
-
-    
-
-    const searchBar = container.querySelector('form')
-    searchBar.addEventListener('submit', function(event){
-        event.preventDefault();
-        var input = event.target.text.value
-
-        var results = searchUser(input)
-        var search = Search()
-        var temp
+    });
+    let results;//Para ver si tiene que crear la ventana con los resultados o editarla
+    //Añade la ventana con los resultados de la busqueda de usuarios
+    this.container.appendChild(new Search(function(query){
+        const users= searchUser(query);
         if(!results){
-            temp = document.createElement('p')
-            temp.innerHTML = 'no users found'
-            
-        } 
-        for (i in results){
-            temp = document.createElement("li");
-            temp.innerHTML=`${results[i].name} ${results[i].surname}, ${results[i].email}`
-            search.appendChild(temp)      
+            results= new Results(users);
+            //Le añade al container de home el container con los resultados
+            self.container.appendChild(results.container);
+        }else{
+            const _results=results;
+            results=new Results(users);
+            _results.container.replaceWith(results.container);
         }
-        //añadir componente
-        //append.Find(nombre, apellido, correo)
-           // ul.appendChild(`<li>${results[i]}</li>`)
-        container.appendChild(search)
-            
-    })
-    //Añade el boton de añadir mensajes
-    container.appendChild(Send(sendPete,name));
-    return container;
+
+    }).container)
+    }
 }
+
+//Añade el boton de añadir mensajes
+    //container.appendChild(Send(sendPete,name));

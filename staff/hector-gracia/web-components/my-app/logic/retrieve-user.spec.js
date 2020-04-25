@@ -1,5 +1,5 @@
 describe("retrieveUser", function(){
-    /*
+    
     let name,surname,email,password;
     beforeEach(function(){
         users.length=0;
@@ -8,11 +8,11 @@ describe("retrieveUser", function(){
         email= `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('')}@mail.com`;
         password=passwords.random();
     })
-    */
+    
     it("should return a specified user", function(){
-        users.push("Hector","Gracia","graciaarriazuhector@gmail.com", "123123123");
-        let result = retrieveUser("graciaarriazuhector@gmail.com")
-        expect(result).to.deep.equal({name: "Hector", surname:"Gracia", email:"graciaarriazuhector@gmail.com", password: "123123123"})
+        users.push({name,surname,email,password});
+        let result = retrieveUser(email)
+        expect(result).to.deep.equal({name: name, surname:surname, email:email, password: password})
     })
 
     it("should return an error email is not a string", function(){
@@ -33,6 +33,12 @@ describe("retrieveUser", function(){
         expect(function(){
             retrieveUser()
         }).to.throw(TypeError, undefined+' is not a string') 
+
+    })
+    it("should return an error if given an email that doesn't exist in the database", function(){
+        expect(function(){
+            retrieveUser("pepitogrillo69@gmail.com")
+        }).to.throw(TypeError, "couldn't find user with that email") ;
 
     })
 })

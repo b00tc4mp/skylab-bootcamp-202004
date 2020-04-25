@@ -1,23 +1,19 @@
-function Landing(goRegister,goLogin) {
-    //Elemento que aparece cuando abre la web
-    const temp = document.createElement('div')
-
-    temp.innerHTML = `<section class="login">
-    <h1>Welcome</h1>
-    <a href="" >Register</a>
-    <a href="" >Login</a>
-    </section>`
-
-    const container = temp.firstChild    
-    const [register, login] = container.querySelectorAll('a')
-
-    register.addEventListener('click', function() {
+//La ventana que se abre cuando entra por primera vez a la web
+class Landing extends Component{
+    constructor(onRegister,onLogin){
+        super(`<section class="landing">
+        <a href="">Register</a> or <a href="">Login</a>
+        </section>`);
+    //Recoge los botones de register y login
+    const [register, login] = this.container.querySelectorAll('a');
+    //Cambia de pagina en funcion del enlace pulsado
+    register.addEventListener("click",function(event){
         event.preventDefault();
-        goRegister();
-    })
-    login.addEventListener("click",function(){
+        onRegister();
+    });
+    login.addEventListener("click",function(event){
         event.preventDefault();
-        goLogin();
+        onLogin();
     })
-    return container
+    }
 }
