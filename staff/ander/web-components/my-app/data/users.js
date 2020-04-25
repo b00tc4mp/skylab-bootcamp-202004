@@ -5,6 +5,12 @@ const users = [
         email: 'manuelbarzi@gmail.com',
         password: '123123123'
     },
+    {
+        name: 'topo',
+        surname: 'tamadre',
+        email: 'a@a.aa',
+        password: '11111111'
+    },
 
     {
         name: 'Pepito',
