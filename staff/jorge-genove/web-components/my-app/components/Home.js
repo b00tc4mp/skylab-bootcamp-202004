@@ -1,57 +1,71 @@
 class Home extends Component {
-    constructor(name, callback) {
-        super(`<section class="home">
+  constructor(name, callback) {
+    super(`<section class="home">
     <h1>Welcome, ${name}!</h1><button>Logout</button>
-</section>`)
+</section>`);
 
-        const button = this.container.querySelector('button')
+    const button = this.container.querySelector("button");
 
-        button.addEventListener('click', function () {
-            callback()
-        })
+    button.addEventListener("click", function () {
+      callback();
+    });
 
-        let results
+    let results;
 
-        
+    this.container.appendChild(
+      new Search((query) => {
+        const users = searchUsers(query);
 
-        this.container.appendChild(new Search(query => {
-            const users = searchUsers(query)
+        if (!results) {
+          results = new Results(users);
 
-            if (!results) {
-                results = new Results(users)
+          //this.container.appendChild(results.container)
+          this.container.appendChild(results.container);
+        } else {
+          const _results = results;
 
-                //this.container.appendChild(results.container)
-                this.container.appendChild(results.container)
-            } else {
-                const _results = results
+          results = new Results(users);
 
-                results = new Results(users)
+          _results.container.replaceWith(results.container);
+        }
+      }).container
+    );
 
-                _results.container.replaceWith(results.container)
-            }
-        }).container)
-        
-        
+    let googleresult;
 
-        let googleresult;
+    this.container.appendChild(
+      new GoogleSearch((googleQuery) => {
+        googleSearch(googleQuery, (error, results) => {
+          if (!googleresult) {
+            googleresult = new GoogleResults(results).container;
 
-        this.container.appendChild(new GoogleSearch(googleQuery => {
-              googleSearch(googleQuery, (error, results) => {
-                
-                if(!googleresult) {
-                    googleresult = new GoogleResults(results).container
-                
-                    this.container.appendChild(googleresult)
-                }else {
-                    const _googleresult = googleresult
+            this.container.appendChild(googleresult);
+          } else {
+            const _googleresult = googleresult;
 
-                    googleresult = new GoogleResults(results).container
+            googleresult = new GoogleResults(results).container;
 
-                    _googleresult.replaceWith(googleresult)
-                }
-            })
-        }).container) 
-           
-        } 
+            _googleresult.replaceWith(googleresult);
+          }
+        });
+      }).container
+    );
+    let ecosiaResults;
 
-    }       
+    this.container.appendChild(
+      new EcosiaSearch((ecosiaQuery) => {
+        ecosiaSearch(ecosiaQuery, (error, results) => {
+          if (!ecosiaResults) {
+            ecosiaResults = new EcosiaResult(results).container;
+
+            this.container.appendChild(ecosiaResults);
+          } else {
+            const _ecosiaResults = ecosiaResults;
+            ecosiaResults = new EcosiaResult(results).container;
+            _ecosiaResults.replaceWith(ecosiaresults);
+          }
+        });
+      }).container
+    );
+  }
+}

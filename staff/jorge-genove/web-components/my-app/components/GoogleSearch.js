@@ -10,7 +10,7 @@ class GoogleSearch extends Component {
 
         const form = this.container.querySelector('form')
 
-        form.addEventListener('submit', function (event) {
+        form.addEventListener('submit', function (event) {debugger
             event.preventDefault()
 
             const googleQuery = event.target.googlequery.value

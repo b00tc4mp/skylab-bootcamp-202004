@@ -4,17 +4,17 @@ class EcosiaResult extends Component {
         
         </section>`);
 
-    if (appends.length) 
-    const list = document.createElement(section);
+    if (appends.length) {
+    const list = document.createElement('section');
 
     appends.forEach(function ({ title, content, link }) {
-      const item = document.createElement(h2);
-      const itemP = document.createElement(p);
-      const itemLink = document.createElement(p);
+      const item = document.createElement('h2');
+      const itemP = document.createElement('p');
+      const itemLink = document.createElement('p');
 
       item.innerText = `${title}`;
       itemP.innerText = `${content}`;
-      itemLink.innerHTML = `${link}`;
+      itemLink.innerHTML = `<a href="${link}">${link}<a></a>`;
 
       list.appendChild(item);
       list.appendChild(itemP);
@@ -24,5 +24,6 @@ class EcosiaResult extends Component {
     
     this.container.appendChild(list)
 
+}else this.container.appendChild(new Feddback('sorry, no results'))
 }
 }

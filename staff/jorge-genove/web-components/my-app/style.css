@@ -1,25 +1,75 @@
-.home, .register, .login {
-  display: inline-block;
-  border: 1rem dashed gray;
-  border-radius: 2rem;
-  padding: 1rem;
+.landing {
+  padding: 0px 25px 25px;
+  background: #fff;
+  box-shadow: 0px 0px 0px 5px rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50%;
+  text-align: center;
+  width: 300px;
+  height: 300px;
 }
 
-.landing {
-  background-color: orange;
+a:link, a:visited {
+  background-color: #f44336;
+  color: white;
+  padding: 14px 25px;
   text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: red;
 }
 
 .login {
-  border-color: blue;
+  padding: 0px 25px 25px;
+  background: #fff;
+  box-shadow: 0px 0px 0px 5px rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50%;
 }
 
 .register {
-  border-color: red;
+  padding: 0px 25px 25px;
+  background: #fff;
+  box-shadow: 0px 0px 0px 5px rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50%;
+}
+
+body {
+  background-image: url(http://kreativo.se/backlogin.jpg);
+  display: flex;
+  font-family: Arial, Helvetica, sans-serif;
+  background-repeat: no-repeat;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  background-size: cover;
 }
 
 .home {
-  border-color: yellow;
+  padding: 0px 25px 25px;
+  background: #fff;
+  box-shadow: 0px 0px 0px 5px rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .feedback {

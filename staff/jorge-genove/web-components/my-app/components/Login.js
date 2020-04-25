@@ -1,4 +1,4 @@
-class Login extends Component {
+class Login extends Component {debugger
     constructor(onSubmit, onRegister) {
         super(`<section class="login">
     <h1>Login</h1>
