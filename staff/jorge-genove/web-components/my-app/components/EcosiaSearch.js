@@ -4,7 +4,7 @@ class EcosiaSearch extends Component {
         <form>
         <label>Ecosia</label>
         <input type="text" name="ecosiaquery">
-        <button>🔍<button>
+        <button>🔍</button>
         </form>
         </section>`)
         
