@@ -1,27 +1,22 @@
 class Search extends Component {
-    constructor() {
+    constructor(callback) {
         super(`<section class="search">
             <form>
-                <input type="text" name="query">
+                <input type="text" name="query" placeholder="search users">
                 <button>🔍</button>
             </form>
         </section>`)
 
-        const formSearch = this.container.querySelector('form')
+        const form = this.container.querySelector('form')
+        
+        let query
 
-        let result, query
-
-        formSearch.addEventListener('submit', event => {
+        form.addEventListener('submit', event => {
             event.preventDefault()
 
-            query = formSearch.query.value
+            query = form.query.value
 
-            if (query.trim().length > 0 && typeof query != 'undefined') {
-                if (result) this.container.removeChild(result.container)
-                result = new Results(query)
-                
-                this.container.append(result.container)
-            }
+            callback(query)
         })
     }
 }

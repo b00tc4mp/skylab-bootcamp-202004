@@ -64,4 +64,14 @@
   color: red;
 }
 
+.google-results {
+  border: 1rem dashed Aquamarine;
+  border-radius: 1rem;
+}
+
+.results {
+  border: 1rem dashed BlanchedAlmond;
+  border-radius: 1rem;
+}
+
 /*# sourceMappingURL=style.css.map */
