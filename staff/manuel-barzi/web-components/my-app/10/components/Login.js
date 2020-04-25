@@ -14,7 +14,7 @@ class Login extends Component {
 
         let feedback
 
-        form.addEventListener('submit', function (event) {
+        form.addEventListener('submit', event => {
             event.preventDefault()
 
             let { email, password } = event.target
@@ -25,7 +25,7 @@ class Login extends Component {
             try {
                 onSubmit(email, password)
 
-                cleanUp.call(this)
+                cleanUp()
             } catch (error) {
                 if (!feedback) {
                     feedback = new Feedback(error.message, 'error')
@@ -33,9 +33,9 @@ class Login extends Component {
                     this.container.append(feedback.container)
                 } else feedback.innerText = error.message
             }
-        }.bind(this))
+        })
 
-        function cleanUp() {
+        const cleanUp = () => {
             form.email.value = ''
             form.password.value = ''
 
@@ -53,7 +53,7 @@ class Login extends Component {
 
             onRegister()
 
-            cleanUp.call(this)
-        }.bind(this))
+            cleanUp()
+        })
     }
 }
