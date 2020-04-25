@@ -1,40 +1,54 @@
 // TODO show "Welcome, <name>!"
-class Home extends Component{
-    constructor(name, onLogout){
-        super(`<section class="home">
+class Home extends Component {
+  constructor(name, onLogout) {
+    super(`<section class="home">
     <h1>Welcome, ${name}!</h1>
     <button id='logout'>Logout</button>
-</section>`)
-        
-        let results
-        const self = this
-        
-    const searchComponent = new Search(function(query){
-        const _users = searchUsers(query)
+</section>`);
 
-        if (!results) {
-            results = Results(_users)
+    let results;
 
-            self.container.appendChild(results)
+    const searchComponent = new Search((query) => {
+      const _users = searchUsers(query);
+
+      if (!results) {
+        results = new Results(_users);
+
+        this.container.appendChild(results.container);
+      } else {
+        const _results = results;
+
+        results = new Results(_users);
+
+        _results.container.replaceWith(results.container);
+      }
+    });
+    this.container.appendChild(searchComponent.container);
+
+    let googleResults;
+
+    const searchGoogle = new Google((query) => {
+      google(query, (error, data) => {
+        if (!googleResults) {
+          googleResults = new GoogleResults(data);
+
+          console.log(this);
+
+          this.container.appendChild(googleResults.container);
         } else {
-            const _results = results
-            
-            results = Results(_users)
-            
-            _results.replaceWith(results)
+          const _googleResults = googleResults;
+
+          googleResults = new GoogleResults(data);
+
+          _googleResults.container.replaceWith(googleResults.container);
         }
-        
-    })
+      });
+    });
+    this.container.appendChild(searchGoogle.container);
 
-    console.log(this.container)
-    
-    this.container.appendChild(searchComponent.container)
-    
-    const logout = this.container.querySelector("#logout")
-    logout.addEventListener("click",function(){
-        onLogout()
-    })
-    
-    }
+    const logout = this.container.querySelector("#logout");
+    logout.addEventListener("click", function () {
+      onLogout();
+    });
+  }
 }
-

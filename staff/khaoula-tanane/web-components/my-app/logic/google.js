@@ -1,56 +1,34 @@
+function google(query, callback) {
+    var xhr = new XMLHttpRequest()
 
-function searchUsers(query) {
-    // TODO find users matching query in name, surname, email
+    xhr.open( 'GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?q=${query}` )
 
-    if(!query) return []
+    xhr.onload = function () {
+        const parser = new DOMParser()
 
-    let _users = users.filter(function(user) {
-        return user.name.includes(query) || user.email.includes(query) || user.surname.includes(query)
-        // TODO match user.name contains query || user.surname contains query || ...
-    })
+        const doc = parser.parseFromString(this.responseText, 'text/html')
 
-    _users = _users.map(({name, surname, email}) => {
-        return {name, surname, email}
-    })
+        let results = doc.querySelectorAll('.rc')
+        console.log(results)
 
-    // TODO sanitize: create new objects of users without password
+        const data = []
 
-    return _users
-    // TODO return _users
+        results.forEach(result => {
+            const title = result.querySelector('.LC20lb').innerText
+
+            const content = result.querySelector('.st').innerText
+
+            const { href: link } = result.querySelector('.r > a') 
+
+            data.push({ title, content, link })
+        })
+   
+        callback(undefined, data)
+    }
+
+    xhr.onerror = function(error) {
+        callback(new Error('network error'))
+    }
+
+    xhr.send()
 }
-
-// function search(query) {
-//     var xhr = new XMLHttpRequest()
-
-//     xhr.open( 'GET', `https://www.google.com/search?q=${query}` )
-
-//     xhr.onload = function () {
-//         //console.log(this.responseText)
-
-//         const parser = new DOMParser()
-
-//         const doc = parser.parseFromString(this.responseText, 'text/html')
-
-//         const results = doc.querySelectorAll('.rc')
-
-//         results.forEach(result => {
-//             const title = result.querySelector('.LC20lb')
-
-//             console.log(title.innerText)
-
-//             const content = result.querySelector('.st')
-
-//             console.log(content.innerText)
-
-//             const { href: link } = result.querySelector('.r > a') 
-
-//             console.log(link)
-//         })
-//     }
-
-//     xhr.onerror = function(error) {
-//         console.error(error)
-//     }
-
-//     xhr.send()
-// }

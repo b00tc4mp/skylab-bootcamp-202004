@@ -14,7 +14,6 @@ class Register extends Component{
 </section>`)
 
     let feedback
-    const self = this
 
     function cleanUp() {
         form.name.value = ''
@@ -23,7 +22,7 @@ class Register extends Component{
         form.password.value = ''
 
         if (feedback) {
-            self.container.removeChild(feedback)
+            this.container.removeChild(feedback)
 
             feedback = undefined
         }
@@ -35,7 +34,7 @@ class Register extends Component{
         goLogin()
     })
 
-    form.addEventListener('submit', function (event) {
+    form.addEventListener('submit', event => {
         event.preventDefault()
 
         let { name, surname, email, password } = event.target
@@ -52,7 +51,7 @@ class Register extends Component{
         } catch (error){
             if (!feedback){
                 feedback = Feedback(error.message, 'error')
-                self.container.appendChild(feedback.container)
+                this.container.appendChild(feedback.container)
             } else feedback.innerText = error.message
         }
     })

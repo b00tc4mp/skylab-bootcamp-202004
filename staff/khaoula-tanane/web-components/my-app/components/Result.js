@@ -1,15 +1,12 @@
-function Results(_users) {
-    const temp = document.createElement('div')
-
-    temp.innerHTML = `<section class="results">
-</section>`
-
-    const container = temp.firstChild
+class Results extends Component{
+    constructor(_users) {
+        super(`<section class="results">
+</section>`)
 
     if (_users.length) {
         const list = document.createElement('ul')
 
-        _users.forEach(function ({ name, surname, email }) {
+        _users.forEach(({ name, surname, email }) => {
             const item = document.createElement('li')
 
             item.innerText = `${name} ${surname} ${email}`
@@ -17,8 +14,8 @@ function Results(_users) {
             list.appendChild(item)
         })
 
-        container.appendChild(list)
-    } else container.appendChild(new Feedback('sorry, no results :(', 'warning').container)
+        this.container.appendChild(list)
+    } else this.container.appendChild(new Feedback('sorry, no results :(', 'warning').container)
 
-    return container
+}
 }
