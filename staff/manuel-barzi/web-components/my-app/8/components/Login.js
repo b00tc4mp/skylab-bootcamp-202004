@@ -35,7 +35,7 @@ class Login extends Component {
             }
         }.bind(this))
 
-        function cleanUp() {
+        const cleanUp = function () {
             form.email.value = ''
             form.password.value = ''
 
@@ -44,7 +44,7 @@ class Login extends Component {
 
                 feedback = undefined
             }
-        }
+        }.bind(this)
 
         const register = this.container.querySelector('a')
 
@@ -53,7 +53,7 @@ class Login extends Component {
 
             onRegister()
 
-            cleanUp.call(this)
-        }.bind(this))
+            cleanUp()
+        })
     }
 }
