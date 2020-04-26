@@ -1,9 +1,9 @@
 class Search extends Component{
-    constructor(onSubmit){
+    constructor(onSubmit, buttonName){
         super(`<section class="search">
             <form>
              <input type="text" name="query">
-                <button>🦗</button>
+                <button>${buttonName}</button>
             </form><br>
          </section>`)
     

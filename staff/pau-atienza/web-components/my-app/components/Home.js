@@ -1,76 +1,73 @@
 class Home extends Component{
     constructor(user){
-        super(`<span> 
-                <h1>Welcome ${user.name}</h1>
-                <button>Log out</button>
-            </span>`)
+        super(`<section class = 'home'> 
+                    <h1>Welcome to the best website in the net, ${user.name}</h1>
+                    <button>Log out</button>
+            </section>`)
         const button = this.container.querySelector('button')
     
         button.addEventListener('click', function(){ 
             home.container.replaceWith(landing.container)
         })
-        let results
 
-        this.container.appendChild(new Search(input => {
+        var searchbar = Component.prototype.mount.call(undefined, `<div class = 'searchbar'>
+            <h2>Search at your will</h2>
+        </div>`)
+        this.container.appendChild(searchbar)
+        let results
+        searchbar.appendChild(new Search(input => {
             const searchOutput = searchUser(input)
             console.log(searchOutput)
-            debugger
-            if (!results) {
-                results = new Result(searchOutput, (input) => {
-                    const resultItem = document.createElement("li");
-                    for (let i in users){
-                        resultItem.innerHTML=`${input[i].name} ${input[i].surname}, ${input[i].email}`
-                        this.container.appendChild(resultItem)      
-                    }
-                })
 
-                this.container.appendChild(results.container)
+            if (!results) {
+                results = new ResultUser(searchOutput).container
+                this.container.appendChild(results)
             } else {
                 const _results = results
 
-                results = new Result(searchOutput, (input) => {
-                    const resultItem = document.createElement("li");
-                    for (let i in users){
-                        resultItem.innerHTML=`${input[i].name} ${input[i].surname}, ${input[i].email}`
-                        this.container.appendChild(resultItem)      
-                    }
-                })
+                results = new ResultUser(searchOutput).container
 
-                _results.container.replaceWith(results.container)
+                _results.replaceWith(results)
             }
-        }).container)
+        },'Search Users🦗').container)
 
-        this.container.appendChild(new Search(input => {
-            const searchOutput = googleSearch(input)
+        searchbar.appendChild(new Search(input => {
+
+            googleSearch(input, (error, searchOutput) => {
+                if (!results) {
+                    results = new ResultGoogle(searchOutput).container
         
-            if (!results) {
-                results = new Result(searchOutput, input =>{
-                    for (let i in searchOutput){
-                        let resultItem = document.createElement("li");
-                        
-                        resultItem.innerHTML=`<strong>${input[i].title.textContent}</strong><br>
-                        ${input[i].content.textContent}<br>
-                        <a href= '${input[i].link}'>${input[i].link}</a><br><br>`
-                        this.container.appendChild(resultItem)      
-                    }
-                }).container
+                    searchbar.appendChild(results)
+                } else {
+                    const _results = results
+    
+                    results = new ResultGoogle(searchOutput).container
+        
+                    _results.replaceWith(results)
+                }
+            })
+        }, 'Search Google').container)
+        
+        searchbar.appendChild(new Search(input => {
 
-                this.container.appendChild(results.container)
-            } else {
-                const _results = results
+            ecosiaSearch(input, (error, searchOutput) => {
+                if (!results) {
+                    results = new ResultGoogle(searchOutput).container
+        
+                    searchbar.appendChild(results)
+                } else {
+                    const _results = results
+    
+                    results = new ResultGoogle(searchOutput).container
+        
+                    _results.replaceWith(results)
+                }
+            })
+        }, 'Search Ecosia').container)
 
-                results = new Result(searchOutput, input => {
-                    for (let i in searchOutput){
-                        let resultItem = document.createElement("li");
-                        
-                        resultItem.innerHTML=`<strong>${input[i].title.textContent}</strong><br>
-                        ${input[i].content.textContent}<br>
-                        <a href= '${input[i].link}'>${input[i].link}</a><br><br>`
-                        this.container.appendChild(resultItem)    
-                    }
-                }).container
-                _results.container.replaceWith(results.container)
-            }
-        }).container)
-    }
+
+        holaNews((error, news) => {
+            this.container.appendChild(new News(news, 'Enjoy the latest news from HOLA!').container)
+        })
+    }     
 }
