@@ -1,32 +1,39 @@
 class Home extends Component {
-  constructor(name, callback) {
-    super(`<section class="home">
-    <h1>Welcome, ${name}!</h1><button>Logout</button>
-</section>`);
+    constructor(name, logout, toGoogle) {
+        super(`<section class="home">
+    <h1>Welcome, ${name}!</h1>
+    <button id="logout">Logout</button>
+    <button id="google">toGOOGLE</button>
+</section>`)
 
-    const button = this.container.querySelector("button");
+        const buttonLogout = this.container.querySelector('#logout')
+        const buttonGoogle = this.container.querySelector('#google')
+        buttonLogout.addEventListener('click', function () {
+            logout()
+        })
+        buttonGoogle.addEventListener('click', function () {
+            toGoogle()
+        })
 
-    button.addEventListener("click", () =>{
-      callback();
-    });
+        let results
 
-    let results;
+        const searchUsersCont= new Search(query => {
+            const users = searchUsers(query)
 
-    this.container.appendChild(
-      new Search(query =>{
-        const users = searchUsers(query);
+            if (!results) {
+                results = new Results(users)
 
-        if (!results) {
-          results = new Results(users);
-          
-          this.container.appendChild(results.container);
-        } else {
-          const _results = results;
+                this.container.appendChild(results.container)
+            } else {
+                const _results = results
 
-          results = new Results(users);
+                results = new Results(users)
 
-          _results.container.replaceWith(results.container);
-        }
-      }).container)
-  }
+                _results.container.replaceWith(results.container)
+            }
+
+        })
+
+        this.container.appendChild(searchUsersCont.container)
+    }
 }

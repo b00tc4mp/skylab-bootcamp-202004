@@ -14,17 +14,23 @@ const register = new Register(function (name, surname, email, password) {
 
 const login = new Login(function (email, password) {
     authenticateUser(email, password)
-
     const user = retrieveUser(email)
 
     const home = new Home(user.name, function () {
         home.container.replaceWith(landing.container)
+        
+    },  function(){
+        const homeGoogle = new HomeGoogle(function(){
+            homeGoogle.container.replaceWith(home.container)
     })
+    home.container.replaceWith(homeGoogle.container)
+    })
+login.container.replaceWith(home.container)
 
-    login.container.replaceWith(home.container)
-}, function () {
+
+}, function() {
     login.container.replaceWith(register.container)
 })
 
-
+// document.getElementById('root').appendChild(Home('pepito', function() {}))
 document.getElementById('root').appendChild(landing.container)

@@ -1,20 +1,20 @@
 class Search extends Component {
-  constructor(onSubmit) {
-    super(`<section class="search">
+    constructor(onSubmit) {
+        super(`<section class="search">
     <form>
         <input type="text" name="query">
         <button>🔍</button>
     </form>
-</section>`);
+</section>`)
 
-    const form = this.container.querySelector("form");
+        const form = this.container.querySelector('form')
 
-    form.addEventListener("submit", (event) =>{
-      event.preventDefault();
+        form.addEventListener('submit', function (event) {
+            event.preventDefault()
 
-      const query = event.target.query.value;
+            const query = event.target.query.value
 
-      onSubmit(query);
-    });
-  }
+            onSubmit(query)
+        })
+    }
 }
