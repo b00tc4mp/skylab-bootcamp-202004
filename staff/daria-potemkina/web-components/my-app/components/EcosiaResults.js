@@ -17,8 +17,7 @@ class EcosiaResults extends Component {
 
         this.container.appendChild(_title)
         this.container.appendChild(_content)
-        this.container.appendChild(_link)
-        
+        this.container.appendChild(_link)        
       }
     } else {
       feedback = new Feedback('La búsqueda no obtuvo ningún resultado.', 'warning')

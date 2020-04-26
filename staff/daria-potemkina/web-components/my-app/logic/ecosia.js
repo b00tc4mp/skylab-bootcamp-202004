@@ -1,4 +1,7 @@
 function searchEcosia(query, callback) {
+    if (typeof query !== 'string') throw new TypeError(`${query} is not a string`)
+    if (!query.trim().length) throw Error('query is empty')
+    
     var xhr = new XMLHttpRequest()
 
     xhr.open('GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.ecosia.org/search?q=${query}`)
@@ -15,16 +18,16 @@ function searchEcosia(query, callback) {
         const queryResults = []
 
         results.forEach(result => {
-            const title = result.querySelector('.js-result-title').innerHTML
+            const title = result.querySelector('.js-result-title').innerText
 
-            const content = result.querySelector('.result-snippet').innerHTML
+            const content = result.querySelector('.result-snippet').innerText
 
-            const link = result.querySelector('.result-url')
+            const { href: link} = result.querySelector('.result-url')
            
             queryResults.push({title, content, link})
         })
 
-        callback(queryResults)
+        callback(undefined, queryResults)
     }
 
     xhr.onerror = function (error) {

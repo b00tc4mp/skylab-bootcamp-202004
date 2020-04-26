@@ -1,10 +1,12 @@
 function searchGoogle(query, callback) {
+    if (typeof query !== 'string') throw new TypeError(`${query} is not a string`)
+    if (!query.trim().length) throw Error('query is empty')
+    
     var xhr = new XMLHttpRequest()
 
     xhr.open('GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?q=${query}`)
 
     xhr.onload = function () {
-        //console.log(this.responseText)
 
         const parser = new DOMParser()
 
@@ -24,7 +26,7 @@ function searchGoogle(query, callback) {
             queryResults.push({title, content, link})
         })
 
-        callback(queryResults)
+        callback(undefined, queryResults)
     }
 
     xhr.onerror = function (error) {

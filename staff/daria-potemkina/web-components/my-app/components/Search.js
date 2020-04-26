@@ -13,42 +13,83 @@ class Search extends Component {
       <input type="text" name="ecosiaquery">
       <button type="submit">Ecosia 🌳</button>
   </form>
-  </section>`)
+  <section>`)
 
     const [form, googleForm, ecosiaForm] = this.container.querySelectorAll("form");
 
-    form.addEventListener("submit", function (event) {
+    let feedback;
+
+    form.addEventListener("submit", event => {
       event.preventDefault();
 
       const request = event.target.query.value
 
-      query(request);
+      cleanUp()
+
+      try {
+        query(request)
+
+      } catch (error) {
+
+        showError(error)
+      }
 
       googleForm.reset()
       ecosiaForm.reset()
     });
 
-    googleForm.addEventListener("submit", function (event) {
+    googleForm.addEventListener("submit", event => {
       event.preventDefault();
 
       const requestGoogle = event.target.googlequery.value
 
-      query(undefined, requestGoogle);
+      cleanUp()
+
+      try {
+        query(undefined, requestGoogle);
+        
+      }catch(error){
+        
+        showError(error)
+      }
 
       form.reset()
       ecosiaForm.reset()
     });
 
-    ecosiaForm.addEventListener("submit", function (event) {
+    ecosiaForm.addEventListener("submit", event => {
       event.preventDefault();
 
       const requestEcosia = event.target.ecosiaquery.value
+      cleanUp()
 
-      query(undefined, undefined, requestEcosia);
+      try{
+        query(undefined, undefined, requestEcosia);
+      }catch(error){
 
+        showError(error)
+      }
+    
       form.reset()
       googleForm.reset()
     });
+
+    const showError = (error) => {
+      if (!feedback) {
+        feedback = new Feedback(error.message, 'error')
+
+        this.container.appendChild(feedback.container)
+
+      } else feedback.innerText = error.message
+    }
+
+    const cleanUp = () => {
+      if (feedback) {
+        this.container.removeChild(feedback.container)
+
+        feedback = undefined
+      }
+    }
 
   }
 }

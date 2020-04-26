@@ -15,9 +15,7 @@
 }
 
 .home {
-  width: 100vw;
-  margin: 0;
-  padding: 0;
+  width: 100%;
   border-radius: 0;
   font-size: 2rem;
 }
@@ -31,6 +29,12 @@ button {
 button:hover {
   background-color: white;
   color: #CE93D8;
+}
+
+p {
+  text-align: start;
+  font-size: 1rem;
+  margin-left: 10px;
 }
 
 .feedback {
@@ -49,9 +53,14 @@ button:hover {
   border-radius: 0;
   text-align: start;
   color: #37474F;
-  width: 45%;
+  width: 40%;
   float: left;
   margin-left: 10px;
+  padding: 20px;
+}
+.result a {
+  font-size: 0.8rem;
+  width: 100%;
 }
 
 form {
@@ -69,13 +78,23 @@ h1 {
   border-radius: 0;
   color: #37474F;
   float: right;
-  width: 45%;
+  width: 40%;
+  padding: 1.5rem;
+}
+.news a {
+  font-size: 0.8rem;
+  width: 100%;
 }
 
 img {
-  min-width: 300px;
-  width: auto;
-  margin: 5px;
+  width: 100%;
+  height: auto;
+}
+
+.cover {
+  heigth: 100%;
+  object-fit: cover;
+  object-position: center center;
 }
 
 /*# sourceMappingURL=style.css.map */

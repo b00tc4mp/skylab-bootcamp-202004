@@ -14,42 +14,39 @@ class Home extends Component {
             onLogout()
         });
 
-        let listDisplayed = false
+        let results
 
         const search = new Search((request, requestGoogle, requestEcosia) => {
-            if (listDisplayed) this.container.removeChild(this.container.lastChild);
-
+            if (results) {
+                this.container.removeChild(results.container);
+                results = undefined
+            }
             if (request) {
                 const usersFound = searchUsers(request);
-                const results = new Results(usersFound);
-                this.container.append(results.container);
-                listDisplayed = true;
+                results = new Results(usersFound);
+                this.container.appendChild(results.container);
             }
 
             if (requestGoogle) {
-                searchGoogle(requestGoogle, listResults => {
-                    const results = new GoogleResults(listResults);
-                    this.container.append(results.container);
+                searchGoogle(requestGoogle, (error, listResults) => {
+                    results = new GoogleResults(listResults);
+                    this.container.appendChild(results.container);
                 })
-
-                listDisplayed = true
             }
 
             if (requestEcosia) {
-                searchEcosia(requestEcosia, listResults => {
-                    const results = new EcosiaResults(listResults);
-                    this.container.append(results.container);
+                searchEcosia(requestEcosia, (error, listResults) => {
+                    results = new EcosiaResults(listResults);
+                    this.container.appendChild(results.container);
                 })
-
-                listDisplayed = true
             }
         });
 
-        this.container.append(search.container);
+        this.container.appendChild(search.container);
 
         dailyNews(result =>{
-            const results = new News (result)
-            this.container.append(results.container)
+            const NewsResults = new News (result)
+            this.container.appendChild(NewsResults.container)
         })
 
     }

@@ -1,4 +1,7 @@
 function searchUsers(query) {
+    if (typeof query !== 'string') throw new TypeError(`${query} is not a string`)
+    if (!query.trim().length) throw Error('query is empty')
+    
     const request = query.toLowerCase();
 
     const _users = users.filter(function (user) {

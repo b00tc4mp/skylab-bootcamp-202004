@@ -35,7 +35,7 @@ function dailyNews(callback) {
     }
 
     xhr.onerror = function (error) {
-        console.error(error)
+        callback(new Error('network error'))
     }
 
     xhr.send()
