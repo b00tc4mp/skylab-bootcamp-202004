@@ -19,7 +19,10 @@ const login = new Login(function (email, password) {
 
     const home = new Home(user.name, function () {
         home.container.replaceWith(landing.container)
+    
+    
     })
+
 
     login.container.replaceWith(home.container)
 }, function () {

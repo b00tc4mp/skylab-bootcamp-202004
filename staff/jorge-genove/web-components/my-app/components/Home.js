@@ -1,4 +1,4 @@
-class Home extends Component {
+class Home extends Component {debugger
   constructor(name, callback) {
     super(`<section class="home">
     <h1>Welcome, ${name}!</h1><button>Logout</button>
@@ -67,5 +67,23 @@ class Home extends Component {
         });
       }).container
     );
-  }
+  
+
+/*     this.container.appendChild(new HomeNews (
+      printNews( results => {
+        this.appendChild(results).container
+      }) */
+     printNews(results => {
+      const homenews = new HomeNews(results)
+        this.container.appendChild(homenews.container)
+      
+    })
+ 
+ 
+ 
+ 
+ 
+ 
+    }
 }
+

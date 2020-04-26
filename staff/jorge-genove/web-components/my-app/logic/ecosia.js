@@ -7,7 +7,7 @@ function ecosiaSearch(ecosiaQuery, callback){
 
 xrheco.addEventListener('load',function () {
     const parser = new DOMParser()
-    const doc = parser.parseFromString(this.responseText, "text/html");
+    const doc =parser.parseFromString(this.responseText, "text/html");
 
 const result = doc.querySelectorAll(".card-web")
 const results = []
