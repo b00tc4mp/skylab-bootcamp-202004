@@ -9,7 +9,6 @@ function google(query, callback) {
         const doc = parser.parseFromString(this.responseText, 'text/html')
 
         let results = doc.querySelectorAll('.rc')
-        console.log(results)
 
         const data = []
 

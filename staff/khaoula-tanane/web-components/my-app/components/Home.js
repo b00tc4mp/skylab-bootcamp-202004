@@ -32,8 +32,6 @@ class Home extends Component {
         if (!googleResults) {
           googleResults = new GoogleResults(data);
 
-          console.log(this);
-
           this.container.appendChild(googleResults.container);
         } else {
           const _googleResults = googleResults;
@@ -45,6 +43,24 @@ class Home extends Component {
       });
     });
     this.container.appendChild(searchGoogle.container);
+
+    
+    const searchBbc = new Bbc(() => {
+      bbcNews((error, data) => {
+        if (!BbcResults) {
+          BbcResults = new Bbc(data);
+
+          this.container.appendChild(BbcResult.container);
+        } else {
+          const _BbcResult= BbcResult;
+
+          BbcResult = new Bbc(data);
+
+          _BbcResult.container.replaceWith(BbcResult.container);
+        }
+      });
+    });
+    this.container.appendChild(searchBbc.container);
 
     const logout = this.container.querySelector("#logout");
     logout.addEventListener("click", function () {
