@@ -1,18 +1,23 @@
 class Home extends Component {
-    constructor(name, logout, toGoogle) {
+    constructor(name, logout, toGoogle, toHola) {
         super(`<section class="home">
     <h1>Welcome, ${name}!</h1>
     <button id="logout">Logout</button>
     <button id="google">toGOOGLE</button>
+    <button id="hola">toHola</button>
 </section>`)
 
         const buttonLogout = this.container.querySelector('#logout')
         const buttonGoogle = this.container.querySelector('#google')
+        const buttonHola = this.container.querySelector('#hola')
         buttonLogout.addEventListener('click', function () {
             logout()
         })
         buttonGoogle.addEventListener('click', function () {
             toGoogle()
+        })
+        buttonHola.addEventListener('click', function () {
+            toHola()
         })
 
         let results

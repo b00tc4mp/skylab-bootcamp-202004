@@ -1,7 +1,7 @@
 class Landing extends Component {
     constructor(onRegister, onLogin) {
         super(`<section class="landing">
-    <a href="">Register</a> or <a href="">Login</a>
+    <a href="" id="regist" type="button">Register</a> <a href="" id="login" type="button">Login</a>
 </section>`)
 
         // const anchors = container.querySelectorAll('a')

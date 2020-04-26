@@ -5,9 +5,10 @@ class Search extends Component {
         <input type="text" name="query">
         <button>🔍</button>
     </form>
-</section>`)
+    </section>`)
 
-        const form = this.container.querySelector('form')
+        
+    const form = this.container.querySelector('form')
 
         form.addEventListener('submit', function (event) {
             event.preventDefault()

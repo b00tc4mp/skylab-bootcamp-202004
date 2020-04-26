@@ -7,7 +7,7 @@ function google(query, callback) {
         const parser = new DOMParser()
 
         const doc = parser.parseFromString(this.responseText, 'text/html')
-        debugger
+        
         let results = doc.querySelectorAll('.rc')
 
         const data = []
