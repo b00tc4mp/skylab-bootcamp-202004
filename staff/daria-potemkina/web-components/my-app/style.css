@@ -1,39 +1,81 @@
-.result, .home, .register, .login {
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+.news, .result, .home, .register, .login, .landing {
   display: inline-block;
-  border: 1rem solid gray;
+  border: 0.05rem solid #BDC3C7;
   border-radius: 2rem;
+  background-color: #ECF0F1;
   padding: 1rem;
+  color: #CE93D8;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
 }
 
 .landing {
-  background-color: orange;
   text-align: center;
 }
 
-.login {
-  border-color: blue;
-}
-
-.register {
-  border-color: red;
-}
-
 .home {
-  border-color: yellow;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  font-size: 2rem;
+}
+
+button {
+  background-color: #CE93D8;
+  color: white;
+  font-size: 0.8rem;
+}
+
+button:hover {
+  background-color: white;
+  color: #CE93D8;
 }
 
 .feedback {
-  color: green;
+  color: #A5D6A7;
 }
 .feedback--warning {
-  color: orange;
+  color: #FFAB91;
 }
 .feedback--error {
-  color: red;
+  color: #EF9A9A;
 }
 
 .result {
-  border-color: green;
+  font-size: 1rem;
+  text-align: start;
+  border-radius: 0;
+  text-align: start;
+  color: #37474F;
+  width: 45%;
+  float: left;
+  margin-left: 10px;
+}
+
+form {
+  text-align: start;
+  margin-left: 10px;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+.news {
+  font-size: 1rem;
+  text-align: start;
+  border-radius: 0;
+  color: #37474F;
+  float: right;
+  width: 45%;
+}
+
+img {
+  min-width: 300px;
+  width: auto;
+  margin: 5px;
 }
 
 /*# sourceMappingURL=style.css.map */
