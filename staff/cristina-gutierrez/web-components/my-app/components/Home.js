@@ -15,13 +15,13 @@ class Home extends Component {
         const self = this;
 
         this.container.appendChild(new Search(function(query) {
-            const users = searchUsers(query);
+            const googleResults = google(query);
             if(!results) {
-                results = new Results(users)
+                results = new SearchGoogle(googleResults)
                 self.container.appendChild(results.container);
             } else {
                 const _results = results;
-                results = new Results(users);
+                results = new SearchGoogle(googleResults);
                 _results.container.replaceWith(results.container);
             };
         }).container);
