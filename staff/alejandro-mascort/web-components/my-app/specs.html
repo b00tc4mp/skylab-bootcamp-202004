@@ -4,13 +4,13 @@
     <meta charset="utf-8" />
     <title>Mocha Tests</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://unpkg.com/mocha/mocha.css" />
+    <link rel="stylesheet" href="vendor/mocha/mocha.css" />
   </head>
   <body>
     <div id="mocha"></div>
 
-    <script src="https://unpkg.com/chai/chai.js"></script>
-    <script src="https://unpkg.com/mocha/mocha.js"></script>
+    <script src="vendor/mocha/chai.js"></script>
+    <script src="vendor/mocha/mocha.js"></script>
 
     <script class="mocha-init">
       mocha.setup('bdd');
@@ -22,7 +22,9 @@
     <script src="utils/regex.js"></script>
     <script src="utils/tests.js"></script>
     <script src="utils/Array.prototype.random-polyfill.js"></script>
+
     <script src="data/users.js"></script>
+    
     <script src="logic/register-user.js"></script>
     <script src="logic/register-user.spec.js"></script>
     <script src="logic/authenticate-user.js"></script>
@@ -31,7 +33,10 @@
     <script src="logic/retrieve-user.spec.js"></script>
     <script src="logic/search-users.js"></script>
     <script src="logic/search-users.spec.js"></script>
+    <script src="logic/google.js"></script>
     <script src="logic/google.spec.js"></script>
+    <script src="logic/latest-news.js"></script>
+    <script src="logic/latest-news.spec.js"></script>
     <script class="mocha-exec">
       mocha.run();
     </script>
