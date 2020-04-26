@@ -1,12 +1,11 @@
 class Results extends Component {
     constructor(users) {
-        super(`<section class="results">
-        </section>`)
+        super(`<section class="results"></section>`)
 
         if(users.length) {
             const list = document.createElement("ul");
             
-            users.forEach(function ({ name, surname, email }) {
+            users.forEach(({ name, surname, email }) => {
                 const item = document.createElement("li");
         
                 item.innerText = `${name} ${surname} (${email})`
@@ -16,7 +15,9 @@ class Results extends Component {
         
             this.container.appendChild(list);
         } else {
-            this.container.appendChild(new Feedback("sorry, no results", "warning").container)
+            this.container.appendChild(
+                new Feedback("sorry, no results", "warning").container
+            )
         }
     }
 }

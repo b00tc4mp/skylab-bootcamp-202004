@@ -10,4 +10,4 @@ class Component {
 
         return temp.firstChild;
     }
-};
+}

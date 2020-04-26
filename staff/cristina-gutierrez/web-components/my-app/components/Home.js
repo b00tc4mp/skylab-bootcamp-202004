@@ -1,29 +1,54 @@
 class Home extends Component {
     constructor(name, callback) {
         super(`<section class="home">
-        <h1>Welcome, ${name}!</h1><button>Logout</button>
-    </section>`)
+            <h1>Welcome, ${name}!</h1>
+            <button>Logout</button>
+        </section>`)
 
-        const button = container.querySelector('button');
+        const button = this.container.querySelector('button');
 
-        button.addEventListener('click', function() {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+
             callback()
         });
 
         let results;
 
-        const self = this;
+        this.container.appendChild(
+            new Search((query) => {
+                const users = searchUsers(query)
 
-        this.container.appendChild(new Search(function(query) {
-            const googleResults = google(query);
-            if(!results) {
-                results = new SearchGoogle(googleResults)
-                self.container.appendChild(results.container);
-            } else {
-                const _results = results;
-                results = new SearchGoogle(googleResults);
-                _results.container.replaceWith(results.container);
-            };
-        }).container);
+                if (!results) {
+                    results = new Results(users)
+
+                    this.container.appendChild(results.container)
+                } else {
+                    const _results = results
+
+                    results = new Results(users)
+
+                    _results.container.replaceWith(results.container)
+                }
+            }).container
+        )
+
+        this.container.appendChild(
+            new Search((query) => {
+                const info = searchInfo(query)
+
+                if (!results) {
+                    results = new Results(info)
+
+                    this.container.appendChild(results.container)
+                } else {
+                    const _results = results
+
+                    results = new Results(info)
+
+                    _results.container.replaceWith(results.container)
+                }
+            }).container
+        )
     }
 }
