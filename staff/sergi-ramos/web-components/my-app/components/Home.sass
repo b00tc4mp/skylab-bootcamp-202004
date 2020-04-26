@@ -1,26 +1,23 @@
 .home
-    display: flex
-    align-items: center
-    flex-direction: column
-    border-radius: 5px
-    background-color: #13232f
-    color: #ffffff
-    box-shadow: 5px 10px 5px 0px rgba(0,0,0,0.75)
+    @extend %panel
     min-height: 200px
 .home button
-    border: 1px solid #1bb188
-    padding: 5px
-    background-color: #1bb188
-    color: #ffffff
-    font-weight: 800
+    @extend %panel-button
+.home button:hover
+    @extend %button-hover
 .home form input
-    border: 1px solid #ffffff
-    background-color: #13232f
-    color: #F9F9F9
-    padding: 5px
+    @extend %panel-form
 .home a
     color: #a0b3b0
-::placeholder
+.home ul
+    list-style: none
+    text-align: center
+.home hr
+    width: 800px
     color: #a0b3b0
-.results
-    width: 700px
+    margin-top: 40px
+    margin-bottom: 40px
+
+
+
+    

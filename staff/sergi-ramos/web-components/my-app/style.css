@@ -1,11 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap");
-.login > p {
-  color: red;
-  font-size: 20px;
-  font-weight: 900;
+.results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.home {
+.search {
+  margin-top: 20px;
+}
+
+.home ul {
+  list-style: none;
+  text-align: center;
+}
+
+.results {
+  width: 700px;
+}
+
+.landing, .login, .register, .home {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -13,10 +26,9 @@
   background-color: #13232f;
   color: #ffffff;
   box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
-  min-height: 200px;
 }
 
-.home button {
+.login form button, .register form button, .home button {
   border: 1px solid #1bb188;
   padding: 5px;
   background-color: #1bb188;
@@ -24,33 +36,49 @@
   font-weight: 800;
 }
 
-.home form input {
-  border: 1px solid #ffffff;
+.login form button:hover, .register form button:hover, .home button:hover {
+  border: 1px solid white;
+  cursor: pointer;
+}
+
+.login form input, .register form input, .home form input {
+  border: 1px solid white;
   background-color: #13232f;
   color: #F9F9F9;
   padding: 5px;
-}
-
-.home a {
-  color: #a0b3b0;
 }
 
 ::placeholder {
   color: #a0b3b0;
 }
 
-.results {
-  width: 700px;
+.login > p {
+  color: #ff726f;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.home {
+  min-height: 200px;
+}
+
+.home a {
+  color: #a0b3b0;
+}
+
+.home ul {
+  list-style: none;
+  text-align: center;
+}
+
+.home hr {
+  width: 800px;
+  color: #a0b3b0;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .register {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  border-radius: 5px;
-  background-color: #13232f;
-  color: #ffffff;
-  box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
   height: 200px;
 }
 
@@ -59,69 +87,13 @@
   text-decoration-style: none;
 }
 
-.register form input {
-  border: 1px solid #ffffff;
-  background-color: #13232f;
-  color: #F9F9F9;
-  padding: 5px;
-}
-
-.register form button {
-  border: 1px solid #1bb188;
-  padding: 5px;
-  background-color: #1bb188;
-  color: #ffffff;
-  font-weight: 800;
-}
-
-::placeholder {
-  color: #a0b3b0;
-}
-
 .login {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  border-radius: 5px;
-  background-color: #13232f;
-  color: #ffffff;
-  box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
   height: 200px;
 }
 
 .login a {
-  color: #ffffff;
-  text-decoration-style: none;
-}
-
-.login form input {
-  border: 1px solid #ffffff;
-  background-color: #13232f;
-  color: #F9F9F9;
-  padding: 5px;
-}
-
-.login form button {
-  border: 1px solid #1bb188;
-  padding: 5px;
-  background-color: #1bb188;
-  color: #ffffff;
-  font-weight: 800;
-}
-
-::placeholder {
   color: #a0b3b0;
-}
-
-.landing {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  border-radius: 5px;
-  background-color: #13232f;
-  color: #ffffff;
-  box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
-  height: 200px;
+  text-decoration-style: none;
 }
 
 .landing a {
@@ -129,8 +101,25 @@
   text-decoration-style: none;
 }
 
+.resultsGoogle {
+  width: 700px;
+}
+
+.resultsSport {
+  width: 700px;
+}
+
+.resultsSport img {
+  width: 400px;
+  height: auto;
+}
+
+.resultsEcosia {
+  width: 700px;
+}
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Titillium Web", sans-serif;
   font-size: 20px;
 }
 

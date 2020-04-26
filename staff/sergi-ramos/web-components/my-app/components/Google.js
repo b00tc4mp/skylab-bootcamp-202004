@@ -5,12 +5,10 @@ class Google extends Components {
        
             listResults.forEach( (singleResult) => { updateResults += `\n<h2>${singleResult.title} </h2><p>${singleResult.content}</p><a href="${singleResult.link}">${singleResult.link}</a>` })
 
-            super(`<section class="results">
-                        
+            super(`<section class="resultsGoogle">
+                        <hr/>
                      ${updateResults}
                         
-                    </section>`)
-      
-                
+                    </section>`)            
     }
 }

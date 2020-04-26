@@ -1,4 +1,4 @@
-describe('searchUser', () => {
+describe('searchUser', () => { 
     let name, surname, email, password, usersFound
 
     beforeEach( () => {

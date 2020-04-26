@@ -6,12 +6,13 @@ class Result extends Components {
             users.forEach( (user) => { updateUser += `\n<li>${user.name} ${user.surname} : ${user.email}</li>` })
 
             super(`<section class="results">
+                        <hr/>
                         <ul>
                      ${updateUser}
                         </ul>
                     </section>`)
         } else {
-            updateUser += '<p class="feedback--warning">No results obtained</p>'
+            updateUser += '<hr/><p class="feedback--warning">No results obtained</p>'
             super(`<section class="results">
                      ${updateUser}
                     </section>`)

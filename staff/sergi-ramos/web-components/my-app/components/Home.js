@@ -12,6 +12,18 @@ class Home extends Components {
 
         this.container.appendChild(search.container)
 
+        const googleSearch = new GoogleSearch()
+
+        this.container.appendChild(googleSearch.container)
+
+        const ecosiaSearch = new EcosiaSearch()
+
+        this.container.appendChild(ecosiaSearch.container)
+
+        const sportNews = new SportNews()
+
+        this.container.appendChild(sportNews.container)
+
         const logOutButton = this.container.querySelector('button')
 
         logOutButton.addEventListener('click', () => {
@@ -21,37 +33,90 @@ class Home extends Components {
         let result
 
         const searchButton = this.container.querySelector('form')
-        searchButton.addEventListener('submit', (event) => {  debugger
+        let feedback
+        let googleResults
+        let ecosiaResults
+        searchButton.addEventListener('submit', (event) => {
             debugger
+
             event.preventDefault()
 
             const query = event.target.query.value
-            const queryGoogle = event.target.queryGoogle.value
-            if (query) {
-                const user = searchUser(query)
-                if (!result) {
-                    searchResults(user)
-                } else {
-                    this.container.removeChild(result.container)
-                    result.container = undefined
-                    searchResults(user)
+            removeLastSection()
+            const user = searchUser(query)
+            if (!result) {
+                searchResults(user)
+                if (user.length) {
+                    event.target.query.value = ''
+                }
+
+            } else {
+                result.container = undefined
+                searchResults(user)
+                if (user.length) {
+                    event.target.query.value = ''
                 }
             }
-            if (queryGoogle) {
-                searchGoogle(queryGoogle,  (listResults) =>{
-                  const googleResults = new Google(listResults)
-                    this.container.append(googleResults.container)
-                })
-            }
+        })
+        const googleButton = this.container.querySelector('.google-search')
 
+        googleButton.addEventListener('submit', event => {
+            debugger
+            event.preventDefault()
+            const queryGoogle = event.target.queryGoogle.value
+
+
+            removeLastSection()
+            searchGoogle(queryGoogle, (error, listResults) => {
+                googleResults = new Google(listResults)
+                debugger
+                this.container.append(googleResults.container)
+            })
 
         })
 
+        const sportButton = this.container.querySelector('.sport-news')
+
+        sportButton.addEventListener('submit', event => {
+
+            event.preventDefault()
+
+            searchSport((list) => {
+                removeLastSection()
+                const sportNews = new Sport(list)
+                this.container.appendChild(sportNews.container)
+            })
+
+        })
+
+
+
+        const ecosiaButton = this.container.querySelector('.ecosia')
+
+        ecosiaButton.addEventListener('submit', () => {
+
+            event.preventDefault()
+
+            const queryEcosia = event.target.queryEcosia.value
+            
+                removeLastSection()
+                searchEcosia(queryEcosia, (error, list) => {
+                    ecosiaResults = new Ecosia(list)
+                    this.container.appendChild(ecosiaResults.container)
+
+                })         
+        })
+
+        const removeLastSection = () => {
+            debugger
+            if (this.container.children.length > 6) {
+                this.container.removeChild(this.container.children[6])
+            }
+        }
         const searchResults = (user) => {
             result = new Result(user)
             this.container.append(result.container)
         }
-
     }
 }
 

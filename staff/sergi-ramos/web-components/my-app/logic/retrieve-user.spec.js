@@ -13,23 +13,19 @@ describe('retrieveUser', () => {
         users.push({ name, surname, email, password })
     })
 
-    it('should succeed if mail matches',() => {
+    it('should succeed if mail matches',() => { debugger
         
         const user = retrieveUser(email)
        
         expect(user.name).to.equal(name)
         expect(user.surname).to.equal(surname)
-        expect(user.email).to.equal(email)
-        expect(user.password).to.equal(password)
+        expect(user._email).to.equal(email)
+        
     })
 
-    it('should return undefined if email is not registered', () => {
-        const _email = 'e@email.com'
+   
 
-        expect(retrieveUser(_email)).to.be.undefined
-    })
-
-    it('should fail if arguments are not strings', () => {
+   it('should fail if arguments are not strings', () => {
         expect( () => {
             retrieveUser(true, password)
         }).to.throw(Error, 'is not a string')

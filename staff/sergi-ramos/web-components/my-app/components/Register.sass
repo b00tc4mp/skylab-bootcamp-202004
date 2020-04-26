@@ -1,27 +1,14 @@
 .register
-    display: flex
-    align-items: center
-    flex-direction: column
-    border-radius: 5px
-    background-color: #13232f
-    color: #ffffff
-    box-shadow: 5px 10px 5px 0px rgba(0,0,0,0.75)
+    @extend %panel
     height: 200px
+.register form button
+    @extend %panel-button
+.register form button:hover
+    @extend %button-hover
 .register a
     color: #ffffff
     text-decoration-style: none
-    
 .register form input
-    border: 1px solid #ffffff
-    background-color: #13232f
-    color: #F9F9F9
-    padding: 5px
-
-.register form button
-    border: 1px solid #1bb188
-    padding: 5px
-    background-color: #1bb188
-    color: #ffffff
-    font-weight: 800
+    @extend %panel-form
 ::placeholder
-    color: #a0b3b0
+    @extend %placeholder

@@ -1,4 +1,8 @@
 function searchGoogle(query, callback) {
+
+if(typeof query !== 'string') throw new TypeError(query + ' is not a String')
+if(!query.trim().length) throw new Error('Sorry the search is empty or blank')
+
     let listResults = []
     var xhr = new XMLHttpRequest()
 
@@ -21,14 +25,13 @@ function searchGoogle(query, callback) {
             const { href: link } = result.querySelector('.r > a')
 
             listResults.push({title, content, link})
-        })
-       
-            
-           callback(listResults)
-    }
-    xhr.onerror = function(error) {
-        console.error(error)
+        })        
+         if(typeof listResults === 'undefined') throw Error ('No results obtained, try again')
+           callback(undefined, listResults)
     }
 
+    xhr.onerror = function(error) {
+        console.error('KO', error.message)
+    }
     xhr.send()
 }

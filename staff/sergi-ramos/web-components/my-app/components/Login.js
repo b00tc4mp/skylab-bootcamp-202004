@@ -3,8 +3,8 @@ class Login extends Components {
         super(`<section class="login">
                     <h1>Login</h1>
                     <form>
-                        <input type="email" name="email" placeholder="e-mail">
-                        <input type="password" name="password" placeholder="password">
+                        <input type="email" name="email" placeholder="e-mail*">
+                        <input type="password" name="password" placeholder="password*">
                          <button>Submit</button>
                          to <a href="">Register</a>
                     </form>

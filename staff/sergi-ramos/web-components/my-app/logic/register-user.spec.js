@@ -36,7 +36,7 @@ describe('registerUser', () => {
         }).to.throw(TypeError, 'undefined is not a string')
 
         expect( () => {
-            registerUser(1, surname, email, password)
+            registerUser(name, 1, email, password)
         }).to.throw(TypeError, '1 is not a string')
 
         expect( () => {
@@ -44,15 +44,15 @@ describe('registerUser', () => {
         }).to.throw(TypeError, 'true is not a string')
 
         expect( () => {
-            registerUser(name, undefined, email, password)
+            registerUser(name, surname , undefined, password)
         }).to.throw(TypeError, 'undefined is not a string')
 
         expect( () => {
-            registerUser(name, 1, email, password)
+            registerUser(name, surname, email, 1)
         }).to.throw(TypeError, '1 is not a string')
 
         expect( () => {
-            registerUser(name, true, email, password)
+            registerUser(name, surname, email, true)
         }).to.throw(TypeError, 'true is not a string')
 
         // TODO same for the other fields
@@ -64,25 +64,36 @@ describe('registerUser', () => {
         }).to.throw(Error, '1 is not alphabetic')
 
         expect( () => {
-            registerUser('$', surname, email, password)
+            registerUser(name, '$', email, password)
         }).to.throw(Error, '$ is not alphabetic')
 
         expect( () => {
-            registerUser('%', surname, email, password)
+            registerUser(name, '%',email , password)
         }).to.throw(Error, '% is not alphabetic')
 
-        expect( () => {
-            registerUser(name, '&', email, password)
-        }).to.throw(Error, '& is not alphabetic')
-
-        expect( () => {
-            registerUser(name, '(', email, password)
+              expect( () => {
+            registerUser('(',surname ,email , password)
         }).to.throw(Error, '( is not alphabetic')
 
         expect( () => {
             registerUser(name, '?', email, password)
         }).to.throw(Error, '? is not alphabetic')
 
+        // TODO same for the other fields
+    })
+
+    it('should fail on non-password correct format', () => {
+        
+
+        expect( () => {
+            registerUser(name, surname, email , '%')
+        }).to.throw(Error, 'password does not have min length')
+
+        expect( () => {
+            registerUser(name, surname , email, '&')
+        }).to.throw(Error, 'password does not have min length')
+
+      
         // TODO same for the other fields
     })
 })
