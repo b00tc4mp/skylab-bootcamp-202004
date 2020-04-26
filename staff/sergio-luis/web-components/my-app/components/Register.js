@@ -3,10 +3,10 @@ class Register extends Component {
         super(`<section class="register">
         <h2 class='register__title'>REGISTER</h2>
         <form action="" class="register__form">
-            <input class="register__input" type="text" name='name' placeholder="Name">
-            <input class="register__input" type="text" name='surname' placeholder="Surname">
-            <input class="register__input" type="email" name='email' placeholder="E-Mail">
-            <input class="register__input" type="password" name='password' placeholder="Password">
+            <input class="register__input" type="text" name='name' placeholder="Name" required>
+            <input class="register__input" type="text" name='surname' placeholder="Surname" required>
+            <input class="register__input" type="email" name='email' placeholder="E-Mail" required>
+            <input class="register__input" type="password" name='password' placeholder="Password" required>
             <button class='register__button'>Submit</button>
             <a href="">Login</a>
         </form>

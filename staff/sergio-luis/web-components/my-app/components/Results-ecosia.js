@@ -1,7 +1,7 @@
-class ResultsGoogle extends Component {
+class ResultsEcosia extends Component {
     constructor(items){
         super(`<section class="results">
-        <h2>Google Results</h2>
+        <h2>Ecosia Results</h2>
         </section>`)
 
         if(items.length){

@@ -1,8 +1,10 @@
 class Home extends Component {
     constructor(name, callback) {
         super(`<main class='main'>
-        <h1 class='main__title'>Welcome ${name}</h1>
-        <button class="main__button">Exit</button>
+        <nav class='navbar'>
+            <h3 class='navbar__title'>Welcome ${name}</h3>
+            <button class="navbar__button">LogOut</button>
+        <nav>
     </main>`)
 
 
@@ -12,51 +14,68 @@ class Home extends Component {
             callback()
         })
 
-        let results;
+        let searchResults;
 
         this.container.appendChild(new Search(query => {
             const users = searchUsers(query);
 
-            if (!results) {
-                results = new Results(users);
-                this.container.appendChild(results.container);
+            if (!searchResults) {
+                searchResults = new Results(users);
+                this.container.appendChild(searchResults.container);
             } else {
-                const _results = results;
-                results = new Results(users);
-                _results.container.replaceWith(results.container);
+                const _searchResults = searchResults;
+                searchResults = new Results(users);
+                _searchResults.container.replaceWith(searchResults.container);
             }
         }).container)
 
-        let searchResults;
-        // const queryResult;
+  
         this.container.appendChild(new SearchGoogle(query =>{
             const items = google(query, (error, results)=> {
                 if (error) console.error('KO', error.message)
                 else {
-                    searchResults = new ResultsGoogle(results);
-                    this.container.appendChild(searchResults.container);
+                    if (!searchResults) {
+                        searchResults = new ResultsGoogle(results);
+                        this.container.appendChild(searchResults.container);
+                    } else {
+                        const _searchResults = searchResults;
+                        searchResults = new ResultsGoogle(results);
+                        _searchResults.container.replaceWith(searchResults.container);
+                    }
                 }
             });
-            // try {
-            //     search('hola mundo', function(error, results) {
-            //         if (error) console.error('KO', error.message)
-            //         else {
-            //             console.log('OK', 'hola mundo =>', results)
-            //         }
-            //     })
-            //     // do more stuff
-            // } catch(error) {
-            //     console.error('KO', error.message)
-            // }
+        }).container)
+  
+        this.container.appendChild(new SearchEcosia(query =>{
+            const items = ecosia(query, (error, results)=> {
+                if (error) console.error('KO', error.message)
+                else {
+                    if (!searchResults) {
+                        searchResults = new ResultsEcosia(results);
+                        this.container.appendChild(searchResults.container);
+                    } else {
+                        const _searchResults = searchResults;
+                        searchResults = new ResultsEcosia(results);
+                        _searchResults.container.replaceWith(searchResults.container);
+                    }
+                }
+            });
+        }).container)
 
-            if (!searchResults) {
-                searchResults = new ResultsGoogle(items);
-                this.container.appendChild(searchResults.container);
-            } else {
-                const _searchResults = searchResults;
-                searchResults = new ResultsGoogle(items);
-                _searchResults.container.replaceWith(searchResults.container);
-            }
+        this.container.appendChild(new SearchNews(() =>{
+            const items = news((error, results)=> {
+                if (error) console.error(error.message)
+                else {
+                    if (!searchResults) {
+                        searchResults = new ResultsNews(results);
+                        this.container.appendChild(searchResults.container);
+                    } else {
+                        const _searchResults = searchResults;
+                        searchResults = new ResultsNews(results);
+                        _searchResults.container.replaceWith(searchResults.container);
+                    }
+                }
+            });
         }).container)
     }
 }

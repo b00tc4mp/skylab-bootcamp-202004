@@ -1,4 +1,4 @@
-describe('Google', () => {
+describe('Ecosia', () => {
     it('should succeed on matching query', done => {
         google('hello world', function(error, results) {
             expect(error).to.be.undefined

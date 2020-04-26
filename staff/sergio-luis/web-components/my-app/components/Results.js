@@ -1,13 +1,16 @@
 class Results extends Component {
     constructor(users){
         super(`<section class="results">
+        <h2>Results</h2>
         </section>`)
 
         if(users.length){
+            
             const list = document.createElement('ul');
 
             users.forEach( ({name, surname,email})=>{
                 const item = document.createElement('li');
+                item.setAttribute('class','results__list')
                 item.innerText = `${name} ${surname} - (${email})`;
                 list.appendChild(item);
             });

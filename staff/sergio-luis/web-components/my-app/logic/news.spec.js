@@ -1,5 +1,5 @@
-describe('Google', () => {
-    it('should succeed on matching query', done => {
+describe('News', () => {
+    it('should succeed on having results', done => {
         google('hello world', function(error, results) {
             expect(error).to.be.undefined
 
