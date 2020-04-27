@@ -21,16 +21,16 @@ class Login extends Component {
       const email = event.target.email.value,
         password = event.target.password.value;
 
-      try {
-        onSubmit(email, password);
+      // try {
+      onSubmit(email, password);
 
-        cleanUp();
-      } catch (error) {
-        if (!feedback) {
-          feedback = new Feedback(error.message, "error");
-          this.container.appendChild(feedback.container);
-        } else feedback.innerText = error.message;
-      }
+      cleanUp();
+      // } catch (error) {
+      //   if (!feedback) {
+      //     feedback = new Feedback(error.message, "error");
+      //     this.container.appendChild(feedback.container);
+      //   } else feedback.innerText = error.message;
+      // }
     });
 
     const cleanUp = () => {

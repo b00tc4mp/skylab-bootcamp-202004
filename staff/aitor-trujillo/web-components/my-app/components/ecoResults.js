@@ -1,17 +1,20 @@
-class Results extends Component {
+class ecoResults extends Component {
   constructor(matchingList) {
+    debugger;
     super(`<section class="result">
       </section>`);
     let feedback;
     if (matchingList.length) {
+      debugger;
       const list = document.createElement("ul");
-      const listItems = document.createElement("li");
+      this.container.appendChild(list);
 
       for (let i = 0; i < matchingList.length; i++) {
-        listItems.innerHTML = `${matchingList[i].name} ${matchingList[i].surname} (${matchingList[i].email})`;
-        list.append(listItems);
+        list.innerHTML += `<li>${matchingList[i].title}</li>`;
+        list.innerHTML += `<li>${matchingList[i].description}</li>`;
+        list.innerHTML += `<a href="${matchingList[i].link}">${matchingList[i].link}</a>`;
+        list.innerHTML += `<hr>`;
       }
-      this.container.appendChild(list);
     } else {
       feedback = new Feedback("You have 0 results :(", "warning");
       this.container.appendChild(feedback.container);
