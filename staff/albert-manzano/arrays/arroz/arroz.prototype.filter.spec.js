@@ -22,7 +22,6 @@ describe('Arroz.prototype.filter', function() {
         });
 
         expect(input instanceof Arroz).toBeTruthy();
-        expect(result instanceof Arroz).toBeTruthy();
         expect(result[0]).toBe(4);
         expect(result[1]).toBe(5);
         

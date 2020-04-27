@@ -30,17 +30,26 @@ describe('Arroz.prototype.concat',function(){
         expect(result.length).toBe(3);
     });
 
-    it('should thorw and Error',function(){
+    it('should return a new array with the function added',function(){
+        var array1 = [1,2,3];
+        var array2 = [4,5,6];
+        
+        var result = array1.concat(array1.push(array2));
+    
+        expect(result.length).toBe(5);
+    });
+
+    it('should throw an Error',function(){
         var array1 = [1,2,3];
 
         expect(function () {
             array1.concat(push())
-        }).toThrowError(ReferenceError,+ '');
+        }).toThrowError(ReferenceError,+ 'is empty');
 
-        var array2;
+        var array2=true
 
         expect(function () {
             array2.concat()
-        }).toThrowError(TypeError,+ '');
+        }).toThrowError(TypeError);
     });
 });

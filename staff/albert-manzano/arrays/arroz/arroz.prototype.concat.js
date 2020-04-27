@@ -2,7 +2,7 @@
 
 Arroz.prototype.concat = function() {
     if (typeof this.lenght === 0) throw TypeError ( this +'is empty')
-    if (typeof arguments === 'function') throw ReferenceError (arguments + 'can not concat')
+    if (typeof arguments !== 'object') throw TypeError (arguments + 'can not concat')
     var result= new Arroz;
     if (arguments===0){
         return this
