@@ -29,14 +29,14 @@ class Home extends Component {
 
             if (requestGoogle) {
                 searchGoogle(requestGoogle, (error, listResults) => {
-                    results = new GoogleResults(listResults);
+                    results = new SearchResults(listResults);
                     this.container.appendChild(results.container);
                 })
             }
 
             if (requestEcosia) {
                 searchEcosia(requestEcosia, (error, listResults) => {
-                    results = new EcosiaResults(listResults);
+                    results = new SearchResults(listResults);
                     this.container.appendChild(results.container);
                 })
             }

@@ -1,4 +1,4 @@
-class GoogleResults extends Component {
+class SearchResults extends Component {
   constructor(matchingList) {
     super(`<section class="result">
       </section>`)
@@ -6,18 +6,16 @@ class GoogleResults extends Component {
     let feedback
     if (matchingList.length) {
       for (let i = 0; i < matchingList.length; i++) {
-        const _title = document.createElement('h1')
+        const _title = document.createElement('a')
         const _content = document.createElement('p')
-        const _link = document.createElement('a')
 
         _title.innerHTML = `${matchingList[i].title}`
+        _title.href = `${matchingList[i].link}`
+        _title.target = '_blank'
         _content.innerHTML = `${matchingList[i].content}`
-        _link.innerHTML = `${matchingList[i].link}`
-        _link.href = `${matchingList[i].link}`
 
         this.container.appendChild(_title)
         this.container.appendChild(_content)
-        this.container.appendChild(_link)
         
       }
     } else {
