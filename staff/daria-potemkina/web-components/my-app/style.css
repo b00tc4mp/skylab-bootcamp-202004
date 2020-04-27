@@ -17,7 +17,6 @@
 .home {
   width: 100%;
   border-radius: 0;
-  font-size: 2rem;
 }
 
 button {
@@ -31,12 +30,6 @@ button:hover {
   color: #CE93D8;
 }
 
-p {
-  text-align: start;
-  font-size: 1rem;
-  margin-left: 10px;
-}
-
 .feedback {
   color: #A5D6A7;
 }
@@ -48,7 +41,7 @@ p {
 }
 
 .result {
-  font-size: 1rem;
+  font-size: 0.8rem;
   text-align: start;
   border-radius: 0;
   text-align: start;
@@ -59,8 +52,11 @@ p {
   padding: 20px;
 }
 .result a {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   width: 100%;
+}
+.result h1 {
+  font-weight: bold;
 }
 
 form {
@@ -68,12 +64,8 @@ form {
   margin-left: 10px;
 }
 
-h1 {
-  font-weight: bold;
-}
-
 .news {
-  font-size: 1rem;
+  font-size: 0.8rem;
   text-align: start;
   border-radius: 0;
   color: #37474F;
@@ -82,7 +74,7 @@ h1 {
   padding: 1.5rem;
 }
 .news a {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   width: 100%;
 }
 
