@@ -69,10 +69,7 @@ class Home extends Component {debugger
     );
   
 
-/*     this.container.appendChild(new HomeNews (
-      printNews( results => {
-        this.appendChild(results).container
-      }) */
+
      printNews(results => {
       const homenews = new HomeNews(results)
         this.container.appendChild(homenews.container)

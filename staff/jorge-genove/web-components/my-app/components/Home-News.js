@@ -13,7 +13,7 @@ class HomeNews extends Component{
      const itemLink = document.createElement('a')
 
     itemLink.innerHTML= `${link}`
-    itemTitle.innerHTML = `<a id="titlelink" href="https://www.mediavida.com${link.slice(6)}">${title}</a>`
+    itemTitle.innerHTML = `<a id="titlelink" href="https://www.mediavida.com${link.slice(10)}">${title}</a>`
     itemContent.innerText = `${content}`
     
     itemImage.src=`${image}`
