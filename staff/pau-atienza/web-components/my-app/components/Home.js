@@ -1,19 +1,26 @@
 class Home extends Component{
     constructor(user){
         super(`<section class = 'home'> 
+                <header>
                     <h1>Welcome to the best website in the net, ${user.name}</h1>
                     <button>Log out</button>
+                </header>
             </section>`)
         const button = this.container.querySelector('button')
     
         button.addEventListener('click', function(){ 
             home.container.replaceWith(landing.container)
         })
+        
+        var main = Component.prototype.mount.call(undefined, `<div class = 'main'>
+        </div>`)
+        this.container.appendChild(main)
 
         var searchbar = Component.prototype.mount.call(undefined, `<div class = 'searchbar'>
             <h2>Search at your will</h2>
         </div>`)
-        this.container.appendChild(searchbar)
+        main.appendChild(searchbar)
+        
         let results
         searchbar.appendChild(new Search(input => {
             const searchOutput = searchUser(input)
@@ -21,7 +28,7 @@ class Home extends Component{
 
             if (!results) {
                 results = new ResultUser(searchOutput).container
-                this.container.appendChild(results)
+                searchbar.appendChild(results)
             } else {
                 const _results = results
 
@@ -34,7 +41,8 @@ class Home extends Component{
         searchbar.appendChild(new Search(input => {
 
             googleSearch(input, (error, searchOutput) => {
-                if (!results) {
+                if (error) throw new Error(error.message, 'error')
+                else if (!results) {
                     results = new ResultGoogle(searchOutput).container
         
                     searchbar.appendChild(results)
@@ -67,7 +75,7 @@ class Home extends Component{
 
 
         holaNews((error, news) => {
-            this.container.appendChild(new News(news, 'Enjoy the latest news from HOLA!').container)
+            main.appendChild(new News(news, 'Enjoy the latest news from HOLA!').container)
         })
     }     
 }

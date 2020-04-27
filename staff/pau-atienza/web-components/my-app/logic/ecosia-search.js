@@ -4,7 +4,7 @@ function ecosiaSearch(query, processResults) {
     xhr.open( 'GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.ecosia.org/search?q=${query}` )
     'https://skylabcoders.herokuapp.com/proxy?url=https://www.hola.com/'
     xhr.onload = function () {
-        debugger
+        
         const parser = new DOMParser()
 
         const doc = parser.parseFromString(this.responseText, 'text/html')

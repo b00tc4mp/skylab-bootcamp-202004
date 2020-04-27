@@ -8,4 +8,16 @@
   display: inline-block;
 }
 
+.main{
+  display: flex;
+  flex-direction: row;
+}
+
+.searchbar{
+  width: 80vh;
+}
+
+.news{
+  width: 20vh;
+}
 /*# sourceMappingURL=style.css.map */

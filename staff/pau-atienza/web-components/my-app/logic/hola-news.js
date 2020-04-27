@@ -1,6 +1,6 @@
 function holaNews(callback) {
     var xhr = new XMLHttpRequest()
-    debugger
+    
     xhr.open( 'GET', 'https://skylabcoders.herokuapp.com/proxy?url=https://us.hola.com/' )
 
     xhr.onload = function () {
@@ -14,7 +14,7 @@ function holaNews(callback) {
 
         results.forEach((result) => {
             const title = result.querySelector('h2').innerText
-            debugger
+            
             let image= result.querySelector('.highlighted__image')
             image = 'https://us.hola.com/' + image.dataset.src
 
@@ -25,7 +25,7 @@ function holaNews(callback) {
 
         callback(undefined, news)
     }
-    debugger
+    
     xhr.onerror = function(error){
         callback(new Error('network error'))
     }
