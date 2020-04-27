@@ -1,14 +1,14 @@
 class Login extends Component {
     constructor(onSubmit, onRegister) {
         super(`<section class="login">
-    <h1>Login</h1>
-    <form>
-    <input type="email" name="email" placeholder="e-mail" required>
-        <input type="password" name="password" placeholder="password" required>
-        <button>Submit</button>
-        or <a href="">Register</a>
-    </form>
-</section>`)
+        <h1 class="title-login">Login</h1>
+        <form>
+        <input class="input-mail" type="email" name="email" placeholder="e-mail" required>
+            <input class="input-pass" type="password" name="password" placeholder="password" required>
+            <button class="submit-button">Submit</button>
+            or <a class="register-login" href="">Register</a>
+        </form>
+    </section>`)
 
         const form = this.container.querySelector('form')
 
