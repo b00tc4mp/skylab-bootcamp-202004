@@ -44,19 +44,20 @@ class Home extends Component {
     });
     this.container.appendChild(searchGoogle.container);
 
-    
+
+    let bbcResults;
     const searchBbc = new Bbc(() => {
       bbcNews((error, data) => {
-        if (!BbcResults) {
-          BbcResults = new Bbc(data);
+        if (!bbcResults) {
+          bbcResults = new BbcResults(data);
 
-          this.container.appendChild(BbcResult.container);
+          this.container.appendChild(bbcResults.container);
         } else {
-          const _BbcResult= BbcResult;
+          const _bbcResult= bbcResults;
 
-          BbcResult = new Bbc(data);
+          bbcResults = new BbcResults(data);
 
-          _BbcResult.container.replaceWith(BbcResult.container);
+          _bbcResult.container.replaceWith(bbcResults.container);
         }
       });
     });

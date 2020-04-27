@@ -6,17 +6,18 @@ class BbcResults extends Component{
     if (news.length) {
         const list = document.createElement('ul')
 
-        news.forEach(({link, title}) => {
+        news.forEach(({result}) => {
             const item = document.createElement('li')
-
+/*
             item.innerHTML = `
                 <h4>
                     <a href=${link}>${title}</a>
                 </h4>
+                    <div>${img}</div>
                 <hr>
             `
-
-            list.appendChild(item)
+            */
+            list.appendChild(result)
         })
 
         this.container.appendChild(list)

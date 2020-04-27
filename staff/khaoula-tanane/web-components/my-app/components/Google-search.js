@@ -1,7 +1,7 @@
 class Google extends Component{
     constructor(callback){
         super(`<section>
-        <input type="text" name="search" placeholder="search">
+        <input type="text" name="search" placeholder="Google search">
       </section>`)
 
     const input = this.container.querySelector("input");
