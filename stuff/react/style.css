@@ -1,0 +1,17 @@
+.header-link {
+  text-decoration: none;
+  color: lightgray;
+}
+.header-link:visited {
+  color: lightgray;
+}
+.header-link--active {
+  color: gray;
+  background-color: yellow;
+}
+.header-link--active:visited {
+  color: gray;
+  background-color: yellow;
+}
+
+/*# sourceMappingURL=style.css.map */
