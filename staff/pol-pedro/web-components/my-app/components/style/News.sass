@@ -1,0 +1,55 @@
+.news-grid
+    display: grid
+    margin-top: 6.5vh
+    grid-gap: 0.6vh
+    grid-template: repeat(4, 1fr) / repeat(3, 1fr)
+    margin-right: auto
+    margin-left: auto
+    width: 95vw
+    
+    div
+        display: flex
+        background-color: rgba(251, 167, 180, 1)
+        align-items: center
+        a
+            text-decoration: none
+            font-family: 'Special Elite', cursive
+            text-align: center
+            padding: 2vh
+            font-size: 2rem
+    div:nth-child(1)
+        grid-row: 1 / span 2
+        a 
+            color: white
+    div:nth-child(2)
+        color: black
+        grid-column: 2 / span 2
+        a 
+            color: black
+    div:nth-child(3)
+        grid-column: 2 / span 2
+        a 
+            color: white
+    div:nth-child(4)
+        grid-column: 1 / span 2
+        a 
+            color: black
+    div:nth-child(5)
+        grid-column: 3 
+        grid-row: 3 / span 2
+        a 
+            color: white
+    div:nth-child(6)
+        grid-column: 1 / span 2
+        a 
+            color: black
+    div:hover
+        z-index: 90
+        background-color: rgba(214, 204, 207, 1)
+        box-shadow: 7px 7px #888888
+        a
+            text-decoration: underline
+
+    
+
+

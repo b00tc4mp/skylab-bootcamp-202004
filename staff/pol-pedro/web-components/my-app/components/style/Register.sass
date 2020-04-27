@@ -1,4 +1,63 @@
-.register
-    padding: 0.5rem
-    border: 0.3rem solid red
-    border-radius: 15px
+.register   
+    top: 5vh
+    position: fixed
+    display: flex
+    justify-content: center
+    width: 100%
+    height: 100vh
+    z-index: 99
+    background-color: rgba(201, 199, 204, 0.7)
+    &__container
+        background-color: rgba(222, 196, 203, 1)
+        width: 60vw
+        height: 46vh
+        margin-top: 15vh
+        padding: 0.5rem
+        box-shadow: 0.9vw 0.7vw #888888
+        h1
+            text-align: center
+            font-family: 'Special Elite', cursive
+            font-size: 2rem
+        form
+            font-family: 'Special Elite', cursive
+            display: flex
+            flex-direction: column
+            margin: 1vw 
+            label
+                margin-top: 1vw
+            input
+                height: 4vh
+            button
+                display: flex
+                justify-content: center
+                justify-items: center
+                font-family: 'Special Elite', cursive
+                font-weight: 600
+                font-size:1.5rem
+                border: none
+                margin-right: auto
+                margin-left: auto
+                margin-top: 2vw
+                width: 20vw
+                height: 5vh
+            button:hover
+                background-color: rgba(125, 151, 139, 1)
+                color: white
+
+            a
+                margin-right: auto
+                margin-left: auto
+                margin-top: 2vw
+                text-decoration: none
+                color: white
+                font-size: 1.3rem
+            a:hover
+                color: rgba(125, 151, 139, 1)
+                text-decoration: underline
+            .feedback--error
+                transform: rotate(-15deg)
+                position: absolute
+                text-align: center
+                    
+
+

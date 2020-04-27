@@ -1,9 +1,13 @@
 class Landing extends Component{
     constructor(onLogin, onRegister){
-        super(`<section class="landing">
-        <h1>Welcome, to my App</h1>
-        <a href="">Login</a> <a href="">Register</a>
-        </section>`)
+        super(`<header class="header">
+        <section class="header__landing">
+            <h1>MyApp</h1>
+            <a href="">Login</a>
+            <a href="">Register</a>
+            <i class="fas fa-search fa-lg"></i> 
+        </section>
+    </header>`)
 
         const [login, register] = this.container.querySelectorAll('a')
 
