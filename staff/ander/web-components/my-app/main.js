@@ -16,7 +16,7 @@ const login = new Login(function (email, password) {
     authenticateUser(email, password)
 
     const user = retrieveUser(email)
-
+    
     const home = new Home(user.name, function () {
         home.container.replaceWith(landing.container)
     })

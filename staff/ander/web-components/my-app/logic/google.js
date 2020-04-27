@@ -2,12 +2,12 @@ function google(query, callback) {
     var xhr = new XMLHttpRequest()
 
     xhr.open( 'GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?q=${query}` )
-
+    debugger
     xhr.onload = function () {
         const parser = new DOMParser()
 
         const doc = parser.parseFromString(this.responseText, 'text/html')
-        debugger
+        
         let results = doc.querySelectorAll('.rc')
 
         const data = []

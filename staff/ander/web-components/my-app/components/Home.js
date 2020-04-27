@@ -12,7 +12,23 @@ class Home extends Component {
         })
 
         let results
+        
 
+        this.container.appendChild(new Search(query => {
+            const users = searchUsers(query)
+
+            if (!results) {
+                results = new Results(users)
+
+                this.container.appendChild(results.container)
+            } else {
+                const _results = results
+
+                results = new Results(users)
+
+                _results.container.replaceWith(results.container)
+            }
+        }).container)
         const googleSearch = new SearchGoogle(query => {
             google(query, (data) => {
 
