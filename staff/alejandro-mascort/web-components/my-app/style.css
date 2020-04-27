@@ -54,6 +54,14 @@
   padding: 0;
 }
 
+.anchors {
+  text-decoration: none;
+  padding: 5px;
+  margin: 10px;
+  background-color: #FFA07A;
+  color: white;
+}
+
 .feedback {
   color: green;
 }
