@@ -1,13 +1,12 @@
-//Lista con los resultados de la busqueda de usuarios
+//Lista con los resultados de la busqueda de usuarios, de petes y de noticias
 class Results extends Component{
     constructor(logedUser){
         super(`<section class="results">
         </section>`)
         this.search;
-        this.logedUser=logedUser;//TODO Quitar el puente
+        this.logedUser=logedUser;
     }
-    
-    
+    //Cambia el contenido segun la llamada
     changeContent(style,user){
         switch(style){
             case "profile":

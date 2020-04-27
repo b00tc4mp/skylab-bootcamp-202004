@@ -1,4 +1,4 @@
-const names=[
+const names=[//Para la generación aleatoria de nombres
     "Juan",
     "Pedro",
     "Miguel",

@@ -40,28 +40,4 @@ const landing = new Landing(function(){
 },function(){
     landing.container.replaceWith(login.container);
 });
-//Componente con los tweets
-//
-//los petes
-/*
-users[0].makePete("Hola Don Pepito");
-users[0].makePete("Hola Don Jose");
-const home=new Navigation("Manolo",function(){home.container.replaceWith(landing.container)});
-const navigation=new Navigation("Usuario",function(resultado){
-    resultado.changeContent("profile",users[0]);
-},function(resultado){
-    resultado.changeContent("Buscador",users[0]);
-},function(resultado){
-    resultado.changeContent("feed",users[0]);
-},function(resultado){
-    resultado.changeContent("following",users[0]);
-},function(resultado){
-    resultado.changeContent("followers",users[0]);
-},function(resultado){
-    resultado.changeContent("likes",users[0]);
-},function(){
-    navigation.container.replaceWith(landing.container);
-})
-*/
-//document.getElementById('root').appendChild(landing.container)
 document.getElementById('root').appendChild(landing.container);

@@ -52,7 +52,7 @@ body{
 /*////////////////////////Navigation/////////////////////////*/
 .navigation{
   width: fit-content;
-  height: 100vh;
+  min-height: 100vh;
   border:0.01rem solid white;
   text-align: center;
 }
