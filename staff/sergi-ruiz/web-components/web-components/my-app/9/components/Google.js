@@ -1,4 +1,4 @@
-class Search extends Component {
+class Searchh extends Component {
     constructor(onSubmit) {
         super(`<section class="search">
     <form>

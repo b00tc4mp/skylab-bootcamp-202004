@@ -6,26 +6,27 @@ class Home extends Component {
 
         const button = this.container.querySelector('button')
 
-        button.addEventListener('click', function () {
+        button.addEventListener('click', function() {
             callback()
         })
 
         let results
 
-        this.container.appendChild(new Search(query => {
-            const users = searchUsers(query)
+        this.container.appendChild(new Searchh(query => {
+            const users = search(query)
+            results = new Results(users)
+            this.container.appendChild(results.container)
+                /* if (!results) {
+                        results = new Results(users)
 
-            if (!results) {
-                results = new Results(users)
+                        this.container.appendChild(results.container)
+                    }  else {
+                         const _results = results
 
-                this.container.appendChild(results.container)
-            } else {
-                const _results = results
+                         results = new Results(users)
 
-                results = new Results(users)
-
-                _results.container.replaceWith(results.container)
-            }
+                      _results.container.replaceWith(results.container)
+                } */
         }).container)
     }
 }
