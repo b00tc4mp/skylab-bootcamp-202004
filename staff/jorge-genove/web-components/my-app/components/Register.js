@@ -36,13 +36,13 @@ class Register extends Component {
                 if (!feedback) {
                     feedback = new Feedback(error.message, 'error')
 
-                    //this.container.append(feedback.container)
+                    
                     this.container.append(feedback.container)
                 } else feedback.innerText = error.message
             }
-        }.bind(this))
+        })
 
-         const cleanUp  = function(){
+         const cleanUp  = () => {
             const { name, surname, email, password } = form
 
             name.value = ''
@@ -55,7 +55,7 @@ class Register extends Component {
 
                 feedback = undefined
             }
-        }.bind(this)
+        }
 
         const login = this.container.querySelector('a')
 

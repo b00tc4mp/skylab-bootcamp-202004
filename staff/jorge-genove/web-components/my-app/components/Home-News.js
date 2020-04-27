@@ -1,12 +1,16 @@
 class HomeNews extends Component{ 
-    constructor(news){
+    constructor(results){
     super(`<section class="news">
-
+        <h2>Mediavida News<h2>
 </section>`)
 
- const homeNews = document.createElement('section')
+ 
 
- news.forEach(function({title,link, content, image}) {debugger
+printNews( (results) => {
+
+    const homeNews = document.createElement('section')
+
+ results.forEach(function({title,link, content, image}) {debugger
      const itemTitle = document.createElement('h3')
      const itemContent = document.createElement('p')
      const itemImage = document.createElement('img')
@@ -27,5 +31,6 @@ class HomeNews extends Component{
  
  });
     this.container.appendChild(homeNews)
+})
 }
 }

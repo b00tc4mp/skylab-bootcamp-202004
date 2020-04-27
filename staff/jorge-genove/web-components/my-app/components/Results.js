@@ -6,11 +6,11 @@ class Results extends Component {
         if (users.length) {
             const list = document.createElement('ul')
 
-            // users.forEach(function (user) {
+            
             users.forEach(function ({ name, surname, email }) {
                 const item = document.createElement('li')
 
-                // const { name, surname, email } = user
+               
 
                 item.innerText = `${name} ${surname} (${email})`
 

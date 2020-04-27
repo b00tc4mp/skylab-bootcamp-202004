@@ -4,9 +4,7 @@ class Landing extends Component {
     <a href="">Register</a> or <a href="">Login</a>
 </section>`)
 
-        // const anchors = container.querySelectorAll('a')
-        // const register = anchors[0]
-        // const login = anchors[1]
+       
 
         const [register, login] = this.container.querySelectorAll('a')
 

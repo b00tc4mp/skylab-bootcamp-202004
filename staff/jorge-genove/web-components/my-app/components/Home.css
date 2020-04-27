@@ -19,4 +19,10 @@
   color: black;
 }
 
+.nav {
+  display: flex;
+  padding-inline-start: 0px;
+  list-style: none;
+}
+
 /*# sourceMappingURL=Home.css.map */
