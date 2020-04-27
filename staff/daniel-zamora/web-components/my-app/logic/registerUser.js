@@ -1,4 +1,4 @@
-function registerUser(name, surname, email, password) {
+function userRegister(name, surname, email, password) {
     if (typeof name !== 'string') throw new TypeError(name + ' is not a string')
     if (!TEXT_REGEX.test(name)) throw new Error(name + ' does not match the format')
 

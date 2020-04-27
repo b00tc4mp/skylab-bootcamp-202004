@@ -1,31 +1,42 @@
-const landing = Landing(function () {
-    landing.replaceWith(register);
+const landing = new Landing(
+  function () {
+    landing.container.replaceWith(register.container);
   },
   function () {
-    landing.replaceWith(login);
+    landing.container.replaceWith(login.container);
   }
 );
 
-const register = Register(function (name, surname, email, password) {
-    userRegister(name,surname,email,password)
-  
-    register.replaceWith(login);
-}, function () {
-    register.replaceWith(home);
-});
+const register = new Register(
+  function (name, surname, email, password) {
+    userRegister(name, surname, email, password);
 
-const login = Login(function (email, password) {
-  authenticateUser(email,password)
-  
-  const user = retrieveUser(email)
+    register.container.replaceWith(login.container);
+  },
+  function () {
+    register.container.replaceWith(login.container);
+  }
+);
 
-    const home = Home(user.name, user.surname, function () {
-      home.replaceWith(landing);
-    })
+const login = new Login(
+  function (email, password) {
+    authenticateUser(email, password);
 
-    login.replaceWith(home);
-}, function () {
-    login.replaceWith(register);
-});
+    const user = retrieveUser(email);
 
-document.getElementById("root").appendChild(landing);
+    const home = new Home(user.name, function () {
+      home.container.replaceWith(landing.container);
+    });
+
+
+    login.container.replaceWith(home.container);
+    // const googleHome = new HomeGoo(function () {
+    //   googleHome.container.appendChild(home.container)
+    // })
+  },
+  function () {
+    login.container.replaceWith(register.container);
+  }
+);
+
+document.getElementById("root").appendChild(landing.container);

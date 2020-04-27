@@ -1,4 +1,4 @@
-class Search extends Component {
+class SearchGoo extends Component {
   constructor(onSearch) {
     super(`<section class="search">
     <form>
@@ -9,7 +9,7 @@ class Search extends Component {
 
     const form = this.container.querySelector("form");
 
-    form.addEventListener("submit", function (event) {
+    form.addEventListener("submit", (event) => {
       event.preventDefault();
 
       const query = event.target.query.value;

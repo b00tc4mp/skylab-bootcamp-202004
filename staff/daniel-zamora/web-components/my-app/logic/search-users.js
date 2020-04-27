@@ -1,22 +1,10 @@
 function searchUsers(query) {
-    // TODO find users matching query in name, surname, email
+  query = query.toLowerCase();
   
     const _users = users.filter(user => {
-        return query === user.name || query === user.surname || query === user.email;
+        return user.name.toLowerCase().includes(query) || user.surname.toLowerCase().includes(query) || user.email.toLowerCase().includes(query)
     });
-
-    if(_users.length === 0) throw new Error ('The user don`t exist!');
-
-    // const { name, surname, email: _email } =_users
-    var txt='';
-    for(var i = 0; i<_users.length;i++){
-        txt+= _users[i].name + ' '
-        txt+= _users[i].surname +' '
-        txt+= _users[i].email + '.'
-    }
-
-
-    // return `${name} ${surname} ${_email}`
-    return txt
+  
+    return _users;
 }
 

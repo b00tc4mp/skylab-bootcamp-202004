@@ -1,15 +1,16 @@
 class Login extends Component {
   constructor(checkLogin, inRegister) {
-    super(`<section class="login">  
+    super(`<section class="login">
     <h1>Login</h1>
     <form>
-        <input type="email" name="email" placeholder="e-mail">
-        <input type="password" name="password" placeholder="password">
+    <input type="email" name="email" placeholder="e-mail" required>
+        <input type="password" name="password" placeholder="password" required>
         <button>Submit</button>
+        or <a href="">Register</a>
     </form>
 </section>`)
 
-    const form = container.querySelector("form");
+    const form = this.container.querySelector("form");
 
     let feedback;
 
@@ -17,6 +18,7 @@ class Login extends Component {
       event.preventDefault();
 
       let { email, password } = event.target;
+
       email = email.value;
       password = password.value;
 
@@ -38,19 +40,19 @@ class Login extends Component {
       form.password.value = "";
 
       if (feedback) {
-        self.container.removeChild(feedback.container);
+        this.container.removeChild(feedback.container);
 
         feedback = undefined;
       }
     }
 
-    const register = this.container.querySelector("a");
+    const register = this.container.querySelector("a")
 
     register.addEventListener("click", function (event) {
       event.preventDefault();
       inRegister();
 
-      cleanUp;
+      cleanUp();
     });
   }
 }
