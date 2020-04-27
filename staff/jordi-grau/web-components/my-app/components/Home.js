@@ -5,13 +5,32 @@ function Home(name, callback) {
     <h1>Welcome, ${name}!</h1><button>Logout</button>
 </section>`
 
-    const container = temp.firstChild
+    const 
 
     const button = container.querySelector('button')
     
     button.addEventListener('click', function() {
         callback()
     })
+
+    let results
+
+    container.appenChild(search(function (query) {
+        const users = searchUsers(query)
+
+        if (!results) {
+            results = Results (users)
+
+            container.appendChild(results)
+        }
+        else {
+            const _results = results
+
+            results = Results(users)
+
+            _results.ReplaceWith(results)
+        }
+    }))
        
     return container
 }
