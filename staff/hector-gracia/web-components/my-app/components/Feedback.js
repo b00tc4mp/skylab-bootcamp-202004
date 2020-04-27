@@ -2,6 +2,6 @@
 class Feedback extends Component{
     constructor(message,level){
         //Le manda el template del mensaje al constructor de component
-        super(`<p class="feedback feedback--${level}">${message}</p>`);
+        super(`<p class="pete__feedback pete__feedback--${level}">${message}</p>`);
     }
 }

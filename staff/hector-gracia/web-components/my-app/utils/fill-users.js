@@ -8,6 +8,31 @@ function fillUsers(newUsers){
 }
 function fillPetes(newPetes){
     for(var i=0;i<newPetes;i++){
-        sendPete(users.random().name,presetPetes.random());
+        users.random().makePete(presetPetes.random());
     }
+}
+function fillFollows(newfollows){
+    for(var i=0; i<newfollows;i++){
+        users.random().follow(users.random());
+    }
+}
+function fillLikes(likePercentage){
+    let rand=0;
+    for(var i=0;i<users.length;i++){
+        for(var j=0;j<users[i].following.length;j++){
+            for(var k=0;k<users[i].following[j].petes.length;k++){
+                rand= Math.random()*100;
+                if(rand<likePercentage){
+                    users[i].likePete(users[i].following[j].petes[k]);
+                }
+            }
+        }
+    }
+}
+function fillSocializing(newUsers,newPetes,newfollows,likePercentage){
+    fillUsers(newUsers);
+    fillFollows(newfollows);
+    fillPetes(newPetes);
+    fillLikes(likePercentage);
+
 }

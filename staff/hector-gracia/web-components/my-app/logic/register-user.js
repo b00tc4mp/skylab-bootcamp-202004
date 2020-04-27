@@ -15,10 +15,5 @@ function registerUser(name,surname,email,password){
     if(user) throw new Error("user already exists");
 
     //Mete al usuario en el array
-    users.push({
-        name,
-        surname,
-        email,
-        password
-    })
+    users.push(new User(name,surname,email,password))
 }

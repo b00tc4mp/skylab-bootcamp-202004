@@ -1,5 +1,5 @@
 //array con los mensajes de la web
-const petes=[];
+//const petes=[];
 const presetPetes=[
     "Hola mundo",
     "Hello world",

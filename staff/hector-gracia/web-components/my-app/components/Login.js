@@ -2,12 +2,13 @@
 class Login extends Component{
     constructor(onSubmit,onRegister){
         super(`<section class="login">
-            <h1>Login</h1>
-            <form>
-            <input type="email" name="email" placeholder="e-mail" required>
-                <input type="password" name="password" placeholder="password" required>
-                <button>Submit</button>
-                or <a href="">Register</a>
+            <h1 class="peter__title">Login</h1>
+            <form class="peter__form">
+                <input class="peter__input" type="email" name="email" placeholder="e-mail" required>
+                <input class="peter__input" type="password" name="password" placeholder="password" required>
+                </br>
+                <button class="peter__button">SUBMIT</button>
+                or <a class="peter__link" href="">I'm new using Peter</a>
             </form>
             </section>`);
         const self=this; //Guarda la referencia a this

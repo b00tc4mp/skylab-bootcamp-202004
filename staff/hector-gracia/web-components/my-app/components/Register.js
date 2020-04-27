@@ -2,14 +2,15 @@
 class Register extends Component{
     constructor(onSubmit,onLogin){
         super(`<section class="register">
-        <h1>Register</h1>
-        <form>
-            <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}">
-            <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}">
-            <input type="email" name="email" placeholder="e-mail" required>
-            <input type="password" name="password" placeholder="password" required minLength="8">
-            <button>Submit</button>
-            or <a href="">Login</a>
+        <h1 class="peter__title">Create a new account</h1>
+        <form class="peter__form">
+            <input class="peter__input" type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}">
+            <input class="peter__input" type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}">
+            <input class="peter__input" type="email" name="email" placeholder="e-mail" required>
+            <input class="peter__input" type="password" name="password" placeholder="password" required minLength="8">
+            </br>
+            <button class="peter__button">SUBMIT</button>
+            or <a href="" class="peter__link">I already have an account</a>
         </form>
         </section>`);
         
