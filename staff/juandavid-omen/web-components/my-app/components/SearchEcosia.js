@@ -1,8 +1,8 @@
-class Search extends Component {
+class SearchEcosia extends Component {
     constructor(onSubmit) {
         super(`<section class="search">
         <form>
-            <input type="text" name="query" placeholder="Search Users">
+            <input type="text" name="query" placeholder="Search Ecosia">
             <button>🔍</button>
         </form>
     </section>`);

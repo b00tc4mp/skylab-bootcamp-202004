@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="style.css">
     </head>
 
@@ -39,21 +40,78 @@
 
         <section class="home">
             <h1>Hello ${name}, Welcome!</h1><button>Logout</button>
-            
+            <div class="w3-bar w3-black">
+                <button id="users" class="w3-bar-item w3-button tablink w3-red">Users</button>
+                <button id="google" class="w3-bar-item w3-button tablink">Google</button>
+                <button id="ecosia" class="w3-bar-item w3-button tablink">Ecosia</button>
+                <button id="news" class="w3-bar-item w3-button tablink">News</button>
+            </div>
+
+            <section>
+                <section class="search">
+                    <form>
+                        <input type="text" name="query">
+                        <button>🔍</button>
+                    </form>
+                </section>
+
+                <search class="results">
+                    <ul>
+                        <li>Juan Omen (anvidmen@gmail.com)</li>
+                        <li>Juanito Tim (juanito@tim.com)</li>
+                        <li>Tito Shon (tito@shon.com)</li>
+                    </ul>
+                </search>
+            </section>
+            <section>
+                <section class="search">
+                    <form>
+                        <input type="text" name="query">
+                        <button>🔍</button>
+                    </form>
+                </section>
+                <section class="results">
+                    <ul>
+                        <h4>
+                            <a href=${link}>${title}</a>
+                        </h4>
+                        <p>${content}</p>
+                        <hr>
+                    </ul>
+                </section>
+            </section>
+            <section>
+                <section class="search">
+                    <form>
+                        <input type="text" name="query">
+                        <button>🔍</button>
+                    </form>
+                </section>
+                <section class="results">
+                    <ul>
+                        <h4>
+                            <a href=${link}>${title}</a>
+                        </h4>
+                        <p>${content}</p>
+                        <hr>
+                    </ul>
+                </section>
+            </section>
             <section class="search">
                 <form>
-                    <input type="text" name="query">
-                    <button>🔍</button>
+                    <button value="text">news</button>
                 </form>
             </section>
-
-            <search class="results">
+            <section class="news">
                 <ul>
-                    <li>Juan Omen (anvidmen@gmail.com)</li>
-                    <li>Juanito Tim (juanito@tim.com)</li>
-                    <li>Tito Shon (tito@shon.com)</li>
+                    <img/>
+                    <h4>
+                        <a href=${link}>${title}</a>
+                    </h4>
+                    <p>${content}</p>
+                    <hr>
                 </ul>
-            </search>
+            </section>
         </section>
     </body>
 
