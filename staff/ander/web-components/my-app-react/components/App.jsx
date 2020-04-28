@@ -64,7 +64,6 @@ function Contact() {
  */
 const {Component} = React
 class App extends Component {
-    debugger
     constructor() {
         super()
 
@@ -78,15 +77,17 @@ class App extends Component {
 
     handleGoToLogin = () => this.setState({ view: "login" })
     handleGoToRegister = () => this.setState({ view: "register" })
-    
+    handleRegister=(name,surname,mail,password) =>{
+        registerUser(name,surname,mail,password)
+        this.setState({view:"login"})
+    }
     handleGoToHome = () => this.setState({ view: "home" })
     handleGoToLanding = () => this.setState({ view: "landing" })
 
     render() {
-        debugger
         return <>
              {this.state.view === 'landing' && <Landing onLogin = {this.handleGoToLogin} onRegister={this.handleGoToRegister} />}
-             {this.state.view === 'register' && <Register onSubmit = {this.handleGoToLogin} onLogin = {this.handleGoToLogin} />}
+             {this.state.view === 'register' && <Register onSubmit = {this.handleRegister} onLogin = {this.handleGoToLogin} />}
              {this.state.view === 'login' && <Login onSubmit = {this.handleGoToHome}  onRegister={this.handleGoToRegister}/>}
              {this.state.view === 'home' && <Home onLogout = {this.handleGoToLanding} />}
             

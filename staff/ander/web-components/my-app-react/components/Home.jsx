@@ -62,7 +62,7 @@
         })
     }
 } */
-
+const {Component} = React
 function Home(onLogout) {
     return <section className="home">
         <h1>This is Home</h1>
