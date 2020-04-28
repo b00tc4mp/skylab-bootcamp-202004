@@ -24,7 +24,7 @@ class App extends Component {
             user: name
         })
     }
-    
+
     render() {
 
         return <>
