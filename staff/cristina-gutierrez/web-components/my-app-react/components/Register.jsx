@@ -85,7 +85,6 @@ class Register extends Component {
         email = email.value;
         password = password.value;
 
-        onLogin()
         try {
             this.props.onSubmit(name, surname, email, password)
         } catch ({ message }) {

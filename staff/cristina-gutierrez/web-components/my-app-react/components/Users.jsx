@@ -23,3 +23,28 @@
 //         }).container)
 //     }
 // }
+
+const { Component } = React
+class Users extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            usersFound: false
+        }
+    }
+
+    handleSearch = query => {
+        const users = searchUsers(query)
+
+        this.setState ({ users })
+    }
+
+    render() {
+        return <section class='users'>
+            <h2>Users</h2>
+            <Search onSubmit={handleSearch} />
+        </section>
+
+    }
+}

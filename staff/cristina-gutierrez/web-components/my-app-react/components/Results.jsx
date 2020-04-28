@@ -22,3 +22,9 @@
 //         } else this.container.appendChild(new Feedback('sorry, no results :(', 'warning').container)
 //     }
 // }
+
+function Results() {
+    return <section class="results">
+     
+    </section>
+}

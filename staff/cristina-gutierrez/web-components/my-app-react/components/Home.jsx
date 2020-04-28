@@ -62,3 +62,44 @@
 //         })
 //     }
 // }
+
+class Home extends Component {
+    constructor(props) {
+        super(props) 
+        
+        this.state = {
+            current:'users'
+        }   
+    }
+
+    displayView = view => {this.setState({ current:view })}
+
+    render() {
+        return <section className="home">
+            <h1>Welcome, {name}!</h1>
+            <a className="home__link" href="" onClick={event => {
+                event.preventDefault()
+
+                this.displayView('users')
+            }}>Users</a>
+            <a className="home__link" href="" onClick={event => {
+                event.preventDefault()
+
+                this.displayView("google")
+            }}>Google</a>
+            <a className="home__link" href="" onClick={event => {
+                event.preventDefault()
+
+                this.displayView('users')
+            }}>Hola News</a>
+            <button onClick={ event => {
+                event.preventDefault()
+
+                this.props.handleGoToLanding
+            }}>Logout</button>
+            {this.state.current === 'users' && <Users />}
+            {this.state.current === 'google' && <Google />}
+            {this.state.current === 'news' && <HolaNews />}
+        </section>
+    }
+}
