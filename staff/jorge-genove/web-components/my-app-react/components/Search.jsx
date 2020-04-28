@@ -1,21 +1,21 @@
-class Search extends Component {
-    constructor(onSubmit) {
-        super(`<section class="search">
-    <form>
-        <label>User<label>
-        <input type="text" name="query">
-        <button>🔍</button>
-    </form>
-</section>`)
+function Search({ onSearch }) {
 
-        const form = this.container.querySelector('form')
+    function handleSubmitUsers(event) {
+        event.preventDefault()
 
-        form.addEventListener('submit', function (event) {
-            event.preventDefault()
+        let { query } = event.target
 
-            const query = event.target.query.value
-
-            onSubmit(query)
-        })
+        query = query.value
+      
+            onSearch(query)    
     }
+
+
+
+    return <section className="search">
+        <form onSubmit={handleSubmitUsers} >
+            <label>search<input type="text" name="query"></input></label>
+            <button>🔍</button><br></br>
+        </form>
+    </section>
 }

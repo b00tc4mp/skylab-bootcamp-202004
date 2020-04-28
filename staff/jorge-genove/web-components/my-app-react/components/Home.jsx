@@ -1,94 +1,48 @@
-/* class Home extends Component {debugger
-  constructor(name, callback) {
-    super(`<section class="home">
-    <h1>Welcome, ${name}!</h1><button>Logout</button>
-</section>`);
+const { Component } = React
 
-    const button = this.container.querySelector("button");
+class Home extends Component {
+    constructor(props) {
+        super(props)
 
-    button.addEventListener("click", function () {
-      callback();
-    });
+        this.state = { currentLink: 'user' }
 
-    let results;
+    }
+    handleOnGoogle = (event) => {
+        event.preventDefault()
 
-    this.container.appendChild(
-      new Search((query) => {
-        const users = searchUsers(query);
+        this.setState(
+            { currentLink: 'google' }
+        )
+    }
+    handleOnUsers = (event) => {
+        event.preventDefault()
 
-        if (!results) {
-          results = new Results(users);
+        this.setState(
+            { currentLink: 'user' }
+        )
+    }
 
-          //this.container.appendChild(results.container)
-          this.container.appendChild(results.container);
-        } else {
-          const _results = results;
+    handleOnEcosia = (event) => {
+      event.preventDefault()
+      this.setState(
+        { currentLink: 'ecosia'}
+      )
+    }
 
-          results = new Results(users);
+    render() {
+        return <section className="home">
+                    <h1>Wellcome {this.props.user}</h1>
+                    <button onClick={this.props.logOut}>Logout</button>
+                    <a onClick={this.handleOnUsers} className="home__link" href="">Users</a>
+                    <a onClick={this.handleOnGoogle} className="home__link" href="">Google</a>
+                    <a onClick={this.handleOnEcosia} className ="home__link" href="">Ecosia</a>
+                    <a className="home__link" href="">Sport</a>
 
-          _results.container.replaceWith(results.container);
-        }
-      }).container
-    );
+                    {this.state.currentLink === 'user' && <User />}
+                    {this.state.currentLink === 'google' && <Google />}
+                    {this.state.currentLink === 'ecosia' && <Ecosia />}
 
-    let googleresult;
-
-    this.container.appendChild(
-      new GoogleSearch((googleQuery) => {
-        googleSearch(googleQuery, (error, results) => {
-          if (!googleresult) {
-            googleresult = new GoogleResults(results).container;
-
-            this.container.appendChild(googleresult);
-          } else {
-            const _googleresult = googleresult;
-
-            googleresult = new GoogleResults(results).container;
-
-            _googleresult.replaceWith(googleresult);
-          }
-        });
-      }).container
-    );
-    let ecosiaResults;
-
-    this.container.appendChild(
-      new EcosiaSearch((ecosiaQuery) => {
-        ecosiaSearch(ecosiaQuery, (error, results) => {
-          if (!ecosiaResults) {
-            ecosiaResults = new EcosiaResult(results).container;
-
-            this.container.appendChild(ecosiaResults);
-          } else {
-            const _ecosiaResults = ecosiaResults;
-            ecosiaResults = new EcosiaResult(results).container;
-            _ecosiaResults.replaceWith(ecosiaresults);
-          }
-        });
-      }).container
-    );
-  
-
-
-     printNews(results => {
-      const homenews = new HomeNews(results)
-        this.container.appendChild(homenews.container)
-      
-    })
- 
- 
- 
- 
- 
- 
+               </section>
     }
 }
 
- */
-
- function Home({name}) {
- return <section className="home">
-  <h1>Welcome,{name}!</h1><button>Logout</button>
-</section>
- 
-}

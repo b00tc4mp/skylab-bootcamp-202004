@@ -53,7 +53,7 @@ class Login extends Component {
 
     }
 
-handleSubmit = event => {
+handleSubmit = event => {debugger
     event.preventDefault()
 
     let { email, password } = event.target
