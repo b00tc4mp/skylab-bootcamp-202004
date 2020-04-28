@@ -2,7 +2,7 @@ class ResultsGoo extends Component {
     constructor(webs) {
       super(`<section class="result">
         </section>`);
-      let feedback;
+   
       if (webs.length) {
         const list = document.createElement("ul");
 
@@ -11,13 +11,17 @@ class ResultsGoo extends Component {
 
           const anchor = document.createElement('a')
           anchor.href = link;
-          anchor.target = blank;
+          anchor.target = '_blank';
           anchor.innerText = title;
 
           item.append(anchor);
 
-          const _description = document.createElement('p');
-          _description.innerText = description;
+          const content = document.createElement('p');
+          content.innerText = description;
+
+          content.append(item);
+
+          list.append(item)
         })
         // const list = document.createElement("ul");
         // for (let i = 0; i < matchingList.length; i++) {

@@ -15,10 +15,10 @@ function google(query, callback) {
   
       results.forEach((result) => {
         const title = result.querySelector(".LC20lb").innerText
-        const content = result.querySelector(".st").innerText
+        const description = result.querySelector(".st").innerText
         const { href: link } = result.querySelector(".r > a")
  
-        queryResults.push({title, content, link})
+        queryResults.push({title, description, link})
       });
 
       callback(queryResults);
@@ -26,7 +26,7 @@ function google(query, callback) {
     };
   
     xhr.onerror = function (error) {
-      console.error(error);
+      callback(new Error('network error'))
     }
     xhr.send();
   }
