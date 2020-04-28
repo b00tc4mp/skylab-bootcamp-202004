@@ -13,34 +13,17 @@ class App extends Component {
     handleGoToRegister = () => this.setState({ view: 'register' })
     handleGoToLogin = () => this.setState({ view: 'login' })
     
-    handleLoginSubmit = (event) => {
-        let { email, password } = event.target
-        email = email.value
-        password = password.value
-        try{
-            const user = authenticateUser(email, password)
-            this.setState({user, view: 'home'})
-        } catch (error){
-            console.log(error)
-        }
+    handleLoginSubmit = ( email, password) => {
+       authenticateUser(email, password)
+       this.setState({view: 'home'})
     }
 
-    handleRegisterSubmit = (event) => {
-        let { name, surname, email, password } = event.target
-
-        name = name.value
-        surname = surname.value
-        email = email.value
-        password = password.value
-
-        try {
-            registerUser(name, surname, email, password)
-            this.handleGoToLogin()
-        } catch (error) {
-       console.log(error)}
+    handleRegisterSubmit = (name, surname, email, password) => {
+        registerUser( name, surname, email, password)
+        this.setState({view: 'login'})
     }
-
-
+    
+    
     render() {
         return <>
             {this.state.view === 'landing' && <Landing onLogin={this.handleGoToLogin} onRegister={this.handleGoToRegister} />}
@@ -50,5 +33,5 @@ class App extends Component {
 
         </>
     }
-
+    
 }
