@@ -15,7 +15,7 @@ class App extends Component {
     render() {
         return <>
             {this.state.view === 'landing' && <Landing onRegister={this.handleGoToRegister} onLogin={this.handleGoToLogin}/>}
-            {this.state.view === 'register' && <Register onLogin={this.handleGoToLogin}/>}
+            {this.state.view === 'register' && <Register onLogin={this.handleRegister}/>}
             {this.state.view === 'login' && <Login onRegister={this.handleGoToRegister}/>}
         </>
     }
