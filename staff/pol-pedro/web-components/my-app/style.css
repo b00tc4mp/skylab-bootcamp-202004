@@ -128,6 +128,10 @@
   font-family: "Special Elite", cursive;
   text-align: center;
 }
+.home .home__search .change {
+  font-size: 1rem;
+  font-family: "Special Elite", cursive;
+}
 .home ul {
   font-family: "Bebas Neue", cursive;
   flex-direction: column;
@@ -432,6 +436,7 @@
   position: absolute;
   text-align: center;
 }
+
 .feedback {
   color: green;
   position: absolute;

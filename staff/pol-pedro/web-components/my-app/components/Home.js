@@ -19,7 +19,8 @@ class Home extends Component{
         const form = searchContainer.querySelector('form')
         const input = searchContainer.querySelector('input')
         const deletCont = landing.container.querySelector('section')
-        const google = new GoogleComp ()
+        let google = new GoogleComp ('google', 'Bing')
+        const navSelector = google.container.children[0].children[0].querySelector('h2')
 
         // ||clasic variables ||
 
@@ -29,6 +30,7 @@ class Home extends Component{
         let searchUser = false
         let searchGoogle = false
         let num = 0
+        let navigatorState = false
     // || Functions and event listeners ||
 
         //inject username in the header
@@ -53,11 +55,24 @@ class Home extends Component{
         function cleanSearch() { //clean the founded users list when a new search is done
             if (typeof searched !== 'undefined'){
                 while (searchContainer.children[1].hasChildNodes()) {
-                    searchContainer.children[1].removeChild(searchContainer.children[1].firstChild)
+                    searchContainer.children[1].removeChild(searchContainer.children[1].firstChild) //123123123
                 }
                 searched = undefined
             }
         }
+
+        navSelector.addEventListener('click', function(){
+            if(navigatorState === false){
+                google.container.replaceWith(google = new GoogleComp ('bing', 'google'))
+                navigatorState = true
+            }
+            else{
+                google.container.replaceWith(google = new GoogleComp ('google', 'bing'))
+                navigatorState = false
+            }
+            
+        })
+
 
         searchTag.addEventListener('click', (event) =>{ //para abrir y cerrar el buscador
             if(!searchGoogle){
@@ -77,9 +92,6 @@ class Home extends Component{
                 document.getElementById('root').removeChild(this.container)
                 searchUser = false
             }
-            //searchContainer.appendChild(style)
-            //style.sheet.insertRule(`.home{transition: 3s
-                                           // margin-top: 5vh !important}`)
         })
 
 
