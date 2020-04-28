@@ -5,7 +5,7 @@ class App extends Component {
         super()
 
         this.state = {
-            view: 'home'
+            view: 'landing'
         }
     }
 
@@ -22,9 +22,9 @@ class App extends Component {
             {this.state.view === 'landing' && <Landing onRegister={this.handleGoToRegister} />}
             {this.state.view === 'register' && <Register onSubmit={this.handleRegister} />}
             {/* {this.state.view === 'login' && <Login />} */}
-            {this.state.view === 'home' && <Home name="Pepito" />}
 
-            {this.state.view === 'login' && <Smart view={this.state.view} />}
+            {this.state.view === 'login' && <SmartCompo view={this.state.view} />}
         </>
     }
 }
+
