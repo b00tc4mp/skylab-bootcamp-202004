@@ -24,7 +24,6 @@ class App extends Component {
             console.log(error)
         }
     }
-    
 
     handleRegisterSubmit = (event) => {
         let { name, surname, email, password } = event.target
