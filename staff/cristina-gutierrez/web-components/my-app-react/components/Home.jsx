@@ -1,12 +1,4 @@
-// class Home extends Component {
-//     constructor(name, onLogout) {
-//         super(`<section class="home">
-//     <h1>Welcome, ${name}!</h1>
-//     <a class="home__link" href="">Users</a>
-//     <a class="home__link" href="">Google</a>
-//     <a class="home__link" href="">Hola News</a>
-//     <button>Logout</button>
-// </section>`)
+
 
 //         const button = this.container.querySelector('button')
 
@@ -63,13 +55,18 @@
 //     }
 // }
 
+
+
+
+const { Component } = React
+
 class Home extends Component {
     constructor(props) {
         super(props) 
         
         this.state = {
             current:'users'
-        }   
+        }
     }
 
     displayView = view => {this.setState({ current:view })}
@@ -77,17 +74,17 @@ class Home extends Component {
     render() {
         return <section className="home">
             <h1>Welcome, {name}!</h1>
-            <a className="home__link" href="" onClick={event => {
+            <a href="" onClick={event => {
                 event.preventDefault()
 
                 this.displayView('users')
             }}>Users</a>
-            <a className="home__link" href="" onClick={event => {
+            <a href="" onClick={event => {
                 event.preventDefault()
 
                 this.displayView("google")
             }}>Google</a>
-            <a className="home__link" href="" onClick={event => {
+            <a href="" onClick={event => {
                 event.preventDefault()
 
                 this.displayView('users')

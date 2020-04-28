@@ -1,22 +1,4 @@
 const users = [
-    {
-        name: 'Manuel',
-        surname: 'Barzi',
-        email: 'manuelbarzi@gmail.com',
-        password: '123123123'
-    },
-
-    {
-        name: 'Pepito',
-        surname: 'Grillo',
-        email: 'pepito@grillo.com',
-        password: '123123123'
-    },
-
-    {
-        name: 'Andy',
-        surname: 'Garcia',
-        email: 'andy@garcia.com',
-        password: '123123123'
-    }
-]
+    {name: "Cris", surname: "Gutierrez", email: "gutierrezales@hotmail.com", password: "12345678"},
+    {name: "Aleix", surname: "Caminal", email: "aleixc@gmail.com", password: "1234"}
+];
