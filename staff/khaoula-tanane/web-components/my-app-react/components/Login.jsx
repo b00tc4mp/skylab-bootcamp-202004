@@ -5,21 +5,21 @@ class Login extends Component{
         super(props)
 
         this.state = {
-            error: ""
+            error: null
         }
     }    
+
     handleLoginSubmit = (event) => {
         let { email, password } = event.target
         email = email.value
         password = password.value
         try{
-            this.props.authenticateUser(email, password)
+            this.props.onSubmit(email, password)
             this.setState({user, view: 'home'})
         } catch (error){
             this.setState({error : message})
         }
     }
-
 
 
     render(){
@@ -28,7 +28,7 @@ class Login extends Component{
         <h1>Login</h1>
         <form onSubmit={(event) => {
             event.preventDefault()
-            this.props.onLoginSubmit(event)
+            this.props.onLogin()
         }}>
             <input  name="email" placeholder="e-mail" required />
             <input type="password" name="password" placeholder="password" required />

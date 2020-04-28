@@ -79,7 +79,7 @@ class Home extends Component{
 
         return <>
         <section className="login">
-        {/* <h1>HOME: Welcome {user.name} </h1> */}
+        <h1>HOME: Welcome </h1>
         <input type="text" placeholder="searchUser" className="searchUser"/>
 
         </section>
