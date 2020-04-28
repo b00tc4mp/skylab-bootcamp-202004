@@ -21,7 +21,7 @@ function google(query, callback) {
 
             data.push({ title, content, link })
         })
-   
+        
         callback(undefined, data)
     }
 

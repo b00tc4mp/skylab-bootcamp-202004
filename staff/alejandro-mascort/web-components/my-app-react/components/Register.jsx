@@ -1,106 +1,33 @@
-// class Register extends Component {
-//     constructor(onSubmit, onLogin) {
-//         super(`<section class="register">
-//     <h1>Register</h1>
-//     <form>
-//         <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}">
-//         <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}">
-//         <input type="email" name="email" placeholder="e-mail" required>
-//         <input type="password" name="password" placeholder="password" required minLength="8">
-//         <button>Submit</button>
-//         or <a href="">Login</a>
-//     </form>
-// </section>`)
+class Register extends Component {
+    constructor (props){
+        super(props)
 
-//         const form = this.container.querySelector('form')
+        this.state = {
+            error: ''
+        }
+    }
 
-//         let feedback
+    handleSubmit = event => {
+        event.preventDefault()
 
-//         form.addEventListener('submit', event => {
-//             event.preventDefault()
+        let {name, surname, email, password} = event.target
 
-//             let { name, surname, email, password } = event.target
+        name = name.value
+        surname = surname.value
+        email = email.value
+        password = password.value
 
-//             name = name.value
-//             surname = surname.value
-//             email = email.value
-//             password = password.value
-
-//             try {
-//                 onSubmit(name, surname, email, password)
-
-//                 cleanUp()
-//             } catch (error) {
-//                 if (!feedback) {
-//                     feedback = new Feedback(error.message, 'error')
-
-//                     this.container.append(feedback.container)
-//                 } else feedback.innerText = error.message
-//             }
-//         })
-
-//         const cleanUp = () => {
-//             const { name, surname, email, password } = form
-
-//             name.value = ''
-//             surname.value = ''
-//             email.value = ''
-//             password.value = ''
-
-//             if (feedback) {
-//                 this.container.removeChild(feedback.container)
-
-//                 feedback = undefined
-//             }
-//         }
-
-//         const login = this.container.querySelector('a')
-
-//         login.addEventListener('click', function (event) {
-//             event.preventDefault()
-
-//             onLogin()
-
-//             cleanUp()
-//         })
-//     }
-// }
-
-function Register({onLogin}) {
-    let registerSection = <section className="register">
+        try {
+            this.props.onSubmit(name, surname, email, password)
+        } catch({message}){
+            this.setState({error: message})
+        }
+    }
+        
+ render() {
+    return <section className="register">
         <h1>Register</h1>
-        <form onSubmit={ event => {
-            event.preventDefault()
-
-            let {name, surname, email, password} = event.target
-
-            name = name.value
-            surname = surname.value
-            email = email.value
-            password = password.value
-
-            // let feedback
-            // debugger
-
-            // try {
-            registerUser(name, surname, email, password)
-                
-                // cleanUp()
-
-            name = ''
-            surname = ''
-            email = ''
-            password = ''
-
-            onLogin()
-            // } catch(error){
-            //     if (!feedback) {
-            //         feedback = Feedback(error.message, 'error')
-
-            //         //registerSection.appendChild(feedback)
-            //     } else feedback.innerText = error.message
-            // }
-        }}>
+        <form onSubmit={this.handleSubmit}>
         <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}" />
         <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}" />
         <input type="email" name="email" placeholder="e-mail" required />
@@ -109,10 +36,11 @@ function Register({onLogin}) {
             or <a href="" onClick={ event => {
                 event.preventDefault()
                 
-                onLogin()
+                this.props.onLogin()
             }}>Login</a>
+
+            {this.state.error && <Feedback message={this.state.error} level={'error'} />}
         </form>
     </section>
-
-    return registerSection
+    }
 }

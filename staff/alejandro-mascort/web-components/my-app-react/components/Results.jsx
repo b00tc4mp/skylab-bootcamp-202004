@@ -23,11 +23,10 @@
 //     }
 // }
 
-function Results ({user}) {
-    let list = searchUsers(user)
-    let _list = list.map(({name, surname, email}) => <li>{name} {surname} ({email})}</li>)
+function Results ({results}) {
+    let list = results.map(({name, surname, email}) => <li>{name} {surname} ({email})}</li>)
 
     return <section className="results">
-        <ul>{_list}</ul>
+        {results.length ? <ul>{list}</ul> : <Feedback message={'Sorry, no results :('} level={'warning'} />}
     </section>
 }

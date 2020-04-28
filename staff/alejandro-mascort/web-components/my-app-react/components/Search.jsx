@@ -19,17 +19,23 @@
 //     }
 // }
 
-function Search({onSubmit}) {
-    return <section className='search'>
-        <form onSubmit={ event => {
-            event.preventDefault()
-
-            query = event.target.query.value
-
-            onSubmit(query)
-        }}>
-            <input type='text' name='query'></input>
+function Search ({ onSubmit }) {
+    function handleSubmit(event) {
+        event.preventDefault()
+        
+        let { query } = event.target
+        
+        query = query.value
+        
+        onSubmit(query)
+    }
+    
+    
+    return <section className="search"> 
+        <form onSubmit={handleSubmit}>
+            <input type="text" name="query"/>
             <button>🔍</button>
         </form>
     </section>
 }
+
