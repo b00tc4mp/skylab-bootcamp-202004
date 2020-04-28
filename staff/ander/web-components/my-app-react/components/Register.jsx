@@ -66,7 +66,7 @@
     }
 } */
 
-function Register(params) {
+function Register(onSubmit,onLogin) {
     return <section className="register">
     <h1>Register</h1>
     <form>
@@ -84,7 +84,7 @@ function Register(params) {
         password = password.value
 
     onSubmit(name, surname, email, password)}}>Submit</button>
-        or <a href="">Login</a>
+        or <a href="" onClick={(event)=>{event.preventDefault(); onLogin()}}>Login</a>
     </form>
 </section>
     
