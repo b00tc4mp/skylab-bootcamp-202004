@@ -1,4 +1,4 @@
-class Landing extends Component {
+/* class Landing extends Component {
     constructor(onRegister, onLogin) {
         super(`<section class="landing">
     <a href="">Register</a> or <a href="">Login</a>
@@ -22,4 +22,11 @@ class Landing extends Component {
             onLogin()
         })
     }
+} */
+function Landing(params) {
+    return <section className="landing">
+    <a href="" onClick={ (event) =>{ event.preventDefault();
+                onRegister()}}>Register</a> or <a href="" onClick={ (event) =>{ event.preventDefault();
+                    onLogin()}}>Login</a>
+    </section>
 }

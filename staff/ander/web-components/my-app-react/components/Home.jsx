@@ -1,4 +1,4 @@
-class Home extends Component {
+/* class Home extends Component {
     constructor(name, onLogout) {
         super(`<section class="home">
     <h1>Welcome, ${name}!</h1>
@@ -61,4 +61,15 @@ class Home extends Component {
             currentLink.classList.toggle('home__link--active')
         })
     }
+} */
+
+function Home(params) {
+    return <section className="home">
+        <h1>This is Home</h1>
+        <button onClick={event => {
+                event.preventDefault();
+                onLogout();
+        }}></button>
+
+</section>
 }
