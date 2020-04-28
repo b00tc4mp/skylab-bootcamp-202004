@@ -44,7 +44,7 @@ class Header extends Component {
                     <li>
                         <a className={`header-link ${this.state.body === 'home' ? 'header-link--active' : ''}`} href="" onClick={event => {
                             event.preventDefault()
-
+                            
                             this.setState({ body: 'home' })
                         }}>Home</a>
                     </li>
