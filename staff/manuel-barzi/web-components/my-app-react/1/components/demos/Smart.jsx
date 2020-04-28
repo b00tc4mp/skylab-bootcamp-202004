@@ -1,7 +1,7 @@
 const { Component } = React
 //import { Component } from 'react' // DOESN'T work yet in browsers by default
 
-class SmartCompo extends Component {
+class Smart extends Component {
     constructor(props) {
         super(props)
 
@@ -15,7 +15,11 @@ class SmartCompo extends Component {
     render() {
         console.log('render')
 
-        return <h1>Hello, {this.state.name}!</h1>
+        return <>
+            <h1>Smart: Hello, {this.state.name}!</h1>
+            
+            <Dumb name={this.state.name} />
+        </>
     }
 
     componentDidMount() {
