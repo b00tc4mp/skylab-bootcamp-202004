@@ -1,29 +1,31 @@
-//class="article-h-link "
-function retrieveNews(callback) {
-    var xhr = new XMLHttpRequest()
 
-    xhr.open('GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.vilaweb.cat/`)
+function retrieveNews(callback) {
+    var xhr = new XMLHttpRequest();
+
+    const NEWS_URL = 'https://www.vilaweb.cat/';
+
+    xhr.open('GET', `https://skylabcoders.herokuapp.com/proxy?url=${NEWS_URL}`);
 
     xhr.onload = function () {
-        const parser = new DOMParser()
+        const parser = new DOMParser()//bloc-subtitular-container
 
         const doc = parser.parseFromString(this.responseText, 'text/html')
 
-        let results = doc.querySelectorAll('.article.short')
+        let results = doc.querySelectorAll('li.bloc-parent')
 
         const data = []
 
         results.forEach(result => {
-            const title = result.querySelector('.link-noticia').innerText
-
             const content = result.querySelector('.link-noticia').innerText
 
             const { href: link } = result.querySelector('.link-noticia')
 
-           // const { src: image} = result.querySelector('.article-image')
-           const image = '';
-
-            data.push({ title, content, link, image})
+            let image = ''
+            const imageNode = result.querySelector('img.vw-item-img')
+            if (imageNode) {
+                image = imageNode.getAttribute('ng-src')
+            }
+            data.push({ image, content, link })
         })
 
         callback(undefined, data)

@@ -1,126 +1,80 @@
 class Home extends Component {
-    constructor(name, callback) {
+    constructor(name) {
         super(`<section class="home">
-        <h1>Hello ${name}, Welcome!</h1><button>Logout</button>
+        <h1>Hello ${name}, Welcome!</h1><button id="logout">Logout</button>
+        <div class="w3-bar w3-black">
+            <button id="users" class="w3-bar-item w3-button tablink w3-red">Users</button>
+            <button id="google" class="w3-bar-item w3-button tablink">Google</button>
+            <button id="ecosia" class="w3-bar-item w3-button tablink">Ecosia</button>
+            <button id="news" class="w3-bar-item w3-button tablink">News</button>
+        </div>
     </section>`);
 
-    const button = this.container.querySelector("button");
-    button.addEventListener("click", function() {
-        callback();
-    });
+        const button = this.container.querySelector('#logout')
 
-    let results;
+    button.addEventListener('click', () => onLogout())
 
-    this.container.appendChild(new Search(query => {
-        const users = searchUsers(query);
-        if (!results) {
-            results = new Results(users);
-            
-            this.container.appendChild(results.container);
-        } else {
-            const _results = results;
+    const users = new Users();
+    const google = new Google();
+    const ecosia = new Ecosia();
+    const news = new News();
 
-            results = new Results(users);
+    let currentComponent = users;
+    this.container.appendChild(currentComponent.container);
 
-            _results.container.replaceWith(results.container);
-        }
-    }).container);
+    const usersButton = this.container.querySelector('#users')
+    let currentButton = usersButton;
 
-    const _googleSearch = new SearchGoogle(query => {
-        searchGoogle(query, (error, data) => {
-            if (!results) {
-                results = new ResultsGoogle();
+    usersButton.addEventListener('click', function () {
+        event.preventDefault()
 
-                this.container.appendChild(results.container);
-            } else {
-                const _results = results;
+        currentComponent.container.replaceWith(users.container)
+        currentComponent = users;
 
-                results = new ResultsGoogle(error, data);
+        currentButton.classList.toggle('w3-red')
+        currentButton = usersButton;
+        currentButton.classList.toggle('w3-red')
 
-                _results.container.replaceWith(results.container);
-            }
-        });
-    });
-    this.container.appendChild(_googleSearch.container);
+    })
+
+    const googleButton = this.container.querySelector('#google')
+    googleButton.addEventListener('click', function () {
+        event.preventDefault()
+
+        currentComponent.container.replaceWith(google.container)
+        currentComponent = google;
+
+        currentButton.classList.toggle('w3-red')
+        currentButton = googleButton;
+        currentButton.classList.toggle('w3-red')
+
+    })
     
-    const _ecosiaSearch = new SearchEcosia(query => {
-        searchEcosia(query, (error, data) => {
-            if (!results) {
-                results = new ResultsEcosia();
+    const ecosiaButton = this.container.querySelector('#ecosia')
+    ecosiaButton.addEventListener('click', function () {
+        event.preventDefault()
 
-                this.container.appendChild(results.container);
-            } else {
-                const _results = results;
+        currentComponent.container.replaceWith(ecosia.container)
+        currentComponent = ecosia;
 
-                results = new ResultsEcosia(error, data);
+        currentButton.classList.toggle('w3-red')
+        currentButton = ecosiaButton;
+        currentButton.classList.toggle('w3-red')
 
-                _results.container.replaceWith(results.container);
-            }
-        });
-    });
-    
-    this.container.appendChild(_ecosiaSearch.container);
+    })
 
-    let resultNews;
-    retrieveNews((error, data) => {
-        if (resultNews) {
-            resultNews = new News(error, data);
+    const newsButton = this.container.querySelector('#news')
+    newsButton.addEventListener('click', function () {
+        event.preventDefault()
 
-            this.container.appendChild(resultNews.container);
-        }
-    });
-    
+        currentComponent.container.replaceWith(news.container)
+        currentComponent = news;
+
+        currentButton.classList.toggle('w3-red')
+        currentButton = newsButton;
+        currentButton.classList.toggle('w3-red')
+
+    })
+
     };
 };
-
-
-/* 
-
-class Home extends Component {
-    constructor(name, callback) {
-        super(`<section class="home">
-    <h1>Welcome, ${name}!</h1><button>Logout</button>
-</section>`)
-
-        const usersButton = this.container.querySelector('#users')
-        button.addEventListener('click', function () {
-            //todo change style for all buttons and change the tab visibility
-        })
-        const googleButton = this.container.querySelector('#google')
-        button.addEventListener('click', function () {
-            //todo change style for all buttons and change the tab visibility
-        })
-        const ecosiaButton = this.container.querySelector('#ecosia')
-        button.addEventListener('click', function () {
-            //todo change style for all buttons and change the tab visibility
-        })
-        const newsButton = this.container.querySelector('#news')
-        button.addEventListener('click', function () {
-            //todo change style for all buttons and change the tab visibility
-        })
-
-        const button = this.container.querySelector('button')
-
-        button.addEventListener('click', function () {
-            callback()
-        })
-
-        let results
-
-        this.container.appendChild(new Search(query => {
-            const users = searchUsers(query)
-
-            if (!results) {
-                results = new Results(users)
-
-                this.container.appendChild(results.container)
-            } else {
-                const _results = results
-
-                results = new Results(users)
-
-                _results.container.replaceWith(results.container)
-            }
-        }).container)
-    }
-} */

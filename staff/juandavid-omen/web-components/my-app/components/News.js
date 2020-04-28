@@ -6,29 +6,42 @@ class News extends Component {
         </form>
     </section>`);
 
-        if (error) {
-            this.container.appendChild(new Feedback('sorry, an error has occurred :(', 'error').container);
-        } else if (data) {
-            if (data.length) {
-                const list = document.createElement('ul');
+        retrieveNews((error, data) => {
 
-                data.forEach(({ title, content, link }) => {
-                    const item = document.createElement('p');
+            if (error) {
+                this.container.appendChild(new Feedback('sorry, an error has occurred :(', 'error').container);
+            } else if (data) {
+                if (data.length) {
+                    const list = document.createElement('ul');
 
-                    item.innerHTML = `
-                    <img src=${image}>
-                    <h4>
-                        <a href=${link}>${title}</a>
-                    </h4>
-                    <p>${content}</p>
-                    <hr>`
+                    data.forEach(({ image, content, link }) => {
+                        const item = document.createElement('li')
 
-                    list.appendChild(item);
+                        const anchor = document.createElement('a')
+                        anchor.href = link
+                        anchor.target = '_blank'
 
-                })
-                this.container.appendChild(list);
+                        item.append(anchor)
 
-            } 
-        }
+                        const img = document.createElement('img')
+                        img.src = image
+
+                        anchor.append(img)
+
+                        const paragraph = document.createElement('p')
+                        paragraph.innerText = content
+
+                        anchor.append(paragraph)
+
+                        list.append(item)
+
+                    })
+                    this.container.append(list);
+
+                }
+            }
+            
+        });
+
     };
 };
