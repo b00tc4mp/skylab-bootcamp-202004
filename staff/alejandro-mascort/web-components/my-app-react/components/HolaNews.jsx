@@ -1,3 +1,5 @@
+import { Component } from "react";
+
 // class HolaNews extends Component {
 //     constructor(message, level) {
 //         super(`<section class="hola-news">
@@ -34,4 +36,29 @@
 //             this.container.append(list)
 //         })
 //     }
+// }
+
+// class HolaNews extends Component{
+//     constructor() {
+//         super()
+
+//         this.state = {
+//             error: undefined,
+//             results: undefined
+//         }
+//     }
+
+//     handleSubmit = () => {
+//         retrieveHolaNews((error, results) => {
+//             if (error) this.setState({error: error.message})
+//             else this.setState({results: results})
+//         })
+//     }
+
+//     render() {
+//         return <section className="hola-news">
+//             <h2>Hola News</h2>
+//         </section>
+//     }
+
 // }

@@ -37,17 +37,11 @@ class Google extends Component {
     }
 
     handleSubmit = query => {
-        debugger
+        
         google(query, (error, results) => {
             if (error) this.setState({error: error.message})
-            else{
-                debugger
-                this.setState = {results: results}
-                console.log(results)
-            }
+            else this.setState({results: results})
         })
-
-
     }
 
     render() {
@@ -56,7 +50,6 @@ class Google extends Component {
             <Search onSubmit={this.handleSubmit}/>
             {this.state.error && <Feedback message={this.state.error} level={'error'} />} 
             {this.state.results && <GoogleResults results={this.state.results} />}
-
         </section>
     }
 }
