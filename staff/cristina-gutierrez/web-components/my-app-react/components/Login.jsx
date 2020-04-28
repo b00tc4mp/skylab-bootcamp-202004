@@ -58,20 +58,18 @@
 //     }
 // }
 
-function Login({ onRegister }) {
+function Login({ onRegister}) {
     return <section className="login">
         <h1>Login</h1>
         <form>
             <input type="email" name="email" placeholder="e-mail" required />
             <input type="password" name="password" placeholder="password" required />
             <button>Submit</button>
-            or <a href="">Register</a>
-            <a href="" onClick={ event => {
+            or <a href="" onClick={event => {
                 event.preventDefault()
-        
+                
                 onRegister()
-            }}>Register</a> 
+            }}>Register</a>
         </form>
     </section>
-        
 }
