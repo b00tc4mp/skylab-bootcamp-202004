@@ -1,4 +1,4 @@
-class Home extends Component {debugger
+/* class Home extends Component {debugger
   constructor(name, callback) {
     super(`<section class="home">
     <h1>Welcome, ${name}!</h1><button>Logout</button>
@@ -84,3 +84,11 @@ class Home extends Component {debugger
     }
 }
 
+ */
+
+ function Home({name}) {
+ return <section className="home">
+  <h1>Welcome,{name}!</h1><button>Logout</button>
+</section>
+ 
+}
