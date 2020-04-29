@@ -71,6 +71,11 @@
   text-align: center;
 }
 
+@keyframes spin {
+  0% {
+    transform: rotate(-360deg);
+  }
+}
 * {
   margin: none;
   box-sizing: border-box;
@@ -89,7 +94,8 @@
   background-color: #a7b9fb;
 }
 .home .home__search {
-  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 .home .home__search button {
   height: vh;
@@ -103,6 +109,16 @@
 .home .home__search button:hover {
   color: white;
   font-weight: 600;
+}
+.home .home__search .change {
+  display: none;
+  width: 3vw;
+  font-family: "Special Elite", cursive;
+  font-size: 1.2rem;
+  padding: none;
+  margin: none;
+  border: none;
+  background-color: #a7b9fb;
 }
 .home .home__search input {
   font-family: "Special Elite", cursive;
@@ -132,21 +148,32 @@
   font-size: 1rem;
   font-family: "Special Elite", cursive;
 }
+.home i {
+  align-self: center;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  display: none;
+  color: white;
+  animation: spin 1.5s linear infinite;
+}
 .home ul {
   font-family: "Bebas Neue", cursive;
   flex-direction: column;
-  flex-direction: column;
   margin-right: 3.5vw;
   list-style-type: none;
-  ustify-content: center;
   max-height: 60vh;
   overflow-y: scroll;
+  display: flex;
+  -ms-overflow-style: none;
+  margin-top: 3vh;
 }
 .home ul::-webkit-scrollbar {
   display: none;
 }
 .home ul {
+  display: flex;
   -ms-overflow-style: none;
+  margin-top: 3vh;
 }
 .home ul li {
   font-size: 1.2rem;

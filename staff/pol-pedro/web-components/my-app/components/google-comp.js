@@ -6,9 +6,10 @@ class GoogleComp extends Component{
                 <form>
                     <input type="text" name="search" placeholder="search in ${navigator}">
                     <button class="search">search</button>
-                    <h2 button="change">${onNav}</h2>
+                    <h2 class="change">Bing</h2>
                 </form>
                 <ul></ul>
+                <i class="fas fa-spinner fa-5x"></i>
             </section>
         </section>`)
     // || Variables declaration ||
@@ -18,6 +19,7 @@ class GoogleComp extends Component{
         const form = searchContainer.querySelector('form')
         let feedback
         let searched
+        let style = document.createElement('style');
     // || Functions and event listeners ||
 
 
@@ -42,10 +44,13 @@ class GoogleComp extends Component{
             event.preventDefault();
             var theName = event.target.search.value
             cleanSearch()
+            searchContainer.appendChild(style);
+            style.sheet.insertRule('.home__search i{display: inline}')
             try{
                 if(navigator === 'google'){
-
                     google(theName, (results)=>{
+                        searchContainer.appendChild(style);
+                        style.sheet.insertRule('.home__search i{display: none}')
                         for (var i = 0; i < results.length; i++){
                             searched = new GoogleResults(results[i].textTitle, results[i].textContent, results[i].link)
                             searchContainer.children[1].append(searched.container)
