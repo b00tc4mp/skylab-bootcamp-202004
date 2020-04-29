@@ -1,6 +1,5 @@
 function Navbar({onChangeView}) {
     return <section>
-    <h1>{`Welcome ${name}`}</h1>
     <button onClick={event => {
         event.preventDefault()
 
@@ -13,6 +12,12 @@ function Navbar({onChangeView}) {
 
             onChangeView('users')
         }}>Users</a> 
+    </li>
+    <li><a href="" onClick={event => {
+            event.preventDefault()
+
+            onChangeView('feed')
+        }}>Feed</a> 
     </li>
     
     <li><a href="" onClick={event => {

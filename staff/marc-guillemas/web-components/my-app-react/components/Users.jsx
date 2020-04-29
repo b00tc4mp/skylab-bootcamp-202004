@@ -32,13 +32,19 @@ class Users extends Component {
 
     }
 
-    render(){
+    
+
+
+
+
+    render() {
         return <section>
-            
+
             <SearchUsers onSubmit = {this.handleSearch}/>
-            {this.state.users && <Results users={this.state.users}/>}
-            
+            {this.state.users && <Results users={this.state.users} loggedUser={this.props.user} />} 
+        
         </section>
+        
     }
   
 }

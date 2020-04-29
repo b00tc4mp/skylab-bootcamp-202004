@@ -41,7 +41,6 @@ class Google extends Component {
             
             <SearchGoogle onSubmit = {this.handleSearch}/>
             {this.state.data && <GoogleResults data= {this.state.data} />}
-            
         </section>
     }
     

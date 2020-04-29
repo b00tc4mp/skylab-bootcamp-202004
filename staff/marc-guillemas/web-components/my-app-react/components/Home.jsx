@@ -83,26 +83,30 @@
 const {Component} = React
 
 class Home extends Component {
-    constructor(props) {
+    constructor(props) { // props = {user, }{user}
         super(props)
 
+        
         this.state = {
-            view: 'google'
+            view: 'feed'
         }
 
     }
 
     changeView = (_view) => this.setState({view: _view})
 
-
+    debugger
     render() {
         return <>
+        
+        <h1>Welcome, {this.props.user.name}!</h1>
+        
         <Navbar onChangeView={this.changeView}/>
 
-        {/* {this.state.view === 'landing' && <Landing/>} */}
-        {this.state.view === 'users' && <Users/>}
+        {this.state.view === 'users' && <Users user={this.props.user} />}
         {this.state.view === 'google' && <Google/>}
         {this.state.view === 'wired' && <Wired/>}
+        {this.state.view === 'feed' && <Feed loggedUser={this.props.user} />}
     </>
     }
 }

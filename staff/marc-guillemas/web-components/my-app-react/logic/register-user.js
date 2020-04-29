@@ -19,6 +19,9 @@ function registerUser(name, surname, email, password) {
         name,
         surname,
         email,
-        password
+        password,
+
+        // twitter: {tweets: [] , 
+        //         following: []} 
     })
 }

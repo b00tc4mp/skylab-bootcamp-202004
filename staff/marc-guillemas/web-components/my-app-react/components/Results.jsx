@@ -19,17 +19,38 @@
 //     }
 // }
 
-function Results({users}){
+function Results({users, loggedUser}){
+    
+    // const followingUsers = user.filter(if following)
+    const checkFollow = (email, loggedUser)=> {
+        debugger
+        if(loggedUser.twitter.following)
+            if(loggedUser.twitter.following.indexOf(email) !== -1)
+             return 'Following'
+            else
+            return 'Follow'
+    }
+
+    const handleFollow = (email) => {
+        debugger
+        loggedUser.twitter.following.push(email)
+
+
+        checkFollow(email, loggedUser)
+    }
+
     return <section>
         
-        {(() => { debugger
+        {(() => {
             if(users.length)
-                return <ul>{users.map(({ name, surname, email }) => <li>{`${name} ${surname} (${email})`}</li>)}</ul>
+                return <ul>{users.map(({ name, surname, email }) => <li>{`${name} ${surname} (${email})` }<button onClick={event => { event.preventDefault(); handleFollow(email)}}>{`${checkFollow(email, loggedUser)}`}</button></li>)}</ul>
             else return <Feedback message="sorry, no results :(" level="warning" />
         })()}
         
     </section>
 }
+
+{/* <button>{Follow/Following}</button> */}
 
  {/*(() => {
             if (users.length)

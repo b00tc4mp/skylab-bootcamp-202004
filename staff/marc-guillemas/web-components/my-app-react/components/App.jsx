@@ -5,6 +5,7 @@ class App extends Component {
         super()
 
         this.state = {
+            user: retrieveUser('aitor@gmail.com'),
             view: 'home'
         }
     }
@@ -20,8 +21,9 @@ class App extends Component {
 
     handleLogin = (email, password) => {
        authenticateUser(email, password)
-
+        const user = retrieveUser(email)
         this.setState({ view: 'home' })
+        this.setState({ user: user })
     }
 
     render() {
@@ -29,7 +31,7 @@ class App extends Component {
             {this.state.view === 'landing' && <Landing onRegister={this.changeView} onLogin={this.changeView}/>}
             {this.state.view === 'register' && <Register onLogin={this.changeView} onSubmit = {this.handleRegister}/>}
             {this.state.view === 'login' && <Login onRegister={this.changeView} onSubmit={this.handleLogin}/>}
-            {this.state.view === 'home' && <Home />}
+            {this.state.view === 'home' && <Home user={this.state.user} />}
         </>
     }
 }
