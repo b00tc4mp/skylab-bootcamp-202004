@@ -19,7 +19,7 @@ render() {
     return <section className="ecosia">
         <h2>Ecosia</h2>
         <Search onSubmit={this.handleOnEcosia}/>
-        {this.state.results && <EcosiaResults googleFind={this.state.results} />}
+        {this.state.results && <EcosiaResults results={this.state.results} />}
     </section >
 }
 

@@ -2,7 +2,7 @@ function EcosiaResults({ results }) {debugger
 
   return <section className="results">
       {results.length ?
-          <ul>{reuslts.map(({ title, content, link }) => {
+          <ul>{results.map(({ title, content, link }) => {
               return <>
                   <h2>{`${title}`}</h2>
                   <p>{`${content}`}</p>
