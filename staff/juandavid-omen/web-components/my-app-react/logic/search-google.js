@@ -26,7 +26,7 @@ function searchGoogle(query, callback) {
     }
 
     xhr.onerror = function (error) {
-        callback(new Error(`network error: ${error}`));
+        callback(new Error('network error'));
     }
 
     xhr.send()
