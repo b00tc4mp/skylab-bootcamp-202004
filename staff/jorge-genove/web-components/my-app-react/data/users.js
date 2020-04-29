@@ -4,7 +4,7 @@ const users = [{
         email: 'manuelbarzi@gmail.com',
         password: '123123123',
         tweets: [{
-            message: 'Hola, Mundo!',
+            message: 'I hate pepigri!',
             date: new Date
         }],
         following: ['pepito@grillo.com']
@@ -14,7 +14,11 @@ const users = [{
         name: 'Pepito',
         surname: 'Grillo',
         email: 'pepito@grillo.com',
-        password: '123123123'
+        password: '123123123',
+        tweets: [{
+            message: 'FYOU Manu!',
+            date: new Date
+        }],
     },
 
     {

@@ -9,7 +9,9 @@
 
         this.state = {
         view: 'landing',
-        name: undefined
+        name: undefined,
+        useremail: undefined
+        
     }
      }    
     
@@ -17,7 +19,7 @@
     /* handleGoToLogin = () => this.setState({view: 'login'})
     handleToGo = () => this.setState({view})  */
 
-    handleRegister = (name, surname, email, password) => {debugger
+    handleRegister = (name, surname, email, password) => {
         registerUser(name, surname, email, password)
 
         this.setState({ view: 'login' })
@@ -29,7 +31,8 @@
         const user = retrieveUser(email)
         const {name} = user
         this.setState({view: 'home',
-                       user: name })
+                       user: name, 
+                        useremail: email})
 
     }
     
@@ -41,7 +44,7 @@
         {this.state.view === 'landing' && <Landing onRegister={this.handleGoToRegister}  onLogin = {this.handleGoToLogin}/>}
         {this.state.view === 'register' && <Register onRegister1={this.handleRegister}/>}
         {this.state.view === 'login' && <Login onLogin1={this.handleLogin} />}
-        {this.state.view === 'home' && <Home user={this.state.user}/>}
+        {this.state.view === 'home' && <Home user={this.state.user} useremail ={this.state.email} />}
     
     
 </>

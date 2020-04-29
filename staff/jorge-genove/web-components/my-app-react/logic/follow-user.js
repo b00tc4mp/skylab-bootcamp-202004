@@ -1,15 +1,22 @@
-function followUser(email, selfmail) {
-    users.forEach(user => {
-        if (user.email === email) {
-            for (var i = 0; users.length; i++) {
-                if (users[i].email === selfmail) {
-                    users[i].folllowing.push(email)
-                }
-            }
+function followUser(emailFollower, selfemail) {
+    debugger
+    if (typeof emailFollower !== 'string') throw new TypeError(emailFollower + ' is not a string')
+    if (!EMAIL_REGEX.test(emailFollower)) throw new Error(emailFollower + ' does not match the format')
 
-        } else {
-            console.log('error')
-        }
-    })
+    if (typeof selfemail !== 'string') throw new TypeError(email + ' is not a string')
+    if (!EMAIL_REGEX.test(selfemail)) throw new Error(email + ' does not match the format')
+
+    const user = users.find(user => user.email === selfemail)
+    if (!user) throw new Error(`${selfemail} not exist`)
+
+    const follower = users.find(user => user.email === emailFollower)
+    if (!follower) throw new Error(`${emailFollower} not matched`)
+
+    const index = (user.following || (user.following = [])).indexOf(emailFollower)
+
+    if (index > -1) user.following.splice(index, 1)
+    else user.following.push(emailFollower)
+
+
 
 }
