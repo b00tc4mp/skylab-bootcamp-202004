@@ -1,15 +1,15 @@
 const { Component } = React
 
 class Ecosia extends Component{
-    constructor(){
-    super()
+    constructor(props){
+    super(props)
     
-    this.state = {ecosiaFind : undefined}
+    this.state = {results : undefined}
 
     }
 handleOnEcosia = (query) => {
-    ecosiaSearch(query, (error,results) => {
-        this.setState({ecosiaFind : results})
+    ecosiaSearch(query, (error,results) => {debugger
+        this.setState({ results })
     })
 }
 
@@ -18,8 +18,8 @@ handleOnEcosia = (query) => {
 render() {
     return <section className="ecosia">
         <h2>Ecosia</h2>
-        <Search onSearch={this.handleOnEcosia}/>
-        {this.state.ecosiaFind && <EcosiaResults googleFind={this.state.ecosiaFind} />}
+        <Search onSubmit={this.handleOnEcosia}/>
+        {this.state.results && <EcosiaResults googleFind={this.state.results} />}
     </section >
 }
 

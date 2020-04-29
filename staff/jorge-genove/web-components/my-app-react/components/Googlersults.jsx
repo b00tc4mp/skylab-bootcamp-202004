@@ -1,4 +1,4 @@
-function GoogleResults({ googleFind }) {
+function GoogleResults({ googleFind }) {debugger
 
     return <section className="results">
         {googleFind.length ?

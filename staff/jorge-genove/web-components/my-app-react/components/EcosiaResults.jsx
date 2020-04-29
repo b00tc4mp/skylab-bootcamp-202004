@@ -1,8 +1,8 @@
-function EcosiaResults({ ecosiaFind }) {
+function EcosiaResults({ results }) {debugger
 
   return <section className="results">
-      {ecosiaFind.length ?
-          <ul>{ecosiaFind.map(({ title, content, link }) => {
+      {results.length ?
+          <ul>{reuslts.map(({ title, content, link }) => {
               return <>
                   <h2>{`${title}`}</h2>
                   <p>{`${content}`}</p>

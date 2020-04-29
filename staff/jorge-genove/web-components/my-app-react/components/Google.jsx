@@ -10,7 +10,7 @@ class Google extends Component {
 
     handleGoogle = (query) => {
 
-        googleSearch(query, (error, results) => {
+        googleSearch(query, (error, results) => {debugger
             this.setState({ googleFind: results })
         })
     }
@@ -18,7 +18,7 @@ class Google extends Component {
     render() {
         return <section className="google">
             <h2>Google</h2>
-            <Search onSearch={this.handleGoogle}/>
+            <Search onSubmit={this.handleGoogle}/>
             {this.state.googleFind && <GoogleResults googleFind={this.state.googleFind} />}
         </section >
     }

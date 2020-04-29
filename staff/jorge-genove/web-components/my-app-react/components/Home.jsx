@@ -28,7 +28,13 @@ class Home extends Component {
         { currentLink: 'ecosia'}
       )
     }
-
+    handleOnNews = (event) => {
+        event.preventDefault()
+        this.setState(
+          { currentLink: 'mediavida'}
+        )
+      }
+  
     render() {
         return <section className="home">
                     <h1>Wellcome {this.props.user}</h1>
@@ -36,11 +42,12 @@ class Home extends Component {
                     <a onClick={this.handleOnUsers} className="home__link" href="">Users</a>
                     <a onClick={this.handleOnGoogle} className="home__link" href="">Google</a>
                     <a onClick={this.handleOnEcosia} className ="home__link" href="">Ecosia</a>
-                    <a className="home__link" href="">Sport</a>
+                    <a onClick={this.handleOnNews} className="home__link" href="">Mediavida</a>
 
                     {this.state.currentLink === 'user' && <User />}
                     {this.state.currentLink === 'google' && <Google />}
                     {this.state.currentLink === 'ecosia' && <Ecosia />}
+                    {this.state.currentLink === 'medivida' && <HomeNews />}
 
                </section>
     }
