@@ -1,6 +1,6 @@
 function Landing({ onRegister, onLogin}) {
     return <section className="landing">
-        <h1>Wellcome to my App</h1>
+        <h1>Welcome to my App</h1>
         <a href="" onClick={event => {
             event.preventDefault()
             onRegister()
