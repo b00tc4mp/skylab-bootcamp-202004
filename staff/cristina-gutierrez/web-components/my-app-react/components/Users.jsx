@@ -1,26 +1,14 @@
-const { Component } = React
-
-class Users extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            users: undefined
-        }
-    }
-
-    handleSearch = query => {
+function Users({ onSearch, users, query }) {
+    function handleSearch(query) {
         const users = searchUsers(query)
 
-        this.setState ({ users })
+        onSearch(users, query)
     }
 
-    render() {
-        return <section className='users'>
-            <h2>Users</h2>
-            <Search onSubmit={this.handleSearch} />
-            {this.state.users && <Results users={this.state.users} />}
-        </section>
+    return <section className="users">
+        <h2>Users</h2>
 
-    }
+        <Search onSubmit={handleSearch} query={query} />
+        {users && <Results users={users} />}
+    </section>
 }

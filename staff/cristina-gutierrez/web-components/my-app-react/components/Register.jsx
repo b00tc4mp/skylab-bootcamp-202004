@@ -1,23 +1,19 @@
-const { Component } = React
-
 class Register extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            error: ''
-        }
+        this.state = { error: '' }
     }
-    
+
     handleSubmit = event => {
         event.preventDefault()
 
-        let { name, surname, email, password } = event.target;
+        let { name, surname, email, password } = event.target
 
-        name = name.value;
-        surname = surname.value;
-        email = email.value;
-        password = password.value;
+        name = name.value
+        surname = surname.value
+        email = email.value
+        password = password.value
 
         try {
             this.props.onSubmit(name, surname, email, password)
@@ -35,13 +31,10 @@ class Register extends Component {
                 <input type="email" name="email" placeholder="e-mail" required />
                 <input type="password" name="password" placeholder="password" required minLength="8" />
                 <button>Submit</button>
-                    or <a href="" onClick={ event => {
-                        event.preventDefault()
+                or <a href="">Login</a>
 
-                        this.props.onLogin()
-                    }}>Login</a>
-                    {this.state.error && <Feedback message={this.state.error} level={'error'} />}
-                </form>
-            </section>
-        }
+                {this.state.error && <Feedback message={this.state.error} level="error" />}
+            </form>
+        </section>
     }
+}

@@ -1,4 +1,43 @@
 const users = [
-    {name: "Cris", surname: "Gutierrez", email: "gutierrezales@hotmail.com", password: "12345678"},
-    {name: "Aleix", surname: "Caminal", email: "aleixc@gmail.com", password: "1234"}
-];
+    {
+        name: 'Manuel',
+        surname: 'Barzi',
+        email: 'manuelbarzi@gmail.com',
+        password: '123123123',
+        tweets: [{
+            message: 'Hola, Mundo!',
+            date: new Date
+        }],
+        following: ['pepito@grillo.com']
+    },
+
+    {
+        name: 'Pepito',
+        surname: 'Grillo',
+        email: 'pepito@grillo.com',
+        password: '123123123',
+        tweets: [{
+            message: 'Hola, Mundo!',
+            date: new Date
+        }],
+    },
+
+    {
+        name: 'Andy',
+        surname: 'Garcia',
+        email: 'andy@garcia.com',
+        password: '123123123'
+    },
+
+    {
+        name: 'Cristina',
+        surname: 'Guti',
+        email: 'Cristgu@gmail.com',
+        password: '123123123',
+        tweets: [{
+            message: 'Hola, Mundo!',
+            date: new Date
+        }],
+        following: ['pepito@grillo.com']
+    },
+]
