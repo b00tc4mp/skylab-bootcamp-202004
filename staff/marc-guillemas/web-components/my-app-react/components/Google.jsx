@@ -44,5 +44,5 @@ class Google extends Component {
             
         </section>
     }
-  
+    
 } 
