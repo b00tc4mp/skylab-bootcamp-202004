@@ -10,6 +10,6 @@ function findUser(email, password) {
     })
 
     if (!user) throw new Error('wrong credentials')
-
-    return user;
+    const finaleUser = {name: user.name, surname: user.surname}
+    return finaleUser;
 }

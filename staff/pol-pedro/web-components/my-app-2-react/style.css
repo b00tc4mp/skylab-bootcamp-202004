@@ -346,7 +346,6 @@
 }
 .header__landing i {
   margin-left: 70vw;
-  display: none;
 }
 .header__landing i:hover {
   color: white;
@@ -421,6 +420,9 @@
 .login__container form button:hover {
   background-color: #7d978b;
   color: white;
+}
+.login__container form .buton-cross {
+  text-decoration: line-through;
 }
 .login__container form a {
   margin-right: auto;

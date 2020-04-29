@@ -11,15 +11,16 @@ class Landing extends Component{
         return <header className="header">
             <section className="header__landing">
                 <h1>MyApp</h1>
-                <a href="" onClick={ event => {
+                {!this.props.userInfo && <a href="" onClick={ event => {
                 event.preventDefault()
                 this.props.onLogin()
-                }}>Login</a>
-                <a href="" onClick={ event => {
+                }}>Login</a>}
+                {!this.props.userInfo && <a href="" onClick={ event => {
                 event.preventDefault()
                 this.props.onRegister()
-                }}>Register</a>
-                <i className="fas fa-search fa-lg"></i> 
+                }}>Register</a>}
+                {this.props.userInfo && <i className="fas fa-search fa-lg"></i>}
+                {this.props.userInfo && <h2>{this.props.userInfo.name} {this.props.userInfo.surname}</h2>}
             </section>
         </header>
     }
