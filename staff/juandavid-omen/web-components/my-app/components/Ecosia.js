@@ -2,7 +2,7 @@ class Ecosia extends Component {
     constructor(error, data) {
         super(`<section class="users">
             <form>
-                <h2>users</h2>
+                <h2>Ecosia</h2>
             </form>
         </section>`);
 

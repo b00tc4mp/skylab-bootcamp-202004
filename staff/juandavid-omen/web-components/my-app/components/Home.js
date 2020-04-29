@@ -1,5 +1,5 @@
 class Home extends Component {
-    constructor(name) {
+    constructor(name, onLogout) {
         super(`<section class="home">
         <h1>Hello ${name}, Welcome!</h1><button id="logout">Logout</button>
         <div class="w3-bar w3-black">
@@ -11,8 +11,7 @@ class Home extends Component {
     </section>`);
 
         const button = this.container.querySelector('#logout')
-
-    button.addEventListener('click', () => onLogout())
+        button.addEventListener('click', () => onLogout())
 
     const users = new Users();
     const google = new Google();

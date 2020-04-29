@@ -1,9 +1,7 @@
 class News extends Component {
     constructor(error, data) {
         super(`<section class="news">
-        <form>
-            <h2>news</h2>
-        </form>
+            <h2>News</h2>
     </section>`);
 
         retrieveNews((error, data) => {
