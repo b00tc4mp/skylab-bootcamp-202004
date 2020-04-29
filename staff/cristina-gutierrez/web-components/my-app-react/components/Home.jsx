@@ -65,38 +65,45 @@ class Home extends Component {
         super(props) 
         
         this.state = {
-            current:'users'
+            view:'users'
         }
     }
 
-    displayView = view => {this.setState({ current:view })}
+    handleUsers = event => {
+        event.preventDefault()
+        
+        this.setState({ view: "users" })
+    }
+    handleGoogle = event => {
+        event.preventDefault()
+    }
 
     render() {
         return <section className="home">
-            <h1>Welcome, {name}!</h1>
+            <h1>Welcome, {this.props.name}!</h1>
             <a href="" onClick={event => {
                 event.preventDefault()
 
-                this.displayView('users')
-            }}>Users</a>
+                this.handleUsers('users')
+            }}>Users </a>
             <a href="" onClick={event => {
                 event.preventDefault()
 
-                this.displayView("google")
-            }}>Google</a>
+                this.handleGoogle("google")
+            }}>Google </a>
             <a href="" onClick={event => {
                 event.preventDefault()
 
-                this.displayView('users')
-            }}>Hola News</a>
+                this.handleHola('users')
+            }}>Hola News </a>
             <button onClick={ event => {
                 event.preventDefault()
 
                 this.props.handleGoToLanding
             }}>Logout</button>
-            {this.state.current === 'users' && <Users />}
-            {this.state.current === 'google' && <Google />}
-            {this.state.current === 'news' && <HolaNews />}
+            {this.state.view === 'users' && <Users />}
+            {this.state.view === 'google' && <Google />}
+            {this.state.view === 'news' && <HolaNews />}
         </section>
     }
 }

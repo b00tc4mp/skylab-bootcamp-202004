@@ -1,8 +1,8 @@
 const { Component } = React
 
 class Users extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.state = {
             users: undefined
