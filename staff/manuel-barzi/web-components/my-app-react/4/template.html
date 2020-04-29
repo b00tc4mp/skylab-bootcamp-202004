@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <section class="landing">
+        <a href="">Register</a> or <a href="">Login</a>
+    </section>
+
+    <section class="register">
+        <h1>Register</h1>
+        <form>
+            <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}">
+            <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}">
+            <input type="email" name="email" placeholder="e-mail" required>
+            <input type="password" name="password" placeholder="password" required minLength="8">
+            <button>Submit</button>
+            or <a href="">Login</a>
+        </form>
+        <p class="feedback feedback--error">Wrong credentials</p>
+    </section>
+
+    <section class="login">
+        <h1>Login</h1>
+        <form>
+            <input type="email" name="email" placeholder="e-mail" required>
+            <input type="password" name="password" placeholder="password" required minLength="8">
+            <button>Submit</button>
+            or <a href="">Register</a>
+        </form>
+        <p class="feedback feedback--error">Wrong credentials</p>
+    </section>
+
+    <section class="home">
+        <h1>Welcome, ${name}!</h1>
+        <a class="home__link home__link--active" href="">Users</a>
+        <a class="home__link" href="">Google</a>
+        <button>Logout</button>
+        
+        <section class="search">
+            <form>
+                <input type="text" name="query">
+                <button>🔍</button>
+            </form>
+        </section>
+
+        <section class="results">
+            <ul>
+                <li>Manuel Barzi (manuelbarzi@gmail.com)</li>
+                <li>Pepito Grillo (pepito@grillo.com)</li>
+            </ul>
+        </section>
+    </section>
+</body>
+
+</html>
