@@ -4,7 +4,10 @@ class Home extends Component {
     constructor(props) {
         super(props)
 
-        this.state = { currentLink: 'user' }
+        this.state = {
+            currentLink: 'user',
+            tweet: undefined
+        }
 
     }
     handleOnGoogle = (event) => {
@@ -23,11 +26,17 @@ class Home extends Component {
     }
     handleonTwitter = (event) => {
         event.preventDefault()
-
+        const tweets = retrieveTweets(this.props.userEmail)
         this.setState(
-            { currentLink: 'twitter' }
+            {
+                currentLink: 'twitter',
+                tweet: tweets
+            }
         )
     }
+
+
+
     // handleOnEcosia = (event) => {
     //     event.preventDefault()
 
@@ -42,6 +51,7 @@ class Home extends Component {
     //         { currentLink: 'sport' }
     //     )
     // }
+
     render() {
         return <section className="home">
             <h1>Wellcome {this.props.user}</h1>
@@ -55,7 +65,7 @@ class Home extends Component {
             {this.state.currentLink === 'user' && <Users />}
             {this.state.currentLink === 'google' && <Google />}
             {this.state.currentLink === 'ecosia' && <Ecosia />}
-            {this.state.currentLink === 'twitter' && <Twitter />}
+            {this.state.currentLink === 'twitter' && <Twitter resultsTweet={this.state.tweet}/>}
             {/* {this.state.currentLink === 'sport' && <Sport />} */}
         </section>
     }

@@ -6,7 +6,8 @@ class App extends Component {
         super()
         this.state = {
             view: 'landing',
-            user: undefined
+            user: undefined,
+            userEmail: undefined
         }
     }
     handleGoToRegister = () => this.setState({ view: 'register' })
@@ -18,10 +19,11 @@ class App extends Component {
     handleLogin = (email, password) => {
         loginUser(email, password)
         const currentUser = retrieveUser(email)
-        const {name} = currentUser
+        const {name, _email} = currentUser
         this.setState({
             view: 'home',
-            user: name
+            user: name,
+            userEmail: _email
         })
     }
 
@@ -31,7 +33,7 @@ class App extends Component {
             {this.state.view === 'landing' && <Landing onRegister={this.handleGoToRegister} onLogin={this.handleGoToLogin} />}
             {this.state.view === 'register' && <Register onLogin={this.handleGoToLogin} />}
             {this.state.view === 'login' && <Login onRegister={this.handleGoToRegister} onSubmitLogin={this.handleLogin} />}
-            {this.state.view === 'home' && <Home user={this.state.user} logOut={this.handleLogout}/>}
+            {this.state.view === 'home' && <Home user={this.state.user} userEmail={this.state.userEmail} logOut={this.handleLogout}/>}
         </>
     }
 }
