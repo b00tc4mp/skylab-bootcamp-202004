@@ -1,1 +1,1 @@
-const users = []
+const users = [{name: 'Khaoula', surname: 'Tanane', email: 'khaoulatanane@gmail.com', password: '123123123'}]

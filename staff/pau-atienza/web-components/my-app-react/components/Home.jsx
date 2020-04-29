@@ -8,21 +8,12 @@ class Home extends Component{
     }
     changeSearchBar = (input) => this.setState({searchBar: input })
       
-    // showUserSearch = (event) => {}
-    // showGoogleSearch = (event) => {}
-    // showEcosiaSearch = (event) => {}
+    
     render(){
         return <>
             <NavBar callback = {this.changeSearchBar}/>
 
-            {/* {this.state.searchBAr === 'user'&& <Search buttonName = {'User Search'} 
-            buttonFunction = {this.showUserSearch}/>}
-
-            {this.state.searchBAr === 'google'&& <Search buttonName = {'Google Search'} 
-            buttonFunction = {this.showGoogleSearch}/>}
-
-            {this.state.searchBAr === 'ecosia'&& <Search buttonName = {'Ecosia Search'} 
-            buttonFunction = {this.showEcosiaSearch}/>} */}
+            
         </>
     }
 }
@@ -50,7 +41,25 @@ function NavBar({callback}){
    </section>
 }
 
+// //TODO 
+// logic/ Tweet (create a tweet) DONE!, 
+// retrieve-tweets (mine and from users I follow)
+// follow-user
+//Compo CreateTweet, Tweet,  Tweeter
+//Tweets,
 
+// showUserSearch = (event) => {}
+    // showGoogleSearch = (event) => {}
+    // showEcosiaSearch = (event) => {}
+
+{/* {this.state.searchBAr === 'user'&& <Search buttonName = {'User Search'} 
+            buttonFunction = {this.showUserSearch}/>}
+
+            {this.state.searchBAr === 'google'&& <Search buttonName = {'Google Search'} 
+            buttonFunction = {this.showGoogleSearch}/>}
+
+            {this.state.searchBAr === 'ecosia'&& <Search buttonName = {'Ecosia Search'} 
+            buttonFunction = {this.showEcosiaSearch}/>} */}
 
 // class Home extends Component{
 //     constructor(user){
@@ -166,4 +175,4 @@ function NavBar({callback}){
 
 //         _results.replaceWith(results)
 //     }
-// }/ }/ }/ }/ }/ }/ }
+// }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }
