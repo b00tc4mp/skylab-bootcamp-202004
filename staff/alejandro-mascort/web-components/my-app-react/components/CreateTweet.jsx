@@ -1,4 +1,4 @@
-function Search ({ onSubmit, query }) {
+function CreateTweet({onSubmit}) {
     function handleSubmit(event) {
         event.preventDefault()
         
@@ -7,13 +7,14 @@ function Search ({ onSubmit, query }) {
         query = query.value
         
         onSubmit(query)
+
+        event.target.query.value = ''
     }
     
     return <section className="search"> 
         <form onSubmit={handleSubmit}>
-            <input type="text" name="query" defaultValue={query}/>
-            <button>🔍</button>
+            <input type="text" name="query" />
+            <button>Tweet!</button>
         </form>
     </section>
 }
-

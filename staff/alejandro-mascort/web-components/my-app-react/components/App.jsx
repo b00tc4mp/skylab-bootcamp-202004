@@ -32,7 +32,7 @@ class App extends Component {
             {this.state.view === 'landing' && <Landing onRegister={this.handleGoToRegister} onLogin={this.handleGoToLogin} />}
             {this.state.view === 'register' && <Register onSubmit={this.handleRegister} onLogin={this.handleGoToLogin}/>}
             {this.state.view === 'login' && <Login onSubmit={this.handleLogin} onRegister={this.handleGoToRegister}/>}
-            {this.state.view === 'home' && <Home name={this.state.user.name} onLogout={this.logOut} />}
+            {this.state.view === 'home' && <Home user={this.state.user} onLogout={this.logOut} />}
         </>
     }
 }
