@@ -1,4 +1,4 @@
-function Search({ onSearch }) {
+function Search({ onSubmit }) {
 
     function handleSubmitUsers(event) {
         event.preventDefault()
@@ -7,7 +7,7 @@ function Search({ onSearch }) {
 
         query = query.value
       
-            onSearch(query)    
+            onSubmit(query)    
     }
 
 

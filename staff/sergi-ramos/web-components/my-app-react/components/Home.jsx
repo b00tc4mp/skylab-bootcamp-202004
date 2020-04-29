@@ -21,6 +21,20 @@ class Home extends Component {
             { currentLink: 'user' }
         )
     }
+    handleOnEcosia = (event) => {
+        event.preventDefault()
+
+        this.setState(
+            { currentLink: 'ecosia' }
+        )
+    }
+    handleOnSport = (event) => {
+        event.preventDefault()
+
+        this.setState(
+            { currentLink: 'sport' }
+        )
+    }
 
     render() {
         return <section className="home">
@@ -33,6 +47,8 @@ class Home extends Component {
 
                     {this.state.currentLink === 'user' && <Users />}
                     {this.state.currentLink === 'google' && <Google />}
+                    {/* {this.state.currentLink === 'ecosia' && <Ecosia />} */}
+                    {/* {this.state.currentLink === 'sport' && <Sport />} */}
 
                </section>
     }

@@ -16,11 +16,11 @@ class Google extends Component {
     }
 
     render() {
-        return <section className="google">
-            <h2>Google</h2>
-            <Search onSearch={this.handleGoogle}/>
-            {this.state.googleFind && <GoogleResults googleFind={this.state.googleFind} />}
-        </section >
+        return   <section className="google">
+                    <h2>Google</h2>
+                    <Search onSubmit={this.handleGoogle}/>
+                    {this.state.googleFind && <GoogleResults googleFind={this.state.googleFind} />}
+                </section >
     }
 
 }
