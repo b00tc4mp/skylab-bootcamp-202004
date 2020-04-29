@@ -64,7 +64,7 @@
 // }
 
 function Home ({ name }) {
-    return <section calssName="home">
+    return <section className="home">
         <h1>Welcome, {name}!</h1>
         <a className="home__link" href="">Users</a>
         <a className="home__link" href="">Google</a>
