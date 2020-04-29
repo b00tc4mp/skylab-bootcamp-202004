@@ -1,13 +1,3 @@
-// class Component{
-//     constructor(template){this.container = this.mount(template)}
-
-//     mount(template){
-//         const temp = document.createElement('div')
-//         temp.innerHTML = template
-//         return temp.firstChild
-//     }
-// }
-
 const { Component } = React
 
 class App extends Component{
@@ -15,36 +5,39 @@ class App extends Component{
         super()
 
         this.state = {
-            view: 'home'
+            view: 'home',
+            user: 'pauatro@gmail.com',
+            error: '',
+            name: 'Pau'
         }
     }
 
     changeView = (input) => this.setState({view: input })
 
-    // submitRegister = (event) => {
-    //     event.preventDefault();
-    //     let {name, surname, email, password} = event.target;
-    //     name = name.value
-    //     surname = surname.value
-    //     email = email.value
-    //     password = password.value
-    //     try{
-    //     registerUser(name,surname,email,password)
-    //     } catch(error){
-    //         console.log(error)
-    //     }
-    // }
+    handleLogin = event => {
+        event.preventDefault();
+        let {email, password} = event.target;
+        email = email.value
+        password = password.value
+
+        try{
+            authenticateUser(email, password)
+            let {name} = retrieveUser(email)
+            this.setState({user: email, name, view: 'home'})
+        }catch ({message}){
+            this.setState({error: message})
+        }
+    }
+
     
 
     render(){
         return <>
             {this.state.view === 'landing' && <Landing callback = {this.changeView}/>}
             {this.state.view === 'register' && <Register callback = {this.changeView} uponRegister = {this.submitRegister}/>}
-            {this.state.view === 'login' && <Login callback = {this.changeView}/>}
-            {this.state.view === 'home' && <Home callback = {this.changeSearchBar}/>}
-            {/* {this.state === 'login' && </>}
-            {this.state === 'register' && </>}
-            {this.state === '' && <Home/>}*/}
+            {this.state.view === 'login' && <Login callback = {this.changeView} handleLogin = {this.handleLogin}/>}
+            {this.state.view === 'home' && <Home user = {this.state.user} name = {this.state.name}/>}
+            {this.state.error && <Feedback message = {this.state.error} level = 'error'/>}
         </>
     }
 }

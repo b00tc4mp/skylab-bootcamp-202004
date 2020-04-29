@@ -1,52 +1,37 @@
 class Home extends Component{
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
 
         this.state = {
-            searchBar: 'users'
+            homeView: 'user',
+            user: this.props.user,
+            latestTweet: undefined
         }
     }
-    changeSearchBar = (input) => this.setState({searchBar: input })
+
+    changeSearchBar = (input) => this.setState({homeView: input })
       
+    handleTweet = (event) =>{
+        event.preventDefault()
+        let email = this.state.user
+        let text = event.target.tweet.value
+        tweet(email, text)
+        this.setState({latestTweet: text})
+
+    }
     
     render(){
         return <>
-            <NavBar callback = {this.changeSearchBar}/>
+            <NavBar callback = {this.changeSearchBar} name = {this.props.name}/>
+            {this.state.homeView === 'user' && <UserSearch/>}
+            {this.state.homeView === 'twitter' && <Twitter handleTweet = {this.handleTweet} email ={this.state.user}/>}
 
-            
+            {this.state.error && <Feedback message = {this.state.error} level = 'error'/>}
         </>
     }
 }
 
-function NavBar({callback}){
-        return <section className = 'home'> 
-        <header>
-            <h1>Welcome to the best website in the net, {'Person'}</h1>
-            <button>Log out</button>
-            <nav>
-               <a href = '' onClick = {(event)=>{
-                   event.preventDefault()
-                   callback('users')
-               }}>User Search</a>
-               <a href = '' onClick = {(event)=>{
-                   event.preventDefault()
-                   callback('google')
-               }}>Google Search</a>
-               <a href = '' onClick = {(event)=>{
-                   event.preventDefault()
-                   callback('ecosia')
-               }}>Ecosia Search</a>
-            </nav>    
-        </header>
-   </section>
-}
 
-// //TODO 
-// logic/ Tweet (create a tweet) DONE!, 
-// retrieve-tweets (mine and from users I follow)
-// follow-user
-//Compo CreateTweet, Tweet,  Tweeter
-//Tweets,
 
 // showUserSearch = (event) => {}
     // showGoogleSearch = (event) => {}
@@ -175,4 +160,4 @@ function NavBar({callback}){
 
 //         _results.replaceWith(results)
 //     }
-// }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }
+// }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }/ }
