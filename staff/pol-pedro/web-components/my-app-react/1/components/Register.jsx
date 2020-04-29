@@ -106,3 +106,5 @@ class Register extends Component {
         </section>
     }
 }
+
+

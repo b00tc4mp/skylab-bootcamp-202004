@@ -49,6 +49,9 @@
   width: 20vw;
   height: 5vh;
 }
+.register__container form .buton-cross {
+  text-decoration: line-through;
+}
 .register__container form button:hover {
   background-color: #7d978b;
   color: white;
