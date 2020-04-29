@@ -1,3 +1,57 @@
+class Home extends Component{
+    constructor(){
+        super()
+
+        this.state = {
+            searchBar: 'users'
+        }
+    }
+    changeSearchBar = (input) => this.setState({searchBar: input })
+      
+    // showUserSearch = (event) => {}
+    // showGoogleSearch = (event) => {}
+    // showEcosiaSearch = (event) => {}
+    render(){
+        return <>
+            <NavBar callback = {this.changeSearchBar}/>
+
+            {/* {this.state.searchBAr === 'user'&& <Search buttonName = {'User Search'} 
+            buttonFunction = {this.showUserSearch}/>}
+
+            {this.state.searchBAr === 'google'&& <Search buttonName = {'Google Search'} 
+            buttonFunction = {this.showGoogleSearch}/>}
+
+            {this.state.searchBAr === 'ecosia'&& <Search buttonName = {'Ecosia Search'} 
+            buttonFunction = {this.showEcosiaSearch}/>} */}
+        </>
+    }
+}
+
+function NavBar({callback}){
+        return <section className = 'home'> 
+        <header>
+            <h1>Welcome to the best website in the net, {'Person'}</h1>
+            <button>Log out</button>
+            <nav>
+               <a href = '' onClick = {(event)=>{
+                   event.preventDefault()
+                   callback('users')
+               }}>User Search</a>
+               <a href = '' onClick = {(event)=>{
+                   event.preventDefault()
+                   callback('google')
+               }}>Google Search</a>
+               <a href = '' onClick = {(event)=>{
+                   event.preventDefault()
+                   callback('ecosia')
+               }}>Ecosia Search</a>
+            </nav>    
+        </header>
+   </section>
+}
+
+
+
 // class Home extends Component{
 //     constructor(user){
 //         super(`<section class = 'home'> 
@@ -80,51 +134,36 @@
 //     }     
 // }
 
-class Home extends Component{
-    constructor(){
-        super()
 
-        this.state = {
-            searchBar: 'users'
-        }
-    }
 
-    changeSearchBar = (input) => this.setState({searchBar: input })
-        
-    render(){
-        
-        return <>
-            <NavBar callback = {this.changeSearchBar}/>
-            {this.state.searchBAr === 'user'&& <UserSearch/>}
-            {}
-            {}
-        </>
-    }
-}
+// function Search(buttonName, buttonFunction){
+//     return <form className="search" onSubmit = {function(){buttonFunction(event)}}>
+//         <input type="text" name="query"/>
+//             <button>{`${buttonName}`}</button>
+//         </form>
+// }
 
-function NavBar({callback}){
-        return <section className = 'home'> 
-        <header>
-            <h1>Welcome to the best website in the net, ${'Mothafucka'}</h1>
-            <button>Log out</button>
-            <nav>
-               <a href = '' onClick = {(event)=>{
-                   event.preventDefault()
-                   callback('users')
-               }}>searchUsers</a>
-               <a href = '' onClick = {(event)=>{
-                   event.preventDefault()
-                   callback('ecosia')
-               }}>searchEcosia</a>
-               <a href = '' onClick = {(event)=>{
-                   event.preventDefault()
-                   callback('google')
-               }}>searchGoogle</a>
-            </nav>    
-        </header>
-   </section>
-}
+// showUserSearch = (event) =>{ 
+//     input = event.target.query.value
+//     const searchOutput = searchUser(input)
 
-function userSearch(){
+//     console.log(searchOutput)
 
-}
+//     let resultsList = <ul className= "search"></ul>
+//     searchOutput.map(element=> { })
+
+
+//     if (!results) {
+//         render(){
+//             <></>
+//         }
+//         results = new ResultUser(searchOutput).container
+//         searchbar.appendChild(results)
+//     } else {
+//         const _results = results
+
+//         results = new ResultUser(searchOutput).container
+
+//         _results.replaceWith(results)
+//     }
+// }/ }/ }/ }/ }/ }/ }

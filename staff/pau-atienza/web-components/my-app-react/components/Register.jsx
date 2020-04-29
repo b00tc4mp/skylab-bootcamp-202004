@@ -42,7 +42,7 @@
 //     }
 // }
 
-function Register({callback, uponRegister}){
+function Register({callback}){
     return <section className="register">
                  <h1>Register</h1>
                  <form onSubmit  = {(event) => {
