@@ -1,5 +1,3 @@
-const { Component } = React
-
 class Users extends Component {
 
     constructor() {

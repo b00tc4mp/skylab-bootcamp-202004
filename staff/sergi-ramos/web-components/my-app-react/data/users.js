@@ -1,3 +1,38 @@
-const users = [{name: 'sergi', surname:'ramos', email:'1@mail.com', password:'1'},
-{name:'sergi', surname:'ramos', email:'2@mail.com', password:'2'},
-{name:'alex', surname:'hola', email:'4@mail.com', password:'4'}]
+const users = [
+{name: 'sergi', 
+surname:'ramos', 
+email:'1@mail.com', 
+password:'1', 
+tweets: [{
+    message: 'Hola, Mundo', 
+    date: new Date
+}],  
+    following: ['4@mail.com','2@mail.com']},
+
+{name:'sergi', 
+surname:'ramos', 
+email:'2@mail.com', 
+password:'2',
+tweets: [{
+    message: 'Hola, Pepito', 
+    date: new Date
+}],  
+    following: ['1@mail.com']},
+
+    
+{name:'alex', 
+surname:'hola', 
+email:'4@mail.com', 
+password:'4',
+tweets: [{
+    message: 'Hola, Pepito', 
+    date: new Date
+}],  
+    following: ['2@mail.com','1@mail.com']}]
+
+
+
+
+
+
+
