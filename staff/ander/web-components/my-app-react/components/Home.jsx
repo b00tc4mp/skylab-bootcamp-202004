@@ -63,13 +63,13 @@
     }
 } */
 const {Component} = React
-function Home(onLogout) {
+function Home(name,onLogout) {
     return <section className="home">
-        <h1>This is Home</h1>
+        <h1>This is Home {name}</h1>
         <button onClick={event => {
                 event.preventDefault();
                 onLogout();
-        }}></button>
+        }}>Logout</button>
 
 </section>
 }
