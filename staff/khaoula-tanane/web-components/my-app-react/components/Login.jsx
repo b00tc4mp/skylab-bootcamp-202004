@@ -7,36 +7,34 @@ class Login extends Component{
         this.state = {
             error: null
         }
-    }    
+    }
 
-    handleLoginSubmit = (event) => {
+    handleSubmit = (event) => {
+        event.preventDefault()
+
         let { email, password } = event.target
         email = email.value
         password = password.value
         try{
             this.props.onSubmit(email, password)
-            this.setState({user, view: 'home'})
-        } catch (error){
+            this.props.goToHome()
+        } catch ({message}){
             this.setState({error : message})
         }
     }
 
-
     render(){
-
         return <section className="login">
-        <h1>Login</h1>
-        <form onSubmit={(event) => {
-            event.preventDefault()
-            this.props.onLogin()
-        }}>
-            <input  name="email" placeholder="e-mail" required />
-            <input type="password" name="password" placeholder="password" required />
+        <form onSubmit={this.handleSubmit}>
+            <h1>Login</h1>
+            <input  name="email" placeholder="e-mail" value='kau@gmail.com' required />
+            <input type="password" name="password" placeholder="password" value='123123123' required />
             <button type='submit'>Submit</button>
              or <a href="" onClick={event => {
-                 event.preventDefault()
-                 this.props.onRegister()
-                }}>Register</a>
+                event.preventDefault()
+                this.props.onRegister()
+               }}>Register</a>
+             {this.state.error && <Feedback message={this.state.error} level="error" />}
         </form>
     </section>
 }
