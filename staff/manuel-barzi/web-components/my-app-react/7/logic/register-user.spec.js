@@ -80,11 +80,13 @@ describe('registerUser', () => {
             xhr.send(`{ "name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}" }`)
         })
 
-        it('should fail alerting user already exists', () => {
+        it('should fail alerting user already exists', done => {
             registerUser(name, surname, email, password, error => {
                 expect(error).to.exist
 
                 expect(error.message).to.equal(`user with username \"${email}\" already exists`)
+
+                done()
             })
         })
     })
