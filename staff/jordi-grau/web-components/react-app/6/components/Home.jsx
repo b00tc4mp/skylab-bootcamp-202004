@@ -47,6 +47,7 @@ class Home extends Component {
             <a className={`home__link ${this.state.view === 'users' ? 'home__link--active' : ''}`} href="" onClick={this.handleUsers}>Users </a>
             <a className={`home__link ${this.state.view === 'google' ? 'home__link--active' : ''}`} href="" onClick={this.handleGoogle}>Google </a>
             <a className={`home__link ${this.state.view === 'hola-news' ? 'home__link--active' : ''}`} href="" onClick={this.handleHolaNews}>Hola News </a>
+            <a className={`home__link ${this.state.view === 'tweet' ? 'home__link--active' : ''}`} href="" onClick={this.handleTweeter}>Tweeter </a>
             <button>Logout</button>
 
             {this.state.view === 'users' && <Users onSearch={this.handleSearchUsersResultsAndQuery} users={this.state.usersResults} query={this.state.usersQuery} />}
