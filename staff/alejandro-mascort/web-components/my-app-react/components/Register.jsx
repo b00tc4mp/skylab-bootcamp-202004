@@ -18,10 +18,14 @@ class Register extends Component {
         password = password.value
 
         try {
-            this.props.onSubmit(name, surname, email, password)
-        } catch({message}){
+            registerUser(name, surname, email, password, error => {
+                if (error) return this.setState({error: error.message})
+
+                this.props.onLogin()
+            })
+        } catch ({message}) {
             this.setState({error: message})
-        }
+        }   
     }
         
  render() {

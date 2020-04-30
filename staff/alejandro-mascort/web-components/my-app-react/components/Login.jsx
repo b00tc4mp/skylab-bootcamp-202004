@@ -4,7 +4,6 @@ class Login extends Component {
 
         this.state = {
             error: "",
-            user: ''
         }
     }
 
@@ -17,7 +16,12 @@ class Login extends Component {
         password = password.value;
 
         try {
-            this.props.onSubmit(email, password)
+            authenticateUser(email, password, (error, token) => {
+                if (error) return this.setState({error})
+                else {
+                    this.props.onHome(token)
+                }
+            })
         } catch ({ message }) {
             this.setState({ error: message })
         }
