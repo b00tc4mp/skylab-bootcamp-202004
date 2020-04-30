@@ -1,71 +1,46 @@
-// class Login extends Component {
-//     constructor(onSubmit, onRegister) {
-//         super(`<section class="login">
-//     <h1>Login</h1>
-//     <form>
-//     <input type="email" name="email" placeholder="e-mail" required>
-//         <input type="password" name="password" placeholder="password" required>
-//         <button>Submit</button>
-//         or <a href="">Register</a>
-//     </form>
-// </section>`)
+class Login extends Component {
+    constructor(props) {
+        super(props)
 
-//         const form = this.container.querySelector('form')
+        this.state = { error: '' }
+    }
 
-//         let feedback
+    handleSubmit = event => {
+        event.preventDefault()
 
-//         form.addEventListener('submit', event => {
-//             event.preventDefault()
+        let { email, password } = event.target
 
-//             let { email, password } = event.target
+        email = email.value
+        password = password.value
 
-//             email = email.value
-//             password = password.value
+        try {
+            authenticateUser(email, password, (error, token) => {
+                if (error) return this.setState({ error: error.message })
 
-//             try {
-//                 onSubmit(email, password)
+                this.props.onLogin(token)
+            })
+        } catch ({ message }) {
+            this.setState({ error: message })
+        }
+    }
 
-//                 cleanUp()
-//             } catch (error) {
-//                 if (!feedback) {
-//                     feedback = new Feedback(error.message, 'error')
+    handeGoToRegister = event => {
+        event.preventDefault()
 
-//                     this.container.append(feedback.container)
-//                 } else feedback.innerText = error.message
-//             }
-//         })
+        this.props.onGoToRegister()
+    }
 
-//         const cleanUp = () => {
-//             form.email.value = ''
-//             form.password.value = ''
+    render() {
+        return <section className="login">
+            <h1>Login</h1>
+            <form onSubmit={this.handleSubmit}>
+                <input type="email" name="email" placeholder="e-mail" required />
+                <input type="password" name="password" placeholder="password" required minLength="8" />
+                <button>Submit</button>
+                or <a href="" onClick={this.handeGoToRegister}>Register</a>
 
-//             if (feedback) {
-//                 this.container.removeChild(feedback.container)
-
-//                 feedback = undefined
-//             }
-//         }
-
-//         const register = this.container.querySelector('a')
-
-//         register.addEventListener('click', function (event) {
-//             event.preventDefault()
-
-//             onRegister()
-
-//             cleanUp()
-//         })
-//     }
-// }
-
-function Login() {
-    return <section className="login">
-        <h1>Login</h1>
-        <form>
-            <input type="email" name="email" placeholder="e-mail" required />
-            <input type="password" name="password" placeholder="password" required />
-            <button>Submit</button>
-             or <a href="">Register</a>
-        </form>
-    </section>
+                {this.state.error && <Feedback message={this.state.error} level="error" />}
+            </form>
+        </section>
+    }
 }
