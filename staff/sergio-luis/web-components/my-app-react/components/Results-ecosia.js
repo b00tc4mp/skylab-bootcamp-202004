@@ -1,7 +1,7 @@
-class ResultsGoogle extends Component {
+class ResultsEcosia extends Component {
     constructor(items){
         super(`<section class="results">
-        <h2>Google Results</h2>
+        <h2>Ecosia Results</h2>
         </section>`)
 
         if(items.length){
@@ -23,7 +23,6 @@ class ResultsGoogle extends Component {
                 contentContainer.innerText = `${content}`
                 linkContainer.innerText = `${link}`
                 linkContainer.setAttribute('href', `${link}`)
-                // linkContainer.target='_blanch'
                 contentContainer.setAttribute('class', `results__content`)
 
                 resultsContainer.appendChild(titleContainer);
