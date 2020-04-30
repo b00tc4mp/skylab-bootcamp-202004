@@ -1,49 +1,32 @@
- describe("searchUser", function () {
-  let name, surname, email, password;
-
-   beforeEach(function () {
-    users.length = 0;
-
-    name = names.random();
-    surname = surnames.random();
-
-    email = `${name
-      .toLowerCase()
-      .split(" ")
-      .join("")}${surname.toLowerCase().split(" ").join("")}@mail.com`;
-
-    users.push({
-      name: name,
-      surname: surname,
-
-      email: email,
-    });
-  });
+ describe("searchUser",  () => {debugger
+  let name, surname, email
   
-   it("must pass search and user and return a user", function () {
-    expect(function () {
-      searchUsers(name);
-    }).not.to.throw(Error);
+  it ('should find all users and create an array.', done => {
+    searchUsers ('helena', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWFhOWVhYTYwZjc1NzAwMTU3NzQyYTMiLCJpYXQiOjE1ODgyODUwNjcsImV4cCI6MTU4ODI4ODY2N30.rUw68h4cPoYulhKqm2gwTWd13cBE6mc2xmZQM5pUIgg', () =>{console.log(status)})
+  call(
+    "GET",
+    "https://skylabcoders.herokuapp.com/api/v2/users/all",
+    undefined,
+    { "Content-type": "application/json", Authorization: `Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWFhOWVhYTYwZjc1NzAwMTU3NzQyYTMiLCJpYXQiOjE1ODgyODUwNjcsImV4cCI6MTU4ODI4ODY2N30.rUw68h4cPoYulhKqm2gwTWd13cBE6mc2xmZQM5pUIgg` },
+    (error, status, body) => {
+      if (error) return callback(error)
+      if (status === 200) {
+        
+        const users = JSON.parse(body)}
 
-    expect(function () {
-      searchUsers(email);
-    }).not.to.throw(Error);
+        expect(users).to.exist
+        expect(users.length).to.be.greaterThan(0)
+      
+       return done(users)
+      
+      })
+    })
+  })
+  
+  
 
-    expect(function () {
-      searchUsers(surname);
-    }).not.to.throw(Error);
-  }); 
-  it("must find and user and push to an array", function () {debugger
-    
-    
-    expect(searchUsers(name)).to.be.an("array");
-
-    expect(searchUsers(name).length).to.equal(1)
-    expect(searchUsers(name)[0].name).to.equal(name)
-    expect(searchUsers(name)[0].email).to.equal(email)
-    expect(searchUsers(name)[0].surname).to.equal(surname)
-  });
+  
 
 
 
-});
+  

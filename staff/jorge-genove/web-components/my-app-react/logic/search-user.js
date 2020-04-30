@@ -1,11 +1,29 @@
-function searchUsers(query) {
-  const user = users.filter(function (user) {
-    return (
-      user.name.includes(query) ||
-      user.surname.includes(query) ||
-      user.email.includes(query)
-    );
-  });
+function searchUsers(query, token, callback) {
+  debugger;
+  call(
+    "GET",
+    "https://skylabcoders.herokuapp.com/api/v2/users/all",
+    undefined,
+    { "Content-type": "application/json", 'Authorization': `Bearer ${token}` },
+    (error, status, body) => {
+      if (error) return callback(error);
+      if (status === 200) {
+        debugger;
+        
+        const users = JSON.parse(body);
+        const userFilter = users.filter(function ({
+          username: email
+        }) {
+          return email.includes(query)
+          
+        });
+        debugger
+        callback(undefined, userFilter);
+      } else {
+        const { error } = JSON.parse(body);
 
-  return user;
+        callback(new Error(error));
+      }
+    }
+  );
 }
