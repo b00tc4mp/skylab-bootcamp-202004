@@ -26,10 +26,11 @@
     }
 
     handleGoToLogin = () => this.setState({view: 'login'})
-    handleLogin= (email, password) => {
+    handleLogin= (email, password) => {debugger
         authenticateUser(email, password)
         const user = retrieveUser(email)
         const {name} = user
+        retrieveTweets(email) 
         this.setState({view: 'home',
                        user: name, 
                         useremail: email})
