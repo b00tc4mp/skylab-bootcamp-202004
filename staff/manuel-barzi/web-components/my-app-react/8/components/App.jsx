@@ -5,26 +5,26 @@ class App extends Component {
         super()
 
         this.state = {
-            view: 'home'
+            view: 'landing'
         }
     }
 
     handleGoToRegister = () => this.setState({ view: 'register' })
 
-    handleRegister = (name, surname, email, password) => {
-        registerUser(name, surname, email, password)
+    handleRegister = () => this.setState({ view: 'login' })
 
-        this.setState({ view: 'login' })
-    }
+    handleLogin = token => this.setState({ token, view: 'home' })
+
+    handleGoToLogin = () => this.setState({ view: 'login' })
+
+    handleLogout = () => this.setState({ token: undefined, view: 'landing'})
 
     render() {
         return <>
-            {this.state.view === 'landing' && <Landing onRegister={this.handleGoToRegister} />}
-            {this.state.view === 'register' && <Register onSubmit={this.handleRegister} />}
-            {/* {this.state.view === 'login' && <Login />} */}
-            {this.state.view === 'home' && <Home name="Pepito" />}
-
-            {this.state.view === 'login' && <Smart view={this.state.view} />}
+            {this.state.view === 'landing' && <Landing onGoToRegister={this.handleGoToRegister} onGoToLogin={this.handleGoToLogin} />}
+            {this.state.view === 'register' && <Register onRegister={this.handleRegister} onGoToLogin={this.handleGoToLogin} />}
+            {this.state.view === 'login' && <Login onLogin={this.handleLogin} onGoToRegister={this.handleGoToRegister} />}
+            {this.state.view === 'home' && <Home token={this.state.token} onLogout={this.handleLogout}/>}
         </>
     }
 }
