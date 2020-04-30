@@ -14,6 +14,18 @@ class Home extends Component {
         }
     }
 
+    componentDidMount() {
+        try {
+            retrieveUser(this.props.token, (error, user) => {
+                if (error) throw error
+
+                this.setState({ name: user.name })
+            })
+        } catch (error) {
+            throw error
+        }
+    }
+
     handleUsers = event => {
         event.preventDefault()
 
@@ -43,11 +55,11 @@ class Home extends Component {
 
     render() {
         return <section className="home">
-            <h1>Welcome, {this.props.name}!</h1>
+            <h1>Welcome, {this.state.name}!</h1>
             <a className={`home__link ${this.state.view === 'users' ? 'home__link--active' : ''}`} href="" onClick={this.handleUsers}>Users </a>
             <a className={`home__link ${this.state.view === 'google' ? 'home__link--active' : ''}`} href="" onClick={this.handleGoogle}>Google </a>
             <a className={`home__link ${this.state.view === 'hola-news' ? 'home__link--active' : ''}`} href="" onClick={this.handleHolaNews}>Hola News </a>
-            <button>Logout</button>
+            <button onClick={this.props.onLogout}>Logout</button>
 
             {this.state.view === 'users' && <Users onSearch={this.handleSearchUsersResultsAndQuery} users={this.state.usersResults} query={this.state.usersQuery} />}
             {this.state.view === 'google' && <Google onSearch={this.handleSearchGoogleResultsAndQuery} results={this.state.googleResults} query={this.state.googleQuery} />}
