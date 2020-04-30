@@ -1,5 +1,5 @@
 class Twitter extends Component {
-    componentDidMount(){
+    componentDidMount() {
         debugger
         !this.props.tweets && retrieveTweets(this.props.email, (error, tweets) => {
             if (error) throw error

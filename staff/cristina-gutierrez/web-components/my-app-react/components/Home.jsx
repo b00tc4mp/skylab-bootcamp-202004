@@ -12,7 +12,7 @@ class Home extends Component {
             googleQuery: undefined,
             holaNews: undefined,
             twitter: undefined,
-            user:{
+            user: {
                 name: 'Cristina',
                 surname: 'Guti',
                 email: 'Cristgu@gmail.com',
@@ -52,8 +52,7 @@ class Home extends Component {
         this.setState({ view: 'tweets' })
     }
     
-    handleSearchUsersResultsAndQuery = (results, query) =>
-        this.setState({ usersResults: results, usersQuery: query })
+    handleSearchUsersResultsAndQuery = (results, query) => this.setState({ usersResults: results, usersQuery: query })
 
     handleSearchGoogleResultsAndQuery = (results, query) =>
         this.setState({ googleResults: results, googleQuery: query })
@@ -62,7 +61,7 @@ class Home extends Component {
         this.setState({ holaNews: news })
 
     handleRetrieveTwitterResults = tweets =>
-        this.setState({ twitter: tweets})
+        this.setState({ twitter: tweets })
 
     render() {
         return <section className="home">
