@@ -8,7 +8,8 @@ class App extends Component {
             view: 'landing',
             header: '',
             user: '',
-            news1: ''
+            news1: undefined,
+            news2: undefined
         }
     }
 
@@ -33,9 +34,13 @@ class App extends Component {
 
     // || Functions asincron
 
-    // news1 = news20(found => {
-    //     this.setState({news1 : found})
-    // }) // lets try to recive the found array this way
+    news1 = found => {
+         this.setState({news1 : found})
+    } 
+
+    news2 = found => {
+        this.setState({news2 : found})
+   } 
             
 
     render() {
@@ -43,7 +48,8 @@ class App extends Component {
             {this.state.view === 'landing' && <Landing onRegister = {this.handelRegister} onLogin = {this.handelLogin} userInfo = {this.state.user}/>}
             {this.state.header === 'register' && <Register onLogin = {this.handelLogin} onLanding = {this.handelLanding} onSumbmit = {this.searchUser}/>}
             {this.state.header === 'login' && <Login onRegister = {this.handelRegister} onLanding = {this.handelLanding} onSumbmit = {this.loginUser}/>}
-            {this.state.view === 'landing' && <News/>}
+            {this.state.view === 'landing' && <News onNews ={this.news1} results = {this.state.news1}/>}
+            {this.state.view === 'landing' && <News2 onload ={this.news2} results = {this.state.news2}/>}
         </>
     }
 }

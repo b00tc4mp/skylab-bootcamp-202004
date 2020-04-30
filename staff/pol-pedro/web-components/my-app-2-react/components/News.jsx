@@ -1,33 +1,41 @@
-// import { Component } from "react"
-
-// function News ({search, results}) {
-//     search
-//     let creatGrid = results.map(({textTitle, link}) => <div><a href={`${link}`} target="blank"><h1>{textTitle}</h1></a></div>)
-//     return <section class="news-grid">{creatGrid}</section>
-
-// }
 
 class News extends Component {
-    constructor() {
-        super()
-        this.state = {loading: ''}
-    }
-
-    creatList = () => {
-        news20(found => {
-            this.setState({news1 : found})
-        })
-        let results = this.state.news1
-        return results.map(({textTitle, link}) => <div><a href={`${link}`} target="blank"><h1>{textTitle}</h1></a></div>)
+     componentDidMount () {
+        news20 ((found) => { 
+            this.props.onNews(found)
+        }) 
     }
 
     render () {
-        return <section class="news-grid">{this.creatList()}</section>
+
+        return <section class="news-grid">
+            {this.props.results && this.props.results.map(({textTitle, link}) => <div><a href={`${link}`} target="blank"><h1>{textTitle}</h1></a></div>)}
+        </section>
     }
-
-
-
 }
+
+
+// class News extends Component {
+//     constructor() {
+//         super()
+//         this.state = {loading: ''}
+//     }
+
+//     creatList = () => {
+//         news20(found => {
+//             this.setState({news1 : found})
+//         })
+//         let results = this.state.news1
+//         return results.map(({textTitle, link}) => <div><a href={`${link}`} target="blank"><h1>{textTitle}</h1></a></div>)
+//     }
+
+//     render () {
+//         return <section class="news-grid">{this.creatList()}</section>
+//     }
+
+
+
+// }
 
 
 
