@@ -13,25 +13,18 @@ function registerUser(name, surname, email, password, callback) {
 
     if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
 
-    var xhr = new XMLHttpRequest()
+    call('POST',
+        'https://skylabcoders.herokuapp.com/api/v2/users',
+        `{ "name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}" }`,
+        { 'Content-type': 'application/json' }, (error, status, body) => {
+            if (error) return callback(error)
 
-    xhr.open('POST', 'https://skylabcoders.herokuapp.com/api/v2/users')
+            if (status === 201)
+                callback()
+            else {
+                const { error } = JSON.parse(body)
 
-    xhr.setRequestHeader('Content-type', 'application/json')
-
-    xhr.onload = function () {
-        if (this.status === 201)
-            callback()
-        else {
-            const { error } = JSON.parse(this.responseText)
-
-            callback(new Error(error))
-        }
-    }
-
-    xhr.onerror = function () {
-        callback(new Error('network error'))
-    }
-
-    xhr.send(`{ "name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}" }`)
+                callback(new Error(error))
+            }
+        })
 }
