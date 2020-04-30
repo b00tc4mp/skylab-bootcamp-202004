@@ -6,6 +6,7 @@ class App extends Component {
 
     this.state = {
       view: "landing",
+      user: null
     };
   }
 
@@ -20,9 +21,9 @@ class App extends Component {
   };
 
   handleLogin = (email, password) => {
-    authenticateUser(email, password);
+    const user = authenticateUser(email, password);
 
-    this.setState({ view: "home" });
+    this.setState({ view: "home", user });
   };
 
   render() {
@@ -47,7 +48,7 @@ class App extends Component {
             onRegister={this.handleGoToRegister}
           />
         )}
-        {this.state.view === "home" && <Home />}
+        {this.state.view === "home" && <Home user={this.state.user}/>}
       </>
     );
   }
