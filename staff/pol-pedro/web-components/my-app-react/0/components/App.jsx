@@ -9,20 +9,12 @@ class App extends Component {
         }
     }
 
-    handleGoTo = view => this.setState({view})
-
-    newRegister = (name, surname, email, password) =>{
-
-        registerUser(name, surname, email, password)
-
-        this.setState({ view: 'login' })
-    }
+    handleGoToRegister = () => this.setState({ view: 'register' })
 
     render() {
         return <>
-            {this.state.view === 'landing' && <Landing onRegister={this.handleGoTo} />}
-            {this.state.view === 'register' && <Register onSend={this.newRegister}/>}
-            {this.state.view === 'login' && <Login />}
+            {this.state.view === 'landing' && <Landing onRegister={this.handleGoToRegister} />}
+            {this.state.view === 'register' && <Register />}
         </>
     }
 }

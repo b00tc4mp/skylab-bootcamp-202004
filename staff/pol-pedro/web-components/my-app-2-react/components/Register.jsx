@@ -4,30 +4,46 @@ class Register extends Component{
         super(props)
         this.state = {error: ''}
     }
+
     // || function when the user is send to check if available to register ||
 
     logicRegister = () => {
-        debugger
         event.preventDefault()
+        this.state = {error: ''}
+
         let {name, surname, email, password} = event.target
         name = name.value
         surname = surname.value
         email = email.value
         password = password.value
 
-        try {
-            this.props.onSumbmit (name, surname, email, password) 
-        } catch ({message}) {
-               this.classButon = 'buton-cross'
-               this.setState ({error: message})
-        }
+        userDefine(name, surname, email, password, (error) =>{
+            this.props.onSumbmit(error)
+            if(this.props.onError){
+                this.classButon = 'buton-cross'
+                this.setState ({error: this.props.onError})
+            }
+        })
+
+        // this.props.onSumbmit (name, surname, email, password)
+        // if(this.props.onError){
+        //     this.classButon = 'buton-cross'
+        //     this.setState ({error: this.props.onError})
+        // }
+        // try {
+        //     this.props.onSumbmit (name, surname, email, password) 
+
+        // } catch ({message}) {
+        //        this.classButon = 'buton-cross'
+        //        this.setState ({error: message})
+        // }
     }
 
     // || function that changes the style of the button and cros it out ||
 
     input = () => {
         this.classButon = undefined
-        this.setState ({error: ''})
+        this.state = {error: ''}
     }
 
     // || render ||

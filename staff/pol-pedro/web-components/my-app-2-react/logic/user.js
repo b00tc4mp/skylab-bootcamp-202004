@@ -1,4 +1,4 @@
-function userDefine(name, surname, email, password) {
+function userDefine(name, surname, email, password, callback) {
     if (typeof name !== 'string') throw new TypeError(name + ' is not a string')
     if (!TEXT_REGEX.test(name)) throw new Error(name + ' is not alphabetic')
 
@@ -11,14 +11,20 @@ function userDefine(name, surname, email, password) {
     if (typeof password !== 'string') throw new TypeError(password + ' is not a string')
     if (password.length < 8) throw new Error('password does not have the min length')
 
-    const user = users.find(function(user) { return user.email === email })
+    call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users', `{
+        "name":"${name}",
+        "surname":"${surname}",
+        "username":"${email}",
+        "password":"${password}"
+    }`,{'Content-Type':'application/json'}, (error, status, body) => {
+        if (error) return callback(error)
 
-    if (user) throw new Error('user already exists')
+        if (status === 201) {
+            callback()
+        }else{
+            const {error} = JSON.parse(body)
 
-    users.push({
-        name,
-        surname,
-        email,
-        password
+            callback(error)
+        }
     })
 }

@@ -74,10 +74,14 @@
   text-align: center;
 }
 
+@keyframes spin {
+  0% {
+    transform: rotate(-360deg);
+  }
+}
 * {
   margin: none;
   box-sizing: border-box;
-  trainsition: 2s;
 }
 
 .home {
@@ -135,13 +139,20 @@
   font-size: 1rem;
   font-family: "Special Elite", cursive;
 }
+.home i {
+  margin-left: 30vw;
+  margin-right: auto;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  color: white;
+  animation: spin 1.5s linear infinite;
+}
 .home ul {
+  align-self: center;
   font-family: "Bebas Neue", cursive;
   flex-direction: column;
-  flex-direction: column;
-  margin-right: 3.5vw;
+  margin-right: 6%;
   list-style-type: none;
-  ustify-content: center;
   max-height: 60vh;
   overflow-y: scroll;
 }
@@ -155,7 +166,6 @@
   font-size: 1.2rem;
   transition: 1s;
   margin: 0.3rem;
-  margin-right: 16px;
   background-color: #fba7b4;
   text-align: center;
   padding: 0.5rem;

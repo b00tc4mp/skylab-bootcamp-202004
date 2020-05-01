@@ -1,15 +1,24 @@
-function findUser(email, password) {
+
+function findUser(email, password, callback) {
     if (typeof email !== 'string') throw new TypeError(email + ' is not a string')
     if (!EMAIL_REGEX.test(email)) throw new Error(email + ' is not an e-mail')
 
     if (typeof password !== 'string') throw new TypeError(password + ' is not a string')
     if (!password.trim().length) throw new Error('password is empty or blank')
 
-    const user = users.find(function(user) {
-        return user.email === email && user.password === password
-    })
+    call('POST','https://skylabcoders.herokuapp.com/api/v2/users/auth',`{
+        "username":"${email}",
+        "password":"${password}"
+    }`,{'Content-Type':'application/json'}, (error, status, body) => {
+        if(error) return callback(error)
 
-    if (!user) throw new Error('wrong credentials')
-    const finaleUser = {name: user.name, surname: user.surname}
-    return finaleUser;
+        if(status === 200){
+            const {token} = JSON.parse(body)
+            callback(token)
+        }
+        else{
+            const {error} = JSON.parse(body)
+            callback(error)
+        }
+    })
 }
