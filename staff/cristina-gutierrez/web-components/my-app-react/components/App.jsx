@@ -39,8 +39,20 @@ class App extends Component {
     }
 
     handleLogin = (email, password) => {
+        
+        loginUser(email, password, error => {
+            if(error) {
+                return Feedback(error)
+            }
+            else {
+                this.state.view === "home"
+            }
+        })
 
+        this.setState({ view: 'home' })
     }
+
+    handleLogout = () => this.setState({ view: 'landing'})
 
     render() {
         return <>

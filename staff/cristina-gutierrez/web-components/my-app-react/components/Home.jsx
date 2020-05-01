@@ -23,10 +23,20 @@ class Home extends Component {
                 }],
                 following: ['pepito@grillo.com']
             }
-            //TODO
         }
     }
 
+    componentDidMount() {
+        try {
+            retrieveUser(this.props.token, (error, user) => {
+                if (error) throw error
+
+                this.setState({ name: user.name })
+            })
+        } catch (error) {
+            throw error
+        }
+    }
 
     handleUsers = event => {
         event.preventDefault()
@@ -52,7 +62,8 @@ class Home extends Component {
         this.setState({ view: 'tweets' })
     }
     
-    handleSearchUsersResultsAndQuery = (results, query) => this.setState({ usersResults: results, usersQuery: query })
+    handleSearchUsersResultsAndQuery = (results, query) =>
+        this.setState({ usersResults: results, usersQuery: query })
 
     handleSearchGoogleResultsAndQuery = (results, query) =>
         this.setState({ googleResults: results, googleQuery: query })
@@ -65,14 +76,14 @@ class Home extends Component {
 
     render() {
         return <section className="home">
-            <h1>Welcome, {this.props.name}!</h1>
+            <h1>Welcome, {this.state.name}!</h1>
             <a className={`home__link ${this.state.view === 'users' ? 'home__link--active' : ''}`} href="" onClick={this.handleUsers}>Users </a>
             <a className={`home__link ${this.state.view === 'google' ? 'home__link--active' : ''}`} href="" onClick={this.handleGoogle}>Google </a>
             <a className={`home__link ${this.state.view === 'hola-news' ? 'home__link--active' : ''}`} href="" onClick={this.handleHolaNews}>Hola News </a>
             <a className={`home__link ${this.state.view === 'tweets' ? 'home__link--active' : ''}`} href="" onClick={this.handleTwitter}>Twitter </a>
             <button onClick={this.props.onLogout}>Logout</button>
 
-            {this.state.view === 'users' && <Users onSearch={this.handleSearchUsersResultsAndQuery} users={this.state.usersResults} query={this.state.usersQuery} />}
+            {this.state.view === 'users' && <Users onSearch={this.handleSearchUsersResultsAndQuery} users={this.state.usersResults} query={this.state.usersQuery} token={this.props.token} />}
             {this.state.view === 'google' && <Google onSearch={this.handleSearchGoogleResultsAndQuery} results={this.state.googleResults} query={this.state.googleQuery} />}
             {this.state.view === 'hola-news' && <HolaNews onNews={this.handleRetrieveHolaNewsResults} news={this.state.holaNews} />}
             {this.state.view === 'tweets' && <Twitter onTweets={this.handleRetrieveTwitterResults} tweets={this.state.twitter} email={this.state.user.email} />}
