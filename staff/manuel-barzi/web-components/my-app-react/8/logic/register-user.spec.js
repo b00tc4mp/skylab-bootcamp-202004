@@ -14,7 +14,8 @@ describe('registerUser', () => {
 
             call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
                 `{ "username": "${email}", "password": "${password}" }`,
-                { 'Content-type': 'application/json' }, (error, status, body) => {
+                { 'Content-type': 'application/json' },
+                (error, status, body) => {
                     expect(error).to.be.undefined
                     expect(status).to.equal(200)
 
@@ -24,7 +25,8 @@ describe('registerUser', () => {
 
                     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
                         undefined,
-                        { 'Authorization': `Bearer ${token}` }, (error, status, body) => {
+                        { 'Authorization': `Bearer ${token}` },
+                        (error, status, body) => {
                             expect(error).to.be.undefined
                             expect(status).to.equal(200)
 
@@ -46,10 +48,10 @@ describe('registerUser', () => {
         beforeEach(done => {
             call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
                 `{ "name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}" }`,
-                { 'Content-type': 'application/json' }, (error, status, body) => {
-                    expect(error).to.be.undefined
-                    expect(status).to.equal(201)
-                    expect(body).to.equal('')
+                { 'Content-type': 'application/json' },
+                (error, status, body) => {
+                    if (error) return done(new Error(error.message))
+                    if (status !== 201) return done(new Error(`undexpected status ${status}`))
 
                     done()
                 })
