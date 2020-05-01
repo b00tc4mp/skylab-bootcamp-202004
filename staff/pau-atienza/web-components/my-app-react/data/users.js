@@ -1,5 +1,5 @@
 const users = [{name: 'Khaoula', surname: 'Tanane', email: 'khaoulatanane@gmail.com', password: '123123123'},
-{name: 'Pau', surname: 'Atienza', email: 'pauatienza@gmail.com', password: '123123123'},
+{name: 'Pau', surname: 'Atienza', email: 'pauatro@gmail.com', password: '123123123'},
 {name: 'Jose', surname: 'Mes', email: 'josemes@gmail.com', password: '123123123'},
 {name: 'Ander', surname: 'Ezate', email: 'anderezate@gmail.com', password: '123123123'},
 {name: 'Jorge', surname: 'San', email: 'sanjordi@gmail.com', password: '123123123'},

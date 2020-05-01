@@ -4,14 +4,16 @@ function tweet(userEmail, text){
 
     if (typeof text !== 'string') throw new TypeError(text + ' is not a string')
 
-    const userThatFollows = retrieveUser(userEmail)
+    let user = retrieveUser(userEmail)
 
-    userThatFollows.tweets || (userThatFollows.tweets = [])
+    user.tweets || (user.tweets = [])
 
     let tweet = {
+        name: user.name,
+        surname: user.surname,
         text,
         date: new Date
     }
 
-    userThatFollows.tweets.push(tweet)
+    user.tweets.push(tweet)
 }
