@@ -15,7 +15,6 @@ class App extends Component {
   handleGoToHome = (token) => this.setState({ token, view: "home" });
 
   render() {
-    console.log(this.state.token)
 
     return (
       <>

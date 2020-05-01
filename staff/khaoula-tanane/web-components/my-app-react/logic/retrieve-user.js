@@ -7,17 +7,17 @@ function retrieveUser(token, callback) {
     const url = 'https://skylabcoders.herokuapp.com/api/v2/users'
     const headers = { 'Authorization': `Bearer ${token}` }
 
-    call('GET', url, body, headers,(error, status, body) => {
+    call('GET', url, body, headers,(error, status, response) => {
             if (error) return callback(error)
 
             if (status === 200) {
-                const { name, surname, username } = JSON.parse(body)
-
-                callback(undefined, { name, surname, email: username })
+                const user = JSON.parse(response)
+                user.email = user.username
+                callback(undefined, user)
             } else {
-                const { error } = JSON.parse(body)
+                const { _error } = JSON.parse(response)
 
-                callback(new Error(error))
+                callback(new Error(_error))
             }
         }
     )

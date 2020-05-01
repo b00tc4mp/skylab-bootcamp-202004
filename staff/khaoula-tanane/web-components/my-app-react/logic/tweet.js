@@ -1,19 +1,36 @@
-function tweet(userEmail, text){
-    if (typeof userEmail !== 'string') throw new TypeError(userEmail + ' is not a string')
-    if (!EMAIL_REGEX.test(userEmail)) throw new Error(userEmail + ' is not an e-mail')
+function tweet(token, text, callback){
+    // if (typeof userEmail !== 'string') throw new TypeError(userEmail + ' is not a string')
+    // if (!EMAIL_REGEX.test(userEmail)) throw new Error(userEmail + ' is not an e-mail')
 
-    if (typeof text !== 'string') throw new TypeError(text + ' is not a string')
+    let body = undefined
+    let url = 'https://skylabcoders.herokuapp.com/api/v2/users'
+    let headers = { Authorization: `Bearer ${token}` }
 
-    const userThatFollows = retrieveUser(userEmail)
+    call('GET', url, body, headers, (error, status, response) => {
+       
+        if (error) return callback(error)
+        if (status === 200){
+            let user = JSON.parse(response);
+            if(!user.tweets) user.tweets = []
+            let newTweet = {username: user.username, text, date: new Date }
+            user.tweets.push(newTweet)
 
-    userThatFollows.tweets || (userThatFollows.tweets = [])
+            body = JSON.stringify({tweets: user.tweets})
+            url = 'https://skylabcoders.herokuapp.com/api/v2/users'
+            headers = { Authorization: `Bearer ${token}`, 'Content-type': 'application/json' }
+            call('PATCH', url, body, headers, (error, status, response) => {
+                if (error) return callback(error)
+                if (status === 204){
+                    callback(undefined, newTweet)
+                } 
+            })
 
-    let tweet = {
-        text,
-        date: new Date
-    }
+        }
 
-    userThatFollows.tweets.push(tweet)
+        const {error: responseError} = JSON.parse(response)
 
-    console.log(userThatFollows)
+        if (responseError) callback(new Error(responseError))
+
+    })
+
 }
