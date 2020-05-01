@@ -1,8 +1,11 @@
-function Users({ onSearch, users, query }) {
+function Users({ onSearch, users, query, token }) {
     function handleSearch(query) {
-        const users = searchUsers(query)
+        searchUsers(token, query, (error, users) => {
+            if (error) throw error // TODO handle this error with a feedback
 
-        onSearch(users, query)
+            onSearch(users, query)
+        })
+
     }
 
     return <section className="users">
