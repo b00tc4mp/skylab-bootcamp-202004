@@ -70,7 +70,7 @@ class Home extends Component {
             <a className={`home__link ${this.state.view === 'google' ? 'home__link--active' : ''}`} href="" onClick={this.handleGoogle}>Google </a>
             <a className={`home__link ${this.state.view === 'hola-news' ? 'home__link--active' : ''}`} href="" onClick={this.handleHolaNews}>Hola News </a>
             <a className={`home__link ${this.state.view === 'tweets' ? 'home__link--active' : ''}`} href="" onClick={this.handleTwitter}>Twitter </a>
-            <button>Logout</button>
+            <button onClick={this.props.onLogout}>Logout</button>
 
             {this.state.view === 'users' && <Users onSearch={this.handleSearchUsersResultsAndQuery} users={this.state.usersResults} query={this.state.usersQuery} />}
             {this.state.view === 'google' && <Google onSearch={this.handleSearchGoogleResultsAndQuery} results={this.state.googleResults} query={this.state.googleQuery} />}

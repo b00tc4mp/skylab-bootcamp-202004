@@ -9,9 +9,33 @@ describe('authenticateUser', function () {
         email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('')}@mail.com`
         password = passwords.random()
 
-        users.push({ name, surname, email, password })
+        /* users.push({ name, surname, email, password }) */
     })
+    it('should succeed on correct data', done => {
+        registerUser(name, surname, email, password, error => {
+            expect(error).to.be.undefined
 
+                authenticateUser(email , password , (error, token) => {
+                    call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                        undefined,
+                        { 'Authorization': `Bearer ${token}` },
+                        (error, status, body) => {
+                            expect(error).to.be.undefined
+                            expect(status).to.equal(200)
+
+                            const user = JSON.parse(body)
+
+                            expect(user.name).to.equal(name)
+                            expect(user.surname).to.equal(surname)
+                            expect(user.username).to.equal(email)
+                            expect(user.password).to.be.undefined
+
+                            done()
+                        }
+                    )
+                })
+        })
+    })
     it('should succeed on correct credentials', function () {
         expect(function () {
             authenticateUser(email, password)

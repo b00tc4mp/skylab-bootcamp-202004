@@ -14,7 +14,7 @@ class Register extends Component {
         surname = surname.value
         email = email.value
         password = password.value
-
+       
         try {
             this.props.onSubmit(name, surname, email, password)
         } catch ({ message }) {
@@ -31,7 +31,11 @@ class Register extends Component {
                 <input type="email" name="email" placeholder="e-mail" required />
                 <input type="password" name="password" placeholder="password" required minLength="8" />
                 <button>Submit</button>
-                or <a href="">Login</a>
+                or <a href="" onClick={event => {
+                    event.preventDefault()
+        
+                    this.props.onGoToLogin()
+                }}>Login</a>
 
                 {this.state.error && <Feedback message={this.state.error} level="error" />}
             </form>

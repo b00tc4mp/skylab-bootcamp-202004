@@ -5,7 +5,7 @@ class App extends Component {
         super()
 
         this.state = {
-            view: 'home',
+            view: 'landing',
             user:  {
                 name: 'Cristina',
                 surname: 'Guti',
@@ -22,20 +22,32 @@ class App extends Component {
 
     handleGoToRegister = () => this.setState({ view: 'register' })
 
+    handleGoToLogin = () => this.setState({ view: 'login' })
+
     handleRegister = (name, surname, email, password) => {
-        registerUser(name, surname, email, password)
+        
+        registerUser(name, surname, email, password, error => {
+            if(error) {
+                return Feedback(error)
+            }
+            else {
+                this.state.view === "login"
+            }
+        })
 
         this.setState({ view: 'login' })
     }
 
+    handleLogin = (email, password) => {
+
+    }
+
     render() {
         return <>
-            {this.state.view === 'landing' && <Landing onRegister={this.handleGoToRegister} />}
-            {this.state.view === 'register' && <Register onSubmit={this.handleRegister} />}
-            {/* {this.state.view === 'login' && <Login />} */}
-            {this.state.view === 'home' && <Home name={this.state.user.name} user={this.state.user} />}
-
-            {this.state.view === 'login' && <Smart view={this.state.view} />}
+            {this.state.view === 'landing' && <Landing onGoToRegister={this.handleGoToRegister} onGoToLogin={this.handleGoToLogin} />}
+            {this.state.view === 'register' && <Register onSubmit={this.handleRegister} onGoToLogin={this.handleGoToLogin}/>}
+            {this.state.view === 'login' && <Login onSubmit={this.handleLogin} onGoToRegister={this.handleGoToRegister}/>}
+            {this.state.view === 'home' && <Home name={this.state.user.name} user={this.state.user} onLogout={this.handleLogout} />}
         </>
     }
 }

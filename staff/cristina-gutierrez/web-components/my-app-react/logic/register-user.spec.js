@@ -23,24 +23,24 @@ describe('registerUser', () => {
 
                     expect(token).to.exist
 
-                    call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
-                        undefined,
-                        { 'Authorization': `Bearer ${token}` },
-                        (error, status, body) => {
-                            expect(error).to.be.undefined
-                            expect(status).to.equal(200)
-
-                            const user = JSON.parse(body)
-
-                            expect(user.name).to.equal(name)
-                            expect(user.surname).to.equal(surname)
-                            expect(user.username).to.equal(email)
-                            expect(user.password).to.be.undefined
-
-                            done()
-                        }
-                    )
                 })
+                call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                    undefined,
+                    { 'Authorization': `Bearer ${token}` },
+                    (error, status, body) => {
+                        expect(error).to.be.undefined
+                        expect(status).to.equal(200)
+
+                        const user = JSON.parse(body)
+
+                        expect(user.name).to.equal(name)
+                        expect(user.surname).to.equal(surname)
+                        expect(user.username).to.equal(email)
+                        expect(user.password).to.be.undefined
+
+                        done()
+                    }
+                )
         })
     })
 
