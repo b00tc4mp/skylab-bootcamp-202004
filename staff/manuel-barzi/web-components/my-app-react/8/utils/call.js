@@ -11,7 +11,11 @@ function call(method, url, body, headers, callback) {
         callback(undefined, this.status, this.responseText)
     }
 
+<<<<<<< HEAD
     xhr.onerror = function(error) {
+=======
+    xhr.onerror = function () {
+>>>>>>> develop
         callback(new Error('network error'))
     }
 
