@@ -1,24 +1,29 @@
 function searchUsers(query, token, callback) {
-  debugger;
+  query = query.toLowerCase();
+  
   call(
     "GET",
     "https://skylabcoders.herokuapp.com/api/v2/users/all",
     undefined,
-    { "Content-type": "application/json", 'Authorization': `Bearer ${token}` },
+    { Authorization: `Bearer ${token}` },
     (error, status, body) => {
       if (error) return callback(error);
       if (status === 200) {
-        debugger;
         
-        const users = JSON.parse(body);
-        const userFilter = users.filter(function ({
-          username: email
-        }) {
-          return email.includes(query)
-          
+
+        let users = JSON.parse(body);
+        users = users.filter(function (user) {
+          const { name, surname, username: email } = user;
+
+          return (
+            email.toLowerCase().includes(query) ||
+            name && name.toLowerCase().includes(query) ||
+            surname && surname.toLowerCase().includes(query)
+          );
         });
-        debugger
-        callback(undefined, userFilter);
+
+        
+       callback(undefined, users);
       } else {
         const { error } = JSON.parse(body);
 

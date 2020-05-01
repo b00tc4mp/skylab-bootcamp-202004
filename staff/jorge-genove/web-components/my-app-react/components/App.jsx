@@ -16,8 +16,8 @@
      }    
     
     handleGoToRegister = () => this.setState({view: 'register'})
-    /* handleGoToLogin = () => this.setState({view: 'login'})
-    handleToGo = () => this.setState({view})  */
+    handleGoToLogin = () => this.setState({view: 'login'})
+    handleToGo = () => this.setState({view})  
 
     handleRegister = (name, surname, email, password) => {
         registerUser(name, surname, email, password)
