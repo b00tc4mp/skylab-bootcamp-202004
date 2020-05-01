@@ -2,8 +2,8 @@ describe('call', () => {
     it('should suceed on correct parameters in Google', done => {
         call('GET', 'https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com', undefined, undefined, (error, status, body) => {
             if (error) return done(new Error(error))
-
-            //console.log(status, body)
+                //function call(method, url, body, headers, callback)
+                //console.log(status, body)
             expect(status).to.equal(200)
             expect(body).to.exist
 

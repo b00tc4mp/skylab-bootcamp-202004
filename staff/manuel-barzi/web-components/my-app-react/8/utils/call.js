@@ -7,11 +7,11 @@ function call(method, url, body, headers, callback) {
         for (const key in headers)
             xhr.setRequestHeader(key, headers[key])
 
-    xhr.onload = function () {
+    xhr.onload = function() {
         callback(undefined, this.status, this.responseText)
     }
 
-    xhr.onerror = function (error) {
+    xhr.onerror = function(error) {
         callback(new Error('network error'))
     }
 
