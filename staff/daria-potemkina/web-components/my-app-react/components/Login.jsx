@@ -2,7 +2,8 @@ class Login extends Component {
     constructor(props) {
         super(props)
 
-        this.state = { error: '' }
+        this.state = { error: ''}
+
     }
 
     handleSubmit = event => {
@@ -14,7 +15,14 @@ class Login extends Component {
             password = password.value
 
         try {
-            this.props.onSubmit(email, password)
+            authenticateUser(email, password, (error, token) => {
+                if (error) return this.setState({error: error.message})
+
+                retrieveUser(token, (error, user) => {
+                    if (error) return this.setState({error: error.message})
+                    else this.props.onSubmit(user.name, token)
+                })
+            })
 
         } catch ({ message }) {
             this.setState({ error: message })

@@ -1,26 +1,36 @@
-function searchUsers(query) {
-    if (typeof query !== 'string') throw new TypeError(`${query} is not a string`)
-    if (!query.trim().length) throw Error('query is empty')
-    
-    const request = query.toLowerCase();
+function searchUsers(token, query, callback) {
+  if (typeof token !== 'string') throw new TypeError(`${token} is not a string`)
+  if (!token.trim().length) throw Error('token is empty')
 
-    const _users = users.filter(function (user) {
+  if (typeof query !== 'string') throw new TypeError(`${query} is not a string`)
+  if (!query.trim().length) throw Error('query is empty')
 
-      return (
-        user.email.toLowerCase().includes(request) ||
-        user.name.toLowerCase().includes(request) ||
-        user.surname.toLowerCase().includes(request)
-      );
-    });
-    
-    const usersFound = [];
-    for (let i = 0; i < _users.length; i++) {
-      usersFound.push({
-        name: _users[i].name,
-        surname: _users[i].surname,
-        email: _users[i].email,
-      });
+  if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
+
+  call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all',
+    undefined,
+    { 'Authorization': `Bearer: ${token}` }, (error, status, body) => {
+      if (error) return callback(error)
+      if (status === 200) {
+        const users = JSON.parse(body)
+
+        const _users = users.filter(function (user) {
+
+          return (
+            user.username.toLowerCase().includes(query) ||
+            user.name && user.name.toLowerCase().includes(query) ||
+            user.surname && user.surname.toLowerCase().includes(query)
+          );
+        })
+
+        const __users = _users.map(({ username, name, surname }) => ({ email: username, name, surname }))
+
+        callback(undefined, __users)
+      } else {
+        const { error } = JSON.parse(body)
+
+        callback(new Error(error))
+      }
     }
-    
-    return usersFound;
-  }
+  )
+}

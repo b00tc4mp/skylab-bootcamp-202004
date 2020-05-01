@@ -10,12 +10,16 @@ class Register extends Component {
 
         let { name, surname, email, password } = event.target
         name = name.value,
-            surname = surname.value,
-            email = email.value,
-            password = password.value
+        surname = surname.value,
+        email = email.value,
+        password = password.value
 
         try {
-            this.props.onSubmit(name, surname, email, password);
+            registerUser(name, surname, email, password, error => {
+                if (error) return this.setState({error: error.message})
+
+                this.props.onSubmit();
+            })
 
         } catch ({ message }) {
             this.setState({ error: message })

@@ -59,15 +59,24 @@ class Home extends Component {
 
         this.state = {
             view: 'home',
-            tweets: undefined
+            errorUsers: undefined,
+            usersSearched: undefined,
+            tweets: undefined,
+            user: undefined
         }
     }
+    
+    handleUsers = (event) => {
+        event.preventDefault()
 
-    // handleTweeter = (event) => {
-    //     event.preventDefault()
+        this.setState({view: 'users'})
+    }
 
-    //     this.setState({view: 'tweeter'})
-    // }
+    handleTweeter = (event) => {
+        event.preventDefault()
+
+        this.setState({view: 'tweeter'})
+    }
 
     handleRetriveTweets = (event) => {
         event.preventDefault()
@@ -82,17 +91,27 @@ class Home extends Component {
         this.props.onLogout()
     }
 
+    handleSearchUsers = query => {
+        searchUsers(this.props.token, query, (error, users) => {
+            if (error) this.setState({errorUsers: error.message})
+            else this.setState({usersSearched: users})
+        })
+    }
+
     render() {
         return <section className="home">
-            <h1>Welcome {this.props.name}!</h1>
-            <a className="home__link" href="">Users  </a>
+            <h1>Welcome {this.props.name}</h1>
+            <a className="home__link" href="" onClick = {this.handleUsers}>Users  </a>
             <a className="home__link" href="">Google  </a>
             <a className="home__link" href="">Ecosia  </a>
             <a className="home__link" href="" onClick={this.handleRetriveTweets}>Tweeter </a>
             <button onClick={this.handleGoToLogout}>Log out</button>
 
             <News />
-           {this.state.view === 'tweeter' && <Tweeter tweetList = {this.state.tweets}/>}
+            {this.state.view === 'users' && <Search onSubmit={this.handleSearchUsers}/>}
+            {this.state.view === 'users' && this.state.usersSearched && <Results results={this.state.usersSearched} />}
+            {this.state.view === 'users' && this.state.usersSearched && <Feedback message={this.state.errorUsers} level={'warning'}/>}
+            {this.state.view === 'tweeter' && <Tweeter tweetList = {this.state.tweets}/>}
         </section>
     }
 }

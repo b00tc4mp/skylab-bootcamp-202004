@@ -13,7 +13,7 @@ function authenticateUser(email, password, callback) {
 
     // if (!user) throw new Error('wrong credentials')
 
-    call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth', `{"username" : "${email}", "password" : "${password}"}`, { 'Content-type': 'aplication/json' }, (error, status, body) => {
+    call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth', `{"username" : "${email}", "password" : "${password}"}`, { 'Content-type': 'application/json' }, (error, status, body) => {
         if (error) return callback(error)
 
         if (status === 200) {
