@@ -10,7 +10,7 @@ function retrieveUser(token, callback) {
         if (status === 200) {
             const {name, surname, username: email} = JSON.parse(body)
 
-            callback(undefined, name, surname, email)
+            callback(undefined,{ name, surname, email})
         } else {
             const { error } = JSON.parse(body)
 
