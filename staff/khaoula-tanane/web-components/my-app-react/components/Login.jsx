@@ -15,9 +15,12 @@ class Login extends Component{
         let { email, password } = event.target
         email = email.value
         password = password.value
+
         try{
-            this.props.onSubmit(email, password)
-            this.props.goToHome()
+          authenticateUser(email, password, (error, token) => {
+            if (error) return this.setState({ error: error.message })
+            this.props.goToHome(token)
+          })
         } catch ({message}){
             this.setState({error : message})
         }
@@ -27,8 +30,8 @@ class Login extends Component{
         return <section className="login">
         <form onSubmit={this.handleSubmit}>
             <h1>Login</h1>
-            <input  name="email" placeholder="e-mail" value='kau@gmail.com' required />
-            <input type="password" name="password" placeholder="password" value='123123123' required />
+            <input  name="email" placeholder="e-mail" required />
+            <input type="password" name="password" placeholder="password" required />
             <button type='submit'>Submit</button>
              or <a href="" onClick={event => {
                 event.preventDefault()

@@ -6,27 +6,17 @@ class App extends Component {
 
     this.state = {
       view: "landing",
-      user: null
+      token: null
     };
   }
 
   handleGoToRegister = () => this.setState({ view: "register" });
   handleGoToLogin = () => this.setState({ view: "login" });
-  handleGoToHome = () => this.setState({ view: "home" });
-
-  handleRegister = (name, surname, email, password) => {
-    registerUser(name, surname, email, password);
-
-    this.setState({ view: "login" });
-  };
-
-  handleLogin = (email, password) => {
-    const user = authenticateUser(email, password);
-
-    this.setState({ view: "home", user });
-  };
+  handleGoToHome = (token) => this.setState({ token, view: "home" });
 
   render() {
+    console.log(this.state.token)
+
     return (
       <>
         {this.state.view === "landing" && (
@@ -37,18 +27,16 @@ class App extends Component {
         )}
         {this.state.view === "register" && (
           <Register
-            onSubmit={this.handleRegister}
             onLogin={this.handleGoToLogin}
           />
         )}
         {this.state.view === "login" && (
           <Login
             goToHome={this.handleGoToHome}
-            onSubmit={this.handleLogin}
             onRegister={this.handleGoToRegister}
           />
         )}
-        {this.state.view === "home" && <Home user={this.state.user}/>}
+        {this.state.view === "home" && <Home token={this.state.token}/>}
       </>
     );
   }

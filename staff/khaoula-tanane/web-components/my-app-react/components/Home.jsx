@@ -4,8 +4,18 @@ class Home extends Component{
 
         this.state = {
             foundUsers: [],
-            view: 'search'
+            view: 'search',
+            error: null,
+            user: null
         }  
+    }
+
+    componentDidMount(){
+        console.log(retrieveUser)
+        retrieveUser(this.props.token, (error, user) => {
+            if (error) return this.setState({ error: error.message })
+            this.setState({user})
+        })
     }
 
     handleSearchUsers = (query) => {
@@ -26,9 +36,11 @@ class Home extends Component{
 
 
     render(){
-        const {user} = this.props
+
+        const {user} = this.state
+
         return <>
-        <section className="home">
+       { user && <section className="home">
         <h1>HOME: Welcome {user.name} </h1>
 
 
@@ -49,8 +61,8 @@ class Home extends Component{
          {this.state.view === 'google' && <Google />}
          {this.state.view === 'twitter' && <CreateTweet onSubmit={this.handleTweet}/> }
 
-
-        </section>
+        </section>}
+        {!user && <p>LOADING...</p>}
     </>
 }
 }
