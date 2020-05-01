@@ -1,4 +1,5 @@
-const registerUser = (name, surname, email, password) => { debugger
+const registerUser = (name, surname, email, password, callback) => {
+    debugger
 
     if (typeof name !== 'string') throw new TypeError(name + ' is not a string')
     if (!TEXT_REGEX.test(name)) throw new Error(name + ' is not alphabetic')
@@ -11,16 +12,22 @@ const registerUser = (name, surname, email, password) => { debugger
     if (!EMAIL_REGEX.test(email)) throw new Error(email + ' is not an e-mail')
 
     if (typeof password !== 'string') throw new TypeError(password + ' is not a string')
-    if ( password.length < 8) throw new Error('password does not have min length')
+    if (password.length < 8) throw new Error('password does not have min length')
 
     const user = users.find((user) => { return user.email === email })
 
-    if(user) throw new Error ('user already exists')
+    if (user) throw new Error('user already exists')
 
-    users.push({
-        name,
-        surname,
-        email,
-        password
-    })
+    call('POST', "https://skylabcoders.herokuapp.com/api/v2/users",
+        `{ "name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}" }`,
+        { 'Content-type': 'application/json' },
+        (error, status, body) => {
+            if (error) return callback(error)
+            if (status === 201) {
+                callback()
+            } else {
+                const { error } = JSON.parse(body)
+                callback(new Error(error))
+            }
+        })
 }

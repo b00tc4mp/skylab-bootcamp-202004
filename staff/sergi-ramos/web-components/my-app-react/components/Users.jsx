@@ -7,8 +7,11 @@ class Users extends Component {
     }
 
     handleSubmit = (query) => {
-        const users = searchUser(query)
-        this.setState({users})
+        const users = searchUsers(query, this.props.token,  (error, users) => {
+            if (error) console.log(error) //TODO feedaback
+            else this.setState({ users })
+        })
+
     }
 
 
@@ -16,8 +19,8 @@ class Users extends Component {
         return <section className="users">
             <h2>Users</h2>
             <Search onSubmit={this.handleSubmit} />
-            {this.state.users && <Results user={this.state.users}/> }
-            
+            {this.state.users && <Results user={this.state.users} />}
+
         </section>
 
     }

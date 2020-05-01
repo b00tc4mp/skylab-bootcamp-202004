@@ -7,7 +7,8 @@ class App extends Component {
         this.state = {
             view: 'landing',
             user: undefined,
-            userEmail: undefined
+            userEmail: undefined,
+            token: undefined
         }
     }
     handleGoToRegister = () => this.setState({ view: 'register' })
@@ -17,23 +18,31 @@ class App extends Component {
         user: undefined
     })
     handleLogin = (email, password) => {
-        loginUser(email, password)
-        const currentUser = retrieveUser(email)
-        const {name, _email} = currentUser
-        this.setState({
-            view: 'home',
-            user: name,
-            userEmail: _email
+        loginUser(email, password, (error, token) => {
+            if (error) console.log(error) // TODO feedback
+            else {
+                retrieveUser(token, (error, { name, surname, email }) => {
+                    if (error) console.log(error)
+                    else {
+                        this.setState({
+                            view: 'home',
+                            token: token,
+                            user: name,
+                            surname: surname,
+                            email: email
+                        })
+                    }
+                })
+            }
         })
     }
-
     render() {
 
         return <>
             {this.state.view === 'landing' && <Landing onRegister={this.handleGoToRegister} onLogin={this.handleGoToLogin} />}
             {this.state.view === 'register' && <Register onLogin={this.handleGoToLogin} />}
             {this.state.view === 'login' && <Login onRegister={this.handleGoToRegister} onSubmitLogin={this.handleLogin} />}
-            {this.state.view === 'home' && <Home user={this.state.user} userEmail={this.state.userEmail} logOut={this.handleLogout}/>}
+            {this.state.view === 'home' && <Home token={this.state.token} name={this.state.name} surname={this.state.surname} email={this.state.userEmail} logOut={this.handleLogout} />}
         </>
     }
 }

@@ -14,7 +14,7 @@ function Search({ onSubmit }) {
 
     return <section className="search">
         <form onSubmit={handleSubmitUsers} >
-            <input type="text" name="query" value='search'></input>
+            <input type="text" name="query" placeholder="search"></input>
             <button>🔍</button><br></br>
         </form>
     </section>

@@ -34,9 +34,6 @@ class Home extends Component {
             }
         )
     }
-
-
-
     // handleOnEcosia = (event) => {
     //     event.preventDefault()
 
@@ -62,7 +59,7 @@ class Home extends Component {
             <a className="home__link" href="">Ecosia</a>
             <a className="home__link" href="">Sport</a>
 
-            {this.state.currentLink === 'user' && <Users />}
+            {this.state.currentLink === 'user' && <Users token={this.props.token} />}
             {this.state.currentLink === 'google' && <Google />}
             {this.state.currentLink === 'ecosia' && <Ecosia />}
             {this.state.currentLink === 'twitter' && <Twitter resultsTweet={this.state.tweet}/>}
