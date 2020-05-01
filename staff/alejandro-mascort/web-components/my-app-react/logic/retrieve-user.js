@@ -1,6 +1,5 @@
 function retrieveUser(token, callback) {
-    if (typeof email !== 'string') throw new TypeError(email + ' is not a string')
-    if (!EMAIL_REGEX.test(email)) throw new Error(email + ' is not an e-mail')
+    if (typeof token !== 'string') throw new TypeError(token + ' is not a string')
 
     call('GET','https://skylabcoders.herokuapp.com/api/v2/users',
     undefined,
