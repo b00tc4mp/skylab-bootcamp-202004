@@ -7,13 +7,6 @@ function tweet(token, message, callback) {
 
     if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
 
-    // const user = users.find(user => user.email === email)
-
-    // if (!user) throw new Error(`e-mail ${email} is not exists`)
-
-    // if(!user.tweet) user.tweet = []
-    // else user.tweet.push({text: message, date: Date.now()})
-
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined,
         { 'Authorization': `Bearer ${token}` },
         (error, status, body) => {
@@ -40,12 +33,3 @@ function tweet(token, message, callback) {
 
         })
 }
-
-
-
-
-
-
-// tweet = [{message:'sddfdfdgf', date: new Date}]
-
-// `{ "tweets" : "${JSON.stringify(user.tweets)}"}`

@@ -1,4 +1,4 @@
-function Search({onSubmit, results, error}) {
+function Google({ onSubmit, results, error }) {
     function handleSubmit(event) {
         event.preventDefault()
 
@@ -8,14 +8,13 @@ function Search({onSubmit, results, error}) {
 
         onSubmit(query)
     }
-    return <section className="users">
-        <h2>Users</h2>
+    return <section className="google">
+        <h2>Google</h2>
         <form onSubmit={handleSubmit}>
             <input type="text" name="query"/>
-            <button type="submit">🔍</button>
+            <button type="submit">🧐</button>
         </form>
-        {results && <Results results={results}/>}
+        {results && <SearchResults results={results}/>}
         {error && <Feedback message = {error} level = {'warning'} />}
     </section>
 }
-
