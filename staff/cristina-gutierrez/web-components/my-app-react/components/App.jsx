@@ -25,41 +25,30 @@ class App extends Component {
     handleGoToLogin = () => this.setState({ view: 'login' })
 
     handleRegister = (name, surname, email, password) => {
-        
-        registerUser(name, surname, email, password, error => {
-            if(error) {
-                return Feedback(error)
-            }
-            else {
-                this.state.view === "login"
-            }
-        })
 
-        this.setState({ view: 'login' })
+        try {
+            registerUser(name, surname, email, password, error => {
+                if (error) return this.setState({ error: error.message })
+
+                this.props.onRegister()
+            })
+        } catch ({ message }) {
+            this.setState({ error: message })
+        }
     }
 
-    handleLogin = (email, password) => {
-        
-        loginUser(email, password, error => {
-            if(error) {
-                return Feedback(error)
-            }
-            else {
-                this.state.view === "home"
-            }
-        })
-
-        this.setState({ view: 'home' })
+    handleLogin = token => {
+        this.setState({ token, view: 'home' })
     }
 
-    handleLogout = () => this.setState({ view: 'landing'})
+    handleLogout = () => this.setState({ token: undefined, view: 'landing'})
 
     render() {
         return <>
             {this.state.view === 'landing' && <Landing onGoToRegister={this.handleGoToRegister} onGoToLogin={this.handleGoToLogin} />}
             {this.state.view === 'register' && <Register onSubmit={this.handleRegister} onGoToLogin={this.handleGoToLogin}/>}
             {this.state.view === 'login' && <Login onSubmit={this.handleLogin} onGoToRegister={this.handleGoToRegister}/>}
-            {this.state.view === 'home' && <Home name={this.state.user.name} user={this.state.user} onLogout={this.handleLogout} />}
+            {this.state.view === 'home' && <Home token={this.state.token} onLogout={this.handleLogout} />}
         </>
     }
 }

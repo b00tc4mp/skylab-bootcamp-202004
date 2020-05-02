@@ -16,10 +16,21 @@ class Register extends Component {
         password = password.value
        
         try {
-            this.props.onSubmit(name, surname, email, password)
+            //this.props.onSubmit(name, surname, email, password)
+            registerUser(name, surname, email, password, error => {
+                if (error) return this.setState({ error: error.message })
+
+                this.props.onRegister()
+            })
         } catch ({ message }) {
             this.setState({ error: message })
         }
+    }
+
+    handleGoToLogin = event => {
+        event.preventDefault()
+
+        this.props.onGoToLogin()
     }
 
     render() {
@@ -31,11 +42,7 @@ class Register extends Component {
                 <input type="email" name="email" placeholder="e-mail" required />
                 <input type="password" name="password" placeholder="password" required minLength="8" />
                 <button>Submit</button>
-                or <a href="" onClick={event => {
-                    event.preventDefault()
-        
-                    this.props.onGoToLogin()
-                }}>Login</a>
+                or <a href="" onClick={this.handleGoToLogin}>Login</a>
 
                 {this.state.error && <Feedback message={this.state.error} level="error" />}
             </form>
