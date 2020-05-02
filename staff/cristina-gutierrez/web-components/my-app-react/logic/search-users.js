@@ -1,4 +1,10 @@
 function searchUsers(token, query, callback) {
+    String.validate.notVoid(token)
+
+    String.validate(query)
+
+    Function.validate(callback)
+    
     query = query.toLowerCase()
 
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all',

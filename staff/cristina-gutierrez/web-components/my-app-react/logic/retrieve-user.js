@@ -1,7 +1,7 @@
 function retrieveUser(token, callback) {
-    if (typeof token !== 'string') throw new TypeError(token + ' is not a string')
+    String.validate.notVoid(token)
 
-    if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
+    Function.validate(callback)
 
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
         undefined,

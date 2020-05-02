@@ -1,4 +1,8 @@
 function google(query, callback) {
+    String.validate(query)
+
+    Function.validate(callback)
+    
     call('GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?q=${query}`, undefined, undefined, (error, status, body) => {
         if (error) return callback(error)
         if (status !== 200) return callback(new Error('unknown error'))
