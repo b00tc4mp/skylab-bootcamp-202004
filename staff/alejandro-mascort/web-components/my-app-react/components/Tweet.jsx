@@ -1,9 +1,11 @@
 class Tweet extends Component {
     constructor (props) {
         super(props)
+
         this.state = {
             view: 'feed',
-            userTweets: undefined
+            allTweets: undefined,
+            error: undefined
         }
     }
     
@@ -25,9 +27,23 @@ class Tweet extends Component {
         this.setState({view:'user profile'})
     }
 
-    handleCreateTweet = query => {
-        tweet(this.props.email, query)
-        this.setState({view: 'feed'})
+    handleCreateTweet = message => {
+        tweet(this.props.token, message, error => {
+            if (error) this.setState({error})
+            else {
+                retrieveTweets(this.props.token, (error, tweets) => {
+                    if (error) this.setState({error})
+                    else this.setState({allTweets: tweets})
+                })
+            }
+        })
+    }
+
+    componentDidMount = () => {
+        retrieveTweets(this.props.token, (error, tweets) => {
+            if (error) this.setState({error})
+            else this.setState({allTweets: tweets})
+        })
     }
 
     render() {
@@ -36,9 +52,8 @@ class Tweet extends Component {
              <a href='' className={`home__link ${this.state.view === 'my tweets' ? 'home__link--active' : '' }`} onClick={this.handleViewMyTweets}><h1> My Tweets </h1></a>
              <a href='' className={`home__link ${this.state.view === 'my tweets' ? 'home__link--active' : '' }`} onClick={this.handleViewUserProfile}><h1> Search User Profile </h1></a>
             { this.state.view == 'feed' && <CreateTweet onSubmit={this.handleCreateTweet} />}
-            { this.state.view == 'feed' && <Tweets email={this.props.email} view='feed'/> }
-            { this.state.view == 'my tweets' && <Tweets email={this.props.email} view='my tweets' /> }
-            { this.state.view == 'user profile' && <User email={this.props.email} view='my tweets' /> }
+            { this.state.allTweets && <Tweets tweets={this.state.allTweets} view={this.state.view}/> }
+            {/* { this.state.view == 'user profile' && <User email={this.props.email} view='my tweets' /> } */}
         </section>
 
     }

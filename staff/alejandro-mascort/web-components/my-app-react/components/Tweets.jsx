@@ -1,9 +1,7 @@
-function Tweets({email, view}) {
-    let tweets = retrieveTweets(email)
+function Tweets({tweets, view}) {
+    if (view == 'my tweets') tweets = tweets.filter(({username}) => username === 'Me')
 
-    if (view == 'my tweets') tweets = tweets.filter(({userFollowed}) => userFollowed === 'Me')
-
-    let list = tweets.map(({message, date, userFollowed}) => <li><h4>{message} by <a href='' onClick={event => event.preventDefault()}><i>{userFollowed}</i></a></h4><h6>({date.toString()})</h6></li>)
+    let list = tweets.map(({text, date, username}) => <li><h4>{text} by <a href='' onClick={event => event.preventDefault()}><i>{username}</i></a></h4><h6>{date}</h6></li>)
 
     return <ul>{list}</ul>
 }

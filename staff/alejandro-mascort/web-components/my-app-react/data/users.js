@@ -60,3 +60,26 @@ const users = [
         ],
     }
 ]
+
+
+// {
+// 	"name": "aaa",
+// 	"surname": "asdasdasd",
+// 	"age": 3.1415,
+// 	"username": "alejandro.mascort177@hotmail.com",
+// 	"password": "123123123",
+// 	"tweets": [
+// 						{
+// 								"message": "Hola mundo",
+// 								"date": "12:02 sabado"
+//             },
+//             {
+//                 "message": "Hola mundo",
+//                 "date": "12:03 sabado"
+//             },
+//             {
+//                 "message": "Hola mundo",
+//                 "date": "12:04 sabado"
+//             }
+//         ]
+// }

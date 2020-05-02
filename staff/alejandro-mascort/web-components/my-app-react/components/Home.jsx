@@ -12,44 +12,47 @@ class Home extends Component {
         }
     }
 
-    // displayView = view => {this.setState({ view:view })}
+    displayView = view => {this.setState({ view:view })}
 
-    // handleUsers = event => {
-    //     event.preventDefault()
+    handleUsers = event => {
+        event.preventDefault()
                 
-    //     this.displayView('users')
-    // }
+        this.displayView('users')
+    }
 
-    // handleGoogle = event => {
-    //     event.preventDefault()
+    handleGoogle = event => {
+        event.preventDefault()
                 
-    //     this.displayView('google')
-    // }
+        this.displayView('google')
+    }
 
-    // handleNews = event => {
-    //     event.preventDefault()
+    handleNews = event => {
+        event.preventDefault()
     
-    //     this.displayView('news')
-    // }
+        this.displayView('news')
+    }
 
-    // handleTwitter = event => {
-    //     event.preventDefault()
+    handleTwitter = event => {
+        event.preventDefault()
     
-    //     this.displayView('twitter')
-    // }
+        this.displayView('twitter')
+    }
 
-    // handleSearchUsers = query => {
-    //     const users = searchUsers(query)
-    //     this.setState({ usersResults: users, usersQuery: query})
-    // }
+    handleSearchUsers = query => {
+        searchUsers(this.props.token, query, (error, users) => {
+            if (error) this.setState({errorUsers: error.message})
+            else this.setState({usersResults: users})
+        })
+        this.setState({usersQuery: query})
+    }
 
-    // handleGoogleSearch = query => {
-    //     google(query, (error, results) => {
-    //         if (error) this.setState({googleError: error.message})
-    //         else this.setState({googleResults: results})
-    //     })
-    //     this.setState({googleQuery: query})
-    // }
+    handleGoogleSearch = query => {
+        google(query, (error, results) => {
+            if (error) this.setState({googleError: error.message})
+            else this.setState({googleResults: results})
+        })
+        this.setState({googleQuery: query})
+    }
 
     render() {
         return <section className="home">
@@ -62,10 +65,10 @@ class Home extends Component {
                 this.props.onLogout()
             }}>Logout</button>
 
-            {/* {this.state.view === 'users' && <Users usersResults={this.state.usersResults} handleSearchUsers={this.handleSearchUsers} query={this.state.usersQuery}/>}
+            {this.state.view === 'users' && <Users usersResults={this.state.usersResults} handleSearchUsers={this.handleSearchUsers} query={this.state.usersQuery}/>}
             {this.state.view === 'google' && <Google googleResults={this.state.googleResults} googleError={this.state.googleError} handleGoogleSearch={this.handleGoogleSearch} query={this.state.googleQuery}/>}
             {this.state.view === 'news' && <HolaNews />}
-            {this.state.view === 'twitter' && <Tweet email={this.state.user.email}/>} */}
+            {this.state.view === 'twitter' && <Tweet token={this.props.token}/>} 
         </section>
     }
 
