@@ -37,21 +37,6 @@ class Home extends Component {
 
 
 
-    // handleOnEcosia = (event) => {
-    //     event.preventDefault()
-
-    //     this.setState(
-    //         { currentLink: 'ecosia' }
-    //     )
-    // }
-    // handleOnSport = (event) => {
-    //     event.preventDefault()
-
-    //     this.setState(
-    //         { currentLink: 'sport' }
-    //     )
-    // }
-
     render() {
         return <section className="home">
             <h1>Wellcome {this.props.user}</h1>
