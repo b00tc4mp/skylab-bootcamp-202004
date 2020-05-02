@@ -17,7 +17,7 @@ class Login extends Component {
             authenticateUser(email, password, (error, token) => {
                 if (error) return this.setState({ error: error.message })
 
-                this.props.onLogin(token)
+                this.props.onSubmit(token)
             })
         } catch ({ message }) {
             this.setState({ error: message })

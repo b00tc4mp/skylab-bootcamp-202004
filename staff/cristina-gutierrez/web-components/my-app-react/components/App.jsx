@@ -24,22 +24,9 @@ class App extends Component {
 
     handleGoToLogin = () => this.setState({ view: 'login' })
 
-    handleRegister = (name, surname, email, password) => {
+    handleRegister = () => this.setState({ view: 'login' })
 
-        try {
-            registerUser(name, surname, email, password, error => {
-                if (error) return this.setState({ error: error.message })
-
-                this.props.onRegister()
-            })
-        } catch ({ message }) {
-            this.setState({ error: message })
-        }
-    }
-
-    handleLogin = token => {
-        this.setState({ token, view: 'home' })
-    }
+    handleLogin = token => this.setState({ token, view: 'home' })
 
     handleLogout = () => this.setState({ token: undefined, view: 'landing'})
 
