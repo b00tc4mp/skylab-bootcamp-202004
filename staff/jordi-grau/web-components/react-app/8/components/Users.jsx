@@ -1,8 +1,10 @@
-function Users({ onSearch, users, query }) {
+function Users({ onSearch, users, query, token }) {
     function handleSearch(query) {
-        const users = searchUsers(query)
+        searchUsers(query, token, (users) =>{
 
-        onSearch(users, query)
+            onSearch(users, query)
+        })
+        
     }
 
     return <section className="users">
