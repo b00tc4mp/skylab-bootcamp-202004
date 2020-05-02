@@ -1,34 +1,17 @@
-// class Landing extends Component {
-//     constructor(onRegister, onLogin) {
-//         super(`<section class="landing">
-//     <a href="" class="signin">Register</a> <p class="or">or</p> <a href="" class="submit">Login</a>
-// </section>`)
+function Landing({ onGoToRegister, onGoToLogin }) {
+    function handleGoToRegister(event) {
+        event.preventDefault()
 
-//         // const anchors = container.querySelectorAll('a')
-//         // const register = anchors[0]
-//         // const login = anchors[1]
+        onGoToRegister()
+    }
 
-//         const [register, login] = this.container.querySelectorAll('a')
+    function handleGoToLogin(event) {
+        event.preventDefault()
 
-//         register.addEventListener('click', function (event) {
-//             event.preventDefault()
+        onGoToLogin()
+    }
 
-//             onRegister()
-//         })
-
-//         login.addEventListener('click', function (event) {
-//             event.preventDefault()
-//             onLogin()
-//         })
-//     }
-// }
-
-function Landing({callback}) {
     return <section className="landing">
-        <a href="" className="signin" onClick={event => {event.preventDefault(); callback('register')}}>Register</a> <p className="or">or</p> <a href="" className="submit" onClick={event => {event.preventDefault(); callback('login')}}>Login</a>
+        <a href="" onClick={handleGoToRegister}>Register</a> or <a href="" onClick={handleGoToLogin}>Login</a>
     </section>
-
-
-
-
 }

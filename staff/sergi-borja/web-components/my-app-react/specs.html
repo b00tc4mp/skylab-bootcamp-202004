@@ -15,15 +15,20 @@
     <script src="vendor/chai/chai.js"></script>
 
     <script class="mocha-init">
-        mocha.setup('bdd');
-        mocha.checkLeaks();
+        mocha.setup('bdd')
+        mocha.checkLeaks()
+        mocha.timeout(50000)
 
-        const { expect } = chai
+        const {
+            expect
+        } = chai
     </script>
 
     <script src="utils/regex.js"></script>
     <script src="utils/array.prototype.random-polyfill.js"></script>
     <script src="utils/tests.js"></script>
+    <script src="utils/call.js"></script>
+    <script src="utils/call.spec.js"></script>
 
     <script src="data/users.js"></script>
     <script src="logic/register-user.js"></script>
@@ -32,9 +37,13 @@
     <script src="logic/authenticate-user.spec.js"></script>
     <script src="logic/google.js"></script>
     <script src="logic/google.spec.js"></script>
+    <script src="logic/toggle-follow-user.js"></script>
+    <script src="logic/toggle-follow-user.spec.js"></script>
+    <script src="logic/search-users.js"></script>
+    <script src="logic/search-users.spec.js"></script>
 
     <script class="mocha-exec">
-        mocha.run();
+        mocha.run()
     </script>
 </body>
 

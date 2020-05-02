@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,8 +9,8 @@
 </head>
 
 <body>
-    <!-- <section class="landing">
-        <a href="" class="signin">Register</a> <p class="or">or</p> <a href="" class="submit">Login</a>
+    <section class="landing">
+        <a href="">Register</a> or <a href="">Login</a>
     </section>
 
     <section class="register">
@@ -26,33 +26,27 @@
         <p class="feedback feedback--error">Wrong credentials</p>
     </section>
 
-    <br>
-    <br>
-    <br>
-    <br> -->
-
     <section class="login">
-        <h1 class="title-login">Login</h1>
+        <h1>Login</h1>
         <form>
-        <input class="input-mail" type="email" name="email" placeholder="e-mail" required>
-            <input class="input-pass" type="password" name="password" placeholder="password" required>
-            <button class="submit-button">Submit</button>
-            or <a class="register-login" href="">Register</a>
+            <input type="email" name="email" placeholder="e-mail" required>
+            <input type="password" name="password" placeholder="password" required minLength="8">
+            <button>Submit</button>
+            or <a href="">Register</a>
         </form>
-    </section>   
+        <p class="feedback feedback--error">Wrong credentials</p>
+    </section>
 
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <!-- <section class="home">
-        <h1>Welcome, ${name}!</h1><button>Logout</button>
+    <section class="home">
+        <h1>Welcome, ${name}!</h1>
+        <a class="home__link home__link--active" href="">Users</a>
+        <a class="home__link" href="">Google</a>
+        <button>Logout</button>
         
         <section class="search">
             <form>
                 <input type="text" name="query">
-                <button id="users-button">🔍</button>
+                <button>🔍</button>
             </form>
         </section>
 
@@ -63,18 +57,6 @@
             </ul>
         </section>
     </section>
-
-    <section class="home-google">    
-        <section class="search-google">
-            <form>
-                <input type="text" name="query">
-                <button id="google-button">🔍</button>
-            </form>
-        </section>
-
-        <section class="results-google">
-        </section>
-    </section> -->
 </body>
 
 </html>
