@@ -102,8 +102,6 @@ class Login extends Component {
             this.props.onRegister('register')
         }}>Register</a> 
         
-        
-
         {this.state.error && <Feedback message={this.state.error} level='error'/>}
 
         </form>

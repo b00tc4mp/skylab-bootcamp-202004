@@ -1,15 +1,37 @@
-function searchUsers(input){
-    debugger
-    //Comprueba que se le está dando un valor correcto a la busqueda
-    if (typeof input !== 'string') throw new TypeError(input + ' is not a string')
-    //if (!TEXT_REGEX.test(input)) throw new Error(input + ' is not an e-mail');
-    //Devuelve el usuario que tenga el input que se está buscando
-    const user = users.filter(function(user){return user.email===input || user.name===input || user.surname===input})
+function searchUsers(token,query,callback){
 
-    var tempUsers = []; //Le añades el mail, el nombre y el apellido
-    for (i in user)
-        tempUsers[i] = {name: user[i].name, surname: user[i].surname, email: user[i].email}
+    if (typeof token !== 'string') throw new TypeError(`${token} is not a string`)
+    if (typeof query !== 'string') throw new TypeError(`${query} is not a string`)
+    if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
+    
+  
+    const follow = checkFollow(token, (error,following)=>{
+        return following
+    })
+    
+    call('GET','https://skylabcoders.herokuapp.com/api/v2/users/all',
+    undefined,
+    {'Authorization': `Bearer ${token}`},
+    (error,status,body) =>{
+        if(error) throw callback(error);
+   
+        if(status === 200){
+                let users = JSON.parse(body)
 
+                users = users.filter(function (user) {
+                    const { name, surname, username,id } = user
 
-    return tempUsers
+                    return name && name.toLowerCase().includes(query) || surname && surname.toLowerCase().includes(query) || username.toLowerCase().includes(query)
+                })
+
+                users = users.map(({ name, surname, username, id }) => ({ name, surname, email: username, id }))
+                
+                callback(undefined, users)
+        }else{
+            const {error} = JSON.parse(body);
+
+            callback(new Error(error));
+
+        }
+    })
 }

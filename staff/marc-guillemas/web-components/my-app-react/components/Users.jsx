@@ -21,14 +21,20 @@
 const {Component} = React
 
 class Users extends Component {
-    constructor(){
-        super()
-        this.state = {users:undefined}
+    constructor(props){
+        super(props)
+        this.state = {
+            users:undefined
+        }
     }
 
-    handleSearch = query =>{ debugger
-        const users = searchUsers(query);
-        this.setState({users})
+    handleSearch = query =>{
+        const users = searchUsers(this.props.token, query, (error, users) => {
+            if(error) throw Error 
+
+            this.setState({users})
+
+        });
 
     }
 
@@ -41,7 +47,7 @@ class Users extends Component {
         return <section>
 
             <SearchUsers onSubmit = {this.handleSearch}/>
-            {this.state.users && <Results users={this.state.users} loggedUser={this.props.user} />} 
+            {this.state.users && <UserResults users={this.state.users} token={this.props.token}/>} 
         
         </section>
         

@@ -1,9 +1,9 @@
-function Navbar({onChangeView}) {
+function Navbar({onChangeView, onLogout}) {
     return <section>
     <button onClick={event => {
         event.preventDefault()
 
-        onChangeView('landing')
+        onLogout()
     }}>Log out</button> 
     
     <ul>

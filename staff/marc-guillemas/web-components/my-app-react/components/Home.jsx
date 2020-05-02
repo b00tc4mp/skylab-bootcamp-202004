@@ -88,22 +88,30 @@ class Home extends Component {
 
         
         this.state = {
-            view: 'feed'
+            view: 'user',
+            name: undefined
+          
+            
         }
 
     }
-
+    componentDidMount(){
+        retrieveUser(this.props.token, (error,user) => {
+            if (error) throw error;
+            
+            this.setState({name: user.user})
+        })
+    }
     changeView = (_view) => this.setState({view: _view})
 
-    debugger
     render() {
         return <>
         
-        <h1>Welcome, {this.props.user.name}!</h1>
+        <h1>Welcome, {this.state.name}!</h1> 
         
-        <Navbar onChangeView={this.changeView}/>
+        <Navbar onChangeView={this.changeView} onLogout={this.props.onLogout}/>
 
-        {this.state.view === 'users' && <Users user={this.props.user} />}
+        {this.state.view === 'user' && <Users token={this.props.token} />}
         {this.state.view === 'google' && <Google/>}
         {this.state.view === 'wired' && <Wired/>}
         {this.state.view === 'feed' && <Feed loggedUser={this.props.user} />}
