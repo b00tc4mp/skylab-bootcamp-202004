@@ -1,18 +1,30 @@
-function Results({ users }) {
+function Results({ users, handleFollow }) {
     return <section className="results">
-        {/*{!!users.length && <ul>{users.map(({ name, surname, email }) => <li>{`${name} ${surname} (${email})`}</li>)}</ul>}
-        {!users.length && <Feedback message="sorry, no results :(" level="warning" />}*/}
-
-        {/*(() => {
-            if (users.length)
-                return <ul>{users.map(({ name, surname, email }) => <li>{`${name} ${surname} (${email})`}</li>)}</ul>
-            else return <Feedback message="sorry, no results :(" level="warning" />
-        })()*/}
-
         {
-            users.length ?
-                <ul>{users.map(({ name, surname, email }) => <li>{`${name} ${surname} (${email})`}</li>)}</ul>
-                : <Feedback message="sorry, no results :(" level="warning" />
+            users.length ? (<>
+                <ul>{users.map(({ name, surname, email, id }) => (
+                    
+                    <li>
+                        {`${name} ${id} ${surname} (${email})`}<button onClick={event => {
+                        event.preventDefault();
+                        handleFollow(id);
+                        
+                    }}>Follow</button></li>
+
+                    
+                ))}</ul>
+            </>) : <Feedback message="sorry, no results :(" level="warning" />
         }
     </section>
 }
+
+
+
+/*  function handleFollow(event){
+ console.log(event.id.value);
+ console.log(event.target.id.value);
+
+}
+*/
+//<buttom onClick={handlenoseke(id)}></buttom>
+//<buttom onClick= {()=>{handlenoske(id)}}></buttom>

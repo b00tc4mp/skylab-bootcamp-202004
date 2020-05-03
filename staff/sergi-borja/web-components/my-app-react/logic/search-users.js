@@ -16,7 +16,7 @@ function searchUsers(token, query, callback) {
                     return name && name.toLowerCase().includes(query) || surname && surname.toLowerCase().includes(query) || username.toLowerCase().includes(query)
                 })
 
-                users = users.map(({ name, surname, username }) => ({ name, surname, email: username }))
+                users = users.map(({ name, surname, username, id }) => ({ name, surname, email: username, id }))
 
                 // TODO optimize this processing by just using a single Array.prototype.reduce function
 
