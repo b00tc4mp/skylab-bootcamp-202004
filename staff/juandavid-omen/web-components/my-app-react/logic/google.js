@@ -1,33 +1,48 @@
 function google(query, callback) {
-    var xhr = new XMLHttpRequest()
+    call('GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?q=${query}`, undefined, undefined, (error, status, body) => {
+        if (error) {
+            return callback(error);
+        }
+        
+        if (status !== 200) {
+            return callback(new Error('unknown error'));
+        }
 
-    xhr.open( 'GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?q=${query}` )
+        const parser = new DOMParser();
 
-    xhr.onload = function () {
-        const parser = new DOMParser()
-
-        const doc = parser.parseFromString(this.responseText, 'text/html')
+        const doc = parser.parseFromString(dody, 'text/html')
 
         let results = doc.querySelectorAll('.rc')
+        
+        let data;
 
-        const data = []
+        if (results.length > 0) {
+            data = extractData(results, '.LC20lb', '.st', '.r > a');
+            callback(undefined, data);
+        } else {
+            results = doc.querySelectorAll('.xpd')
 
-        results.forEach(result => {
-            const title = result.querySelector('.LC20lb').innerText
+            data = extractData(results, '.v0nnCb > div', '.MUxGbd', '.BmP5tf');
+            callback(undefined, data);
+        }
 
-            const content = result.querySelector('.st').innerText
+        callback(undefined, data);
+    });
+};
 
-            const { href: link } = result.querySelector('.r > a') 
+function extractData(results, titleTag, contentTag, linkTag) {
+    const data = [];
+  
+    results.forEach(result => {
+        const title = result.querySelector(titleTag).innerText;
 
-            data.push({ title, content, link })
-        })
-   
-        callback(undefined, data)
-    }
+        const content = result.querySelector(contentTag).innerText;
 
-    xhr.onerror = function(error) {
-        callback(new Error('network error'))
-    }
+        const { href: link } = result.querySelector(linkTag);
 
-    xhr.send()
-}
+        data.push({ title, content, link });
+    })
+
+    return data
+};
+

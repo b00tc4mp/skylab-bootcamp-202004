@@ -9,7 +9,16 @@
 
     & button
         color: blue
-        justify-content: center
+    
+    &__link
+        text-decoration: none
+    
+        &:visited
+        color: lightgray
 
-    & p 
-        line-height: 150%
+        &--active
+            font-weight: bold
+            color: gray
+
+            &:visited
+                color: gray

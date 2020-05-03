@@ -1,22 +1,22 @@
 const users = [
     {
-        name: 'Manuel',
-        surname: 'Barzi',
-        email: 'manuelbarzi@gmail.com',
-        password: '123123123'
+        name: 'Juan',
+        surname: 'Omen',
+        email: 'anvidmen@gmail.com',
+        password: '123123'
     },
 
     {
-        name: 'Pepito',
-        surname: 'Grillo',
-        email: 'pepito@grillo.com',
-        password: '123123123'
+        name: 'Juanito',
+        surname: 'Tim',
+        email: 'juanito@tim.com',
+        password: '321321'
     },
 
     {
-        name: 'Andy',
-        surname: 'Garcia',
-        email: 'andy@garcia.com',
-        password: '123123123'
+        name: 'Tito',
+        surname: 'Shon',
+        email: 'tito@shon.com',
+        password: '123456'
     }
-]
+];

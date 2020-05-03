@@ -1,24 +1,18 @@
-const { Component } = React
+function Users({ onSearch, users, query, token }) {
+    function handleSearch(query) {
+        searchUsers(token, query, (error, users) => {
+            if (error) {
+                throw error // TODO handle this error with a feedback
+            }
+            onSearch(users, query);
+        })
 
-class Users extends Component {
-    constructor() {
-        super()
-
-        this.state = { users: undefined }
     }
 
-    handleSearch = query => {
-        const users = searchUsers(query)
+    return <section className="users">
+        <h2>Users</h2>
 
-        this.setState({ users })
-    }
-
-    render() {
-        return <section className="users">
-            <h2>Users</h2>
-
-            <Search onSubmit={this.handleSearch} />
-            {this.state.users && <Results users={this.state.users} />}
-        </section>
-    }
+        <Search onSubmit={handleSearch} query={query} />
+        {users && <Results users={users} />}
+    </section>
 }

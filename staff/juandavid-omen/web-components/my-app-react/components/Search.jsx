@@ -1,19 +1,18 @@
-function Search({ onSubmit }) {
-    // const handleSubmit = event => {
+function Search({ onSubmit, query }) {
     function handleSubmit(event) {
-        event.preventDefault()
+        event.preventDefault();
 
-        let { query } = event.target
+        let { query } = event.target;
 
-        query = query.value
+        query = query.value;
 
-        onSubmit(query)
+        onSubmit(query);
     }
 
     return <section className="search">
         <form onSubmit={handleSubmit}>
-            <input type="text" name="query" />
+            <input type="text" name="query" defaultValue={query} />
             <button>🔍</button>
         </form>
     </section>
-}
+};

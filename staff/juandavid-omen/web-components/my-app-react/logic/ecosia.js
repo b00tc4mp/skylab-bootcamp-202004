@@ -1,4 +1,4 @@
-function searchEcosia(query, callback) {
+function ecosia(query, callback) {
     var xhr = new XMLHttpRequest()
 
     xhr.open('GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.ecosia.org/search?q=${query}`)

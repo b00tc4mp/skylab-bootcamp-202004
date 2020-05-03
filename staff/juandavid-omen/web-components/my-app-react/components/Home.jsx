@@ -1,96 +1,85 @@
-/* class Home extends Component {
-    constructor(name, onLogout) {
-        super(`<section class="home">
-         <h1>Hello ${name}, Welcome!</h1>
-            <button>Logout</button>
-            <div>
-                <button id="users" class="home__link home__link--active">Users</button>
-                <button id="google" class="home__link">Google</button>
-                <button id="ecosia" class="home__link">Ecosia</button>
-                <button id="news" class="home__link">News</button>
-            </div>
-    </section>`);
+ const {Component} = React;
 
-        const button = this.container.querySelector('#logout')
-        button.addEventListener('click', () => onLogout())
+ class Home extends Component {
+    constructor() {
+        super();
 
-        const users = new Users();
-        const google = new Google();
-        const ecosia = new Ecosia();
-        const news = new News();
+        this.state = {
+            view: 'users',
+            usersResults: undefined,
+            usersQuery: undefined,
+            googleResults: undefined,
+            googleQuery: undefined,
+            ecosiaResults: undefined,
+            ecosiaQuery: undefined,
+            news: undefined,
+        }
 
-        let currentComponent = users;
-        this.container.appendChild(currentComponent.container);
+    }
 
-        const usersButton = this.container.querySelector('#users')
-        let currentButton = usersButton;
+    componentDidMount() {
+        try {
+            retrieveUser(this.props.token, (error, user) => {
+                if (error) {
+                    throw error;
+                }
+                
+                this.setState({name: user.name});
+            });
+        } catch (error) {       
+            throw error;
+        }
+    }
 
-        usersButton.addEventListener('click', function () {
-            event.preventDefault()
+     handleUsers = event => {
+         event.preventDefault();
 
-            currentComponent.container.replaceWith(users.container)
-            currentComponent = users;
+         this.setState({ view: 'users' });
+     }
 
-            currentButton.classList.toggle('w3-red')
-            currentButton = usersButton;
-            currentButton.classList.toggle('w3-red')
+     handleGoogle = event => {
+         event.preventDefault();    
+        
+         this.setState({ view: 'google' });
+     }
 
-        })
+     handleEcosia = event => {
+         event.preventDefault();
 
-        const googleButton = this.container.querySelector('#google')
-        googleButton.addEventListener('click', function () {
-            event.preventDefault()
+         this.setState({ view: 'ecosia' });
+     }
 
-            currentComponent.container.replaceWith(google.container)
-            currentComponent = google;
+     handleHolaNews = event => {
+         event.preventDefault();
 
-            currentButton.classList.toggle('w3-red')
-            currentButton = googleButton;
-            currentButton.classList.toggle('w3-red')
+         this.setState({ view: 'news' });
+     }
 
-        })
+     handleSearchUsersResultsAndQuery = (results, query) =>
+         this.setState({ usersResults: results, usersQuery: query });
 
-        const ecosiaButton = this.container.querySelector('#ecosia')
-        ecosiaButton.addEventListener('click', function () {
-            event.preventDefault()
+     handleSearchGoogleResultsAndQuery = (results, query) =>
+         this.setState({ googleResults: results, googleQuery: query });
+    
+    handleSearchEcosiaResultsAndQuery = (results, query) =>
+        this.setState({ EcosiaResults: results, EcosiaQuery: query });
+         
+     handleRetrieveNewsResults = news =>
+         this.setState({ news: news });
 
-            currentComponent.container.replaceWith(ecosia.container)
-            currentComponent = ecosia;
+     render() {
+         return <section className="home">
+             <h1>Hello, {this.state.name} Welcome!</h1>
+             <a className={`home__link ${this.state.view === 'users' ? 'home__link--active' : ''}`} href="" onClick={this.handleUsers}>Users </a>
+             <a className={`home__link ${this.state.view === 'google' ? 'home__link--active' : ''}`} href="" onClick={this.handleGoogle}>Google </a>
+             <a className={`home__link ${this.state.view === 'ecosia' ? 'home__link--active' : ''}`} href="" onClick={this.handleEcosia}>Ecosia </a>
+             <a className={`home__link ${this.state.view === 'news' ? 'home__link--active' : ''}`} href="" onClick={this.handleHolaNews}>News </a>
+             <button onClick={this.props.onLogout}>Logout</button>
 
-            currentButton.classList.toggle('w3-red')
-            currentButton = ecosiaButton;
-            currentButton.classList.toggle('w3-red')
-
-        })
-
-        const newsButton = this.container.querySelector('#news')
-        newsButton.addEventListener('click', function () {
-            event.preventDefault()
-
-            currentComponent.container.replaceWith(news.container)
-            currentComponent = news;
-
-            currentButton.classList.toggle('w3-red')
-            currentButton = newsButton;
-            currentButton.classList.toggle('w3-red')
-
-        })
-
-    };
-};
- */
-
-function Home({ name }) {
-    return <section class="home">
-        <h1>Hello ${name}, Welcome!</h1>
-        <button>Logout</button>
-        <div>
-            <button id="users" class="home__link home__link--active">Users</button>
-            <button id="google" class="home__link">Google</button>
-            <button id="ecosia" class="home__link">Ecosia</button>
-            <button id="news" class="home__link">News</button>
-        </div>
-
-        <Users />
-    </section>
-}
+             {this.state.view === 'users' && <Users onSearch={this.handleSearchUsersResultsAndQuery} users={this.state.usersResults} query={this.state.usersQuery} token={this.props.token} />}
+             {this.state.view === 'google' && <Google onSearch={this.handleSearchGoogleResultsAndQuery} results={this.state.googleResults} query={this.state.googleQuery} />}
+             {this.state.view === 'Ecosia' && <Google onSearch={this.handleSearchEcosiaResultsAndQuery} results={this.state.EcosiaResults} query={this.state.ecosiaQuery} />}
+             {this.state.view === 'news' && <HolaNews onNews={this.handleRetrieveNewsResults} news={this.state.news} />}
+         </section>
+     }
+ }

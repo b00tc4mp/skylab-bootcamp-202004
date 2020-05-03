@@ -30,4 +30,3 @@ const passwords = [
     'poiuytr123123',
     'asdfhasdfh'
 ]
-
