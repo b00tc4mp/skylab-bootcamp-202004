@@ -15,6 +15,7 @@ function toggleFollowUser(token, followEmail, callback) {
 
   call("GET", url, body, headers, (error, status, response) => {
     if (error) return callback(error);
+
     if (status === 200) {
       let user = JSON.parse(response);
       if (!user.followers) {
@@ -23,21 +24,24 @@ function toggleFollowUser(token, followEmail, callback) {
         let index = user.followers.indexOf(followEmail);
         if (index === -1) {user.followers.push(followEmail)}else user.followers.splice(index, 1);
       }
+
       body = JSON.stringify({ followers: user.followers });
       headers = {
         Authorization: `Bearer ${token}`,
         "Content-type": "application/json",
       };
-    }
-    call("PATCH", url, body, headers, (error, status, response) => {
-      if (error) return callback(error);
-      if (status === 204) {
-        return callback(undefined, followEmail);
-      }
-      const { error: responseError } = JSON.parse(response);
 
-      if (responseError) callback(new Error(responseError));
-    });
+      call("PATCH", url, body, headers, (error, status, response) => {
+        if (error) return callback(error);
+        if (status === 204) {
+          return callback(undefined, followEmail);
+        }
+        const { error: responseError } = JSON.parse(response);
+  
+        if (responseError) callback(new Error(responseError));
+      });
+
+    }
 
     const { error: responseError } = JSON.parse(response);
     if (responseError) callback(new Error(responseError));

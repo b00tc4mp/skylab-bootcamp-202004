@@ -3,33 +3,42 @@ class Twitter extends Component {
     super(props);
     
     this.state = {
-      followersTweets: null
+      followersTweets: null,
+      tweet: null
     }
   }
 
   componentDidMount(){
+    this.handleRetrieveTweets()
+  }
+
+  handleRetrieveTweets = () => {
     retrieveTweets(this.props.token, (error, followersTweets) => {
       if(error) throw error
       this.setState({followersTweets})
-  })
+    })
   }
+
+  handleTweet = (event) => {
+    event.preventDefault();
+    let text = event.target.tweet.value
+    tweet(this.props.token, text, (error, tweet) => {
+        if(error) throw error
+        this.setState({tweet})
+        this.handleRetrieveTweets()
+    })
+    }
 
   render() {
     return (
       <>
-        {" "}
         <section className="tweet">
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              this.props.handleTweet(event);
-            }}
-          >
+          <form onSubmit={this.handleTweet}>
             <input type="text" name="tweet" />
             <button>Tweet</button>
           </form>
         </section>
-        {this.props.tweet && <Tweet tweet={this.props.tweet} />}
+        {this.state.tweet && <Tweet tweet={this.state.tweet} />}
         {this.state.followersTweets && <Tweets followersTweets={this.state.followersTweets} />}
       </>
     );

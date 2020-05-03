@@ -1,7 +1,7 @@
 function Tweets({ followersTweets }) {
   const printTweets = () => {
     return followersTweets.map(({ username, text, date }) => (
-      <li>{`${username} tweeted: ${text} ${date
+      <li>{`${username} tweeted: ${text} ${date && date
         .toString()
         .slice(4, 21)}`}</li>
     ));

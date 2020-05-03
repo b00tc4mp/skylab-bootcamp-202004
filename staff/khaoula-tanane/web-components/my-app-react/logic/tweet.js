@@ -26,9 +26,7 @@ function tweet(token, text, callback){
             })
 
         }
-
         const {error: responseError} = JSON.parse(response)
-
         if (responseError) callback(new Error(responseError))
 
     })

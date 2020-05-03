@@ -7,7 +7,6 @@ class Home extends Component{
             view: 'search',
             error: null,
             user: null,
-            followersTweets: null
 
 
         }  
@@ -17,11 +16,6 @@ class Home extends Component{
         retrieveUser(this.props.token, (error, user) => {
             if (error) return this.setState({ error: error.message })
             this.setState({user})
-        })
-
-        retrieveTweets(this.props.token, (error, followersTweets) => {
-            if(error) throw error
-            this.setState({followersTweets})
         })
     }
 
@@ -34,13 +28,6 @@ class Home extends Component{
     })}
 
 
-    handleTweet = (event) => {
-        let text = event.target.tweet.value
-        tweet(this.props.token, text, (error, tweet) => {
-            if(error) throw error
-            this.setState({tweet})
-        })
-    }
 
     handleFollow = (followEmail) => {
         toggleFollowUser(this.props.token, followEmail, (error, email) => {
@@ -52,12 +39,6 @@ class Home extends Component{
         })
     }
 
-    // handleRetrieveTweets = () => {
-    //     retrieveTweets(this.props.token, (error, followersTweets) => {
-    //         if(error) throw error
-    //         this.setState({followersTweets})
-    //     })
-    // }
 
     changeView = (view) => {
         this.setState({view})
@@ -88,7 +69,7 @@ class Home extends Component{
          )}
 
          {this.state.view === 'google' && <Google />}
-         {this.state.view === 'twitter' && <Twitter token={this.props.token} handleTweet={this.handleTweet} tweet={this.state.tweet}/> }
+         {this.state.view === 'twitter' && <Twitter token={this.props.token}/> }
 
         </section>}
         {!user && <p>LOADING...</p>}
