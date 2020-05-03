@@ -36,8 +36,8 @@ class Home extends Component{
         })
     }
 
-    handleFollow = (followEmail) => {
-        toggleFollowUser(this.props.token, followEmail, (error, email) => {
+    handleFollow = (followID) => {
+        toggleFollowUser(this.props.token, followID, (error, email) => {
             if(error) return this.setstate({error: error.message})
             
             retrieveUser(this.props.token, (error, user) => {

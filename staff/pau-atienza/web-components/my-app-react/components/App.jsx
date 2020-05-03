@@ -11,7 +11,7 @@ class App extends Component{
         }
     }
 
-    changeView = (input) => this.setState({view: input })
+    changeView = (input) => this.setState({view: input})
 
     handleLogin = event => {
         let {email, password} = event.target;
