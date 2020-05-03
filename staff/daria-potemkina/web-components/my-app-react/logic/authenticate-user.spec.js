@@ -1,73 +1,128 @@
-describe('authenticateUser', function(){
+describe('authenticateUser',  () =>{
     let name, surname, email, password
 
-    beforeEach(function(){
-        users.length = 0
-
+    beforeEach( () => {
         name = names.random()
         surname = surnames.random()
         email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`
         password = passwords.random()
     })
 
-    it('should match the email and password and not return an error', done =>{
 
+    describe('when user already exists', () => {
+        beforeEach(done => {
+            call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                `{ "name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}" }`,
+                { 'Content-type': 'application/json' },
+                (error, status, body) => {
+                    if (error) return done(new Error(error.message))
+                    if (status !== 201) return done(new Error(`unexpected status ${status}`))
 
+                    done()
+                })
+        })
 
-        // expect(function(){
-        //     authenticateUser(email, password)
-        // }).not.to.throw()
-    })
+        it('should succeed on correct data', done =>{
+            authenticateUser(email, password, (error, token)=>{
+                expect(error).to.be.undefined
 
-    // it('should return an error with wrong credentials', function(){
-    //     expect(function(){
-    //         authenticateUser(email, '123hola!')
-    //     }).to.throw(Error, 'wrong credentials')
+                expect(token).to.be.a('string')
 
-    //     const _email = email.substring(0,2) + '@mail.com'
+                done()
+            })
+        })
 
-    //     expect(function(){
-    //         authenticateUser(_email, password)
-    //     }).to.throw(Error, 'wrong credentials')
-    // })
+        it('should fail on incorrect credentials (e-mail)', done=>{
+            const _email = email.substring(0, 3) + '-' + email.substring(3)
+
+            authenticateUser(_email, password, (error, token) =>{
+                expect(error).to.be.an.instanceOf(Error)
+                expect(error.message).to.equal('username and/or password wrong')
+                expect(token).to.be.undefined
+
+                done()
+
+            })
+        })
+
+        it('should fail on incorrect credentials (password)', done =>{
+            const _password = password.substring(0, 3) + '-' + password.substring(3)
+
+            authenticateUser(email, _password, (error, token)=>{
+                expect(error).to.be.an.instanceOf(Error)
+                expect(error.message).to.equal('username and/or password wrong')
+                 expect(token).to.be.undefined
+
+                 done()
+            })
+        })
+
+        afterEach(done => {
+            call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
+                `{ "username": "${email}", "password": "${password}" }`,
+                { 'Content-type': 'application/json' },
+                (error, status, body) => {
+                    if (error) return done(error)
+                    if (status !== 200) return done(new Error(`unexpected status ${status}`))
     
-    it('should return an type error', function () {
-        expect(function () {
-            authenticateUser(undefined, password)
-        }).to.throw(TypeError, 'undefined is not a string')
+                    const { token } = JSON.parse(body)
+    
+                    call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                        `{ "password": "${password}" }`,
+                        {
+                            'Content-type': 'application/json',
+                            Authorization: `Bearer ${token}`
+                        },
+                        (error, status, body) => {
+                            if (error) return done(new Error(error.message))
+                            if (status !== 204) return done(new Error(`undexpected status ${status}`))
+    
+                            done()
+                        })
+                })
+        })
 
-        expect(function () {
-            authenticateUser(email, undefined)
-        }).to.throw(TypeError, 'undefined is not a string')
-
-        expect(function () {
-            authenticateUser(1, password)
-        }).to.throw(TypeError, '1 is not a string')
-
-        expect(function () {
-            authenticateUser(email, 1)
-        }).to.throw(TypeError, '1 is not a string')
-
-        expect(function () {
-            authenticateUser(true, password)
-        }).to.throw(TypeError, 'true is not a string')
-
-        expect(function () {
-            authenticateUser(email, false)
-        }).to.throw(TypeError, 'false is not a string')
     })
 
-    it('should return an error', function(){
-        expect(function(){
-            authenticateUser('123@ma', password)
-        }).to.throw(Error, '123@ma is not an email')
+    // it('should return an type error', function () {
+    //     expect(function () {
+    //         authenticateUser(undefined, password, callback)
+    //     }).to.throw(TypeError, 'undefined is not a string')
 
-        expect(function(){
-            authenticateUser(email, '  ')
-        }).to.throw(Error, 'password is empty or blank')
+    //     expect(function () {
+    //         authenticateUser(email, undefined, callback)
+    //     }).to.throw(TypeError, 'undefined is not a string')
 
-        expect(function(){
-            authenticateUser(email, '')
-        }).to.throw(Error, 'password is empty or blank')
-    })
+    //     expect(function () {
+    //         authenticateUser(1, password, callback)
+    //     }).to.throw(TypeError, '1 is not a string')
+
+    //     expect(function () {
+    //         authenticateUser(email, 1, callback)
+    //     }).to.throw(TypeError, '1 is not a string')
+
+    //     expect(function () {
+    //         authenticateUser(true, password, callback)
+    //     }).to.throw(TypeError, 'true is not a string')
+
+    //     expect(function () {
+    //         authenticateUser(email, false, callback)
+    //     }).to.throw(TypeError, 'false is not a string')
+    // })
+
+    // it('should return an error', function () {
+    //     expect(function () {
+    //         authenticateUser('123@ma', password, callback)
+    //     }).to.throw(Error, '123@ma is not an email')
+
+    //     expect(function () {
+    //         authenticateUser(email, '  ', callback)
+    //     }).to.throw(Error, 'password is empty or blank')
+
+    //     expect(function () {
+    //         authenticateUser(email, '', callback)
+    //     }).to.throw(Error, 'password is empty or blank')
+    // })
+
+
 })

@@ -1,12 +1,18 @@
 function Tweets ( { allTweets } ){
-return <section clsassName="tweets">
-    <ul>{ allTweets.map(({ text, date }) =>{
+return <section className="tweets">
+{
+    allTweets.length ?
+    <ul>{ 
+        allTweets.map(({ name, surname, text, date }) =>
         <li>
-            <p>{text}</p>
             <p>{date}</p>
+            <p>{name} {surname}</p>
+            <p>{text}</p>
         </li>
-    })} </ul> 
-
+  )} 
+  </ul> 
+    :<Feedback message="no tweets yet" level=""/>
+}
 </section>
 
 }

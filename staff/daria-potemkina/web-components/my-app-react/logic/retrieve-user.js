@@ -1,5 +1,5 @@
 function retrieveUser(token, callback) {
-    if (typeof token !== 'string') throw new TypeError(email + ' is not a string')
+    if (typeof token !== 'string') throw new TypeError(`${token} is not a string`)
 
     if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function}`)
 

@@ -20,7 +20,7 @@ class Login extends Component {
 
                 retrieveUser(token, (error, user) => {
                     if (error) return this.setState({error: error.message})
-                    else this.props.onSubmit(user.name, token)
+                    else this.props.onSubmit(user.name, token, user.following)
                 })
             })
 

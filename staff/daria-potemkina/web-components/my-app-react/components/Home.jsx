@@ -1,3 +1,5 @@
+const { Component } = React
+
 class Home extends Component {
     constructor(props) {
         super(props)
@@ -11,7 +13,11 @@ class Home extends Component {
             googleResults: undefined,
             errorEcosia: undefined,
             ecosiaResults: undefined,
+            errorTweets: undefined,
             tweets: undefined,
+            following: this.props.following,
+            toggleFollowError: undefined,
+            
         }
     }
     
@@ -54,23 +60,23 @@ class Home extends Component {
         })
     }
 
-    handleTweeter = (event) => {
+    handleGoToTwitter = (event) => {
         event.preventDefault()
 
-        this.setState({view: 'tweeter'})
-    }
-
-    handleRetriveTweets = (event) => {
-        event.preventDefault()
-        const myTweets =  retrieveTweets(this.props.userEmail)
-
-        this.setState({tweets: myTweets, view: 'tweeter'})
+        this.setState({view: 'twitter'})
     }
 
     handleGoToLogout = event => {
         event.preventDefault();
 
         this.props.onLogout()
+    }
+
+    handleFollowing = id =>{
+        toggleFollowUser(this.props.token, id, error => {
+            if(error) this.setState({toggleFollowError: error.message})
+        })
+        this.setState({view: 'users'})
     }
 
 
@@ -80,14 +86,14 @@ class Home extends Component {
             <a className="home__link" href="" onClick = {this.handleGoToUsers}>Users  </a>
             <a className="home__link" href="" onClick = {this.handleGoToGoogle}>Google  </a>
             <a className="home__link" href="" onClick = {this.handleGoToEcosia}>Ecosia  </a>
-            <a className="home__link" href="" onClick={this.handleRetriveTweets}>Tweeter  </a>
+            <a className="home__link" href="" onClick={this.handleGoToTwitter}>Twitter  </a>
             <button onClick={this.handleGoToLogout}>Log out</button>
 
             <News />
-            {this.state.view === 'users' && <Search onSubmit={this.handleSearchUsers} results = {this.state.usersResults} error = {this.state.errorUsers}/>}
+            {this.state.view === 'users' && <Search onSubmit={this.handleSearchUsers} results = {this.state.usersResults} error = {this.state.errorUsers} following={this.props.following} toggleFollowUser={this.handleFollowing}/>}
             {this.state.view === 'google' && <Google onSubmit={this.handleGoogle} results = {this.state.googleResults} error = {this.state.errorGoogle}/>}
             {this.state.view === 'ecosia' && <Ecosia onSubmit={this.handleEcosia} resultsEco = {this.state.ecosiaResults} error = {this.state.errorEcosia}/>}
-            {this.state.view === 'tweeter' && <Tweeter tweetList = {this.state.tweets}/>}
+            {this.state.view === 'twitter' && <Twitter token={this.props.token}/>}
         </section>
     }
 }

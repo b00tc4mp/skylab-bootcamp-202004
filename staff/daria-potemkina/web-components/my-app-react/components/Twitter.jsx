@@ -1,20 +1,24 @@
-class Tweeter extends Component {
+class Twitter extends Component {
     constructor(props) {
         super(props)
-        
+
         this.state = {
-            tweet: undefined
+            tweets: undefined,
+            tweetsError: undefined
         }
     }
-    // function handleSearchTweets (email){
-    //     return retrieveTweets(email)
-    // }
+
+    componentDidMount(){
+            retrieveTweets(this.props.token, (allTweets) =>{
+                this.setState({tweets: allTweets})
+            })
+    }
 
     render() {
-        return <section className="tweeter">
-            <h2>Tweeter</h2>
-            <Tweet />
-            {this.props.tweetList && <Tweets allTweets={this.props.tweetList} />}
+        return <section className="twitter">
+            <h2>Twitter</h2>
+            <Tweet token={this.props.token}/>
+            {this.state.tweets && <Tweets allTweets={this.state.tweets}/>}
         </section>
     }
 }

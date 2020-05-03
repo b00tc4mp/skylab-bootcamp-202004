@@ -1,7 +1,6 @@
-describe('retrieveUser', () =>{
+describe('toggleFollowUser', () =>{
     let name, surname, email, password, _token
-
-    beforeEach( () => {
+    beforeEach(() => {
         name = names.random()
         surname = surnames.random()
         email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`
@@ -24,31 +23,6 @@ describe('retrieveUser', () =>{
                     done()
                 })
             })
-    })
-
-    it('should return user data', done =>{
-        retrieveUser(_token, (error, user) =>{
-            expect(error).to.be.undefined
-
-            expect(user.name).to.equal(name)
-            expect(user.surname).to.equal(surname)
-            expect(user.email).to.equal(email)
-            expect(user.password).to.be.undefined
-
-            done()
-        })
-    })
-
-    it('shoud return an error because invalid token is passed', done =>{
-        let __token = '12132fkdjfkdjfkdjd'
-        retrieveUser(__token, (error, user) =>{
-            expect(error).to.exist
-            expect(error.message).to.equal('invalid token')
-
-            expect(user).to.be.undefined
-
-            done()
-        })
     })
 
     afterEach(done => {
@@ -74,18 +48,6 @@ describe('retrieveUser', () =>{
                         done()
                     })
             })
-    })
-
-    it('should return a type error', () => {
-        _token = 1234567
-        expect(() => {
-            retrieveUser(_token, function() {})
-        }).to.throw(TypeError, `${_token} is not a string`)
-
-        _token = undefined
-        expect(function(){
-            retrieveUser(_token,  function() {})
-        }).to.throw(TypeError, `${_token} is not a string`)
     })
 
 })

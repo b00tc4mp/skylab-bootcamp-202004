@@ -42,14 +42,14 @@ function retrieveTweets(token, callback) {
                                 const { error } = JSON.parse(body)
                                 callback(new Error(error))
                             }
-                            callback(undefined, allTweets)
+                            callback(allTweets)
                         })
                 }
             } else {
                 const { error } = JSON.parse(body)
                 callback(new Error(error))
             }
-            callback(undefined, allTweets)
+            callback(allTweets)
         })
 }
 

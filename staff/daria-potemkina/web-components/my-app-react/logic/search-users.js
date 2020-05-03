@@ -23,7 +23,7 @@ function searchUsers(token, query, callback) {
           );
         })
 
-        const __users = _users.map(({ username, name, surname }) => ({ email: username, name, surname }))
+        const __users = _users.map(({ username, name, surname, id }) => ({ email: username, name, surname, id }))
 
         callback(undefined, __users)
       } else {

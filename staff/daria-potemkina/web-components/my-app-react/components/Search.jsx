@@ -1,4 +1,4 @@
-function Search({onSubmit, results, error}) {
+function Search({onSubmit, results, error, following, toggleFollowUser}) {
     function handleSubmit(event) {
         event.preventDefault()
 
@@ -8,13 +8,14 @@ function Search({onSubmit, results, error}) {
 
         onSubmit(query)
     }
+
     return <section className="users">
         <h2>Users</h2>
         <form onSubmit={handleSubmit}>
             <input type="text" name="query"/>
             <button type="submit">🔍</button>
         </form>
-        {results && <Results results={results}/>}
+        {results && <Results results={results} error={error} following={following} toggleFollowUser={toggleFollowUser}/>}
         {error && <Feedback message = {error} level = {'warning'} />}
     </section>
 }

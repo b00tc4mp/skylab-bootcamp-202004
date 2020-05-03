@@ -1,40 +1,89 @@
-describe('searchUsers', function () {
-    it('should return an empty array', function () {
-        const result = searchUsers('hola')
+describe.only('searchUsers', () => {
+    let name, surname, email, password, _token
 
-        expect(result).to.be.an('array')
-        expect(result.length).to.equal(0)
-        expect(result[0]).to.equal(undefined)
+    beforeEach(() => {
+        name = names.random()
+        surname = surnames.random()
+        email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`
+        password = passwords.random()
     })
 
-    it('should return an array with results', function () {
-        users.length = 0;
-        users.push({
-            name: "daria",
-            surname: "potemkina",
-            email: "dariapotemkina@mail.ru",
-            password: "123456789"
+    beforeEach(done => {
+        call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
+            `{ "name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}" }`,
+            { 'Content-type': 'application/json' },
+            (error, status, body) => {
+                if (error) return done(new Error(error.message))
+                if (status !== 201) return done(new Error(`undexpected status ${status}`))
+                call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth', `{"username" : "${email}", "password" : "${password}"}`, { 'Content-type': 'application/json' }, (error, status, body) => {
+                    if (error) return done(new Error(error.message))
+                    if (status !== 200) return done(new Error(`undexpected status ${status}`))
+                    let { token } = JSON.parse(body)
+                    _token = token
+
+                    done()
+                })
+            })
+    })
+
+    it('should return an empty array with no results', done => {
+        searchUsers(_token, 'dhsdjshdjahhdfhjdhfjdhfjdhjk', (error, users) => {
+
+            expect(users.length).to.equal(0)
+
+            done()
         })
+    })
 
-        const result = searchUsers('daria')
+    it('should return an array with results', done => {
+        searchUsers(_token, 'pepito', (error, users) => {
+            expect(error).to.be.undefined
 
-        expect(result.length).to.equal(1)
-        expect(result[0].name).to.equal('daria')
-        expect(result[0].surname).to.equal('potemkina')
-        expect(result[0].email).to.equal('dariapotemkina@mail.ru')
-        expect(result[0].password).to.equal(undefined)
+            expect(users.length).to.be.greaterThan(0)
+            expect(users[0].name).to.exist
+            expect(users[0].surname).to.exist
+            expect(users[0].email).to.exist
+            expect(users[0].id).to.exist
+
+            done()
+        })
+    })
+
+    afterEach(done => {
+        call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
+            `{ "username": "${email}", "password": "${password}" }`,
+            { 'Content-type': 'application/json' },
+            (error, status, body) => {
+                if (error) return done(error)
+                if (status !== 200) return done(new Error(`unexpected status ${status}`))
+
+                const { token } = JSON.parse(body)
+
+                call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                    `{ "password": "${password}" }`,
+                    {
+                        'Content-type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    },
+                    (error, status, body) => {
+                        if (error) return done(new Error(error.message))
+                        if (status !== 204) return done(new Error(`undexpected status ${status}`))
+
+                        done()
+                    })
+            })
     })
 
     it('should return an error', () => {
-
         expect(() => {
-            searchUsers('    ')
+            searchUsers(_token, '    ', function(){})
         }).to.throw(Error, 'query is empty')
     })
 
-    it('should return a type error', () =>{
-        expect( () =>{
-            searchUsers(123)
+    it('should return a type error', () => {
+        let __token = 123
+        expect(() => {
+            searchUsers(__token, 'hola', function(){})
         }).to.throw(TypeError, '123 is not a string')
     })
 })
