@@ -10,7 +10,8 @@
         this.state = {
         view: 'landing',
         name: undefined,
-        useremail: undefined
+        useremail: undefined,
+        token: undefined
         
     }
      }    
@@ -27,18 +28,17 @@
 
     handleGoToLogin = () => this.setState({view: 'login'})
     handleLogin= (email, password) => {debugger
-        loginUser(email, password,  () => {
-            this.state = {token}
-        })
-        const user = retrieveUser(this.state.token, () => {})
-        const {name} = user
-        retrieveTweets(email) 
-        this.setState({view: 'home',
-                       user: name, 
-                        useremail: email})
-
-    }
-    
+        loginUser(email, password,  (error,token) => {
+            if (error) console.log(error)
+            this.setState({token: token,
+                           useremail: email, 
+                           view: 'home'})
+       
+        
+        
+        
+    })
+}
     
 
     render(){
@@ -47,7 +47,7 @@
         {this.state.view === 'landing' && <Landing onRegister={this.handleGoToRegister}  onLogin = {this.handleGoToLogin}/>}
         {this.state.view === 'register' && <Register onRegister1={this.handleRegister}/>}
         {this.state.view === 'login' && <Login onLogin1={this.handleLogin} />}
-        {this.state.view === 'home' && <Home user={this.state.user} useremail ={this.state.email} />}
+        {this.state.view === 'home' && <Home user={this.state.user} useremail ={this.state.useremail} token = {this.state.token} />}
     
     
 </>

@@ -5,8 +5,9 @@ class Home extends Component {
         super(props)
 
         this.state = { currentLink: 'user' ,
+                        email: this.props.email,
                         
-                      twitterresults: undefined,
+                      
                      }
     }
     handleOnGoogle = (event) => {
@@ -37,19 +38,17 @@ class Home extends Component {
         )
       }
   
-    handleOnTwitter = () => {
+    handleOnTwitter = () => {debugger
       event.preventDefault()
-      retrieveTweets(this.props.useremail)
-      this.setState({currentLink: 'twitter',
-                    twitterresults: results
-                
-    })
+      
+      this.setState({currentLink: 'twitter', })
+      
   }
 
 
     render() {
         return <section className="home">
-                    <h1>Wellcome {this.props.user}</h1>
+                    <h1>Welcome {this.props.user}</h1>
                     <button onClick={this.props.logOut}>Logout</button>
                     <a onClick={this.handleOnUsers} className="home__link" href="">Users</a>
                     <a onClick={this.handleOnGoogle} className="home__link" href="">Google</a>
@@ -57,11 +56,11 @@ class Home extends Component {
                     <a onClick={this.handleOnNews} className="home__link" href="">Mediavida</a>
                     <a onClick={this.handleOnTwitter} className= "home__link" href="">Twitter</a>
 
-                    {this.state.currentLink === 'user' && <User />}
+                    {this.state.currentLink === 'user' && <User token = {this.props.token} useremail = {this.props.useremail} />}
                     {this.state.currentLink === 'google' && <Google />}
                     {this.state.currentLink === 'ecosia' && <Ecosia />}
                     {this.state.currentLink === 'medivida' && <HomeNews />}
-                    {this.state.currentLink === 'twitter' && <Twitter onClick= {this.handleOnTweetsResults} email = {this.props.email} results= {this.state.twitterresults}/>}
+                    {this.state.currentLink === 'twitter' && <Twitter onClick  useremail = {this.props.useremail} token = {this.props.token} />} 
 
                </section>
     }

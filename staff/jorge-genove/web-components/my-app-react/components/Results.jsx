@@ -1,9 +1,14 @@
-function Result({ user }) {
+function Result({users, onFollow}) {
   return (
     <section className="results">
-      {user.length ? (
+      {users.length ? (
         <ul>
-          {user.map(({ name, surname, email }) => (<li>{`${name}${surname} ${email}`}</li>))}</ul>) 
+          {users.map(({ name, surname, username }) => (<li>{`${name} ${surname} ${username}`}<button onClick =  {event => {
+            event.preventDefault()
+            
+            onFollow(username)
+
+          }}>Follow</button></li>))} </ul>) 
           : <Feedback message="no users" level="warning" />}
     </section>
   )
