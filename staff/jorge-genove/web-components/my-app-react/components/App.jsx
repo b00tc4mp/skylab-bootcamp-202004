@@ -20,15 +20,17 @@
     handleToGo = () => this.setState({view})  
 
     handleRegister = (name, surname, email, password) => {
-        registerUser(name, surname, email, password)
+        registerUser(name, surname, email, password, () => {})
 
         this.setState({ view: 'login' })
     }
 
     handleGoToLogin = () => this.setState({view: 'login'})
     handleLogin= (email, password) => {debugger
-        authenticateUser(email, password)
-        const user = retrieveUser(email)
+        loginUser(email, password,  () => {
+            this.state = {token}
+        })
+        const user = retrieveUser(this.state.token, () => {})
         const {name} = user
         retrieveTweets(email) 
         this.setState({view: 'home',

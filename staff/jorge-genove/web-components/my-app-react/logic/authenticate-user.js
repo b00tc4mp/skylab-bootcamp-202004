@@ -1,4 +1,4 @@
-function loginUser(email, password, callback)  {
+function loginUser(email, password, callback)  {debugger
 
   if (typeof email !== 'string') throw new TypeError(email + ' is not a string')
   if (!email.trim().length) throw new Error('email is empty or blank')

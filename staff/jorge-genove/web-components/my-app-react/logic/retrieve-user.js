@@ -1,11 +1,20 @@
-function retrieveUser(email) {
-    if(typeof email !== 'string') throw new TypeError(email + ' is not a string')
-    if(!EMAIL_REGEX.test(email)) throw new Error(email + ' is not an e-mail')
-
-    const user = users.find(function(user){return user.email === email})
+const retrieveUser = (token, callback) => {
     
-    const { name, surname, email:_email } = user
-
-    return { name, surname, _email }
-
-}
+    call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
+        undefined, { Authorization: `Bearer ${token}` },
+        (error, status, body) => {
+  
+            if (error) return callback(error)
+  
+            if(status === 200){
+                const {name, surname, username: email} = JSON.parse(body)
+                callback(undefined,{name, surname, email})
+            }else{
+                const {error} = JSON.parse(body)
+  
+                callback(new Error(error))
+            }
+        }
+    )
+  }
+  

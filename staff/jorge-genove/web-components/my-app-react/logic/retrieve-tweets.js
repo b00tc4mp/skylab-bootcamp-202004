@@ -1,40 +1,68 @@
-let user = "";
-let followerUsers = [];
+function retrieveTweets(email,token,callback) {debugger
+  let user = "";
+  let followerUsers = [];
+  let tweetArr = []
+  
+  call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all', undefined, {Authorization: `Bearer ${token}`},
+  (error,status,body) => {
+    if(error) return callback (error)
 
-function retrieveTweets(email) {debugger
-  for (var i = 0; i < users.length; i++) {
-    if (users[i].email === email) {
-      user = users[i];
-    }
-  }
-  let followersEmail = [];
-  for (var j = 0; j < user.following.length; j++) {
-    followersEmail.push(user.following[j]);
-  }
-
-  for (var i = 0; i < users.length; i++) {
-    followersEmail.find((elemento) => {
-      if (users[i].email === elemento) {
-        followerUsers.push(users[i]);
+    if(status === 200){
+      
+      const users = JSON.parse(body)
+      callback()
+      for (var i = 0; i < users.length; i++) {
+        if (users[i].username === email) {
+          user = users[i];
+        }
       }
-    });
-  }
-
-  let tweetsArray = [];
-
-  for (var i = 0; i < followerUsers.length; i++) {
-    for (var k = 0; k < followerUsers[i].tweets.length; k++) {
-      let tweet = followerUsers[i].tweets;
-      let name = followerUsers[i].name;
-      let surname = followerUsers[i].surname;
+      let followersID = [];
+      for (var j = 0; j < user.following.length; j++) {debugger
+        followersID.push(user.following[j]);
+      }
+    
+      for (var i = 0; i < users.length; i++) {
+        followersID.find((elemento) => {
+          if (users[i].id === elemento) {
+            followerUsers.push(users[i]);
+          }
+        });
+      }
+    
+      let tweetsArray = [];
+    
+      for (var i = 0; i < followerUsers.length; i++) {debugger
+        let name = followerUsers[i].name;
+        let surname = followerUsers[i].surname;
+        for (var k = 0; k < followerUsers[i].tweets.length; k++) {
+          tweetArr[tweetArr.length] = followerUsers[i].tweets
+         
+          
+          
+        }
+        tweetsArray.push({name,surname, tweetArr });
+      }
+    
+      let tweet = user.tweets;
+      let name = user.name;
+      let surname = user.surname;
       tweetsArray.push({ tweet, name, surname });
+    
+     
+    
+
+    }else{
+      const {error} =  JSON.parse(body)
+      callback(new Error(error))
     }
-  }
-
-  let tweet = user.tweets;
-  let name = user.name;
-  let surname = user.surname;
-  tweetsArray.push({ tweet, name, surname });
-
-  return tweetsArray;
+  })
 }
+
+
+
+
+
+
+
+  
+ 
