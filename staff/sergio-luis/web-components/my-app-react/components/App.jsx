@@ -5,7 +5,7 @@ class App extends Component{
         super()
 
         this.state={
-            view: 'landing'
+            view: 'login'
         }
     }
 
@@ -18,6 +18,11 @@ class App extends Component{
     handleLogin =(token) =>{
         this.setState({ token, view:'home'})
     }
+    handleLogout = () =>{
+        this.setState({view:'landing'})
+
+    }
+  
 
 
     render() {
@@ -26,7 +31,7 @@ class App extends Component{
             {this.state.view === 'landing' && <Landing onClick={this.handleState}/>}
             {this.state.view === 'register' && <Register onClick={this.handleState} onRegister={this.handleRegister}/>}
             {this.state.view === 'login' && <Login onClick={this.handleState} onLogin={this.handleLogin}/>}
-            {this.state.view === 'home' && <Home />}
+            {this.state.view === 'home' && <Home onLogout={this.handleLogout} token={this.state.token}/>}
 
         </>
     }

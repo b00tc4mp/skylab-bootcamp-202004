@@ -1,14 +1,16 @@
-function news(callback) {
 
-    var xhr = new XMLHttpRequest()
-
-    xhr.open('GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.cbsnews.com/world/`)
-
-    //xhr.onload = function () {
-    xhr.addEventListener('load', function() {
+function searchNews(callback) {
+    if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
+  
+    call('GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.cbsnews.com/world/`,
+    undefined,
+    undefined,
+    (error,status,body)=>{
+        if(error) return callback(error);
+        if(status!== 200) return callback(new Error('unknow error'))
         const parser = new DOMParser()
 
-        const doc = parser.parseFromString(this.responseText, 'text/html')
+        const doc = parser.parseFromString(body, 'text/html')
 
         let results = doc.querySelectorAll('.item.item--type-article.item--topic-world');
 
@@ -25,15 +27,5 @@ function news(callback) {
         }
 
         callback(undefined, data)
-    
     })
-
-    //xhr.onerror = function(error) {
-    xhr.addEventListener('error', () => {
-        callback(new Error('network error'))
-            //}
-    })
-
-
-    xhr.send()
 }
