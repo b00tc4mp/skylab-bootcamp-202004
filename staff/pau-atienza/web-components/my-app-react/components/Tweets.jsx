@@ -8,12 +8,12 @@ class Tweets extends Component{
   }
 
   componentDidMount(){
-    retrieveTweets(this.props.token, (error, followersTweets) => {
-        if(error) throw error
-        this.setState({followersTweets})
+    retrieveTweets(this.props.token, this.props.user,(error, followersTweets) => {
+      if(error) throw error
+      this.setState({followersTweets})
     })
   }
-  
+
   printTweets = () => {
     return this.state.followersTweets && this.state.followersTweets.map(({ username, message, date }) => (
       <li>{`${username} tweeted: ${message} ${date.toString().slice(0,10) + ' ' + date.toString().slice(11,16)}`}</li>));

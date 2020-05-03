@@ -7,15 +7,11 @@ function NavBar({callback, name}){
             <a href = '' onClick = {(event)=>{
                 event.preventDefault()
                 callback('user')
-            }}>User Search</a>
+            }}>User Search </a>
             <a href = '' onClick = {(event)=>{
                 event.preventDefault()
                 callback('google')
-            }}>Google Search</a>
-            <a href = '' onClick = {(event)=>{
-                event.preventDefault()
-                callback('ecosia')
-            }}>Ecosia Search</a>
+            }}>Google Search </a>
             <a href = '' onClick = {(event)=>{
                 event.preventDefault()
                 callback('twitter')

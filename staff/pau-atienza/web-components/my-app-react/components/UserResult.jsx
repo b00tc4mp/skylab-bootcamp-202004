@@ -1,6 +1,6 @@
 function UserResult({ foundUsers, user, handleFollow }){
     
-    return <section className="results">
+    return <section className="results--user">
         {foundUsers &&
             <ul>{foundUsers.map(({ name, surname, email, id }) => 
             <li>{`${name} ${surname} (${email})`} <button onClick={(event) => {event.preventDefault(); 

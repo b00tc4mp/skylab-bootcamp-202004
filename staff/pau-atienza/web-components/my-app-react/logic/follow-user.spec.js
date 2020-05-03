@@ -3,7 +3,6 @@ describe('toggleFollowUser', () => {
     describe('when user already exist', () => {
         let name, surname, password
  
-
         beforeEach(() => {
             users.length = 0
 
