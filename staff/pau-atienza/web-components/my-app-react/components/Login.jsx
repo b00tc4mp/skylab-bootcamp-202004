@@ -1,4 +1,4 @@
-function Login({handleLogin, callback}){
+function Login({handleLogin, changeView}){
 
     return <section className="login">
         <h1 className="title-login">Login</h1>
@@ -6,7 +6,7 @@ function Login({handleLogin, callback}){
         <input className="input-mail" type="email" name="email" placeholder="e-mail"/>
             <input className="input-pass" type="password" name="password" placeholder="password"/>
             <button className="submit-button">Submit</button>
-            or <a className="register-login" href="" onClick={event => {event.preventDefault(); callback('register')}}>Register</a>
+            or <a className="register-login" href="" onClick={event => {event.preventDefault(); changeView('register')}}>Register</a>
         </form>
     </section>
 
