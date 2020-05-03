@@ -29,7 +29,7 @@ class Users extends Component {
     }
 
     handleSearch = query =>{
-        const users = searchUsers(this.props.token, query, (error, users) => {
+        searchUsers(this.props.token, query, (error, users) => {
             if(error) throw Error 
 
             this.setState({users})

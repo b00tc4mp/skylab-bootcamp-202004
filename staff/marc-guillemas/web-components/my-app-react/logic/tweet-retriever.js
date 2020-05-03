@@ -1,4 +1,7 @@
 function tweetRetriever(loggedUser) {
+    
+    
+    
     const followingUsers = users.filter(user => {
         
         for (let i = 0; i < loggedUser.twitter.following.length; i++) {

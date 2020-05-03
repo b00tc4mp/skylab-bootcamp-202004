@@ -6,10 +6,12 @@ function checkFollow(token, callback) {
         if(error) throw callback(error);
    
         if(status === 200){
-            const {followers} = JSON.parse(body)
-            if(followers)
-               callback(undefined, following )
-            else updateUser(token, error => {if(error) throw Error})
+            const {following} = JSON.parse(body)
+            if(following)
+               callback(undefined, following)
+            // else
+            // updateUser(token, error => {if(error) throw Error; callback(undefined, following)})
+                
         }else{
             const {error} = JSON.parse(body);
 
@@ -18,3 +20,5 @@ function checkFollow(token, callback) {
         }
     })
 }
+
+
