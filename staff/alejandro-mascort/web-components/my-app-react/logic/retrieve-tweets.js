@@ -57,34 +57,3 @@ function retrieveTweets(token, callback) {
     })
 
 }
-
-    // let tweetsFollowing
-
-    // if (!user.tweets) tweetsFollowing = []
-    // else {
-    //     tweetsFollowing = user.tweets.map(({message, date}) => {
-    //         return {message, 
-    //         date,
-    //         userFollowed: 'Me'}
-    //     })
-    // }
-
-    // let userFollowing, message, date
-
-    // if (user.following) {
-    //     for (let i = 0; i < user.following.length; i++) {
-    //         userFollowing = users.find(__user => __user.email === user.following[i])
-    //         if (userFollowing.tweets) {
-    //             for (let j = userFollowing.tweets.length-1; j >= 0; j--) {
-    //                 message = userFollowing.tweets[j].message
-    //                 date = userFollowing.tweets[j].date
-    //                 userFollowed = userFollowing.email
-    //                 tweetsFollowing.push({message, date, userFollowed})
-    //             }
-    //         }
-    //     }
-    // }
-
-    // tweetsFollowing.sort((a,b) => b.date-a.date)
-
-    // return tweetsFollowing

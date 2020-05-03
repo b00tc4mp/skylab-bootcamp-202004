@@ -1,20 +1,44 @@
-function toggleFollowUser(email, following) {
-    if (typeof email !== 'string') throw new TypeError(email + ' is not a string')
-    if (!EMAIL_REGEX.test(email)) throw new Error(email + ' is not an e-mail')
+function toggleFollowUser(token, followingId, callback) {
+    if (typeof token !== 'string') throw new TypeError(token + ' is not a string')
 
-    if (typeof following !== 'string') throw new TypeError(following + ' is not a string')
-    if (!EMAIL_REGEX.test(following)) throw new Error(following + ' is not an e-mail')
+    if (typeof followingId !== 'string') throw new TypeError(following + ' is not a string')
 
-    const user = users.find(user => user.email === email)
+    if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
 
-    if (!user) throw new Error(`user with e-mail ${email} not found`)
+    let following
 
-    const _user = users.find(user => user.email === following)
+    call('GET','https://skylabcoders.herokuapp.com/api/v2/users',
+    undefined,
+    { 'Authorization': `Bearer ${token}`  },
+    (error, status, body) => {
+        if (error) callback(error)
 
-    if (!_user) throw new Error(`user with e-mail ${following} not found`)
+        if (status === 200) {
+            const user = JSON.parse(body);
 
-    const index = (user.following || (user.following = [])).indexOf(following)
+            (user.following ? (following = user.following) : (following=[]))
 
-    if (index > -1) user.following.splice(index, 1)
-    else user.following.push(following)
+            const index = following.indexOf(followingId)
+
+            if (index > -1) following.splice(index, 1)
+            else following.push(followingId)
+
+            call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', `{ "following" : ${JSON.stringify(following)}}`,
+            { 'Authorization': `Bearer ${token}`,'Content-Type': 'application/json' },
+            (error, status, body) => {
+                if (error) return callback(error)
+                if (status === 204) callback()
+                else {
+                    const { error } = JSON.parse(body)
+
+                    callback(new Error(error))
+                }
+            })
+
+        } else {
+            const { error } = JSON.parse(body)
+
+            callback(new Error(error))
+        }
+    })
 }
