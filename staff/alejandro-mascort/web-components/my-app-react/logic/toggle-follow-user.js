@@ -7,34 +7,53 @@ function toggleFollowUser(token, followingId, callback) {
 
     let following
 
-    call('GET','https://skylabcoders.herokuapp.com/api/v2/users',
-    undefined,
-    { 'Authorization': `Bearer ${token}`  },
+    call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined,
+    {
+        Authorization: `Bearer ${token}`
+    },
     (error, status, body) => {
-        if (error) callback(error)
+        if (error) return callback(error)
 
         if (status === 200) {
-            const user = JSON.parse(body);
+            call('GET', `https://skylabcoders.herokuapp.com/api/v2/users/${followingId}`, undefined,
+                {
+                    Authorization: `Bearer ${token}`
+                },
+                (error, status) => {
+                    if (error) return callback(error)
 
-            (user.following ? (following = user.following) : (following=[]))
+                    if (status == 200) {
+                        const user = JSON.parse(body)
 
-            const index = following.indexOf(followingId)
+                        const { following = [] } = user
 
-            if (index > -1) following.splice(index, 1)
-            else following.push(followingId)
+                        const index = following.indexOf(followingId)
 
-            call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', `{ "following" : ${JSON.stringify(following)}}`,
-            { 'Authorization': `Bearer ${token}`,'Content-Type': 'application/json' },
-            (error, status, body) => {
-                if (error) return callback(error)
-                if (status === 204) callback()
-                else {
-                    const { error } = JSON.parse(body)
+                        if (index < 0) following.push(followingId)
+                        else following.splice(index, 1)
 
-                    callback(new Error(error))
-                }
-            })
+                        call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify({ following }),
+                            {
+                                Authorization: `Bearer ${token}`,
+                                'Content-type': 'application/json'
+                            },
+                            (error, status, body) => {
+                                if (error) return callback(error)
 
+                                if (status === 204) {
+                                    callback()
+                                } else {
+                                    const { error } = JSON.parse(body)
+
+                                    callback(new Error(error))
+                                }
+                            })
+                    } else {
+                        const { error } = JSON.parse(body)
+
+                        callback(new Error(error))
+                    }
+                })
         } else {
             const { error } = JSON.parse(body)
 

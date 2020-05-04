@@ -4,9 +4,9 @@ class Home extends Component {
         
         this.state = {
             view: 'users',
-            following: this.props.following,
             usersResults: undefined,
             usersQuery: undefined,
+            usersError: undefined,
             googleResults: undefined,
             googleError: undefined,
             googleQuery: undefined
@@ -55,17 +55,16 @@ class Home extends Component {
         this.setState({googleQuery: query})
     }
 
-    handleToggleUser = id => {
+    handleToggle = id => {
         toggleFollowUser(this.props.token, id, error => {
-            if (error) this.setState({userError: error.message})
+            if (error) this.setState({errorUsers: error.message})
             else {
-                retrieveUser(this.props.token, (error, user) => {
-                    if (error) this.setState({userError: error.message})
-                    else this.setState({following: user.following})
+                searchUsers(this.props.token, this.state.usersQuery, (error, users) => {
+                    if (error) this.setState({errorUsers: error.message})
+                    else this.setState({usersResults: users})
                 })
             }
         })
-        this.setState({view: 'users'})
     }
 
     render() {
@@ -76,17 +75,10 @@ class Home extends Component {
             <a className={`home__link ${this.state.view === 'news' ? 'home__link--active' : '' }`} href="" onClick={this.handleNews}> Hola News </a>
             <a className={`home__link ${this.state.view === 'twitter' ? 'home__link--active' : '' }`} href="" onClick={this.handleTwitter}> Twitter </a>
             <button onClick={() => {
-                this.setState({
-                    following: [],
-                    usersResults: undefined,
-                    usersQuery: undefined,
-                    googleResults: undefined,
-                    googleError: undefined,
-                    googleQuery: undefined})
                 this.props.onLogout()
             }}>Logout</button>
 
-            {this.state.view === 'users' && <Users usersResults={this.state.usersResults} following={this.state.following} handleSearchUsers={this.handleSearchUsers} query={this.state.usersQuery} toggleUser={this.handleToggleUser}/>}
+            {this.state.view === 'users' && <Users usersResults={this.state.usersResults} handleSearchUsers={this.handleSearchUsers} query={this.state.usersQuery} handleToggle={this.handleToggle} errorUsers={this.state.errorUsers}/>}
             {this.state.view === 'google' && <Google googleResults={this.state.googleResults} googleError={this.state.googleError} handleGoogleSearch={this.handleGoogleSearch} query={this.state.googleQuery}/>}
             {this.state.view === 'news' && <HolaNews />}
             {this.state.view === 'twitter' && <Tweet token={this.props.token}/>} 

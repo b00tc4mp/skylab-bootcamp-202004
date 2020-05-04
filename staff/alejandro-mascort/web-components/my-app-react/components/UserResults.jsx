@@ -1,9 +1,9 @@
-function UserResults ({results, following, toggleUser}) {
-    let list = results.map(({name, surname, email, id}) => <li>{name} {surname} ({email}) <button onClick={event => {
+function UserResults ({results, handleToggle}) {
+    let list = results.map(({name, surname, email, following, id}) => <li>{name} {surname} ({email}) <button onClick={event => {
         event.preventDefault()
 
-        toggleUser(id)
-    }}>{following.includes(id) ? 'Unfollow' : 'Follow'}</button></li>)
+        handleToggle(id)
+    }}>{following ? 'Unfollow' : 'Follow'}</button></li>)
 
     return <section className="results">
         {results.length ? <ul>{list}</ul> : <Feedback message={'Sorry, no results :('} level={'warning'} />}
