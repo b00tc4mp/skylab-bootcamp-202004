@@ -7,28 +7,32 @@ class User extends Component {
     super()
   
     this.state = {
-    users: undefined
+    users: undefined,
+    query: undefined
   }  
   
   }
-    onFollow = (username) => {
-      toggleFollowUser(username, this.props.token, this.props.useremail, (error) => {
-        if(error) console.log(error)
-      })
-    }
+   
 
 
     handleSearch = query => {debugger
-      searchUsers(query, this.props.token, (error,users) =>  { 
+      searchUsers(query, this.props.token, (error,users) =>  { debugger
         if (error) console.log(error)
 
-      this.setState({ users : users})
-    })}
-   render(){
+      this.setState({ users : users,
+                      query : query})
+                    })}
+                    
+      onToggleFollow = query => {debugger
+      this.handleSearch(this.state.query)    }
+   
+   
+   
+  render(){
    return <section className="users">
             <h2>Users</h2>
             <Search onSubmit = {this.handleSearch}/>
-            {this.state.users && <Result users={this.state.users} onFollow ={this.onFollow}/>}
+            {this.state.users && <Result users={this.state.users} onToggleFollow ={this.onToggleFollow} token = {this.props.token}/>}
         </section>
         
       }

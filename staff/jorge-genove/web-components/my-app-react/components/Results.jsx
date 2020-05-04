@@ -1,15 +1,33 @@
-function Result({users, onFollow}) {
-  return (
-    <section className="results">
-      {users.length ? (
-        <ul>
-          {users.map(({ name, surname, username }) => (<li>{`${name} ${surname} ${username}`}<button onClick =  {event => {
-            event.preventDefault()
-            
-            onFollow(username)
+function Result({ users, token, onToggleFollow }) {
+  function handleToogleFollow(followingId) {
+    try {
+      toggleFollowers(followingId,token, error => {
+        if(error) throw error
+      
+        onToggleFollow()
+      })
+    }catch (error){
+      if (error) throw error
+    }
+  }
+  
+  return <section className="results">
+      {
+      users.length ? 
+        <ul>{users.map(({ id, name, surname,email, following }) => 
+          <li>{`${name} ${surname} ${email}`} {
+          typeof following !== 'undefined' ?
+          <button onClick={() => handleToogleFollow(id)}>
+              {following ? 'Unfollow' : 'Follow'}
+          </button>
+          :
+          undefined
+      }
+      </li>
+    )}</ul>
+    : <Feedback message="no users" level="warning" />
 
-          }}>Follow</button></li>))} </ul>) 
-          : <Feedback message="no users" level="warning" />}
-    </section>
-  )
+    }
+  </section>
+  
 }
