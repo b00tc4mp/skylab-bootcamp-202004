@@ -1,4 +1,4 @@
-describe.only("searchUser", () => {
+describe("searchUser", () => {
   debugger;
   let tokenValue;
   let users;
@@ -12,15 +12,7 @@ describe.only("searchUser", () => {
       
       name = names.random();
       surname = surnames.random();
-      email = `${name
-        .toLowerCase()
-        .split(" ")
-        .join("")}${surname
-        .toLowerCase()
-        .split(" ")
-        .join("")
-        .concat("-")
-        .concat(Math.random())}@mail.com`;
+      email = `${name.toLowerCase().split(" ").join("")}${surname.toLowerCase().split(" ").join("").concat("-").concat(Math.random())}@mail.com`;
       password = passwords.random();
       debugger;
       call(
@@ -31,7 +23,7 @@ describe.only("searchUser", () => {
         (error, status, body) => {
           if (error) return done(new Error(error));
           if (!status === 201) return done(new Error("unexpectet status"));
-done()
+          done()
           debugger;
           call(
             "POST",
@@ -53,6 +45,8 @@ done()
     
   });
   debugger;
+  
+  describe('hola mundo', () => {
   it("should find all users and create an array.", (done) => {
     searchUsers('helena', tokenValue, () => {
       
@@ -74,11 +68,12 @@ done()
         expect(users).to.exist;
         expect(users.length).to.be.greaterThan(0);
 
-        done();
+        
       }
     );
+    done();
   });
-
+})
     afterEach(done => {
     call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
         `{ "username": "${email}", "password": "${password}" }`,
@@ -99,10 +94,13 @@ done()
                     if (error) return done(new Error(error.message))
                     if (status !== 204) return done(new Error(`undexpected status ${status}`))
 
-                    done()
+                   
                 })
         })
-})
+
+        done()
+
+      })
 
 
 
