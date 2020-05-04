@@ -1,92 +1,107 @@
 describe('toggleFollowUser', () => {
-    let email, following
+    let name, surname, email, password, _token, users
 
-    describe('when user already exist', () => {
-        let name, surname, password
+    let _name,_surname, _email, _password, _id
+    beforeEach(() => {
+        name = names.random()
+        surname = surnames.random()
+        email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`
+        password = passwords.random()
 
-        beforeEach(() => {
-            users.length = 0
+        _name = names.random()
+        _surname = surnames.random()
+        _email = `${_name.toLowerCase().split(' ').join('')}${_surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`
+        _password = passwords.random()
+    })
 
-            name = names.random()
-            surname = surnames.random()
-            email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('')}@mail.com`
-            password = passwords.random()
+    beforeEach(done => {
+        call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
+            `{ "name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}" }`,
+            { 'Content-type': 'application/json' },
+            (error, status, body) => {
+                if (error) return done(new Error(error.message))
+                if (status !== 201) return done(new Error(`undexpected status ${status}`))
 
-            users.push({ name, surname, email, password })
-        })
+                call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth', `{"username" : "${email}", "password" : "${password}"}`, { 'Content-type': 'application/json' }, (error, status, body) => {
+                    if (error) return done(new Error(error.message))
+                    if (status !== 200) return done(new Error(`undexpected status ${status}`))
+                    let { token } = JSON.parse(body)
+                    _token = token
 
-        describe('when following already exists', () => {
-            beforeEach(() => {
-                const name = names.random(),
-                    surname = surnames.random(),
-                    email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('')}@mail.com`,
-                    password = passwords.random()
+                    call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                    `{ "name": "${_name}", "surname": "${_surname}", "username": "${_email}", "password": "${_password}" }`,
+                    { 'Content-type': 'application/json' },
+                    (error, status, body) => {
+                        if (error) return done(new Error(error.message))
+                        if (status !== 201) return done(new Error(`undexpected status ${status}`))
+                        
+                        call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth', `{"username" : "${_email}", "password" : "${_password}"}`, { 'Content-type': 'application/json' }, 
+                        (error, status, body) => {
+                            if (error) return done(new Error(error.message))
+                            if (status !== 200) return done(new Error(`undexpected status ${status}`))
 
-                users.push({ name, surname, email, password })
+                            call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all',
+                            undefined,
+                            { Authorization: `Bearer ${_token}` },
+                            (error, status, body) => {
+                                if (error) return done(new Error(error.message))
+                                if (status !== 200) return done(new Error(`undexpected status ${status}`))
 
-                following = email
-            })
+                                let users = JSON.parse(body)
 
-            it('should succeed on existing users', () => {
-                toggleFollowUser(email, following)
+                                users = users.filter(function (user) {
+                                    const { name, surname, username } = user
 
-                const user = users.find(user => user.email === email)
+                                    return username.toLowerCase().includes(_email)
+                                })
 
-                expect(user).to.exist
-                expect(user.name).to.equal(name)
-                expect(user.surname).to.equal(surname)
-                expect(user.email).to.equal(email)
-                expect(user.password).to.equal(password)
+                                users = users.map(({ name, surname, username, id }) => ({ name, surname, email: username, id }))
+                                
+                                _id = users[0].id
 
-                expect(user.following).to.exist
-                expect(user.following).to.have.length(1)
-
-                const [_following] = user.following
-                expect(_following).to.equal(following)
-            })
-
-            describe('when following is already followed', () => {
-                beforeEach(() => {
-                    const user = users.find(user => user.email === email)
-
-                    user.following = [following]
-                })
-
-                it('should succeed and following become unfollowed', () => {
-                    toggleFollowUser(email, following)
-
-                    const user = users.find(user => user.email === email)
-
-                    expect(user).to.exist
-                    expect(user.name).to.equal(name)
-                    expect(user.surname).to.equal(surname)
-                    expect(user.email).to.equal(email)
-                    expect(user.password).to.equal(password)
-
-                    expect(user.following).to.exist
-                    expect(user.following).to.have.length(0)
+                                done()
+                            }
+                        )
+                    })
                 })
             })
-        })
-
-        describe('when following does not exist', () => {
-            beforeEach(() => following = `${names.random().toLowerCase().split(' ').join('')}${surnames.random().toLowerCase().split(' ').join('')}@mail.com`)
-
-            it('should fail alerting following user e-mail does not exist', () =>
-                expect(() => toggleFollowUser(email, following)).to.throw(Error, `user with e-mail ${following} not found`)
-            )
         })
     })
 
-    describe('when user does not exist', () => {
-        beforeEach(() => {
-            email = `${names.random().toLowerCase().split(' ').join('')}${surnames.random().toLowerCase().split(' ').join('')}@mail.com`
+    it('should succeed on pushing a new id', done => {
+        call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
+        undefined,
+        { 'Authorization': `Bearer ${_token}` }, (error, state, body) => {
+            expect(error).to.be.undefined
+            expect(state).to.equal(200)
+            expect(body).to.exist
 
-            following = `${names.random().toLowerCase().split(' ').join('')}${surnames.random().toLowerCase().split(' ').join('')}@mail.com`
+            let user = JSON.parse(body)
+
+            expect(user.following).to.be.undefined
+            debugger
+            toggleFollowUser(_token, _id, error => {
+                expect(error).to.be.undefined
+
+                call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                    undefined,
+                    { 'Authorization': `Bearer ${_token}` }, (error, state, body) => {
+                        expect(error).to.be.undefined
+                        expect(state).to.equal(200)
+                        expect(body).to.exist
+
+                        let _user = JSON.parse(body)
+
+                        expect(_user.following).to.exist
+                        expect(_user.following.length).to.be.greaterThan(0)
+
+                        expect(_user.following[0]).to.equal(_id)
+                        expect(_user.following[0]).to.be.an('string')
+
+                        done()
+                })
+            
+            })
         })
-
-        it('should fail alerting user e-mail does not exist', () =>
-            expect(() => toggleFollowUser(email, following)).to.throw(Error, `user with e-mail ${email} not found`)
-        )
     })
 })
