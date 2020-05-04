@@ -1,29 +1,27 @@
 const users = [
     {
-      name: "Manuel",
-      surname: "Barzi",
-      email: "manuelbarzi@gmail.com",
-      password: "123123123",
+        name: 'Manuel',
+        surname: 'Barzi',
+        email: 'manuelbarzi@gmail.com',
+        password: '123123123',
+        tweets: [{
+            message: 'Hola, Mundo!',
+            date: new Date
+        }],
+        following: ['pepito@grillo.com']
     },
 
     {
-      name: "albert",
-      surname: "manzano",
-      email: "vetu87@gmail.com",
-      password: "123123123",
+        name: 'Pepito',
+        surname: 'Grillo',
+        email: 'pepito@grillo.com',
+        password: '123123123'
     },
 
     {
-      name: "sergio",
-      surname: "borja",
-      email: "sergioborja@gmail.com",
-      password: "123123123",
-    },
-
-    {
-      name: "sergio",
-      surname: "ramos",
-      email: "sergioramos@gmail.com",
-      password: "123123123",
-    },
-  ];
+        name: 'Andy',
+        surname: 'Garcia',
+        email: 'andy@garcia.com',
+        password: '123123123'
+    }
+]

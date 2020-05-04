@@ -1,60 +1,25 @@
-@import compos/Landing
-@import compos/Login
-@import compos/Register
-@import compos/Home
-@import compos/Feedback
-
-*
-    font-family: sans-serif
-    font-size: 20px
-    margin: 0
-    box-sizing: border-box
-    background-color: #212f3d
-    text-align: center
-    color: white
+@import utils
+@import components/Panel
     
-a
-    color: #0066c0
-    text-decoration: none
+@import components/Landing
+@import components/Login
+@import components/Register
+@import components/Home
+@import components/Feedback
+@import components/Search
+
+.Twitwer
+    @extend %panel
+
+    border-color: yellow
     
-#root 
-    text-align: center
-
-
-.input
-    background-color: white
-    color: gray
+    &__link
+        text-decoration: none
     
-
-.logo
-    height: 100px
-    width: auto
-    position: absolute
-    top:0
-    left: 0
-
-.h1
-    color: #e47911
-    font-size: 40px
-
-
-.button    
-    background: #f0c14b
-    border-color: #a88734 #9c7e31 #846a29 
-    padding: 5px 110px
-    border-radius: 5px
-    color: black
-
-    &--magnifier
-        padding: 3px
-        padding-top: 1px
-        background-color: #f0c14b
-
-    &--logout
-        margin-bottom: 10px
-
-.register
-    display: block
-    margin-top: 180px
-    margin-bottom: 50px
-       
+        &:visited
+            color: blue
+        &--active
+            font-weight: bold
+            color: lighblue
+            &:visited
+                color: lighblue

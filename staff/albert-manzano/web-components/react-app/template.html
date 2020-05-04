@@ -38,27 +38,22 @@
     </section>
 
     <section class="home">
-        <h1>Welcome, ${name}!</h1><button>Logout</button>
+        <h1>Welcome, ${name}!</h1>
+        <a class="home__link home__link--active" href="">Users</a>
+        <a class="home__link" href="">Google</a>
+        <button>Logout</button>
         
         <section class="search">
             <form>
                 <input type="text" name="query">
                 <button>🔍</button>
-                <p class="feedback feedback--error">Wrong credentials</p>
             </form>
-        </section class="results">
+        </section>
+
+        <section class="results">
             <ul>
-                <li>item1
-                    <a></a>
-                    <h3></h3>
-                    <p></p>
-                </li>
-                <li>item2
-                    <a></a>
-                    <h3></h3>
-                    <p></p>
-                </li>
-                
+                <li>Manuel Barzi (manuelbarzi@gmail.com)</li>
+                <li>Pepito Grillo (pepito@grillo.com)</li>
             </ul>
         </section>
     </section>

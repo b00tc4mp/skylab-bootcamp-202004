@@ -1,32 +1,32 @@
-function searchUsers(query) {
-    debugger
-    query=query.toLowerCase()
-    
-    const _users = users.filter(function(user){
-        
-        const {name, surname,email}= user
+function searchUsers(token,query, callback) {
+  query = query.toLowerCase()
 
-        return name.toLowerCase().includes(query)||surname.toLowerCase().includes(query)||email.toLowerCase().includes(query)
-    })
-    //sanitaze
-    //???? mirar debugger
-    // _users = _users.map(function(user){
-    //     const {name,surname,email}=user
-    //     return {name,surname,email}
-    // })
+  call(
+    "GET",
+    "https://skylabcoders.herokuapp.com/api/v2/users/all",
+    undefined,
+    { "Content-type": "application/json", "Authorization": `Bearer: ${token}` },
+    (error, status, body) => {
+      if (error) return callback(error);
 
-   
-        const __users = _users.map(function ({ name, surname, email }) {
-           
+      if (status === 200) {
+        let users = JSON.parse(body);
 
-            return { name, surname, email }
-        })
-    
-        return __users
+        users = users.filter(function (user) {
+          const { name, surname, email,id } = user
+
+          return name && name.toLowerCase().includes(query) || surname && surname.toLowerCase().includes(query) || email && email.toLowerCase().includes(query)
+        });
+
+        users = users.map(({ name, surname, username,id }) => ({ name, surname, email: username,id }))
+        callback(undefined,users);
+      } else {
+        const { error } = JSON.parse(body);
+
+        callback(new Error(error));
+      }
     }
+  );
+}
 
-// const result = Result(user)
-// const resultList = document.getElementById('resultslist')
-// if(resultList !== null) resultList.remove()        
-// if(result !== null)  container.appendChild(result)
 
