@@ -1,0 +1,158 @@
+@keyframes spin
+    0%
+        transform: rotate(-360deg)
+    
+    
+.tweeter
+    margin: 8vh auto
+    width: 85vw
+    background-color: rgba(172, 225, 251, 1)
+    height: 95vh
+    font-family: 'Special Elite', cursive
+    &__header
+        display: flex
+        height: 5vh
+        padding-top: 0.5rem
+        padding-bottom: 0.5rem
+        justify-content: center
+        background-color: rgba(251, 167, 180, 1)
+
+        .fas
+            margin-right: auto
+            padding-left: 0.5rem
+        .fas:hover
+            color: white
+
+        .fab
+            margin-right: auto
+    &__menu
+        top: 8vh
+        position: absolute
+        height: 100%
+        background-color: rgba(201, 199, 204, 0.6)
+        width: 85vw
+        z-index: 99
+        &--display
+            height: 100%
+            background-color: rgba(251, 167, 180, 1)
+            width: 30vw
+            h2
+                padding: 0.5rem
+            .tweeter__menu--folowers
+                margin-bottom: 1rem
+                border-bottom: 0.2rem solid white
+                padding-bottom: 1rem
+                span
+                    margin-left: 0.8rem
+                    text-align: center
+                    
+            h3
+                padding: 0.5rem
+                border-bottom: 0.2rem solid rgba(49, 45, 54, 0)
+            h3:hover
+                border-bottom: 0.2rem solid white
+                color: white
+    &__home
+        justify-content: center
+
+        i
+            margin-left: 48%
+            color: white
+            animation: spin 1.5s linear infinite
+        .fa-comment-medical
+            top: 90vh
+            color: black
+            animation: none
+            position: absolute
+            margin-left: 77vw
+        .fa-comment-medical:hover
+            color: white
+        
+        .riteTweet
+            form
+                border: 0.5rem solid black
+                display: flex
+                flex-direction: column
+                height: 55vh
+                width: 85vw
+                background-color: white
+                position: absolute
+                margin: 0
+                top: 48vh
+                label
+                    margin: 2rem 0
+                    text-align: center
+                    font-size: 2rem
+                    font-weight: 600
+                textarea
+                    border: 0.3rem solid rgba(251, 167, 180, 1)
+                    background-color: rgba(172, 225, 251, 1)
+                    margin: 1rem
+                    height: 35vh
+                    font-size: 1.5rem
+                .submit
+                    background-color: rgba(172, 225, 251, 1)
+                    border: none
+                    width: 20vw
+                    height: 4vh
+                    margin-left: auto
+                    margin-right: 2vw
+                    border-radius: 5px
+                    margin-bottom: 0.8rem
+                    font-family: 'Special Elite', cursive
+                    font-weight: 600
+                    font-size: 1.2rem
+                    color: white
+                .submit:hover
+                    background-color: rgba(80, 191, 247, 1)
+
+
+
+        ul
+            margin-left: auto
+            margin-right: auto
+            margin-top: 1vh
+            width: 65vw
+            font-family: 'Bebas Neue', cursive
+            list-style-type: none
+            max-height: 87vh
+            overflow-y: scroll
+        ul::-webkit-scrollbar 
+            display: none
+        ul   
+            li
+                display: flex
+                flex-direction: column
+                font-size: 1.2rem
+                transition: 1s
+                margin: 0.3rem
+                background-color: rgba(251, 167, 180, 1)
+                
+                padding: 0.5rem
+                .username
+                    font-size: 1.4rem
+                    color: white
+                .tweet
+
+                .date
+                    margin-left: auto
+                    font-size: 1rem
+
+                .following
+                    padding: 0 0.3rem
+                    margin-left: auto
+                    background-color: rgba(167, 251, 178, 1)
+                    border-radius: 3px
+                .following:hover
+                    background-color: rgba(172, 225, 251, 1)
+                    color: white
+                    text-decoration: underline
+                
+                .following--alert
+                    margin-left: auto
+                    background-color: rgba(172, 225, 251, 1)
+                    border-radius: 5px
+                    padding: 0 0.3rem
+        
+
+

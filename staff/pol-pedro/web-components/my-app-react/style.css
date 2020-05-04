@@ -1,0 +1,646 @@
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Special+Elite&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+html {
+  background-color: #dee8ed;
+}
+
+.register {
+  top: 5vh;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  z-index: 99;
+  background-color: rgba(201, 199, 204, 0.7);
+}
+.register__container {
+  background-color: #dec4cb;
+  width: 60vw;
+  height: 46vh;
+  margin-top: 15vh;
+  padding: 0.5rem;
+  box-shadow: 0.9vw 0.7vw #888888;
+}
+.register__container h1 {
+  text-align: center;
+  font-family: "Special Elite", cursive;
+  font-size: 2rem;
+}
+.register__container form {
+  font-family: "Special Elite", cursive;
+  display: flex;
+  flex-direction: column;
+  margin: 1vw;
+}
+.register__container form label {
+  margin-top: 1vw;
+}
+.register__container form input {
+  height: 4vh;
+}
+.register__container form button {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  font-family: "Special Elite", cursive;
+  font-weight: 600;
+  font-size: 1.5rem;
+  border: none;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 2vw;
+  width: 20vw;
+  height: 5vh;
+}
+.register__container form .buton-cross {
+  text-decoration: line-through;
+}
+.register__container form button:hover {
+  background-color: #7d978b;
+  color: white;
+}
+.register__container form a {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 2vw;
+  text-decoration: none;
+  color: white;
+  font-size: 1.3rem;
+}
+.register__container form a:hover {
+  color: #7d978b;
+  text-decoration: underline;
+}
+.register__container form .feedback--error {
+  transform: rotate(-15deg);
+  position: absolute;
+  text-align: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(-360deg);
+  }
+}
+* {
+  margin: none;
+  box-sizing: border-box;
+}
+
+.home {
+  -moz-transition: 2s;
+  transition-delay: 2s;
+  -moz-transition-duration: 2s;
+  margin-top: 5vh;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+  width: 70vw;
+  background-color: #a7b9fb;
+}
+.home .home__search {
+  align-items: center;
+}
+.home .home__search button {
+  height: vh;
+  font-family: "Special Elite", cursive;
+  font-size: 1.2rem;
+  padding: 0.6rem 1rem;
+  margin-left: 0.7rem;
+  border: none;
+  background-color: #a7b9fb;
+}
+.home .home__search button:hover {
+  color: white;
+  font-weight: 600;
+}
+.home .home__search input {
+  font-family: "Special Elite", cursive;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-left: 0vw;
+  padding: 0.6rem;
+  height: 5vh;
+  width: 45vw;
+  border: none;
+  background-color: #fba7b4;
+  color: white;
+  border-radius: 0px;
+  border-top: 3px solid black;
+  border-right: 3px solid black;
+  border-left: 3px solid black;
+  border-bottom: 3px solid black;
+}
+.home .home__search .feedback--error {
+  position: absolute;
+  font-weight: 600;
+  padding: 0.5rem;
+  font-family: "Special Elite", cursive;
+  text-align: center;
+}
+.home .home__search .change {
+  font-size: 1rem;
+  font-family: "Special Elite", cursive;
+}
+.home i {
+  margin-left: 30vw;
+  margin-right: auto;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  color: white;
+  animation: spin 1.5s linear infinite;
+}
+.home ul {
+  align-self: center;
+  font-family: "Bebas Neue", cursive;
+  flex-direction: column;
+  margin-right: 6%;
+  list-style-type: none;
+  max-height: 60vh;
+  overflow-y: scroll;
+}
+.home ul::-webkit-scrollbar {
+  display: none;
+}
+.home ul {
+  -ms-overflow-style: none;
+}
+.home ul li {
+  font-size: 1.2rem;
+  transition: 1s;
+  margin: 0.3rem;
+  background-color: #fba7b4;
+  text-align: center;
+  padding: 0.5rem;
+}
+.home ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.5rem;
+}
+.home ul li a:hover {
+  text-decoration: underline;
+}
+
+.news-grid {
+  display: grid;
+  margin-top: 6.5vh;
+  grid-gap: 0.6vh;
+  grid-template: repeat(4, 1fr)/repeat(3, 1fr);
+  margin-right: auto;
+  margin-left: auto;
+  width: 95vw;
+}
+.news-grid div {
+  display: flex;
+  background-color: #fba7b4;
+  align-items: center;
+}
+.news-grid div a {
+  text-decoration: none;
+  font-family: "Special Elite", cursive;
+  text-align: center;
+  padding: 2vh;
+  font-size: 2rem;
+}
+.news-grid div:nth-child(1) {
+  grid-row: 1/span 2;
+}
+.news-grid div:nth-child(1) a {
+  color: white;
+}
+.news-grid div:nth-child(2) {
+  color: black;
+  grid-column: 2/span 2;
+}
+.news-grid div:nth-child(2) a {
+  color: black;
+}
+.news-grid div:nth-child(3) {
+  grid-column: 2/span 2;
+}
+.news-grid div:nth-child(3) a {
+  color: white;
+}
+.news-grid div:nth-child(4) {
+  grid-column: 1/span 2;
+}
+.news-grid div:nth-child(4) a {
+  color: black;
+}
+.news-grid div:nth-child(5) {
+  grid-column: 3;
+  grid-row: 3/span 2;
+}
+.news-grid div:nth-child(5) a {
+  color: white;
+}
+.news-grid div:nth-child(6) {
+  grid-column: 1/span 2;
+}
+.news-grid div:nth-child(6) a {
+  color: black;
+}
+.news-grid div:hover {
+  z-index: 90;
+  background-color: #d6cccf;
+  box-shadow: 7px 7px #888888;
+}
+.news-grid div:hover a {
+  text-decoration: underline;
+}
+
+.news-grid2 {
+  display: grid;
+  margin-top: 6.5vh;
+  margin-bottom: 5vh;
+  grid-gap: 0.6vh;
+  grid-template: repeat(4, 1fr)/repeat(3, 1fr);
+  margin-right: auto;
+  margin-left: auto;
+  width: 95vw;
+}
+.news-grid2 div {
+  display: flex;
+  background-color: #a7b9fb;
+  align-items: center;
+}
+.news-grid2 div a {
+  text-decoration: none;
+  font-family: "Special Elite", cursive;
+  text-align: center;
+  padding: 2vh;
+  font-size: 2rem;
+}
+.news-grid2 div:nth-child(1) {
+  grid-row: 1/span 2;
+}
+.news-grid2 div:nth-child(1) a {
+  color: white;
+}
+.news-grid2 div:nth-child(2) {
+  color: black;
+  grid-column: 2/span 2;
+}
+.news-grid2 div:nth-child(2) a {
+  color: black;
+}
+.news-grid2 div:nth-child(3) {
+  grid-column: 2/span 2;
+}
+.news-grid2 div:nth-child(3) a {
+  color: white;
+}
+.news-grid2 div:nth-child(4) {
+  grid-column: 1/span 2;
+}
+.news-grid2 div:nth-child(4) a {
+  color: black;
+}
+.news-grid2 div:nth-child(5) {
+  grid-column: 3;
+  grid-row: 3/span 2;
+}
+.news-grid2 div:nth-child(5) a {
+  color: white;
+}
+.news-grid2 div:nth-child(6) {
+  grid-column: 1/span 2;
+}
+.news-grid2 div:nth-child(6) a {
+  color: black;
+}
+.news-grid2 div:hover {
+  z-index: 99;
+  background-color: #d6cccf;
+  box-shadow: 7px 7px #888888;
+}
+.news-grid2 div:hover a {
+  text-decoration: underline;
+}
+
+* {
+  margin: 0;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.header {
+  z-index: 99;
+  top: 0;
+  position: fixed;
+  background-color: #fba7b4;
+  width: 100vw;
+}
+.header__landing {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+  width: 100vw;
+  height: 5vh;
+}
+.header__landing h1 {
+  margin-right: auto;
+  font-family: "Special Elite", cursive;
+  font-size: 1.5rem;
+  margin-left: 1vw;
+  color: white;
+}
+.header__landing h2 {
+  margin-right: 2vw;
+  justify-self: end;
+  font-weight: 600;
+  font-family: "Special Elite", cursive;
+  font-size: 1.4rem;
+  color: black;
+  margin-left: 5vw;
+}
+.header__landing h2:hover {
+  color: white;
+  font-weight: 600;
+}
+.header__landing .fab {
+  margin-right: 5vw;
+}
+.header__landing .fas {
+  margin-right: 2vw;
+}
+.header__landing i:hover {
+  color: white;
+}
+.header__landing a {
+  font-family: "Special Elite", cursive;
+  margin-right: 1vw;
+  text-decoration: none;
+  color: white;
+  font-size: 1.3rem;
+}
+.header__landing a:nth-child(2) {
+  margin-left: 70vw;
+}
+.header__landing a:nth-child(3) {
+  margin-left: 2vw;
+}
+.header__landing a:hover {
+  color: gray;
+  text-decoration: underline;
+}
+
+.login {
+  top: 5vh;
+  z-index: 99;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(201, 199, 204, 0.7);
+}
+.login__container {
+  background-color: #dec4cb;
+  width: 60vw;
+  height: 32vh;
+  margin-top: 15vh;
+  padding: 0.5rem;
+  box-shadow: 0.9vw 0.7vw #888888;
+}
+.login__container h1 {
+  text-align: center;
+  font-family: "Special Elite", cursive;
+  font-size: 2rem;
+}
+.login__container form {
+  font-family: "Special Elite", cursive;
+  display: flex;
+  flex-direction: column;
+  margin: 1vw;
+}
+.login__container form label {
+  margin-top: 1vw;
+}
+.login__container form input {
+  height: 4vh;
+}
+.login__container form button {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  font-family: "Special Elite", cursive;
+  font-weight: 600;
+  font-size: 1.5rem;
+  border: none;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 2vw;
+  width: 20vw;
+  height: 5vh;
+}
+.login__container form button:hover {
+  background-color: #7d978b;
+  color: white;
+}
+.login__container form .buton-cross {
+  text-decoration: line-through;
+}
+.login__container form a {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 2vw;
+  text-decoration: none;
+  color: white;
+  font-size: 1.3rem;
+}
+.login__container form a:hover {
+  color: #7d978b;
+  text-decoration: underline;
+}
+.login__container form .feedback--error {
+  transform: rotate(-15deg);
+  position: absolute;
+  text-align: center;
+}
+
+.feedback {
+  color: green;
+  position: absolute;
+}
+.feedback--warning {
+  color: orange;
+}
+.feedback--error {
+  color: red;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(-360deg);
+  }
+}
+.tweeter {
+  margin: 8vh auto;
+  width: 85vw;
+  background-color: #ace1fb;
+  height: 95vh;
+  font-family: "Special Elite", cursive;
+}
+.tweeter__header {
+  display: flex;
+  height: 5vh;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  justify-content: center;
+  background-color: #fba7b4;
+}
+.tweeter__header .fas {
+  margin-right: auto;
+  padding-left: 0.5rem;
+}
+.tweeter__header .fas:hover {
+  color: white;
+}
+.tweeter__header .fab {
+  margin-right: auto;
+}
+.tweeter__menu {
+  top: 8vh;
+  position: absolute;
+  height: 100%;
+  background-color: rgba(201, 199, 204, 0.6);
+  width: 85vw;
+  z-index: 99;
+}
+.tweeter__menu--display {
+  height: 100%;
+  background-color: #fba7b4;
+  width: 30vw;
+}
+.tweeter__menu--display h2 {
+  padding: 0.5rem;
+}
+.tweeter__menu--display .tweeter__menu--folowers {
+  margin-bottom: 1rem;
+  border-bottom: 0.2rem solid white;
+  padding-bottom: 1rem;
+}
+.tweeter__menu--display .tweeter__menu--folowers span {
+  margin-left: 0.8rem;
+  text-align: center;
+}
+.tweeter__menu--display h3 {
+  padding: 0.5rem;
+  border-bottom: 0.2rem solid rgba(49, 45, 54, 0);
+}
+.tweeter__menu--display h3:hover {
+  border-bottom: 0.2rem solid white;
+  color: white;
+}
+.tweeter__home {
+  justify-content: center;
+}
+.tweeter__home i {
+  margin-left: 48%;
+  color: white;
+  animation: spin 1.5s linear infinite;
+}
+.tweeter__home .fa-comment-medical {
+  top: 90vh;
+  color: black;
+  animation: none;
+  position: absolute;
+  margin-left: 77vw;
+}
+.tweeter__home .fa-comment-medical:hover {
+  color: white;
+}
+.tweeter__home .riteTweet form {
+  border: 0.5rem solid black;
+  display: flex;
+  flex-direction: column;
+  height: 55vh;
+  width: 85vw;
+  background-color: white;
+  position: absolute;
+  margin: 0;
+  top: 48vh;
+}
+.tweeter__home .riteTweet form label {
+  margin: 2rem 0;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+}
+.tweeter__home .riteTweet form textarea {
+  border: 0.3rem solid #fba7b4;
+  background-color: #ace1fb;
+  margin: 1rem;
+  height: 35vh;
+  font-size: 1.5rem;
+}
+.tweeter__home .riteTweet form .submit {
+  background-color: #ace1fb;
+  border: none;
+  width: 20vw;
+  height: 4vh;
+  margin-left: auto;
+  margin-right: 2vw;
+  border-radius: 5px;
+  margin-bottom: 0.8rem;
+  font-family: "Special Elite", cursive;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: white;
+}
+.tweeter__home .riteTweet form .submit:hover {
+  background-color: #50bff7;
+}
+.tweeter__home ul {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1vh;
+  width: 65vw;
+  font-family: "Bebas Neue", cursive;
+  list-style-type: none;
+  max-height: 87vh;
+  overflow-y: scroll;
+}
+.tweeter__home ul::-webkit-scrollbar {
+  display: none;
+}
+.tweeter__home ul li {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.2rem;
+  transition: 1s;
+  margin: 0.3rem;
+  background-color: #fba7b4;
+  padding: 0.5rem;
+}
+.tweeter__home ul li .username {
+  font-size: 1.4rem;
+  color: white;
+}
+.tweeter__home ul li .date {
+  margin-left: auto;
+  font-size: 1rem;
+}
+.tweeter__home ul li .following {
+  padding: 0 0.3rem;
+  margin-left: auto;
+  background-color: #a7fbb2;
+  border-radius: 3px;
+}
+.tweeter__home ul li .following:hover {
+  background-color: #ace1fb;
+  color: white;
+  text-decoration: underline;
+}
+.tweeter__home ul li .following--alert {
+  margin-left: auto;
+  background-color: #ace1fb;
+  border-radius: 5px;
+  padding: 0 0.3rem;
+}
+
+/*# sourceMappingURL=style.css.map */
