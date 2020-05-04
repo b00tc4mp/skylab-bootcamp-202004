@@ -15,7 +15,7 @@ function searchUsers(token, query, callback) {
             if (status === 200) {
                 const user = JSON.parse(body)
 
-                const { username: _username, following = [] } = user
+                const { username, following = [] } = user
 
                 call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all',
                     undefined,
@@ -33,9 +33,9 @@ function searchUsers(token, query, callback) {
                             })
 
                             users = users.map(({ id, name, surname, username }) => {
-                                const _user = { id, name, surname, email: username }
+                                const _user = { id, name, surname, email: _username }
 
-                                if (username !== _username) _user.following = following.includes(id)
+                                if (_username !== username) _user.following = following.includes(id)
 
                                 return _user
                             })
