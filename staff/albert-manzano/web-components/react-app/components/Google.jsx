@@ -1,3 +1,5 @@
+
+
 function Google({ onSearch, query, results }) {
     function handleSearch(query) {
         google(query, (error, results) => {

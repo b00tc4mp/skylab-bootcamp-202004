@@ -1,3 +1,4 @@
+const {Component} = React
 class Login extends Component {
     constructor(props) {
         super(props)
