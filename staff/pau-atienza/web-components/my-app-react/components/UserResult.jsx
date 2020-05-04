@@ -1,11 +1,19 @@
 function UserResult({ foundUsers, user, handleFollow }){
+
+    let printUsers = () => {
+        return foundUsers.map(({ name, surname, email, id }) => 
+            <li>{`${name} ${surname} (${email})`} 
+                {user.email === email ||
+                <button onClick={(event) => {handleFollow(id)}}>
+                    {user.following && user.following.includes(id)? 'Unfollow' : 'Follow'}
+                </button>} 
+            </li>
+        )
+    }
     
+
     return <section className="results--user">
-        {foundUsers &&
-            <ul>{foundUsers.map(({ name, surname, email, id }) => 
-            <li>{`${name} ${surname} (${email})`} <button onClick={(event) => {event.preventDefault(); 
-                handleFollow(id)}}>{user.followers && user.followers.includes(id)? 'Unfollow' : 'Follow'}</button> </li>)}</ul>
-        }
+        {user && foundUsers && <ul>{printUsers()}</ul>}
         {foundUsers === [] && <Feedback message="sorry, no results :(" level="warning" />}
     </section>
 }

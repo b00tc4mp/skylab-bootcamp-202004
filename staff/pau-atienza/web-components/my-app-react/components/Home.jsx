@@ -6,7 +6,6 @@ class Home extends Component{
             token: this.props.token,
             homeView: 'user',
             user: undefined,
-            followersTweets: undefined,
             error: undefined
         }
     }
@@ -30,7 +29,7 @@ class Home extends Component{
     }
 
     handleFollow = (followID) => {
-        toggleFollowUser(this.props.token, followID, this.state.user.followers, (error, email) => {
+        toggleFollowUser(this.props.token, followID, this.state.user.following, (error, email) => {
             if(error) return this.setstate({error: error.message})
             
             retrieveUser(this.props.token, (error, user) => {

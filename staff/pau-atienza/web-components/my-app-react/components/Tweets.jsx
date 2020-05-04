@@ -3,19 +3,19 @@ class Tweets extends Component{
     super(props)
 
     this.state = {
-      followersTweets: undefined
+      followingTweets: undefined
     }
   }
 
   componentDidMount(){
-    retrieveTweets(this.props.token, this.props.user,(error, followersTweets) => {
+    retrieveTweets(this.props.token, this.props.user,(error, followingTweets) => {
       if(error) throw error
-      this.setState({followersTweets})
+      this.setState({followingTweets})
     })
   }
 
   printTweets = () => {
-    return this.state.followersTweets && this.state.followersTweets.map(({ username, message, date }) => (
+    return this.state.followingTweets && this.state.followingTweets.map(({ username, message, date }) => (
       <li>{`${username} tweeted: ${message} ${date.toString().slice(0,10) + ' ' + date.toString().slice(11,16)}`}</li>));
   };
 

@@ -6,26 +6,23 @@ function retrieveTweets(token, user, callback) {
     let url = "https://skylabcoders.herokuapp.com/api/v2/users/all"
     let headers = { Authorization: `Bearer ${token}` }
 
-    if (!user.followers)return callback(undefined, user.tweets)
+    if (!user.following)return callback(undefined, user.tweets)
 
     call("GET", url, body, headers, (error, status, response) => {
         if (error) return callback(error)
         if (status === 200) {
             const allUsers = JSON.parse(response)
-            const followerUsers = allUsers.filter(element => user.followers.some(id => id === element.id))
-            
+
+            const followerUsers = allUsers.filter(element => 
+                user.following.some(id => id === element.id))
+
             let allTweets = followerUsers.reduce((accumulator, element)=>{
-                if(element.tweets){ 
-                    element.tweets.forEach(({message, text, date}) => 
-                        {if (!message) message = text
-                            accumulator.push({username: element.username, message, date})
-                        }
-                    ) 
-                }
+                element.tweets && element.tweets.forEach(({text, message = text, date}) => 
+                    {accumulator.push({username: element.username, message, date})}) 
                 return accumulator
             }, [])
-            user.tweets && user.tweets.forEach(({message, text, date}) =>{ 
-                if (!message) message = text
+            
+            user.tweets && user.tweets.forEach(({text, message = text, date}) =>{ 
                 allTweets.push({username: user.username, message, date})
             })
             
