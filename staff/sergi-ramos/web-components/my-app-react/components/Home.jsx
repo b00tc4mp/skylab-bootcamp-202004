@@ -43,21 +43,6 @@ class Home extends Component {
         this.handleRetriveTweets()
     }
 
-    // handleOnEcosia = (event) => {
-    //     event.preventDefault()
-
-    //     this.setState(
-    //         { currentLink: 'ecosia' }
-    //     )
-    // }
-    // handleOnSport = (event) => {
-    //     event.preventDefault()
-
-    //     this.setState(
-    //         { currentLink: 'sport' }
-    //     )
-    // }
-
     render() {
         return <section className="home">
             <h1>Wellcome {`${this.props.name} ${this.props.surname}`}</h1>
