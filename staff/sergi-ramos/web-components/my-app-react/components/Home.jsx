@@ -24,16 +24,25 @@ class Home extends Component {
             { currentLink: 'user' }
         )
     }
+    handleRetriveTweets = () => {
+        const tweets = retrieveTweets(this.props.email, this.props.token, (error, tweets) => {
+            if (error) console.log(error) //TODDO feedback
+            else {
+                this.setState(
+                    {
+                        currentLink: 'twitter',
+                        tweet: tweets
+                    })
+            }
+        })
+    }
+
+
     handleonTwitter = (event) => {
         event.preventDefault()
-        const tweets = retrieveTweets(this.props.userEmail)
-        this.setState(
-            {
-                currentLink: 'twitter',
-                tweet: tweets
-            }
-        )
+        this.handleRetriveTweets()
     }
+
     // handleOnEcosia = (event) => {
     //     event.preventDefault()
 
@@ -51,7 +60,7 @@ class Home extends Component {
 
     render() {
         return <section className="home">
-            <h1>Wellcome {this.props.user}</h1>
+            <h1>Wellcome {`${this.props.name} ${this.props.surname}`}</h1>
             <button onClick={this.props.logOut}>Logout</button>
             <a onClick={this.handleOnUsers} className="home__link" href="">Users</a>
             <a onClick={this.handleOnGoogle} className="home__link" href="">Google</a>
@@ -59,10 +68,10 @@ class Home extends Component {
             <a className="home__link" href="">Ecosia</a>
             <a className="home__link" href="">Sport</a>
 
-            {this.state.currentLink === 'user' && <Users token={this.props.token} />}
+            {this.state.currentLink === 'user' && <Users token={this.props.token} following={this.props.following}/>}
             {this.state.currentLink === 'google' && <Google />}
             {this.state.currentLink === 'ecosia' && <Ecosia />}
-            {this.state.currentLink === 'twitter' && <Twitter resultsTweet={this.state.tweet}/>}
+            {this.state.currentLink === 'twitter' && <Twitter  retrieveTweets={this.handleRetriveTweets} resultsTweet={this.state.tweet} token={this.props.token} name={this.props.name} />}
             {/* {this.state.currentLink === 'sport' && <Sport />} */}
         </section>
     }

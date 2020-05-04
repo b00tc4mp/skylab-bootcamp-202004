@@ -1,4 +1,4 @@
-function searchUsers(query, token, callback) {
+function searchUsers(query, token, following, callback) {
     call(
         "GET",
         "https://skylabcoders.herokuapp.com/api/v2/users/all",
@@ -14,6 +14,16 @@ function searchUsers(query, token, callback) {
                 }) {
                     return name && name.includes(query) || surname && surname.includes(query) || email && email.includes(query)
 
+                })
+                userFilter.forEach(user => {
+                    if (following) {
+                        for (let i = 0; i < following.length; i++) {
+                            if (user.id === following[i]) user.follow = true
+                            else user.follow = false
+                        }
+                    }else{
+                        user.follow = false
+                    }
                 })
 
                 callback(undefined, userFilter)

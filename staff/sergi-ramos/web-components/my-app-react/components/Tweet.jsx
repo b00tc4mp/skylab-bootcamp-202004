@@ -1,9 +1,17 @@
-function Tweet() {
+function Tweet({onSubmitTweet}) {
+
+  function handleOnSubmitTweet (event) {
+      event.preventDefault()
+        const tweet = event.target.tweet.value
+
+
+        onSubmitTweet(tweet)
+    }
 
     return <> <section className="search">
-        <form>
-        <input type="text" />
-        <button>Tweet</button>
+        <form onSubmit={handleOnSubmitTweet}>
+            <input type="text" name="tweet" />
+            <button>Tweet</button>
         </form>
     </section>
     </>

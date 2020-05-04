@@ -8,7 +8,8 @@ class App extends Component {
             view: 'landing',
             user: undefined,
             userEmail: undefined,
-            token: undefined
+            token: undefined,
+            following: undefined
         }
     }
     handleGoToRegister = () => this.setState({ view: 'register' })
@@ -21,18 +22,28 @@ class App extends Component {
         loginUser(email, password, (error, token) => {
             if (error) console.log(error) // TODO feedback
             else {
-                retrieveUser(token, (error, { name, surname, email }) => {
+                retrieveUser(token, (error, { name, surname, email, following }) => {
                     if (error) console.log(error)
                     else {
                         this.setState({
                             view: 'home',
                             token: token,
-                            user: name,
+                            name: name,
                             surname: surname,
-                            email: email
+                            userEmail: email,
+                            following: following
+
                         })
                     }
                 })
+            }
+        })
+    }
+    handleRegister = (name, surname, username, password) => {
+        registerUser(name, surname, username, password, (error) => {
+            if (error) { console.log(error) }
+            else {
+                this.setState({ view: 'login' })
             }
         })
     }
@@ -40,9 +51,9 @@ class App extends Component {
 
         return <>
             {this.state.view === 'landing' && <Landing onRegister={this.handleGoToRegister} onLogin={this.handleGoToLogin} />}
-            {this.state.view === 'register' && <Register onLogin={this.handleGoToLogin} />}
+            {this.state.view === 'register' && <Register onLogin={this.handleGoToLogin} onSubmitRegister={this.handleRegister} />}
             {this.state.view === 'login' && <Login onRegister={this.handleGoToRegister} onSubmitLogin={this.handleLogin} />}
-            {this.state.view === 'home' && <Home token={this.state.token} name={this.state.name} surname={this.state.surname} email={this.state.userEmail} logOut={this.handleLogout} />}
+            {this.state.view === 'home' && <Home token={this.state.token} name={this.state.name} surname={this.state.surname} email={this.state.userEmail} logOut={this.handleLogout} following={this.state.following} />}
         </>
     }
 }
