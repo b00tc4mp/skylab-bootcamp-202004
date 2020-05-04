@@ -1,5 +1,10 @@
 function call(method, url, body, headers, callback) {
-    var xhr = new XMLHttpRequest()
+    Http.validateMethod(method)
+    URL.validate(url)
+
+    Function.validate(callback)
+
+    const xhr = new XMLHttpRequest()
 
     xhr.open(method, url)
 

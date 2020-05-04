@@ -8,10 +8,14 @@ function Users({ onSearch, users, query, token }) {
 
     }
 
+    function handleToggleFollow() {
+        handleSearch(query)
+    }
+
     return <section className="users">
         <h2>Users</h2>
 
         <Search onSubmit={handleSearch} query={query} />
-        {users && <Results users={users} />}
+        {users && <UserResults users={users} token={token} onToggleFollow={handleToggleFollow} />}
     </section>
 }
