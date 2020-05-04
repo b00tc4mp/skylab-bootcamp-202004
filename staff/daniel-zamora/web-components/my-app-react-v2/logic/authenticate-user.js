@@ -11,10 +11,6 @@ function authenticateUser(email, password, callback) {
         `{ "username": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json' },
         (error, status, body) => {
-            // if (error) {
-            //     callback(error)
-            //     return
-            // }
 
             if (error) return callback(error)
 

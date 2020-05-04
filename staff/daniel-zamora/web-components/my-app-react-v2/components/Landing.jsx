@@ -1,17 +1,12 @@
-function Landing({ onGoToRegister, onGoToLogin }) {
-    function handleGoToRegister(event) {
-        event.preventDefault()
-
-        onGoToRegister()
-    }
-
-    function handleGoToLogin(event) {
-        event.preventDefault()
-
-        onGoToLogin()
-    }
-
+function Landing({ onRegister, onLogin}) {
     return <section className="landing">
-        <a href="" onClick={handleGoToRegister}>Register</a> or <a href="" onClick={handleGoToLogin}>Login</a>
+        <h1>Wellcome to my App</h1>
+        <a href="" onClick={event => {
+            event.preventDefault()
+            onRegister()
+        }}>Register </a>or<a href="" onClick={event =>{
+            event.preventDefault()
+            onLogin()
+        }}>Login</a>
     </section>
 }

@@ -21,7 +21,8 @@ function retrieveTweets(token,callback) {
                         const {tweets} =JSON.parse(body);
                         tweets && _tweets.push(tweets)
                         
-                        if(counter === following.length) console.log(undefined, _tweets)
+                        if(counter === following.length) 
+                        callback(undefined, tweets)
                     }else {
                      const { error } = JSON.parse(body)
                      debugger

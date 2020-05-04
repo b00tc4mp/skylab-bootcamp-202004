@@ -1,18 +1,9 @@
-function Results({ users }) {
+function Results({user}) {
+
     return <section className="results">
-        {/*{!!users.length && <ul>{users.map(({ name, surname, email }) => <li>{`${name} ${surname} (${email})`}</li>)}</ul>}
-        {!users.length && <Feedback message="sorry, no results :(" level="warning" />}*/}
+        {    user.length ?
+        <ul>{user.map(({ name, surname, email }) => <li>{`${name} ${surname} (${email})`}</li>)}</ul>
+        : <Feedback message="sorry, no results :(" level="warning" />}
+        </section>
 
-        {/*(() => {
-            if (users.length)
-                return <ul>{users.map(({ name, surname, email }) => <li>{`${name} ${surname} (${email})`}</li>)}</ul>
-            else return <Feedback message="sorry, no results :(" level="warning" />
-        })()*/}
-
-        {
-            users.length ?
-                <ul>{users.map(({ name, surname, email }) => <li>{`${name} ${surname} (${email})`}</li>)}</ul>
-                : <Feedback message="sorry, no results :(" level="warning" />
-        }
-    </section>
 }

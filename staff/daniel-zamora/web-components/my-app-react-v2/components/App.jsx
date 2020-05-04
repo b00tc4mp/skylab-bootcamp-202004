@@ -1,30 +1,42 @@
-const { Component } = React
+const { Component } = React;
 
 class App extends Component {
-    constructor() {
-        super()
+  constructor() {
+    super();
+    this.state = {
+      view: "landing",
+      user: undefined,
+      userEmail: undefined,
+    };
+  }
+  handleGoToRegister = () => this.setState({ view: "register" });
+  handleGoToLogin = () => this.setState({ view: "login" });
+  handleLogout = () =>
+    this.setState({
+      view: "landing",
+      user: undefined,
+    });
+  handleLogin = (email, password) => {
+    authenticateUser(email, password, (error, token) => {
+        retrieveUser(token, (error, user) => {
 
-        this.state = {
-            view: 'landing'
-        }
-    }
+        this.setState({
+        view: "home",
+        userName: user.name,
+        userEmail: user.email
+      });
+    });
+})
+  };
 
-    handleGoToRegister = () => this.setState({ view: 'register' })
-
-    handleRegister = () => this.setState({ view: 'login' })
-
-    handleLogin = token => this.setState({ token, view: 'home' })
-
-    handleGoToLogin = () => this.setState({ view: 'login' })
-
-    handleLogout = () => this.setState({ token: undefined, view: 'landing'})
-
-    render() {
-        return <>
-            {this.state.view === 'landing' && <Landing onGoToRegister={this.handleGoToRegister} onGoToLogin={this.handleGoToLogin} />}
-            {this.state.view === 'register' && <Register onRegister={this.handleRegister} onGoToLogin={this.handleGoToLogin} />}
-            {this.state.view === 'login' && <Login onLogin={this.handleLogin} onGoToRegister={this.handleGoToRegister} />}
-            {this.state.view === 'home' && <Home token={this.state.token} onLogout={this.handleLogout}/>}
-        </>
-    }
+  render() {
+    return (
+      <>
+        {this.state.view === "landing" && (<Landing onRegister={this.handleGoToRegister} onLogin={this.handleGoToLogin}/>)}
+        {this.state.view === "register" && (<Register onLogin={this.handleGoToLogin} />)}
+        {this.state.view === "login" && (<Login onRegister={this.handleGoToRegister} onSubmitLogin={this.handleLogin}/>)}
+        {this.state.view === "home" && (<Home name={this.state.userName} userEmail={this.state.userEmail} logOut={this.handleLogout}/>)}
+      </>
+    );
+  }
 }

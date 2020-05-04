@@ -1,69 +1,57 @@
 const { Component } = React
-
 class Home extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.state = {
-            view: 'users',
-            usersResults: undefined,
-            usersQuery: undefined,
-            googleResults: undefined,
-            googleQuery: undefined,
-            holaNews: undefined
+            currentLink: 'user',
+            tweet: undefined
         }
+
     }
-
-    componentDidMount() {
-        try {
-            retrieveUser(this.props.token, (error, user) => {
-                if (error) throw error
-
-                this.setState({ name: user.name })
-            })
-        } catch (error) {
-            throw error
-        }
-    }
-
-    handleUsers = event => {
+    handleOnGoogle = (event) => {
         event.preventDefault()
 
-        this.setState({ view: 'users' })
+        this.setState(
+            { currentLink: 'google' }
+        )
     }
-
-    handleGoogle = event => {
+    handleOnUsers = (event) => {
         event.preventDefault()
 
-        this.setState({ view: 'google' })
+        this.setState(
+            { currentLink: 'user' }
+        )
     }
-
-    handleHolaNews = event => {
+    handleonTwitter = (event) => {
         event.preventDefault()
-
-        this.setState({ view: 'hola-news' })
+        const tweets = retrieveTweets(this.props.userEmail)
+        this.setState(
+            {
+                currentLink: 'twitter',
+                tweet: tweets
+            }
+        )
     }
 
-    handleSearchUsersResultsAndQuery = (results, query) =>
-        this.setState({ usersResults: results, usersQuery: query })
 
-    handleSearchGoogleResultsAndQuery = (results, query) =>
-        this.setState({ googleResults: results, googleQuery: query })
-
-    handleRetrieveHolaNewsResults = news =>
-        this.setState({ holaNews: news })
 
     render() {
         return <section className="home">
-            <h1>Welcome, {this.state.name}!</h1>
-            <a className={`home__link ${this.state.view === 'users' ? 'home__link--active' : ''}`} href="" onClick={this.handleUsers}>Users </a>
-            <a className={`home__link ${this.state.view === 'google' ? 'home__link--active' : ''}`} href="" onClick={this.handleGoogle}>Google </a>
-            <a className={`home__link ${this.state.view === 'hola-news' ? 'home__link--active' : ''}`} href="" onClick={this.handleHolaNews}>Hola News </a>
-            <button onClick={this.props.onLogout}>Logout</button>
+            <h1>Hola super {this.props.name}</h1>
+            <button onClick={this.props.logOut}>Logout</button>
+            <a onClick={this.handleOnUsers} className="home__link" href="">Users</a>
+            <a onClick={this.handleOnGoogle} className="home__link" href="">Google</a>
+            <a onClick={this.handleonTwitter} className="home__link" href="">Twitter</a>
+            {/* <a className="home__link" href="">Ecosia</a>
+            <a className="home__link" href="">Sport</a> */}
 
-            {this.state.view === 'users' && <Users onSearch={this.handleSearchUsersResultsAndQuery} users={this.state.usersResults} query={this.state.usersQuery} />}
-            {this.state.view === 'google' && <Google onSearch={this.handleSearchGoogleResultsAndQuery} results={this.state.googleResults} query={this.state.googleQuery} />}
-            {this.state.view === 'hola-news' && <HolaNews onNews={this.handleRetrieveHolaNewsResults} news={this.state.holaNews} />}
+            {this.state.currentLink === 'user' && <Users />}
+            {this.state.currentLink === 'google' && <Google />}
+            {this.state.currentLink === 'ecosia' && <Ecosia />}
+            {this.state.currentLink === 'twitter' && <Twitter resultsTweet={this.state.tweet}/>}
+            {/* {this.state.currentLink === 'sport' && <Sport />} */}
         </section>
     }
 }
+
