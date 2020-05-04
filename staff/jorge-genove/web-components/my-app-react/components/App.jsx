@@ -1,59 +1,49 @@
-/* 
+/* const { useState, Component } = React;
 
- const {Component} = React;
+function App() {
+  const [view, setView] = useState("landing");
+  const [user, setUser] = useState(undefined);
+  const [token, setToken] = useState(undefined);
+  const [useremail, setUseremail] = useState(undefined);
 
- class App extends Component{
-     constructor(){
-        super()
+  function handleGoToRegisterOrLoging(view) {
+    setView(view);
+  }
 
+  function handleRegister(name, surname, email, password) {
+    registerUser(name, surname, email, password, () => {});
 
-        this.state = {
-        view: 'landing',
-        name: undefined,
-        useremail: undefined,
-        token: undefined
-        
-    }
-     }    
-    
-    handleGoToRegister = () => this.setState({view: 'register'})
-    handleGoToLogin = () => this.setState({view: 'login'})
-    handleToGo = () => this.setState({view})  
+    setView("login");
+    setUser(name);
+  }
 
-    handleRegister = (name, surname, email, password) => {
-        registerUser(name, surname, email, password, () => {})
+  function handleLogin(email, password) {
+    debugger;
+    loginUser(email, password, (error, token) => {
+      if (error) console.log(error);
+      setToken(token);
+      setUseremail(email);
+      setView("home");
+    });
+  }
 
-        this.setState({ view: 'login' })
-    }
-
-    handleGoToLogin = () => this.setState({view: 'login'})
-    handleLogin= (email, password) => {debugger
-        loginUser(email, password,  (error,token) => {
-            if (error) console.log(error)
-            this.setState({token: token,
-                           useremail: email, 
-                           view: 'home'})
-       
-        
-        
-        
-    })
-}
-    
-
-    render(){
-        return <>
-
-        {this.state.view === 'landing' && <Landing onRegister={this.handleGoToRegister}  onLogin = {this.handleGoToLogin}/>}
-        {this.state.view === 'register' && <Register onRegister1={this.handleRegister}/>}
-        {this.state.view === 'login' && <Login onLogin1={this.handleLogin} />}
-        {this.state.view === 'home' && <Home user={this.state.user} useremail ={this.state.useremail} token = {this.state.token} />}
-    
-    
-</>
-
-    }}
-  */
+  return (
+    <>
+      {view === "landing" && (
+        <Landing
+          onRegister={handleGoToRegisterOrLoging}
+          onLogin={handleGoToRegisterOrLogin}
+        />
+      )}
+      {view === "register" && <Register onRegister1={handleRegister} />}
+      {view === "login" && <Login onLogin1={handleLogin} />}
+      {view === "home" && (<Home user={user}useremail={useremail}
+          token={token}
+        />
+      )}
+    </>
+  );
+} */
 
 
 const { useState,Component } = React;
@@ -72,6 +62,7 @@ function App() {debugger
     registerUser(name, surname, email, password, () => {});
 
     handleView('login');
+    
   };
 
   function handleLogin (email, password){
@@ -82,15 +73,16 @@ function App() {debugger
       setToken(token)
       setUseremail(email)
       
+      
      
     });
   };
  
     return <>
         {view === "landing" && (<Landing onRegister={handleView} onLogin={handleView}/>)}
-        {view === "register" && (<Register onRegister1={handleRegister} />)}
-        {view === "login" && <Login onLogin1={handleLogin} />}
-        {view === "home" && (<Home useremail={useremail}token={token}/>)}
+        {view === "register" && (<Register onRegister1={handleRegister} onLogin = {handleView} />)}
+        {view === "login" && <Login onLogin1={handleLogin} onRegister = {handleView} />}
+        {view === "home" && (<Home useremail={useremail} token={token} user={user}/>)}
       </>
 
 }

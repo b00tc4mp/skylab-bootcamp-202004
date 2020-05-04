@@ -1,6 +1,6 @@
 const { Component } = React
 
-class Home extends Component {
+ class Home extends Component {
     constructor(props) {
         super(props)
 
@@ -51,7 +51,7 @@ class Home extends Component {
                     <h1>Welcome {this.props.user}</h1>
                     <button onClick={this.props.logOut}>Logout</button>
                     <ul className ="links">
-                    <a onCllick={this.handleOnUsers} className="home__link" href="">Users</a>
+                    <a onClick={this.handleOnUsers} className="home__link" href="">Users</a>
                     <a onClick={this.handleOnGoogle} className="home__link" href="">Google</a>
                     <a onClick={this.handleOnEcosia} className ="home__link" href="">Ecosia</a>
                     <a onClick={this.handleOnNews} className="home__link" href="">Mediavida</a>
@@ -67,3 +67,4 @@ class Home extends Component {
     }
 }
 
+ 

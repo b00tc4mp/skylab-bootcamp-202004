@@ -37,7 +37,7 @@ render() {
             <input type="email" name="email" placeholder="e-mail" required/>
             <input type="password" name="password" placeholder="password" required minLength="1"/>
             <button>Submit</button>
-            or <a href="">Login</a>
+            or <a onClick={ () => {event.preventDefault(); this.props.onLogin('login')}} className="home__link" href="">Login</a>
             
             {this.state.error && <Feedback message={this.state.error} level = 'error'/>}
         </form>
