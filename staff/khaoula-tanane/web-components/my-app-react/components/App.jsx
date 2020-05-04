@@ -1,20 +1,14 @@
+
 const { Component } = React;
 
-class App extends Component {
-  constructor() {
-    super();
+function App(){
 
-    this.state = {
-      view: "landing",
-      token: null
-    };
-  }
 
   handleGoToRegister = () => this.setState({ view: "register" });
   handleGoToLogin = () => this.setState({ view: "login" });
   handleGoToHome = (token) => this.setState({ token, view: "home" });
 
-  render() {
+  
 
     return (
       <>
@@ -39,4 +33,4 @@ class App extends Component {
       </>
     );
   }
-}
+
