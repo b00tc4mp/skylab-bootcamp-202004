@@ -1,19 +1,18 @@
-function Search({ onSubmit, query }) {
-    // const handleSubmit = event => {
-    function handleSubmit(event) {
+const { Component } = React
+
+class Search extends Component {
+    handleSubmit = (event) => {
         event.preventDefault()
 
-        let { query } = event.target
-
-        query = query.value
-
-        onSubmit(query)
+        this.props.onSubmit(event.target.query.value)
     }
 
-    return <section className="search">
-        <form onSubmit={handleSubmit}>
-            <input type="text" name="query" defaultValue={query} />
-            <button>🔍</button>
-        </form>
-    </section>
+    render() {
+        return <section className="search">
+            <form onSubmit={this.handleSubmit}>
+                <input type="text" name="query" defaultValue={this.props.query} />
+                <button type="submit">🔍</button>
+            </form>
+        </section>
+    }
 }

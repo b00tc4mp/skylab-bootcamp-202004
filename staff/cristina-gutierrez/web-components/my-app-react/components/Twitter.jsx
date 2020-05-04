@@ -1,6 +1,6 @@
 class Twitter extends Component {
     componentDidMount() {
-        !this.props.tweets && retrieveTweets(this.props.email, (error, tweets) => {
+        !this.props.tweets && retrieveTweets(this.props.token, (error, tweets) => {
             if (error) throw error
 
             this.props.onTweets(tweets)
@@ -12,14 +12,13 @@ class Twitter extends Component {
             <h2>Twitter</h2>
 
             {this.props.tweets && <ul>
-                {this.props.tweets.map(({ tweet, date }) =>
+                {this.props.tweets.map(({ message, date }) =>
                     <li>
                         <date>{date}</date>
-                        <p>{tweet}</p>
+                        <p>{message}</p>
                     </li>
                 )}
             </ul>}
         </section>
-        // <Tweet />
     }
 }

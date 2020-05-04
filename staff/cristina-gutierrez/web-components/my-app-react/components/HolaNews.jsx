@@ -13,7 +13,7 @@ class HolaNews extends Component {
 
             {this.props.news && <ul>
                     {this.props.news.map(({ image, link, text }) => 
-                        <li>
+                        <li key={link}>
                             <a href={link} target="_blank">
                                 <img src={image} />
                                 <p>{text}</p>

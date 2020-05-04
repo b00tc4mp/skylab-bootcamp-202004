@@ -6,17 +6,9 @@ class App extends Component {
 
         this.state = {
             view: 'landing',
-            user:  {
-                name: 'Cristina',
-                surname: 'Guti',
-                email: 'Cristgu@gmail.com',
-                password: '123123123',
-                tweets: [{
-                    message: 'Hola, Mundo!',
-                    date: new Date
-                }],
-                following: ['pepito@grillo.com']
-            }
+            name: undefined,
+            token: undefined,
+            following: []
         }
     }
 
@@ -26,7 +18,10 @@ class App extends Component {
 
     handleRegister = () => this.setState({ view: 'login' })
 
-    handleLogin = token => this.setState({ token, view: 'home' })
+    handleLogin = (name, token, following) => {
+        this.setState({ name, token, view: 'home' })
+        if (following) this.setState ({ following })
+    }
 
     handleLogout = () => this.setState({ token: undefined, view: 'landing'})
 
@@ -35,7 +30,7 @@ class App extends Component {
             {this.state.view === 'landing' && <Landing onGoToRegister={this.handleGoToRegister} onGoToLogin={this.handleGoToLogin} />}
             {this.state.view === 'register' && <Register onSubmit={this.handleRegister} onGoToLogin={this.handleGoToLogin}/>}
             {this.state.view === 'login' && <Login onSubmit={this.handleLogin} onGoToRegister={this.handleGoToRegister}/>}
-            {this.state.view === 'home' && <Home token={this.state.token} onLogout={this.handleLogout} />}
+            {this.state.view === 'home' && <Home name={this.state.name} following={this.state.following} token={this.state.token} onLogout={this.handleLogout} />}
         </>
     }
 }

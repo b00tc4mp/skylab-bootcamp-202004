@@ -1,16 +1,20 @@
-function Google({ onSearch, query, results }) {
-    function handleSearch(query) {
-        google(query, (error, results) => {
-            if (error) throw error // TODO do something with error (feedback panel?) 
+const { Component } = React
 
-            onSearch(results, query)
+class Google extends Component {
+    handleSearch = (query) => {
+        google(query, (error, results) => {
+            if (error) throw error
+
+            this.props.onSearch(results, query)
         })
     }
 
-    return <section className="google">
-        <h2>Google</h2>
+    render() {
+        return <section className="google">
+            <h2>Google</h2>
 
-        <Search onSubmit={handleSearch} query={query} />
-        {results && <GoogleResults results={results} />}
-    </section >
+            <Search onSubmit={this.handleSearch} query={this.props.query} />
+            {this.props.results && <GoogleResults results={this.props.results} />}
+        </section>
+    }
 }

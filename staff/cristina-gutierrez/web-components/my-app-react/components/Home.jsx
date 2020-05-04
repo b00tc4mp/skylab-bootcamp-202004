@@ -11,18 +11,9 @@ class Home extends Component {
             googleResults: undefined,
             googleQuery: undefined,
             holaNews: undefined,
-            twitter: undefined,
-            user: {
-                name: 'Cristina',
-                surname: 'Guti',
-                email: 'Cristgu@gmail.com',
-                password: '123123123',
-                tweets: [{
-                    message: 'Hola, Mundo!',
-                    date: new Date
-                }],
-                following: ['pepito@grillo.com']
-            }
+            tweets: undefined,
+            user: {},
+            following: this.props.following
         }
     }
 
@@ -31,35 +22,37 @@ class Home extends Component {
             retrieveUser(this.props.token, (error, user) => {
                 if (error) throw error
 
-                this.setState({ name: user.name })
+                this.setState({ user })
             })
         } catch (error) {
             throw error
         }
     }
 
+    displayView = view => {this.setState({ view })}
+
     handleUsers = event => {
         event.preventDefault()
 
-        this.setState({ view: 'users' })
+        this.displayView("users")
     }
 
     handleGoogle = event => {
         event.preventDefault()
 
-        this.setState({ view: 'google' })
+        this.displayView("google")
     }
 
     handleHolaNews = event => {
         event.preventDefault()
 
-        this.setState({ view: 'hola-news' })
+        this.displayView("hola-news")
     }
 
     handleTwitter = event => {
         event.preventDefault()
 
-        this.setState({ view: 'tweets' })
+        this.displayView("twitter")
     }
     
     handleSearchUsersResultsAndQuery = (results, query) =>
@@ -72,21 +65,34 @@ class Home extends Component {
         this.setState({ holaNews: news })
 
     handleRetrieveTwitterResults = tweets =>
-        this.setState({ twitter: tweets })
+        this.setState({ tweets })
 
     render() {
         return <section className="home">
-            <h1>Welcome, {this.state.name}!</h1>
+            <h1>Welcome, {this.state.user.name}!</h1>
             <a className={`home__link ${this.state.view === 'users' ? 'home__link--active' : ''}`} href="" onClick={this.handleUsers}>Users </a>
             <a className={`home__link ${this.state.view === 'google' ? 'home__link--active' : ''}`} href="" onClick={this.handleGoogle}>Google </a>
             <a className={`home__link ${this.state.view === 'hola-news' ? 'home__link--active' : ''}`} href="" onClick={this.handleHolaNews}>Hola News </a>
-            <a className={`home__link ${this.state.view === 'tweets' ? 'home__link--active' : ''}`} href="" onClick={this.handleTwitter}>Twitter </a>
-            <button onClick={this.props.onLogout}>Logout</button>
+            <a className={`home__link ${this.state.view === 'twitter' ? 'home__link--active' : ''}`} href="" onClick={this.handleTwitter}>Twitter </a>
+            <button onClick={() => {
+                this.setState({
+                    following: [],
+                    usersResults: undefined,
+                    usersQuery: undefined,
+                    googleResults: undefined,
+                    googleQuery: undefined,
+                    holaNews: undefined,
+                    tweets: undefined,
+                    user: undefined
+                })
+                
+                this.props.onLogout()
+            }}>Logout</button>
 
-            {this.state.view === 'users' && <Users onSearch={this.handleSearchUsersResultsAndQuery} users={this.state.usersResults} query={this.state.usersQuery} token={this.props.token} />}
+            {this.state.view === 'users' && <Users onSearch={this.handleSearchUsersResultsAndQuery} results={this.state.usersResults} query={this.state.usersQuery} token={this.props.token} />}
             {this.state.view === 'google' && <Google onSearch={this.handleSearchGoogleResultsAndQuery} results={this.state.googleResults} query={this.state.googleQuery} />}
             {this.state.view === 'hola-news' && <HolaNews onNews={this.handleRetrieveHolaNewsResults} news={this.state.holaNews} />}
-            {this.state.view === 'tweets' && <Twitter onTweets={this.handleRetrieveTwitterResults} tweets={this.state.twitter} email={this.state.user.email} />}
+            {this.state.view === 'twitter' && <Twitter onTweets={this.handleRetrieveTwitterResults} tweets={this.state.tweets} token={this.props.token} />}
         </section>
     }
 }
