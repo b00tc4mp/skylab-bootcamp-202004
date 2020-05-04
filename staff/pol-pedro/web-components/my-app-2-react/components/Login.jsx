@@ -15,7 +15,13 @@ class Login extends Component{
         password = password.value
 
         try {
-            this.props.onSumbmit(email, password)
+            findUser(email, password, (error, token) => {
+                if(error){
+                    this.classButon = 'buton-cross'
+                    return this.setState({error: error})
+                }else this.props.onSumbmit(token) 
+
+            })
         } catch ({message}) {
                this.classButon = 'buton-cross'
                this.setState ({error: message})

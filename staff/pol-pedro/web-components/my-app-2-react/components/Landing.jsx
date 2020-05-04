@@ -19,8 +19,9 @@ class Landing extends Component{
                 event.preventDefault()
                 this.props.onRegister()
                 }}>Register</a>}
+                {this.props.userInfo && <i className="fab fa-twitter fa-lg" i onClick={ () => { this.props.onTweeter() }}></i>}
                 {this.props.userInfo && <i className="fas fa-search fa-lg" i onClick={ () => { this.props.onNavigator() }}></i>}
-                {this.props.userInfo && <h2>{this.props.userInfo.name} {this.props.userInfo.surname}</h2>}
+                {this.props.userInfo && <h2 onClick={ () => { this.props.onUsers() }}>{this.props.userInfo.name} {this.props.userInfo.surname}</h2>}
             </section>
         </header>
     }

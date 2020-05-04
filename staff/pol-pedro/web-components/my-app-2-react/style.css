@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Special+Elite&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+html {
+  background-color: #dee8ed;
+}
+
 .register {
   top: 5vh;
   position: fixed;
@@ -331,22 +335,25 @@
 }
 .header__landing {
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   text-align: center;
   width: 100vw;
   height: 5vh;
 }
 .header__landing h1 {
+  margin-right: auto;
   font-family: "Special Elite", cursive;
   font-size: 1.5rem;
   margin-left: 1vw;
   color: white;
 }
 .header__landing h2 {
+  margin-right: 2vw;
+  justify-self: end;
   font-weight: 600;
   font-family: "Special Elite", cursive;
   font-size: 1.4rem;
-  margin-left: 1vw;
   color: black;
   margin-left: 5vw;
 }
@@ -354,8 +361,11 @@
   color: white;
   font-weight: 600;
 }
-.header__landing i {
-  margin-left: 70vw;
+.header__landing .fab {
+  margin-right: 5vw;
+}
+.header__landing .fas {
+  margin-right: 2vw;
 }
 .header__landing i:hover {
   color: white;
@@ -461,6 +471,176 @@
 }
 .feedback--error {
   color: red;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(-360deg);
+  }
+}
+.tweeter {
+  margin: 8vh auto;
+  width: 85vw;
+  background-color: #ace1fb;
+  height: 95vh;
+  font-family: "Special Elite", cursive;
+}
+.tweeter__header {
+  display: flex;
+  height: 5vh;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  justify-content: center;
+  background-color: #fba7b4;
+}
+.tweeter__header .fas {
+  margin-right: auto;
+  padding-left: 0.5rem;
+}
+.tweeter__header .fas:hover {
+  color: white;
+}
+.tweeter__header .fab {
+  margin-right: auto;
+}
+.tweeter__menu {
+  top: 8vh;
+  position: absolute;
+  height: 100%;
+  background-color: rgba(201, 199, 204, 0.6);
+  width: 85vw;
+  z-index: 99;
+}
+.tweeter__menu--display {
+  height: 100%;
+  background-color: #fba7b4;
+  width: 30vw;
+}
+.tweeter__menu--display h2 {
+  padding: 0.5rem;
+}
+.tweeter__menu--display .tweeter__menu--folowers {
+  margin-bottom: 1rem;
+  border-bottom: 0.2rem solid white;
+  padding-bottom: 1rem;
+}
+.tweeter__menu--display .tweeter__menu--folowers span {
+  margin-left: 0.8rem;
+  text-align: center;
+}
+.tweeter__menu--display h3 {
+  padding: 0.5rem;
+  border-bottom: 0.2rem solid rgba(49, 45, 54, 0);
+}
+.tweeter__menu--display h3:hover {
+  border-bottom: 0.2rem solid white;
+  color: white;
+}
+.tweeter__home {
+  justify-content: center;
+}
+.tweeter__home i {
+  margin-left: 48%;
+  color: white;
+  animation: spin 1.5s linear infinite;
+}
+.tweeter__home .fa-comment-medical {
+  top: 90vh;
+  color: black;
+  animation: none;
+  position: absolute;
+  margin-left: 77vw;
+}
+.tweeter__home .fa-comment-medical:hover {
+  color: white;
+}
+.tweeter__home .riteTweet form {
+  border: 0.5rem solid black;
+  display: flex;
+  flex-direction: column;
+  height: 55vh;
+  width: 85vw;
+  background-color: white;
+  position: absolute;
+  margin: 0;
+  top: 48vh;
+}
+.tweeter__home .riteTweet form label {
+  margin: 2rem 0;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+}
+.tweeter__home .riteTweet form textarea {
+  border: 0.3rem solid #fba7b4;
+  background-color: #ace1fb;
+  margin: 1rem;
+  height: 35vh;
+  font-size: 1.5rem;
+}
+.tweeter__home .riteTweet form .submit {
+  background-color: #ace1fb;
+  border: none;
+  width: 20vw;
+  height: 4vh;
+  margin-left: auto;
+  margin-right: 2vw;
+  border-radius: 5px;
+  margin-bottom: 0.8rem;
+  font-family: "Special Elite", cursive;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: white;
+}
+.tweeter__home .riteTweet form .submit:hover {
+  background-color: #50bff7;
+}
+.tweeter__home ul {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1vh;
+  width: 65vw;
+  font-family: "Bebas Neue", cursive;
+  list-style-type: none;
+  max-height: 87vh;
+  overflow-y: scroll;
+}
+.tweeter__home ul::-webkit-scrollbar {
+  display: none;
+}
+.tweeter__home ul li {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.2rem;
+  transition: 1s;
+  margin: 0.3rem;
+  background-color: #fba7b4;
+  padding: 0.5rem;
+}
+.tweeter__home ul li .username {
+  font-size: 1.4rem;
+  color: white;
+}
+.tweeter__home ul li .date {
+  margin-left: auto;
+  font-size: 1rem;
+}
+.tweeter__home ul li .following {
+  padding: 0 0.3rem;
+  margin-left: auto;
+  background-color: #a7fbb2;
+  border-radius: 3px;
+}
+.tweeter__home ul li .following:hover {
+  background-color: #ace1fb;
+  color: white;
+  text-decoration: underline;
+}
+.tweeter__home ul li .following--alert {
+  margin-left: auto;
+  background-color: #ace1fb;
+  border-radius: 5px;
+  padding: 0 0.3rem;
 }
 
 /*# sourceMappingURL=style.css.map */

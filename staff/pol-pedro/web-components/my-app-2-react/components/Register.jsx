@@ -7,7 +7,7 @@ class Register extends Component{
 
     // || function when the user is send to check if available to register ||
 
-    logicRegister = () => {
+    logicRegister = (event) => {
         event.preventDefault()
         this.state = {error: ''}
 
@@ -16,15 +16,18 @@ class Register extends Component{
         surname = surname.value
         email = email.value
         password = password.value
-
-        userDefine(name, surname, email, password, (error) =>{
-            this.props.onSumbmit(error)
-            if(this.props.onError){
-                this.classButon = 'buton-cross'
-                this.setState ({error: this.props.onError})
-            }
-        })
-
+        try{
+            userDefine(name, surname, email, password, (error) =>{
+                this.props.onSumbmit(error)
+                if(this.props.onError){
+                    this.classButon = 'buton-cross'
+                    this.setState ({error: this.props.onError})
+                }
+            })
+        }catch({message}){
+            this.setState({error: message})
+        }
+            
         // this.props.onSumbmit (name, surname, email, password)
         // if(this.props.onError){
         //     this.classButon = 'buton-cross'
