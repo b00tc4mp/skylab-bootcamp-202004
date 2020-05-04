@@ -12,7 +12,7 @@ function tweet(token, text, callback){
         if (status === 200){
             let user = JSON.parse(response);
             if(!user.tweets) user.tweets = []
-            let newTweet = {username: user.username, text, date: new Date }
+            let newTweet = {username: user.username, text, date: new Date(Date.now()) }
             user.tweets.push(newTweet)
 
             body = JSON.stringify({tweets: user.tweets})

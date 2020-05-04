@@ -17,15 +17,20 @@ function toggleFollowUser(token, followEmail, callback) {
     if (error) return callback(error);
 
     if (status === 200) {
-      let user = JSON.parse(response);
-      if (!user.followers) {
-        user.followers = [followEmail];
-      } else {
-        let index = user.followers.indexOf(followEmail);
-        if (index === -1) {user.followers.push(followEmail)}else user.followers.splice(index, 1);
-      }
+      let {followers = []} = JSON.parse(response);
 
-      body = JSON.stringify({ followers: user.followers });
+      if (followers.includes(followEmail)){
+        followers = followers.filter(email => followEmail !== email )
+      } else followers.push(followEmail)
+
+      // if (!user.followers) {
+      //   user.followers = [followEmail];
+      // } else {
+      //   let index = user.followers.indexOf(followEmail);
+      //   if (index === -1) {user.followers.push(followEmail)}else user.followers.splice(index, 1);
+      // }
+
+      body = JSON.stringify({ followers });
       headers = {
         Authorization: `Bearer ${token}`,
         "Content-type": "application/json",
