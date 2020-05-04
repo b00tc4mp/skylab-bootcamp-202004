@@ -1,29 +1,44 @@
-// class usersResults extends Component {
-//   constructor(matchingList) {
-//     super(`<section class="result">
-//       </section>`);
-//     let feedback;
-//     if (matchingList.length) {
-//       const list = document.createElement("ul");
 
-//       for (let i = 0; i < matchingList.length; i++) {
-//         const listItem = document.createElement("li");
-//         listItem.innerHTML = `${matchingList[i].name} ${matchingList[i].surname} (${matchingList[i].email})`;
-//         list.append(listItem);
-//       }
-//       this.container.appendChild(list);
-//     } else {
-//       feedback = new Feedback("You have 0 results :(", "warning");
-//       this.container.appendChild(feedback.container);
-//     }
-//   }
-// }
+function UsersResults({ results, userToken, searchSubmit, userEmail }) {
+
+  const checkFollow = (userToken, userEmail) => {
+    // CALL TO API TO GET FOLLOWING LIST
+    findMyUser(userToken, userEmail, (error, myUser) => {
+      if (error) throw new Error(error)
+
+      const idList = []
+      for (let i = 0; i < results.length; i++) idList.push(results[i].id)
+
+      if (myUser.following)
+        if (myUser.following.indexOf(idList) !== -1)
+          return 'Following'
+        else
+          return 'Follow'
+    })
+  }
+
+  const handleFollow = (id) => { // GET ID AND PUSH TO FOLLOWING
+
+    findMyUser(userToken, userEmail, (error, myUser) => {
+      if (error) throw new Error(error)
+
+      // if (!myUser.following)
+      //   myUser.following.push(id)   // PENDING
+
+    })
 
 
-function UsersResults({ results }) {
-  return <section className="results">
-    {results.length ?
-      <ul>{results.map(({ name, surname, email }) => <li>{`${name} ${surname} (${email})`}</li>)}</ul>
-      : <Feedback message="sorry, no results :(" level="warning" />}
+    checkFollow(email, loggedUser)
+  }
+
+  return <section>
+    <Search query={searchSubmit} />
+
+    {results.length && <ul>{results.map(({ name, surname, email, id }) => <li>{`${name} ${surname} (${email})`}<button onClick={event => { event.preventDefault(); handleFollow(id) }}>{`${checkFollow(userToken, userEmail)}`}</button></li>)}</ul>}
+    {!results.length && results instanceof Array && <Feedback message="sorry, no results :(" level="warning" />}
+
+
   </section>
 }
+
+

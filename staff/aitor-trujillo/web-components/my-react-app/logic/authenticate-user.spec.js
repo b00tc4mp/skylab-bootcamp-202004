@@ -13,15 +13,6 @@ describe('authenticateUser', function () {
     })
 
     it('should succeed on correct credentials', function () {
-        // let _error
-
-        // try {
-        //     authenticateUser(email, password)
-        // } catch (error) {
-        //     _error = error
-        // }
-
-        // expect(_error).to.be.undefined
 
         expect(function () {
             authenticateUser(email, password)
@@ -29,15 +20,6 @@ describe('authenticateUser', function () {
     })
 
     it('should fail on incorrect credentials', function () {
-        // let _error
-
-        // try {
-        //     authenticateUser(email + 'hola mundo', password)
-        // } catch (error) {
-        //     _error = error
-        // }
-
-        // expect(_error).to.exist
 
         const _email = email.substring(0, 3) + '-' + email.substring(3)
 

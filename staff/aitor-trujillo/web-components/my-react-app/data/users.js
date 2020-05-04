@@ -1,20 +1,30 @@
-const users = [
-  {
-    name: "Manuel",
-    surname: "Barzi",
-    email: "manuelbarzi@gmail.com",
-    password: "123123123",
-  },
-  {
-    name: "Pepito",
-    surname: "Grillo",
-    email: "pepigri@gmail.com",
-    password: "abc123abc",
-  },
-  {
-    name: "Facundo",
-    surname: "Pepitote",
-    email: "eureka@gmail.com",
-    password: "abc123abc",
-  },
-];
+const users = [{
+  name: 'marc',
+  surname: 'guillemas',
+  email: 'mguillemas@gmail.com',
+  password: '123123123',
+  twitter: {
+    tweets: [{ tweet: 'hola que ase' }, { tweet: 'sdfsd' }],
+    following: []
+  }
+},
+{
+  name: 'aitor',
+  surname: 'truji',
+  email: 'aitor@gmail.com',
+  password: '123123123',
+  twitter: {
+    tweets: [],
+    following: ['mguillemas@gmail.com', 'pepigri@gmail.com']
+  }
+},
+{
+  name: 'pepito',
+  surname: 'grillo',
+  email: 'pepigri@gmail.com',
+  password: '123123123',
+  twitter: {
+    tweets: [{ tweet: 'asadf' }],
+    following: []
+  }
+}]

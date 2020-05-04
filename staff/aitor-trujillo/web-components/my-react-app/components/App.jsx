@@ -5,7 +5,7 @@ class App extends Component {
     super();
 
     this.state = {
-      view: 'landing',
+      view: 'home',
       user: ''
     };
   }
@@ -14,32 +14,37 @@ class App extends Component {
   goToLogin = () => this.setState({ view: 'login' })
   onLogout = () => {
     this.setState({ view: 'landing' })
-    this.setState({ user: '' })
+    this.setState({ user: undefined })
+    this.setState({ token: undefined })
 
   }
 
 
   registerSubmit = (name, surname, email, password) => {
-    registerUser(name, surname, email, password)
-    this.setState({ view: 'login' })
+    registerUser(name, surname, email, password, (error) => {
+      if (error) throw new Error(error)
+      else this.setState({ view: 'login' })
+    })
   }
 
   loginSubmit = (email, password) => {
-    authenticateUser(email, password)
-    const _user = retrieveUser(email)
-    this.setState({ view: 'home' })
-    this.setState({ user: _user })
-    // <Home />
+    authenticateUser(email, password, (error, token) => { // POR AQUI
+      if (error) throw new Error(error)
+
+      this.setState({ token })
+      this.setState({ user: email })
+      this.setState({ view: 'home' })
+    })
+
   }
 
 
   render() {
     return <>
-      <h1>Hello there!</h1>
       {this.state.view === 'landing' && <Landing toRegister={this.goToRegister} toLogin={this.goToLogin} />}
       {this.state.view === 'register' && <Register onSubmit={this.registerSubmit} toLogin={this.goToLogin} />}
       {this.state.view === 'login' && <Login onSubmit={this.loginSubmit} toRegister={this.goToRegister} />}
-      {this.state.view === 'home' && <Home name={this.state.user.name} onLogout={this.onLogout} />}
+      {this.state.view === 'home' && <Home token={this.state.token} userEmail={this.state.user} onLogout={this.onLogout} />}
     </>
 
   }

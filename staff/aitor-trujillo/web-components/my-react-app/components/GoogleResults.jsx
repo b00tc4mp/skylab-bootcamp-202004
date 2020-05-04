@@ -20,16 +20,18 @@
 //   }
 // }
 
-function GoogleResults({ results }) {
+function GoogleResults({ results, searchSubmit }) {
 
-  return <section className="result">
-    <ul>{results.map(({ title, description, link }) => {
+  return <section className="google">
+    <Search query={searchSubmit} />
+    {results.length && <ul>{results.map(({ title, description, link }) => {
       return <>
         <li>{title}</li>
         <li>{description}</li>
         <a href={link}>{link}</a>
         <hr></hr>
       </>
-    })}</ul>
+    })}</ul>}
+    {!results.length && results instanceof Array && <Feedback message="sorry, no results :(" level="warning" />}
   </section>
 }
