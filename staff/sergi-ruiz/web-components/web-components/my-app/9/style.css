@@ -21,6 +21,19 @@
 .home {
   border-color: yellow;
 }
+.home__link {
+  text-decoration: none;
+}
+.home__link:visited {
+  color: lightgray;
+}
+.home__link--active {
+  font-weight: bold;
+  color: gray;
+}
+.home__link--active:visited {
+  color: gray;
+}
 
 .feedback {
   color: green;
