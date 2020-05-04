@@ -11,9 +11,11 @@ function authenticateUser(email, password,callback) {
         { 'Content-type': 'application/json' }, (error, status, body) => {
             if (error) return callback(error)
 
-            if (status === 200)
+            if (status === 200){
                 const { token } = JSON.parse(body)
                 callback(undefined,token)
+            }
+                
             else {
                 const { error } = JSON.parse(body)
 
