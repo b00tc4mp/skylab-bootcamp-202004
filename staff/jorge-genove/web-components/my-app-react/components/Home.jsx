@@ -50,12 +50,13 @@ class Home extends Component {
         return <section className="home">
                     <h1>Welcome {this.props.user}</h1>
                     <button onClick={this.props.logOut}>Logout</button>
-                    <a onClick={this.handleOnUsers} className="home__link" href="">Users</a>
+                    <ul className ="links">
+                    <a onCllick={this.handleOnUsers} className="home__link" href="">Users</a>
                     <a onClick={this.handleOnGoogle} className="home__link" href="">Google</a>
                     <a onClick={this.handleOnEcosia} className ="home__link" href="">Ecosia</a>
                     <a onClick={this.handleOnNews} className="home__link" href="">Mediavida</a>
                     <a onClick={this.handleOnTwitter} className= "home__link" href="">Twitter</a>
-
+                    </ul>
                     {this.state.currentLink === 'user' && <User token = {this.props.token} useremail = {this.props.useremail} />}
                     {this.state.currentLink === 'google' && <Google />}
                     {this.state.currentLink === 'ecosia' && <Ecosia />}

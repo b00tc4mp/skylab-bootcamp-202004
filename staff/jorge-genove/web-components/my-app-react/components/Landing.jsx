@@ -1,14 +1,14 @@
-  function Landing({onRegister, onLogin}) {
+  function Landing({onRegister, onLogin}) {debugger
       return < section className="landing">
           <a href="" onClick= { event => {debugger
               event.preventDefault()
                
-              onRegister()
+              onRegister("register")
           }}>Register</a> or <a href ="" 
           onClick = {event => {debugger
               event.preventDefault()
                
-              onLogin()
+              onLogin("login")
           }}>Login</a>
       </section>
   

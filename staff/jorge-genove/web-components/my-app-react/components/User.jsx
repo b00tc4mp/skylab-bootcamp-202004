@@ -24,7 +24,7 @@ class User extends Component {
                     })}
                     
       onToggleFollow = query => {debugger
-      this.handleSearch(this.state.query)    }
+      this.handleSearch(this.state.query)}
    
    
    

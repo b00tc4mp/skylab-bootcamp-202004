@@ -1,4 +1,4 @@
-
+/* 
 
  const {Component} = React;
 
@@ -51,5 +51,46 @@
     
     
 </>
-    }
+
+    }}
+  */
+
+
+const { useState,Component } = React;
+
+function App() {debugger
+   const [view, setView] = useState('landing')
+   
+   const [useremail, setUseremail] = useState(undefined)
+   const [token, setToken] = useState(undefined)
+
+  
+  function handleView(view){setView(view)};
+
+
+  function handleRegister(name, surname, email, password) {
+    registerUser(name, surname, email, password, () => {});
+
+    handleView('login');
+  };
+
+  function handleLogin (email, password){
+    debugger;
+    loginUser(email, password, (error, token) => {
+      if (error) console.log(error)
+      setView('home')
+      setToken(token)
+      setUseremail(email)
+      
+     
+    });
+  };
+ 
+    return <>
+        {view === "landing" && (<Landing onRegister={handleView} onLogin={handleView}/>)}
+        {view === "register" && (<Register onRegister1={handleRegister} />)}
+        {view === "login" && <Login onLogin1={handleLogin} />}
+        {view === "home" && (<Home useremail={useremail}token={token}/>)}
+      </>
+
 }
