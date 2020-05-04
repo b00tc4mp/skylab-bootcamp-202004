@@ -14,13 +14,13 @@ class App extends Component {
     handleLogin = token => this.setState({ token, view: 'home' });
     handleGoToLogin = () => this.setState({ view: 'login' });
     handleLogout = () => this.setState({ token: undefined, view: 'landing' });
-
+    
     render() {
         return <>
             {this.state.view === 'landing' && <Landing onGoToRegister={this.handleGoToRegister} onGoToLogin={this.handleGoToLogin} />}
             {this.state.view === 'register' && <Register onRegister={this.handleRegister} onGoToLogin={this.handleGoToLogin} />}
             {this.state.view === 'login' && <Login onLogin={this.handleLogin} onGoToRegister={this.handleGoToRegister} />}
-            {this.state.view === 'home' && <Home token={this.state.token} onLogout={this.handleLogout} />}
+            {this.state.view === 'home' && <Home token={this.state.token} onLogout={this.handleLogout}/>}
         </>
     }
 };

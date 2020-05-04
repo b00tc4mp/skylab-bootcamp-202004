@@ -32,54 +32,54 @@
     }
 
      handleUsers = event => {
-         event.preventDefault();
+        event.preventDefault();
 
-         this.setState({ view: 'users' });
+        this.setState({ view: 'users' });
      }
 
      handleGoogle = event => {
-         event.preventDefault();    
+        event.preventDefault();    
         
-         this.setState({ view: 'google' });
+        this.setState({ view: 'google' });
      }
 
      handleEcosia = event => {
-         event.preventDefault();
+        event.preventDefault();
 
-         this.setState({ view: 'ecosia' });
+        this.setState({ view: 'ecosia' });
      }
 
-     handleHolaNews = event => {
-         event.preventDefault();
+     handleNews = event => {
+        event.preventDefault();
 
-         this.setState({ view: 'news' });
+        this.setState({ view: 'news' });
      }
 
      handleSearchUsersResultsAndQuery = (results, query) =>
-         this.setState({ usersResults: results, usersQuery: query });
+        this.setState({ usersResults: results, usersQuery: query });
 
      handleSearchGoogleResultsAndQuery = (results, query) =>
-         this.setState({ googleResults: results, googleQuery: query });
+        this.setState({ googleResults: results, googleQuery: query });
     
     handleSearchEcosiaResultsAndQuery = (results, query) =>
         this.setState({ EcosiaResults: results, EcosiaQuery: query });
          
-     handleRetrieveNewsResults = news =>
-         this.setState({ news: news });
+    handleRetrieveNewsResults = news =>
+        this.setState({ news: news });
 
      render() {
          return <section className="home">
              <h1>Hello, {this.state.name} Welcome!</h1>
-             <a className={`home__link ${this.state.view === 'users' ? 'home__link--active' : ''}`} href="" onClick={this.handleUsers}>Users </a>
-             <a className={`home__link ${this.state.view === 'google' ? 'home__link--active' : ''}`} href="" onClick={this.handleGoogle}>Google </a>
-             <a className={`home__link ${this.state.view === 'ecosia' ? 'home__link--active' : ''}`} href="" onClick={this.handleEcosia}>Ecosia </a>
-             <a className={`home__link ${this.state.view === 'news' ? 'home__link--active' : ''}`} href="" onClick={this.handleHolaNews}>News </a>
+             <a className={`home__link ${this.state.view === 'users' ? 'home__link--active' : ''}`} href="" onClick={this.handleUsers}>Users</a>
+             <a className={`home__link ${this.state.view === 'google' ? 'home__link--active' : ''}`} href="" onClick={this.handleGoogle}>Google</a>
+             <a className={`home__link ${this.state.view === 'ecosia' ? 'home__link--active' : ''}`} href="" onClick={this.handleEcosia}>Ecosia</a>
+             <a className={`home__link ${this.state.view === 'news' ? 'home__link--active' : ''}`} href="" onClick={this.handleNews}>News</a>
              <button onClick={this.props.onLogout}>Logout</button>
 
              {this.state.view === 'users' && <Users onSearch={this.handleSearchUsersResultsAndQuery} users={this.state.usersResults} query={this.state.usersQuery} token={this.props.token} />}
              {this.state.view === 'google' && <Google onSearch={this.handleSearchGoogleResultsAndQuery} results={this.state.googleResults} query={this.state.googleQuery} />}
-             {this.state.view === 'Ecosia' && <Google onSearch={this.handleSearchEcosiaResultsAndQuery} results={this.state.EcosiaResults} query={this.state.ecosiaQuery} />}
-             {this.state.view === 'news' && <HolaNews onNews={this.handleRetrieveNewsResults} news={this.state.news} />}
+             {this.state.view === 'Ecosia' && <Ecosia onSearch={this.handleSearchEcosiaResultsAndQuery} results={this.state.EcosiaResults} query={this.state.ecosiaQuery} />}
+             {this.state.view === 'news' && <News onNews={this.handleRetrieveNewsResults} news={this.state.news} />}
          </section>
      }
  }

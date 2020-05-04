@@ -1,27 +1,18 @@
-class Ecosia extends Component {
-    constructor(error, data) {
-        super(`<section class="users">
-            <form>
-                <h2>Ecosia</h2>
-            </form>
-        </section>`);
+function Ecosia ({ onSearch, query, results }) {
+  function handleSearch (query) {
+    ecosia(query, (error, results) => {
+      if (error) {
+        throw error // TODO do something with error (feedback panel?)
+      }
+      onSearch(results, query);
 
-        let results;
-        const _ecosiaSearch = new SearchEcosia(query => {
-            searchEcosia(query, (error, data) => {
-                if (!results) {
-                    results = new ResultsEcosia();
+    })
+  }
 
-                    this.container.appendChild(results.container);
-                } else {
-                    const _results = results;
+  return <section className='ecosia'>
+      <h2>Ecosia</h2>
 
-                    results = new ResultsEcosia(error, data);
-
-                    _results.container.replaceWith(results.container);
-                }
-            });
-        });
-        this.container.appendChild(_ecosiaSearch.container);
-    };
-};
+      <Search onSubmit={handleSearch} query={query} />
+      {results && <EcosiaResults results={results} />}
+    </section>
+}

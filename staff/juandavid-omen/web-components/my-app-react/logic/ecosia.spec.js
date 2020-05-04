@@ -1,6 +1,6 @@
 describe('Ecosia', () => {
     it('should succeed on matching query', done => {
-        searchEcosia('hello world', function (error, results) {
+        ecosia('hello world', function (error, results) {
             expect(error).to.be.undefined
 
             expect(results).to.exist

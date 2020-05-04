@@ -38,7 +38,7 @@ class Login extends Component {
                 <input type="email" name="email" placeholder="e-mail" required />
                 <input type="password" name="password" placeholder="password" required minLength="6" />
                 <button>Submit</button>
-                or <a href="" onClick={this.handeGoToRegister}>Register</a>
+                {" "} or {" "} <a href="" onClick={this.handeGoToRegister}>Register</a>
 
                 {this.state.error && <Feedback message={this.state.error} level="error" />}
             </form>

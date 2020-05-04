@@ -1,5 +1,6 @@
 function google(query, callback) {
-    call('GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?q=${query}`, undefined, undefined, (error, status, body) => {
+    call('GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?q=${query}`, 
+    undefined, undefined, (error, status, body) => {
         if (error) {
             return callback(error);
         }
@@ -10,9 +11,9 @@ function google(query, callback) {
 
         const parser = new DOMParser();
 
-        const doc = parser.parseFromString(dody, 'text/html')
+        const doc = parser.parseFromString(body, 'text/html');
 
-        let results = doc.querySelectorAll('.rc')
+        let results = doc.querySelectorAll('.rc');
         
         let data;
 
@@ -45,4 +46,3 @@ function extractData(results, titleTag, contentTag, linkTag) {
 
     return data
 };
-

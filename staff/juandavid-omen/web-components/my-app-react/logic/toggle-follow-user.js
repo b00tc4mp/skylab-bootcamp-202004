@@ -1,10 +1,8 @@
-function toggleFollowUser(email, following) {
-    if (typeof email !== 'string') throw new TypeError(email + ' is not a string')
-    if (!EMAIL_REGEX.test(email)) throw new Error(email + ' is not an e-mail')
-
-    if (typeof following !== 'string') throw new TypeError(following + ' is not a string')
-    if (!EMAIL_REGEX.test(following)) throw new Error(following + ' is not an e-mail')
-
+function toggleFollowUser(token, followingId, callback) {
+    String.validate.notVoid(token);
+    String.validate.notVoid(followingId);
+    Function.validate(callback);
+  
     // TODO call to retrieve user
     // TODO check if array of following exists, otherwise create new array
     // TODO if following user (id) it is already in array, then remove it, otherwise add it

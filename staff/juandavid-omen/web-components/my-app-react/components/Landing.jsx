@@ -1,16 +1,15 @@
 function Landing({ onGoToRegister, onGoToLogin  }) {
-    function handleGoToRegister(event) {
+    const handleGoToRegister = (event) => {
         event.preventDefault();
 
         onGoToRegister();
     }
 
-    function handleGoToLogin(event) {
+    const handleGoToLogin = (event) =>{
         event.preventDefault();
 
         onGoToLogin();
     }
-
 
    return <section className="landing">
        <a href="" onClick={handleGoToRegister}>Register</a> or <a href="" onClick={handleGoToLogin}>Login</a>
