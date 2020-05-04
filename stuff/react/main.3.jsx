@@ -1,11 +1,8 @@
-'use strict'
-
 const names = ['Mary', 'Anna', 'John', 'Max', 'James']
 
 const colors = ['Red', 'Green', 'Blue', 'Yellow', 'Orange']
 
 function List(props) {
-    console.log(0);
     const { items } = props
 
     const _items = items.map(item => <li>{item}</li>)
@@ -29,6 +26,8 @@ function PeopleAndColors(props) {
     </>
 }
 
+const { Component } = React
+
 function Header({ view, onChangeView }) {
     return <header>
         <nav>
@@ -36,7 +35,7 @@ function Header({ view, onChangeView }) {
                 <li>
                     <a className={`header-link ${view === 'home' ? 'header-link--active' : ''}`} href="" onClick={event => {
                         event.preventDefault()
-                        console.log(1);
+
                         onChangeView('home')
                     }}>Home</a>
                 </li>
@@ -77,16 +76,14 @@ function Contact() {
     return <h1>Contact</h1>
 }
 
-<<<<<<< HEAD
 class App extends Component {
-    debugger
     constructor() {
         super()
 
         this.state = {
             view: 'home'
         }
-        console.log(1);
+
         //this.handleChangeView = this.handleChangeView.bind(this)
     }
 
@@ -94,38 +91,16 @@ class App extends Component {
     //     this.setState({ view })
     // }
 
-    handleChangeView = view => {
-        return this.setState({ view })
-    }
-   
+    handleChangeView = view => this.setState({ view })
+
     render() {
         return <>
-            console.log(2);
             <Header view={this.state.view} onChangeView={this.handleChangeView} />
+
             {this.state.view === 'home' && <Home />}
             {this.state.view === 'about' && <About />}
             {this.state.view === 'contact' && <Contact />}
         </>
     }
-=======
-const { useState } = React
-
-function App() {
-    const [view, setView] = useState('home')
-    // const [pepito, setPepito] = useState()
-    // const [fulanito, setFulanito] = useState()
-
-    function handleChangeView(view) {
-        setView(view)
-    }
-
-    return <>
-        <Header view={view} onChangeView={handleChangeView} />
-
-        {view === 'home' && <Home />}
-        {view === 'about' && <About />}
-        {view === 'contact' && <Contact />}
-    </>
->>>>>>> develop
 }
 ReactDOM.render(<App />, document.getElementById('root'))
