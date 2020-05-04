@@ -8,15 +8,13 @@ class Results extends Component {
         })
     }
     handleList = (id) => {
-        if(this.props.isFollowed){
-        this.props.isFollowed.forEach((userId) => {
-            if (id === userId) { return true }
-
-        })
-    }else{
-        return false
-
-    }
+        if (this.props.isFollowed) {
+            this.props.isFollowed.forEach((userId) => {
+                if (id === userId) { return true }
+            })
+        } else {
+            return false
+        }
     }
     render() {
         return <section className="results">
