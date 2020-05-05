@@ -1,13 +1,10 @@
 function loginUser(email, password, callback)  {debugger
 
-  if (typeof email !== 'string') throw new TypeError(email + ' is not a string')
-  if (!email.trim().length) throw new Error('email is empty or blank')
-  if (!EMAIL_REGEX.test(email)) throw new Error(email + ' is not an e-mail')
+    Email.validate(email)
 
-  if (typeof password !== 'string') throw new TypeError('password is not a string')
-  if (!password.trim().length) throw new Error('password is empty or blank')
+    String.validate.notVoid(password)
 
-  if(!callback) throw new Error('callback is not function')
+    Function.validate(callback)
 
   call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
       `{ "username": "${email}", "password": "${password}" }`, 

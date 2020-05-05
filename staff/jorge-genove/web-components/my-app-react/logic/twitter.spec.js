@@ -43,7 +43,7 @@ describe("tweet", function () {
       );
     };
   });
-describe('hola mundo', () => {
+describe('Add tweets', () => {
   it("should succeed on post tweet", (done) => {
     tweet(
       token,
