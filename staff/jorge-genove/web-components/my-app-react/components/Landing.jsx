@@ -1,15 +1,17 @@
-  function Landing({onRegister, onLogin}) {debugger
-      return < section className="landing">
-          <a href="" onClick= { event => {debugger
-              event.preventDefault()
-               
-              onRegister("register")
-          }}>Register</a> or <a href ="" 
-          onClick = {event => {debugger
-              event.preventDefault()
-               
-              onLogin("login")
-          }}>Login</a>
-      </section>
-  
+function Landing({ onGoToRegister, onGoToLogin }) {
+    function handleGoToRegister(event) {
+        event.preventDefault()
+
+        onGoToRegister()
     }
+
+    function handleGoToLogin(event) {
+        event.preventDefault()
+
+        onGoToLogin()
+    }
+
+    return <section className="landing">
+        <a href="" onClick={handleGoToRegister}>Register</a> or <a href="" onClick={handleGoToLogin}>Login</a>
+    </section>
+}

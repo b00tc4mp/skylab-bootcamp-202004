@@ -1,70 +1,81 @@
-const { Component } = React
 
- class Home extends Component {
-    constructor(props) {
-        super(props)
+const { useState} = React
 
-        this.state = { currentLink: 'user' ,
-                        email: this.props.email,
-                        
-                      
-                     }
+ function Home ({user, logOut, useremail, token}){
+    
+    
+    const [mediavida, setMediavida] = useState(undefined)
+    const [view, setView] = useState('spinner')
+    
+    
+    
+    useEffect(() =>{
+      try {
+        retrieveUser(token, (error,user) => {
+          if(error) throw error
+
+          const hash = location.hash.substring(1)
+          location.hash = hash? hash: 'users'
+          setView(hash? hash : 'users')
+        })
+      }catch(error) {
+        throw error
+      }
+    })
+    
+    goToView = view => {
+      location.hash = view ==='users' || view === 'google' || view === 'mediavida' ? view: ''
+    
+    setView(view)
+    
     }
-    handleOnGoogle = (event) => {
+    
+    const handleOnGoogle = (event) => {
         event.preventDefault()
 
-        this.setState(
-            { currentLink: 'google' }
-        )
+        goToView('google')
     }
-    handleOnUsers = (event) => {
+    const handleOnUsers = (event) => {
         event.preventDefault()
 
-        this.setState(
-            { currentLink: 'user' }
-        )
+        goToView('user')
     }
 
-    handleOnEcosia = (event) => {debugger
+    const handleOnEcosia = (event) => {
       event.preventDefault()
-      this.setState(
-        { currentLink: 'ecosia'}
-      )
+      goToView('ecosia')
     }
-    handleOnNews = (event) => {
+    const handleOnNews = (event) => {
         event.preventDefault()
-        this.setState(
-          { currentLink: 'mediavida'}
-        )
+      goToView('mediavida')
       }
   
-    handleOnTwitter = () => {debugger
+    const handleOnTwitter = () => {
       event.preventDefault()
-      
-      this.setState({currentLink: 'twitter', })
-      
+      goToView('twitter') 
   }
 
+  const handleRetrieveHolaNewsResults = results =>
+  setMediavida(results)
 
-    render() {
-        return <section className="home">
-                    <h1>Welcome {this.props.user}</h1>
-                    <button onClick={this.props.logOut}>Logout</button>
-                    <ul className ="links">
-                    <a onClick={this.handleOnUsers} className="home__link" href="">Users</a>
-                    <a onClick={this.handleOnGoogle} className="home__link" href="">Google</a>
-                    <a onClick={this.handleOnEcosia} className ="home__link" href="">Ecosia</a>
-                    <a onClick={this.handleOnNews} className="home__link" href="">Mediavida</a>
-                    <a onClick={this.handleOnTwitter} className= "home__link" href="">Twitter</a>
-                    </ul>
-                    {this.state.currentLink === 'user' && <User token = {this.props.token} useremail = {this.props.useremail} />}
-                    {this.state.currentLink === 'google' && <Google />}
-                    {this.state.currentLink === 'ecosia' && <Ecosia />}
-                    {this.state.currentLink === 'medivida' && <HomeNews />}
-                    {this.state.currentLink === 'twitter' && <Twitter onClick  useremail = {this.props.useremail} token = {this.props.token} />} 
+  return <section className="home">
+              <h1>Welcome {user}</h1>
+              <button onClick={logOut}>Logout</button>
+              <ul className ="links">
+              <a onClick={handleOnUsers} className="home__link" href="">Users</a>
+              <a onClick={handleOnGoogle} className="home__link" href="">Google</a>
+              <a onClick={handleOnEcosia} className ="home__link" href="">Ecosia</a>
+              <a onClick={handleOnNews} className="home__link" href="">Mediavida</a>
+              <a onClick={handleOnTwitter} className= "home__link" href="">Twitter</a>
+              </ul>
+              {currentLink === 'user' && <User token = {token} useremail = {useremail} />}
+              {currentLink === 'google' && <Google />}
+              {currentLink === 'ecosia' && <Ecosia />}
+              {currentLink === 'mediavida' && <HomeNews results={mediavida} onNews={handleRetrieveHolaNewsResults}/>}
+              {currentLink === 'twitter' && <Twitter onClick  useremail = {useremail} token = {token} />} 
+              
+          </section>
 
-               </section>
-    }
 }
 
  

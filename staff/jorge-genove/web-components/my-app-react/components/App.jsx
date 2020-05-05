@@ -49,19 +49,49 @@ function App() {
 const { useState,Component } = React;
 
 function App() {debugger
-   const [view, setView] = useState('landing')
+   const [view, setView] = useState('load')
    
    const [useremail, setUseremail] = useState(undefined)
    const [token, setToken] = useState(undefined)
 
+
+   useEffect(()=> {
+     if (sessionStorage.token)
+     try{
+       isUserAuthenticated(sessionStorage.token, (error,isAuthenticated) => {
+         if(error) throw error
+
+         if(isAuthenticated){
+           setToken(sessionStorage.token)
+           setView('home')
+         }else setHashview('login')
+       })
+     }catch (error) {
+       if (error) throw error
+     }
+    else {
+      const hash = location.hash.substring(1)
+      if(hash === 'login' || hash === 'register') setHashView(hash)
+      else{
+        location.hash = ''
+        setView('landing')
+      }
+    
+    }
+   }, [])
   
-  function handleView(view){setView(view)};
+   const setHashView = view => {
+     location.hash = view
+     setView(view)
+   }
+  
+  const handleGoToRegister = () => setHashView('register')
 
 
   function handleRegister(name, surname, email, password) {
     registerUser(name, surname, email, password, () => {});
 
-    handleView('login');
+    setHashView('login');
     
   };
 
@@ -69,20 +99,30 @@ function App() {debugger
     debugger;
     loginUser(email, password, (error, token) => {
       if (error) console.log(error)
-      setView('home')
+      sessionStorage.taken = token
       setToken(token)
       setUseremail(email)
-      
-      
+      setView('home')
+
+    const handleGotoLogin = () => setHashView('login')
+
+    const handleLogout = () => {
+      setToken()
+      delete sessionStorage.token
+      location.hash=''
+      setView('landing')
+    }
+      const handleUserSessionExpired = () => setHashView('login')
      
     });
   };
  
     return <>
-        {view === "landing" && (<Landing onRegister={handleView} onLogin={handleView}/>)}
-        {view === "register" && (<Register onRegister1={handleRegister} onLogin = {handleView} />)}
-        {view === "login" && <Login onLogin1={handleLogin} onRegister = {handleView} />}
-        {view === "home" && (<Home useremail={useremail} token={token} user={user}/>)}
+        {view === 'load' && <Spinner />}    
+        {view === "landing" && (<Landing onRegister={handleGoToRegister} onGoToLogin={handleGoToLogin}/>)}
+        {view === "register" && (<Register onRegister1={handleRegister} onGoToLogin = {handleGoToLogin} />)}
+        {view === "login" && <Login onLogin1={handleLogin} onGoToRegister = {handleGoToRegister} />}
+        {view === "home" && <Home useremail={useremail} token={token} onLogout={handleLogout} onUserSessionExpired={handleUserSessionExpired} />}
       </>
 
 }

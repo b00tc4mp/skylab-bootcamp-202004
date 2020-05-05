@@ -1,41 +1,42 @@
 
-const { Component } = React
+const { useState, Component } = React
 
 
-class User extends Component {
-    constructor(){
-    super()
-  
-    this.state = {
-    users: undefined,
-    query: undefined
-  }  
-  
+function User({ token }) {
+
+  const [users, setUsers] = useState(undefined)
+  const [query, setQuery] = useState(undefined)
+
+
+
+
+
+
+
+
+  const handleSearch = query =>
+    searchUsers(query, token, (error, users) => {
+      debugger
+      if (error) console.log(error)
+
+      setUsers(users)
+      setQuery(query)
+    })
+
+  const onToggleFollow = query => {
+    debugger
+    handleSearch(query)
   }
-   
 
 
-    handleSearch = query => {debugger
-      searchUsers(query, this.props.token, (error,users) =>  { debugger
-        if (error) console.log(error)
 
-      this.setState({ users : users,
-                      query : query})
-                    })}
-                    
-      onToggleFollow = query => {debugger
-      this.handleSearch(this.state.query)}
-   
-   
-   
-  render(){
-   return <section className="users">
-            <h2>Users</h2>
-            <Search onSubmit = {this.handleSearch}/>
-            {this.state.users && <Result users={this.state.users} onToggleFollow ={this.onToggleFollow} token = {this.props.token}/>}
-        </section>
-        
-      }
-    }
 
-    
+  return <section className="users">
+    <h2>Users</h2>
+    <Search onSubmit={handleSearch} />
+    {users  && <Result users={users} onToggleFollow={onToggleFollow} token={token} />}
+  </section>
+
+
+}
+

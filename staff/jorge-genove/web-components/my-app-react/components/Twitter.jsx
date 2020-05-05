@@ -1,42 +1,40 @@
-class Twitter extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            tweets: undefined
-        }
+const {useEffect, useState} = React
 
-     
+function Twitter({useremail,token})  {
+    
+        const [tweets, setTweets]= useState(undefined)
 
-    }
 
-    componentDidMount() {
-        retrieveTweets(this.props.useremail, this.props.token, (error, tweetsArray) => {debugger
+    useEffect(()=>{
+        retrieveTweets(useremail,token, (error, tweetsArray) => {debugger
             if (error) console.log(error)
 
-            this.setState({ tweets: tweetsArray })
+            setTweets(tweetsArray)
+    
+        
 
         })
         
-    }
+    },[])
 
-    handleTweet = (event) => {
+    const handleTweet = (event) => {
         event.preventDefault()
         let {message} = event.target
         message = message.value
         tweet(this.props.token, message, (error) =>{
         if (error) console.log(error)
         })
+    
     }
 
-    render() {debugger
         return <section className="twitter">
             <h2>Twitter</h2>
-            <form onSubmit = {this.handleTweet}>
+            <form onSubmit = {handleTweet}>
                 <input type="text" name="message"/> <button>Tweet</button>
             </form>
 
-            {this.state.tweets && <ul>
-                {this.state.tweets.map(({ name, surname, tweets }) =>
+            {tweets && <ul>
+                {tweets.map(({ name, surname, tweets }) =>
                     <li>
                         <h2>{name} {surname}</h2>
                         {tweets.map(({message, text, date})  => {
@@ -47,10 +45,9 @@ class Twitter extends Component {
             </ul>}
         </section>
 
-
-    }
- 
 }
+    
+ 
 
 
 

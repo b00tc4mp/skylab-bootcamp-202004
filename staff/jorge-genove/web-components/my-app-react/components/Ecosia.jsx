@@ -1,38 +1,24 @@
-const { Component } = React
+const { useState,Component } = React
 
-class Ecosia extends Component{
-    constructor(props){
-    super(props)
+    function Ecosia(){
     
-    this.state = {results : undefined}
+    const [ecosia, setEcosia] =  useState(undefined)
 
-    }
-handleOnEcosia = (query) => {
-    ecosiaSearch(query, (error,results) => {debugger
-        this.setState({ results })
-    })
-}
+
+
+        const handleOnEcosia = (query) => {
+            ecosiaSearch(query, (error,results) => {debugger
+                setEcosia( results )
+         })
+        }
 
 
     
-render() {
+
     return <section className="ecosia">
         <h2>Ecosia</h2>
-        <Search onSubmit={this.handleOnEcosia}/>
-        {this.state.results && <EcosiaResults results={this.state.results} />}
+        <Search onSubmit={handleOnEcosia}/>
+        {ecosia && <EcosiaResults results={ecosia} />}
     </section >
-}
-
-
-
-
-   
-
-
-
-
-
-
-
 
 }

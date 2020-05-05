@@ -19,4 +19,10 @@
   color: black;
 }
 
+.results__link {
+  color: -webkit-link !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+}
+
 /*# sourceMappingURL=Home.css.map */
