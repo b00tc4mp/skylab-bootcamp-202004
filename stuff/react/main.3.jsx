@@ -26,6 +26,8 @@ function PeopleAndColors(props) {
     </>
 }
 
+const { Component } = React
+
 function Header({ view, onChangeView }) {
     return <header>
         <nav>
@@ -74,23 +76,31 @@ function Contact() {
     return <h1>Contact</h1>
 }
 
-const { useState } = React
+class App extends Component {
+    constructor() {
+        super()
 
-function App() {
-    const [view, setView] = useState('home')
-    // const [pepito, setPepito] = useState()
-    // const [fulanito, setFulanito] = useState()
+        this.state = {
+            view: 'home'
+        }
 
-    function handleChangeView(view) {
-        setView(view)
+        //this.handleChangeView = this.handleChangeView.bind(this)
     }
 
-    return <>
-        <Header view={view} onChangeView={handleChangeView} />
+    // handleChangeView(view) {
+    //     this.setState({ view })
+    // }
 
-        {view === 'home' && <Home />}
-        {view === 'about' && <About />}
-        {view === 'contact' && <Contact />}
-    </>
+    handleChangeView = view => this.setState({ view })
+
+    render() {
+        return <>
+            <Header view={this.state.view} onChangeView={this.handleChangeView} />
+
+            {this.state.view === 'home' && <Home />}
+            {this.state.view === 'about' && <About />}
+            {this.state.view === 'contact' && <Contact />}
+        </>
+    }
 }
 ReactDOM.render(<App />, document.getElementById('root'))
