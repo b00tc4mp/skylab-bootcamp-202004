@@ -1,33 +1,37 @@
-const { Component } = React
+const { useState, Component } = React
+// const { Component } = React
 
-class App extends Component {
-    constructor() {
-        super()
+function App () {
+    const [ view, setView ] = useState('home') //deberia ser landing...
+    const [ token, setToken ] = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWIwMTkxNmNkY2ZkZDAwMTU3YmM0ZDciLCJpYXQiOjE1ODg2MTMxMzUsImV4cCI6MTU4ODYxNjczNX0.YsxDVIO5Srdjo4Wq6SajXBi1Nbllg_gMhfxXuj5NAnM')
 
-        this.state = {
             //view: 'landing',
-            view: 'home',
+            //view: 'home',
             //token: undefined
-            token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWFmMzdjMzkyMzM2YTAwMTU3MDM5NWMiLCJpYXQiOjE1ODg1OTE0MTAsImV4cCI6MTU4ODU5NTAxMH0.cevjOJgEc06iI7yByQFq8Bf6Q0BlxDAHSfrVEql9bUY'
+
+
+    const handleGoToRegister = () => setView('register')
+
+    const handleRegister = () => setView('login' )
+
+    const handleLogin = token => {
+        setToken(token);
+        setView ('home')
         }
+
+    const handleGoToLogin = () => setView('login')
+
+    const handleLogout = () => {
+        setToken(undefined);
+        setView ('landing')
     }
+    
 
-    handleGoToRegister = () => this.setState({ view: 'register' })
-
-    handleRegister = () => this.setState({ view: 'login' })
-
-    handleLogin = token => this.setState({ token, view: 'home' })
-
-    handleGoToLogin = () => this.setState({ view: 'login' })
-
-    handleLogout = () => this.setState({ token: undefined, view: 'landing'})
-
-    render() {
         return <>
-            {this.state.view === 'landing' && <Landing onGoToRegister={this.handleGoToRegister} onGoToLogin={this.handleGoToLogin} />}
-            {this.state.view === 'register' && <Register onRegister={this.handleRegister} onGoToLogin={this.handleGoToLogin} />}
-            {this.state.view === 'login' && <Login onLogin={this.handleLogin} onGoToRegister={this.handleGoToRegister} />}
-            {this.state.view === 'home' && <Home token={this.state.token} onLogout={this.handleLogout}/>}
+            {view === 'landing' && <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
+            {view === 'register' && <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />}
+            {view === 'login' && <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />}
+            {view === 'home' && <Home token={token} onLogout={handleLogout}/>}
         </>
-    }
+    
 }
