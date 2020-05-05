@@ -1,77 +1,68 @@
-class Home extends Component{
-    constructor(props){
-        super(props)
+const { useState, useEffect } = React
 
-        this.state = {
-            token: this.props.token,
-            homeView: 'user',
-            user: undefined,
-            error: undefined
-        }
-    }
+function Home(props){
+    const [homeView, setHomeView] = useState('user')
+    const [user, setUser] = useState(undefined)
+    const [foundUsers, setFoundUsers] = useState(undefined)
+    const [googleResults, setGoogleResults] = useState(undefined)
+    const [latestTweet, setLatestTweet] = useState(undefined)
 
-    componentDidMount(){
-        retrieveUser(this.props.token, (error, user) => {
-            if (error) return this.setState({ error: error.message })
-            this.setState({user})
+    useEffect(()=>{
+        retrieveUser(props.token, (error, user) => {
+            if(error) return props.setError(error.message)
+            setUser(user)
         })
-    }
+      }
+    )
 
-    changeSearchBar = (input) => this.setState({homeView: input })
-
-    handleSearchUsers = (event)=>{
+    const handleSearchUsers = (event)=>{
         let query = event.target.query.value
 
-        searchUser(this.props.token, query, (error, foundUsers) => {
-            if(error) return this.setstate({error: error.message})
-            this.setState({foundUsers})
+        searchUser(props.token, query, (error, foundUsers) => {
+            if(error) return props.setError(error.message)
+            setFoundUsers(foundUsers)
         })
     }
 
-    handleFollow = (followID) => {
-        toggleFollowUser(this.props.token, followID, this.state.user.following, (error, email) => {
-            if(error) return this.setstate({error: error.message})
+    const handleFollow = (followID) => {
+        toggleFollowUser(props.token, followID, user.following, (error, email) => {
+            if(error) return props.setError(error.message)
             
-            retrieveUser(this.props.token, (error, user) => {
-                if (error) return this.setState({ error: error.message })
-                this.setState({user})
+            retrieveUser(props.token, (error, user) => {
+                if(error) return props.setError(error.message)
+                setUser(user)
             })
         })
     }
 
-    handleSearchGoogle = (query) => {
+    const handleSearchGoogle = (query) => {
         googleSearch(query, (error, googleResults)=>{
-            if (error) return this.setState({ error: error.message })
-            this.setState({googleResults})
+            if(error) return props.setError(error.message)
+            setGoogleResults(googleResults)
         })
     }
     
-    handleTweet = (event) => {
+    const handleTweet = (event) => {
         let text = event.target.tweet.value
-        tweet(this.props.token, text, this.state.user.tweets, (error, tweet) => {
-            if(error) return this.setstate({error: error.message})
+        tweet(props.token, text, user.tweets, (error, latestTweet) => {
+            if(error) return props.setError(error.message)
 
-            this.setState({tweet})
-            retrieveUser(this.props.token, (error, user) => {
-                if (error) return this.setState({ error: error.message })
-                this.setState({user})
+            setLatestTweet(latestTweet)
+            retrieveUser(props.token, (error, user) => {
+                if(error) return props.setError(error.message)
+                setUser(user)
             })
         })
     }
 
-    render(){
-        return <>
-            {this.state.user && <NavBar callback = {this.changeSearchBar} name = {this.state.user.name}/>}
-            {(this.state.homeView === 'user') &&
-            <>
-                <UserSearch handleSearchUsers = {this.handleSearchUsers}/> 
-                <UserResult foundUsers={this.state.foundUsers} user={this.state.user} handleFollow={this.handleFollow}/>
-            </>}
-
-            {this.state.homeView === 'google' && <GoogleSearch handleSearchGoogle = {this.handleSearchGoogle} googleResults={this.state.googleResults}/>}
-            {this.state.homeView === 'twitter' && <Twitter token={this.props.token} 
-                handleTweet={this.handleTweet} tweet={this.state.tweet} user = {this.state.user}/>}
-            {this.state.error && <Feedback message = {this.state.error} level = 'error'/>}
-        </>
-    }
+    return <>
+        {<NavBar setHomeView = {setHomeView} name = {user && user.name}/>}
+        {(homeView === 'user') &&
+        <>
+            <UserSearch handleSearchUsers = {handleSearchUsers}/> 
+            <UserResult foundUsers={foundUsers} user={user} handleFollow={handleFollow}/>
+        </>}
+        {homeView === 'google' && <GoogleSearch handleSearchGoogle = {handleSearchGoogle} googleResults = {googleResults}/>}
+        {homeView === 'twitter' && <Twitter token={props.token} handleTweet = {handleTweet} tweet={latestTweet} user = {user}/>}
+    </>
 }

@@ -1,4 +1,4 @@
-function Register ({handleRegister, changeView}){
+function Register ({handleRegister, setView}){
 
     return <section className="register">
         <h1>Register</h1>
@@ -8,7 +8,7 @@ function Register ({handleRegister, changeView}){
             <input type="email" name="email" placeholder="e-mail" required />
             <input type="password" name="password" placeholder="password" required minLength="8" />
             <button>Submit</button>
-            or <a href="" onClick={event => { event.preventDefault(); changeView('login') }}>Login</a>
+            or <a href="" onClick={event => { event.preventDefault(); setView('login') }}>Login</a>
         </form>
     </section>
 }
