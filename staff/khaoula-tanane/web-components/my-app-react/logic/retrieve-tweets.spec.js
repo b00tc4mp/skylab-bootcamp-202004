@@ -23,8 +23,4 @@ describe('retrieve-tweets', () => {
             })
         })
     }).timeout(5000)
-
-
-
-
 })

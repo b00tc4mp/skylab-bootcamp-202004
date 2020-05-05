@@ -1,53 +1,41 @@
-class Home extends Component{
-    constructor(props){
-        super()
+const { useState, useEffect } = React
 
-        this.state = {
-            foundUsers: [],
-            view: 'search',
-            error: null,
-            user: null,
+function Home(props) {
+  const [view, setView] = useState('search')
+  const [user, setUser] = useState()
+  const [error, setError] = useState()
+  const [foundUsers, setFoundUsers] = useState([])
+  const [query, setQuery] = useState()
 
+  useEffect(() => {
+    retrieveUser(props.token, (error, user) => {
+        if (error) return setError(error)
+        setUser({user})
+    })
+  }, [])
 
-        }  
-    }
-
-    componentDidMount(){
-        retrieveUser(this.props.token, (error, user) => {
-            if (error) return this.setState({ error: error.message })
-            this.setState({user})
-        })
-    }
-
-
-
-    handleSearchUsers = (query) =>  {
-        searchUsers(this.props.token, query, (error, foundUsers) => {
+    function handleSearchUsers(query){
+        searchUsers(props.token, query, (error, foundUsers) => {
             if(error) throw error
-            this.setState({foundUsers})
+            setFoundUsers(foundUsers)
+            setQuery(query)
+            
     })}
 
 
 
-    handleFollow = (followEmail) => {
-        toggleFollowUser(this.props.token, followEmail, (error, email) => {
+    function handleFollow(followEmail){
+        toggleFollowUser(props.token, followEmail, (error, email) => {
             if(error) throw error
-            retrieveUser(this.props.token, (error, user) => {
-                if (error) return this.setState({ error: error.message })
-                this.setState({user})
-            })
+            handleSearchUsers(query)
         })
     }
 
 
-    changeView = (view) => {
-        this.setState({view})
+    function changeView(view){
+        setView(view)
     }
 
-
-    render(){
-
-        const {user} = this.state
 
         return <>
        { user && <section className="home">
@@ -55,24 +43,23 @@ class Home extends Component{
 
 
         <ul>
-            <li onClick={()=> this.changeView('search')}>Search Users</li>
-            <li onClick={()=> this.changeView('google')}>Google Search</li>
-            <li onClick={()=> this.changeView('twitter')}>Twitter</li>
+            <li onClick={()=> changeView('google')}>Google Search</li>
+            <li onClick={()=> changeView('search')}>Search Users</li>
+            <li onClick={()=> changeView('twitter')}>Twitter</li>
         </ul>
 
 
-         {this.state.view === 'search' && (
+         {view === 'search' && (
              <>
-             <Search onSubmit={this.handleSearchUsers} token={this.state.token}/>
-             <UsersResults foundUsers={this.state.foundUsers} user={this.state.user} handleFollow={this.handleFollow} />
+             <Search onSubmit={handleSearchUsers} token={props.token}/>
+             <UsersResults foundUsers={foundUsers} user={user} handleFollow={handleFollow} />
             </>
          )}
 
-         {this.state.view === 'google' && <Google />}
-         {this.state.view === 'twitter' && <Twitter token={this.props.token}/> }
+         {view === 'google' && <Google />}
+         {view === 'twitter' && <Twitter token={props.token}/> }
 
         </section>}
         {!user && <p>LOADING...</p>}
     </>
-}
 }

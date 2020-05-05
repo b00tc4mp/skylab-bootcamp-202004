@@ -1,35 +1,44 @@
-
-const { Component } = React;
+const { useState } = React
 
 function App(){
+  const [view, setView] = useState('landing')
+  const [eltoken, setToken] = useState('')
 
 
-  handleGoToRegister = () => this.setState({ view: "register" });
-  handleGoToLogin = () => this.setState({ view: "login" });
-  handleGoToHome = (token) => this.setState({ token, view: "home" });
+  function handleGoToRegister() {
+  setView('register')
+  }
 
-  
+
+  function handleGoToLogin(){
+    setView('login')
+  } 
+
+  function handleGoToHome(token){
+    setToken(token)
+    setView('home')
+  }
 
     return (
       <>
-        {this.state.view === "landing" && (
+        {view === "landing" && (
           <Landing
-            onRegister={this.handleGoToRegister}
-            onLogin={this.handleGoToLogin}
+            onRegister={handleGoToRegister}
+            onLogin={handleGoToLogin}
           />
         )}
-        {this.state.view === "register" && (
+        {view === "register" && (
           <Register
-            onLogin={this.handleGoToLogin}
+            onLogin={handleGoToLogin}
           />
         )}
-        {this.state.view === "login" && (
+        {view === "login" && (
           <Login
-            goToHome={this.handleGoToHome}
-            onRegister={this.handleGoToRegister}
+            goToHome={handleGoToHome}
+            onRegister={handleGoToRegister}
           />
         )}
-        {this.state.view === "home" && <Home token={this.state.token}/>}
+        {view === "home" && <Home token={eltoken}/>}
       </>
     );
   }

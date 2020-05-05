@@ -1,12 +1,19 @@
-function UsersResults({ foundUsers, user, handleFollow }) {
+function UsersResults({ foundUsers, handleFollow }) {
+    console.log(foundUsers)
     return <section className="results">
         {
             foundUsers.length ?
-                <ul>{foundUsers.map(({ name, surname, email,  }) => 
-                <li>{`${name} ${surname} (${email})`} <button onClick={(event) => {
-                    event.preventDefault()
-                    handleFollow(email)
-                }}>{user.followers.includes(email)? 'Unfollow' : 'Follow'}</button> </li>)}</ul>
+                <ul>{foundUsers.map(({ id, name, surname, email, following }) =>
+                    <li>{`${name} ${surname} (${email})`} {
+                        typeof following !== 'undefined' ?
+                            <button onClick={() => handleFollow(id)}>
+                                {following ? 'Unfollow' : 'Follow'}
+                            </button>
+                            :
+                            undefined
+                    }
+                    </li>
+                )}</ul>
                 : <Feedback message="sorry, no results :(" level="warning" />
         }
     </section>

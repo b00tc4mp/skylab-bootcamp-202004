@@ -17,11 +17,11 @@ function toggleFollowUser(token, followEmail, callback) {
     if (error) return callback(error);
 
     if (status === 200) {
-      let {followers = []} = JSON.parse(response);
+      let {following = []} = JSON.parse(response);
 
-      if (followers.includes(followEmail)){
-        followers = followers.filter(email => followEmail !== email )
-      } else followers.push(followEmail)
+      if (following.includes(followEmail)){
+        following = following.filter(email => followEmail !== email )
+      } else following.push(followEmail)
 
       // if (!user.followers) {
       //   user.followers = [followEmail];
@@ -30,7 +30,7 @@ function toggleFollowUser(token, followEmail, callback) {
       //   if (index === -1) {user.followers.push(followEmail)}else user.followers.splice(index, 1);
       // }
 
-      body = JSON.stringify({ followers });
+      body = JSON.stringify({ following });
       headers = {
         Authorization: `Bearer ${token}`,
         "Content-type": "application/json",
