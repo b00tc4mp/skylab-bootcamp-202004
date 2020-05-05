@@ -76,7 +76,7 @@ function Contact() {
     return <h1>Contact</h1>
 }
 
-const { useState, useEffect } = React
+const { useState } = React
 
 function App () {
 
