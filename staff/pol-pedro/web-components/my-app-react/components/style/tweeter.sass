@@ -12,9 +12,9 @@
     &__header
         display: flex
         height: 5vh
+        width: 100%
         padding-top: 0.5rem
         padding-bottom: 0.5rem
-        justify-content: center
         background-color: rgba(251, 167, 180, 1)
 
         .fas
@@ -24,7 +24,15 @@
             color: white
 
         .fab
-            margin-right: auto
+            margin-right: 40.5vw 
+
+        .fa-spinner
+            position: absolute
+            left: 85vw
+            margin-right: 0
+            padding: 0
+            color: white
+            animation: spin 1.5s linear infinite
     &__menu
         top: 8vh
         position: absolute
@@ -45,20 +53,21 @@
                 span
                     margin-left: 0.8rem
                     text-align: center
-                    
+            
             h3
                 padding: 0.5rem
                 border-bottom: 0.2rem solid rgba(49, 45, 54, 0)
+            &--onAll
+                color: white 
+            &--onUser
+                color: white 
             h3:hover
                 border-bottom: 0.2rem solid white
                 color: white
+            
     &__home
         justify-content: center
 
-        i
-            margin-left: 48%
-            color: white
-            animation: spin 1.5s linear infinite
         .fa-comment-medical
             top: 90vh
             color: black
@@ -153,6 +162,8 @@
                     background-color: rgba(172, 225, 251, 1)
                     border-radius: 5px
                     padding: 0 0.3rem
+                .following--alert:hover
+                    background-color: red
         
 
 

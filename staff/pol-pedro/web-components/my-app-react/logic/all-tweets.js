@@ -21,7 +21,7 @@ function allTweets(token, callback){
                 }
             }
 
-            Alltweets.sort((a, b) => b.date-a.date)
+            Alltweets.sort((a, b) =>{return b.date - a.date})
             return callback(undefined, Alltweets)
         }else{
             const {error} = JSON.parse(body)

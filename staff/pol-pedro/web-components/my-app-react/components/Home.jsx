@@ -34,6 +34,28 @@ class Home extends Component{ //se bugea el buscador con el spiner cuando se int
             this.props.onUsers(undefined, '') //to cleand the search when we have an error
         }
     }
+
+    handelFollow = (id) => {
+        this.props.newFollower(id)
+        this.setState({newFollow: true})
+    }
+
+    handelUnFollow = (id => {
+        this.props.unFollow(id)
+        this.setState({newFollow: false})
+
+    })
+
+    handelFollowed = (id) => {
+        if(this.props.userInfo.following){
+            for(var i in this.props.userInfo.following){
+                if(this.props.userInfo.following[i] === id){
+                    return true
+                }
+            }
+        }
+        return false
+    }
     //onInput = {this.handelSubmit}
     render = () =>{
         return <section class="home">
@@ -46,7 +68,7 @@ class Home extends Component{ //se bugea el buscador con el spiner cuando se int
             {this.props.spiner && <i className={this.props.spiner}></i>}
             {this.state.error && <Feedback message={this.state.error} level="error" />}
         <ul>
-            {this.props.results && <ResultsUser results = {this.props.results}/>}
+            {this.props.results && <ResultsUser results = {this.props.results} onFollow = {this.handelFollow} ifFollowed = {this.handelFollowed} onUnFollow = {this.handelUnFollow}/>}
         </ul>
         </section>
         </section>
