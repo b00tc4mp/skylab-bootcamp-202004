@@ -6,7 +6,7 @@ function Tweet({tweet}){
         <section className = 'tweet'>
             <h3>Your latest Tweet </h3>
             <ul>
-                <li>{`${message} ${date.toString().slice(4,21)}`}</li>
+                <li>{`${message} ${date.toString().slice(0,10) + ' ' + date.toString().slice(11,16)}`}</li>
             </ul> 
         </section>
     </>

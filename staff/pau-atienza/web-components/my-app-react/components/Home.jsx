@@ -11,8 +11,9 @@ function Home(props){
         retrieveUser(props.token, (error, user) => {
             if(error) return props.setError(error.message)
             setUser(user)
+            setLatestTweet(user.tweets[user.tweets.length-1])
         })
-      }
+      }, []
     )
 
     const handleSearchUsers = (event)=>{
@@ -47,10 +48,10 @@ function Home(props){
         tweet(props.token, text, user.tweets, (error, latestTweet) => {
             if(error) return props.setError(error.message)
 
-            setLatestTweet(latestTweet)
             retrieveUser(props.token, (error, user) => {
                 if(error) return props.setError(error.message)
                 setUser(user)
+                setLatestTweet(user.tweets[user.tweets.length-1])
             })
         })
     }

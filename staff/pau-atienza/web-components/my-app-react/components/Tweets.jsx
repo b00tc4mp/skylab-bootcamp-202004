@@ -9,7 +9,7 @@ function Tweets(props){
         if(error) throw error
         setFollowersTweets(followersTweets)
       })
-    }, []
+    }, [props.tweet]
   )
 
   const printTweets = () => {
