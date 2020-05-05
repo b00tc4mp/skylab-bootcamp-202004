@@ -36,7 +36,7 @@ const { Component } = React
 //     }
 // }
 
-const { useState } = React
+const { useState, useEffect } = React
 
 function App() {
     const [view, setView] = useState('landing')

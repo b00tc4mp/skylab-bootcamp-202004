@@ -1,5 +1,5 @@
 function UserResults ({results, handleToggle}) {
-    let list = results.map(({name, surname, email, following, id}) => <li>{name} {surname} ({email}) <button onClick={event => {
+    let list = results.map(({name, surname, email, following, id}) => <li key={id}>{name} {surname} ({email}) <button onClick={event => {
         event.preventDefault()
 
         handleToggle(id)
