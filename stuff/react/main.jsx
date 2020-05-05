@@ -77,37 +77,6 @@ function Contact() {
     return <h1>Contact</h1>
 }
 
-<<<<<<< HEAD
-class App extends Component {
-    debugger
-    constructor() {
-        super()
-
-        this.state = {
-            view: 'home'
-        }
-        console.log(1);
-        //this.handleChangeView = this.handleChangeView.bind(this)
-    }
-
-    // handleChangeView(view) {
-    //     this.setState({ view })
-    // }
-
-    handleChangeView = view => {
-        return this.setState({ view })
-    }
-   
-    render() {
-        return <>
-            console.log(2);
-            <Header view={this.state.view} onChangeView={this.handleChangeView} />
-            {this.state.view === 'home' && <Home />}
-            {this.state.view === 'about' && <About />}
-            {this.state.view === 'contact' && <Contact />}
-        </>
-    }
-=======
 const { useState } = React
 
 function App() {
@@ -126,6 +95,5 @@ function App() {
         {view === 'about' && <About />}
         {view === 'contact' && <Contact />}
     </>
->>>>>>> develop
 }
 ReactDOM.render(<App />, document.getElementById('root'))

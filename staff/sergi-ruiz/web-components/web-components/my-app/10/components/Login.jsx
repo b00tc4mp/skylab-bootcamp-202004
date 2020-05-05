@@ -1,11 +1,12 @@
-class Login extends Component {
-    constructor(props) {
-        super(props)
+const { useState, Component } = React
 
-        this.state = { error: '' }
-    }
+function Login({onGoToRegister}) {
 
-    handleSubmit = event => {
+    const [error, setError] = useState()
+    const [token, setToken] = useState()
+    
+    
+    const handleSubmit = event => {
         event.preventDefault()
 
         let { email, password } = event.target
@@ -20,27 +21,73 @@ class Login extends Component {
                 this.props.onLogin(token)
             })
         } catch ({ message }) {
-            this.setState({ error: message })
+            setError(message)
         }
     }
 
-    handeGoToRegister = event => {
+    const handleGoToRegister = event => {
         event.preventDefault()
 
         this.props.onGoToRegister()
     }
 
-    render() {
         return <section className="login">
             <h1>Login</h1>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <input type="email" name="email" placeholder="e-mail" required />
                 <input type="password" name="password" placeholder="password" required minLength="8" />
                 <button>Submit</button>
-                or <a href="" onClick={this.handeGoToRegister}>Register</a>
+                or <a href="" onClick={handleGoToRegister}>Register</a>
 
-                {this.state.error && <Feedback message={this.state.error} level="error" />}
+                {error && <Feedback message={error} level="error" />}
             </form>
         </section>
-    }
+    
 }
+
+// const { useState } = React
+
+// function Register({ onRegister, onGoToLogin }) {
+//     const [error, setError] = useState()
+
+//     const handleSubmit = event => {
+//         event.preventDefault()
+
+//         let { name, surname, email, password } = event.target
+
+//         name = name.value
+//         surname = surname.value
+//         email = email.value
+//         password = password.value
+
+//         try {
+//             registerUser(name, surname, email, password, error => {
+//                 if (error) return setError(error.message)
+
+//                 onRegister()
+//             })
+//         } catch ({ message }) {
+//             setError(message)
+//         }
+//     }
+
+//     const handleGoToLogin = event => {
+//         event.preventDefault()
+
+//         onGoToLogin()
+//     }
+
+//     return <section className="register">
+//         <h1>Register</h1>
+//         <form onSubmit={handleSubmit}>
+//             <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}" />
+//             <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}" />
+//             <input type="email" name="email" placeholder="e-mail" required />
+//             <input type="password" name="password" placeholder="password" required minLength="8" />
+//             <button>Submit</button>
+//                 or <a href="" onClick={handleGoToLogin}>Login</a>
+
+//             {error && <Feedback message={error} level="error" />}
+//         </form>
+//     </section>
+// }
