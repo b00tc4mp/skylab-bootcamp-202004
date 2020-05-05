@@ -1,17 +1,16 @@
-function Results({ users }) {
+function Results({ users, goToFollow }) {
+
+    handleGotoToogle = id => {
+        toggleFollowUser(token, id, callback)
+
+        goToFollow()
+    }
+
     return <section className="results">
-        {/*{!!users.length && <ul>{users.map(({ name, surname, email }) => <li>{`${name} ${surname} (${email})`}</li>)}</ul>}
-        {!users.length && <Feedback message="sorry, no results :(" level="warning" />}*/}
-
-        {/*(() => {
-            if (users.length)
-                return <ul>{users.map(({ name, surname, email }) => <li>{`${name} ${surname} (${email})`}</li>)}</ul>
-            else return <Feedback message="sorry, no results :(" level="warning" />
-        })()*/}
-
         {
             users.length ?
-                <ul>{users.map(({ name, surname, email }) => <li>{`${name} ${surname} (${email})`}</li>)}</ul>
+                <ul>{users.map(({ name, surname, email, id}) => <li>{`${name} ${surname} (${email})`}
+                <button onClick={handleGotoToogle(id)}></button></li>)}</ul>
                 : <Feedback message="sorry, no results :(" level="warning" />
         }
     </section>
