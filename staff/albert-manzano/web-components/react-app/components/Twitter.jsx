@@ -17,9 +17,9 @@ class Twitter extends Component {
           
             this.props.onTweets(tweets)
         })
-        retrieveFollowing(this.props.token,(error,following)=>{
-            this.props.onFollowing(following)
-        })
+        // retrieveFollowing(this.props.token,(error,following)=>{
+        //     this.props.onFollowing(following)
+        // })
     }
 
     handleSubmit = (event) => {
@@ -57,18 +57,6 @@ class Twitter extends Component {
         this.setState({ view: 'tweet' })
     }
 
-    toggle=(token,id)=>{
-        toggleFollowUser(token,id,(error,boolean))
-        {this.state.success && <Feedback message={this.state.success} level="undefined" />}
-        {this.state.error && <Feedback message={this.state.error} level="error" />}
-        let toggle
-        if((this.props.twitterFollowing).includes(id)){
-            toggle= "unfollow"
-        }else{
-            toggle= "follow"
-        }
-        return toggle
-    }
 
     render() {
         return <section className="Twitter">

@@ -1,6 +1,6 @@
 const { useState, useEffect } = React
 
-function Home ({onLogout,token}) {
+function Home ({onLogout, token}) {
 
     const[view,setView] = useState ('home')
     const[googleResults, setGoogleResult] = useState ()

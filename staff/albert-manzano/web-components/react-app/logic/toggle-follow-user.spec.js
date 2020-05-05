@@ -1,58 +1,121 @@
-describe('toggleFollowUser', () => {
-    let email, following
+describe.only('toggleFollowUser', () => {
 
-    describe('when user already exist', () => {
-        let name, surname, password, token
+    let name, surname, password, email, followingId,following
+    let _name, _surname, _password, _email
 
-        beforeEach(() => {
-            name = names.random()
-            surname = surnames.random()
-            email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('')}@mail.com`
-            password = passwords.random()
+    beforeEach(() => {
+        name = names.random()
+        surname = surnames.random()
+        email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`
+        password = passwords.random()
 
-        })
+        _name = names.random()
+        _surname = surnames.random()
+        _email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`
+        _password = passwords.random()
+    })
 
-        // describe('when following already exists', () => {
-            beforeEach((done) => {
-                call('POST', `'https://skylabcoders.herokuapp.com/v2/users'`,
-                    `{"name":"${name}","surname":"${surname}","email":"${email}","password":"${password}"}`,
-                     {"Content-type": 'application/json' }, (error, status) => {
-                        if (error) return done(new Error(error.message))
-                        if (status === 201) { }
-                        call('POST', `'https://skylabcoders.herokuapp.com/v2/users/auth'`,
-                            `{"email":"${email}","password":"${password}"}`,
+    describe('should succed on adding follower', () => {
+        beforeEach(done => {
+
+            call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                `{"name":"${name}","surname":"${surname}","username":"${email}","password":"${password}"}`,
+                { "Content-type": 'application/json' }, (error, status, body) => {
+                    if (error) return done(new Error(error.message))
+
+                    if (status === 201) {
+
+                        call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
+                            `{"username":"${email}","password":"${password}"}`,
                             { "Content-type": 'application/json' }, (error, status, body) => {
                                 if (error) return done(new Error(error.message))
-                                if (status === 200) {
-                                    const { token } = JSON.parse(body);
 
-                                    call('GET', `https://skylabcoders.herokuapp.com/api/v2/users`,
+                                if (status === 200) {
+                                    let { token } = JSON.parse(body);
+
+                                    call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all',
                                         undefined,
                                         { 'Authorization': `Bearer ${token}` },
                                         (error, status, body) => {
                                             if (error) return done(error)
                                             if (status === 200) {
-                                                const { id } = JSON.parse(body)
-                                                id = following
 
-                                                expect(id).to.exist
-                                                expect(id).to.be.an(String)
-                                                expect(token).to.exist
-                                                expect(token).to.be.an(String)
+                                                let users = JSON.parse(body)
 
-                                                done()
+                                                let { id } = users.find(({ username }) => {
+                                                    return (username === email)
+                                                })
+                                                followingId=id
 
+                                                call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                                                    `{"name":"${_name}","surname":"${_surname}","username":"${_email}","password":"${_password}"}`,
+                                                    { "Content-type": 'application/json' }, (error, status) => {
+                                                        if (error) return done(new Error(error.message))
+
+                                                        if (status === 201) {
+
+                                                            call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
+                                                                `{"username":"${_email}","password":"${_password}"}`,
+                                                                { "Content-type": 'application/json' }, (error, status, body) => {
+                                                                    if (error) return done(new Error(error.message))
+                                                                    //falta
+                                                                    if (status === 200) {
+
+                                                                        let {token} = JSON.parse(body);
+                                                                        const _token=token
+                                                                        call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                                                                            undefined,
+                                                                            { 'Authorization': `Bearer ${token}` }, (error, status, body) => {
+                                                                                if (error) return done(new Error(error.message))
+                                                                                if (status === 200) {
+
+                                                                                    let { _following } = JSON.parse(body)
+                                                                                    following = _following
+                                                                                    done()
+                                                                                }
+                                                                            })
+                                                                    }
+                                                                })
+                                                        }
+                                                    }
+                                                )
                                             }
                                         })
                                 }
                             })
+                    }
+                })
+        })
+        it('should succed on adding following', done => {
+            toggleFollowUser(token, id, (error, toggle) => {
+                if (error) return done(new Error(error.message))
+                else {
+                    expect(error).to.be.undefined
+                    expect(token).to.exist
+                    expect(_token).to.exist
+                    expect(id).to.exist
+                    expect(token).to.be.an(String)
+                    expect(_token).to.be.an(String)
+                    expect(id).to.be.an(String)
+                    expect(toggle).to.exist
+                    expect(toggle).to.be.a(Function)
+                    expect(following).to.exist
+                    expect(following).to.be(String)
+                    expect(following).to.equal(followingId)
 
-                    })
+                    done()
+                }
             })
-           
-        // })
+        })
+    
+
+
     })
+
+
+
 })
+
 
             // Todo 2 users
             // registerUser(em.... etc)
@@ -123,5 +186,3 @@ describe('toggleFollowUser', () => {
 
             // Todo 2 users
             // 1 registrar y auth
-            // registrar y pasar el id al primero 
-

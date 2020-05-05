@@ -1,30 +1,25 @@
-class Tweet extends Component{
-    constructor(){
-        super()
+const {useState,Component} = React
 
-        this.state={
-            error: undefined,
-            success: undefined
-        }
-    }
+function Tweet ({token}) {
+    const [error,setError] = useState()
+    const [success,setSuccess] = useState()    
 
-    handleSubmit(event){
+    const handleSubmit= (event)=> {
         event.preventDefault()
- 
-        let message = event.target.message.value
-        tweet(this.prop.token,message,(error,success)=>{
-            if(error) setState ="error"
-            else setState="succes"
+        
+        let message = event.target.tweet.value
+        tweet(token , message, error => {
+            if (error) setError( "error")
+            else setSuccess ( "succes")
         })
     }
-    render(){
-    return <section className="tweet">
-         <form onSubmit={this.handleSubmit}>
-        <input type="text" name="tweet"/>
-        <button>Twitear</button>
-            {this.state.success && <Feedback message={this.state.success} level="undefined" />}
-            {this.state.error && <Feedback message={this.state.error} level="error" />}
-        </form>
-    </section>
-    }
+    
+        return <section className="tweet">
+            <form onSubmit={handleSubmit}>
+                <input type="text" name="tweet" />
+                <button>Twittear</button>
+                {success && <Feedback message={success} level="undefined" />}
+                {error && <Feedback message={error} level="error" />}
+            </form>
+        </section>
 }

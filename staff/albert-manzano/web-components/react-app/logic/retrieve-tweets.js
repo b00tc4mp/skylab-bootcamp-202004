@@ -9,7 +9,8 @@ function retrieveTweets(token,callback) {
             const {tweets, following} =JSON.parse(body);
             
             tweets && tweets.forEach((tweet)=>{
-                _tweets.push({tweet})
+                const {message,date, username}=tweet
+                _tweets.push({message,date, username})
             })
 
             let counter=0
@@ -23,20 +24,20 @@ function retrieveTweets(token,callback) {
                         const {tweets} =JSON.parse(body);
                         
                         tweets && tweets.forEach((tweet)=>{
-                            _tweets.push({tweet})
+                            const {message,date, username}=tweet
+                            _tweets.push({message,date, username})
                         })
                         
                         if(counter === following.length) callback(undefined, _tweets)
                     }else {
                      const { error } = JSON.parse(body)
-                     debugger
                     callback(new Error(error))
                     }
                 })      
             })
         }
     })
-    const tweets= _tweets.flat()
+    const tweets = _tweets
     return (tweets)
 }
 

@@ -1,26 +1,32 @@
-class HolaNews extends Component {
-    componentDidMount() {
-        !this.props.news && retrieveHolaNews((error, news) => {
-            if (error) throw error // TODO handle this error!
+const { useState, useEffect } = React
 
-            this.props.onNews(news)
-        })
-    }
+function HolaNews({ onNews, news }) {
+    useEffect(() => {
+        try {
+            !news && retrieveHolaNews((error, news) => {
+                if (error) throw error
 
-    render() {
-        return <section className="hola-news">
-            <h2>Hola News</h2>
+                onNews(news)
+            })
+        } catch (error) {
+            throw error
+        }
+    }, [])
 
-            {this.props.news && <ul>
-                    {this.props.news.map(({ image, link, text }) => 
-                        <li>
-                            <a href={link} target="_blank">
-                                <img src={image} />
-                                <p>{text}</p>
-                            </a>
-                        </li>
-                    )}
-                </ul>}
-        </section>
-    }
+
+    return <section className="hola-news">
+        <h2>Hola News</h2>
+
+        {news && <ul>
+            {news.map(({ image, link, text }) =>
+                <li>
+                    <a href={link} target="_blank">
+                        <img src={image} />
+                        <p>{text}</p>
+                    </a>
+                </li>
+            )}
+        </ul>}
+    </section>
+
 }

@@ -1,4 +1,4 @@
-function Results({ users, token, onToggleFollow }) {
+function UserResults({ users, token, onToggleFollow }) {
     function handleToggleFollow(followingId) {
         try {
             toggleFollowUser(token, followingId, error => {
