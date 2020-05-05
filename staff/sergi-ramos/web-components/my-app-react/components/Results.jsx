@@ -1,17 +1,13 @@
-const { Component } = React
+const { useState } = React
 
-class Results extends Component {
-    constructor(props) {
-        super(props)
-    }
+function Results(props) {
 
-    render() {
         return <section className="results">
-            {this.props.user.length ?
-                <ul>{this.props.user.map(({ name, surname, username, following }) =>
+            {props.user.length ?
+                <ul>{props.user.map(({ name, surname, username, following }) =>
                     <li>{`${name} ${surname} (${username})`} {
                         typeof following !== 'undefined' ?
-                            <button className="results__button" onClick={() => this.props.onSubmitFollowing(username)}>
+                            <button className="results__button" onClick={() => props.onSubmitFollowing(username)}>
                                 {following ? 'unfollow' : 'follow'}
 
                             </button>
@@ -22,5 +18,5 @@ class Results extends Component {
                 )}</ul>
                 : <Feedback message="sorry, no results :(" level="warning" />}
         </section>
-    }
+    
 }

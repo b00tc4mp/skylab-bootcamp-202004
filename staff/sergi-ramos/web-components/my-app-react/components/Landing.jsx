@@ -3,10 +3,10 @@ function Landing({ onRegister, onLogin}) {
         <h1>Wellcome to my App</h1>
         <a href="" onClick={event => {
             event.preventDefault()
-            onRegister()
+            onRegister('register')
         }}>Register </a>or<a href="" onClick={event =>{
             event.preventDefault()
-            onLogin()
+            onLogin('login')
         }}>Login</a>
     </section>
 }

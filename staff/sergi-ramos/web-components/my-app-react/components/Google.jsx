@@ -1,26 +1,21 @@
 const { Component } = React
 
-class Google extends Component {
+function Google(props) {
 
-    constructor(props) {
-        super(props)
+    const [googleFind, setGoogleFind] = useState(undefined)
 
-        this.state = { googleFind: undefined }
-    }
-
-    handleGoogle = (query) => {
+    function handleGoogle(query) {
 
         searchGoogle(query, (error, results) => {
-            this.setState({ googleFind: results })
+            setGoogleFind(results)
         })
     }
 
-    render() {
-        return   <section className="google">
-                    <h2>Google</h2>
-                    <Search onSubmit={this.handleGoogle}/>
-                    {this.state.googleFind && <GoogleResults googleFind={this.state.googleFind} />}
-                </section >
-    }
+    return <section className="google">
+        <h2>Google</h2>
+        <Search onSubmit={handleGoogle} />
+        {googleFind && <GoogleResults googleFind={googleFind} />}
+    </section >
+
 
 }

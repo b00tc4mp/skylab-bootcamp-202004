@@ -1,6 +1,7 @@
 function Tweets({ listTweet }) {
 
     return <section className="tweets">
+        {listTweet.length ?
         <ul>{listTweet.map(({ name, text, date }) => {
             return <>
                 <div className="tweet">
@@ -10,6 +11,7 @@ function Tweets({ listTweet }) {
                 </div>
             </>
         })}</ul>
+        : <Feedback message="you don't have tweets yet :(" level="warning"/>}
     </section>
 }
 

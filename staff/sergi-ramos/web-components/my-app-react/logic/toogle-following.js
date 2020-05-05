@@ -1,8 +1,9 @@
-function toggleFollowUser(user,emailFollowing, token, callback) {
+function toggleFollowUser(emailFollowing, token, callback) {
 
 
    // Email.validate(emailFollowing)
     let userID;
+    //Comprobar que los datos son creibles
 
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined, { Authorization: `Bearer ${token}` },
         (error, status, body) => {
@@ -37,7 +38,7 @@ function toggleFollowUser(user,emailFollowing, token, callback) {
                                     if (error) return callback(error)
 
                                     if (status === 204) {
-                                        callback(undefined, followingRepeat, following)
+                                        callback(undefined)
                                     } else {
                                         const { error } = JSON.parse(body)
                                         callback(new Error(error))

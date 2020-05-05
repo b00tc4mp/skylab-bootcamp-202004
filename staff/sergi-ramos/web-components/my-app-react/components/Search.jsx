@@ -9,9 +9,6 @@ function Search({ onSubmit }) {
       
             onSubmit(query)    
     }
-
-
-
     return <section className="search">
         <form onSubmit={handleSubmitUsers} >
             <input type="text" name="query" placeholder="search"></input>

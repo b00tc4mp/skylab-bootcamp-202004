@@ -1,59 +1,53 @@
-const { Component } = React
+const { useState } = React
 
-class App extends Component {
+function App() {
 
-    constructor() {
-        super()
-        this.state = {
-            view: 'landing',
-            user: undefined,
-            userEmail: undefined,
-            token: undefined,
-            following: undefined
-        }
-    }
-    handleGoToRegister = () => this.setState({ view: 'register' })
-    handleGoToLogin = () => this.setState({ view: 'login' })
-    handleLogout = () => this.setState({
-        view: 'landing',
-        user: undefined
-    })
-    handleLogin = (email, password) => {
+    const [view, setView] = useState('landing')
+    const [user, setUser] = useState(undefined)
+    const [name, setName] = useState(undefined)
+    const [surname, setSurname] = useState(undefined)
+    const [userEmail, setUserEmail] = useState(undefined)
+    const [token, setToken] = useState(undefined)
+    const [following, setFollowing] = useState(undefined)
+
+
+    function handleGoToRegisterOrLogin(view) { setView(view) }
+
+    function handleLogout(view) { setView(view) }
+
+    function handleLogin(email, password) {
         loginUser(email, password, (error, token) => {
             if (error) console.log(error) // TODO feedback
             else {
                 retrieveUser(token, (error, { name, surname, email, following }) => {
                     if (error) console.log(error)
                     else {
-                        this.setState({
-                            view: 'home',
-                            token: token,
-                            name: name,
-                            surname: surname,
-                            userEmail: email,
-                            following: following
-
-                        })
+                        setView('home')
+                        setToken(token)
+                        setName(name)
+                        setSurname(surname)
+                        setUserEmail(email)
+                        setFollowing(following)
                     }
                 })
             }
         })
     }
-    handleRegister = (name, surname, username, password) => {
+
+
+    function handleRegister(name, surname, username, password) {
         registerUser(name, surname, username, password, (error) => {
             if (error) { console.log(error) }
             else {
-                this.setState({ view: 'login' })
+                setView('login')
             }
         })
     }
-    render() {
+    return <>
+        {view === 'landing' && <Landing onRegister={handleGoToRegisterOrLogin} onLogin={handleGoToRegisterOrLogin} />}
+        {view === 'register' && <Register onLogin={handleGoToRegisterOrLogin} onSubmitRegister={handleRegister} />}
+        {view === 'login' && <Login onRegister={handleGoToRegisterOrLogin} onSubmitLogin={handleLogin} />}
+        {view === 'home' && <Home token={token} name={name} surname={surname} email={userEmail} logOut={handleLogout} following={following} />}
+    </>
 
-        return <>
-            {this.state.view === 'landing' && <Landing onRegister={this.handleGoToRegister} onLogin={this.handleGoToLogin} />}
-            {this.state.view === 'register' && <Register onLogin={this.handleGoToLogin} onSubmitRegister={this.handleRegister} />}
-            {this.state.view === 'login' && <Login onRegister={this.handleGoToRegister} onSubmitLogin={this.handleLogin} />}
-            {this.state.view === 'home' && <Home token={this.state.token} name={this.state.name} surname={this.state.surname} email={this.state.userEmail} logOut={this.handleLogout} following={this.state.following} />}
-        </>
-    }
 }

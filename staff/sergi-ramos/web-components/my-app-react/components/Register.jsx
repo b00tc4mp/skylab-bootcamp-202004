@@ -1,11 +1,8 @@
-const { Component } = React
+const { useState } = React
 
-class Register extends Component {
-
-    constructor(props) {
-        super(props)
-    }
-    handleSubmitRegister = event => {
+function Register(props) {
+  
+    function handleSubmitRegister(event) {
         event.preventDefault()
         let { name, surname, email, password } = event.target
 
@@ -13,16 +10,13 @@ class Register extends Component {
         surname = surname.value
         email = email.value
         password = password.value
-        this.props.onSubmitRegister(name,surname, email, password)
+        props.onSubmitRegister(name,surname, email, password)
     }
-
-
-
-    render() {
+   
         return <section className="register">
             <h1>Register</h1>
 
-            <form onSubmit={this.handleSubmitRegister} >
+            <form onSubmit={handleSubmitRegister} >
                 <input type="text" name="name" placeholder="Name*"></input>
                 <input type="text" name="surname" placeholder="Surname*"></input>
                 <input type="email" name="email" placeholder="E-mail*"></input>
@@ -30,11 +24,11 @@ class Register extends Component {
                 <button>Submit</button>
         to <a href="" onClick={event => {
                     event.preventDefault()
-                    this.props.onLogin()
+                    props.onLogin('login')
                 }}> Login</a>
             </form>
         </section>
-    }
+    
 }
 
 

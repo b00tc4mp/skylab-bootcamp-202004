@@ -29,9 +29,11 @@ function retrieveTweets(email, token, callback) {
                             return user.id === following[i]
                         })
                         const [{ name, tweets }] = followingRetrieve
-                        for (let i = 0; i < tweets.length; i++) {
-                            const { text, date } = tweets[i]
-                            tweetsAll.push({ name, text, date })
+                        if (tweets) {
+                            for (let i = 0; i < tweets.length; i++) {
+                                const { text, date } = tweets[i]
+                                tweetsAll.push({ name, text, date })
+                            }
                         }
                     }
                 }

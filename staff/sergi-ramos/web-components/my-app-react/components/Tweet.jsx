@@ -4,7 +4,6 @@ function Tweet({onSubmitTweet}) {
       event.preventDefault()
         const tweet = event.target.tweet.value
 
-
         onSubmitTweet(tweet)
     }
 

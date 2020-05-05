@@ -1,64 +1,54 @@
-const { Component } = React
+const { useState } = React
 
-class Home extends Component {
-    constructor(props) {
-        super(props)
+function Home(props) {
 
-        this.state = {
-            currentLink: 'user',
-            tweet: undefined
-        }
+    const [currentLink, setCurrentLink] = useState('user')
+    const [tweet, setTweet] = useState(undefined)
 
-    }
-    handleOnGoogle = (event) => {
+    function handleOnGoogle(event) {
         event.preventDefault()
 
-        this.setState(
-            { currentLink: 'google' }
-        )
+        setCurrentLink('google')   
     }
-    handleOnUsers = (event) => {
+
+    function handleOnUsers(event) {
         event.preventDefault()
 
-        this.setState(
-            { currentLink: 'user' }
-        )
+        setCurrentLink('user')
     }
-    handleRetriveTweets = () => {
-        const tweets = retrieveTweets(this.props.email, this.props.token, (error, tweets) => {
+
+    function handleRetriveTweets()  {
+        retrieveTweets(props.email, props.token, (error, tweets) => {
             if (error) console.log(error) //TODDO feedback
             else {
-                this.setState(
-                    {
-                        currentLink: 'twitter',
-                        tweet: tweets
-                    })
+                setCurrentLink('twitter')
+                setTweet(tweets)                    
             }
         })
     }
 
 
-    handleonTwitter = (event) => {
+    function handleonTwitter(event) {
         event.preventDefault()
-        this.handleRetriveTweets()
+        handleRetriveTweets()
     }
 
-    render() {
+ 
         return <section className="home">
-            <h1>Wellcome {`${this.props.name} ${this.props.surname}`}</h1>
-            <button onClick={this.props.logOut}>Logout</button>
-            <a onClick={this.handleOnUsers} className="home__link" href="">Users</a>
-            <a onClick={this.handleOnGoogle} className="home__link" href="">Google</a>
-            <a onClick={this.handleonTwitter} className="home__link" href="">Twitter</a>
+            <h1>Wellcome {`${props.name} ${props.surname}`}</h1>
+            <button onClick={() => props.logOut('landing')}>Logout</button>
+            <a onClick={handleOnUsers} className="home__link" href="">Users</a>
+            <a onClick={handleOnGoogle} className="home__link" href="">Google</a>
+            <a onClick={handleonTwitter} className="home__link" href="">Twitter</a>
             <a className="home__link" href="">Ecosia</a>
             <a className="home__link" href="">Sport</a>
 
-            {this.state.currentLink === 'user' && <Users token={this.props.token} following={this.props.following}/>}
-            {this.state.currentLink === 'google' && <Google />}
-            {this.state.currentLink === 'ecosia' && <Ecosia />}
-            {this.state.currentLink === 'twitter' && <Twitter  retrieveTweets={this.handleRetriveTweets} resultsTweet={this.state.tweet} token={this.props.token} name={this.props.name} />}
+            {currentLink === 'user' && <Users token={props.token} following={props.following} />}
+            {currentLink === 'google' && <Google />}
+            {currentLink === 'ecosia' && <Ecosia />}
+            {currentLink === 'twitter' && <Twitter retrieveTweets={handleRetriveTweets} resultsTweet={tweet} token={props.token} name={props.name} />}
             {/* {this.state.currentLink === 'sport' && <Sport />} */}
         </section>
-    }
+   
 }
 

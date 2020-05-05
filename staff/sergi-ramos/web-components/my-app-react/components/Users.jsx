@@ -1,41 +1,34 @@
-class Users extends Component {
+const { useState } = React
+function Users(props) {
 
-    constructor() {
-        super()
+    const [users, setUsers] = useState(undefined)
+    const [query, setQuery] = useState(undefined)
 
-        this.state = { users: undefined,
-            query: undefined 
-        }
-    }
-
-
-    handleSubmit = (query) => {
+    function handleSubmit(query) {
         console.log(query)
 
-        searchUsers(query, this.props.token,this.props.following, (error, users) => {
-            if (error) console.log(error) //TODO feedaback
-            else this.setState({ users, query })
+        searchUsers(query, props.token, props.following, (error, users) => {
+            if (error) {console.log(error)} //TODO feedaback
+            else {
+                setUsers(users)
+                setQuery(query)
+            }
         })
     }
-    handleOnFollowing = (username) => {
-        toggleFollowUser(this.state.users,username, this.props.token, (error, novale, isFollowed ) => { //TODO novale var
+    function handleOnFollowing(username) {
+        toggleFollowUser( username, props.token, (error) => { //TODO novale var
             if (error) console.log(error) //TODO feedback
-           else this.handleSubmit(this.state.query)
-           this.setState({isFollowed})
+            else handleSubmit(query)
+
         })
     }
-  
-
-
-    render() {
         return <section className="users">
             <h2>Users</h2>
-            <Search onSubmit={this.handleSubmit} />
-            {this.state.users && <Results user={this.state.users} onSubmitFollowing={this.handleOnFollowing} onSubmitFollowingButton={this.handleOnFollowButton} />}
+            <Search onSubmit={handleSubmit} />
+            {users && <Results user={users} onSubmitFollowing={handleOnFollowing}  />}
 
         </section>
 
-    }
 }
 
 
