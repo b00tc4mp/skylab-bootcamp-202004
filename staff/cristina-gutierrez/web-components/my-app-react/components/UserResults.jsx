@@ -13,7 +13,7 @@ function Results({ users }) {
         {
             users.length ?
                 <ul>{users.map(({ id, name, surname, email }) =>
-                    <li key={email}>{`${name} ${surname} (${email})`} {
+                    <li key={id}>{`${name} ${surname} (${email})`} {
                         <button onClick={() =>
                         handleToggleFollow(id)}>{following ? "Unfollow" : "Follow"}</button>
                     }</li>)}
