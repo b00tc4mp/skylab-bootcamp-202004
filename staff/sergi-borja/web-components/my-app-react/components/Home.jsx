@@ -16,6 +16,7 @@ class Home extends Component {
 
     componentDidMount() {
         try {
+            debugger
             retrieveUser(this.props.token, (error, user) => {
                 if (error) throw error
 
