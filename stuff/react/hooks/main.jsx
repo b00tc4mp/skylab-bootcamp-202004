@@ -2,10 +2,12 @@ const names = ['Mary', 'Anna', 'John', 'Max', 'James']
 
 const colors = ['Red', 'Green', 'Blue', 'Yellow', 'Orange']
 
+const { useState, useEffect } = React
+
 function List(props) {
     const { items } = props
 
-    const _items = items.map(item => <li>{item}</li>)
+    const _items = items.map(item => <li key={item}>{item}</li>)
 
     const list = <ul>{_items}</ul>
 
@@ -27,13 +29,23 @@ function PeopleAndColors(props) {
 }
 
 function Header({ view, onChangeView }) {
+    const [clicked, setClicked] = useState(0)
+
+    useEffect(() => {
+        console.log('view changed', view)
+    }, [view])
+
+    clicked && console.log('clicked on', clicked)
+
     return <header>
+        <h1>Header</h1>
         <nav>
             <ul>
                 <li>
                     <a className={`header-link ${view === 'home' ? 'header-link--active' : ''}`} href="" onClick={event => {
                         event.preventDefault()
 
+                        setClicked(clicked + 1)
                         onChangeView('home')
                     }}>Home</a>
                 </li>
@@ -42,6 +54,7 @@ function Header({ view, onChangeView }) {
                     <a className={`header-link ${view === 'about' ? 'header-link--active' : ''}`} href="" onClick={event => {
                         event.preventDefault()
 
+                        setClicked(clicked + 1)
                         onChangeView('about')
                     }}>About</a>
                 </li>
@@ -50,6 +63,7 @@ function Header({ view, onChangeView }) {
                     <a className={`header-link ${view === 'contact' ? 'header-link--active' : ''}`} href="" onClick={event => {
                         event.preventDefault()
 
+                        setClicked(clicked + 1)
                         onChangeView('contact')
                     }}>Contact</a>
                 </li>
@@ -59,6 +73,12 @@ function Header({ view, onChangeView }) {
 }
 
 function Home() {
+    useEffect(() => {
+        console.log('mount')
+
+        return () => console.log('unmount')
+    }, [])
+
     return <>
         <h1>Home</h1>
 
@@ -74,12 +94,12 @@ function Contact() {
     return <h1>Contact</h1>
 }
 
-const { useState } = React
-
 function App() {
     const [view, setView] = useState('home')
-    // const [pepito, setPepito] = useState()
-    // const [fulanito, setFulanito] = useState()
+
+    useEffect(() => {
+        console.log('update')
+    })
 
     function handleChangeView(view) {
         setView(view)
