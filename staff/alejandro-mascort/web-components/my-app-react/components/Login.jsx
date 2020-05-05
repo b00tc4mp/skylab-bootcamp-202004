@@ -65,9 +65,9 @@ function Login({onSubmit, onRegister}) {
             authenticateUser(email, password, (error, token) => {
                 if (error) return setError(error.message)
 
-                retrieveUser(token, (error, user) => {
+                retrieveUser(token, (error) => {
                     if (error) return setError(error.message)
-                    else onSubmit(user.name, token)
+                    else onSubmit(token)
                 })
             })
 

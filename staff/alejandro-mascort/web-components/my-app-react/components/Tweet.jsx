@@ -58,7 +58,7 @@
 //     }
 // }
 
-function Tweet({token}) {
+function Tweet({token, onLogin}) {
     const [view, setView] = useState('feed')
     const [allTweets, setAllTweets] = useState(undefined)
     const [error, setError] = useState(undefined)
@@ -77,11 +77,23 @@ function Tweet({token}) {
 
     function handleCreateTweet(message) {
         tweet(token, message, error => {
-            if (error) setError(error)
-            else {
+            if (error) {
+                if (error.message === 'invalid token') {
+                    sessionStorage.token = ''
+                    onLogin()
+                    return
+                }
+                setError(error.message)
+                
+            } else {
                 retrieveTweets(token, (error, tweets) => {
-                    if (error) setError(error)
-                    else setAllTweets(tweets)
+                    if (error) {
+                        if (error.message === 'invalid token') {
+                            sessionStorage.token = ''
+                            onLogin()
+                            return
+                        }
+                    } else setAllTweets(tweets)
                 })
             }
         })
@@ -89,8 +101,15 @@ function Tweet({token}) {
 
     useEffect(() => {
         retrieveTweets(token, (error, tweets) => {
-            if (error) setError(error)
-            else setAllTweets(tweets)
+            if (error) {
+                if (error.message === 'invalid token') {
+                    sessionStorage.token = ''
+                    onLogin()
+                    return
+                }
+                setError(error.message)
+                
+            } else setAllTweets(tweets)
         })
     }, [])
 

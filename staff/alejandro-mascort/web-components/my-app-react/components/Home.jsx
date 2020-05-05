@@ -88,8 +88,9 @@
 // }  
 
 
-function Home({name, token, onLogout}) {
+function Home({token, onLogout, onLogin}) {
     const [view, setView] = useState('users')
+    const [name, setName] = useState(undefined)
     const [usersResults, setUsersResults] = useState(undefined)
     const [usersQuery, setUsersQuery] = useState(undefined)
     const [usersError, setUsersError] = useState(undefined)
@@ -97,34 +98,49 @@ function Home({name, token, onLogout}) {
     const [googleError, setGoogleError] = useState(undefined)
     const [googleQuery, setGoogleQuery] = useState(undefined)
 
+    const setHashView = view => {
+        location.hash = view
+
+        setView(view)
+    }
+    
     function handleUsers(event) {
         event.preventDefault()
                 
-        setView('users')
+        setHashView('users')
     }
 
     function handleGoogle(event) {
         event.preventDefault()
                 
-        setView('google')
+        setHashView('google')
     }
 
     function handleNews(event) {
         event.preventDefault()
     
-        setView('news')
+        setHashView('news')
     }
 
     function handleTwitter(event) {
         event.preventDefault()
     
-        setView('twitter')
+        setHashView('twitter')
     }
 
     function handleSearchUsers(query) {
         searchUsers(token, query, (error, users) => {
-            if (error) setUsersError(error.message)
-            else setUsersResults(users)
+            if (error) {
+                if (error.message === 'invalid token') {
+                    sessionStorage.token = ''
+                    onLogin()
+                    return
+                }
+                setUsersError(error.message)
+                
+            } else {
+                setUsersResults(users)
+            }
         })
         setUsersQuery(query)
     }
@@ -139,8 +155,15 @@ function Home({name, token, onLogout}) {
 
     function handleToggle(id) {
         toggleFollowUser(token, id, error => {
-            if (error) this.setState({errorUsers: error.message})
-            else {
+            if (error) {
+                if (error.message === 'invalid token') {
+                    sessionStorage.token = ''
+                    onLogin()
+                    return
+                }
+                setUsersError(error.message)
+                
+            } else {
                 searchUsers(token, usersQuery, (error, users) => {
                     if (error) setUsersError(error.message)
                     else setUsersResults(users)
@@ -148,6 +171,23 @@ function Home({name, token, onLogout}) {
             }
         })
     }
+
+    useEffect(() => {
+        try {
+            retrieveUser(token, (error, user) => {
+                if (error) throw error
+
+                const hash = location.hash.substring(1)
+
+                location.hash = hash ? hash : 'users' 
+
+                setName(user.name)
+                setView(hash)
+            })
+        } catch (error) {
+            if (error) throw error
+        }
+    })
 
     return <section className="home">
             <h1>Welcome, {name}!</h1>
@@ -159,9 +199,10 @@ function Home({name, token, onLogout}) {
                 onLogout()
             }}>Logout</button>
 
+            {view == 'spinner' && <Spinner />}
             {view === 'users' && <Users usersResults={usersResults} handleSearchUsers={handleSearchUsers} query={usersQuery} handleToggle={handleToggle} errorUsers={usersError}/>}
             {view === 'google' && <Google googleResults={googleResults} googleError={googleError} handleGoogleSearch={handleGoogleSearch} query={googleQuery}/>}
             {view === 'news' && <HolaNews />}
-            {view === 'twitter' && <Tweet token={token}/>} 
+            {view === 'twitter' && <Tweet token={token} onLogin={onLogin}/>} 
         </section>
 }
