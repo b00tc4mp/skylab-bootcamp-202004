@@ -8,6 +8,8 @@ function authenticateUser (email, password, callback){
     if (typeof password !== 'string') throw new TypeError(password + ' is not a string')
     if (!password.trim().length) throw new Error('password is empty or blank')
 
+    if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
+
     call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth', `{ "username": "${email}", "password": "${password}"  }`,
         { 'Content-type': 'application/json' }, (error, status, response) => {
                     if (error) throw new  Error (console.error(error) )
@@ -23,7 +25,7 @@ function authenticateUser (email, password, callback){
     
     
     )
-    if (!user) throw new Error('wrong credentials')
+    //if (!user) throw new Error('wrong credentials')
 }
 
 

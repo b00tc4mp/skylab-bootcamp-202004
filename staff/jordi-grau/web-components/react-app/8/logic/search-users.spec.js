@@ -28,12 +28,12 @@ describe ('testing search user', () => {
                     const { token } =  JSON.parse(response)
                     expect(token).to.exist
                     
-                    _token = token.toString()
-                    searchUsers("mel", _token, (result) => {
+                    token = token.toString()
+                    searchUsers("mel", token, (result) => {
                         expect(result).to.be.a('array')
                         expect(result).to.have.lengthOf.above(0)
 
-                        done()
+                        
                         
                     } )
                 }
