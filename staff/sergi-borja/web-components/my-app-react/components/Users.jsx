@@ -1,4 +1,4 @@
-function Users({ onSearch, users, query, token }) {
+function Users({ onSearch, users, query, token , onUserSessionExpired}) {
     function handleSearch(query) {
         searchUsers(token, query, (error, users) => {
             if (error) throw error // TODO handle this error with a feedback
@@ -7,10 +7,8 @@ function Users({ onSearch, users, query, token }) {
         })
     }
 
-    function handleFollow (id) {
-        toggleFollowUser(id, token, (error)=>{
-            if (error) throw error
-        })
+    function handleFollow() {
+        handleSearch(query)
     }
     let followButton=0;
     function handleButton () {
@@ -22,6 +20,6 @@ function Users({ onSearch, users, query, token }) {
         <h2>Users</h2>
 
         <Search onSubmit={handleSearch} query={query} />
-        {users && <Results users={users} handleFollow={handleFollow} handleButton={handleButton}/>}
+        {users && <Results users={users} onFollow={handleFollow}  onUserSessionExpired={onUserSessionExpired} token={token}/>}
     </section>
 }

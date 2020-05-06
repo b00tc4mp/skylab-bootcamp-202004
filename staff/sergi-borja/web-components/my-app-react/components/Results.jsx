@@ -1,15 +1,28 @@
-function Results({ users, handleFollow }) {
+function Results({ users, onFollow, onUserSessionExpired, token }) {
+
+const handleFollow = (followingId) =>{
+    try {
+        toggleFollowUser(token, followingId, error => {
+            if(error){
+                if(error.message === 'invalid token')
+                    onUserSessionExpired()
+                else throw error
+            } else onFollow()
+        })
+    } catch(error){
+        if(error) throw error
+    }
+}
     return <section className="results">
         {
             users.length ? (<>
-                <ul>{users.map(({ name, surname, email, id }) => (
-                    
+                <ul>{users.map(({ name, surname, email, id, following }) => (
                     <li>
                         {`${name} ${id} ${surname} (${email})`}<button onClick={event => {
                         event.preventDefault();
                         handleFollow(id);
                         
-                    }}>Follow</button></li>
+                    }}>{}</button></li>
 
                     
                 ))}</ul>

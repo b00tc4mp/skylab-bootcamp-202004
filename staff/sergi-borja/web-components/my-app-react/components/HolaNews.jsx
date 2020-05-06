@@ -1,3 +1,5 @@
+const {Component} = React
+
 class HolaNews extends Component {
     componentDidMount() {
         !this.props.news && retrieveHolaNews((error, news) => {

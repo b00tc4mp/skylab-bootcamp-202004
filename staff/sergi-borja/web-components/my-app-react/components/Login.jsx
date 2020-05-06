@@ -1,11 +1,10 @@
-class Login extends Component {
-    constructor(props) {
-        super(props)
+const {useState} = React;
 
-        this.state = { error: '' }
-    }
+function Login ({onGoToRegister,onLogin}) {
 
-    handleSubmit = event => {
+    const [error, setError] = useState('')    
+
+    const handleSubmit = event => {
         event.preventDefault()
 
         let { email, password } = event.target
@@ -15,32 +14,32 @@ class Login extends Component {
 
         try {
             authenticateUser(email, password, (error, token) => {
-                if (error) return this.setState({ error: error.message })
+                if (error) return setError(error.message)
 
-                this.props.onLogin(token)
+                onLogin(token)
             })
         } catch ({ message }) {
-            this.setState({ error: message })
+            setError(message)
         }
     }
 
-    handeGoToRegister = event => {
+    const handeGoToRegister = event => {
         event.preventDefault()
 
-        this.props.onGoToRegister()
+        onGoToRegister()
     }
 
-    render() {
+
         return <section className="login">
             <h1>Login</h1>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <input type="email" name="email" placeholder="e-mail" required />
                 <input type="password" name="password" placeholder="password" required minLength="8" />
                 <button>Submit</button>
-                or <a href="" onClick={this.handeGoToRegister}>Register</a>
+                or <a href="" onClick={handeGoToRegister}>Register</a>
 
-                {this.state.error && <Feedback message={this.state.error} level="error" />}
+                {error && <Feedback message={error} level="error" />}
             </form>
         </section>
-    }
+    
 }
