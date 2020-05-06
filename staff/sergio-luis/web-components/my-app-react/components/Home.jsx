@@ -11,11 +11,15 @@ class Home extends Component{
         }
     }
     componentDidMount(){
-        retrieveUser(this.props.token,(error,user)=>{
-            if(error) throw error
-
-            this.setState({name : user.name})
-        })
+        try{
+            retrieveUser(this.props.token,(error,user)=>{
+                if(error) throw error
+    
+                this.setState({name : user.name})
+            })
+        }catch(error){
+            throw error
+        }
     }
 
     handleView = (input) => {
@@ -44,7 +48,7 @@ class Home extends Component{
   
     render(){
         return <>
-       <Navbar onClick={this.handleView} onLogout={this.props.onLogout} name={this.state.name} />
+       <Navbar onClick={this.handleView} onLogout={this.props.onLogout} name={this.state.name}  />
        {this.state.view === 'users' && <Users onSubmit={this.handleSubmit} token={this.props.token} users={this.state.users}/>}
        {this.state.view === 'google' && <Google onSubmit={this.handleGoogle} results={this.state.resultsGoogle}/>}
        {this.state.view === 'news' && <News onSubmit={this.handleNews} results={this.state.resultsNews}/>}

@@ -10,12 +10,15 @@ class Users extends Component{
         }
     }
 
-handleSubmit= (event) =>{
+handleSubmit= (event) => {
     event.preventDefault();
     let { query } = event.target
 
     query = query.value
     this.props.onSubmit(query);
+}
+handleToggleFollow = () => {
+    handleSubmit(query)
 }
 
 
@@ -29,7 +32,7 @@ render(){
             <button className='search__button' >🔍</button>
         </div>    
     </form>
-    {this.props.users && <UsersResults users={this.props.users}/>}
+    {this.props.users && <UsersResults users={this.props.users} token={this.props.token} onToggleFollow={this.handleToggleFollow} />}
     </section>
     </>
     }
