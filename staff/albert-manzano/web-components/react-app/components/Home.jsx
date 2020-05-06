@@ -1,12 +1,12 @@
 const { useState, useEffect } = React
 
-function Home ({onLogout, token}) {
+function Home ({onLogout, token, toUserSessionExpired}) {
 
     const[view,setView] = useState ('home')
     const[googleResults, setGoogleResult] = useState ()
     const[googleQuery, setGoogleQuery] = useState ()
     const[holaNews, setHolaNews] = useState ()
-    const[twitter, setTwitter] = useState ()
+    const[tweets, setTwitter] = useState ()
     const[twitterFollowing, setTwitterFollowing] = useState ()
     const[name,setName] = useState ()
     
@@ -15,29 +15,42 @@ function Home ({onLogout, token}) {
             retrieveUser(token, (error, user) => {
                 if (error) throw error
 
+                const hash = location.hash.substring(1)
+
+                location.hash= hash ? hash : 'users'
+                
                 setName (user.name) 
+
+                setView(hash ? hash : 'users')
             })
         } catch (error) {
             throw error 
         }
     },[])
     
+
+    const goToView =(view) =>{
+        location.hash = view === 'twitter' || view === 'google' || view === 'hola-news' ? view : ''
+
+       setView( view )
+    }
+
     const handleGoogle = event => {
         event.preventDefault()
 
-        setView('google')
+        goToView('google')
     }
 
     const handleHolaNews = event => {
         event.preventDefault()
 
-        setView('hola-news')
+        goToView('hola-news')
     }
 
     const handleTwitter = event => {
         event.preventDefault()
         
-        setView('twitter')
+        goToView('twitter')
     }
 
     const handleFollowing = following =>
@@ -53,7 +66,10 @@ function Home ({onLogout, token}) {
 
     const handleRetrieveTwitterResults = tweets =>
         setTwitter( tweets)
+        
+    
 
+    const onUserSessionExpired = () => toUserSessionExpired
     
         return <section className="home">
             <h1>Welcome Son of a bitch, {name}!</h1>
@@ -62,16 +78,16 @@ function Home ({onLogout, token}) {
             <a className={`home__link ${view === 'twitter' ? 'home__link--active' : ''}`} href="" onClick={handleTwitter}>Twitter </a>
             <button onClick={onLogout}>Logout</button>
 
-            
+            {view === 'load' && <Spinner />}
 
             {view === 'google' && <Google onSearch={handleSearchGoogleResultsAndQuery} 
-            results={googleResults} query={googleQuery} />}
+            results={googleResults} query={googleQuery} onUserSessionExpired={onUserSessionExpired}/>}
             
             {view === 'hola-news' && <HolaNews onNews={handleRetrieveHolaNewsResults}
-            news={holaNews} />}
+            news={holaNews} onUserSessionExpired={onUserSessionExpired}/>}
             
             {view === 'twitter' && <Twitter onTweets={handleRetrieveTwitterResults} onFollowing={handleFollowing}
-            tweets={twitter} token={token} following={twitterFollowing} />}
+            tweets={tweets} token={token} following={twitterFollowing} onUserSessionExpired={onUserSessionExpired}/>}
             
         </section>
     

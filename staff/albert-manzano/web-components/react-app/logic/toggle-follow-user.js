@@ -4,8 +4,6 @@ function toggleFollowUser(token, followingId, callback) {
     String.validate.notVoid(followingId)
     Function.validate(callback)
 
-    
-
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/',
 
         undefined,
@@ -19,7 +17,7 @@ function toggleFollowUser(token, followingId, callback) {
             if (error) return callback(error)
 
             if (status === 200) {
-                call('GET', `'https://skylabcoders.herokuapp.com/api/v2/users/'${followingId}`,
+                call('GET', `https://skylabcoders.herokuapp.com/api/v2/users/${followingId}`,
 
                     undefined,
 
@@ -34,11 +32,11 @@ function toggleFollowUser(token, followingId, callback) {
                         if (status === 200) {
                             const user = JSON.parse(body)
                             const { following = [] } = user
-                            const index = followingId.indexOf(following)
+                            const index = following.indexOf(followingId)
 
-                            if (index < 0) follwing.push(followingId)
+                            if (index < 0) following.push(followingId)
                             else following.splice(index, 1)
-
+                           
                             call('PATCH',
                                 'https://skylabcoders.herokuapp.com/api/v2/users',
                                 JSON.stringify({ following }),
@@ -46,8 +44,8 @@ function toggleFollowUser(token, followingId, callback) {
                                 (error, status, body) => {
                                     if (error) return callback(error)
                                     if (status === 204) {
-                                        debugger
-                                        callback(undefined, toggle)
+                                        
+                                        callback()
                                     } else {
                                         const { error } = JSON.parse(body)
                                         callback(new Error(error))

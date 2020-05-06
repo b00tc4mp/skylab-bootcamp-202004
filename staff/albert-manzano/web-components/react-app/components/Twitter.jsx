@@ -1,79 +1,98 @@
-class Twitter extends Component {
-    constructor(props) {
-        super(props)
-        
-        this.state ={
-            view:   'tweets',
-            error : undefined,
-            success : undefined,
-            usersResults: undefined,
-            usersQuery: undefined
+const { useState, useEffect ,Component} = React
+
+function Twitter({ onTweets,onSubmit,tweets,token}) {
+
+
+    const [view, setView] = useState('spinner')
+    const [error, setError] = useState()
+    const [success, setSucces] = useState()
+    const [usersResults, setResults] = useState()
+    const [usersQuery, setUsersQuery] = useState()
+
+    useEffect(() => {
+        try {
+            !tweets && retrieveTweets(token, (error,tweets) => {
+                if (error) throw error
+
+                onTweets(tweets)
+
+                const hash = location.hash.substring(1)
+
+                location.hash = hash ? hash : 'tweets'
+
+                setView(hash ? hash : 'tweets')
+            }
+            )
+        } catch (error) {
+            throw error
         }
+    }, [])
+
+
+    const goToView = (view) => {
+        location.hash = view === 'twitter' || view === 'tweets' || view === 'tweet' ? view : ''
+
+        setView(view)
     }
 
-    componentDidMount() {
-        !this.props.tweets && retrieveTweets(this.props.token, (error, tweets) => {
-            if (error) throw error // TODO handle this error!
-          
-            this.props.onTweets(tweets)
-        })
-        // retrieveFollowing(this.props.token,(error,following)=>{
-        //     this.props.onFollowing(following)
-        // })
-    }
-
-    handleSubmit = (event) => {
+    const handleSubmit= function(event) {
         event.preventDefault()
 
         const message = event.target.tweet.value
 
-        try{
-            tweet(this.props.token, message, (error,success)=>this.setState({success :success}))
-            
-        }catch (error){
-            this.setState({error : message})
+        try {
+            tweet(token, message, (error) => setSucces(success))
+        } catch (error) {
+            setError(error)
         }
     }
 
-    handleSearchUsersResultsAndQuery = (results, query) =>
-    this.setState({ usersResults: results, usersQuery: query })
-
-
-    handleTwitter = event => {
-        event.preventDefault()
-
-        this.setState({ view: 'twitter' })
+    const handleSearchUsersResultsAndQuery = (results, query) =>{
+        setResults(results)
+        setUsersQuery(query)
+        // #q=
+        const [hash,q]=location.hash.substring(1).split('?')
+        hash = twitter
+        q = query
+        location.hash[hash,q]
     }
 
-    handleTweets = event => {
+    const handleTwitter = event => {
         event.preventDefault()
 
-        this.setState({ view: 'tweets' })
+        goToView( 'twitter')
     }
 
-    handleTweet = event => {
+    const handleTweets = event => {
         event.preventDefault()
 
-        this.setState({ view: 'tweet' })
+        goToView('tweets')
+    }
+
+    const handleTweet = event => {
+        event.preventDefault()
+
+        goToView('tweet')
     }
 
 
-    render() {
-        return <section className="Twitter">
-            <h2>Twitter</h2>  
-            <a className={`Twitter__link ${this.state.view === 'twitter' ? 'Twitter__link--active' : ''}`} href="" onClick={this.handleTwitter}>twitter </a>
-            <a className={`Twitter__link ${this.state.view === 'tweets' ? 'Twitter__link--active' : ''}`} href="" onClick={this.handleTweets}>tweets </a>
-            <a className={`Twitter__link ${this.state.view === 'tweet' ? 'Twitter__link--active' : ''}`} href="" onClick={this.handleTweet}>tweet </a>
 
-            {this.state.view === 'twitter' && <Users onSearch={this.handleSearchUsersResultsAndQuery} 
-            token={this.props.token} users={this.state.usersResults} query={this.state.usersQuery} />}
-                
-            {this.state.view === 'tweets' && <Tweets tweets={this.props.tweets} handleToggle={this.handleTweet}
-            following={this.props.twitterFollowing} token={this.props.token} toggle={this.props.toggle}/>}
+    return <section className="Twitter">
+        <h2>Twitter</h2>
+        <a className={`Twitter__link ${view === 'twitter' ? 'Twitter__link--active' : ''}`} href="" onClick={handleTwitter}>twitter </a>
+        <a className={`Twitter__link ${view === 'tweets' ? 'Twitter__link--active' : ''}`} href="" onClick={handleTweets}>tweets </a>
+        <a className={`Twitter__link ${view === 'tweet' ? 'Twitter__link--active' : ''}`} href="" onClick={handleTweet}>tweet </a>
 
-            {this.state.view === 'tweet' && <Tweet tweets={this.props.tweets} token={this.props.token} handleOnSubmit={this.onSubmit} />}
-            
-        </section>
-             
-}}
+        {view === 'twitter' && <Users onSearch={handleSearchUsersResultsAndQuery}
+            token={token} users={usersResults} query={usersQuery} />}
+
+        {view === 'tweets' && <Tweets tweets={tweets} handleToggle={handleTweet}
+            token={token} />}
+
+        {view === 'tweet' && <Tweet tweets={tweets} token={token} handleSubmit={onSubmit} />}
+
+        {view === 'spinner' && <Spinner/>}
+    </section>
+
+}
 

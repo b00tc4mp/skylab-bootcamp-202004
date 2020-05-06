@@ -3,8 +3,8 @@
 function Google({ onSearch, query, results }) {
     function handleSearch(query) {
         google(query, (error, results) => {
-            if (error) throw error // TODO do something with error (feedback panel?) 
-
+            if (error) throw error 
+            
             onSearch(results, query)
         })
     }
