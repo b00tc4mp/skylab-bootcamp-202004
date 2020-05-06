@@ -89,7 +89,7 @@
 
 
 function Home({token, onLogout, onLogin}) {
-    const [view, setView] = useState('users')
+    const [view, setView] = useState('spinner')
     const [name, setName] = useState(undefined)
     const [usersResults, setUsersResults] = useState(undefined)
     const [usersQuery, setUsersQuery] = useState(undefined)
@@ -108,6 +108,7 @@ function Home({token, onLogout, onLogin}) {
         event.preventDefault()
                 
         setHashView('users')
+        if (usersQuery) location.hash += `?q=${usersQuery}`
     }
 
     function handleGoogle(event) {
@@ -129,6 +130,9 @@ function Home({token, onLogout, onLogin}) {
     }
 
     function handleSearchUsers(query) {
+        if (!location.hash.includes('?q=')) {
+            location.hash += `?q=${query}`
+        }
         searchUsers(token, query, (error, users) => {
             if (error) {
                 if (error.message === 'invalid token') {
@@ -177,17 +181,23 @@ function Home({token, onLogout, onLogin}) {
             retrieveUser(token, (error, user) => {
                 if (error) throw error
 
-                const hash = location.hash.substring(1)
+                let hash = location.hash.substring(1)
 
                 location.hash = hash ? hash : 'users' 
 
+                if (hash.includes('?q=')) {
+                    setView(hash.split('?q=')[0])
+                    handleSearchUsers(hash.split('?q=')[1])
+                } else {
+                    setView(hash)
+                }
+
                 setName(user.name)
-                setView(hash)
             })
         } catch (error) {
             if (error) throw error
         }
-    })
+    }, [])
 
     return <section className="home">
             <h1>Welcome, {name}!</h1>

@@ -96,7 +96,7 @@ function App() {
     }
 
     return <>
-        {view === 'load' && <Spinner />}
+        {view === 'spinner' && <Spinner />}
         {view === 'landing' && <Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister} />}
         {view === 'login' && <Login onSubmit={handleLogin} onRegister={handleGoToRegister} />}
         {view === 'register' && <Register onLogin={handleGoToLogin} />}
