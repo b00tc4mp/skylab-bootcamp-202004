@@ -11,6 +11,7 @@ describe("authenticateUser",() => {
 
     describe('when user already exists', () => {
         beforeEach( done =>{
+         
             call("POST", 'https://skylabcoders.herokuapp.com/api/v2/users',
             `{ "name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}" }`,
             { 'Content-type': 'application/json' },
@@ -45,6 +46,7 @@ describe("authenticateUser",() => {
 
                 expect(error.message).to.equal('username and/or password wrong')
                 expect(token).to.be.undefined
+                
                 authenticateUser(email, password + 'x', (error, token) => {
                     expect(error).to.be.an.instanceOf(Error)
     
@@ -71,6 +73,10 @@ describe("authenticateUser",() => {
             expect(
                 ()=>{authenticateUser('123', password, (error, token) => {})}
             ).to.throw('123 is not an e-mail')
+
+            expect(
+                ()=>{authenticateUser(email, password, 1)}
+            ).to.throw('1 is not a function')
         })
 
         afterEach(done => {

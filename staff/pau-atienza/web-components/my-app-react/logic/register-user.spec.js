@@ -9,22 +9,38 @@ describe("registerUser",function(){
     })
 
     it("should register a new user if there are no anomalies",function(){
-        registerUser(name,surname,email,password);
-        const user= users.find(function(user){return user.email===email;})
-        expect(user).to.exist
+        registerUser(name,surname,email,password, ()=>{
+            expect(error).to.be.undefined
+
+            call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
+            `{"username": "${email}", "password": "${password}" }`,
+            { "Content-type": "application/json" },
+            (error, status, response) => {
+                expect(error).to.be.undefined
+                let {token} = JSON.parse(response)
+
+                call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined,
+                { Authorization: `Bearer ${token}`},
+                (error, status, response) => {
+                    const {user} = JSON.parse(response)
+                    expect(user).to.exist
+                    expect(user.name).to.eq(name)
+                    expect(user.surname).to.eq(surname)
+                    expect(user.username).to.eq(email)
+                })
+            })
+        });  
     })
 
-    it("should fail to register a user if the email is already in use",function(){
-        let name="name",
-        surname="surname",
-        email="e@mail.com",
-        password="password1";
-        users.push({name, surname, email,password})
+    it("should register a new user if there are no anomalies",function(){
+        registerUser(name,surname,email,password, ()=>{
+            expect(error).to.be.undefined
 
-        expect(function(){
-            registerUser(name,surname,email,password)
-        }).to.throw(Error, "user already exist")
-    
+            registerUser(name,surname,email,password, ()=>{
+                expect(error).to.exist
+                expect(error.message).to.equal(`user with username ${email} already exists`)
+            }); 
+        });  
     })
 
     it("should throw error on non-string inputs", function(){
@@ -78,7 +94,7 @@ describe("registerUser",function(){
 
         expect(function(){
             registerUser(name,surname,email,password)
-        }).to.throw(Error, "%%Pau does not match the format")
+        }).to.throw(Error, "%%Pau is not alphabetic")
 
         name= "name",
         surname= 'Hector//',
@@ -88,7 +104,7 @@ describe("registerUser",function(){
 
         expect(function(){
             registerUser(name,surname,email,password)
-        }).to.throw(Error, "Hector// does not match the format")
+        }).to.throw(Error, "Hector// is not alphabetic")
 
         name= "name",
         surname="surname",
@@ -109,6 +125,5 @@ describe("registerUser",function(){
         expect(function(){
             registerUser(name,surname,email,password)
         }).to.throw(Error, "password does not have the min length")
-    
     })
 })
