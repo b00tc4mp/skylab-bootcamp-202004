@@ -21,7 +21,7 @@ describe('retrive user', function(){
     let name , surname, password, username
     
     it('should succeed on correct data', done => {
-        registerUser(name, surname, email, password, error => {
+        userDefine(name, surname, surname, password, error => {
             expect(error).to.be.undefined
 
         call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
@@ -57,6 +57,8 @@ describe('retrive user', function(){
                         expect(userInfo.username).to.equal(username)
                         expect(userInfo.name).to.equal(name)
                         expect(userInfo.surname).to.equal(surname)
+
+                        done()
 
 
                     })
