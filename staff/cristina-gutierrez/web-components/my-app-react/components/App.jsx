@@ -1,36 +1,54 @@
-const { Component } = React
+const { useState, useEffect } = React
 
-class App extends Component {
-    constructor() {
-        super()
+function App() {
+    const [view, setView] = useState("load")
+    const [token, setToken] = useState()
 
-        this.state = {
-            view: 'landing',
-            name: undefined,
-            token: undefined,
-            following: []
-        }
+    useEffect(() => {
+        if (sessionStorage.token)
+            try {
+                isUserAuthenticated(sessionStorage.token, (error, isAuthenticated) => {
+                    if (error) throw error
+
+                    if (isAuthenticated) {
+                        setToken(sessionStorage.token)
+                        setView("home")
+                    } else setView("login")
+                })
+            } catch (error) {
+                if (error) throw error
+            }
+        else setView("landing")
+    }, [])
+
+    const handleGoToRegister = () => setView("register")
+
+    const handleGoToLogin = () => setView("login")
+
+    const handleRegister = () => setView("login")
+
+    const handleLogin = (name, token, following) => {
+        sessionStorage.token = token
+        setToken(token)
+        setView("home")
+        if (following) setState ({ following })
     }
 
-    handleGoToRegister = () => this.setState({ view: 'register' })
-
-    handleGoToLogin = () => this.setState({ view: 'login' })
-
-    handleRegister = () => this.setState({ view: 'login' })
-
-    handleLogin = (name, token, following) => {
-        this.setState({ name, token, view: 'home' })
-        if (following) this.setState ({ following })
+    const handleLogout = () => {
+        setToken()
+        delete sessionStorage.token
+        setView("landing")
     }
 
-    handleLogout = () => this.setState({ token: undefined, view: 'landing'})
+    const handleUserSessionExpired = () => setView("login")
 
-    render() {
-        return <>
-            {this.state.view === 'landing' && <Landing onGoToRegister={this.handleGoToRegister} onGoToLogin={this.handleGoToLogin} />}
-            {this.state.view === 'register' && <Register onSubmit={this.handleRegister} onGoToLogin={this.handleGoToLogin}/>}
-            {this.state.view === 'login' && <Login onSubmit={this.handleLogin} onGoToRegister={this.handleGoToRegister}/>}
-            {this.state.view === 'home' && <Home name={this.state.name} following={this.state.following} token={this.state.token} onLogout={this.handleLogout} />}
-        </>
-    }
+    
+    return <>
+        {view === "load" && <Spinner />}
+        {view === 'landing' && <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
+        {view === 'register' && <Register onSubmit={handleRegister} onGoToLogin={handleGoToLogin}/>}
+        {view === 'login' && <Login onSubmit={handleLogin} onGoToRegister={handleGoToRegister}/>}
+        {view === 'home' && <Home name={name} following={following} token={token} onLogout={handleLogout} onUserSessionExpired={handleUserSessionExpired} />}
+    </>
+    
 }

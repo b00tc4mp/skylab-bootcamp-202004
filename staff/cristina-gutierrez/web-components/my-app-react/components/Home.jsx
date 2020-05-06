@@ -1,98 +1,97 @@
-const { Component } = React
+const { useState, useEffect } = React
 
-class Home extends Component {
-    constructor(props) {
-        super(props)
+function Home ({onLogout, token}) {
+    
+        const [view, setView] = useState ("home"),
+        const [googleResults, setGoogleResult] = useState (),
+        const [googleQuery, setGoogleQuery] = useState (),
+        const [holaNews, setHolaNews] = useState (),
+        const [userResults, setUserResults] = useState (),
+        const [usersQuery, setUsersQuery] = useState (),
+        const [tweets, setTweets] = useState (),
+        const [following, setfollowing] = useState (),
+        const [name, setName] = useState ()
+       
+        useEffect(() => {
+            try {
+                retrieveUser(token, (error, user) => {
+                    if (error) throw error
+    
+                    setName (user.name)
+                })
+            } catch (error) {
+                throw error
+            }
+        }, [])
 
-        this.state = {
-            view: 'users',
-            usersResults: undefined,
-            usersQuery: undefined,
-            googleResults: undefined,
-            googleQuery: undefined,
-            holaNews: undefined,
-            tweets: undefined,
-            user: {},
-            following: this.props.following
-        }
-    }
-
-    componentDidMount() {
-        try {
-            retrieveUser(this.props.token, (error, user) => {
-                if (error) throw error
-
-                this.setState({ user })
-            })
-        } catch (error) {
-            throw error
-        }
-    }
-
-    displayView = view => {this.setState({ view })}
-
-    handleUsers = event => {
+    const handleUsers = event => {
         event.preventDefault()
 
-        this.displayView("users")
+        setView("users")
     }
 
-    handleGoogle = event => {
+    const handleGoogle = event => {
         event.preventDefault()
 
-        this.displayView("google")
+        setView("google")
     }
 
-    handleHolaNews = event => {
+    const handleHolaNews = event => {
         event.preventDefault()
 
-        this.displayView("hola-news")
+        setView("hola-news")
     }
 
-    handleTwitter = event => {
+    const handleTwitter = event => {
         event.preventDefault()
 
-        this.displayView("twitter")
+       setView("twitter")
     }
     
-    handleSearchUsersResultsAndQuery = (results, query) =>
-        this.setState({ usersResults: results, usersQuery: query })
+    const handleFollowing = event => {
+        event.preventDefault()
 
-    handleSearchGoogleResultsAndQuery = (results, query) =>
-        this.setState({ googleResults: results, googleQuery: query })
-
-    handleRetrieveHolaNewsResults = news =>
-        this.setState({ holaNews: news })
-
-    handleRetrieveTwitterResults = tweets =>
-        this.setState({ tweets })
-
-    render() {
-        return <section className="home">
-            <h1>Welcome, {this.state.user.name}!</h1>
-            <a className={`home__link ${this.state.view === 'users' ? 'home__link--active' : ''}`} href="" onClick={this.handleUsers}>Users </a>
-            <a className={`home__link ${this.state.view === 'google' ? 'home__link--active' : ''}`} href="" onClick={this.handleGoogle}>Google </a>
-            <a className={`home__link ${this.state.view === 'hola-news' ? 'home__link--active' : ''}`} href="" onClick={this.handleHolaNews}>Hola News </a>
-            <a className={`home__link ${this.state.view === 'twitter' ? 'home__link--active' : ''}`} href="" onClick={this.handleTwitter}>Twitter </a>
-            <button onClick={() => {
-                this.setState({
-                    following: [],
-                    usersResults: undefined,
-                    usersQuery: undefined,
-                    googleResults: undefined,
-                    googleQuery: undefined,
-                    holaNews: undefined,
-                    tweets: undefined,
-                    user: undefined
-                })
-                
-                this.props.onLogout()
-            }}>Logout</button>
-
-            {this.state.view === 'users' && <Users onSearch={this.handleSearchUsersResultsAndQuery} results={this.state.usersResults} query={this.state.usersQuery} token={this.props.token} />}
-            {this.state.view === 'google' && <Google onSearch={this.handleSearchGoogleResultsAndQuery} results={this.state.googleResults} query={this.state.googleQuery} />}
-            {this.state.view === 'hola-news' && <HolaNews onNews={this.handleRetrieveHolaNewsResults} news={this.state.holaNews} />}
-            {this.state.view === 'twitter' && <Twitter onTweets={this.handleRetrieveTwitterResults} tweets={this.state.tweets} token={this.props.token} />}
-        </section>
+        setView("following")
     }
+
+    const handleSearchUsersResultsAndQuery = (results, query) => {
+        setUserResults (results)
+        setUsersQuery (query)
+    }
+
+    const handleSearchGoogleResultsAndQuery = (results, query) => {
+        setGoogleResults (results)
+        setGoogleQuery (query)
+    }
+
+    const handleRetrieveHolaNewsResults = news => {
+        setHolaNews (news)
+    }
+
+    const handleRetrieveTwitterResults = tweets => {
+        setTwitter (tweets)
+    }
+
+    return <section className="home">
+        <h1>Welcome, {name}!</h1>
+        <a className={`home__link ${view === 'users' ? 'home__link--active' : ''}`} href="" onClick={handleUsers}>Users </a>
+        <a className={`home__link ${view === 'google' ? 'home__link--active' : ''}`} href="" onClick={handleGoogle}>Google </a>
+        <a className={`home__link ${view === 'hola-news' ? 'home__link--active' : ''}`} href="" onClick={handleHolaNews}>Hola News </a>
+        <a className={`home__link ${view === 'twitter' ? 'home__link--active' : ''}`} href="" onClick={handleTwitter}>Twitter </a>
+        <button onClick={onLogout}> Logout </button>
+
+        {view === 'users' && <Users onSearch={this.handleSearchUsersResultsAndQuery} results={this.state.usersResults} query={this.state.usersQuery} token={this.props.token} />}
+        {view === 'google' && <Google onSearch={this.handleSearchGoogleResultsAndQuery} results={this.state.googleResults} query={this.state.googleQuery} />}
+        {view === 'hola-news' && <HolaNews onNews={this.handleRetrieveHolaNewsResults} news={this.state.holaNews} />}
+        {view === 'twitter' && <Twitter onTweets={this.handleRetrieveTwitterResults} tweets={this.state.tweets} token={this.props.token} />}
+    </section>
 }
+
+{view === 'google' && <Google onSearch={handleSearchGoogleResultsAndQuery} 
+results={googleResults} query={googleQuery} />}
+
+{view === 'hola-news' && <HolaNews onNews={handleRetrieveHolaNewsResults}
+news={holaNews} />}
+
+{view === 'twitter' && <Twitter onTweets={handleRetrieveTwitterResults} onFollowing={handleFollowing}
+tweets={twitter} token={token} following={twitterFollowing} />}
