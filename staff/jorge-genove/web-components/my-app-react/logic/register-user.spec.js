@@ -1,133 +1,176 @@
-describe('registerUser', function () {
+describe('registerUser', () => {
     let name, surname, email, password
 
-    beforeEach(function () {
-        users.length = 0
-
+    beforeEach(() => {
         name = names.random()
         surname = surnames.random()
-        email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('')}@mail.com`
+        email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`
         password = passwords.random()
     })
 
-    it('should succeed on correct data', function () {
-        registerUser(name, surname, email, password)
+    it('should succeed on correct data', done => {
+        registerUser(name, surname, email, password, error => {
+            expect(error).to.be.undefined
 
-        const user = users.find(function (user) { return user.email === email })
+            call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
+                `{ "username": "${email}", "password": "${password}" }`,
+                { 'Content-type': 'application/json' },
+                (error, status, body) => {
+                    expect(error).to.be.undefined
+                    expect(status).to.equal(200)
 
-        expect(user).to.exist
-    })
+                    const { token } = JSON.parse(body)
 
-   
-    describe('when user already exists', function () {
-        beforeEach(function () {
-            beforeEach(function () {
-                users.length = 0
-        
-                name = names.random()
-                surname = surnames.random()
-                email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('')}@mail.com`
-                password = passwords.random()
-            })
+                    expect(token).to.exist
 
+                    call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                        undefined,
+                        { Authorization: `Bearer ${token}` },
+                        (error, status, body) => {
+                            expect(error).to.be.undefined
+                            expect(status).to.equal(200)
 
+                            const user = JSON.parse(body)
 
-            users.push({ name, surname, email, password })
-        })                              
-
-        it('should fail alerting user already exists', function () {
-            expect(function () {
-                registerUser(name, surname, email, password)
-            }).to.throw(Error, 'Email already exists MDRFUCKER')
-       
+                            expect(user.name).to.equal(name)
+                            expect(user.surname).to.equal(surname)
+                            expect(user.username).to.equal(email)
+                            expect(user.password).to.be.undefined
+                            
+                            done() 
+                            
+                        }
+                    )
+                })
         })
-        it('should fail on non-string field', function () {
-              expect(function () {
-                   registerUser(undefined, surname, email, password)
-               }).to.throw(TypeError, 'undefined is not a string')
+    
         
-               expect(function () {
-                   registerUser(1, surname, email, password)
-               }).to.throw(TypeError, '1 is not a string')
-       
-               expect(function () {
-                   registerUser(true, surname, email, password)
-               }).to.throw(TypeError, 'true is not a string')
-       
-               expect(function () {
-                   registerUser(name, undefined, email, password)
-               }).to.throw(TypeError, 'undefined is not a string')
-       
-               expect(function () {
-                   registerUser(name, 1, email, password)
-               }).to.throw(TypeError, '1 is not a string')
-       
-               expect(function () {
-                   registerUser(name, true, email, password)
-               }).to.throw(TypeError, 'true is not a string')
-       
-               expect(function () {
-                   registerUser(name, surname, undefined, password)
-               }).to.throw(TypeError, 'undefined is not a string')
-       
-               expect(function () {
-                   registerUser(name, surname, 1, password)
-               }).to.throw(TypeError, '1 is not a string')
-       
-               expect(function () {
-                   registerUser(name, surname, true, password)
-               }).to.throw(TypeError, 'true is not a string')
-       
-               expect(function () {
-                   registerUser(name, surname, email, undefined)
-               }).to.throw(TypeError, 'undefined is not a string')
-       
-               expect(function () {
-                   registerUser(name, surname, email, 1)
-               }).to.throw(TypeError, '1 is not a string')
-       
-               expect(function () {
-                   registerUser(name, surname, email, true)
-               }).to.throw(TypeError, 'true is not a string')
-           })
-       
-           it('should fail on non-alphabetic field', function () {
-               expect(function () {
-                   registerUser('1', surname, email, password)
-               }).to.throw(Error, '1 does not match the format')
-       
-               expect(function () {
-                   registerUser('$', surname, email, password)
-               }).to.throw(Error, '$ does not match the format')
-       
-               expect(function () {
-                   registerUser('%', surname, email, password)
-               }).to.throw(Error, '% does not match the format')
-       
-                expect(function () {
-                   registerUser(name, '&', email, password)
-               }).to.throw(Error, '&  does not match the format') 
-       
-               expect(function () {
-                   registerUser(name, '(', email, password)
-               }).to.throw(Error, '( does not match the format')
-       
-               expect(function () {
-                   registerUser(name, '?', email, password)
-               }).to.throw(Error, '? does not match the format')
-       
-               expect(function () {
-                   registerUser(name, surname, '1', password)
-               }).to.throw(Error, '1 is not an e-mail')
-       
-               expect(function () {
-                   registerUser(name, surname, '$', password)
-               }).to.throw(Error, '$ is not an e-mail')
-           })
-      
-    
-    
     
     })
-    
-}) 
+
+    describe('when user already exists', () => {
+        beforeEach(done => {
+            call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                `{ "name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}" }`,
+                { 'Content-type': 'application/json' },
+                (error, status, body) => {
+                    if (error) return done(new Error(error.message))
+                    if (status !== 201) return done(new Error(`undexpected status ${status}`))
+
+                    done()
+            
+                })
+        })
+
+        it('should fail alerting user already exists', done => {
+            registerUser(name, surname, email, password, error => {
+                expect(error).to.exist
+
+                expect(error.message).to.equal(`user with username \"${email}\" already exists`)
+
+                done()
+            })
+            
+        
+        })
+    })
+
+    it('should fail on non-string field', () => {
+        expect(() => {
+            registerUser(undefined, surname, email, password, function () { })
+        }).to.throw(TypeError, 'undefined is not a string')
+
+        expect(() => {
+            registerUser(1, surname, email, password, function () { })
+        }).to.throw(TypeError, '1 is not a string')
+
+        expect(() => {
+            registerUser(true, surname, email, password, function () { })
+        }).to.throw(TypeError, 'true is not a string')
+
+        expect(() => {
+            registerUser(name, undefined, email, password, function () { })
+        }).to.throw(TypeError, 'undefined is not a string')
+
+        expect(() => {
+            registerUser(name, 1, email, password, function () { })
+        }).to.throw(TypeError, '1 is not a string')
+
+        expect(() => {
+            registerUser(name, true, email, password, function () { })
+        }).to.throw(TypeError, 'true is not a string')
+
+       
+    })
+
+    it('should fail on non-alphabetic field', () => {
+        expect(() => {
+            registerUser('1', surname, email, password, function () { })
+        }).to.throw(Error, '1 is not alphabetic')
+
+        expect(() => {
+            registerUser('$', surname, email, password, function () { })
+        }).to.throw(Error, '$ is not alphabetic')
+
+        expect(() => {
+            registerUser('%', surname, email, password, function () { })
+        }).to.throw(Error, '% is not alphabetic')
+
+        expect(() => {
+            registerUser(name, '&', email, password, function () { })
+        }).to.throw(Error, '& is not alphabetic')
+
+        expect(() => {
+            registerUser(name, '(', email, password, function () { })
+        }).to.throw(Error, '( is not alphabetic')
+
+        expect(() => {
+            registerUser(name, '?', email, password, function () { })
+        }).to.throw(Error, '? is not alphabetic')
+
+        
+    })
+
+    it('should fail on non-function callback', () => {
+        expect(() => {
+            registerUser(name, surname, email, password, 1)
+        }).to.throw(TypeError, '1 is not a function')
+
+        expect(() => {
+            registerUser(name, surname, email, password, true)
+        }).to.throw(TypeError, 'true is not a function')
+
+        expect(() => {
+            registerUser(name, surname, email, password, 'text')
+        }).to.throw(TypeError, 'text is not a function')
+
+        expect(() => {
+            registerUser(name, surname, email, password)
+        }).to.throw(TypeError, 'undefined is not a function')
+    })
+
+    afterEach( (done)=> {
+        call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
+            `{ "username": "${email}", "password": "${password}" }`,
+            { 'Content-type': 'application/json' },
+            (error, status, body) => {
+                if (error) return done(error)
+                if (status !== 200) return done(new Error(`unexpected status ${status}`))
+
+                const { token } = JSON.parse(body)
+
+                call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                    `{ "password": "${password}" }`,
+                    {
+                        'Content-type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    },
+                    (error, status, body) => {
+                        if (error) return done(new Error(error.message))
+                        if (status !== 204) return done(new Error(`undexpected status ${status}`))
+                        done()
+                       
+                    })
+        })
+    })
+})

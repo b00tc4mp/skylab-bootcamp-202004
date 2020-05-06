@@ -21,10 +21,10 @@ const { useState} = React
       }catch(error) {
         throw error
       }
-    })
+    }, [])
     
-    goToView = view => {
-      location.hash = view ==='users' || view === 'google' || view === 'mediavida' ? view: ''
+    const goToView = view => {
+      location.hash = view ==='users' || view === 'google' || view === 'mediavida'|| view === 'twitter'|| view === 'ecosia' ? view: ''
     
     setView(view)
     
@@ -68,11 +68,12 @@ const { useState} = React
               <a onClick={handleOnNews} className="home__link" href="">Mediavida</a>
               <a onClick={handleOnTwitter} className= "home__link" href="">Twitter</a>
               </ul>
-              {currentLink === 'user' && <User token = {token} useremail = {useremail} />}
-              {currentLink === 'google' && <Google />}
-              {currentLink === 'ecosia' && <Ecosia />}
-              {currentLink === 'mediavida' && <HomeNews results={mediavida} onNews={handleRetrieveHolaNewsResults}/>}
-              {currentLink === 'twitter' && <Twitter onClick  useremail = {useremail} token = {token} />} 
+              {view === 'spinner' && <Spinner />}
+              {view === 'user' && <User token = {token} useremail = {useremail} />}
+              {view === 'google' && <Google />}
+              {view === 'ecosia' && <Ecosia />}
+              {view === 'mediavida' && <HomeNews results={mediavida} onNews={handleRetrieveHolaNewsResults}/>}
+              {view === 'twitter' && <Twitter onClick  useremail = {useremail} token = {token} />} 
               
           </section>
 

@@ -1,6 +1,6 @@
 const { useState, Component } = React
 
-function Login({onLogin1, onRegister}) {
+function Login({onLogin1, onGoToRegister}) {
 
     const [error, setError] = useState('')
 
@@ -34,7 +34,7 @@ function Login({onLogin1, onRegister}) {
             <input type="email" name="email" placeholder="e-mail" required />
             <input type="password" name="password" placeholder="password" required />
             <button>Submit</button>
-            or <a onClick={() => { event.preventDefault(); onRegister('register') }} className="home__link" href="">Register</a>
+            or <a onClick={() => { event.preventDefault(); onGoToRegister('register') }} className="home__link" href="">Register</a>
 
 
             {error === error.message && <Feedback message={error} level='error' />}

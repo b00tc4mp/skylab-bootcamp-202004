@@ -2,7 +2,7 @@
 
 function App() {
   const [view, setView] = useState("landing");
-  const [user, setUser] = useState(undefined);
+  const [user, setUser] = useState(undefined);taken
   const [token, setToken] = useState(undefined);
   const [useremail, setUseremail] = useState(undefined);
 
@@ -46,7 +46,7 @@ function App() {
 } */
 
 
-const { useState,Component } = React;
+const { useState } = React;
 
 function App() {debugger
    const [view, setView] = useState('load')
@@ -99,27 +99,35 @@ function App() {debugger
     debugger;
     loginUser(email, password, (error, token) => {
       if (error) console.log(error)
-      sessionStorage.taken = token
+      sessionStorage.token = token
       setToken(token)
       setUseremail(email)
       setView('home')
 
-    const handleGotoLogin = () => setHashView('login')
+    
 
-    const handleLogout = () => {
-      setToken()
-      delete sessionStorage.token
-      location.hash=''
-      setView('landing')
-    }
-      const handleUserSessionExpired = () => setHashView('login')
+    
      
     });
   };
- 
+  const handleGoToLogin = () => setHashView('login')
+    
+    
+  const handleLogout = () => {
+    setToken()
+    delete sessionStorage.token
+    location.hash=''
+    setView('landing')
+  }
+    
+    
+  const handleUserSessionExpired = () => setHashView('login')
+    
+    
+    
     return <>
         {view === 'load' && <Spinner />}    
-        {view === "landing" && (<Landing onRegister={handleGoToRegister} onGoToLogin={handleGoToLogin}/>)}
+        {view === "landing" && (<Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin}/>)}
         {view === "register" && (<Register onRegister1={handleRegister} onGoToLogin = {handleGoToLogin} />)}
         {view === "login" && <Login onLogin1={handleLogin} onGoToRegister = {handleGoToRegister} />}
         {view === "home" && <Home useremail={useremail} token={token} onLogout={handleLogout} onUserSessionExpired={handleUserSessionExpired} />}
