@@ -1,12 +1,15 @@
 function google(query, callback) {
-    var xhr = new XMLHttpRequest()
+    String.validate(query)
 
-    xhr.open( 'GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?q=${query}` )
+    Function.validate(callback)
 
-    xhr.onload = function () {
+    call('GET', `https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?q=${query}`, undefined, undefined, (error, status, body) => {
+        if (error) return callback(error)
+        if (status !== 200) return callback(new Error('unknown error'))
+
         const parser = new DOMParser()
 
-        const doc = parser.parseFromString(this.responseText, 'text/html')
+        const doc = parser.parseFromString(body, 'text/html')
 
         let results = doc.querySelectorAll('.rc')
 
@@ -17,17 +20,11 @@ function google(query, callback) {
 
             const content = result.querySelector('.st').innerText
 
-            const { href: link } = result.querySelector('.r > a') 
+            const { href: link } = result.querySelector('.r > a')
 
             data.push({ title, content, link })
         })
-   
+
         callback(undefined, data)
-    }
-
-    xhr.onerror = function(error) {
-        callback(new Error('network error'))
-    }
-
-    xhr.send()
+    })
 }

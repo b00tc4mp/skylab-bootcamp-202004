@@ -3,7 +3,12 @@ const users = [
         name: 'Manuel',
         surname: 'Barzi',
         email: 'manuelbarzi@gmail.com',
-        password: '123123123'
+        password: '123123123',
+        tweets: [{
+            message: 'Hola, Mundo!',
+            date: new Date
+        }],
+        following: ['pepito@grillo.com']
     },
 
     {

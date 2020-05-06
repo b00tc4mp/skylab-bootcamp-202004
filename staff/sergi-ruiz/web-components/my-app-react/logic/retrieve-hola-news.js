@@ -1,4 +1,6 @@
 function retrieveHolaNews(callback) {
+    Function.validate(callback)
+    
     var xhr = new XMLHttpRequest()
 
     const HOLA_URL = 'https://us.hola.com'
