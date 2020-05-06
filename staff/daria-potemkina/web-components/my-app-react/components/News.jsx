@@ -1,24 +1,19 @@
-class News extends Component {
-  constructor() {
-    super()
+const { useState, useEffect } = React
 
-    this.state = { news: undefined }
+function News({news, onNews}) {
 
-  }
-
-  componentDidMount() {
-    dailyNews((news) => {
-      this.setState({ news })
+  useEffect(() =>{
+    !news && dailyNews((news) => {
+       onNews(news)
     })
-  }
+  }, [])
 
-  render() {
     return <section className="news">
       <h2>The New York Times</h2>
-      {this.state.news && <ul>
+      {news && <ul>
         {
-          this.state.news.map(({ title, content, link, image }) =>
-            <li>
+          news.map(({ title, content, link, image }) =>
+            <li key={link}>
               <img src={image} />
               <a href={link} target='_blank'>{title}</a>
               <p>{content}</p>
@@ -26,5 +21,4 @@ class News extends Component {
       </ul>
       }
     </section>
-  }
 }

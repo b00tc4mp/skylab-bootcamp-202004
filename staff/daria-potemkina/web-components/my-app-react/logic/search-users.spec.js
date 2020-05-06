@@ -1,4 +1,4 @@
-describe.only('searchUsers', () => {
+describe('searchUsers', () => {
     let name, surname, email, password, _token
 
     beforeEach(() => {

@@ -1,24 +1,38 @@
-class Twitter extends Component {
-    constructor(props) {
-        super(props)
+const { useState, useEffect} = React
 
-        this.state = {
-            tweets: undefined,
-            tweetsError: undefined
-        }
+function Twitter ({token}) {
+  
+     const [error, setError] = useState()
+     const [tweets, setTweets] = useState()
+    
+    useEffect(() => {
+        retrieveTweets(token, (error, allTweets) => {
+            debugger
+            if (error) throw error
+            setTweets(allTweets)
+
+        })
+    },[])
+    
+     const handleSubmitTweet = tweets => {
+        tweet(token, tweets, error => {
+            if (error) setError(error.message)
+            else {
+                retrieveTweets(token, (error, allTweets) => {
+                    if (error) throw error
+
+                    setTweets(allTweets)
+                })
+            }
+        })
     }
 
-    componentDidMount(){
-            retrieveTweets(this.props.token, (allTweets) =>{
-                this.setState({tweets: allTweets})
-            })
-    }
 
-    render() {
+    
         return <section className="twitter">
             <h2>Twitter</h2>
-            <Tweet token={this.props.token}/>
-            {this.state.tweets && <Tweets allTweets={this.state.tweets}/>}
+            <Tweet token={token} onSubmitTweet={handleSubmitTweet} />
+            {tweets && <Tweets allTweets={tweets} />}
         </section>
-    }
+    
 }

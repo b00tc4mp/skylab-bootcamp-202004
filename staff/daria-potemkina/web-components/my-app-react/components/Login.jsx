@@ -1,3 +1,4 @@
+const {Component} = React
 class Login extends Component {
     constructor(props) {
         super(props)
@@ -18,10 +19,10 @@ class Login extends Component {
             authenticateUser(email, password, (error, token) => {
                 if (error) return this.setState({error: error.message})
 
-                retrieveUser(token, (error, user) => {
-                    if (error) return this.setState({error: error.message})
-                    else this.props.onSubmit(user.name, token, user.following)
-                })
+                // retrieveUser(token, (error, user) => {
+                //     if (error) return this.setState({error: error.message})
+                    else this.props.onSubmit(token)
+                // })
             })
 
         } catch ({ message }) {

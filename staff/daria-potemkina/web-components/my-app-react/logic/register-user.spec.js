@@ -95,96 +95,96 @@ describe('registerUser', () => {
     })
 
 
-    it('should return an type error', function () {
+    it('should return an type error', () => {
         expect(function () {
-            registerUser(undefined, surname, email, password)
+            registerUser(undefined, surname, email, password, function(){})
         }).to.throw(TypeError, 'undefined is not a string')
 
         expect(function () {
-            registerUser(name, undefined, email, password)
+            registerUser(name, undefined, email, password, function(){})
         }).to.throw(TypeError, 'undefined is not a string')
 
         expect(function () {
-            registerUser(name, surname, undefined, password)
+            registerUser(name, surname, undefined, password, function(){})
         }).to.throw(TypeError, 'undefined is not a string')
 
         expect(function () {
-            registerUser(name, surname, email, undefined)
+            registerUser(name, surname, email, undefined, function(){})
         }).to.throw(TypeError, 'undefined is not a string')
 
         expect(function () {
-            registerUser(true, surname, email, password)
+            registerUser(true, surname, email, password, function(){})
         }).to.throw(TypeError, 'true is not a string')
 
         expect(function () {
-            registerUser(name, true, email, password)
+            registerUser(name, true, email, password, function(){})
         }).to.throw(TypeError, 'true is not a string')
 
         expect(function () {
-            registerUser(name, surname, false, password)
+            registerUser(name, surname, false, password, function(){})
         }).to.throw(TypeError, 'false is not a string')
 
         expect(function () {
-            registerUser(name, surname, email, false)
+            registerUser(name, surname, email, false, function(){})
         }).to.throw(TypeError, 'false is not a string')
 
         expect(function () {
-            registerUser(123, surname, email, password)
+            registerUser(123, surname, email, password, function(){})
         }).to.throw(TypeError, '123 is not a string')
 
         expect(function () {
-            registerUser(name, 5, email, password)
+            registerUser(name, 5, email, password, function(){})
         }).to.throw(TypeError, '5 is not a string')
 
         expect(function () {
-            registerUser(name, surname, 5, password)
+            registerUser(name, surname, 5, password, function(){})
         }).to.throw(TypeError, '5 is not a string')
 
         expect(function () {
-            registerUser(name, surname, email, 12345678)
+            registerUser(name, surname, email, 12345678, function(){})
         }).to.throw(TypeError, '12345678 is not a string')
 
     })
 
     it('shoul return an error', function () {
         expect(function () {
-            registerUser('123', surname, email, password)
+            registerUser('123', surname, email, password, function(){})
         }).to.throw(Error, '123 contains non-alphabetic characters')
 
         expect(function () {
-            registerUser('Juan-David', surname, email, password)
+            registerUser('Juan-David', surname, email, password, function(){})
         }).to.throw(Error, 'Juan-David contains non-alphabetic characters')
 
         expect(function () {
-            registerUser('???', surname, email, password)
+            registerUser('???', surname, email, password, function(){})
         }).to.throw(Error, '??? contains non-alphabetic characters')
 
         expect(function () {
-            registerUser(name, 'grillo?', email, password)
+            registerUser(name, 'grillo?', email, password, function(){})
         }).to.throw(Error, 'grillo? contains non-alphabetic characters')
 
         expect(function () {
-            registerUser(name, '123', email, password)
+            registerUser(name, '123', email, password, function(){})
         }).to.throw(Error, '123 contains non-alphabetic characters')
 
         expect(function () {
-            registerUser(name, '123', email, password)
+            registerUser(name, '123', email, password, function(){})
         }).to.throw(Error, '123 contains non-alphabetic characters')
 
         expect(function () {
-            registerUser(name, surname, 'pepito', password)
+            registerUser(name, surname, 'pepito', password, function(){})
         }).to.throw(Error, 'pepito is not an email')
 
         expect(function () {
-            registerUser(name, surname, 'pepito@mail', password)
+            registerUser(name, surname, 'pepito@mail', password, function(){})
         }).to.throw(Error, 'pepito@mail is not an email')
 
         expect(function () {
-            registerUser(name, surname, '123.com', password)
+            registerUser(name, surname, '123.com', password, function(){})
         }).to.throw(Error, '123.com is not an email')
 
         expect(function () {
-            registerUser(name, surname, email, '123')
+            registerUser(name, surname, email, '123', function(){})
         }).to.throw(Error, 'password does not have the min length')
 
     })

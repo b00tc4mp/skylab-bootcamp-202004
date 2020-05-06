@@ -12,19 +12,6 @@ function registerUser(name, surname, email, password, callback) {
     if (typeof password !== 'string') throw new TypeError(password + ' is not a string')
     if (password.length < 8) throw new Error('password does not have the min length')
 
-    // for (let i = 0; i < users.length; i++) {
-    //     if (users[i].email === email) {
-    //         throw new Error('User already exists')
-    //     }
-    // }
-
-    // users.push({
-    //     name,
-    //     surname,
-    //     email,
-    //     password
-    // })
-
     call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
         `{"name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}"}`,
         { 'Content-type': 'application/json' }, (error, status, body) => {

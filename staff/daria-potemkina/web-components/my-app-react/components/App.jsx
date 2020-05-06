@@ -1,40 +1,69 @@
-const { Component } = React
+const { useState, useEffect } = React
 
-class App extends Component {
-    constructor() {
-        super()
+function App() {
 
-        this.state = {
-            view: "landing",
-            name: undefined,
-            token: undefined,
-            following: []
-        }
+    const [view, setView] = useState('load')
+    // const [name, setName] = useState()
+    const [token, setToken] = useState()
+    // const [following, setFollowing] = useState([])
+
+    useEffect(() => {
+        if (sessionStorage.token) {
+            try {
+                isUserAuthenticate(sessionStorage.token, (error, isAuthenticated) => {
+                    if (error) throw error
+
+                    if (isAuthenticated) {
+                        setToken(sessionStorage.token)
+                        setView('home')
+                    }
+                })
+            } catch (error) {
+                if (error) throw error
+            }
+        }else setHashView('landing')
+    }, [])
+
+    const setHashView =(view)=> {
+        location.hash = view
+        setView(view)
     }
 
-    handleGoToLogin = () => this.setState({ view: 'login' })
-
-    handleLogin = (name, token, following) => {
-        this.setState({ view: 'home', name, token})
-        if(following) this.setState({following})
+    function handleGoToLogin() {
+        setHashView('login')
     }
 
-    handleGoToRegister = () => this.setState({ view: 'register' })
-
-    handleRegister = () => {
-        this.setState({ view: 'login' })
+    function handleLogin(token) {
+        sessionStorage.token = token
+        setToken(token)
+        setView('home')
+        location.hash = ''
+        // setName(name)
+        // if (following) setFollowing(following)
     }
 
-    handleGoToHome = () => this.setState({ view: 'home' })
-
-    handleGoToLanding = () => this.setState({ view: 'landing' })
-
-    render() {
-        return <>
-            {this.state.view === 'landing' && <Landing onLogin={this.handleGoToLogin} onRegister={this.handleGoToRegister} />}
-            {this.state.view === 'login' && <Login onSubmit={this.handleLogin} onRegister={this.handleGoToRegister} />}
-            {this.state.view === 'register' && <Register onSubmit={this.handleRegister} onLogin={this.handleGoToLogin} />}
-            {this.state.view === 'home' && <Home name={this.state.name} token={this.state.token} following={this.state.following} onLogout={this.handleGoToLanding}/>}
-        </>
+    function handleGoToRegister() {
+        setHashView('register')
     }
+
+    function handleRegister() {
+        setHashView('login')
+    }
+
+    function handleGoToLanding() {
+        setToken()
+        delete sessionStorage.token
+        setView('landing')
+        location.hash = ''
+    }
+
+
+    return <>
+        {view === 'load' && <Spinner />}
+        {view === 'landing' && <Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister} />}
+        {view === 'login' && <Login onSubmit={handleLogin} onRegister={handleGoToRegister} />}
+        {view === 'register' && <Register onSubmit={handleRegister} onLogin={handleGoToLogin} />}
+        {view === 'home' && <Home token={token} onLogout={handleGoToLanding} />}
+    </>
+
 }

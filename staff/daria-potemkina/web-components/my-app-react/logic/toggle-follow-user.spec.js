@@ -1,5 +1,5 @@
 describe('toggleFollowUser', () =>{
-    let name, surname, email, password, _token
+    let name, surname, email, password, _token, _followId
     beforeEach(() => {
         name = names.random()
         surname = surnames.random()
@@ -19,10 +19,30 @@ describe('toggleFollowUser', () =>{
                     if (status !== 200) return done(new Error(`undexpected status ${status}`))
                     let { token } = JSON.parse(body)
                     _token = token
+                    call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all', 
+                    undefined,
+                    {Authorization: `Bearer ${_token}`},
+                    (error, status, body) =>{
+                        if (error) return done(new Error(`undexpected status ${status}`))
+                        let random = Math.floor(Math.random()*10)
 
+                        const users = JSON.parse(body)
+
+                        const _user = users[random]
+
+                        const {id} = _user
+                        
+                        _followId = id
+                    }
+                    )
                     done()
                 })
             })
+    })
+
+    it('should add a new user to a following array', done =>{
+        a
+        
     })
 
     afterEach(done => {

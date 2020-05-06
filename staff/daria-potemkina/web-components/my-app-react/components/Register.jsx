@@ -1,11 +1,11 @@
-class Register extends Component {
-    constructor(props) {
-        super(props)
+const { useState } = React
 
-        this.state = { error: '' }
-    }
+function Register({onSubmit, onLogin}){
 
-    handleSubmit = event => {
+        const [error, setError] = useState()
+        
+
+    function handleSubmit (event) {
         event.preventDefault()
 
         let { name, surname, email, password } = event.target
@@ -16,33 +16,31 @@ class Register extends Component {
 
         try {
             registerUser(name, surname, email, password, error => {
-                if (error) return this.setState({error: error.message})
+                if (error) return setError(error.message)
 
-                this.props.onSubmit();
+                onSubmit();
             })
 
-        } catch ({ message }) {
-            this.setState({ error: message })
+        } catch ( {message} ) {
+            setError(message)
         }
     }
 
-    handleGoToLogin = event => {
+    function handleGoToLogin(event){
         event.preventDefault()
 
-        this.props.onLogin()
+        onLogin()
     }
 
-    render() {
-        return <section className="register"><h1>Register</h1>
-            <form onSubmit={this.handleSubmit}>
-                <input type="text" name="name" placeholder="name" required patern="[A-Za-z]{1,20}" />
-                <input type="text" name="surname" placeholder="surname" required patern="[A-Za-z]{1,20}" />
-                <input type="email" name="email" placeholder="e-mail" required />
-                <input type="password" name="password" placeholder="password" required minLength="8" />
-                <button>Submit</button>
-                <a href="" onClick={this.handleGoToLogin}>Log in</a>
-                {this.state.error && <Feedback message={this.state.error} level='error' />}
-            </form>
-        </section>
-    }
+    return <section className="register"><h1>Register</h1>
+        <form onSubmit={handleSubmit}>
+            <input type="text" name="name" placeholder="name" required patern="[A-Za-z]{1,20}" />
+            <input type="text" name="surname" placeholder="surname" required patern="[A-Za-z]{1,20}" />
+            <input type="email" name="email" placeholder="e-mail" required />
+            <input type="password" name="password" placeholder="password" required minLength="8" />
+            <button>Submit</button>
+            <a href="" onClick={handleGoToLogin}>Log in</a>
+            {error && <Feedback message={error} level='error' />}
+        </form>
+    </section>
 }
