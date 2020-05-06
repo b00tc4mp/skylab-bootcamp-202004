@@ -3,7 +3,7 @@ function Results({ users, goToFollow }) {
   const handleGotoToogle = id => {
         toggleFollowUser(token, id, callback)
 
-        goToFollow()
+        goToFollow(token)
     }
 
     return <section className="results">

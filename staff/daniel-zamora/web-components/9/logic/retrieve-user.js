@@ -1,5 +1,5 @@
 function retrieveUser(token, callback) {
-    // String.validate(token)
+    String.validate(token)
 
     Function.validate(callback)
 
