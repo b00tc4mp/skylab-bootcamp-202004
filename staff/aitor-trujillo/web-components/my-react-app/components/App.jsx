@@ -3,7 +3,7 @@ const { useState, Component } = React;
 function App() {
 
   const [view, setView] = useState('home')
-  const [token, setToken] = useState()
+  const [token, setToken] = useState(undefined)
 
   const goToRegister = () => setView('register')
   const goToLogin = () => setView('login')
@@ -21,6 +21,7 @@ function App() {
       if (error) throw new Error(error)
 
       setToken(token)
+      console.log(token)
       setView('home')
     })
   }

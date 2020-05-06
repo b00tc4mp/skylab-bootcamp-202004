@@ -47,7 +47,7 @@ function Home({ token, onLogout }) {
     setView('feed')
   }
 
-  const handleUsersQuery = (request) => {
+  const handleUsersQuery = (query) => {
     if (view === 'users') {
       searchUsers(token, query, (error, usersFound) => {
         if (error) throw new Error(error)
