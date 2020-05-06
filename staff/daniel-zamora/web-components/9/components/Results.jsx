@@ -1,6 +1,6 @@
 function Results({ users, goToFollow }) {
 
-    handleGotoToogle = id => {
+  const handleGotoToogle = id => {
         toggleFollowUser(token, id, callback)
 
         goToFollow()

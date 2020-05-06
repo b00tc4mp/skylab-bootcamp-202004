@@ -12,6 +12,6 @@ function Users({ onSearch, users, query, token }) {
         <h2>Users</h2>
 
         <Search onSubmit={handleSearch} query={query} />
-        {users && <Results users={users} />}
+        {users && <Results users={users} token={token} />}
     </section>
 }
