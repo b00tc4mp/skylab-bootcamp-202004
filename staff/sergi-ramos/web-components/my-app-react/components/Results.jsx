@@ -4,8 +4,8 @@ function Results(props) {
 
         return <section className="results">
             {props.user.length ?
-                <ul>{props.user.map(({ name, surname, username, following }) =>
-                    <li>{`${name} ${surname} (${username})`} {
+                <ul>{props.user.map(({ name, surname, username, following, id }) =>
+                    <li key={id}>{`${name} ${surname} (${username})`} {
                         typeof following !== 'undefined' ?
                             <button className="results__button" onClick={() => props.onSubmitFollowing(username)}>
                                 {following ? 'unfollow' : 'follow'}
