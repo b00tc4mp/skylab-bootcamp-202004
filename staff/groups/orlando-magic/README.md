@@ -1,10 +1,10 @@
-#H1 Team Project
+# Team Project
 
-#H2 Team name: Orlando Magic
+## Team name: Orlando Magic
 
 - Alejandro Mascort
 - Pau Atienza
 
-#Project name: CardSearch
+## Project name: CardSearch
 
-[trello] (https://trello.com/b/tb4Vg9DD/card-search)
+[trello](https://trello.com/b/tb4Vg9DD/card-search)
