@@ -1,77 +1,84 @@
 
-const { Component } = React
+const { useState, useEffect } = React
 
-class Home extends Component {
-  constructor() {
-    super()
+function Home({ token, onLogout }) {
 
-    this.state = {
-      search: 'users',
-      results: false
+  const [view, setView] = useState('users')
+  const [usersResults, setUsersResults] = useState(undefined)
+  const [googleResults, setGoogleResults] = useState(undefined)
+  const [name, setName] = useState(undefined)
+
+  useEffect(() => {
+    try {
+      retrieveUser(token, (error, user) => {
+        if (error) throw error
+
+        const { name } = user
+        setName(name)
+      })
+    } catch (error) {
+      throw error
     }
-  }
+  }, [])
 
-  handleLogout = e => {
+  const handleLogout = e => {
     e.preventDefault()
 
-    this.props.onLogout()
+    onLogout()
   }
 
-  usersSearch = e => {
+  const usersSearch = e => {
     e.preventDefault()
 
-    this.setState({ results: false })
-    this.setState({ search: 'users' })
+    setResults(undefined)
+    setView('users')
   }
 
-  googleSearch = e => {
+  const googleSearch = e => {
     e.preventDefault()
 
-    this.setState({ results: false })
-    this.setState({ search: 'google' })
+    setResults(undefined)
+    setView('google')
   }
-  twitterFeed = e => {
+  const twitterFeed = e => {
     e.preventDefault()
 
-    this.setState({ results: false })
-    this.setState({ search: 'feed' })
+    setResults(undefined)
+    setView('feed')
   }
 
-  handleQuery = (request) => {
-    if (this.state.search === 'users') {
-      searchUsers(request, this.props.token, (error, usersFound) => {
+  const handleUsersQuery = (request) => {
+    if (view === 'users') {
+      searchUsers(token, query, (error, usersFound) => {
         if (error) throw new Error(error)
 
         if (usersFound.length)
-          this.setState({ results: usersFound })
+          setUsersResults(usersFound)
         else
-          this.setState({ results: [] })
+          setUsersResults([])
 
       })
-
-      //usersFound.length ? 
-      // : this.setState({ results: [] })
-
-    } else if (this.state.search === 'google') {
+    }
+  }
+  const handleGoogleQuery = (request) => {
+    if (view === 'google') {
       google(request, (queryResults) => {
-        queryResults.length ? this.setState({ results: queryResults })
-          : this.setState({ results: [] })
+        queryResults.length ?
+          this.setGoogleResults(queryResults) : setGoogleResults([])
 
       })
-
     }
   }
 
-  render() {
-    return <section className="home-nav"><h1>Welcome!</h1>
-      <a href="#" onClick={this.usersSearch}>Users Search </a>
-      <a href="#" onClick={this.googleSearch}>Google Search </a>
-      <a href="#" onClick={this.twitterFeed}>Twitter Feed</a>
-      <button className="logout-button" onClick={this.handleLogout}>Log out</button>
 
-      {this.state.search === 'users' && <UsersResults results={this.state.results} userToken={this.props.token} userEmail={this.props.userEmail} searchSubmit={this.handleQuery} />}
-      {this.state.search === 'google' && <GoogleResults results={this.state.results} searchSubmit={this.handleQuery} />}
-      {this.state.search === 'feed' && <Feed results={this.state.results} userToken={this.props.token} />}
-    </section>
-  }
+  return <section className="home-nav"><h1>Welcome, {name}!</h1>
+    <a href="#" onClick={usersSearch}>Users Search </a>
+    <a href="#" onClick={googleSearch}>Google Search </a>
+    <a href="#" onClick={twitterFeed}>Twitter Feed</a>
+    <button className="logout-button" onClick={handleLogout}>Log out</button>
+
+    {view === 'users' && <UsersResults results={usersResults} userToken={token} searchSubmit={handleUsersQuery} />}
+    {view === 'google' && <GoogleResults results={googleResults} searchSubmit={handleGoogleQuery} />}
+    {view === 'feed' && <Feed results={results} userToken={token} />}
+  </section>
 }

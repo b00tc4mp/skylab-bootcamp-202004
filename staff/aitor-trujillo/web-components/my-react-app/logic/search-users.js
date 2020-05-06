@@ -1,52 +1,56 @@
-// function searchUsers(query) {
-//   const request = query.toLowerCase();
+function searchUsers(token, query, callback) {
 
-//   const _users = users.filter(function (user) {
-//     return (
-//       user.email.toLowerCase().includes(request) ||
-//       user.name.toLowerCase().includes(request) ||
-//       user.surname.toLowerCase().includes(request)
-//     );
-//   });
 
-//   const usersFound = [];
-//   for (let i = 0; i < _users.length; i++) {
-//     usersFound.push({
-//       name: _users[i].name,
-//       surname: _users[i].surname,
-//       email: _users[i].email,
-//     });
-//   }
+  query = query.toLowerCase()
 
-//   return usersFound;
-// }
-
-function searchUsers(query, token, callback) {
-  const request = query.toLowerCase();
-
-  call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all',
-    undefined,
-    { Authorization: `Bearer ${token}` }, (error, status, response) => {
-      if (error) callback(error)
-
-      const apiUsers = JSON.parse(response)
+  call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined,
+    { Authorization: `Bearer ${token}` },
+    (error, status, body) => {
+      if (error) return callback(error)
 
       if (status === 200) {
+        const user = JSON.parse(body)
 
-        const users = apiUsers.filter(function (user) {
-          return (
-            user.username.toLowerCase().includes(query) ||
-            user.name.toLowerCase().includes(query) ||
-            user.surname.toLowerCase().includes(query)
-          );
-        });
-        callback(undefined, users)
+        const { username, following = [] } = user
+
+        call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all',
+          undefined,
+          { Authorization: `Bearer ${token}` },
+          (error, status, body) => {
+            if (error) return callback(error)
+
+            if (status === 200) {
+              let users = JSON.parse(body)
+
+              users = users.filter(function (user) {
+                const { name, surname, username } = user
+
+                return name && name.toLowerCase().includes(query) || surname && surname.toLowerCase().includes(query) || username.toLowerCase().includes(query)
+              })
+
+              users = users.map(({ id, name, surname, username: _username }) => {
+                const _user = { id, name, surname, email: _username }
+
+                if (_username !== username) _user.following = following.includes(id)
+
+                return _user
+              })
+
+              // TODO optimize this processing by just using a single Array.prototype.reduce function
+
+              callback(undefined, users)
+            } else {
+              const { error } = JSON.parse(body)
+
+              callback(new Error(error))
+            }
+
+          }
+        )
       } else {
-        const error = JSON.parse(response)
+        const { error } = JSON.parse(body)
 
         callback(new Error(error))
-
       }
-    }
-  )
+    })
 }

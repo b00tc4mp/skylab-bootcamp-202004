@@ -1,51 +1,40 @@
-const { Component } = React;
+const { useState, Component } = React;
 
-class App extends Component {
-  constructor() {
-    super();
+function App() {
 
-    this.state = {
-      view: 'home',
-      user: ''
-    };
-  }
+  const [view, setView] = useState('home')
+  const [token, setToken] = useState()
 
-  goToRegister = () => this.setState({ view: 'register' })
-  goToLogin = () => this.setState({ view: 'login' })
-  onLogout = () => {
-    this.setState({ view: 'landing' })
-    this.setState({ user: undefined })
-    this.setState({ token: undefined })
+  const goToRegister = () => setView('register')
+  const goToLogin = () => setView('login')
 
-  }
-
-
-  registerSubmit = (name, surname, email, password) => {
+  const registerSubmit = (name, surname, email, password) => {
     registerUser(name, surname, email, password, (error) => {
       if (error) throw new Error(error)
-      else this.setState({ view: 'login' })
+
+      setView('login')
     })
   }
 
-  loginSubmit = (email, password) => {
-    authenticateUser(email, password, (error, token) => { // POR AQUI
+  const loginSubmit = (email, password) => {
+    authenticateUser(email, password, (error, token) => {
       if (error) throw new Error(error)
 
-      this.setState({ token })
-      this.setState({ user: email })
-      this.setState({ view: 'home' })
+      setToken(token)
+      setView('home')
     })
-
   }
 
-
-  render() {
-    return <>
-      {this.state.view === 'landing' && <Landing toRegister={this.goToRegister} toLogin={this.goToLogin} />}
-      {this.state.view === 'register' && <Register onSubmit={this.registerSubmit} toLogin={this.goToLogin} />}
-      {this.state.view === 'login' && <Login onSubmit={this.loginSubmit} toRegister={this.goToRegister} />}
-      {this.state.view === 'home' && <Home token={this.state.token} userEmail={this.state.user} onLogout={this.onLogout} />}
-    </>
-
+  const onLogout = () => {
+    setView('landing')
+    setToken(undefined)
   }
+
+  return <>
+    {view === 'landing' && <Landing toRegister={goToRegister} toLogin={goToLogin} />}
+    {view === 'register' && <Register onSubmit={registerSubmit} toLogin={goToLogin} />}
+    {view === 'login' && <Login onSubmit={loginSubmit} toRegister={goToRegister} />}
+    {view === 'home' && <Home token={token} onLogout={onLogout} />}
+  </>
+
 }
