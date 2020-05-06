@@ -32,10 +32,20 @@ function Header({ view, onChangeView }) {
     const [clicked, setClicked] = useState(0)
 
     useEffect(() => {
-        console.log('view changed', view)
+        console.log('Header', 'mount')
+
+        return () => console.log('Header', 'unmount')
+    }, [])
+
+    useEffect(() => {
+        console.log('Header', 'view changed', view)
     }, [view])
 
-    clicked && console.log('clicked on', clicked)
+    clicked && console.log('Header', 'clicked on', clicked)
+
+    useEffect(() => {
+        console.log('Header', 'update')
+    })
 
     return <header>
         <h1>Header</h1>
@@ -74,10 +84,14 @@ function Header({ view, onChangeView }) {
 
 function Home() {
     useEffect(() => {
-        console.log('mount')
+        console.log('Home', 'mount')
 
-        return () => console.log('unmount')
+        return () => console.log('Home', 'unmount')
     }, [])
+
+    useEffect(() => {
+        console.log('Home', 'update')
+    })
 
     return <>
         <h1>Home</h1>
@@ -87,10 +101,30 @@ function Home() {
 }
 
 function About() {
+    useEffect(() => {
+        console.log('About', 'mount')
+
+        return () => console.log('About', 'unmount')
+    }, [])
+
+    useEffect(() => {
+        console.log('About', 'update')
+    })
+
     return <h1>About</h1>
 }
 
 function Contact() {
+    useEffect(() => {
+        console.log('Contact', 'mount')
+
+        return () => console.log('Contact', 'unmount')
+    }, [])
+
+    useEffect(() => {
+        console.log('Contact', 'update')
+    })
+
     return <h1>Contact</h1>
 }
 
@@ -98,7 +132,13 @@ function App() {
     const [view, setView] = useState('home')
 
     useEffect(() => {
-        console.log('update')
+        console.log('App', 'mount')
+
+        return () => console.log('App', 'unmount')
+    }, [])
+
+    useEffect(() => {
+        console.log('App', 'update')
     })
 
     function handleChangeView(view) {
