@@ -1,6 +1,6 @@
 class News extends Component {
 
-    componentDidMount() {
+    componentWillMount() {
         !this.props.news && retrieveNews((error, news) => {
             if (error) {
                 throw error;

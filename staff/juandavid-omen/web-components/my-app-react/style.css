@@ -44,17 +44,27 @@
 }
 .home button {
   color: blue;
-  justify-content: center;
 }
-.home p {
-  line-height: 150%;
+.home__link {
+  text-decoration: none;
+  margin: 1rem 1rem;
+}
+.home__link:visited {
+  color: lightgray;
+}
+.home__link--active {
+  font-weight: bold;
+  color: gray;
+}
+.home__link--active:visited {
+  color: gray;
 }
 
 .feedback {
-  color: green;
+  color: teal;
 }
 .feedback--warning {
-  color: orange;
+  color: yellow;
 }
 .feedback--error {
   color: red;

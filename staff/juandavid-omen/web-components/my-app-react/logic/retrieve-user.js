@@ -1,11 +1,9 @@
 function retrieveUser(token, callback) {
-    String.validate.notVoid(token);
+    String.validate(token);
 
     Function.validate(callback);
 
-    call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
-        undefined,
-        { "Authorization": `Bearer ${token}` },
+    call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined, { "Authorization": `Bearer ${token}` },
         (error, status, body) => {
             if (error) {
                 return callback(error);
@@ -16,8 +14,9 @@ function retrieveUser(token, callback) {
                 
                 callback(undefined, { name: user.name, surname: user.surname, email: user.username });
             } else {
-                callback(new Error(JSON.parse(body).error))
-            
+                const { error } = JSON.parse(body);
+
+                callback(new Error(error));            
             }
         }
     );

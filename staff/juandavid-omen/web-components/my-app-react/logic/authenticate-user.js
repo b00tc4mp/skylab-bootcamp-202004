@@ -1,12 +1,13 @@
 function authenticateUser(email, password, callback) {
     Email.validate(email);
     
-    // String.validate.notvoid(password);
+    String.validate.notVoid(password);
+
+    String.validate.lengthGreaterEqualThan(password, 6);
 
     Function.validate(callback);
 
-    call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
-        `{ "username": "${email}", "password": "${password}" }`,
+    call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth', `{ "username": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json' },
         (error, status, body) => {
 

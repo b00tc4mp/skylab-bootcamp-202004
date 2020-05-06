@@ -1,5 +1,5 @@
 function Google ({ onSearch, query, results }) {
-  function handleSearch (query) {
+  const handleSearch = (query) => {
     google(query, (error, results) => {
       if (error) {
           throw error; // TODO do something with error (feedback panel?)

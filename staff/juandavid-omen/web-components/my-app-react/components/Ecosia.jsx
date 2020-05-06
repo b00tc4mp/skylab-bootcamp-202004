@@ -1,5 +1,5 @@
 function Ecosia ({ onSearch, query, results }) {
-  function handleSearch (query) {
+  const handleSearch = (query) => {
     ecosia(query, (error, results) => {
       if (error) {
         throw error // TODO do something with error (feedback panel?)

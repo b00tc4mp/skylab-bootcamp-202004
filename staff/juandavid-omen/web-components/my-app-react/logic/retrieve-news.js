@@ -1,4 +1,3 @@
-
 function retrieveNews(callback) {
   //  var xhr = new XMLHttpRequest();
 
@@ -7,7 +6,7 @@ function retrieveNews(callback) {
  //   xhr.open('GET', `https://skylabcoders.herokuapp.com/proxy?url=${NEWS_URL}`);
 
     call('GET', `https://skylabcoders.herokuapp.com/proxy?url=${NEWS_URL}`, undefined, undefined, 
-    () => {
+    () => { debugger
         const parser = new DOMParser()//bloc-subtitular-container
 
         const doc = parser.parseFromString(this.responseText, 'text/html')

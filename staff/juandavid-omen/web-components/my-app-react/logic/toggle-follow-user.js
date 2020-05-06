@@ -1,23 +1,56 @@
 function toggleFollowUser(token, followingId, callback) {
     String.validate.notVoid(token);
+    
     String.validate.notVoid(followingId);
+
     Function.validate(callback);
-  
-    // TODO call to retrieve user
-    // TODO check if array of following exists, otherwise create new array
-    // TODO if following user (id) it is already in array, then remove it, otherwise add it
-    // TODO call to update user (body => { following: [...] })
 
-    const user = users.find(user => user.email === email)
+    call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined, {Authorization: `Bearer ${token}`},
+    (error, status, body) => {
+        if (error) {
+            return callback(error)
+        }
+        if (status === 200) {
+            call('GET', `https://skylabcoders.herokuapp.com/api/v2/users/${followingId}`, undefined, {Authorization: `Bearer ${token}`},
+                (error, status) => {
+                    if (error) {
+                        return callback(error)
+                    }
 
-    if (!user) throw new Error(`user with e-mail ${email} not found`)
+                    if (status == 200) {
+                        const user = JSON.parse(body);
 
-    const _user = users.find(user => user.email === following)
+                        const { following = [] } = user;
 
-    if (!_user) throw new Error(`user with e-mail ${following} not found`)
+                        const index = following.indexOf(followingId);
 
-    const index = (user.following || (user.following = [])).indexOf(following)
+                        if (index < 0) {
+                            following.push(followingId)   
+                        
+                        } else {
+                            following.splice(index, 1)
+                        }
 
-    if (index > -1) user.following.splice(index, 1)
-    else user.following.push(following)
+                        call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify({ following }), {Authorization: `Bearer ${token}`, 'Content-type': 'application/json'},
+                        (error, status, body) => {
+                            if (error) {
+                                return callback(error)
+                            }
+
+                            if (status === 204) {
+                                callback()
+                            } else {
+                                
+                                callback(new Error(JSON.parse(body).error));                      
+                            }
+                        })    
+                    } else {
+                        callback(new Error(JSON.parse(body).error));
+
+                    }
+                })
+        } else {
+            callback(new Error(JSON.parse(body).error));
+        }
+     })
 }
