@@ -1,6 +1,24 @@
-const { Component } = React
 
-class App extends Component {
+const { useState, Component } = React
+
+function App () {
+    const  [ view, setView ] = useState('landing')
+
+    const handleGoToRegister = () => setState({ view: 'register' })
+
+    const handleRegister = () => setState({ view: 'login' })
+    
+    const handleLogin = token => 
+    
+    setState({ token, view: 'home' })
+    
+    const handleGoToLogin = () => setState({ view: 'login' })
+
+    const handleLogout = () => setState({ token: undefined, view: 'landing'})
+
+
+/*
+ class App extends Component {
     constructor() {
         super()
 
@@ -8,23 +26,15 @@ class App extends Component {
             view: 'landing'
         }
     }
+*/
+   
 
-    handleGoToRegister = () => this.setState({ view: 'register' })
-
-    handleRegister = () => this.setState({ view: 'login' })
-
-    handleLogin = token => this.setState({ token, view: 'home' })
-
-    handleGoToLogin = () => this.setState({ view: 'login' })
-
-    handleLogout = () => this.setState({ token: undefined, view: 'landing'})
-
-    render() {
+  
         return <>
-            {this.state.view === 'landing' && <Landing onGoToRegister={this.handleGoToRegister} onGoToLogin={this.handleGoToLogin} />}
-            {this.state.view === 'register' && <Register onRegister={this.handleRegister} onGoToLogin={this.handleGoToLogin} />}
-            {this.state.view === 'login' && <Login onLogin={this.handleLogin} onGoToRegister={this.handleGoToRegister} />}
-            {this.state.view === 'home' && <Home token={this.state.token} onLogout={this.handleLogout}/>}
+            {view === 'landing' && <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
+            {view === 'register' && <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />}
+            {view === 'login' && <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />}
+            {view === 'home' && <Home token={state.token} onLogout={handleLogout}/>}
         </>
-    }
+
 }

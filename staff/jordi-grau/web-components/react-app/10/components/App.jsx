@@ -1,9 +1,8 @@
 const { useState, Component } = React
-// const { Component } = React
 
 function App () {
-    const [ view, setView ] = useState('home') //deberia ser landing...
-    const [ token, setToken ] = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWIwMTkxNmNkY2ZkZDAwMTU3YmM0ZDciLCJpYXQiOjE1ODg2MTMxMzUsImV4cCI6MTU4ODYxNjczNX0.YsxDVIO5Srdjo4Wq6SajXBi1Nbllg_gMhfxXuj5NAnM')
+    const [ view, setView ] = useState('landing')  
+    const [ token, setToken ] = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWIxNWZlNTMxOTlkODAwMTU5ZWVmMDUiLCJpYXQiOjE1ODg3NTExMjgsImV4cCI6MTU4ODc1NDcyOH0.aoDLxu-F91CTin_5gVXgEYqBilPy1vM4IsP8f4eY1OA')
 
             //view: 'landing',
             //view: 'home',
