@@ -12,9 +12,9 @@ class Twitter extends Component {
             <h2>Twitter</h2>
 
             {this.props.tweets && <ul>
-                {this.props.tweets.map(({ message, date }) =>
+                {this.props.tweets.map(({ message, username }) =>
                     <li>
-                        <date>{date}</date>
+                        <h2>{username}</h2>
                         <p>{message}</p>
                     </li>
                 )}

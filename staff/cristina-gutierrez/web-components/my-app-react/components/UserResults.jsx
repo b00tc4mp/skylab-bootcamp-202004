@@ -1,4 +1,4 @@
-function Results({ users }) {
+function Results({ users, token }) {
     function handleToggleFollow(followingId) {
         try {
             toggleFollowUser(token, followingId, error => {
@@ -12,9 +12,10 @@ function Results({ users }) {
     return <section className="results">
         {
             users.length ?
-                <ul>{users.map(({ id, name, surname, email }) =>
+                <ul>{users.map(({ id, name, surname, email, following, self }) =>
                     <li key={id}>{`${name} ${surname} (${email})`} {
-                        <button onClick={() =>
+                        //Si self===false
+                        !self && <button onClick={() =>
                         handleToggleFollow(id)}>{following ? "Unfollow" : "Follow"}</button>
                     }</li>)}
                 </ul>

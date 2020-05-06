@@ -1,8 +1,9 @@
 const { useState, useEffect } = React
 
 function App() {
-    const [view, setView] = useState("load")
-    const [token, setToken] = useState()
+    const [view, setView] = useState("load");
+    const [token, setToken] = useState();
+    const [following, setFollowing] = useState();
 
     useEffect(() => {
         if (sessionStorage.token)
@@ -16,7 +17,7 @@ function App() {
                     } else setView("login")
                 })
             } catch (error) {
-                if (error) throw error
+                if (error) setView("login")
             }
         else setView("landing")
     }, [])
@@ -31,7 +32,7 @@ function App() {
         sessionStorage.token = token
         setToken(token)
         setView("home")
-        if (following) setState ({ following })
+        if (following) setFollowing (following)
     }
 
     const handleLogout = () => {

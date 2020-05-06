@@ -30,7 +30,7 @@ function retrieveTweets(token, callback) {
         if (error) return callback(error)
         if (status === 200) {
             let user = JSON.parse(body);
-            if (user.tweets) tweetsToShow = user.tweets.map(({text, date}) => ({text, date, username: 'Me'}));
+            if (user.tweets) tweetsToShow = user.tweets.map(({message, date}) => ({message, date, username: 'Me'}));
             
             if (user.following) {
                 let following = user.following
@@ -51,7 +51,7 @@ function retrieveTweets(token, callback) {
 
                         _users = users.map(({ username, tweets }) => ({ username, tweets }))
 
-                        _users.forEach(({tweets, username}) => tweets.forEach(tweet => tweetsToShow.push({text: tweet.text, date: tweet.date, username})))
+                        _users.forEach(({tweets, username}) => tweets.forEach(tweet => tweetsToShow.push({message: tweet.message, date: tweet.date, username})))
 
                         callback(undefined, tweetsToShow)
 

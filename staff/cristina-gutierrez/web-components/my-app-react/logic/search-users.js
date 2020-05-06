@@ -7,34 +7,50 @@ function searchUsers(token, query, callback) {
     
     query = query.toLowerCase()
 
-    call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all',
-        undefined,
-        { Authorization: `Bearer ${token}` },
-        (error, status, body) => {
-            if (error) return callback(error)
+    //Llamamos a nuestro user y le sacamos el email: myemail
 
-            if (status === 200) {
-                let users = JSON.parse(body)
+    //Llamamos a todos los usuarios y buscamos uno que tenga email === myemail
 
-                users = users.filter(function (user) {
-                    const { name, surname, username } = user
+    //De ese usuario cogemos su id y su following myid=id
 
-                    return name && name.toLowerCase().includes(query) || surname && surname.toLowerCase().includes(query) || username.toLowerCase().includes(query)
-                })
+    //llamada all users.filter(con lo del includes) y a ese users le hacemos un map para añadir(following: following ? following.includes(id) y self:si id===myid)
 
-                users = users.map(({ id, name, surname, username }) =>
-                    ({ id, name, surname, email: username, following: following.includes(id) })
-                )
+    call("GET","https://skylabcoders.herokuapp.com/api/v2/users",
+    undefined,{ Authorization: `Bearer ${token}` },
+    (error,status,body) => {
+        if(error) return callback(error);
+        if(status===200){
+            const {username, following} = JSON.parse(body);
+            const myUsername = username;
+            
+            call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all',
+            undefined,
+            { Authorization: `Bearer ${token}` },
+            (error, status, body) => {
+                if (error) return callback(error);
+                if (status === 200) {
+                    let users=JSON.parse(body);
 
-                // TODO optimize this processing by just using a single Array.prototype.reduce function
+                    users = users.filter(function (user) {
+                        const { name, surname, username } = user
+    
+                        return name && name.toLowerCase().includes(query) || surname && surname.toLowerCase().includes(query) || username.toLowerCase().includes(query)
+                    })
+                    
+                    users = users.map(({ id, name, surname, username }) =>
+                            ({ id, name, surname, email: username, following: following ? following.includes(id):false, self: username===myUsername })
+                        )
+                    callback(undefined,users);
+                } else {
+                    const { error } = JSON.parse(body)
 
-                callback(undefined, users)
-            } else {
-                const { error } = JSON.parse(body)
+                    callback(new Error(error))
+                }
+            })
+        } else {
+            const { error } = JSON.parse(body)
 
-                callback(new Error(error))
-            }
-
+            callback(new Error(error))
         }
-    )
+    })
 }

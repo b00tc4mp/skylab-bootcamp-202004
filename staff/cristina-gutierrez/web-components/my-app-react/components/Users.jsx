@@ -14,7 +14,7 @@ class Users extends Component {
             <h2>Users</h2>
 
             <Search onSubmit={this.handleSearch} query={this.props.query} />
-            {this.props.results && <Results users={this.props.results} />}
+            {this.props.results && <Results users={this.props.results} token={this.props.token} />}
         </section>
     }
 }

@@ -2,15 +2,15 @@ const { useState, useEffect } = React
 
 function Home ({onLogout, token}) {
     
-        const [view, setView] = useState ("home"),
-        const [googleResults, setGoogleResult] = useState (),
-        const [googleQuery, setGoogleQuery] = useState (),
-        const [holaNews, setHolaNews] = useState (),
-        const [userResults, setUserResults] = useState (),
-        const [usersQuery, setUsersQuery] = useState (),
-        const [tweets, setTweets] = useState (),
-        const [following, setfollowing] = useState (),
-        const [name, setName] = useState ()
+        const [view, setView] = useState ("home");
+        const [googleResults, setGoogleResult] = useState ();
+        const [googleQuery, setGoogleQuery] = useState ();
+        const [holaNews, setHolaNews] = useState ();
+        const [userResults, setUserResults] = useState ();
+        const [usersQuery, setUsersQuery] = useState ();
+        const [tweets, setTweets] = useState ();
+        const [following, setFollowing] = useState ();
+        const [name, setName] = useState ();
        
         useEffect(() => {
             try {
@@ -51,7 +51,7 @@ function Home ({onLogout, token}) {
     const handleFollowing = event => {
         event.preventDefault()
 
-        setView("following")
+        setFollowing (following)
     }
 
     const handleSearchUsersResultsAndQuery = (results, query) => {
@@ -60,7 +60,7 @@ function Home ({onLogout, token}) {
     }
 
     const handleSearchGoogleResultsAndQuery = (results, query) => {
-        setGoogleResults (results)
+        setGoogleResult (results)
         setGoogleQuery (query)
     }
 
@@ -69,7 +69,7 @@ function Home ({onLogout, token}) {
     }
 
     const handleRetrieveTwitterResults = tweets => {
-        setTwitter (tweets)
+        setTweets (tweets)
     }
 
     return <section className="home">
@@ -80,18 +80,9 @@ function Home ({onLogout, token}) {
         <a className={`home__link ${view === 'twitter' ? 'home__link--active' : ''}`} href="" onClick={handleTwitter}>Twitter </a>
         <button onClick={onLogout}> Logout </button>
 
-        {view === 'users' && <Users onSearch={this.handleSearchUsersResultsAndQuery} results={this.state.usersResults} query={this.state.usersQuery} token={this.props.token} />}
-        {view === 'google' && <Google onSearch={this.handleSearchGoogleResultsAndQuery} results={this.state.googleResults} query={this.state.googleQuery} />}
-        {view === 'hola-news' && <HolaNews onNews={this.handleRetrieveHolaNewsResults} news={this.state.holaNews} />}
-        {view === 'twitter' && <Twitter onTweets={this.handleRetrieveTwitterResults} tweets={this.state.tweets} token={this.props.token} />}
+        {view === 'users' && <Users onSearch={handleSearchUsersResultsAndQuery} results={userResults} query={usersQuery} token={token} />}
+        {view === 'google' && <Google onSearch={handleSearchGoogleResultsAndQuery} result={googleResults} query={googleQuery} />}
+        {view === 'hola-news' && <HolaNews onNews={handleRetrieveHolaNewsResults} news={holaNews} />}
+        {view === 'twitter' && <Twitter onTweets={handleRetrieveTwitterResults} tweets={tweets} token={token} onFollowing={handleFollowing} following={following} />}
     </section>
 }
-
-{view === 'google' && <Google onSearch={handleSearchGoogleResultsAndQuery} 
-results={googleResults} query={googleQuery} />}
-
-{view === 'hola-news' && <HolaNews onNews={handleRetrieveHolaNewsResults}
-news={holaNews} />}
-
-{view === 'twitter' && <Twitter onTweets={handleRetrieveTwitterResults} onFollowing={handleFollowing}
-tweets={twitter} token={token} following={twitterFollowing} />}
