@@ -80,41 +80,49 @@
 
 //     }
 // }
-const {Component} = React
+const {useState, useEffect} = React
 
-class Home extends Component {
-    constructor(props) { // props = {user, }{user}
-        super(props)
-
-        
-        this.state = {
-            view: 'user',
-            name: undefined
+function Home({token, onLogout, onUserSessionExpired}) {
+    
+    const [view, setView] = useState('loading')    
+    const [name, setName] = useState(undefined)    
+    const [results, setResults] = useState(undefined)
+    const [usersQuery, setUsersQuery] = useState(undefined)
           
-            
-        }
+   
 
-    }
-    componentDidMount(){
-        retrieveUser(this.props.token, (error,user) => {
+    
+    useEffect(() => {
+        retrieveUser(sessionStorage.token, (error,user) => {
             if (error) throw error;
-            
-            this.setState({name: user.user})
+            setName(user.user)
+            setView('user')
         })
-    }
-    changeView = (_view) => this.setState({view: _view})
+    }, [])
+        
+    
+    function changeView(_view){
+        setView(_view)
+    } 
 
-    render() {
+    const handleSearchUsersResultsAndQuery = (results, query) => {
+        setResults(results) 
+        setUsersQuery(query)
+    }
+   
+
+   
         return <>
         
-        <h1>Welcome, {this.state.name}!</h1> 
+        <h1>Welcome, {name}!</h1> 
         
-        <Navbar onChangeView={this.changeView} onLogout={this.props.onLogout}/>
+        <Navbar onChangeView={changeView} onLogout={onLogout}/>
 
-        {this.state.view === 'user' && <Users token={this.props.token} />}
-        {this.state.view === 'google' && <Google/>}
-        {this.state.view === 'wired' && <Wired/>}
-        {this.state.view === 'feed' && <Feed loggedUser={this.props.user} />}
+        {view === 'loading' && <Spinner/>}
+        {view === 'user' && <Users onSearch={handleSearchUsersResultsAndQuery} users={results} query={usersQuery} token={token} onUserSessionExpired={onUserSessionExpired}/>}
+        {view === 'google' && <Google/>}
+        {view === 'wired' && <Wired/>}
+        {view === 'feed' && <Feed loggedUser={user} />}
     </>
-    }
+    
 }

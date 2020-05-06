@@ -1,54 +1,54 @@
-const { Component } = React
-
-class App extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            token: undefined,
+const { useState } = React
+//HOOKS
+function App() {
+    
+    const [view, setView] = useState('login')
+    const[token, setToken] = useState()
    
-            view: 'login'
-        }
-    }
+     
 
-    changeView = (_view) => this.setState({view: _view})
+    function changeView(_view){
+        setView(_view)
+    } 
+
     // handleGoToLogin = () => this.setState({view: 'login'})
 
-    handleRegister = (name, surname, email, password) => {
+    function handleRegister(name, surname, email, password){
         registerUser(name, surname, email, password, (error) =>{
             if(error) throw error
 
-            this.setState({ 
-                view: 'login' 
-            })
+            setView('login')
     
         })
 
     }
 
-    handleLogin = (email, password) => {
+    function handleLogin(email, password){
        authenticateUser(email, password, (error,token) => {
            if(error) throw error
-            
-            this.setState({ token, view: 'home' })
 
+           sessionStorage.token = token
+           setToken(token)
+        //    setTimeout(setView('loading'),7000)
+           setView('home')
        })
         
     }
 
-    handleLogout = () =>{
-        this.setState({token: undefined ,view:'login'})
-        
+    function handleLogout(){
+        setToken(token)  
+        setView('view')
     }
 
-    render() {
-        return <>
-            {this.state.view === 'landing' && <Landing onRegister={this.changeView} onLogin={this.changeView}/>}
-            {this.state.view === 'register' && <Register onLogin={this.changeView} onSubmit = {this.handleRegister}/>}
-            {this.state.view === 'login' && <Login onRegister={this.changeView} onSubmit={this.handleLogin}/>}
-            {this.state.view === 'home' && <Home token={this.state.token} onLogout={this.handleLogout}/>}
-        </>
-    }
+    const handleUserSessionExpired = () => {setView('login')}
+    return <>
+        {view === 'loading' && <Spinner/>}
+        {view === 'landing' && <Landing onRegister={changeView} onLogin={changeView}/>}
+        {view === 'register' && <Register onLogin={changeView} onSubmit = {handleRegister}/>}
+        {view === 'login' && <Login onRegister={changeView} onSubmit={handleLogin}/>}
+        {view === 'home' && <Home token={token} onLogout={handleLogout} onUserSessionExpired={handleUserSessionExpired}/>}
+    </>
+    
 }
 
 

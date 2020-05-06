@@ -1,6 +1,6 @@
 function Search({ onSubmit, query }) {
     // const handleSubmit = event => {
-    function handleSubmit(event) {debugger
+    function handleSubmit(event) {
         event.preventDefault()
 
         let { query } = event.target
