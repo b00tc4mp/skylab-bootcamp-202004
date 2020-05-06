@@ -1,9 +1,5 @@
 const { useState} = React
 
-function HolaNews () {
-
-}
-
 
 class HolaNews extends Component {
     componentDidMount() {
