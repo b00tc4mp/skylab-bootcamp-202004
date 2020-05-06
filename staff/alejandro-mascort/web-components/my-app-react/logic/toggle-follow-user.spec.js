@@ -79,7 +79,7 @@ describe('toggleFollowUser', () => {
             let user = JSON.parse(body)
 
             expect(user.following).to.be.undefined
-            debugger
+            
             toggleFollowUser(_token, _id, error => {
                 expect(error).to.be.undefined
 
