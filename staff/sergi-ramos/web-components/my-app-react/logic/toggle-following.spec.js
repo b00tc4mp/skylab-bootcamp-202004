@@ -13,7 +13,7 @@ describe(("toggleFollowUser"), () => {
         password1 = passwords.random()
         password2 = passwords.random()
     })
-    it.only("should follow and unfollow a user", (done) => {
+    it("should follow and unfollow a user", (done) => {
 
         call('POST', "https://skylabcoders.herokuapp.com/api/v2/users/",
             `{"name": "${name1}" , "surname": "${surname1}", "username" : "${email1}","password": "${password1}"}`,

@@ -5,8 +5,8 @@ function Home(props) {
     
     const [tweet, setTweet] = useState(undefined)
     const [view, setView] = useState('spinner')
-    const [name, setName] = useState(undefined)
-    const [surname, setSurname] = useState(undefined)
+    const [name, setName] = useState('')
+    const [surname, setSurname] = useState('')
     const [userEmail, setUserEmail] = useState(undefined)
     const [following, setFollowing] = useState(undefined)
 

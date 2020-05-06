@@ -8,7 +8,6 @@ function App() {
     const [surname, setSurname] = useState(undefined)
    
     const [token, setToken] = useState(undefined)
-   
 
     useEffect(() => {
         if (sessionStorage.token)
