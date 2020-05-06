@@ -22,9 +22,8 @@ describe.only('Retrieve users', () => {
                             `{ "username": "${email}", "password": "${password}" }`,
                             { 'Content-type': 'application/json' },
                             (error, status, body) => {
-                                debugger
                             if (error) return done(new Error(error.message))
-                            if (status !== 201) return done(new Error(`undexpected status ${status}`))
+                            if (status !== 200) return done(new Error(`undexpected status ${status}`))
 
                             const { token } = JSON.parse(body)
                             _token = token
@@ -40,13 +39,13 @@ describe.only('Retrieve users', () => {
                 const{name, surname, email} = users;
                 expect(name).to.equal(name)
                 expect(surname).to.equal(surname)
-                expect(username).to.equal(email)
+                expect(email).to.equal(email)
 
                 done()
             })
         })
 
-        it('test with status 200', done=>{
+        it('test with status 200', done =>{
             call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
             undefined,
             { 'Authorization': `Bearer ${_token}` },
@@ -57,13 +56,9 @@ describe.only('Retrieve users', () => {
                 done()
             }
         )
-        })
-
+        }).timeout(5000)
 
     }) 
     
-    
 })
 
-          
-            

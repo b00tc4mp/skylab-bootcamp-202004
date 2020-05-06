@@ -5,19 +5,63 @@ function App(){
   const [eltoken, setToken] = useState('')
 
 
+  useEffect(() => {
+    if (sessionStorage.token){
+      try {
+        isUserAuthenticated(sessionStorage.token, (error, isValidToken) => {
+          if (error) throw error
+          if (isValidToken){
+            setToken(sessionStorage.token)
+            setView('home')
+          } else setHashView('login')
+        })
+
+      } catch (error) {
+        if (error) throw error
+      }
+    }else{
+      const hash = location.hash.substring(1)
+
+      if (hash === 'login' || hash === 'register'){
+        setHashView(hash)
+      } else {
+        location.hash = ''
+        setView('landing')
+      }
+    }
+  }, [])
+
+
+
+  const setHashView = view => {
+    location.hash = view
+    setView(view)
+  }
+
+
   function handleGoToRegister() {
-  setView('register')
+  setHashView('register')
   }
 
 
   function handleGoToLogin(){
-    setView('login')
+    setHashView('login')
   } 
 
   function handleGoToHome(token){
     setToken(token)
+    sessionStorage.setItem('token', token)
     setView('home')
   }
+
+//   const handleLogout = () => {
+//     setToken()
+//     delete sessionStorage.token
+//     location.hash = ''
+//     setView('landing')
+// }
+
+  const handleUserSessionExpired = () => setHashView('login')
 
     return (
       <>
@@ -38,7 +82,7 @@ function App(){
             onRegister={handleGoToRegister}
           />
         )}
-        {view === "home" && <Home token={eltoken}/>}
+        {view === "home" && <Home token={eltoken} onUserSessionExpired={handleUserSessionExpired} />}
       </>
     );
   }

@@ -20,7 +20,12 @@ const surnames = [
     'Garcia',
     'Grillo',
     'Pan',
-    'Doe'
+    'Doe',
+    'Boludo',
+    'Loquillo',
+    'Pepinillo',
+    'Azuquita',
+    'Capullita'
 ]
 
 const passwords = [

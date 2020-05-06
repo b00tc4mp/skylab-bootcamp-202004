@@ -1,8 +1,5 @@
 function authenticateUser(username, password, callback) {
-  if (typeof username !== "string")
-    throw new TypeError(username + " is not a string");
-  if (!EMAIL_REGEX.test(username))
-    throw new Error(username + " is not an e-mail");
+
 
   if (typeof password !== "string")
     throw new TypeError(password + " is not a string");

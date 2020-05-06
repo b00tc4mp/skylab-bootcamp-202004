@@ -1,5 +1,4 @@
 function UsersResults({ foundUsers, handleFollow }) {
-    console.log(foundUsers)
     return <section className="results">
         {
             foundUsers.length ?

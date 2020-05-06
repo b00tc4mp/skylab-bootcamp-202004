@@ -10,7 +10,7 @@ function Home(props) {
   useEffect(() => {
     retrieveUser(props.token, (error, user) => {
         if (error) return setError(error)
-        setUser({user})
+        setUser(user)
     })
   }, [])
 
@@ -23,18 +23,34 @@ function Home(props) {
     })}
 
 
-
     function handleFollow(followEmail){
-        toggleFollowUser(props.token, followEmail, (error, email) => {
-            if(error) throw error
-            handleSearchUsers(query)
-        })
+
+        try {
+            toggleFollowUser(props.token, followEmail, error => {
+                if (error){
+                    if (error.message === 'invalid'){
+                        props.onUserSessionExpired()
+                    } else throw error
+                } else handleSearchUsers(query)
+            })
+        } catch (error){
+            if (error) throw error
+        }
+        // toggleFollowUser(props.token, followEmail, (error, email) => {
+        //     if(error) throw error
+        //     handleSearchUsers(query)
+        // })
     }
 
 
     function changeView(view){
         setView(view)
     }
+
+    const setHashView = view => {
+        location.hash = view
+        setView(view)
+      }
 
 
         return <>
@@ -43,9 +59,9 @@ function Home(props) {
 
 
         <ul>
-            <li onClick={()=> changeView('google')}>Google Search</li>
-            <li onClick={()=> changeView('search')}>Search Users</li>
-            <li onClick={()=> changeView('twitter')}>Twitter</li>
+            <li onClick={()=> setHashView('google')}>Google Search</li>
+            <li onClick={()=> setHashView('search')}>Search Users</li>
+            <li onClick={()=> setHashView('twitter')}>Twitter</li>
         </ul>
 
 
