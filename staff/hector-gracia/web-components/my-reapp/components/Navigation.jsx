@@ -77,9 +77,11 @@ class Navigation extends Component{
     }
     handleOnFollow=(id)=>{
         toogleFollow(this.state.token,id,(error)=>{
-            if(error!==undefined){
-                //Muy mal el console.log
-                //console.log("Ha habido un problema al seguir")
+            if(error===undefined){
+
+                //this.handleSearchUsers(this.state.usersResults,this.state.usersQuery)
+                this.handleDiscoverOnSearch(this.state.usersQuery);
+                this.setState({view:"discover"});//Chuta a medias
             }
         });
     }

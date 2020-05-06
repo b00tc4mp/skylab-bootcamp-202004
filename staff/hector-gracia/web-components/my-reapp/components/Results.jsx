@@ -31,7 +31,7 @@ class Results extends Component{
                     : <h2>No se ha encontrado nada</h2>
                     }
                 </section>
-                break;
+                
             case "discover":
                 //Saca una lista con todos los usuarios
                 return <section className="pete__list">
@@ -43,7 +43,7 @@ class Results extends Component{
                     }
                     
                 </section>
-                break;
+                
             case "following":
                 //Saca una lista con todos los usuarios que está siguiendo
                 return <section className="pete__list">
@@ -53,7 +53,7 @@ class Results extends Component{
                 </section>
                 
                 
-                break;
+                
             case "follower":
                 //Saca una lista con los usuarios que le siguen
                 return <section className="pete__list">
@@ -61,7 +61,7 @@ class Results extends Component{
                     <ul>{this.props.followersResults.map((value) => <User user={value} onFollow={this.handleOnFollow}/> )}</ul>
                     : <h2>No se ha encontrado nada</h2>}
                 </section>
-                break;
+                
             case "feed":
                 //Crea una lista con los tweets de todos los usuarios que sigue
                 return <section className="pete__list">
@@ -73,7 +73,7 @@ class Results extends Component{
                     : <h2>No se ha encontrado nada</h2>
                     }
                 </section>
-                break;
+                
             case "likes":
                 //Lista con todos los tweets a los que el usuario le ha dado a like
                 break;
@@ -88,7 +88,7 @@ class Results extends Component{
                     : <h2>No se ha encontrado nada</h2>
                     }
                 </section>
-                break;
+                
         }
     }
 }

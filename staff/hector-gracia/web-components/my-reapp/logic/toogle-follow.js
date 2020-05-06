@@ -15,7 +15,7 @@ function toogleFollow(token,id,callback){//Hace que un usuario siga o deje de se
                     `{"following": ["${id}"] }`,
                     {"Content-type": "application/json", "Authorization": `Bearer ${token}`}, (error,status,body)=>{
                         if(error) return callback(error);
-                        if(status!==204){
+                        if(status===204){
                             callback(undefined)
                         }else{
                             callback(new Error(JSON.parse(body).error))
@@ -34,7 +34,7 @@ function toogleFollow(token,id,callback){//Hace que un usuario siga o deje de se
                     `{"following": ${follow} }`,
                     {"Content-type": "application/json", "Authorization": `Bearer ${token}`}, (error,status,body)=>{
                         if(error) return callback(error);
-                        if(status===204){//Creo que debería ser ===
+                        if(status===204){
                             callback(undefined)
                         }else{
                             callback(new Error(JSON.parse(body).error))
