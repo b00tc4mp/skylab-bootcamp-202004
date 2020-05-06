@@ -115,6 +115,7 @@ function Home({token, onLogout, onLogin}) {
         event.preventDefault()
                 
         setHashView('google')
+        if (googleQuery) location.hash += `?q=${googleQuery}`
     }
 
     function handleNews(event) {
@@ -150,6 +151,9 @@ function Home({token, onLogout, onLogin}) {
     }
 
     function handleGoogleSearch(query) {
+        if (!location.hash.includes('?q=')) {
+            location.hash += `?q=${query}`
+        }
         google(query, (error, results) => {
             if (error) setGoogleError(error.message)
             else setGoogleResults(results)
@@ -187,7 +191,8 @@ function Home({token, onLogout, onLogin}) {
 
                 if (hash.includes('?q=')) {
                     setView(hash.split('?q=')[0])
-                    handleSearchUsers(hash.split('?q=')[1])
+                    if (hash.includes('users')) handleSearchUsers(hash.split('?q=')[1])
+                    else handleGoogleSearch(hash.split('?q=')[1])
                 } else {
                     setView(hash)
                 }
