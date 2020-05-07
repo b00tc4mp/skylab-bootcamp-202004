@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section className='landing'>
+    <a href="">Register</a>
+    <a href="">Login</a>
+</section>
+
+<section class="register">
+    <form >
+        <input type="text" name="name" placeholder="name">
+        <input type="text" name="surname" placeholder="surname">
+        <input type="email" name="email" placeholder="e-mail">
+        <input type="password" name="password" ><br>
+        <input type="checkbox" id="checkbox1" value="business">Business<br>
+        <input type="checkbox" id="checkbox2" value="entertainment">Entertainment<br>
+        <input type="checkbox" id="checkbox3" value="general">General<br>
+        <input type="checkbox" id="checkbox4" value="health">Health<br>
+        <input type="checkbox" id="checkbox4" value="science">Science<br>
+        <input type="checkbox" id="checkbox4" value="sports">Sports<br>
+        <input type="checkbox" id="checkbox4" value="technology">Technology<br>
+
+        <button>Submitnav</button> or <a href="">Login</a>
+        <p class="feedback feedback--error">Wrong credentials</p>
+    </form>
+</section>
+
+<section className="login">
+    <form>
+        <input type="email" name="email" placeholder="e-mail">
+        <input type="password" name="password" placeholder="password">
+        <button>Submit</button> or 
+        <a href="">Register</a>
+    </form>
+    <p class="feedback">Wrong credencials</p>
+</section>
+
+<section class="preferences">
+
+    <input type="input" name="language">
+    <input type="input" name="categories/interests">
+
+</section>
+
+<section className="home">
+    <header>
+        <nav>
+            <a href="">profile</a>
+            <a href="">favs</a>
+            <a href="">search</a>
+                <form className="search">
+                    <input type="text" name="search">
+                    <button>Submit</button>
+                </form>
+        </nav>     
+    </header>
+    <main>  news</main>
+   <footer>
+
+   </footer>
+</section>    
+
+<section className="profile">
+    <input type="input" name="language">
+    <input type="input" name="categories/interests">
+    <input type="input" name="password">
+    <input type="input" name="username">
+</section>
+
+<section className="favs">
+    <p>show favs</p>
+</section>
+</body>
+</html>
