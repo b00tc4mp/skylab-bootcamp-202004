@@ -3,33 +3,43 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Template task-talk</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0"> title>Template task-talk</title>
+    <link rel=" stylesheet " href="style.css ">
 </head>
 
 <body>
-    <section class="landing">
-        <button>Login</button>
-        <button>Register</button>
+    <section class="landing ">
+        <h1>Task Talk</h1>
+        <button class="button__navigation button__navigation--regular ">Login</button>
+        <button class="button__navigation button__navigation--inverted ">Register</button>
     </section>
 
-
-
-    <section class="login">
+    <section class="login ">
         <h1>Login</h1>
         <form>
-            <input type="email" name="email" placeholder="e-mail" required>
-            <input type="password" name="password" placeholder="password">
-            <button>Submit</button> or <a href="">Register</a>
+            <input type="email " name="email " placeholder="e-mail " required>
+            <input type="password " name="password " placeholder="password ">
+            <button class="button__navigation button__navigation--regular ">Submit</button> or <a href=" ">Register</a>
         </form>
-        <p class="feedback feedback--error">Wrong credentials</p>
+        <p class="feedback feedback--error ">Wrong credentials</p>
     </section>
 
+    <section class="register ">
+        <h1>Register</h1>
+        <form>
+            <input type="text " name="name " placeholder="name " required pattern="[A-Za-z]{1,20} ">
+            <input type="text " name="surname " placeholder="surname " required pattern="[A-Za-z]{1,20} ">
+            <input type="email " name="email " placeholder="e-mail " required>
+            <input type="password " name="password " placeholder="password " required minLength="6 ">
+            <button class="button__navigation button__navigation--regular ">Submit</button> or <a href=" ">Login</a>
+        </form>
+        <p class="feedback feedback--error ">Wrong credentials</p>
+    </section>
 
-    <section class="home">
-        <div class="upper-nav-bar"> </div>
-        <div class="nav-bar"></div>
+    <section class="home ">
+
+        <div class="navigation__bar navigation__bar--upper ">soy una barra de navegacion</div>
+        <div class="group__card group__card--preview "></div>
     </section>
 
 
