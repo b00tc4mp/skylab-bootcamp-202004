@@ -1,0 +1,109 @@
+.register, .login {
+  display: inline-block;
+  padding: 1rem;
+}
+.register h1, .login h1 {
+  text-align: center;
+  font-style: italic;
+  font-family: Georgia;
+  color: white;
+}
+
+h1 {
+  text-align: center;
+  font-style: italic;
+  font-family: Georgia;
+  color: white;
+}
+
+.landing {
+  background: salmon;
+  text-align: center;
+  height: 10rem;
+  width: 15rem;
+  justify-content: center;
+  padding-top: 5rem;
+  border-radius: 10%;
+  margin: auto;
+  text-align: center;
+}
+.landing a {
+  font-size: 3rem;
+}
+.landing button {
+  display: block;
+  margin: 0 auto;
+  margin-top: 1rem;
+}
+
+.login {
+  background: salmon;
+  width: 100%;
+  height: 10rem;
+  text-align: center;
+  justify-content: center;
+  padding-top: 7rem;
+}
+
+.register {
+  background: salmon;
+  width: 100%;
+  height: 10rem;
+  text-align: center;
+  justify-content: center;
+  padding-top: 7rem;
+}
+
+.home {
+  width: 100vw;
+  height: 170vh;
+}
+
+.navigation__bar--upper {
+  overflow-anchor: none;
+  position: sticky;
+  top: 0px;
+  width: 100%;
+  min-height: 6rem;
+  max-height: 6rem;
+  background-color: black;
+  border: 2px;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+}
+
+.group__card--preview {
+  width: 100%;
+  height: 100%;
+  background-color: #b3ccff;
+  color: red;
+}
+
+.button__navigation {
+  font-size: 1rem;
+  border: none;
+  text-align: center;
+  font-style: italic;
+  font-family: Georgia;
+  border-radius: 10px;
+  font-weight: bold;
+}
+.button__navigation--regular {
+  background-color: white;
+  color: salmon;
+}
+.button__navigation--regular:hover {
+  background-color: #C16156;
+  color: white;
+}
+.button__navigation--inverted {
+  background-color: #C16156;
+  color: white;
+}
+.button__navigation--inverted:hover {
+  background-color: white;
+  color: salmon;
+}
+
+/*# sourceMappingURL=style.css.map */
