@@ -1,0 +1,244 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans&display=swap");
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #1c1c1c;
+  color: white;
+  font-family: "Work Sans", sans-serif;
+}
+
+.nav {
+  margin-top: 1em;
+  font-size: 1.2em;
+  background: rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: flex-end;
+}
+.nav__item {
+  margin-right: 5%;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+.nav__item--contrast {
+  color: #f7ce78;
+}
+
+.brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 5em 10%;
+}
+.brand__title {
+  font-size: 2em;
+  margin: 1em 0;
+}
+.brand__description {
+  text-align: center;
+}
+
+.footer {
+  padding: 2em 0 0.5em 0;
+  width: 100%;
+  background: #424242;
+  border-radius: 2em 2em 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.footer__text {
+  margin: 0 auto;
+  margin-bottom: 0.8em;
+  font-size: 1.3em;
+}
+.footer__button {
+  margin: 0 auto;
+  margin: 1em;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.footer__button--contrast {
+  color: #f7ce78;
+}
+.footer__copyright {
+  margin-top: 3em;
+  font-size: 0.6em;
+}
+
+.crypto-coins {
+  display: flex;
+  flex-direction: column;
+}
+.crypto-coins__title {
+  width: 80%;
+  margin: 0 auto;
+  color: lightgrey;
+}
+.crypto-coins__search {
+  border: 1em solid white;
+  border-radius: 20px;
+  margin: 1em auto;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+}
+.crypto-coins__search input {
+  width: 100%;
+  border-style: none;
+  color: inherit;
+  font-size: 1em;
+  outline: none;
+  color: black;
+}
+
+.coins-container {
+  margin: 0 auto;
+  width: 90%;
+  margin-top: 20px;
+  background-color: #1c1c1c;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.coins-container .coin {
+  width: 12em;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: #f7ce78;
+  border-radius: 25px;
+  margin: 15px 0;
+  padding: 15px;
+}
+.coins-container .coin span {
+  height: 25px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1em;
+}
+.coins-container .coin__img {
+  width: 50px;
+  border-radius: 25px;
+}
+.coins-container .coin__name {
+  color: #dd7631;
+}
+.coins-container .coin__price {
+  font-weight: bold;
+  color: black;
+}
+.coins-container .coin__percentage {
+  color: #dd7631;
+}
+
+.register {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  background-color: white;
+  margin: 1em auto;
+  border-radius: 0.5em;
+}
+.register__title {
+  color: black;
+  margin: 1em 0;
+}
+.register__form {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+.register__form input {
+  font-size: 1em;
+  margin: 1em auto;
+  width: 90%;
+  border: 1px solid #ccc;
+  border-radius: 0.3em;
+  box-sizing: border-box;
+  padding: 0.5em 1em;
+}
+.register__form button {
+  font-size: 1em;
+  padding: 0.8em;
+  margin: 1em auto;
+  width: 70%;
+  background: #f7ce78;
+  border-color: #f7ce78;
+  border-radius: 0.3em;
+}
+.register__to-login {
+  color: black;
+  margin-bottom: 1em;
+}
+.register__to-login a {
+  margin-left: 0.8em;
+  text-decoration: underline;
+  color: black;
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 1em;
+}
+
+.login {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  background-color: white;
+  margin: 1em auto;
+  border-radius: 0.5em;
+}
+.login__title {
+  color: black;
+  margin: 1em 0;
+}
+.login__form {
+  display: flex;
+  flex-direction: column;
+  height: 15em;
+  width: 70%;
+}
+.login__form input {
+  font-size: 1em;
+  margin: 1em auto;
+  width: 90%;
+  border: 1px solid #ccc;
+  border-radius: 0.3em;
+  box-sizing: border-box;
+  padding: 0.5em 1em;
+}
+.login__form button {
+  font-size: 1em;
+  padding: 0.8em;
+  margin: 1em auto;
+  width: 70%;
+  background: #f7ce78;
+  border-color: #f7ce78;
+  border-radius: 0.3em;
+}
+.login__to-register {
+  color: black;
+  margin-bottom: 1em;
+}
+.login__to-register a {
+  margin-left: 0.8em;
+  text-decoration: underline;
+  color: black;
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 1em;
+}
+
+/*# sourceMappingURL=styles.css.map */
