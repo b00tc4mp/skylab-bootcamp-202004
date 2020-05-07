@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <header>
+    <nav>
         <a href="">Register</a> 
         <a href="">Login</a>
         <a href="">Search</a>
@@ -18,7 +18,7 @@
         <a href="">Random</a>
         <a href="">Your decks</a> 
         -->
-    </header>
+    </nav>
 
     <section class = 'landing'>
         <form>
@@ -1351,21 +1351,6 @@
                 <label for="common">Common</label>
             </span>
 
-            <label for="criteria">Criteria:</label>
-            <select id="criteria">
-                <option value=""></option>
-                <option value="highres_image">High Resolution Image</option>
-                <option value="reserved">Reserved List</option>
-                <option value="foil">Foil</option>
-                <option value="nonfoil">Non Foil</option>
-                <option value="oversized">Oversized</option>
-                <option value="promo">Promo</option>
-                <option value="reprint">Reprint</option>
-                <option value="full_art">Full Art</option>
-                <option value="textless">Textless</option>
-                <option value="story_spotlight">Story Spotlight</option>
-            </select>
-
             <label for="artist">Artist:</label>
             <input type="text" name="artist" id="artist">
 
@@ -1405,9 +1390,6 @@
                 <option value="set">Sort by Set/Number</option>
                 <option value="rarity">Sort by Rarity</option>
                 <option value="color">Sort by Color</option>
-                <option value="usd">Sort by Price: USD</option>
-                <option value="tix">Sort by Price: TIX</option>
-                <option value="eur">Sort by Price: EUR</option>
                 <option value="cmc">Sort by CMC</option>
                 <option value="power">Sort by Power</option>
                 <option value="toughness">Sort by Toughness</option>
@@ -1421,7 +1403,21 @@
     </section>
 
     <section class = 'results'>
-
+        <header>Need display options</header>
+        <article>1 – 60 of 155 cards where the name includes “a” and the text includes “b” and the card types include “artifact” and the colors ≤ R and the mana cost is greater than or equal to {1} and the converted mana cost &#60 10 and it’s legal in Vintage and the rarity is equal to common</article>
+        <article class = 'results--cards'>
+            <img src = 'https://img.scryfall.com/cards/normal/front/7/8/7855528a-ede9-49a9-8749-795a004fd927.jpg?1562788826'>
+            <img src = 'https://img.scryfall.com/cards/normal/front/7/8/7855528a-ede9-49a9-8749-795a004fd927.jpg?1562788826'>
+            <img src = 'https://img.scryfall.com/cards/normal/front/7/8/7855528a-ede9-49a9-8749-795a004fd927.jpg?1562788826'>
+            <img src = 'https://img.scryfall.com/cards/normal/front/7/8/7855528a-ede9-49a9-8749-795a004fd927.jpg?1562788826'>
+            <img src = 'https://img.scryfall.com/cards/normal/front/7/8/7855528a-ede9-49a9-8749-795a004fd927.jpg?1562788826'>
+            <img src = 'https://img.scryfall.com/cards/normal/front/7/8/7855528a-ede9-49a9-8749-795a004fd927.jpg?1562788826'>
+            <img src = 'https://img.scryfall.com/cards/normal/front/7/8/7855528a-ede9-49a9-8749-795a004fd927.jpg?1562788826'>
+            <img src = 'https://img.scryfall.com/cards/normal/front/7/8/7855528a-ede9-49a9-8749-795a004fd927.jpg?1562788826'>
+            <img src = 'https://img.scryfall.com/cards/normal/front/7/8/7855528a-ede9-49a9-8749-795a004fd927.jpg?1562788826'>
+            <img src = 'https://img.scryfall.com/cards/normal/front/7/8/7855528a-ede9-49a9-8749-795a004fd927.jpg?1562788826'>
+            <img src = 'https://img.scryfall.com/cards/normal/front/7/8/7855528a-ede9-49a9-8749-795a004fd927.jpg?1562788826'>
+        </article>
     </section>
 
     <section class = 'card'>
