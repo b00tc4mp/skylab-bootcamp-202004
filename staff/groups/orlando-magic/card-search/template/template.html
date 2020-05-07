@@ -581,7 +581,7 @@
 
             <label for="manacost">Manacost:</label>
             <input type="text" name="manacost">
-            <select id="subjoiner" data-separator aria-hidden = 'true'>
+            <select id="subjoiner">
                 <option value="">Add symbol</option>
                 <option value="{T}">{T} – tap this permanent</option>
                 <option value="{Q}">{Q} – untap this permanent</option>
@@ -641,7 +641,6 @@
                 <option value="tou">Toughness</option>
                 <option value="loy">Loyalty</option>                
             </select>
-
             <select id="stat_1_mode">
                 <option value="=">equals</option>
                 <option value="<">less than</option>
@@ -650,11 +649,9 @@
                 <option value=">=">greater than or equal to</option> 
                 <option value="!=">not equal to</option> 
             </select>
-
-            <input type="number" name="stats">
+            <input type="number" name="statnumber">
 
             <label for="formats">Formats</label>
-
             <select id="legality">
                 <option value="legal">Legal</option>
                 <option value="restricted">Restricted</option>
