@@ -1,15 +1,9 @@
-function Home({onGoToLogin, onGoToRegister}) {
+function Home({onGoToLogin}) {
 
     const handleGoToLogin= event =>{
         event.preventDefault()
 
         onGoToLogin()
-    }
-
-    const handleGoToRegister= event =>{
-        event.preventDefault()
-
-        onGoToRegister()
     }
 
     return <section className="home">
@@ -18,8 +12,7 @@ function Home({onGoToLogin, onGoToRegister}) {
         <header className="Header">
             <section className="Header__container">
                 <h2 className="Header__container--name">4thElement</h2>
-                <a onClick={handleGoToLogin} className="Header__container--login" href="">Login</a>
-                <a onClick={handleGoToRegister} className="Header__container--register" href="">Register</a>
+                <a onClick={handleGoToLogin} className="Header__container--login" href="">Logout</a>
             </section>
         </header>
 
