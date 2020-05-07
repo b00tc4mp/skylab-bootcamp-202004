@@ -35,3 +35,4 @@ const passwords = [
     'poiuytr123123',
     'asdfhasdfh'
 ]
+const countries = ["ae" ,"ar", "at", "au", "be", "bg", "br", "ca" ,"ch", "cn"]
