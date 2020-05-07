@@ -1,0 +1,1 @@
+ReactDOM.render(<Register />, document.getElementById('root'))
