@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Mocha Tests</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="vendor/mocha/mocha.css" />
+
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <script src="https://api.trello.com/1/client.js?key=0b485e17ba3c15fb1f01827832e6fa16"></script>
+
+</head>
+
+<body>
+    <div id="mocha"></div>
+
+    <script src="vendor/mocha/mocha.js"></script>
+    <script src="vendor/chai/chai.js"></script>
+
+    <script class="mocha-init">
+        mocha.setup('bdd')
+        mocha.checkLeaks()
+        mocha.timeout(50000)
+
+        const { expect } = chai
+    </script>
+
+    
+    
+    <script class="mocha-exec">
+        mocha.run()
+    </script>
+</body>
+
+</html>
