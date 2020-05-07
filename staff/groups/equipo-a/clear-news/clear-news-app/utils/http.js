@@ -27,13 +27,8 @@ const Http = (() => {
         http[method] = method
 
     return http
-<<<<<<< Updated upstream
 
 })()
 
 
 
-=======
-})()
-
->>>>>>> Stashed changes
