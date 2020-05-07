@@ -21,4 +21,7 @@ function call(method, url, body, headers, callback) {
     }
 
     xhr.send(body ? body : undefined)
+
 }
+
+

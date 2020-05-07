@@ -27,5 +27,8 @@ const Http = (() => {
         http[method] = method
 
     return http
+
 })()
+
+
 
