@@ -16,4 +16,4 @@ Cryptonite is an app made for those investors that wants to know at a glance how
 
 ## Link
 
-[cryptonite-app](https://github.com/Aitor1111/skylab-bootcamp-202004/tree/cryptonite-develop/staff/groups/cryptonite)
+[cryptonite-app](https://github.com/Aitor1111/skylab-bootcamp-202004/tree/cryptonite-develop/staff/groups/team-jalapeno/cryptonite)
