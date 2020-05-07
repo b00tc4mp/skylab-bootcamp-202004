@@ -6,10 +6,10 @@ Cryptonite is an app made for those investors that wants to know at a glance how
 
 ## Screenshots
 
-![dashboard](https://imgur.com/3Xr9gZ4)
-![home](https://imgur.com/ToQKclC)
-![news](https://imgur.com/CKjrrRF)
-![graphs](https://imgur.com/I6NGNB0)
+![dashboard](https://i.imgur.com/3Xr9gZ4.png)
+![home](https://i.imgur.com/ToQKclC.png)
+![news](https://i.imgur.com/CKjrrRF.png)
+![graphs](https://i.imgur.com/I6NGNB0.png)
 
 
 
