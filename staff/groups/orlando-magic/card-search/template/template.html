@@ -48,7 +48,7 @@
 
             <label for="text">Card Text</label>
             <input type="text" name="text">
-            <select id="subjoiner" data-separator aria-hidden = 'true'>
+            <select id="mana">
                 <option value="">Add symbol</option>
                 <option value="{T}">{T} – tap this permanent</option>
                 <option value="{Q}">{Q} – untap this permanent</option>
@@ -102,7 +102,7 @@
             </select>
 
             <label for="type">Type Line</label>
-            <select id="subjoiner" data-separator aria-hidden = 'true'>
+            <select id="types">
                 <option value=""></option>
                 <optgroup label="Types"><option data-pol="+" data-item="artifact" value="artifact">Artifact</option>
                     <option data-pol="+" data-item="conspiracy" value="conspiracy">Conspiracy</option>
@@ -1340,7 +1340,7 @@
             </select>  
 
             <label for="rarity">Rarity:</label>
-            <span id = "rarity">
+            <div id = "rarity">
                 <input type="checkbox" name="mythicrare" id="mythicrare">
                 <label for="mythicrare">Mythic Rare</label>
                 <input type="checkbox" name="rare" id="rare">
@@ -1349,7 +1349,7 @@
                 <label for="uncommon">Uncommon</label>
                 <input type="checkbox" name="common" id="common">
                 <label for="common">Common</label>
-            </span>
+            </div>
 
             <label for="artist">Artist:</label>
             <input type="text" name="artist" id="artist">
@@ -1421,7 +1421,7 @@
     </section>
 
     <section class = 'card'>
-
+        
     </section>
 
     <footer>
