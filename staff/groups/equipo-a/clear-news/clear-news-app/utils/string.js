@@ -1,4 +1,3 @@
-  
 (() => {
     const ALPHABETIC_REGEX = /^[a-zA-Z ]+$/
 
