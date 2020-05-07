@@ -1,7 +1,7 @@
 /* Error: Can't find stylesheet to import.
  *    ,
- * 17 | @import \staff\groups\4thElement\app\style\header.sass
- *    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ * 17 | @import /style/header.sass
+ *    |         ^^^^^^^^^^^^^^^^^^
  *    '
  *   style.sass 17:9  root stylesheet */
 
@@ -13,5 +13,5 @@ body::before {
   padding: 1em;
   margin-bottom: 1em;
   border-bottom: 2px solid black;
-  content: "Error: Can't find stylesheet to import.\a    \2577 \a 17 \2502  @import \\staff\\groups\\4thElement\\app\\style\\header.sass\a    \2502          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\a    \2575 \a   style.sass 17:9  root stylesheet";
+  content: "Error: Can't find stylesheet to import.\a    \2577 \a 17 \2502  @import /style/header.sass\a    \2502          ^^^^^^^^^^^^^^^^^^\a    \2575 \a   style.sass 17:9  root stylesheet";
 }
