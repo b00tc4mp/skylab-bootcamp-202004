@@ -7,7 +7,6 @@ function Home({onGoToLogin}) {
     }
 
     return <section className="home">
-        <script src="https://kit.fontawesome.com/8134188eff.js" crossOrigin="anonymous"></script>
 
         <header className="Header">
             <section className="Header__container">

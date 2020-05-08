@@ -46,6 +46,9 @@
 .Footer .fas {
   margin: 0.8vh 7.5vw;
 }
+.Footer .fas:hover {
+  color: white;
+}
 
 .Header {
   top: 0;
