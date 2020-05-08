@@ -146,11 +146,20 @@ body {
   height: 200px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
   background: #f7ce78;
   border-radius: 25px;
   margin: 15px 0;
   padding: 15px;
+}
+.coins-container .coin__head {
+  display: flex;
+  justify-content: space-between;
+  color: black;
+  font-size: 1.5em;
+}
+.coins-container .coin__body {
+  margin-bottom: 0.5em;
 }
 .coins-container .coin span {
   height: 25px;
