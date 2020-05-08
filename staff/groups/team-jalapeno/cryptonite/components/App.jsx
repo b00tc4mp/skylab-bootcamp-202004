@@ -1,20 +1,18 @@
 const { useState, Component } = React
 
 function App() {
-    const [view, setView] = useState('landing')
+    const [view, setView] = useState('register')
 
 
+    const handleGoToLogin = () => setView('login')
 
-    return
-    // LANDING
-    // NAV
-    // BRAND
-    // CRYPTO COINS 
-    // FOOTER
 
-    // REGISTER
-
-    // LOGIN
-
-    //HOME
+    return(
+        <> 
+            {view === 'register' && <Register goToLogin={handleGoToLogin} />}
+            {view === 'login' && <p>soy login</p>}
+        
+        </>
+    )
+   
 }
