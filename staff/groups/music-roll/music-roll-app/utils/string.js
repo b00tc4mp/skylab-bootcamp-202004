@@ -1,6 +1,5 @@
 (() => {
     const ALPHABETIC_REGEX = /^[a-zA-Z ]+$/
-    const PASSWORD_REGEX = /(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/
 
     String.isString = function (string) {
         return typeof string === 'string'
@@ -17,11 +16,7 @@
 
         return ALPHABETIC_REGEX.test(string)
     }
-    String.isValidPassword = function(password) {
-        this.validate(password)
 
-        return PASSWORD_REGEX.test(password)
-    }
 
     String.isLengthGreaterEqualThan = function (string, length) {
         this.validate(string)

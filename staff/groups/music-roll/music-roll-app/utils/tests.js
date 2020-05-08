@@ -20,13 +20,4 @@ const surnames = [
     'Garcia',
     'Grillo',
     'Pan',
-    'Doe'
-]
 
-const passwords = [
-    'DI12312312323',
-    'Hoabcabcabc22',
-    'Quertyquerty22',
-    'Poiuytr123123',
-    'Peasdfhasdfh12'
-]
