@@ -1,12 +1,34 @@
 .register, .login {
   display: inline-block;
-  padding: 1rem;
+  padding: 0rem;
+  margin: 0px;
 }
 .register h1, .login h1 {
   text-align: center;
   font-style: italic;
   font-family: Georgia;
   color: white;
+}
+
+.navigation__link:visited {
+  color: white;
+}
+.navigation__link:link {
+  color: white;
+}
+.navigation__link:hover {
+  color: #C16156;
+}
+
+.navigation__input {
+  border-color: #C16156;
+}
+
+.aux {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background-color: #C16156;
 }
 
 h1 {
@@ -16,13 +38,17 @@ h1 {
   color: white;
 }
 
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
 .landing {
   background: salmon;
   text-align: center;
-  height: 10rem;
+  height: 15rem;
   width: 15rem;
   justify-content: center;
-  padding-top: 5rem;
   border-radius: 10%;
   margin: auto;
   text-align: center;
@@ -38,45 +64,68 @@ h1 {
 
 .login {
   background: salmon;
-  width: 100%;
-  height: 10rem;
+  width: 15rem;
+  height: 15rem;
   text-align: center;
   justify-content: center;
-  padding-top: 7rem;
+  color: white;
+  margin: auto;
+  border-radius: 10%;
 }
 
 .register {
   background: salmon;
-  width: 100%;
-  height: 10rem;
+  width: 15rem;
+  height: 15rem;
   text-align: center;
   justify-content: center;
-  padding-top: 7rem;
+  color: white;
+  margin: auto;
+  border-radius: 10%;
 }
 
 .home {
-  width: 100vw;
+  width: 100%;
   height: 170vh;
+  margin-left: 0;
+  padding: 0;
+  background-color: #C16156;
 }
 
+.navigation__text {
+  margin-left: 3%;
+}
+
+.navigation__bar {
+  box-sizing: border-box;
+}
 .navigation__bar--upper {
-  overflow-anchor: none;
+  display: inline-flex;
   position: sticky;
+  color: white;
   top: 0px;
   width: 100%;
-  min-height: 6rem;
-  max-height: 6rem;
-  background-color: black;
-  border: 2px;
+  min-height: 4.5rem;
+  max-height: 4.5rem;
+  background-color: salmon;
   justify-content: space-around;
   align-items: center;
   flex-direction: row;
+  font-size: 1.5rem;
+  font-style: italic;
+  font-family: Georgia;
+  font-weight: bold;
+  justify-content: space-between;
+  border-style: solid;
+  border-width: 1rem;
+  border-color: salmon;
 }
 
 .group__card--preview {
   width: 100%;
   height: 100%;
   background-color: #b3ccff;
+  background-color: #C16156;
   color: red;
 }
 
@@ -84,7 +133,6 @@ h1 {
   font-size: 1rem;
   border: none;
   text-align: center;
-  font-style: italic;
   font-family: Georgia;
   border-radius: 10px;
   font-weight: bold;
@@ -104,6 +152,106 @@ h1 {
 .button__navigation--inverted:hover {
   background-color: white;
   color: salmon;
+}
+.button__card {
+  text-align: justify;
+  font-size: 1.5rem;
+  border: none;
+  text-align: center;
+  font-family: Georgia;
+  border-radius: 0.3rem;
+  font-weight: bold;
+}
+.button__card--regular {
+  background-color: white;
+  color: salmon;
+}
+.button__card--regular:hover {
+  background-color: #C16156;
+  color: white;
+}
+.button__card--inverted {
+  background-color: #C16156;
+  color: white;
+}
+.button__card--inverted:hover {
+  background-color: white;
+  color: salmon;
+}
+.button__card--back {
+  grid-column-start: 1;
+}
+.button__card--edit {
+  grid-column-start: 2;
+}
+.button__card--save {
+  grid-column-start: 2;
+}
+.button__card--delete {
+  grid-column-start: 4;
+}
+.button__card--configuration {
+  justify-self: end;
+  margin: 3%;
+  font-size: 1.5rem;
+}
+
+.card {
+  box-sizing: border-box;
+  background-color: white;
+  border-style: solid;
+  border-color: salmon;
+  border-width: 0.5rem;
+  border-radius: 1rem;
+  margin-top: 0.6rem;
+  margin-left: 2%;
+  width: 96%;
+}
+.card--highlighted {
+  background-color: white;
+}
+.card--preview {
+  background-color: white;
+}
+.card__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 5fr 1fr;
+  grid-column-gap: 5px;
+  justify-content: left;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.card__title {
+  width: 100%;
+  background-color: salmon;
+  color: white;
+  border-style: solid;
+  border-color: salmon;
+  border-width: 2px;
+  text-align: center;
+  font-size: 1rem;
+  font-style: italic;
+  font-family: Georgia;
+  font-weight: bold;
+  padding: 0px;
+  margin: -2px;
+}
+
+.card__message {
+  color: black;
+  text-align: justify;
+  font-family: Georgia;
+  margin: 0.5rem;
+}
+
+.card__input {
+  border: none;
+}
+.card__input--text {
+  margin-left: -1%;
+  width: 100%;
+  resize: none;
 }
 
 /*# sourceMappingURL=style.css.map */

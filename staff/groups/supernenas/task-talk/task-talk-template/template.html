@@ -9,38 +9,123 @@
 </head>
 
 <body>
-    <section class="landing ">
-        <h1>Task Talk</h1>
-        <button class="button__navigation button__navigation--regular ">Login</button>
-        <button class="button__navigation button__navigation--inverted ">Register</button>
-    </section>
+    <div class="aux">
+        <section class="landing ">
+            <h1>Task Talk</h1>
+            <br> <br>
+            <button class="button__navigation button__navigation--regular ">Login</button>
+            <button class="button__navigation button__navigation--inverted ">Register</button>
+        </section>
+    </div>
 
-    <section class="login ">
-        <h1>Login</h1>
-        <form>
-            <input type="email " name="email " placeholder="e-mail " required>
-            <input type="password " name="password " placeholder="password ">
-            <button class="button__navigation button__navigation--regular ">Submit</button> or <a href=" ">Register</a>
-        </form>
-        <p class="feedback feedback--error ">Wrong credentials</p>
-    </section>
 
-    <section class="register ">
-        <h1>Register</h1>
-        <form>
-            <input type="text " name="name " placeholder="name " required pattern="[A-Za-z]{1,20} ">
-            <input type="text " name="surname " placeholder="surname " required pattern="[A-Za-z]{1,20} ">
-            <input type="email " name="email " placeholder="e-mail " required>
-            <input type="password " name="password " placeholder="password " required minLength="6 ">
-            <button class="button__navigation button__navigation--regular ">Submit</button> or <a href=" ">Login</a>
-        </form>
-        <p class="feedback feedback--error ">Wrong credentials</p>
+    <div class="aux">
+        <section class="login ">
+            <h1>Login</h1>
+            <form>
+                <input class="navigation__input" type=" email " name="email " placeholder="e-mail " required>
+                <input class="navigation__input" type="password " name="password " placeholder="password ">
+                <br> <br>
+                <button class="button__navigation button__navigation--regular ">Submit</button> or <a class="navigation__link " href=" ">Register</a>
+            </form>
+            <p class="feedback feedback--error ">Wrong credentials</p>
+        </section>
+    </div>
+
+    <div class="aux">
+        <section class="register ">
+            <h1>Register</h1>
+            <form>
+                <input class="navigation__input" type="text " name="name " placeholder="name " required pattern="[A-Za-z]{1,20} ">
+                <input class="navigation__input" type="text " name="surname " placeholder="surname " required pattern="[A-Za-z]{1,20} ">
+                <input class="navigation__input" type="email " name="email " placeholder="e-mail " required>
+                <input class="navigation__input" type="password " name="password " placeholder="password " required minLength="6 ">
+                <br> <br>
+                <button class="button__navigation button__navigation--regular ">Submit</button> or <a class="navigation__link ">Login</a>
+            </form>
+            <p class="feedback feedback--error ">Wrong credentials</p>
+        </section>
+    </div>
+
+
+    <section class="home ">
+        <div class="navigation__bar navigation__bar--upper ">
+            <div class="navigation__text ">Usuario</div>
+            <button class="button__card button__card--inverted button__card--configuration ">☰</button>
+        </div>
+        <div class="group__card group__card--preview ">
+
+        </div>
     </section>
 
     <section class="home ">
+        <div class="navigation__bar navigation__bar--upper ">
+            <button class=" button__card button__card--regular button__card--back ">◄</button>
+            <div class="navigation__text ">Nombre de grupo</div>
+            <button class="button__card button__card--inverted button__card--configuration ">☰</button>
+        </div>
+        <div class="group__card group__card--preview ">
+            <div class="card card__preview ">
+                <div class="card__title ">Preview card</div>
+                <div class="card__message ">Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+            </div>
+            <div class="card card__preview ">
+                <div class="card__title ">Preview card</div>
+                <div class="card__message ">Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+            </div>
+            <div class="card card__preview ">
+                <div class="card__title ">Preview card</div>
+                <div class="card__message ">Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+            </div>
+            <div class="card card__preview ">
+                <div class="card__title ">Preview card</div>
+                <div class="card__message ">Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+            </div>
+            <div class="card card__preview ">
+                <div class="card__title ">Preview card</div>
+                <div class="card__message ">Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+            </div>
+            <div class="card card__preview ">
+                <div class="card__title ">Preview card</div>
+                <div class="card__message ">Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+            </div>
 
-        <div class="navigation__bar navigation__bar--upper ">soy una barra de navegacion</div>
-        <div class="group__card group__card--preview "></div>
+        </div>
+    </section>
+
+
+    <section>
+        <div class="card card__preview ">
+            <div class="card__title ">Preview card</div>
+            <div class="card__message ">Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+        </div>
+
+
+        <div class=" card card__highlighted ">
+            <div class="card__title ">
+                <div class="card__grid ">
+                    <button class=" button__card button__card--regular button__card--back ">◄</button>
+                    <button class="button__card button__card--regular button__card--edit ">✎</button>What we have to do
+                    <button class="button__card button__card--inverted button__card--delete ">✖</button>
+                </div>
+            </div>
+            <div class="card__message ">Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+        </div>
+
+        <div class="card card__editing ">
+            <div class="card__title ">
+                <div class="card__grid ">
+                    <button class=" button__card button__card--regular button__card--back ">◄</button>
+                    <button class="button__card button__card--regular button__card--save ">✔</button>
+                    <input type="text " class="card__input card__input--title " placeholder="What we need to do ">
+                    <button class="button__card button__card--inverted button__card--delete ">✖</button>
+                </div>
+            </div>
+            <div class="card__message ">
+                <textarea class="card__input card__input--text " rows="4 " placeholder="Click here to add a description "></textarea>
+            </div>
+        </div>
+
     </section>
 
 
