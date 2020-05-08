@@ -1,4 +1,5 @@
 
+
 const { useState } = React
 
 function Home({onGoToLogin}) {
@@ -29,8 +30,6 @@ function Home({onGoToLogin}) {
         setdinamicClass('snow')
         setworldImage('snow')
     }
-
-    // || Return ||
 
     return <section className="Home">
             <img className="Home__imagen" src="" alt="" />

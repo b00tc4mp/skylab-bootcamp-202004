@@ -230,4 +230,32 @@ form {
   margin-top: 4vh;
 }
 
+.input {
+  margin-top: 3vh;
+  height: 8vh;
+  width: 80vw;
+  font-size: 20px;
+}
+
+.search-button {
+  height: 8vh;
+  width: 20vw;
+  font-size: 20px;
+}
+
+ul {
+  list-style-type: none;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 25px;
+  border: 2px solid black;
+  width: 100vw;
+  height: 10vh;
+  padding: 5px;
+}
+
+li {
+  display: flex;
+  justify-content: center;
+}
+
 /*# sourceMappingURL=style.css.map */

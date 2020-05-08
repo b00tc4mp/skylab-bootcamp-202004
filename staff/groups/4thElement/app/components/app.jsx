@@ -1,24 +1,39 @@
 const { useState } = React
 
 function App() {
-     
-    const [view, setView] = useState('home')
+    const [view, setView] = useState('login')
+    const [token, setToken] = useState(undefined)
     
-    const handleGoToRegister= () => setView('register')
+
+    const handleGoToRegister= () => setHashView('register')
 
     const handleGoToLogin= () => setView('login')
 
     const handleRegister= () => setView('login')
-    
-    const handleLogin= () => setView('home')
 
-    const handleGoToHome= () => setView('home')
-    
+    const handleLogin= (token) => {
+        setToken(token)
+        sessionStorage.token = token
+        setHashView('home')
+    }
 
-    // const setHashView = view => {
-    //     location.hash = view
-    //     setView(view)
-    // }
+    const handleGoToHome= () => setHashView('home')
+    
+    const setHashView = view => {
+        location.hash = view
+        setView(view)
+    }
+
+    const handleLogout = () => {
+        setToken(undefined)
+        delete sessionStorage.token
+        setHashView('login')
+    }
+
+    const handleGoToSearch = () => {
+        setHashView('search')
+    }
+
 
         return <>
             {view === 'home' && <Header onGoToLogin={handleGoToLogin}/>}
