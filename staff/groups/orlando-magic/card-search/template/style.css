@@ -1,0 +1,66 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: cornsilk;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.advancedsearch {
+  display: flex;
+  flex-flow: column;
+}
+.advancedsearch__section {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  border-bottom: solid brown;
+  width: 98%;
+  padding: 1%;
+}
+.advancedsearch__section--title {
+  color: #7491ac;
+  text-align: center;
+  width: 100%;
+  font-family: URW Chancery L;
+}
+.advancedsearch__section--options {
+  display: flex;
+  flex-flow: wrap row;
+  justify-content: center;
+  width: 100%;
+}
+.advancedsearch__section--options > p {
+  font-size: 0.8em;
+  width: 100%;
+  color: #7491ac;
+  text-align: center;
+}
+.advancedsearch__section--options > input, .advancedsearch__section--options select {
+  background-color: whitesmoke;
+  width: 100%;
+  border: solid brown 0.1px;
+  height: 2em;
+}
+.advancedsearch__section--button {
+  background-color: whitesmoke;
+  width: 100%;
+}
+
+.results {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+}
+.results--cards {
+  display: flex;
+  flex-flow: wrap row;
+  justify-content: space-around;
+  width: 100%;
+}
+.results--cards > img {
+  width: 48%;
+  margin-bottom: 1%;
+}
+
+/*# sourceMappingURL=style.css.map */
