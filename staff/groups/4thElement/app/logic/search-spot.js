@@ -10,7 +10,7 @@ function searchSpotList(query, callback) {
     })
 
     callback(spotsFound)
-    
+
 
     // call('GET', `http://api.worldweatheronline.com/premium/v1/marine.ashx?key=e440183fb8e545b0838104901200705&format=json&q=${spots[0].coordinates}`, undefined, undefined, (error, status, body) => {
     //     if (error) return callback(error)
