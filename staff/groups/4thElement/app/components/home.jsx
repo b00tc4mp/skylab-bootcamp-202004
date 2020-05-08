@@ -1,47 +1,48 @@
-function Home({token, OnLogout, OnGoToSearch}) {
 
-    const handleLogout= event =>{
-        event.preventDefault()
 
-        OnLogout()
-    }
+const { useState } = React
 
-    const handleSearch = event => {
-        event.preventDefault()
+function Home({onGoToLogin}) {
 
-        OnGoToSearch()
-    }
+    // || hooks states declarations ||
 
-    return <section className="home">
+    const [dinamicClass, setdinamicClass] = useState('surf')
+    const [WorldImage, setworldImage] = useState('')
+
+    // || functions ||
+
+    const handelFadeImage = () => { //to change the background globe image wen fade out
+        if(WorldImage === 'snow'){
+            setworldImage('')
+        } 
         
+    }
 
-        <header className="Header">
-            <section className="Header__container">
-                <h2 className="Header__container--name">4thElement</h2>
-                
-                <a onClick={handleLogout} className="Header__container--login" href="">{token? 'Logout' : 'Login'}</a>
-                
-            </section>
-        </header>
+    const handelClickSurf = () => {
+        if(dinamicClass != 'surf'){
+            setdinamicClass('surf')
+            setworldImage('surf')
+            setTimeout(()=> handelFadeImage(), 1300)
+        }  
+    }
 
-        <section className="Home">
-            <h1>Which one do you choose?</h1>
+    const handelClickSnow = () => {
+        setdinamicClass('snow')
+        setworldImage('snow')
+    }
+
+    return <section className="Home">
             <img className="Home__imagen" src="" alt="" />
             <div className="Home__Selection">
-                <div className="Home__Selection--surf">DIV-SURF</div>
-                <div className="Home__Selection--snow">DIV-SNOW</div>
+                <div className={"Home__Selection--surf"+(dinamicClass==='surf' ? "clikedSurf" : "")} onClick = {handelClickSurf}> DIV-SURF</div>
+                <div className={"Home__Selection--snow"+(dinamicClass==='snow' ? "clikedsnow" : "")} onClick = {handelClickSnow}>DIV-SNOW</div>
             </div>
-
-            <div className="Home__map"></div>
+            <div className="Home__map">
+               
+                {WorldImage==='surf' && <div className="Home__map--snow--out">
+                </div>}
+                {WorldImage==='snow' && <div className="Home__map--snow">
+                </div>}
+            </div>
         </section>
-
-        <footer className="Footer">
-            <section className="Footer__container">
-                <i className="fas fa-home fa-2x"></i>
-                <i onClick={handleSearch} className="fas fa-search fa-2x"></i>
-                <i className="fas fa-map-marked-alt fa-2x"></i>
-                <i className="fas fa-star fa-2x"></i>
-            </section>
-        </footer>
-    </section>
 }
