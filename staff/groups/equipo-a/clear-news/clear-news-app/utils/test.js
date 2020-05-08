@@ -35,6 +35,8 @@ const passwords = [
     'poiuytr123123',
     'asdfhasdfh'
 ]
+
 const countries = ["es" ,"us", "ru", "it", "fr"]
 
 const category = [true, false]
+
