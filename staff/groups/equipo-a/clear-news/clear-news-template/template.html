@@ -13,34 +13,100 @@
     <a href="">Login</a>
 </section>
 
-<section class="register">
+<section className="register">
+    <h1>Register</h1>
     <form >
-        <input type="text" name="name" placeholder="name">
-        <input type="text" name="surname" placeholder="surname">
-        <input type="email" name="email" placeholder="e-mail">
-        <input type="password" name="password" ><br>
-        <input type="checkbox" id="checkbox1" value="business">Business<br>
-        <input type="checkbox" id="checkbox2" value="entertainment">Entertainment<br>
-        <input type="checkbox" id="checkbox3" value="general">General<br>
-        <input type="checkbox" id="checkbox4" value="health">Health<br>
-        <input type="checkbox" id="checkbox4" value="science">Science<br>
-        <input type="checkbox" id="checkbox4" value="sports">Sports<br>
-        <input type="checkbox" id="checkbox4" value="technology">Technology<br>
+        <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}" />
+        <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}" />
+        <input type="email" name="email" placeholder="e-mail" required />
+        <input type="password" name="password" placeholder="password" required minLength="8" />
+        <fieldset>
+            <legend>Choose your favorite topcis</legend>
+            <input type="checkbox" name="business" value="business" />Business<br />
+            <input type="checkbox" name="entertainment" value="entertainment" />Entertainment<br />
+            <input type="checkbox" name="general" value="general" />General<br />
+            <input type="checkbox" name="health" value="health" />Health<br />
+            <input type="checkbox" name="science" value="science" />Science<br />
+            <input type="checkbox" name="sports" value="sports" />Sports<br />
+            <input type="checkbox" name="technology" value="technology" />Technology<br />
+        </fieldset>
+        <label for="regions">Choose your region to receive national news</label>
+        <select className="regions">
+        <optgroup label="regions">
+            <option>international</option>
+            <option>ae</option>
+            <option>ar</option>
+            <option>at</option>
+            <option>de</option>
+            <option>au</option>
+            <option>be</option>
+            <option>bg</option>
+            <option>br</option>
+            <option>ca</option>
+            <option>ch</option>
+            <option>cn</option>
+            <option>co</option>
+            <option>cu</option>
+            <option>cz</option>
+            <option>de</option>
+            <option>eg</option>
+            <option>fr</option>
+            <option>gb</option>
+            <option>gr</option>
+            <option>hk</option>
+            <option>hu</option>
+            <option>id</option>
+            <option>ie</option>
+            <option>il</option>
+            <option>in</option>
+            <option>it</option>
+            <option>jp</option>
+            <option>kr</option>
+            <option>lt</option>
+            <option>lv</option>
+            <option>ma</option>
+            <option>mx</option>
+            <option>my</option>
+            <option>ng</option>
+            <option>nl</option>
+            <option>no</option>
+            <option>nz</option>
+            <option>ph</option>
+            <option>pl</option>
+            <option>pt</option>
+            <option>ro</option>
+            <option>rs</option>
+            <option>ru</option>
+            <option>sa</option>
+            <option>se</option>
+            <option>sg</option>
+            <option>si</option>
+            <option>sk</option>
+            <option>th</option>
+            <option>tr</option>
+            <option>tw</option>
+            <option>ua</option>
+            <option>us</option>
+            <option>ve</option>
+            <option>za</option>
+        </optgroup>
+        <button>Submit</button>
+            or <a href="" onClick={handleGoToLogin}>Login</a>
 
-        <button>Submitnav</button> or <a href="">Login</a>
-        <p class="feedback feedback--error">Wrong credentials</p>
+        <Feedback message={error} level="error" ></Feedback>
     </form>
-</section>
 
-<section className="login">
-    <form>
-        <input type="email" name="email" placeholder="e-mail">
-        <input type="password" name="password" placeholder="password">
-        <button>Submit</button> or 
-        <a href="">Register</a>
-    </form>
-    <p class="feedback">Wrong credencials</p>
-</section>
+    <section className="login">
+        <h1>Login</h1>
+        <form >
+            <input type="email" name="email" placeholder="e-mail" required />
+            <input type="password" name="password" placeholder="password" required minLength="8" />
+            <button>Submit</button>
+            or <a href="" onClick={this.handeGoToRegister}>Register</a>
+
+            <Feedback/>
+        </form>
+    </section>
 
 <section class="preferences">
 

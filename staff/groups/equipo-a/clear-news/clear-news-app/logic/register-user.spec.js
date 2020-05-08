@@ -2,8 +2,8 @@ describe('registerUser', () => {
     let name, surname, email, password, categories, country
 
     beforeEach(() => {
-        name = names.random()
-        surname = surnames.random()
+        name = names.random();
+        surname = surnames.random();
         email = `${name.toLowerCase().split('').join('')}${surname.toLowerCase().split('').join('').concat(Math.random())}@SpeechGrammarList.com`
         password = passwords.random();
         categories = {
@@ -16,6 +16,31 @@ describe('registerUser', () => {
             technology: true
         }
         country = countries.random();
+        
+    });
+    afterEach(done => {
+        call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
+            `{ "username": "${email}", "password": "${password}" }`,
+            { 'Content-type': 'application/json' },
+            (error, status, body) => {
+                if (error) return done(error)
+                if (status !== 200) return done(new Error(`unexpected status ${status}`))
+
+                const { token } = JSON.parse(body);
+
+                call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                    `{ "password": "${password}" }`,
+                    {
+                        'Content-type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    },
+                    (error, status) => {
+                        if (error) return done(new Error(error.message))
+                        if (status !== 204) return done(new Error(`undexpected status ${status}`))
+
+                        done();
+                    });
+            });
     });
 
     describe('when user already exists', () => {
@@ -28,54 +53,28 @@ describe('registerUser', () => {
                     { 'Content-type': 'application/json' },
                     (error, status, body) => {
                         debugger
-                        expect(error).to.be.undefined;// ambos expect no van
-                        expect(status).to.equal(200); // 
+                        if (error) return done(new Error(error.message));
+                        if (status !== 200) return done(new Error(`undexpected status ${status}`)); 
 
-                        //if (error)done(error)
-                        //if(status !== 200) done (new error)
                         const { token } = JSON.parse(body);
 
                         call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
                             undefined,
                             { Authorization: `Bearer ${token}` },
                             (error, status, body) => {
-                                expect(error).to.be.undefined;// idem
-                                expect(status).to.equal(200); // iodem
+                                if (error) return done(new Error(error.message));
+                                if (status !== 200) return done(new Error(`undexpected status ${status}`));
 
-                                const {name: _name, surame, etc} = body
-                                expect(_name).to.equal(name)
+                                const { name: name, surame, etc } = body;
 
-                                done()
+                                done();
                             }
                         )
                     });
             });
 
         });
-        /* afterEach(done => {
-            call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
-                `{ "username": "${email}", "password": "${password}" }`,
-                { 'Content-type': 'application/json' },
-                (error, status, body) => {
-                    if (error) return done(error)
-                    if (status !== 200) return done(new Error(`unexpected status ${status}`))
-    
-                    const { token } = JSON.parse(body)
-    
-                    call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users',
-                        `{ "password": "${password}" }`,
-                        {
-                            'Content-type': 'application/json',
-                            Authorization: `Bearer ${token}`
-                        },
-                        (error, status) => {
-                            if (error) return done(new Error(error.message))
-                            if (status !== 204) return done(new Error(`undexpected status ${status}`))
-    
-                            done()
-                        })
-                })
-        }) */
+
     });
 
     describe('when user already exists', () => {
@@ -100,55 +99,8 @@ describe('registerUser', () => {
                 done()
             });
         });
-        /* afterEach(done => {
-            call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
-                `{ "username": "${email}", "password": "${password}" }`,
-                { 'Content-type': 'application/json' },
-                (error, status, body) => {
-                    if (error) return done(error)
-                    if (status !== 200) return done(new Error(`unexpected status ${status}`))
-    
-                    const { token } = JSON.parse(body)
-    
-                    call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users',
-                        `{ "password": "${password}" }`,
-                        {
-                            'Content-type': 'application/json',
-                            Authorization: `Bearer ${token}`
-                        },
-                        (error, status) => {
-                            if (error) return done(new Error(error.message))
-                            if (status !== 204) return done(new Error(`undexpected status ${status}`))
-    
-                            done()
-                        })
-                })
-        }) */
+
     });
-    /* afterEach(done => {
-        call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
-            `{ "username": "${email}", "password": "${password}" }`,
-            { 'Content-type': 'application/json' },
-            (error, status, body) => {
-                if (error) return done(error)
-                if (status !== 200) return done(new Error(`unexpected status ${status}`))
-
-                const { token } = JSON.parse(body)
-
-                call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users',
-                    `{ "password": "${password}" }`,
-                    {
-                        'Content-type': 'application/json',
-                        Authorization: `Bearer ${token}`
-                    },
-                    (error, status) => {
-                        if (error) return done(new Error(error.message))
-                        if (status !== 204) return done(new Error(`undexpected status ${status}`))
-
-                        done()
-                    })
-            })
-    }) */
 
     it('should fail on non-string field', () => {
         expect(() => {
@@ -199,10 +151,6 @@ describe('registerUser', () => {
             registerUser(name, surname, email, 1, categories, country, function () { })
         }).to.throw(TypeError, '1 is not a string');
 
-        /* expect(() => {
-            registerUser(name, surname, email, password, true, country, function () { })
-        }).to.throw(Error, 'true is not a string');
- */
         expect(() => {
             registerUser(name, surname, email, password, categories, undefined, function () { })
         }).to.throw(TypeError, 'undefined is not a string');
@@ -283,7 +231,5 @@ describe('registerUser', () => {
         expect(() => {
             registerUser(name, surname, email, password, categories, country)
         }).to.throw(TypeError, 'undefined is not a function');
-    })
-
-
-})
+    });
+});
