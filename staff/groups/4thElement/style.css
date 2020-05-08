@@ -1,24 +1,7 @@
-<<<<<<< HEAD
-/* Error: Can't find stylesheet to import.
- *    ,
- * 17 | @import /style/header.sass
- *    |         ^^^^^^^^^^^^^^^^^^
- *    '
- *   style.sass 17:9  root stylesheet */
-
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Can't find stylesheet to import.\a    \2577 \a 17 \2502  @import /style/header.sass\a    \2502          ^^^^^^^^^^^^^^^^^^\a    \2575 \a   style.sass 17:9  root stylesheet";
-=======
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Carter+One&family=Kalam:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Special+Elite&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap");
 * {
   margin: 0;
   user-select: none;
@@ -50,7 +33,7 @@ body::before {
 
 .Footer {
   bottom: 0;
-  height: 6vh;
+  height: 6.5vh;
   width: 100vw;
   position: fixed;
   background-color: green;
@@ -80,7 +63,6 @@ body::before {
 .Header__container--name {
   margin-left: 1vw;
   color: white;
->>>>>>> fa06fc75826a13dfe74400d5e2841f2cdf267ae5
 }
 .Header__container a {
   text-decoration: none;
@@ -91,6 +73,49 @@ body::before {
 }
 .Header__container--register {
   margin-right: 2vw;
+}
+
+body {
+  background-color: #83c3ee;
+}
+
+.login {
+  font-family: "Source Sans Pro", sans-serif;
+  text-align: center;
+  margin-top: 40vh;
+  justify-content: center;
+}
+
+form {
+  margin-top: 5vh;
+}
+
+body {
+  background-color: #83c3ee;
+}
+
+.register {
+  font-family: "Source Sans Pro", sans-serif;
+  text-align: center;
+  margin-top: 40vh;
+  justify-content: center;
+}
+
+form {
+  margin-top: 4vh;
+}
+
+.input {
+  margin-top: 3vh;
+  height: 8vh;
+  width: 80vw;
+  font-size: 20px;
+}
+
+.search-button {
+  height: 8vh;
+  width: 20vw;
+  font-size: 20px;
 }
 
 /*# sourceMappingURL=style.css.map */
