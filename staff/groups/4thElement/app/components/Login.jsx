@@ -1,6 +1,6 @@
 const { useState } = React
 
-function Login({onLogin, onGoToRegister}) {
+function Login({onLogin, onGoToRegister, onGoToHome}) {
 
     const [error, setError] = useState('')
 
@@ -28,6 +28,11 @@ function Login({onLogin, onGoToRegister}) {
         onGoToRegister()
     }
 
+    const handleSkipLogin = (event) => {
+        event.preventDefault()
+        onGoToHome()
+    }
+
     return <section className="login">
             <h2>Welcome to the 4thElement, <br/> to make the most of this app:</h2>
             <form onSubmit={handleSubmit}>
@@ -44,5 +49,6 @@ function Login({onLogin, onGoToRegister}) {
             </form>
             <br/>
                 <h3>Made from surfers to surfers</h3>
+                <a onClick={handleSkipLogin}>SKIP LOGIN</a>
         </section>
 }
