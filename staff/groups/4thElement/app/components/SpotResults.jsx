@@ -1,6 +1,7 @@
 const { useState, useEffect } = React
 
 function SpotResultsList({ query }) {
+
     const [spots, setSpots] = useState();
 
     useEffect(() => {
