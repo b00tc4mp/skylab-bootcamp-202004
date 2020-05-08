@@ -1,54 +1,46 @@
 const { useState , useEffect} = React
 
-function Cryptos(){
-    const [error, setError] = useState(null)
-    const [cryptos, setCryptos] = useState(undefined)
+function Cryptos({cryptoResults}){
 
-    useEffect(()=>{
-        retrieveCryptos((_error, _cryptos)=> {
-            if (_error)  setError(_error.messsage)  
-            else setCryptos(_cryptos)
-            
-        
-    })
-}, [])
+    const getChangePrice24Hr = (price, changePercent) => {
+        let result = (price * (1 - (changePercent / 100)).toFixed(3))
+        result > 0 ? result = '+' + result : result.toString()
+        return result
+    }
 
-return(
-    <section className="crypto-coins">
-        <h3 className="crypto-coins__title">Crypto Coins</h3>
+    return(
+        <section className="crypto-coins">
+            <h3 className="crypto-coins__title">Crypto Coins</h3>
             <section className="crypto-coins__search">
-            <input type="text" placeholder="Find your next crypto favorite" />
-            <i className="fa fa-search " />
-    <section className='crypto-container'>
+                <input type="text" placeholder="Find your next crypto favorite" />
+                <i className="fa fa-search " />
+            </section>
+            <section className='crypto-container'>
 
-        {!cryptos && <p>Loading...</p>}
-        {cryptos && cryptos.map(({name, symbol, rank, priceUsd, changePercent24Hr}) => {
-            {console.log(name, symbol, rank, priceUsd, changePercent24Hr)}
-        }) }
-    </section>
+            {!cryptoResults && <p>Loading...</p>}
+            {cryptoResults && cryptoResults.map(({name, symbol, rank, priceUsd, changePercent24Hr}) => {
+
+                {priceUsd = Number(priceUsd)
+                    priceUsd = priceUsd.toFixed(3).toString(); 
+                    changePercent24Hr = Number(changePercent24Hr);
+                    changePercent24Hr = changePercent24Hr.toFixed(3).toString()}
+
+                {console.log(name, symbol, rank, priceUsd, changePercent24Hr)}
+
+                return <div className="coin">
+                    <div className="coin__head">
+                        <span className="coin__symbol">{symbol}</span>
+                        <span className="coin__rank">{rank}</span>
+                    </div>
+                    <div className="coin__body">
+                        <span className="coin__name">{name}</span>
+                        <span className="coin__price">{priceUsd} USD</span>
+                        <span className="coin__percentage">{getChangePrice24Hr(priceUsd, changePercent24Hr)}$ ({changePercent24Hr}%)</span>
+                    </div>
+                </div>  
+            })}
+        
+            </section>
         </section>
-      </section>
     )
 }
-
-// // <!-- COMPO 3 -->
-//     <section class="crypto-coins">
-//         <h3 class="crypto-coins__title">Crypto Coins</h3>
-//         <section class="crypto-coins__search">
-//             <input type="text" placeholder="Find your next crypto favorite">
-//             <i class="fa fa-search search-bar__icon"></i>
-//         </section>
-
-//     //     <section class="coins-container">
-//     //         <div class="coin">
-//     //             <img class="coin__img" src="./img/71t1Q2ARnTL._SX466_.jpg"> //SYMBOL
-//     //             <span class="coin__name">Bitcoin</span> // NAME
-//     //             <span class="coin__price">4.00751 BTC</span> // PRICE
-//     //             <span class="coin__percentage">+120$ (14%)</span> //PERCENT
-//     //         </div>
-
-
-
-// //         </section>
-
-// //     </section>
