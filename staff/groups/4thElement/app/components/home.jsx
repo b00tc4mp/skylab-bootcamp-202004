@@ -1,39 +1,49 @@
+
+const { useState } = React
+
 function Home({onGoToLogin}) {
 
-    const handleGoToLogin= event =>{
-        event.preventDefault()
+    // || hooks states declarations ||
 
-        onGoToLogin()
+    const [dinamicClass, setdinamicClass] = useState('surf')
+    const [WorldImage, setworldImage] = useState('')
+
+    // || functions ||
+
+    const handelFadeImage = () => { //to change the background globe image wen fade out
+        if(WorldImage === 'snow'){
+            setworldImage('')
+        } 
+        
     }
 
-    return <section className="home">
-        
+    const handelClickSurf = () => {
+        if(dinamicClass != 'surf'){
+            setdinamicClass('surf')
+            setworldImage('surf')
+            setTimeout(()=> handelFadeImage(), 1300)
+        }  
+    }
 
-        <header className="Header">
-            <section className="Header__container">
-                <h2 className="Header__container--name">4thElement</h2>
-                <a onClick={handleGoToLogin} className="Header__container--login" href="">Logout</a>
-            </section>
-        </header>
+    const handelClickSnow = () => {
+        setdinamicClass('snow')
+        setworldImage('snow')
+    }
 
-        <section className="Home">
-            <h1>Which one do you choose?</h1>
+    // || Return ||
+
+    return <section className="Home">
             <img className="Home__imagen" src="" alt="" />
             <div className="Home__Selection">
-                <div className="Home__Selection--surf">DIV-SURF</div>
-                <div className="Home__Selection--snow">DIV-SNOW</div>
+                <div className={"Home__Selection--surf"+(dinamicClass==='surf' ? "clikedSurf" : "")} onClick = {handelClickSurf}> DIV-SURF</div>
+                <div className={"Home__Selection--snow"+(dinamicClass==='snow' ? "clikedsnow" : "")} onClick = {handelClickSnow}>DIV-SNOW</div>
             </div>
-
-            <div className="Home__map"></div>
+            <div className="Home__map">
+               
+                {WorldImage==='surf' && <div className="Home__map--snow--out">
+                </div>}
+                {WorldImage==='snow' && <div className="Home__map--snow">
+                </div>}
+            </div>
         </section>
-
-        <footer className="Footer">
-            <section className="Footer__container">
-                <i className="fas fa-home fa-2x"></i>
-                <i className="fas fa-search fa-2x"></i>
-                <i className="fas fa-map-marked-alt fa-2x"></i>
-                <i className="fas fa-star fa-2x"></i>
-            </section>
-        </footer>
-    </section>
 }

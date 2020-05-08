@@ -1,3 +1,95 @@
+// || fade in effectt ||
+
+@keyframes fadeIn 
+  0% 
+    opacity:0
+  
+  100% 
+    opacity:1
+  
+
+
+@-moz-keyframes fadeIn 
+  0% 
+    opacity:0
+  
+  100% 
+    opacity:1
+  
+
+
+@-webkit-keyframes fadeIn 
+  0% 
+    opacity:0
+  
+  100% 
+    opacity:1
+  
+
+
+@-o-keyframes fadeIn 
+  0% 
+    opacity:0
+  
+  100% 
+    opacity:1
+  
+
+
+@-ms-keyframes fadeIn 
+  0% 
+    opacity:0
+  
+  100% 
+    opacity:1
+
+// || fade out effectt ||
+
+@keyframes fadeOut 
+  0% 
+    opacity:1
+  
+  100% 
+    opacity:0
+  
+
+
+@-moz-keyframes fadeOut 
+  0% 
+    opacity:1
+  
+  100% 
+    opacity:0
+  
+
+
+@-webkit-keyframes fadeOut 
+  0% 
+    opacity:1
+  
+  100% 
+    opacity:0
+  
+
+
+@-o-keyframes fadeOut 
+  0% 
+    opacity:1
+  
+  100% 
+    opacity:0
+  
+
+
+@-ms-keyframes fadeOut 
+  0% 
+    opacity:1
+  
+  100% 
+    opacity:0
+
+
+    
 .Home
     height: 94vh
     background-color: gray
@@ -11,12 +103,50 @@
         height: 15vh
 
         &--surf
+            display: flex
             width: 50vw
             border:2px solid black
             text-align: center
+            transition: 1.5s
+            &clikedSurf
+                transition: 1s
+                width: 200vw
+        &--surf:hover
+            width: 200vw
         &--snow
+            display: flex
             width: 50vw
             border: 2px solid black
             text-align: center
+            transition: 1.5s
+            &clikedsnow
+                transition: 1s
+                border: 2px solid black
+                width: 200vw
+        &--snow:hover
+            width: 200vw
+    &__map
+        margin-top: 10vh
+        height: 50vh
+        background-size: 130%
+        background-position: center
+        background-image: url('./app/images/mundo.png')
+        
+        &--snow
+            animation: fadeIn ease 1.5s
+            margin-top: 10vh
+            height: 50vh
+            background-size: 130%
+            background-position: center
+            background-image: url('./app/images/mundoSnow.png')
+            &--out
+                animation: fadeOut ease 1.5s
+                margin-top: 10vh
+                height: 50vh
+                background-size: 130%
+                background-position: center
+                background-image: url('./app/images/mundoSnow.png')
+
+
 
 
