@@ -73,6 +73,39 @@ body {
   font-size: 0.6em;
 }
 
+.portfolio {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2em;
+}
+.portfolio__title {
+  width: 80%;
+  margin: 0 auto;
+  color: lightgrey;
+}
+.portfolio__money {
+  font-size: 3em;
+  margin-top: 1em;
+}
+.portfolio__stats {
+  font-size: 1em;
+  margin-bottom: 1.5em;
+}
+.portfolio__stats--contrast {
+  color: #f7ce78;
+}
+.portfolio__button {
+  font-size: 1em;
+  padding: 0.8em;
+  margin: 1em auto;
+  width: 50%;
+  background: #f7ce78;
+  border-color: #f7ce78;
+  border-radius: 0.3em;
+}
+
 .crypto-coins {
   display: flex;
   flex-direction: column;
@@ -113,11 +146,20 @@ body {
   height: 200px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
   background: #f7ce78;
   border-radius: 25px;
   margin: 15px 0;
   padding: 15px;
+}
+.coins-container .coin__head {
+  display: flex;
+  justify-content: space-between;
+  color: black;
+  font-size: 1.5em;
+}
+.coins-container .coin__body {
+  margin-bottom: 0.5em;
 }
 .coins-container .coin span {
   height: 25px;
