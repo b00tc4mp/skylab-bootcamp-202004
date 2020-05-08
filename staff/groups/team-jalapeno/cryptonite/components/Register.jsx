@@ -1,6 +1,6 @@
 const { useState } = React
 
-function Register({ goToLogin }) {
+function Register({ goToLogin, registerSubmit }) {
     const [error, setError] = useState(null)
 
     const handleRegister = (event) => {
@@ -12,9 +12,13 @@ function Register({ goToLogin }) {
             password: { value: password },
         } = event.target;
 
+        // register(name, surname, email, password, (_error) => {
+        //     if (_error) return setError(_error.message) 
+        //     goToLogin()
+        // });
         register(name, surname, email, password, (_error) => {
-            if (_error) return setError(_error.message)
-            goToLogin()
+            if (_error) setError(_error.message)
+            else registerSubmit()
         });
     };
 
@@ -31,7 +35,7 @@ function Register({ goToLogin }) {
                 <button type="submit">Create account</button>
             </form>
             <p className="register__to-login">
-                Already registered?<a href="#">Login</a>
+                Already registered?<a href="#" onClick={goToLogin}>Login</a>
             </p>
             {error && <p style={{ color: 'crimson' }}>{error}</p>}
         </section>
