@@ -35,6 +35,7 @@ function App() {
     }
 
 
+
         return <>
             {view === 'home' && <Header onGoToLogin={handleGoToLogin}/>}
             {view === 'search' && <Header onGoToLogin={handleGoToLogin}/>}
@@ -42,8 +43,8 @@ function App() {
             {view === 'login' && <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} onGoToHome={handleGoToHome}/>}
             {view === 'home' && <Home onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
             {view === 'search' && <Search token={token} OnLogout={handleLogout}/>}
-            {view === 'home' && <Footer GoToSearch={handleGoToSearch}/>}
-            {view === 'search' && <Footer GoToSearch={handleGoToSearch}/>}
+            {view === 'home' && <Footer GoToHome={handleGoToHome} GoToSearch={handleGoToSearch}/>}
+            {view === 'search' && <Footer GoToHome={handleGoToHome} GoToSearch={handleGoToSearch}/>}
         </>
     
 }
