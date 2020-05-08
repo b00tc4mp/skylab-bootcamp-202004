@@ -1,25 +1,20 @@
+const { useState } = React
+
 function Search({ token, OnLogout }) {
+
+    const [query, setQuery] = useState('')
 
     const handleLogout = () => {
         OnLogout()
     }
 
     const handleSubmitSpot = (query) =>{
-
-        searchSpot(query)
+        setQuery(query)
     }
 
     return <section className="Search">
-        <header className="Header">
-            <section className="Header__container">
-                <h2 className="Header__container--name">Search</h2>
-
-                <a onClick={handleLogout} className="Header__container--login" href="">{token ? 'Logout' : 'Login'}</a>
-            </section>
-        </header>
-
         <SearchSpotCompo onSubmitSpot={handleSubmitSpot} />
-
+        {query && <SpotResultsList  query={query}/>}
 
     </section>
 }

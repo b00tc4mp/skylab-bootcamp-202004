@@ -37,6 +37,7 @@ function App() {
 
 
         return <>
+        
             {view === 'register' && <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>}
             {view === 'login' && <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} onGoToHome={handleGoToHome}/>}
             {view === 'home' && <Home token={token} OnLogout={handleLogout} OnGoToSearch={handleGoToSearch} />}
