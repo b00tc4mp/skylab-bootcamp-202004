@@ -25,7 +25,6 @@ function Cryptos({cryptoResults}){
                     changePercent24Hr = Number(changePercent24Hr);
                     changePercent24Hr = changePercent24Hr.toFixed(3).toString()}
 
-                {console.log(name, symbol, rank, priceUsd, changePercent24Hr)}
 
                 return <div className="coin">
                     <div className="coin__head">
