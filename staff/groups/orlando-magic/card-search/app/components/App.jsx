@@ -3,14 +3,14 @@ const {useState, useEffect} = React
 function App(){
 
     let [view, setView] = useState('landing')
-    // let [login, setLogin] = useState(false)
+    let [login, setLogin] = useState(false)
     let [results, setResults] = useState(undefined)
     let [card, setCard] = useState(undefined)
 
     function onBasicSearch(event){
         const query = event.target.query.value
         // To define inputs for search apart from callback
-        searchCard((error, searchResults) =>{
+        searchCard(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined,undefined,undefined,undefined,undefined,undefined,undefined,query,undefined,(error, searchResults) =>{
             setResults(searchResults)
             searchResults.length>1 ? setView('results'): setView('card') 
         })
@@ -22,9 +22,9 @@ function App(){
     }
 
     return <>
-    <Landing login = {login} setView = {setView} onBasicSearch = {onBasicSearch}/>
-    {/* {view === 'landing' && <Landing login = {login} setView = {setView} onBasicSearch = {onBasicSearch}/>}
+    {view === 'landing' && <Landing login = {login} setView = {setView} onBasicSearch = {onBasicSearch}/>}
+    {view !== 'landing' && <NavBar login = {login} setView = {setView} onBasicSearch = {onBasicSearch}/>}
     {view === 'results' && <Results results = {results} onCardClick = {onCardClick}/>}
-    {view === 'card' && <Card/> card = {card}} */}
+    {view === 'card' && <Card card = {card}/>}
     </>
 }
