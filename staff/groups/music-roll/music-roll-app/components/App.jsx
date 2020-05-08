@@ -10,11 +10,11 @@ class App extends Component {
         }
     }
 
-    // onChangeView = (_view) => this.setState({view : _view})
+    onChangeView = (_view) => this.setState({view : _view})
 
-    // handleLogin = (_token) => {
-    //     this.state.token = _token
-    // }
+    handleLogin = (_token) => {
+        this.state.token = _token
+    }
     
     // handleRegister = () => {
         
