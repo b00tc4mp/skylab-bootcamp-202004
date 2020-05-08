@@ -2,7 +2,8 @@ function retrieveCryptos(callback) {
 
     Function.validate(callback)
 
-    const url = 'https://api.coincap.io/v2/assets'
+    // const url = 'https://api.coincap.io/v2/assets'
+    const url= 'https://api.coincap.io/v2/assets?limit=8'
     const headers = { 'Content-type': 'application/json' }
     const body = undefined
 
