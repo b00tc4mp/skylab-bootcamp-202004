@@ -33,7 +33,7 @@ function App() {
     return <>
         {view === 'landing' && <Landing toRegister={handleGoToRegister} toLogin={handleGoToLogin} />}
         {view === 'login' && <Login toRegister={handleGoToRegister} loginSubmit={handleLoginSubmit} />}
-        {/* {view === 'login' && <Register />} */}
+        {view === 'register' && <Register goToLogin={handleGoToLogin} />}
         {view === 'home' && <Home />}
 
 
