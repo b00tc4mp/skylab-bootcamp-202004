@@ -34,13 +34,12 @@ function App() {
                 setView('home')
             }
         })
-
     }
 
     return <>
         {view === 'landing' && <Landing toRegister={handleGoToRegister} toLogin={handleGoToLogin} />}
         {view === 'login' && <Login toRegister={handleGoToRegister} loginSubmit={handleLoginSubmit} />}
-        {view === 'register' && <Register loginSubmit={handleRegisterSubmit} goToLogin={handleGoToLogin} />}
+        {view === 'register' && <Register registerSubmit={handleRegisterSubmit} goToLogin={handleGoToLogin} />}
         {view === 'home' && <Home />}
 
 

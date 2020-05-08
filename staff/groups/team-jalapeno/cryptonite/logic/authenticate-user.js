@@ -3,20 +3,21 @@ function authenticateUser(email, password, callback) {
     // TYPEOF FILTER PENDING
     // TESTING PENDING
 
-    call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
-        `{ "username": "${email}", "password": "${password}"}`, { 'Content-type': 'application/json' },
-        (error, status, response) => {
-            if (error) throw error
+    const url = 'https://skylabcoders.herokuapp.com/api/v2/users/auth'
+    const body = JSON.stringify({ username: email, password })
+    const headers = { 'Content-type': 'application/json' }
 
-            if (status === 200) {
-                const { token } = JSON.parse(response)
-                console.log(token)
-                callback(undefined, token)
-            } else {
-                const { error } = JSON.parse(response)
-                callback(new Error(error))
-            }
+    call('POST', url, body, headers, (error, status, response) => {
+        if (error) throw error
 
-        })
+        if (status === 200) {
+            const { token } = JSON.parse(response)
+            callback(undefined, token)
+        } else {
+            const { error } = JSON.parse(response)
+            callback(new Error(error))
+        }
+
+    })
 
 }
