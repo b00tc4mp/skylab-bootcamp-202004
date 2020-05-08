@@ -1,4 +1,93 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,500;0,900;1,700&display=swap");
+.sport-news {
+  width: 24rem;
+  margin-left: 2px;
+}
+
+.sport-news__container {
+  width: 24rem;
+  height: 100vh;
+  border: 1px solid black;
+}
+.sport-news__container > a {
+  display: flex;
+  justify-content: center;
+}
+
+.sport-news__image {
+  width: 90%;
+  height: 15vh;
+  border: 1px solid black;
+}
+
+.navbar {
+  margin-left: 2px;
+}
+
+.navbar__container {
+  width: 24rem;
+  height: 16.5vh;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+}
+
+.navbar__user {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #73f182;
+  padding: 0rem 1rem 0rem 1rem;
+  height: 6rem;
+}
+
+.navbar__links {
+  display: flex;
+  background-color: #320090;
+  justify-content: space-around;
+  align-items: center;
+}
+.navbar__links-item {
+  width: 2.2rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+}
+
+.navbar__user-logo {
+  margin-left: 0.8rem;
+  width: 11rem;
+}
+
+.navbar__user-img {
+  margin-right: 0.8rem;
+  width: 2.4rem;
+}
+
+#navbar__links-news {
+  width: 1.9rem;
+}
+
+#navbar__links-search {
+  background-image: url("img/search.svg");
+  background-size: 1.9rem;
+  background-repeat: no-repeat;
+  background-position: right;
+  height: 2.2rem;
+  border-radius: 1.1rem;
+  border: 0;
+  width: 0rem;
+  outline-style: none;
+  font-size: 1.4rem;
+  transition: 1s;
+  padding-left: 1.1rem;
+  padding-right: 1.1rem;
+}
+#navbar__links-search:focus {
+  transition: 1s;
+  width: 14rem;
+  color: #320090;
+}
+
 .landing {
   font-family: Raleway;
   color: #320090;
@@ -61,6 +150,7 @@
   flex-direction: column;
   align-items: center;
   margin-right: 2px;
+  font-family: Raleway;
 }
 .register__logo {
   text-align: center;
@@ -71,7 +161,6 @@
   width: 11rem;
 }
 .register__title {
-  font-family: Raleway;
   font-weight: 400;
   font-size: 3.4rem;
   margin-bottom: 1.5rem;
@@ -116,7 +205,6 @@
   font-size: 0.9rem;
   text-indent: 0.7rem;
   color: #320090;
-  font-family: Raleway;
   font-weight: 200;
 }
 
@@ -128,7 +216,7 @@
   top: 2.4rem;
 }
 .register__goto-text-landing {
-  margin-right: 12rem;
+  margin-right: 11rem;
   margin-left: 0.5rem;
   font-weight: 700;
 }
@@ -216,11 +304,15 @@
   top: 4.2rem;
 }
 .login__goto-text-landing {
-  margin-right: 12rem;
+  font-family: Raleway;
+  margin-right: 10rem;
   font-weight: 700;
+  margin-left: 0.5rem;
 }
 .login__goto-text-register {
+  font-family: Raleway;
   font-weight: 700;
+  margin-right: 0.5rem;
 }
 .login__goto-landing {
   width: 2.5rem;
