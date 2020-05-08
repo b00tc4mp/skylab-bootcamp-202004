@@ -1,0 +1,40 @@
+.home__hamburger {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 2.5rem;
+  width: 2.5rem;
+  cursor: pointer;
+}
+.home__hamburger__hamburger-bar {
+  height: 5px;
+  background: black;
+  border-radius: 5px;
+  margin: 3px 0px;
+  transform-origin: left;
+  transition: all 0.5s;
+}
+.home__hamburger__hamburger-bar--top:hover {
+  transform: rotate(45deg);
+}
+.home__hamburger__hamburger-bar--middle:hover {
+  opacity: 0;
+}
+.home__hamburger__hamburger-bar--bottom:hover {
+  transform: rotate(-45deg);
+}
+
+.img {
+  background-color: orange;
+}
+
+.slider {
+  background-color: yellow;
+}
+
+.daylist {
+  background-color: purple;
+}
+
+/*# sourceMappingURL=home.css.map */
