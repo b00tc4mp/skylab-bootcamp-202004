@@ -23,6 +23,7 @@ function Landing({onLogin, onRegister}){
             <a href="" onClick = {() => props.setView('account')}>Your Account</a>
             <a href="" onClick = {handleLogin}>Login</a>
             <a href="" onClick = {handleRegister}>Register</a> 
+
         </section>
     </>
 }
