@@ -99,23 +99,44 @@
                     <img src="img/user.svg" class="header__user-item">
                 </div>
             </secction> -->
-            <section>
-                <form action="" class="player-header__search">
-                    <input type="text" class="player-header__search-input" placeholder="Search Player">
-                    <button class="player-header__input-button">
-                        <img src="img/search.svg" class="player-header__search-item" alt="">
+            <!-- <section class="search-player">
+                <form action="" class="search-player__search">
+                    <input type="text" class="search-player__search-input" placeholder="Search Player">
+                    <button class="search-player__input-button">
+                        <img src="img/search.svg" class="search-player__search-item" alt="">
                     </button>
                 </input>
                 </form>
-                <ul class="player-card__list">
-                    <li class="player-card_list-item">
-                        <div class="player-card_emblem">
-                            <img src="https:\/\/www.thesportsdb.com\/images\/media\/team\/badge\/xqwpup1473502878.png" alt="team badge">
+            </section> -->
+            <section class="player">
+                <ul class="player-card">
+                    <li class="player-card__item">
+                        <div class="player-card__player">
+                            <div class="player-card__emblem">
+                                <img src="https:\/\/www.thesportsdb.com\/images\/media\/team\/badge\/xqwpup1473502878.png" alt="team badge" class="player-card__emblem-item">
+                            </div>
+                             <div class="player-card__number">
+                                <span class="player-card__number-item">5</span>
+                            </div>
+                             <div class="player-card__image">
+                                <img src="https:\/\/www.thesportsdb.com\/images\/media\/player\/cutout\/6gm6rv1565126217.png" alt="player" class="player-card__image-item">
+                             </div>
+                                 <h2 class="player-card__name-first">Sergio</h2>
+                                 <h2 class="player-card__name-surname">Busquets</h2>
                         </div>
-                        <div class="player-card__number">
-                            <span>5</span>
+                        <hr class="player-card__line">
+                        <div class="player-card__info">
+                            <h3 class="player-card__question">Team: </h3><span class="answer">F.C. Barcelona</span>
+                            <h3 class="player-card__question">Country: </h3><span class="answer">Spain</span>
+                            <h3 class="player-card__question">Date of birth: </h3><span class="answer">25/03/86</span>
                         </div>
-                        <div class="player-card__image"></div>
+                        <div class="player-card__like">
+                            <img src="img/heart_onclick.svg" alt="">
+                            <h4 class="player-card__llikes">21</h4>
+                        </div>
+                        <div class="player-card__coment">
+                            <input type="text" placeholder="Say something...">
+                        </div>
                     </li>
                 </ul>
     
