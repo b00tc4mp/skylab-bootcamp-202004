@@ -27,7 +27,7 @@ describe('registerUser', () => {
                     `{ "username": "${email}", "password": "${password}" }`,
                     { 'Content-type': 'application/json' },
                     (error, status, body) => {
-                        debugger
+                       
                         expect(error).to.be.undefined;// ambos expect no van
                         expect(status).to.equal(200); // 
 
