@@ -30,7 +30,4 @@ function searchPlayers(query, callback) {
         })
 }
 
-// searchPlayers('messi', (error, _players) => {
 
-//     console.log(_players)
-// })

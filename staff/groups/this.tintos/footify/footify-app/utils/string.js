@@ -23,6 +23,13 @@
         return string.length >= length
     }
 
+    String.equalThan = function (password, confirmPassword) {
+        this.validate(password)
+        this.validate(confirmPassword)
+
+        return password === confirmPassword
+    }
+
     String.validate = function (string) {
         if (!this.isString(string)) throw new TypeError(`${string} is not a string`)
     }
@@ -37,5 +44,9 @@
 
     String.validate.lengthGreaterEqualThan = function (string, length) {
         if (!this.isLengthGreaterEqualThan(string, length)) throw new Error(`"${string}" length is not greater or equal than ${length}`)
+    }.bind(String)
+
+    String.validate.equalThan = function (password, confirmPassword) {
+        if (!this.equalThan(password, confirmPassword)) throw new Error(`The password is not the same.`)
     }.bind(String)
 })()
