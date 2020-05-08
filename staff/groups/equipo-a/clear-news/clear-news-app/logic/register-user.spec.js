@@ -52,9 +52,14 @@ describe('registerUser', () => {
                     `{ "username": "${email}", "password": "${password}" }`,
                     { 'Content-type': 'application/json' },
                     (error, status, body) => {
+
                         debugger
                         if (error) return done(new Error(error.message));
                         if (status !== 200) return done(new Error(`undexpected status ${status}`)); 
+                       
+                        expect(error).to.be.undefined;// ambos expect no van
+                        expect(status).to.equal(200); // 
+
 
                         const { token } = JSON.parse(body);
 
