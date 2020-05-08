@@ -13,6 +13,11 @@ function App() {
         event.preventDefault()
         setView('login')
     }
+
+    const handleRegisterSubmit = (event) => {
+        setView('login')
+    }
+
     const handleLoginSubmit = (event) => {
         event.preventDefault()
 
@@ -24,16 +29,18 @@ function App() {
         authenticateUser(email, password, (error, token) => {
             if (error) throw error
 
-            if (token) setToken(token)
+            if (token) {
+                setToken(token)
+                setView('home')
+            }
         })
 
-        setView('home')
     }
 
     return <>
         {view === 'landing' && <Landing toRegister={handleGoToRegister} toLogin={handleGoToLogin} />}
         {view === 'login' && <Login toRegister={handleGoToRegister} loginSubmit={handleLoginSubmit} />}
-        {view === 'register' && <Register goToLogin={handleGoToLogin} />}
+        {view === 'register' && <Register loginSubmit={handleRegisterSubmit} goToLogin={handleGoToLogin} />}
         {view === 'home' && <Home />}
 
 
