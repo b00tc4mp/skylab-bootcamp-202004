@@ -1,18 +1,53 @@
 const { useState, Component } = React
 
 function App() {
-    const [view, setView] = useState('register')
+    const [view, setView] = useState('landing')
+    const [token, setToken] = useState(undefined)
+
+    const handleGoToRegister = (event) => {
+        event.preventDefault()
+        setView('register')
+    }
+
+    const handleGoToLogin = (event) => {
+        event.preventDefault()
+        setView('login')
+    }
+    const handleLoginSubmit = (event) => {
+        event.preventDefault()
+
+        const email = event.target.email.value
+        const password = event.target.password.value
+
+        console.log(email, password)
+
+        authenticateUser(email, password, (error, token) => {
+            if (error) throw error
+
+            if (token) setToken(token)
+        })
+
+        setView('home')
+    }
+
+    return <>
+        {view === 'landing' && <Landing toRegister={handleGoToRegister} toLogin={handleGoToLogin} />}
+        {view === 'login' && <Login toRegister={handleGoToRegister} loginSubmit={handleLoginSubmit} />}
+        {view === 'register' && <Register goToLogin={handleGoToLogin} />}
+        {view === 'home' && <Home />}
 
 
-    const handleGoToLogin = () => setView('login')
+    </>
+    // LANDING
+    // NAV
+    // BRAND
+    // CRYPTO COINS 
+    // FOOTER
 
+    // REGISTER
 
-    return(
-        <> 
-            {view === 'register' && <Register goToLogin={handleGoToLogin} />}
-            {view === 'login' && <p>soy login</p>}
-        
-        </>
-    )
-   
+    // LOGIN
+
+    //HOME
 }
+
