@@ -1,9 +1,9 @@
-function Home({onGoToLogin}) {
+function Home({token, OnLogout}) {
 
-    const handleGoToLogin= event =>{
+    const handleLogout= event =>{
         event.preventDefault()
 
-        onGoToLogin()
+        OnLogout()
     }
 
     return <section className="home">
@@ -12,7 +12,9 @@ function Home({onGoToLogin}) {
         <header className="Header">
             <section className="Header__container">
                 <h2 className="Header__container--name">4thElement</h2>
-                <a onClick={handleGoToLogin} className="Header__container--login" href="">Logout</a>
+                
+                <a onClick={handleLogout} className="Header__container--login" href="">{token? 'Logout' : 'Login'}</a>
+                
             </section>
         </header>
 
