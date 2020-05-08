@@ -33,34 +33,43 @@
     display: flex
     flex-wrap: wrap
     justify-content: space-around
-    .coin
-        width: 12em
-        height: 200px
+
+.coin
+    width: 12em
+    height: 200px
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    background: $secondary-color
+    border-radius: 25px
+    margin: 15px 0
+    padding: 15px
+
+    &__head
         display: flex
-        flex-direction: column
-        justify-content: flex-end
-        background: $secondary-color
+        justify-content: space-between
+        color: black
+        font-size: 1.5em
+    &__body
+        margin-bottom: 0.5em
+
+    span
+        height: 25px
+        display: flex
+        justify-content: space-between
+        font-size: 1.1em
+
+    &__img
+        // justify-self: center TODO MOVE IMAGE TO TOP OF DIV
+        width: 50px
         border-radius: 25px
-        margin: 15px 0
-        padding: 15px
 
-        span
-            height: 25px
-            display: flex
-            justify-content: space-between
-            font-size: 1.1em
+    &__name
+        color: #dd7631
 
-        &__img
-            // justify-self: center TODO MOVE IMAGE TO TOP OF DIV
-            width: 50px
-            border-radius: 25px
+    &__price
+        font-weight: bold
+        color: black
 
-        &__name
-            color: #dd7631
-
-        &__price
-            font-weight: bold
-            color: black
-
-        &__percentage
-            color: #dd7631
+    &__percentage
+        color: #dd7631
