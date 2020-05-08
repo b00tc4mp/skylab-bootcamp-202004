@@ -309,7 +309,16 @@
   font-weight: bold 700;
 }
 .player-card__line {
-  border-top: 5px solid #320090;
+  border: 3px solid #320090;
+}
+
+.player-card__info {
+  display: block;
+}
+.player-card__info__question {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #320090;
 }
 
 * {
