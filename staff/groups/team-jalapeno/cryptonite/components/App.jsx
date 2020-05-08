@@ -14,16 +14,18 @@ function App() {
         setView('login')
     }
     const handleLoginSubmit = (event) => {
+        event.preventDefault()
+
         const email = event.target.email.value
         const password = event.target.password.value
 
         console.log(email, password)
 
-        // authenticateUser(email, password, (error, token)=>{
-        //     if (error) throw error
+        authenticateUser(email, password, (error, token) => {
+            if (error) throw error
 
-        //     if (token) setToken(token)
-        // })
+            if (token) setToken(token)
+        })
 
         setView('home')
     }
