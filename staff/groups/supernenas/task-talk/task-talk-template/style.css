@@ -1,6 +1,7 @@
 .register, .login {
   display: inline-block;
-  padding: 1rem;
+  padding: 0rem;
+  margin: 0px;
 }
 .register h1, .login h1 {
   text-align: center;
@@ -14,6 +15,11 @@ h1 {
   font-style: italic;
   font-family: Georgia;
   color: white;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
 }
 
 .landing {
@@ -55,8 +61,10 @@ h1 {
 }
 
 .home {
-  width: 100vw;
+  width: 100%;
   height: 170vh;
+  margin-left: 0;
+  padding: 0;
 }
 
 .navigation__bar--upper {
@@ -84,7 +92,6 @@ h1 {
   font-size: 1rem;
   border: none;
   text-align: center;
-  font-style: italic;
   font-family: Georgia;
   border-radius: 10px;
   font-weight: bold;
@@ -104,6 +111,97 @@ h1 {
 .button__navigation--inverted:hover {
   background-color: white;
   color: salmon;
+}
+.button__card {
+  text-align: justify;
+  font-size: 0.8rem;
+  border: none;
+  text-align: center;
+  font-family: Georgia;
+  border-radius: 0.3rem;
+  font-weight: bold;
+}
+.button__card--regular {
+  background-color: white;
+  color: salmon;
+}
+.button__card--regular:hover {
+  background-color: #C16156;
+  color: white;
+}
+.button__card--inverted {
+  background-color: #C16156;
+  color: white;
+}
+.button__card--inverted:hover {
+  background-color: white;
+  color: salmon;
+}
+.button__card--back {
+  grid-column-start: 1;
+}
+.button__card--edit {
+  grid-column-start: 2;
+}
+.button__card--save {
+  grid-column-start: 2;
+}
+.button__card--delete {
+  grid-column-start: 4;
+}
+
+.card {
+  box-sizing: border-box;
+  background-color: white;
+  border-style: solid;
+  border-color: salmon;
+  border-width: 0.5rem;
+  border-radius: 1rem;
+  width: 100%;
+}
+.card--highlighted {
+  background-color: white;
+}
+.card--preview {
+  background-color: white;
+}
+.card__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 5fr 1fr;
+  grid-column-gap: 5px;
+  justify-content: left;
+}
+
+.card__title {
+  width: 100%;
+  background-color: salmon;
+  color: white;
+  border-style: solid;
+  border-color: salmon;
+  border-width: 2px;
+  text-align: center;
+  font-size: 1rem;
+  font-style: italic;
+  font-family: Georgia;
+  font-weight: bold;
+  padding: 0px;
+  margin: -2px;
+}
+
+.card__message {
+  color: black;
+  text-align: justify;
+  font-family: Georgia;
+  margin: 0.5rem;
+}
+
+.card__input {
+  border: none;
+}
+.card__input--text {
+  margin-left: -1%;
+  width: 100%;
+  resize: none;
 }
 
 /*# sourceMappingURL=style.css.map */
