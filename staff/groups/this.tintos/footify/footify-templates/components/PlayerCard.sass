@@ -1,0 +1,79 @@
+.player
+    display: flex
+    justify-content: center
+    background-color: #ffffff
+
+=nameSize()
+    color: #320090
+    display: flex
+    justify-content: start
+    margin-left: 2rem
+    font-family: raleway 
+    font-weight: bold 700
+    
+.player-card
+    display: flex
+    flex-direction: column
+    align-items: start
+    width: 100%
+    &__item
+        background-color: #73f182
+        margin: 2rem
+        list-style: none
+        height: 40vh
+    &__player
+        height: auto
+        display: grid
+        height: 52%
+        align-content: center
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
+        grid-template-rows: 1fr 1fr 1fr 1fr
+        grid-template-areas: "emblem emblem number number image image image image" "emblem emblem number number image image image image" "name name . . image image image image" "surname surname . . image image image image"
+    &__emblem
+        grid-area: emblem
+        margin: 0.4rem
+        &-item
+            width: 100%
+            height: 100%
+    &__number
+        grid-area: number
+        display: flex
+        justify-content: center
+        align-items: flex-start
+        background: #ffffff
+        border-radius: 50%
+        margin: 0.9rem
+        font-family: raleway 
+        font-size: 2.6rem
+        font-weight: 700
+        color: #320090
+        &-item
+            height: 100%
+            text-align: center
+            width: 100%
+    &__image
+        grid-area: image
+        display: flex
+        align-items: flex-end
+        &-item
+            width: 100%
+            min-height: 155px
+    &__name-first
+        grid-area: name
+        +nameSize()
+        align-items: flex-end
+    &__name-surname
+        grid-area: surname
+        +nameSize()
+    &__line
+        border: 3px solid #320090
+
+.player-card__info
+    display: block
+    &__question
+        font-size: 1.8rem
+        font-weight: 700
+        color: #320090
+
+    
+
