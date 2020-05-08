@@ -7,6 +7,7 @@ function Home({onGoToLogin}) {
     }
 
     return <section className="home">
+        
 
         <header className="Header">
             <section className="Header__container">
