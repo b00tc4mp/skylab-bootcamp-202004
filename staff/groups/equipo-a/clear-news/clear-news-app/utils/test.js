@@ -35,4 +35,6 @@ const passwords = [
     'poiuytr123123',
     'asdfhasdfh'
 ]
-const countries = ["ae" ,"ar", "at", "au", "be", "bg", "br", "ca" ,"ch", "cn"]
+const countries = ["es" ,"us", "ru", "it", "fr"]
+
+const category = [true, false]

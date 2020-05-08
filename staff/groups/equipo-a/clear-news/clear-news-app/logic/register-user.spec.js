@@ -42,7 +42,7 @@ describe('registerUser', () => {
                                 expect(error).to.be.undefined;// idem
                                 expect(status).to.equal(200); // iodem
 
-                                const {name: _name, surame, etc} = body
+                                const { name: _name, surame, etc} = JSON.parse(body)
                                 expect(_name).to.equal(name)
 
                                 done()
