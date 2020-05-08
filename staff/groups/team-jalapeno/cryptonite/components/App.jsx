@@ -1,7 +1,7 @@
 const { useState, Component } = React
 
 function App() {
-    const [view, setView] = useState('landing')
+    const [view, setView] = useState('home')
     const [token, setToken] = useState(undefined)
 
     const handleGoToRegister = (event) => {
