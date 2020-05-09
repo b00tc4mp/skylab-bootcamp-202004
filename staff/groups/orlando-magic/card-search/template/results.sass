@@ -2,6 +2,30 @@
     display: flex
     flex-flow: column
     width: 100%
+    color: #7491ac
+    &__header
+        border-bottom: solid brown
+        width: 98%
+        padding: 1%
+        display: flex
+        flex-direction: column
+        & > a
+            font-size: 1.2em
+        &--option
+            display: flex
+            width: 100%
+            & > a
+                width: 27%
+            & > select
+                border: solid brown 0.1px
+                flex-grow: 1
+                background-color: whitesmoke
+                height: 2em 
+        &--button
+            width: 100%
+            height: 2em 
+    & > article
+        font-size: 0.8em
     &--cards
         display: flex
         flex-flow: wrap row

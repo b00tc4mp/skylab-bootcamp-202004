@@ -3,22 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Card-Search Template</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav>
-        <a href="">Register</a> 
-        <a href="">Login</a>
-        <a href="">Search</a>
-        <a href="">Advanced Search</a>
-        <a href="">Your Account</a>
-     
-        <!-- <a href="">Sets</a>
-        <a href="">Syntax</a>
-        <a href="">Random</a>
-        <a href="">Your decks</a> 
-        -->
+    <nav class = "navigation">
+        <div class = "navigation__basic">
+            <a href="">Landing</a>
+            <form>
+                <input type="text" name="query" placeholder = "Search for Magic cards">
+            </form>
+            <a href="">Menu</a>
+        </div>
+        <div class = "navigation__extended">
+            <a href="">Advanced Search</a>
+            <!-- If not logged in -->
+            <a href="">Register</a> 
+            <a href="">Login</a>
+            <!-- If logged in -->
+            <a href="">Your Account</a>
+            <a href="">Your Decks</a> 
+            <a href="">Your Cards</a>
+        </div>
     </nav>
 
     <section class = 'landing'>
@@ -29,16 +35,16 @@
         <a href="">Advanced Search</a>
         <!-- IF LOGGED IN -->
         <a href="">Your Account</a>
+        <a href="">Your Decks</a> 
+        <a href="">Your Cards</a> 
         <!-- IF NOT LOGGED IN -->
         <a href="">Register</a> 
         <a href="">Login</a>
-        <!-- <a href="">All Sets</a>
+
+        <!-- Other possible options
+        <a href="">All Sets</a>
         <a href="">Syntax Guide</a>
         <a href="">Random Card</a>
-        <a href="">Your decks</a> 
-
-        + HIDE HEADER
-
         -->
     </section>
 
@@ -47,15 +53,15 @@
             <div class = 'advancedsearch__section'>
                 <a class = 'advancedsearch__section--title'>Card Name</a>
                 <div class = 'advancedsearch__section--options'>
-                    <input type="text" name="cardname">
-                    <p></p>
+                    <input type="text" name="cardname" placeholder=" Any words in the name, e.g. 'Sky'">
+                    <p>Enter text that should appear in the card name. Word order doesn't matter.</p>
                 </div>
             </div>
 
             <div class = 'advancedsearch__section'>
                 <a class = 'advancedsearch__section--title'>Card Text</a>
-                <div class = 'advancedsearch__section--options'>
-                    <input type="text" name="text">
+                <div class = 'advancedsearch__section--options' >
+                    <input type="text" name="text" placeholder=" Any words in the name, e.g. 'Lab'">
                     <select id="mana">
                         <option value="">Add symbol</option>
                         <option value="{T}">{T} – tap this permanent</option>
@@ -116,7 +122,7 @@
                 <a class = 'advancedsearch__section--title'>Type Line</a>
                 <div class = 'advancedsearch__section--options'>
                     <select id="types">
-                        <option value=""></option>
+                        <option value="">Type</option>
                         <optgroup label="Types"><option data-pol="+" data-item="artifact" value="artifact">Artifact</option>
                             <option data-pol="+" data-item="conspiracy" value="conspiracy">Conspiracy</option>
                             <option data-pol="+" data-item="creature" value="creature">Creature</option>
@@ -601,14 +607,21 @@
                         <input type="checkbox" name="C" value = "C">
                         <a>Colorless</a>
                     </div>
-                    <p></p>
+                    
+                    <select id="color_comparison">
+                        <option value="=">Exactly these colors</option>
+                        <option value=">=">Including these colors</option>
+                        <option value="<=">At most these colors</option>
+                    </select>
+                    
+                    <p>Including" means cards that are all the colors you select, with or without any others. "At most" means cards that have some or all of the colors you select, plus colorless.</p>
                 </div>
             </div>
 
             <div class = 'advancedsearch__section'>            
                 <a class = 'advancedsearch__section--title'>Manacost</a>
                 <div class = 'advancedsearch__section--options'>
-                    <input type="text" name="manacost">
+                    <input type="text" name="manacost" placeholder=" Any mana symbols, e.g. {WB}">
                     <select id="subjoiner">
                         <option value="">Add symbol</option>
                         <option value="{T}">{T} – tap this permanent</option>
@@ -682,7 +695,7 @@
                         <option value=">=">greater than or equal to</option> 
                         <option value="!=">not equal to</option> 
                     </select>
-                    <input type="number" name="statnumber">
+                    <input type="number" name="statnumber" placeholder=" Any number">
                     <p>Restrict cards based on their numeric statistics. Cards without stats will not be returned.</p>
                 </div>
             </div>
@@ -696,7 +709,7 @@
                         <option value="banned">Banned</option>
                     </select>
                     <select id="formats">
-                        <option value=""></option>
+                        <option value="">Format</option>
                         <option value="standard">Standard</option>
                         <option value="future">Future Standard</option>
                         <option value="historic">Historic</option>
@@ -719,7 +732,7 @@
                 <a class = 'advancedsearch__section--title'>Sets</a>
                 <div class = 'advancedsearch__section--options'>
                     <select id="sets">
-                        <option value=""></option>
+                        <option value="">Set</option>
                         <optgroup label="Expansions">
                             <option data-svg-code="iko" value="iko">Ikoria: Lair of Behemoths (IKO)</option>
                             <option data-svg-code="thb" value="thb">Theros Beyond Death (THB)</option>
@@ -1344,7 +1357,7 @@
                         </optgroup>
                     </select>
                     <select id = "blocks">
-                        <option value=""></option>
+                        <option value="">Block</option>
                         <option value="parl">Arena League</option>
                         <option value="jgp">Judge Gift Cards</option>
                         <option value="cmd">Commander</option>
@@ -1405,7 +1418,7 @@
             <div class = 'advancedsearch__section'>
                 <a class = 'advancedsearch__section--title'>Artist</a>
                 <div class = 'advancedsearch__section--options'>
-                    <input type="text" name="artist" id="artist">
+                    <input type="text" name="artist" id="artist" placeholder=" Any artist name, e.g. 'John Avon'">
                     <p>Enter text that should be part of the artist name.</p>
                 </div>
             </div>
@@ -1413,7 +1426,7 @@
             <div class = 'advancedsearch__section'>
                 <a class = 'advancedsearch__section--title'>Flavor Text</a>
                 <div class = 'advancedsearch__section--options'>
-                    <input type="text" name="flavortext" id="flavortext">
+                    <input type="text" name="flavortext" id="flavortext" placeholder=" Any words in the flavor text, e.g. 'Chandra'">
                     <p>Enter words that should appear in the flavor text. Word order doesn't matter.</p>
                 </div>
             </div>
@@ -1421,7 +1434,7 @@
             <div class = 'advancedsearch__section'>
                 <a class = 'advancedsearch__section--title'>Lore</a>
                 <div class = 'advancedsearch__section--options'>
-                    <input type="text" name="lore" id="lore">
+                    <input type="text" name="lore" id="lore" placeholder=" Any text in the card, especially names, e.g. 'Nicol Bolas'">
                     <p>Enter names or words here and the system will search each part of the card for that word. Great for finding every card that mentions your favorite character or creature type.</p>
                 </div>
             </div>
@@ -1474,15 +1487,43 @@
             </div>
 
             <div class = 'advancedsearch__section'>
-                <a class = 'advancedsearch__section--title'></a>
-                <button class = 'advancedsearch__section--button'>Search with these options</button>
+                <button type = "submit" class = 'advancedsearch__section--button'>Search with these options</button>
             </div>
             
         </form>
     </section>
 
     <section class = 'results'>
-        <header>Need display options</header>
+        <header class = "results__header">
+            <form>
+                <div class = "results__header--option">
+                    <a>Sort By</a>
+                    <select id="order" class="select-n">
+                        <option value="name">Name</option> 
+                        <option value="released">Release Date</option> 
+                        <option value="set">Set/Number</option> 
+                        <option value="rarity">Rarity</option> 
+                        <option value="color">Color</option> 
+                        <option value="cmc">CMC</option> 
+                        <option value="power">Power</option> 
+                        <option value="toughness">Toughness</option> 
+                        <option value="edhrec">EDHREC Rank</option> 
+                        <option value="artist">Artist Name</option>
+                    </select>
+                </div>
+                <div class = "results__header--option">
+                    <a>Sort Direction</a>
+                    <select id="dir">
+                        <option value = "">Auto</option>
+                        <option value = "asc">Ascendant</option>
+                        <option value = "desc">Descendant</option>
+                    </select>
+                </div>
+                <div>
+                    <button type = "submit" class = "results__header--button">Sort</button>
+                </div>
+            </form>
+        </header>
         <article>1 – 60 of 155 cards where the name includes “a” and the text includes “b” and the card types include “artifact” and the colors ≤ R and the mana cost is greater than or equal to {1} and the converted mana cost &#60 10 and it’s legal in Vintage and the rarity is equal to common</article>
         <article class = 'results--cards'>
             <img src = 'https://img.scryfall.com/cards/normal/front/7/8/7855528a-ede9-49a9-8749-795a004fd927.jpg?1562788826'>
