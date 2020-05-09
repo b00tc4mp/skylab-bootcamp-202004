@@ -1,4 +1,9 @@
 function searchTeam(teamId, callback) {
+    if(teamId === '') throw new Error('Any team search');
+    
+    String.validate(teamId);
+    Function.validate(callback);
+
     let team = []
     call('GET', `https://www.thesportsdb.com/api/v1/json/1/lookupteam.php?id=${teamId}`,
         undefined, undefined, (error, status, body) => {
@@ -25,7 +30,3 @@ function searchTeam(teamId, callback) {
         })
 }
 
-searchTeam('133739', (error, team) => {
-
-    console.log(team)
-})
