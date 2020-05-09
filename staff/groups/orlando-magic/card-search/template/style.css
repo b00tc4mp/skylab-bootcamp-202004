@@ -10,7 +10,6 @@
   padding: 1%;
 }
 .advancedsearch__section--title {
-  color: #7491ac;
   text-align: center;
   width: 100%;
   font-size: 1.2em;
@@ -23,13 +22,9 @@
   align-items: center;
   width: 100%;
 }
-.advancedsearch__section--options > div > a {
-  color: #7491ac;
-}
 .advancedsearch__section--options > p {
   font-size: 0.8em;
   width: 100%;
-  color: #7491ac;
   text-align: center;
 }
 .advancedsearch__section--options > input, .advancedsearch__section--options select {
@@ -37,10 +32,17 @@
   width: 100%;
   border: solid brown 0.1px;
   height: 2em;
+  text-align: center;
+  text-align-last: center;
 }
 .advancedsearch__section--button {
   width: 100%;
   height: 2em;
+}
+.advancedsearch__section--buttoncontainer {
+  position: sticky;
+  bottom: 0rem;
+  border-top: solid brown;
 }
 
 .results {
@@ -79,15 +81,20 @@
 .results > article {
   font-size: 0.8em;
 }
-.results--cards {
+.results__cards {
   display: flex;
   flex-flow: wrap row;
   justify-content: space-around;
   width: 100%;
+  list-style-type: none;
+  padding: 0;
 }
-.results--cards > img {
+.results__cards > li {
   width: 48%;
-  margin-bottom: 1%;
+  margin: 1%;
+}
+.results__cards--card {
+  width: 100%;
 }
 
 .navigation__basic {
