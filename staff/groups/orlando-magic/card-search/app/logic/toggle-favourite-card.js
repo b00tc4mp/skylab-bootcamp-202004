@@ -36,7 +36,7 @@ function toggleFavouriteCard(token, cardId, callback) {
                             callback(new Error(error))
                         }
                     })
-
+            } else {
                 const { error } = JSON.parse(body)
 
                 callback(new Error(error))

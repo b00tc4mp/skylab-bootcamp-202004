@@ -1,4 +1,4 @@
-describe.only('toggleFavouriteCard', () => {
+describe('toggleFavouriteCard', () => {
     let name, surname, email, password, _token, username, id
 
     beforeEach(() => {
@@ -39,29 +39,28 @@ describe.only('toggleFavouriteCard', () => {
 
             let user = JSON.parse(body)
 
-            // expect(user.myCards).to.be.undefined
+            expect(user.myCards).to.be.undefined
             
             toggleFavouriteCard(_token, id, error => {
-            //     expect(error).to.be.undefined
+                expect(error).to.be.undefined
 
-            //     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
-            //         undefined,
-            //         { Authorization: `Bearer ${_token}` }, (error, state, body) => {
-            //             // expect(error).to.be.undefined
-            //             // expect(state).to.equal(200)
-            //             // expect(body).to.exist
+                call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                    undefined,
+                    { Authorization: `Bearer ${_token}` }, (error, state, body) => {
+                        expect(error).to.be.undefined
+                        expect(state).to.equal(200)
+                        expect(body).to.exist
 
-            //             // let _user = JSON.parse(body)
+                        let _user = JSON.parse(body)
 
-            //             // expect(_user.myCards).to.exist
-            //             // expect(_user.myCards.length).to.be.greaterThan(0)
+                        expect(_user.myCards).to.exist
+                        expect(_user.myCards.length).to.be.greaterThan(0)
 
-            //             // expect(_user.myCards[0]).to.equal(id)
-            //             // expect(_user.myCards[0]).to.be.a('string')
+                        expect(_user.myCards[0]).to.equal(id)
+                        expect(_user.myCards[0]).to.be.a('string')
 
-            //             done()
-            //     })
-                done()
+                        done()
+                })
             })
         })
     })
