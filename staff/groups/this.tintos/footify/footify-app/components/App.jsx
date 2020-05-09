@@ -7,13 +7,16 @@ function App() {
     const handleGoToLogin = () => { setView('login') }
     const handleGoToRegister = () => { setView('register') }
     const handleGoToLanding = () => { setView('landing') }
-    const handlGoToHome = () => { setView('home') } 
+    const handlGoToHome = (token) => { 
+        setToken(token) 
+        setView('home')      
+    } 
 
     return <>
         {view === 'landing' && <Landing onGoToLogin={handleGoToLogin} onGoToRegister={handleGoToRegister} />}
         {view === 'login' && <Login onGoToRegister={handleGoToRegister} onGoToLanding={handleGoToLanding} onGoToHome={handlGoToHome}/>}
         {view === 'register' && <Register onGoToLogin={handleGoToLogin} onGoToLanding={handleGoToLanding}/>}
-        {view === 'home' && <Home />}
+        {view === 'home' && <Home token={token}/>}
     </>
 
 }

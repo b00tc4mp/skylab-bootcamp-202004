@@ -82,7 +82,7 @@
   padding: 0.5rem;
   background-color: #73f182;
   color: #320090;
-  width: 24rem;
+  width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -90,7 +90,10 @@
   justify-content: space-around;
 }
 .register__input {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .register__input-button {
   width: 12rem;
@@ -170,7 +173,7 @@
   padding: 0.5rem;
   background-color: #73f182;
   color: #320090;
-  width: 24rem;
+  width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -178,7 +181,10 @@
   justify-content: space-around;
 }
 .login__input {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .login__input-button {
   width: 12rem;
@@ -359,7 +365,7 @@
 }
 
 .navbar__container {
-  width: 24rem;
+  width: 100vw;
   height: 16.5vh;
   display: flex;
   flex-direction: column;

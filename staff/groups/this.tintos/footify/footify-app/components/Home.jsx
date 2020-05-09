@@ -1,15 +1,10 @@
-const {useState} = React
+const { useState } = React
 
-/*function(){
-
-
+function Home() {
 
 
-
-
-
-return <>
-
-</>*/
+    return <>
+       <Navbar />
+    </>
 
 }
