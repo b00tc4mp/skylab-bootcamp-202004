@@ -1,6 +1,6 @@
 const { useState } = React
 
-function Search({ token, OnLogout }) {
+function Search({ token, OnLogout, movingSurfForecast }) {
 
     const [query, setQuery] = useState('')
 
@@ -12,9 +12,13 @@ function Search({ token, OnLogout }) {
         setQuery(query)
     }
 
+    const onGoToSurfForecast = (surfForecastSelected) =>{
+        movingSurfForecast(surfForecastSelected)
+    }
+
     return <section className="Search">
         <SearchSpotCompo onSubmitSpot={handleSubmitSpot} />
-        {query && <SpotResultsList  query={query}/>}
+        {query && <SpotResultsList  query={query} onGoToSurfForecast={onGoToSurfForecast}/>}
 
     </section>
 }
