@@ -73,7 +73,7 @@ describe("retrieveUserGroups",()=>{
     afterEach((done)=>{ //Borro los tablones que he creado para las pruebas
         function recursive(index,groups){
             if(index>=0){
-                Trello.delete("boards/"+groups[index].id,()=>{
+                Trello.delete("boards/"+groups[index],()=>{
                     index--;
                     if(index>=0){
                         recursive(index,groups)
@@ -87,9 +87,9 @@ describe("retrieveUserGroups",()=>{
                 done();
             }
         }
-        retrieveUserGroups(testUsername,(groups)=>{//No entra bien aquí cuando el usuario no está metido en ningún grupo
-            if(groups.length>0){
-                recursive(groups.length-1,groups)
+        Trello.get("members/"+testUsername,(user)=>{
+            if(user.idBoards.length>0){
+                recursive(user.idBoards.length-1,user.idBoards);
             }else{
                 done();
             }
