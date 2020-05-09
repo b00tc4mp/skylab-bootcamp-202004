@@ -18,8 +18,6 @@ describe('retrieveUser', () => {
         _country = countries.random();
     })
 
-
-
     describe('when user already exists', () => {
         beforeEach(done => {
             call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
@@ -28,7 +26,6 @@ describe('retrieveUser', () => {
                 (error, status) => {
                     if (error) return done(new Error(error.message));
                     if (status !== 201) return done(new Error(`undexpected status ${status}`));
-                    // call('POST', )
 
                     call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth', `{"username" : "${email}", "password" : "${password}"}`, { 'Content-type': 'application/json' }, (error, status, body) => {
                         if (error) return done(new Error(error.message));
@@ -36,9 +33,9 @@ describe('retrieveUser', () => {
                         let { token } = JSON.parse(body);
                         _token = token;
 
-                        done()
-                    })
-                })
+                        done();
+                    });
+                });
 
             it('should succeed on correct credentials', done => {
 
@@ -52,7 +49,7 @@ describe('retrieveUser', () => {
                     expect(categories).to.include(_categories);
                     expect(country).to.equal(_country);
 
-                    done()
+                    done();
 
                 })
 
@@ -68,7 +65,7 @@ describe('retrieveUser', () => {
 
 
 
-                    done()
+                    done();
                 });
             });
 
@@ -106,5 +103,5 @@ describe('retrieveUser', () => {
 
 });
 
-});
+
 
