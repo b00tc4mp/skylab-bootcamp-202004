@@ -1,4 +1,4 @@
-describe.only('search-everything', () => {
+describe('search-everything', () => {
     // searchEverything(query, language, sortBy, callback)
 
     describe('expect to succed on searching news in english', () => {

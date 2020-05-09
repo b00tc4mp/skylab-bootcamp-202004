@@ -18,30 +18,30 @@ describe('registerUser', () => {
         country = countries.random();
         
     });
-    afterEach(done => {
-        call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
-            `{ "username": "${email}", "password": "${password}" }`,
-            { 'Content-type': 'application/json' },
-            (error, status, body) => {
-                if (error) return done(error)
-                if (status !== 200) return done(new Error(`unexpected status ${status}`))
+    // afterEach(done => {
+    //     call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
+    //         `{ "username": "${email}", "password": "${password}" }`,
+    //         { 'Content-type': 'application/json' },
+    //         (error, status, body) => {
+    //             if (error) return done(error)
+    //             if (status !== 200) return done(new Error(`unexpected status ${status}`))
 
-                const { token } = JSON.parse(body);
+    //             const { token } = JSON.parse(body);
 
-                call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users',
-                    `{ "password": "${password}" }`,
-                    {
-                        'Content-type': 'application/json',
-                        Authorization: `Bearer ${token}`
-                    },
-                    (error, status) => {
-                        if (error) return done(new Error(error.message))
-                        if (status !== 204) return done(new Error(`undexpected status ${status}`))
+    //             call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users',
+    //                 `{ "password": "${password}" }`,
+    //                 {
+    //                     'Content-type': 'application/json',
+    //                     Authorization: `Bearer ${token}`
+    //                 },
+    //                 (error, status) => {
+    //                     if (error) return done(new Error(error.message))
+    //                     if (status !== 204) return done(new Error(`undexpected status ${status}`))
 
-                        done();
-                    });
-            });
-    });
+    //                     done();
+    //                 });
+    //         });
+    // });
 
     describe('when user already exists', () => {
         it('should succed on correct data', done => {
