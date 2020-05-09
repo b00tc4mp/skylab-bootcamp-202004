@@ -1,0 +1,436 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,500;0,900;1,700&display=swap");
+.landing {
+  font-family: Raleway;
+  color: #320090;
+  margin-right: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.landing__container {
+  padding: 0.5rem;
+  background-image: url("img/home.jpg");
+  background-size: 80vh;
+  background-position: center;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.landing__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.landing__logo > img {
+  width: 11rem;
+}
+.landing__info {
+  margin: 5rem 2rem 2rem 2rem;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+.landing__nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.landing__button {
+  width: 12rem;
+  height: 2.2rem;
+  font: Raleway;
+  font-weight: 100;
+  color: #320090;
+  font-size: 1.4rem;
+  background-color: white;
+  border-radius: 0.3rem;
+  border: none;
+  margin-top: 1.5rem;
+  outline: none;
+}
+.landing__button:hover {
+  background-color: #320090;
+  color: white;
+}
+
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 2px;
+  font-family: Raleway;
+}
+.register__logo {
+  text-align: center;
+  position: relative;
+  top: 1.8rem;
+}
+.register__logo img {
+  width: 11rem;
+}
+.register__title {
+  font-family: Raleway;
+  font-weight: 400;
+  font-size: 3.4rem;
+  margin-bottom: 1.5rem;
+}
+.register__container {
+  padding: 0.5rem;
+  background-color: #73f182;
+  color: #320090;
+  width: 24rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.register__input {
+  text-align: center;
+}
+.register__input-button {
+  width: 12rem;
+  height: 2.2rem;
+  font: Raleway;
+  font-weight: 100;
+  color: white;
+  font-size: 1.4rem;
+  background-color: #320090;
+  border-radius: 0.3rem;
+  border: none;
+  margin-top: 1.5rem;
+  outline: none;
+}
+.register__input-button:hover {
+  background-color: white;
+  color: #320090;
+}
+.register__input-item {
+  width: 20rem;
+  height: 2.7rem;
+  margin-bottom: 0.9rem;
+  border-style: none;
+  outline: none;
+  font-size: 0.9rem;
+  text-indent: 0.7rem;
+  color: #320090;
+  font-family: Raleway;
+  font-weight: 200;
+}
+
+.register__goto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 2.4rem;
+}
+.register__goto-text-landing {
+  margin-right: 11rem;
+  margin-left: 0.5rem;
+  font-weight: 700;
+}
+.register__goto-text-login {
+  margin-right: 0.5rem;
+  font-weight: 700;
+}
+.register__goto-landing {
+  width: 2.5rem;
+}
+.register__goto-login {
+  width: 2.5rem;
+}
+
+::placeholder {
+  color: #320090;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.login__logo {
+  text-align: center;
+}
+.login__logo img {
+  width: 11rem;
+}
+.login__title {
+  font-family: Raleway;
+  font-weight: 400;
+  font-size: 3.4rem;
+  margin-bottom: 1.5rem;
+}
+.login__container {
+  padding: 0.5rem;
+  background-color: #73f182;
+  color: #320090;
+  width: 24rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.login__input {
+  text-align: center;
+}
+.login__input-button {
+  width: 12rem;
+  height: 2.2rem;
+  font: Raleway;
+  font-weight: 100;
+  color: white;
+  font-size: 1.4rem;
+  background-color: #320090;
+  border-radius: 0.3rem;
+  border: none;
+  margin-top: 1.5rem;
+  outline: none;
+}
+.login__input-button:hover {
+  background-color: white;
+  color: #320090;
+}
+.login__input-item {
+  width: 20rem;
+  height: 2.7rem;
+  margin-bottom: 0.9rem;
+  border-style: none;
+  outline: none;
+  font-size: 0.9rem;
+  text-indent: 0.7rem;
+  color: #320090;
+  font-family: Raleway;
+  font-weight: 200;
+}
+
+.login__goto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 4.2rem;
+}
+.login__goto-text-landing {
+  font-family: Raleway;
+  margin-right: 9.7rem;
+  font-weight: 700;
+  margin-left: 0.5rem;
+}
+.login__goto-text-register {
+  font-family: Raleway;
+  font-weight: 700;
+  margin-right: 0.5rem;
+}
+.login__goto-landing {
+  width: 2.5rem;
+}
+.login__goto-register {
+  width: 2.5rem;
+}
+
+::placeholder {
+  color: #320090;
+}
+
+.player {
+  display: flex;
+  justify-content: center;
+  background-color: #ffffff;
+}
+
+.player-card {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+}
+.player-card__item {
+  background-color: #73f182;
+  margin: 2rem;
+  list-style: none;
+  height: 40vh;
+}
+.player-card__player {
+  height: auto;
+  display: grid;
+  height: 52%;
+  align-content: center;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-areas: "emblem emblem number number image image image image" "emblem emblem number number image image image image" "name name . . image image image image" "surname surname . . image image image image";
+}
+.player-card__emblem {
+  grid-area: emblem;
+  margin: 0.4rem;
+}
+.player-card__emblem-item {
+  width: 100%;
+  height: 100%;
+}
+.player-card__number {
+  grid-area: number;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: #ffffff;
+  border-radius: 50%;
+  margin: 0.9rem;
+  font-family: raleway;
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: #320090;
+}
+.player-card__number-item {
+  height: 100%;
+  text-align: center;
+  width: 100%;
+}
+.player-card__image {
+  grid-area: image;
+  display: flex;
+  align-items: flex-end;
+}
+.player-card__image-item {
+  width: 100%;
+  min-height: 155px;
+}
+.player-card__name-first {
+  grid-area: name;
+  color: #320090;
+  display: flex;
+  justify-content: start;
+  margin-left: 2rem;
+  font-family: raleway;
+  font-weight: bold 700;
+  align-items: flex-end;
+}
+.player-card__name-surname {
+  grid-area: surname;
+  color: #320090;
+  display: flex;
+  justify-content: start;
+  margin-left: 2rem;
+  font-family: raleway;
+  font-weight: bold 700;
+}
+.player-card__line {
+  border: 3px solid #320090;
+}
+
+.player-card__info {
+  display: block;
+}
+.player-card__info__question {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #320090;
+}
+
+.sport-news {
+  width: 24rem;
+  margin-left: 2px;
+}
+
+.sport-news__container {
+  width: 24rem;
+  height: 100vh;
+  border: 1px solid black;
+}
+.sport-news__container > a {
+  display: flex;
+  justify-content: center;
+}
+
+.sport-news__image {
+  width: 90%;
+  height: 15vh;
+  border: 1px solid black;
+}
+
+.navbar {
+  margin-left: 2px;
+}
+
+.navbar__container {
+  width: 24rem;
+  height: 16.5vh;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+}
+
+.navbar__user {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #73f182;
+  padding: 0rem 1rem 0rem 1rem;
+  height: 6rem;
+}
+
+.navbar__links {
+  display: flex;
+  background-color: #320090;
+  justify-content: space-around;
+  align-items: center;
+}
+.navbar__links-item {
+  width: 2.2rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+}
+
+.navbar__user-logo {
+  margin-left: 0.8rem;
+  width: 11rem;
+}
+
+.navbar__user-img {
+  margin-right: 0.8rem;
+  width: 2.4rem;
+}
+
+#navbar__links-news {
+  width: 1.9rem;
+}
+
+#navbar__links-search {
+  background-image: url("img/search.svg");
+  background-size: 1.9rem;
+  background-repeat: no-repeat;
+  background-position: right;
+  height: 2.2rem;
+  border-radius: 1.1rem;
+  border: 0;
+  width: 0rem;
+  outline-style: none;
+  font-size: 1.4rem;
+  transition: 1s;
+  color: rgba(255, 0, 0, 0);
+  padding-left: 1.1rem;
+  padding-right: 1.1rem;
+}
+
+#navbar__links-search:focus {
+  transition: 1s;
+  width: 14rem;
+  color: #320090;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+}
+
+/*# sourceMappingURL=style.css.map */

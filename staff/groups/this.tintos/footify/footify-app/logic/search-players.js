@@ -22,7 +22,7 @@ function searchPlayers(query, callback) {
 
                         _players.push({
                             date: notNull(dateBorn),
-                            image: notNull(strCutout),
+                            image: strCutout,
                             football_player: notNull(strPlayer),
                             position: notNull(strPosition),
                             club: notNull(strTeam),

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 30.52 63.06" style="enable-background:new 0 0 30.52 63.06;" xml:space="preserve">
+<style type="text/css">
+	.st0{clip-path:url(#SVGID_2_);fill:#FF4800;}
+	.st1{clip-path:url(#SVGID_4_);fill:#E5E8ED;}
+	.st2{clip-path:url(#SVGID_6_);fill:#EBC7BA;}
+	.st3{clip-path:url(#SVGID_8_);fill:#666E78;}
+	.st4{fill:#666E78;}
+</style>
+<g>
+	<g>
+		<defs>
+			<rect id="SVGID_1_" width="30.51" height="63.06"/>
+		</defs>
+		<clipPath id="SVGID_2_">
+			<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+		</clipPath>
+		<path class="st0" d="M0,37.63c0,0.56,0.46,1.02,1.02,1.02H29.5c0.56,0,1.02-0.46,1.02-1.02V1.02C30.52,0.46,30.06,0,29.5,0H1.02
+			C0.46,0,0,0.46,0,1.02V37.63z"/>
+	</g>
+	<g>
+		<defs>
+			<rect id="SVGID_3_" width="30.51" height="63.06"/>
+		</defs>
+		<clipPath id="SVGID_4_">
+			<use xlink:href="#SVGID_3_"  style="overflow:visible;"/>
+		</clipPath>
+		<path class="st1" d="M20.35,54.92c0.56,0,1.02,0.46,1.02,1.02v3.05c0,0.56-0.46,1.02-1.02,1.02H4.08c-0.56,0-1.02-0.46-1.02-1.02
+			v-3.05c0-0.56,0.46-1.02,1.02-1.02H20.35z"/>
+	</g>
+	<g>
+		<defs>
+			<rect id="SVGID_5_" width="30.51" height="63.06"/>
+		</defs>
+		<clipPath id="SVGID_6_">
+			<use xlink:href="#SVGID_5_"  style="overflow:visible;"/>
+		</clipPath>
+		<path class="st2" d="M27.47,38.65v7.12l-8.14,9.15H4.07V38.65V27.97c0-1.97,1.6-3.56,3.56-3.56c1.97,0,3.56,1.59,3.56,3.56v10.68
+			H27.47z"/>
+	</g>
+	<g>
+		<defs>
+			<rect id="SVGID_7_" width="30.51" height="63.06"/>
+		</defs>
+		<clipPath id="SVGID_8_">
+			<use xlink:href="#SVGID_7_"  style="overflow:visible;"/>
+		</clipPath>
+		<path class="st3" d="M21.37,57.97c0.56,0,1.02,0.46,1.02,1.02v3.05c0,0.56-0.46,1.02-1.02,1.02H3.06c-0.56,0-1.02-0.46-1.02-1.02
+			v-3.05c0-0.56,0.46-1.02,1.02-1.02H21.37z"/>
+	</g>
+</g>
+<rect x="2.04" y="62.04" class="st4" width="20.34" height="1.02"/>
+</svg>
