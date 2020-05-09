@@ -70,7 +70,12 @@ describe('registerUser', () => {
                                 if (error) return done(new Error(error.message));
                                 if (status !== 200) return done(new Error(`undexpected status ${status}`));
 
-                                const { name: name, surame, etc } = body;
+
+                                const { name: _name, surame, etc} = JSON.parse(body)
+                                expect(_name).to.equal(name)
+
+                               
+
 
                                 done();
                             }
