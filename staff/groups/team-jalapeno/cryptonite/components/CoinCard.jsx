@@ -1,4 +1,4 @@
-function CoinCard({ rank, symbol, name, priceUsd, changePercent24Hr }) {
+function CoinCard({ rank, symbol, name, priceUsd, changePercent24Hr, coinClick }) {
 
     const getChangePrice24Hr = (price, changePercent) => {
         let result = (price / 100 * changePercent)
