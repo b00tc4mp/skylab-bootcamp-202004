@@ -1,9 +1,10 @@
-function retrieveCryptos(callback) {
+function searchCryptos(query, callback) {
 
     Function.validate(callback)
+    String.validate.alphabetic(query)
 
-    // const url = 'https://api.coincap.io/v2/assets'
-    const url = 'https://api.coincap.io/v2/assets?limit=12'
+
+    const url = `https://api.coincap.io/v2/assets?search=${query}`
     const headers = { 'Content-type': 'application/json' }
     const body = undefined
 

@@ -11,9 +11,8 @@ body {
 }
 
 .nav {
-  margin-top: 1em;
+  padding-top: 1em;
   font-size: 1.2em;
-  background: rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: flex-end;
 }
@@ -232,6 +231,35 @@ body {
   margin-bottom: 1em;
 }
 
+.coinpage-header {
+  background: #f7ce78;
+  color: black;
+  border-radius: 0 0 3em 3em;
+}
+.coinpage-header .nav__item {
+  color: black;
+}
+.coinpage-header__name {
+  font-size: 2em;
+  margin: 1em 0;
+}
+.coinpage-header__button {
+  font-size: 1em;
+  padding: 0.8em;
+  margin: 1em auto;
+  width: 50%;
+  background: #1c1c1c;
+  border-color: #1c1c1c;
+  border-radius: 0.3em;
+  color: #f7ce78;
+}
+.coinpage-header__stats {
+  display: flex;
+  justify-content: space-around;
+  width: 90%;
+  align-items: center;
+  flex-wrap: wrap;
+}
 .login {
   flex-direction: column;
   display: flex;

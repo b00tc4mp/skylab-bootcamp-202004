@@ -1,19 +1,13 @@
 const { useState, useEffect } = React
 
-function Cryptos({ cryptoResults }) {
+function Cryptos({ cryptoResults, handleSearchOnChange }) {
 
-    const getChangePrice24Hr = (price, changePercent) => {
-        let result = (price / 100 * changePercent)
-        result = result.toFixed(2)
-        result > 0 ? result = '+' + result : result.toString()
-        return result
-    }
 
     return (
         <section className="crypto-coins">
             <h3 className="crypto-coins__title">Crypto Coins</h3>
             <section className="crypto-coins__search">
-                <input type="text" placeholder="Find your next crypto favorite" />
+                <input onChange={handleSearchOnChange} type="text" placeholder="Find your next crypto favorite" />
                 <i className="fa fa-search " />
             </section>
             <section className='coins-container'>
@@ -29,17 +23,7 @@ function Cryptos({ cryptoResults }) {
                     }
 
 
-                    return <div className="coin">
-                        <div className="coin__head">
-                            <span className="coin__symbol">{symbol}</span>
-                            <span className="coin__rank">{rank}</span>
-                        </div>
-                        <div className="coin__body">
-                            <span className="coin__name">{name}</span>
-                            <span className="coin__price">{priceUsd} USD</span>
-                            <span className="coin__percentage">{getChangePrice24Hr(priceUsd, changePercent24Hr)}$ ({changePercent24Hr}%)</span>
-                        </div>
-                    </div>
+                    return <CoinCard rank={rank} symbol={symbol} name={name} priceUsd={priceUsd} changePercent24Hr={changePercent24Hr} />
                 })}
 
             </section>

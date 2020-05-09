@@ -4,15 +4,25 @@ function Home() {
     const [cryptos, setCryptos] = useState(null)
     const [error, setError] = useState(null)
 
-
-    useEffect(()=>{
-        retrieveCryptos((_error, _cryptos)=> {
-            if (_error)  setError(_error.messsage)  
-            else setCryptos(_cryptos) 
-            console.log('i just set Cryptos')
+    const handleRetrieveCryptos = () => {
+        retrieveCryptos((_error, _cryptos) => {
+            if (_error) setError(_error.messsage)
+            else setCryptos(_cryptos)
         })
-        
+    }
+
+    useEffect(() => {
+        handleRetrieveCryptos()
     }, [])
+
+    const handleSearchOnChange = (event) => {
+        const { target: { value: query } } = event
+        if (!query) return handleRetrieveCryptos()
+        searchCryptos(query, (_error, _cryptos) => {
+            if (_error) setError(_error.messsage)
+            else setCryptos(_cryptos)
+        })
+    }
 
     return <>
         <nav className="nav">
@@ -27,7 +37,7 @@ function Home() {
             <button className="portfolio__button">Go to Portfolio </button>
         </section>
 
-        {cryptos &&<Cryptos cryptoResults={cryptos} />}
+        {cryptos && <Cryptos handleSearchOnChange={handleSearchOnChange} cryptoResults={cryptos} />}
 
 
         <footer className="footer">
@@ -36,6 +46,6 @@ function Home() {
             </section>
 
         </footer>
-        
+
     </>
-}
+} 
