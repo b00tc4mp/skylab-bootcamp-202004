@@ -5,27 +5,26 @@
 .advancedsearch__section {
   display: flex;
   flex-flow: column;
-  align-items: flex-start;
   border-bottom: solid brown;
   width: 98%;
   padding: 1%;
 }
 .advancedsearch__section--title {
-  color: #7491ac;
   text-align: center;
   width: 100%;
-  font-family: URW Chancery L;
+  font-size: 1.2em;
+  margin-bottom: 0.5em;
 }
 .advancedsearch__section--options {
   display: flex;
-  flex-flow: wrap row;
+  flex-flow: column;
   justify-content: center;
+  align-items: center;
   width: 100%;
 }
 .advancedsearch__section--options > p {
   font-size: 0.8em;
   width: 100%;
-  color: #7491ac;
   text-align: center;
 }
 .advancedsearch__section--options > input, .advancedsearch__section--options select {
@@ -33,16 +32,49 @@
   width: 100%;
   border: solid brown 0.1px;
   height: 2em;
+  text-align: center;
+  text-align-last: center;
 }
 .advancedsearch__section--button {
-  background-color: whitesmoke;
   width: 100%;
+  height: 2em;
 }
 
 .results {
   display: flex;
   flex-flow: column;
   width: 100%;
+  color: #7491ac;
+}
+.results__header {
+  border-bottom: solid brown;
+  width: 98%;
+  padding: 1%;
+  display: flex;
+  flex-direction: column;
+}
+.results__header > a {
+  font-size: 1.2em;
+}
+.results__header--option {
+  display: flex;
+  width: 100%;
+}
+.results__header--option > a {
+  width: 27%;
+}
+.results__header--option > select {
+  border: solid brown 0.1px;
+  flex-grow: 1;
+  background-color: whitesmoke;
+  height: 2em;
+}
+.results__header--button {
+  width: 100%;
+  height: 2em;
+}
+.results > article {
+  font-size: 0.8em;
 }
 .results--cards {
   display: flex;
@@ -53,6 +85,50 @@
 .results--cards > img {
   width: 48%;
   margin-bottom: 1%;
+}
+
+.navigation__basic {
+  display: flex;
+  height: 3em;
+  align-items: center;
+  background-color: black;
+}
+.navigation__basic > a {
+  text-decoration: none;
+  margin: 0.2em;
+  color: white;
+  width: 15%;
+  text-align: center;
+}
+.navigation__basic > form {
+  flex-grow: 1;
+  display: flex;
+  height: 100%;
+}
+.navigation__basic > form > input {
+  flex-grow: 1;
+  color: white;
+  background-color: black;
+  border: none;
+  text-align: center;
+}
+.navigation__basic > form > input::placeholder {
+  color: white;
+  text-align: center;
+}
+.navigation__extended {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+}
+.navigation__extended > a {
+  text-decoration: none;
+  margin: 0.2em;
+  color: white;
+  text-align: center;
+  height: 1.5em;
 }
 
 body {

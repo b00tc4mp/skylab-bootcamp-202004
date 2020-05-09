@@ -621,14 +621,9 @@
             <div class = 'advancedsearch__section'>            
                 <a class = 'advancedsearch__section--title'>Manacost</a>
                 <div class = 'advancedsearch__section--options'>
-                    <input type="text" name="manacost" placeholder=" Any mana symbols, e.g. {WB}">
-                    <select id="subjoiner">
+                    <input type="text" name="manacost" placeholder=" Any mana symbols, e.g. {WB}" id = "manacost">
+                    <select id="manasymbols" name = "symbols">
                         <option value="">Add symbol</option>
-                        <option value="{T}">{T} – tap this permanent</option>
-                        <option value="{Q}">{Q} – untap this permanent</option>
-                        <option value="{E}">{E} – an energy counter</option>
-                        <option value="{PW}">{PW} – planeswalker</option>
-                        <option value="{CHAOS}">{CHAOS} – chaos</option>
                         <option value="{W}">{W} – one white mana</option>
                         <option value="{U}">{U} – one blue mana</option>
                         <option value="{B}">{B} – one black mana</option>
@@ -1442,7 +1437,7 @@
             <div class = 'advancedsearch__section'>
                 <a class = 'advancedsearch__section--title'>Language</a>
                 <div class = 'advancedsearch__section--options'>
-                    <select id="languages" value="English">
+                    <select id="languages">
                         <option value="">Default</option>
                         <option value="any">Any</option>
                         <option value="en">English</option>
