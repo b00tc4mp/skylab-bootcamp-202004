@@ -223,10 +223,10 @@ function Register({ onRegister, onGoToLogin }) {
                     <option>International</option>
                 </optgroup>
                 <optgroup label="Regions">
-                    <option>Arab Emirates</option>
-                    <option>Argentina</option>
-                    <option>Austria</option>
-                    <option>Australia</option>
+                    <option>Arab Emirates</option> 
+                    <option>Argentina</option> 
+                    <option>Austria</option>  
+                    <option>Australia</option> 
                     <option>Belgica</option>
                     <option>Bulgaria</option>
                     <option>Brasil</option>
