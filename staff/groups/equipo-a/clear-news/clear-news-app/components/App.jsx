@@ -4,31 +4,31 @@ function App() {
     const [view, setView] = useState('landing')
     const [token, setToken] = useState()
 
-    useEffect(() => {
-        if (sessionStorage.token)
-            try {
-                isUserAuthenticated(sessionStorage.token, (error, isAuthenticated) => {
-                    if (error) throw error
+    // useEffect(() => {
+    //     if (sessionStorage.token)
+    //         try {
+    //             isUserAuthenticated(sessionStorage.token, (error, isAuthenticated) => {
+    //                 if (error) throw error
 
-                    if (isAuthenticated) {
-                        setToken(sessionStorage.token)
-                        setView('home')
-                    } else setHashView('login')
-                })
-            } catch (error) {
-                if (error) throw error
-            }
-        else {
-            const hash = location.hash.substring(1)
+    //                 if (isAuthenticated) {
+    //                     setToken(sessionStorage.token)
+    //                     setView('home')
+    //                 } else setHashView('login')
+    //             })
+    //         } catch (error) {
+    //             if (error) throw error
+    //         }
+    //     else {
+    //         const hash = location.hash.substring(1)
 
-            if (hash === 'login' || hash === 'register') setHashView(hash)
-            else {
-                location.hash = ''
+    //         if (hash === 'login' || hash === 'register') setHashView(hash)
+    //         else {
+    //             location.hash = ''
                 
-                setView('landing')
-            }
-        }
-    }, [])
+    //             setView('landing')
+    //         }
+    //     }
+    // }, [])
 
 
     const setHashView = view => {
