@@ -27,7 +27,9 @@
   text-decoration: none;
   background-color: #5B2C6F;
   border-radius: 10px;
+  font-size: 3vw;
   padding: 0.5rem;
+  width: 20vw;
 }
 .landing a:visited {
   color: white;
@@ -42,17 +44,20 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
+  font-size: 0.7rem;
 }
 .login__button {
   background-color: #5B2C6F;
   color: white;
-  font-size: 0.8rem;
-  padding: 0.3rem;
   border-radius: 10px;
+  font-size: 3vw;
+  padding: 0.5rem;
+  width: 15vw;
 }
 .login__input {
   display: flex;
   flex-direction: column;
+  width: 200px;
 }
 .login__logo {
   width: 50%;
@@ -60,20 +65,25 @@
 }
 .login input {
   margin-bottom: 1.5rem;
-  margin-left: 0.5rem;
-}
-.login input:hover {
-  background-color: #5B2C6F;
-  color: white;
+  border: 0.05rem solid #A6ACAF;
+  border-radius: 5px;
+  width: 100%;
+  padding: 0.3rem;
 }
 .login h1 {
   margin-bottom: 1.5rem;
+  font-size: 1.5rem;
 }
 .login a {
   text-decoration: none;
+  background-color: #5B2C6F;
+  color: white;
+  border-radius: 10px;
+  font-size: 3vw;
+  padding: 0.5rem;
 }
 .login a:visited {
-  color: #5B2C6F;
+  color: white;
 }
 
 .register {
@@ -85,6 +95,7 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
+  font-size: 0.7rem;
 }
 .register__input {
   display: flex;
@@ -92,12 +103,12 @@
 }
 .register__logo {
   width: 50%;
-  margin-bottom: 1.5rem;
 }
 .register__checkbox {
   text-align: start;
   margin-bottom: 1rem;
   font-size: 0.7rem;
+  width: 100%;
 }
 .register__nav-button {
   display: flex;
@@ -105,116 +116,57 @@
 .register__button {
   background-color: #5B2C6F;
   color: white;
-  font-size: 0.7rem;
-  padding: 0.3rem;
   border-radius: 10px;
+  font-size: 3vw;
+  padding: 0.5rem;
+  width: 15vw;
 }
 .register__country {
   display: flex;
   border-radius: 0;
   margin-bottom: 1rem;
+  width: 100%;
 }
 .register input {
   margin-bottom: 1rem;
 }
+.register input[type=text], .register input[type=email], .register input[type=password] {
+  border: 0.05rem solid #A6ACAF;
+  border-radius: 5px;
+  width: 100%;
+  padding: 0.3rem;
+}
 .register h1 {
   margin-bottom: 1.5rem;
+  font-size: 1.5rem;
 }
 .register a {
   text-decoration: none;
+  background-color: #5B2C6F;
+  color: white;
+  border-radius: 10px;
+  font-size: 3vw;
+  padding: 0.5rem;
 }
 .register a:visited {
-  color: #5B2C6F;
+  color: white;
 }
 
 .home {
   width: 100vw;
 }
-.home__nav-bar {
-  background-color: #ffc003;
+.home__link {
+  background-color: #A6ACAF;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #154360;
-}
-.home__menu {
-  display: flex;
-  flex-direction: column;
-  width: 20%;
-  background-color: #ffc003;
-  color: #154360;
-  font-size: 0.8rem;
-  padding: 0.6rem;
-  text-align: center;
-}
-.home__icon {
-  width: 25%;
-}
-.home__user-name {
-  font-size: 0.6rem;
-}
-.home__nav-bar-title {
-  font-size: 1rem;
-}
-.home__link {
-  text-decoration: none;
-}
-.home__link:visited {
-  color: #154360;
-}
-.home__search {
-  text-align: center;
-  background-color: #ffc003;
-  color: #154360;
-}
-.home input {
-  margin-left: 2.5rem;
-  margin-top: 0.5rem;
-  border-color: #154360;
-}
-.home input:hover {
-  background-color: #154360;
-  color: white;
-}
-.home__button {
-  background-color: #154360;
-  color: white;
-  font-size: 0.6rem;
-  padding: 0.3rem;
-  border-radius: 10px;
-}
-.home__title {
-  text-align: center;
-  margin-top: 1rem;
-}
-.home__content {
-  font-family: "Slabo", serif;
-  font-size: 0.8rem;
-}
-.home__images {
-  width: 100%;
-}
-.home__notice-content {
-  padding: 1rem;
-}
-.home__notice-content > a {
-  text-decoration: none;
-  font-size: 1.5rem;
-  color: #154360;
-}
-.home p {
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-}
-.home__notice-text {
-  border-bottom: 1px solid;
-  padding-bottom: 2rem;
 }
 
-.news__image {
+.news__images {
   width: 100vw;
   margin: 0;
   padding: 0;
+  max-height: 220px;
 }
 .news__container {
   list-style: none;
@@ -228,18 +180,13 @@
 }
 .news__title {
   position: absolute;
-  top: 1rem;
-  left: 0.5rem;
-  padding: 0.5rem;
-}
-
-.stroke {
-  -webkit-text-fill-color: black;
-  -webkit-text-stroke: 1px white;
+  bottom: 0.1rem;
+  left: 0;
   font-size: 4vw;
-  font-family: "Montserrat", serif;
+  padding: 0.5rem;
+  background-color: rgba(167, 172, 175, 0.8);
   color: white;
-  text-shadow: -1px -1px 1px #333, 1px -1px 1px #333, -1px 1px 1px #333, 1px 1px 1px #333;
+  width: 100%;
 }
 
 * {

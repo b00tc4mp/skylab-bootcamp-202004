@@ -209,7 +209,7 @@ function Register({ onRegister, onGoToLogin }) {
             <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}" />
             <input type="email" name="email" placeholder="e-mail" required />
             <input type="password" name="password" placeholder="password" required minLength="8" />
-            <label >Choose your country:</label>
+            <p>Choose your country</p>
             <select class="register__country" name="country">
                     <option>Arab Emirates</option> 
                     <option>Argentina</option> 
