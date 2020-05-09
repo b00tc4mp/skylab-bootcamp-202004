@@ -5,8 +5,8 @@ function Register({ onRegister, onGoToLogin }) {
 
     const handleSubmit = event => {
         event.preventDefault()
-        let region
-        let business = false
+        let country
+        let business =false
         let entertainment = false
         let general = false
         let health = false
@@ -14,8 +14,39 @@ function Register({ onRegister, onGoToLogin }) {
         let sports = false
         let technology = false
 
-        let interests = { business, entertainment, general, health, science, sports, technology }
+        // (function() {
+        //     const form = document.querySelector('#sectionForm');
+        //     const checkboxes = form.querySelectorAll('input[type=checkbox]');
+        //     const checkboxLength = checkboxes.length;
+        //     const firstCheckbox = checkboxLength > 0 ? checkboxes[0] : null;
+        
+        //     function init() {
+        //         if (firstCheckbox) {
+        //             for (let i = 0; i < checkboxLength; i++) {
+        //                 checkboxes[i].addEventListener('change', checkValidity);
+        //             }
+        
+        //             checkValidity();
+        //         }
+        //     }
+        
+        //     function isChecked() {
+        //         for (let i = 0; i < checkboxLength; i++) {
+        //             if (checkboxes[i].checked) return true;
+        //         }
+        
+        //         return false;
+        //     }
+        
+        //     function checkValidity() {
+        //         const errorMessage = !isChecked() ? 'At least one checkbox must be selected.' : '';
+        //         firstCheckbox.setCustomValidity(errorMessage);
+        //     }
+        
+        //     init();
+        // })();
 
+        
         if (event.target.business.checked) business = Boolean(event.target.business.value)
         if (event.target.entertainment.checked) entertainment = Boolean(event.target.entertainment.value)
         if (event.target.general.checked) general = Boolean(event.target.general.value)
@@ -24,167 +55,168 @@ function Register({ onRegister, onGoToLogin }) {
         if (event.target.sports.checked) sports = Boolean(event.target.sports.value)
         if (event.target.technology.checked) technology = Boolean(event.target.technology.value)
 
+        let interests = { business, entertainment, general, health, science, sports, technology }
 
-        let { name, surname, email, password, regions } = event.target
-
+        let { name, surname, email, password } = event.target
+        debugger
         name = name.value
         surname = surname.value
         email = email.value
         password = password.value
 
-        switch (event.target.regions.value) {
+        switch (event.target.country.value) {
             case 'Arab Emirates':
-                region = "ea"
+                country = "ea"
                 break;
             case 'Argentina':
-                region = "ar"
+                country = "ar"
                 break;
             case 'Austria':
-                region = "at"
+                country = "at"
                 break;
             case 'Australia':
-                region = "au"
+                country = "au"
                 break;
             case 'Belgica':
-                region = "be"
+                country = "be"
                 break;
             case 'Bulgaria':
-                region = "bg"
+                country = "bg"
                 break;
             case 'Brasil':
-                region = "br"
+                country = "br"
                 break;
             case 'Canada':
-                region = "ca"
+                country = "ca"
                 break;
             case 'Switzerland':
-                region = "ch"
+                country = "ch"
                 break;
             case 'China':
-                region = "cn"
+                country = "cn"
                 break;
             case 'Colombia':
-                region = "co"
+                country = "co"
                 break;
             case 'Cuba':
-                region = "cu"
+                country = "cu"
                 break;
             case 'Czch Republica':
-                region = "cz"
+                country = "cz"
                 break;
             case 'Germany':
-                region = "de"
+                country = "de"
                 break;
             case 'France':
-                region = "fr"
+                country = "fr"
                 break;
             case 'Great Britain':
-                region = "gb"
+                country = "gb"
                 break;
             case 'Greece':
-                region = "gr"
+                country = "gr"
                 break;
             case 'Hong Kong':
-                region = "hk"
+                country = "hk"
                 break;
             case 'Hungary':
-                region = "hu"
+                country = "hu"
                 break;
             case 'Irlanda':
-                region = "ie"
+                country = "ie"
                 break;
             case 'Israel':
-                region = "il"
+                country = "il"
                 break;
             case 'Italy':
-                region = "it"
+                country = "it"
                 break;
             case 'Japan':
-                region = "jp"
+                country = "jp"
                 break;
             case 'Lituania':
-                region = "lt"
+                country = "lt"
                 break;
             case 'Letonia':
-                region = "lv"
+                country = "lv"
                 break;
             case 'Marocco':
-                region = "ma"
+                country = "ma"
                 break;
             case 'Mexico':
-                region = "mx"
+                country = "mx"
                 break;
             case 'Malasia':
-                region = "my"
+                country = "my"
                 break;
             case 'Nigeria':
-                region = "ng"
+                country = "ng"
                 break;
             case 'Netherlands':
-                region = "nl"
+                country = "nl"
                 break;
             case 'Norway':
-                region = "no"
+                country = "no"
                 break;
             case 'New Zealand':
-                region = "nz"
+                country = "nz"
                 break;
             case 'Phillipines':
-                region = "ph"
+                country = "ph"
                 break;
             case 'Polonia':
-                region = "pl"
+                country = "pl"
                 break;
             case 'Portugal':
-                region = "pt"
+                country = "pt"
                 break;
             case 'Rumania':
-                region = "ro"
+                country = "ro"
                 break;
             case 'Serbia':
-                region = "rs"
+                country = "rs"
                 break;
             case 'Russia':
-                region = "ru"
+                country = "ru"
                 break;
             case 'Saudi Arabia':
-                region = "sa"
+                country = "sa"
                 break;
             case 'Sweden':
-                region = "se"
+                country = "se"
                 break;
             case 'Singapur':
-                region = "sg"
+                country = "sg"
                 break;
             case 'Eslovenia':
-                region = "si"
+                country = "si"
                 break;
             case 'Thailand':
-                region = "th"
+                country = "th"
                 break;
             case 'Turkey':
-                region = "tr"
+                country = "tr"
                 break;
             case 'Taiwan':
-                region = "tw"
+                country = "tw"
                 break;
             case 'Ucrania':
-                region = "ua"
+                country = "ua"
                 break;
             case 'United States of America':
-                region = "us"
+                country = "us"
                 break;
             case 'Venezuela':
-                region = "ve"
+                country = "ve"
                 break;
             case 'South Africa':
-                region = "za"
+                country = "za"
                 break;
             default:
                 throw error
         }
         try {
-            registerUser(name, surname, email, password, interests, region, error => {
+            registerUser(name, surname, email, password, interests, country, error => {
                 if (error) return setError(error.message)
 
                 onRegister()
@@ -210,7 +242,7 @@ function Register({ onRegister, onGoToLogin }) {
             <input type="email" name="email" placeholder="e-mail" required />
             <input type="password" name="password" placeholder="password" required minLength="8" />
             <label >Choose your country:</label>
-            <select class="register__country" name="country">
+            <select className="register__country" name="country">
                     <option>Arab Emirates</option> 
                     <option>Argentina</option> 
                     <option>Austria</option>  
@@ -261,7 +293,7 @@ function Register({ onRegister, onGoToLogin }) {
                     <option>Venezuela</option>
                     <option>South Africa</option>
             </select>
-            <fieldset className="register__checkbox">
+            <fieldset className="register__checkbox" required>
                 <legend>Choose your favorite topics</legend>
                 <input type="checkbox" name="business" value="true" />Business<br/>
                 <input type="checkbox" name="entertainment" value="true" />Entertainment<br/>
@@ -272,7 +304,7 @@ function Register({ onRegister, onGoToLogin }) {
                 <input type="checkbox" name="technology" value="true" />Technology<br/>
             </fieldset>
             <section className="resister__nav-button">
-            <button class="register__button" >Submit</button>
+            <button className="register__button" >Submit</button>
                 or <a href="" onClick={handleGoToLogin}>Login</a>
             </section>
             {error && <Feedback message={error} level="error" />}

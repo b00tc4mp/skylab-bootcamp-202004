@@ -31,7 +31,7 @@ class Home extends Component {
 
     goToView = view => {
         location.hash = view === 'topheadlines' || view === 'search' || view === 'favorites' || view === 'profile' ? view : ''
-
+        debugger
         this.setState({ view })
     }
 
