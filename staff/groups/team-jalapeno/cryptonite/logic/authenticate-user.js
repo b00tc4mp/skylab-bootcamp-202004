@@ -8,7 +8,7 @@ function authenticateUser(email, password, callback) {
     const headers = { 'Content-type': 'application/json' }
 
     call('POST', url, body, headers, (error, status, response) => {
-        if (error) throw error
+        if (error) throw error 
 
         if (status === 200) {
             const { token } = JSON.parse(response)
