@@ -20,19 +20,4 @@ const surnames = [
     'Garcia',
     'Grillo',
     'Pan',
-    'Doe',
-    'Boludo',
-    'Loquillo',
-    'Pepinillo',
-    'Azuquita',
-    'Capullita'
-]
-
-const passwords = [
-    '123123123',
-    'abcabcabc',
-    'quertyquerty',
-    'poiuytr123123',
-    'asdfhasdfh'
-]
 

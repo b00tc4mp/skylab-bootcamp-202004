@@ -10,15 +10,18 @@ class App extends Component {
         }
     }
 
+
     onChangeView = (_view) => this.setState({view : _view})
 
     handleLogin = (_token) => {
-        this.state.token = _token
+        this.setState({token: _token})
+        console.log("done")
+        // this.setState({view: 'home'})
     }
     
-    // handleRegister = () => {
-        
-    // }
+    handleRegister = () => {
+        this.onChangeView('login')
+    }
 
     // handleLogOut = () => {
     //     sessionStorage.token = undefined
@@ -27,8 +30,8 @@ class App extends Component {
 
     render() {
         return <>
-            {this.state.view === 'login' && <Login />}
-            {/* {this.state.view === 'register' && <Register onLogin = {this.onChangeView} onSubmit = {this.handleRegister}/>} */}
+            {this.state.view === 'login' && <Login onSubmit = {this.handleLogin} onRegister = {this.onChangeView}/>}
+            {this.state.view === 'register' && <Register onSubmit = {this.handleRegister} onLogin = {this.onChangeView} />}
             {/* {this.state.view === 'home' && <Home onLogOut = {this.handleLogOut}/>} */}
         </>
 

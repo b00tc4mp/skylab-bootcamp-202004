@@ -17,6 +17,7 @@
         return ALPHABETIC_REGEX.test(string)
     }
 
+
     String.isLengthGreaterEqualThan = function (string, length) {
         this.validate(string)
 
