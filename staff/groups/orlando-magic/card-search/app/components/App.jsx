@@ -8,13 +8,17 @@ function App(){
     let [results, setResults] = useState(undefined)
     let [card, setCard] = useState(undefined)
 
-    function handleLogin(event) {
+    function handleLogin() {
         setView('login')
     }
 
-    function handleRegister(event) {
+    function handleRegister() {
         setView('register')
     }
+
+    function handleLanding() {
+        setView('landing')
+    } 
 
     function handleLoggedIn(token) {
         setToken(token)
@@ -74,9 +78,9 @@ function App(){
     }
 
     return <>
-        <Landing onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch}/>
-        {view==='login' && <Login onSubmit = {handleLoggedIn} onRegister = {handleRegister} />}
-        {view==='register'  && <Register onLogin = {handleLogin}/>}
+        {view==='landing' && <Landing onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch}/>}
+        {view==='login' && <Login onSubmit = {handleLoggedIn} onRegister = {handleRegister} onLanding={handleLanding}/>}
+        {view==='register'  && <Register onLogin = {handleLogin} onLanding={handleLanding}/>}
         {/* {view === 'landing' && <Landing login = {login} setView = {setView} onBasicSearch = {onBasicSearch}/>}
         {view === 'results' && <Results results = {results} onCardClick = {onCardClick}/>}
         {view === 'card' && <Card/> card = {card}} */}
