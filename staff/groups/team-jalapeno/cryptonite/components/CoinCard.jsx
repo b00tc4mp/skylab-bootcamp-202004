@@ -7,7 +7,7 @@ function CoinCard({ rank, symbol, name, priceUsd, changePercent24Hr, coinClick }
         return result
     }
 
-    return <div className="coin" key={rank}>
+    return <div className="coin" key={rank} onClick={coinClick} >
         <div className="coin__head">
             <span className="coin__symbol">{symbol}</span>
             <span className="coin__rank">{rank}</span>

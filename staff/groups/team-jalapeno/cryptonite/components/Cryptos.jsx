@@ -1,6 +1,6 @@
 const { useState, useEffect } = React
 
-function Cryptos({ cryptoResults, handleSearchOnChange }) {
+function Cryptos({ cryptoResults, handleSearchOnChange, coinClick }) {
 
 
     return (
@@ -23,7 +23,7 @@ function Cryptos({ cryptoResults, handleSearchOnChange }) {
                     }
 
 
-                    return <CoinCard rank={rank} symbol={symbol} name={name} priceUsd={priceUsd} changePercent24Hr={changePercent24Hr} />
+                    return <CoinCard coinClick={coinClick} rank={rank} symbol={symbol} name={name} priceUsd={priceUsd} changePercent24Hr={changePercent24Hr} />
                 })}
 
             </section>
