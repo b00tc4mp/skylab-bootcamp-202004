@@ -201,28 +201,16 @@ function Register({ onRegister, onGoToLogin }) {
     }
 
     return <section className="register">
+    <img className="register__logo"
+            src="images/logo.png"></img>
         <h1>Register</h1>
-        <form onSubmit={handleSubmit}>
+        <form className="register__input" onSubmit={handleSubmit}>
             <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}" />
             <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}" />
             <input type="email" name="email" placeholder="e-mail" required />
             <input type="password" name="password" placeholder="password" required minLength="8" />
-            <fieldset>
-                <legend>Choose your favorite topics</legend>
-                <input type="checkbox" name="business" value="true" />Business<br />
-                <input type="checkbox" name="entertainment" value="true" />Entertainment<br />
-                <input type="checkbox" name="general" value="true" />General<br />
-                <input type="checkbox" name="health" value="true" />Health<br />
-                <input type="checkbox" name="science" value="true" />Science<br />
-                <input type="checkbox" name="sports" value="true" />Sports<br />
-                <input type="checkbox" name="technology" value="true" />Technology<br />
-            </fieldset>
-            <label >Choose your region:</label>
-            <select id="regions">
-                <optgroup label="International">
-                    <option>International</option>
-                </optgroup>
-                <optgroup label="Regions">
+            <label >Choose your country:</label>
+            <select class="register__country" name="country">
                     <option>Arab Emirates</option> 
                     <option>Argentina</option> 
                     <option>Austria</option>  
@@ -272,11 +260,21 @@ function Register({ onRegister, onGoToLogin }) {
                     <option>United States of America</option>
                     <option>Venezuela</option>
                     <option>South Africa</option>
-                </optgroup>
             </select>
-            <button>Submit</button>
+            <fieldset className="register__checkbox">
+                <legend>Choose your favorite topics</legend>
+                <input type="checkbox" name="business" value="true" />Business<br/>
+                <input type="checkbox" name="entertainment" value="true" />Entertainment<br/>
+                <input type="checkbox" name="general" value="true" />General<br/>
+                <input type="checkbox" name="health" value="true" />Health<br/>
+                <input type="checkbox" name="science" value="true" />Science<br/>
+                <input type="checkbox" name="sports" value="true" />Sports<br/>
+                <input type="checkbox" name="technology" value="true" />Technology<br/>
+            </fieldset>
+            <section className="resister__nav-button">
+            <button class="register__button" >Submit</button>
                 or <a href="" onClick={handleGoToLogin}>Login</a>
-
+            </section>
             {error && <Feedback message={error} level="error" />}
         </form>
     </section>

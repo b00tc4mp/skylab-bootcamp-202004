@@ -12,6 +12,10 @@ function Landing({ onGoToRegister, onGoToLogin }) {
     }
 
     return <section className="landing">
-        <a href="" onClick={handleGoToRegister}>Register</a> or <a href="" onClick={handleGoToLogin}>Login</a>
+        <img className='landing__image' src="images/logo.png"></img>
+        <section className="landing__navigation">
+        <a href="" onClick={handleGoToRegister}>Register</a>
+        <a href="" onClick={handleGoToLogin}>Login</a>
+        </section>
     </section>
 }

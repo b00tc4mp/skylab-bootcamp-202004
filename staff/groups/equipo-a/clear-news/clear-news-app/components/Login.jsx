@@ -34,11 +34,14 @@ class Login extends Component {
 
     render() {
         return <section className="login">
+            <img className="login__logo" src="images/logo.png"></img>
             <h1>Login</h1>
             <form onSubmit={this.handleSubmit}>
-                <input type="email" name="email" placeholder="e-mail" required />
-                <input type="password" name="password" placeholder="password" required minLength="8" />
-                <button>Submit</button>
+                <section className="login__input">
+                    <input type="email" name="email" placeholder="e-mail" required />
+                    <input type="password" name="password" placeholder="password" required minLength="8" />
+                </section>
+                <button className="login__button">Submit</button>
                 or <a href="" onClick={this.handeGoToRegister}>Register</a>
 
                 {this.state.error && <Feedback message={this.state.error} level="error" />}

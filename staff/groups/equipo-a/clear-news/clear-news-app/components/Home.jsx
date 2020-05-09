@@ -4,6 +4,12 @@ class Home extends Component {
     constructor() {
         super()
 
+        this.state = {
+            news: undefined,
+            view: 'topheadlines',
+            name: undefined
+        }
+
     }
 
     componentDidMount() {
@@ -13,9 +19,10 @@ class Home extends Component {
 
                 const hash = location.hash.substring(1)
 
-                location.hash = hash? hash : 'profile'
+                location.hash = hash ? hash : 'topheadlines'
 
-                this.setState({view: hash? hash : 'profile' })
+                this.setState({name: user.name , view: hash ? hash : 'topheadlines' })
+
             })
         } catch (error) {
             throw error
@@ -23,7 +30,7 @@ class Home extends Component {
     }
 
     goToView = view => {
-        location.hash = view === 'user' || view === 'search' || view === 'favorites' || view === 'profile' ? view : ''
+        location.hash = view === 'topheadlines' || view === 'search' || view === 'favorites' || view === 'profile' ? view : ''
 
         this.setState({ view })
     }
@@ -37,9 +44,9 @@ class Home extends Component {
     handleUser = event => {
         event.preventDefault()
 
-        this.goToView('user')
+        this.goToView('topheadlines')
     }
-
+                                                                                                                
     handleFavorites = event => {
         event.preventDefault()
 
@@ -52,19 +59,24 @@ class Home extends Component {
         this.goToView('profile')
     }
 
+    handleTopHeadlines = news => {
+        this.setState({ news })
+    }
+
     render() {
         return <section className="home">
             <h1>Welcome, {this.state.name}!</h1>
             <a className={`home__link ${this.state.view === 'profile' ? 'home__link--active' : ''}`} href="" onClick={this.handleProfile}>Profile </a>
             <a className={`home__link ${this.state.view === 'favoirtes' ? 'home__link--active' : ''}`} href="" onClick={this.handleFavorites}>Favorites </a>
-            <a className={`home__link ${this.state.view === 'user' ? 'home__link--active' : ''}`} href="" onClick={this.handleUser}>User </a>
+            <a className={`home__link ${this.state.view === 'topheadlines' ? 'home__link--active' : ''}`} href="" onClick={this.handleUser}>Top headlines</a>
             <a className={`home__link ${this.state.view === 'search' ? 'home__link--active' : ''}`} href="" onClick={this.handleSearch}>Search </a>
             <button onClick={this.props.onLogout}>Logout</button>
-       
+
+           
             {this.state.view === 'profile' && <Profile />}
             {this.state.view === 'favorites' && <Favorites />}
-            {this.state.view === 'user' && <User />}
-            {this.state.view === 'search' && <Search />}
+            {this.state.view === 'topheadlines' &&  <TopHeadlines myHeadlines={this.handleTopHeadlines} token={this.props.token} news={this.state.news}/>}
+            {/* {this.state.view === 'search' && <Search />} */}
         </section>
     }
 }
