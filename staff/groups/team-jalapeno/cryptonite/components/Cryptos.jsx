@@ -1,6 +1,6 @@
 const { useState, useEffect } = React
 
-function Cryptos({ cryptoResults }) {
+function Cryptos({ cryptoResults, handleSearchOnChange }) {
 
     const getChangePrice24Hr = (price, changePercent) => {
         let result = (price / 100 * changePercent)
@@ -13,7 +13,7 @@ function Cryptos({ cryptoResults }) {
         <section className="crypto-coins">
             <h3 className="crypto-coins__title">Crypto Coins</h3>
             <section className="crypto-coins__search">
-                <input type="text" placeholder="Find your next crypto favorite" />
+                <input onChange={handleSearchOnChange} type="text" placeholder="Find your next crypto favorite" />
                 <i className="fa fa-search " />
             </section>
             <section className='coins-container'>
@@ -29,7 +29,7 @@ function Cryptos({ cryptoResults }) {
                     }
 
 
-                    return <div className="coin">
+                    return <div className="coin" key={rank}>
                         <div className="coin__head">
                             <span className="coin__symbol">{symbol}</span>
                             <span className="coin__rank">{rank}</span>
