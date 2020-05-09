@@ -4,13 +4,14 @@ function TopHeadlines({ news, myHeadlines, token }) {
     const [error, setError] = useState()
 
     useEffect(() => {
-        !news && retrieveNews(token, (error, news) => {
+        !news && retrieveNews(token, ( error,news) => {
             if (error) setError(error.message)
             myHeadlines(news)
         })
     }, [])
-
+debugger
     return <section className="news">
+
         {
             news && <ul className="news__container">
                 { news.map(({ name, title, url, urlToImage }) =>
