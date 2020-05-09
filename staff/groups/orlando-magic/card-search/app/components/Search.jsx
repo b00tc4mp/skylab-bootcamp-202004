@@ -3801,11 +3801,13 @@ function Search({onAdvancedSearch}){
           <p />
         </div>
       </div>
-      <div className="advancedsearch__section">
+
+      <div className="advancedsearch__section--buttoncontainer">
         <button type="submit" className="advancedsearch__section--button">
           Search with these options
         </button>
       </div>
+
     </form>
   </section>
   

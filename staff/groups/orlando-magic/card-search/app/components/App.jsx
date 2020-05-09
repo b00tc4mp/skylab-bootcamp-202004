@@ -22,7 +22,7 @@ function App(){
     }
 
     function onBasicSearch(event){
-        const query = event.target.query.value
+        const searchInputs = {name: event.target.query.value}
         // To define inputs for search apart from callback
         searchCard(searchInputs,(error, searchResults) =>{
             setResults(searchResults)
