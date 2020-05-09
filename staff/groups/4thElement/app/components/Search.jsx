@@ -1,12 +1,10 @@
 const { useState } = React
 
-function Search({ token, OnLogout, movingSurfForecast }) {
+function Search({ movingSurfForecast }) {
 
     const [query, setQuery] = useState('')
 
-    const handleLogout = () => {
-        OnLogout()
-    }
+    
 
     const handleSubmitSpot = (query) =>{
         setQuery(query)

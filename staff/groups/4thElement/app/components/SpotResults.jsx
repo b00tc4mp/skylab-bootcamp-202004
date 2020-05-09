@@ -18,8 +18,8 @@ function SpotResultsList({ query, onGoToSurfForecast }) {
         {
             spots ? (<>
             
-                <ul>{spots.map(( item ) =>
-                    <li onClick={() => handleSurfForecast(item)}>{`${item.name}`} </li>
+                <ul className='ul-spot-results'>{spots.map(( item ) =>
+                    <li className='li-spot-results' onClick={() => handleSurfForecast(item)}>{`${item.name}`} </li>
                     
                 )}</ul>
 

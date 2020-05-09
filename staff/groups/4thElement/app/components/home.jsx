@@ -2,7 +2,7 @@
 
 const { useState } = React
 
-function Home({onGoToLogin}) {
+function Home() {
 
     // || hooks states declarations ||
 

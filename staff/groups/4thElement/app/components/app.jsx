@@ -26,6 +26,7 @@ function App() {
     }
 
     const handleLogout = () => {
+        console.log('hola')
         setToken(undefined)
         delete sessionStorage.token
         setHashView('login')
@@ -40,16 +41,19 @@ function App() {
         setForecastSelected(surfForecastSelected)
     }
 
+    const handleGoToFavs= () => {
+        setHashView('favs')
+    }
+
         return <>
-            {view === 'home' && <Header onGoToLogin={handleGoToLogin}/>}
-            {view === 'search' && <Header onGoToLogin={handleGoToLogin}/>}
+            {<Header view={view} token={token} forecastSelected={forecastSelected} OnLogout={handleLogout}/>}
             {view === 'register' && <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>}
             {view === 'login' && <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} onGoToHome={handleGoToHome}/>}
-            {view === 'home' && <Home onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
-            {view === 'search' && <Search token={token} OnLogout={handleLogout} movingSurfForecast={onGoToSurfForecast}/>}
-            {view === 'surfForecast' && <SurfForecast forecastSelected={forecastSelected} />}
-            {view === 'home' && <Footer GoToHome={handleGoToHome} GoToSearch={handleGoToSearch}/>}
-            {view === 'search' && <Footer GoToHome={handleGoToHome} GoToSearch={handleGoToSearch}/>}
+            {view === 'home' && <Home />}
+            {view === 'search' && <Search token={token}  movingSurfForecast={onGoToSurfForecast}/>}
+            {view === 'surfForecast' && <SurfForecast token={token} forecastSelected={forecastSelected} />}
+            {view === 'favs' && <FavSpotsList token={token} />}
+            {<Footer GoToHome={handleGoToHome} GoToSearch={handleGoToSearch} GoToFavs={handleGoToFavs}/>}
         </>
     
 }

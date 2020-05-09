@@ -5,9 +5,9 @@ function surfForecastLogic({forecastSelected}, callback){
         if (status === 200) {
             // const { name, surname, username } = JSON.parse(body)
             const info = JSON.parse(body)
-            const waveSize= info.data.weather[0].hourly[0].swellHeight_m
+            // const waveSize= info.data.weather[0].hourly[0].swellHeight_m
 
-            callback(undefined, waveSize)
+            callback(undefined, info)
         } else {
             const { error } = JSON.parse(body)
 
