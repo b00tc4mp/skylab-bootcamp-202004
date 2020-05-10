@@ -1,7 +1,7 @@
 const { useState } = React
 
 function App() {
-    const [view, setView] = useState('login')
+    const [view, setView] = useState('home')
     const [token, setToken] = useState(undefined)
     const [forecastSelected, setForecastSelected] = useState('')
     
@@ -54,6 +54,5 @@ function App() {
             {view === 'surfForecast' && <SurfForecast token={token} forecastSelected={forecastSelected} />}
             {view === 'favs' && <FavSpotsList token={token} />}
             {<Footer GoToHome={handleGoToHome} GoToSearch={handleGoToSearch} GoToFavs={handleGoToFavs}/>}
-        </>
     
 }

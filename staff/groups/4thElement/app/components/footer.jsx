@@ -1,9 +1,9 @@
+
 function Footer ({GoToSearch, GoToHome, GoToFavs}) {
 
     const handleGoToSearch= () => {
         GoToSearch()
     }
-
     const handleGoToHome = () => {
         GoToHome()
     }

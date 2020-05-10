@@ -90,51 +90,132 @@
 }
 .Home {
   height: 94vh;
-  background-color: gray;
   margin-top: 6vh;
-  background-size: 160%;
+  background-size: cover;
+}
+.Home .Home--Surf {
+  transition: 1.5s;
+  height: 94vh;
+  background-size: cover;
   background-image: url("./app/images/fondo.jpg");
+}
+.Home .Home--Snow {
+  transition: 1.5s;
+  opacity: 1;
+  height: 94vh;
+  background-size: cover;
+  background-image: url("./app/images/fondoSnow.jpg");
 }
 .Home__Selection {
   display: flex;
   background-color: white;
-  height: 15vh;
+  height: 17vh;
+  font-family: "Carter One", cursive;
+  color: white;
 }
 .Home__Selection--surf {
   display: flex;
   width: 50vw;
-  border: 2px solid black;
   text-align: center;
   transition: 1.5s;
+  border-top: 0.3rem solid;
+  background-size: cover;
+  background-image: url("./app/images/surfSelection.jpg");
+  border-top: 1vh solid white;
+  border-bottom: 1vh solid white;
 }
 .Home__Selection--surfclikedSurf {
+  color: black;
+  background-size: cover;
+  background-image: url("./app/images/surfSelection.jpg");
   transition: 1s;
   width: 200vw;
+  border-top: 1vh solid white;
+  border-bottom: 1vh solid white;
 }
 .Home__Selection--surf:hover {
+  color: black;
   width: 200vw;
 }
 .Home__Selection--snow {
+  background-size: cover;
+  background-image: url("./app/images/snowSelection.jpg");
   display: flex;
   width: 50vw;
-  border: 2px solid black;
   text-align: center;
   transition: 1.5s;
+  border-top: 1vh solid white;
+  border-bottom: 1vh solid white;
 }
 .Home__Selection--snowclikedsnow {
+  color: black;
+  background-size: cover;
+  background-image: url("./app/images/snowSelection.jpg");
   transition: 1s;
-  border: 2px solid black;
   width: 200vw;
+  border-top: 1vh solid white;
+  border-bottom: 1vh solid white;
 }
 .Home__Selection--snow:hover {
+  color: black;
   width: 200vw;
+}
+.Home__pointerResult--element {
+  font-family: "Carter One", cursive;
+  position: absolute;
+  height: 15vh;
+  width: 100vw;
+  background-color: gray;
+  border-bottom: 1vh solid white;
+}
+.Home__pointerResult--element p {
+  text-align: center;
+  margin-top: 2vh;
+  font-size: 2rem;
+}
+.Home__pointerResult--element--snow1 {
+  background-size: cover;
+  background-image: url("./app/images/2-alpes-recortado.jpg");
+}
+.Home__pointerResult--element--surf4 {
+  background-color: white;
+  background-size: 100%;
+  background-image: url("./app/images/mavericks.jpg");
 }
 .Home__map {
   margin-top: 10vh;
   height: 50vh;
-  background-size: 130%;
+  background-size: 130vw;
   background-position: center;
   background-image: url("./app/images/mundo.png");
+}
+.Home__map--surf {
+  animation: fadeIn ease 0.5s;
+  margin-top: 10vh;
+  height: 50vh;
+  background-size: 130vw;
+  background-position: center;
+  background-image: url("./app/images/mundo.png");
+}
+.Home__map--surf i {
+  position: relative;
+  color: gray;
+}
+.Home__map--surf i:nth-child(1) {
+  top: 28%;
+  left: 60%;
+}
+.Home__map--surf i:nth-child(2) {
+  top: 62%;
+  left: 62%;
+}
+.Home__map--surf i:nth-child(3) {
+  top: 48%;
+  left: 10%;
+}
+.Home__map--surf i:nth-child(4) {
+  top: 30%;
+  left: -5%;
 }
 .Home__map--snow {
   animation: fadeIn ease 1.5s;
@@ -143,6 +224,26 @@
   background-size: 130%;
   background-position: center;
   background-image: url("./app/images/mundoSnow.png");
+}
+.Home__map--snow i {
+  position: relative;
+  color: darkblue;
+}
+.Home__map--snow i:nth-child(1) {
+  top: 25%;
+  left: 65%;
+}
+.Home__map--snow i:nth-child(2) {
+  top: 28%;
+  left: 80%;
+}
+.Home__map--snow i:nth-child(3) {
+  top: 72%;
+  left: 21%;
+}
+.Home__map--snow i:nth-child(4) {
+  top: 30%;
+  left: 0%;
 }
 .Home__map--snow--out {
   animation: fadeOut ease 1.5s;
