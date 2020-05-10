@@ -16,24 +16,22 @@ function searchPlayers(query, callback) {
 
                 let { player: results } = JSON.parse(body)
 
-
-
-
-                let counter = 0
+                let counterSoccerPlayers = 0
+                let counterSearchTeam = 0
                 results.forEach(result => {
                     const { dateBorn, strCutout, strPlayer, strPosition, strSport, strTeam, strNumber, strBirthLocation, idPlayer, strHeight, strWeight, idTeam } = result
-
+                    
                     if (strCutout !== null && strSport === 'Soccer') {
-                        counter++
-
+                        counterSoccerPlayers++
                         let splitName = strPlayer.split(' ');
                         let firstName = splitName[0];
                         let surname = splitName[1];
 
+                          
                         searchTeam(idTeam, (error, _idTeam) => {
                             const [{ emblem }] = _idTeam
                             if (error) throw console.error(error)
-
+                            counterSearchTeam++
                             _players.push({
                                 date: notNull(dateBorn),
                                 image: strCutout,
@@ -47,15 +45,17 @@ function searchPlayers(query, callback) {
                                 weight: notNull(strWeight),
                                 height: notNull(strHeight),
                                 teamId: notNull(idTeam),
-                                emblem: emblem
+                                club: emblem
                             })
-
-                            if (counter === results.length) {
+                       
+                            if (counterSoccerPlayers === counterSearchTeam) {
                                 callback(undefined, _players)
                             }
+            
                         })
                     }
                 })
+            
 
             } else {
                 const { error } = JSON.parse(body)
