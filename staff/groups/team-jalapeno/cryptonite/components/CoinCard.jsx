@@ -1,4 +1,4 @@
-function CoinCard({ rank, symbol, name, priceUsd, changePercent24Hr, coinClick }) {
+function CoinCard({ id, rank, symbol, name, priceUsd, changePercent24Hr, handleClickCoin }) {
 
     const getChangePrice24Hr = (price, changePercent) => {
         let result = (price / 100 * changePercent)
@@ -7,7 +7,7 @@ function CoinCard({ rank, symbol, name, priceUsd, changePercent24Hr, coinClick }
         return result
     }
 
-    return <div className="coin" key={rank}>
+    return <div className="coin" onClick={() => handleClickCoin(id)} >
         <div className="coin__head">
             <span className="coin__symbol">{symbol}</span>
             <span className="coin__rank">{rank}</span>

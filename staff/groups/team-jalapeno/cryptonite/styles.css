@@ -319,6 +319,7 @@ body {
   margin-bottom: 1em;
 }
 
+
 .wallet {
   padding: 0.5em 0;
   background: #424242;
@@ -338,6 +339,7 @@ body {
   flex-direction: column;
   margin-right: 1.2em;
   align-items: flex-end;
+
 }
 
 /*# sourceMappingURL=styles.css.map */

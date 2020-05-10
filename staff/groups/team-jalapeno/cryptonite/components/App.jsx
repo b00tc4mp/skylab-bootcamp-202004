@@ -2,8 +2,8 @@ const { useState, Component } = React
 
 function App() {
     const [view, setView] = useState('home')
-    const [token, setToken] = useState(undefined)
-
+    const [token, setToken] = useState(null)
+    
     const handleGoToRegister = (event) => {
         event.preventDefault()
         setView('register')
@@ -24,8 +24,6 @@ function App() {
         const email = event.target.email.value
         const password = event.target.password.value
 
-        console.log(email, password)
-
         authenticateUser(email, password, (error, token) => {
             if (error) throw error
 
@@ -36,24 +34,12 @@ function App() {
         })
     }
 
+
     return <>
         {view === 'landing' && <Landing toRegister={handleGoToRegister} toLogin={handleGoToLogin} />}
         {view === 'login' && <Login toRegister={handleGoToRegister} loginSubmit={handleLoginSubmit} />}
         {view === 'register' && <Register registerSubmit={handleRegisterSubmit} goToLogin={handleGoToLogin} />}
         {view === 'home' && <Home />}
 
-
     </>
-    // LANDING
-    // NAV
-    // BRAND
-    // CRYPTO COINS 
-    // FOOTER
-
-    // REGISTER
-
-    // LOGIN
-
-    //HOME
 }
-
