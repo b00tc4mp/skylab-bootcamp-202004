@@ -15,7 +15,7 @@ function addToFavs(token, spotSelected, callback) {
                 const index = favSpots.indexOf(spotSelected)
 
                 if (index === -1) favSpots.push(spotSelected)
-                else favSpots.splice(index, 1)
+                
 
 
                 call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify({ favSpots }),
