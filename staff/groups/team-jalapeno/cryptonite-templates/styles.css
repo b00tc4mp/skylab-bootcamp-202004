@@ -151,6 +151,10 @@ body {
   margin: 15px 0;
   padding: 15px;
 }
+.coins-container .coin--large {
+  width: 95%;
+  height: 145px;
+}
 .coins-container .coin__head {
   display: flex;
   justify-content: space-between;
@@ -158,7 +162,7 @@ body {
   font-size: 1.5em;
 }
 .coins-container .coin__body {
-  margin-bottom: 0.5em;
+  margin-bottom: 0.4em;
 }
 .coins-container .coin span {
   height: 25px;
@@ -176,6 +180,9 @@ body {
 .coins-container .coin__price {
   font-weight: bold;
   color: black;
+}
+.coins-container .coin__price--light {
+  color: white;
 }
 .coins-container .coin__percentage {
   color: #dd7631;
@@ -260,6 +267,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
 }
+
 .login {
   flex-direction: column;
   display: flex;
@@ -309,6 +317,27 @@ body {
   font-weight: bold;
   font-size: 1.2em;
   margin-bottom: 1em;
+}
+
+.wallet {
+  padding: 0.5em 0;
+  background: #424242;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  border-radius: 1em;
+  margin-bottom: 1em;
+}
+.wallet__head {
+  margin-left: 1.2em;
+  display: flex;
+  flex-direction: column;
+}
+.wallet__body {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1.2em;
+  align-items: flex-end;
 }
 
 /*# sourceMappingURL=styles.css.map */
