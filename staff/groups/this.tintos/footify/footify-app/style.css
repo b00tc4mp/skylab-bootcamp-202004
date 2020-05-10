@@ -285,7 +285,7 @@
   align-items: center;
 }
 .player-card__emblem-item {
-  width: 75px;
+  width: 70px;
   height: auto;
   min-width: 60px;
   min-height: 60px;
@@ -296,9 +296,10 @@
   justify-content: center;
   align-items: center;
   font-family: raleway;
-  font-size: 2.4rem;
+  font-size: 2.2rem;
   font-weight: 700;
   color: #320090;
+  margin-bottom: 1rem;
 }
 .player-card__number-item {
   height: 50px;

@@ -30,9 +30,9 @@ function PlayerResults({resultsPlayers}) {
 
 
                                 <div className="player-card__info">
-                                    <h3 className="player-card__team">Team: <span class="player-card__team-answer">F.C. Barcelona</span></h3>
-                                    <h3 className="player-card__country">Country:  <span class="player-card__country-answer">Spain</span></h3>
-                                    <h3 className="player-card__birth">Date of birth:  <span class="player-card__birth-answer">25/03/86</span></h3>
+                                    <h3 className="player-card__team">Team: <span className="player-card__team-answer">F.C. Barcelona</span></h3>
+                                    <h3 className="player-card__country">Country:  <span className="player-card__country-answer">Spain</span></h3>
+                                    <h3 className="player-card__birth">Date of birth:  <span className="player-card__birth-answer">25/03/86</span></h3>
                                     <a className="player-card__like">
                                         <img src="img/heart.svg" alt="" />
                                     </a>
@@ -42,7 +42,7 @@ function PlayerResults({resultsPlayers}) {
                                 <hr className="player-card__small-line" />
 
                                 <div className="player-card__comment">
-                                    <input type="text" class="player-card__comment-input" placeholder="Say something..." />
+                                    <input type="text" className="player-card__comment-input" placeholder="Say something..." />
                                 </div>
 
                             </li>
