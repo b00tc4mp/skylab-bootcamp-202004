@@ -7,7 +7,11 @@ class Home extends Component {
         this.state = {
             news: undefined,
             view: 'topheadlines',
-            name: undefined
+            name: undefined,
+            searchNewsResults: undefined,
+            newsQuery: undefined,
+            newsLanguage: undefined,
+            sortBy: undefined
         }
 
     }
@@ -21,7 +25,7 @@ class Home extends Component {
 
                 location.hash = hash ? hash : 'topheadlines'
 
-                this.setState({name: user.name , view: hash ? hash : 'topheadlines' })
+                this.setState({ name: user.name, view: hash ? hash : 'topheadlines' })
 
             })
         } catch (error) {
@@ -46,7 +50,7 @@ class Home extends Component {
 
         this.goToView('topheadlines')
     }
-                                                                                                                
+
     handleFavorites = event => {
         event.preventDefault()
 
@@ -63,20 +67,28 @@ class Home extends Component {
         this.setState({ news })
     }
 
+    handleSearchNews = (results, query, language, sortBy) =>{
+        this.setState({searchNewsResults: results, newsQuery: query, newsLanguage: language, sortBy})
+    }
+
+
+
+
     render() {
         return <section className="home">
-            <h1>Welcome, {this.state.name}!</h1>
-            <a className={`home__link ${this.state.view === 'profile' ? 'home__link--active' : ''}`} href="" onClick={this.handleProfile}>Profile </a>
-            <a className={`home__link ${this.state.view === 'favoirtes' ? 'home__link--active' : ''}`} href="" onClick={this.handleFavorites}>Favorites </a>
-            <a className={`home__link ${this.state.view === 'topheadlines' ? 'home__link--active' : ''}`} href="" onClick={this.handleUser}>Top headlines</a>
-            <a className={`home__link ${this.state.view === 'search' ? 'home__link--active' : ''}`} href="" onClick={this.handleSearch}>Search </a>
-            <button onClick={this.props.onLogout}>Logout</button>
+            <nav className="home__nav-bar">
+                <h1>Welcome, {this.state.name}!</h1>
+                <a className={`home__link ${this.state.view === 'profile' ? 'home__link--active' : ''}`} href="" onClick={this.handleProfile}>Profile </a>
+                <a className={`home__link ${this.state.view === 'favoirtes' ? 'home__link--active' : ''}`} href="" onClick={this.handleFavorites}>Favorites </a>
+                <a className={`home__link ${this.state.view === 'topheadlines' ? 'home__link--active' : ''}`} href="" onClick={this.handleUser}>Top headlines</a>
+                <a className={`home__link ${this.state.view === 'search' ? 'home__link--active' : ''}`} href="" onClick={this.handleSearch}>Search </a>
+                <button onClick={this.props.onLogout}>Logout</button>
+            </nav>
 
-           
-            {this.state.view === 'profile' && <Profile />}
+            {/* {this.state.view === 'profile' && <Profile />} */}
             {this.state.view === 'favorites' && <Favorites />}
-            {this.state.view === 'topheadlines' &&  <TopHeadlines myHeadlines={this.handleTopHeadlines} token={this.props.token} news={this.state.news}/>}
-            {/* {this.state.view === 'search' && <Search />} */}
+            {this.state.view === 'topheadlines' && <TopHeadlines myHeadlines={this.handleTopHeadlines} token={this.props.token} news={this.state.news} />}
+            {this.state.view === 'search' && <SearchNews token={this.props.token} onSearch={this.handleSearchNews} searchNewsResults={this.state.searchNewsResults} query={this.state.newsQuery} language={this.state.newsLanguage} sortBy={this.state.sortBy}/>}
         </section>
     }
 }
