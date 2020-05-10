@@ -21,7 +21,7 @@ function Results({results, onCardClick}){
           </select>
         </div>
         <div className="results__header--option">
-          <a>Sort Direction</a>
+          <a>Direction</a>
           <select id="dir">
             <option value>Auto</option>
             <option value="asc">Ascendant</option>
