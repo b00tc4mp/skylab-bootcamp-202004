@@ -45,26 +45,36 @@ function Home() {
       else setCryptos(_cryptos);
     });
   };
+
+  const handlePortfolioClick = (event) => {
+    event.preventDefault()
+
+    setView('favorites-page')
+  }
   
 
   return (
     <>
-      <nav className="nav">
-        <a href="" className="nav__item nav__item--contrast register-link"></a>
-        <a href="" className="nav__item logout-link">
-          Logout
-        </a>
-      </nav>
-
       {view === "cryptos-list" && (
-        <CryptosListPage
-          handleSearchOnChange={handleSearchOnChange}
-          cryptos={cryptos}
-          handleClickCoin={handleClickCoin}
-        />
+        <>
+        <nav className="nav">
+          <a href="" className="nav__item nav__item--contrast register-link"></a>
+          <a href="" className="nav__item logout-link">
+            Logout
+          </a>
+        </nav>
+          
+          <CryptosListPage
+            handleSearchOnChange={handleSearchOnChange}
+            cryptos={cryptos}
+            handleClickCoin={handleClickCoin}
+            handlePortfolioClick={handlePortfolioClick}
+          />
+        </>
       )}
 
       {view === 'coin-page' && <CoinPage />}
+      {view === 'favorites-page' && <FavoritesPage />}
 
       <footer className="footer">
         <section>
@@ -74,5 +84,7 @@ function Home() {
         </section>
       </footer>
     </>
+
+    
   );
 }

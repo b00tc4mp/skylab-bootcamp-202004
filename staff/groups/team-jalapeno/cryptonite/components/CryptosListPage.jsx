@@ -1,4 +1,4 @@
-function CryptosListPage({handleSearchOnChange, cryptos, handleClickCoin}) {
+function CryptosListPage({handleSearchOnChange, cryptos, handleClickCoin, handlePortfolioClick}) {
   return (
     <>
       <section className="portfolio">
@@ -8,7 +8,7 @@ function CryptosListPage({handleSearchOnChange, cryptos, handleClickCoin}) {
           <span className="portfolio__stats--contrast">+121,40$ (8.3%)</span>{" "}
           Last 24h
         </h4>
-        <button className="portfolio__button">Go to Portfolio </button>
+        <button className="portfolio__button" onClick={handlePortfolioClick}>Go to Portfolio </button>
       </section>
 
       {cryptos && (
