@@ -1,7 +1,7 @@
 const { useState, Component } = React
 
 function App() {
-    const [view, setView] = useState('home')
+    const [view, setView] = useState('landing')
     const [token, setToken] = useState(null)
     
     const handleGoToRegister = (event) => {
@@ -29,6 +29,7 @@ function App() {
 
             if (token) {
                 setToken(token)
+                sessionStorage.token = token
                 setView('home')
             }
         })

@@ -1,7 +1,6 @@
-function retrieveCryptos(callback) {
+function retrieveFavorites(callback, favoritesIds) {
     Function.validate(callback)
-    
-    const url = 'https://api.coincap.io/v2/assets?&limit=12'
+    const url = `https://api.coincap.io/v2/assets?&ids=${favoritesIds.join(',')}`
     const headers = { 'Content-type': 'application/json' }
     const body = undefined
 
