@@ -1,9 +1,9 @@
 function authenticateUser(email, password, callback) {
-    Email.validate(email);
+    Email.validate(email)
     
-    String.validate.notVoid(password);
+    String.validate.notVoid(password)
 
-    String.validate.lengthGreaterEqualThan(password, 6);
+    String.validate.lengthGreaterEqualThan(password, 6)
 
     Function.validate(callback);
 
@@ -11,16 +11,15 @@ function authenticateUser(email, password, callback) {
         { 'Content-type': 'application/json' },
         (error, status, body) => {
 
-            if (error) {
-                return callback(error);
-            }
-            if (status === 200) {
-                const { token } = JSON.parse(body);
+            if (error) return callback(error)
 
-                callback(undefined, token);
+            if (status === 200) {
+                const { token } = JSON.parse(body)
+
+                callback(undefined, token)
             } else {
-                callback(new Error(JSON.parse(body).error));
+                callback(new Error(JSON.parse(body).error))
             }
         }
-    );
-};
+    )
+}

@@ -1,13 +1,13 @@
 function registerUser(name, surname, email, password, callback) {
     String.validate.alphabetic(name);
 
-    String.validate.alphabetic(surname);
+    String.validate.alphabetic(surname)
     
-    Email.validate(email);
+    Email.validate(email)
 
-    String.validate.lengthGreaterEqualThan(password, 6);
+    String.validate.lengthGreaterEqualThan(password, 6)
 
-    Function.validate(callback);
+    Function.validate(callback)
 
 
     call('POST',
@@ -15,16 +15,13 @@ function registerUser(name, surname, email, password, callback) {
         `{ "name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json' },
         (error, status, body) => {
-             //Comprueba error de conexion
-            if (error) {
-                return callback(error);
-            }
-            //Comprueba que no ha habido un error llamando a la API
+            if (error) return callback(error)
+
             if (status === 201) {
-                callback();
+                callback()
 
             } else {
-                callback(new Error(JSON.parse(body).error));
+                callback(new Error(JSON.parse(body).error))
                 
             }
         }

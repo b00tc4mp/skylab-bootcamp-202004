@@ -1,53 +1,72 @@
-const { useState, useEffect, Component } = React
+const { useState, useEffect } = React
 
 function App() {
     const [view, setView] = useState('landing')
 
-    const [token, setToken] = useState();
+    const [token, setToken] = useState()
 
     useEffect(() =>{
-        sessionStorage.token && isUserAuthenticated(sessionStorage.token, (error, isAuthenticated) => {
-            if(error) {
-                throw error;
+        if (sessionStorage.token) {
+            try {
+                isUserAuthenticated(sessionStorage.token, (error, isAuthenticated) => {
+                    if(error) throw error
+
+                    if(isAuthenticated){
+                        setToken(sessionStorage.token)
+                        
+                        setView('home')
+                    } else {
+                        setHashView('login')
+                    }
+                })
+            } catch (error) {
+                if(error) throw error
             }
+        } else {
+            const hash = location.hash.substring(1)
+            
+            if (hash === 'login' || hash === 'register') {
+                setHashView(hash)
+            } else {
+                location.hash = ""
 
-            if(isAuthenticated){
-                setToken(sessionStorage.token);
-                setView('home');
-            } 
-        })
-    }, []);
+                setView('landing')
+            }
+        }
+    }, [])
 
-    function handleGoToRegister (){ 
-        setView('register');
+    const setHashView = view => { 
+        location.hash = view
+
+        setView(view)
     }
 
-    function handleRegister() {
-        setView('login');
-    }
+    const handleGoToRegister = () => setHashView('register')
+
+    const handleRegister = () => setHashView('login')
     
     function handleLogin (token){
-        sessionStorage.token = token;
-
-        setToken(token);
-
-        setView('home');
+        sessionStorage.token = token
+        setToken(token)
+        location.hash = ""
+        setView('home')
     }
     
-    function handleGoToLogin () {
-        setView('login');
-    } 
+    const handleGoToLogin = () => setHashView('login') 
     
-    function handleLogout (){
-        setToken();
-        delete sessionStorage.token;
-        setView('landing');
+    const handleLogout = () => {
+        setToken()
+        delete sessionStorage.token
+        location.hash = ""
+        setView('landing')
     } 
+
+    const handleUserSessionExpired = () => setHashView('login')
     
-        return <>
-            {view === 'landing' && <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
-            {view === 'register' && <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />}
-            {view === 'login' && <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />}
-            {view === 'home' && <Home token={token} onLogout={handleLogout}/>}
-        </>
-};
+    return <>
+        {view === 'landing' && <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
+        {view === 'register' && <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />}
+        {view === 'login' && <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />}
+        {view === 'home' && <Home token={token} onLogout={handleLogout} onUserSessionExpired={handleUserSessionExpired} />}
+    </>
+}

@@ -1,14 +1,14 @@
 function Landing({ onGoToRegister, onGoToLogin  }) {
     const handleGoToRegister = (event) => {
-        event.preventDefault();
+        event.preventDefault()
 
-        onGoToRegister();
+        onGoToRegister()
     }
 
     const handleGoToLogin = (event) =>{
-        event.preventDefault();
+        event.preventDefault()
 
-        onGoToLogin();
+        onGoToLogin()
     }
 
    return <section className="landing">

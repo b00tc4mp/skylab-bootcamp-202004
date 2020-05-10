@@ -1,47 +1,42 @@
-class Login extends Component {
-    constructor(props) {
-        super(props);
+const { useState } = React
 
-        this.state = { error: '' };
-    };
+function Login ({ onLogin, onGoToRegister }) {
+    const [error, setError] = useState()
+    
+    const handleSubmit = event => {
+        event.preventDefault()
 
-    handleSubmit = event => {
-        event.preventDefault();
+        let { email, password } = event.target
 
-        let { email, password } = event.target;
-
-        email = email.value;
-        password = password.value;
+        email = email.value
+        password = password.value
 
         try {
             authenticateUser(email, password, (error, token) => {
-                if (error) {
-                    return this.setState({ error: error.message });
-                }
-                this.props.onLogin(token);
+                if (error) return setError(error.message)
+                
+                onLogin(token)
             })
         } catch ({ message }) {
-            this.setState({ error: message });
+            setError(message)
         }
-    };
+    }
 
-    handeGoToRegister = event => {
-        event.preventDefault();
+    const handeGoToRegister = event => {
+        event.preventDefault()
+    
+        onGoToRegister()
+    }
 
-        this.props.onGoToRegister();
-    };
-
-    render() {
-        return <section className="login">
-            <h1>Login</h1>
-            <form onSubmit={this.handleSubmit}>
-                <input type="email" name="email" placeholder="e-mail" required />
-                <input type="password" name="password" placeholder="password" required minLength="6" />
-                <button>Submit</button>
-                {" "} or {" "} <a href="" onClick={this.handeGoToRegister}>Register</a>
-
-                {this.state.error && <Feedback message={this.state.error} level="error" />}
-            </form>
-        </section>
-    };
-};
+    return <section className="login">
+        <h1>Login</h1>
+        <form onSubmit={handleSubmit}>
+            <input type="email" name="email" placeholder="e-mail" required />
+            <input type="password" name="password" placeholder="password" required minLength="6" />
+            <button>Submit</button>
+                {" "} or {" "} <a href="" onClick={handeGoToRegister}>Register</a>
+            
+            {error && <Feedback message={error} level="error" />}
+        </form>
+    </section>
+}

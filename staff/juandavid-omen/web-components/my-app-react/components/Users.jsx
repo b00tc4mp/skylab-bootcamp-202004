@@ -1,22 +1,28 @@
-function Users({ onSearch, users, query, token }) {
-    function handleSearch(query) {
-        searchUsers(token, query, (error, users) => {
-            if (error) {
-                throw error // TODO handle this error with a feedback
-            }
-            onSearch(users, query);
-        })
-
+function Users({ onSearch, users, query, token, onUserSessionExpired }) {
+    const handleSearch = (query) => {
+        try {
+            searchUsers(token, query, (error, users) => {
+                if (error) {
+                    if (error.message === 'invalid token') {
+                        onUserSessionExpired()
+                    } else {
+                        throw error
+                    }
+                } else {
+                    onSearch(users, query);
+                }
+            })
+        } catch (error){
+            throw error
+        }
     }
     
-    function handleToggleFollow() {
-        handleSearch(query)
-    }
+    const handleToggleFollow = () => handleSearch(query)
 
     return <section className="users">
         <h2>Users</h2>
 
         <Search onSubmit={handleSearch} query={query} />
-        {users && <UserResults users={users} token={token} onToggleFollow={handleToggleFollow} />}
+        {users && <UserResults users={users} token={token} onToggleFollow={handleToggleFollow} onUserSessionExpired={onUserSessionExpired}/>}
     </section>
 }

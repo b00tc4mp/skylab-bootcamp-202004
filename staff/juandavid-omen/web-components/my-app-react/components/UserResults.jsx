@@ -1,16 +1,19 @@
-function UserResults({ users, token, onToggleFollow}) {
-    function handleToggleFollow (followingId) {
+function UserResults({ users, token, onToggleFollow, onUserSessionExpired }) {
+    const handleToggleFollow = (followingId) => {
         try {
             toggleFollowUser(token, followingId, error => {
                 if (error) {
-                    throw error
+                    if (error.message === 'invalid token') {
+                        onUserSessionExpired()
+                    } else {
+                        throw error
+                    }
+                } else {
+                    onToggleFollow()
                 }
-                onToggleFollow()
             })
         } catch (error) {
-            if (error) {
-                throw error
-            }
+            if (error) throw error
         }
     }
 
