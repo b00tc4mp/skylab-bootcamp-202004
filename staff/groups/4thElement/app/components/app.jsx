@@ -3,6 +3,7 @@ const { useState } = React
 function App() {
     const [view, setView] = useState('login')
     const [token, setToken] = useState(undefined)
+    const [forecastSelected, setForecastSelected] = useState('')
     
 
     const handleGoToRegister= () => setHashView('register')
@@ -25,6 +26,7 @@ function App() {
     }
 
     const handleLogout = () => {
+        console.log('hola')
         setToken(undefined)
         delete sessionStorage.token
         setHashView('login')
@@ -34,16 +36,24 @@ function App() {
         setHashView('search')
     }
 
+    const onGoToSurfForecast = (surfForecastSelected) => {
+        setHashView('surfForecast')
+        setForecastSelected(surfForecastSelected)
+    }
+
+    const handleGoToFavs= () => {
+        setHashView('favs')
+    }
 
         return <>
-            {view === 'home' && <Header onGoToLogin={handleGoToLogin}/>}
-            {view === 'search' && <Header onGoToLogin={handleGoToLogin}/>}
+            {<Header view={view} token={token} forecastSelected={forecastSelected} OnLogout={handleLogout}/>}
             {view === 'register' && <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>}
             {view === 'login' && <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} onGoToHome={handleGoToHome}/>}
-            {view === 'home' && <Home onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
-            {view === 'search' && <Search token={token} OnLogout={handleLogout}/>}
-            {view === 'home' && <Footer GoToSearch={handleGoToSearch}/>}
-            {view === 'search' && <Footer GoToSearch={handleGoToSearch}/>}
+            {view === 'home' && <Home />}
+            {view === 'search' && <Search token={token}  movingSurfForecast={onGoToSurfForecast}/>}
+            {view === 'surfForecast' && <SurfForecast token={token} forecastSelected={forecastSelected} />}
+            {view === 'favs' && <FavSpotsList token={token} />}
+            {<Footer GoToHome={handleGoToHome} GoToSearch={handleGoToSearch} GoToFavs={handleGoToFavs}/>}
         </>
     
 }
