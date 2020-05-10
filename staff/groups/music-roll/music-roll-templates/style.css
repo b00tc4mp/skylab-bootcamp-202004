@@ -204,45 +204,6 @@ input -internal-autofill-selected {
   margin: 0;
 }
 
-.home__hamburger--menu {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  height: 2.5rem;
-  width: 2.5rem;
-  cursor: pointer;
-}
-.home__hamburger--menu__hamburger .bar {
-  height: 5px;
-  background: black;
-  border-radius: 5px;
-  margin: 3px 0px;
-  transform-origin: left;
-  transition: all 0.5s;
-}
-.home__hamburger--menu__hamburger-bartop:hover {
-  transform: rotate(45deg);
-}
-.home__hamburger--menu__hamburger--barmiddle:hover {
-  opacity: 0;
-}
-.home__hamburger--menu__hamburger--barbottom:hover {
-  transform: rotate(-45deg);
-}
-
-.img {
-  background-color: orange;
-}
-
-.slider {
-  background-color: yellow;
-}
-
-.daylist {
-  background-color: purple;
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -267,7 +228,6 @@ input -internal-autofill-selected {
   justify-content: space-between;
   width: 100%;
   padding: 0;
-  border: 3px solid red;
 }
 .navbar__item {
   display: flex;
@@ -290,7 +250,64 @@ input -internal-autofill-selected {
   margin-top: 2rem;
 }
 .navbar :nth-child(7) {
-  margin-top: 60vh;
+  margin-top: 55vh;
+}
+
+.quiz {
+  display: flex;
+  flex-direction: column;
+  background-image: linear-gradient(to bottom, #d900ff, #008cff);
+  height: 100vh;
+  justify-content: space-around;
+  align-items: center;
+}
+.quiz__header {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: #0000008f;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+.quiz__list {
+  display: grid;
+  padding: 0;
+  height: 20rem;
+  width: 20rem;
+  list-style: none;
+  grid-gap: 1rem;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+.quiz__genre {
+  display: flex;
+  background-color: #00000075;
+  font-size: 1.1rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: #ffffffde;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.quiz__genre:active {
+  background-color: black;
+}
+.quiz__button {
+  justify-content: center;
+  font-size: 1.1rem;
+  border-radius: 30px 0 30px 0;
+  border: 0;
+  margin: -2rem 1rem 1rem 1rem;
+  background-color: #ffffff3f;
+  height: 2.3rem;
+  width: 40%;
+  transition: 1s;
+}
+.quiz__button:active {
+  box-shadow: 0 0 10px red;
+  transition: 1s;
+  border-radius: 0;
 }
 
 /*# sourceMappingURL=style.css.map */
