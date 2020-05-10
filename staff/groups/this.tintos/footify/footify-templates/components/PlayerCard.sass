@@ -2,6 +2,7 @@
     display: flex
     justify-content: center
     background-color: #ffffff
+    font-family: raleway 
 
 =nameSize()
     color: #320090
@@ -20,44 +21,59 @@
         background-color: #73f182
         margin: 2rem
         list-style: none
-        height: 41vh
+        height: 48vh
+        border: double 2px
+        border-radius: 20px
+        -webkit-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.75)
+        -moz-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.75)
+        box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.75)
+    &__item:hover
+        -webkit-box-shadow: 2px 3px 5px 0px rgba(231,166,26,1)
+        -moz-box-shadow: 2px 3px 5px 0px rgba(231,166,26,1)
+        box-shadow: 2px 3px 5px 0px rgba(231,166,26,1)
     &__player
         height: auto
         display: grid
-        height: 52%
+        height: 50%
         align-content: center
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
         grid-template-rows: 1fr 1fr 1fr 1fr
         grid-template-areas: "emblem emblem number number image image image image" "emblem emblem number number image image image image" "name name . . image image image image" "surname surname . . image image image image"
     &__emblem
         grid-area: emblem
-        margin: 0.4rem
+        margin: 0.5rem
+        display: flex
+        justify-content: center
+        align-items: center
         &-item
-            width: 100%
-            height: 100%
+            width: 70px
+            height: auto
+            min-width: 60px
+            min-height: 60px
     &__number
         grid-area: number
         display: flex
         justify-content: center
         align-items: flex-start
-        background: #ffffff
-        border-radius: 50%
         margin: 0.9rem
         font-family: raleway 
         font-size: 2.6rem
         font-weight: 700
         color: #320090
         &-item
-            height: 100%
+            height: 60px
             text-align: center
-            width: 100%
+            width: 60px
+            background: #ffffff
+            border-radius: 50%
     &__image
         grid-area: image
         display: flex
+        justify-content: flex-end
         align-items: flex-end
         &-item
-            width: 100%
-            min-height: 155px
+            max-width: 155px
+            max-height: auto
     &__name-first
         grid-area: name
         +nameSize()
@@ -67,13 +83,71 @@
         +nameSize()
     &__line
         border: 3px solid #320090
-
-.player-card__info
-    display: block
-    &__question
-        font-size: 1.6rem
-        font-weight: 700
+    =infoLetter()
+        font-size: 1rem
+        font-weight: 600
         color: #320090
+        margin-left: 0.8rem
+        margin-top: 0.2rem
+    &__info
+        width: 100%
+        height: 110px
+        display: grid
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
+        grid-template-rows: 30% 30% 30% 10%
+        grid-template-areas: "team team team-answer team-answer team-answer team-answer team-answer . like ." "country country country country-answer country-answer country-answer country-answer . count ." "birth birth birth birth birth-answer birth-answer birth-answer . . ." ". . . . . . . . . ."
+    &__team
+        +infoLetter()
+        grid-area: team
+        &-answer
+            grid-area: team-answer
+            font-size: 0.8rem
+            margin-top: 0.3rem
+            margin-left: 0.4rem
+    &__country
+        +infoLetter()
+        grid-area: country
+        &-answer
+            grid-area: country-answer
+            font-size: 0.8rem
+            margin-top: 0.3rem
+    &__birth
+        +infoLetter()
+        grid-area: birth
+        &-answer
+            grid-area: birth-answer
+            font-size: 0.8rem
+            margin-top: 0.3rem
+    &__like
+        grid-area: like
+        width: 30px
+        height: 30px
+        justify-self: center
+        margin-top: 0.3rem
+    &__count
+        grid-area: count
+        justify-self: center
+        font-family: raleway
+        font-weight: 650
+        color: #320090
+    &__small-line
+        border: 0.6px solid #320090
+  
+    &__comment
+        display: flex
+        justify-content: center
+        align-items: center
+        border-radius: 30px
+        &-input
+            border-radius: 30px
+            width: 88%
+            height: 20px
+            font-family: raleway
+            border-style: none
+            text-align: center
+            margin-top: 0.6rem
+            
 
+ 
     
 
