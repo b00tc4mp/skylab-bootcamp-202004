@@ -1,6 +1,6 @@
 const { useEffect, useState } = React
 
-function Home() {
+function Home({ coinClick }) {
     const [cryptos, setCryptos] = useState(null)
     const [error, setError] = useState(null)
 
@@ -37,7 +37,7 @@ function Home() {
             <button className="portfolio__button">Go to Portfolio </button>
         </section>
 
-        {cryptos && <Cryptos handleSearchOnChange={handleSearchOnChange} cryptoResults={cryptos} />}
+        {cryptos && <Cryptos handleSearchOnChange={handleSearchOnChange} cryptoResults={cryptos} coinClick={coinClick} />}
 
 
         <footer className="footer">
