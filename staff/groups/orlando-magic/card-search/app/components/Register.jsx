@@ -18,13 +18,13 @@ class Register extends Component {
 
         try {
             registerUser(username, email, password, error => {
-                if (error) return this.setState(error.message)
+                if (error) return this.setState({error: error.message})
 
                 this.props.onLogin()
             })
 
         } catch ({ message }) {
-           this.setState(message)
+           this.setState({error: message})
         }
     }
 
@@ -34,17 +34,39 @@ class Register extends Component {
         this.props.onLogin()
     }
 
+    handleLanding = event => {
+        event.preventDefault()
+
+        this.props.onLanding()
+    }
+
     render() {
-        return <section className="register"><h1>Register</h1>
-            <form onSubmit={this.handleSubmit}>
-                <input type="text" name="username" placeholder="username" required patern="[A-Za-z]{1,20}" />
-                <input type="email" name="email" placeholder="e-mail" required />
-                <input type="password" name="password" placeholder="password" required minLength="8" />
-                <button>Submit</button>
-                <a href="" onClick={this.handleLogin}>Log in</a>
-                {this.state.error && <Feedback message={this.state.error} level='error' />}
-            </form>
-        </section>
+        return <>
+        <div className='section-container'>
+            <div className='card-container'>
+                <section className="menu-title">
+                    <h1 className='name title'>Register</h1>
+                    <div className="frame-art-container">
+                        <img className='frame-art' src='https://image.ibb.co/fqdLEn/nissa.jpg' alt='nissa art'/>
+                    </div>
+                    <h1 className="type title">Legendary Enchantment</h1>
+                    <div className="form-container">
+                        <form className='form' onSubmit={this.handleSubmit}>
+                            <input className='form__item' type="text" name="username" placeholder="username" required patern="[A-Za-z]{1,20}" />
+                            <input className='form__item' type="email" name="email" placeholder="e-mail" required />
+                            <input className='form__item' type="password" name="password" placeholder="password" required minLength="8" />
+                            <button className='form__item'>Submit</button>
+                        </form>
+                        {this.state.error && <Feedback message={this.state.error} level='error' />}
+                        <div className="nav">
+                            <a className="nav__item" href="" onClick={this.handleLogin}>Log in</a>
+                            <a className="nav__item" href="" onClick={this.handleLanding}>Return to main page</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        </>
     }
 
 
