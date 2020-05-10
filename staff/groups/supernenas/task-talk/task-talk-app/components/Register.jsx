@@ -30,16 +30,19 @@ function Register({ onRegister, onGoToLogin }) {
         onGoToLogin()
     }
 
-    return <section className="register ">
+    return <div className="aux">
+    <section className="register ">
         <h1>Register</h1>
         <form onSubmit= {handleSubmit}>
-            <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}" />
-            <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}" />
-            <input type="email" name="email" placeholder="e-mail" required />
-            <input type="password" name="password" placeholder="password" required minLength={ 6 } />
+            <input className="navigation_inptut" type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}" />
+            <input className="navigation_inptut" type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}" />
+            <input className="navigation_inptut" type="email" name="email" placeholder="e-mail" required />
+            <input className="navigation_inptut" type="password" name="password" placeholder="password" required minLength={ 6 } />
+            <br/><br/>
             <button className="button__navigation button__navigation--regular">Submit</button> 
-                or <a href=" " onClick={handleGoToLogin}>Login</a>
+                {" "} or {" "} <a  className="navigation__link" href=" " onClick={handleGoToLogin}>Login</a>
             {error && <Feedback message={error} level="error" />}
         </form>
     </section>
+    </div>
 }
