@@ -351,9 +351,6 @@ form {
   width: 100vw;
   height: 10vh;
   padding: 5px;
-}
-
-.ul-spot-results {
   display: flex;
   justify-content: center;
   padding: 3vh;
@@ -394,6 +391,10 @@ form {
   margin-left: 75vw;
 }
 
+.fav-button:hover {
+  background: white;
+}
+
 .star-fore {
   padding: 13.5px;
 }
@@ -410,6 +411,23 @@ form {
 }
 .feedback--error {
   color: red;
+}
+
+.Favorites__List {
+  list-style-type: none;
+  margin-top: 6.5vh;
+  text-align: center;
+  padding: 0;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 25px;
+}
+
+.Favourites__List--elements {
+  border: 2px solid black;
+  width: 100vw;
+  height: 10vh;
+  padding: 2.5vh;
+  margin-top: 0.5vh;
 }
 
 /*# sourceMappingURL=style.css.map */

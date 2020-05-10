@@ -6,14 +6,22 @@ function SurfForecast({token, forecastSelected}) {
         addToFavs(token, forecastSelected, (error) => {
             if(error) throw new TypeError('error')
         })
+        document.getElementById("deleteMe").style.display="none"; 
+	    
     } //to do : handel error if not login
 
     const [forecast, setForecast] = useState()
-
+    const [following, setFollowing] = useState()
 
     useEffect(() => {
         surfForecastLogic({forecastSelected}, function (error, info) {
             setForecast(info)
+        })
+        hideButton(token, forecastSelected, (error, following)=>{
+            if(error){ throw new TypeError('error')
+        } else {
+            setFollowing(following)
+        }
         })
     }, [forecastSelected]); //upload each half an hour
 
@@ -37,8 +45,14 @@ function SurfForecast({token, forecastSelected}) {
                 : (
                     <Feedback message="sorry, no results :(" /> //handel error and maybe add spiner when charging
                 )
-        }
-              <div className='fav-button' onClick={()=>handleFavButton(token)}><i className="fas fa-star star-fore fa-2x"></i></div>
-              
+            }
+            {
+                following!==1? (
+                <div className='fav-button' id='deleteMe' onClick={()=>handleFavButton(token)}><i className="fas fa-star star-fore fa-2x"></i></div>
+                ) : (
+                    console.log('hello')
+                )
+            }
+        
     </section>
 }

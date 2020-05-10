@@ -52,7 +52,7 @@ function App() {
             {view === 'home' && <Home />}
             {view === 'search' && <Search token={token}  movingSurfForecast={onGoToSurfForecast}/>}
             {view === 'surfForecast' && <SurfForecast token={token} forecastSelected={forecastSelected} />}
-            {view === 'favs' && <FavSpots token={token} />}
+            {view === 'favs' && <FavSpots token={token} movingSurfForecast={onGoToSurfForecast}/>}
             {<Footer GoToHome={handleGoToHome} GoToSearch={handleGoToSearch} GoToFavs={handleGoToFavs}/>}
         </>
 }

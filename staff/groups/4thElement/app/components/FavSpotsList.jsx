@@ -1,9 +1,14 @@
 
 const { useState, useEffect } = React
 
-function FavSpotsList({results}) {
+function FavSpotsList({results, onGoToSurfForecast}) {
+
+    const handleSurfForecast = (surfForecastSelected) =>{
+        onGoToSurfForecast(surfForecastSelected)
+    }
+
     return <ul className="Favorites__List">
-        {results.map((element) => <li>{element.name}</li>)}
+        {results.map((element) => <li onClick={()=> handleSurfForecast(element)} className='Favourites__List--elements'>{element.name}</li>)}
     </ul>
 
 }

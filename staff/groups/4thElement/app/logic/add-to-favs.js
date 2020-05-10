@@ -12,13 +12,16 @@ function addToFavs(token, spotSelected, callback) {
 
                 const { favSpots = [] } = userLoged
 
-                const indexOfCord = favSpots.indexOf(spotSelected.coordinates) //i will control if it is alrady on favs outside the call sow we can change the color of the fav tag to make it more responsive
-                const indexOfName = favSpots.indexOf(spotSelected.name)
+                let indexOfName;
+                favSpots.map((element) => {
+                    indexOfName = element.name.indexOf(spotSelected.name)
+                    if(indexOfName!==-1) return indexOfName;
+                })
 
-
-                if (indexOfCord === -1 && indexOfName === -1) favSpots.push(spotSelected)
-                
-
+                if (indexOfName === -1) {
+                    spotSelected.following=true
+                    favSpots.push(spotSelected)
+                }
 
                 call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify({ favSpots }),
                     {
@@ -42,7 +45,5 @@ function addToFavs(token, spotSelected, callback) {
                 callback(new Error(error))
             }
         })
-
-
 
 }
