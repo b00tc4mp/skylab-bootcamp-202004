@@ -1,11 +1,21 @@
-.home__hamburger--menu 
+.home
+    background-color: grey
+    height: 400px
+    width: 100vh
     display: flex
-    flex-direction: column
-    flex-wrap: wrap
     justify-content: space-between
-    height: 2.5rem
-    width: 2.5rem
-    cursor: pointer
+    flex-direction: column
+    
+    
+    
+    &__hamburger
+        display: flex
+        flex-direction: column
+        flex-wrap: wrap
+        justify-content: space-between
+        height: 2.5rem
+        width: 2.5rem
+        cursor: pointer
 
 
     &__hamburger .bar 
@@ -17,22 +27,32 @@
         transition: all 0.5s
 
 
-    &__hamburger-bartop:hover  
+    &__hamburger:hover .top  
         transform: rotate(45deg)
 
 
-    &__hamburger--barmiddle:hover 
+    &__hamburger:hover .middle 
         opacity: 0
 
-    &__hamburger--barbottom:hover 
+    &__hamburger:hover .bottom 
         transform: rotate(-45deg)
 
 .img
     background-color: orange
+    height: 199px
+    width: 64vh
+    margin-left: 49px
 .slider
     background-color: yellow
+    height: 100px
+    width: 64vh
+    margin-left: 49px
 .daylist
     background-color: purple
+    height: 50px
+    width: 64vh
+    margin-left: 49px
+    
 
 
 
