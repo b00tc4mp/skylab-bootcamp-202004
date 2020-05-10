@@ -1,4 +1,4 @@
-function Landing({onLogin, onRegister, onLogOut, token}){
+function Landing({onLogin, onRegister, onLogOut, token, onAdvSearch, onBasicSearch}){
     const [error, setError] = useState(undefined)
     const [name, setName] = useState(undefined)
 //function Landing(props){
@@ -20,6 +20,11 @@ function Landing({onLogin, onRegister, onLogOut, token}){
 
         setName(undefined)
         onLogOut()
+    }
+
+    const handleAdvSearch = event =>{
+        event.preventDefault()
+        onAdvSearch()
     }
 
     useEffect(() => {
@@ -44,14 +49,14 @@ function Landing({onLogin, onRegister, onLogOut, token}){
                         <img className='frame-art' src='https://www.hipstersofthecoast.com/wp-content/uploads/2019/07/gidoath.png' alt='kytheon art'/>
                     </div>
                     <div className="type title">
-                        <form onSubmit = {() => {event.preventDefault(); props.onBasicSearch(event)}}>
+                        <form onSubmit = {() => {event.preventDefault(); onBasicSearch(event)}}>
                             <input className='form-search' type="text" name="query" size="15"/>
                             <button>Card Search</button>
                         </form>
                     </div>
                     {error && <Feedback error={error} level='warning'/>}
                     <div className="nav">
-                        <a className="nav__item" href="" onClick = {() => props.setView('adv')}>Advanced Search</a>
+                        <a className="nav__item" href="" onClick = {handleAdvSearch}>Advanced Search</a>
                         <a className="nav__item" href="" onClick = {event.preventDefault()}>About Us</a>
                         {token && <a className="nav__item" href="" onClick = {() => props.setView('account')}>Your Account</a>}
                         {!token && <a className="nav__item" href="" onClick = {handleLogin}>Login</a>}

@@ -4,6 +4,22 @@ function NavBar(props){
 
     const [menu, setMenu] = useState(false)
 
+    const handleLogin = event => {
+        event.preventDefault()
+    
+        props.onLogin()
+    }
+
+    const handleRegister = event => {
+        event.preventDefault()
+
+        props.onRegister()
+    }
+
+    const handleAdvSearch = event =>{
+        event.preventDefault()
+        props.onAdvSearch()
+    }
     return <nav className = "navigation">
         <div className = "navigation__basic">
             <a href="">Landing</a>
@@ -14,10 +30,10 @@ function NavBar(props){
         </div>
 
         {menu && <div className = "navigation__extended">
-            <a href="" onClick = {() => {event.preventDefault();props.setView('adv')}}>Advanced Search</a>
+            <a href="" onClick = {handleAdvSearch}>Advanced Search</a>
             <a href="" onClick = {() => {event.preventDefault();props.setView('account')}}>Your Account</a>
-            <a href="" onClick = {() => {event.preventDefault();props.setView('registe')}}>Register</a> 
-            <a href="" onClick = {() => {event.preventDefault();props.setView('login')}}>Login</a>
+            <a href="" onClick = {handleRegister}>Register</a> 
+            <a href="" onClick = {handleLogin}>Login</a>
             <a href="" onClick = {event.preventDefault}>Your Cards</a>
             <a href="" onClick = {event.preventDefault}>Your Decks</a>
         </div>}

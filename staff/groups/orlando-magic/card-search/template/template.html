@@ -1556,82 +1556,85 @@
     </section>
 
     <section class = 'card'>
-        <img class = "card__image" src = 'https://img.scryfall.com/cards/normal/front/7/8/7855528a-ede9-49a9-8749-795a004fd927.jpg?1562788826'>
-        <article class = "card__content">
-            <div class = "card__content--top">
-                <!-- printed_name over name -->
-                <p class = "card__content--name">Abzan Banner</p>
-                <!-- mana_cost -->
-                <p class = "card__content--manacost">{3}</p>
-            </div>
-
-            <div class = "card__content--typeline">
-                <!-- printed_type_line over type_line -->
-                <p>Artifact</p>
-            </div>
-
-            <div class = "card__content--content">
-                <!-- printed_text over oracle_text -->
-                <!-- Will need to divide into paragraphs using a function, teext comes with /n as line breaks -->
-                <p class = "card__content--oracletext">
-                    {T}: Add {W}, {B}, or {G} to your mana pool.
-                </p>
-                <p class = "card__content--oracletext">
-                    {W}{B}{G}, {T}, Sacrifice Abzan Banner: Draw a Card.
-                </p>
-                <!-- flavor_text -->
-                <p class = "card__content--flavortext">Stone to endure, roots to remember.</p>
-            </div >
-
-            <div class = "card__content--stats">
-                <!-- power and toughness -->
-                <!-- loyalty -->
-                <p>Only if card has power/toughness or loyalty</p>
-            </div >
-
-            <div class = "card__content--artist">
-                <!-- artist -->
-                <p>Illustrated by Daniel Ljunggren</p>
-            </div>
-
-            <div class = "card__content--legalities">
-                <!-- card.legalities is an object with a key for each format and 'legal' or 'not_legal' as values-->
-                <div class = "card__content--legalityelement">
-                    <p class = "card__content--format">
-                        Pioneer
-                    </p>
-                    <p class = "card__content--legal">
-                        LEGAL
-                    </p>
+        <div class="card__info">
+            <img class = "card__image" src = 'https://img.scryfall.com/cards/normal/front/7/8/7855528a-ede9-49a9-8749-795a004fd927.jpg?1562788826'>
+            <article class = "card__content">
+                <div class = "card__content--top">
+                    <!-- printed_name over name -->
+                    <p class = "card__content--name">Abzan Banner</p>
+                    <!-- mana_cost -->
+                    <p class = "card__content--manacost">{3}</p>
                 </div>
 
-                <div class = "card__content--legalityelement">
-                    <p class = "card__content--format">
-                        Standard
-                    </p>
-                    <p class = "card__content--illegal">
-                        ILLEGAL
-                    </p>
-                </div>
-                <div class = "card__content--legalityelement">
-                    <p class = "card__content--format">
-                        Pioneer
-                    </p>
-                    <p class = "card__content--legal">
-                        LEGAL
-                    </p>
+                <div class = "card__content--typeline">
+                    <!-- printed_type_line over type_line -->
+                    <p>Artifact</p>
                 </div>
 
-                <div class = "card__content--legalityelement">
-                    <p class = "card__content--format">
-                        Standard
-                    </p>
-                    <p class = "card__content--illegal">
-                        ILLEGAL
-                    </p>
+                <ul class = "card__content--content">
+                    <!-- printed_text over oracle_text -->
+                    <!-- Will need to divide into paragraphs using a function, teext comes with /n as line breaks -->
+                    <li class = "card__content--oracletext">
+                        {T}: Add {W}, {B}, or {G} to your mana pool.
+                    </li>
+                    <li class = "card__content--oracletext">
+                        {W}{B}{G}, {T}, Sacrifice Abzan Banner: Draw a Card.
+                    </li>
+                    <!-- flavor_text -->
+                    <li class = "card__content--flavortext">Stone to endure, roots to remember.</p>
+                </ul >
+
+                <div class = "card__content--stats">
+                    <!-- power and toughness -->
+                    <!-- loyalty -->
+                    <p>Only if card has power/toughness or loyalty</p>
+                </div >
+
+                <div class = "card__content--artist">
+                    <!-- artist -->
+                    <p>Illustrated by Daniel Ljunggren</p>
                 </div>
-            </div>
-        </article>
+
+                <div class = "card__content--legalities">
+                    <!-- card.legalities is an object with a key for each format and 'legal' or 'not_legal' as values-->
+                    <div class = "card__content--legalityelement">
+                        <p class = "card__content--format">
+                            Pioneer
+                        </p>
+                        <p class = "card__content--legal">
+                            LEGAL
+                        </p>
+                    </div>
+
+                    <div class = "card__content--legalityelement">
+                        <p class = "card__content--format">
+                            Standard
+                        </p>
+                        <p class = "card__content--illegal">
+                            ILLEGAL
+                        </p>
+                    </div>
+                    <div class = "card__content--legalityelement">
+                        <p class = "card__content--format">
+                            Pioneer
+                        </p>
+                        <p class = "card__content--legal">
+                            LEGAL
+                        </p>
+                    </div>
+
+                    <div class = "card__content--legalityelement">
+                        <p class = "card__content--format">
+                            Standard
+                        </p>
+                        <p class = "card__content--illegal">
+                            ILLEGAL
+                        </p>
+                    </div>
+                </div>
+            </article>
+        </div>
+        
         COULD ADD LANGUAGES/PRINTS BUT WOULD REQUIRE MORE CALLS TO API - WE CAN LEAVE IT FOR AFTER THE DECKBUILDING TOOL IF WE HAVE TIME
         <article class = "card__tools">
 
