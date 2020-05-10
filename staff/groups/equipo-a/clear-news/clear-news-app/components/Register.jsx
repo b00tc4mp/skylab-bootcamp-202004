@@ -5,6 +5,7 @@ function Register({ onRegister, onGoToLogin }) {
 
     const handleSubmit = event => {
         event.preventDefault()
+        checkboxes()
         let country
         let business =false
         let entertainment = false
@@ -13,38 +14,6 @@ function Register({ onRegister, onGoToLogin }) {
         let science = false
         let sports = false
         let technology = false
-
-        // (function() {
-        //     const form = document.querySelector('#sectionForm');
-        //     const checkboxes = form.querySelectorAll('input[type=checkbox]');
-        //     const checkboxLength = checkboxes.length;
-        //     const firstCheckbox = checkboxLength > 0 ? checkboxes[0] : null;
-        
-        //     function init() {
-        //         if (firstCheckbox) {
-        //             for (let i = 0; i < checkboxLength; i++) {
-        //                 checkboxes[i].addEventListener('change', checkValidity);
-        //             }
-        
-        //             checkValidity();
-        //         }
-        //     }
-        
-        //     function isChecked() {
-        //         for (let i = 0; i < checkboxLength; i++) {
-        //             if (checkboxes[i].checked) return true;
-        //         }
-        
-        //         return false;
-        //     }
-        
-        //     function checkValidity() {
-        //         const errorMessage = !isChecked() ? 'At least one checkbox must be selected.' : '';
-        //         firstCheckbox.setCustomValidity(errorMessage);
-        //     }
-        
-        //     init();
-        // })();
 
         
         if (event.target.business.checked) business = Boolean(event.target.business.value)
@@ -294,7 +263,7 @@ function Register({ onRegister, onGoToLogin }) {
                     <option>Venezuela</option>
                     <option>South Africa</option>
             </select>
-            <fieldset className="register__checkbox" required>
+            <fieldset className="register__checkbox">
                 <legend>Choose your favorite topics</legend>
                 <input type="checkbox" name="business" value="true" />Business<br/>
                 <input type="checkbox" name="entertainment" value="true" />Entertainment<br/>
