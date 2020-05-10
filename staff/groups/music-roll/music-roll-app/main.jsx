@@ -1,1 +1,3 @@
-ReactDOM.render(<Browser />, document.getElementById('root'))
+
+
+ReactDOM.render(<Main />, document.getElementById('root'))
