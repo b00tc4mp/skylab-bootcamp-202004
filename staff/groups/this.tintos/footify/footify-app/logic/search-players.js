@@ -15,48 +15,48 @@ function searchPlayers(query, callback) {
             if (status === 200) {
 
                 let { player: results } = JSON.parse(body)
+
+
+
+
                 let counter = 0
                 results.forEach(result => {
-                    const { dateBorn, strCutout, strPlayer, strPosition, strSport, strTeam, strNumber, strBirthLocation, idPlayer, strHeight, strWeight,idTeam } = result
+                    const { dateBorn, strCutout, strPlayer, strPosition, strSport, strTeam, strNumber, strBirthLocation, idPlayer, strHeight, strWeight, idTeam } = result
+
                     if (strCutout !== null && strSport === 'Soccer') {
-
-                            let _emblem = '';
-
-                            searchTeam(idTeam,(error,_idTeam)=>{
-                                if(error) throw console.error(error)
-                                const [emblem] = _idTeam
-                                _emblem = emblem
-                                if(results.length === counter)
-                                _players.push({emblem: notNull(_emblem)})
-                                
-                            })
-                        
+                        counter++
 
                         let splitName = strPlayer.split(' ');
                         let firstName = splitName[0];
                         let surname = splitName[1];
 
-                        counter++
+                        searchTeam(idTeam, (error, _idTeam) => {
+                            const [{ emblem }] = _idTeam
+                            if (error) throw console.error(error)
 
-                        _players.push({
-                            date: notNull(dateBorn),
-                            image: strCutout,
-                            firstName: notNull(firstName),
-                            surname: notNull(surname),
-                            position: notNull(strPosition),
-                            club: notNull(strTeam),
-                            number: notNull(strNumber),
-                            born: notNull(strBirthLocation),
-                            id: notNull(idPlayer),
-                            weight: notNull(strWeight),
-                            height: notNull(strHeight),
-                            
+                            _players.push({
+                                date: notNull(dateBorn),
+                                image: strCutout,
+                                firstName: notNull(firstName),
+                                surname: notNull(surname),
+                                position: notNull(strPosition),
+                                club: notNull(strTeam),
+                                number: notNull(strNumber),
+                                born: notNull(strBirthLocation),
+                                id: notNull(idPlayer),
+                                weight: notNull(strWeight),
+                                height: notNull(strHeight),
+                                teamId: notNull(idTeam),
+                                emblem: emblem
+                            })
+
+                            if (counter === results.length) {
+                                callback(undefined, _players)
+                            }
                         })
                     }
-
                 })
 
-                callback(undefined, _players)
             } else {
                 const { error } = JSON.parse(body)
 
@@ -64,7 +64,3 @@ function searchPlayers(query, callback) {
             }
         })
 }
-
-
-
-

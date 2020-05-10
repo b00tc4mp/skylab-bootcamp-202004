@@ -4,7 +4,7 @@ function Navbar({ onGoToPlayerResults }) {
         event.preventDefault()
 
         const queryPlayer = event.target.searchPlayer.value
-
+debugger
         onGoToPlayerResults(queryPlayer)
     }
 

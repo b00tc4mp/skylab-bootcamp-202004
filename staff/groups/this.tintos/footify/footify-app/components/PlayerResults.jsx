@@ -1,6 +1,6 @@
 const { useState } = React
 
-function PlayerResults({resultsPlayers, emblem}) {
+function PlayerResults({resultsPlayers}) {
 
 
     return <>

@@ -1,4 +1,4 @@
-describe.only('Search players',()=>{
+describe('Search players',()=>{
     let player;
 
     beforeEach(()=>{
@@ -15,10 +15,11 @@ describe.only('Search players',()=>{
          
 
             results.forEach(result =>{
-                const { date, image, football_player, position, club, number, born,id, weight, height} = result;
+                const { date, image, firstName, surname, position, club, number, born,id, weight, height} = result;
                 expect(date).to.exist
                 expect(image).to.exist
-                expect(football_player).to.exist
+                expect(firstName).to.exist
+                expect(surname).to.exist
                 expect(position).to.exist
                 expect(club).to.exist
                 expect(number).to.exist
@@ -43,10 +44,11 @@ describe.only('Search players',()=>{
             expect(results).to.exist
             console.log(results)
             results.forEach(result =>{
-                const { date, image, football_player, position, club, number, born,id, weight, height} = result;
+                const { date, image, firstName, surname, position, club, number, born,id, weight, height} = result;
                 expect(date).to.exist
                 expect(image).to.exist
-                expect(football_player).to.exist
+                expect(firstName).to.exist
+                expect(surname).to.exist
                 expect(position).to.exist
                 expect(club).to.exist
                 expect(number).to.exist
