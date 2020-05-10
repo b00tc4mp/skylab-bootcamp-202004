@@ -2,23 +2,43 @@ const { useEffect, useState } = React
 
 function TopHeadlines({ news, myHeadlines, token }) {
     const [error, setError] = useState()
+    // const [NewsError, setErrorNews] = useState()
 
     useEffect(() => {
-        !news && retrieveNews(token, ( error,news) => {
+        !news && retrieveNews(token, (error, news) => {
             if (error) setError(error.message)
             myHeadlines(news)
         })
     }, [])
-debugger
+    debugger
+    function handleLikeNews(newsTitle) {
+        try {
+            storeNews(token, newsTitle, error => {
+                if (error) throw error
+                // setErrorNews(error.message)
+                /* if(error.message==="invalid token") */
+                else {
+                    retrieveNews(token, (error, news) => {
+                        if (error) setError(error.message)
+                        myHeadlines(news)
+                    })
+                }
+            })
+        } catch (error) {
+            if (error) throw error
+            // setErrorNews(error.message)
+        }
+    }
     return <section className="news">
 
         {
             news && <ul className="news__container">
-                { news.map(({ name, title, url, urlToImage }) =>
-                        <li className="news__item" key={title}>
-                            <a href={url} target='_blank'><img className="news__images" src={urlToImage}></img>
-                            <div className="news__title stroke"><p className="stroke">{name}</p><p className="stroke"> {title}</p> </div></a>
-                </li>)}
+                {news.map(({ name, title, url, urlToImage,favorites }) =>
+                    <li className="news__item" key={title}>
+                        <a href={url} target='_blank'><img className="news__images" src={urlToImage}></img>
+                            <div className="news__title stroke"><p className="stroke">{name}</p><p className="stroke"> {title}</p></div></a>
+                            <div className="news__button"> <button onClick={() => handleLikeNews(title)}>{favorites? 'unFollow' : 'follow'}</button></div>
+                    </li>)}
             </ul>
         }
 

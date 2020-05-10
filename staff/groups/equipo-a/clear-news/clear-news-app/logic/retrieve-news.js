@@ -4,7 +4,7 @@ function retrieveNews(token, callback) {
 
     Function.validate(callback)
 
-    const myNews = []
+    let myNews = []
 
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
         undefined,
@@ -16,7 +16,7 @@ function retrieveNews(token, callback) {
 
                 let user = JSON.parse(body)
 
-                const { categories, country } = user
+                const { categories, country, favorite = [] } = user
 
                 let result = Object.keys(categories).map(function (key) { return [String(key), categories[key]] })
 
@@ -29,11 +29,7 @@ function retrieveNews(token, callback) {
                 }
 
                 let counter = 0
-                /* let URL
-                if(country===undefined)
-                URL=`https://newsapi.org/v2/top-headlines?category=${_categories[i]}&apiKey=f8ed27ae05b44313b6a87abfea6dc48b`
-                else URL=`https://newsapi.org/v2/top-headlines?country=${country}&category=${_categories[i]}&apiKey=f8ed27ae05b44313b6a87abfea6dc48b` */
-                debugger
+          
                 for (let i = 0; i < _categories.length; i++) {
                     call('GET', `https://newsapi.org/v2/top-headlines?country=${country}&category=${_categories[i]}&apiKey=ca31e7b3e6ba43198e30c837afcf0021`,
                         undefined,
@@ -53,12 +49,19 @@ function retrieveNews(token, callback) {
                                     if (typeof source !== "undefined") {
                                         const { name } = source
                                         myNews.push({ name, author, title, description, url, urlToImage, publishedAt })
+
                                     }
                                     else {
                                         const name = "unknown"
                                         myNews.push({ name, author, title, description, url, urlToImage, publishedAt })
                                     }
+
                                 }
+                                myNews = myNews.map(({ name, author, title, description, url, urlToImage, publishedAt }) => {
+                                    const _news = { name, author, title, description, url, urlToImage, publishedAt }
+                                    _news.favorites = favorite.includes(title)
+                                    return _news
+                                })
 
                             } else {
                                 const { error } = JSON.parse(body)
