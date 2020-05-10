@@ -2,7 +2,7 @@ function addToFavs(token, spotSelected, callback) {
 
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined,
         {
-            Authorization: `Bearer ${token}`
+            'Authorization': `Bearer ${token}`
         },
         (error, status, body) => {
             if (error) return callback(error)
@@ -12,15 +12,17 @@ function addToFavs(token, spotSelected, callback) {
 
                 const { favSpots = [] } = userLoged
 
-                const index = favSpots.indexOf(spotSelected)
+                const indexOfCord = favSpots.indexOf(spotSelected.coordinates) //i will control if it is alrady on favs outside the call sow we can change the color of the fav tag to make it more responsive
+                const indexOfName = favSpots.indexOf(spotSelected.name)
 
-                if (index === -1) favSpots.push(spotSelected)
+
+                if (indexOfCord === -1 && indexOfName === -1) favSpots.push(spotSelected)
                 
 
 
                 call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify({ favSpots }),
                     {
-                        Authorization: `Bearer ${token}`,
+                        'Authorization': `Bearer ${token}`,
                         'Content-type': 'application/json'
                     },
                     (error, status, body) => {

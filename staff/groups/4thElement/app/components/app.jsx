@@ -8,7 +8,7 @@ function App() {
 
     const handleGoToRegister= () => setHashView('register')
 
-    const handleGoToLogin= () => setView('login')
+    const handleGoToLogin= () => setView('home')
 
     const handleRegister= () => setView('login')
 
@@ -52,7 +52,7 @@ function App() {
             {view === 'home' && <Home />}
             {view === 'search' && <Search token={token}  movingSurfForecast={onGoToSurfForecast}/>}
             {view === 'surfForecast' && <SurfForecast token={token} forecastSelected={forecastSelected} />}
-            {view === 'favs' && <FavSpotsList token={token} />}
+            {view === 'favs' && <FavSpots token={token} />}
             {<Footer GoToHome={handleGoToHome} GoToSearch={handleGoToSearch} GoToFavs={handleGoToFavs}/>}
-    
+        </>
 }

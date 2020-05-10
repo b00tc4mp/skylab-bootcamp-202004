@@ -8,7 +8,7 @@ function Footer ({GoToSearch, GoToHome, GoToFavs}) {
         GoToHome()
     }
     
-    const handleGoToFavs = () => {
+    const handleGoToFavs = () => { //put state to change color to white on the section your at and not at hover at least for movile
         GoToFavs()
     }
 

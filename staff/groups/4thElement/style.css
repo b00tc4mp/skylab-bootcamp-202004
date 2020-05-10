@@ -398,4 +398,18 @@ form {
   padding: 13.5px;
 }
 
+.feedback {
+  top: 15vh;
+  color: green;
+  position: relative;
+  text-align: center;
+  font-size: 1.5rem;
+}
+.feedback--warning {
+  color: orange;
+}
+.feedback--error {
+  color: red;
+}
+
 /*# sourceMappingURL=style.css.map */

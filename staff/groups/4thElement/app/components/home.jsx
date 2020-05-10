@@ -30,7 +30,7 @@ function Home() {
         }  
     }
 
-    const handelMouseOver = (name) => {
+    const handelMouseOver = (name) => { //on click not mouse over for movile first hover has no sense
         console.log('in')
         setMouseOver(name)
     }

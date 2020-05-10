@@ -1,31 +1,23 @@
+
 const { useState, useEffect } = React
 
-function FavSpotsList({ token }) {
+function FavSpotsList({results}) {
+    return <ul className="Favorites__List">
+        {results.map((element) => <li>{element.name}</li>)}
+    </ul>
 
-    const [favSpots, setFavSpots] = useState()
-
-    useEffect(() => {
-        favList(token, (error, favSpots) => {
-            if (error) throw new TypeError('error')
-
-            setFavSpots(favSpots)
-        })
-    }, [token])
-
-    return <section>
-
-        {
-            favSpots ? (<>
-
-                <ul>
-                    {favSpots.map((element) => {
-                        return <li >{`${element}`}</li>
-                    })}
-                </ul>
-            </>)
-                : (
-                    <Feedback message="sorry, no results :(" />
-                )
-        }
-    </section>
 }
+
+// {
+//     favSpots ? (<>
+
+//         <ul>
+//             {favSpots.map((element) => {
+//                 return <li >{`${element}`}</li>
+//             })}
+//         </ul>
+//     </>)
+//         : (
+//             <Feedback message="sorry, no results :(" />
+//         )
+// }

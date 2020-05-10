@@ -6,7 +6,7 @@ function SurfForecast({token, forecastSelected}) {
         addToFavs(token, forecastSelected, (error) => {
             if(error) throw new TypeError('error')
         })
-    }
+    } //to do : handel error if not login
 
     const [forecast, setForecast] = useState()
 
@@ -15,7 +15,7 @@ function SurfForecast({token, forecastSelected}) {
         surfForecastLogic({forecastSelected}, function (error, info) {
             setForecast(info)
         })
-    }, [forecastSelected]);
+    }, [forecastSelected]); //upload each half an hour
 
     return <section className="spot-result-list">
 
@@ -35,7 +35,7 @@ function SurfForecast({token, forecastSelected}) {
                 </ul>
             </>)
                 : (
-                    <Feedback message="sorry, no results :(" />
+                    <Feedback message="sorry, no results :(" /> //handel error and maybe add spiner when charging
                 )
         }
               <div className='fav-button' onClick={()=>handleFavButton(token)}><i className="fas fa-star star-fore fa-2x"></i></div>
