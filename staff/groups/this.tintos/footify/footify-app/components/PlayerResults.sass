@@ -7,28 +7,31 @@
     color: #320090
     display: flex
     justify-content: start
-    margin-left: 2rem
+    margin-left: 1rem
     font-family: raleway 
     font-weight: bold 700
 .player-card
     display: flex
     flex-direction: column
-    align-items: start
+    align-items: center
     width: 100%
     &__item
         background-color: #73f182
-        margin: 2rem
+        margin-top: 1.5rem
+        margin-right: 0.2rem
         list-style: none
-        height: 330px
-        border: double 2px
+        height: 370px
+        border: double 1px
         border-radius: 20px
-        -webkit-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.75)
-        -moz-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.75)
-        box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.75)
-    &__item:hover
-        -webkit-box-shadow: 2px 3px 5px 0px rgba(231,166,26,1)
-        -moz-box-shadow: 2px 3px 5px 0px rgba(231,166,26,1)
-        box-shadow: 2px 3px 5px 0px rgba(231,166,26,1)
+        min-width: 420px
+
+    //     -webkit-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.75)
+    //     -moz-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.75)
+    //     box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.75)
+    // &__item:hover
+    //     -webkit-box-shadow: 2px 3px 5px 0px rgba(231,166,26,1)
+    //     -moz-box-shadow: 2px 3px 5px 0px rgba(231,166,26,1)
+    //     box-shadow: 2px 3px 5px 0px rgba(231,166,26,1)
     &__player
         height: auto
         display: grid
@@ -44,7 +47,7 @@
         justify-content: center
         align-items: center
         &-item
-            width: 70px
+            width: 75px
             height: auto
             min-width: 60px
             min-height: 60px
@@ -52,16 +55,15 @@
         grid-area: number
         display: flex
         justify-content: center
-        align-items: flex-start
-        margin: 0.9rem
+        align-items: center
         font-family: raleway 
-        font-size: 2.6rem
+        font-size: 2.4rem
         font-weight: 700
         color: #320090
         &-item
-            height: 60px
+            height: 50px
             text-align: center
-            width: 60px
+            width: 50px
             background: #ffffff
             border-radius: 50%
     &__image
@@ -70,7 +72,7 @@
         justify-content: flex-end
         align-items: flex-end
         &-item
-            max-width: 155px
+            max-width: 180px
             max-height: auto
     &__name-first
         grid-area: name
@@ -85,46 +87,64 @@
         font-size: 1rem
         font-weight: 600
         color: #320090
-        margin-left: 0.8rem
-        margin-top: 0.2rem
+        margin-left: 1.1rem
+        margin-top: .4rem
+    &__small-line
+        position: relative
+        bottom: 2.7rem
     &__info
-        width: 100%
-        height: 110px
-        display: grid
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
-        grid-template-rows: 30% 30% 30% 10%
-        grid-template-areas: "team team team-answer team-answer team-answer team-answer team-answer . like ." "country country country country-answer country-answer country-answer country-answer . count ." "birth birth birth birth birth-answer birth-answer birth-answer . . ." ". . . . . . . . . ."
+        display: flex
+        flex-direction: column
+        align-items: flex-start
+        justify-content: flex-start
+        
+        // width: 100%
+        // height: 110px
+        // display: grid
+        // grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
+        // grid-template-rows: 30% 30% 30% 10%
+        // grid-template-areas: "team team team-answer team-answer team-answer team-answer team-answer . like ." "country country country country-answer country-answer country-answer country-answer . count ." "birth birth birth birth birth-answer birth-answer birth-answer . . ." ". . . . . . . . . ."
     &__team
         +infoLetter()
         grid-area: team
+        margin-top: 1rem
         &-answer
             grid-area: team-answer
-            font-size: 0.8rem
+            font-size: 1rem
             margin-top: 0.3rem
             margin-left: 0.4rem
+            color: black
+            font-weight: 500
     &__country
         +infoLetter()
         grid-area: country
         &-answer
             grid-area: country-answer
-            font-size: 0.8rem
+            font-size: 1rem
             margin-top: 0.3rem
+            color: black
+            font-weight: 500
     &__birth
         +infoLetter()
         grid-area: birth
         &-answer
             grid-area: birth-answer
-            font-size: 0.8rem
+            font-size: 1rem
             margin-top: 0.3rem
+            color: black
+            font-weight: 500
     &__like
-        grid-area: like
-        width: 30px
-        height: 30px
+        position: relative
+        left: 23rem
+        bottom: 4.7rem
+        width: 35px
+        height: 35px
         justify-self: center
         margin-top: 0.3rem
     &__count
-        grid-area: count
-        justify-self: center
+        position: relative
+        left: 23.5rem
+        bottom: 4.5rem
         font-family: raleway
         font-weight: 650
         color: #320090
@@ -136,14 +156,21 @@
         justify-content: center
         align-items: center
         border-radius: 30px
+        position: relative
+        bottom: 1.6rem
         &-input
             border-radius: 30px
+            font-size: 1rem
             width: 88%
             height: 20px
             font-family: raleway
             border-style: none
-            text-align: center
-            margin-top: 0.8rem
+            text-align: left
+            padding: .6rem 0rem .6rem .8rem
+            &:focus
+                outline: none
+        
+            
             
 
  
