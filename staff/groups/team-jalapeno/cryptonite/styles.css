@@ -11,9 +11,8 @@ body {
 }
 
 .nav {
-  margin-top: 1em;
+  padding-top: 1em;
   font-size: 1.2em;
-  background: rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: flex-end;
 }
@@ -73,6 +72,39 @@ body {
   font-size: 0.6em;
 }
 
+.portfolio {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2em;
+}
+.portfolio__title {
+  width: 80%;
+  margin: 0 auto;
+  color: lightgrey;
+}
+.portfolio__money {
+  font-size: 3em;
+  margin-top: 1em;
+}
+.portfolio__stats {
+  font-size: 1em;
+  margin-bottom: 1.5em;
+}
+.portfolio__stats--contrast {
+  color: #f7ce78;
+}
+.portfolio__button {
+  font-size: 1em;
+  padding: 0.8em;
+  margin: 1em auto;
+  width: 50%;
+  background: #f7ce78;
+  border-color: #f7ce78;
+  border-radius: 0.3em;
+}
+
 .crypto-coins {
   display: flex;
   flex-direction: column;
@@ -108,8 +140,7 @@ body {
   flex-wrap: wrap;
   justify-content: space-around;
 }
-
-.coin {
+.coins-container .coin {
   width: 12em;
   height: 200px;
   display: flex;
@@ -120,67 +151,41 @@ body {
   margin: 15px 0;
   padding: 15px;
 }
-.coin__head {
+.coins-container .coin--large {
+  width: 95%;
+  height: 145px;
+}
+.coins-container .coin__head {
   display: flex;
   justify-content: space-between;
   color: black;
   font-size: 1.5em;
 }
-.coin__body {
-  margin-bottom: 0.5em;
+.coins-container .coin__body {
+  margin-bottom: 0.4em;
 }
-.coin span {
+.coins-container .coin span {
   height: 25px;
   display: flex;
   justify-content: space-between;
   font-size: 1.1em;
 }
-.coin__img {
+.coins-container .coin__img {
   width: 50px;
   border-radius: 25px;
 }
-.coin__name {
+.coins-container .coin__name {
   color: #dd7631;
 }
-.coin__price {
+.coins-container .coin__price {
   font-weight: bold;
   color: black;
 }
-.coin__percentage {
+.coins-container .coin__price--light {
+  color: white;
+}
+.coins-container .coin__percentage {
   color: #dd7631;
-}
-
-.portfolio {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 2em;
-}
-.portfolio__title {
-  width: 80%;
-  margin: 0 auto;
-  color: lightgrey;
-}
-.portfolio__money {
-  font-size: 3em;
-  margin-top: 1em;
-}
-.portfolio__stats {
-  font-size: 1em;
-  margin-bottom: 1.5em;
-}
-.portfolio__stats--contrast {
-  color: #f7ce78;
-}
-.portfolio__button {
-  font-size: 1em;
-  padding: 0.8em;
-  margin: 1em auto;
-  width: 50%;
-  background: #f7ce78;
-  border-color: #f7ce78;
-  border-radius: 0.3em;
 }
 
 .register {
@@ -231,6 +236,36 @@ body {
   font-weight: bold;
   font-size: 1.2em;
   margin-bottom: 1em;
+}
+
+.coinpage-header {
+  background: #f7ce78;
+  color: black;
+  border-radius: 0 0 3em 3em;
+}
+.coinpage-header .nav__item {
+  color: black;
+}
+.coinpage-header__name {
+  font-size: 2em;
+  margin: 1em 0;
+}
+.coinpage-header__button {
+  font-size: 1em;
+  padding: 0.8em;
+  margin: 1em auto;
+  width: 50%;
+  background: #1c1c1c;
+  border-color: #1c1c1c;
+  border-radius: 0.3em;
+  color: #f7ce78;
+}
+.coinpage-header__stats {
+  display: flex;
+  justify-content: space-around;
+  width: 90%;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .login {
@@ -284,34 +319,27 @@ body {
   margin-bottom: 1em;
 }
 
-.coinpage-header {
-  background: #f7ce78;
-  color: black;
-  border-radius: 0 0 3em 3em;
-}
-.coinpage-header .nav__item {
-  color: black;
-}
-.coinpage-header__name {
-  font-size: 2em;
-  margin: 1em 0;
-}
-.coinpage-header__button {
-  font-size: 1em;
-  padding: 0.8em;
-  margin: 1em auto;
-  width: 50%;
-  background: #1c1c1c;
-  border-color: #1c1c1c;
-  border-radius: 0.3em;
-  color: #f7ce78;
-}
-.coinpage-header__stats {
+
+.wallet {
+  padding: 0.5em 0;
+  background: #424242;
   display: flex;
-  justify-content: space-around;
-  width: 90%;
-  align-items: center;
-  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+  border-radius: 1em;
+  margin-bottom: 1em;
+}
+.wallet__head {
+  margin-left: 1.2em;
+  display: flex;
+  flex-direction: column;
+}
+.wallet__body {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1.2em;
+  align-items: flex-end;
+
 }
 
 /*# sourceMappingURL=styles.css.map */
