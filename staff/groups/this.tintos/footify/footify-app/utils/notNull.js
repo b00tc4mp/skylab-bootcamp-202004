@@ -1,3 +1,3 @@
 function notNull(value) {
-    return value === null ? 'not available' : value
+    return value === null ? '-' : value
 }

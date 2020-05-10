@@ -1,9 +1,19 @@
-function Navbar() {
+function Navbar({ onGoToPlayerResults }) {
+
+    const handleSubmitSearch = (event) => {
+        event.preventDefault()
+
+        const queryPlayer = event.target.searchPlayer.value
+
+        onGoToPlayerResults(queryPlayer)
+    }
+
+
 
 
 
     return <>
-     <section className="navbar">
+        <section className="navbar">
             <div className="navbar__container">
                 <nav className="navbar__user">
                     <a href="" className="navbar__user-logo">
@@ -23,9 +33,13 @@ function Navbar() {
                     <a href="">
                         <img src="img/dreamteam.svg" alt="user" className="navbar__links-item" />
                     </a>
-                    <input type="text" id="navbar__links-search" />
+
+                    <form action="" onSubmit={handleSubmitSearch}>
+                        <input type="text" id="navbar__links-search" name='searchPlayer' />
+                        <button>🔍</button>
+                    </form>
                 </nav>
             </div>
         </section>
-</>
+    </>
 }
