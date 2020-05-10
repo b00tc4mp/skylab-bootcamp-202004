@@ -17,6 +17,7 @@
     <script class="mocha-init">
         mocha.setup('bdd')
         mocha.checkLeaks()
+        mocha.timeout(50000)
 
         const { expect } = chai
     </script>
@@ -34,6 +35,8 @@
 
     <script src="logic/authenticate-user.js"></script>
     <script src="logic/authenticate-user.spec.js"></script>
+    <script src="logic/register.js"></script>
+    <script src="logic/register.spec.js"></script>
     
     
     <script class="mocha-exec">
