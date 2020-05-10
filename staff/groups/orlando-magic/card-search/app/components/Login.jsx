@@ -44,25 +44,29 @@ class Login extends Component {
 
     render() {
         return <>
-        <div className='login-card-container'>
-            <section className="login">
-                <h1 className='name title'>Login</h1>
-                <div className="frame-art-container">
-                    <img className='frame-art' src='https://i.pinimg.com/originals/0a/32/77/0a3277ef0b12f7ae989ef690ea022f24.jpg' alt='nissa art'/>
-                </div>
-                <h1 className="type title">Legendary Enchantment</h1>
-                <div className="form-container">
-                    <form className='form' onSubmit={this.handleSubmit}>
-                        <input className='form__item' type="email" name="email" placeholder="e-mail" required />
-                        <input className='form__item' type="password" name="password" placeholder="password" required minLength="8" />
-                        <button className='form__item'>Submit</button>
-                    </form>
-                </div>
-            </section>
+        <div className='section-container'>
+            <div className='login-card-container'>
+                <section className="menu-title">
+                    <h1 className='name title'>Login</h1>
+                    <div className="frame-art-container">
+                        <img className='frame-art' src='https://i.pinimg.com/originals/0a/32/77/0a3277ef0b12f7ae989ef690ea022f24.jpg' alt='jace art'/>
+                    </div>
+                    <h1 className="type title">Legendary Enchantment</h1>
+                    <div className="form-container">
+                        <form className='form' onSubmit={this.handleSubmit}>
+                            <input className='form__item' type="email" name="email" placeholder="e-mail" required />
+                            <input className='form__item' type="password" name="password" placeholder="password" required minLength="8" />
+                            <button className='form__item'>Submit</button>
+                        </form>
+                        {this.state.error && <Feedback message={this.state.error} level='error' />}
+                        <div className="nav">
+                            <a className="nav__item" href="" onClick={this.handleRegister}>Register</a>
+                            <a className="nav__item" href="" onClick={this.handleLanding}>Return to main page</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
-        <a href="" onClick={this.handleRegister}>Register</a>
-        <a href="" onClick={this.handleLanding}>Return to main page</a>
-        {this.state.error && <Feedback message={this.state.error} level='error' />}
         </>
     }
 }

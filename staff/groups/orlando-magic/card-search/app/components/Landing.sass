@@ -1,4 +1,11 @@
-.login-card-container
+.type > form 
+    display: flex
+    justify-content: center
+    height: 1.5rem
+    margin: auto
+    font-size: 1rem
+
+.landing-card-container
     border: 0.5rem solid black
     width: 95vw
     margin: 0 auto
@@ -10,24 +17,28 @@
     z-index: 0
 
     .title, .frame-type-line,.nav__item 
-        box-shadow: 0 0 0 2px #171314, 0 0 0 5px #2e70b3, -3px 3px 2px 5px #171314
+        box-shadow: 0 0 0 2px #171314, 0 0 0 5px #deddc5, -3px 3px 2px 5px #171314
 
 
     .form-container
         width: 100%
 
     .form 
-        box-shadow: 0 0 0 5px #2e70b3, -3px 3px 2px 5px #171314
+        box-shadow: 0 0 0 5px #deddc5, -3px 3px 2px 5px #171314
 
     .frame-art 
-        box-shadow: 0 0 0 2px #171314,0 0 0 5px #2e70b3,-3px 3px 2px 5px #171314
+        box-shadow: 0 0 0 2px #171314,0 0 0 5px #deddc5,-3px 3px 2px 5px #171314
 
 @media only screen and (min-width: 768px)
-    .login-card-container
+    .type > form 
+        height: 2rem
+        margin: auto
+        font-size: 2rem
+    .landing-card-container
         font-size: 1.5rem
 
 @media only screen and (min-width: 968px)
-    .login-card-container
+    .landing-card-container
         font-size: 2rem
 
         .form
@@ -40,7 +51,7 @@
 
     
 @media only screen and (min-width: 1025px)
-    .login-card-container
+    .landing-card-container
         width: 30%
         font-size: 0.8rem
 

@@ -77,8 +77,13 @@ function App(){
         setView('card') 
     }
 
+    function handleLogOut () {
+        setToken(undefined)
+        setView('landing')
+    }
+
     return <>
-        {view==='landing' && <Landing onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch}/>}
+        {view==='landing' && <Landing onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch} onLogOut={handleLogOut} token={token}/>}
         {view==='login' && <Login onSubmit = {handleLoggedIn} onRegister = {handleRegister} onLanding={handleLanding}/>}
         {view==='register'  && <Register onLogin = {handleLogin} onLanding={handleLanding}/>}
         {/* {view === 'landing' && <Landing login = {login} setView = {setView} onBasicSearch = {onBasicSearch}/>}
