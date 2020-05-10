@@ -1,11 +1,17 @@
-function Navbar({ onGoToPlayerResults }) {
+function Navbar({ onGoToPlayerResults, onGoToSportNews }) {
 
     const handleSubmitSearch = (event) => {
         event.preventDefault()
 
         const queryPlayer = event.target.searchPlayer.value
-debugger
+
         onGoToPlayerResults(queryPlayer)
+    }
+    const handleSubmitSport = (event) => {
+        event.preventDefault()
+
+        onGoToSportNews()
+
     }
 
 
@@ -27,7 +33,7 @@ debugger
                     <a href="">
                         <img src="img/home.svg" alt="logo" className="navbar__links-item" />
                     </a>
-                    <a href="">
+                    <a href="" onClick={handleSubmitSport}>
                         <img src="img/news.svg" alt="user" id="navbar__links-news" />
                     </a>
                     <a href="">

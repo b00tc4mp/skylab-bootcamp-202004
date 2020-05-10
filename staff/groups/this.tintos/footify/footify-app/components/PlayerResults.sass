@@ -2,13 +2,13 @@
     display: flex
     justify-content: center
     background-color: #ffffff
-    font-family: raleway 
+    font-family: raleway
 =nameSize()
     color: #320090
     display: flex
     justify-content: start
     margin-left: 1rem
-    font-family: raleway 
+    font-family: raleway
     font-weight: bold 700
 .player-card
     display: flex
@@ -21,17 +21,10 @@
         margin-right: 0.2rem
         list-style: none
         height: 370px
-        border: double 1px
         border-radius: 20px
-        min-width: 420px
+        min-width: 420px          
+            
 
-    //     -webkit-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.75)
-    //     -moz-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.75)
-    //     box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.75)
-    // &__item:hover
-    //     -webkit-box-shadow: 2px 3px 5px 0px rgba(231,166,26,1)
-    //     -moz-box-shadow: 2px 3px 5px 0px rgba(231,166,26,1)
-    //     box-shadow: 2px 3px 5px 0px rgba(231,166,26,1)
     &__player
         height: auto
         display: grid
@@ -39,7 +32,7 @@
         align-content: center
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
         grid-template-rows: 1fr 1fr 1fr 1fr
-        grid-template-areas: "emblem emblem number number image image image image" "emblem emblem number number image image image image" "name name . . image image image image" "surname surname . . image image image image"
+        grid-template-areas: "emblem emblem number number image image image image" "emblem emblem number number image image image image" "name name name . image image image image" "surname surname surname . image image image image"
     &__emblem
         grid-area: emblem
         margin: 0.5rem
@@ -47,7 +40,7 @@
         justify-content: center
         align-items: center
         &-item
-            width: 75px
+            width: 70px
             height: auto
             min-width: 60px
             min-height: 60px
@@ -56,10 +49,11 @@
         display: flex
         justify-content: center
         align-items: center
-        font-family: raleway 
-        font-size: 2.4rem
+        font-family: raleway
+        font-size: 2.2rem
         font-weight: 700
         color: #320090
+        margin-bottom: 1rem
         &-item
             height: 50px
             text-align: center
@@ -97,13 +91,6 @@
         flex-direction: column
         align-items: flex-start
         justify-content: flex-start
-        
-        // width: 100%
-        // height: 110px
-        // display: grid
-        // grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
-        // grid-template-rows: 30% 30% 30% 10%
-        // grid-template-areas: "team team team-answer team-answer team-answer team-answer team-answer . like ." "country country country country-answer country-answer country-answer country-answer . count ." "birth birth birth birth birth-answer birth-answer birth-answer . . ." ". . . . . . . . . ."
     &__team
         +infoLetter()
         grid-area: team
@@ -143,14 +130,14 @@
         margin-top: 0.3rem
     &__count
         position: relative
-        left: 23.5rem
+        left: 23.8rem
         bottom: 4.5rem
         font-family: raleway
         font-weight: 650
         color: #320090
     &__small-line
         border: 0.6px solid #320090
-  
+
     &__comment
         display: flex
         justify-content: center
@@ -169,10 +156,3 @@
             padding: .6rem 0rem .6rem .8rem
             &:focus
                 outline: none
-        
-            
-            
-
- 
-    
-
