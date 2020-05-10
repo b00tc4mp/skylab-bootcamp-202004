@@ -13,7 +13,7 @@ function PlayerResults({resultsPlayers}) {
                             <li className="player-card__item">
                                 <div className="player-card__player">
                                     <div className="player-card__emblem">
-                                        <img src={emblem} alt="team badge" className="player-card__emblem-item" />
+                                        <img src={club} alt="team badge" className="player-card__emblem-item" />
                                     </div>
                                     <div className="player-card__number">
                                         <span className="player-card__number-item">{number}</span>
