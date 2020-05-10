@@ -298,7 +298,7 @@
 .feedback--error {
   color: red;
 }
-=======
+
 .advancedsearch {
   display: flex;
   flex-flow: column;
@@ -342,7 +342,7 @@
 }
 .advancedsearch__section--buttoncontainer {
   position: sticky;
-  bottom: 0rem;
+  bottom: 0em;
   border-top: solid brown;
 }
 
@@ -350,7 +350,10 @@
   display: flex;
   flex-flow: column;
   width: 100%;
-  color: #7491ac;
+}
+.results__info {
+  display: flex;
+  flex-flow: column;
 }
 .results__header {
   border-bottom: solid brown;
@@ -365,6 +368,8 @@
 .results__header--option {
   display: flex;
   width: 100%;
+  margin: 0.2em;
+  align-items: center;
 }
 .results__header--option > a {
   width: 27%;
@@ -381,6 +386,7 @@
 }
 .results > article {
   font-size: 0.8em;
+  margin: 0.2em;
 }
 .results__cards {
   display: flex;
@@ -440,6 +446,105 @@
   color: white;
   text-align: center;
   height: 1.5em;
+}
+
+.card {
+  width: 100%;
+  padding: 1%;
+  display: flex;
+  flex-flow: column;
+}
+.card__image {
+  width: 98%;
+}
+.card__content {
+  width: 98%;
+  border: solid brown 3px;
+  box-sizing: border-box;
+  margin-top: 1em;
+  background-color: whitesmoke;
+  border-radius: 0.3em;
+}
+.card__content > * {
+  padding: 0.2em;
+  display: flex;
+  align-items: center;
+}
+.card__content--top {
+  height: 2em;
+  border-bottom: solid brown 0.2px;
+}
+.card__content--name {
+  flex-grow: 1;
+  font-weight: bold;
+}
+.card__content--typeline {
+  height: 2em;
+  border-bottom: solid brown 0.2px;
+}
+.card__content--content {
+  list-style-type: none;
+  flex-flow: column;
+  align-items: flex-start;
+  border-bottom: solid brown 0.2px;
+}
+.card__content--flavortext {
+  font-style: italic;
+}
+.card__content--stats {
+  border-bottom: solid brown 0.2px;
+}
+.card__content--artist {
+  border-bottom: solid brown 0.2px;
+}
+.card__content--legalities {
+  flex-flow: wrap column;
+  height: 9em;
+}
+.card__content--legalityelement {
+  width: 48%;
+  display: flex;
+  justify-content: space-around;
+  font-size: 0.8em;
+  margin: 0.1em;
+}
+.card__content--format {
+  width: 50%;
+}
+.card__content--legal, .card__content--illegal {
+  border: solid black 1px;
+  color: whitesmoke;
+  width: 50%;
+  text-align: center;
+}
+.card__content--legal {
+  background-color: #4caf50;
+}
+.card__content--illegal {
+  background-color: #d32f2f;
+}
+.card__tools {
+  display: flex;
+  flex-direction: column;
+  width: 98%;
+}
+.card__tools--toolbox, .card__tools--shopping {
+  display: flex;
+  flex-direction: column;
+}
+.card__tools--title {
+  font-weight: bold;
+  font-size: 0.9em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+.card__tools--link {
+  border: solid brown 1px;
+  padding: 0.2em;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  text-decoration: none;
+  color: brown;
 }
 
 body {

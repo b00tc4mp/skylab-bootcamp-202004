@@ -25,6 +25,10 @@ function App(){
         setView('landing')
     }
 
+    function handleAdvSearch(){
+        setView('adv')
+    }
+
     function onBasicSearch(event){
         const searchInputs = {name: event.target.query.value}
         // To define inputs for search apart from callback
@@ -82,19 +86,13 @@ function App(){
     }
 
     return <>
-        {view==='landing' && <Landing onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch} onLogOut={handleLogOut} token={token}/>}
+        {view !== 'landing' && <NavBar onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch} onAdvSearch = {handleAdvSearch}/>}
+        {view==='landing' && <Landing onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch} onLogOut={handleLogOut} token={token} onAdvSearch = {handleAdvSearch}/>}
         {view==='login' && <Login onSubmit = {handleLoggedIn} onRegister = {handleRegister} onLanding={handleLanding}/>}
         {view==='register'  && <Register onLogin = {handleLogin} onLanding={handleLanding}/>}
-      
-        {/* {view === 'landing' && <Landing login = {login} setView = {setView} onBasicSearch = {onBasicSearch}/>}
-        {view !== 'landing' && <NavBar onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch}/>}
-        {view==='login' && <Login onSubmit = {handleLoggedIn} onRegister = {handleRegister} />}
-        {view==='register'  && <Register onLogin = {handleLogin}/>}
-        {view === 'landing' && <Landing login = {login} setView = {setView} onBasicSearch = {onBasicSearch}/>}
-
         {view === 'results' && <Results results = {results} onCardClick = {onCardClick}/>}
         {view === 'adv' && <Search onAdvancedSearch = {onAdvancedSearch}/>}
-        {/* {view === 'card' && <Card card = {card}/>} */}
+        {view === 'card' && <Card card = {card}/>}
     </>
         /*{view === 'landing' && <Landing login = {login} setView = {setView} onBasicSearch = {onBasicSearch}/>}
     {view !== 'landing' && <NavBar login = {login} setView = {setView} onBasicSearch = {onBasicSearch}/>}

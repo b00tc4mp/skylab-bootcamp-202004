@@ -26,6 +26,7 @@
             height: 2em
             border-bottom: solid brown 0.2px
         &--content
+            list-style-type: none
             flex-flow: column
             align-items: flex-start
             border-bottom: solid brown 0.2px
@@ -36,11 +37,16 @@
         &--artist
             border-bottom: solid brown 0.2px
         &--legalities
-            flex-flow: wrap row
+            flex-flow: wrap column
+            height: 9em
         &--legalityelement
-            width: 45%
+            width: 48%
             display: flex
             justify-content: space-around
+            font-size: 0.8em
+            margin: 0.1em
+        &--format
+            width: 50%
         &--legal, &--illegal
                border: solid black 1px 
                color: whitesmoke
@@ -59,15 +65,13 @@
             flex-direction: column
         &--title
             font-weight: bold
-            padding: 0.2em
             font-size: 0.9em
-            margin: 0.5em
+            margin-top: 0.5em
+            margin-bottom: 0.5em
         &--link
             border: solid brown 1px
             padding: 0.2em
-            margin: 0.2em
+            margin-top: 0.2em
+            margin-bottom: 0.2em
             text-decoration: none
             color: brown
-
-            
-            
