@@ -15,22 +15,42 @@ function searchPlayers(query, callback) {
             if (status === 200) {
 
                 let { player: results } = JSON.parse(body)
-
+                let counter = 0
                 results.forEach(result => {
-                    const { dateBorn, strCutout, strPlayer, strPosition, strSport, strTeam, strNumber, strBirthLocation, idPlayer, strHeight, strWeight } = result
+                    const { dateBorn, strCutout, strPlayer, strPosition, strSport, strTeam, strNumber, strBirthLocation, idPlayer, strHeight, strWeight,idTeam } = result
                     if (strCutout !== null && strSport === 'Soccer') {
+
+                            let _emblem = '';
+
+                            searchTeam(idTeam,(error,_idTeam)=>{
+                                if(error) throw console.error(error)
+                                const [emblem] = _idTeam
+                                _emblem = emblem
+                                if(results.length === counter)
+                                _players.push({emblem: notNull(_emblem)})
+                                
+                            })
+                        
+
+                        let splitName = strPlayer.split(' ');
+                        let firstName = splitName[0];
+                        let surname = splitName[1];
+
+                        counter++
 
                         _players.push({
                             date: notNull(dateBorn),
-                            image: notNull(strCutout),
-                            football_player: notNull(strPlayer),
+                            image: strCutout,
+                            firstName: notNull(firstName),
+                            surname: notNull(surname),
                             position: notNull(strPosition),
                             club: notNull(strTeam),
                             number: notNull(strNumber),
                             born: notNull(strBirthLocation),
                             id: notNull(idPlayer),
                             weight: notNull(strWeight),
-                            height: notNull(strHeight)
+                            height: notNull(strHeight),
+                            
                         })
                     }
 

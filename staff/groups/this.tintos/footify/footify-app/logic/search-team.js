@@ -14,10 +14,10 @@ function searchTeam(teamId, callback) {
                 let { teams: results } = JSON.parse(body)
 
                 results.forEach(result => {
-                    const { strAlternate, strTeamBadge } = result
+                    const {strTeamBadge } = result
 
                     team.push({
-                        name: strAlternate, emblem: strTeamBadge, 
+                         emblem: strTeamBadge
                     })
                 })
 
