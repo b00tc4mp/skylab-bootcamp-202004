@@ -1,6 +1,8 @@
 function Landing({onLogin, onRegister, onLogOut, token}){
     const [error, setError] = useState(undefined)
     const [name, setName] = useState(undefined)
+//function Landing(props){
+
     const handleLogin = event => {
         event.preventDefault()
     
@@ -56,7 +58,6 @@ function Landing({onLogin, onRegister, onLogOut, token}){
                         {!token && <a className="nav__item" href="" onClick = {handleRegister}>Register</a>}
                         {token && <a className="nav__item" href="" onClick = {handleLogOut}>Logout</a>}
                     </div>
-
             </section>
             </div>
         </div>

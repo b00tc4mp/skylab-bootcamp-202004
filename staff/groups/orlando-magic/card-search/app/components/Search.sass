@@ -1,0 +1,38 @@
+.advancedsearch
+    display: flex
+    flex-flow: column
+    &__section
+        display: flex
+        flex-flow: column
+        border-bottom: solid brown 
+        width: 98%
+        padding: 1%
+        &--title
+            text-align: center
+            width: 100%
+            font-size: 1.2em
+            margin-bottom: 0.5em
+        &--options
+            display: flex
+            flex-flow: column
+            justify-content: center
+            align-items: center
+            width: 100%
+            & > p
+                font-size: 0.8em
+                width: 100%
+                text-align: center
+            & > input, select
+                background-color: whitesmoke
+                width: 100%
+                border: solid brown 0.1px
+                height: 2em  
+                text-align: center
+                text-align-last: center
+        &--button
+            width: 100%
+            height: 2em
+            &container
+                position: sticky
+                bottom: 0rem
+                border-top: solid brown
