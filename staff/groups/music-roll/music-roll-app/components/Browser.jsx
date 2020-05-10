@@ -1,6 +1,6 @@
-const {Usestate,UseEffect} = React
+/* const {Usestate,UseEffect} = React
 
-function Browser() {
+
 
 const [viewResult, setViewResult] = setState(undefined)
 
@@ -19,25 +19,25 @@ const handleSubmit = (event) => {
 
     setViewResult(browser)
 
-}
-
+} */
+function Browser() {
 return <section class="browser">
-            <h2>Browser</h2>
-            <form onSubmit={handleSubmit}>
-                <select name="browser">
+            <h2 className="title">Browser</h2>
+            <form className ="browser__form" /* onSubmit={handleSubmit} */ >
+                <select name="browser__options">
                     <option selected>Choose one:</option>
                     <option value="artist">Artist</option>
                     <option value="album">Album</option>
                     <option value="track">Track</option>
                     <option value="playlists">Playlists</option>
                 </select>
+                <i></i>
                 <input type="text" name="query" placeholder="What do you want to listen?"/>
                 <button>Submit</button>
             </form>     
-{viewResult === 'album' && <AlbumResults/>}  
-{viewResult === 'artist' && <ArtistResults/>}
-{viewResult === 'track' && <TrackResults/>}
-{viewResult === 'playlist' && <PlaylistResults/>}
+        <section className ="results">
+
+        </section>
         </section>
     
 }
