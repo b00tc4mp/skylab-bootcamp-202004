@@ -1,0 +1,73 @@
+.card
+    width: 100%
+    padding: 1%
+    display: flex
+    flex-flow: column
+    &__image
+        width: 98%
+    &__content
+        width: 98%
+        border: solid brown 3px
+        box-sizing: border-box
+        margin-top: 1em
+        background-color: whitesmoke
+        border-radius: 0.3em
+        & > *
+            padding: 0.2em
+            display: flex
+            align-items: center
+        &--top
+            height: 2em
+            border-bottom: solid brown 0.2px
+        &--name
+            flex-grow: 1
+            font-weight: bold
+        &--typeline
+            height: 2em
+            border-bottom: solid brown 0.2px
+        &--content
+            flex-flow: column
+            align-items: flex-start
+            border-bottom: solid brown 0.2px
+        &--flavortext
+            font-style: italic
+        &--stats
+            border-bottom: solid brown 0.2px
+        &--artist
+            border-bottom: solid brown 0.2px
+        &--legalities
+            flex-flow: wrap row
+        &--legalityelement
+            width: 45%
+            display: flex
+            justify-content: space-around
+        &--legal, &--illegal
+               border: solid black 1px 
+               color: whitesmoke
+               width: 50%
+               text-align: center
+        &--legal
+            background-color: #4caf50
+        &--illegal
+            background-color: #d32f2f
+    &__tools
+        display: flex
+        flex-direction: column
+        width: 98%
+        &--toolbox, &--shopping
+            display: flex
+            flex-direction: column
+        &--title
+            font-weight: bold
+            padding: 0.2em
+            font-size: 0.9em
+            margin: 0.5em
+        &--link
+            border: solid brown 1px
+            padding: 0.2em
+            margin: 0.2em
+            text-decoration: none
+            color: brown
+
+            
+            

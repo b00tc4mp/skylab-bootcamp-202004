@@ -8,7 +8,7 @@ function NavBar(props){
         <div className = "navigation__basic">
             <a href="">Landing</a>
             <form onSubmit = {() => {event.preventDefault(); props.onBasicSearch(event)}}>
-                <input type="text" name="query" placeholder = "Search for Magic cards"/>
+                <input type="text" name="query" placeholder = "Search cards by name"/>
             </form>
             <a href="" onClick = {() => {event.preventDefault(); setMenu(menu?false:true)}}>Menu</a>
         </div>
