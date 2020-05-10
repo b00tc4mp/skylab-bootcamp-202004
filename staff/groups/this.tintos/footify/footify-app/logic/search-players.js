@@ -32,20 +32,22 @@ function searchPlayers(query, callback) {
                             const [{ emblem }] = _idTeam
                             if (error) throw console.error(error)
                             counterSearchTeam++
+                                let like = '-'
                             _players.push({
                                 date: notNull(dateBorn),
                                 image: strCutout,
                                 firstName: notNull(firstName),
                                 surname: notNull(surname),
                                 position: notNull(strPosition),
-                                club: notNull(strTeam),
+                                clubName: notNull(strTeam),
                                 number: notNull(strNumber),
                                 born: notNull(strBirthLocation),
                                 id: notNull(idPlayer),
                                 weight: notNull(strWeight),
                                 height: notNull(strHeight),
                                 teamId: notNull(idTeam),
-                                club: emblem
+                                club: emblem,
+                                likes: like
                             })
                        
                             if (counterSoccerPlayers === counterSearchTeam) {

@@ -1,6 +1,10 @@
 function searchPlayersLikes(players, token, callback) {
-    debugger
+    if (players === undefined) throw new Error('not found players');
 
+    String.validate(token)
+    Function.validate(callback)
+
+    const [{id}] = players
     let likePlayers = []
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all',
         undefined, { Authorization: `Bearer ${token}` }, (error, status, body) => {
@@ -19,7 +23,6 @@ function searchPlayersLikes(players, token, callback) {
                         for (like of likes) {
 
                             likePlayers.push(like)
-
                         }
                     }
                 })
@@ -35,7 +38,7 @@ function searchPlayersLikes(players, token, callback) {
         })
 }
 
-function seachTimes(like, likePlayers) {
+function searchTimes(like, likePlayers) {
     var count = 0;
 
     for (var i = 0; i < likePlayers.length; i++) {
@@ -43,8 +46,7 @@ function seachTimes(like, likePlayers) {
             count++
         }
     }
-
-    return like + ' ' + count
+    return {[like] : count}
 }
 
 function results(likePlayers) {

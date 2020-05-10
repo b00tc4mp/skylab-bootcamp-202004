@@ -264,7 +264,6 @@
   margin-right: 0.2rem;
   list-style: none;
   height: 370px;
-  border: double 1px;
   border-radius: 20px;
   min-width: 420px;
 }
@@ -275,7 +274,7 @@
   align-content: center;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr;
-  grid-template-areas: "emblem emblem number number image image image image" "emblem emblem number number image image image image" "name name . . image image image image" "surname surname . . image image image image";
+  grid-template-areas: "emblem emblem number number image image image image" "emblem emblem number number image image image image" "name name name . image image image image" "surname surname surname . image image image image";
 }
 .player-card__emblem {
   grid-area: emblem;
@@ -408,7 +407,7 @@
 }
 .player-card__count {
   position: relative;
-  left: 23.5rem;
+  left: 23.8rem;
   bottom: 4.5rem;
   font-family: raleway;
   font-weight: 650;
