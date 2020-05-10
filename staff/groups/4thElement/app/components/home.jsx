@@ -1,10 +1,7 @@
 
 const { useState } = React
 
-// import mySvg from './images/navigation.svg'
-
-function Home({onGoToLogin}) {
-
+function Home() {
     // || hooks states declarations ||
 
     const [dinamicClass, setdinamicClass] = useState('surf')
