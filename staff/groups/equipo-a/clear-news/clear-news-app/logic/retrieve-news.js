@@ -1,4 +1,5 @@
 function retrieveNews(token, callback) {
+    debugger
     String.validate(token)
 
     Function.validate(callback)
@@ -32,9 +33,9 @@ function retrieveNews(token, callback) {
                 if(country===undefined)
                 URL=`https://newsapi.org/v2/top-headlines?category=${_categories[i]}&apiKey=f8ed27ae05b44313b6a87abfea6dc48b`
                 else URL=`https://newsapi.org/v2/top-headlines?country=${country}&category=${_categories[i]}&apiKey=f8ed27ae05b44313b6a87abfea6dc48b` */
-
+                debugger
                 for (let i = 0; i < _categories.length; i++) {
-                    call('GET', `https://newsapi.org/v2/top-headlines?country=${country}&category=${_categories[i]}&apiKey=f8ed27ae05b44313b6a87abfea6dc48b`,
+                    call('GET', `https://newsapi.org/v2/top-headlines?country=${country}&category=${_categories[i]}&apiKey=ca31e7b3e6ba43198e30c837afcf0021`,
                         undefined,
                         undefined,
                         (error, status, body) => {

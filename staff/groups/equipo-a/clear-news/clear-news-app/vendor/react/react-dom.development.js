@@ -5432,7 +5432,7 @@
     'aria-valuemin': 0,
     'aria-valuenow': 0,
     'aria-valuetext': 0,
-    // Live Region Attributes
+    // Live country Attributes
     'aria-atomic': 0,
     'aria-busy': 0,
     'aria-live': 0,
