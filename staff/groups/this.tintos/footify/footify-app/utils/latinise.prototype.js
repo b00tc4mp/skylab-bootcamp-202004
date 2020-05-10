@@ -823,6 +823,11 @@ var Latinise={};Latinise.latin_map={"Á":"A",
 "ᵥ":"v",
 "ₓ":"x"};
 
-String.prototype.latinise=function(){return this.replace(/[^A-Za-z0-9\[\] ]/g,function(a){return Latinise.latin_map[a]||a})};
+String.prototype.latinise= function(){
+    return this.replace(/[^A-Za-z0-9\[\] ]/g,function(a){return Latinise.latin_map[a]||a})};
+
 String.prototype.latinize=String.prototype.latinise;
-String.prototype.isLatin=function(){return this==this.latinise()}
+
+String.prototype.isLatin= function(){
+    return this==this.latinise()
+}

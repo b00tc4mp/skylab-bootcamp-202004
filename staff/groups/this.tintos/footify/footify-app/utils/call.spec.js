@@ -1,4 +1,4 @@
-describe('call', () => {
+describe('Call', () => {
     it('should suceed on correct parameters in Google', done => {
         call('GET', 'https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com', undefined, undefined, (error, status, body) => {
             if (error) return done(new Error(error))

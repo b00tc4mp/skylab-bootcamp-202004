@@ -1,4 +1,4 @@
-describe.only('Search Team', () => {
+describe('Search Team', () => {
     let player;
 
     beforeEach(() => {
@@ -52,106 +52,55 @@ describe.only('Search Team', () => {
             })
     })
 
-    it()
-    // it('should succeed on correct data', done =>{
-    //     expect(typeof player).to.be.a('string');
-
-    //     searchPlayers(player, (error, results)=>{
-
-    //         expect(error).to.be.undefined;
-    //         expect(results).to.exist
 
 
-    //         results.forEach(result =>{
-    //             const { date, image, firstName, surname, position, club, number, born,id, weight, height} = result;
-    //             expect(date).to.exist
-    //             expect(image).to.exist
-    //             expect(firstName).to.exist
-    //             expect(surname).to.exist
-    //             expect(position).to.exist
-    //             expect(club).to.exist
-    //             expect(number).to.exist
-    //             expect(born).to.exist
-    //             expect(id).to.exist
-    //             expect(weight).to.exist
-    //             expect(height).to.exist
-    //         })
-    //         done()
+    it('should fail on a empty teamId', ()=>{
+        let teamId = ''
+        expect(()=>{
+            searchTeam(teamId, (error, results)=>{})
+        }).to.throw(Error,'Any team search')
+    })
 
-    //     })
-    // })
-    // it('should succeed on search a incomplet name', done =>{
+    it('should fail on no teamId String', ()=>{
+        let _teamId = true
+        expect(() => {
+            searchTeam(_teamId, (error,results)=>{
+                expect(results).to.be.undefined
+            })
+        }).to.throw(TypeError,`${_teamId} is not a string`)
 
-    //     let _player = player.substring(0, 6)
-    //     console.log(_player)
-    //     expect(typeof player).to.be.a('string');
+        _teamId = 123132
+        expect(() => {
+            searchTeam(_teamId, (error,results)=>{
+                expect(results).to.be.undefined
+            })
+        }).to.throw(TypeError,`${_teamId} is not a string`)
 
-    //     searchPlayers(_player, (error, results)=>{
-    //         expect(error).to.be.undefined;
+        _teamId = undefined
+        expect(() => {
+            searchTeam(_teamId, (error,results)=>{
+                expect(error).
+                expect(results).to.be.undefined
+            })
+        }).to.throw(TypeError,`${_teamId} is not a string`)
+    })
 
-    //         expect(results).to.exist
-    //         console.log(results)
-    //         results.forEach(result =>{
-    //             const { date, image, firstName, surname, position, club, number, born,id, weight, height} = result;
-    //             expect(date).to.exist
-    //             expect(image).to.exist
-    //             expect(firstName).to.exist
-    //             expect(surname).to.exist
-    //             expect(position).to.exist
-    //             expect(club).to.exist
-    //             expect(number).to.exist
-    //             expect(born).to.exist
-    //             expect(id).to.exist
-    //             expect(weight).to.exist
-    //             expect(height).to.exist
-    //         })
-    //         done()
+    it('should fail on not function callback', ()=>{
+        let callback = true;
+        // teamId 'F.C. Barcelona'
+        let teamId = '133739'
+        expect(() => {
+            searchTeam(teamId, callback)
+        }).to.throw(TypeError,`${callback} is not a function`);
 
-    //     })
-    // })
+        callback = undefined;
+        expect(() => {
+            searchTeam(teamId, callback)
+        }).to.throw(TypeError,`${callback} is not a function`);
+        callback = 123132;
+        expect(() => {
+            searchTeam(teamId, callback)
+        }).to.throw(TypeError,`${callback} is not a function`)
+    })   
 
-    // it('should fail on a empty query', ()=>{
-    //     let _player = ''
-    //     expect(()=>{
-    //         searchPlayers(_player, (error, results)=>{})
-    //     }).to.throw(Error,'Any result search')
-    // })
-
-    // it('should fail on no query String', ()=>{
-    //     player = true
-    //     expect(() => {
-    //         searchPlayers(player, (error,results)=>{
-    //             expect(results).to.be.undefined
-    //         })
-    //     }).to.throw(TypeError,`${player} is not a string`)
-
-    //     player = 123132
-    //     expect(() => {
-    //         searchPlayers(player, (error,results)=>{
-    //             expect(results).to.be.undefined
-    //         })
-    //     }).to.throw(TypeError,`${player} is not a string`)
-
-    //     player = undefined
-    //     expect(() => {
-    //         searchPlayers(player, (error,results)=>{
-    //             expect(results).to.be.undefined
-    //         })
-    //     }).to.throw(TypeError,`${player} is not a string`)
-    // })
-
-    // it('should fail on not function callback', ()=>{
-    //     let callback = true;
-    //     expect(() => {
-    //         searchPlayers(player, callback)
-    //     }).to.throw(TypeError,`${callback} is not a function`);
-
-    //     callback = undefined;
-    //     expect(() => {
-    //         searchPlayers(player, callback)
-    //     }).to.throw(TypeError,`${callback} is not a function`);
-    //     callback = 123132;
-    //     expect(() => {
-    //         searchPlayers(player, callback)
-    //     }).to.throw(TypeError,`${callback} is not a function`);
 })
