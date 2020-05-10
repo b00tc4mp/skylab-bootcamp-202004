@@ -1,4 +1,4 @@
-function registerUser(name, surname, email, password, callback) {debugger
+function registerUser(name, surname, email, password, callback) {
    
     String.validate.alphabetic(name)
     String.validate.alphabetic(surname)
