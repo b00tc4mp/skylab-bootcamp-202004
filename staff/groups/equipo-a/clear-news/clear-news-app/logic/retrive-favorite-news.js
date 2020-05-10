@@ -1,10 +1,9 @@
-function retrieveNews(token, callback) {
-    debugger
-    String.validate(token)
+function retrieveFavNews(token, callback) {
+    String.validate(token);
 
-    Function.validate(callback)
+    Function.validate(callback);
 
-    let myNews = []
+    const favNews = [];
 
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
         undefined,
@@ -15,23 +14,14 @@ function retrieveNews(token, callback) {
             if (status === 200) {
 
                 let user = JSON.parse(body)
-
-                const { categories, country, favorite = [] } = user
-
-                let result = Object.keys(categories).map(function (key) { return [String(key), categories[key]] })
-
-                let _categories = []
-
-                for (let i in result) {
-                    if (result[i][1]) {
-                        _categories.push(result[i][0])
-                    }
-                }
+                if (!user.favorite) callback("you still havent selected any news")
+                const { favorite } = user
 
                 let counter = 0
-          
-                for (let i = 0; i < _categories.length; i++) {
-                    call('GET', `https://newsapi.org/v2/top-headlines?country=${country}&category=${_categories[i]}&apiKey=ca31e7b3e6ba43198e30c837afcf0021`,
+
+                favorite.forEach((item => {
+                    let title = item.split().join('+') 
+                    call('GET', `https://newsapi.org/v2/everything?q=${title}&apiKey=f8ed27ae05b44313b6a87abfea6dc48b`,
                         undefined,
                         undefined,
                         (error, status, body) => {
@@ -48,31 +38,26 @@ function retrieveNews(token, callback) {
 
                                     if (typeof source !== "undefined") {
                                         const { name } = source
-                                        myNews.push({ name, author, title, description, url, urlToImage, publishedAt })
-
+                                        favNews.push({ name, author, title, description, url, urlToImage, publishedAt })
                                     }
                                     else {
                                         const name = "unknown"
-                                        myNews.push({ name, author, title, description, url, urlToImage, publishedAt })
+                                        favNews.push({ name, author, title, description, url, urlToImage, publishedAt })
                                     }
-
                                 }
-                                myNews = myNews.map(({ name, author, title, description, url, urlToImage, publishedAt }) => {
-                                    const _news = { name, author, title, description, url, urlToImage, publishedAt }
-                                    _news.favorites = favorite.includes(title)
-                                    return _news
-                                })
 
                             } else {
                                 const { error } = JSON.parse(body)
                                 callback(new Error(error))
                             }
 
-                            if (counter === _categories.length) callback(undefined, myNews)
+                            if (counter === favorites.length) callback(undefined, favNews)
 
                         })
-                }
 
+                }
+                )
+                )
             } else {
                 const { error } = JSON.parse(body)
                 callback(new Error(error))

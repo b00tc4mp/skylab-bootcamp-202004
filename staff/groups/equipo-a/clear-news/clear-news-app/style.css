@@ -173,20 +173,10 @@
   margin: 0;
   padding: 0;
 }
-.news__item {
+.news__items {
   position: relative;
   text-align: start;
   text-decoration: none;
-}
-.news__title {
-  position: absolute;
-  bottom: 0.1rem;
-  left: 0;
-  font-size: 4vw;
-  padding: 0.5rem;
-  background-color: rgba(167, 172, 175, 0.8);
-  color: white;
-  width: 100%;
 }
 
 * {
