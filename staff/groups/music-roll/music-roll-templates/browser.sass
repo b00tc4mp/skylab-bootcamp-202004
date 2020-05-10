@@ -1,0 +1,107 @@
+*
+    margin: 0
+    box-sizing: border-box
+
+.browser
+    background-color: #111010
+    height: 100vh
+    display: flex
+    flex-direction: column
+
+    &__options
+        display: flex
+    &__form
+        display: flex
+        margin: 0 auto
+        max-width: 250px
+        position: relative
+        flex-direction: column
+        align-items: center
+        
+
+    &__form select
+        font-family: montserrat
+        -webkit-appearance: none
+        -moz-appearance: none
+        display: inline-block
+        width: 100%
+        cursor: pointer
+        padding:7px 10px
+        height: 42px
+        outline:0
+        border:0
+        border-radius: 0
+        background-color: #f0f0f06e
+        font-size: 1em
+        color: #999
+        font-family:'Quicksand', sans-serif
+        border:2px solid rgba(0,0,0,0.2)
+        border-radius: 12px
+        position: relative
+        transition: all 0.25s ease
+        margin-top: 20px
+    &__form select:hover
+        background: #B1E8CD
+    &__form select:focus
+        transition: all 1s ease
+        box-shadow: 0 0 10px dodgerBlue
+    &__form i
+        position: absolute
+        right: 24px
+        top: calc(22% - 13px)
+        width: 16px
+        height: 16px
+        display: block
+        border-left: 4px solid #2ac176
+        border-bottom:4px solid #2ac176
+        transform: rotate(-45deg)
+        transition: all 0.25s ease
+
+    &__form:hover i 
+        margin-top: 3px
+    
+    &__form input    
+        margin-top: 14px
+        border-radius: 14px
+        height: 42px
+        width: 250px
+        margin-bottom: 5px
+        background-color: #f0f0f06e
+        border: 0
+        color: #999
+        padding: 7px 10px
+        border: 2px solid rgba(0, 0, 0, 0.2)
+        font-family: montserrat  
+        font-size: 1em  
+    
+    &__form input:focus
+        transition: all 1s ease
+        box-shadow: 0 0 10px dodgerBlue
+   
+    
+    &__form button 
+        height: 39px
+        width: 89px
+        border-radius: 16px
+        margin-top: 8px
+        background-color: #f0f0f06e
+        border: 0
+        margin-top: 24px
+        border: 2px solid rgba(0, 0, 0, 0.2)
+
+.results
+    background-color: #2a2a2a
+    height: 60%
+    display: flex
+    justify-content: space-around
+    margin-top: 28px
+
+.title
+    font-family: montserrat
+    text-align: center
+    margin-top: 20px
+    font-size: 40px
+    color: #999
+
+
+    
