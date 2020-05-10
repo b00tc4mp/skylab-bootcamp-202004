@@ -1,1 +1,7 @@
-ReactDOM.render(<Homes />, document.getElementById('root'))
+
+
+
+
+
+ReactDOM.render(<Main />, document.getElementById('root'))
+
