@@ -10,8 +10,6 @@ function register(name, surname, email, password, callback){
     const body = JSON.stringify({name, surname, username: email, password})
     const headers =  { 'Content-type': 'application/json' }
 
-    console.log(body)
-
     call('POST', url, body, headers, (error, status, response) => {
         
         if(error) return callback(error)

@@ -14,16 +14,13 @@ function CoinPage() {
 
         retrieveCrypto(coinName, (_error, _crypto) => {
             if (_error) setError(_error.message);
-            
-            retrieveOhlc(coinName, (_error, _data) => {
-                if (_error) setError(_error.message);
-                else {setOhlc(_data);
-                setCrypto(_crypto);
-                }
-            })
+            setCrypto(_crypto);
         });
 
-
+        retrieveOhlc(coinName, (_error, _data) => {
+            if (_error) setError(_error.message);
+            else setOhlc(_data);
+        })
     }, [])
 
 
@@ -40,12 +37,13 @@ function CoinPage() {
                 {/* COMPO 2 */}
                 <section className="portfolio">
                     <h1 className="coinpage-header__name">{crypto.name}</h1>
-                    <div className="coinpage-header__stats">
+                    {ohlc && <div className="coinpage-header__stats">
                         <span className="coinpage-header__stats--contrast">{ohlc.open}</span>
                         <span className="coinpage-header__stats--contrast">{ohlc.high}</span>
                         <span className="coinpage-header__stats--contrast">{ohlc.low}</span>
                         <span className="coinpage-header__stats--contrast">{ohlc.close}</span>
-                    </div>
+                    </div>}
+                    {!ohlc && <p>Loading...</p>}
                     <button className="coinpage-header__button">Add to Favorites</button>
                 </section>
             </section>
