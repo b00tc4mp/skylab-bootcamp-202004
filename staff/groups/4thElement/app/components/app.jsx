@@ -1,7 +1,7 @@
 const { useState } = React
 
 function App() {
-    const [view, setView] = useState('login')
+    const [view, setView] = useState('home')
     const [token, setToken] = useState(undefined)
     
 
@@ -36,12 +36,12 @@ function App() {
 
 
         return <>
-            {view === 'home' && <Header onGoToLogin={handleGoToLogin}/>}
+            {<Header onGoToLogin={handleGoToLogin}/>}
             {view === 'register' && <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>}
             {view === 'login' && <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} onGoToHome={handleGoToHome}/>}
             {view === 'home' && <Home onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
             {view === 'search' && <Search token={token} OnLogout={handleLogout}/>}
-            {view === 'home' && <Footer GoToSearch={handleGoToSearch}/>}
+            {<Footer GoToSearch={handleGoToSearch}/>}
         </>
     
 }
