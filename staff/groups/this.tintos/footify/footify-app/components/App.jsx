@@ -1,7 +1,7 @@
 const { useState } = React
 function App() {
 
-    const [view, setView] = useState('login')
+    const [view, setView] = useState('home')
     const [token, setToken] = useState(undefined)
 
     const handleGoToLogin = () => { setView('login') }
