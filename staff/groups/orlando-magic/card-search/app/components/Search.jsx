@@ -40,7 +40,7 @@ function Search({onAdvancedSearch}){
             placeholder=" Any words in the name, e.g. 'Lab'"
           />
           <select id="textsymbols" onChange = {()=>{event.preventDefault(); changeText(event)}}>
-            <option value>Add symbol</option>
+            <option value = "">Add symbol</option>
             <option value="{T}">
               {"{"}T{"}"} – tap this permanent
             </option>
@@ -199,7 +199,7 @@ function Search({onAdvancedSearch}){
         <a className="advancedsearch__section--title">Type Line</a>
         <div className="advancedsearch__section--options">
           <select id="types">
-            <option value>Type</option>
+            <option value = "">Type</option>
             <optgroup label="Types">
               <option data-pol="+" data-item="artifact" value="artifact">
                 Artifact
@@ -1671,7 +1671,7 @@ function Search({onAdvancedSearch}){
             placeholder=" Any mana symbols, e.g. {WB}"
           />
           <select name = "symbols" id="manasymbols" onChange = {()=>{event.preventDefault(); changeManacost(event)}}>
-            <option value>Add symbol</option>
+            <option value = "">Add symbol</option>
             <option value="{W}">
               {"{"}W{"}"} – one white mana
             </option>
@@ -1839,12 +1839,12 @@ function Search({onAdvancedSearch}){
         <a className="advancedsearch__section--title">Formats</a>
         <div className="advancedsearch__section--options">
           <select id="legality">
-            <option value="legal">Legal</option>
+            <option value="f">Legal</option>
             <option value="restricted">Restricted</option>
             <option value="banned">Banned</option>
           </select>
           <select id="formats">
-            <option value>Format</option>
+            <option value = "">Format</option>
             <option value="standard">Standard</option>
             <option value="future">Future Standard</option>
             <option value="historic">Historic</option>
@@ -1869,7 +1869,7 @@ function Search({onAdvancedSearch}){
         <a className="advancedsearch__section--title">Sets</a>
         <div className="advancedsearch__section--options">
           <select id="sets">
-            <option value>Set</option>
+            <option value = "">Set</option>
             <optgroup label="Expansions">
               <option data-svg-code="iko" value="iko">
                 Ikoria: Lair of Behemoths (IKO)
@@ -3658,7 +3658,7 @@ function Search({onAdvancedSearch}){
             </optgroup>
           </select>
           <select id="blocks">
-            <option value>Block</option>
+            <option value = "">Block</option>
             <option value="parl">Arena League</option>
             <option value="jgp">Judge Gift Cards</option>
             <option value="cmd">Commander</option>
@@ -3699,15 +3699,15 @@ function Search({onAdvancedSearch}){
         <a className="advancedsearch__section--title">Rarity</a>
         <div className="advancedsearch__section--options">
           <div>
-            <input type="checkbox" name="mythicrare" id="mythicrare" />
+            <input type="checkbox" name="mythicrare" id="mythicrare" value = "m"/>
             <a>Mythic Rare</a>
-            <input type="checkbox" name="rare" id="rare" />
+            <input type="checkbox" name="rare" id="rare" value='r'/>
             <a>Rare</a>
           </div>
           <div>
-            <input type="checkbox" name="uncommon" id="uncommon" />
+            <input type="checkbox" name="uncommon" id="uncommon" value = "u"/>
             <a>Uncommon</a>
-            <input type="checkbox" name="common" id="common" />
+            <input type="checkbox" name="common" id="common" value = "c"/>
             <a>Common</a>
           </div>
           <p>Only return cards of the selected rarities.</p>
@@ -3760,7 +3760,7 @@ function Search({onAdvancedSearch}){
         <a className="advancedsearch__section--title">Language</a>
         <div className="advancedsearch__section--options">
           <select id="languages">
-            <option value>Default</option>
+            <option value="en">Default</option>
             <option value="any">Any</option>
             <option value="en">English</option>
             <option value="es">Spanish</option>
@@ -3786,7 +3786,7 @@ function Search({onAdvancedSearch}){
       <div className="advancedsearch__section">
         <a className="advancedsearch__section--title">Sort Method</a>
         <div className="advancedsearch__section--options">
-          <select>
+          <select id = "order">
             <option value="name">Sort by Name</option>
             <option value="released">Sort by Release Date</option>
             <option value="set">Sort by Set/Number</option>
