@@ -14,10 +14,10 @@ function Home({ token }) {
     const handleGoToPlayerResults = (queryPlayer) => {
         try {
             searchPlayers(queryPlayer, (error, resultsPlayer) => {
-                if (error) return SetError(error.message)
+                if (error) return setError(error.message)
 
                 searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => {
-                    if (error) return SetError(error.message)
+                    if (error) return setError(error.message)
                     setPlayers(resultLikes)
                     
                 })
