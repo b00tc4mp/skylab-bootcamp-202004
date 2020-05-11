@@ -1,7 +1,9 @@
 function authenticateUser(email, password, callback) {
+    
     Email.validate(email)
 
     String.validate.notVoid(password)
+    String.validate(password)
 
     Function.validate(callback)
 
