@@ -14,7 +14,7 @@ function retrieveMyCards(token, callback) {
 
             const cards = myCards.map(card => ({"id": card}))
 
-            call('POST', 'https://skylabcoders.herokuapp.com/proxy?url=https://api.scryfall.com/cards/collection', `{ "identifiers" : ${JSON.stringify(cards)}`,
+            call('POST', 'https://api.scryfall.com/cards/collection', `{ "identifiers" : ${JSON.stringify(cards)} }`,
             { 'Content-type': 'application/json' }, (error, status, body) => {
                 if (error) return callback(error)
 
