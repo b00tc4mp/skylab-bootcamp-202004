@@ -1,7 +1,7 @@
 function searchPlayersLikes(players, token, callback) {
     if (players === undefined) throw new Error('not found players');
 
-    String.validate(token)
+    // String.validate(token)
     Function.validate(callback)
 
     const [{id}] = players
