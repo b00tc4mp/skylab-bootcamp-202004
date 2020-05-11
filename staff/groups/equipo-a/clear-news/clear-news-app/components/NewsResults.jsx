@@ -39,7 +39,11 @@ function NewsResults({ onSearch, results, token, query, language, sortBy }) {
                     <li className="news__item" key={title}>
                         <a href={url} target='_blank'><img className="news__images" src={urlToImage}></img>
                             <div className="news__title stroke"><p className="stroke">{name}</p><p className="stroke"> {title}</p></div></a>
-                        <div className="news__button"> <button onClick={() => handleLikeNews(title)}>{favorites ? 'unFollow' : 'follow'}</button></div>
+
+                            <div className="news__button"> <input type="image" src={favorites? "images/heart-unfollow.png" : "images/heart-follow.png"} onClick={() => handleLikeNews(title)} /></div>
+
+
+
                     </li>)}
             </ul>
         }

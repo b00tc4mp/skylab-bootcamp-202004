@@ -39,13 +39,16 @@ function TopHeadlines({ news, pages, myHeadlines, token }) {
     return <section className="news">
 
         {
-            news && <ul className="news__container">
-                {newsForPage(news, currentPage).map(({ name, title, url, urlToImage, favorites }) =>
+          
+            news && <ul className="news__container"> 
+                {news.map(({ name, title, url, urlToImage,favorites }) =>
                     <li className="news__item" key={title}>
                         <a href={url} target='_blank'><img className="news__images" src={urlToImage}></img>
                             <div className="news__title stroke"><p className="stroke">{name}</p><p className="stroke"> {title}</p></div></a>
-                        <div className="news__button"> <button onClick={() => handleLikeNews(title)}>{favorites ? 'unFollow' : 'follow'}</button></div>
+                            <div className="news__button"> <input type="image" className="news__followIMG" src={favorites? "images/heart-follow.png" : "images/heart-unfollow.png"} onClick={() => handleLikeNews(title)} /></div>
+
                     </li>)}
+                
             </ul>
             
         }
