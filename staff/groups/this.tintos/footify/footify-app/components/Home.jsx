@@ -7,11 +7,20 @@ function Home({ token }) {
     const [error, setError] = useState()
     const [emblem, setEmblem] = useState()
     // const [loading, setLoading] = useState(true)
-    const [likes, setLikes] = useState()
+    const [likesUser, setLikesUser] = useState()
     const [sportNews, setSportNews] = useState()
+    const [queryPlayer, setQueryPlayer] = useState()    
+    const [fwitter,setFwitter] = useState();
 
 
     const handleGoToPlayerResults = (queryPlayer) => {
+        
+        retrieveUser(token, (error, user) =>{
+            const {likes} = user
+            setLikesUser(likes)
+          })
+
+        setQueryPlayer(queryPlayer)
         try {
             setPlayers(undefined)
             setError(undefined)
@@ -26,6 +35,12 @@ function Home({ token }) {
                     setPlayers(resultLikes)
                     
                 })
+
+                // isPlayerfollowed(token, playerId, (error, followPlayer) => {
+                //     if (error) return setError(error.message)
+                //     setFollow(followPlayer)
+                // })   
+
                 setView('cards')
             })
         } catch ({ message }) {
@@ -39,16 +54,33 @@ function Home({ token }) {
             setView('sport')
 
         })
+    }
 
+    const handleToggleFollowPlayers = () =>{
+        handleGoToPlayerResults(queryPlayer)
+    }
+
+    const handleGoToFwitter = () =>{
+        try {
+            retriveFwitter(token,(error,results)=>{
+                if (error) return setError(error.message);
+                setFwitter(results);
+            })
+            setView('fwitter');
+        } catch ({message}) {
+            setError(message)
+        }  
     }
 
     return <>
 
-        <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} />
+        <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter}/>
         {/* {view === 'spinner' && <Spinner />} */}
-        {view === 'cards' && <PlayerResults resultsPlayers={players} error={error}/>}
-        {view === 'sport' && <SportNews sportNews={sportNews}/>}
         {/* {error && <Feedback message={error} level="error" />} */}
+        {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} queryPlayer={queryPlayer} likesUser={likesUser}/>}
+        {view === 'sport' && <SportNews sportNews={sportNews}/>}
+        {view === 'fwitter' && <Fwitter fwitter={fwitter}/>}
+
     </>
 
 }
