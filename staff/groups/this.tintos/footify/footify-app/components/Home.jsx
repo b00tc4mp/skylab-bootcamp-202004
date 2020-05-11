@@ -1,4 +1,4 @@
-const { useState } = React
+const { useState, useEffect } = React
 
 function Home({token}) {
 
@@ -7,19 +7,19 @@ function Home({token}) {
     const [error, setError] = useState()
     const [emblem, setEmblem] = useState()
     const [likes,setLikes] = useState()
-
+    // const [loading, setLoading] = useState(true)
 
     const handleGoToPlayerResults = (queryPlayer) => {
         try {
             searchPlayers(queryPlayer, (error, resultsPlayer) => {
                 if (error) return SetError(error.message)
                 
-                setPlayers(resultsPlayer)
                 
-                searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => {
+                
+                searchPlayersLikes(resultsPlayer, token, (error, resultsPlayers) => {
                     if (error) return SetError(error.message)
-
-                    setLikes(resultLikes)
+                    setPlayers(resultsPlayer)
+                    
                 })
                
                 setView('cards')
@@ -34,8 +34,8 @@ function Home({token}) {
 
     return <>
         <Navbar onGoToPlayerResults={handleGoToPlayerResults} />
-
-        {view === 'cards' && <PlayerResults resultsPlayers={players} resultLikes={likes}/>}
+        {/* {view === 'spinner' && <Spinner />} */}
+        {view === 'cards' && <PlayerResults resultsPlayers={players}/>}
         {error && <Feedback message={error} level="error" />}
     </>
 

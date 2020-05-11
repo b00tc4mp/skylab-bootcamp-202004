@@ -1,9 +1,9 @@
 const { useState } = React
 
 
-function PlayerResults({ resultsPlayers, resultLikes }) {
+function PlayerResults({ resultsPlayers}) {
 
-
+if(!resultsPlayers) return <Spinner />
     return <>
         <section className="player">
             {

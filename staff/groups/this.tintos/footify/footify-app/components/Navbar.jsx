@@ -8,10 +8,6 @@ debugger
         onGoToPlayerResults(queryPlayer)
     }
 
-
-
-
-
     return <>
         <section className="navbar">
             <div className="navbar__container">
