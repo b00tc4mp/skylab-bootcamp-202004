@@ -46,8 +46,8 @@ function Register({ onGoToLogin, onGoToLanding }) {
                     <input type="text" className="register__input-item" placeholder="name*" />
                     <input type="text" className="register__input-item" placeholder="surname*" />
                     <input type="text" className="register__input-item" placeholder="email*" />
-                    <input type="text" className="register__input-item" placeholder="password*" />
-                    <input type="text" className="register__input-item" placeholder="confirm password*" />
+                    <input type="password" className="password" className="register__input-item" placeholder="password*" />
+                    <input type="password" className="password" className="register__input-item" placeholder="confirm password*" />
                     <button className="register__input-button">REGISTER</button>
                     {error && <Feedback message={error} level="error" />}
                 </form>

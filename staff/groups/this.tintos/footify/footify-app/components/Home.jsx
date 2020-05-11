@@ -1,4 +1,4 @@
-const { useState } = React
+const { useState, useEffect } = React
 
 function Home({ token }) {
 
@@ -6,6 +6,7 @@ function Home({ token }) {
     const [players, setPlayers] = useState()
     const [error, setError] = useState()
     const [emblem, setEmblem] = useState()
+    // const [loading, setLoading] = useState(true)
     const [likes, setLikes] = useState()
     const [sportNews, setSportNews] = useState()
 
@@ -13,14 +14,12 @@ function Home({ token }) {
     const handleGoToPlayerResults = (queryPlayer) => {
         try {
             searchPlayers(queryPlayer, (error, resultsPlayer) => {
-                if (error) return SetError(error.message)
-
-                setPlayers(resultsPlayer)
+                if (error) return setError(error.message)
 
                 searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => {
-                    if (error) return SetError(error.message)
-
-                    setLikes(resultLikes)
+                    if (error) return setError(error.message)
+                    setPlayers(resultLikes)
+                    
                 })
                 setView('cards')
             })
@@ -41,9 +40,10 @@ function Home({ token }) {
     }
 
     return <>
-        <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} />
 
-        {view === 'cards' && <PlayerResults resultsPlayers={players} resultLikes={likes} />}
+        <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} />
+        {/* {view === 'spinner' && <Spinner />} */}
+        {view === 'cards' && <PlayerResults resultsPlayers={players} />}
         {view === 'sport' && <SportNews sportNews={sportNews}/>}
         {error && <Feedback message={error} level="error" />}
     </>
