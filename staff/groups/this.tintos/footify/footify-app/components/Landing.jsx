@@ -1,7 +1,4 @@
 function Landing({onGoToLogin,onGoToRegister}){
-
-    const handleGoToRegister = () => { onGoToRegister()}
-    const handleGoToLogin = () => { onGoToLogin()}
       
     return <>
         <section className="landing">
@@ -14,8 +11,8 @@ function Landing({onGoToLogin,onGoToRegister}){
                 maiores quae aliquam ipsam voluptatem, id numquam!
           </div>
                 <div className="landing__nav">
-                    <button className="landing__button" onClick={handleGoToLogin}>LOGIN</button>
-                    <button className="landing__button" onClick={handleGoToRegister}>REGISTER</button>
+                    <button className="landing__button" onClick={onGoToLogin}>LOGIN</button>
+                    <button className="landing__button" onClick={onGoToRegister}>REGISTER</button>
                 </div>
             </div>
         </section>
