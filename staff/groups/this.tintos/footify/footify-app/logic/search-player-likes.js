@@ -4,17 +4,15 @@ function searchPlayersLikes(players, token, callback) {
 
 
   // String.validate(token)
-  Function.validate(callback);
+  Function.validate(callback)
+  let likePlayers = []
+   call("GET","https://skylabcoders.herokuapp.com/api/v2/users/all", undefined,
+    { Authorization: `Bearer ${token}` }, (error, status, body) => {
 
-  let likePlayers = [];
-  call(
-    "GET",
-    "https://skylabcoders.herokuapp.com/api/v2/users/all",
-    undefined,
-    { Authorization: `Bearer ${token}` },
-    (error, status, body) => {
       if (error) return callback(error);
+      
       if (status === 200) {
+        
         let users = JSON.parse(body);
         users = users.filter((user) => {
           return user.app === "footify";
@@ -27,7 +25,7 @@ function searchPlayersLikes(players, token, callback) {
             }
           }
         });
-
+            const resultsLikes = results(likePlayers)
 
                 for(var i = 0; i < resultsLikes.length; i++){ 
                     for(y = 0; y < players.length; y++){
@@ -36,18 +34,8 @@ function searchPlayersLikes(players, token, callback) {
                         }
                     }
                 }
-/*if(resultsLikes === undefined){
-    resultsLikes = false
-}*/
-                callback(undefined, players)
-            }
-            else {
-                const { error } = JSON.parse(body)
-                callback(new Error(error))
-            }
-          }
-        }
-        // sort by value
+
+       // sort by value
         players = players.sort(function (a, b) {
 
           return b.likes - a.likes
@@ -57,8 +45,7 @@ function searchPlayersLikes(players, token, callback) {
         const { error } = JSON.parse(body)
         callback(new Error(error));
       }
-    }
-  );
+    })
 }
 
 function searchTimes(like, likePlayers) {
