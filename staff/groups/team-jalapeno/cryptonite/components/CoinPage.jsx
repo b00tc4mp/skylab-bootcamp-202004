@@ -56,6 +56,7 @@ function CoinPage({ addPortfolioSubmit }) {
 
         let quantity = event.target.quantity.value;
         quantity = Number(quantity)
+        event.target.quantity.value = ''
 
         addPortfolioSubmit(crypto.id, quantity, (_error) => {
             if (_error) setError(_error.message);

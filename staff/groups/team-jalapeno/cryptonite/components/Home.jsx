@@ -49,7 +49,7 @@ function Home() {
   const handlePortfolioClick = (event) => {
     event.preventDefault()
 
-    setView('favorites-page')
+    setView('portfolio-page')
   }
 
   const handlePortfolioSubmit = (id, quantity, callback) => {
@@ -81,6 +81,7 @@ function Home() {
 
       {view === 'coin-page' && <CoinPage addPortfolioSubmit={handlePortfolioSubmit} />}
       {view === 'favorites-page' && <FavoritesPage />}
+      {view === 'portfolio-page' && <PortfolioPage />}
 
       <footer className="footer">
         <section>

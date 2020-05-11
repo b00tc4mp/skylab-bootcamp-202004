@@ -12,17 +12,16 @@ function Register({ goToLogin, registerSubmit }) {
             password: { value: password },
         } = event.target;
 
-        // register(name, surname, email, password, (_error) => {
-        //     if (_error) return setError(_error.message) 
-        //     goToLogin()
-        // });
-        register(name, surname, email, password, (_error) => {
-            if (_error) setError(_error.message)
-            else registerSubmit()
-        });
+        try {
+            register(name, surname, email, password, (_error) => {
+                if (_error) setError(_error.message)
+                else registerSubmit()
+            })
+        } catch ({ message }) {
+            setError(message)
+        }
     };
 
-    // TODO create component for alerts
 
     return (
         <section className="register">

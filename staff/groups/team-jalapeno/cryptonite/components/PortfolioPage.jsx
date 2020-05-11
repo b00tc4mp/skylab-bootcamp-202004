@@ -1,36 +1,86 @@
 function PortfolioPage() {
+    const [coinCryptos, setCoinCryptos] = useState(null)
+    const [error, setError] = useState(null)
+    const [portfolio, setPortfolio] = useState(null)
+    const [wallet, setWallet] = useState(0)
+
+
+    useEffect(() => {
+
+        retrieveUser(sessionStorage.token, (userError, user) => {
+            if (userError) return setError(userError)
+
+            const { portfolio } = user
+            setPortfolio(portfolio)
+
+            const ids = []
+            for (let i = 0; i < portfolio.length; i++) ids.push(portfolio[i].id)
+
+            if (portfolio.length) {
+
+                retrieveFavorites((cryptosError, data) => {
+                    if (cryptosError) return setError(cryptosError)
+
+                    const _data = data.map(coin => {
+                        const thisCoin = portfolio.find(item => {
+                            return coin.id === item.id
+                        })
+
+                        coin.quantity = thisCoin.quantity
+                        return coin
+                    })
+
+                    let result = 0
+                    for (let i = 0; i < _data.length; i++) {
+                        let { quantity, priceUsd } = _data[i]
+                        result += subTotal(quantity, priceUsd) * 1
+                    }
+                    setWallet(result)
+                    setCoinCryptos(_data)
+                }, ids)
+            }
+        })
+
+    }, [])
+
+    const subTotal = (quantity, priceUsd) => {
+        let result = Number(quantity) * Number(priceUsd)
+        return result.toFixed(2)
+    }
+
+
 
 
     return <div>
         <nav className="nav">
-            <a href className="nav__item logout-link">Logout</a>
+            <a href='#' className="nav__item logout-link">Logout</a>
         </nav>
         <section className="portfolio">
-            <h1 className="portfolio__money">1.752,21$</h1>
+            <h1 className="portfolio__money">{wallet}$</h1>
             <h4 className="portfolio__stats"><span className="portfolio__stats--contrast">+121,40$ (8.3%)</span> Last 24h</h4>
 
         </section>
         <section className="crypto-coins">
             <h3 className="crypto-coins__title">My Portfolio</h3>
             <section className="coins-container">
-                {/* THIS NEEDS TO BE MAPPED */}
-                <div className="wallet">
-                    <div className="wallet__head">
-                        <span className="coin__title">BTC</span>
-                        <span className="coin__name">Bitcoin</span>
+
+                {coinCryptos && coinCryptos.map(({ symbol, name, priceUsd, quantity }) => (
+
+                    <div className="wallet">
+                        <div className="wallet__head">
+                            <span className="coin__title">{symbol}</span>
+                            <span className="coin__name">{name}</span>
+                        </div>
+                        <div className="wallet__body">
+                            <span className="coin__price coin__price--light">{quantity} {symbol}</span>
+                            <span className="coin__percentage">({subTotal(quantity, priceUsd)}$)</span>
+                        </div>
                     </div>
-                    <div className="wallet__body">
-                        <span className="coin__price coin__price--light">4.32 BTC</span>
-                        <span className="coin__percentage">(38.019$)</span>
-                    </div>
-                </div>
-                {/* UP TO HERE */}
+
+
+                ))}
+                {!coinCryptos && <h4 className="brand__description">You don't have any favorites... :( </h4>}
             </section>
         </section>
-        <footer className="footer">
-            <section>
-                <p className="footer__copyright">© 2020 Team Jalapeño - Skylab Coders. All rights reserved.</p>
-            </section>
-        </footer>
-    </div>
+    </div >
 }
