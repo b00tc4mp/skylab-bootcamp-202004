@@ -30,7 +30,9 @@ function CoinPage({ addPortfolioSubmit }) {
     }, [])
 
     useEffect(() => {
-        getPortfolioCoin()
+        if (crypto) {
+            getPortfolioCoin()
+        } 
     }, [crypto])
 
     const checkFavorite = (cryptoId) => {
@@ -55,19 +57,16 @@ function CoinPage({ addPortfolioSubmit }) {
         let quantity = event.target.quantity.value;
         quantity = Number(quantity)
 
-        addPortfolioSubmit(crypto.id, quantity, () => {
-            if (error) throw error
-
+        addPortfolioSubmit(crypto.id, quantity, (_error) => {
+            if (_error) setError(_error.message);
             getPortfolioCoin()
         })
 
     }
 
     const getPortfolioCoin = () => {
-        retrieveUser(sessionStorage.token, (error, user) => {
-            if (error) throw error //TODO handle error
-
-            console.log(user.portfolio, crypto)
+        retrieveUser(sessionStorage.token, (_error, user) => {
+            if (_error) setError(_error.message);
 
             const portfolioCoin = user.portfolio.find(coin => crypto.id === coin.id)
             if (portfolioCoin) {
@@ -75,8 +74,6 @@ function CoinPage({ addPortfolioSubmit }) {
 
             }
         })
-
-        // '4 BTC'
     }
 
 
@@ -99,7 +96,7 @@ function CoinPage({ addPortfolioSubmit }) {
                     {!ohlc && <p>Loading...</p>}
                     <button onClick={handleToggleFav} className="coinpage-header__button">{isFav ? 'Remove from Favorites' : 'Add to Favorites'}</button>
                     <form action="" name="add-portfolio" className="portfolio__input" onSubmit={addSubmit} >
-                        <input type="number" name="quantity" id="" placeholder="Quantity" />
+                        <input type="text" name="quantity" id="" placeholder="Quantity" />
                         <button className="coinpage-header__button" type="submit">Add to Portfolio <i className="fa fa-bitcoin"></i></button>
 
                     </form>

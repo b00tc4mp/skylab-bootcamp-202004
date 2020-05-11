@@ -52,11 +52,8 @@ function Home() {
     setView('favorites-page')
   }
 
-  const handlePortfolioSubmit = (id, quantity) => {
-    addPortfolioCrypto(sessionStorage.token, { id, quantity }, () => {
-      if (error) throw error // TODO HANDLE THIS ERROR
-
-    })
+  const handlePortfolioSubmit = (id, quantity, callback) => {
+    addPortfolioCrypto(sessionStorage.token, { id, quantity }, callback)
 
   }
 
