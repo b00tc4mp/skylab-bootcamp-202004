@@ -30,15 +30,19 @@ function App() {
         const email = event.target.email.value
         const password = event.target.password.value
 
-        authenticateUser(email, password, (error, token) => {
-            if (error) throw error
+        try {
+            authenticateUser(email, password, (error, token) => {
+                if (error) throw error
 
-            if (token) {
-                setToken(token)
-                sessionStorage.token = token
-                setView('home')
-            }
-        })
+                if (token) {
+                    setToken(token)
+                    sessionStorage.token = token
+                    setView('home')
+                }
+            })
+        } catch (error) {
+            if (error) new Error(error.message)
+        }
     }
 
 
