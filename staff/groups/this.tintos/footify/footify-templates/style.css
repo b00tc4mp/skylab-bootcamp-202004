@@ -239,6 +239,211 @@
   color: #320090;
 }
 
+.player {
+  display: flex;
+  justify-content: center;
+  background-color: #ffffff;
+  font-family: raleway;
+}
+
+.player-card {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+}
+.player-card__item {
+  background-color: #73f182;
+  margin: 2rem;
+  list-style: none;
+  height: 330px;
+  border: double 2px;
+  border-radius: 20px;
+  -webkit-box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.75);
+}
+.player-card__item:hover {
+  -webkit-box-shadow: 2px 3px 5px 0px #e7a61a;
+  -moz-box-shadow: 2px 3px 5px 0px #e7a61a;
+  box-shadow: 2px 3px 5px 0px #e7a61a;
+}
+.player-card__player {
+  height: auto;
+  display: grid;
+  height: 50%;
+  align-content: center;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-areas: "emblem emblem number number image image image image" "emblem emblem number number image image image image" "name name . . image image image image" "surname surname . . image image image image";
+}
+.player-card__emblem {
+  grid-area: emblem;
+  margin: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.player-card__emblem-item {
+  width: 70px;
+  height: auto;
+  min-width: 60px;
+  min-height: 60px;
+}
+.player-card__number {
+  grid-area: number;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 0.9rem;
+  font-family: raleway;
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: #320090;
+}
+.player-card__number-item {
+  height: 60px;
+  text-align: center;
+  width: 60px;
+  background: #ffffff;
+  border-radius: 50%;
+}
+.player-card__image {
+  grid-area: image;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.player-card__image-item {
+  max-width: 155px;
+  max-height: auto;
+}
+.player-card__name-first {
+  grid-area: name;
+  color: #320090;
+  display: flex;
+  justify-content: start;
+  margin-left: 2rem;
+  font-family: raleway;
+  font-weight: bold 700;
+  align-items: flex-end;
+}
+.player-card__name-surname {
+  grid-area: surname;
+  color: #320090;
+  display: flex;
+  justify-content: start;
+  margin-left: 2rem;
+  font-family: raleway;
+  font-weight: bold 700;
+}
+.player-card__line {
+  border: 3px solid #320090;
+}
+.player-card__info {
+  width: 100%;
+  height: 110px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 30% 30% 30% 10%;
+  grid-template-areas: "team team team-answer team-answer team-answer team-answer team-answer . like ." "country country country country-answer country-answer country-answer country-answer . count ." "birth birth birth birth birth-answer birth-answer birth-answer . . ." ". . . . . . . . . .";
+}
+.player-card__team {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #320090;
+  margin-left: 0.8rem;
+  margin-top: 0.2rem;
+  grid-area: team;
+}
+.player-card__team-answer {
+  grid-area: team-answer;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+  margin-left: 0.4rem;
+}
+.player-card__country {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #320090;
+  margin-left: 0.8rem;
+  margin-top: 0.2rem;
+  grid-area: country;
+}
+.player-card__country-answer {
+  grid-area: country-answer;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+.player-card__birth {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #320090;
+  margin-left: 0.8rem;
+  margin-top: 0.2rem;
+  grid-area: birth;
+}
+.player-card__birth-answer {
+  grid-area: birth-answer;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+.player-card__like {
+  grid-area: like;
+  width: 30px;
+  height: 30px;
+  justify-self: center;
+  margin-top: 0.3rem;
+}
+.player-card__count {
+  grid-area: count;
+  justify-self: center;
+  font-family: raleway;
+  font-weight: 650;
+  color: #320090;
+}
+.player-card__small-line {
+  border: 0.6px solid #320090;
+}
+.player-card__form {
+  display: flex;
+  justify-content: center;
+  margin-left: 1rem;
+  align-items: center;
+  border-radius: 30px;
+  flex-shrink: 1;
+  flex-grow: 1;
+}
+.player-card__form-input {
+  border-radius: 30px;
+  width: 88%;
+  height: 25px;
+  font-family: raleway;
+  border-style: none;
+  text-align: justify;
+  margin-top: 0.8rem;
+  padding-left: 10px;
+  opacity: 50%;
+  background: #ffffff;
+}
+.player-card__form-input:focus {
+  opacity: 100%;
+  text-emphasis: none;
+  outline: none;
+  user-select: none;
+}
+.player-card__form-button {
+  position: relative;
+  right: 2.4rem;
+  top: 0.4rem;
+  background: 0 0;
+  border: 0;
+}
+.player-card__form-button:hover {
+  color: #320090;
+  opacity: 60%;
+}
+
 .sport-news {
   width: 24rem;
   margin-left: 2px;
