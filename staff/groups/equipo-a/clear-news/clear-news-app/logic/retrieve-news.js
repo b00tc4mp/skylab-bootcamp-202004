@@ -1,5 +1,5 @@
 function retrieveNews(token, callback) {
-    debugger
+
     String.validate(token)
 
     Function.validate(callback)

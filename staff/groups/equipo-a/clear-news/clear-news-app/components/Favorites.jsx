@@ -1,54 +1,49 @@
 const { useState, useEffect } = React
 
-function Favorites({token,onGoToProfile,onGoToTopheadlines,onGoToSearch}) {
-    
+function Favorites({token, myFavorite, favNews}) {
+    const [error, setError] = useState()
+
     useEffect(() => {
-        !news && retrieveFavoritesNews(token, ( error,favNews) => {
+        !favNews && retrieveFavNews(token, ( error,favNews) => {
             if (error) setError(error.message);
             myFavorite(favNews);
         })
     }, []);
 
- 
-    function handleGoToProfile(event) {
-        event.preventDefault();
+    function handleLikeNews(newsTitle) {
+        try {
+            storeNews(token, newsTitle, error => {
+                if (error) throw error
+                // setErrorNews(error.message)
+                /* if(error.message==="invalid token") */
+                else {
+                    retrieveFavNews(token, (error, news) => {
+                        if (error) setError(error.message)
+                        myFavorite(news)
+                    })
+                }
+            })
 
-        onGoToProfile();
+        } catch (error) {
+            if (error) throw error
+            // setErrorNews(error.message)
+        }
     }
 
-    function handleGoToTopheadlines(event) {
-        event.preventDefault();
-
-        onGoToTopheadlines();
-    }
-
-    function handleGoToSearch(event) {
-        event.preventDefault();
-
-        onGoToSearch();
-    }
-
-    return <><section className="navBar">
-            <a href="" onClick={handleGoToProfile}>Profile </a>
-            <a href="" onClick={handleGoToTopheadlines}>Top Headlines </a>
-            <a href="" onClick={handleGoToSearch}>Search </a>
-         </section>
-
+    return <>
+    
     <section className="favNews">
-
         {
             favNews && <ul className="news__container">
                 { favNews.map(({ name, title, url, urlToImage }) =>
                         <li className="news__item" key={title}>
                             <a href={url} target='_blank'><img className="news__images" src={urlToImage}></img>
                             <div className="news__title stroke"><p className="stroke">{name}</p><p className="stroke"> {title}</p> </div></a>
+                            <div className="news__button"> <button onClick={() => handleLikeNews(title)}>{favorites? 'unFollow' : 'follow'}</button></div>
                 </li>)}
             </ul>
         }
-
     </section>
-
     </>   
 }
 
-//retrieveFavoritesNews

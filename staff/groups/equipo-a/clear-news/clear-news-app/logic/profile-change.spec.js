@@ -1,4 +1,4 @@
-describe('profileChange', () => {
+describe.only('profileChange', () => {
     // function profileChange(token, name, surname, email, password, oldPassword, interests, country,callback)
     let _name,_surname,_email,_password,_categories,_country
     beforeEach(() => {
@@ -20,7 +20,7 @@ describe('profileChange', () => {
 
     describe('it should succed on changing parameters',()=>{
         //post user
-        beforeEach(done =>{
+       it('should succed on correct data',done=>{
             call('POST','https://skylabcoders.herokuapp.com/api/v2/users',
             `{"name": "${_name}", "surname": "${_surname}", "username": "${_email}", "password": "${_password}", "categories": ${JSON.stringify(_categories)}, "country": "${_country}"}`,
             { 'Content-type': 'application/json' },
@@ -38,6 +38,8 @@ describe('profileChange', () => {
                 });
 
             });
+
+            
         it ('should change name/surname', done =>{
             newName=names.random();
             newSurname=surnames.random();

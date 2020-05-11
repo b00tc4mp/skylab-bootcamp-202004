@@ -10,7 +10,7 @@ function TopHeadlines({ news, myHeadlines, token }) {
             myHeadlines(news)
         })
     }, [])
-    debugger
+  
     function handleLikeNews(newsTitle) {
         try {
             storeNews(token, newsTitle, error => {

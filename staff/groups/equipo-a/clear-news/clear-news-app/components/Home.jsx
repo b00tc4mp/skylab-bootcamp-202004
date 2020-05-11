@@ -5,6 +5,7 @@ class Home extends Component {
         super()
 
         this.state = {
+            favNews: undefined,
             news: undefined,
             view: 'topheadlines',
             name: undefined,
@@ -67,29 +68,30 @@ class Home extends Component {
         this.setState({ news })
     }
 
+    handleFavoritesNews = favNews => {
+        this.setState({favNews})
+    }
+
     handleSearchNews = (results, query, language, sortBy) =>{
         this.setState({searchNewsResults: results, newsQuery: query, newsLanguage: language, sortBy})
     }
-
-
-
 
     render() {
         return <section className="home">
             <nav className="home__nav-bar">
                 <h1>Welcome, {this.state.name}!</h1>
                 <a className={`home__link ${this.state.view === 'profile' ? 'home__link--active' : ''}`} href="" onClick={this.handleProfile}>Profile </a>
-                <a className={`home__link ${this.state.view === 'favoirtes' ? 'home__link--active' : ''}`} href="" onClick={this.handleFavorites}>Favorites </a>
+                <a className={`home__link ${this.state.view === 'favorites' ? 'home__link--active' : ''}`} href="" onClick={this.handleFavorites}>Favorites </a>
                 <a className={`home__link ${this.state.view === 'topheadlines' ? 'home__link--active' : ''}`} href="" onClick={this.handleUser}>Top headlines</a>
                 <a className={`home__link ${this.state.view === 'search' ? 'home__link--active' : ''}`} href="" onClick={this.handleSearch}>Search </a>
                 <button onClick={this.props.onLogout}>Logout</button>
             </nav>
 
-            {/* {this.state.view === 'profile' && <Profile />} */}
-            {this.state.view === 'favorites' && <Favorites />}
+            {this.state.view === 'profile' && <Profile token={this.props.token}/>}
+            {this.state.view === 'favorites' && <Favorites token={this.props.token} myFavorite={this.handleFavoritesNews} favNews={this.state.favNews}/>}
             {this.state.view === 'topheadlines' && <TopHeadlines myHeadlines={this.handleTopHeadlines} token={this.props.token} news={this.state.news} />}
             {this.state.view === 'search' && <SearchNews token={this.props.token} onSearch={this.handleSearchNews} searchNewsResults={this.state.searchNewsResults} query={this.state.newsQuery} language={this.state.newsLanguage} sortBy={this.state.sortBy}/>}
-          
+
         </section>
     }
 }

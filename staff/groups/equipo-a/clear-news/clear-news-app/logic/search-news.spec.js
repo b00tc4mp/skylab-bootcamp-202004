@@ -1,4 +1,4 @@
-describe.only('search-news', () => {
+describe('search-news', () => {
 
     describe('expect to succed on searching news', () => {
 

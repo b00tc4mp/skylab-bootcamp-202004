@@ -1,4 +1,4 @@
-const { useState } = React
+const { useState,useEffect } = React
 
 function Profile({ onChangeProf,token}) {
     const [error, setError] = useState()
@@ -181,6 +181,9 @@ function Profile({ onChangeProf,token}) {
             case 'South Africa':
                 country = "za"
                 break;
+            case 'Default':
+                country = null
+                break;
             default:
                 throw error
         }
@@ -198,15 +201,16 @@ function Profile({ onChangeProf,token}) {
 
     return <section className="register">
         <h1>Change profile</h1>
-        <form className="register__input" onSubmit={handleSubmit}>
+        <form className="register__input" autoComplete ="off" onSubmit={handleSubmit}>
             <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}" />
             <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}" />
-            <input type="email" name="email" placeholder="e-mail" required />
-            <input type="password" name="password" placeholder="password" required minLength="8" />
+            <input type="email" name="email" placeholder="e-mail"  required />
+            <input type="password" name="password" placeholder="password"   required minLength="8" />
             <input type="password" name="oldPassword" placeholder="Old password" required minLength="8" />
 
             <label >Change your country:</label>
             <select className="register__country" name="country">
+                    <option>Default</option>
                     <option>Arab Emirates</option> 
                     <option>Argentina</option> 
                     <option>Austria</option>  

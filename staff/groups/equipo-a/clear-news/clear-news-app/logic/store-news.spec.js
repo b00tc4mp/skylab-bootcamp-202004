@@ -1,7 +1,7 @@
-describe.only('storeNews', () => {
+describe('storeNews', () => {
     let name, surname, email, password, categories, country, _token, title
 
-    beforeEach(()=> {
+    beforeEach(() => {
         name = names.random();
         surname = surnames.random();
         email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`;
@@ -15,15 +15,15 @@ describe.only('storeNews', () => {
             sports: false,
             technology: true
         }
-        
+
         country = countries.random()
-        title="random title";
-    })    
+        title = "random title";
+    })
     describe('when both user exist', () => {
         beforeEach(done => {
 
             call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
-            `{"name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}", "categories": ${JSON.stringify(categories)}, "country": "${country}"}`,
+                `{"name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}", "categories": ${JSON.stringify(categories)}, "country": "${country}"}`,
                 { "Content-type": 'application/json' }, (error, status) => {
                     if (error) return done(new Error(error.message));
 
@@ -38,14 +38,14 @@ describe.only('storeNews', () => {
                                     let { token } = JSON.parse(body);
                                     _token = token;
                                     done();
-                                }    
+                                }
                             });
                     }
                 });
-            });
+        });
 
         it('should succed on adding favorite', done => {
-        debugger
+
             storeNews(_token, title, (error) => {
                 if (error) return done(new Error(error.message));
 
@@ -68,39 +68,39 @@ describe.only('storeNews', () => {
 
         it('should remove favorite', () => {
             beforeEach(done => {
-            call('PATCH',
-                'https://skylabcoders.herokuapp.com/api/v2/users',
-                `"favorite":"${title}"`,
-                { "Content-type": "application/json", "Authorization": `Bearer ${_token}` },
-                (error, status,body) => {
-                    if (error) return done(new Error(error.message));
+                call('PATCH',
+                    'https://skylabcoders.herokuapp.com/api/v2/users',
+                    `"favorite":"${title}"`,
+                    { "Content-type": "application/json", "Authorization": `Bearer ${_token}` },
+                    (error, status, body) => {
+                        if (error) return done(new Error(error.message));
 
-                    if (status === 200) {
-                        storeNews(_token, title, (error) => {
-                            if (error) return done(new Error(error.message));
+                        if (status === 200) {
+                            storeNews(_token, title, (error) => {
+                                if (error) return done(new Error(error.message));
 
-                            call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
-                                undefined,
-                                { 'Authorization': `Bearer ${_token}` }, (error, status, body) => {
-                                    if (error) return done(new Error(error.message));
+                                call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                                    undefined,
+                                    { 'Authorization': `Bearer ${_token}` }, (error, status, body) => {
+                                        if (error) return done(new Error(error.message));
 
-                                    if (status === 200) {
+                                        if (status === 200) {
 
-                                        debugger
-                                        let { favorite } = JSON.parse(body);
-                                        expect(favorite).to.exist;
-                                        expect(favorite).to.be.an.instanceOf(Array);
-                                        expect(favorite.length).to.be(0);
-                                        expect(favorite).to.not.include(title);
-                                       
-                                        done();
-                                    }
-                                });
-                        });
-                    }
-                });
-              
+                                            debugger
+                                            let { favorite } = JSON.parse(body);
+                                            expect(favorite).to.exist;
+                                            expect(favorite).to.be.an.instanceOf(Array);
+                                            expect(favorite.length).to.be(0);
+                                            expect(favorite).to.not.include(title);
+
+                                            done();
+                                        }
+                                    });
+                            });
+                        }
+                    });
+
             });
+        });
     });
-});
 })

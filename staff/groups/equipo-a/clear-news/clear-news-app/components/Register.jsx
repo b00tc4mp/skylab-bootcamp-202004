@@ -4,8 +4,10 @@ function Register({ onRegister, onGoToLogin }) {
     const [error, setError] = useState()
 
     const handleSubmit = event => {
+        
         event.preventDefault()
-        checkboxes()
+        
+        
         let country
         let business =false
         let entertainment = false
@@ -23,6 +25,8 @@ function Register({ onRegister, onGoToLogin }) {
         if (event.target.science.checked) science = Boolean(event.target.science.value)
         if (event.target.sports.checked) sports = Boolean(event.target.sports.value)
         if (event.target.technology.checked) technology = Boolean(event.target.technology.value)
+        
+        
 
         let interests = { business, entertainment, general, health, science, sports, technology }
 
@@ -187,7 +191,7 @@ function Register({ onRegister, onGoToLogin }) {
         try {
             registerUser(name, surname, email, password, interests, country, error => {
                 if (error) return setError(error.message)
-
+                
                 onRegister()
             })
         } catch ({ message }) {
@@ -197,7 +201,7 @@ function Register({ onRegister, onGoToLogin }) {
 
     const handleGoToLogin = event => {
         event.preventDefault()
-
+        
         onGoToLogin()
     }
 
@@ -265,6 +269,7 @@ function Register({ onRegister, onGoToLogin }) {
             </select>
             <fieldset className="register__checkbox">
                 <legend>Choose your favorite topics</legend>
+                
                 <input type="checkbox" name="business" value="true" />Business<br/>
                 <input type="checkbox" name="entertainment" value="true" />Entertainment<br/>
                 <input type="checkbox" name="general" value="true" />General<br/>
@@ -272,9 +277,10 @@ function Register({ onRegister, onGoToLogin }) {
                 <input type="checkbox" name="science" value="true" />Science<br/>
                 <input type="checkbox" name="sports" value="true" />Sports<br/>
                 <input type="checkbox" name="technology" value="true" />Technology<br/>
+                
             </fieldset>
             <section className="resister__nav-button">
-            <button className="register__button" >Submit</button>
+            <button className="register__button">Submit</button>
                 or <a href="" onClick={handleGoToLogin}>Login</a>
             </section>
             {error && <Feedback message={error} level="error" />}
