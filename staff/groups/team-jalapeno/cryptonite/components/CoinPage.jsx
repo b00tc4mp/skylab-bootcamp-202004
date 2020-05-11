@@ -72,9 +72,16 @@ function CoinPage({ addPortfolioSubmit }) {
             const portfolioCoin = user.portfolio.find(coin => crypto.id === coin.id)
             if (portfolioCoin) {
                 setInPortfolio(`${portfolioCoin.quantity} ${crypto.symbol}`)
-
-            }
+            } else setInPortfolio('')
         })
+    }
+
+    const handleDeleteFromPortfolio = (event) => {
+        deletePortfolioCrypto(sessionStorage.token ,crypto.id, (_error) => {
+            if (_error) setError(_error.message);
+            getPortfolioCoin()
+        })
+
     }
 
 
@@ -99,6 +106,8 @@ function CoinPage({ addPortfolioSubmit }) {
                     <form action="" name="add-portfolio" className="portfolio__input" onSubmit={addSubmit} >
                         <input type="text" name="quantity" id="" placeholder="Quantity" />
                         <button className="coinpage-header__button" type="submit">Add to Portfolio <i className="fa fa-bitcoin"></i></button>
+                        <button onClick={handleDeleteFromPortfolio} className="coinpage-header__button" type="button">Delete From Portfolio <i className="fa fa-bitcoin"></i></button>
+
 
                     </form>
                 </section>
