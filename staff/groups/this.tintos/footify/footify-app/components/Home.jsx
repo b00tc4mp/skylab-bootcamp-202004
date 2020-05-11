@@ -7,13 +7,22 @@ function Home({ token }) {
     const [error, setError] = useState()
     const [emblem, setEmblem] = useState()
     // const [loading, setLoading] = useState(true)
-    const [likes, setLikes] = useState()
+    const [likesUser, setLikesUser] = useState()
     const [sportNews, setSportNews] = useState()
+    const [queryPlayer, setQueryPlayer] = useState()    
     const [fwitter,setFwitter] = useState();
 
 
     const handleGoToPlayerResults = (queryPlayer) => {
+        
+        retrieveUser(token, (error, user) =>{
+            const {likes} = user
+            setLikesUser(likes)
+          })
+
+        setQueryPlayer(queryPlayer)
         try {
+
             searchPlayers(queryPlayer, (error, resultsPlayer) => {
                 if (error) return setError(error.message)
 
@@ -22,6 +31,12 @@ function Home({ token }) {
                     setPlayers(resultLikes)
                     
                 })
+
+                // isPlayerfollowed(token, playerId, (error, followPlayer) => {
+                //     if (error) return setError(error.message)
+                //     setFollow(followPlayer)
+                // })   
+
                 setView('cards')
             })
         } catch ({ message }) {
@@ -35,9 +50,10 @@ function Home({ token }) {
             setView('sport')
 
         })
+    }
 
-
-
+    const handleToggleFollowPlayers = () =>{
+        handleGoToPlayerResults(queryPlayer)
     }
 
     const handleGoToFwitter = () =>{
@@ -56,7 +72,7 @@ function Home({ token }) {
 
         <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter}/>
         {/* {view === 'spinner' && <Spinner />} */}
-        {view === 'cards' && <PlayerResults resultsPlayers={players} />}
+        {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} queryPlayer={queryPlayer} likesUser={likesUser}/>}
         {view === 'sport' && <SportNews sportNews={sportNews}/>}
         {view === 'fwitter' && <Fwitter fwitter={fwitter}/>}
         {error && <Feedback message={error} level="error" />}

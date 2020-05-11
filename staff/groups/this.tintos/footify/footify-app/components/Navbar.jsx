@@ -44,7 +44,7 @@ function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter }) {
 
                     <form action="" onSubmit={handleSubmitSearch}>
                         <input type="text" id="navbar__links-search" name='searchPlayer' />
-                        <button>🔍</button>
+                        {/* <button>🔍</button> */}
                     </form>
                 </nav>
             </div>
