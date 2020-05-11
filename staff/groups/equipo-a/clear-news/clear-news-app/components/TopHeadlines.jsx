@@ -1,16 +1,17 @@
 const { useEffect, useState } = React
 
-function TopHeadlines({ news, myHeadlines, token }) {
+function TopHeadlines({ news, pages, myHeadlines, token }) {
     const [error, setError] = useState()
+    const [currentPage, setCurrentPage] = useState(1)
     // const [NewsError, setErrorNews] = useState()
 
     useEffect(() => {
-        !news && retrieveNews(token, (error, news) => {
+        !news && retrieveNews(token, (error, news, pages) => {
             if (error) setError(error.message)
-            myHeadlines(news)
+            myHeadlines(news, pages)
         })
     }, [])
-  
+
     function handleLikeNews(newsTitle) {
         try {
             storeNews(token, newsTitle, error => {
@@ -18,9 +19,9 @@ function TopHeadlines({ news, myHeadlines, token }) {
                 // setErrorNews(error.message)
                 /* if(error.message==="invalid token") */
                 else {
-                    retrieveNews(token, (error, news) => {
+                    retrieveNews(token, (error, news, pages) => {
                         if (error) setError(error.message)
-                        myHeadlines(news)
+                        myHeadlines(news, pages)
                     })
                 }
             })
@@ -29,18 +30,26 @@ function TopHeadlines({ news, myHeadlines, token }) {
             // setErrorNews(error.message)
         }
     }
+
+    function handleCurrentPage (currentPage){
+        setCurrentPage(Number(currentPage))
+    }
+
+
     return <section className="news">
 
         {
             news && <ul className="news__container">
-                {news.map(({ name, title, url, urlToImage,favorites }) =>
+                {newsForPage(news, currentPage).map(({ name, title, url, urlToImage, favorites }) =>
                     <li className="news__item" key={title}>
                         <a href={url} target='_blank'><img className="news__images" src={urlToImage}></img>
                             <div className="news__title stroke"><p className="stroke">{name}</p><p className="stroke"> {title}</p></div></a>
-                            <div className="news__button"> <button onClick={() => handleLikeNews(title)}>{favorites? 'unFollow' : 'follow'}</button></div>
+                        <div className="news__button"> <button onClick={() => handleLikeNews(title)}>{favorites ? 'unFollow' : 'follow'}</button></div>
                     </li>)}
             </ul>
+            
         }
+        {pages && <Pages pages={pages} handleCurrentPage={handleCurrentPage}/>}
 
     </section>
 }

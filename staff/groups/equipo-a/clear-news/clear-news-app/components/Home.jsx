@@ -7,6 +7,7 @@ class Home extends Component {
         this.state = {
             favNews: undefined,
             news: undefined,
+            pages: undefined,
             view: 'topheadlines',
             name: undefined,
             searchNewsResults: undefined,
@@ -64,8 +65,8 @@ class Home extends Component {
         this.goToView('profile')
     }
 
-    handleTopHeadlines = news => {
-        this.setState({ news })
+    handleTopHeadlines = (news, pages) => {
+        this.setState({ news, pages })
     }
 
     handleFavoritesNews = favNews => {
@@ -89,7 +90,7 @@ class Home extends Component {
 
             {this.state.view === 'profile' && <Profile token={this.props.token}/>}
             {this.state.view === 'favorites' && <Favorites token={this.props.token} myFavorite={this.handleFavoritesNews} favNews={this.state.favNews}/>}
-            {this.state.view === 'topheadlines' && <TopHeadlines myHeadlines={this.handleTopHeadlines} token={this.props.token} news={this.state.news} />}
+            {this.state.view === 'topheadlines' && <TopHeadlines myHeadlines={this.handleTopHeadlines} token={this.props.token} news={this.state.news} pages={this.state.pages}/>}
             {this.state.view === 'search' && <SearchNews token={this.props.token} onSearch={this.handleSearchNews} searchNewsResults={this.state.searchNewsResults} query={this.state.newsQuery} language={this.state.newsLanguage} sortBy={this.state.sortBy}/>}
 
         </section>
