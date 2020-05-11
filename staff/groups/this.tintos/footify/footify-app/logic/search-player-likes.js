@@ -1,5 +1,5 @@
 function searchPlayersLikes(players, token, callback) {
-    if (players === undefined) throw new Error('not found players');
+    if (players === undefined) return callback(new Error('sorry, no players found :('));
 
     // String.validate(token)
     Function.validate(callback)
@@ -36,7 +36,9 @@ function searchPlayersLikes(players, token, callback) {
                         }
                     }
                 }
-
+/*if(resultsLikes === undefined){
+    resultsLikes = false
+}*/
                 callback(undefined, players)
             }
             else {

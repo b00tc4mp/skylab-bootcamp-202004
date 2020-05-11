@@ -1,13 +1,13 @@
 const { useState } = React
 
 
-function PlayerResults({ resultsPlayers}) {
+function PlayerResults({ resultsPlayers, error}) {
 
 if(!resultsPlayers) return <Spinner />
     return <>
         <section className="player">
             {
-                resultsPlayers ?
+                typeof resultsPlayers === 'object' ?
                     <ul className="player-card">
                         {resultsPlayers.map(({ firstName, surname, club, number, image, clubName, born, date, likes }) =>
                             <li className="player-card__item">
@@ -25,8 +25,6 @@ if(!resultsPlayers) return <Spinner />
                                     <h2 className="player-card__name-surname">{surname}</h2>
                                 </div>
                                 <hr className="player-card__line" />
-
-
 
 
                                 <div className="player-card__info">
@@ -49,8 +47,9 @@ if(!resultsPlayers) return <Spinner />
                         )}
                     </ul>
                     :
-                    <Feedback message="sorry, no results :(" level="warning" />
-            }
+                     <Feedback message={`${error}`} level="warning" />
+            } 
+            
 
         </section>
     </>

@@ -13,11 +13,16 @@ function Home({ token }) {
 
     const handleGoToPlayerResults = (queryPlayer) => {
         try {
+            setPlayers(undefined)
+            setError(undefined)
             searchPlayers(queryPlayer, (error, resultsPlayer) => {
-                if (error) return SetError(error.message)
+                if (error) {
+                    setPlayers('no players')
+                    setError(error.message)
+                }
 
                 searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => {
-                    if (error) return SetError(error.message)
+                    if (error) return setError(error.message)
                     setPlayers(resultLikes)
                     
                 })
@@ -35,17 +40,15 @@ function Home({ token }) {
 
         })
 
-
-
     }
 
     return <>
 
         <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} />
         {/* {view === 'spinner' && <Spinner />} */}
-        {view === 'cards' && <PlayerResults resultsPlayers={players} />}
+        {view === 'cards' && <PlayerResults resultsPlayers={players} error={error}/>}
         {view === 'sport' && <SportNews sportNews={sportNews}/>}
-        {error && <Feedback message={error} level="error" />}
+        {/* {error && <Feedback message={error} level="error" />} */}
     </>
 
 }
