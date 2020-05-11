@@ -1,12 +1,12 @@
 const { Component } = React
 
 class App extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
 
         this.state = {
-            view: 'login', 
-            token: undefined
+            view: 'home', 
+            token: "BQCDb_-ZIsPThhYa2grmojihZ5hUNma4voaqG92PnR7KssK_SsMwewjos5Hr5zymxLzViwUD9rqaXwDOPtw_USu_ih0GLUBgLDENOpy_XJ8ZEYrKQ2NO-j-PGo2V-vaj2EbGig"
         }
     }
 
@@ -15,24 +15,26 @@ class App extends Component {
 
     handleLogin = (_token) => {
         this.setState({token: _token})
-        console.log("done")
-        // this.setState({view: 'home'})
+        
+         this.setState({view: 'home'})
     }
     
     handleRegister = () => {
         this.onChangeView('login')
     }
 
-    // handleLogOut = () => {
-    //     sessionStorage.token = undefined
-    //     this.setState({view: 'login'})
-    // }
+   
 
     render() {
         return <>
             {this.state.view === 'login' && <Login onSubmit = {this.handleLogin} onRegister = {this.onChangeView}/>}
             {this.state.view === 'register' && <Register onSubmit = {this.handleRegister} onLogin = {this.onChangeView} />}
-            {/* {this.state.view === 'home' && <Home onLogOut = {this.handleLogOut}/>} */}
+
+            <Navbar onChangeView={this.onChangeView}/>
+
+            {this.state.view === 'home' && <Home />}
+            {this.state.view === 'browser' && <Browser token = {this.state.token}/>}
+            
         </>
 
     }
