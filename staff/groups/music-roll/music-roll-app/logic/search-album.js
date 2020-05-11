@@ -1,4 +1,4 @@
-const token = "BQBoV7__CDAg_U-K1CCT2FSloGE32NtUmnHGx-pzB1_2Q7xT9jkyu4U-EUo0g9vqDVvRXitLIh33EHTJbndvqlHQ-rkOmxUFvUFP8RADZmOPbuo4ddrA-6DrpnId97z6C1R1KDhvyxkBahOloOrjhNJTMd4G9hjoZhfuYpVolh8yY5lp0pjNPgfq"
+/* const token = "BQBoV7__CDAg_U-K1CCT2FSloGE32NtUmnHGx-pzB1_2Q7xT9jkyu4U-EUo0g9vqDVvRXitLIh33EHTJbndvqlHQ-rkOmxUFvUFP8RADZmOPbuo4ddrA-6DrpnId97z6C1R1KDhvyxkBahOloOrjhNJTMd4G9hjoZhfuYpVolh8yY5lp0pjNPgfq"
 
 function searchAlbum(token) {
 
@@ -171,4 +171,4 @@ function searchAlbum(token) {
       "previous": null,
       "total": 3
     }
-  }
+  } */

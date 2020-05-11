@@ -1,67 +1,102 @@
 const {useState} = React
 
-function navbar(){
-
-/*     const [view, setView] = useState('home')
-   
-    const handleOnHome = (event) =>{
+function Navbar({onChangeView }){
+    
+    const [view, setView] = useState('home')
+    
+    /*  const handleOnHome = (event) =>{
         event.preventDefault()
-
+        
         setView('home')
-    }
-    const handleOnBrowser =(event) =>{
+    } */
+    /*  const handleOnBrowser =(event) =>{
         event.preventDefault()
+        
+        onBrowser()  */
+        
+        
+        /*  } */
+        
+        /*  const handleOnPlaylist =(event) =>{
+            event.preventDefault()
+            
+            setView('playlist')
+        }
+        
+        const handleOnFavorites =(event) =>{
+            event.preventDefault()
+            
+            setView('favorites')
+        }
+        
+        const handleOnFriends =(event) =>{
+            event.preventDefault()
+            
+            setView('friends')>XX
+        }
+        
+        const handleOnLogOut =(event) =>{
+            event.preventDefault()
+            
+            setView('login')
+        }
+        */
+        
+        
+        
+        
+        
+        
+    return <nav className="navbar">
+        <ul className="navbar__list">
+            <li className="navbar__item">
+                <div className="navbar__user"></div><a href="" onClick = {event => {
+                    event.preventDefault()
 
-        setView('browser')
-    }
+                    onChangeView('user')
+                }}>Logged User</a> 
+            </li>
+            <li className="navbar__item">
+                <a href="">Home</a>
+            </li>
+            <li className="navbar__item">
+                <a href="" onClick = {event => {
+                    event.preventDefault()
 
-    const handleOnPlaylist =(event) =>{
-        event.preventDefault()
+                    onChangeView('browser')
+                }}>Browser</a>
+            </li>
+            <li className="navbar__item">
+                <a href="" onClick = {event => {
+                    event.preventDefault()
 
-        setView('playlist')
-    }
+                    onChangeView('playlists')
+                }}>Playlists</a>
+            </li>
+            <li className="navbar__item">
+                <a href="" onClick = {event => {
+                    event.preventDefault()
 
-    const handleOnFavorites =(event) =>{
-        event.preventDefault()
+                    onChangeView('favorites')
+                }}>Favorites</a>
+            </li>
+            <li className="navbar__item">
+                <a href="" onClick = {event => {
+                    event.preventDefault()
 
-        setView('favorites')
-    }
+                    onChangeView('friends')
+                }}>Friends</a>
+            </li>
+            <li className="navbar__item">
+                <a href="" onClick = {event => {
+                    event.preventDefault()
 
-    const handleOnFriends =(event) =>{
-        event.preventDefault()
-
-        setView('friends')
-    }
-
-    const handleOnLogOut =(event) =>{
-        event.preventDefault()
-
-        setView('login')
-    }
- 
- */
-
-
-
-
-
-return <section className="navbar">
-                <ul className="navbar__list">
-                    <li className="navbar__item"><div className="navbar__user"></div> Logged User</li>
-                    <li className="navbar__item"><span onHome={handleOnHome}>Home</span></li>
-                    <li className="navbar__item"><span onBrowser={handleOnBrowser}>Browser</span></li>
-                    <li className="navbar__item"><span onPlaylist={handleOnPlaylist}>Playlists</span></li>
-                    <li className="navbar__item"><span onFavorites={handleOnFavorites}>Favorites</span></li>
-                    <li className="navbar__item"><span onFriends={handleOnFriends}>Friends</span></li>
-                    <li className="navbar__item"><span onLogout={handleOnLogOut}>LogOut</span></li>
-                </ul>
-
-                {/* {view === 'home' && <Home/>}
-                {view === 'browser' && <Browser/>}
-                {view === 'playlist' && <Playlists/>}
-                {view === 'favorites' && <Favorites/>}
-                {view === 'friends' && <Friends/>}
-                {view === 'logout' && <Logout/>}
- */}
-            </section>
+                    onChangeView('logout')
+                }}>LogOut</a>
+            </li>
+        </ul>
+    </nav>
+        
+     
+   
 }

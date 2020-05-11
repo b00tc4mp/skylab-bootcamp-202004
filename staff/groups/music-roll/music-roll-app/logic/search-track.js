@@ -1,4 +1,4 @@
-function searchTrack(token, query, callback) {
+function searchTrack(token, query, callback) {debugger
   debugger;
 
   const queryUrl = query
@@ -28,8 +28,8 @@ function searchTrack(token, query, callback) {
           let { preview_url } = items[i];
           let object = { preview_url, name, artistName };
           results.push(object);
-          callback(undefined, results);
         }
+        callback(undefined, results);
       }
     }
   );
