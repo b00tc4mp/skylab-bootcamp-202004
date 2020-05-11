@@ -1,7 +1,7 @@
 const { useState, Component } = React
 
 const App = () => {
-    const [view, setView] = useState(sessionStorage.token ? 'home' : 'landing')
+    const [view, setView] = useState(sessionStorage.token ? 'home' : 'home')
     
     const [token, setToken] = useState(sessionStorage.token)
 
