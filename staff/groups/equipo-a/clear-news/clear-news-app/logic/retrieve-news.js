@@ -6,6 +6,10 @@ function retrieveNews(token, callback) {
 
     let myNews = []
 
+    const numberOfPages = []
+
+    const NEWS_FOR_PAGE = 20
+
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
         undefined,
         { 'Authorization': `Bearer ${token}` },
@@ -68,7 +72,15 @@ function retrieveNews(token, callback) {
                                 callback(new Error(error))
                             }
 
-                            if (counter === _categories.length) callback(undefined, myNews)
+
+                            if (counter === _categories.length){
+
+                                for(let i = 0; i < Math.ceil(myNews.length/NEWS_FOR_PAGE); i++){
+                                    numberOfPages.push(i+1)
+                                }
+
+                                callback(undefined, myNews, numberOfPages)
+                            } 
 
                         })
                 }

@@ -161,6 +161,9 @@
   justify-content: space-between;
   align-items: center;
 }
+.home__nav-bar {
+  display: flex;
+}
 
 .news__images {
   width: 100vw;
@@ -267,5 +270,8 @@
 * {
   margin: 0;
 }
+
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.sass.map */
 
 /*# sourceMappingURL=style.css.map */

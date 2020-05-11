@@ -3,206 +3,117 @@ const { useState } = React
 function Register({ onRegister, onGoToLogin }) {
     const [error, setError] = useState()
 
-    const handleSubmit = event => {
+    const handleSubmit = event => {     
+        event.preventDefault();
         
-        event.preventDefault()
+        let country;
+        let business =false;
+        let entertainment = false;
+        let general = false;
+        let health = false;
+        let science = false;
+        let sports = false;
+        let technology = false;
+ 
+        if (event.target.business.checked) business = Boolean(event.target.business.value);
+        if (event.target.entertainment.checked) entertainment = Boolean(event.target.entertainment.value);
+        if (event.target.general.checked) general = Boolean(event.target.general.value);
+        if (event.target.health.checked) health = Boolean(event.target.health.value);
+        if (event.target.science.checked) science = Boolean(event.target.science.value);
+        if (event.target.sports.checked) sports = Boolean(event.target.sports.value);
+        if (event.target.technology.checked) technology = Boolean(event.target.technology.value);
         
-        
-        let country
-        let business =false
-        let entertainment = false
-        let general = false
-        let health = false
-        let science = false
-        let sports = false
-        let technology = false
-
-        
-        if (event.target.business.checked) business = Boolean(event.target.business.value)
-        if (event.target.entertainment.checked) entertainment = Boolean(event.target.entertainment.value)
-        if (event.target.general.checked) general = Boolean(event.target.general.value)
-        if (event.target.health.checked) health = Boolean(event.target.health.value)
-        if (event.target.science.checked) science = Boolean(event.target.science.value)
-        if (event.target.sports.checked) sports = Boolean(event.target.sports.value)
-        if (event.target.technology.checked) technology = Boolean(event.target.technology.value)
-        
-        
-
         let interests = { business, entertainment, general, health, science, sports, technology }
 
-        let { name, surname, email, password } = event.target
-        debugger
-        name = name.value
-        surname = surname.value
-        email = email.value
-        password = password.value
-
-        switch (event.target.country.value) {
-            case 'Arab Emirates':
-                country = "ea"
-                break;
-            case 'Argentina':
-                country = "ar"
-                break;
-            case 'Austria':
-                country = "at"
-                break;
-            case 'Australia':
-                country = "au"
-                break;
-            case 'Belgica':
-                country = "be"
-                break;
-            case 'Bulgaria':
-                country = "bg"
-                break;
-            case 'Brasil':
-                country = "br"
-                break;
-            case 'Canada':
-                country = "ca"
-                break;
-            case 'Switzerland':
-                country = "ch"
-                break;
-            case 'China':
-                country = "cn"
-                break;
-            case 'Colombia':
-                country = "co"
-                break;
-            case 'Cuba':
-                country = "cu"
-                break;
-            case 'Czch Republica':
-                country = "cz"
-                break;
-            case 'Germany':
-                country = "de"
-                break;
-            case 'France':
-                country = "fr"
-                break;
-            case 'Great Britain':
-                country = "gb"
-                break;
-            case 'Greece':
-                country = "gr"
-                break;
-            case 'Hong Kong':
-                country = "hk"
-                break;
-            case 'Hungary':
-                country = "hu"
-                break;
-            case 'Irlanda':
-                country = "ie"
-                break;
-            case 'Israel':
-                country = "il"
-                break;
-            case 'Italy':
-                country = "it"
-                break;
-            case 'Japan':
-                country = "jp"
-                break;
-            case 'Lituania':
-                country = "lt"
-                break;
-            case 'Letonia':
-                country = "lv"
-                break;
-            case 'Marocco':
-                country = "ma"
-                break;
-            case 'Mexico':
-                country = "mx"
-                break;
-            case 'Malasia':
-                country = "my"
-                break;
-            case 'Nigeria':
-                country = "ng"
-                break;
-            case 'Netherlands':
-                country = "nl"
-                break;
-            case 'Norway':
-                country = "no"
-                break;
-            case 'New Zealand':
-                country = "nz"
-                break;
-            case 'Phillipines':
-                country = "ph"
-                break;
-            case 'Polonia':
-                country = "pl"
-                break;
-            case 'Portugal':
-                country = "pt"
-                break;
-            case 'Rumania':
-                country = "ro"
-                break;
-            case 'Serbia':
-                country = "rs"
-                break;
-            case 'Russia':
-                country = "ru"
-                break;
-            case 'Saudi Arabia':
-                country = "sa"
-                break;
-            case 'Sweden':
-                country = "se"
-                break;
-            case 'Singapur':
-                country = "sg"
-                break;
-            case 'Eslovenia':
-                country = "si"
-                break;
-            case 'Thailand':
-                country = "th"
-                break;
-            case 'Turkey':
-                country = "tr"
-                break;
-            case 'Taiwan':
-                country = "tw"
-                break;
-            case 'Ucrania':
-                country = "ua"
-                break;
-            case 'United States of America':
-                country = "us"
-                break;
-            case 'Venezuela':
-                country = "ve"
-                break;
-            case 'South Africa':
-                country = "za"
-                break;
-            default:
-                throw error
-        }
+        let { name, surname, email, password } = event.target;
+       
+        name = name.value;
+        surname = surname.value;
+        email = email.value;
+        password = password.value;
+        country=turnToIata(event.target.country.value)
+        // switch (event.target.country.value) {     
+        //     case 'International News':
+        //         country = ""
+        //         break;                 
+        //     case 'Argentina':
+        //         country = "ar"
+        //         break;
+        //     case 'Austria':
+        //         country = "at"
+        //         break;
+        //     case 'Australia':
+        //         country = "au"
+        //         break;
+        //     case 'Brasil':
+        //         country = "br"
+        //         break;
+        //     case 'Canada':
+        //         country = "ca"
+        //         break;  
+        //     case 'China':
+        //         country = "cn"
+        //         break;         
+        //     case 'Germany':
+        //         country = "de"
+        //         break;
+        //     case 'France':
+        //         country = "fr"
+        //         break;
+        //     case 'Great Britain':
+        //         country = "gb"
+        //         break;         
+        //     case 'Hong Kong':
+        //         country = "hk"
+        //         break;
+        //     case 'Irlanda':
+        //         country = "ie"
+        //         break;
+        //     case 'Italy':
+        //         country = "it"
+        //         break;
+        //     case 'Japan':
+        //         country = "jp"
+        //         break;
+        //     case 'Marocco':
+        //         country = "ma"
+        //         break;
+        //     case 'Mexico':
+        //         country = "mx"
+        //         break; 
+        //     case 'New Zealand':
+        //         country = "nz"
+        //         break;
+        //     case 'Phillipines':
+        //         country = "ph"
+        //         break;
+        //     case 'Portugal':
+        //         country = "pt"
+        //         break;   
+        //     case 'Russia':
+        //         country = "ru"
+        //         break;
+        //     case 'United States of America':
+        //         country = "us"
+        //         break;
+        //     default:
+        //         throw error
+        // }
         try {
             registerUser(name, surname, email, password, interests, country, error => {
-                if (error) return setError(error.message)
+                if (error) return setError(error.message);
                 
-                onRegister()
+                onRegister();
             })
         } catch ({ message }) {
-            setError(message)
+            setError(message);
         }
     }
 
     const handleGoToLogin = event => {
-        event.preventDefault()
+        event.preventDefault();
         
-        onGoToLogin()
+        onGoToLogin();
     }
 
     return <section className="register">
@@ -217,67 +128,38 @@ function Register({ onRegister, onGoToLogin }) {
 
             <label >Choose your country:</label>
             <select className="register__country" name="country">
-                    <option>Arab Emirates</option> 
+                    <option>International News</option>
                     <option>Argentina</option> 
                     <option>Austria</option>  
-                    <option>Australia</option> 
-                    <option>Belgica</option>
-                    <option>Bulgaria</option>
+                    <option>Australia</option>                    
                     <option>Brasil</option>
-                    <option>Canada</option>
-                    <option>Switzerland</option>
-                    <option>China</option>
-                    <option>Colombia</option>
-                    <option>Cuba</option>
-                    <option>Czch Republica</option>
+                    <option>Canada</option>                    
+                    <option>China</option>                                    
                     <option>Germany</option>
                     <option>France</option>
-                    <option>Great Britain</option>
-                    <option>Greece</option>
-                    <option>Hong Kong</option>
-                    <option>Hungary</option>
-                    <option>Irlanda</option>
-                    <option>Israel</option>
+                    <option>Great Britain</option>                   
+                    <option>Hong Kong</option>                    
+                    <option>Irlanda</option>                    
                     <option>Italy</option>
-                    <option>Japan</option>
-                    <option>Lituania</option>
-                    <option>Letonia</option>
+                    <option>Japan</option>             
                     <option>Marocco</option>
                     <option>Mexico</option>
-                    <option>Malasia</option>
-                    <option>Nigeria</option>
-                    <option>Netherlands</option>
-                    <option>Norway</option>
                     <option>New Zealand</option>
-                    <option>Phillipines</option>
-                    <option>Polonia</option>
-                    <option>Portugal</option>
-                    <option>Rumania</option>
-                    <option>Serbia</option>
-                    <option>Russia</option>
-                    <option>Saudi Arabia</option>
-                    <option>Sweden</option>
-                    <option>Singapur</option>
-                    <option>Eslovenia</option>
-                    <option>Thailand</option>
-                    <option>Turkey</option>
-                    <option>Taiwan</option>
-                    <option>Ucrania</option>
-                    <option>United States of America</option>
-                    <option>Venezuela</option>
-                    <option>South Africa</option>
+                    <option>Phillipines</option>                    
+                    <option>Portugal</option>                                    
+                    <option>Russia</option>               
+                    <option>United States of America</option>                
+                  
             </select>
             <fieldset className="register__checkbox">
-                <legend>Choose your favorite topics</legend>
-                
+                <legend>Choose your favorite topics</legend>            
                 <input type="checkbox" name="business" value="true" />Business<br/>
                 <input type="checkbox" name="entertainment" value="true" />Entertainment<br/>
                 <input type="checkbox" name="general" value="true" />General<br/>
                 <input type="checkbox" name="health" value="true" />Health<br/>
                 <input type="checkbox" name="science" value="true" />Science<br/>
                 <input type="checkbox" name="sports" value="true" />Sports<br/>
-                <input type="checkbox" name="technology" value="true" />Technology<br/>
-                
+                <input type="checkbox" name="technology" value="true" />Technology<br/>    
             </fieldset>
             <section className="resister__nav-button">
             <button className="register__button">Submit</button>
