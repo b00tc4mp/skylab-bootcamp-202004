@@ -1,4 +1,4 @@
-.home__hamburger
+.home__hamburger--menu 
     display: flex
     flex-direction: column
     flex-wrap: wrap
@@ -8,7 +8,7 @@
     cursor: pointer
 
 
-    &__hamburger-bar
+    &__hamburger .bar 
         height: 5px
         background: black
         border-radius: 5px
@@ -16,16 +16,16 @@
         transform-origin: left
         transition: all 0.5s
 
-   
-        &--top:hover
-            transform: rotate(45deg)
-        
-            
-        &--middle:hover 
-            opacity: 0
 
-        &--bottom:hover 
-            transform: rotate(-45deg)
+    &__hamburger-bartop:hover  
+        transform: rotate(45deg)
+
+
+    &__hamburger--barmiddle:hover 
+        opacity: 0
+
+    &__hamburger--barbottom:hover 
+        transform: rotate(-45deg)
 
 .img
     background-color: orange

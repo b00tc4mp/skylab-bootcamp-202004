@@ -31,19 +31,24 @@ class Login extends Component {
     
     render(){
         return <section className="login">
-        <h1>Login</h1>
-            <form onSubmit={this.handleSubmit}>
-                <input type="email" name="email" placeholder="e-mail" required />
-                <input type="password" name="password" placeholder="password" required />
-                <button>Submit</button>
-                or <a href="" onClick={ event => {
+        <div className="login__container">
+          <h1 className="login__header">Login</h1>
+          <hr className="login__divider" />
+          <form onSubmit={this.handleSubmit} className="login__form"> 
+            <label htmlFor="email" className="email-label">Email</label>
+            <input className="login__input login--mail" type="email" name="email" placeholder="john@mail.com" required />
+            <label htmlFor="password">Password</label>
+            <input className="login__input login--pass" type="password" name="password" placeholder="********" required />
+            <button className="login__button">Sign In</button>
+            <a href="" onClick={ event => {
                     event.preventDefault()
             
                     this.props.onRegister('register')
-                }}>Already not a member? Register now!</a> 
-        
-            </form> 
-        </section>
+                }}>Already not a member? Register now!</a>            
+          </form> 
+        </div>
+      </section>
+ 
     }
     
 }

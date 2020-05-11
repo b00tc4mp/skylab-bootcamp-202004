@@ -1,4 +1,4 @@
-.home__hamburger {
+.home__hamburger--menu {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -7,7 +7,7 @@
   width: 2.5rem;
   cursor: pointer;
 }
-.home__hamburger__hamburger-bar {
+.home__hamburger--menu__hamburger .bar {
   height: 5px;
   background: black;
   border-radius: 5px;
@@ -15,13 +15,13 @@
   transform-origin: left;
   transition: all 0.5s;
 }
-.home__hamburger__hamburger-bar--top:hover {
+.home__hamburger--menu__hamburger-bartop:hover {
   transform: rotate(45deg);
 }
-.home__hamburger__hamburger-bar--middle:hover {
+.home__hamburger--menu__hamburger--barmiddle:hover {
   opacity: 0;
 }
-.home__hamburger__hamburger-bar--bottom:hover {
+.home__hamburger--menu__hamburger--barbottom:hover {
   transform: rotate(-45deg);
 }
 

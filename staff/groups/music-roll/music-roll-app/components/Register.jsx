@@ -1,7 +1,7 @@
 
 const { useState } = React
 
-function Register({onLogin}) {
+function Register({onLogin, onSubmit}) {
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -21,20 +21,27 @@ function Register({onLogin}) {
         })
     }
 
-    return <section className="register">
-            <h2>Register</h2>
-            <form onSubmit={handleSubmit}>
-                <input type="text" name="name"></input>
-                <input type="text" name="surname"></input>
-                <input type="text" name="email"></input>
-                <input type="password" name="password"></input>
-                <button>Submit</button>
-            </form> or
-            <a href="" onClick={(event) => {
+    return  <section className="register">
+    <div className="register__container">
+      <h1 className="register__header">Register</h1>
+      <hr className="register__divider" />
+      <form onSubmit={handleSubmit} className="register__form">      
+        <label htmlFor="name">Name</label>          
+        <input className="register__input" type="text" name="name" placeholder="John" />
+        <label htmlFor="surname">Surname</label>
+        <input className="register__input" type="text" name="surname" placeholder="Doe" />
+        <label htmlFor="email">Email</label>
+        <input className="register__input" type="text" name="email" placeholder="john@doe.com" />
+        <label htmlFor="password">Password</label>
+        <input className="register__input" type="password" name="password" placeholder="********" />
+        <button className="register__button">Sing Up</button>
+        <a href="" onClick={(event) => {
                 event.preventDefault()
                 onLogin('login')
-            }}>Go to login</a>
-    </section>    
-
+            }}>Already registered? SignIn now! </a>
+      </form>
+    </div>
+  </section>
+  
 }
 

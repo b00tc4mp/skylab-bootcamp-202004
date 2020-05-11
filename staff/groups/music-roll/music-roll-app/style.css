@@ -1,0 +1,207 @@
+@import url("https://fonts.googleapis.com/css2?family=Trade+Winds&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Trade+Winds&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Trade+Winds&display=swap");
+input -internal-autofill-selected {
+  background-color: none !important;
+}
+
+.login {
+  display: flex;
+  background-image: linear-gradient(to bottom, #d900ff, #008cff);
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.login__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #ffffff49;
+  border-radius: 20px;
+  height: 60vh;
+  width: 80%;
+}
+.login__header {
+  color: #0000008f;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  display: flex;
+  justify-content: center;
+  margin-top: 0;
+}
+.login__divider {
+  width: 80%;
+  height: 0.1rem;
+  margin-top: -3rem;
+  background-color: #0000008f;
+  border: 0;
+}
+.login__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: -2rem;
+}
+.login label {
+  display: flex;
+  align-self: self-start;
+  margin-left: 1rem;
+  color: #00000088;
+  content-shadow: 0 0 10px dodgerBlue;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.login__input {
+  margin: 0.5rem;
+  width: 15rem;
+  height: 2.5rem;
+  padding-left: 1rem;
+  border-radius: 20px 0 20px 0;
+  border: 0;
+  background-color: #ffffff5b;
+  transition: 1s ease;
+}
+.login__input:valid {
+  background-color: #ffffff5b;
+}
+.login__input:focus {
+  transition: all 1s ease;
+  border-radius: 0;
+  box-shadow: 0 0 10px dodgerBlue;
+}
+.login--mail:hover + label[for=email] {
+  color: red;
+}
+.login__button {
+  justify-content: center;
+  border-radius: 30px;
+  border: 0;
+  margin: 2rem 1rem 1rem 1rem;
+  background-color: #ffffff3f;
+  height: 2rem;
+  width: 35%;
+}
+.login__button:hover {
+  transition: 0.4s ease all;
+  width: 40%;
+}
+.login a {
+  cursor: pointer;
+  position: absolute;
+  height: 2rem;
+  margin: 3rem 0 0 2rem;
+  color: black;
+  font-size: 0.7rem;
+}
+.login a:active {
+  transition: 0.35s ease;
+  color: blue;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+input -internal-autofill-selected {
+  background-color: none !important;
+}
+
+.register {
+  display: flex;
+  background-image: linear-gradient(to bottom, #d900ff, #008cff);
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.register__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #ffffff49;
+  border-radius: 20px;
+  height: 70vh;
+  width: 80%;
+}
+.register__header {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: #0000008f;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+.register__divider {
+  width: 80%;
+  height: 0.1rem;
+  background-color: #0000008f;
+  border: 0;
+}
+.register__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.register label {
+  display: flex;
+  align-self: self-start;
+  margin-left: 1rem;
+  color: #00000088;
+  content-shadow: 0 0 10px dodgerBlue;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.register__input {
+  margin: 0.5rem;
+  width: 15rem;
+  height: 2.5rem;
+  padding-left: 1rem;
+  border-radius: 20px 0 20px 0;
+  border: 0;
+  background-color: #ffffff5b;
+  transition: 1s;
+}
+.register__input:valid {
+  background-color: #ffffff5b;
+}
+.register__input:focus {
+  transition: all 1s ease;
+  border-radius: 0;
+  box-shadow: 0 0 10px dodgerBlue;
+}
+.register--mail:hover + label[for=email] {
+  color: red;
+}
+.register__button {
+  justify-content: center;
+  border-radius: 30px;
+  border: 0;
+  margin: 2rem 1rem 1rem 1rem;
+  background-color: #ffffff3f;
+  height: 2rem;
+  width: 35%;
+}
+.register__button:hover {
+  transition: 0.4s ease all;
+  width: 40%;
+}
+.register a {
+  cursor: pointer;
+  position: absolute;
+  height: 2rem;
+  margin: 7.8rem 0 0 2rem;
+  color: black;
+  font-size: 0.7rem;
+  text-decoration: none;
+}
+.register a:active {
+  transition: 0.35s ease;
+  color: blue;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+/*# sourceMappingURL=style.css.map */

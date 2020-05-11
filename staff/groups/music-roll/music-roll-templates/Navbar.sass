@@ -1,6 +1,7 @@
 *
     box-sizing: border-box
     margin: 0
+    
 .navbar
     height: 100vh
     width: 30%
@@ -20,7 +21,7 @@
         justify-content: space-between
         width: 100%
         padding: 0
-        border: 3px solid red
+        // border: 3px solid red
         
         
     &__item
@@ -35,15 +36,50 @@
         background-color: #505050
         transition:  all 2s
     
-    &__item:active
-        display:block
-        background-image: linear-gradient(to right, #7F00FF, #E100FF)
-        z-index: 2
-        transition: ease-in 5s
+//     &__item:active
+//         display: block
+//         background-image: linear-gradient(to right, #7F00FF, #E100FF)
+//         z-index: 2
+//         transition: ease-in 5s
    
-    :nth-child(2)
-        margin-top: 2rem 
-    :nth-child(7)
-        margin-top: 60vh            
+//     :nth-child(2)
+//         // margin-top: 2rem 
+//     :nth-child(7)
+//         margin-top: 55vh            
+
+
+
+//Hamburguer button
+
+.hamburguer 
+    display: flex
+    flex-direction: column
+    flex-wrap: wrap
+    justify-content: space-between
+    height: 2.5rem
+    width: 2.5rem
+    cursor: pointer
+    background-color: white
+
+    &__bar 
+        height: 5px
+        background: black
+        border-radius: 5px
+        margin: 3px 0px
+        transform-origin: left
+        transition: all 0.5s
+
+    &__bar:hover > &--top
+        
+        transform: rotate(45deg)
+
+    &--top:hover  
+        transform: rotate(45deg)
+
+    &--middle:hover 
+        opacity: 0
+
+    &--bottom:hover 
+        transform: rotate(-45deg)
 
 
