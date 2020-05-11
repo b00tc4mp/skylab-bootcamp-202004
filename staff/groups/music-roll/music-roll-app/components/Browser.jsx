@@ -3,6 +3,7 @@ const { useState, useEffect } = React
 function Browser({ token }) {
 
     const [trackResults, setTrackResults] = useState(undefined)
+    const [albumResults, setAlbumResults] = useState(undefined)
 
     const handleSubmit = (event) => {
         debugger
@@ -12,20 +13,28 @@ function Browser({ token }) {
         const browserquery = query.value
 
 
-        if (browser === 'album') searchAlbum()
+        if (browser === 'album') {
+            searchAlbum(token, browserquery, (error, results) => {
+              
+                    if(error)console.log(error)
+                    
+                    setAlbumResults(results)
+                
+            })
+        }
         if (browser === 'artist') searchArtist()
 
 
        
         if (browser === 'track') searchTrack(token, browserquery, (error, results) => {
            
-            try{
+            
                 if (error) console.log(error)
 
                 setTrackResults(results)
-            }catch{
+            
                 console.error("fail")
-            }
+            
             
         })
   
@@ -48,6 +57,7 @@ function Browser({ token }) {
         </form>
         <section className="results">
             {trackResults && <TrackResults results={trackResults} />}
+            {albumResults && <AlbumResults results={albumResults}  token= {token}  />}
         </section>
 
     </section>
