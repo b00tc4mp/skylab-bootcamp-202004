@@ -5,8 +5,8 @@ function App(){
     let [view, setView] = useState('landing')
     let [login, setLogin] = useState(false)
     let [token, setToken] = useState(undefined)
-    let [results, setResults] = useState(undefined)
     let [card, setCard] = useState(undefined)
+    let [searchConditions, setSearchConditions] = useState(undefined)
 
     function handleLogin() {
         setView('login')
@@ -30,18 +30,13 @@ function App(){
     }
 
     function onBasicSearch(event){
-        const searchInputs = {name: event.target.query.value}
-        // To define inputs for search apart from callback
-        searchCard(searchInputs,(error, searchResults) =>{
-            setResults(searchResults)
-            // searchResults.length>1 ? setView('results'): setView('card') 
-            setView('results')
-        })
+        setSearchConditions({name: event.target.query.value})
+        setView('results')
     }
 
     function onAdvancedSearch(event){
         const form = event.target 
-        let searchInputs = {
+        setSearchConditions({
             order:form.order.value,
             dir:"",
             name: form.cardname.value, 
@@ -50,6 +45,7 @@ function App(){
             color: (form.W.checked?form.W.value:'') + (form.U.checked?form.U.value:'') + 
             (form.B.checked?form.B.value:'') + (form.R.checked?form.R.value:'') + 
             (form.G.checked?form.G.value:'') + (form.C.checked?form.C.value:''), 
+            colorLimit: form.color_comparison.value,
             mana: form.manacost.value, 
             cmc: form.stat_1.value === "cmc" && form.statnumber.value, 
             power: form.stat_1.value === "pow" && form.statnumber.value, 
@@ -66,13 +62,8 @@ function App(){
             flavor: form.flavortext.value, 
             lore: form.lore.value, 
             language: form.languages.value
-        }
-
-        searchCard(searchInputs,(error, searchResults) =>{
-            setResults(searchResults)
-            // searchResults.length>1 ? setView('results'): setView('card') 
-            setView('results')
         })
+        setView('results')
     }
 
     function onCardClick(card){
@@ -90,7 +81,7 @@ function App(){
         {view==='landing' && <Landing onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch} onLogOut={handleLogOut} token={token} onAdvSearch = {handleAdvSearch}/>}
         {view==='login' && <Login onSubmit = {handleLoggedIn} onRegister = {handleRegister} onLanding={handleLanding}/>}
         {view==='register'  && <Register onLogin = {handleLogin} onLanding={handleLanding}/>}
-        {view === 'results' && <Results results = {results} onCardClick = {onCardClick}/>}
+        {view === 'results' && <Results onCardClick = {onCardClick} searchConditions={searchConditions} setSearchConditions={setSearchConditions}/>}
         {view === 'adv' && <Search onAdvancedSearch = {onAdvancedSearch}/>}
         {view === 'card' && <Card card = {card}/>}
     </>

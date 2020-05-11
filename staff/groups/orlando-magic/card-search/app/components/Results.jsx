@@ -1,10 +1,49 @@
 const {useState, useEffect} = React
 
-function Results({results, onCardClick}){
+function Results({onCardClick, searchConditions, setSearchConditions}){
+  let [errorResults, setErrorResults] = useState(undefined)
+  let [results, setResults] = useState(undefined)
 
+  useEffect(()=>{
+   
+    try{
+      searchCard(searchConditions,(error, searchResults) =>{
+        if(error) setErrorResults(error.message)
+        setResults(searchResults)
+        // searchResults.length>1 ? setView('results'): setView('card') 
+      })
+    } catch (error) {
+      if (error) {
+        setErrorResults(error.message)
+        setResults([])
+      }
+    }
+  },[searchConditions])
+
+  const handleOrder = event => {
+    
+    event.preventDefault()
+    searchConditions.order = event.target.order.value
+    searchConditions.dir = event.target.dir.value
+    setSearchConditions(searchConditions)
+
+    try{
+      searchCard(searchConditions,(error, searchResults) =>{
+        if(error) setErrorResults(error.message)
+        setResults(searchResults)
+        // searchResults.length>1 ? setView('results'): setView('card') 
+      })
+    } catch (error) {
+      if (error) {
+        setErrorResults(error.message)
+        setResults([])
+      }
+    }
+  }
+  
   return <section className="results">
     <header className="results__header">
-      <form>
+      <form onSubmit = {handleOrder}>
         <div className="results__header--option">
           <a>Sort By</a>
           <select id="order" className="select-n">
@@ -23,7 +62,7 @@ function Results({results, onCardClick}){
         <div className="results__header--option">
           <a>Direction</a>
           <select id="dir">
-            <option value>Auto</option>
+            <option value = "">Auto</option>
             <option value="asc">Ascendant</option>
             <option value="desc">Descendant</option>
           </select>
@@ -41,8 +80,9 @@ function Results({results, onCardClick}){
       is greater than or equal to {"{"}1{"}"} and the converted mana cost &lt; 10
       and it’s legal in Vintage and the rarity is equal to common
     </article>
+    {errorResults && !results.length && <Feedback message= {errorResults} level = "warning"/>}
     <ul className = 'results__cards'>
-      {results.map(card => <li key={card.id}><a onClick = {() => {onCardClick(card)}}>
+      {results && results.map(card => <li key={card.id}><a onClick = {() => {onCardClick(card)}}>
           <img className = "results__cards--card" src = {card.image_uris? card.image_uris.png || card.image_uris.large : (card.card_faces[0].image_uris.png || card.card_faces[0].image_uris.large)}/>
       </a></li>)}
     </ul> 

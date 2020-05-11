@@ -42,7 +42,7 @@ function Landing({onLogin, onRegister, onLogOut, token, onAdvSearch, onBasicSear
                 setError(message)
             }
         }
-    })
+    }, [token])
 
     return <>
         <div className='section-container'>
