@@ -1,4 +1,4 @@
 function Spinner() {
-    return <section className="spinner">  <img class="spinner__img" src="img/spinner.gif" /></section>
+    return <section className="spinner">  <img className="spinner__img" src="img/spinner.gif" /></section>
   
 }

@@ -13,7 +13,7 @@ function registerUser(name,surname,email,password,confirmPassword,callback){
 
     call('POST',
         'https://skylabcoders.herokuapp.com/api/v2/users',
-        `{"name":"${name}","surname":"${surname}","username":"${email}","password":"${password}"} `,
+        `{"name":"${name}","surname":"${surname}","username":"${email}","password":"${password}", "app":"footify"} `,
         {'Content-type':'application/json'},
         (error,status,body)=>{
             if(error) return callback(error);

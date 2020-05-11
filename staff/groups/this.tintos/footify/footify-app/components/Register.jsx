@@ -15,12 +15,12 @@ function Register({ onGoToLogin, onGoToLanding }) {
     const handleSubmitRegister = (event) =>{
         event.preventDefault()
 
-        let{name,surname,email,password,confirmPassword} = event.target()
+        let{name,surname,email,password,confirmPassword} = event.target
 
         name = name.value
         surname = surname.value
         email = email.value
-        password = name.value
+        password = password.value
         confirmPassword = confirmPassword.value
 
         try{
@@ -41,13 +41,13 @@ function Register({ onGoToLogin, onGoToLanding }) {
                 <div className="register__logo">
                     <img src="img/logo.svg" className="register__logo-item" />
                 </div>
-                <form action className="register__input" onSubmit={handleSubmitRegister}>
+                <form className="register__input" onSubmit={handleSubmitRegister}>
                     <h1 className="register__title">REGISTER</h1>
-                    <input type="text" className="register__input-item" placeholder="name*" />
-                    <input type="text" className="register__input-item" placeholder="surname*" />
-                    <input type="text" className="register__input-item" placeholder="email*" />
-                    <input type="password" className="password" className="register__input-item" placeholder="password*" />
-                    <input type="password" className="password" className="register__input-item" placeholder="confirm password*" />
+                    <input type="text" name="name" className="register__input-item" placeholder="name*" />
+                    <input type="text" name="surname" className="register__input-item" placeholder="surname*" />
+                    <input type="text" name="email" className="register__input-item" placeholder="email*" />
+                    <input type="password" name="password" className="password" className="register__input-item" placeholder="password*" />
+                    <input type="password" name="confirmPassword" className="password" className="register__input-item" placeholder="confirm password*" />
                     <button className="register__input-button">REGISTER</button>
                     {error && <Feedback message={error} level="error" />}
                 </form>

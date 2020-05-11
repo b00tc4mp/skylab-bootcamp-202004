@@ -1,3 +1,4 @@
+
 const { useState } = React;
 
 function PlayerResults({resultsPlayers, token, onToggleFollowPlayer, queryPlayer, likesUser}) {
@@ -60,4 +61,5 @@ function PlayerResults({resultsPlayers, token, onToggleFollowPlayer, queryPlayer
             </section>
         </>
     );
+
 }

@@ -1,7 +1,6 @@
 function SportNews({ sportNews }) {
 
-
-
+if(!sportNews) return <Spinner />
     return <>
         <section className="sport-news">
             {
