@@ -21,6 +21,9 @@
     <script src="vendor/mocha/mocha.js"></script>
     <script src="vendor/chai/chai.js"></script>
 
+
+    
+
     <script class="mocha-init">
         mocha.setup('bdd')
         mocha.checkLeaks()
@@ -29,6 +32,11 @@
         const { expect } = chai
     </script>
 
+    <script src="logic/authenticate-user.js"></script>
+    <script src="logic/retrieve-user-groups.js"></script>
+
+
+    <script src="logic/retrieve-user-groups.spec.js"></script>
     
     
     <script class="mocha-exec">
