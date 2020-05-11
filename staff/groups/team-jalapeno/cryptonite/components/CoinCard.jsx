@@ -18,4 +18,4 @@ function CoinCard({ id, rank, symbol, name, priceUsd, changePercent24Hr, handleC
             <span className="coin__percentage">{getChangePrice24Hr(priceUsd, changePercent24Hr)}$ ({changePercent24Hr}%)</span>
         </div>
     </div>
-}
+}         

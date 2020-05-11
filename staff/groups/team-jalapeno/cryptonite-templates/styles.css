@@ -8,6 +8,7 @@ body {
   background: #1c1c1c;
   color: white;
   font-family: "Work Sans", sans-serif;
+  height: 100vh;
 }
 
 .nav {
@@ -39,6 +40,25 @@ body {
 }
 .brand__description {
   text-align: center;
+}
+
+.nav-bar {
+  background: #f7ce78;
+  padding: 0.5em 3em;
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+}
+.nav-bar__item {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: black;
+}
+.nav-bar__item i {
+  font-size: 2em;
 }
 
 .footer {

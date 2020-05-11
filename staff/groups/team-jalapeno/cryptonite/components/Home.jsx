@@ -14,8 +14,8 @@ function Home() {
 
   const handleCheckHash = () => {
     let coinName = window.location.hash
-    if(coinName) {
-        setView('coin-page')
+    if (coinName) {
+      setView('coin-page')
     } else setView('cryptos-list')
   }
 
@@ -25,15 +25,15 @@ function Home() {
 
     window.addEventListener('hashchange', handleCheckHash)
     return () => {
-        window.removeEventListener('hashchange', handleCheckHash)
+      window.removeEventListener('hashchange', handleCheckHash)
     }
-}, [])
+  }, [])
 
-    const handleClickCoin = (coinName) => {
-        if(!coinName) return
-        window.location.hash = coinName
-        setView('coin-page')
-    }
+  const handleClickCoin = (coinName) => {
+    if (!coinName) return
+    window.location.hash = coinName
+    setView('coin-page')
+  }
 
   const handleSearchOnChange = (event) => {
     const {
@@ -51,19 +51,28 @@ function Home() {
 
     setView('favorites-page')
   }
-  
+
+  const handlePortfolioSubmit = (id, quantity) => {
+    addPortfolioCrypto(sessionStorage.token, { id, quantity }, () => {
+      if (error) throw error // TODO HANDLE THIS ERROR
+
+    })
+
+  }
+
+
 
   return (
     <>
       {view === "cryptos-list" && (
         <>
-        <nav className="nav">
-          <a href="" className="nav__item nav__item--contrast register-link"></a>
-          <a href="" className="nav__item logout-link">
-            Logout
+          <nav className="nav">
+            <a href="" className="nav__item nav__item--contrast register-link"></a>
+            <a href="" className="nav__item logout-link">
+              Logout
           </a>
-        </nav>
-          
+          </nav>
+
           <CryptosListPage
             handleSearchOnChange={handleSearchOnChange}
             cryptos={cryptos}
@@ -73,7 +82,7 @@ function Home() {
         </>
       )}
 
-      {view === 'coin-page' && <CoinPage />}
+      {view === 'coin-page' && <CoinPage addPortfolioSubmit={handlePortfolioSubmit} />}
       {view === 'favorites-page' && <FavoritesPage />}
 
       <footer className="footer">
@@ -83,8 +92,10 @@ function Home() {
           </p>
         </section>
       </footer>
+
+      <NavBar />
     </>
 
-    
+
   );
 }

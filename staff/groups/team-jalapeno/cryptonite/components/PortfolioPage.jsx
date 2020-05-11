@@ -8,6 +8,7 @@ function PortfolioPage() {
         <section className="portfolio">
             <h1 className="portfolio__money">1.752,21$</h1>
             <h4 className="portfolio__stats"><span className="portfolio__stats--contrast">+121,40$ (8.3%)</span> Last 24h</h4>
+
         </section>
         <section className="crypto-coins">
             <h3 className="crypto-coins__title">My Portfolio</h3>
