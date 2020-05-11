@@ -2,17 +2,49 @@
     @extend %panel
 
     width: 100vw
-
-    &__link
-        background-color: #A6ACAF
-        display: flex
-        justify-content: space-between
-        align-items: center
     
     &__nav-bar
+        display: grid
+        grid-template-columns: repeat(6, 1fr)
+        height: 40px
+        width: 100%
+        margin-bottom: 1rem
+        
+    &__logo
+        width: 30%
+        margin-left: 30%
+    
+    &__user-name
+        font-size: 70%
         display: flex
-        
-        
+        justify-content: center
+        align-items: center
+        background-color: #a67bb8
+        color: white
+        border: 0.1rem solid #5B2C6F
+
+    &__link
+        display: flex
+        justify-content: center
+        align-items: center
+        padding: 0.5rem
+        text-decoration: none
+        font-size: 70%
+        border: 0.1rem solid #5B2C6F
+
+        &--active
+            background-color: #5B2C6F
+            color: white
+    
+    &__logout
+        background-color:#5B2C6F
+        color: white
+        border-radius: 10px
+        font-size: 2.5vw
+        padding: 0.3rem
+        width: 15vw
+        margin-bottom: 1rem
+
     
     // &__menu
     //     display: flex

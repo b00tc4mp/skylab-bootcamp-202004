@@ -7,10 +7,11 @@ function Pages({ pages, handleCurrentPage }) {
        handleCurrentPage(_id)
     }
 
-    return <section className="news__pages">
+    //revisar cambiar el class name dependiendo en que pagina estamos
+    return <section className="pages">
             {
                 pages.map(number => 
-                    <button id={`${number}`} key={number} onClick={event=>{
+                    <button className={`pages__button ${handleCurrentPage === number ? 'pages__button--active':''}`} id={`${number}`} key={number} onClick={event=>{
                         event.preventDefault()
                         let _id = event.target.id
                         handleClick(_id)}}>{number}</button>

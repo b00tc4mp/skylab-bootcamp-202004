@@ -41,9 +41,10 @@ function TopHeadlines({ news, pages, myHeadlines, token }) {
         {
           
             news && <ul className="news__container"> 
-                {news.map(({ name, title, url, urlToImage,favorites }) =>
+                {newsForPage(news, currentPage).map(({ name, title, url, urlToImage,favorites }) =>
                     <li className="news__item" key={title}>
-                        <a href={url} target='_blank'><img className="news__images" src={urlToImage}></img>
+                        <a href={url} target='_blank'><img className="news__images" src={urlToImage} alt="
+Image not available for your region"></img>
                             <div className="news__title stroke"><p className="stroke">{name}</p><p className="stroke"> {title}</p></div></a>
                             <div className="news__button"> <input type="image" className="news__followIMG" src={favorites? "images/heart-follow.png" : "images/heart-unfollow.png"} onClick={() => handleLikeNews(title)} /></div>
 
