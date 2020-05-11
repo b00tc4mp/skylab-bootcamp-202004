@@ -52,6 +52,15 @@ function Home() {
     setView('favorites-page')
   }
 
+  const handlePortfolioSubmit = (id, quantity) => {
+    addPortfolioCrypto(sessionStorage.token, { id, quantity }, () => {
+      if (error) throw error // TODO HANDLE THIS ERROR
+
+    })
+
+  }
+
+
 
   return (
     <>
@@ -73,7 +82,7 @@ function Home() {
         </>
       )}
 
-      {view === 'coin-page' && <CoinPage />}
+      {view === 'coin-page' && <CoinPage addPortfolioSubmit={handlePortfolioSubmit} />}
       {view === 'favorites-page' && <FavoritesPage />}
 
       <footer className="footer">

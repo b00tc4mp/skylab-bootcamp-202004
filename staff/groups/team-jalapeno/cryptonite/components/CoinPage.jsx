@@ -1,46 +1,82 @@
 const { useEffect, useState } = React;
 
-function CoinPage() {
+function CoinPage({ addPortfolioSubmit }) {
     const [crypto, setCrypto] = useState(null)
     const [error, setError] = useState(null)
     const [ohlc, setOhlc] = useState(null)
     const [isFav, setIsFav] = useState(false)
+    const [inPortfolio, setInPortfolio] = useState(false)
 
-    
+
     useEffect(() => {
         let coinName = window.location.hash
         if (!coinName) return
-        
+
         coinName = coinName.substring(1)
-        
+
         retrieveCrypto(coinName, (_error, _crypto) => {
             if (_error) setError(_error.message);
             setCrypto(_crypto);
             checkFavorite(_crypto.id)
         });
-        
-        
+
+
         retrieveOhlc(coinName, (_error, _data) => {
             if (_error) setError(_error.message);
             else setOhlc(_data);
         })
-        
+
+
     }, [])
-    
+
+    useEffect(() => {
+        getPortfolioCoin()
+    }, [crypto])
+
     const checkFavorite = (cryptoId) => {
         retrieveUser(sessionStorage.token, (_error, _user) => {
             if (_error) setError(_error.message);
-            const {favorites} = _user
+            const { favorites } = _user
             setIsFav(favorites.includes(cryptoId || crypto.id))
         });
 
     }
-    
+
     const handleToggleFav = () => {
         toggleFavorite(sessionStorage.token, crypto.id, (_error) => {
             if (_error) setError(_error.message);
             checkFavorite()
         })
+    }
+
+    const addSubmit = (event) => {
+        event.preventDefault()
+
+        let quantity = event.target.quantity.value;
+        quantity = Number(quantity)
+
+        addPortfolioSubmit(crypto.id, quantity, () => {
+            if (error) throw error
+
+            getPortfolioCoin()
+        })
+
+    }
+
+    const getPortfolioCoin = () => {
+        retrieveUser(sessionStorage.token, (error, user) => {
+            if (error) throw error //TODO handle error
+
+            console.log(user.portfolio, crypto)
+
+            const portfolioCoin = user.portfolio.find(coin => crypto.id === coin.id)
+            if (portfolioCoin) {
+                setInPortfolio(`${portfolioCoin.quantity} ${crypto.symbol}`)
+
+            }
+        })
+
+        // '4 BTC'
     }
 
 
@@ -53,6 +89,7 @@ function CoinPage() {
                 </nav>
                 <section className="portfolio">
                     <h1 className="coinpage-header__name">{crypto.name}</h1>
+                    {inPortfolio && <h4 className="portfolio__stats">In Portfolio: {inPortfolio}</h4>}
                     {ohlc && <div className="coinpage-header__stats">
                         <span className="coinpage-header__stats--contrast">Open: {Number(ohlc.open).toFixed(3)}$</span>
                         <span className="coinpage-header__stats--contrast">High: {Number(ohlc.high).toFixed(3)}$</span>
@@ -60,7 +97,12 @@ function CoinPage() {
                         <span className="coinpage-header__stats--contrast">Close: {Number(ohlc.close).toFixed(3)}$</span>
                     </div>}
                     {!ohlc && <p>Loading...</p>}
-                    <button onClick={handleToggleFav} className="coinpage-header__button">{isFav ?  'Remove from Favorites': 'Add to Favorites'}</button>
+                    <button onClick={handleToggleFav} className="coinpage-header__button">{isFav ? 'Remove from Favorites' : 'Add to Favorites'}</button>
+                    <form action="" name="add-portfolio" className="portfolio__input" onSubmit={addSubmit} >
+                        <input type="number" name="quantity" id="" placeholder="Quantity" />
+                        <button className="coinpage-header__button" type="submit">Add to Portfolio <i className="fa fa-bitcoin"></i></button>
+
+                    </form>
                 </section>
             </section>
             {/* TradingView Widget BEGIN */}
