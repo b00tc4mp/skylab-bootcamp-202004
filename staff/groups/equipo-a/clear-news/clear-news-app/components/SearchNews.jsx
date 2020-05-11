@@ -2,6 +2,8 @@ const {useState} = React
 
 function SearchNews({ onSearch, searchNewsResults, query, language, sortBy, token}) {
 
+    // const [count, setCount] = useState(0)
+
     function handleSubmit(event) {
         event.preventDefault()
 
@@ -38,9 +40,11 @@ function SearchNews({ onSearch, searchNewsResults, query, language, sortBy, toke
                 throw error
         }
         try{
-        searchNews(token, query, language, sortBy, 0, (error, searchNewsResults) =>{
+        searchNews(token, query, language, sortBy, count, (error, searchNewsResults) =>{
             if (error) throw Error
-            onSearch(searchNewsResults, query, language, sortBy)
+            // count = count + 1
+            // setCount(count)
+            onSearch(searchNewsResults, query, language, sortBy, count)
         })
         }catch(error){
             if(error) throw error
@@ -69,5 +73,6 @@ function SearchNews({ onSearch, searchNewsResults, query, language, sortBy, toke
             <button>Search</button>
         </form>
         {searchNewsResults && <NewsResults token={token} results={searchNewsResults} onSearch={onSearch} query={query} language={language} sortBy={sortBy}/>}
+        {/* <button onClick = {handleSubmit}>More News</button> */}
     </section>
 }
