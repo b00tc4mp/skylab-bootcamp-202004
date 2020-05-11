@@ -9,18 +9,25 @@ function Home({ token }) {
     // const [loading, setLoading] = useState(true)
     const [likes, setLikes] = useState()
     const [sportNews, setSportNews] = useState()
+    const [follow, setFollow] = useState()
 
 
     const handleGoToPlayerResults = (queryPlayer) => {
         try {
             searchPlayers(queryPlayer, (error, resultsPlayer) => {
-                if (error) return SetError(error.message)
+                if (error) return setError(error.message)
 
                 searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => {
-                    if (error) return SetError(error.message)
+                    if (error) return setError(error.message)
                     setPlayers(resultLikes)
                     
                 })
+
+                toogleFollowPlayer(token, playerId, (error, followPlayer) => {
+                    if (error) return setError(error.message)
+                    setFollow(followPlayer)
+                })     
+
                 setView('cards')
             })
         } catch ({ message }) {
@@ -43,7 +50,7 @@ function Home({ token }) {
 
         <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} />
         {/* {view === 'spinner' && <Spinner />} */}
-        {view === 'cards' && <PlayerResults resultsPlayers={players} />}
+        {view === 'cards' && <PlayerResults resultsPlayers={players} followPlayer={followPlayer}/>}
         {view === 'sport' && <SportNews sportNews={sportNews}/>}
         {error && <Feedback message={error} level="error" />}
     </>

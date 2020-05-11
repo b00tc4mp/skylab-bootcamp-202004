@@ -1,7 +1,7 @@
 const { useState } = React
 
 
-function PlayerResults({ resultsPlayers}) {
+function PlayerResults({ resultsPlayers, followPLayer}) {
 
 if(!resultsPlayers) return <Spinner />
     return <>
@@ -34,7 +34,7 @@ if(!resultsPlayers) return <Spinner />
                                     <h3 className="player-card__country">Country:  <span className="player-card__country-answer">{born}</span></h3>
                                     <h3 className="player-card__birth">Date of birth:  <span className="player-card__birth-answer">{date}</span></h3>
                                     <a className="player-card__like">
-                                        <img src="img/heart.svg" alt="" />
+                                        {followPLayer ? <img src="img/heart.svg" alt="" /> : <img src="img/heart_onclick.svg" alt="" /> }
                                     </a>
                                     <h4 className="player-card__count">{likes}</h4>
                                 </div>
