@@ -7,13 +7,21 @@ function Home({ token }) {
     const [error, setError] = useState()
     const [emblem, setEmblem] = useState()
     // const [loading, setLoading] = useState(true)
-    const [likes, setLikes] = useState()
+    const [likesUser, setLikesUser] = useState()
     const [sportNews, setSportNews] = useState()
-    const [follow, setFollow] = useState()
-
+    const [queryPlayer, setQueryPlayer] = useState()
+    
 
     const handleGoToPlayerResults = (queryPlayer) => {
+        
+        retrieveUser(token, (error, user) =>{
+            const {likes} = user
+            setLikesUser(likes)
+          })
+
+        setQueryPlayer(queryPlayer)
         try {
+
             searchPlayers(queryPlayer, (error, resultsPlayer) => {
                 if (error) return setError(error.message)
 
@@ -23,10 +31,10 @@ function Home({ token }) {
                     
                 })
 
-                toogleFollowPlayer(token, playerId, (error, followPlayer) => {
-                    if (error) return setError(error.message)
-                    setFollow(followPlayer)
-                })     
+                // isPlayerfollowed(token, playerId, (error, followPlayer) => {
+                //     if (error) return setError(error.message)
+                //     setFollow(followPlayer)
+                // })   
 
                 setView('cards')
             })
@@ -41,16 +49,17 @@ function Home({ token }) {
             setView('sport')
 
         })
+    }
 
-
-
+    const handleToggleFollowPlayers = () =>{
+        handleGoToPlayerResults(queryPlayer)
     }
 
     return <>
 
         <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} />
         {/* {view === 'spinner' && <Spinner />} */}
-        {view === 'cards' && <PlayerResults resultsPlayers={players} followPlayer={followPlayer}/>}
+        {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} queryPlayer={queryPlayer} likesUser={likesUser}/>}
         {view === 'sport' && <SportNews sportNews={sportNews}/>}
         {error && <Feedback message={error} level="error" />}
     </>

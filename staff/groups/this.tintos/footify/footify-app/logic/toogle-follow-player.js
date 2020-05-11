@@ -1,51 +1,38 @@
 function toogleFollowPlayer(token, playerId, callback) {
-    String.validate.notVoid(token)
-    String.validate.notVoid(playerId)
-    Function.validate(callback)
+  String.validate.notVoid(token);
+  String.validate.notVoid(playerId);
+  Function.validate(callback);
 
-    call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined,
-    { Authorization: `Bearer ${token}`}, (error, status, body) => {
-        if(error) return callback(error)
+  call("GET","https://skylabcoders.herokuapp.com/api/v2/users",undefined,
+    { Authorization: `Bearer ${token}` }, (error, status, body) => {
+      if (error) return callback(error);
 
-        if (status === 200) {
-            call('GET', `https://skylabcoders.herokuapp.com/api/v2/users/${playerId}`),
-            undefined, { Authorization: `Bearer ${token}`}, (error, status) => {
-                if (error) return callback(error)
+      if (status === 200) {
+        const user = JSON.parse(body);
 
-                if (status === 200) {
-                    const user = JSON.parse(body)
+        const { likes } = user
 
-                    const { favPlayer = [] } = user 
+        const actualIndex = likes.indexOf(playerId);
 
-                    const actualIndex = favPlayer.indexOf(playerId)
+        if (actualIndex !== -1) likes.splice(actualIndex, 1);  
+        else likes.push(playerId)
+        user.likes = likes
 
-                    if(actualIndex !== -1) favPlayer.splice(actualIndex, 1)
-                    else favPlayer.push(actualIndex)
+        call("PATCH", "https://skylabcoders.herokuapp.com/api/v2/users", JSON.stringify( user ),
+          { Authorization: `Bearer ${token}`, "Content-type": "application/json"},
+          (error, status, body) => {
+            if (error) return callback(error);
 
-                    call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify({favPlayer}), 
-                    { Authorization: `Bearer ${token}`, 'Content-type': 'aplication/json'}, 
-                    (error, status, body) => {
-                        if(error) return callback(error)
+            if (status === 204) {
+              callback(undefined, likes);
+            } else {
+              const { error } = JSON.parse(body);
 
-                        if(status === 204) {
-                            callback()
-                        } else {
-                            const { error } = JSON.parse(body)
-                            
-                            callback(new Error(error))
-                        }
-                    }
-                     )
-                } else {
-                    const { error } = JSON.parse(body)
-
-                    callback(new Error(error))
-                }
+              callback(new Error(error));
             }
-        } else {
-            const { error } = JSON.parse(body)
-
-            callback(new Error(error))
-        }
-    })
+          }
+        );
+      }
+    }
+  );
 }

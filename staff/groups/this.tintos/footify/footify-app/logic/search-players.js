@@ -32,7 +32,7 @@ function searchPlayers(query, callback) {
                             const [{ emblem }] = _idTeam
                             if (error) throw console.error(error)
                             counterSearchTeam++
-                                let like = '-'
+                                let like = 0
                             _players.push({
                                 date: notNull(dateBorn),
                                 image: strCutout,

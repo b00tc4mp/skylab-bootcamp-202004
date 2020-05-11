@@ -1,7 +1,9 @@
+
 const { useState } = React
 
 function Login({ onGoToRegister, onGoToLanding, onGoToHome }) {
-
+ 
+    
     const [error, setError] = useState(undefined);
 
     const handleGoToLanding = (event) => {
@@ -22,6 +24,7 @@ function Login({ onGoToRegister, onGoToLanding, onGoToHome }) {
         try {
             authenticateUser(username, password, (error, token) => {
                 if (error) return setError(error.message)
+            
                 onGoToHome(token)
             })
         } catch ({ message }) {
