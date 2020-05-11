@@ -14,10 +14,6 @@ function Navbar({ onGoToPlayerResults, onGoToSportNews }) {
 
     }
 
-
-
-
-
     return <>
         <section className="navbar">
             <div className="navbar__container">

@@ -4,7 +4,7 @@ function searchPlayersLikes(players, token, callback) {
     // String.validate(token)
     Function.validate(callback)
 
-    const [{id}] = players
+    
     let likePlayers = []
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all',
         undefined, { Authorization: `Bearer ${token}` }, (error, status, body) => {
@@ -29,7 +29,15 @@ function searchPlayersLikes(players, token, callback) {
 
                 const resultsLikes = results(likePlayers)
 
-                callback(undefined, resultsLikes)
+                for(var i = 0; i < resultsLikes.length; i++){ 
+                    for(y = 0; y < players.length; y++){
+                     if(Object.keys(resultsLikes[i])[0] === players[y].id){
+                     players[y].likes = resultsLikes[i][Object.keys(resultsLikes[i])[0]]
+                        }
+                    }
+                }
+
+                callback(undefined, players)
             }
             else {
                 const { error } = JSON.parse(body)
@@ -46,7 +54,7 @@ function searchTimes(like, likePlayers) {
             count++
         }
     }
-    return {[like] : count}
+    return { [like]: count }
 }
 
 function results(likePlayers) {

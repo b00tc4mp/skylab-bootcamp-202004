@@ -529,6 +529,12 @@
   color: #320090;
 }
 
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  margin-top: 5rem;
+}
 .sport-news {
   display: flex;
   justify-content: center;
@@ -565,6 +571,7 @@
 .sport-news__separation {
   width: 100vw;
   border: 1px solid #320090;
+
 }
 
 * {
