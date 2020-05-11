@@ -2,10 +2,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Carter+One&family=Kalam:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Special+Elite&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap");
 * {
   margin: 0;
   user-select: none;
   box-sizing: border-box;
+}
+
+body {
+  background: #f2f2f2;
 }
 
 @keyframes fadeIn {
@@ -281,7 +286,7 @@
 .Header__container {
   display: flex;
   height: 6vh;
-  font-family: "Carter One", cursive;
+  font-family: "Noto Sans JP", sans-serif;
   background-color: #43a1b1;
   font-weight: 700;
   align-items: center;
@@ -301,10 +306,6 @@
   margin-right: 2vw;
 }
 
-body {
-  background-color: #83c3ee;
-}
-
 .login {
   font-family: "Source Sans Pro", sans-serif;
   text-align: center;
@@ -314,10 +315,6 @@ body {
 
 form {
   margin-top: 5vh;
-}
-
-body {
-  background-color: #83c3ee;
 }
 
 .register {
@@ -331,31 +328,55 @@ form {
   margin-top: 4vh;
 }
 
-.input {
+.Searcher {
+  background-color: #43a1b1;
+  height: 10.5vh;
+}
+.Searcher__input-container {
+  position: absolute;
   margin-top: 3vh;
-  height: 8vh;
-  width: 80vw;
+  margin-left: 7vw;
+  background: white;
+  min-width: 85vw;
+  height: 6vh;
+  border-radius: 10px;
+}
+.Searcher__input-container__type {
+  position: absolute;
   font-size: 20px;
+  border: none;
+  height: 6vh;
+}
+.Searcher__input-container__image {
+  height: 4vh;
+  margin: 1vh;
+}
+.Searcher__input-container__button {
+  background: none;
+  border: none;
 }
 
-.search-button {
-  height: 8vh;
-  width: 20vw;
+.Spot-Searched__title {
+  font-family: "Source Sans Pro", sans-serif;
+  background: #e4e4e4;
   font-size: 20px;
+  height: 3.5vh;
 }
-
-.ul-spot-results {
+.Spot-Searched__list {
   list-style-type: none;
+  text-align: center;
+  padding: 0;
   font-family: "Source Sans Pro", sans-serif;
   font-size: 25px;
+}
+.Spot-Searched__item {
+  border-bottom: 1px solid black;
   width: 100vw;
   height: 10vh;
-  padding: 5px;
-  display: flex;
-  justify-content: center;
   padding: 3vh;
-  border: 2px solid black;
-  margin: 0.5vh;
+}
+.Spot-Searched__item:hover {
+  background: gray;
 }
 
 .ul-spot-forecast {
@@ -416,18 +437,25 @@ form {
 .Favorites__List {
   list-style-type: none;
   margin-top: 6.5vh;
-  text-align: center;
   padding: 0;
   font-family: "Source Sans Pro", sans-serif;
   font-size: 25px;
 }
-
-.Favourites__List--elements {
-  border: 2px solid black;
+.Favorites__List--title {
+  font-family: "Source Sans Pro", sans-serif;
+  background: #e4e4e4;
+  font-size: 20px;
+  height: 3.5vh;
+}
+.Favorites__List--elements {
+  text-align: center;
+  border-bottom: 1px solid black;
   width: 100vw;
   height: 10vh;
-  padding: 2.5vh;
-  margin-top: 0.5vh;
+  padding: 3vh;
+}
+.Favorites__List--elements:hover {
+  background-color: gray;
 }
 
 /*# sourceMappingURL=style.css.map */

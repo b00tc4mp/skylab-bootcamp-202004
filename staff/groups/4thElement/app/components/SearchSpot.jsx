@@ -12,8 +12,10 @@ function SearchSpotCompo({onSubmitSpot}) {
 
 return <section className='Searcher'>
 <form onSubmit={handleSpot}>
-    <input className='input' type="text" name='query'  />
-    <button className='search-button'>🔍</button>
+    <div className="Searcher__input-container">
+    <button className="Searcher__input-container__button"><img  className='Searcher__input-container__image' src="./images/icon.png"/></button>
+    <input className='Searcher__input-container__type' placeholder='Search Spots..' type="text" name='query'/>
+    </div>
 </form>
 </section>
 

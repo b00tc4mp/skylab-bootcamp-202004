@@ -29,7 +29,12 @@ function SurfForecast({token, forecastSelected}) {
 
         {
             forecast ? (<>
-
+                <div>
+                    <h2>Time</h2>
+                    <h2>Air</h2>
+                    <h2>Wind</h2>
+                    <h2>Swell</h2>
+                </div>
                 <ul className='ul-spot-forecast'>
                     {forecast.data.weather.map((element) => {
                         return <li className='li-spot-forecast-date'>{`${element.date}`}
@@ -46,13 +51,7 @@ function SurfForecast({token, forecastSelected}) {
                     <Feedback message="sorry, no results :(" /> //handel error and maybe add spiner when charging
                 )
             }
-            {
-                following!==1? (
-                <div className='fav-button' id='deleteMe' onClick={()=>handleFavButton(token)}><i className="fas fa-star star-fore fa-2x"></i></div>
-                ) : (
-                    console.log('hello')
-                )
-            }
+            {following!==1 && <div className='fav-button' id='deleteMe' onClick={()=>handleFavButton(token)}><i className="fas fa-star star-fore fa-2x"></i></div>}
         
     </section>
 }

@@ -14,12 +14,12 @@ function SpotResultsList({ query, onGoToSurfForecast }) {
         })
     }, [query]);
 
-    return <section className="spot-result-list">
+    return <section className="Spot-Searched">
         {
             spots ? (<>
-            
-                <ul className='ul-spot-results'>{spots.map(( item ) =>
-                    <li className='li-spot-results' onClick={() => handleSurfForecast(item)}>{`${item.name}`} </li>
+                <h2 className='Spot-Searched__title'>Spots</h2>
+                <ul className='Spot-Searched__list'>{spots.map(( item ) =>
+                    <li className='Spot-Searched__item' onClick={() => handleSurfForecast(item)}>{`${item.name}`} </li>
                     
                 )}</ul>
 
