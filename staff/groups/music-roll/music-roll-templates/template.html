@@ -5,43 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/bfafcf28e4.js" crossorigin="anonymous"></script>
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+ music-roll/feature/logic-search
+     <link rel="stylesheet" href="home.css"> 
 </head>
 <body>
-    <!-- <section class="login">
-        <div class="login__container">
-            <h1 class="login__header">Login</h1>
-            <hr class="login__divider">
+    <section class="login">
+        <h1>Login</h1>
+            <form>
+                <input type="email" name="email" placeholder="e-mail" required />
+                <input type="password" name="password" placeholder="password" required />
+                <button>Submit</button>
+                or <a>Already not a member? Register now!</a> 
+        
 
-            <form class="login__form"> 
-                <label for="email" class="email-label">Email</label>
-                <input class="login__input login--mail" type="email" name="email" placeholder="john@mail.com" required />
-                <label for="password">Password</label>
-                <input class="login__input login--pass" type="password" name="password" placeholder="********" required />
-                <button class="login__button">Submit</button>
-                <a>Already not a member? Register now!</a>            
-            </form> 
-        </div>
-        
-    </section> -->
-    <!-- <section class="register">
-        <div class="register__container">
-            <h1 class="register__header">Register</h1>
-            <hr class="register__divider">
-            <form class="register__form" onSubmit>      
-                <label for="name">Name</label>          
-                <input class="register__input" type="text" name="name" placeholder="John"></input>
-                <label for="surname">Surname</label>
-                <input class="register__input" type="text" name="surname" placeholder="Doe"></input>
-                <label for="email">Email</label>
-                <input class="register__input" type="text" name="email" placeholder="john@doe.com"></input>
-                <label for="password">Password</label>
-                <input class="register__input" type="text" name="password" placeholder="********"></input>
-                <button class="register__button">Submit</button>
-                <a href="">Already registered? SignIn now! </a>
-            </form>
-        </div>
-        
     </section> -->
         
         <!-- <section class ="quiz">
@@ -111,8 +87,52 @@
             
             
             
+
+            </form> 
+        </section>
+     <section class="register">
+            <h2>Register</h2>
+        <form onSubmit>
+            <input type="text" name="name" placeholder="name"></input>
+            <input type="text" name="surname" placeholder="surname"></input>
+            <input type="text" name="email" placeholder="email"></input>
+            <input type="text" name="password" placeholder="password"></input>
+            <button>Submit</button>
+        </form>
+    </section> 
+
+
+    <section class="register__likes--container">
+        <h2>What cain of music do you like?</h2>
+
             
-</body>
-</html>
+                <ul class="music__styles">
+                 <li><button>Pop</button></li>
+                 <li><button>Country</button></li>
+                 <li><button>Rock</button></li>
+                 <li><button>Latino</button></li>
+                 <li><button>Regeeton</button></li>
+                 <li><button>Rap</button></li>
+                 <li><button>Metal</button></li>
+                 <li><button>Techno</button></li>
+                 <li><button>K-Pop</button></li>
+                 <li><button>Blues</button></li>
+                 <li><button>Punk</button></li>
+                 <li><button>Old School</button></li>
+             </ul>
+             <button>I like it!!</button>
+
+    </section>
+
+
+    <section class="home">
+        <div class="home__hamburger">
+            <div class="home__hamburger bar top"></div>
+            <div class="home__hamburger bar middle"></div>
+            <div class="home__hamburger bar bottom"></div>
+        </div>
+        <div class="img">Welcome image</div>
+        <div class="slider">Slider</div>
+        <div class="daylist">Random List</div>
         
-        
+    </section>

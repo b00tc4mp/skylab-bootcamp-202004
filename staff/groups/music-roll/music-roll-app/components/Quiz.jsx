@@ -18,7 +18,6 @@ function RegisterQuestionari() {
         <li><button>Old School</button></li>
     </ul>
     <button>I like it!!</button>
-
 </section>
     
 }

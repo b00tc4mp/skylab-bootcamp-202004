@@ -1,12 +1,4 @@
-.home {
-  background-color: grey;
-  height: 400px;
-  width: 100vh;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-}
-.home__hamburger {
+.home__hamburger--menu {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -15,7 +7,7 @@
   width: 2.5rem;
   cursor: pointer;
 }
-.home__hamburger .bar {
+.home__hamburger--menu__hamburger .bar {
   height: 5px;
   background: black;
   border-radius: 5px;
@@ -23,35 +15,26 @@
   transform-origin: left;
   transition: all 0.5s;
 }
-.home__hamburger:hover .top {
+.home__hamburger--menu__hamburger-bartop:hover {
   transform: rotate(45deg);
 }
-.home__hamburger:hover .middle {
+.home__hamburger--menu__hamburger--barmiddle:hover {
   opacity: 0;
 }
-.home__hamburger:hover .bottom {
+.home__hamburger--menu__hamburger--barbottom:hover {
   transform: rotate(-45deg);
 }
 
 .img {
   background-color: orange;
-  height: 199px;
-  width: 64vh;
-  margin-left: 49px;
 }
 
 .slider {
   background-color: yellow;
-  height: 100px;
-  width: 64vh;
-  margin-left: 49px;
 }
 
 .daylist {
   background-color: purple;
-  height: 50px;
-  width: 64vh;
-  margin-left: 49px;
 }
 
 /*# sourceMappingURL=home.css.map */
