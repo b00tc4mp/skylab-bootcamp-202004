@@ -1,0 +1,42 @@
+.news
+    @extend %panel
+
+    &__images
+        width: 100vw
+        margin: 0
+        padding: 0
+        max-height: 220px
+
+    &__container
+        list-style: none
+        margin: 0
+        padding: 0
+
+    &__items
+        position: relative
+        text-align: start
+        text-decoration: none
+
+@media screen and ( min-width: 768px )  
+    .news
+        &__container
+            display: grid
+            grid-template-columns: repeat(2, 1fr)
+            grid-template-rows: repeat(10, 1fr)
+            justify-content: none
+            align-items: none
+        &__images
+            width: 100vw
+            max-height: 660px
+
+@media screen and ( min-width: 1024px )  
+    .news
+        &__container
+            display: grid
+            grid-template-columns: repeat(4, 1fr)
+            grid-template-rows: repeat(5, 1fr)
+            justify-content: none
+            align-items: none
+        &__images
+            width: 100vw
+            max-height: 660px
