@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Slabo+27px&display=swap");
-.news, .home, .login, .register, .landing {
+.search, .pages, .news, .home, .login, .register, .landing {
   font-family: "Montserrat", serif;
 }
 
@@ -155,14 +155,47 @@
 .home {
   width: 100vw;
 }
-.home__link {
-  background-color: #A6ACAF;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 .home__nav-bar {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  height: 40px;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.home__logo {
+  width: 30%;
+  margin-left: 30%;
+}
+.home__user-name {
+  font-size: 70%;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #a67bb8;
+  color: white;
+  border: 0.1rem solid #5B2C6F;
+}
+.home__link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  text-decoration: none;
+  font-size: 70%;
+  border: 0.1rem solid #5B2C6F;
+}
+.home__link--active {
+  background-color: #5B2C6F;
+  color: white;
+}
+.home__logout {
+  background-color: #5B2C6F;
+  color: white;
+  border-radius: 10px;
+  font-size: 2.5vw;
+  padding: 0.3rem;
+  width: 15vw;
+  margin-bottom: 1rem;
 }
 
 .news__images {
@@ -178,9 +211,10 @@
 }
 .news__item {
   position: relative;
-  display: inline-block;
   text-align: start;
   text-decoration: none;
+  width: 100vw;
+  height: 220px;
 }
 .news__title {
   position: absolute;
@@ -267,6 +301,59 @@
     max-height: 660px;
   }
 }
+.pages {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.pages__button {
+  width: 25px;
+  height: 25px;
+  background-color: #a67bb8;
+  color: white;
+  margin: 0.2rem;
+  margin-bottom: 1rem;
+}
+.pages__button--active {
+  background-color: #5B2C6F;
+}
+
+.search {
+  font-size: 0.7rem;
+  border: 1px solid #5B2C6F;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.search__button {
+  background-color: #5B2C6F;
+  color: white;
+  border-radius: 10px;
+  font-size: 3vw;
+  padding: 0.5rem;
+  width: 15vw;
+  margin-bottom: 1rem;
+}
+.search input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1rem;
+  border: 0.05rem solid #A6ACAF;
+  border-radius: 5px;
+  width: 50%;
+  padding: 0.3rem;
+}
+.search select {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1rem;
+  border: 0.05rem solid #A6ACAF;
+  border-radius: 5px;
+  width: 30%;
+  padding: 0.3rem;
+}
+
 * {
   margin: 0;
 }
