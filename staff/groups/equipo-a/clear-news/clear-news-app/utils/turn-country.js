@@ -4,9 +4,6 @@ function turnToCountry(country){
     String.validate(country)
 
     switch (country) {
-        case 'International News':
-            country = ""
-            break;
         case 'ar':
             country = 1
             break;

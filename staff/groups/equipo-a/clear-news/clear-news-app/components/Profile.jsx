@@ -1,32 +1,29 @@
 const { useState, useEffect } = React
 
-function Profile({ onChangeProf, token }) {
+function Profile({ token, categories, country }) {
     const [error, setError] = useState()
-    const [user, setUser] = useState()
+
+    const [name, setName] = useState()
+    const [surname, setSurname] = useState()
+    const [email, setEmail] = useState()
+    // const [categories , setCategories] = useState()
+    // const [country, setCountry] = useState()
     //todo a traves de estado setear variables
 
     useEffect(() => {
-        retrieveUser(token, (error, { name, surname, username, categories, country }) => {
+        retrieveUser(token, (error, user) => {
             if (error) setError(error.message)
-            let user = { name, surname, username, categories, country }
-            setUser(user)
-            // const form=document.getElementsByClassName('register__input')
-            // form[0].innerText= name
-            // // form[1].innerText= surname
-            // country=turnToCountry(country)
-            // document.getElementsByClassName('register__country')[0].options[country].selected=true
-            // const checkbox=document.querySelectorAll('input[type=checkbox]')
-            // let result = Object.keys(categories).map(function (key) { return  categories[key] })
-            //    for(let i=0; i<result.length; i++){
-            //        if(result){
-            //            let j=i
-            //         for(j=0;j<checkbox.length;j++){
 
-            //             checkbox[j].checked=true
-            //         }
-            //     }
-            //    }
+            setName(user.name)
+            setSurname(user.surname)
+            setEmail(user.email)
+
+
+            // setCategories(user.categories)
+            // setCountry(user.country)
+
         })
+
     }, [])
 
     const handleSubmit = event => {
@@ -58,6 +55,8 @@ function Profile({ onChangeProf, token }) {
         email = email.value
         password = password.value
         oldPassword = oldPassword.value
+
+
 
         // let country=turnToIata(event.target.country.value)
         // switch (event.target.country.value) {
@@ -127,6 +126,7 @@ function Profile({ onChangeProf, token }) {
         //     default:
         //         throw error
 
+
         try {
             profileChange(token, name, surname, email, password, oldPassword, interests, country, error => {
                 if (error) return setError(error.message)
@@ -138,57 +138,63 @@ function Profile({ onChangeProf, token }) {
         }
     }
 
-
     return <section className="register">
-        <h1>Change profile</h1>
-        <form className="register__input" onSubmit={handleSubmit}>
-            <input type="text" name="name" placeholder="name" value={`${user.name}`} pattern="[A-Za-z]{1,20}" />
-            <input type="text" name="surname" placeholder="username" value={`${user.surname}`} pattern="[A-Za-z]{1,20}" />
-            <input type="email" name="email" placeholder="e-mail" value={`${user.username}`} />
-            <input type="password" name="password" placeholder="password" minLength="8" />
-            <input type="password" name="oldPassword" placeholder="Old password" required minLength="8" />
 
-            <label >Change your country:</label>
-            <select className="register__country" name="country">
-                {/* { (turnToCountry(user.country) */}
-                    <option>International News</option>
-                    <option>Argentina</option>                    
-                    <option>Brasil</option>
-                    <option>Canada</option>                    
-                    <option>China</option>                                    
-                    <option>Germany</option>
-                    <option>Great Britain</option>                                                       
-                    <option>Italy</option>
-                    <option>Japan</option>             
-                    <option>New Zealand</option>
-                    <option>Phillipines</option>                    
-                    <option>Portugal</option>                                    
-                    <option>Russia</option>               
-                    <option>United States of America</option> 
+        <section><h1>Change profile</h1>
 
-            </select>
-            {/* {
-                <fieldset className="register__checkbox" required>
+            <form className="register__input" onSubmit={handleSubmit}>
+                <input type="text" name="name" placeholder="name" value={`${name}`} pattern="[A-Za-z]{1,20}" />
+                <input type="text" name="surname" placeholder="username" value={`${surname}`} pattern="[A-Za-z]{1,20}" />
+                <input type="email" name="email" value={`${email}`} placeholder="e-mail" />
+                <input type="password" name="password" placeholder="password" minLength="8" />
+                <input type="password" name="oldPassword" placeholder="Old password" required minLength="8" />
+
+                <label >Change your country:</label>
+                <select className="register__country" name="country">
+
+                    {/* {country === '' ? <option>International News</option> */}
+
+                    {country === 'ar' ? <option selected >Argentina</option> : <option>Argentina</option>}
+                    {country === 'br' ? <option selected >Brazil</option> : <option>Brazil</option>}
+                    {country === 'ca' ? <option selected >Canada</option> : <option>Canada</option>}
+                    {country === 'ch' ? <option selected >China</option> : <option>China</option>}
+                    {country === 'de' ? <option selected>Germany</option> : <option>Germany</option>}
+                    {country === 'gb' ? <option selected>Great Britain</option> : <option>Great Britain</option>}
+                    {country === 'it' ? <option selected>Italy</option> : <option>Italy</option>}
+                    {country === 'jp' ? <option selected>Japan</option> : <option>Japan</option>}
+                    {country === 'nz' ? <option selected >New Zealand</option> : <option>New Zealand</option>}
+                    {country === 'ph' ? <option selected >Phillipines</option> : <option>Phillipines</option>}
+                    {country === 'pt' ? <option selected >Portugal</option> : <option>Portugal</option>}
+                    {country === 'ru' ? <option selected >Russia</option> : <option>Russia</option>}
+                    {country === 'us' ? <option selected >United States of America</option> : <option>Portugal</option>}
+
+                </select>
+                <fieldset className="register__checkbox" >
+
                     <legend>Change your favorite topics</legend>
-                    {user.categories({business,entertainment,general,health,science,sports,technology}
-                    <input type="checkbox" name="business" innerText="Business" value={business.value} checked={business.value} /> <br />
-                    <input type="checkbox" name="entertainment" innerText="Entertainment"value={entertainment.value} checked={entertainment.value}/> <br />
-                    <input type="checkbox" name="general" innerText="General" value={general.value} checked={general.value} /> <br />
-                    <input type="checkbox" name="health" innerText="Health" value={health.value} value={health.value} /><br />
-                    <input type="checkbox" name="science" innerText="Science" value={science.value} /> <br />
-                    <input type="checkbox" name="sports" innertText="Sports" value={sports.value} checked={sports.value} /><br />
-                    <input type="checkbox" name="technology" innertText="Technology" value={technology.value} checked={technology.value} value="true" /> <br />
-                    )}
-            
-                </fieldset>
-            } */}
-            <section className="resister__nav-button">
-                <button className="register__button" >Apply</button>
-            </section>
-            {error && <Feedback message={error} level="error" />}
-        </form>
-    </section>
-}
+
+
+
+                    {categories.business ? <input type="checkbox" name="business" value="business"  checked /> : <input type="checkbox" name="business" value="business" />}
+                    <label for="business">Business</label>
+                    {categories.entertainament ? <input type="checkbox" name="entertainament" value="entertainament" checked /> : <input type="checkbox" name="entertainament" value="entertainament" />}
+                    <label for="entertainament">Entertainament</label>
+                    {categories.health ? <input type="checkbox" name="health" value="health" checked /> : <input type="checkbox" name="health" value="health" />}
+                    <label for="health">Health</label>
+                    {categories.science ? <input type="checkbox" name="science" value="science"  checked /> : <input type="checkbox" name="science" value="science" /> }
+                    <label for="science">Science</label>
+                    {categories.sports ? <input type="checkbox" name="sports" value="sports" checked /> : <input type="checkbox" name="sports" value="sports" />}
+                    <label for="sports">Sports</label>
+                    {categories.general ? <input type="checkbox" name="general" value="general" checked /> : <input type="checkbox" name="general" value="general" />}
+                    <label for="general">General</label>
+                    {categories.technology ? <input type="checkbox" name="technology" value="technology" checked /> : <input type="checkbox" name="technology" value="technology" />}
+                    <label for="technology">Technology</label>
+                    {/* <input type="checkbox" name="entertainment" value="Entertainment" checked={ `${categories.entertainment ? true : }`}/>Entertainment
+                    <input type="checkbox" name="general" value="General" checked={ `${categories.general ? true : }`}/> General
+                    <input type="checkbox" name="health" value="Health" checked={ `${categories.health ? true : }`}/> Health
+                    <input type="checkbox" name="science" value="Science" checked={ `${categories.science ? true : }`}/> Science
+                    <input type="checkbox" name="sports" value="Sports" checked={ `${categories.sport ? true : }`}/> Sports
+                    <input type="checkbox" name="technology" value="Technology" checked={ `${categories.technology ? true : }`}/>Technology  */}
 
 {
     user && <ul className="news__container">
@@ -201,6 +207,14 @@ function Profile({ onChangeProf, token }) {
 
 
 
-            </li>)}
-    </ul>
+                </fieldset>
+                <section className="resister__nav-button">
+                    <button className="register__button" >Apply</button>
+                </section>
+                {error && <Feedback message={error} level="error" />}
+            </form>
+        </section>
+
+    </section>
+
 }
