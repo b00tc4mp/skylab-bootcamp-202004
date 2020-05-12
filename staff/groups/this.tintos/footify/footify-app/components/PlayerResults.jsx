@@ -1,9 +1,13 @@
 
 const { useState } = React;
 
-function PlayerResults({resultsPlayers, token, onToggleFollowPlayer, queryPlayer, likesUser}) {
+function PlayerResults({resultsPlayers, token, onToggleFollowPlayer,onCommentFwitt, queryPlayer, likesUser}) {
+
     
-    function handleToggleplayer(playerId) {
+    const [error,setError] = useState()
+  
+
+    const handleToggleplayer = (playerId) => {
        
         try {
             toogleFollowPlayer(token, playerId, (error) => {
@@ -16,6 +20,19 @@ function PlayerResults({resultsPlayers, token, onToggleFollowPlayer, queryPlayer
             });
         } catch (error) {
             if (error) throw error;
+        }
+    }
+
+    const handleCommentFwitt = (id,firstName ,surname,comment) =>{
+       
+        try{
+            debugger
+            addFwitter(id,`${firstName} ${surname}`,comment,token,(error)=>{
+                if(error) throw setError(error.message);
+                onCommentFwitt(queryPlayer)
+            })  
+        }catch(error){
+            if(error) throw setError(error.message);
         }
     }
 
@@ -51,8 +68,15 @@ function PlayerResults({resultsPlayers, token, onToggleFollowPlayer, queryPlayer
                             <h4 className="player-card__count">{likes}</h4>
                         </div>
                         <hr className="player-card__small-line" />
-                        <div className="player-card__comment">
-                            <input type="text" className="player-card__comment-input" placeholder="Say something..."/>
+
+                       <div className="player-card__comment">
+                        <form type="text" class="player-card__form" onSubmit={(event) => { event.preventDefault()
+                                let {comment} = event.target 
+                                    comment = comment.value
+                                    handleCommentFwitt(id,firstName,surname,comment);}}>
+                         <input name="comment" id="" cols="30" rows="4" placeholder="Say something..." className="player-card__form-input" maxLength="60"/>
+                            <button className="player-card__form-button"> Send</button>
+                        </form>
                         </div>
                     </li>
                 ))} </ul>) 

@@ -1,3 +1,4 @@
+
 const { useState } = React
 
 function Fwitter({ fwitter, token, onUpdateFwitter }) {
@@ -23,6 +24,7 @@ toogleFollowComment(token, idCommentUser, fwitter,cardColor,message, (error, fwi
 
     
     return <>
+
         <section >
             {
                 fwitter.length ?
@@ -61,6 +63,7 @@ toogleFollowComment(token, idCommentUser, fwitter,cardColor,message, (error, fwi
                                                 }}><img className="fwitter__card-img" src="img/card_gren.svg" alt="" /></a>
                                                 <p>{greenCard}</p>
                                             </div>
+
 
                                         </div>
 

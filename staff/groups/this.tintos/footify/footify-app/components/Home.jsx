@@ -5,7 +5,6 @@ function Home({ token }) {
     const [view, setView] = useState('fwitter')
     const [players, setPlayers] = useState()
     const [error, setError] = useState()
-    const [emblem, setEmblem] = useState()
     // const [loading, setLoading] = useState(true)
     const [likesUser, setLikesUser] = useState()
     const [sportNews, setSportNews] = useState()
@@ -42,23 +41,21 @@ function Home({ token }) {
         try {
             setPlayers(undefined)
             setError(undefined)
+
             searchPlayers(queryPlayer, (error, resultsPlayer) => {
+
                 if (error) {
                     setPlayers('no players')
                     setError(error.message)
                 }
 
-                searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => {
-                    if (error) return setError(error.message)
-                 
-                    setPlayers(resultLikes)
 
+                searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => { 
+                    if (error) return setError(error.message)
+                    setPlayers(resultLikes) 
+                    
                 })
 
-                // isPlayerfollowed(token, playerId, (error, followPlayer) => {
-                //     if (error) return setError(error.message)
-                //     setFollow(followPlayer)
-                // })   
 
                 setView('cards')
             })
@@ -81,6 +78,9 @@ function Home({ token }) {
     const handleCommentFwitt = () => {
         handleGoToPlayerResults(queryPlayer)
     }
+    const handleCommentFwitt = () =>{
+        handleGoToPlayerResults(queryPlayer)
+    }
 
     const handleGoToFwitter = () => {
         try {
@@ -100,8 +100,14 @@ function Home({ token }) {
     const handleGoToDream = () => {
         setView('dream')
     }
+    const handleGoToDream = () =>{
+        setView('dream')
+    }
+
+    const handleGoToUpdateUser = () => setView('update-user')
 
     return <>
+
 
         <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter} onGoToDream={handleGoToDream} />
         {/* {view === 'spinner' && <Spinner />} */}

@@ -437,6 +437,44 @@
 .player-card__comment-input:focus {
   outline: none;
 }
+.player-card__form {
+  display: flex;
+  justify-content: center;
+  margin-left: 1rem;
+  align-items: center;
+  border-radius: 30px;
+  flex-shrink: 1;
+  flex-grow: 1;
+}
+.player-card__form-input {
+  border-radius: 30px;
+  width: 88%;
+  height: 25px;
+  font-family: raleway;
+  border-style: none;
+  text-align: justify;
+  margin-top: 0.8rem;
+  padding-left: 10px;
+  opacity: 50%;
+  background: #ffffff;
+}
+.player-card__form-input:focus {
+  opacity: 100%;
+  text-emphasis: none;
+  outline: none;
+  user-select: none;
+}
+.player-card__form-button {
+  position: relative;
+  right: 2.4rem;
+  top: 0.4rem;
+  background: 0 0;
+  border: 0;
+}
+.player-card__form-button:hover {
+  color: #320090;
+  opacity: 60%;
+}
 
 .navbar {
   margin-left: 2px;
@@ -584,20 +622,22 @@
   align-items: center;
 }
 .fwitter__user {
-  margin: 1rem 3rem;
+  margin: 1.5rem 3rem;
   padding-bottom: 1rem;
   border-bottom: 5px solid #320090;
+  width: 25rem;
 }
 .fwitter__user-item {
   display: flex;
   align-items: center;
 }
 .fwitter__point {
-<<<<<<< Updated upstream
   background-color: #320090;
   border-radius: 50%;
-=======
->>>>>>> Stashed changes
+  width: 4rem;
+  height: 4rem;
+}
+.fwitter__point > img {
   width: 4rem;
   height: 4rem;
 }
@@ -617,12 +657,15 @@
 }
 .fwitter__message {
   text-align: justify;
+  color: black;
+  font: Raleway;
+  font-weight: 400;
 }
 .fwitter__date {
   margin: 0.5rem;
   color: #320090;
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 0.8rem;
+  font-weight: 500;
   text-align: right;
 }
 .fwitter__card-container {
@@ -631,16 +674,85 @@
   border-top: 1px solid #320090;
   border-bottom: 1px solid #320090;
 }
-<<<<<<< Updated upstream
+
 .fwitter__card {
+.fwitter__card-img {
   margin: 1rem;
-=======
 .fwitter__card-img {
   margin-top: 0.4rem;
->>>>>>> Stashed changes
   width: 3rem;
   height: 3rem;
-  background: green;
+}
+
+.update {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.update__logo {
+  text-align: center;
+}
+.update__logo img {
+  width: 11rem;
+}
+.update__title {
+  font-family: Raleway;
+  font-weight: 500;
+  font-size: 2.8rem;
+  margin-bottom: 1.5rem;
+}
+.update__container {
+  padding: 0.5rem;
+  background-color: #73f182;
+  color: #320090;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.update__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.update__form-item {
+  width: 20rem;
+  height: 2.7rem;
+  margin-bottom: 0.9rem;
+  border-style: none;
+  outline: none;
+  font-size: 0.9rem;
+  text-indent: 0.7rem;
+  color: #320090;
+  font-family: Raleway;
+  font-weight: 200;
+}
+.update__form-button {
+  width: 12rem;
+  height: 2.2rem;
+  font: Raleway;
+  font-weight: 100;
+  color: white;
+  font-size: 1.4rem;
+  background-color: #320090;
+  border-radius: 0.3rem;
+  border: none;
+  margin-top: 1.5rem;
+  outline: none;
+}
+.update__form-button:hover {
+  background-color: white;
+  color: #320090;
+}
+
+.update__goto-text {
+  font-family: Raleway;
+  font-weight: 700;
+  user-select: none;
+  outline: none;
 }
 .fwitter__card-and-count {
   display: flex;
