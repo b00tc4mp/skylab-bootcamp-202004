@@ -22,7 +22,7 @@ function SpotResultsList({ query, onGoToSurfForecast, sportState }) {
             spots ? (<>
                 <h2 className='Spot-Searched__title'>Spots</h2>
                 <ul className='Spot-Searched__list'>{spots.map(( item ) =>
-                    <li className='Spot-Searched__item' onClick={() => handleSurfForecast(item)}>{`${item.name}`} </li>
+                    <li className='Spot-Searched__item' onClick={() => onGoToSurfForecast(item)}>{`${item.name}`} </li>
                 )}</ul>
 
             </>)

@@ -22,7 +22,7 @@ function FavSpots({ token, movingSurfForecast }) {
     }
 
     return <section className="Favorites">
-        {favSpots && <FavSpotsList results={favSpots} onGoToSurfForecast={onGoToSurfForecast}/>}
+        {favSpots && <FavSpotsList token={token} results={favSpots} onGoToSurfForecast={onGoToSurfForecast}/>}
         {!favSpots && <Feedback message={ error ? error : 'You dont have any favs to your list'} level={'error'}/>} 
     </section>
 } //handel the charging phase sow it shows a spinwe or some like that instead of the error message (with a stater chargin in the asincron callback parobably)

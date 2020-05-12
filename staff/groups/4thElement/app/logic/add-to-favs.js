@@ -13,14 +13,19 @@ function addToFavs(token, spotSelected, callback) {
                 const { favSpots = [] } = userLoged
 
                 let indexOfName;
+                let acc=0;
                 favSpots.map((element) => {
-                    indexOfName = element.name.indexOf(spotSelected.name)
-                    if(indexOfName!==-1) return indexOfName;
+                    halo = element.name.indexOf(spotSelected.name)
+                    if(halo!==-1) indexOfName=acc;
+                    acc++
                 })
 
-                if (indexOfName === -1) {
+                if (indexOfName === undefined) {
                     spotSelected.following=true
                     favSpots.push(spotSelected)
+                } else {
+                    favSpots.splice(indexOfName, 1)
+                    callback(undefined, favSpots)
                 }
 
                 call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify({ favSpots }),

@@ -26,7 +26,7 @@ function SnowForecast({token, forecastSelected}) {
         // })
     },[]) //upload each half an hour
 
-    return <section className="forecastInfoSnow">
+    return <section className="forecast">
         {forecast && <div className="forecastInfoSnow__day">
                 {<h2>{forecast.data.weather[0].date}</h2>}
                 {<h4>sunrise:{forecast.data.weather[0].astronomy[0].sunrise}, sunset:{forecast.data.weather[0].astronomy[0].sunset}</h4>}
