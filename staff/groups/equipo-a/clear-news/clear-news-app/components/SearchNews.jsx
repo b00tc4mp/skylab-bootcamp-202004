@@ -38,10 +38,12 @@ function SearchNews({ onSearch, searchNewsResults, query, language, sortBy, toke
                 throw error
         }
         try{
+
         searchNews(token, query, language, sortBy, (error, searchNewsResults, pages) =>{
             if (error) throw Error
     
             onSearch(searchNewsResults, query, language, sortBy, pages)
+
         })
         }catch(error){
             if(error) throw error
@@ -70,6 +72,9 @@ function SearchNews({ onSearch, searchNewsResults, query, language, sortBy, toke
             </select>
             <button className="search__button">Search</button>
         </form>
+
+
         {searchNewsResults && <NewsResults token={token} results={searchNewsResults} onSearch={onSearch} query={query} language={language} sortBy={sortBy} pages={pages}/>}
+
     </section>
 }

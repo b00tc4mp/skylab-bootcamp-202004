@@ -9,6 +9,7 @@ function NewsResults({ onSearch, results, token, query, language, sortBy, pages 
             storeNews(token, newsTitle, error => {
                 if (error) throw error
                 else {
+
                     searchNews(token, query, language, sortBy, (error, results, pages) => {
                         if (error) throw error
                         onSearch(results, query, language, sortBy, pages)

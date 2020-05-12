@@ -19,7 +19,7 @@ function Favorites({token, myFavorite, favNews}) {
                 else {
                     retrieveFavNews(token, (error, news) => {
                         if (error) setError(error.message)
-                        myFavorite(news)
+                        myFavorites(news)
                     })
                 }
             })
@@ -39,7 +39,7 @@ function Favorites({token, myFavorite, favNews}) {
                         <li className="news__item" key={title}>
                             <a href={url} target='_blank'><img className="news__images" src={urlToImage}></img>
                             <div className="news__title stroke"><p className="stroke">{name}</p><p className="stroke"> {title}</p> </div></a>
-                            <div className="news__button"> <button onClick={() => handleLikeNews(title)}>{favorites? 'unFollow' : 'follow'}</button></div>
+                            <div className="news__button"> <input type="image" className="news__followIMG" src={favorites? "images/heart-follow.png" : "images/heart-unfollow.png"} onClick={() => handleLikeNews(title)} /></div>
                 </li>)}
             </ul>
         }

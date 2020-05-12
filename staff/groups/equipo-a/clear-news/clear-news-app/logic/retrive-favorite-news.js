@@ -51,7 +51,7 @@ function retrieveFavNews(token, callback) {
                                 callback(new Error(error))
                             }
 
-                            if (counter === favorites.length) callback(undefined, favNews)
+                            if (counter === favorite.length) callback(undefined, favNews)
 
                         })
 
