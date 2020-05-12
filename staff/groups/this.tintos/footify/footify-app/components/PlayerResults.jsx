@@ -22,7 +22,7 @@ function PlayerResults({resultsPlayers, token, onToggleFollowPlayer, queryPlayer
     if (!resultsPlayers) return <Spinner />;
     return (<>
     <section className="player"> 
-    {resultsPlayers ? (
+    {resultsPlayers !== 'no players' ? (
             <ul className="player-card">
                 {resultsPlayers.map(({id, firstName, surname, club, number, image, clubName, born, date, likes}) => (
                 <li key={id} className="player-card__item">
@@ -57,7 +57,7 @@ function PlayerResults({resultsPlayers, token, onToggleFollowPlayer, queryPlayer
                     </li>
                 ))} </ul>) 
                 : 
-                (<Feedback message="sorry, no results :(" level="warning" />)}
+                (<Feedback message="sorry, no players found :(" level="warning" />)}
             </section>
         </>
     );

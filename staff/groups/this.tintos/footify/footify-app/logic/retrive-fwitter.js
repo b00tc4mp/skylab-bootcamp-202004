@@ -21,7 +21,8 @@ function retriveFwitter(token, callback) {
                                     results.push({ idUser,nameUser,surnameUser,fwitter})
                                 } 
                             })
-                            callback(undefined,results)
+                            const arrfwitter = creatFwitterArray(results)
+                            callback(undefined,arrfwitter)
                         } else {
                             const { error } = JSON.parse(body)
 
