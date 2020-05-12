@@ -1,4 +1,5 @@
-describe("retrieveUserGroups",()=>{
+"use strict";
+describe("retrieveusergroups",()=>{
     let testUsername="pepitogrilloskylab"
     beforeEach((done)=>{ //Compruebo que hay autorización
         let authoritationProblem=false;
@@ -9,7 +10,7 @@ describe("retrieveUserGroups",()=>{
                 read: 'true',
                 write: 'true'
             },
-            expiration: '1hour',
+            expiration: 'never',
             success: ()=>{expect(authoritationProblem).to.equal(false); done()},
             error: ()=>{authoritationProblem=true; expect(authoritationProblem).to.equal(false);done()}
         });
@@ -19,12 +20,12 @@ describe("retrieveUserGroups",()=>{
         let testError
         Trello.post("boards/",{name: "retrieveTest"},()=>{
             //Compruebo que el usuario está asociado a un tablon y tienen los mismos datos
-            retrieveUserGroups(testUsername,(results)=>{
+            retrieveusergroups(testUsername,(results)=>{
                 expect(results.length).to.equal(1);
                 expect(results[0].name).to.equal("retrieveTest");
                 //Creo otro tablon y compruebo que el usuario está asociado a dos tablones
                 Trello.post("boards/",{name:"retrieveTest2"},()=>{
-                    retrieveUserGroups(testUsername,(results)=>{
+                    retrieveusergroups(testUsername,(results)=>{
                         expect(results.length).to.equal(2);
                         expect(results[0].name).to.equal("retrieveTest");
                         expect(results[1].name).to.equal("retrieveTest2");
@@ -50,24 +51,35 @@ describe("retrieveUserGroups",()=>{
             done();
         })
     })
+    it("should call onFailure when given an unexistent id/name",(done)=>{
+        retrieveusergroups("pepitogrilskylab",()=>{
+            expect(true).to.equal(false);
+            done();
+        },(error)=>{
+            expect(error.responseText).to.equal("model not found");
+            expect(error.statusText).to.equal("error");
+            expect(error.status).to.equal(404);
+            done();
+        })
+    })
     it("should throw an error when called with incorrect parameters",()=>{
         expect(function(){
-            retrieveUserGroups((123),()=>{},()=>{})
+            retrieveusergroups((123),()=>{},()=>{})
         }).to.throw(TypeError, 123 +" is not a string")
         expect(function(){
-            retrieveUserGroups(undefined,()=>{},()=>{})
+            retrieveusergroups(undefined,()=>{},()=>{})
         }).to.throw(TypeError, undefined +" is not a string")
         expect(function(){
-            retrieveUserGroups("user")
+            retrieveusergroups("user")
         }).to.throw(TypeError, undefined +" is not a function")
         expect(function(){
-            retrieveUserGroups("user","notafunction")
+            retrieveusergroups("user","notafunction")
         }).to.throw(TypeError, "notafunction" +" is not a function")
         expect(function(){
-            retrieveUserGroups("user",()=>{})
+            retrieveusergroups("user",()=>{})
         }).to.throw(TypeError, undefined +" is not a function")
         expect(function(){
-            retrieveUserGroups("user",()=>{},"notafunction")
+            retrieveusergroups("user",()=>{},"notafunction")
         }).to.throw(TypeError, "notafunction" +" is not a function")
     })
     afterEach((done)=>{ //Borro los tablones que he creado para las pruebas

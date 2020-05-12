@@ -1,4 +1,5 @@
-describe("createNewGroup",()=>{
+"use strict";
+describe("createnewgroup",()=>{
     let testUsername="pepitogrilloskylab"
     beforeEach((done)=>{ //Compruebo que hay autorización
         let authoritationProblem=false;
@@ -9,7 +10,7 @@ describe("createNewGroup",()=>{
                 read: 'true',
                 write: 'true'
             },
-            expiration: '1hour',
+            expiration: 'never',
             success: ()=>{expect(authoritationProblem).to.equal(false); done()},
             error: ()=>{authoritationProblem=true; expect(authoritationProblem).to.equal(false);done()}
         });
@@ -20,7 +21,7 @@ describe("createNewGroup",()=>{
         Trello.get("members/"+testUsername,(user)=>{
             expect(user.idBoards.length).to.equal(0);
             //Crea el grupo
-            createNewGroup("createNewGroupTest",(group)=>{
+            createnewgroup("createNewGroupTest",(group)=>{
                 //Comprueba el nombre del grupo
                 expect(group.name).to.equal("createNewGroupTest");
                 //Comprueba que no tiene ninguna actividad
@@ -54,22 +55,22 @@ describe("createNewGroup",()=>{
     })
     it("should throw an error if called with the wrong type of parameters",()=>{
         expect(function(){
-            createNewGroup((123),()=>{},()=>{})
+            createnewgroup((123),()=>{},()=>{})
         }).to.throw(TypeError, 123 +" is not a string")
         expect(function(){
-            createNewGroup(undefined,()=>{},()=>{})
+            createnewgroup(undefined,()=>{},()=>{})
         }).to.throw(TypeError, undefined +" is not a string")
         expect(function(){
-            createNewGroup("(123)",undefined,()=>{})
+            createnewgroup("(123)",undefined,()=>{})
         }).to.throw(TypeError, undefined +" is not a function")
         expect(function(){
-            createNewGroup("(123)",()=>{})
+            createnewgroup("(123)",()=>{})
         }).to.throw(TypeError, undefined +" is not a function")
         expect(function(){
-            createNewGroup("(123)","notafunction",()=>{})
+            createnewgroup("(123)","notafunction",()=>{})
         }).to.throw(TypeError, "notafunction is not a function")
         expect(function(){
-            createNewGroup("(123)",()=>{},"notafunction")
+            createnewgroup("(123)",()=>{},"notafunction")
         }).to.throw(TypeError, "notafunction is not a function")
     })
     afterEach((done)=>{ //Borro los tablones que he creado para las pruebas

@@ -1,4 +1,5 @@
-describe("retrieveGroupActivity",()=>{
+"use strict";
+describe("retrievegroupactivity",()=>{
     let testUsername="pepitogrilloskylab"
     beforeEach((done)=>{ //Compruebo que hay autorización
         let authoritationProblem=false;
@@ -9,7 +10,7 @@ describe("retrieveGroupActivity",()=>{
                 read: 'true',
                 write: 'true'
             },
-            expiration: '1hour',
+            expiration: 'never',
             success: ()=>{expect(authoritationProblem).to.equal(false); done()},
             error: ()=>{authoritationProblem=true; expect(authoritationProblem).to.equal(false);done()}
         });
@@ -25,13 +26,13 @@ describe("retrieveGroupActivity",()=>{
                     //Creo una carta en esa lista
                     Trello.post("cards",{name: "retrieveTestCard",idList: lists[0].id},()=>{
                         //Comprueba que los resultados coinciden con la carta que acabo de crear
-                        retrieveGroupActivity(user.idBoards[0],(results)=>{
+                        retrievegroupactivity(user.idBoards[0],(results)=>{
                             expect(results.length).to.equal(1);
                             expect(results[0].name).to.equal("retrieveTestCard");
                             expect(results[0].idList).to.equal(lists[0].id);
                             //Mete otra carta y vuelve a comprobar
                             Trello.post("cards",{name: "retrieveTestCard2",idList:lists[0].id},()=>{
-                                retrieveGroupActivity(user.idBoards[0],(results)=>{
+                                retrievegroupactivity(user.idBoards[0],(results)=>{
                                     //Comprueba que están ordenadas de más reciente a más antigua
                                     expect(results.length).to.equal(2);
                                     expect(results[0].name).to.equal("retrieveTestCard2");
@@ -77,24 +78,36 @@ describe("retrieveGroupActivity",()=>{
     })
     it("should throw an error if called with the wrong type of parameters",()=>{
         expect(function(){
-            retrieveGroupActivity((123),()=>{},()=>{})
+            retrievegroupactivity((123),()=>{},()=>{})
         }).to.throw(TypeError, 123 +" is not a string")
         expect(function(){
-            retrieveGroupActivity(undefined,()=>{},()=>{})
+            retrievegroupactivity(undefined,()=>{},()=>{})
         }).to.throw(TypeError, undefined +" is not a string")
         expect(function(){
-            retrieveGroupActivity("(123)",undefined,()=>{})
+            retrievegroupactivity("(123)",undefined,()=>{})
         }).to.throw(TypeError, undefined +" is not a function")
         expect(function(){
-            retrieveGroupActivity("(123)",()=>{})
+            retrievegroupactivity("(123)",()=>{})
         }).to.throw(TypeError, undefined +" is not a function")
         expect(function(){
-            retrieveGroupActivity("(123)","notafunction",()=>{})
+            retrievegroupactivity("(123)","notafunction",()=>{})
         }).to.throw(TypeError, "notafunction is not a function")
         expect(function(){
-            retrieveGroupActivity("(123)",()=>{},"notafunction")
+            retrievegroupactivity("(123)",()=>{},"notafunction")
         }).to.throw(TypeError, "notafunction is not a function")
     })
+    it("should call onFailure when given a wrong idBoard",(done)=>{
+        retrievegroupactivity("12345678901234567890123456789012",()=>{
+            expect(true).to.equal(false);
+            done();
+        },(error)=>{
+            expect(error.responseText).to.equal("invalid id");
+            expect(error.statusText).to.equal("error");
+            expect(error.status).to.equal(400);
+            done();
+        })
+    })
+    
     afterEach((done)=>{ //Borro los tablones que he creado para las pruebas
         function recursive(index,groups){
             if(index>=0){

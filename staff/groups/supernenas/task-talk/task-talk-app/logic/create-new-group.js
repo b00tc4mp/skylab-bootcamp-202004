@@ -1,9 +1,17 @@
-//Crea un nuevo grupo vacío
-function createNewGroup(groupname,onSuccess,onFailure){
+/**
+ * Crea un nuevo grupo vacío con el usuario que lo crea como único miembro
+ * @param {string} groupname nombre del grupo que se va a crear
+ * @param {function} onSuccess callback que se llama cuando no hay ningún error, recibe el nuevo grupo como parámetro
+ * @param {function} onFailure callback que se llama en caso de error, recibe el error como parámetro
+ * @throws {TypeError} lanza un error si groupname no es un string
+ * @throws {TypeError} lanza un error si onSuccess o onFailure no son funciones
+ */
+function createnewgroup(groupname,onSuccess,onFailure){
     //Comprueba que los parametros son del tipo correcto
-    if(typeof groupname!=="string") throw new TypeError(groupname+" is not a string");
-    if(typeof onSuccess!=="function") throw new TypeError(onSuccess+" is not a function");
-    if(typeof onFailure!=="function") throw new TypeError(onFailure+" is not a function");
+    String.validate(groupname);
+    Function.validate(onSuccess);
+    Function.validate(onFailure);
+    
     //Comprueba el tamaño del nombre y si se sobrepasa lo trunca
     if(groupname.length>16384) groupname= groupname.substr(0,16384);
 
