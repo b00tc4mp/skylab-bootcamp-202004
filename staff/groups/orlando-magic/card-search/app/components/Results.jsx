@@ -1,16 +1,17 @@
 const {useState, useEffect} = React
 
-function Results({onCardClick, searchConditions, setSearchConditions}){
+function Results({searchConditions, setSearchConditions, goToCard}){
   let [errorResults, setErrorResults] = useState(undefined)
-  let [results, setResults] = useState(undefined)
+  let [results, setResults] = useState([])
 
   useEffect(()=>{
    
     try{
       searchCard(searchConditions,(error, searchResults) =>{
         if(error) setErrorResults(error.message)
+        debugger
+        if (searchResults && (searchResults.length === 1)) return goToCard(searchResults[0])
         setResults(searchResults)
-        // searchResults.length>1 ? setView('results'): setView('card') 
       })
     } catch (error) {
       if (error) {
@@ -31,7 +32,6 @@ function Results({onCardClick, searchConditions, setSearchConditions}){
       searchCard(searchConditions,(error, searchResults) =>{
         if(error) setErrorResults(error.message)
         setResults(searchResults)
-        // searchResults.length>1 ? setView('results'): setView('card') 
       })
     } catch (error) {
       if (error) {
@@ -82,7 +82,7 @@ function Results({onCardClick, searchConditions, setSearchConditions}){
     </article>
     {errorResults && !results.length && <Feedback message= {errorResults} level = "warning"/>}
     <ul className = 'results__cards'>
-      {results && results.map(card => <li key={card.id}><a onClick = {() => {onCardClick(card)}}>
+      {results && results.map(card => <li key={card.id}><a onClick = {() => {goToCard(card)}}>
           <img className = "results__cards--card" src = {card.image_uris? card.image_uris.png || card.image_uris.large : (card.card_faces[0].image_uris.png || card.card_faces[0].image_uris.large)}/>
       </a></li>)}
     </ul> 
