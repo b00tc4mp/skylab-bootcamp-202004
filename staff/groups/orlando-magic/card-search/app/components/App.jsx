@@ -66,7 +66,7 @@ function App(){
         setView('results')
     }
 
-    function onCardClick(card){
+    function goToCard(card){
         setCard(card)
         setView('card') 
     }
@@ -81,7 +81,7 @@ function App(){
         {view==='landing' && <Landing onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch} onLogOut={handleLogOut} token={token} onAdvSearch = {handleAdvSearch}/>}
         {view==='login' && <Login onSubmit = {handleLoggedIn} onRegister = {handleRegister} onLanding={handleLanding}/>}
         {view==='register'  && <Register onLogin = {handleLogin} onLanding={handleLanding}/>}
-        {view === 'results' && <Results onCardClick = {onCardClick} searchConditions={searchConditions} setSearchConditions={setSearchConditions}/>}
+        {view === 'results' && <Results goToCard = {goToCard} searchConditions={searchConditions} setSearchConditions={setSearchConditions}/>}
         {view === 'adv' && <Search onAdvancedSearch = {onAdvancedSearch}/>}
         {view === 'card' && <Card card = {card}/>}
     </>
