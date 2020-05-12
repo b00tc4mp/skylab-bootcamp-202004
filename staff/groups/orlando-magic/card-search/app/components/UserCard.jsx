@@ -1,6 +1,7 @@
-function UserCard({user}) {
-    const {nickname, email, myCards} = user
-    return <>
+function UserCard({user, handleFollow, goToUser}) {
+    const {nickname, email, myCards, following} = user
+
+    return<>
         <div className='user-card-container'>
             <section className="card-container__section">
                 <h1 className='card-container__name card-container__title'>{nickname}</h1>
@@ -9,10 +10,12 @@ function UserCard({user}) {
                 </div>
                 <h1 className="card-container__type card-container__title">{email}</h1>
                 <div className="card-container__nav">
-                    <a className="card-container__nav-item" href=""><h1>Follow</h1></a>
-                    <a className="card-container__nav-item" href=""><h1>View Profile</h1></a>
+                    {typeof user.following !== "undefined" && 
+                    <a className="card-container__nav-item" href="" onClick = {()=>{event.preventDefault(); handleFollow(user)}}>
+                        <h1>{user.following === true?"Unfollow":"Follow"}</h1></a>}                    
+                    <a className="card-container__nav-item" href="" onClick = {()=>{event.preventDefault(); goToUser(user)}}><h1>View Profile</h1></a>
                 </div>
-            </section>
-        </div>
+            </section>  
+        </div>     
     </>
 }

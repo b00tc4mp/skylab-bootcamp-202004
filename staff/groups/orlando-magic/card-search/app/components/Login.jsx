@@ -54,9 +54,9 @@ class Login extends Component {
                     <h1 className="card-container__type card-container__title">Legendary Enchantment</h1>
                     <div className="card-container__form-container">
                         <form className='card-container__form' onSubmit={this.handleSubmit}>
-                            <input className='card-container__form__item' type="email" name="email" placeholder="e-mail" required />
-                            <input className='card-container__form__item' type="password" name="password" placeholder="password" required minLength="8" />
-                            <button className='card-container__form__item'>Submit</button>
+                            <input className='card-container__form-item' type="email" name="email" placeholder="e-mail" required />
+                            <input className='card-container__form-item' type="password" name="password" placeholder="password" required minLength="8" />
+                            <button className='card-container__form-item'>Submit</button>
                         </form>
                         {this.state.error && <Feedback message={this.state.error} level='error' />}
                         <div className="card-container__nav">

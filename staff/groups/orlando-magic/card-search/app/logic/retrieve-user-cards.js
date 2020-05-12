@@ -1,9 +1,9 @@
-function retrieveMyCards(token, callback) {
+function retrieveUserCards(token, callback, id = "") {
     String.validate.notVoid(token)
 
     Function.validate(callback)
 
-    call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
+    call('GET', `https://skylabcoders.herokuapp.com/api/v2/users/${id}`,
     undefined,
     { 'Authorization': `Bearer ${token}` },
     (error, status, body) => {
@@ -11,6 +11,8 @@ function retrieveMyCards(token, callback) {
 
         if (status === 200) {
             const { myCards = [] } = JSON.parse(body)
+
+            if(!myCards.length) return callback(undefined, [])
 
             const cards = myCards.map(card => ({"id": card}))
 
@@ -22,7 +24,7 @@ function retrieveMyCards(token, callback) {
                     const { data } = JSON.parse(body)
 
                     callback(undefined, data)
-                } else {
+                } else{
                     const {error} = JSON.parse(body)
 
                     callback(new Error(error.message))

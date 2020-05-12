@@ -186,16 +186,12 @@
 
 @media only screen and (min-width: 768px) {
   .login-card-container {
-    font-size: 1.5rem;
+    font-size: 0.8rem;
   }
 }
 @media only screen and (min-width: 968px) {
   .login-card-container {
     font-size: 2rem;
-  }
-  .login-card-container .card-container__form-item {
-    font-size: 2rem;
-    height: 2.5rem;
   }
   .login-card-container .card-container__nav-item {
     font-size: 2rem;
@@ -302,6 +298,7 @@
 .advancedsearch {
   display: flex;
   flex-flow: column;
+  margin: auto;
 }
 .advancedsearch__section {
   display: flex;
@@ -670,10 +667,51 @@
     width: 100%;
   }
 }
+.userresults {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+}
+.userresults__info {
+  font-size: 1.2rem;
+  margin: 0.2rem;
+}
+.userresults__cards {
+  display: flex;
+  flex-flow: wrap row;
+  justify-content: flex-start;
+  width: 100%;
+  list-style-type: none;
+  padding: 0;
+}
+.userresults__cards > li {
+  width: 48%;
+  margin: 1%;
+}
+
+@media only screen and (min-width: 768px) {
+  .userresults__cards > li {
+    width: 31%;
+  }
+  .userresults__header > form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+@media only screen and (min-width: 968px) {
+  .userresults__cards > li {
+    width: 23%;
+  }
+}
+@media only screen and (min-width: 1025px) {
+  .userresults__cards > li {
+    width: 18%;
+  }
+}
 .user-card-container {
   font-size: 0.5rem;
   border: 0.5rem solid black;
-  width: 95%;
   margin: 0 auto;
   margin-top: 0;
   border-radius: 1rem;
@@ -724,6 +762,10 @@ body {
   background-color: cornsilk;
   box-sizing: border-box;
   width: 100%;
+}
+
+#root {
+  width: 100vw;
 }
 
 @media only screen and (min-width: 968px) {
