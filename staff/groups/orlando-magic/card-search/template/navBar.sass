@@ -11,19 +11,19 @@
             width: 15%
             text-align: center
             font-size: 1rem
-        & > form
+    &--searchbar
+        flex-grow: 1
+        display: flex
+        height: 3rem
+        & > input
             flex-grow: 1
-            display: flex
-            height: 100%
-            & > input
-                flex-grow: 1
+            color: white
+            background-color: black
+            border: none
+            text-align: center
+            &::placeholder
                 color: white
-                background-color: black
-                border: none
-                text-align: center
-                &::placeholder
-                    color: white
-                    text-align: center
+                text-align: center    
     &__extended
         display: flex
         flex-flow: column
@@ -32,15 +32,27 @@
         background-color: black
         & > a
             text-decoration: none
-            margin: 0.2rem
             color: white
             text-align: center
             height: 1.5rem
+            padding-top: 1rem
+            padding-bottom: 1rem
+            border-top: solid white 0.5px
+            border-bottom: solid white 0.5px
 
-@media only screen and (min-width: 768px)
+@media only screen and (min-width: 810px)
     .navigation__extended
         flex-flow: row
         justify-content: space-around
+        & > a
+            padding-right: 1rem
+            padding-left: 1rem
+            border-right: solid white 0.5px
+            border-left: solid white 0.5px
+            padding-top: 0rem
+            padding-bottom: 0rem
+            border-top: none
+            border-bottom: none
                 
 @media only screen and (min-width: 968px)
     .navigation
