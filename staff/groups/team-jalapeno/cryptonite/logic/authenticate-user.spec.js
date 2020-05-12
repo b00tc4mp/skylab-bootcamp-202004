@@ -1,5 +1,5 @@
 
-describe('when user exist', () => {
+describe('authenticate', () => {
     let name, surname, email, password
 
     beforeEach(done => {
@@ -19,12 +19,6 @@ describe('when user exist', () => {
             done()
         })
     })
-
-    // console.log(name, surname, email, password)
-    // beforeEach(done => {
-
-    // })
-
 
     it('it should succeed on correct credentials', done => {
         authenticateUser(email, password, (error, token) => {
