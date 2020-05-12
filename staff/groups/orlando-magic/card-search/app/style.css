@@ -652,6 +652,63 @@
     width: 100%;
   }
 }
+.user-card-container {
+  border: 0.5rem solid black;
+  width: 95vw;
+  margin: 0 auto;
+  margin-top: 0.5rem;
+  border-radius: 1rem;
+  box-sizing: border-box;
+  box-shadow: -8px 9px 16px -3px gray;
+  background: #171314;
+  z-index: 0;
+}
+.user-card-container .title, .user-card-container .frame-type-line, .user-card-container .nav__item {
+  box-shadow: 0 0 0 2px #171314, 0 0 0 5px #f2412f, -3px 3px 2px 5px #171314;
+}
+.user-card-container .form-container {
+  width: 100%;
+}
+.user-card-container .form {
+  box-shadow: 0 0 0 5px #f2412f, -3px 3px 2px 5px #171314;
+}
+.user-card-container .frame-art {
+  box-shadow: 0 0 0 2px #171314, 0 0 0 5px #f2412f, -3px 3px 2px 5px #171314;
+}
+
+@media only screen and (min-width: 768px) {
+  .user-card-container {
+    font-size: 1.5rem;
+  }
+}
+@media only screen and (min-width: 968px) {
+  .user-card-container {
+    font-size: 2rem;
+  }
+  .user-card-container .form__item {
+    font-size: 2rem;
+    height: 2.5rem;
+  }
+  .user-card-container .nav__item {
+    font-size: 2rem;
+  }
+}
+@media only screen and (min-width: 1025px) {
+  .login-card-container {
+    width: 30%;
+    font-size: 0.8rem;
+  }
+  .login-card-container .form__item {
+    font-size: 0.8rem;
+    height: 1.35rem;
+  }
+  .login-card-container .nav {
+    margin-top: 0.8rem;
+  }
+  .login-card-container .nav__item {
+    font-size: 0.8rem;
+  }
+}
 body {
   margin: 0;
   padding: 0;
