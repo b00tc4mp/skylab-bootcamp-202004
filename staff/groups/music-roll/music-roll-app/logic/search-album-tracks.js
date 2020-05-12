@@ -22,6 +22,9 @@ function searchAlbumTracks(id,token,callback) {
                 results.push(object)
             }
             callback(undefined,results)
+            }else{
+                const {error : {message} } = JSON.parse(body)
+                callback(new Error(message))
             }
 
 })
