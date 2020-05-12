@@ -48,11 +48,11 @@ function Home({ token }) {
                     setError(error.message)
                 }
 
-                searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => {
+                searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => { 
                     if (error) return setError(error.message)
-                 
-                    setPlayers(resultLikes)
-
+               
+                    setPlayers(resultLikes) 
+                    
                 })
 
                 // isPlayerfollowed(token, playerId, (error, followPlayer) => {
@@ -81,6 +81,7 @@ function Home({ token }) {
     const handleCommentFwitt = () => {
         handleGoToPlayerResults(queryPlayer)
     }
+   
 
     const handleGoToFwitter = () => {
         try {
@@ -100,7 +101,7 @@ function Home({ token }) {
     const handleGoToDream = () => {
         setView('dream')
     }
-
+  
     return <>
 
         <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter} onGoToDream={handleGoToDream} />

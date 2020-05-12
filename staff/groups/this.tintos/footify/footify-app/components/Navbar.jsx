@@ -1,4 +1,4 @@
-function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter }) {
+function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDream }) {
 
     const handleSubmitSearch = (event) => {
         event.preventDefault()
@@ -20,6 +20,12 @@ function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter }) {
         onGoToFwitter()
     }
 
+    const handleSubmitDream = (event) =>{
+        event.preventDefault()
+
+        onGoToDream()
+    }
+
     return <>
         <section className="navbar">
             <div className="navbar__container">
@@ -38,7 +44,7 @@ function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter }) {
                     <a href="" onClick={handleSubmitSport}>
                         <img src="img/news.svg" alt="user" id="navbar__links-news" />
                     </a>
-                    <a href="">
+                    <a href="" onClick={handleSubmitDream}>
                         <img src="img/dreamteam.svg" alt="user" className="navbar__links-item" />
                     </a>
 
