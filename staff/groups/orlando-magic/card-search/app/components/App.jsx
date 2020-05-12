@@ -2,11 +2,12 @@ const {useState, useEffect} = React
 
 function App(){
 
-    let [view, setView] = useState('landing')
-    let [login, setLogin] = useState(false)
-    let [token, setToken] = useState(undefined)
-    let [card, setCard] = useState(undefined)
-    let [searchConditions, setSearchConditions] = useState(undefined)
+    const [view, setView] = useState('landing')
+    const [login, setLogin] = useState(false)
+    const [token, setToken] = useState(undefined)
+    const [card, setCard] = useState(undefined)
+    const [searchConditions, setSearchConditions] = useState(undefined)
+    const [userConditions, setUserConditions] = useState(undefined)
 
     function handleLogin() {
         setView('login')
@@ -71,17 +72,23 @@ function App(){
         setView('card') 
     }
 
+    function onUserSearch(event){
+        setUserConditions(event.target.userquery.value)
+        setView('userresults')
+    }
+
     function handleLogOut () {
         setToken(undefined)
         setView('landing')
     }
 
     return <>
-        {view !== 'landing' && <NavBar onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch} onAdvSearch = {handleAdvSearch}/>}
+        {view !== 'landing' && <NavBar onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch} onAdvSearch = {handleAdvSearch} onUserSearch = {onUserSearch}/>}
         {view==='landing' && <Landing onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch} onLogOut={handleLogOut} token={token} onAdvSearch = {handleAdvSearch}/>}
         {view==='login' && <Login onSubmit = {handleLoggedIn} onRegister = {handleRegister} onLanding={handleLanding}/>}
         {view==='register'  && <Register onLogin = {handleLogin} onLanding={handleLanding}/>}
         {view === 'results' && <Results goToCard = {goToCard} searchConditions={searchConditions} setSearchConditions={setSearchConditions}/>}
+        {view === 'userresults' && <UserResults goToUser = {undefined} userConditions={userConditions} token = {token}/>}
         {view === 'adv' && <Search onAdvancedSearch = {onAdvancedSearch}/>}
         {view === 'card' && <Card card = {card}/>}
     </>

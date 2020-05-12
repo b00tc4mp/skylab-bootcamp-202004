@@ -1,4 +1,5 @@
-function UserCard({nickname, email, myCards}) {
+function UserCard({user}) {
+    const {nickname, email, myCards} = user
     return <>
         <div className='user-card-container'>
             <section className="menu-title">
@@ -9,7 +10,7 @@ function UserCard({nickname, email, myCards}) {
                 <h1 className="type title">{email}</h1>
                 <div className="form-container">
                     <form className='form' >
-                        <h2>{nickname} has <a href="">34</a> favourite cards.</h2>
+                        <h2>{nickname} has <a href="">{myCards?myCards.length:0}</a> favourite cards.</h2>
                     </form>
                     <div className="nav">
                         <a className="nav__item" href=""><h1>Follow</h1></a>
