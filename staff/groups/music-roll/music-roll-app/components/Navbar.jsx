@@ -91,7 +91,7 @@ function Navbar({onChangeView }){
                 <a href="" onClick = {event => {
                     event.preventDefault()
 
-                    onChangeView('logout')
+                    onChangeView('login')
                 }}>LogOut</a>
             </li>
         </ul>

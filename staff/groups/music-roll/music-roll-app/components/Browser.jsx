@@ -3,7 +3,11 @@ const { useState, useEffect } = React
 function Browser({ token }) {
 
     const [trackResults, setTrackResults] = useState(undefined)
+
     const [albumResults, setAlbumResults] = useState(undefined)
+
+    const [playlistsResults, setPlaylistsResults] = useState(undefined)
+
 
     const handleSubmit = (event) => {
         debugger
@@ -38,7 +42,20 @@ function Browser({ token }) {
 
         })
 
+
         if (browser === 'playlist') searchPlaylist()
+
+  
+        if (browser === 'playlist') searchPlaylists(token, browserquery, (error, results) => {
+            try{
+                if (error) console.log(error)
+
+                setPlaylistsResults(results)
+            }catch{
+                console.error("fail")
+            }
+        })
+
     }
 
     return <section className="browser">
@@ -49,7 +66,7 @@ function Browser({ token }) {
                 <option value="artist">Artist</option>
                 <option value="album">Album</option>
                 <option value="track">Track</option>
-                <option value="playlists">Playlists</option>
+                <option value="playlist">Playlists</option>
             </select>
             <i></i>
             <input type="text" name="query" placeholder="What do you want to listen?" />
@@ -57,7 +74,12 @@ function Browser({ token }) {
         </form>
         <section className="results">
             {trackResults && <TrackResults results={trackResults} />}
+
             {albumResults && <AlbumResults results={albumResults} token={token} />}
+
+            {playlistsResults && <PlaylistsResults results={playlistsResults} />}
+
+
         </section>
 
     </section>
