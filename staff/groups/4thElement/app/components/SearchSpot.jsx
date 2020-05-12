@@ -10,6 +10,7 @@ function SearchSpotCompo({onSubmitSpot}) {
         onSubmitSpot(query)
     }
 
+
 return <section className='Searcher'>
 <form onSubmit={handleSpot}>
     <input className='input' type="text" name='query'  />

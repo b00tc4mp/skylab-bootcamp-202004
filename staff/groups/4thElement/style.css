@@ -92,16 +92,16 @@
   height: 94vh;
   margin-top: 6vh;
   background-size: cover;
+  background-repeat: no-repeat;
 }
 .Home .Home--Surf {
-  transition: 1.5s;
+  transition: 1s;
   height: 94vh;
   background-size: cover;
   background-image: url("./app/images/fondo.jpg");
 }
 .Home .Home--Snow {
-  transition: 1.5s;
-  opacity: 1;
+  transition: 1s;
   height: 94vh;
   background-size: cover;
   background-image: url("./app/images/fondoSnow.jpg");
@@ -198,6 +198,7 @@
   background-image: url("./app/images/mundo.png");
 }
 .Home__map--surf i {
+  animation: fadeIn ease 0.5s;
   position: relative;
   color: gray;
 }
@@ -279,6 +280,7 @@
   width: 100vw;
 }
 .Header__container {
+  transition: background-color 1.5s ease;
   display: flex;
   height: 6vh;
   font-family: "Carter One", cursive;
@@ -299,6 +301,9 @@
 }
 .Header__container--register {
   margin-right: 2vw;
+}
+.Header__container--snow {
+  background-color: #a1eefc;
 }
 
 body {
@@ -356,6 +361,18 @@ form {
   padding: 3vh;
   border: 2px solid black;
   margin: 0.5vh;
+  list-style-type: none;
+  text-align: center;
+  padding: 0;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 25px;
+}
+.ul-spot-results .li-spot-results {
+  border: 2px solid black;
+  width: 100vw;
+  height: 10vh;
+  padding: 2.5vh;
+  margin-top: 0.5vh;
 }
 
 .ul-spot-forecast {
