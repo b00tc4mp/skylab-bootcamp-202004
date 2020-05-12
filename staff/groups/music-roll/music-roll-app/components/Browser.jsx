@@ -15,29 +15,29 @@ function Browser({ token }) {
 
         if (browser === 'album') {
             searchAlbum(token, browserquery, (error, results) => {
-              
-                    if(error)console.log(error)
-                    
-                    setAlbumResults(results)
-                
+
+                if (error) console.log(error)
+
+                setAlbumResults(results)
+
             })
         }
         if (browser === 'artist') searchArtist()
 
 
-       
-        if (browser === 'track') searchTrack(token, browserquery, (error, results) => {
-           
-            
-                if (error) console.log(error)
 
-                setTrackResults(results)
-            
-                console.error("fail")
-            
-            
+        if (browser === 'track') searchTrack(token, browserquery, (error, results) => {
+
+
+            if (error) console.log(error)
+
+            setTrackResults(results)
+
+            console.error("fail")
+
+
         })
-  
+
         if (browser === 'playlist') searchPlaylist()
     }
 
@@ -45,7 +45,7 @@ function Browser({ token }) {
         <h2 className="title">Browser</h2>
         <form className="browser__form" onSubmit={handleSubmit} >
             <select name="browser">
-                <option selected>Choose one:</option>
+                <option defaultValue>Choose one:</option>
                 <option value="artist">Artist</option>
                 <option value="album">Album</option>
                 <option value="track">Track</option>
@@ -57,7 +57,7 @@ function Browser({ token }) {
         </form>
         <section className="results">
             {trackResults && <TrackResults results={trackResults} />}
-            {albumResults && <AlbumResults results={albumResults}  token= {token}  />}
+            {albumResults && <AlbumResults results={albumResults} token={token} />}
         </section>
 
     </section>
