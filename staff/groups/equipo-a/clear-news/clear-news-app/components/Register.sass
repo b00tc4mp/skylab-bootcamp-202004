@@ -5,7 +5,7 @@
     text-align: center
     display: flex
     flex-direction: column
-    justify-content: center
+    justify-content: space-evenly
     align-items: center
     width: 100vw
     height: 100vh
@@ -66,3 +66,48 @@
         &:visited
             color: white
     
+    &__country
+        overflow: auto
+    
+@media screen and ( min-width: 768px ) 
+.register 
+    align-items: center
+    justify-content: space-evenly
+
+    &__logo
+        max-width: 168px
+        width: 168px
+    a
+        max-width: 100px
+        margin:10px
+        width:120px
+        font-size: 20px
+    button
+        max-width: 100px
+        margin:10px
+        width:120px
+        font-size: 20px
+
+
+@media screen and ( min-width: 1024px )  
+.register
+    maralign-items: center
+    justify-content: space-evenly
+    
+    &__logo
+        max-width: 168px
+        width: 168px
+    
+    a
+        max-width: 150px
+        font-size:  20px
+        margin:10px
+        width:120px
+        //font-size
+    button
+        max-width: 150px
+        font-size:  20px
+        margin:10px
+        width:120px
+        
+

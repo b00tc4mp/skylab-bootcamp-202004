@@ -35,12 +35,40 @@
   color: white;
 }
 
+.landing {
+  align-items: center;
+  justify-content: space-evenly;
+}
+.landing__image {
+  max-width: 768px;
+}
+.landing a {
+  max-width: 100px;
+  margin: 10px;
+  width: 120px;
+  font-size: 20px;
+}
+
+.landing {
+  maralign-items: center;
+  justify-content: space-evenly;
+}
+.landing__image {
+  max-width: 768px;
+}
+.landing a {
+  max-width: 150px;
+  font-size: 20px;
+  margin: 10px;
+  width: 120px;
+}
+
 .register {
   color: #5B2C6F;
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   width: 100vw;
   height: 100vh;
@@ -100,13 +128,58 @@
 .register a:visited {
   color: white;
 }
+.register__country {
+  overflow: auto;
+}
+
+.register {
+  align-items: center;
+  justify-content: space-evenly;
+}
+.register__logo {
+  max-width: 168px;
+  width: 168px;
+}
+.register a {
+  max-width: 100px;
+  margin: 10px;
+  width: 120px;
+  font-size: 20px;
+}
+.register button {
+  max-width: 100px;
+  margin: 10px;
+  width: 120px;
+  font-size: 20px;
+}
+
+.register {
+  maralign-items: center;
+  justify-content: space-evenly;
+}
+.register__logo {
+  max-width: 168px;
+  width: 168px;
+}
+.register a {
+  max-width: 150px;
+  font-size: 20px;
+  margin: 10px;
+  width: 120px;
+}
+.register button {
+  max-width: 150px;
+  font-size: 20px;
+  margin: 10px;
+  width: 120px;
+}
 
 .login {
   color: #5B2C6F;
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   width: 100vw;
   height: 100vh;
@@ -123,7 +196,8 @@
 .login__input {
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 100%;
+  justify-content: center;
 }
 .login__logo {
   width: 50%;
@@ -135,6 +209,7 @@
   border-radius: 5px;
   width: 100%;
   padding: 0.3rem;
+  align-self: center;
 }
 .login h1 {
   margin-bottom: 1.5rem;
@@ -150,6 +225,48 @@
 }
 .login a:visited {
   color: white;
+}
+
+.register {
+  align-items: center;
+  justify-content: space-evenly;
+}
+.register__logo {
+  max-width: 168px;
+  width: 168px;
+}
+.register a {
+  max-width: 100px;
+  margin: 10px;
+  width: 120px;
+  font-size: 20px;
+}
+.register button {
+  max-width: 100px;
+  margin: 10px;
+  width: 120px;
+  font-size: 20px;
+}
+
+.login {
+  maralign-items: center;
+  justify-content: space-evenly;
+}
+.login__logo {
+  max-width: 168px;
+  width: 168px;
+}
+.login a {
+  max-width: 150px;
+  font-size: 20px;
+  margin: 10px;
+  width: 120px;
+}
+.login button {
+  max-width: 150px;
+  font-size: 20px;
+  margin: 10px;
+  width: 120px;
 }
 
 .home {
@@ -190,12 +307,7 @@
 }
 .home__logout {
   background-color: #5B2C6F;
-  color: white;
-  border-radius: 10px;
-  font-size: 2.5vw;
-  padding: 0.3rem;
   width: 15vw;
-  margin-bottom: 1rem;
 }
 
 .news__images {
@@ -219,9 +331,8 @@
 .news__title {
   position: absolute;
   top: 0.1rem;
-  left: 0;
+  left: 0px;
   font-size: 4vw;
-  padding: 0.5rem;
   background-color: rgba(167, 172, 175, 0.7);
   color: white;
   width: 100%;
@@ -352,6 +463,18 @@
   border-radius: 5px;
   width: 30%;
   padding: 0.3rem;
+}
+
+.feedback {
+  font-size: 20px;
+  color: green;
+  max-width: 200px;
+}
+.feedback--warning {
+  color: orange;
+}
+.feedback--error {
+  color: red;
 }
 
 * {

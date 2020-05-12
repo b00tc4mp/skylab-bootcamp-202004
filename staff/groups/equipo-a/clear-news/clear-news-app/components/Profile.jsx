@@ -2,6 +2,7 @@ const { useState, useEffect } = React
 
 function Profile({ token, categories, country }) {
     const [error, setError] = useState()
+
     const [name, setName] = useState()
     const [surname, setSurname] = useState()
     const [email, setEmail] = useState()
@@ -20,6 +21,7 @@ function Profile({ token, categories, country }) {
 
             // setCategories(user.categories)
             // setCountry(user.country)
+
         })
 
     }, [])
@@ -54,6 +56,77 @@ function Profile({ token, categories, country }) {
         password = password.value
         oldPassword = oldPassword.value
 
+
+
+        // let country=turnToIata(event.target.country.value)
+        // switch (event.target.country.value) {
+        //     case 'International News':
+        //         country = ""
+        //         break;
+        //     case 'Argentina':
+        //         country = "ar"
+        //         break;
+        //     case 'Austria':
+        //         country = "at"
+        //         break;
+        //     case 'Australia':
+        //         country = "au"
+        //         break;
+        //     case 'Brasil':
+        //         country = "br"
+        //         break;
+        //     case 'Canada':
+        //         country = "ca"
+        //         break;
+        //     case 'China':
+        //         country = "cn"
+        //         break;
+        //     case 'Germany':
+        //         country = "de"
+        //         break;
+        //     case 'France':
+        //         country = "fr"
+        //         break;
+        //     case 'Great Britain':
+        //         country = "gb"
+        //         break;
+        //     case 'Hong Kong':
+        //         country = "hk"
+        //         break;
+        //     case 'Irlanda':
+        //         country = "ie"
+        //         break;
+        //     case 'Italy':
+        //         country = "it"
+        //         break;
+        //     case 'Japan':
+        //         country = "jp"
+        //         break;
+        //     case 'Marocco':
+        //         country = "ma"
+        //         break;
+        //     case 'Mexico':
+        //         country = "mx"
+        //         break;
+        //     case 'New Zealand':
+        //         country = "nz"
+        //         break;
+        //     case 'Phillipines':
+        //         country = "ph"
+        //         break;
+        //     case 'Portugal':
+        //         country = "pt"
+        //         break;
+        //     case 'Russia':
+        //         country = "ru"
+        //         break;
+        //     case 'United States of America':
+        //         country = "us"
+        //         break;
+        //     default:
+        //         throw error
+
+
         try {
             profileChange(token, name, surname, email, password, oldPassword, interests, country, error => {
                 if (error) return setError(error.message)
@@ -66,6 +139,7 @@ function Profile({ token, categories, country }) {
     }
 
     return <section className="register">
+
         <section><h1>Change profile</h1>
 
             <form className="register__input" onSubmit={handleSubmit}>
@@ -96,7 +170,9 @@ function Profile({ token, categories, country }) {
 
                 </select>
                 <fieldset className="register__checkbox" >
+
                     <legend>Change your favorite topics</legend>
+
 
 
                     {categories.business ? <input type="checkbox" name="business" value="business"  checked /> : <input type="checkbox" name="business" value="business" />}
@@ -119,6 +195,16 @@ function Profile({ token, categories, country }) {
                     <input type="checkbox" name="science" value="Science" checked={ `${categories.science ? true : }`}/> Science
                     <input type="checkbox" name="sports" value="Sports" checked={ `${categories.sport ? true : }`}/> Sports
                     <input type="checkbox" name="technology" value="Technology" checked={ `${categories.technology ? true : }`}/>Technology  */}
+
+{
+    user && <ul className="news__container">
+        {user.map(({ name, title, url, urlToImage, favorites }) =>
+            <li className="news__item" key={title}>
+                <a href={url} target='_blank'><img className="news__images" src={urlToImage}></img>
+                    <div className="news__title stroke"><p className="stroke">{name}</p><p className="stroke"> {title}</p></div></a>
+
+                <div className="news__button"> <input type="image" src={favorites ? "images/heart-unfollow.png" : "images/heart-follow.png"} onClick={() => handleLikeNews(title)} /></div>
+
 
 
                 </fieldset>

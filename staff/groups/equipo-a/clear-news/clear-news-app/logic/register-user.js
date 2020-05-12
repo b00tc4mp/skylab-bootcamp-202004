@@ -16,7 +16,7 @@ function registerUser(name, surname, email, password, interests, country, callba
     }
 
     if (count === 7) {
-        callback(new Error('At least one field should be checked'))
+        callback(new Error('Kindly choose one topic.'))
     } else {
 
         call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',

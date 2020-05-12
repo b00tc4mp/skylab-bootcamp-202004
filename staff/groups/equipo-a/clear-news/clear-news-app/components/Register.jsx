@@ -129,21 +129,14 @@ function Register({ onRegister, onGoToLogin }) {
             <label >Choose your country:</label>
             <select className="register__country" name="country">
                     <option>International News</option>
-                    <option>Argentina</option> 
-                    <option>Austria</option>  
-                    <option>Australia</option>                    
+                    <option>Argentina</option>                    
                     <option>Brasil</option>
                     <option>Canada</option>                    
                     <option>China</option>                                    
                     <option>Germany</option>
-                    <option>France</option>
-                    <option>Great Britain</option>                   
-                    <option>Hong Kong</option>                    
-                    <option>Irlanda</option>                    
+                    <option>Great Britain</option>                                                       
                     <option>Italy</option>
                     <option>Japan</option>             
-                    <option>Marocco</option>
-                    <option>Mexico</option>
                     <option>New Zealand</option>
                     <option>Phillipines</option>                    
                     <option>Portugal</option>                                    
@@ -163,7 +156,7 @@ function Register({ onRegister, onGoToLogin }) {
             </fieldset>
             <section className="resister__nav-button">
             <button className="register__button">Submit</button>
-                or <a href="" onClick={handleGoToLogin}>Login</a>
+            <a href="" onClick={handleGoToLogin}>Login</a>
             </section>
             {error && <Feedback message={error} level="error" />}
         </form>
