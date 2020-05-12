@@ -37,6 +37,3 @@ function retriveFwitter(token, callback) {
             }
         })
 }
-// retriveFwitter('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWI5Mzc3ZDZlMjVmYzAwMTU4MDEyMzMiLCJpYXQiOjE1ODkyMDUxNTcsImV4cCI6MTU4OTIwODc1N30.Qc1v3s3PGUflLJ6W0yIkr5M9TyM9fPu3lsRicmys1pE',(error,results)=>{
-// console.log(results)
-// })

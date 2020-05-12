@@ -1,13 +1,21 @@
-@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,500;0,900;1,700&display=swap");
-.landing {
-  font-family: Raleway;
-  color: #320090;
-  margin-right: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Error: Can't find stylesheet to import.
+ *   ,
+ * 6 | @import components/PlayerResults
+ *   |         ^^^^^^^^^^^^^^^^^^^^^^^^
+ *   '
+ *   style.sass 6:9  root stylesheet */
+
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Can't find stylesheet to import.\a   \2577 \a 6 \2502  @import components/PlayerResults\a   \2502          ^^^^^^^^^^^^^^^^^^^^^^^^\a   \2575 \a   style.sass 6:9  root stylesheet";
 }
+<<<<<<< Updated upstream
 .landing__container {
   padding: 0.5rem;
   background-image: url("img/home.jpg");
@@ -604,3 +612,5 @@ body {
 }
 
 /*# sourceMappingURL=style.css.map */
+=======
+>>>>>>> Stashed changes
