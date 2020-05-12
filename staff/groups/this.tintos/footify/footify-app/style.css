@@ -584,17 +584,20 @@
   align-items: center;
 }
 .fwitter__user {
-  margin: 1rem 3rem;
+  margin: 1.5rem 3rem;
   padding-bottom: 1rem;
   border-bottom: 5px solid #320090;
+  width: 25rem;
 }
 .fwitter__user-item {
   display: flex;
   align-items: center;
 }
 .fwitter__point {
-  background-color: #320090;
-  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+}
+.fwitter__point > img {
   width: 4rem;
   height: 4rem;
 }
@@ -614,12 +617,15 @@
 }
 .fwitter__message {
   text-align: justify;
+  color: black;
+  font: Raleway;
+  font-weight: 400;
 }
 .fwitter__date {
   margin: 0.5rem;
   color: #320090;
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 0.8rem;
+  font-weight: 500;
   text-align: right;
 }
 .fwitter__card-container {
@@ -628,11 +634,10 @@
   border-top: 1px solid #320090;
   border-bottom: 1px solid #320090;
 }
-.fwitter__card {
+.fwitter__card-img {
   margin: 1rem;
   width: 3rem;
   height: 3rem;
-  background: green;
 }
 
 * {
