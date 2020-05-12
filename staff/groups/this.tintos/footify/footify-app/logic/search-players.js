@@ -30,7 +30,7 @@ function searchPlayers(query, callback) {
                         let firstName = splitName[0];
                         let surname = splitName[1];
 
-
+                        
                         searchTeam(idTeam, (error, _idTeam) => {
                             const [{ emblem }] = _idTeam
                             if (error) throw console.error(error)
