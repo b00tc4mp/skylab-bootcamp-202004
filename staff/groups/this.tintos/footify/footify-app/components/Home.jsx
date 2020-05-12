@@ -24,15 +24,15 @@ function Home({ token }) {
         try {
             setPlayers(undefined)
             setError(undefined)
-            searchPlayers(queryPlayer, (error, resultsPlayer) => {
+            searchPlayers(queryPlayer, (error, resultsPlayer) => { debugger
                 if (error) {
                     setPlayers('no players')
                     setError(error.message)
                 }
 
-                searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => {
+                searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => { debugger
                     if (error) return setError(error.message)
-                    setPlayers(resultLikes)
+                    setPlayers(resultLikes) 
                     
                 })
 

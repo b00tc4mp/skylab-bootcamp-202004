@@ -10,7 +10,7 @@ function toogleFollowPlayer(token, playerId, callback) {
       if (status === 200) {
         const user = JSON.parse(body);
 
-        const { likes } = user
+        const { likes = [] } = user
 
         const actualIndex = likes.indexOf(playerId);
 
