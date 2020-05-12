@@ -6,7 +6,7 @@ class App extends Component {
 
         this.state = {
             view: 'home', 
-            token: "BQCDb_-ZIsPThhYa2grmojihZ5hUNma4voaqG92PnR7KssK_SsMwewjos5Hr5zymxLzViwUD9rqaXwDOPtw_USu_ih0GLUBgLDENOpy_XJ8ZEYrKQ2NO-j-PGo2V-vaj2EbGig"
+            token: "BQBiBP-YdwKbzWDxDdM5VYvVngmEUt4pAnwygCz30lEJVVLW6hS4cR99p2IgT-skRb95z2LPgOL0laHi1jdshQZIcGGWFtjb64yaq0wpkcvMirURJcEShmo68_d9Z1D_ioQ85-QLYCA"
         }
     }
 

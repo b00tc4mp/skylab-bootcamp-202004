@@ -1,5 +1,4 @@
-function searchTrack(token, query, callback) {debugger
-  debugger;
+function searchTrack(token, query, callback) {
 
   const queryUrl = query
     .split(" ")
