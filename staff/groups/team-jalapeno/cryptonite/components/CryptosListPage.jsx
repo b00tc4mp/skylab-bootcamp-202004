@@ -10,8 +10,7 @@ function CryptosListPage({ handleSearchOnChange, cryptos, handleClickCoin, handl
 
       const { portfolio } = user
 
-      const ids = []
-      for (let i = 0; i < portfolio.length; i++) ids.push(portfolio[i].id)
+      const ids = portfolio.map(item => item.id)
 
       if (portfolio.length) {
 
@@ -27,13 +26,11 @@ function CryptosListPage({ handleSearchOnChange, cryptos, handleClickCoin, handl
             return coin
           })
 
-          let result = 0
-          for (let i = 0; i < _data.length; i++) {
-            let { quantity, priceUsd } = _data[i]
-            result += subTotal(quantity, priceUsd) * 1
-          }
-          result = result.toFixed(2)
-          setWallet(result)
+          const total = _data.reduce((acc, { quantity, priceUsd }) => {
+            return acc + subTotal(quantity, priceUsd) * 1
+          }, 0).toFixed(2)
+
+          setWallet(total)
         }, ids)
       }
     })

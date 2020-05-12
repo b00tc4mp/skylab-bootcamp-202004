@@ -22,10 +22,12 @@ function Home() {
   useEffect(() => {
     handleCheckHash()
     handleRetrieveCryptos()
+    const interval = setInterval(handleRetrieveCryptos, 5000)
 
     window.addEventListener('hashchange', handleCheckHash)
     return () => {
       window.removeEventListener('hashchange', handleCheckHash)
+      clearInterval(interval)
     }
   }, [])
 
