@@ -42,7 +42,7 @@ class Login extends Component {
                     <input type="password" name="password" placeholder="password" required minLength="8" />
                 </section>
                 <button className="login__button">Submit</button>
-                or <a href="" onClick={this.handeGoToRegister}>Register</a>
+                <a href="" onClick={this.handeGoToRegister}>Register</a>
 
                 {this.state.error && <Feedback message={this.state.error} level="error" />}
             </form>

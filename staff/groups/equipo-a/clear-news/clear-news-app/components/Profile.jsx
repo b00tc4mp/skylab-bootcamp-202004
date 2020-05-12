@@ -2,13 +2,13 @@ const { useState, useEffect } = React
 
 function Profile({ onChangeProf, token }) {
     const [error, setError] = useState()
-    const [user , setUser] = useState()
+    const [user, setUser] = useState()
     //todo a traves de estado setear variables
 
     useEffect(() => {
-        retrieveUser(token, (error,  { name, surname, username, categories, country}) => {
+        retrieveUser(token, (error, { name, surname, username, categories, country }) => {
             if (error) setError(error.message)
-            let user={name, surname, username, categories, country}
+            let user = { name, surname, username, categories, country }
             setUser(user)
             // const form=document.getElementsByClassName('register__input')
             // form[0].innerText= name
@@ -21,7 +21,7 @@ function Profile({ onChangeProf, token }) {
             //        if(result){
             //            let j=i
             //         for(j=0;j<checkbox.length;j++){
-                        
+
             //             checkbox[j].checked=true
             //         }
             //     }
@@ -31,7 +31,7 @@ function Profile({ onChangeProf, token }) {
 
     const handleSubmit = event => {
         event.preventDefault()
-        
+
         let business = false
         let entertainment = false
         let general = false
@@ -126,7 +126,7 @@ function Profile({ onChangeProf, token }) {
         //         break;
         //     default:
         //         throw error
-        
+
         try {
             profileChange(token, name, surname, email, password, oldPassword, interests, country, error => {
                 if (error) return setError(error.message)
@@ -142,37 +142,30 @@ function Profile({ onChangeProf, token }) {
     return <section className="register">
         <h1>Change profile</h1>
         <form className="register__input" onSubmit={handleSubmit}>
-            <input innerText={user.name} type="text" name="name" placeholder= "name" pattern="[A-Za-z]{1,20}" />
-            <input innerText={user.surname} type="text" name="surname" placeholder="username" pattern="[A-Za-z]{1,20}" />
-            <input innerText={user.username} type="email" name="email" placeholder="e-mail"  />
-            <input type="password" name="password" placeholder="password"  minLength="8" />
+            <input type="text" name="name" placeholder="name" value={`${user.name}`} pattern="[A-Za-z]{1,20}" />
+            <input type="text" name="surname" placeholder="username" value={`${user.surname}`} pattern="[A-Za-z]{1,20}" />
+            <input type="email" name="email" placeholder="e-mail" value={`${user.username}`} />
+            <input type="password" name="password" placeholder="password" minLength="8" />
             <input type="password" name="oldPassword" placeholder="Old password" required minLength="8" />
 
             <label >Change your country:</label>
             <select className="register__country" name="country">
                 {/* { (turnToCountry(user.country) */}
-                <option>International News</option>
-                <option>Argentina</option>
-                <option>Austria</option>
-                <option>Australia</option>
-                <option>Brasil</option>
-                <option>Canada</option>
-                <option>China</option>
-                <option>Germany</option>
-                <option>France</option>
-                <option>Great Britain</option>
-                <option>Hong Kong</option>
-                <option>Irlanda</option>
-                <option>Italy</option>
-                <option>Japan</option>
-                <option>Marocco</option>
-                <option>Mexico</option>
-                <option>New Zealand</option>
-                <option>Phillipines</option>
-                <option>Portugal</option>
-                <option>Russia</option>
-                <option>United States of America</option>
-                
+                    <option>International News</option>
+                    <option>Argentina</option>                    
+                    <option>Brasil</option>
+                    <option>Canada</option>                    
+                    <option>China</option>                                    
+                    <option>Germany</option>
+                    <option>Great Britain</option>                                                       
+                    <option>Italy</option>
+                    <option>Japan</option>             
+                    <option>New Zealand</option>
+                    <option>Phillipines</option>                    
+                    <option>Portugal</option>                                    
+                    <option>Russia</option>               
+                    <option>United States of America</option> 
+
             </select>
             {/* {
                 <fieldset className="register__checkbox" required>
@@ -198,13 +191,13 @@ function Profile({ onChangeProf, token }) {
 }
 
 {
-    results && <ul className="news__container">
-        {results.map(({ name, title, url, urlToImage, favorites }) =>
+    user && <ul className="news__container">
+        {user.map(({ name, title, url, urlToImage, favorites }) =>
             <li className="news__item" key={title}>
                 <a href={url} target='_blank'><img className="news__images" src={urlToImage}></img>
                     <div className="news__title stroke"><p className="stroke">{name}</p><p className="stroke"> {title}</p></div></a>
 
-                    <div className="news__button"> <input type="image" src={favorites? "images/heart-unfollow.png" : "images/heart-follow.png"} onClick={() => handleLikeNews(title)} /></div>
+                <div className="news__button"> <input type="image" src={favorites ? "images/heart-unfollow.png" : "images/heart-follow.png"} onClick={() => handleLikeNews(title)} /></div>
 
 
 
