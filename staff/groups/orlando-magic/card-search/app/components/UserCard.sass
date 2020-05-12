@@ -1,55 +1,46 @@
 .user-card-container
+    font-size: 0.5rem
     border: 0.5rem solid black
-    width: 95vw
+    width: 95%  
     margin: 0 auto
-    margin-top: 0.5rem
+    margin-top: 0
     border-radius: 1rem
     box-sizing: border-box
-    box-shadow: -8px 9px 16px -3px gray
+    box-shadow: -4px 5px 8px -1.5px gray
     background: #171314
     z-index: 0
 
-    .title, .frame-type-line,.nav__item 
+    .card-container__title, .card-container__nav-item 
         box-shadow: 0 0 0 2px #171314, 0 0 0 5px #f2412f, -3px 3px 2px 5px #171314
+        font-size: 0.5rem
+        margin-top: 0
+        margin-bottom: 0.7rem
 
+    .card-container__type
+        margin-bottom: 0
 
-    .form-container
+    .card-container__form-container
+        margin-top: 0.5rem
         width: 100%
+        display: flex
+        flex-direction: column
+        font-size: 0.2rem
 
-    .form 
-        box-shadow: 0 0 0 5px #f2412f, -3px 3px 2px 5px #171314
-
-    .frame-art 
+    .card-container__frame-art  
         box-shadow: 0 0 0 2px #171314,0 0 0 5px #f2412f,-3px 3px 2px 5px #171314
+        width: 100%
+        margin-bottom: 0.8rem
+
+    .card-container__section
+        background-color: #bbb
+        // border-radius: 1rem 
+
+    .card-container__nav
+        margin-top: 0.5rem
 
 @media only screen and (min-width: 768px)
     .user-card-container
-        font-size: 1.5rem
-
-@media only screen and (min-width: 968px)
-    .user-card-container
-        font-size: 2rem
-
-        .form
-            &__item
-                font-size: 2rem
-                height: 2.5rem
-        
-        .nav__item
-            font-size: 2rem
-
-    
-@media only screen and (min-width: 1025px)
-    .login-card-container
-        width: 30%
         font-size: 0.8rem
 
-        .form
-            &__item
-                font-size: 0.8rem
-                height: 1.35rem
-    
-        .nav
-            margin-top: 0.8rem
-            &__item
-                font-size: 0.8rem
+        .card-container__title, .card-container__nav-item  
+            font-size: 0.8rem
