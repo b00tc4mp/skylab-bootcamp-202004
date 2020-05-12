@@ -26,40 +26,39 @@ describe('deleteActivity', () => {
     })
     
     
-    it('should delete a  card', (done) => {
-        
+    it('should delete a card', (done) => {
         Trello.post('boards/', { name: 'deleteActivityTest' }, (board) => { 
             Trello.get(`boards/${board.id}/lists`, (lists) => {
-                Trello.post('cards', { name: 'holaDelete', idList: lists[1].id} , (card)=> {
+                Trello.post('cards', { name: 'holaDelete', idList: lists[1].id } , (card) => {
                     deleteActivity(card.id, () => { 
-                        Trello.get(`lists/${lists[1].id}/cards`, (cards) =>{
+                        Trello.get(`lists/${lists[1].id}/cards`, (cards) => { 
                             expect(cards.length).to.equal(0)
                             done()
 
                         }, (error) => {
-                            expect(true).to.equal(false)
+                            expect(error).to.be.undefined
                             
                             done() 
                         })
-                    }, () => {
-                        expect(true).to.equal(false)
+                    }, (error) => {
+                        expect(error).to.be.undefined
                         
                         done()
                     })
-                }, () => {
-                    expect(true).to.equal(false)
+                }, (error) => {
+                    expect(error).to.be.undefined
 
                     done()
                 }) 
-            }, () => {
-                expect(true).to.equal(false)
+            }, (error) => {
+                    expect(error).to.be.undefined
 
                 done()
             })
-        }, () => { 
-            expect(true).to.equal(false)
+        }, (error) => { 
+            expect(error).to.be.undefined
 
             done()  
-        } )        
+        })        
     })
 })
