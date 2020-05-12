@@ -5,7 +5,6 @@ function Results({searchConditions, setSearchConditions, goToCard}){
   let [results, setResults] = useState([])
 
   useEffect(()=>{
-   
     try{
       searchCard(searchConditions,(error, searchResults) =>{
         if(error) setErrorResults(error.message)
@@ -24,21 +23,7 @@ function Results({searchConditions, setSearchConditions, goToCard}){
   const handleOrder = event => {
     
     event.preventDefault()
-    searchConditions.order = event.target.order.value
-    searchConditions.dir = event.target.dir.value
-    setSearchConditions(searchConditions)
-
-    try{
-      searchCard(searchConditions,(error, searchResults) =>{
-        if(error) setErrorResults(error.message)
-        setResults(searchResults)
-      })
-    } catch (error) {
-      if (error) {
-        setErrorResults(error.message)
-        setResults([])
-      }
-    }
+    setSearchConditions({...searchConditions,  order: event.target.order.value, dir: event.target.dir.value})
   }
   
   return <section className="results">
