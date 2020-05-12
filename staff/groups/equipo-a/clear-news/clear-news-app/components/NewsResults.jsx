@@ -1,17 +1,18 @@
 const { useState } = React
 
-function NewsResults({ onSearch, results, token, query, language, sortBy }) {
+function NewsResults({ onSearch, results, token, query, language, sortBy, pages }) {
 
-    // const [count, setCount] = useState(0)
+    const [currentPage, setCurrentPage] = useState(1)
 
     function handleLikeNews(newsTitle) {
         try {
             storeNews(token, newsTitle, error => {
                 if (error) throw error
                 else {
-                    searchNews(token, query, language, sortBy, (error, results) => {
+
+                    searchNews(token, query, language, sortBy, (error, results, pages) => {
                         if (error) throw error
-                        onSearch(results, query, language, sortBy)
+                        onSearch(results, query, language, sortBy, pages)
                     })
                 }
             })
@@ -30,23 +31,28 @@ function NewsResults({ onSearch, results, token, query, language, sortBy }) {
     //         if (error) throw error
     //     }
     // }
+    function handleCurrentPage (currentPage){
+        setCurrentPage(Number(currentPage))
+    }
 
     return <section className="search-news">
 
         {
             results && <ul className="news__container">
-                {results.map(({ name, title, url, urlToImage, favorites }) =>
+                {newsForPage(results, currentPage).map(({ name, title, url, urlToImage, favorites }) =>
                     <li className="news__item" key={title}>
-                        <a href={url} target='_blank'><img className="news__images" src={urlToImage}></img>
+                        <a href={url} target='_blank'><img className="news__images" src={urlToImage} alt="
+Image not available for your region"></img>
                             <div className="news__title stroke"><p className="stroke">{name}</p><p className="stroke"> {title}</p></div></a>
 
-                            <div className="news__button"> <input type="image" src={favorites? "images/heart-unfollow.png" : "images/heart-follow.png"} onClick={() => handleLikeNews(title)} /></div>
+                            <div className="news__button"> <input type="image" className="news__followIMG" src={favorites? "images/heart-follow.png" : "images/heart-unfollow.png"} onClick={() => handleLikeNews(title)} /></div>
 
 
 
                     </li>)}
             </ul>
         }
+        {pages && <Pages pages={pages} handleCurrentPage={handleCurrentPage}/>}
 
     </section>
 }
