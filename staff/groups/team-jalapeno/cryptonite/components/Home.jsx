@@ -51,6 +51,7 @@ function Home() {
   const handlePortfolioClick = (event) => {
     event.preventDefault()
 
+
     setView('portfolio-page')
   }
 
@@ -93,7 +94,7 @@ function Home() {
         </section>
       </footer>
 
-      <NavBar />
+      <NavBar portfolioClick={handlePortfolioClick} />
     </>
 
 
