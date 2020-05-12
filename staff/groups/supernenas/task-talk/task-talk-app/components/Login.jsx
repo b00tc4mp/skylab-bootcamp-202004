@@ -36,7 +36,7 @@ function Login ({ onLogin, onGoToRegister }) {
                 <input className="navigation__input" type="password" name="password" placeholder="password" />
                 <br/><br/>    
                 <button className="button__navigation button__navigation--regular ">Submit</button>
-                    {" "} or {" "} <a className="navigation__link" href="" onClick={handeGoToRegister}>Register</a>
+                    or <a className="navigation__link" href="" onClick={handeGoToRegister}>Register</a>
                 {error && <Feedback message={error} level="error" />}
             </form>
         </section>
