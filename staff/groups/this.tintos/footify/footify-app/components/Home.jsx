@@ -2,7 +2,7 @@ const { useState, useEffect } = React
 
 function Home({ token }) {
 
-    const [view, setView] = useState()
+    const [view, setView] = useState('fwitter')
     const [players, setPlayers] = useState()
     const [error, setError] = useState()
     const [emblem, setEmblem] = useState()
@@ -12,6 +12,19 @@ function Home({ token }) {
     const [queryPlayer, setQueryPlayer] = useState()    
     const [fwitter,setFwitter] = useState();
 
+
+useEffect(()=>{
+    try {
+        retriveFwitter(token,(error,results)=>{
+            if (error) return setError(error.message);
+            setFwitter(results);
+        })
+        setView('fwitter');
+    } catch ({message}) {
+        setError(message)
+    }  
+},[])
+    
 
     const handleGoToPlayerResults = (queryPlayer) => {
         
