@@ -1,16 +1,15 @@
 //Devuelve la información de todos los grupos a los que pertenece un usuario
 //Requiere que el usuario esté logeado para ver sus boards privados
 
-function retrieveUserGroups(username,onSucces,onFail){
+function retrieveUserGroups(username,onSucces,onFailure){
     const groups=[];
     //Comprueba que los parametros son del tipo correcto
-    
-    if(typeof username!=="string") throw new TypeError(username+" is not a string")
-    if(typeof onSucces!=="function") throw new TypeError(onSucces+" is not a function")
-    if(typeof onFail!=="function") throw new TypeError(onFail+ " is not a function")
+    String.validate(username);
+    Function.validate(onSucces);
+    Function.validate(onFailure);
 
     //Obtener la información del usuario
-    Trello.get("members/"+username,getUserSucces,getUserFailure)
+    Trello.get("members/"+username,getUserSucces,onFailure)
     function getUserSucces(user){
         //Si no ha tenido ningun fallo para sacar el usuario
         //itera sobre todos los grupos en los que participa
@@ -29,15 +28,7 @@ function retrieveUserGroups(username,onSucces,onFail){
                     //let results= groups.map((value)=>value.name) //Podemos usar esto si queremos recomponer los resultados
                     onSucces(groups);
                 }
-            },iterationFailure)
+            },onFailure)
         }
-    }
-    //En caso de haber algún fallo durante las llamadas a API ejecuta la callback de error
-    //Y le pasa el objeto que ha devuelto esa llamada
-    function getUserFailure(error){
-        onFail(error);
-    }
-    function iterationFailure(error){
-        onFail(error);
     }
 }

@@ -1,43 +1,58 @@
 "use strict";
-describe("createNewList",()=>{
+describe("createNewActivity", () => {
     let testUsername="pepitogrilloskylab"
-    beforeEach((done)=>{ //Compruebo que hay autorización
-        let authoritationProblem=false;
+    beforeEach(done => {
+        let authoritationProblem = false;
+
         window.Trello.authorize({
             type: 'popup',
-            name: 'Task Talk',
+            name: 'Task talk',
             scope: {
                 read: 'true',
                 write: 'true'
             },
             expiration: 'never',
-            success: ()=>{expect(authoritationProblem).to.equal(false); done()},
-            error: ()=>{authoritationProblem=true; expect(authoritationProblem).to.equal(false);done()}
-        });
-    })
-
-    it("should create a new list in a specified group",(done)=>{
-        Trello.post("boards/",{name:"createListTest",defaultLists:false},(group)=>{
-            createNewList("testList",group.id,(list)=>{
-                expect(list.name).to.equal("testList");
-                expect(list.idBoard).to.equal(group.id);
+            success: () => {
+                expect(authoritationProblem).to.equal(false);
                 done()
-            },(error)=>{
+            },
+            error: () => {
+                authorizationProblem = true;
+                expect(authoritationProblem).to.equal(false);
+                done()
+            }
+        })
+    })
+    it("should create a new activity in a specified list", done => {
+        Trello.post("boards/", {
+            name: "createActivity",
+            defaultLists: false
+        }, (board) => {
+            Trello.post("lists", { name: "newList", idBoard: board.id }, (list) => {
+                createNewActivity("newActivity", list.id, (card) => {
+                    expect(card.name).to.equal("newActivity");
+                    expect(card.idList).to.equal(list.id);
+                    expect(card.desc).to.equal("");
+                    done();
+                }, () => {
+                    expect(true).to.equal(false);
+                    done();
+                })
+            }, () => {
                 expect(true).to.equal(false);
                 done();
             })
-
-        },(error)=>{
+        }, () => {
             expect(true).to.equal(false);
             done();
         })
     })
-    it("should call onFailure when given a wrong idBoard",(done)=>{
-        createNewList("failedList","12345678901234567890123456789012",()=>{
+    it("should call onFailure when given a wrong listId",(done)=>{
+        createNewActivity("failedActivity","12345678901234567890123456789012",()=>{
             expect(true).to.equal(false);
             done();
         },(error)=>{
-            expect(error.responseText).to.equal("invalid value for idBoard");
+            expect(error.responseText).to.equal("invalid value for idList");
             expect(error.statusText).to.equal("error");
             expect(error.status).to.equal(400);
             done();
@@ -45,28 +60,28 @@ describe("createNewList",()=>{
     })
     it("should throw an error if called with the wrong type of parameters",()=>{
         expect(function(){
-            createNewList((123),"listID",()=>{},()=>{})
+            createNewActivity((123),"listID",()=>{},()=>{})
         }).to.throw(TypeError, 123 +" is not a string")
         expect(function(){
-            createNewList(undefined,"listID",()=>{},()=>{})
+            createNewActivity(undefined,"listID",()=>{},()=>{})
         }).to.throw(TypeError, undefined +" is not a string")
         expect(function(){
-            createNewList("123",123,()=>{},()=>{})
+            createNewActivity("123",123,()=>{},()=>{})
         }).to.throw(TypeError, 123 +" is not a string")
         expect(function(){
-            createNewList("123",undefined,()=>{},()=>{})
+            createNewActivity("123",undefined,()=>{},()=>{})
         }).to.throw(TypeError, undefined +" is not a string")
         expect(function(){
-            createNewList("123123","123123",undefined,()=>{})
+            createNewActivity("123123","123123",undefined,()=>{})
         }).to.throw(TypeError, undefined +" is not a function")
         expect(function(){
-            createNewList("123123","123123","notafunction",()=>{})
+            createNewActivity("123123","123123","notafunction",()=>{})
         }).to.throw(TypeError, "notafunction is not a function")
         expect(function(){
-            createNewList("123123","123123",()=>{},undefined)
+            createNewActivity("123123","123123",()=>{},undefined)
         }).to.throw(TypeError, undefined +" is not a function")
         expect(function(){
-            createNewList("123123","123123",()=>{},"notafunction")
+            createNewActivity("123123","123123",()=>{},"notafunction")
         }).to.throw(TypeError, "notafunction is not a function")
     })
     afterEach((done)=>{ //Borro los tablones que he creado para las pruebas

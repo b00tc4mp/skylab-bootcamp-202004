@@ -1,3 +1,4 @@
+"use strict";
 describe("retrieveUserGroups",()=>{
     let testUsername="pepitogrilloskylab"
     beforeEach((done)=>{ //Compruebo que hay autorización
@@ -47,6 +48,17 @@ describe("retrieveUserGroups",()=>{
         },(error)=>{
             testError=error.status;
             expect(testError).to.be.undefined;//Esto saltará error siempre y así sabemos en el mocha donde ha fallado
+            done();
+        })
+    })
+    it("should call onFailure when given an unexistent id/name",(done)=>{
+        retrieveUserGroups("pepitogrilskylab",()=>{
+            expect(true).to.equal(false);
+            done();
+        },(error)=>{
+            expect(error.responseText).to.equal("model not found");
+            expect(error.statusText).to.equal("error");
+            expect(error.status).to.equal(404);
             done();
         })
     })

@@ -1,3 +1,4 @@
+"use strict";
 describe("retrieveGroupActivity",()=>{
     let testUsername="pepitogrilloskylab"
     beforeEach((done)=>{ //Compruebo que hay autorización
@@ -95,6 +96,18 @@ describe("retrieveGroupActivity",()=>{
             retrieveGroupActivity("(123)",()=>{},"notafunction")
         }).to.throw(TypeError, "notafunction is not a function")
     })
+    it("should call onFailure when given a wrong idBoard",(done)=>{
+        retrieveGroupActivity("12345678901234567890123456789012",()=>{
+            expect(true).to.equal(false);
+            done();
+        },(error)=>{
+            expect(error.responseText).to.equal("invalid id");
+            expect(error.statusText).to.equal("error");
+            expect(error.status).to.equal(400);
+            done();
+        })
+    })
+    
     afterEach((done)=>{ //Borro los tablones que he creado para las pruebas
         function recursive(index,groups){
             if(index>=0){

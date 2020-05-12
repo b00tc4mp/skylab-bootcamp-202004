@@ -1,3 +1,4 @@
+"use strict";
 describe("createNewGroup",()=>{
     let testUsername="pepitogrilloskylab"
     beforeEach((done)=>{ //Compruebo que hay autorización
