@@ -15,7 +15,6 @@ body::before {
   border-bottom: 2px solid black;
   content: "Error: Can't find stylesheet to import.\a   \2577 \a 6 \2502  @import components/PlayerResults\a   \2502          ^^^^^^^^^^^^^^^^^^^^^^^^\a   \2575 \a   style.sass 6:9  root stylesheet";
 }
-<<<<<<< Updated upstream
 .landing__container {
   padding: 0.5rem;
   background-image: url("img/home.jpg");
@@ -612,5 +611,3 @@ body {
 }
 
 /*# sourceMappingURL=style.css.map */
-=======
->>>>>>> Stashed changes
