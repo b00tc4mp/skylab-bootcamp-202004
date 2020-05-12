@@ -97,16 +97,16 @@ body {
   height: 94vh;
   margin-top: 6vh;
   background-size: cover;
+  background-repeat: no-repeat;
 }
 .Home .Home--Surf {
-  transition: 1.5s;
+  transition: 1s;
   height: 94vh;
   background-size: cover;
   background-image: url("./app/images/fondo.jpg");
 }
 .Home .Home--Snow {
-  transition: 1.5s;
-  opacity: 1;
+  transition: 1s;
   height: 94vh;
   background-size: cover;
   background-image: url("./app/images/fondoSnow.jpg");
@@ -203,6 +203,7 @@ body {
   background-image: url("./app/images/mundo.png");
 }
 .Home__map--surf i {
+  animation: fadeIn ease 0.5s;
   position: relative;
   color: gray;
 }
@@ -284,6 +285,7 @@ body {
   width: 100vw;
 }
 .Header__container {
+  transition: background-color 1.5s ease;
   display: flex;
   height: 6vh;
   font-family: "Noto Sans JP", sans-serif;
@@ -304,6 +306,9 @@ body {
 }
 .Header__container--register {
   margin-right: 2vw;
+}
+.Header__container--snow {
+  background-color: #a1eefc;
 }
 
 .login {
@@ -374,6 +379,7 @@ form {
   width: 100vw;
   height: 10vh;
   padding: 3vh;
+
 }
 .Spot-Searched__item:hover {
   background: gray;

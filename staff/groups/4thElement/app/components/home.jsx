@@ -1,14 +1,23 @@
 
 const { useState } = React
 
-function Home() {
+
+function Home({sportState, ReturnsportState}) {
     // || hooks states declarations ||
 
-    const [dinamicClass, setdinamicClass] = useState('surf')
-    const [WorldImage, setworldImage] = useState('')
+    const [dinamicClass, setdinamicClass] = useState(ReturnsportState)
+    const [WorldImage, setworldImage] = useState(ReturnsportState)
     const [firstEnter, setFirstEnter] = useState(true)
     const [timer, setTimer] = useState(false)
     const [mouseOver, setMouseOver] = useState(undefined)
+
+    // || use Effect || 
+
+    useEffect(() => {
+        var backImage = document.getElementById('Home')
+        backImage.style.backgroundImage="url('./images/fondo.jpg')"
+        dinamicClass==='surf' ? backImage.style.backgroundImage="url('./images/fondo.jpg')" : backImage.style.backgroundImage="url('./images/fondo.jpg')" 
+    }, [dinamicClass])  //por hacer y areglar el problema de los punteros que no salen al principio por culpa de le nombre de los states (poner otro state para contarolar ese problema )
 
     // || functions ||
 
@@ -20,13 +29,17 @@ function Home() {
         
     }
 
+    //arglar los punteros de surf que no vuleven a aparacer
+
     const handelClickSurf = () => {
         if(dinamicClass != 'surf'){
             setFirstEnter(false)
             setdinamicClass('surf')
             setworldImage('surf')
             setTimer(true)
+            sportState()
             setTimeout(()=> handelFadeImage(), 1200) //use it to stop from clicking til the animation has finished
+            
         }  
     }
 
@@ -43,12 +56,13 @@ function Home() {
     const handelClickSnow = () => {
         setdinamicClass('snow')
         setworldImage('snow')
+        sportState()
     }
 
-    return <section className="Home">
-            {<div className={"Home--"+(dinamicClass==='surf' ? "Surf" : "Snow")}>
+    //poner el home surf, snow en un div por separado abajo del todo
 
-                <img className="Home__imagen" src="" alt="" />
+    return <section id="Home" className="Home">
+            {<div className={"Home--"+(dinamicClass==='surf' ? "Surf" : "Snow")}>
                 <div className="Home__Selection">
                     <div className={"Home__Selection--surf"+(dinamicClass==='surf' ? "clikedSurf" : "")} onClick = { () => {handelClickSurf()}}> SURF</div>
                     <div className={"Home__Selection--snow"+(dinamicClass==='snow' ? "clikedsnow" : "")} onClick = { () => {if(timer===false)handelClickSnow()}}>SNOW</div>
@@ -72,7 +86,7 @@ function Home() {
                         <i class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('snow3')} onMouseOut={handelMouseOut}></i>
                         <i class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('snow4')} onMouseOut={handelMouseOut}></i>
                     </div>}
-                    {WorldImage==='' && <div className="Home__map--surf">
+                    {ReturnsportState==='surf' && <div className="Home__map--surf">
                         <i class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('surf1')} onMouseOut={handelMouseOut}></i>
                         <i class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('surf2')} onMouseOut={handelMouseOut}></i>
                         <i class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('surf3')} onMouseOut={handelMouseOut}></i>
@@ -82,3 +96,4 @@ function Home() {
             </div>}
         </section>
 }
+

@@ -98,14 +98,15 @@ body
     height: 94vh
     margin-top: 6vh
     background-size: cover
+    background-repeat: no-repeat
+    // background-image: url('./app/images/fondo.jpg')
     .Home--Surf
-      transition: 1.5s
+      transition: 1s
       height: 94vh
       background-size: cover
       background-image: url('./app/images/fondo.jpg')
     .Home--Snow
-      transition: 1.5s
-      opacity: 1
+      transition: 1s
       height: 94vh
       background-size: cover
       background-image: url('./app/images/fondoSnow.jpg')
@@ -194,11 +195,12 @@ body
           background-position: center
           background-image: url('./app/images/mundo.png')
           i
+            animation: fadeIn ease 0.5s
             position: relative
             color: gray
           i:nth-child(1)
-              top: 28%
-              left: 60%
+            top: 28%
+            left: 60%
           i:nth-child(2)
             top: 62%
             left: 62%

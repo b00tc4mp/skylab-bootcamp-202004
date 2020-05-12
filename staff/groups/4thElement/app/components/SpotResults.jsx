@@ -1,17 +1,20 @@
 const { useState, useEffect } = React
 
-function SpotResultsList({ query, onGoToSurfForecast }) {
+function SpotResultsList({ query, onGoToSurfForecast, sportState }) {
 
-    const handleSurfForecast = (surfForecastSelected) =>{
-        onGoToSurfForecast(surfForecastSelected)
-    }
-    
     const [spots, setSpots] = useState();
 
     useEffect(() => {
-        searchSpotList(query, (spotsFound) => {
-            setSpots(spotsFound)
-        })
+        if(sportState === 'surf'){
+            searchSpotList(query, (spotsFound) => {
+                setSpots(spotsFound)
+            })
+        }else{
+            searchSpotListSnow(query, (spotsFound) => {
+                setSpots(spotsFound)
+            })
+        }
+
     }, [query]);
 
     return <section className="Spot-Searched">
