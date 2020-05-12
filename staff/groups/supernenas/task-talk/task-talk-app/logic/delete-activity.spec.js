@@ -27,8 +27,7 @@ describe('deleteactivity', () => {
     })
     
     
-    it('should delete a  card', (done) => {
-        
+    it('should delete a card', (done) => {
         Trello.post('boards/', { name: 'deleteActivityTest' }, (board) => { 
             Trello.get(`boards/${board.id}/lists`, (lists) => {
                 Trello.post('cards', { name: 'holaDelete', idList: lists[1].id} , (card)=> {
@@ -38,30 +37,30 @@ describe('deleteactivity', () => {
                             done()
 
                         }, (error) => {
-                            expect(true).to.equal(false)
+                            expect(error).to.be.undefined
                             
                             done() 
                         })
-                    }, () => {
-                        expect(true).to.equal(false)
+                    }, (error) => {
+                        expect(error).to.be.undefined
                         
                         done()
                     })
-                }, () => {
-                    expect(true).to.equal(false)
+                }, (error) => {
+                    expect(error).to.be.undefined
 
                     done()
                 }) 
-            }, () => {
-                expect(true).to.equal(false)
+            }, (error) => {
+                    expect(error).to.be.undefined
 
                 done()
             })
-        }, () => { 
-            expect(true).to.equal(false)
+        }, (error) => { 
+            expect(error).to.be.undefined
 
             done()  
-        } )        
+        })        
     })
     it("should call onFailure when given a wrong cardId",(done)=>{
         deleteactivity("12345678901234567890123456789012",()=>{
