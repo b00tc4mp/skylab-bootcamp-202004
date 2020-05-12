@@ -64,7 +64,7 @@ describe.only('authenticateUser', () => {
                         'Content-type': 'application/json',
                         Authorization: `Bearer ${token}`
                     },
-                    (error, status, body) => {
+                    (error, status) => {
                         if (error) return done(new Error(error.message))
                         if (status !== 204) return done(new Error(`undexpected status ${status}`))
 

@@ -64,8 +64,6 @@ function searchUsers(token, query, callback) {
     
           users = users.map(({id, name, surname, username }) => {
           const _user = { id, name, surname, username }
-
-          console.log(id, following)
           
           if (username !== _username) _user.following = following.includes(id)
           return _user

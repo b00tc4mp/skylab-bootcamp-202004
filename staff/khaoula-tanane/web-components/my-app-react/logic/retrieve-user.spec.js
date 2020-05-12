@@ -1,4 +1,4 @@
-describe.only('Retrieve users', () => {
+describe('Retrieve users', () => {
     let name, surname, email, password
 
     beforeEach(() => {
@@ -33,30 +33,18 @@ describe.only('Retrieve users', () => {
         })
 
         it('test retrive user function', done=>{
-            retrieveUser(_token,(error,users)=>{
+            retrieveUser(_token,(error,user)=>{
 
                 expect(error).to.be.undefined
-                const{name, surname, email} = users;
-                expect(name).to.equal(name)
-                expect(surname).to.equal(surname)
-                expect(email).to.equal(email)
+                expect(user.name).to.equal(name)
+                expect(user.surname).to.equal(surname)
+                expect(user.email).to.equal(email)
 
                 done()
             })
         })
 
-        it('test with status 200', done =>{
-            call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
-            undefined,
-            { 'Authorization': `Bearer ${_token}` },
-            (error, status, body) => {
-                if (error) return expect(error).to.be.undefined
-    
-                if (status === 200) expect(status).to.equal(200)
-                done()
-            }
-        )
-        }).timeout(5000)
+
 
     }) 
     
