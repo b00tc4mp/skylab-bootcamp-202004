@@ -25,17 +25,28 @@ function SurfForecast({token, forecastSelected}) {
         })
     }, [forecastSelected]); //upload each half an hour
 
-    return <section className="spot-result-list">
+    return <section className="forecast">
 
+
+        {!following && <div className='forecast__favButton' id='deleteMe' onClick={()=>handleFavButton(token)}><i className="fas fa-star fa-2x"></i></div>}
         {
             forecast ? (<>
-
-                <ul className='ul-spot-forecast'>
+                <div className='forecast__titles'>
+                    <h2 className='forecast__titles--element'>Time</h2>
+                    <h2 className='forecast__titles--element'>Air</h2>
+                    <h2 className='forecast__titles--element'>Wind</h2>
+                    <h2 >Swell</h2>
+                </div>
+                <ul className='forecast__ul'>
                     {forecast.data.weather.map((element) => {
-                        return <li className='li-spot-forecast-date'>{`${element.date}`}
-
+                        return <li className='forecast__date'><span>{`${element.date}`}</span>
                             {element.hourly.map((forTime) => {
-                                return <li className='li-spot-forecast-info'>{`${forTime.time}h  ${forTime.tempC}ºC ${forTime.windspeedKmph}Km/h  ${forTime.swellHeight_m}m`} </li>
+                                return <li className='forecast__info'>
+                                    <p>{`${forTime.time}h`}</p>
+                                    <p>{`${forTime.tempC}ºC`}</p>
+                                    <p>{`${forTime.windspeedKmph}Km/h`}</p> 
+                                    <p>{`${forTime.swellHeight_m}m`}</p> 
+                             </li>
                             })}
 
                         </li>
@@ -45,14 +56,6 @@ function SurfForecast({token, forecastSelected}) {
                 : (
                     <Feedback message="sorry, no results :(" /> //handel error and maybe add spiner when charging
                 )
-            }
-            {
-                following!==1? (
-                <div className='fav-button' id='deleteMe' onClick={()=>handleFavButton(token)}><i className="fas fa-star star-fore fa-2x"></i></div>
-                ) : (
-                    console.log('hello')
-                )
-            }
-        
+            }    
     </section>
 }

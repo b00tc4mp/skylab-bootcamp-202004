@@ -29,7 +29,6 @@ function App() {
     }
 
     const handleLogout = () => {
-        console.log('hola')
         setToken(undefined)
         delete sessionStorage.token
         setHashView('login')

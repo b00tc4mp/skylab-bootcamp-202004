@@ -13,9 +13,10 @@ function hideButton(token, forecastSelected, callback){
                 let following;
                 favSpots.map((element) => {
                     shit = element.name.indexOf(forecastSelected.name)
-                    if(shit!==-1) following=1;
+                    if(shit!==-1) following=true;
                 })
                 callback(undefined, following)
             }
         })
 }
+

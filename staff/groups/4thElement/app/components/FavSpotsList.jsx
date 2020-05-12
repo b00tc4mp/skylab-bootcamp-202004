@@ -8,21 +8,8 @@ function FavSpotsList({results, onGoToSurfForecast}) {
     }
 
     return <ul className="Favorites__List">
-        {results.map((element) => <li onClick={()=> handleSurfForecast(element)} className='Favourites__List--elements'>{element.name}</li>)}
+        <h2 className='Favorites__List--title'>Favorite Spots</h2>
+        {results.map((element) => <li onClick={()=> handleSurfForecast(element)} className='Favorites__List--elements'>{element.name}</li>)}
     </ul>
 
 }
-
-// {
-//     favSpots ? (<>
-
-//         <ul>
-//             {favSpots.map((element) => {
-//                 return <li >{`${element}`}</li>
-//             })}
-//         </ul>
-//     </>)
-//         : (
-//             <Feedback message="sorry, no results :(" />
-//         )
-// }

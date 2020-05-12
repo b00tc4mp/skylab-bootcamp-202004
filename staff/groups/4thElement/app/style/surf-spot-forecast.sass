@@ -1,34 +1,47 @@
-.ul-spot-forecast
-    list-style-type: none
-    font-family: 'Source Sans Pro', sans-serif
+.forecast
+    &__ul
+        list-style-type: none
+        font-family: 'Source Sans Pro', sans-serif
+        padding: 0
+    &__date
+        color: black
+    &__info
+        display: flex
+        justify-content: center
+        padding: 3vh 3vw
+        border-bottom: 1px solid black
+        font-size: 20px
+    &__favButton
+        background: yellow
+        border-radius: 50%
+        height: 8vh
+        width: 8vh
+        position: fixed
+        margin-top: 65vh
+        margin-left: 75vw
+        display: flex
+        justify-content: center
+        align-items: center
+    &__favButton:hover
+        background: white
+    &__titles
+        background: white
+        display: flex
+        margin-top: 6vh
+        height: 3.5vh
+        font-family: 'Source Sans Pro', sans-serif
+        font-size: 13px
+        justify-content: center
+        width: 100vw
+        &--element
+            margin-right: 18vw
+p
+    margin-right: 8vw
+span
+    background: green
     font-size: 25px
-    width: 100vw
-    height: 10vh
-    padding: 5px
-    margin-top: 6vh
+            
+            
+        
     
-.li-spot-forecast-date
-    background: #464545
-    color: white
-.li-spot-forecast-info
-    display: flex
-    justify-content: center
-    padding: 3vh 3vw
-    border: 2px solid black
-    margin: 0.5vh
-
-.fav-button
-    background: yellow
-    border-radius: 50%
-    height: 8vh
-    width: 8vh
-    position: fixed
-    margin-top: 65vh
-    margin-left: 75vw
-
-.fav-button:hover
-    background: white
-
-.star-fore
-    padding: 13.5px
     
