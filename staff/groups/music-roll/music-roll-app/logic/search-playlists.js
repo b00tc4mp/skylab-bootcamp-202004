@@ -1,18 +1,25 @@
 function searchPlaylists(token, query, callback) {
  
-    const queryUrl = query
-      .split(" ")
-      .join("%20")
-      .concat('&type=playlist&limit=5');
+  String.validate.notVoid(token)
+
+  String.validate(query)
+
+  Function.validate(callback)
+    // const queryUrl = query
+    //   .split(" ")
+    //   .join("%20")
+    //   //.concat('&type=playlist&limit=5');
   
+  debugger
     call(
       "GET",
-      `https://api.spotify.com/v1/search?q=${queryUrl}`,
+      `https://api.spotify.com/v1/search?q=${encodeURI(query)}&type=playlist&limit=5`,
       undefined,
-      { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+      { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
       (error, status, body) => {
-        if (error) console.log(error);
-  
+        debugger
+        if (error) callback(error)
+        
         if (status === 200) {
           const queryBody = JSON.parse(body)
           const {playlists} = queryBody
@@ -28,6 +35,9 @@ function searchPlaylists(token, query, callback) {
             return obj
         })
           callback(undefined, results)
+        }else{
+          const {error} = JSON.parse(body)
+          callback(new Error(error.message))
         }
     })
 }

@@ -1,5 +1,10 @@
 function searchTrack(token, query, callback) {debugger
   debugger;
+  String.validate.notVoid(token)
+
+  String.validate(query)
+
+  Function.validate(callback)
 
   const queryUrl = query
     .split(" ")

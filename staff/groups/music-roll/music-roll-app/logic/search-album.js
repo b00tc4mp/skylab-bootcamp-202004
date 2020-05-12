@@ -1,5 +1,10 @@
 function searchAlbum(token, query, callback) {
   debugger;
+  String.validate.notVoid(token)
+  
+  String.validate(query)
+  
+  Function.validate(callback)
 
   const queryUrl = encodeURI(query).concat(`&type=album&offset=0&limit=5`);
 
