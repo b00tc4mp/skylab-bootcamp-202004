@@ -7,17 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="vendor/mocha/mocha.css" />
 
-    <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-    <script src="https://api.trello.com/1/client.js?key=0b485e17ba3c15fb1f01827832e6fa16"></script>
+    
 
 </head>
 
 <body>
     <div id="mocha"></div>
-
+    <script src="vendor/jquery/jquery-3.3.1.min.js"></script>
+    <script src="vendor/trello/client.js"></script>
     <script src="vendor/mocha/mocha.js"></script>
     <script src="vendor/chai/chai.js"></script>
 
@@ -43,14 +40,16 @@
     <script src="logic/registerUser.js"></script>
     <script src="logic/retrieve-group-activity.js"></script>
     <script src="logic/retrieve-user-groups.js"></script>
+    <script src="logic/update-activity.js"></script>
 
     <!-- specs -->
+    <script src="logic/create-new-activity.spec.js"></script>
     <script src="logic/create-new-group.spec.js"></script>
     <script src="logic/create-new-list.spec.js"></script>
-    <script src="logic/create-new-activity.spec.js"></script>
     <script src="logic/delete-activity.spec.js"></script>
     <script src="logic/retrieve-group-activity.spec.js"></script>
     <script src="logic/retrieve-user-groups.spec.js"></script>
+    <script src="logic/update-activity.spec.js"></script>
     
     
     <script class="mocha-exec">

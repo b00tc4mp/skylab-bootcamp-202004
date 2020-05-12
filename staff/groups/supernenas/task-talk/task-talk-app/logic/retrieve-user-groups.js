@@ -1,11 +1,16 @@
-//Devuelve la información de todos los grupos a los que pertenece un usuario
-//Requiere que el usuario esté logeado para ver sus boards privados
-
-function retrieveUserGroups(username,onSucces,onFailure){
+/**
+ * Devuelve la informacion de todos los grupos a los que pertenece un determinado usuario. Si el usuario vinculado en ese momento y username coinciden puede sacar sus grupos privados 
+ * @param {string} username nombre de usuario (también vale su id) cuyos grupos van a sacar
+ * @param {function} onSuccess callback que se llama cuando no hay ningún error, recibe los grupos como parámetro
+ * @param {function} onFailure callback que se llama en caso de error, recibe el error como parámetro
+ * @throws {TypeError} lanza un error si username no es un string
+ * @throws {TypeError} lanza un error si onSuccess o onFailure no son funciones
+ */
+function retrieveusergroups(username,onSuccess,onFailure){
     const groups=[];
     //Comprueba que los parametros son del tipo correcto
     String.validate(username);
-    Function.validate(onSucces);
+    Function.validate(onSuccess);
     Function.validate(onFailure);
 
     //Obtener la información del usuario
@@ -26,7 +31,7 @@ function retrieveUserGroups(username,onSucces,onFailure){
                     iterateGroups(user,index);
                 }else{
                     //let results= groups.map((value)=>value.name) //Podemos usar esto si queremos recomponer los resultados
-                    onSucces(groups);
+                    onSuccess(groups);
                 }
             },onFailure)
         }
