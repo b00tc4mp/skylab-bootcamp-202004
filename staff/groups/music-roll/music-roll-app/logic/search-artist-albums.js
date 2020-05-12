@@ -1,4 +1,4 @@
-function searchArtistAlbum(token, id, callback) {
+function searchArtistAlbum(id,token, callback) {
     String.validate.notVoid(token)
     String.validate(token)
   

@@ -1,8 +1,8 @@
-describe("searchalbumtracks", () => {debugger
+describe("searchArtistgreatesthits", () => {debugger
     let id;
-    const VALID_QUERIES = ["chill", "beats", "californication"];
-    const queryUrl = encodeURI(VALID_QUERIES.random()).concat(`&type=album&offset=0&limit=1`);
-    let token ="BQBsmtQYNTNv-tMjX89ejiSd1P9SNB-APzS3yb0sD2gNm6VnHFXaa1ysOqQQs36leApjVBSEUyDOnCIZxWOb_Igy65H936N50S3gBvW33sUC3L24Lomgs2tjIUrgXrUyXBZxvQdnUj1MdXUrJ7IC4NMsGz3TVrVIflPiW2-YdVxXhseMG_2VGQ5Gmo-c";
+    const VALID_QUERIES = ["extremoduro", "platero y tu", "los suaves"];
+    const queryUrl = encodeURI(VALID_QUERIES.random()).concat(`&type=artist&offset=0&limit=1`);
+    let token ="BQAgVv_DvbfAHMrsh0xl-EXS7-6Oo1l_OUkaEvonzucoRFtH2fxBLEmXH2NwIb-1SybFQqV_RUFK5H-7ZAPWnCb5GdbSXNbShcvAk0MlBKxJRFzvt9gLbm1LaSUe4wY4O1e6-AelvQ0MvnNFipRWPOmCQ1mwAIZ9QYCC-T1dNGJEFA4YDXxXJMMtOpVF";
     beforeEach((done) => {
    debugger
     call(
@@ -14,7 +14,7 @@ describe("searchalbumtracks", () => {debugger
         if (error) return done(new Error(error.message));
 
         if (status === 200) {debugger
-          const {albums: { items }} = JSON.parse(body);
+          const { artists : {items} } = JSON.parse(body);
 
           id = items[0].id;
           done();
@@ -22,9 +22,9 @@ describe("searchalbumtracks", () => {debugger
       }
     );
   });
-it('should find tracks album by id', done =>{debugger
+it('should find  artist greatest-hits by id', done =>{debugger
    
-    searchAlbumTracks(`${id}`,`${token}`, (error,results) => {
+    searchArtistGreatestHits(`${id}`,`${token}`, (error,results) => {
       debugger
       expect(error).to.be.undefined;
       expect(results).to.be.an("array")
@@ -39,8 +39,9 @@ it('should find tracks album by id', done =>{debugger
     done()
     })
 })
-it('should throw an error if id its not correct', done=>{
-  searchAlbumTracks('asdasdasdasd',`${token}`, (error,results) => {debugger
+
+ it('should throw an error if id its not correct', done=>{
+  searchArtistGreatestHits('asdasdasdasd',`${token}`, (error,results) => {debugger
     expect(error).to.exist
     expect(results).to.be.undefined
     expect(error).to.be.an.instanceOf(Error)
@@ -48,6 +49,7 @@ it('should throw an error if id its not correct', done=>{
   done()
   })
 })
+
 it('should throw an error if token its not correct', done=>{debugger
   searchAlbumTracks(`${id}`,'adasdadas341231', (error,results) => {debugger
     expect(error).to.exist
@@ -57,6 +59,7 @@ it('should throw an error if token its not correct', done=>{debugger
   done()
   })
 })
+
 it('should fail when id its not a string', () => {
    token = `${token}`
   
@@ -153,8 +156,8 @@ it('should fail when id its not a string', () => {
              searchAlbum(token, query, undefined)
          }).to.throw(Error, 'undefined is not a function')
         }) 
+    })
 
-})
 
 
 
