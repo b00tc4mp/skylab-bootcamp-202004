@@ -1,8 +1,5 @@
 function addFwitter(idPlayer, _name, _message, token, callback) {
-    String.validate.alphabetic(idPlayer);
-    String.validate.alphabetic(_name);
-    String.validate.alphabetic(_message);
-    String.validate.alphabetic(_token);
+
 
     Function.validate(callback);
 
@@ -25,6 +22,7 @@ function addFwitter(idPlayer, _name, _message, token, callback) {
                         fwitt: [{
                             message: _message,
                             date: new Date().toDateString(),
+                            _date: Date.now(),
                             greenCard: 0,
                             yellowCard: 0,
                             redCard: 0,
@@ -39,6 +37,7 @@ function addFwitter(idPlayer, _name, _message, token, callback) {
                             const newFwitt = {
                                 message: _message,
                                 date: new Date().toDateString(),
+                                _date: Date.now(),
                                 greenCard: 0,
                                 yellowCard: 0,
                                 redCard: 0,
@@ -54,6 +53,7 @@ function addFwitter(idPlayer, _name, _message, token, callback) {
                             fwitt: [{
                                 message: _message,
                                 date: new Date().toDateString(),
+                                _date: Date.now(),
                                 greenCard: 0,
                                 yellowCard: 0,
                                 redCard: 0,

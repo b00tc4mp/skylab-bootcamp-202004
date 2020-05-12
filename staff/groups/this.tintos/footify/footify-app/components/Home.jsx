@@ -37,13 +37,13 @@ useEffect(()=>{
         try {
             setPlayers(undefined)
             setError(undefined)
-            searchPlayers(queryPlayer, (error, resultsPlayer) => { debugger
+            searchPlayers(queryPlayer, (error, resultsPlayer) => { 
                 if (error) {
                     setPlayers('no players')
                     setError(error.message)
                 }
 
-                searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => { debugger
+                searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => { 
                     if (error) return setError(error.message)
                     setPlayers(resultLikes) 
                     
@@ -72,6 +72,9 @@ useEffect(()=>{
     const handleToggleFollowPlayers = () =>{
         handleGoToPlayerResults(queryPlayer)
     }
+    const handleCommentFwitt = () =>{
+        handleGoToPlayerResults(queryPlayer)
+    }
 
     const handleGoToFwitter = () =>{
         try {
@@ -90,7 +93,7 @@ useEffect(()=>{
         <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter}/>
         {/* {view === 'spinner' && <Spinner />} */}
         {/* {error && <Feedback message={error} level="error" />} */}
-        {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} queryPlayer={queryPlayer} likesUser={likesUser}/>}
+        {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} onCommentFwitt={handleCommentFwitt} queryPlayer={queryPlayer} likesUser={likesUser}/>}
         {view === 'sport' && <SportNews sportNews={sportNews}/>}
         {view === 'fwitter' && <Fwitter fwitter={fwitter}/>}
 

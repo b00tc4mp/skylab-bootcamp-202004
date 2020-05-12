@@ -1,34 +1,13 @@
 function Fwitter({fwitter}){
-    const _fwitter = fwitter
-    
 
-    if(!_fwitter) return <Spinner />
+    if(!fwitter) return <Spinner />
 
-    let arrfwitter =[]
-    const _arrfwitter = ()=>{
-        _fwitter.map(({idUser, nameUser,surnameUser,fwitter}) =>{
-            fwitter.map(({id, name,fwitt})=>{
-                fwitt.map(({message,date})=>{
-                    arrfwitter.push({idUser,nameUser,surnameUser,name,message,date})
-                })
-            })
-        })                             
-    } 
-    _arrfwitter()
-
- //order arry by date... not working weet
-    console.log(arrfwitter)
-    arrfwitter.sort(function compare(a, b) {
-        var dateA = new Date(a.date);
-        var dateB = new Date(b.date);
-        return dateA - dateB;
-      });
-    console.log(arrfwitter)
+    const arrfwitter = creatFwitterArray(fwitter)
 
     return <>
     <section >
         {
-            _fwitter.length ?
+            arrfwitter.length ?
                 <div className='fwitter'>
                 { arrfwitter.map(({idUser,nameUser,surnameUser,name,message,date})=>
                                 <div className='fwitter__user'>
@@ -41,12 +20,11 @@ function Fwitter({fwitter}){
                                     <div className=''>
                                         <div className='fwitter__message'>{message}</div>
                                         <div className='fwitter__date'>{date}</div>
-                                            <div class='fwitter__card-container'>
-                                                <div class='fwitter__card'></div>
-                                                <div class='fwitter__card'></div>
-                                                <div class='fwitter__card'></div>
+                                            <div className='fwitter__card-container'>
+                                                <div className='fwitter__card'></div>
+                                                <div className='fwitter__card'></div>
+                                                <div className='fwitter__card'></div>
                                             </div>
-                                 
                                     </div>
                                     </div>
                                 </div>
