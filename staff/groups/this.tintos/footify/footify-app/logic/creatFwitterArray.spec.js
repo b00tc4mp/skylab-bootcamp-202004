@@ -1,4 +1,4 @@
-describe('Retrive Fwitter', () => {
+describe('Create Array Fwitts', () => {
     let _name, surname, email, password
 
     beforeEach(() => {
@@ -23,48 +23,32 @@ describe('Retrive Fwitter', () => {
                         (error, status, body) => {
                             if (status !== 200) return done(new Error(`undexpected status ${status}`))
                             const { token } = JSON.parse(body)
-                        
-                            retriveFwitter(token, (error, results) => {
-                                expect(error).to.be.undefined
-                                const fwitter = results
 
-                                let counter =  0
-                                fwitter.map(({ idUser, nameUser, surnameUser, fwitter }) => {
-                                    fwitter.map(({ id, name, fwitt }) => {
-                                        fwitt.map(({ message, date, _date }) => {
-                                            if (_date) {
-                                                counter++
-                                                expect(idUser).to.be.a('string');
-                                                expect(idUser).to.exist
-                                                expect(nameUser).to.be.a('string');
-                                                expect(nameUser).to.exist
-                                                expect(surnameUser).to.be.a('string');
-                                                expect(surnameUser).to.exist
-
-                                                expect(fwitter).to.exist
-
-                                                expect(id).to.be.a('string');
-                                                expect(id).to.exist
-                                                expect(name).to.be.a('string');
-                                                expect(name).to.exist
-
-                                                expect(fwitt).to.exist
-
-                                                expect(message).to.be.a('string');
-                                                expect(message).to.exist
-                                                expect(date).to.be.a('string');
-                                                expect(date).to.exist
-                                                //TODO
-                                                if(counter>5){
-                                                    done()
-                                                }
-                                            }
-                                        })
+                            call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all',
+                            undefined, { Authorization: `Bearer ${token}` },
+                            (error, status, body) => {
+                             if (status !== 200) return done(new Error(`undexpected status ${status}`))
+                                    let users = JSON.parse(body)
+          
+                                    const results =[]
+                                    users.forEach(({id:idUser,name: nameUser,surname: surnameUser,fwitter})=>{
+                    
+                                        if(fwitter){
+                                            results.push({ idUser,nameUser,surnameUser,fwitter})
+                                        } 
                                     })
-                                })
-                                
-                               
-                                
+
+                                    const fwitterArray = creatFwitterArray(results);
+                                    expect(fwitterArray).to.exist
+                                    fwitterArray.forEach(({ idUser,nameUser,surnameUser,name,message,date})=>{
+                                        expect(idUser).to.exist
+                                        expect(nameUser).to.exist
+                                        expect(surnameUser).to.exist
+                                        expect(name).to.exist
+                                        expect(message).to.exist
+                                        expect(date).to.exist
+                                    })
+ 
                             })
                         })
                 })
