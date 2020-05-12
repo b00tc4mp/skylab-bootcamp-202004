@@ -36,14 +36,15 @@ useEffect(()=>{
         try {
             setPlayers(undefined)
             setError(undefined)
-            searchPlayers(queryPlayer, (error, resultsPlayer) => { debugger
+            searchPlayers(queryPlayer, (error, resultsPlayer) => { 
                 if (error) {
                     setPlayers('no players')
                     setError(error.message)
                 }
 
-                searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => { debugger
+                searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => { 
                     if (error) return setError(error.message)
+                    console.log(resultLikes)
                     setPlayers(resultLikes) 
                     
                 })
@@ -67,6 +68,9 @@ useEffect(()=>{
     const handleToggleFollowPlayers = () =>{
         handleGoToPlayerResults(queryPlayer)
     }
+    const handleCommentFwitt = () =>{
+        handleGoToPlayerResults(queryPlayer)
+    }
 
     const handleGoToFwitter = () =>{
         try {
@@ -79,18 +83,24 @@ useEffect(()=>{
             setError(message)
         }  
     }
+    const handleGoToDream = () =>{
+        setView('dream')
+    }
 
     const handleGoToUpdateUser = () => setView('update-user')
 
     return <>
 
         <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToUpdateUser={handleGoToUpdateUser} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter}/>
+
         {/* {view === 'spinner' && <Spinner />} */}
         {/* {error && <Feedback message={error} level="error" />} */}
-        {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} queryPlayer={queryPlayer} likesUser={likesUser}/>}
+        {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} onCommentFwitt={handleCommentFwitt} queryPlayer={queryPlayer} likesUser={likesUser}/>}
         {view === 'sport' && <SportNews sportNews={sportNews}/>}
         {view === 'fwitter' && <Fwitter fwitter={fwitter}/>}
         {view === 'update-user' && <UpdateUser token={token} />}
+        {view === 'dream' && <Dream />}
+
     </>
 
 }

@@ -437,6 +437,44 @@
 .player-card__comment-input:focus {
   outline: none;
 }
+.player-card__form {
+  display: flex;
+  justify-content: center;
+  margin-left: 1rem;
+  align-items: center;
+  border-radius: 30px;
+  flex-shrink: 1;
+  flex-grow: 1;
+}
+.player-card__form-input {
+  border-radius: 30px;
+  width: 88%;
+  height: 25px;
+  font-family: raleway;
+  border-style: none;
+  text-align: justify;
+  margin-top: 0.8rem;
+  padding-left: 10px;
+  opacity: 50%;
+  background: #ffffff;
+}
+.player-card__form-input:focus {
+  opacity: 100%;
+  text-emphasis: none;
+  outline: none;
+  user-select: none;
+}
+.player-card__form-button {
+  position: relative;
+  right: 2.4rem;
+  top: 0.4rem;
+  background: 0 0;
+  border: 0;
+}
+.player-card__form-button:hover {
+  color: #320090;
+  opacity: 60%;
+}
 
 .navbar {
   margin-left: 2px;
@@ -584,17 +622,20 @@
   align-items: center;
 }
 .fwitter__user {
-  margin: 1rem 3rem;
+  margin: 1.5rem 3rem;
   padding-bottom: 1rem;
   border-bottom: 5px solid #320090;
+  width: 25rem;
 }
 .fwitter__user-item {
   display: flex;
   align-items: center;
 }
 .fwitter__point {
-  background-color: #320090;
-  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+}
+.fwitter__point > img {
   width: 4rem;
   height: 4rem;
 }
@@ -614,12 +655,15 @@
 }
 .fwitter__message {
   text-align: justify;
+  color: black;
+  font: Raleway;
+  font-weight: 400;
 }
 .fwitter__date {
   margin: 0.5rem;
   color: #320090;
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 0.8rem;
+  font-weight: 500;
   text-align: right;
 }
 .fwitter__card-container {
@@ -628,11 +672,10 @@
   border-top: 1px solid #320090;
   border-bottom: 1px solid #320090;
 }
-.fwitter__card {
+.fwitter__card-img {
   margin: 1rem;
   width: 3rem;
   height: 3rem;
-  background: green;
 }
 
 .update {

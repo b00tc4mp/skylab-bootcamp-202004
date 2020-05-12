@@ -1,4 +1,5 @@
-function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToUpdateUser }) {
+
+function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDrea, onGoToUpdateUser }) {
 
     const handleSubmitSearch = (event) => {
         event.preventDefault()
@@ -20,10 +21,16 @@ function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToUpd
         onGoToFwitter()
     }
 
+
     const handleSubmitUpdateUser = (event) =>{ debugger
         event.preventDefault()
 
         onGoToUpdateUser()
+
+    const handleSubmitDream = (event) =>{
+        event.preventDefault()
+
+        onGoToDream()
     }
 
     return <>
@@ -44,7 +51,7 @@ function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToUpd
                     <a href="" onClick={handleSubmitSport}>
                         <img src="img/news.svg" alt="user" id="navbar__links-news" />
                     </a>
-                    <a href="">
+                    <a href="" onClick={handleSubmitDream}>
                         <img src="img/dreamteam.svg" alt="user" className="navbar__links-item" />
                     </a>
 

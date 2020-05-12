@@ -7,7 +7,7 @@ function searchPlayersLikes(players, token, callback) {
   Function.validate(callback)
   let likePlayers = []
    call("GET","https://skylabcoders.herokuapp.com/api/v2/users/all", undefined,
-    { Authorization: `Bearer ${token}` }, (error, status, body) => {
+    { Authorization: `Bearer ${token}` }, (error, status, body) => { debugger
 
       if (error) return callback(error);
       
