@@ -20,9 +20,15 @@ function NavBar(props){
         event.preventDefault()
         props.onAdvSearch()
     }
+
+    const handleLanding = event =>{
+        event.preventDefault()
+        props.onLanding()
+    }
+
     return <nav className = "navigation">
         <div className = "navigation__basic">
-            <a href="">Landing</a>
+            <a href="" onClick = {handleLanding}>Landing</a>
             <form className = "navigation--searchbar" onSubmit = {() => {event.preventDefault(); props.onBasicSearch(event)}}>
                 <input type="text" name="query" placeholder = "Search cards by name"/>
             </form>

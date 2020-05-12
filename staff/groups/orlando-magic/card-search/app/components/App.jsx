@@ -8,6 +8,7 @@ function App(){
     const [card, setCard] = useState(undefined)
     const [searchConditions, setSearchConditions] = useState(undefined)
     const [userConditions, setUserConditions] = useState(undefined)
+    const [id, setId] = useState(undefined)
 
     function handleLogin() {
         setView('login')
@@ -72,6 +73,11 @@ function App(){
         setView('card') 
     }
 
+    function goToUser(user){
+        setId(user.id)
+        setView('user')
+    }
+
     function onUserSearch(event){
         setUserConditions(event.target.userquery.value)
         setView('userresults')
@@ -83,18 +89,15 @@ function App(){
     }
 
     return <>
-        {view !== 'landing' && <NavBar onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch} onAdvSearch = {handleAdvSearch} onUserSearch = {onUserSearch}/>}
+        {(view !== 'landing') && (view !== 'login') && (view !== 'register') && <NavBar onLanding = {handleLanding} onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch} onAdvSearch = {handleAdvSearch} onUserSearch = {onUserSearch}/>}
         {view==='landing' && <Landing onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch} onLogOut={handleLogOut} token={token} onAdvSearch = {handleAdvSearch}/>}
         {view==='login' && <Login onSubmit = {handleLoggedIn} onRegister = {handleRegister} onLanding={handleLanding}/>}
         {view==='register'  && <Register onLogin = {handleLogin} onLanding={handleLanding}/>}
         {view === 'results' && <Results goToCard = {goToCard} searchConditions={searchConditions} setSearchConditions={setSearchConditions}/>}
-        {view === 'userresults' && <UserResults goToUser = {undefined} userConditions={userConditions} token = {token}/>}
+        {view === 'userresults' && <UserResults goToUser = {goToUser} userConditions={userConditions} token = {token}/>}
         {view === 'adv' && <Search onAdvancedSearch = {onAdvancedSearch}/>}
         {view === 'card' && <Card card = {card}/>}
+        {view === 'user' && <User userId = {id} token = {token} goToCard = {goToCard}/>}              
     </>
-        /*{view === 'landing' && <Landing login = {login} setView = {setView} onBasicSearch = {onBasicSearch}/>}
-    {view !== 'landing' && <NavBar login = {login} setView = {setView} onBasicSearch = {onBasicSearch}/>}
-    {view === 'results' && <Results results = {results} onCardClick = {onCardClick}/>}
-    {view === 'card' && <Card card = {card}/>}*/
     
 }

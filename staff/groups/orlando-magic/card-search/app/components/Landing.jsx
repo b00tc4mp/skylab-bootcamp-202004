@@ -33,10 +33,6 @@ function Landing({onLogin, onRegister, onLogOut, token, onAdvSearch, onBasicSear
                 retrieveUser(token , (error, user)=>{
                     if (error) return setError(error.message)
                     setName(user.nickname)
-                    retrieveMyCards(token, (error, cards) => {
-                        if (error) return setError(error.message)
-                        console.log(cards)
-                    })
                 })
             } catch ({message}) {
                 setError(message)

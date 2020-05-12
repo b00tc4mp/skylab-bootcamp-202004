@@ -1,6 +1,6 @@
-function retrieveUser(token,callback, id = "") {
+function retrieveUserCards(token, id, callback) {
     String.validate.notVoid(token)
-
+    String.validate.notVoid(id)
     Function.validate(callback)
 
     call('GET', `https://skylabcoders.herokuapp.com/api/v2/users/${id}`,
@@ -10,9 +10,9 @@ function retrieveUser(token,callback, id = "") {
             if (error) return callback(error)
 
             if (status === 200) {
-                const { nickname, username } = JSON.parse(body)
+                const { myCards=[] } = JSON.parse(body)
 
-                callback(undefined, { nickname, email: username })
+                callback(undefined, myCards)
             } else {
                 const { error } = JSON.parse(body)
 

@@ -1733,6 +1733,132 @@
 
     </section>
 
+    <section class = 'user'>
+        <div class="user__info">
+            <img class = "user__image" src = 'https://img.scryfall.com/users/normal/front/7/8/7855528a-ede9-49a9-8749-795a004fd927.jpg?1562788826'>
+            <article class = "user__content">
+                <div class = "user__content--top">
+                    <!-- printed_name over name -->
+                    <p class = "user__content--name">Abzan Banner</p>
+                    <!-- mana_cost -->
+                    <p class = "user__content--manacost">{3}</p>
+                </div>
+
+                <div class = "user__content--typeline">
+                    <!-- printed_type_line over type_line -->
+                    <p>Artifact</p>
+                </div>
+
+                <ul class = "user__content--content">
+                    <!-- printed_text over oracle_text -->
+                    <!-- Will need to divide into paragraphs using a function, teext comes with /n as line breaks -->
+                    <li class = "user__content--oracletext">
+                        {T}: Add {W}, {B}, or {G} to your mana pool.
+                    </li>
+                    <li class = "user__content--oracletext">
+                        {W}{B}{G}, {T}, Sacrifice Abzan Banner: Draw a user.
+                    </li>
+                    <!-- flavor_text -->
+                    <li class = "user__content--flavortext">Stone to endure, roots to remember.</p>
+                </ul >
+
+                <div class = "user__content--stats">
+                    <!-- power and toughness -->
+                    <!-- loyalty -->
+                    <p>Power/toughness/loyalty</p>
+                </div >
+
+                <div class = "user__content--artist">
+                    <!-- artist -->
+                    <p>Illustrated by Daniel Ljunggren</p>
+                </div>
+
+                <div class = "user__content--legalities">
+                    <!-- user.legalities is an object with a key for each format and 'legal' or 'not_legal' as values-->
+                    <div class = "user__content--legalityelement">
+                        <p class = "user__content--format">
+                            Pioneer
+                        </p>
+                        <p class = "user__content--legal">
+                            LEGAL
+                        </p>
+                    </div>
+
+                    <div class = "user__content--legalityelement">
+                        <p class = "user__content--format">
+                            Standard
+                        </p>
+                        <p class = "user__content--illegal">
+                            ILLEGAL
+                        </p>
+                    </div>
+                    <div class = "user__content--legalityelement">
+                        <p class = "user__content--format">
+                            Pioneer
+                        </p>
+                        <p class = "user__content--legal">
+                            LEGAL
+                        </p>
+                    </div>
+
+                    <div class = "user__content--legalityelement">
+                        <p class = "user__content--format">
+                            Standard
+                        </p>
+                        <p class = "user__content--illegal">
+                            ILLEGAL
+                        </p>
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+        <article class = "user__tools">
+
+            <div class = "user__tools--toolbox">
+                <p class = "user__tools--title">
+                    TOOLBOX
+                </p>
+                <a class = "user__tools--link" href = "https://decks.tcgplayer.com/magic/deck/search?contains=Abzan+Banner&page=1&partner=Scryfall&utm_campaign=affiliate&utm_medium=user-detail-tcgp-decks&utm_source=scryfall" target="_blank">
+                    <!-- related_uris.tcgplayer_decks -->
+                    TCGPlayer decks with this card
+                </a>
+    
+                <a class = "user__tools--link" href = "https://edhrec.com/cards/abzan-banner" target="_blank">
+                    <!-- related_uris.edhrec -->
+                    Card analysis on EDHREC
+                </a>
+    
+                <a class = "card__tools--link" href = "https://mtgtop8.com/search?MD_check=1&SB_check=1&cards=Abzan+Banner" target="_blank">
+                    <!-- related_uris.mtgtop8 -->
+                    Search MTGTop8 for this card
+                </a>
+            </div>
+
+            <div class = "card__tools--shopping">
+                <p class = "card__tools--title">
+                    BUY THIS CARD
+                </p>
+
+                <a class = "card__tools--link" href = "https://shop.tcgplayer.com/magic/khans-of-tarkir/abzan-banner?id=93017&partner=Scryfall&utm_campaign=affiliate&utm_medium=card-detail-buy-nonfoil&utm_source=scryfall" target="_blank">
+                    <!-- purchase_uris.tcgplayer -->
+                    Buy on TCGPlayer
+                </a>
+    
+                <a class = "card__tools--link" href = "https://www.cardmarket.com/en/Magic/Products/Singles/Khans-of-Tarkir/Abzan-Banner?utm_campaign=card_prices&utm_medium=text&utm_source=scryfall" target="_blank">
+                    <!-- purchase_uris.cardmarket -->
+                    Buy on Cardmarket
+                </a>
+    
+                <a class = "card__tools--link" href = "https://www.cardhoarder.com/cards/54060?affiliate_id=scryfall&ref=card-profile&utm_campaign=affiliate&utm_medium=card&utm_source=scryfall" target="_blank">
+                    <!-- purchase_uris.cardhoarder -->
+                    Buy on Cardhoarder
+                </a>
+            </div>
+        </article>
+
+    </section>
+
     <footer>
         <!-- All the footer menus seem to be unnecessary for this web-app -->
         <!-- The literal and graphical information presented on this site about Magic: The Gathering, 

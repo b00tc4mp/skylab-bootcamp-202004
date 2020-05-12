@@ -32,8 +32,8 @@ function searchUsers(token, query, callback) {
                                 return nickname && nickname.toLowerCase().includes(query) || username.toLowerCase().includes(query)
                             })
 
-                            users = users.map(({ id, nickname, username }) => {
-                                const _user = { id, nickname, email: username }
+                            users = users.map(({ id, nickname, username, myCards = []}) => {
+                                const _user = { id, nickname, email: username, myCards}
 
                                 if (username !== _username) _user.following = following.includes(id)
 
@@ -46,7 +46,6 @@ function searchUsers(token, query, callback) {
 
                             callback(new Error(error))
                         }
-
                     }
                 )
             } else {
