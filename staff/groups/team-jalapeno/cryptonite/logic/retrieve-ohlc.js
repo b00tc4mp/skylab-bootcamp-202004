@@ -1,7 +1,9 @@
-function retrieveCryptos(callback) {
+function retrieveOhlc(name, callback) {
+
     Function.validate(callback)
-    
-    const url = 'https://api.coincap.io/v2/assets?&limit=12'
+    String.isString(name)
+
+    const url = `https://api.coincap.io/v2/candles?exchange=poloniex&interval=h8&baseId=${name}&quoteId=tether`
     const headers = { 'Content-type': 'application/json' }
     const body = undefined
 
@@ -10,7 +12,9 @@ function retrieveCryptos(callback) {
         if (error) return callback(error)
 
         if (status === 200) {
-            const { data } = JSON.parse(response)
+            let { data } = JSON.parse(response)
+            data = data.slice(-2)
+            data = data[0]
             return callback(undefined, data)
         }
 

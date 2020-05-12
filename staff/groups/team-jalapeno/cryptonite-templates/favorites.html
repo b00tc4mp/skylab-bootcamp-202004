@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 </head>
 
 <body>
@@ -16,25 +16,24 @@
         <a href="" class="nav__item logout-link">Logout</a>
     </nav>
     <!-- COMPO 2 -->
-    <section class="portfolio">
-        <h3 class="portfolio__title">Wallet</h3>
-        <h1 class="portfolio__money">1.752,21$</h1>
-        <h4 class="portfolio__stats"><span class="portfolio__stats--contrast">+121,40$ (8.3%)</span> Last 24h</h4>
-        <button class="portfolio__button">Go to Portfolio </button>
+    <section class="brand">
+        <h1 class="brand__title">Favorites</h1>
+        <h4 class="brand__description">Track all your crypto favorites!</h4>
+
     </section>
 
 
 
     <!-- COMPO 3 -->
     <section class="crypto-coins">
-        <h3 class="crypto-coins__title">Crypto Coins</h3>
-        <section class="crypto-coins__search">
-            <input type="text" placeholder="Find your next crypto favorite">
+        <h3 class="crypto-coins__title">Crypto Favorites</h3>
+        <!-- <section class="crypto-coins__search">
+            <input type="text" placeholder="Search">
             <i class="fa fa-search"></i>
-        </section>
+        </section> -->
 
         <section class="coins-container">
-            <div class="coin">
+            <div class="coin coin--large">
                 <div class="coin__head">
                     <span class="coin__symbol">BTC</span>
                     <span class="coin__rank">12</span>
@@ -46,7 +45,7 @@
                 </div>
             </div>
 
-            <div class="coin">
+            <div class="coin coin--large">
                 <div class="coin__head">
                     <span class="coin__symbol">BTC</span>
                     <span class="coin__rank">12</span>
@@ -57,9 +56,11 @@
                     <span class="coin__percentage">+120$ (14%)</span>
                 </div>
             </div>
+
+
         </section>
-    </section>
 
+    </section>
 
 
     <footer class="footer">
@@ -68,8 +69,3 @@
         </section>
 
     </footer>
-    <nav class="nav-bar">
-        <a href="#" class="nav-bar__item"><i class="fa fa-home"></i><label for="">home</label></a>
-        <a href="#" class="nav-bar__item"><i class="fa fa-heart"></i><label for="">favorites</label></a>
-        <a href="#" class="nav-bar__item"><i class="fa fa-bitcoin"></i><label for="">portfolio</label></a>
-    </nav>

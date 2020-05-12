@@ -1,41 +1,101 @@
-const { useEffect, useState } = React
+const { useEffect, useState } = React;
 
 function Home() {
-    const [cryptos, setCryptos] = useState(null)
-    const [error, setError] = useState(null)
+  const [view, setView] = useState("cryptos-list");
+  const [cryptos, setCryptos] = useState(null);
+  const [error, setError] = useState(null);
+
+  const handleRetrieveCryptos = () => {
+    retrieveCryptos((_error, _cryptos) => {
+      if (_error) setError(_error.message);
+      else setCryptos(_cryptos);
+    });
+  };
+
+  const handleCheckHash = () => {
+    let coinName = window.location.hash
+    if (coinName) {
+      setView('coin-page')
+    } else setView('cryptos-list')
+  }
+
+  useEffect(() => {
+    handleCheckHash()
+    handleRetrieveCryptos()
+    const interval = setInterval(handleRetrieveCryptos, 5000)
+
+    window.addEventListener('hashchange', handleCheckHash)
+    return () => {
+      window.removeEventListener('hashchange', handleCheckHash)
+      clearInterval(interval)
+    }
+  }, [])
+
+  const handleClickCoin = (coinName) => {
+    if (!coinName) return
+    window.location.hash = coinName
+    setView('coin-page')
+  }
+
+  const handleSearchOnChange = (event) => {
+    const {
+      target: { value: query },
+    } = event;
+    if (!query) return handleRetrieveCryptos();
+    searchCryptos(query, (_error, _cryptos) => {
+      if (_error) setError(_error.message);
+      else setCryptos(_cryptos);
+    });
+  };
+
+  const handlePortfolioClick = (event) => {
+    event.preventDefault()
+
+    setView('portfolio-page')
+  }
+
+  const handlePortfolioSubmit = (id, quantity, callback) => {
+    addPortfolioCrypto(sessionStorage.token, { id, quantity }, callback)
+
+  }
 
 
-    useEffect(()=>{
-        retrieveCryptos((_error, _cryptos)=> {
-            if (_error)  setError(_error.messsage)  
-            else setCryptos(_cryptos) 
-            console.log('i just set Cryptos')
-        })
-        
-    }, [])
 
-    return <>
-        <nav className="nav">
+  return (
+    <>
+      {view === "cryptos-list" && (
+        <>
+          <nav className="nav">
             <a href="" className="nav__item nav__item--contrast register-link"></a>
-            <a href="" className="nav__item logout-link">Logout</a>
-        </nav>
+            <a href="" className="nav__item logout-link">
+              Logout
+          </a>
+          </nav>
 
-        <section className="portfolio">
-            <h3 className="portfolio__title">Wallet</h3>
-            <h1 className="portfolio__money">1.752,21$</h1>
-            <h4 className="portfolio__stats"><span className="portfolio__stats--contrast">+121,40$ (8.3%)</span> Last 24h</h4>
-            <button className="portfolio__button">Go to Portfolio </button>
+          <CryptosListPage
+            handleSearchOnChange={handleSearchOnChange}
+            cryptos={cryptos}
+            handleClickCoin={handleClickCoin}
+            handlePortfolioClick={handlePortfolioClick}
+          />
+        </>
+      )}
+
+      {view === 'coin-page' && <CoinPage addPortfolioSubmit={handlePortfolioSubmit} />}
+      {view === 'favorites-page' && <FavoritesPage />}
+      {view === 'portfolio-page' && <PortfolioPage />}
+
+      <footer className="footer">
+        <section>
+          <p className="footer__copyright">
+            © 2020 Team Jalapeño - Skylab Coders. All rights reserved.
+          </p>
         </section>
+      </footer>
 
-        {cryptos &&<Cryptos cryptoResults={cryptos} />}
-
-
-        <footer className="footer">
-            <section>
-                <p className="footer__copyright">© 2020 Team Jalapeño - Skylab Coders. All rights reserved.</p>
-            </section>
-
-        </footer>
-        
+      <NavBar />
     </>
+
+
+  );
 }

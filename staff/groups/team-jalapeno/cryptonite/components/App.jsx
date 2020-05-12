@@ -1,8 +1,8 @@
 const { useState, Component } = React
 
 function App() {
-    const [view, setView] = useState('home')
-    const [token, setToken] = useState(undefined)
+    const [view, setView] = useState('landing')
+    const [token, setToken] = useState(null)
 
     const handleGoToRegister = (event) => {
         event.preventDefault()
@@ -10,9 +10,15 @@ function App() {
     }
 
     const handleGoToLogin = (event) => {
+        // event.preventDefault()
+        setView('login')
+    }
+
+    const handleGoToLoginFromLanding = (event) => {
         event.preventDefault()
         setView('login')
     }
+
 
     const handleRegisterSubmit = (event) => {
         setView('login')
@@ -24,36 +30,27 @@ function App() {
         const email = event.target.email.value
         const password = event.target.password.value
 
-        console.log(email, password)
+        try {
+            authenticateUser(email, password, (error, token) => {
+                if (error) throw error
 
-        authenticateUser(email, password, (error, token) => {
-            if (error) throw error
-
-            if (token) {
-                setToken(token)
-                setView('home')
-            }
-        })
+                if (token) {
+                    setToken(token)
+                    sessionStorage.token = token
+                    setView('home')
+                }
+            })
+        } catch (error) {
+            if (error) new Error(error.message)
+        }
     }
 
+
     return <>
-        {view === 'landing' && <Landing toRegister={handleGoToRegister} toLogin={handleGoToLogin} />}
+        {view === 'landing' && <Landing toRegister={handleGoToRegister} toLogin={handleGoToLogin} handleGoToLoginFromLanding={handleGoToLoginFromLanding} />}
         {view === 'login' && <Login toRegister={handleGoToRegister} loginSubmit={handleLoginSubmit} />}
         {view === 'register' && <Register registerSubmit={handleRegisterSubmit} goToLogin={handleGoToLogin} />}
         {view === 'home' && <Home />}
 
-
     </>
-    // LANDING
-    // NAV
-    // BRAND
-    // CRYPTO COINS 
-    // FOOTER
-
-    // REGISTER
-
-    // LOGIN
-
-    //HOME
 }
-

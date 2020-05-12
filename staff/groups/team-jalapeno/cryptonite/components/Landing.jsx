@@ -1,9 +1,38 @@
+const { useEffect, useState } = React
 
-function Landing({ toRegister, toLogin }) {
+function Landing({ toRegister, toLogin, handleGoToLoginFromLanding }) {
+
+    const [cryptos, setCryptos] = useState(null);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        handleRetrieveCryptos()
+    }, [])
+
+
+
+    const handleSearchOnChange = (event) => {
+        const {
+            target: { value: query },
+        } = event;
+        if (!query) return handleRetrieveCryptos();
+        searchCryptos(query, (_error, _cryptos) => {
+            if (_error) setError(_error.message);
+            else setCryptos(_cryptos);
+        });
+    };
+
+    const handleRetrieveCryptos = () => {
+        retrieveCryptos((_error, _cryptos) => {
+            if (_error) setError(_error.message);
+            else setCryptos(_cryptos);
+        });
+    };
+
     return <>
         <nav className="nav">
             <a href="" className="nav__item nav__item--contrast register-link" onClick={toRegister} >Register</a>
-            <a href="" className="nav__item login-link" onClick={toLogin}>Login</a>
+            <a href="" className="nav__item login-link" onClick={handleGoToLoginFromLanding}>Login</a>
         </nav>
 
         <section className="brand">
@@ -11,6 +40,14 @@ function Landing({ toRegister, toLogin }) {
             <h4 className="brand__description">Track your coins the simplest way as never before.
             Just the news you need. Made for hodlers by hodlers. Join Cryptonite!</h4>
         </section>
+
+        {cryptos && (
+            <Cryptos
+                handleSearchOnChange={handleSearchOnChange}
+                cryptoResults={cryptos}
+                handleClickCoin={toLogin}
+            />
+        )}
 
         <footer className="footer">
             <section>
@@ -22,4 +59,4 @@ function Landing({ toRegister, toLogin }) {
 
         </footer>
     </>
-}
+} ''
