@@ -632,6 +632,8 @@
   align-items: center;
 }
 .fwitter__point {
+  background-color: #320090;
+  border-radius: 50%;
   width: 4rem;
   height: 4rem;
 }
@@ -672,8 +674,12 @@
   border-top: 1px solid #320090;
   border-bottom: 1px solid #320090;
 }
+
+.fwitter__card {
 .fwitter__card-img {
   margin: 1rem;
+.fwitter__card-img {
+  margin-top: 0.4rem;
   width: 3rem;
   height: 3rem;
 }
@@ -747,6 +753,25 @@
   font-weight: 700;
   user-select: none;
   outline: none;
+}
+.fwitter__card-and-count {
+  display: flex;
+  color: #320090;
+  font-weight: 500;
+  font-size: 1.2rem;
+  align-items: center;
+  justify-content: center;
+  width: 133.3px;
+  height: 80px;
+}
+.fwitter__card-and-count-red:hover {
+  background-color: #FFE4DA;
+}
+.fwitter__card-and-count-yellow:hover {
+  background-color: #FFF9C7;
+}
+.fwitter__card-and-count-green:hover {
+  background-color: #EAFDED;
 }
 
 * {

@@ -8,43 +8,50 @@ function Home({ token }) {
     // const [loading, setLoading] = useState(true)
     const [likesUser, setLikesUser] = useState()
     const [sportNews, setSportNews] = useState()
-    const [queryPlayer, setQueryPlayer] = useState()    
-    const [fwitter,setFwitter] = useState();
+    const [queryPlayer, setQueryPlayer] = useState()
+    const [fwitter, setFwitter] = useState();
 
 
-useEffect(()=>{
-    try {
-        retriveFwitter(token,(error,results)=>{
-            if (error) return setError(error.message);
-            setFwitter(results);
-        })
-        setView('fwitter');
-    } catch ({message}) {
-        setError(message)
-    }  
-},[])
-    
+    useEffect(() => {
+        try {
+            retriveFwitter(token, (error, results) => {
+                if (error) return setError(error.message);
+                
+                commentCards(results, token, (error, resultsComments) => {
+                    if(error) return setError(error.message)
+                    setFwitter(resultsComments)
+                })
+            })
+            
+            setView('fwitter');
+        } catch ({ message }) {
+            setError(message)
+        }
+    }, [])
+
 
     const handleGoToPlayerResults = (queryPlayer) => {
-        
-        retrieveUser(token, (error, user) =>{
-            const {likes} = user
+
+        retrieveUser(token, (error, user) => {
+            const { likes } = user
             setLikesUser(likes)
-          })
+        })
 
         setQueryPlayer(queryPlayer)
         try {
             setPlayers(undefined)
             setError(undefined)
-            searchPlayers(queryPlayer, (error, resultsPlayer) => { 
+
+            searchPlayers(queryPlayer, (error, resultsPlayer) => {
+
                 if (error) {
                     setPlayers('no players')
                     setError(error.message)
                 }
 
+
                 searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => { 
                     if (error) return setError(error.message)
-                    console.log(resultLikes)
                     setPlayers(resultLikes) 
                     
                 })
@@ -65,23 +72,33 @@ useEffect(()=>{
         })
     }
 
-    const handleToggleFollowPlayers = () =>{
+    const handleToggleFollowPlayers = () => {
+        handleGoToPlayerResults(queryPlayer)
+    }
+    const handleCommentFwitt = () => {
         handleGoToPlayerResults(queryPlayer)
     }
     const handleCommentFwitt = () =>{
         handleGoToPlayerResults(queryPlayer)
     }
 
-    const handleGoToFwitter = () =>{
+    const handleGoToFwitter = () => {
         try {
-            retriveFwitter(token,(error,results)=>{
+            retriveFwitter(token, (error, results) => {
                 if (error) return setError(error.message);
-                setFwitter(results);
+                
+                
+                commentCards(results, token, (error, resultsComments) => {
+                    setFwitter(resultsComments)
+                })
             })
             setView('fwitter');
-        } catch ({message}) {
+        } catch ({ message }) {
             setError(message)
-        }  
+        }
+    }
+    const handleGoToDream = () => {
+        setView('dream')
     }
     const handleGoToDream = () =>{
         setView('dream')
@@ -91,14 +108,13 @@ useEffect(()=>{
 
     return <>
 
-        <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToUpdateUser={handleGoToUpdateUser} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter}/>
 
+        <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter} onGoToDream={handleGoToDream} />
         {/* {view === 'spinner' && <Spinner />} */}
         {/* {error && <Feedback message={error} level="error" />} */}
-        {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} onCommentFwitt={handleCommentFwitt} queryPlayer={queryPlayer} likesUser={likesUser}/>}
-        {view === 'sport' && <SportNews sportNews={sportNews}/>}
-        {view === 'fwitter' && <Fwitter fwitter={fwitter}/>}
-        {view === 'update-user' && <UpdateUser token={token} />}
+        {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} onCommentFwitt={handleCommentFwitt} queryPlayer={queryPlayer} likesUser={likesUser} />}
+        {view === 'sport' && <SportNews sportNews={sportNews} />}
+        {view === 'fwitter' && <Fwitter fwitter={fwitter} token={token} onUpdateFwitter={handleGoToFwitter}/>}
         {view === 'dream' && <Dream />}
 
     </>
