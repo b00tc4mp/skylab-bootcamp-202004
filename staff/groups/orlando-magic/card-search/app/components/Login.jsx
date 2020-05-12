@@ -46,22 +46,22 @@ class Login extends Component {
         return <>
         <div className='section-container'>
             <div className='login-card-container'>
-                <section className="menu-title">
-                    <h1 className='name title'>Login</h1>
-                    <div className="frame-art-container">
-                        <img className='frame-art' src='https://i.pinimg.com/originals/0a/32/77/0a3277ef0b12f7ae989ef690ea022f24.jpg' alt='jace art'/>
+                <section className="card-container__section">
+                    <h1 className='card-container__name card-container__title'>Login</h1>
+                    <div className="card-container__frame-art-container">
+                        <img className='card-container__frame-art' src='https://i.pinimg.com/originals/0a/32/77/0a3277ef0b12f7ae989ef690ea022f24.jpg' alt='jace art'/>
                     </div>
-                    <h1 className="type title">Legendary Enchantment</h1>
-                    <div className="form-container">
-                        <form className='form' onSubmit={this.handleSubmit}>
-                            <input className='form__item' type="email" name="email" placeholder="e-mail" required />
-                            <input className='form__item' type="password" name="password" placeholder="password" required minLength="8" />
-                            <button className='form__item'>Submit</button>
+                    <h1 className="card-container__type card-container__title">Legendary Enchantment</h1>
+                    <div className="card-container__form-container">
+                        <form className='card-container__form' onSubmit={this.handleSubmit}>
+                            <input className='card-container__form__item' type="email" name="email" placeholder="e-mail" required />
+                            <input className='card-container__form__item' type="password" name="password" placeholder="password" required minLength="8" />
+                            <button className='card-container__form__item'>Submit</button>
                         </form>
                         {this.state.error && <Feedback message={this.state.error} level='error' />}
-                        <div className="nav">
-                            <a className="nav__item" href="" onClick={this.handleRegister}>Register</a>
-                            <a className="nav__item" href="" onClick={this.handleLanding}>Return to main page</a>
+                        <div className="card-container__nav">
+                            <a className="card-container__nav-item" href="" onClick={this.handleRegister}>Register</a>
+                            <a className="card-container__nav-item" href="" onClick={this.handleLanding}>Return to main page</a>
                         </div>
                     </div>
                 </section>

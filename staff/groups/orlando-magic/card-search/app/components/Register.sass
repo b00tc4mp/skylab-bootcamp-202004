@@ -11,7 +11,7 @@
     background-image: url('https://external-preview.redd.it/uIvFOYYr9-rzIDRmTuFQeHKhBi_q6UV7XjiD00M0o2c.jpg?auto=webp&s=4f1149cb384bec2a2c27fd41168e95a4c1d264b9')
     background-size: 100% 100%
 
-.card-container 
+.card-container
     border: 0.5rem solid black
     width: 95vw
     margin: 0 auto
@@ -24,7 +24,7 @@
     position: relative
 
 
-.menu-title
+.card-container__section
     height: 97.3%
     width: 93%
     margin: auto
@@ -35,7 +35,7 @@
     background-color: #bbb
     padding: 0.25rem
 
-.title, .frame-type-line,.nav__item 
+.card-container__title, .card-container__nav-item 
     border-bottom: 4px solid #a9a9a9
     border-left: 2px solid #a9a9a9
     border-top: 1px solid #fff
@@ -53,10 +53,10 @@
     border-radius: 1.5rem/3rem
     font-size: 1.2rem
 
-.form-container
+.card-container__form-container
     width: 100%
 
-.form 
+.card-container__form 
     z-index: 1
     position: relative
     width: 95%
@@ -65,34 +65,34 @@
     box-shadow: 0 0 0 5px #26714A, -3px 3px 2px 5px #171314
     margin: auto
 
-    &__item
+    &-item
         height: 1.5rem
         margin: 0.1rem 0
         
-.name,.type
+.card-container__name,.card-container__type
     font-size: 1.3em
     
     align-self: baseline
     font-weight: 600
 
-.frame-art-container
+.card-container__frame-art-container
     display: flex
     width: 100%
 
-.frame-art 
+.card-container__frame-art 
     width: 95%
     margin: auto
     margin-bottom: 1rem
     box-shadow: 0 0 0 2px #171314,0 0 0 5px #26714A,-3px 3px 2px 5px #171314
 
-.nav
+.card-container__nav
     margin-top: 1rem
     display: grid
     justify-content: space-around
     align-items: space-around
     bottom: 5%
         
-    &__item 
+    &-item 
         text-decoration: none
         color: black
         text-align: center
@@ -103,24 +103,24 @@
     .card-container
         font-size: 1.5rem
 
-    .form
+    .card-container__form
         &__item
             font-size: 1.5rem
             height: 2.5rem
     
-    .nav__item
+    .card-container__nav-item
         font-size: 1.5rem
 
 @media only screen and (min-width: 968px)
-    .card-container
+    .card-container__card-container
         font-size: 2rem
 
-    .form
-        &__item
+    .card-container__form
+        &-item
             font-size: 2rem
             height: 2.5rem
     
-    .nav__item
+    .nav-item
         font-size: 2rem
 
 @media only screen and (min-width: 1025px)
@@ -128,19 +128,19 @@
         width: 30%
         font-size: 0.8rem
 
-        .form
+        .card-container__form
             &__item
                 font-size: 0.8rem
                 height: 1.2rem
     
-        .nav
+        .card-container__nav
             margin-top: 0.8rem
-            &__item
+            &-item
                 font-size: 0.8rem
 
 @media only screen and (max-width: 320px)
     .card-container
         font-size: 0.7rem
     
-    .nav__item
+    .card-container__nav-item
         font-size: 0.7rem
