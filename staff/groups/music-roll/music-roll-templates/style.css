@@ -241,16 +241,36 @@ input -internal-autofill-selected {
   background-color: #505050;
   transition: all 2s;
 }
-.navbar__item:active {
-  background-image: linear-gradient(to right, #7F00FF, #E100FF);
-  z-index: 2;
-  transition: ease-in 5s;
+
+.hamburguer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 2.5rem;
+  width: 2.5rem;
+  cursor: pointer;
+  background-color: white;
 }
-.navbar :nth-child(2) {
-  margin-top: 2rem;
+.hamburguer__bar {
+  height: 5px;
+  background: black;
+  border-radius: 5px;
+  margin: 3px 0px;
+  transform-origin: left;
+  transition: all 0.5s;
 }
-.navbar :nth-child(7) {
-  margin-top: 55vh;
+.hamburguer__bar:hover > .hamburguer--top {
+  transform: rotate(45deg);
+}
+.hamburguer--top:hover {
+  transform: rotate(45deg);
+}
+.hamburguer--middle:hover {
+  opacity: 0;
+}
+.hamburguer--bottom:hover {
+  transform: rotate(-45deg);
 }
 
 .quiz {
