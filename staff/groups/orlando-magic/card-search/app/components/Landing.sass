@@ -1,4 +1,4 @@
-.type > form 
+.card-container__type > form 
     display: flex
     justify-content: center
     height: 1.5rem
@@ -16,21 +16,21 @@
     background: #171314
     z-index: 0
 
-    .title, .frame-type-line,.nav__item 
+    .card-container__title, .card-container__nav-item
         box-shadow: 0 0 0 2px #171314, 0 0 0 5px #deddc5, -3px 3px 2px 5px #171314
 
 
-    .form-container
+    .card-container__form-container
         width: 100%
 
-    .form 
+    .card-container__form
         box-shadow: 0 0 0 5px #deddc5, -3px 3px 2px 5px #171314
 
-    .frame-art 
+    .card-container__frame-art 
         box-shadow: 0 0 0 2px #171314,0 0 0 5px #deddc5,-3px 3px 2px 5px #171314
 
 @media only screen and (min-width: 768px)
-    .type > form 
+    .card-container__type > form 
         height: 2rem
         margin: auto
         font-size: 2rem
@@ -41,12 +41,12 @@
     .landing-card-container
         font-size: 2rem
 
-        .form
-            &__item
+        .card-container__form
+            &-item
                 font-size: 2rem
                 height: 2.5rem
         
-        .nav__item
+        .card-container__nav-item
             font-size: 2rem
 
     
@@ -55,12 +55,12 @@
         width: 30%
         font-size: 0.8rem
 
-        .form
-            &__item
+        .card-container__form
+            &-item
                 font-size: 0.8rem
                 height: 1.35rem
     
-        .nav
+        .card-container__nav
             margin-top: 0.8rem
-            &__item
+            &-item
                 font-size: 0.8rem
