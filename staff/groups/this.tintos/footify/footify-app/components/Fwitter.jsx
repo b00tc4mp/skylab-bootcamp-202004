@@ -1,5 +1,5 @@
 function Fwitter({fwitter}){
-
+console.log(fwitter)
     if(!fwitter) return <Spinner />
 
     const arrfwitter = creatFwitterArray(fwitter)

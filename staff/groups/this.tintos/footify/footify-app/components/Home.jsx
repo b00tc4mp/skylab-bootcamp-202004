@@ -45,6 +45,7 @@ useEffect(()=>{
 
                 searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => { 
                     if (error) return setError(error.message)
+                    console.log(resultLikes)
                     setPlayers(resultLikes) 
                     
                 })
@@ -87,15 +88,19 @@ useEffect(()=>{
             setError(message)
         }  
     }
+    const handleGoToDream = () =>{
+        setView('dream')
+    }
 
     return <>
 
-        <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter}/>
+        <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter} onGoToDream={handleGoToDream}/>
         {/* {view === 'spinner' && <Spinner />} */}
         {/* {error && <Feedback message={error} level="error" />} */}
         {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} onCommentFwitt={handleCommentFwitt} queryPlayer={queryPlayer} likesUser={likesUser}/>}
         {view === 'sport' && <SportNews sportNews={sportNews}/>}
         {view === 'fwitter' && <Fwitter fwitter={fwitter}/>}
+        {view === 'dream' && <Dream />}
 
     </>
 
