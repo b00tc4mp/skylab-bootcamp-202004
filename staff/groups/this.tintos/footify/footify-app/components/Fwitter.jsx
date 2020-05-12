@@ -1,15 +1,36 @@
 function Fwitter({fwitter}){
     const _fwitter = fwitter
+    
+
     if(!_fwitter) return <Spinner />
-console.log(_fwitter)
+
+    let arrfwitter =[]
+    const _arrfwitter = ()=>{
+        _fwitter.map(({idUser, nameUser,surnameUser,fwitter}) =>{
+            fwitter.map(({id, name,fwitt})=>{
+                fwitt.map(({message,date})=>{
+                    arrfwitter.push({idUser,nameUser,surnameUser,name,message,date})
+                })
+            })
+        })                             
+    } 
+    _arrfwitter()
+
+ //order arry by date... not working weet
+    console.log(arrfwitter)
+    arrfwitter.sort(function compare(a, b) {
+        var dateA = new Date(a.date);
+        var dateB = new Date(b.date);
+        return dateA - dateB;
+      });
+    console.log(arrfwitter)
+
     return <>
     <section >
         {
             _fwitter.length ?
                 <div className='fwitter'>
-                {_fwitter.map(({idUser, nameUser,surnameUser,fwitter}) =>
-                        fwitter.map(({id, name,fwitt})=>
-                                fwitt.map(({message,date})=>
+                { arrfwitter.map(({idUser,nameUser,surnameUser,name,message,date})=>
                                 <div className='fwitter__user'>
                                     <div className='fwitter__user-item'>
                                         <div className='fwitter__point'></div>
@@ -29,11 +50,13 @@ console.log(_fwitter)
                                     </div>
                                     </div>
                                 </div>
-                            )))}<div >
+                            )}<div >
                     </div>
                 </div>
                 : <Feedback message="sorry, no results :(" level="warning" />
         }
     </section>
+
     </>
 }
+
