@@ -3,29 +3,35 @@ function Fwitter({fwitter}){
     if(!_fwitter) return <Spinner />
 console.log(_fwitter)
     return <>
-        <section >
+    <section >
         {
             _fwitter.length ?
-                <div>
+                <div className='fwitter'>
                 {_fwitter.map(({idUser, nameUser,surnameUser,fwitter}) =>
-                    <div >
-                        <div>{`******** ${nameUser} ${surnameUser}`}</div>
-                            <div>
-                            {fwitter.map(({id, name,fwitt})=>
-                                <div >
-                                    <div>{`      * Nombre del Jugador : ${name}`}</div>
-                                    <div>
-                                    {fwitt.map(({message,date})=>
-                                    <div>
-                                        <div>{date}</div>
-                                        <div>{message}</div>
+                        fwitter.map(({id, name,fwitt})=>
+                                fwitt.map(({message,date})=>
+                                <div className='fwitter__user'>
+                                    <div className='fwitter__user-item'>
+                                        <div className='fwitter__point'></div>
+                                        <div className='fwitter__user-name'>{`${nameUser} ${surnameUser}`}</div>
                                     </div>
-                                    )}</div>
-                                
+                                    <div className='fwitter__comment'>
+                                    <div className='fwitter__player-name'>{`${name}`}</div>
+                                    <div className=''>
+                                        <div className='fwitter__message'>{message}</div>
+                                        <div className='fwitter__date'>{date}</div>
+                                            <div class='fwitter__card-container'>
+                                                <div class='fwitter__card'></div>
+                                                <div class='fwitter__card'></div>
+                                                <div class='fwitter__card'></div>
+                                            </div>
+                                 
+                                    </div>
+                                    </div>
                                 </div>
-                             )}</div>
+                            )))}<div >
                     </div>
-                )}</div>
+                </div>
                 : <Feedback message="sorry, no results :(" level="warning" />
         }
     </section>
