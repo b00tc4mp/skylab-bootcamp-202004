@@ -1,6 +1,6 @@
 
 const { useState } = React;
-
+ //setError
 function PlayerResults({resultsPlayers, token, onToggleFollowPlayer, queryPlayer, likesUser}) {
     
     function handleToggleplayer(playerId) {
@@ -52,7 +52,7 @@ function PlayerResults({resultsPlayers, token, onToggleFollowPlayer, queryPlayer
                         </div>
                         <hr className="player-card__small-line" />
                         <div className="player-card__comment">
-                            <input type="text" className="player-card__comment-input" placeholder="Say something..."/>
+                            <input type="text" className="player-card__comment-input" placeholder="Say something..." maxLength="60"/>
                         </div>
                     </li>
                 ))} </ul>) 

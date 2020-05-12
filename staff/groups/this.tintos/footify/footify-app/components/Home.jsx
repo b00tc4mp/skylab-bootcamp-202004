@@ -5,7 +5,6 @@ function Home({ token }) {
     const [view, setView] = useState('fwitter')
     const [players, setPlayers] = useState()
     const [error, setError] = useState()
-    const [emblem, setEmblem] = useState()
     // const [loading, setLoading] = useState(true)
     const [likesUser, setLikesUser] = useState()
     const [sportNews, setSportNews] = useState()
@@ -49,10 +48,6 @@ useEffect(()=>{
                     
                 })
 
-                // isPlayerfollowed(token, playerId, (error, followPlayer) => {
-                //     if (error) return setError(error.message)
-                //     setFollow(followPlayer)
-                // })   
 
                 setView('cards')
             })
@@ -85,15 +80,17 @@ useEffect(()=>{
         }  
     }
 
+    const handleGoToUpdateUser = () => setView('update-user')
+
     return <>
 
-        <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter}/>
+        <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToUpdateUser={handleGoToUpdateUser} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter}/>
         {/* {view === 'spinner' && <Spinner />} */}
         {/* {error && <Feedback message={error} level="error" />} */}
         {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} queryPlayer={queryPlayer} likesUser={likesUser}/>}
         {view === 'sport' && <SportNews sportNews={sportNews}/>}
         {view === 'fwitter' && <Fwitter fwitter={fwitter}/>}
-
+        {view === 'update-user' && <UpdateUser token={token} />}
     </>
 
 }
