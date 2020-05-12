@@ -16,7 +16,9 @@
 
     <script class="mocha-init">
         mocha.setup('bdd')
-        mocha.checkLeaks()
+        // mocha.checkLeaks()
+        mocha.timeout(5000)
+       
 
         const { expect } = chai
     </script>
