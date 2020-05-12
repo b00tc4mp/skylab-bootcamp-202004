@@ -40,7 +40,7 @@ function Register({ onRegister, onGoToLogin }) {
             <input className="navigation_inptut" type="password" name="password" placeholder="password" required minLength={ 6 } />
             <br/><br/>
             <button className="button__navigation button__navigation--regular">Submit</button> 
-                {" "} or {" "} <a  className="navigation__link" href=" " onClick={handleGoToLogin}>Login</a>
+                or <a  className="navigation__link" href=" " onClick={handleGoToLogin}>Login</a>
             {error && <Feedback message={error} level="error" />}
         </form>
     </section>
