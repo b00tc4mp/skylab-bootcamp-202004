@@ -10,7 +10,7 @@ function FavSpotsList({ token, results, onGoToSurfForecast }) {
     }
 
     const handleXButton = (surfForecastSelected) => {
-        addToFavs(token, surfForecastSelected, (error, resultsUpdated) => {
+        addToFavs(token, surfForecastSelected, undefined, (error, resultsUpdated) => {
             if (error) console.log('handlexbutton ERROR')
             setResults(resultsUpdated)
         })

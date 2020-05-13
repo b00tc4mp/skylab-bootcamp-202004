@@ -1,13 +1,13 @@
 const { useState, useEffect } = React
 
-function FavSpots({ token, movingSurfForecast }) {
+function FavSpots({ token, movingSurfForecast, sportState }) {
 
     const [favSpots, setFavSpots] = useState()
     const [error, setError] = useState()
 
     useEffect(() => {
         try{
-            favList(token, (error, favSpots) => {
+            favList(token, sportState, (error, favSpots) => {
                 if (error) setError(error)
                 
                 setFavSpots(favSpots)

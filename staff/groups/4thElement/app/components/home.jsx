@@ -2,7 +2,7 @@
 const { useState } = React
 
 
-function Home({sportState, ReturnsportState}) {
+function Home({sportState, ReturnsportState, pointerMapSelected}) {
     // || hooks states declarations ||
 
     const [dinamicClass, setdinamicClass] = useState(ReturnsportState)
@@ -59,6 +59,10 @@ function Home({sportState, ReturnsportState}) {
         sportState()
     }
 
+    const handleSpotSelected=(coordinates)=>{
+        pointerMapSelected(coordinates);
+    }
+
     //poner el home surf, snow en un div por separado abajo del todo
 
     return <section id="Home" className="Home">
@@ -81,16 +85,16 @@ function Home({sportState, ReturnsportState}) {
                     {WorldImage==='surf' && firstEnter === false && <div className="Home__map--snow--out">
                     </div>}
                     {WorldImage==='snow' && <div className="Home__map--snow">
-                        <i class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('snow1')} onMouseOut={handelMouseOut}></i>
-                        <i class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('snow2')} onMouseOut={handelMouseOut}></i>
-                        <i class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('snow3')} onMouseOut={handelMouseOut}></i>
-                        <i class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('snow4')} onMouseOut={handelMouseOut}></i>
+                        <i onClick={()=> handleSpotSelected({name: 'Les 2 Alpes', coordinates: "Les 2 Alpes"})} class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('snow1')} onMouseOut={handelMouseOut}></i>
+                        <i onClick={()=> handleSpotSelected({name: 'Hakuba, Japan', coordinates: "Hakuba, Japan"})} class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('snow2')} onMouseOut={handelMouseOut}></i>
+                        <i onClick={()=> handleSpotSelected({name: 'Ski Portillo, Chile', coordinates: "Ski Portillo, Chile"})} class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('snow3')} onMouseOut={handelMouseOut}></i>
+                        <i onClick={()=> handleSpotSelected({name: 'Aspen, Colorado', coordinates: "Aspen, Colorado"})} class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('snow4')} onMouseOut={handelMouseOut}></i>
                     </div>}
                     {ReturnsportState==='surf' && <div className="Home__map--surf">
-                        <i class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('surf1')} onMouseOut={handelMouseOut}></i>
-                        <i class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('surf2')} onMouseOut={handelMouseOut}></i>
-                        <i class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('surf3')} onMouseOut={handelMouseOut}></i>
-                        <i class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('surf4')} onMouseOut={handelMouseOut}></i>
+                        <i onClick={()=> handleSpotSelected({name: 'Mundaka, Spain', coordinates: "43.669945, -1.440790"})} class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('surf1')} onMouseOut={handelMouseOut}></i>
+                        <i onClick={()=> handleSpotSelected({name: 'SkeletonBay, Africa',coordinates: "-34.033355, 24.932330"})} class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('surf2')} onMouseOut={handelMouseOut}></i>
+                        <i onClick={()=> handleSpotSelected({name: 'Puerto Escondido, Mexico',coordinates: "15.859872, -97.084793"})} class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('surf3')} onMouseOut={handelMouseOut}></i>
+                        <i onClick={()=> handleSpotSelected({name: 'Mavericks, CA',coordinates: "37.495501, -122.497037"})} class="fas fa-map-marker-alt fa-2x" onMouseOver={ () => handelMouseOver('surf4')} onMouseOut={handelMouseOut}></i>
                     </div>}
                 </div>
             </div>}

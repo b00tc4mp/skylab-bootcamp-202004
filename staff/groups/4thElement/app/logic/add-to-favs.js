@@ -1,4 +1,4 @@
-function addToFavs(token, spotSelected, callback) {
+function addToFavs(token, spotSelected, sportState, callback) {
 
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined,
         {
@@ -22,6 +22,7 @@ function addToFavs(token, spotSelected, callback) {
 
                 if (indexOfName === undefined) {
                     spotSelected.following=true
+                    spotSelected.sportType=sportState
                     favSpots.push(spotSelected)
                 } else {
                     favSpots.splice(indexOfName, 1)
