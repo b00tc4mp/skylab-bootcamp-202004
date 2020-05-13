@@ -37,16 +37,18 @@ describe('Create Array Fwitts', () => {
                                             results.push({ idUser,nameUser,surnameUser,fwitter})
                                         } 
                                     })
-
+                                    let counter=0
                                     const fwitterArray = creatFwitterArray(results);
                                     expect(fwitterArray).to.exist
                                     fwitterArray.forEach(({ idUser,nameUser,surnameUser,name,message,date})=>{
+                                        counter ++
                                         expect(idUser).to.exist
                                         expect(nameUser).to.exist
                                         expect(surnameUser).to.exist
                                         expect(name).to.exist
                                         expect(message).to.exist
                                         expect(date).to.exist
+                                        if(fwitterArray.length === counter) done()
                                     })
  
                             })

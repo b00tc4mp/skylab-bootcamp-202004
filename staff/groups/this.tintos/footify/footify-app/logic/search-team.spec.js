@@ -14,16 +14,17 @@ describe('Search Team', () => {
 
                 if (status === 200) {
                     let { player: results } = JSON.parse(body)
-                        // let counter = 0
+                    let counter = 0
                     results.forEach(result => {
                         const { idTeam } = result
                         searchTeam(idTeam, (error, emblem) => {
+                            counter ++
                             expect(error).to.be.undefined
                             expect({ emblem }).to.exist
-
+                            if(results.length === counter) done()
                         })
                     })
-                    done()
+                   
                 }
             })
     })
@@ -38,16 +39,18 @@ describe('Search Team', () => {
 
                 if (status === 200) {
                     let { player: results } = JSON.parse(body)
-                  
+                  let counter = 0
                     results.forEach(result => {
                         const { idTeam } = result
                         searchTeam(idTeam, (error, emblem) => {
+                            counter ++
                             expect(error).to.be.undefined
                             expect({ emblem }).to.exist
-                    
+                            if(results.length === counter) done()
                         })
                     })
-                    done()
+                    
+                    
                 }
             })
     })

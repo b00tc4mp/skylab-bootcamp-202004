@@ -18,7 +18,7 @@ function Home({ token }) {
             //tratar de sacar los names con retrieve aqui
             retriveFwitter(token, (error, results) => {
                 if (error) return setError(error.message);
-                console.log(results)
+
                 const arrfwitter = creatFwitterArray(results)
                 commentCards(arrfwitter, token, (error, resultsComments) => {
                     if(error) return setError(error.message)
@@ -89,8 +89,11 @@ function Home({ token }) {
         try {
             retriveFwitter(token, (error, results) => {
                 if (error) return setError(error.message);
-                
                 const arrfwitter = creatFwitterArray(results)
+                
+                //TODO
+                //const arrfwitter = creatFwitterArray(results)
+
                 commentCards(arrfwitter, token, (error, resultsComments) => {
                     setFwitter(resultsComments)
                 })
