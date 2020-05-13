@@ -1,10 +1,10 @@
 function searchTrack(token, query, callback) {debugger
-  debugger;
   String.validate.notVoid(token)
+  String.validate(token)
 
-  String.validate(query)
+    String.validate(query)
 
-  Function.validate(callback)
+    Function.validate(callback)
 
   const queryUrl = query
     .split(" ")
@@ -19,7 +19,7 @@ function searchTrack(token, query, callback) {debugger
     { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
     (error, status, body) => {
       if (error) console.log(error);
-
+      console.log(status)
       if (status === 200) {
         debugger;
         const queryBody = JSON.parse(body);
@@ -35,6 +35,9 @@ function searchTrack(token, query, callback) {debugger
           results.push(object);
         }
         callback(undefined, results);
+      }else{
+        const {error} = JSON.parse(body)
+        callback(new Error(error.message))
       }
     }
   );

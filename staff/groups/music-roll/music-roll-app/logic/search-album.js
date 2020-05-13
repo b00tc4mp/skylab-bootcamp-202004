@@ -1,10 +1,10 @@
 function searchAlbum(token, query, callback) {
-  debugger;
   String.validate.notVoid(token)
-  
-  String.validate(query)
-  
-  Function.validate(callback)
+  String.validate(token)
+
+    String.validate(query)
+
+    Function.validate(callback)
 
   const queryUrl = encodeURI(query).concat(`&type=album&offset=0&limit=5`);
 
@@ -15,6 +15,7 @@ function searchAlbum(token, query, callback) {
     { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
     (error, status, body) => {
       if (error) console.log(error);
+      console.log(status)
       debugger;
       if (status === 200) {
         const results = [],
@@ -41,6 +42,9 @@ function searchAlbum(token, query, callback) {
         }
         debugger;
         callback(undefined, results);
+      }else{
+        const {error} = JSON.parse(body)
+        callback(new Error(error.message))
       }
     }
   );

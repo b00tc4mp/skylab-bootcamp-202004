@@ -1,7 +1,7 @@
 const { Component } = React
 
 class App extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
 
         this.state = {
@@ -12,14 +12,14 @@ class App extends Component {
     }
 
 
-    onChangeView = (_view) => this.setState({view : _view})
+    onChangeView = (_view) => this.setState({ view: _view })
 
     handleLogin = (_token) => {
-        this.setState({token: _token})
-        
-        this.setState({view: 'home'})
+        this.setState({ token: _token })
+
+        this.setState({ view: 'home' })
     }
-    
+
     handleRegister = () => {
         this.onChangeView('login')
     }
@@ -32,10 +32,10 @@ class App extends Component {
 
     render() {
         return <>
-            {this.state.view === 'login' && <Login onSubmit = {this.handleLogin} onRegister = {this.onChangeView}/>}
-            {this.state.view === 'register' && <Register onSubmit = {this.handleRegister} onLogin = {this.onChangeView} />}
+            {this.state.view === 'login' && <Login onSubmit={this.handleLogin} onRegister={this.onChangeView} />}
+            {this.state.view === 'register' && <Register onSubmit={this.handleRegister} onLogin={this.onChangeView} />}
 
-            <Navbar onChangeView={this.onChangeView}/>
+            <Navbar onChangeView={this.onChangeView} />
 
             {this.state.view === 'home' && <Home />}
             {this.state.view === 'browser' && <Browser token = {this.state.Spotytoken}/>}
