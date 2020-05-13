@@ -77,7 +77,9 @@ function searchNews(token, query, language, sortBy, callback) {
                             numberOfPages.push(i+1)
                         }
 
-                        callback(undefined, allNews, numberOfPages);
+                        allNewsUnique = getUnique(allNews, element=>element.title)
+
+                        callback(undefined, allNewsUnique, numberOfPages);
                     });
             }else {
                 const { error } = JSON.parse(body)
