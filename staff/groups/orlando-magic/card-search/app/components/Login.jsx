@@ -33,7 +33,7 @@ class Login extends Component {
     handleRegister = event => {
         event.preventDefault()
 
-        this.props.onRegister()
+        this.props.setHashView('register')
     }
 
     handleLanding = event => {

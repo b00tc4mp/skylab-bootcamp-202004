@@ -7,18 +7,18 @@ function NavBar(props){
     const handleLogin = event => {
         event.preventDefault()
     
-        props.onLogin()
+        props.setHashView('login')
     }
 
     const handleRegister = event => {
         event.preventDefault()
 
-        props.onRegister()
+        props.setHashView('register')
     }
 
     const handleAdvSearch = event =>{
         event.preventDefault()
-        props.onAdvSearch()
+        props.setHashView('adv')
     }
 
     const handleLanding = event =>{

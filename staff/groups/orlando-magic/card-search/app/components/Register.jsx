@@ -31,7 +31,7 @@ class Register extends Component {
     handleLogin = event => {
         event.preventDefault()
 
-        this.props.onLogin()
+        this.props.setHashView('login')
     }
 
     handleLanding = event => {

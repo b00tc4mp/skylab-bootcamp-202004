@@ -1,4 +1,4 @@
-function Landing({onLogin, onRegister, onLogOut, token, onAdvSearch, onBasicSearch}){
+function Landing({setHashView, onLogOut, token, onBasicSearch}){
     const [error, setError] = useState(undefined)
     const [name, setName] = useState(undefined)
 //function Landing(props){
@@ -6,13 +6,13 @@ function Landing({onLogin, onRegister, onLogOut, token, onAdvSearch, onBasicSear
     const handleLogin = event => {
         event.preventDefault()
     
-        onLogin()
+        setHashView('login')
     }
 
     const handleRegister = event => {
         event.preventDefault()
 
-        onRegister()
+        setHashView('register')
     }
 
     const handleLogOut = event => {
@@ -24,21 +24,19 @@ function Landing({onLogin, onRegister, onLogOut, token, onAdvSearch, onBasicSear
 
     const handleAdvSearch = event =>{
         event.preventDefault()
-        onAdvSearch()
+        setHashView('adv')
     }
 
     useEffect(() => {
-        if (token) {
-            try {
-                retrieveUser(token , (error, user)=>{
-                    if (error) return setError(error.message)
-                    setName(user.nickname)
-                })
-            } catch ({message}) {
-                setError(message)
-            }
+        try {
+            retrieveUser(token , (error, user)=>{
+                if (error) return setError(error.message)
+                setName(user.nickname)
+            })
+        } catch ({message}) {
+            setError(message)
         }
-    }, [token])
+    }, [])
 
     return <>
         <div className='section-container'>
