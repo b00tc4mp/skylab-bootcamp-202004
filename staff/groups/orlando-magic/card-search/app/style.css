@@ -409,9 +409,30 @@
 .results__cards > li {
   width: 48%;
   margin: 1%;
+  position: relative;
+}
+.results__cards > li > div {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  bottom: 1rem;
+  right: 1rem;
 }
 .results__cards--card {
   width: 100%;
+}
+.results__cards--button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(129, 127, 127, 0.6);
+  color: black;
+  z-factor: 1;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  margin: 0.2rem;
 }
 
 @media only screen and (min-width: 768px) {

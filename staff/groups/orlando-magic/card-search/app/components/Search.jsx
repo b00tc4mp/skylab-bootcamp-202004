@@ -1,6 +1,40 @@
 const {useState, useEffect} = React
 
-function Search({onAdvancedSearch}){ 
+function Search({onAdvancedSearch, searchConditions}){ 
+
+  const clearForm = () => {
+    event.preventDefault()
+    debugger
+    const {cardname, text, types, W, U, B, R, G, C, color_comparison, manacost, stat_1, stat_1_mode, statnumber, legality, formats, sets, blocks, mythicrare, rare, uncommon, common, artist, flavortext, lore, languages, order} = document.querySelector(".advancedsearch__form")
+
+    cardname.value = ""
+    text.value = ""
+    types.value = ""
+    W.checked = false
+    U.checked = false
+    B.checked = false
+    R.checked = false
+    G.checked = false
+    C.checked = false
+    color_comparison.value = "="
+    manacost.value = ""
+    stat_1.value = "cmc"
+    stat_1_mode.value = "="
+    statnumber.value = ""
+    legality.value = "f"
+    formats.value = ""
+    sets.value = ""
+    blocks.value = ""
+    mythicrare.checked = false
+    rare.checked = false
+    uncommon.checked = false
+    common.checked = false
+    artist.value = ""
+    flavortext.value = ""
+    lore.value = ""
+    languages.value = "en"
+    order.value = "name"
+  }
 
   const changeManacost = (event) => {
     document.querySelector("#manacost").value += event.target.value
@@ -13,9 +47,9 @@ function Search({onAdvancedSearch}){
 
     document.querySelector("#textsymbols").value = true
   }
-
+  //defaultValue, defaultChecked
   return <section className="advancedsearch">
-    <form onSubmit = {()=>{event.preventDefault(); onAdvancedSearch(event)}}>
+    <form className = "advancedsearch__form" onSubmit = {()=>{event.preventDefault(); onAdvancedSearch(event)}}>
       <div className="advancedsearch__section">
         <a className="advancedsearch__section--title">Card Name</a>
         <div className="advancedsearch__section--options">
@@ -23,6 +57,7 @@ function Search({onAdvancedSearch}){
             type="text"
             name="cardname"
             placeholder=" Any words in the name, e.g. 'Sky'"
+            defaultValue = {searchConditions && searchConditions.name?searchConditions.name:""}
           />
           <p>
             Enter text that should appear in the card name. Word order doesn't
@@ -38,6 +73,8 @@ function Search({onAdvancedSearch}){
             name="text"
             id = "text"
             placeholder=" Any words in the name, e.g. 'Lab'"
+            defaultValue = {searchConditions && searchConditions.text?searchConditions.text:""}
+
           />
           <select id="textsymbols" onChange = {()=>{event.preventDefault(); changeText(event)}}>
             <option value = "">Add symbol</option>
@@ -198,7 +235,10 @@ function Search({onAdvancedSearch}){
       <div className="advancedsearch__section">
         <a className="advancedsearch__section--title">Type Line</a>
         <div className="advancedsearch__section--options">
-          <select id="types">
+          <select 
+          id="types" 
+          defaultValue = {searchConditions && searchConditions.type?searchConditions.type:""}
+          >
             <option value = "">Type</option>
             <optgroup label="Types">
               <option data-pol="+" data-item="artifact" value="artifact">
@@ -1634,22 +1674,36 @@ function Search({onAdvancedSearch}){
         <a className="advancedsearch__section--title">Colors</a>
         <div className="advancedsearch__section--options">
           <div>
-            <input type="checkbox" name="W" defaultValue="W" />
+            <input type="checkbox" name="W" value="W" 
+              defaultChecked = {searchConditions && searchConditions.color && searchConditions.color.split('').includes("W")?true:false}
+            />
             <a>White</a>
-            <input type="checkbox" name="U" defaultValue="U" />
+            <input type="checkbox" name="U" value="U" 
+              defaultChecked = {searchConditions && searchConditions.color && searchConditions.color.split('').includes("U")?true:false}
+            />
             <a>Blue</a>
-            <input type="checkbox" name="B" defaultValue="B" />
+            <input type="checkbox" name="B" value="B" 
+              defaultChecked = {searchConditions && searchConditions.color && searchConditions.color.split('').includes("B")?true:false}
+            />
             <a>Black</a>
           </div>
           <div>
-            <input type="checkbox" name="R" defaultValue="R" />
+            <input type="checkbox" name="R" value="R" 
+              defaultChecked = {searchConditions && searchConditions.color && searchConditions.color.split('').includes("R")?true:false}
+            />
             <a>Red</a>
-            <input type="checkbox" name="G" defaultValue="G" />
+            <input type="checkbox" name="G" value="G" 
+              defaultChecked = {searchConditions && searchConditions.color && searchConditions.color.split('').includes("G")?true:false}
+            />
             <a>Green</a>
-            <input type="checkbox" name="C" defaultValue="C" />
+            <input type="checkbox" name="C" value="C" 
+              defaultChecked = {searchConditions && searchConditions.color && searchConditions.color.split('').includes("C")?true:false}
+            />
             <a>Colorless</a>
           </div>
-          <select id="color_comparison">
+          <select id="color_comparison"
+            defaultValue = {searchConditions && searchConditions.colorLimit?searchConditions.colorLimit:"="}
+          >
             <option value="=">Exactly these colors</option>
             <option value=">=">Including these colors</option>
             <option value="<=">At most these colors</option>
@@ -1669,6 +1723,8 @@ function Search({onAdvancedSearch}){
             name="mana"
             id="manacost"
             placeholder=" Any mana symbols, e.g. {WB}"
+            defaultValue = {searchConditions && searchConditions.mana?searchConditions.mana:""}
+
           />
           <select name = "symbols" id="manasymbols" onChange = {()=>{event.preventDefault(); changeManacost(event)}}>
             <option value = "">Add symbol</option>
@@ -1814,13 +1870,19 @@ function Search({onAdvancedSearch}){
       <div className="advancedsearch__section">
         <a className="advancedsearch__section--title">Stats</a>
         <div className="advancedsearch__section--options">
-          <select id="stat_1">
+          <select 
+          id="stat_1"
+          defaultValue = {searchConditions?(searchConditions.cmc?"cmc":"") + (searchConditions.power?"pow":"") + (searchConditions.toughness?"tou":"") + (searchConditions.loyalty?"loy":""):"cmc"}
+          >
             <option value="cmc">CMC</option>
             <option value="pow">Power</option>
             <option value="tou">Toughness</option>
             <option value="loy">Loyalty</option>
           </select>
-          <select id="stat_1_mode">
+          <select 
+          id="stat_1_mode"
+          defaultValue = {searchConditions && searchConditions.limit?searchConditions.limit:"="}
+          >
             <option value="=">equals</option>
             <option value="<">less than</option>
             <option value=">">greater than</option>
@@ -1828,7 +1890,9 @@ function Search({onAdvancedSearch}){
             <option value=">=">greater than or equal to</option>
             <option value="!=">not equal to</option>
           </select>
-          <input type="number" name="statnumber" placeholder=" Any number" />
+          <input type="number" name="statnumber" placeholder= "Any number" 
+            defaultValue = {(searchConditions && searchConditions.cmc?searchConditions.cmc:"") + (searchConditions && searchConditions.power?searchConditions.power:"") + (searchConditions && searchConditions.toughness?searchConditions.toughness:"") + (searchConditions && searchConditions.loyalty?searchConditions.loyalty:"")}
+          />
           <p>
             Restrict cards based on their numeric statistics. Cards without stats
             will not be returned.
@@ -1838,12 +1902,16 @@ function Search({onAdvancedSearch}){
       <div className="advancedsearch__section">
         <a className="advancedsearch__section--title">Formats</a>
         <div className="advancedsearch__section--options">
-          <select id="legality">
+          <select id="legality"
+            defaultValue = {searchConditions && searchConditions.legality?searchConditions.legality:"f"}
+          >
             <option value="f">Legal</option>
             <option value="restricted">Restricted</option>
             <option value="banned">Banned</option>
           </select>
-          <select id="formats">
+          <select id="formats"
+            defaultValue = {searchConditions && searchConditions.format?searchConditions.format:""}
+          >
             <option value = "">Format</option>
             <option value="standard">Standard</option>
             <option value="future">Future Standard</option>
@@ -1868,7 +1936,9 @@ function Search({onAdvancedSearch}){
       <div className="advancedsearch__section">
         <a className="advancedsearch__section--title">Sets</a>
         <div className="advancedsearch__section--options">
-          <select id="sets">
+          <select id="sets"
+            defaultValue = {searchConditions && searchConditions.set?searchConditions.set:""}
+          >
             <option value = "">Set</option>
             <optgroup label="Expansions">
               <option data-svg-code="iko" value="iko">
@@ -3657,7 +3727,9 @@ function Search({onAdvancedSearch}){
               </option>
             </optgroup>
           </select>
-          <select id="blocks">
+          <select id="blocks"
+            defaultValue = {searchConditions && searchConditions.block?searchConditions.block:""}
+          >
             <option value = "">Block</option>
             <option value="parl">Arena League</option>
             <option value="jgp">Judge Gift Cards</option>
@@ -3699,15 +3771,23 @@ function Search({onAdvancedSearch}){
         <a className="advancedsearch__section--title">Rarity</a>
         <div className="advancedsearch__section--options">
           <div>
-            <input type="checkbox" name="mythicrare" id="mythicrare" value = "m"/>
+            <input type="checkbox" name="mythicrare" id="mythicrare" value = "m"
+              defaultChecked = {searchConditions && searchConditions.rarity && searchConditions.rarity.split('').includes("m")?true:false}
+            />
             <a>Mythic Rare</a>
-            <input type="checkbox" name="rare" id="rare" value='r'/>
+            <input type="checkbox" name="rare" id="rare" value='r'
+              defaultChecked = {searchConditions && searchConditions.rarity && searchConditions.rarity.split('').includes("r")?true:false}
+            />
             <a>Rare</a>
           </div>
           <div>
-            <input type="checkbox" name="uncommon" id="uncommon" value = "u"/>
+            <input type="checkbox" name="uncommon" id="uncommon" value = "u"
+              defaultChecked = {searchConditions && searchConditions.rarity && searchConditions.rarity.split('').includes("u")?true:false}
+            />
             <a>Uncommon</a>
-            <input type="checkbox" name="common" id="common" value = "c"/>
+            <input type="checkbox" name="common" id="common" value = "c"
+              defaultChecked = {searchConditions && searchConditions.rarity && searchConditions.rarity.split('').includes("c")?true:false}
+            />
             <a>Common</a>
           </div>
           <p>Only return cards of the selected rarities.</p>
@@ -3721,6 +3801,7 @@ function Search({onAdvancedSearch}){
             name="artist"
             id="artist"
             placeholder=" Any artist name, e.g. 'John Avon'"
+            defaultValue = {searchConditions && searchConditions.artist?searchConditions.artist:""}
           />
           <p>Enter text that should be part of the artist name.</p>
         </div>
@@ -3733,6 +3814,7 @@ function Search({onAdvancedSearch}){
             name="flavortext"
             id="flavortext"
             placeholder=" Any words in the flavor text, e.g. 'Chandra'"
+            defaultValue = {searchConditions && searchConditions.flavor?searchConditions.flavor:""}
           />
           <p>
             Enter words that should appear in the flavor text. Word order doesn't
@@ -3748,6 +3830,7 @@ function Search({onAdvancedSearch}){
             name="lore"
             id="lore"
             placeholder=" Any text in the card, especially names, e.g. 'Nicol Bolas'"
+            defaultValue = {searchConditions && searchConditions.lore?searchConditions.lore:""}
           />
           <p>
             Enter names or words here and the system will search each part of the
@@ -3759,7 +3842,9 @@ function Search({onAdvancedSearch}){
       <div className="advancedsearch__section">
         <a className="advancedsearch__section--title">Language</a>
         <div className="advancedsearch__section--options">
-          <select id="languages">
+          <select id="languages"
+            defaultValue = {searchConditions && searchConditions.language?searchConditions.language:"en"}
+          >
             <option value="en">Default</option>
             <option value="any">Any</option>
             <option value="en">English</option>
@@ -3786,7 +3871,9 @@ function Search({onAdvancedSearch}){
       <div className="advancedsearch__section">
         <a className="advancedsearch__section--title">Sort Method</a>
         <div className="advancedsearch__section--options">
-          <select id = "order">
+          <select id = "order"
+            defaultValue = {searchConditions && searchConditions.order?searchConditions.order:"name"}
+          >
             <option value="name">Sort by Name</option>
             <option value="released">Sort by Release Date</option>
             <option value="set">Sort by Set/Number</option>
@@ -3805,6 +3892,9 @@ function Search({onAdvancedSearch}){
       <div className="advancedsearch__section--buttoncontainer">
         <button type="submit" className="advancedsearch__section--button">
           Search with these options
+        </button>
+        <button className="advancedsearch__section--button" onClick = {clearForm}>
+          Clear form
         </button>
       </div>
 
