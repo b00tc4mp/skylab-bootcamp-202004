@@ -1,3 +1,13 @@
+/**
+  * Retrieve user. 
+  * 
+  * @param {string} token Users token
+  * 
+  * @param {function} callback The expression to be called after checking credentials, will recieve an Error or authentication token.
+  *
+  * @throws {TypeError} If any of the parameters does not match the corresponding type or if callback is not a function.
+  * @throws {Error} If there is no token.
+  */
 function retrieveUser(token, callback) {
     String.validate.notVoid(token)
 
@@ -10,9 +20,9 @@ function retrieveUser(token, callback) {
             if (error) return callback(error)
 
             if (status === 200) {
-                const { name, surname, username, categories, country } = JSON.parse(body)
+                const { name, surname, username, categories, country, favorite, headlines } = JSON.parse(body)
                 
-                callback(undefined, { name, surname, email:username, categories, country})
+                callback(undefined, { name, surname, email:username, categories, country, favorite, headlines})
             } else {
                 const { error } = JSON.parse(body)
                 
@@ -22,3 +32,15 @@ function retrieveUser(token, callback) {
         }
     )
 }
+
+/**
+ * 
+ * 
+ * @callback callback
+ * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * @param {String} name Users name
+ * @param {String} surname Users surname
+ * @param {String} email Users email
+ * @param {Object} categories Users preferences
+ * @param {String} country Users country
+ */

@@ -1,8 +1,20 @@
+/**  Change users preferences
+  * 
+  * @param {string} token Users token, received from authenticate
+  * @param {object} userUpdate Users data, when they want to change preferences
+  * @param {function} callback The expression to be called after checking credentials, will recieve an Error or authentication token
+  *
+  *
+  * @throws {TypeError} If any of the parameters does not match the corresponding type or if callback is not  a function
+  * @throws {Error} If e-mail or token does not match the expected format.
+  */
+
 function profileChange(token, userUpdate, callback) {
 
-    let { name, surname, email, password, oldPassword, interests, country } = userUpdate
+
+    let { name, surname, email, password, oldPassword, categories, country } = userUpdate
     Email.validate(email);
- 
+    
     if (oldPassword !==""){ 
         String.validate.notVoid(oldPassword);
         String.validate(oldPassword);
@@ -41,8 +53,8 @@ function profileChange(token, userUpdate, callback) {
     String.validate(country);
 
     let count = 0
-    for (interest in interests) {
-        if (interests[interest] === false) {
+    for (category in categories) {
+        if (categories[category] === false) {
             count++
         }
     }
@@ -82,4 +94,10 @@ function profileChange(token, userUpdate, callback) {
         )
     }
 }
-
+/**
+ * Invoked after remote authentication.
+ * 
+ * @callback callback
+ * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * @param {string} nothing
+ */

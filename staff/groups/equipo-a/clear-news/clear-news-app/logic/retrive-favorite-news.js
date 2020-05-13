@@ -1,3 +1,14 @@
+/**
+  * Retrieve favorites news. 
+  * 
+  * @param {string} token Users token
+  * 
+  * @param {function} callback The expression to be called after checking credentials, will recieve an Error or authentication token.
+  *
+  * @throws {TypeError} If any of the parameters does not match the corresponding type or if callback is not a function.
+  * @throws {Error} If there is no token.
+  */
+
 function retrieveFavNews(token, callback) {
     String.validate(token);
 
@@ -15,14 +26,16 @@ function retrieveFavNews(token, callback) {
             if (status === 200) {
 
                 let user = JSON.parse(body)
-                // if (!user.favorite) callback("you still havent selected any news")
+
                 const { favorite = [] } = user
 
                 let counter = 0
 
                 favorite.forEach((item => {
+
                     // let title = item.split(' ').join('+')
                     call('GET', `https://newsapi.org/v2/everything?q="${item}"&apiKey=55aab6760184405791eeffefcbd32733`,
+
                         undefined,
                         undefined,
                         (error, status, body) => {
@@ -51,6 +64,7 @@ function retrieveFavNews(token, callback) {
                                 const { error } = JSON.parse(body)
                                 callback(new Error(error))
                             }
+
 
                             // let titleTop=JSON.parse(item)
 
@@ -83,15 +97,12 @@ function retrieveFavNews(token, callback) {
                                 const { error } = JSON.parse(body)
                                 callback(new Error(error))
                             }
+                           
+        
+                            if (counter === favorite.length) callback(undefined, favNews)
                             
-
-                            if (counter === favorite.length*2) callback(undefined, favNews)
                         })
-
-                        })
-
-                }
-                )
+                })
                 )
             } else {
                 const { error } = JSON.parse(body)
@@ -100,3 +111,11 @@ function retrieveFavNews(token, callback) {
 
         })
 }
+
+/**
+ * 
+ * 
+ * @callback callback
+ * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * @param {Array} favNews Array of objects with a users favorite news.
+ */

@@ -1,34 +1,37 @@
-/**
-  *  Save/delete favorite news in the list
-  * 
-  * @param {string} token Users token
-  * @param {string} title The title of the news you have clicked
-  * 
-  * @param {function} callback The expression to be called after checking credentials, will recieve an Error or authentication token.
-  *
-  * @throws {TypeError} If any of the parameters does not match the corresponding type or if callback is not a function.
-  * @throws {Error} If there is no token.
-  */
-function storeNews(token, title,callback) {
+function storeTopHeadlines(token, headline, callback) {
     String.validate.notVoid(token)
-    String.validate.notVoid(title)
+    // String.validate.notVoid(title)
     Function.validate(callback)
     
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined ,  
      { 'Authorization': `Bearer ${token}`}, 
     (error, status, body) => {
       if (error) return callback(error)
+
       if (status === 200){
         // callback()
-        const user=JSON.parse(body)
+        const user = JSON.parse(body)
+        if(!user.headlines) user.headlines=[]
         if(!user.favorite) user.favorite=[]
+
+        let newsTitle = []
+        for(let i in user.headlines) {
+            newsTitle.push(user.headlines[i].title)
+        }
         
-        let toIndex = user.favorite.indexOf(title)
+        let toIndex = newsTitle.indexOf(headline.title)
                 if(toIndex === -1) {
-                    user.favorite.push(title)
+                    user.headlines.push(headline)
                 } else if(toIndex !== -1){
-                    user.favorite.splice(toIndex, 1)
+                    user.headlines.splice(toIndex, 1)
                 }
+
+                let favIndex = user.favorite.indexOf(headline.title)
+                if(toIndex === -1) {
+                    user.favorite.push(headline.title)
+                } else if(favIndex !== -1){
+                    user.favorite.splice(favIndex, 1)
+                }     
                 
             call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users',JSON.stringify(user),
             { 'Content-type': 'application/json' , 'Authorization': `Bearer ${token}`}, 
@@ -36,7 +39,7 @@ function storeNews(token, title,callback) {
             if (error) return callback(error)
 
             if (status === 204){
-                 callback(undefined)
+                 callback()
             } else {
                     const { error } = JSON.parse(body)
                     callback(new Error(error))
@@ -46,11 +49,3 @@ function storeNews(token, title,callback) {
         }
     }) 
 }
-
-/**
- * 
- * 
- * @callback callback
- * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
- * 
- */

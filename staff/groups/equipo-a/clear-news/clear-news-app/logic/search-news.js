@@ -1,3 +1,16 @@
+/**
+  * Retrieve favorites news. 
+  * 
+  * @param {string} token Users token
+  * @param {string} query Users input query
+  * @param {string} languaje Users selected languaje
+  * @param {string} sortBy Users selectedorder to sort the articles. (relevancy, popularity,...)
+  * 
+  * @param {function} callback The expression to be called after checking credentials, will recieve an Error or authentication token.
+  *
+  * @throws {TypeError} If any of the parameters does not match the corresponding type or if callback is not a function.
+  * @throws {Error} If there is no token.
+  */
 function searchNews(token, query, language, sortBy, callback) {
 
     String.validate.notVoid(query);
@@ -64,7 +77,9 @@ function searchNews(token, query, language, sortBy, callback) {
                             numberOfPages.push(i+1)
                         }
 
-                        callback(undefined, allNews, numberOfPages);
+                        let allNewsUnique = getUnique(allNews, element=>element.title)
+
+                        callback(undefined, allNewsUnique, numberOfPages);
                     });
             }else {
                 const { error } = JSON.parse(body)
@@ -73,3 +88,11 @@ function searchNews(token, query, language, sortBy, callback) {
 
         })
 }
+/**
+ * 
+ * 
+ * @callback callback
+ * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * @param {Array} myNews Array of objects with the news
+ * @param {Number} numberOfPages numbers of pages in news
+ */

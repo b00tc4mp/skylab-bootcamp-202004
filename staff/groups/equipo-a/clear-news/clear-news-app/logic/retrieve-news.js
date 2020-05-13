@@ -1,3 +1,13 @@
+/**
+  * Register new user. 
+  * 
+  * @param {string} token Users token
+  * 
+  * @param {function} callback The expression to be called after checking credentials, will recieve an Error or authentication token.
+  *
+  * @throws {TypeError} If any of the parameters does not match the corresponding type or if callback is not a function.
+  * @throws {Error} If does not match the expected format.
+  */
 function retrieveNews(token, callback) {
 
     String.validate(token)
@@ -35,7 +45,10 @@ function retrieveNews(token, callback) {
                 let counter = 0
           
                 for (let i = 0; i < _categories.length; i++) {
+
                     call('GET', `https://newsapi.org/v2/top-headlines?country=${country}&category=${_categories[i]}&apiKey=55aab6760184405791eeffefcbd32733`,
+
+
                         undefined,
                         undefined,
                         (error, status, body) => {
@@ -79,7 +92,9 @@ function retrieveNews(token, callback) {
                                     numberOfPages.push(i+1)
                                 }
 
-                                callback(undefined, myNews, numberOfPages)
+                                let myNewsUnique = getUnique(myNews, element=>element.title)
+
+                                callback(undefined, myNewsUnique, numberOfPages)
                             } 
 
                         })
@@ -92,3 +107,12 @@ function retrieveNews(token, callback) {
 
         })
 }
+
+/**
+ * Invoked after remote authentication.
+ * 
+ * @callback callback
+ * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * @param {Array} myNews Array of objects with the news
+ * @param {Number} numberOfPages numbers of pages in news
+ */
