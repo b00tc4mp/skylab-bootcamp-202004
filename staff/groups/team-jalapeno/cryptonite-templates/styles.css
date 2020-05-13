@@ -393,4 +393,12 @@ body {
   align-items: flex-end;
 }
 
+.feedback {
+  color: white;
+  margin: 0 auto;
+}
+.feedback--warning {
+  color: darkorange;
+}
+
 /*# sourceMappingURL=styles.css.map */
