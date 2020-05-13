@@ -5,8 +5,8 @@ class App extends Component {
         super(props)
 
         this.state = {
-            view: 'login', 
-            Spotytoken: "BQAdcob0WU47IJZVPj0xAl_mOQTYRVDKPwMzgRBlra7q_DlZNSzBC8Kw-1XLHed79ZyyTXGCKhrMRzDEcwKUbXAXHwpglz4ZmhinU0b7rEgoa8i0EA1Y6KR1xeh2NODRxJL-paGiiRA45GVxJ0c_9I_8TMFKXdAWeJTp9X7ToiUQYTrTK508-hv_6Ajb",
+            view: 'login',
+            Spotytoken: "BQDXzlsw5RPU67H_LBeyEnQliwEgsmA4SotLrZ2_Is9EJmL3lcn-MRrdkScjolsbwPBv3jNUHaMjtdPODneAPst0gaQwr-wzmZX2meqy7pC4ZrHksuPM4NyPBYrh-eglVwFxz8Fcick",
             token: undefined
         }
     }
@@ -23,22 +23,19 @@ class App extends Component {
         this.onChangeView('login')
     }
 
-    handleSessionExpired = () => {   
+    handleSessionExpired = () => {
         this.onChangeView('login')
     }
 
     render() {
+        const { state: { view, Spotytoken, token }, handleLogin, handleRegister, handleSessionExpired, onChangeView } = this;
         return <>
-            {this.state.view === 'login' && <Login onSubmit={this.handleLogin} onRegister={this.onChangeView} />}
-            {this.state.view === 'register' && <Register onSubmit={this.handleRegister} onLogin={this.onChangeView} />}
-
-            <Navbar onChangeView={this.onChangeView} />
-
-            {this.state.view === 'home' && <Home />}
-            {this.state.view === 'browser' && <Browser token = {this.state.Spotytoken}/>}
-            {this.state.view === 'friends' && <SearchUsers token = {this.state.token} onUserSessionExpired = {this.handleSessionExpired}/>}
-            
+            {view === 'login' && <Login onSubmit={handleLogin} onRegister={onChangeView} />}
+            {view === 'register' && <Register onSubmit={handleRegister} onLogin={onChangeView} />}
+            {view !== "login" && view !== "register" && <Navbar onChangeView={onChangeView} />}
+            {view === 'home' && <Home />}
+            {view === 'browser' && <Browser token={Spotytoken} />}
+            {view === 'friends' && <SearchUsers token={token} onUserSessionExpired={handleSessionExpired} />}
         </>
-
     }
 }
