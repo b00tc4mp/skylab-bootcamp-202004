@@ -51,6 +51,7 @@ function Home() {
   const handlePortfolioClick = (event) => {
     event.preventDefault()
 
+
     setView('portfolio-page')
   }
   const handleFavClick = (event) => {
@@ -103,7 +104,8 @@ function Home() {
         </section>
       </footer>
 
-      <NavBar homeClick={handleHomeClick} favClick={handleFavClick} porfolioClick={handlePortfolioClick} />
+      <NavBar portfolioClick={handlePortfolioClick} />
+
     </>
 
 
