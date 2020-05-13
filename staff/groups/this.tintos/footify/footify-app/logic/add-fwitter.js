@@ -18,7 +18,7 @@ function addFwitter(idPlayer, _name, _message, token, callback) {
 
                 let pushFwitt = false;
 
-                if (fwitter.length === 0) {
+                if (fwitter.length ===  0) {
                     const resultFwitter = {
                         id: idPlayer,
                         name: _name,
