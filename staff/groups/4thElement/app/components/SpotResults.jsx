@@ -49,13 +49,3 @@ function SpotResultsList({ query, onGoToSurfForecast, sportState, selectorState 
         {error && <Feedback message={error} level={'error'}/>}
     </ul>
 }
-
-// spots ? (<>
-//     <ul className='Spot-Searched__list'>{spots.map(( item ) =>
-//         <li className='Spot-Searched__item' onClick={() => onGoToSurfForecast(item)}>{`${item.name}`} </li>
-//     )}</ul>
-
-// </>)
-//     : (
-//         <Feedback message="sorry, no results :(" />
-//     )

@@ -11,8 +11,8 @@
 <body>
     <div id="mocha"></div>
 
-    <script src="vendor/mocha/mocha.js"></script>
-    <script src="vendor/chai/chai.js"></script>
+    <script src="app/vendor/mocha/mocha.js"></script>
+    <script src="app/vendor/chai/chai.js"></script>
 
     <script class="mocha-init">
         mocha.setup('bdd')
@@ -22,10 +22,21 @@
         const { expect } = chai
     </script>
 
-    <script src="utils/call.js"></script>
+    <script src="app/utils/string.js"></script>
+    <script src="app/utils/email.js"></script>
+    <script src="app/utils/url.js"></script>
+    <script src="app/utils/http.js"></script>
+    <script src="app/utils/function.js"></script>
+    <script src="app/utils/array.prototype.random-polyfill.js"></script>
+    <script src="app/utils/tests.js"></script>
+    <script src="app/utils/call.js"></script>
+    <script src="app/utils/call.spec.js"></script>
+    <script src="app/utils/regex.js"></script>
 
-    <script src="logic/authenticate-user.js"></script>
-    <script src="logic/authenticate-user.spec.js"></script>
+    <script src="app/logic/authenticate-user.js"></script>
+    <script src="app/logic/authenticate-user.spec.js"></script>
+    <script src="app/logic/register-user.js"></script>
+    <script src="app/logic/register-user.spec.js"></script>
     
     <script class="mocha-exec">
         mocha.run()

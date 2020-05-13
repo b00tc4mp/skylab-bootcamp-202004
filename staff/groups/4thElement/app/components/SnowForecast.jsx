@@ -1,12 +1,12 @@
 const { useState, useEffect } = React
 
-function SnowForecast({token, forecastSelected}) {
+function SnowForecast({token, forecastSelected, sportState}) {
 
     const [forecast, setForecast] = useState()
     const [following, setFollowing] = useState()
 
     const handleFavButton = (token) => {
-        addToFavs(token, forecastSelected, (error) => { //handel favs for snow instead of surf
+        addToFavs(token, forecastSelected, sportState, (error) => { //handel favs for snow instead of surf
             if(error) throw new TypeError('error')
         })
         document.getElementById("deleteMe").style.display="none"; 
@@ -26,7 +26,9 @@ function SnowForecast({token, forecastSelected}) {
         // })
     },[]) //upload each half an hour
 
-    return <section className="forecastInfoSnow">
+    return <section className="forecast">
+
+        {!following && !token && <div className='forecast__favButton' id='deleteMe' onClick={()=>handleFavButton(token)}><i className="fas fa-star fa-2x"></i></div>}
         {forecast && <div className="forecastInfoSnow__day">
                 {<h2>{forecast.data.weather[0].date}</h2>}
                 {<h4>sunrise: {forecast.data.weather[0].astronomy[0].sunrise}, sunset: {forecast.data.weather[0].astronomy[0].sunset}</h4>}
@@ -44,13 +46,6 @@ function SnowForecast({token, forecastSelected}) {
             </div>
         }
         
-        {
-            following!==1? (
-            <div className='fav-button' id='deleteMe' onClick={()=>handleFavButton(token)}><i className="fas fa-star star-fore fa-2x"></i></div>
-            ) : (
-                console.log('hello')
-            )
-        }
         
     </section>
 }
