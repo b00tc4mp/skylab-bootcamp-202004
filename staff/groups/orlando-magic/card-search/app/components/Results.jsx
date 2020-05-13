@@ -3,12 +3,23 @@ const {useState, useEffect} = React
 function Results({searchConditions, setSearchConditions, goToCard}){
   let [errorResults, setErrorResults] = useState(undefined)
   let [results, setResults] = useState([])
+  let url, query
 
   useEffect(()=>{
     try{
-      searchCard(searchConditions,(error, searchResults) =>{
+      if (searchConditions) {
+        url = createUrl(searchConditions)
+        location.hash = url
+      }
+      else {
+        url = location.hash.substring(1)
+        query = createQuery(url)
+        url = createUrl(query)
+        location.hash = url
+      }
+      searchCard(url,(error, searchResults) =>{
         if(error) setErrorResults(error.message)
-        debugger
+        
         if (searchResults && (searchResults.length === 1)) return goToCard(searchResults[0])
         setResults(searchResults)
       })
@@ -21,9 +32,17 @@ function Results({searchConditions, setSearchConditions, goToCard}){
   },[searchConditions])
 
   const handleOrder = event => {
-    
     event.preventDefault()
-    setSearchConditions({...searchConditions,  order: event.target.order.value, dir: event.target.dir.value})
+    if (!searchConditions) {
+      query = createQuery(location.hash.substring(1))
+      query['order'] = event.target.order.value
+      query['dir'] =  event.target.dir.value
+      query['language'] =  'en'
+      setSearchConditions(query)
+
+    } else setSearchConditions({...searchConditions,  order: event.target.order.value, dir: event.target.dir.value});
+    
+    location.hash = createUrl(searchConditions)
   }
   
   return <section className="results">

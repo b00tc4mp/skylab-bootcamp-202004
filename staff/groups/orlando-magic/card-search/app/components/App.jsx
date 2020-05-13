@@ -9,27 +9,67 @@ function App(){
     const [searchConditions, setSearchConditions] = useState(undefined)
     const [userConditions, setUserConditions] = useState(undefined)
     const [id, setId] = useState(undefined)
+    let hash
 
-    function handleLogin() {
-        setView('login')
-    }
+    useEffect(() => {
+        hash = location.hash.substring(1)
+        if (hash.includes('q=')) setView('results') 
 
-    function handleRegister() {
-        setView('register')
+        else {
+            if (sessionStorage.token) {
+                try {
+                    isUserAuthenticated(sessionStorage.token, (error, isAuthenticated) => {
+                        if (error) throw error
+                        if (isAuthenticated) {
+                            setToken(sessionStorage.token)
+                            if (hash === 'adv') setHashView(hash)
+                            
+                            else {
+                                location.hash = ''
+                                setView('landing')
+                            }
+                        } else {
+                            sessionStorage.token = ''
+                            setHashView('login')
+                        }
+                    })
+                } catch (error) {
+                    if (error) throw error
+                }
+            }
+            else {
+                if (hash === 'login' || hash == 'register' || hash == 'adv') setHashView(hash)
+                else if (hash.includes('q=')) setView('results')
+                else {
+                    location.hash = ''
+                    setView('landing')
+                }
+            }
+        }
+
+    }, [])
+
+    function setHashView(view) {
+        location.hash = view
+
+        setView(view)
     }
 
     function handleLanding() {
+        location.hash = ''
         setView('landing')
     } 
 
     function handleLoggedIn(token) {
         setToken(token)
+        sessionStorage.token = token
+        location.hash = ''
         setView('landing')
     }
 
-    function handleAdvSearch(){
-        setView('adv')
-    }
+    // function handleAdvSearch(){
+    //     setView('adv')
+    // }
 
     function onBasicSearch(event){
         setSearchConditions({name: event.target.query.value})
@@ -85,14 +125,16 @@ function App(){
 
     function handleLogOut () {
         setToken(undefined)
+        delete sessionStorage.token
+        location.hash = ''
         setView('landing')
     }
 
     return <>
-        {(view !== 'landing') && (view !== 'login') && (view !== 'register') && <NavBar onLanding = {handleLanding} onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch} onAdvSearch = {handleAdvSearch} onUserSearch = {onUserSearch}/>}
-        {view==='landing' && <Landing onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch} onLogOut={handleLogOut} token={token} onAdvSearch = {handleAdvSearch}/>}
-        {view==='login' && <Login onSubmit = {handleLoggedIn} onRegister = {handleRegister} onLanding={handleLanding}/>}
-        {view==='register'  && <Register onLogin = {handleLogin} onLanding={handleLanding}/>}
+        {(view !== 'landing') && (view !== 'login') && (view !== 'register') && <NavBar onLanding = {handleLanding} setHashView={setHashView} onBasicSearch = {onBasicSearch} onUserSearch = {onUserSearch}/>}
+        {view==='landing' && <Landing setHashView = {setHashView} onBasicSearch = {onBasicSearch} onLogOut={handleLogOut} token={token} />}
+        {view==='login' && <Login onSubmit = {handleLoggedIn} setHashView = {setHashView} onLanding={handleLanding}/>}
+        {view==='register'  && <Register setHashView = {setHashView} onLanding={handleLanding}/>}
         {view === 'results' && <Results goToCard = {goToCard} searchConditions={searchConditions} setSearchConditions={setSearchConditions}/>}
         {view === 'userresults' && <UserResults goToUser = {goToUser} userConditions={userConditions} token = {token}/>}
         {view === 'adv' && <Search onAdvancedSearch = {onAdvancedSearch}/>}
