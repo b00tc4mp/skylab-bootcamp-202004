@@ -1,4 +1,5 @@
-function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDream }) {
+
+function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDrea, onGoToUpdateUser }) {
 
     const handleSubmitSearch = (event) => {
         event.preventDefault()
@@ -20,6 +21,12 @@ function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDre
         onGoToFwitter()
     }
 
+
+    const handleSubmitUpdateUser = (event) =>{ debugger
+        event.preventDefault()
+
+        onGoToUpdateUser()
+    }
     const handleSubmitDream = (event) =>{
         event.preventDefault()
 
@@ -30,11 +37,11 @@ function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDre
         <section className="navbar">
             <div className="navbar__container">
                 <nav className="navbar__user">
-                    <a href="" className="navbar__user-logo">
+                    <a href="" className="navbar__user-logo" > 
                         <img src="img/logo.svg" alt="logo" />
                     </a>
                     <a href="" className="navbar__user-img">
-                        <img src="img/user.svg" alt="user" />
+                        <img src="img/user.svg" alt="user" onClick={handleSubmitUpdateUser}/>
                     </a>
                 </nav>
                 <nav className="navbar__links">
@@ -50,7 +57,6 @@ function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDre
 
                     <form action="" onSubmit={handleSubmitSearch}>
                         <input type="text" id="navbar__links-search" name='searchPlayer' />
-                        {/* <button>🔍</button> */}
                     </form>
                 </nav>
             </div>

@@ -1,5 +1,8 @@
 function addFwitter(idPlayer, _name, _message, token, callback) {
-
+    String.validate.notVoid(idPlayer);
+    String.validate.notVoid(_name);
+    String.validate.notVoid(_message);
+    String.validate.notVoid(token);
 
     Function.validate(callback);
 
@@ -86,11 +89,3 @@ function addFwitter(idPlayer, _name, _message, token, callback) {
             }
     })
 }
-
-
-
-// addFwitter('1231212', 'joaquin', 'teste 1',
-//     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWI5Mzc3ZDZlMjVmYzAwMTU4MDEyMzMiLCJpYXQiOjE1ODkyMDM2NjIsImV4cCI6MTU4OTIwNzI2Mn0.B0AMM5EJ0-xKKPdbSOPecf240SscD0FYrakfzpgxSi8',
-//     (error, results) => {
-//         console.log(results)
-//     })

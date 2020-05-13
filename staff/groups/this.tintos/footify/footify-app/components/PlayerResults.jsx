@@ -2,6 +2,7 @@
 const { useState } = React;
 
 function PlayerResults({resultsPlayers, token, onToggleFollowPlayer,onCommentFwitt, queryPlayer, likesUser}) {
+
     
     const [error,setError] = useState()
   
@@ -73,7 +74,7 @@ function PlayerResults({resultsPlayers, token, onToggleFollowPlayer,onCommentFwi
                                 let {comment} = event.target 
                                     comment = comment.value
                                     handleCommentFwitt(id,firstName,surname,comment);}}>
-                         <input name="comment" id="" cols="30" rows="4" placeholder="Say something..." className="player-card__form-input"/>
+                         <input name="comment" id="" cols="30" rows="4" placeholder="Say something..." className="player-card__form-input" maxLength="60"/>
                             <button className="player-card__form-button"> Send</button>
                         </form>
                         </div>
