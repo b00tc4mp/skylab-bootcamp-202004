@@ -331,11 +331,19 @@ input -internal-autofill-selected {
   width: 20%;
   list-style: none;
   background-color: black;
-  transition: all 2s;
+  transition: all 0.5s;
   font-size: 0.8rem;
 }
 .navbar__item--active {
   background-image: linear-gradient(to bottom, #d900ff, #008cff);
+  height: 2.5rem;
+}
+.navbar .left {
+  border-bottom-right-radius: 20px;
+}
+.navbar .center {
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
 .navbar a {
   text-decoration: none;

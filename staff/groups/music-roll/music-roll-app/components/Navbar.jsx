@@ -8,7 +8,7 @@ function Navbar({onChangeView }){
 
     return <nav className="navbar">
         <ul className="navbar__list">
-            <li className={`navbar__item ${view === 'home'} ? 'navbar__item--active' : ''`}>
+            <li className={`navbar__item ${view === 'home' ? 'navbar__item--active left' : ''}`}>
                 <a href="" onClick={event => {
                     event.preventDefault()
 
@@ -16,7 +16,7 @@ function Navbar({onChangeView }){
                     onChangeView('home')
                 }}><i className="fas fa-home"></i></a>
             </li>
-            <li className={`navbar__item ${view === 'browser'} ? 'navbar__item--active' : ''`}>
+            <li className={`navbar__item ${view === 'browser' ? 'navbar__item--active center' : ''}`}>
                 <a href="" onClick = {event => {
                     event.preventDefault()
 
@@ -24,7 +24,7 @@ function Navbar({onChangeView }){
                     onChangeView('browser')
                 }}><i className="fas fa-music"></i></a>
             </li>
-            <li className={`navbar__item ${view === 'favorites'} ? 'navbar__item--active' : ''`}>
+            <li className={`navbar__item ${view === 'favorites' ? 'navbar__item--active center' : ''}`}>
                 <a href="" onClick = {event => {
                     event.preventDefault()
 
@@ -32,7 +32,7 @@ function Navbar({onChangeView }){
                     onChangeView('favorites')
                 }}><i className="far fa-heart"></i></a>
             </li>
-            <li className={`navbar__item ${view === 'friends'} ? 'navbar__item--active' : ''`}>
+            <li className={`navbar__item ${view === 'friends' ? 'navbar__item--active center' : ''}`}>
                 <a href="" onClick = {event => {
                     event.preventDefault()
 
@@ -40,7 +40,7 @@ function Navbar({onChangeView }){
                     onChangeView('friends')
                 }}><i className="fas fa-users"></i></a>
             </li>
-            <li className={`navbar__item ${view === 'login'} ? 'navbar__item--active' : ''`}>
+            <li className="navbar__item">
                 <a href="" onClick = {event => {
                     event.preventDefault()
 
