@@ -29,7 +29,7 @@ function Home({ token , onUserSessionExpired }) {
                             else throw setError(error.message);
                         }else{
                             setFwitter(resultsComments)
-                            setView('fwitter')
+                            goToView('fwitter')
                         }
                     });    
                 }
@@ -68,7 +68,8 @@ function Home({ token , onUserSessionExpired }) {
                                     else throw setError(error.message);
                                 } else {
                                 setPlayers(resultLikes) 
-                                setView('cards')
+                                goToView('cards')
+                                
                                 }
                             }) 
                         }  
@@ -95,6 +96,9 @@ function Home({ token , onUserSessionExpired }) {
                                 onUserSessionExpired();
                             else throw setError(error.message);
                         }else{
+                            const hash = address.hash()
+                            !hash && address.hash('fwitter')
+
                             setFwitter(resultsComments);
                             setView('fwitter');
                         }  
@@ -107,10 +111,16 @@ function Home({ token , onUserSessionExpired }) {
     }         
 
 
+    const goToView = (view) => {
+        address.hash(view === 'cards' || view === 'sport' || view === 'fwitter' || view === 'dream' || view === 'update-user' ? view : '')
+
+        setView(view)
+    }
+
     const handleGoToSport = () => {
         searchSport((listResults) => {
             setSportNews(listResults)
-            setView('sport')
+            goToView('sport')
         })
     }
 
@@ -118,21 +128,19 @@ function Home({ token , onUserSessionExpired }) {
 
     const handleCommentFwitt = () => {handleGoToPlayerResults(queryPlayer)}
    
-    const handleGoToDream = () => {setView('dream')}
+    const handleGoToDream = () => {goToView('dream')}
   
-    const handleGoToUpdateUser = () => {setView('update-user') }
+    const handleGoToUpdateUser = () => {goToView('update-user') }
 
     return <>
 
         <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter} onGoToDream={handleGoToDream} onGoToUpdateUser={handleGoToUpdateUser}/>
-        {/* {view === 'spinner' && <Spinner />} */}
         {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} onCommentFwitt={handleCommentFwitt} queryPlayer={queryPlayer} likesUser={likesUser} onUserSessionExpired={onUserSessionExpired}/>}
         {view === 'sport' && <SportNews sportNews={sportNews} />}
         {view === 'fwitter' && <Fwitter fwitter={fwitter} token={token} onUpdateFwitter={handleGoToFwitter} onUserSessionExpired={onUserSessionExpired}/>}
         {view === 'dream' && <Dream />}
         {view === 'update-user' && <UpdateUser token={token} onGoToFwitter={handleGoToFwitter} userDetails={userDetails}  onUserSessionExpired={onUserSessionExpired}/>}
         {error && <Feedback message={error} level="error" />}
-
     </>
 
 }

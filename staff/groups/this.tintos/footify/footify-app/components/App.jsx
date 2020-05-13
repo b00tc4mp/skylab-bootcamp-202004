@@ -6,7 +6,6 @@ function App() {
     const [error,setError] = useState()
 
     useEffect(()=>{
-        console.log('mont App')
         if(sessionStorage.token){
             try{
                 isUserAuthenticated(sessionStorage.token, (error, isAuthenticated)=>{
@@ -19,20 +18,36 @@ function App() {
                         setView('login')
                     }
                 })
-
             }catch({message}){
                 setError(message)
             }
         }else{
-            setView('landing')
+            const hash = address.hash()
+
+            if(hash === 'login' || hash === 'register') setHashView(view)
+            else{
+                address.hash.clear()
+                setView('landing')
+            }
+            
         }
     },[])
 
-    const handleGoToLogin = () => { setView('login') }
+    const setHashView = (view) =>{
+        if(view === 'landing'){
+            address.hash.clear()
+            setView(view)
+        } else{
+            address.hash(view)
+            setView(view)
+        }
+    }
 
-    const handleGoToRegister = () => { setView('register') }
+    const handleGoToLogin = () => {setHashView('login') }
 
-    const handleGoToLanding = () => { setView('landing') }
+    const handleGoToRegister = () => { setHashView('register') }
+
+    const handleGoToLanding = () => { setHashView('landing') }
 
     const handlGoToHome = (token) => { 
         sessionStorage.token = token
@@ -40,7 +55,7 @@ function App() {
         setView('home')      
     } 
     
-    const handleUserSessionExpired = () =>{ setView('login')}
+    const handleUserSessionExpired = () =>{ setHashView('login')}
 
     return <>
         {view === 'load' && <Spinner />}
