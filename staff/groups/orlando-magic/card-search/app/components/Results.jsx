@@ -1,6 +1,6 @@
 const {useState, useEffect} = React
 
-function Results({searchConditions, setSearchConditions, goToCard}){
+function Results({searchConditions, setSearchConditions, goToCard, handleFavourite, favCards}){
   let [errorResults, setErrorResults] = useState(undefined)
   let [results, setResults] = useState([])
 
@@ -21,7 +21,6 @@ function Results({searchConditions, setSearchConditions, goToCard}){
   },[searchConditions])
 
   const handleOrder = event => {
-    
     event.preventDefault()
     setSearchConditions({...searchConditions,  order: event.target.order.value, dir: event.target.dir.value})
   }
@@ -71,8 +70,8 @@ function Results({searchConditions, setSearchConditions, goToCard}){
           <img className = "results__cards--card" src = {card.image_uris? card.image_uris.png || card.image_uris.large : (card.card_faces[0].image_uris.png || card.card_faces[0].image_uris.large)}/>
       </a>
       <div>
-      <a class = "results__cards--button" onClick = {()=>{event.preventDefault();}}>L</a>
-      {!card.image_uris && <a class = "results__cards--button" onClick = {()=>{event.preventDefault();}}></a>}
+        <a className = "results__cards--button" onClick = {()=>{event.preventDefault(); handleFavourite(card.id)}}>{favCards && favCards.includes(card.id)?"D":"L"}</a>
+        {!card.image_uris && <a className = "results__cards--button" onClick = {()=>{event.preventDefault()}}></a>}
       </div>
       </li>)}
     </ul> 
