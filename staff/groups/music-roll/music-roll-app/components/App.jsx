@@ -5,6 +5,7 @@ class App extends Component {
         super(props)
 
         this.state = {
+
             view: 'login',
             Spotytoken: "BQDXzlsw5RPU67H_LBeyEnQliwEgsmA4SotLrZ2_Is9EJmL3lcn-MRrdkScjolsbwPBv3jNUHaMjtdPODneAPst0gaQwr-wzmZX2meqy7pC4ZrHksuPM4NyPBYrh-eglVwFxz8Fcick",
             token: undefined
