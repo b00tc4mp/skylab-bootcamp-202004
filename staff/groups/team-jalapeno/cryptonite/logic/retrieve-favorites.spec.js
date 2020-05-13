@@ -98,7 +98,7 @@ describe('retrieve-favorites', () =>{
                     
                     done()
 
-                }, ['coña', 'leña'])
+                }, ['test1', 'test2'])
 
             } else {
                 const {error} = JSON.parse(response)

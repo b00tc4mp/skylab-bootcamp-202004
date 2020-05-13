@@ -39,10 +39,8 @@ const passwords = [
 
 const favoriteCoins1 = [
     'bitcoin',
-    'bitcoin-cash',
-    'bitcoin-sv',
-    'bitcoin-gold',
-    'bitcoin-diamond'
+    'bat', 
+    'estellar'
     
 ]
 
@@ -57,6 +55,6 @@ const favoriteCoins3 = [
     
     'cosmos',
     'zcash',
-    'neo',
-    'binance-coin'
+    'neo'
+    
 ]

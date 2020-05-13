@@ -15,9 +15,9 @@ function Login({ loginSubmit, toRegister }) {
                 if (error) setError(error.message)
 
                 if (token) {
-                    setToken(token)
+                    
                     sessionStorage.token = token
-                    loginSubmit()
+                    loginSubmit(token)
                 }
             })
         } catch ({ message }) {

@@ -10,7 +10,6 @@ function App() {
     }
 
     const handleGoToLogin = (event) => {
-        // event.preventDefault()
         setView('login')
     }
 
@@ -24,7 +23,8 @@ function App() {
         setView('login')
     }
 
-    const handleLoginSubmit = (event) => {
+    const handleLoginSubmit = (_token) => {
+        setToken(_token)
         setView('home')
     }
 
