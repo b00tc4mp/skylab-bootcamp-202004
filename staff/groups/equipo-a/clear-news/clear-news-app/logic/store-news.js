@@ -1,3 +1,14 @@
+/**
+  *  Save/delete favorite news in the list
+  * 
+  * @param {string} token Users token
+  * @param {string} title The title of the news you have clicked
+  * 
+  * @param {function} callback The expression to be called after checking credentials, will recieve an Error or authentication token.
+  *
+  * @throws {TypeError} If any of the parameters does not match the corresponding type or if callback is not a function.
+  * @throws {Error} If there is no token.
+  */
 function storeNews(token, title,callback) {
     String.validate.notVoid(token)
     String.validate.notVoid(title)
@@ -35,3 +46,11 @@ function storeNews(token, title,callback) {
         }
     }) 
 }
+
+/**
+ * 
+ * 
+ * @callback callback
+ * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * 
+ */
