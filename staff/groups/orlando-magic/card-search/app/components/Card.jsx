@@ -1,5 +1,5 @@
 function Card({card}){
-
+    debugger
     const legalities = cardlegalities => {
         const values = Object.values(cardlegalities)
         return Object.keys(cardlegalities).map((key, i) => {
@@ -22,8 +22,9 @@ function Card({card}){
                 <p>{card.printed_type_line || card.type_line}</p>
             </div>
             <ul className="card__content--content">
-                {card.printed_text? card.printed_text.split('/n').map(paragraph=><p className="card__content--oracletext">{paragraph}</p>)
-                : card.oracle_text.split('\n').map(paragraph=><li className="card__content--oracletext">{paragraph}</li>)
+                {!card.card_faces?(card.printed_text? card.printed_text.split('/n').map(paragraph=><p className="card__content--oracletext">{paragraph}</p>)
+                : card.oracle_text.split('\n').map(paragraph=><li className="card__content--oracletext">{paragraph}</li>)):(card.card_faces[0].printed_text? card.card_faces[0].printed_text.split('/n').map(paragraph=><p className="card__content--oracletext">{paragraph}</p>)
+                : card.card_faces[0].oracle_text.split('\n').map(paragraph=><li className="card__content--oracletext">{paragraph}</li>))
                 }
                 <li className="card__content--flavortext">{card.flavor_text}</li>
             </ul>

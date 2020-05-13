@@ -232,8 +232,23 @@
   background: #171314;
   z-index: 0;
 }
+.landing-card-container .card-container__title {
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.landing-card-container .card-container__nav-item {
+  margin-bottom: 0.6rem;
+}
 .landing-card-container .card-container__title, .landing-card-container .card-container__nav-item {
   box-shadow: 0 0 0 2px #171314, 0 0 0 5px #deddc5, -3px 3px 2px 5px #171314;
+}
+.landing-card-container .card-container__title button, .landing-card-container .card-container__nav-item button {
+  height: 1.4rem;
+}
+.landing-card-container .card-container__title input, .landing-card-container .card-container__nav-item input {
+  height: 1.2rem;
 }
 .landing-card-container .card-container__form-container {
   width: 100%;

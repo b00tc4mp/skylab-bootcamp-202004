@@ -1,4 +1,4 @@
-function Landing({setHashView, onLogOut, token, onBasicSearch}){
+function Landing({setHashView, onLogOut, token, onBasicSearch, onUserSearch, onFollowing, goToUser}){
     const [error, setError] = useState(undefined)
     const [name, setName] = useState(undefined)
 //function Landing(props){
@@ -52,11 +52,17 @@ function Landing({setHashView, onLogOut, token, onBasicSearch}){
                             <button>Card Search</button>
                         </form>
                     </div>
+                    {token && <div className="card-container__type card-container__title">
+                        <form onSubmit = {() => {event.preventDefault(); onUserSearch(event)}}>
+                            <input className='form-search' type="text" name="userquery" size="15"/>
+                            <button>User Search</button>
+                        </form>
+                    </div>}
                     {error && <Feedback error={error} level='warning'/>}
                     <div className="card-container__nav">
                         <a className="card-container__nav-item" href="" onClick = {handleAdvSearch}>Advanced Search</a>
-                        <a className="card-container__nav-item" href="" onClick = {event.preventDefault()}>About Us</a>
-                        {token && <a className="card-container__nav-item" href="" onClick = {() => props.setView('account')}>Your Account</a>}
+                        {token && <a className="card-container__nav-item" href="" onClick = {()=>{event.preventDefault(); debugger; goToUser(undefined)}}>My Cards</a>}
+                        {token && <a className="card-container__nav-item" href="" onClick = {() =>{event.preventDefault(); onFollowing()}}>Following</a>}
                         {!token && <a className="card-container__nav-item" href="" onClick = {handleLogin}>Login</a>}
                         {!token && <a className="card-container__nav-item" href="" onClick = {handleRegister}>Register</a>}
                         {token && <a className="card-container__nav-item" href="" onClick = {handleLogOut}>Logout</a>}
