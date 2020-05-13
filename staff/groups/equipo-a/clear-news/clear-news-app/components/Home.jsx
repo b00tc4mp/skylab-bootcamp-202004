@@ -16,7 +16,9 @@ class Home extends Component {
             newsLanguage: undefined,
             sortBy: undefined,
             categories: undefined,
-            country: undefined
+            country: undefined,
+            headlines: undefined,
+            error: undefined
         }
 
     }
@@ -30,7 +32,7 @@ class Home extends Component {
 
                 location.hash = hash ? hash : 'topheadlines'
 
-                this.setState({ name: user.name, categories: user.categories, country: user.country, view: hash ? hash : 'topheadlines' })
+                this.setState({ name: user.name, categories: user.categories, country: user.country, headlines: user.headlines, view: hash ? hash : 'topheadlines' })
 
             })
         } catch (error) {
@@ -60,6 +62,16 @@ class Home extends Component {
         event.preventDefault()
 
         this.goToView('favorites')
+
+        // retrieveFavoriteTopHeadlines(this.props.token, (error, headlines) =>{
+        //     if(error) this.setState({error: error.message})
+        //     this.setState({headlines})
+        // })
+
+        // retrieveFavNews(this.props.token, (error, favNews) => {
+        //     if (error) this.setState({error: error.message})
+        //     this.setState({favNews})
+        // })
     }
 
     handleProfile = event => {
@@ -74,6 +86,10 @@ class Home extends Component {
 
     handleFavoritesNews = favNews => {
         this.setState({favNews})
+    }
+
+    handleFavoritesHeadlines = headlines =>{
+        this.setState({headlines})
     }
 
     handleSearchNews = (results, query, language, sortBy, pages) =>{
@@ -92,7 +108,7 @@ class Home extends Component {
             </nav>
             <img className="home__logo" src="images/logo.png"></img>
             {this.state.view === 'profile' && <Profile token={this.props.token} categories={this.state.categories} country={this.state.country}/>}
-            {this.state.view === 'favorites' && <Favorites token={this.props.token} myFavorite={this.handleFavoritesNews} favNews={this.state.favNews}/>}
+            {this.state.view === 'favorites' && <Favorites token={this.props.token} myFavorite={this.handleFavoritesNews} favNews={this.state.favNews} myHeadlines={this.handleFavoritesHeadlines} headlines={this.state.headlines}/>}
             {this.state.view === 'topheadlines' && <TopHeadlines myHeadlines={this.handleTopHeadlines} token={this.props.token} news={this.state.news} pages={this.state.pagesInTopHeadlines}/>}
             {this.state.view === 'search' && <SearchNews token={this.props.token} onSearch={this.handleSearchNews} searchNewsResults={this.state.searchNewsResults} query={this.state.newsQuery} language={this.state.newsLanguage} sortBy={this.state.sortBy} pages={this.state.pagesInSearch}/>}
 

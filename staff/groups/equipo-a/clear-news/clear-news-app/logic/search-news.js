@@ -38,9 +38,6 @@ function searchNews(token, query, language, sortBy, callback) {
 
                 const { favorite = [] } = user
 
-
-
-
                 //Confirmar el número de noticias por búsqueda
 
                 call('GET', `https://newsapi.org/v2/everything?q=${query}&language=${language}&sortBy=${sortBy}&pageSize=40&apiKey=f8ed27ae05b44313b6a87abfea6dc48b`,
@@ -84,7 +81,9 @@ function searchNews(token, query, language, sortBy, callback) {
                             numberOfPages.push(i+1)
                         }
 
-                        callback(undefined, allNews, numberOfPages);
+                        allNewsUnique = getUnique(allNews, element=>element.title)
+
+                        callback(undefined, allNewsUnique, numberOfPages);
                     });
             }else {
                 const { error } = JSON.parse(body)
