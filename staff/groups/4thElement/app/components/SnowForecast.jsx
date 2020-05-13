@@ -11,24 +11,24 @@ function SnowForecast({token, forecastSelected, sportState}) {
         })
         document.getElementById("deleteMe").style.display="none"; 
 	    
-    } //to do : handel error if not login
+    } 
 
 
     useEffect(() => { // add try catch
         snowForecastLogic({forecastSelected}, function (error, info) {
             setForecast(info)
         })
-        // hideButton(token, forecastSelected, (error, following)=>{
-        //     if(error){ throw new TypeError('error')
-        // } else {
-        //     setFollowing(following)
-        // }
-        // })
-    },[]) //upload each half an hour
+        hideButton(token, forecastSelected, (error, following)=>{
+            if(error){ throw new TypeError('error')
+        } else {
+            setFollowing(following)
+        }
+        })
+    },[forecastSelected]) //upload each half an hour
 
     return <section className="forecast">
 
-        {!following && !token && <div className='forecast__favButton' id='deleteMe' onClick={()=>handleFavButton(token)}><i className="fas fa-star fa-2x"></i></div>}
+        {!following && token && <div className='forecast__favButton' id='deleteMe' onClick={()=>handleFavButton(token)}><i className="fas fa-star fa-2x"></i></div>}
         {forecast && <div className="forecastInfoSnow__day">
                 {<h2>{forecast.data.weather[0].date}</h2>}
                 {<h4>sunrise: {forecast.data.weather[0].astronomy[0].sunrise}, sunset: {forecast.data.weather[0].astronomy[0].sunset}</h4>}
