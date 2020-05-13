@@ -77,7 +77,7 @@ function searchNews(token, query, language, sortBy, callback) {
                             numberOfPages.push(i+1)
                         }
 
-                        allNewsUnique = getUnique(allNews, element=>element.title)
+                        let allNewsUnique = getUnique(allNews, element=>element.title)
 
                         callback(undefined, allNewsUnique, numberOfPages);
                     });

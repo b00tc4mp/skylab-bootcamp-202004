@@ -89,7 +89,7 @@ function retrieveNews(token, callback) {
                                     numberOfPages.push(i+1)
                                 }
 
-                                myNewsUnique = getUnique(myNews, element=>element.title)
+                                let myNewsUnique = getUnique(myNews, element=>element.title)
 
                                 callback(undefined, myNewsUnique, numberOfPages)
                             } 

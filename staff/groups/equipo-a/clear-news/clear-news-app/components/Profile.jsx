@@ -37,7 +37,7 @@ function Profile({ token, categories, country }) {
         event.target.sports.checked ? sports=true : sports=false
         event.target.technology.checked ? technology=true : technology=false
 
-        let interests = { business, entertainment, general, health, science, sports, technology }
+        let categories = { business, entertainment, general, health, science, sports, technology }
 
         let name= event.target.name.value
         let surname = event.target.surname.value
@@ -47,7 +47,7 @@ function Profile({ token, categories, country }) {
         
         let country=event.target.country.value
 
-        let userUpdate={name, surname, email, oldPassword, password, interests, country}
+        let userUpdate={name, surname, email, oldPassword, password, categories, country}
 
         try {
             profileChange(token,userUpdate , error => {
