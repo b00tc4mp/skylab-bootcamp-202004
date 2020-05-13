@@ -4,7 +4,7 @@ function Favorites({token, myFavorite, favNews}) {
     const [error, setError] = useState()
 
     useEffect(() => {
-        !favNews && retrieveFavNews(token, ( error,favNews) => {
+        !favNews && retrieveFavNews(token, (error, favNews) => {
             if (error) setError(error.message);
             myFavorite(favNews);
         })
@@ -17,9 +17,9 @@ function Favorites({token, myFavorite, favNews}) {
                 // setErrorNews(error.message)
                 /* if(error.message==="invalid token") */
                 else {
-                    retrieveFavNews(token, (error, news) => {
+                    retrieveFavNews(token, (error, favNews) => {
                         if (error) setError(error.message)
-                        myFavorites(news)
+                        myFavorite(favNews)
                     })
                 }
             })
@@ -39,7 +39,7 @@ function Favorites({token, myFavorite, favNews}) {
                         <li className="news__item" key={title}>
                             <a href={url} target='_blank'><img className="news__images" src={urlToImage}></img>
                             <div className="news__title stroke"><p className="stroke">{name}</p><p className="stroke"> {title}</p> </div></a>
-                            <div className="news__button"> <input type="image" className="news__followIMG" src={favorites? "images/heart-follow.png" : "images/heart-unfollow.png"} onClick={() => handleLikeNews(title)} /></div>
+                            <div className="news__button"> <input type="image" className="news__followIMG" src="images/heart-follow.png" onClick={() => handleLikeNews(title)} /></div>
                 </li>)}
             </ul>
         }
