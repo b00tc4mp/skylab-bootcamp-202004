@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <title>Mocha Tests</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="vendor/mocha/mocha.css" />
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="mocha"></div>
 
     <script src="vendor/mocha/mocha.js"></script>
@@ -19,7 +18,7 @@
        /*   mocha.checkLeaks() */
         mocha.timeout(50000)
 
-        const { expect } = chai
+      const { expect } = chai;
     </script>
 
     <script src="utils/string.js"></script>
@@ -44,8 +43,7 @@
     
     
     <script class="mocha-exec">
-        mocha.run()
+      mocha.run();
     </script>
-</body>
-
+  </body>
 </html>

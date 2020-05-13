@@ -3,6 +3,12 @@
 
 function searchAlbumTracks(id,token,callback) {
 
+    String.validate.notVoid(token)
+
+    String.validate(id)
+
+    Function.validate(callback)
+
     const queryUrl = `/${id}`.concat('/tracks')
     
     call(
