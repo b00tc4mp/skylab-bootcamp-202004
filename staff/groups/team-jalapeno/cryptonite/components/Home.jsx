@@ -53,6 +53,16 @@ function Home() {
 
     setView('portfolio-page')
   }
+  const handleFavClick = (event) => {
+    event.preventDefault()
+
+    setView('favorites-page')
+  }
+  const handleHomeClick = (event) => {
+    event.preventDefault()
+
+    setView('cryptos-list')
+  }
 
   const handlePortfolioSubmit = (id, quantity, callback) => {
     addPortfolioCrypto(sessionStorage.token, { id, quantity }, callback)
@@ -93,7 +103,7 @@ function Home() {
         </section>
       </footer>
 
-      <NavBar />
+      <NavBar homeClick={handleHomeClick} favClick={handleFavClick} porfolioClick={handlePortfolioClick} />
     </>
 
 
