@@ -2,8 +2,13 @@ function registerUser(name, surname, email, password, interests, country, callba
 
     String.validate.alphabetic(name)
     String.validate.notVoid(name)
+    String.validate(name)
     String.validate.alphabetic(surname)
     String.validate.notVoid(surname)
+    String.validate(surname)
+    String.validate.alphabetic(country)
+    String.validate.notVoid(country)
+    String.validate(country)
     Email.validate(email)
     String.validate.lengthGreaterEqualThan(password, 8)
     Function.validate(callback)
