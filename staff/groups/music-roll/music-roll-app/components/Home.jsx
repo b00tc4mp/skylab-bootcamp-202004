@@ -2,15 +2,8 @@ const { useState, useEffect } = React
 
 function Home () {
 
-   
- 
-    
-  
-  
     return <>
-        
-    
-    
+         
     <section className="home">
       
         <section className="home-header">

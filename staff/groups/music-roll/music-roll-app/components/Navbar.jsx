@@ -15,6 +15,7 @@ function Navbar({onChangeView }){
                     setView('home')
                     onChangeView('home')
                 }}><i className="fas fa-home"></i></a>
+
             </li>
             <li className={`navbar__item ${view === 'browser' ? 'navbar__item--active center' : ''}`}>
                 <a href="" onClick = {event => {
