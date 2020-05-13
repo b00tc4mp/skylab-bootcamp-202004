@@ -1,8 +1,9 @@
+
 describe('retrieve-cryptos', () => {
 
     it('should return a cryptos list length 12', done => {
         retrieveCryptos((error, data) => {
-            if (error) return done(new Error(error))
+
             expect(error).to.be.undefined
 
             expect(data).to.exist
@@ -10,12 +11,11 @@ describe('retrieve-cryptos', () => {
 
             done()
         })
-
-
     })
 
     it('should fail if callback is not a function', () => {
 
         expect(() => retrieveCryptos('hello world')).to.throw(Error)
     })
+
 })
