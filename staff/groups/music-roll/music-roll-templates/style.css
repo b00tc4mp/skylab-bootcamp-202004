@@ -241,6 +241,20 @@ input -internal-autofill-selected {
   background-color: #505050;
   transition: all 2s;
 }
+.navbar__item:active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(to right, #7F00FF, #E100FF);
+}
+.navbar :nth-child(7) {
+  margin-top: 55vh;
+}
+.navbar a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
 
 .hamburguer {
   display: flex;
@@ -260,16 +274,14 @@ input -internal-autofill-selected {
   transform-origin: left;
   transition: all 0.5s;
 }
-.hamburguer__bar:hover > .hamburguer--top {
+
+.hamburguer:hover--top {
   transform: rotate(45deg);
 }
-.hamburguer--top:hover {
-  transform: rotate(45deg);
-}
-.hamburguer--middle:hover {
+.hamburguer:hover--middle {
   opacity: 0;
 }
-.hamburguer--bottom:hover {
+.hamburguer:hover--bottom {
   transform: rotate(-45deg);
 }
 
