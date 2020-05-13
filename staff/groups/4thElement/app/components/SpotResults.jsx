@@ -12,11 +12,11 @@ function SpotResultsList({ query, onGoToSurfForecast, sportState, selectorState 
         if(selectorState === 'spots'){
 
             if(sportState === 'surf'){
-                searchSpotList(query, (spotsFound) => { //sacaar el list para que la funcion se llame como el archivo
+                searchSpotList(query, sportState, (spotsFound) => { //sacaar el list para que la funcion se llame como el archivo
                     setSpots(spotsFound)
                 })
             }else{
-                searchSpotListSnow(query, (spotsFound) => {
+                searchSpotList(query, sportState, (spotsFound) => {
                     setSpots(spotsFound)
                 })
             }
