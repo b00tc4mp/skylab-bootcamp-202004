@@ -1,7 +1,7 @@
 
 const { useState } = React;
 
-function PlayerResults({resultsPlayers, token, onToggleFollowPlayer,onCommentFwitt, queryPlayer, likesUser}) {
+function PlayerResults({resultsPlayers, token, onToggleFollowPlayer,onCommentFwitt, queryPlayer, likesUser, onUserSessionExpired}) {
 
     
     const [error,setError] = useState()
@@ -12,24 +12,28 @@ function PlayerResults({resultsPlayers, token, onToggleFollowPlayer,onCommentFwi
         try {
             toogleFollowPlayer(token, playerId, (error) => {
                 if (error) {
-                    return setError(error.message);
-                } else {
-                    
-                    onToggleFollowPlayer(queryPlayer);
-                }
+                    if (error.message === 'invalid token')
+                        onUserSessionExpired()
+                    else throw setError(error.message);
+                } else onToggleFollowPlayer(queryPlayer);
+                
             });
         } catch (error) {
-            if (error) throw error;
+            setError(error.message);
         }
     }
 
     const handleCommentFwitt = (id,firstName ,surname,comment) =>{
        
         try{
-            debugger
+            
             addFwitter(id,`${firstName} ${surname}`,comment,token,(error)=>{
-                if(error) throw setError(error.message);
-                onCommentFwitt(queryPlayer)
+                if (error) {
+                    if (error.message === 'invalid token')
+                        onUserSessionExpired()
+                    else throw setError(error.message);
+                } else onCommentFwitt(queryPlayer)
+
             })  
         }catch(error){
             if(error) throw setError(error.message);
@@ -37,7 +41,7 @@ function PlayerResults({resultsPlayers, token, onToggleFollowPlayer,onCommentFwi
     }
 
     if (!resultsPlayers) return <Spinner />;
-    return (<>
+    return <>
     <section className="player"> 
     {resultsPlayers !== 'no players' ? (
             <ul className="player-card">
@@ -83,7 +87,8 @@ function PlayerResults({resultsPlayers, token, onToggleFollowPlayer,onCommentFwi
                 : 
                 (<Feedback message="sorry, no players found :(" level="warning" />)}
             </section>
+            {error && <Feedback message={error} level="error" />}
         </>
-    );
+    
 
 }

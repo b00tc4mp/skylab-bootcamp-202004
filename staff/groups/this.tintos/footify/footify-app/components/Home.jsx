@@ -1,11 +1,10 @@
 const { useState, useEffect } = React
 
-function Home({ token }) {
+function Home({ token , onUserSessionExpired }) {
 
     const [view, setView] = useState('fwitter')
     const [players, setPlayers] = useState()
     const [error, setError] = useState()
-    // const [loading, setLoading] = useState(true)
     const [likesUser, setLikesUser] = useState()
     const [userDetails, setUserDetails] = useState()
     const [sportNews, setSportNews] = useState()
@@ -13,112 +12,125 @@ function Home({ token }) {
     const [fwitter, setFwitter] = useState();
 
 
-    useEffect(() => {
+
+    useEffect(()=>{
         try {
-            //tratar de sacar los names con retrieve aqui
             retriveFwitter(token, (error, results) => {
-                if (error) return setError(error.message);
-
-                const arrfwitter = creatFwitterArray(results)
-                commentCards(arrfwitter, token, (error, resultsComments) => {
-                    if(error) return setError(error.message)
-                    setFwitter(resultsComments)
-                })
-            })
-            
-            setView('fwitter')
-        } catch ({ message }) {
-            setError(message)
+                if (error) {
+                    if (error.message === 'invalid token')
+                        onUserSessionExpired()
+                    else throw setError(error.message);
+                } else {
+                    const arrfwitter = creatFwitterArray(results)
+                    commentCards(arrfwitter, token, (error, resultsComments) => {
+                        if(error){
+                            if (error.message === 'invalid token')
+                            onUserSessionExpired()
+                            else throw setError(error.message);
+                        }else{
+                            setFwitter(resultsComments)
+                            setView('fwitter')
+                        }
+                    });    
+                }
+            });
+        } catch (error) {
+            setError(error.message);
         }
-    }, [])
-
+    },[]);
+     
 
     const handleGoToPlayerResults = (queryPlayer) => {
-
-        retrieveUser(token, (error, user) => {
-            setUserDetails(user)
-            const { likes } = user
-            setLikesUser(likes)
-            
-        })
-
-        setQueryPlayer(queryPlayer)
         try {
-            setPlayers(undefined)
-            setError(undefined)
-
-            searchPlayers(queryPlayer, (error, resultsPlayer) => {
-
+            retrieveUser(token, (error, user) => {
                 if (error) {
-                    setPlayers('no players')
-                    setError(error.message)
+                    if (error.message === 'invalid token')
+                        onUserSessionExpired()
+                    else throw setError(error.message);
+                } else {
+                    setUserDetails(user)
+                    const { likes } = user
+    
+                    setLikesUser(likes)
+                    setQueryPlayer(queryPlayer)
+                    setPlayers(undefined)
+                    setError(undefined)
+
+                    searchPlayers(queryPlayer, (error, resultsPlayer) => {
+                        if (error) {
+                            setPlayers('no players')
+                            setError(error.message)
+                        }else{
+                            searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => { 
+                                if (error) {
+                                    if (error.message === 'invalid token')
+                                        onUserSessionExpired()
+                                    else throw setError(error.message);
+                                } else {
+                                setPlayers(resultLikes) 
+                                setView('cards')
+                                }
+                            }) 
+                        }  
+                    })
                 }
-
-
-                searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => { 
-                    if (error) return setError(error.message)
-                    setPlayers(resultLikes) 
-                    
-                })
-
-
-                setView('cards')
             })
         } catch ({ message }) {
             setError(message)
         }
     }
-    const handleGoToSport = () => {
-        searchSport((listResults) => {
-
-            setSportNews(listResults)
-            setView('sport')
-
-        })
-    }
-
-    const handleToggleFollowPlayers = () => {
-        handleGoToPlayerResults(queryPlayer)
-    }
-    const handleCommentFwitt = () => {
-        handleGoToPlayerResults(queryPlayer)
-    }
-   
 
     const handleGoToFwitter = () => {
         try {
             retriveFwitter(token, (error, results) => {
-                if (error) return setError(error.message);
-                const arrfwitter = creatFwitterArray(results)
-                
-                //TODO
-                //const arrfwitter = creatFwitterArray(results)
-
-                commentCards(arrfwitter, token, (error, resultsComments) => {
-                    setFwitter(resultsComments)
-                })
+                if (error) {
+                    if (error.message === 'invalid token')
+                        onUserSessionExpired()
+                    else throw setError(error.message);
+                } else {
+                    const arrfwitter = creatFwitterArray(results)
+                    commentCards(arrfwitter, token, (error, resultsComments) => {
+                        if (error) {
+                            if (error.message === 'invalid token')
+                                onUserSessionExpired();
+                            else throw setError(error.message);
+                        }else{
+                            setFwitter(resultsComments);
+                            setView('fwitter');
+                        }  
+                    })
+                }
             })
-            setView('fwitter');
-        } catch ({ message }) {
+        }catch({message}){
             setError(message)
-        }
+        }       
+    }         
+
+
+    const handleGoToSport = () => {
+        searchSport((listResults) => {
+            setSportNews(listResults)
+            setView('sport')
+        })
     }
-    const handleGoToDream = () => {
-        setView('dream')
-    }
+
+    const handleToggleFollowPlayers = () => { handleGoToPlayerResults(queryPlayer) }
+
+    const handleCommentFwitt = () => {handleGoToPlayerResults(queryPlayer)}
+   
+    const handleGoToDream = () => {setView('dream')}
   
-    const handleGoToUpdateUser = () => {
-        setView('update-user')
-    }
+    const handleGoToUpdateUser = () => {setView('update-user') }
+
     return <>
 
         <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter} onGoToDream={handleGoToDream} onGoToUpdateUser={handleGoToUpdateUser}/>
         {/* {view === 'spinner' && <Spinner />} */}
-        {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} onCommentFwitt={handleCommentFwitt} queryPlayer={queryPlayer} likesUser={likesUser} />}
+        {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} onCommentFwitt={handleCommentFwitt} queryPlayer={queryPlayer} likesUser={likesUser} onUserSessionExpired={onUserSessionExpired}/>}
         {view === 'sport' && <SportNews sportNews={sportNews} />}
-        {view === 'fwitter' && <Fwitter fwitter={fwitter} token={token} onUpdateFwitter={handleGoToFwitter}/>}
+        {view === 'fwitter' && <Fwitter fwitter={fwitter} token={token} onUpdateFwitter={handleGoToFwitter} onUserSessionExpired={onUserSessionExpired}/>}
         {view === 'dream' && <Dream />}
-        {view === 'update-user' && <UpdateUser token={token} onGoToFwitter={handleGoToFwitter} userDetails={userDetails}/>}
+        {view === 'update-user' && <UpdateUser token={token} onGoToFwitter={handleGoToFwitter} userDetails={userDetails}  onUserSessionExpired={onUserSessionExpired}/>}
         {error && <Feedback message={error} level="error" />}
 
     </>

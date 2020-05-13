@@ -1,6 +1,6 @@
 const { useState } = React
 
-function Fwitter({ fwitter, token, onUpdateFwitter }) {
+function Fwitter({ fwitter, token, onUpdateFwitter, onUserSessionExpired}) {
 
     const [comentsInfo, setComentsInfo] = useState()
     const [error, setError] = useState()
@@ -8,20 +8,21 @@ function Fwitter({ fwitter, token, onUpdateFwitter }) {
     if (!fwitter) return <Spinner />
 
 
-const handletoogleComment = (idCommentUser,cardColor,message) => {
+    const handletoogleComment = (idCommentUser,cardColor,message) => {
+        try {
+            toogleFollowComment(token, idCommentUser, fwitter,cardColor,message, (error, fwitter) => {
+                if (error) {
+                    if (error.message === 'invalid token')
+                        onUserSessionExpired()
+                    else throw setError(error.message);
+                } else onUpdateFwitter();
+            });
+        } catch (error) {
+            setError(error.message);
+        }
+    }
 
-toogleFollowComment(token, idCommentUser, fwitter,cardColor,message, (error, fwitter) => {
-    if(error) return  setError(error.message)
 
-    onUpdateFwitter()
-
-
-})
-
-
-}
-
-    
     return <>
         <section >
             {
@@ -75,6 +76,7 @@ toogleFollowComment(token, idCommentUser, fwitter,cardColor,message, (error, fwi
                     : <Feedback message="sorry, no results :(" level="warning" />
             }
         </section>
+        {error && <Feedback message={error} level="error" />}
 
     </>
 }
