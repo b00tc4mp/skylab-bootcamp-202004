@@ -1,6 +1,6 @@
 const {useState, useEffect} = React
 
-function Results({searchConditions, setSearchConditions, goToCard}){
+function Results({searchConditions, setSearchConditions, goToCard, handleFavourite, favCards}){
   let [errorResults, setErrorResults] = useState(undefined)
   let [results, setResults] = useState([])
   let url, query
@@ -88,7 +88,12 @@ function Results({searchConditions, setSearchConditions, goToCard}){
     <ul className = 'results__cards'>
       {results && results.map(card => <li key={card.id}><a onClick = {() => {goToCard(card)}}>
           <img className = "results__cards--card" src = {card.image_uris? card.image_uris.png || card.image_uris.large : (card.card_faces[0].image_uris.png || card.card_faces[0].image_uris.large)}/>
-      </a></li>)}
+      </a>
+      <div>
+        <a className = "results__cards--button" onClick = {()=>{event.preventDefault(); handleFavourite(card.id)}}>{favCards && favCards.includes(card.id)?"D":"L"}</a>
+        {!card.image_uris && <a className = "results__cards--button" onClick = {()=>{event.preventDefault()}}></a>}
+      </div>
+      </li>)}
     </ul> 
   </section>
 }

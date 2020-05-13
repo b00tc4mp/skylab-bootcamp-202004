@@ -1,4 +1,4 @@
-function retrieveUserCards(token, callback, id = "") {
+function retrieveUserCards(token, callback, id = "", retrieveIds){
     String.validate.notVoid(token)
 
     Function.validate(callback)
@@ -13,8 +13,11 @@ function retrieveUserCards(token, callback, id = "") {
             const { myCards = [] } = JSON.parse(body)
 
             if(!myCards.length) return callback(undefined, [])
-
+            else if (retrieveIds === true) return callback(undefined, myCards)
+             
             const cards = myCards.map(card => ({"id": card}))
+
+            
 
             call('POST', 'https://api.scryfall.com/cards/collection', `{ "identifiers" : ${JSON.stringify(cards)} }`,
             { 'Content-type': 'application/json' }, (error, status, body) => {
