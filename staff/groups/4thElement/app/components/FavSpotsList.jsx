@@ -1,7 +1,7 @@
 
 const { useState, useEffect } = React
 
-function FavSpotsList({ token, results, onGoToSurfForecast }) {
+function FavSpotsList({ token, results, onGoToSurfForecast, sportState }) {
 
     const [_results,  setResults] = useState(results)
 
@@ -24,7 +24,7 @@ function FavSpotsList({ token, results, onGoToSurfForecast }) {
     </ul>
     } else {
         return <>            
-        {<FavSpots token={token} onGoToSurfForecast={onGoToSurfForecast}/>}
+        {<FavSpots token={token} onGoToSurfForecast={onGoToSurfForecast} sportState={sportState}/>}
         </>
 
     }
