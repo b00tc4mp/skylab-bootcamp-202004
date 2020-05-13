@@ -7,8 +7,8 @@ function addFwitter(idPlayer, _name, _message, token, callback) {
     Function.validate(callback);
 
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined, {
-            Authorization: `Bearer ${token}`
-        },
+        Authorization: `Bearer ${token}`
+    },
         (error, status, body) => {
             if (error) return callback(error)
 
@@ -18,7 +18,7 @@ function addFwitter(idPlayer, _name, _message, token, callback) {
 
                 let pushFwitt = false;
 
-                if (fwitter.length ===  0) {
+                if (fwitter.length === 0) {
                     const resultFwitter = {
                         id: idPlayer,
                         name: _name,
@@ -63,13 +63,14 @@ function addFwitter(idPlayer, _name, _message, token, callback) {
                             }]
                         }
                         fwitter.push(addNewFwitter)
+                        console.log(addNewFwitter + 'sergi')
                     }
                 }
 
                 call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify({ fwitter }), {
-                        Authorization: `Bearer ${token}`,
-                        'Content-type': 'application/json'
-                    },
+                    Authorization: `Bearer ${token}`,
+                    'Content-type': 'application/json'
+                },
                     (error, status, body) => {
                         if (error) return callback(error)
 
@@ -87,5 +88,5 @@ function addFwitter(idPlayer, _name, _message, token, callback) {
 
                 callback(new Error(error))
             }
-    })
+        })
 }
