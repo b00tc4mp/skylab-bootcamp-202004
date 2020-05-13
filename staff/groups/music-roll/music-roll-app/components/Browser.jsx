@@ -19,6 +19,7 @@ function Browser({ token }) {
 
         if (browser === 'album') {
             searchAlbum(token, browserquery, (error, results) => {
+                
 
                 if (error) console.log(error)
 
@@ -59,6 +60,7 @@ function Browser({ token }) {
     }
 
     return <section className="browser">
+       <section className ="browser__search">
         <h2 className="title">Browser</h2>
         <form className="browser__form" onSubmit={handleSubmit} >
             <select name="browser">
@@ -72,6 +74,7 @@ function Browser({ token }) {
             <input type="text" name="query" placeholder="What do you want to listen?" />
             <button>Submit</button>
         </form>
+        </section>
         <section className="results">
             {trackResults && <TrackResults results={trackResults} />}
 

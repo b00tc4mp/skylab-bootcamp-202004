@@ -14,6 +14,7 @@ function AlbumResults({ results, token }) {
              searchAlbumTracks(id, token, (error, resultsTracks) => {
                 if (error) console.log(error)
 
+                
                 setAlbumTracks(resultsTracks)
                 
             })
@@ -26,10 +27,10 @@ function AlbumResults({ results, token }) {
         {results.length ? <ul>
             {
                 results.map(({ name, id, artistsArray, image }) => {
-                    return <li><a href="" onClick={(event) => 
+                    return <li className="disc-list">
+                        <h2 className="disc-list__title">{`${name}`}</h2>    <h1 className="disc-list__artist">{`${artistsArray.join()}`} </h1><a href="" onClick={(event) => 
                         {event.preventDefault()
-                        handleOnAlbum(id)}}><img src={image} /></a>
-                        {`${artistsArray.join()} ${name}`} </li>
+                        handleOnAlbum(id)}}><img className="disc-list__image" src={image} /></a> </li>
 
                 })
             }
