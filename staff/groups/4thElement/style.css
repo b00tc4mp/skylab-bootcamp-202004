@@ -360,27 +360,43 @@ form {
   background: none;
   border: none;
 }
-
-.Spot-Searched__title {
-  font-family: "Source Sans Pro", sans-serif;
-  background: #e4e4e4;
-  font-size: 20px;
-  height: 3.5vh;
+.Searcher__selector {
+  font-size: 1.3rem;
+  display: flex;
+  width: 100%;
+  position: absolute;
+  margin-top: 10.5vh;
+  justify-content: center;
+  background-color: #e4e4e4;
 }
-.Spot-Searched__list {
+.Searcher__selector div {
+  text-align: center;
+  width: 50vw;
+}
+.Searcher__selectorSpot--active {
+  background-color: #43a1b1;
+}
+.Searcher__selectorUser--active {
+  background-color: #43a1b1;
+}
+
+.SpotSearched {
+  margin-top: 2vh;
+  height: 75vh;
+  overflow: scroll;
   list-style-type: none;
   text-align: center;
   padding: 0;
   font-family: "Source Sans Pro", sans-serif;
-  font-size: 25px;
+  font-size: 1.5rem;
 }
-.Spot-Searched__item {
+.SpotSearched__item {
   border-bottom: 1px solid black;
   width: 100vw;
   height: 10vh;
   padding: 3vh;
 }
-.Spot-Searched__item:hover {
+.SpotSearched__item:hover {
   background: gray;
 }
 
@@ -484,6 +500,46 @@ span {
 .Favorites__List h1 {
   color: red;
   font-size: 30px;
+}
+
+.forecastInfoSnow {
+  margin-top: 6vh;
+  background: #e4e4e4;
+  height: 100vh;
+}
+.forecastInfoSnow__hour {
+  height: 89vh;
+  overflow: scroll;
+}
+.forecastInfoSnow h2 {
+  padding-top: 1vh;
+  text-align: center;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.6rem;
+  font-weight: bold;
+  height: 3.5vh;
+}
+.forecastInfoSnow h4 {
+  padding-top: 1vh;
+  text-align: center;
+  font-family: "Source Sans Pro", sans-serif;
+  background: #e4e4e4;
+  font-size: 20px;
+  height: 3.5vh;
+}
+.forecastInfoSnow__hour {
+  margin-top: 2vh;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.forecastInfoSnow__list {
+  border-bottom: 1px solid black;
+  width: 100vw;
+  padding: 3vh;
+}
+.forecastInfoSnow__overAllInfo {
+  color: red;
 }
 
 /*# sourceMappingURL=style.css.map */
