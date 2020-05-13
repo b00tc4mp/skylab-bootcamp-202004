@@ -26,9 +26,9 @@ class Home extends Component {
             retrieveUser(this.props.token, (error, user) => {
                 if (error) throw error
 
-                const hash = location.hash.substring(1)
+                const hash = address.hash()
 
-                location.hash = hash ? hash : 'topheadlines'
+                !hash && address.hash('topheadlines')
 
                 this.setState({ name: user.name, categories: user.categories, country: user.country, view: hash ? hash : 'topheadlines' })
 
@@ -39,8 +39,8 @@ class Home extends Component {
     }
 
     goToView = view => {
-        location.hash = view === 'topheadlines' || view === 'search' || view === 'favorites' || view === 'profile' ? view : ''
-        debugger
+        address.hash(view === 'topheadlines' || view === 'search' || view === 'favorites' || view === 'profile' ? view : '')
+       
         this.setState({ view })
     }
 
@@ -77,7 +77,9 @@ class Home extends Component {
     }
 
     handleSearchNews = (results, query, language, sortBy, pages) =>{
+        address.hash.query({ q: query })
         this.setState({searchNewsResults: results, newsQuery: query, newsLanguage: language, sortBy, pagesInSearch: pages})
+        
     }
 
     render() {

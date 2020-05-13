@@ -22,7 +22,7 @@ function retrieveFavNews(token, callback) {
 
                 favorite.forEach((item => {
                     // let title = item.split(' ').join('+')
-                    call('GET', `https://newsapi.org/v2/everything?q="${item}"&apiKey=f8ed27ae05b44313b6a87abfea6dc48b`,
+                    call('GET', `https://newsapi.org/v2/everything?q="${item}"&apiKey=55aab6760184405791eeffefcbd32733`,
                         undefined,
                         undefined,
                         (error, status, body) => {
@@ -54,7 +54,7 @@ function retrieveFavNews(token, callback) {
 
                             // let titleTop=JSON.parse(item)
 
-                            call('GET', `https://newsapi.org/v2/top-headlines?q=${titleTop}&apiKey=f8ed27ae05b44313b6a87abfea6dc48b`,
+                            call('GET', `https://newsapi.org/v2/top-headlines?q=${titleTop}&apiKey=55aab6760184405791eeffefcbd32733`,
                         undefined,
                         undefined,
                         (error, status, body) => {

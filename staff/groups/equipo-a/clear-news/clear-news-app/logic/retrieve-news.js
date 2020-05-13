@@ -35,7 +35,7 @@ function retrieveNews(token, callback) {
                 let counter = 0
           
                 for (let i = 0; i < _categories.length; i++) {
-                    call('GET', `https://newsapi.org/v2/top-headlines?country=${country}&category=${_categories[i]}&apiKey=0d80af4c6ef6473aae5bb15fcf9eb625`,
+                    call('GET', `https://newsapi.org/v2/top-headlines?country=${country}&category=${_categories[i]}&apiKey=55aab6760184405791eeffefcbd32733`,
                         undefined,
                         undefined,
                         (error, status, body) => {
