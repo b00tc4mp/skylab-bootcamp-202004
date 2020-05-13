@@ -11,24 +11,19 @@ function updateUser (token, newData, callback){
         if(!VALID_FIELDS.includes(key)) throw new Error(`property ${key} is not allowed`)
     })
 
+    const {password, oldPassword} = newData
+
+    if (password !== '' &&  oldPassword === '') {
+        return callback(new Error ('You have to indicate your old password'))
+    } else if(password !== '' && oldPassword !== '') { 
+        String.validate.notVoid(password)
+        String.validate.notVoid(oldPassword)
+    } else {        
     for (const key in newData) {
         if (key === 'email') newData[key].trim() === '' ? delete newData[key] : Email.validate(newData[key]);
         else newData[key].trim() === '' ? delete newData[key] : String.validate.notVoid(newData[key])
     }
-    
-    let {oldPassword} = newData
-    
-    // name.trim() === '' ? name = undefined : String.validate.notVoid(name)
-    // surname.trim() === '' ? surname = undefined : String.validate.notVoid(surname)
-    // email.trim() === '' ? email = undefined : Email.validate(name)
-    // password.trim() === '' ? password = undefined : String.validate.notVoid(password)
-    // oldPassword.trim() === '' ? oldPassword = undefined : String.validate.notVoid(oldPassword)
-
-
-
-    if(typeof oldPassword === 'undefined') {
-        return callback(new Error ('You have to indicate your old password'))
-    } else  String.validate.notVoid(oldPassword)
+}  
 
 
     
@@ -38,7 +33,7 @@ function updateUser (token, newData, callback){
          if (error) return callback(error)
 
          if (status === 204){
-         callback()
+         callback(undefined, 'All changes has been updated')
          
          }else {
              const { error } = JSON.parse(body)

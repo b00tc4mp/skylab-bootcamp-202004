@@ -605,13 +605,14 @@
   height: auto;
   text-align: center;
 }
-.feedback--warning {
-  color: #ff4800;
-  margin-top: 1rem;
+.feedback--success {
+  color: #3F00B4;
+  font-weight: 500;
+  margin-top: 1.3rem;
 }
 .feedback--error {
   color: #ff4800;
-  margin-top: 1rem;
+  margin-top: 1.3rem;
 }
 
 .fwitter {
@@ -738,6 +739,12 @@
   color: #320090;
   font-family: Raleway;
   font-weight: 200;
+}
+.update__form-line {
+  border-top: 4px solid #320090;
+  width: 40vw;
+  margin-bottom: 1rem;
+  border-radius: 4px;
 }
 .update__form-button {
   width: 12rem;
