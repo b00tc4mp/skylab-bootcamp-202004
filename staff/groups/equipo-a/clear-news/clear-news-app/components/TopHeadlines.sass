@@ -2,15 +2,16 @@
     
     @extend %panel
     &__images
-        width: 100vw
-        max-height: 220px
-        margin: 0
+        height: 100%
+        margin: 5px
         padding: 0
+        width: 100vw
 
     &__container
         list-style: none
         margin: 0
         padding: 0
+        width: 100vw
 
     &__item
         position: relative
@@ -26,7 +27,7 @@
         font-size: 4vw
         background-color: hsla(204, 5%, 67%, 0.7)
         color: white
-        width: 100%
+        //width: 100%
 
     &__button
         position: absolute
@@ -40,6 +41,11 @@
 
 @media screen and ( min-width: 768px )  
     .news
+        &__images
+            width: 50vw
+        &__item
+            width: 50vw
+            height: 300px
         &__container
             display: grid
             grid-template-columns: repeat(2, 1fr)
@@ -50,6 +56,8 @@
         &__followIMG
             width: 120px
             height: 120px
+        &__title
+            font-size: 2vw
 
 @media screen and ( min-width: 1024px )  
     .news
@@ -59,6 +67,16 @@
             grid-template-rows: repeat(5, 1fr)
             justify-content: none
             align-items: none
+        &__images
+            width: 25vw
+        &__item
+            width: 25vw
+            height: 250px
+        &__title
+            font-size: 2vw
+        &__followIMG
+            width: 70px
+            height: 70px
         // &__images
            // width: 100vw
            // max-height: 660px 

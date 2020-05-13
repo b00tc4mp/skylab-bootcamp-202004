@@ -6,21 +6,28 @@
     margin-top: 1rem
     margin-bottom: 1rem
 
-
+    form
+        display: flex
+        flex-direction: column
+        justify-content: center
+        text-align: center
+        align-items: center
     &__button
         background-color:#5B2C6F
         color: white
         border-radius: 10px
         font-size: 3vw
         padding: 0.5rem
-        width: 15vw
+        width: 80px
+        font-size: 14px
         margin-bottom: 1rem
     
     
-    input
-        display: flex
-        flex-direction: column
-        justify-content: center
+    &__query
+        //display: flex
+        //flex-direction: column
+        //justify-content: center
+        text-align: center
         margin: 1rem
         border: 0.05rem solid #A6ACAF
         border-radius: 5px
@@ -28,13 +35,24 @@
         padding: 0.3rem
 
     select
-        display: flex
-        flex-direction: column
-        justify-content: center
+        //display: flex
+        //flex-direction: column
+        //justify-content: center
+        text-align: center
         margin: 1rem
         border: 0.05rem solid #A6ACAF
         border-radius: 5px
         width: 30%
         padding: 0.3rem
+@media screen and ( min-width: 768px )
+    .search
+        &__button
+            font-size: 20px
+            width:120px
 
+@media screen and ( min-width: 1024px )
+    .search
+        &__button
+            font-size: 24px
+            width:150px
     

@@ -1,21 +1,29 @@
 .news
     @extend %panel
+    width: 100vw
 
     &__images
-        width: 100vw
         margin: 0
         padding: 0
-        max-height: 220px
+        height: 100%
+        width: 100vw
 
     &__container
         list-style: none
         margin: 0
         padding: 0
+        width: 100vw
 
     &__items
         position: relative
         text-align: start
         text-decoration: none
+        width: 100vw
+    &__followIMG
+        width: 70px
+        height: 70px
+        border: 0
+    
 
 @media screen and ( min-width: 768px )  
     .news
@@ -25,9 +33,14 @@
             grid-template-rows: repeat(10, 1fr)
             justify-content: none
             align-items: none
+            
         &__images
-            width: 100vw
-            max-height: 660px
+            width: 50vw
+            
+        &__items
+            width: 50vw
+        
+
 
 @media screen and ( min-width: 1024px )  
     .news
@@ -38,5 +51,7 @@
             justify-content: none
             align-items: none
         &__images
-            width: 100vw
-            max-height: 660px
+            width: 25vw
+        &__items
+            width: 25vw
+            
