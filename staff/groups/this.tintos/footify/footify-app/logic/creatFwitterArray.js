@@ -2,7 +2,7 @@ const creatFwitterArray = (fwitters) => {
     const result = []
 
     fwitters.map(({ idUser, nameUser, surnameUser, fwitter }) => {
-        if (Fwitter !== undefined) {
+        if (fwitter !== undefined) {
             fwitter.map(({ id, name, fwitt }) => {
                 fwitt.map(({ message, date, _date, greenCard, yellowCard, redCard }) => {
                     if (_date) result.push({ idUser, nameUser, surnameUser, name, message, date, _date,  greenCard, yellowCard, redCard })

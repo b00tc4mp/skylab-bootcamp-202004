@@ -56,8 +56,8 @@ describe('Search players',()=>{
                 expect(id).to.exist
                 expect(weight).to.exist
                 expect(height).to.exist
-                done()
             })
+            done()
           
 
         })

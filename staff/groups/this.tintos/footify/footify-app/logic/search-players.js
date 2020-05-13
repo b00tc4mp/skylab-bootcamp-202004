@@ -30,39 +30,58 @@ function searchPlayers(query, callback) {
                         let firstName = splitName[0];
                         let surname = splitName[1];
 
-                        
-                        searchTeam(idTeam, (error, _idTeam) => {
-                            const [{ emblem }] = _idTeam
-                            if (error) throw console.error(error)
-                            counterSearchTeam++
 
-                                let like = 0
-                            _players.push({
-                                date: notNull(dateBorn),
-                                image: strCutout,
-                                firstName: notNull(firstName),
-                                surname: notNull(surname),
-                                position: notNull(strPosition),
-                                clubName: notNull(strTeam),
-                                number: notNull(strNumber),
-                                born: notNull(strBirthLocation),
-                                id: notNull(idPlayer),
-                                weight: notNull(strWeight),
-                                height: notNull(strHeight),
-                                teamId: notNull(idTeam),
-                                club: emblem,
-                                likes: like
+                        let team = []
+                        call('GET', `https://www.thesportsdb.com/api/v1/json/1/lookupteam.php?id=${idTeam}`,
+                            undefined, undefined, (error, status, body) => {
+                                if (error) throw callback(error)
+                    
+                                if (status === 200) {
+                    
+                                    let { teams: results } = JSON.parse(body)
+                    
+                                    results.forEach(result => {
+                                        const {strTeamBadge } = result
+                    
+                                        team.push({
+                                             emblem: strTeamBadge
+                                        })
+                                    })
+
+                                    const [{emblem}] = team  
+
+                                    counterSearchTeam++
+
+                                        let like = 0
+                                    _players.push({
+                                        date: notNull(dateBorn),
+                                        image: strCutout,
+                                        firstName: notNull(firstName),
+                                        surname: notNull(surname),
+                                        position: notNull(strPosition),
+                                        clubName: notNull(strTeam),
+                                        number: notNull(strNumber),
+                                        born: notNull(strBirthLocation),
+                                        id: notNull(idPlayer),
+                                        weight: notNull(strWeight),
+                                        height: notNull(strHeight),
+                                        teamId: notNull(idTeam),
+                                        club: emblem,
+                                        likes: like
+                                    })
+
+                                    if (counterSoccerPlayers === counterSearchTeam) {
+                                        callback(undefined, _players)
+                                    }
+                                } else {
+                                    const { error } = JSON.parse(body)
+                    
+                                    callback(new Error(error))
+                                }
                             })
-
-                            if (counterSoccerPlayers === counterSearchTeam) {
-                                callback(undefined, _players)
-                            }
-
-                        })
+                        
                     }
                 })
-
-
 
             } else {
                 const { error } = JSON.parse(body)

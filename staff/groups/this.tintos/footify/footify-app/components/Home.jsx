@@ -16,8 +16,10 @@ function Home({ token }) {
         try {
             retriveFwitter(token, (error, results) => {
                 if (error) return setError(error.message);
-                
-                commentCards(results, token, (error, resultsComments) => {
+                const arrfwitter = creatFwitterArray(results)
+
+                commentCards(arrfwitter, token, (error, resultsComments) => {
+    
                     if(error) return setError(error.message)
                     setFwitter(resultsComments)
                 })
@@ -84,9 +86,9 @@ function Home({ token }) {
         try {
             retriveFwitter(token, (error, results) => {
                 if (error) return setError(error.message);
+                const arrfwitter = creatFwitterArray(results)
                 
-                
-                commentCards(results, token, (error, resultsComments) => {
+                commentCards(arrfwitter, token, (error, resultsComments) => {
                     setFwitter(resultsComments)
                 })
             })
