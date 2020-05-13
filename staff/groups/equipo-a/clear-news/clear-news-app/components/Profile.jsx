@@ -20,83 +20,39 @@ function Profile({ token, categories, country }) {
 
     const handleSubmit = event => {
         event.preventDefault()
+       
+        let business 
+        let entertainment 
+        let general 
+        let health 
+        let science
+        let sports 
+        let technology
 
-        let business = false
-        let entertainment = false
-        let general = false
-        let health = false
-        let science = false
-        let sports = false
-        let technology = false
-
-        if (event.target.business.checked) business = Boolean(event.target.business.value)
-        if (event.target.entertainment.checked) entertainment = Boolean(event.target.entertainment.value)
-        if (event.target.general.checked) general = Boolean(event.target.general.value)
-        if (event.target.health.checked) health = Boolean(event.target.health.value)
-        if (event.target.science.checked) science = Boolean(event.target.science.value)
-        if (event.target.sports.checked) sports = Boolean(event.target.sports.value)
-        if (event.target.technology.checked) technology = Boolean(event.target.technology.value)
+        event.target.business.checked ? business = true : business=false
+        event.target.entertainment.checked ? entertainment=true : entertainment=false
+        event.target.general.checked ? general=true : general=false
+        event.target.health.checked ? health=true : health=false
+        event.target.science.checked ? science=true : science=false
+        event.target.sports.checked ? sports=true : sports=false
+        event.target.technology.checked ? technology=true : technology=false
 
         let interests = { business, entertainment, general, health, science, sports, technology }
 
-        let { name, surname, email, password, newPassword } = event.target
-     
-        name = name.value
-        surname = surname.value
-        email = email.value
-        password = password.value
-        newPassword = newPassword.value
+        let name= event.target.name.value
+        let surname = event.target.surname.value
+        let email = event.target.email.value
+        let oldPassword = event.target.password.value
+        let password = event.target.newPassword.value
+        
+        let country=event.target.country.value
 
-        switch (event.target.country.value) {
-            case 'Argentina':
-                country = "ar"
-                break;
-            case 'Brasil':
-                country = "br"
-                break;
-            case 'Canada':
-                country = "ca"
-                break;
-            case 'China':
-                country = "cn"
-                break;
-            case 'Germany':
-                country = "de"
-                break; 
-            case 'Great Britain':
-                country = "gb"
-                break;
-            case 'Italy':
-                country = "it"
-                break;
-            case 'Japan':
-                country = "jp"
-                break;
-            case 'New Zealand':
-                country = "nz"
-                break;
-            case 'Phillipines':
-                country = "ph"
-                break;
-            case 'Portugal':
-                country = "pt"
-                break;
-            case 'Russia':
-                country = "ru"
-                break;
-            case 'United States of America':
-                country = "us"
-                break;
-            default:
-                throw error
-        }
-
-        let userUpdate={name, surname, email, password, newPassword, interests, country}
+        let userUpdate={name, surname, email, oldPassword, password, interests, country}
 
         try {
             profileChange(token,userUpdate , error => {
                 if (error) return setError(error.message)
-                setSucces(success)
+                setSucces(message)
                 // onChangeProf()//aqui meter los valores que queremos pasar a home
             })
         } catch ({ message }) {
@@ -110,48 +66,46 @@ function Profile({ token, categories, country }) {
 
             <form className="register__input" onSubmit={handleSubmit}>
                 <p>Please refill the fields you wish to change:</p>
-                <input type="text" name="name" placeholder="name" value={`${name}`} pattern="[A-Za-z]{1,20}" required/>
-                <input type="text" name="surname" placeholder="username" value={`${surname}`} pattern="[A-Za-z]{1,20}" required/>
-                <input type="email" name="email" value={`${email}`} placeholder="e-mail" required/>
-                <input type="password" name="password" placeholder="password" minLength="8" required/> 
+                <input type="text" name="name" placeholder="name" defaultValue={name} pattern="[A-Za-z]{1,20}" autoComplete="off" required/> 
+                <input type="text" name="surname" placeholder="surname" defaultValue={surname} pattern="[A-Za-z]{1,20}"autoComplete="off"  required/>
+                <input type="email" name="email" defaultValue={email} placeholder="e-mail" autoComplete="off" required/>
                 <p>Fill it up, just if you want to change your password.</p>
+                <input type="password" name="password" placeholder="password" minLength="8" autoComplete="off"/> 
                 <input type="password" name="newPassword" placeholder="new password" minLength="8" />
                 
                 <label >Change your country:</label>
-                <select className="register__country" name="country">
-
-                    {country === 'ar' ? <option selected >Argentina</option> : <option>Argentina</option>}
-                    {country === 'br' ? <option selected >Brazil</option> : <option>Brazil</option>}
-                    {country === 'ca' ? <option selected >Canada</option> : <option>Canada</option>}
-                    {country === 'ch' ? <option selected >China</option> : <option>China</option>}
-                    {country === 'de' ? <option selected >Germany</option> : <option>Germany</option>}
-                    {country === 'gb' ? <option selected >Great Britain</option> : <option>Great Britain</option>}
-                    {country === 'it' ? <option selected >Italy</option> : <option>Italy</option>}
-                    {country === 'jp' ? <option selected >Japan</option> : <option>Japan</option>}
-                    {country === 'nz' ? <option selected >New Zealand</option> : <option>New Zealand</option>}
-                    {country === 'ph' ? <option selected >Phillipines</option> : <option>Phillipines</option>}
-                    {country === 'pt' ? <option selected >Portugal</option> : <option>Portugal</option>}
-                    {country === 'ru' ? <option selected >Russia</option> : <option>Russia</option>}
-                    {country === 'us' ? <option selected >United States of America</option> : <option>Portugal</option>}
-
+                <select className="register__country" defaultValue={country} name="country">
+                    <option value ="ar"> Argentina</option> 
+                    <option value ="ca"> Canada</option> 
+                    <option value ="ch"> China</option> 
+                    <option value ="de"> Germany</option> 
+                    <option value ="br"> Brazil</option> 
+                    <option value ="gb"> Great Britain</option> 
+                    <option value ="it"> Italy</option> 
+                    <option value ="jp"> Japan</option> 
+                    <option value ="nz"> New Zealand</option> 
+                    <option value ="ph"> Phillipines</option> 
+                    <option value ="pt"> Portugal</option> 
+                    <option value ="ru"> Russia</option> 
+                    <option value ="us"> United States of America</option> 
                 </select>
                 <fieldset className="register__checkbox" >
 
                     <legend>Change your favorite topics</legend>
 
-                    {categories.business ? <input type="checkbox" name="business" value="true"  defaultChecked /> : <input type="checkbox" name="business" value="true" />}
+                    {categories.business ? <input type="checkbox" name="business" defaultChecked /> : <input type="checkbox" name="business"  />}
                     <label >Business</label>
-                    {categories.entertainament ? <input type="checkbox" name="entertainament" value="true" defaultChecked /> : <input type="checkbox" name="entertainament" value="true" />}
-                    <label >Entertainament</label>
-                    {categories.health ? <input type="checkbox" name="health" value="true" defaultChecked /> : <input type="checkbox" name="health" value="true" />}
+                    {categories.entertainament ? <input type="checkbox" name="entertainment" defaultChecked /> : <input type="checkbox" name="entertainment"  />}
+                    <label >Entertainment</label>
+                    {categories.health ? <input type="checkbox" name="health" defaultChecked /> : <input type="checkbox" name="health"  />}
                     <label >Health</label>
-                    {categories.science ? <input type="checkbox" name="science" value="true"  defaultChecked /> : <input type="checkbox" name="science" value="true" /> }
+                    {categories.science ? <input type="checkbox" name="science" defaultChecked /> : <input type="checkbox" name="science"  /> }
                     <label >Science</label>
-                    {categories.sports ? <input type="checkbox" name="sports" value="true" defaultChecked /> : <input type="checkbox" name="sports" value="true" />}
+                    {categories.sports ? <input type="checkbox" name="sports" defaultChecked /> : <input type="checkbox" name="sports"  />}
                     <label >Sports</label>
-                    {categories.general ? <input type="checkbox" name="general" value="true" defaultChecked /> : <input type="checkbox" name="general" value="true" />}
+                    {categories.general ? <input type="checkbox" name="general" defaultChecked /> : <input type="checkbox" name="general"  />}
                     <label >General</label>
-                    {categories.technology ? <input type="checkbox" name="technology" value="true" defaultChecked /> : <input type="checkbox" name="technology" value="true" />}
+                    {categories.technology ? <input type="checkbox" name="technology" defaultChecked /> : <input type="checkbox" name="technology"  />}
                     <label >Technology</label>
 
                 </fieldset>

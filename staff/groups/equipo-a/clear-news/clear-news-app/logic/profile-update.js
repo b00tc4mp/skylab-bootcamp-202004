@@ -1,16 +1,31 @@
-function profileChange(token, userUpdate={ name, surname, email, password, newPassword, interests, country }, callback) {
-    Email.validate(email);
-    
-    String.validate.notVoid(password);
-    String.validate(password);
+function profileChange(token, userUpdate, callback) {
 
-    if(newPassword){
-        String.validate.notVoid(newPassword);
-        String.validate(newPassword);
-        let oldPassword
-        return oldPassword=password
+    let { name, surname, email, password, oldPassword, interests, country } = userUpdate
+    Email.validate(email);
+ 
+    if (oldPassword !==""){ 
+        String.validate.notVoid(oldPassword);
+        String.validate(oldPassword);
+        String.validate.notVoid(password);
+        String.validate(password);
+        
+    } else {
+        delete userUpdate.oldPassword
+        delete userUpdate.password
     }
-    
+
+    if(password!==""){
+        String.validate.notVoid(oldPassword);
+        String.validate(oldPassword);
+        String.validate.notVoid(password);
+        String.validate(password);
+        
+    } else {
+        delete userUpdate.oldPassword
+        delete userUpdate.password
+
+    }
+
     String.validate.notVoid(name);
     String.validate(name);
 
@@ -36,21 +51,35 @@ function profileChange(token, userUpdate={ name, surname, email, password, newPa
         callback(new Error('Kindly choose one topic.'));
 
     } else {
-        call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify(userUpdate),
-            { 'Content-type': 'application/json', 'Authorization': `Bearer ${token}` },
+        call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
+            undefined,
+            { 'Authorization': `Bearer ${token}` },
             (error, status, body) => {
                 if (error) return callback(error)
 
-                if (status === 204) {
-                    callback(success);
-                   
-                } else {
-                    const { error } = JSON.parse(body);
-                    callback(new Error(error));
-                }
+                if (status === 200) {
+                    const { username} = JSON.parse(body)
+                    if(email===username) delete userUpdate.email
+                    call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify(userUpdate),
+                        { 'Content-type': 'application/json', 'Authorization': `Bearer ${token}` },
+                        (error, status, body) => {
+                            if (error) return callback(error)
 
-            });
+                            if (status === 204) {
+                                callback("message");
+
+                            } else {
+                                const { error } = JSON.parse(body);
+                                callback(new Error(error));
+                            }
+                        });
+                } else {
+                    const { error } = JSON.parse(body)
+
+                    callback(new Error(error))
+                }
+            }
+        )
     }
 }
-    
- 
+
