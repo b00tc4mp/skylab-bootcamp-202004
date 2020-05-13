@@ -13,10 +13,13 @@ function Home() {
   };
 
   const handleCheckHash = () => {
-    let coinName = window.location.hash
-    if (coinName) {
-      setView('coin-page')
-    } else setView('cryptos-list')
+    let view = window.location.hash
+    if (view) {
+      if (view.includes('coin-page')){
+        setView('coin-page')
+      
+    } else setView(view.substring(1))
+  }
   }
 
   useEffect(() => {
@@ -31,11 +34,6 @@ function Home() {
     }
   }, [])
 
-  const handleClickCoin = (coinName) => {
-    if (!coinName) return
-    window.location.hash = coinName
-    setView('coin-page')
-  }
 
   const handleSearchOnChange = (event) => {
     const {
@@ -48,21 +46,24 @@ function Home() {
     });
   };
 
+  const handleClickCoin = (coinName) => {
+    if (!coinName) return
+    window.location.hash = `coin-page/${coinName}`
+    
+  }
   const handlePortfolioClick = (event) => {
     event.preventDefault()
+    window.location.hash = 'portfolio-page'
 
-
-    setView('portfolio-page')
   }
   const handleFavClick = (event) => {
     event.preventDefault()
+    window.location.hash = 'favorites-page'
 
-    setView('favorites-page')
   }
   const handleHomeClick = (event) => {
     event.preventDefault()
-
-    setView('cryptos-list')
+    window.location.hash = 'cryptos-list'
   }
 
   const handlePortfolioSubmit = (id, quantity, callback) => {
@@ -104,7 +105,7 @@ function Home() {
         </section>
       </footer>
 
-      <NavBar portfolioClick={handlePortfolioClick} />
+      <NavBar portfolioClick={handlePortfolioClick} homeClick={handleHomeClick} favClick={handleFavClick} />
 
     </>
 

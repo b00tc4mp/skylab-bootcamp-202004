@@ -1,5 +1,7 @@
 function retrieveFavorites(callback, favoritesIds) {
     Function.validate(callback)
+    if (typeof favoritesIds !== 'array') throw new Error(favoritesIds + 'is not valid')
+
     const url = `https://api.coincap.io/v2/assets?&ids=${favoritesIds.join(',')}`
     const headers = { 'Content-type': 'application/json' }
     const body = undefined
