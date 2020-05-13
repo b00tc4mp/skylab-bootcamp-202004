@@ -1,3 +1,14 @@
+/**
+  * Retrieve favorites news. 
+  * 
+  * @param {string} token Users token
+  * 
+  * @param {function} callback The expression to be called after checking credentials, will recieve an Error or authentication token.
+  *
+  * @throws {TypeError} If any of the parameters does not match the corresponding type or if callback is not a function.
+  * @throws {Error} If there is no token.
+  */
+
 function retrieveFavNews(token, callback) {
     String.validate(token);
 
@@ -100,3 +111,11 @@ function retrieveFavNews(token, callback) {
 
         })
 }
+
+/**
+ * 
+ * 
+ * @callback callback
+ * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * @param {Array} favNews Array of objects with a users favorite news.
+ */
