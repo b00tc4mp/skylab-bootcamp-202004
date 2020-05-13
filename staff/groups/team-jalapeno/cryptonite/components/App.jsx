@@ -25,24 +25,7 @@ function App() {
     }
 
     const handleLoginSubmit = (event) => {
-        event.preventDefault()
-
-        const email = event.target.email.value
-        const password = event.target.password.value
-
-        try {
-            authenticateUser(email, password, (error, token) => {
-                if (error) throw error
-
-                if (token) {
-                    setToken(token)
-                    sessionStorage.token = token
-                    setView('home')
-                }
-            })
-        } catch (error) {
-            if (error) new Error(error.message)
-        }
+        setView('home')
     }
 
 

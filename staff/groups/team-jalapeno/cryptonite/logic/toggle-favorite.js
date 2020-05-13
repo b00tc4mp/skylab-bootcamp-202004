@@ -1,4 +1,4 @@
-function toggleFavorite(token, id, callback){   // logica para pasar un coin a favorite
+function toggleFavorite(token, id, callback){ 
     String.validate.notVoid(token)
     String.isString(id)
     Function.validate(callback)

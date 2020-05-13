@@ -1,7 +1,7 @@
 function authenticateUser(email, password, callback) {
-
-    // TYPEOF FILTER PENDING
-    // TESTING PENDING
+    Email.validate(email)
+    String.validate.notVoid(password)
+    Function.validate(callback)
 
     const url = 'https://skylabcoders.herokuapp.com/api/v2/users/auth'
     const body = JSON.stringify({ username: email, password })

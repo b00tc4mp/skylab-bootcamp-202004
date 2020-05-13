@@ -1,6 +1,7 @@
 
 function deletePortfolioCrypto(token, cryptoId, callback) {
     String.validate.notVoid(token)
+    String.validate.notVoid(cryptoId)
     Function.validate(callback)
 
     let url = 'https://skylabcoders.herokuapp.com/api/v2/users/'

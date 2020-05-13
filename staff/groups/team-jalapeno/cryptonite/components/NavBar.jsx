@@ -1,5 +1,5 @@
 function NavBar({ homeClick, favClick, porfolioClick }) {
-console.log('kllkkllklklklklklk')
+
     return <nav className="nav-bar">
         <a href="#" className="nav-bar__item" onClick={homeClick}><i className="fa fa-home"></i><label for="">home</label></a>
         <a href="#" className="nav-bar__item" onClick={favClick}><i className="fa fa-heart"></i><label for="">favorites</label></a>
