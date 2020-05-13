@@ -15,7 +15,7 @@ function Home({ token }) {
 
     useEffect(() => {
         try {
-            
+            //tratar de sacar los names con retrieve aqui
             retriveFwitter(token, (error, results) => {
                 if (error) return setError(error.message);
                 
