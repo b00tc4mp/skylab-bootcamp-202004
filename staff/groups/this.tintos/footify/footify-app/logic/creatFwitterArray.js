@@ -1,4 +1,3 @@
-
 const creatFwitterArray = (fwitters) => {
     const result = []
 

@@ -78,9 +78,7 @@ function Home({ token }) {
     const handleCommentFwitt = () => {
         handleGoToPlayerResults(queryPlayer)
     }
-    const handleCommentFwitt = () =>{
-        handleGoToPlayerResults(queryPlayer)
-    }
+   
 
     const handleGoToFwitter = () => {
         try {
@@ -100,14 +98,8 @@ function Home({ token }) {
     const handleGoToDream = () => {
         setView('dream')
     }
-    const handleGoToDream = () =>{
-        setView('dream')
-    }
-
-    const handleGoToUpdateUser = () => setView('update-user')
-
+  
     return <>
-
 
         <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter} onGoToDream={handleGoToDream} />
         {/* {view === 'spinner' && <Spinner />} */}

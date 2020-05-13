@@ -26,7 +26,7 @@ function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDre
         event.preventDefault()
 
         onGoToUpdateUser()
-
+    }
     const handleSubmitDream = (event) =>{
         event.preventDefault()
 

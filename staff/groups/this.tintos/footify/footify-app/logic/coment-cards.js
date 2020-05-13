@@ -1,4 +1,3 @@
-
 function commentCards(userfwitts, token, callback) {
 
     call("GET", "https://skylabcoders.herokuapp.com/api/v2/users/all", undefined,
