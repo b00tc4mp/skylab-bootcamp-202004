@@ -1,11 +1,9 @@
 const { useState } = React
 
-function UpdateUser({onGoToHome, token}){
+function UpdateUser({onGoToFwitter, token, userDetails}){
     
-    // return <>
-    // <h1>USER</h1>
-    // </>
     const [ error, setError ] = useState()
+    const [success, setSuccess ] = useState()
 
     const handleUpdateUser = (event) =>{
         event.preventDefault()
@@ -21,17 +19,22 @@ function UpdateUser({onGoToHome, token}){
         const newData = {name, surname, email, password, oldPassword}
 
             try {
-                updateUser(token, newData, error =>{
+                updateUser(token, newData, (error, success) =>{
                     if (error) return setError(error.message)
-
-                    onGoToHome()
+                    setSuccess(success)
+                    
                 })
             } catch ({message}) {
                 setError(message)
             }
         }
  
-    const handleGoToHome = () => onGoToHome()
+     const handleSubmitFwitter = (event) =>{
+            event.preventDefault()
+    
+            onGoToFwitter()
+        }
+    // const {name, surname} = userDetails
 
     return <>
     <section className="update">
@@ -41,18 +44,20 @@ function UpdateUser({onGoToHome, token}){
             </div>
         
         <form className="update__form" onSubmit={handleUpdateUser}>
-            <h1 className="update__title">Dani</h1>
+            <h1 className="update__title">{/*`${name} ${surname}`*/}</h1>
           <input type="text" name="name" className="update__form-item" placeholder="new name(optional)" />
           <input type="text" name="surname" className="update__form-item" placeholder="new surname (optional)" /> 
           <input type="text" name="email" className="update__form-item" placeholder="new email (optional)" />
+           <hr className="update__form-line"/>
           <input type="password" name="password" className="update__form-item" placeholder="new password (optional)" />
-          <input type="password" name="oldPassword" className="update__form-item" placeholder="old password (required)" />
+          <input type="password" name="oldPassword" className="update__form-item" placeholder="old password (optional)" />
           <button type="submit" className="update__form-button">ACCEPT</button>
           {error && <Feedback message={error} level="error"/>}
+          {success && <Feedback message={success} level="success"/>}
         </form>
 
         <div className="update__goto">
-            <a href="" onClick={handleGoToHome}><img src="img/arrow_left.svg" alt="go-to-home" className="update__goto-home" /></a>
+            <a href="" onClick={handleSubmitFwitter}><img src="img/arrow_left.svg" alt="go-to-home" className="update__goto-home" /></a>
             <p className="update__goto-text">back</p>
         </div>
         </div>
