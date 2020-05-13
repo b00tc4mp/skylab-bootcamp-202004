@@ -11,7 +11,9 @@ function Foro () {
     }
 
     const handelPostReviews = (event) => {
-
+        event.preventDefault()
+        let {conditions, Tips, Warrnings, ExtraInfo} = event.target
+        {}
     }
 
     useEffect(() => {
@@ -41,8 +43,8 @@ function Foro () {
             <textarea name="Tips" maxlength="50 " minlength="10" placeholder="Rite tips to help other riders.."></textarea>
             <label for="Warrnings">Warrnings</label>
             <textarea name="Warrnings" maxlength="50 " minlength="10" placeholder="Rite some warrnigs to help prevent accidents.."></textarea>
-            <label for="Extra info">Extra information</label>
-            <textarea name="Extra info" maxlength="50 " placeholder="Rite something.."></textarea>
+            <label for="ExtraInfo">Extra information</label>
+            <textarea name="ExtraInfo" maxlength="50 " placeholder="Rite something.."></textarea>
             <button className="submit">Tweet</button>
         </form>}
     </section>

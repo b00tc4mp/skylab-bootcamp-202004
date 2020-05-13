@@ -18,12 +18,12 @@ function SnowForecast({token, forecastSelected, sportState}) {
         snowForecastLogic({forecastSelected}, function (error, info) {
             setForecast(info)
         })
-        // hideButton(token, forecastSelected, (error, following)=>{
-        //     if(error){ throw new TypeError('error')
-        // } else {
-        //     setFollowing(following)
-        // }
-        // })
+        hideButton(token, forecastSelected, (error, following)=>{
+            if(error){ throw new TypeError('error')
+        } else {
+            setFollowing(following)
+        }
+        })
     },[]) //upload each half an hour
 
     return <section className="forecast">
