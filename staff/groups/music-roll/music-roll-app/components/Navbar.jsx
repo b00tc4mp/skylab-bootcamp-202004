@@ -57,7 +57,11 @@ function Navbar({onChangeView }){
                 }}>Logged User</a> 
             </li>
             <li className="navbar__item">
-                <a href="">Home</a>
+                <a href="" onClick = {event => {
+                    event.preventDefault()
+
+                    onChangeView("home")
+                }}>Home</a>
             </li>
             <li className="navbar__item">
                 <a href="" onClick = {event => {
