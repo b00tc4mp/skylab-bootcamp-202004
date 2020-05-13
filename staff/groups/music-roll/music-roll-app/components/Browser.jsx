@@ -1,34 +1,26 @@
 const { useState, useEffect } = React
 
-function Browser({ token }) {
+function Browser({ token, spotyToken, onToggleAlbum, onToggleArtist, onToggleTrack }) {
 
-    const [trackResults, setTrackResults] = useState(undefined);
-    const [artistResults, setArtistResults] = useState();
+    const [trackResults, setTrackResults] = useState(undefined)
 
     const [albumResults, setAlbumResults] = useState(undefined)
 
     const [playlistsResults, setPlaylistsResults] = useState(undefined)
+    
+    const [artistResults, setArtistResults] = useState(undefined);
 
 
     const handleSubmit = (event) => {
+        debugger
         event.preventDefault()
         let { browser, query } = event.target
         browser = browser.value
         const browserquery = query.value
 
-        if (browser === 'artist') searchArtist(token, browserquery, (error, results) => {
-            try {
-                if (error) throw new Error("fail")
 
-                setArtistResults(results)
-            } catch (error) {
-                console.error(error.message)
-            }
-        })
-       
         if (browser === 'album') {
-            searchAlbum(token, browserquery, (error, results) => {
-                
+            searchAlbum(spotyToken, browserquery, (error, results) => {
 
                 if (error) console.log(error)
 
@@ -36,8 +28,21 @@ function Browser({ token }) {
 
             })
         }
+        if (browser === 'artist') {
+            searchArtist(spotyToken, browserquery, (error, results) => {
+                try {
+                    if (error) throw new Error("fail")
+    
+                    setArtistResults(results)
+                } catch (error) {
+                    console.error(error.message)
+                }
+            })
+        }
 
-        if (browser === 'track') searchTrack(token, browserquery, (error, results) => {
+
+
+        if (browser === 'track') searchTrack(spotyToken, browserquery, (error, results) => {
 
 
             if (error) console.log(error)
@@ -50,23 +55,23 @@ function Browser({ token }) {
         })
 
 
-        if (browser === 'playlist') searchPlaylist()
+        
 
-  
+
         if (browser === 'playlist') searchPlaylists(token, browserquery, (error, results) => {
-            try{
+            try {
                 if (error) console.log(error)
 
                 setPlaylistsResults(results)
-            }catch{
+            } catch{
                 console.error("fail")
             }
         })
 
     }
 
+    
     return <section className="browser">
-       <section className ="browser__search">
         <h2 className="title">Browser</h2>
         <form className="browser__form" onSubmit={handleSubmit} >
             <select name="browser">
@@ -80,12 +85,17 @@ function Browser({ token }) {
             <input type="text" name="query" placeholder="What do you want to listen?" />
             <button>Submit</button>
         </form>
-        </section>
         <section className="results">
-            {trackResults && <TrackResults results={trackResults} />}
-            {artistResults && <ArtistResults results={artistResults} />}
-            {albumResults && <AlbumResults results={albumResults} token={token} />}
-            {playlistsResults && <PlaylistsResults results={playlistsResults} />}
+            {trackResults && <TrackResults results={trackResults} token={token} spotyToken={spotyToken} />}
+
+            {albumResults && <AlbumResults results={albumResults} token={token} spotyToken={spotyToken} />}
+
+            {playlistsResults && <PlaylistsResults results={playlistsResults} token={token} />}
+
+            {artistResults && <ArtistResults results={artistResults} token={token} spotyToken={spotyToken} />}
+
+
         </section>
+
     </section>
 }

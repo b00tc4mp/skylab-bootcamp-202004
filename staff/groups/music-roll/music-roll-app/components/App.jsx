@@ -5,9 +5,11 @@ class App extends Component {
         super(props)
 
         this.state = {
-            view: 'login', 
-            Spotytoken: "BQAdcob0WU47IJZVPj0xAl_mOQTYRVDKPwMzgRBlra7q_DlZNSzBC8Kw-1XLHed79ZyyTXGCKhrMRzDEcwKUbXAXHwpglz4ZmhinU0b7rEgoa8i0EA1Y6KR1xeh2NODRxJL-paGiiRA45GVxJ0c_9I_8TMFKXdAWeJTp9X7ToiUQYTrTK508-hv_6Ajb",
-            token: undefined
+            view: 'login',
+            spotytoken: "BQBwx0NODenfSTXHWSKT6tmn5cIr-neh4ZUrY1qDz1ogqb_vWNnLHSdDdFzmWAcg3BFYMoVNtd_mkKmIptXLcO-ahUh9ViA7D36qu2SRlnbMAlXc3_RNS7nLX4gRGrWZ0mhKmW7oKoNEty9_HO5jZ6dQKKIc05RgJ-AqpCh-6oE6PjWuZIWXG2zwLfx7",
+            token: undefined,
+            
+
         }
     }
 
@@ -23,9 +25,13 @@ class App extends Component {
         this.onChangeView('login')
     }
 
-    handleSessionExpired = () => {   
+    handleSessionExpired = () => {
         this.onChangeView('login')
     }
+
+
+   
+
 
     render() {
         return <>
@@ -35,9 +41,10 @@ class App extends Component {
             <Navbar onChangeView={this.onChangeView} />
 
             {this.state.view === 'home' && <Home />}
-            {this.state.view === 'browser' && <Browser token = {this.state.Spotytoken}/>}
-            {this.state.view === 'friends' && <SearchUsers token = {this.state.token} onUserSessionExpired = {this.handleSessionExpired}/>}
-            
+            {this.state.view === 'browser' && <Browser spotyToken={this.state.spotytoken} token={this.state.token} />}
+            {this.state.view === 'friends' && <SearchUsers token={this.state.token} onUserSessionExpired={this.handleSessionExpired} />}
+            {this.state.view === 'favorites' && <Favorites token={this.state.token}/>}
+
         </>
 
     }
