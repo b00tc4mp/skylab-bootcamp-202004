@@ -1,9 +1,8 @@
 const { useState, useEffect } = React
 
-function SurfForecast({token, forecastSelected}) {
-
+function SurfForecast({token, forecastSelected, sportState}) {
     const handleFavButton = (token) => {
-        addToFavs(token, forecastSelected, (error) => {
+        addToFavs(token, forecastSelected, sportState, (error) => {
             if(error) throw new TypeError('error')
         })
         document.getElementById("deleteMe").style.display="none"; 
@@ -28,7 +27,7 @@ function SurfForecast({token, forecastSelected}) {
     return <section className="forecast">
 
 
-        {!following && <div className='forecast__favButton' id='deleteMe' onClick={()=>handleFavButton(token)}><i className="fas fa-star fa-2x"></i></div>}
+        {!following && token && <div className='forecast__favButton' id='deleteMe' onClick={()=>handleFavButton(token)}><i className="fas fa-star fa-2x"></i></div>}
         {
             forecast ? (<>
                 <div className='forecast__titles'>

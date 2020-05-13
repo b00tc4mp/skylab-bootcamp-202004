@@ -1,15 +1,34 @@
 
 const { useState, useEffect } = React
 
-function FavSpotsList({results, onGoToSurfForecast}) {
+function FavSpotsList({ token, results, onGoToSurfForecast }) {
 
-    const handleSurfForecast = (surfForecastSelected) =>{
+    const [_results,  setResults] = useState(results)
+
+    const handleSurfForecast = (surfForecastSelected) => {
         onGoToSurfForecast(surfForecastSelected)
     }
 
-    return <ul className="Favorites__List">
+    const handleXButton = (surfForecastSelected) => {
+        addToFavs(token, surfForecastSelected, undefined, (error, resultsUpdated) => {
+            if (error) console.log('handlexbutton ERROR')
+            setResults(resultsUpdated)
+        })
+    }
+    
+    if(_results) {
+    return  <ul className="Favorites__List">
         <h2 className='Favorites__List--title'>Favorite Spots</h2>
-        {results.map((element) => <li onClick={()=> handleSurfForecast(element)} className='Favorites__List--elements'>{element.name}</li>)}
+        {_results.map((element) => <li className='Favorites__List--elements'><h4 onClick={() => handleSurfForecast(element)}>{element.name}</h4>
+            <button className='Favorites__List--xButton'><img onClick={() => handleXButton(element)} className='Favorites__List--xImage' src="./images/x.png" /></button> </li>)}
     </ul>
+    } else {
+        return <>            
+        {<FavSpots token={token} onGoToSurfForecast={onGoToSurfForecast}/>}
+        </>
+
+    }
+
+    
 
 }
