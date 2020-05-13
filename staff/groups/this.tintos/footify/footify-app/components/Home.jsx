@@ -7,6 +7,7 @@ function Home({ token }) {
     const [error, setError] = useState()
     // const [loading, setLoading] = useState(true)
     const [likesUser, setLikesUser] = useState()
+    const [userDetails, setUserDetails] = useState()
     const [sportNews, setSportNews] = useState()
     const [queryPlayer, setQueryPlayer] = useState()
     const [fwitter, setFwitter] = useState();
@@ -14,18 +15,18 @@ function Home({ token }) {
 
     useEffect(() => {
         try {
+            //tratar de sacar los names con retrieve aqui
             retriveFwitter(token, (error, results) => {
                 if (error) return setError(error.message);
-                const arrfwitter = creatFwitterArray(results)
 
+                const arrfwitter = creatFwitterArray(results)
                 commentCards(arrfwitter, token, (error, resultsComments) => {
-    
                     if(error) return setError(error.message)
                     setFwitter(resultsComments)
                 })
             })
             
-            setView('fwitter');
+            setView('fwitter')
         } catch ({ message }) {
             setError(message)
         }
@@ -35,8 +36,10 @@ function Home({ token }) {
     const handleGoToPlayerResults = (queryPlayer) => {
 
         retrieveUser(token, (error, user) => {
+            setUserDetails(user)
             const { likes } = user
             setLikesUser(likes)
+            
         })
 
         setQueryPlayer(queryPlayer)
@@ -88,6 +91,9 @@ function Home({ token }) {
                 if (error) return setError(error.message);
                 const arrfwitter = creatFwitterArray(results)
                 
+                //TODO
+                //const arrfwitter = creatFwitterArray(results)
+
                 commentCards(arrfwitter, token, (error, resultsComments) => {
                     setFwitter(resultsComments)
                 })
@@ -101,15 +107,19 @@ function Home({ token }) {
         setView('dream')
     }
   
+    const handleGoToUpdateUser = () => {
+        setView('update-user')
+    }
     return <>
 
-        <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter} onGoToDream={handleGoToDream} />
+        <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter} onGoToDream={handleGoToDream} onGoToUpdateUser={handleGoToUpdateUser}/>
         {/* {view === 'spinner' && <Spinner />} */}
-        {/* {error && <Feedback message={error} level="error" />} */}
         {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} onCommentFwitt={handleCommentFwitt} queryPlayer={queryPlayer} likesUser={likesUser} />}
         {view === 'sport' && <SportNews sportNews={sportNews} />}
         {view === 'fwitter' && <Fwitter fwitter={fwitter} token={token} onUpdateFwitter={handleGoToFwitter}/>}
         {view === 'dream' && <Dream />}
+        {view === 'update-user' && <UpdateUser token={token} onGoToFwitter={handleGoToFwitter} userDetails={userDetails}/>}
+        {error && <Feedback message={error} level="error" />}
 
     </>
 

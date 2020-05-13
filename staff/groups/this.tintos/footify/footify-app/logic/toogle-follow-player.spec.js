@@ -1,38 +1,76 @@
-function toogleFollowPlayer(token, playerId, callback) {
-  String.validate.notVoid(token);
-  String.validate.notVoid(playerId);
-  Function.validate(callback);
+describe.only('toogleFollowPlayer', () => {
+    let _name, surname, email, password
 
-  call("GET","https://skylabcoders.herokuapp.com/api/v2/users",undefined,
-    { Authorization: `Bearer ${token}` }, (error, status, body) => {
-      if (error) return callback(error);
+    beforeEach(() => {
+        _name = names.random();
+        surname = surnames.random();
+        email = `${_name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`;
+        password = passwords.random();
+    })
 
-      if (status === 200) {
-        const user = JSON.parse(body);
+    describe('Async Test', () => {
 
-        const { likes = [] } = user
+        it('Should succeed on correct data', done => {
 
-        const actualIndex = likes.indexOf(playerId);
 
-        if (actualIndex !== -1) likes.splice(actualIndex, 1);  
-        else likes.push(playerId)
-        user.likes = likes
+            call("GET","https://skylabcoders.herokuapp.com/api/v2/users",undefined,
+              { Authorization: `Bearer ${token}` }, (error, status, body) => {
+               if (error) return callback(error);
 
-        call("PATCH", "https://skylabcoders.herokuapp.com/api/v2/users", JSON.stringify( user ),
-          { Authorization: `Bearer ${token}`, "Content-type": "application/json"},
-          (error, status, body) => {
-            if (error) return callback(error);
+              if (status === 200) {
+             const user = JSON.parse(body);
 
-            if (status === 204) {
-              callback(undefined, likes);
-            } else {
-              const { error } = JSON.parse(body);
+              const { likes = [] } = user
 
-              callback(new Error(error));
+              const actualIndex = likes.indexOf(playerId);
+
+              if (actualIndex !== -1) likes.splice(actualIndex, 1);  
+              else likes.push(playerId)
+              user.likes = likes
+
+             call("PATCH", "https://skylabcoders.herokuapp.com/api/v2/users", JSON.stringify( user ),
+               { Authorization: `Bearer ${token}`, "Content-type": "application/json"},
+               (error, status, body) => {
+                 if (error) return callback(error);
+
+                 if (status === 204) {
+                   callback(undefined, likes);
+                 } else {
+                   const { error } = JSON.parse(body);
+
+                   callback(new Error(error));
             }
           }
         );
       }
     }
   );
-}
+        })
+
+
+        
+        afterEach(done => {
+            call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
+                `{ "username": "${email}", "password": "${password}" }`, { 'Content-type': 'application/json' },
+                (error, status, body) => {
+
+                    if (error) return done(error)
+                    if (status !== 200) return done(new Error(`unexpected status ${status}`))
+
+                    const { token } = JSON.parse(body)
+
+                    call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                        `{ "password": "${password}" }`, {
+                            'Content-type': 'application/json',
+                            Authorization: `Bearer ${token}`
+                        },
+                        (error, status, body) => {
+                            if (error) return done(new Error(error.message))
+                            if (status !== 204) return done(new Error(`undexpected status ${status}`))
+
+                            done()
+                        })
+                })
+        })
+    })
+})

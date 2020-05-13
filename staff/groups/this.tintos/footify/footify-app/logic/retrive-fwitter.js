@@ -11,21 +11,23 @@ function retriveFwitter(token, callback) {
 
             if (status === 200) {
                 let users = JSON.parse(body)
+  
+                     const results =[]
+                      users.forEach(({id:idUser,name: nameUser,surname: surnameUser,fwitter})=>{
+                                
+                                if(fwitter){
+                                    results.push({ idUser,nameUser,surnameUser,fwitter})
+                                } 
+                            })
+                            
+                            callback(undefined,results)
+                        } else {
+                            const { error } = JSON.parse(body)
 
-                const results = []
-                users.forEach(({ id: idUser, name: nameUser, surname: surnameUser, fwitter }) => {
+                            callback(new Error(error))
+                        }
 
-                    if (fwitter) {
-                        results.push({ idUser, nameUser, surnameUser, fwitter })
-                    }
-                })
-                callback(undefined, results)
-            } else {
-                const { error } = JSON.parse(body)
-
-                callback(new Error(error))
-            }
-
-        })
-
+                    })
 }
+
+                  

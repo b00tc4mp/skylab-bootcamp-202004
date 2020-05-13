@@ -13,7 +13,6 @@ function commentCards(userfwitts, token, callback) {
                     return user.red || user.green || user.yellow
 
                 })
-                console.log(userfwitts)
                 //for red card
                 usersHaveCards.forEach(user => {
                     for (red of user.red) {
@@ -60,7 +59,6 @@ function commentCards(userfwitts, token, callback) {
 }
 
 // function commentCards(idCurrentUser, token, callback) {
-//     debugger
 
 //     call("GET", "https://skylabcoders.herokuapp.com/api/v2/users/all", undefined,
 //         { Authorization: `Bearer ${token}` }, (error, status, body) => {

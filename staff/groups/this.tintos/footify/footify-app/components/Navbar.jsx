@@ -1,5 +1,5 @@
 
-function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDrea, onGoToUpdateUser }) {
+function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDream, onGoToUpdateUser }) {
 
     const handleSubmitSearch = (event) => {
         event.preventDefault()
@@ -21,12 +21,12 @@ function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDre
         onGoToFwitter()
     }
 
-
-    const handleSubmitUpdateUser = (event) =>{ debugger
+    const handleSubmitUpdateUser = (event) =>{ 
         event.preventDefault()
 
         onGoToUpdateUser()
     }
+
     const handleSubmitDream = (event) =>{
         event.preventDefault()
 

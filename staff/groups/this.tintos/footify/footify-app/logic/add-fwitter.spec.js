@@ -1,5 +1,7 @@
-describe.only('add-fwitter', () => {
+
+describe.only('addFwitter', () => {
     let _name, surname, email, password, player, message
+
 
     beforeEach(() => {
         _name = names.random();
