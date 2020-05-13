@@ -330,4 +330,43 @@ input -internal-autofill-selected {
   border-radius: 0;
 }
 
+.playlists-results {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  top: 50vh;
+  left: 10vw;
+}
+.playlists-results h2 {
+  font-size: 12px;
+  text-align: center;
+}
+.playlists-results__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  overflow-x: visible;
+  align-items: center;
+  justify-items: center;
+  list-style: none;
+  border: 1px dashed red;
+  width: 80vw;
+  height: 50vh;
+}
+.playlists-results__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed black;
+  width: 150px;
+  height: 150px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /*# sourceMappingURL=style.css.map */
