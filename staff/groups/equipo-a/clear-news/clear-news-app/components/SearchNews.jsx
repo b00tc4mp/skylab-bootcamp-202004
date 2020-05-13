@@ -52,7 +52,7 @@ function SearchNews({ onSearch, searchNewsResults, query, language, sortBy, toke
 
     return <section className='search'>
         <form onSubmit={handleSubmit}>
-            <input type="text" name="query"></input>
+            <input type="text" className="search__query" name="query"></input>
             
             <label>Select language</label>
             <select name="language">
