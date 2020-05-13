@@ -31,15 +31,17 @@ function SurfForecast({token, forecastSelected}) {
         {!following && <div className='forecast__favButton' id='deleteMe' onClick={()=>handleFavButton(token)}><i className="fas fa-star fa-2x"></i></div>}
         {
             forecast ? (<>
-                <div className='forecast__titles'>
-                    <h2 className='forecast__titles--element'>Time</h2>
-                    <h2 className='forecast__titles--element'>Air</h2>
-                    <h2 className='forecast__titles--element'>Wind</h2>
-                    <h2 >Swell</h2>
-                </div>
+                
                 <ul className='forecast__ul'>
+                    
                     {forecast.data.weather.map((element) => {
                         return <li className='forecast__date'><span>{`${element.date}`}</span>
+                            <div className='forecast__titles'>
+                            <h2 className='forecast__titles--element'>Time</h2>
+                            <h2 className='forecast__titles--element'>Air</h2>
+                            <h2 className='forecast__titles--element'>Wind</h2>
+                            <h2 >Swell</h2>
+                            </div>
                             {element.hourly.map((forTime) => {
                                 return <li className='forecast__info'>
                                     <p>{`${forTime.time}h`}</p>

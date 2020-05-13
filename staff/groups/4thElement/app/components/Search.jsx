@@ -1,8 +1,9 @@
 const { useState } = React
 
-function Search({ movingSurfForecast, sportState }) {
+function Search({ movingSurfForecast, sportState, token }) {
 
     const [query, setQuery] = useState('')
+    const [selectorState, setselectorState] = useState('spots')
 
     
 
@@ -14,9 +15,13 @@ function Search({ movingSurfForecast, sportState }) {
         movingSurfForecast(surfForecastSelected)
     }
 
+    const handelChangeSelector = (val) => {
+        setselectorState(val)
+    }
+
     return <section className="Search">
-        <SearchSpotCompo onSubmitSpot={handleSubmitSpot} />
-        {query && <SpotResultsList  query={query} onGoToSurfForecast={onGoToSurfForecast} sportState={sportState}/>}
+        <SearchSpotCompo onSubmitSpot={handleSubmitSpot} searchSelector={handelChangeSelector} selectorState={selectorState}/>
+        {query && <SpotResultsList  query={query} onGoToSurfForecast={onGoToSurfForecast} sportState={sportState} selectorState={selectorState} token={token}/>}
 
     </section>
 }
