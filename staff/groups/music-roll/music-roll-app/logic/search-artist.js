@@ -1,9 +1,6 @@
-function searchArtist(token, query, callback) {
+function searchArtist(token, query, callback) {debugger
     
-    const queryUrl = query
-    .split(" ")
-    .join("%20")
-    .concat(`&type=artist&offset=0&limit=5`);
+    const queryUrl = query.split(" ").join("%20").concat(`&type=artist&offset=0&limit=5`);
 
     call("GET", `https://api.spotify.com/v1/search?q=${queryUrl}`,
     undefined, {"Content-Type": "application/json", Authorization: `Bearer ${token}`},

@@ -4,7 +4,7 @@ function ResultsTracks({albumTracks}) { debugger
         {albumTracks.length ? <ol>
             {
                 albumTracks.map(({ name, preview_url}) => {
-                    return <li> <a href={`${preview_url}`}>{`${name}`}</a></li>
+                    return <li> <a href={`${preview_url}`}>{`${name}`}</a>button</li>
 
                 })
             }
