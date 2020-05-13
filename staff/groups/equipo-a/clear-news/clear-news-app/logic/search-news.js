@@ -1,10 +1,22 @@
+/**
+  * Retrieve favorites news. 
+  * 
+  * @param {string} token Users token
+  * @param {string} query Users input query
+  * @param {string} languaje Users selected languaje
+  * @param {string} sortBy Users selectedorder to sort the articles. (relevancy, popularity,...)
+  * 
+  * @param {function} callback The expression to be called after checking credentials, will recieve an Error or authentication token.
+  *
+  * @throws {TypeError} If any of the parameters does not match the corresponding type or if callback is not a function.
+  * @throws {Error} If there is no token.
+  */
 function searchNews(token, query, language, sortBy, callback) {
 
     String.validate.notVoid(query);
     Function.validate(callback);
 
 
-    // let numberOfNews
 
     let allNews = []
 
@@ -12,20 +24,6 @@ function searchNews(token, query, language, sortBy, callback) {
 
     const NEWS_FOR_PAGE = 20
 
-    // switch (counter) {
-    //     case 0: numberOfNews = 20
-    //         break;
-    //     case 1: numberOfNews = 40
-    //         break;
-    //     case 2: numberOfNews = 60
-    //         break;
-    //     case 3: numberOfNews = 80
-    //         break;
-    //     case 4: numberOfNews = 100
-    //         break;
-    //     default: numberOfNews = 20
-    //         break;
-    // }
 
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
         undefined,
@@ -37,8 +35,6 @@ function searchNews(token, query, language, sortBy, callback) {
                 let user = JSON.parse(body)
 
                 const { favorite = [] } = user
-
-                //Confirmar el número de noticias por búsqueda
 
                 call('GET', `https://newsapi.org/v2/everything?q=${query}&language=${language}&sortBy=${sortBy}&pageSize=40&apiKey=f8ed27ae05b44313b6a87abfea6dc48b`,
 
@@ -92,3 +88,11 @@ function searchNews(token, query, language, sortBy, callback) {
 
         })
 }
+/**
+ * 
+ * 
+ * @callback callback
+ * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * @param {Array} myNews Array of objects with the news
+ * @param {Number} numberOfPages numbers of pages in news
+ */

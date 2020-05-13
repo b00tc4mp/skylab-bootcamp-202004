@@ -1,3 +1,18 @@
+/**
+  * Register new user. 
+  * @param {string} name Users input name
+  * @param {string} surname Users input surname
+  * @param {string} email Users input email
+  * @param {string} password Users input password
+  * @param {object} interests Users input password
+  * @param {string} country Users input password
+  * 
+  * 
+  * @param {function} callback The expression to be called after checking credentials, will recieve an Error or authentication token.
+  *
+  * @throws {TypeError} If any of the parameters does not match the corresponding type or if callback is not  a function
+  * @throws {Error} If e-mail does not match the expected format.
+  */
 function registerUser(name, surname, email, password, interests, country, callback) {
 
     String.validate.alphabetic(name)
@@ -43,3 +58,11 @@ function registerUser(name, surname, email, password, interests, country, callba
 
 
 }
+
+/**
+ * 
+ * 
+ * @callback callback
+ * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * 
+ */
