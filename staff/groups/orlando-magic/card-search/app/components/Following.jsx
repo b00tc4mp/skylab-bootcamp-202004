@@ -39,9 +39,7 @@ function Following({goToUser, token}){
     },[])
 
     return <section className="userresults">
-    <article className="userresults__info">
-      1 – 60 of 155 users where the name includes “a”
-    </article>
+    {/* <article className="userresults__info"></article> */}
     {errorFollowing && !following.length && <Feedback message= {errorFollowing} level = "warning"/>}
     <ul className="userresults__cards">
         {following && following.map(user => <li key = {user.email}>{<UserCard user = {user} handleFollow = {handleFollow} goToUser = {goToUser}/>}</li>)}
