@@ -105,7 +105,9 @@ function Home() {
         </section>
       </footer>
 
+
       <NavBar portfolioClick={handlePortfolioClick} homeClick={handleHomeClick} favClick={handleFavClick} />
+
 
     </>
 
