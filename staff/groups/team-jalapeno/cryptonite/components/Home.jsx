@@ -54,7 +54,6 @@ function Home() {
   const handlePortfolioClick = (event) => {
     event.preventDefault()
     window.location.hash = 'portfolio-page'
-    setView('portfolio-page')
 
   }
   const handleFavClick = (event) => {

@@ -4,12 +4,21 @@ function App() {
     const [view, setView] = useState('landing')
     const [token, setToken] = useState(null)
 
+    
+    useEffect(()=>{
+        const token = sessionStorage.token
+        token && retrieveUser(sessionStorage.token, (_error) => {
+            if (!_error) setView('home')
+        })
+    },[])
+
     const handleGoToRegister = (event) => {
         event.preventDefault()
         setView('register')
     }
 
-    const handleGoToLogin = (event) => {
+
+    const handleGoToLogin = () => {
         setView('login')
     }
 
@@ -19,7 +28,7 @@ function App() {
     }
 
 
-    const handleRegisterSubmit = (event) => {
+    const handleRegisterSubmit = () => {
         setView('login')
     }
 
