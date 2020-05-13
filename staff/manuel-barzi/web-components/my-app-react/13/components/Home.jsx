@@ -19,9 +19,9 @@ class Home extends Component {
             retrieveUser(this.props.token, (error, user) => {
                 if (error) throw error
 
-                const hash = location.hash.substring(1)
+                const hash = address.hash()
 
-                location.hash = hash? hash : 'users'
+                !hash && address.hash('users')
 
                 this.setState({ name: user.name, view: hash? hash : 'users' })
             })
@@ -31,7 +31,7 @@ class Home extends Component {
     }
 
     goToView = view => {
-        location.hash = view === 'users' || view === 'google' || view === 'hola-news' ? view : ''
+        address.hash(view === 'users' || view === 'google' || view === 'hola-news' ? view : '')
 
 
         this.setState({ view })
@@ -55,11 +55,17 @@ class Home extends Component {
         this.goToView('hola-news')
     }
 
-    handleSearchUsersResultsAndQuery = (results, query) =>
-        this.setState({ usersResults: results, usersQuery: query })
+    handleSearchUsersResultsAndQuery = (results, query) => {
+        address.hash.query({ q: query })
 
-    handleSearchGoogleResultsAndQuery = (results, query) =>
+        this.setState({ usersResults: results, usersQuery: query })
+    }
+
+    handleSearchGoogleResultsAndQuery = (results, query) =>{
+        address.hash.query({ q: query })
+        
         this.setState({ googleResults: results, googleQuery: query })
+    }
 
     handleRetrieveHolaNewsResults = news =>
         this.setState({ holaNews: news })

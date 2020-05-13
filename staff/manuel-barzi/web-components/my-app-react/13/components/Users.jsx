@@ -1,4 +1,12 @@
+const { useEffect } = React
+
 function Users({ onSearch, users, query, token, onUserSessionExpired }) {
+    useEffect(() => {
+        const query = address.hash.query()
+
+        query && query.q && handleSearch(query.q)
+    }, [])
+
     function handleSearch(query) {
         try {
             searchUsers(token, query, (error, users) => {

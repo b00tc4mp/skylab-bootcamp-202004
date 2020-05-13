@@ -4,21 +4,35 @@ const address = (() => {
     }
 
     function getHash() {
-        let hash = location.hash.substring(1)
+        let hash
 
-        const index = hash.indexOf('?')
+        if (location.href.includes('#')) {
+            hash = location.hash.substring(1)
 
-        if (index > -1) {
-            hash = hash.substring(0, index)
+            const index = hash.indexOf('?')
+
+            if (index > -1) {
+                hash = hash.substring(0, index)
+            }
         }
 
         return hash
     }
 
     function hash(hash) {
-        if (hash) setHash(hash)
+        if (typeof hash !== 'undefined') setHash(hash)
         else return getHash()
     }
+
+    function clearHash() {
+        const { protocol, host, pathname } = location
+
+        let url = `${protocol}//${host}${pathname}`
+
+        history.pushState(undefined, undefined, url)
+    }
+
+    hash.clear = clearHash
 
     function setHashQuery(query) {
         let hash = location.hash.substring(1)
@@ -33,12 +47,12 @@ const address = (() => {
             hash += query
         } else {
             const keys = Object.keys(query)
-    
+
             for (let i = 0; i < keys.length; i++) {
                 const key = keys[i]
-    
+
                 hash += `${key}=${query[key]}`
-    
+
                 if (i < keys.length - 1) hash += '&'
             }
         }
@@ -69,7 +83,7 @@ const address = (() => {
     }
 
     function hashQuery(query) {
-        if (query) setHashQuery(query)
+        if (typeof query !== 'undefined') setHashQuery(query)
         else return getHashQuery()
     }
 

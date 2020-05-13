@@ -21,12 +21,12 @@ function App() {
                 if (error) throw error
             }
         else {
-            const hash = location.hash.substring(1)
+            const hash = address.hash()
 
             if (hash === 'login' || hash === 'register') setHashView(hash)
             else {
-                location.hash = ''
-                
+                address.hash.clear()
+
                 setView('landing')
             }
         }
@@ -34,7 +34,7 @@ function App() {
 
 
     const setHashView = view => {
-        location.hash = view
+        address.hash(view)
 
         setView(view)
     }
@@ -46,7 +46,7 @@ function App() {
     const handleLogin = token => {
         sessionStorage.token = token
         setToken(token)
-        location.hash = ''
+        address.hash.clear()
         setView('home')
     }
 
@@ -55,7 +55,7 @@ function App() {
     const handleLogout = () => {
         setToken()
         delete sessionStorage.token
-        location.hash = ''
+        address.hash.clear()
         setView('landing')
     }
 
