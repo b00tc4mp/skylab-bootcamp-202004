@@ -60,32 +60,6 @@ describe('register ', ()=>{
         })
     })
 
-    afterEach(done =>{
-        const body = JSON.stringify({ username: email, password })
-        const headers = { 'Content-type': 'application/json' }
-        const url = 'https://skylabcoders.herokuapp.com/api/v2/users/auth'
-
-        call('POST', url, body, headers, (error, status, response) => {
-            if (error) return done(new Error(error.message))
     
-            if (status === 200) {
-
-                const { token } = JSON.parse(response)
-
-                call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users',
-                `{ "password": "${password}" }`,
-                {
-                    'Content-type': 'application/json',
-                    Authorization: `Bearer ${token}`
-                },
-                (error, status, body) => {
-                    if (error) return done(new Error(error.message))
-                    if (status !== 204) return done(new Error(`undexpected status ${status}`))
-        
-                    done()
-                })
-            } else return done(new Error(`unexpected status ${status}`))
-        })
-    })
 })
 
