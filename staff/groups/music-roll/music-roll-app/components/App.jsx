@@ -5,10 +5,11 @@ class App extends Component {
         super(props)
 
         this.state = {
+
+
             view: 'login',
-            spotytoken: "BQBwx0NODenfSTXHWSKT6tmn5cIr-neh4ZUrY1qDz1ogqb_vWNnLHSdDdFzmWAcg3BFYMoVNtd_mkKmIptXLcO-ahUh9ViA7D36qu2SRlnbMAlXc3_RNS7nLX4gRGrWZ0mhKmW7oKoNEty9_HO5jZ6dQKKIc05RgJ-AqpCh-6oE6PjWuZIWXG2zwLfx7",
-            token: undefined,
-            
+            Spotytoken: "BQDXzlsw5RPU67H_LBeyEnQliwEgsmA4SotLrZ2_Is9EJmL3lcn-MRrdkScjolsbwPBv3jNUHaMjtdPODneAPst0gaQwr-wzmZX2meqy7pC4ZrHksuPM4NyPBYrh-eglVwFxz8Fcick",
+            token: undefined
 
         }
     }
@@ -34,18 +35,20 @@ class App extends Component {
 
 
     render() {
+        const { state: { view, Spotytoken, token }, handleLogin, handleRegister, handleSessionExpired, onChangeView } = this;
         return <>
-            {this.state.view === 'login' && <Login onSubmit={this.handleLogin} onRegister={this.onChangeView} />}
-            {this.state.view === 'register' && <Register onSubmit={this.handleRegister} onLogin={this.onChangeView} />}
 
-            <Navbar onChangeView={this.onChangeView} />
+           
+            {view === 'favorites' && <Favorites token={this.state.token}/>}
 
-            {this.state.view === 'home' && <Home />}
-            {this.state.view === 'browser' && <Browser spotyToken={this.state.spotytoken} token={this.state.token} />}
-            {this.state.view === 'friends' && <SearchUsers token={this.state.token} onUserSessionExpired={this.handleSessionExpired} />}
-            {this.state.view === 'favorites' && <Favorites token={this.state.token}/>}
+
+            {view === 'login' && <Login onSubmit={handleLogin} onRegister={onChangeView} />}
+            {view === 'register' && <Register onSubmit={handleRegister} onLogin={onChangeView} />}
+            {view !== "login" && view !== "register" && <Navbar onChangeView={onChangeView} />}
+            {view === 'home' && <Home />}
+            {view === 'browser' && <Browser token={Spotytoken} />}
+            {view === 'friends' && <SearchUsers token={token} onUserSessionExpired={handleSessionExpired} />}
 
         </>
-
     }
 }

@@ -4,95 +4,50 @@ function Navbar({onChangeView }){
     
     const [view, setView] = useState('home')
     
-    /*  const handleOnHome = (event) =>{
-        event.preventDefault()
-        
-        setView('home')
-    } */
-    /*  const handleOnBrowser =(event) =>{
-        event.preventDefault()
-        
-        onBrowser()  */
-        
-        
-        /*  } */
-        
-        /*  const handleOnPlaylist =(event) =>{
-            event.preventDefault()
-            
-            setView('playlist')
-        }
-        
-        const handleOnFavorites =(event) =>{
-            event.preventDefault()
-            
-            setView('favorites')
-        }
-        
-        const handleOnFriends =(event) =>{
-            event.preventDefault()
-            
-            setView('friends')>XX
-        }
-        
-        const handleOnLogOut =(event) =>{
-            event.preventDefault()
-            
-            setView('login')
-        }
-        */
-        
-        
-        
-        
-        
-        
+    // <a className={`home__link ${this.state.view === 'users' ? 'home__link--active' : ''}`} href="" onClick={this.handleUsers}>Users </a>
+
     return <nav className="navbar">
         <ul className="navbar__list">
-            <li className="navbar__item">
-                <div className="navbar__user"></div><a href="" onClick = {event => {
+            <li className={`navbar__item ${view === 'home' ? 'navbar__item--active left' : ''}`}>
+                <a href="" onClick={event => {
                     event.preventDefault()
 
-                    onChangeView('user')
-                }}>Logged User</a> 
+                    setView('home')
+                    onChangeView('home')
+                }}><i className="fas fa-home"></i></a>
+
             </li>
-            <li className="navbar__item">
-                <a href="">Home</a>
-            </li>
-            <li className="navbar__item">
+            <li className={`navbar__item ${view === 'browser' ? 'navbar__item--active center' : ''}`}>
                 <a href="" onClick = {event => {
                     event.preventDefault()
 
+                    setView('browser')
                     onChangeView('browser')
-                }}>Browser</a>
+                }}><i className="fas fa-music"></i></a>
             </li>
-            <li className="navbar__item">
+            <li className={`navbar__item ${view === 'favorites' ? 'navbar__item--active center' : ''}`}>
                 <a href="" onClick = {event => {
                     event.preventDefault()
 
-                    onChangeView('playlists')
-                }}>Playlists</a>
-            </li>
-            <li className="navbar__item">
-                <a href="" onClick = {event => {
-                    event.preventDefault()
-
+                    setView('favorites')
                     onChangeView('favorites')
-                }}>Favorites</a>
+                }}><i className="far fa-heart"></i></a>
             </li>
-            <li className="navbar__item">
+            <li className={`navbar__item ${view === 'friends' ? 'navbar__item--active center' : ''}`}>
                 <a href="" onClick = {event => {
                     event.preventDefault()
 
+                    setView('friends')
                     onChangeView('friends')
-                }}>Friends</a>
+                }}><i className="fas fa-users"></i></a>
             </li>
             <li className="navbar__item">
                 <a href="" onClick = {event => {
                     event.preventDefault()
 
+                    setView('login')
                     onChangeView('login')
-                }}>LogOut</a>
+                }}><i className="fas fa-sign-out-alt"></i></a>
             </li>
         </ul>
     </nav>
@@ -100,3 +55,24 @@ function Navbar({onChangeView }){
      
    
 }
+
+{/* <nav class="navbar">
+<ul class="navbar__list">
+    <li class="navbar__item">
+        <a href=""><i class="fas fa-home"></i></a>
+     </li>
+    <li class="navbar__item">
+        <a href=""><i class="fas fa-music"></i></a>
+     </li>
+    <li class="navbar__item">
+        <a href=""><i class="far fa-heart"></i></a>
+     </li>
+    <li class="navbar__item">
+        <a href=""><i class="fas fa-users"></i></a>
+     </li>
+    <li class="navbar__item">
+        <a href=""><i class="fas fa-sign-out-alt"></i></a>
+    </li>
+</ul>
+
+</nav> */}
