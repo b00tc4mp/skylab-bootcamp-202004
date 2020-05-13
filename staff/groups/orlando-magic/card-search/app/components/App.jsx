@@ -31,7 +31,7 @@ function App(){
     }
 
     function onBasicSearch(event){
-        setSearchConditions({name: event.target.query.value})
+        setSearchConditions({name: event.target.query.value, language: 'en'})
         setView('results')
     }
 
