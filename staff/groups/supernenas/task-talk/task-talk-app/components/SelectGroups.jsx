@@ -9,7 +9,7 @@ function SelectGroups ({userGroups, toSelectedGroup}) {
             userGroups.length ? 
             <ul> {
                 userGroups.map((group) => {
-                    return <CardPreview id={group.id} title={group.name} message={group.desc} toEdit={handleToActivities}/>
+                    return <CardPreview key={group.id} id={group.id} title={group.name} message={group.desc} toEdit={toSelectedGroup}/>
                     })
                 }
             </ul>
