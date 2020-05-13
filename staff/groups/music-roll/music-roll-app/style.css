@@ -463,6 +463,26 @@ input -internal-autofill-selected {
   color: #999;
 }
 
+.disc-list {
+  background-color: #2a2a2a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.disc-list__image {
+  width: 100px;
+  height: 100px;
+  margin-top: 10px;
+}
+.disc-list__title {
+  margin-top: 10px;
+}
+.disc-list__artists {
+  margin-top: 10px;
+}
+
 .playlists-results {
   display: flex;
   position: absolute;
