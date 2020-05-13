@@ -16,19 +16,6 @@ function App(){
         setView('login')
     }
 
-    const handleFavourite = id => {
-        try{
-            toggleFavouriteCard(token, id, error=>{
-                if(error) setSocialError(error.message)
-                retrieveUserCards(token, (error, cards)=>{
-                    if (error) return console.log(error)
-                    setFavCards(cards)
-                }, undefined, true)
-            })
-        }catch(error){
-            setSocialError(error.message)
-        }
-    }
 
     function handleRegister() {
         setView('register')
@@ -45,6 +32,10 @@ function App(){
 
     function handleAdvSearch(){
         setView('adv')
+    }
+
+    function handleFollowing(){
+        setView('following')
     }
 
     function onBasicSearch(event){
@@ -94,6 +85,20 @@ function App(){
         setView('user')
     }
 
+    const handleFavourite = id => {
+        try{
+            toggleFavouriteCard(token, id, error=>{
+                if(error) setSocialError(error.message)
+                retrieveUserCards(token, (error, cards)=>{
+                    if (error) return console.log(error)
+                    setFavCards(cards)
+                }, undefined, true)
+            })
+        }catch(error){
+            setSocialError(error.message)
+        }
+    }
+
     function onUserSearch(event){
         setUserConditions(event.target.userquery.value)
         setView('userresults')
@@ -105,13 +110,14 @@ function App(){
     }
 
     return <>
-        {(view !== 'landing') && (view !== 'login') && (view !== 'register') && <NavBar onLanding = {handleLanding} onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch} onAdvSearch = {handleAdvSearch} onUserSearch = {onUserSearch}/>}
+        {(view !== 'landing') && (view !== 'login') && (view !== 'register') && <NavBar onLanding = {handleLanding} onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch} onAdvSearch = {handleAdvSearch} onUserSearch = {onUserSearch} onFollowing = {handleFollowing} token = {token}/>}
         {socialError && <Feedback message= {socialError} level = "error"/>}
         {view==='landing' && <Landing onLogin = {handleLogin} onRegister={handleRegister} onBasicSearch = {onBasicSearch} onLogOut={handleLogOut} token={token} onAdvSearch = {handleAdvSearch}/>}
         {view==='login' && <Login onSubmit = {handleLoggedIn} onRegister = {handleRegister} onLanding={handleLanding}/>}
         {view==='register'  && <Register onLogin = {handleLogin} onLanding={handleLanding}/>}
         {view === 'results' && <Results goToCard = {goToCard} searchConditions={searchConditions} setSearchConditions={setSearchConditions} handleFavourite = {handleFavourite} favCards = {favCards}/>}
         {view === 'userresults' && <UserResults goToUser = {goToUser} userConditions={userConditions} token = {token}/>}
+        {view === 'following' && <Following goToUser = {goToUser} token = {token}/>}
         {view === 'adv' && <Search onAdvancedSearch = {onAdvancedSearch} searchConditions = {searchConditions}/>}
         {view === 'card' && <Card card = {card}/>}
         {view === 'user' && <User userId = {id} token = {token} goToCard = {goToCard} handleFavourite = {handleFavourite} favCards = {favCards}/>}              
