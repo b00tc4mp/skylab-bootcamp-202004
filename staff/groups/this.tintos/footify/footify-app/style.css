@@ -740,6 +740,9 @@
   font-family: Raleway;
   font-weight: 200;
 }
+.update__form-item::placeholder {
+  opacity: 0.5;
+}
 .update__form-line {
   border-top: 4px solid #320090;
   width: 40vw;
