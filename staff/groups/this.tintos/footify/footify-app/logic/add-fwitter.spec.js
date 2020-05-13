@@ -1,4 +1,4 @@
-describe.only('Add Fwitter', () => {
+describe('Add Fwitter', () => {
     let _name, surname, email, password, confirmPassword, player, message
 
     beforeEach(() => {
