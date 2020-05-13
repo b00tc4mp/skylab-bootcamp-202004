@@ -4,7 +4,6 @@ function searchNews(token, query, language, sortBy, callback) {
     Function.validate(callback);
 
 
-    // let numberOfNews
 
     let allNews = []
 
@@ -12,20 +11,6 @@ function searchNews(token, query, language, sortBy, callback) {
 
     const NEWS_FOR_PAGE = 20
 
-    // switch (counter) {
-    //     case 0: numberOfNews = 20
-    //         break;
-    //     case 1: numberOfNews = 40
-    //         break;
-    //     case 2: numberOfNews = 60
-    //         break;
-    //     case 3: numberOfNews = 80
-    //         break;
-    //     case 4: numberOfNews = 100
-    //         break;
-    //     default: numberOfNews = 20
-    //         break;
-    // }
 
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
         undefined,
@@ -37,11 +22,6 @@ function searchNews(token, query, language, sortBy, callback) {
                 let user = JSON.parse(body)
 
                 const { favorite = [] } = user
-
-
-
-
-                //Confirmar el número de noticias por búsqueda
 
                 call('GET', `https://newsapi.org/v2/everything?q=${query}&language=${language}&sortBy=${sortBy}&pageSize=40&apiKey=f8ed27ae05b44313b6a87abfea6dc48b`,
 

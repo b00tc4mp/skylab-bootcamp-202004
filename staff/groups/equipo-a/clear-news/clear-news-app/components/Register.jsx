@@ -6,7 +6,7 @@ function Register({ onRegister, onGoToLogin }) {
     const handleSubmit = event => {     
         event.preventDefault();
         
-        let country;
+        let country=event.target.country.value
         let business =false;
         let entertainment = false;
         let general = false;
@@ -31,74 +31,7 @@ function Register({ onRegister, onGoToLogin }) {
         surname = surname.value;
         email = email.value;
         password = password.value;
-        country=turnToIata(event.target.country.value)
-        // switch (event.target.country.value) {     
-        //     case 'International News':
-        //         country = ""
-        //         break;                 
-        //     case 'Argentina':
-        //         country = "ar"
-        //         break;
-        //     case 'Austria':
-        //         country = "at"
-        //         break;
-        //     case 'Australia':
-        //         country = "au"
-        //         break;
-        //     case 'Brasil':
-        //         country = "br"
-        //         break;
-        //     case 'Canada':
-        //         country = "ca"
-        //         break;  
-        //     case 'China':
-        //         country = "cn"
-        //         break;         
-        //     case 'Germany':
-        //         country = "de"
-        //         break;
-        //     case 'France':
-        //         country = "fr"
-        //         break;
-        //     case 'Great Britain':
-        //         country = "gb"
-        //         break;         
-        //     case 'Hong Kong':
-        //         country = "hk"
-        //         break;
-        //     case 'Irlanda':
-        //         country = "ie"
-        //         break;
-        //     case 'Italy':
-        //         country = "it"
-        //         break;
-        //     case 'Japan':
-        //         country = "jp"
-        //         break;
-        //     case 'Marocco':
-        //         country = "ma"
-        //         break;
-        //     case 'Mexico':
-        //         country = "mx"
-        //         break; 
-        //     case 'New Zealand':
-        //         country = "nz"
-        //         break;
-        //     case 'Phillipines':
-        //         country = "ph"
-        //         break;
-        //     case 'Portugal':
-        //         country = "pt"
-        //         break;   
-        //     case 'Russia':
-        //         country = "ru"
-        //         break;
-        //     case 'United States of America':
-        //         country = "us"
-        //         break;
-        //     default:
-        //         throw error
-        // }
+       
         try {
             registerUser(name, surname, email, password, interests, country, error => {
                 if (error) return setError(error.message);
@@ -128,20 +61,19 @@ function Register({ onRegister, onGoToLogin }) {
 
             <label >Choose your country:</label>
             <select className="register__country" name="country">
-                    <option>International News</option>
-                    <option>Argentina</option>                    
-                    <option>Brasil</option>
-                    <option>Canada</option>                    
-                    <option>China</option>                                    
-                    <option>Germany</option>
-                    <option>Great Britain</option>                                                       
-                    <option>Italy</option>
-                    <option>Japan</option>             
-                    <option>New Zealand</option>
-                    <option>Phillipines</option>                    
-                    <option>Portugal</option>                                    
-                    <option>Russia</option>               
-                    <option>United States of America</option>                
+            <option value ="ar"> Argentina</option> 
+                    <option value ="ca"> Canada</option> 
+                    <option value ="ch"> China</option> 
+                    <option value ="de"> Germany</option> 
+                    <option value ="br"> Brazil</option> 
+                    <option value ="gb"> Great Britain</option> 
+                    <option value ="it"> Italy</option> 
+                    <option value ="jp"> Japan</option> 
+                    <option value ="nz"> New Zealand</option> 
+                    <option value ="ph"> Phillipines</option> 
+                    <option value ="pt"> Portugal</option> 
+                    <option value ="ru"> Russia</option> 
+                    <option value ="us"> United States of America</option>      
                   
             </select>
             <fieldset className="register__checkbox">
