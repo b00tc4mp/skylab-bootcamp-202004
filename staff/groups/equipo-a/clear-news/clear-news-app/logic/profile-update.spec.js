@@ -1,4 +1,4 @@
-describe.only('profileChange', () => {
+describe('profileChange', () => {
     // function profileChange(token, name, surname, email, password, oldPassword, interests, country,callback)
     let _name,_surname,_email,_password,_categories,_country
     beforeEach(() => {
