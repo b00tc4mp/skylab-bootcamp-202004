@@ -284,6 +284,7 @@ body {
 }
 
 .context__menu {
+  position: fixed;
   text-align: center;
   width: 90vw;
   height: fit-content;
