@@ -354,6 +354,15 @@ body {
   font-size: 1em;
 }
 
+.chart {
+  width: 70%;
+}
+
+.canvas-container {
+  width: 100%;
+  height: 20em;
+}
+
 .login {
   flex-direction: column;
   display: flex;

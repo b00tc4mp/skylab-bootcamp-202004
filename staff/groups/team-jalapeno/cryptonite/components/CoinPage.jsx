@@ -6,6 +6,7 @@ function CoinPage({ addPortfolioSubmit, onLogout }) {
     const [ohlc, setOhlc] = useState(null)
     const [isFav, setIsFav] = useState(false)
     const [inPortfolio, setInPortfolio] = useState(false)
+    const [chartData, setChartData] = useState(null)
 
 
     useEffect(() => {
@@ -26,6 +27,11 @@ function CoinPage({ addPortfolioSubmit, onLogout }) {
             else setOhlc(_data);
         })
 
+        retrieveCryptoHistory(coinName, (error, data) => {
+            if (error) return setError(error.message)
+            if (data) return setChartData(data)
+
+        })
 
     }, [])
 
@@ -116,6 +122,11 @@ function CoinPage({ addPortfolioSubmit, onLogout }) {
                     </div>
                     <button className="coinpage-header__button coinpage-header__button--contrast" type="button" onClick={handleDeleteFromPortfolio}>Delete Coin From Portfolio <i className="fa fa-trash"></i></button>
                 </form>
+                {chartData && <div>
+                    <h1>{crypto.name} Chart</h1>
+                    <MyChart data={chartData} name={crypto.name} />
+                </div>
+                }
             </section>
         </div>
         }
