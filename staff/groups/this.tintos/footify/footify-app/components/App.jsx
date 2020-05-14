@@ -49,6 +49,13 @@ function App() {
 
     const handleGoToLanding = () => { setHashView('landing') }
 
+    const handleOnGoToLogOut = () =>{
+        setToken()
+        delete sessionStorage.token
+        location.hash = ''
+        setView('landing')
+    }
+
     const handlGoToHome = (token) => { 
         sessionStorage.token = token
         setToken(token) 
@@ -62,7 +69,7 @@ function App() {
         {view === 'landing' && <Landing onGoToLogin={handleGoToLogin} onGoToRegister={handleGoToRegister} />}
         {view === 'login' && <Login onGoToRegister={handleGoToRegister} onGoToLanding={handleGoToLanding} onGoToHome={handlGoToHome}/>}
         {view === 'register' && <Register onGoToLogin={handleGoToLogin} onGoToLanding={handleGoToLanding}/>}
-        {view === 'home' && <Home token={token} onUserSessionExpired={handleUserSessionExpired}/>}
+        {view === 'home' && <Home token={token} onUserSessionExpired={handleUserSessionExpired} onGoToLogOut={handleOnGoToLogOut}/>}
         {error && <Feedback message={error} level="error" />}
     </>
 
