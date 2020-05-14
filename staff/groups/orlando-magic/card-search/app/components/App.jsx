@@ -74,7 +74,7 @@ function App(){
     }
 
     function onBasicSearch(event){
-        setSearchConditions({name: event.target.query.value, language: 'en'})
+        setSearchConditions({name: event.target.query.value})
         setView('results')
     }
 

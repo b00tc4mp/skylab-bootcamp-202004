@@ -4,26 +4,32 @@
         height: 3rem
         align-items: center
         background-color: black
-        & > a
-            text-decoration: none
-            margin: 0.2rem
-            color: white
+        a
             width: 15%
-            text-align: center
-            font-size: 1rem
+            height: 100%
+            display: flex
+            align-items: center
+            justify-content: center
+            img
+                height: 80%
+            &:hover
+                background-color: grey
     &--searchbar
         flex-grow: 1
         display: flex
         height: 3rem
-        & > input
+        input
             flex-grow: 1
             color: white
             background-color: black
             border: none
             text-align: center
+            &:hover
+                background-color: grey
             &::placeholder
                 color: white
-                text-align: center    
+                text-align: center
+                font-size: 1rem   
     &__extended
         display: flex
         flex-flow: column
@@ -31,7 +37,7 @@
         justify-content: center
         background-color: black
         border-top: solid white 0.5px
-        & > a
+        a
             text-decoration: none
             color: white
             text-align: center
@@ -42,12 +48,14 @@
             width: 32%
             &:first-child
                 border-top: none
+            &:hover
+                background-color: grey
 
 @media only screen and (min-width: 810px)
     .navigation__extended
         flex-flow: row
         height: 3rem
-        & > a
+        a
             padding-right: 1rem
             padding-left: 1rem
             border-left: solid white 0.5px

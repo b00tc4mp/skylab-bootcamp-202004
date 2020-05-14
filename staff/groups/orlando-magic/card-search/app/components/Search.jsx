@@ -32,7 +32,7 @@ function Search({onAdvancedSearch, searchConditions}){
     artist.value = ""
     flavortext.value = ""
     lore.value = ""
-    languages.value = "en"
+    languages.value = ""
     order.value = "name"
   }
 
@@ -3843,9 +3843,9 @@ function Search({onAdvancedSearch, searchConditions}){
         <a className="advancedsearch__section--title">Language</a>
         <div className="advancedsearch__section--options">
           <select id="languages"
-            defaultValue = {searchConditions && searchConditions.language?searchConditions.language:"en"}
+            defaultValue = {searchConditions && searchConditions.language?searchConditions.language:""}
           >
-            <option value="en">Default</option>
+            <option value="">Default</option>
             <option value="any">Any</option>
             <option value="en">English</option>
             <option value="es">Spanish</option>
