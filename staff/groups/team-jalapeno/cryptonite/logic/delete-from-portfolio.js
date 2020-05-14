@@ -9,7 +9,7 @@ function deletePortfolioCrypto(token, cryptoId, callback) {
     String.validate.notVoid(cryptoId)
     Function.validate(callback)
 
-    let url = 'https://skylabcoders.herokuapp.com/api/v2/users/'
+    const url = 'https://skylabcoders.herokuapp.com/api/v2/users/'
     let body = undefined
     let headers = { 'Authorization': `Bearer ${token}` }
 

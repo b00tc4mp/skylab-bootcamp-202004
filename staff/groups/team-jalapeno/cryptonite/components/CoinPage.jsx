@@ -1,6 +1,6 @@
 const { useEffect, useState } = React;
 
-function CoinPage({ addPortfolioSubmit }) {
+function CoinPage({ addPortfolioSubmit, onLogout }) {
     const [crypto, setCrypto] = useState(null)
     const [error, setError] = useState(null)
     const [ohlc, setOhlc] = useState(null)
@@ -90,7 +90,7 @@ function CoinPage({ addPortfolioSubmit }) {
         {crypto && <div>
             <section className="coinpage-header">
                 <nav className="nav">
-                    <a href='#' className="nav__item logout-link">Logout</a>
+                    <a href='#' className="nav__item logout-link" onClick={onLogout}>Logout</a>
                 </nav>
                 <section className="portfolio">
                     <h1 className="coinpage-header__name">{crypto.name}</h1>
@@ -103,14 +103,7 @@ function CoinPage({ addPortfolioSubmit }) {
                     </div>}
 
                     {!ohlc && <p>OHCL Data is not avaliable for this coin.</p>}
-                    <button onClick={handleToggleFav} className="coinpage-header__button">{isFav ? 'Remove from Favorites' : 'Add to Favorites'}</button>
-                    <form action="" name="add-portfolio" className="portfolio__input" onSubmit={addSubmit} >
-                        <input type="text" name="quantity" id="" placeholder="Quantity" />
-                        <button className="coinpage-header__button" type="submit">Add to Portfolio <i className="fa fa-bitcoin"></i></button>
-                        <button onClick={handleDeleteFromPortfolio} className="coinpage-header__button" type="button">Delete From Portfolio <i className="fa fa-bitcoin"></i></button>
-
-
-                    </form>
+                    <button onClick={handleToggleFav} className="coinpage-header__button">{isFav ? 'Remove from Favorites' : 'Add to Favorites'} <i className="fa fa-heart"></i></button>
 
                 </section>
             </section>
@@ -119,7 +112,7 @@ function CoinPage({ addPortfolioSubmit }) {
                 <form action="" name="add-portfolio" className="coinpage-body__form" onSubmit={addSubmit}>
                     <div>
                         <input type="text" name="quantity" id="" placeholder="Quantity" className="coinpage-body__input" />
-                        <button className="coinpage-header__button coinpage-header__button--contrast" type="submit">Add to Portfolio<i className="fa fa-plus"></i></button>
+                        <button className="coinpage-header__button coinpage-header__button--contrast" type="submit">Add to Portfolio <i className="fa fa-plus"></i></button>
                     </div>
                     <button className="coinpage-header__button coinpage-header__button--contrast" type="button" onClick={handleDeleteFromPortfolio}>Delete Coin From Portfolio <i className="fa fa-trash"></i></button>
                 </form>

@@ -2,47 +2,78 @@ const { useState, Component } = React
 
 function App() {
     const [view, setView] = useState('landing')
-    const [token, setToken] = useState(null)
 
-    
+
     useEffect(()=>{
-        const token = sessionStorage.token
-        token && retrieveUser(sessionStorage.token, (_error) => {
-            if (!_error) setView('home')
-        })
+        isAuthenticated()
+        handleCheckHash()
+
+        window.addEventListener('hashchange', handleCheckHash)
+        return () => {
+          window.removeEventListener('hashchange', handleCheckHash)
+          clearInterval(interval)
+        }
     },[])
+
+    const isAuthenticated = () => {
+        const token = sessionStorage.token
+        if (!token) return setView('landing')
+        retrieveUser(sessionStorage.token, (_error) => {
+            if (_error) setView('landing')
+            else setView('home')
+        })
+    }
+    
+    
+    const handleCheckHash = () => {
+        let _view = window.location.hash
+        if (view === 'home') return
+        
+        const appRoutes = ['register', 'login', 'landing']
+        _view = _view.substring(1)
+        if (appRoutes.includes(_view)) {
+            setView(_view)
+        } else isAuthenticated()
+
+      }
+
 
     const handleGoToRegister = (event) => {
         event.preventDefault()
-        setView('register')
+        window.location.hash = 'register'
     }
 
 
     const handleGoToLogin = () => {
-        setView('login')
+        window.location.hash = 'login'
     }
 
     const handleGoToLoginFromLanding = (event) => {
         event.preventDefault()
-        setView('login')
+        window.location.hash = 'login'
     }
 
 
     const handleRegisterSubmit = () => {
-        setView('login')
+        window.location.hash = 'login'
     }
 
     const handleLoginSubmit = (_token) => {
-        setToken(_token)
+        window.location.hash = 'cryptos-list'
         setView('home')
     }
 
 
+    const handleOnLogout = () => {
+        sessionStorage.token = undefined
+        setView('landing')
+    }
+
     return <>
         {view === 'landing' && <Landing toRegister={handleGoToRegister} toLogin={handleGoToLogin} handleGoToLoginFromLanding={handleGoToLoginFromLanding} />}
         {view === 'login' && <Login toRegister={handleGoToRegister} loginSubmit={handleLoginSubmit} />}
-        {view === 'register' && <Register registerSubmit={handleRegisterSubmit} goToLogin={handleGoToLogin} />}
-        {view === 'home' && <Home />}
+        {view === 'register' && <Register registerSubmit={handleRegisterSubmit} goToLogin={handleGoToLoginFromLanding } />}
+        {view === 'home' && <Home onLogout={handleOnLogout} />}
 
     </>
 }

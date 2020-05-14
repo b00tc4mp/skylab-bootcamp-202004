@@ -43,9 +43,10 @@ body {
 }
 
 .nav-bar {
-  background: #f7ce78;
+  background: #f5f5f5;
   padding: 0.5em 3em;
-  position: sticky;
+  position: fixed;
+  width: 100%;
   bottom: 0;
   display: flex;
   justify-content: space-around;
@@ -55,12 +56,21 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: black;
+  color: #1c1c1c;
 }
 .nav-bar__item i {
   font-size: 2em;
 }
 
+.separator {
+  padding: 3em 0;
+}
+
+@media (min-width: 768px) {
+  .nav-bar {
+    padding: 0.5em 30%;
+  }
+}
 .footer {
   padding: 2em 0 0.5em 0;
   width: 100%;
@@ -141,6 +151,10 @@ body {
   width: 80%;
   display: flex;
   justify-content: center;
+  background: white;
+}
+.crypto-coins__search i {
+  color: black;
 }
 .crypto-coins__search input {
   width: 100%;
@@ -208,6 +222,21 @@ body {
   color: #dd7631;
 }
 
+@media (min-width: 768px) {
+  .coins-container .coin--large {
+    max-width: 80%;
+  }
+}
+@media (min-width: 992px) {
+  .coins-container .coin--large {
+    max-width: 48%;
+  }
+}
+@media (max-width: 455px) {
+  .coins-container .coin {
+    width: 10em;
+  }
+}
 .register {
   flex-direction: column;
   display: flex;
@@ -376,6 +405,7 @@ body {
   padding: 0.5em 0;
   background: #424242;
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   justify-content: space-between;
   border-radius: 1em;
@@ -393,6 +423,16 @@ body {
   align-items: flex-end;
 }
 
+@media (min-width: 768px) {
+  .wallet {
+    max-width: 80%;
+  }
+}
+@media (min-width: 992px) {
+  .wallet {
+    max-width: 48%;
+  }
+}
 .feedback {
   color: white;
   margin: 0 auto;
