@@ -29,6 +29,7 @@ function authenticateUser(email, password, callback) {
                 const { token } = JSON.parse(body)
 
                 callback(undefined, token)
+                
             } else {
                 const { error } = JSON.parse(body)
 

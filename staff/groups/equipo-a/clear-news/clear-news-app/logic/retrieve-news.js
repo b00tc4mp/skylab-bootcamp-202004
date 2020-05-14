@@ -10,7 +10,7 @@
   */
 function retrieveNews(token, callback) {
 
-    String.validate(token)
+    String.validate.notVoid(token)
 
     Function.validate(callback)
 

@@ -64,7 +64,7 @@ describe('authenticateUser', () => {
                     if (error) return done(error)
                     if (status !== 200) return done(new Error(`unexpected status ${status}`))
     
-                    const { token } = JSON.parse(body)
+                    let { token } = JSON.parse(body)
     
                     call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users',
                         `{ "password": "${password}" }`,

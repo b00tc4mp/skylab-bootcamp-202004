@@ -10,12 +10,11 @@
   */
 
 function retrieveFavNews(token, callback) {
-    String.validate(token);
+    String.validate.notVoid(token);
 
     Function.validate(callback);
 
     const favNews = [];
-    // let  = [ ...new Set([1, 2, 3, 1, 1]) ];
 
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
         undefined,
@@ -64,8 +63,10 @@ function retrieveFavNews(token, callback) {
 
                             
         
-                            if (counter === favorite.length) callback(undefined, favNews)
-                            
+                            if (counter === favorite.length) {
+                                let favNewsUnique = getUnique(favNews, element=>element.title)
+                                callback(undefined, favNewsUnique)
+                            }
                         })
                 })
                 )

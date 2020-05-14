@@ -16,8 +16,8 @@
 
     <script class="mocha-init">
         mocha.setup('bdd')
-        mocha.checkLeaks()
-        mocha.timeout(50000)
+        // mocha.checkLeaks()
+        mocha.timeout(150000)
 
         const { expect } = chai
     </script>
@@ -31,6 +31,7 @@
     <script src="utils/test.js"></script>
     <script src="utils/call.js"></script>
     <script src="utils/call.spec.js"></script>
+    <script src="utils/unique-value.js"></script>
 
     <script src="logic/authenticate-user.js"></script>
     <script src="logic/authenticate-user.spec.js"></script>
@@ -48,6 +49,12 @@
     <script src="logic/profile-update.spec.js"></script>
     <script src="logic/is-user-authenticated.js"></script>
     <script src="logic/is-user-authenticated.spec.js"></script>
+    <script src="logic/store-top-headlines.js"></script>
+    <script src="logic/store-top-headlines.spec.js"></script>
+    <script src="logic/retrieve-favorite-news.js"></script>
+    <script src="logic/retrieve-favorite-news.spec.js"></script>
+    <script src="logic/retrieve-favorite-top-headlines.js"></script>
+    <script src="logic/retrieve-favorite-top-headlines.spec.js"></script>
     
     <script class="mocha-exec">
         mocha.run()

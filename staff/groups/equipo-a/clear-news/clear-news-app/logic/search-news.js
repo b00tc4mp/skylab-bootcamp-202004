@@ -16,8 +16,6 @@ function searchNews(token, query, language, sortBy, callback) {
     String.validate.notVoid(query);
     Function.validate(callback);
 
-
-
     let allNews = []
 
     const numberOfPages = []
