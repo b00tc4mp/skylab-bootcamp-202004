@@ -1,3 +1,22 @@
+
+/**
+ * Checks user credentials.
+ * 
+ * @param {string} name The user name. 
+ * @param {string} surname The user surname. 
+ * @param {string} email The user email. 
+ * @param {string} password The user password min length 8.
+ * @param {string} password The user password confirmation.
+ * 
+ * @param {callback} callback The expression to be called after checking credentials, receiving an Error.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {Error} If e-mail does not match the expected format.
+ * 
+ * @return If register is correcto don`t return nothing.
+ */
+
+
 function registerUser(name,surname,email,password,confirmPassword,callback){
    
     String.validate.alphabetic(name);
@@ -27,3 +46,10 @@ function registerUser(name,surname,email,password,confirmPassword,callback){
     })
 }
 
+/**
+ * Invoked after remote authentication.
+ * 
+ * @callback callback
+ * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * 
+ */

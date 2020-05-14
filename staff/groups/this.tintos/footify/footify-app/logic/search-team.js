@@ -1,3 +1,17 @@
+/**
+ * Checks user credentials.
+ * 
+ * @param {string} teamId The id of the team player. 
+ 
+ * @param {callback} callback The expression to be called after checking credentials, receiving an Error or a body.
+ * @return {string} Return a string with a emplem of the team.
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {Error} If e-mail does not match the expected format.
+ *
+ */
+
+
+
 function searchTeam(teamId, callback) {
     if(teamId === '') throw new Error('Any team search');
     
@@ -30,3 +44,11 @@ function searchTeam(teamId, callback) {
         })
 }
 
+/**
+ * Invoked after remote authentication.
+ * 
+ * @callback callback
+ * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * @param {string} emblem It receives a emblem in case of sucess.
+ * 
+ */
