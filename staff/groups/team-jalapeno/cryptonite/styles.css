@@ -27,6 +27,10 @@ body {
   color: #f7ce78;
 }
 
+.logout-link {
+  color: #f7ce78;
+}
+
 .brand {
   display: flex;
   justify-content: center;
