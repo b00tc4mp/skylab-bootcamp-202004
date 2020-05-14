@@ -1,6 +1,6 @@
 const { useState, useEffect } = React
 
-function Home({ token , onUserSessionExpired }) {
+function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
 
     const [view, setView] = useState('fwitter')
     const [players, setPlayers] = useState()
@@ -124,7 +124,7 @@ function Home({ token , onUserSessionExpired }) {
 
     return <>
 
-        <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter} onGoToDream={handleGoToDream} onGoToUpdateUser={handleGoToUpdateUser}/>
+        <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter} onGoToDream={handleGoToDream} onGoToUpdateUser={handleGoToUpdateUser} onGoToLogOut={onGoToLogOut}/>
         {/* {view === 'spinner' && <Spinner />} */}
         {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} onCommentFwitt={handleCommentFwitt} queryPlayer={queryPlayer} likesUser={likesUser} onUserSessionExpired={onUserSessionExpired}/>}
         {view === 'sport' && <SportNews sportNews={sportNews} />}
