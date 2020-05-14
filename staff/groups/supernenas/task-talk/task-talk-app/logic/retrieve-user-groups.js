@@ -18,7 +18,9 @@ function retrieveusergroups(username,onSuccess,onFailure){
 
     Trello.get("members/" + username, getUserSucces, onFailure)
     
-    const getUserSucces = (user) => iterateGroups(user, 0)
+    function getUserSucces (user) {
+        iterateGroups(user, 0)
+    }
     function iterateGroups(user, index) {
         if (index < user.idBoards.length) {
             Trello.get("boards/" + user.idBoards[index], (group) => {
