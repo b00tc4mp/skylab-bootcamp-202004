@@ -404,6 +404,7 @@
   height: 35px;
   justify-self: center;
   margin-top: 0.3rem;
+  cursor: pointer;
 }
 .player-card__count {
   position: relative;
@@ -470,6 +471,7 @@
   top: 0.4rem;
   background: 0 0;
   border: 0;
+  cursor: pointer;
 }
 .player-card__form-button:hover {
   color: #320090;
@@ -880,6 +882,10 @@
   text-align: center;
   color: #320090;
   margin-bottom: 0.5rem;
+}
+
+a {
+  text-decoration: none;
 }
 
 * {

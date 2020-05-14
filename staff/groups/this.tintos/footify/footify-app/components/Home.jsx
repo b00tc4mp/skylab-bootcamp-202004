@@ -102,7 +102,7 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
                             !hash && address.hash('fwitter')
 
                             setFwitter(resultsComments);
-                            setView('fwitter');
+                            goToView('fwitter');
                         }  
                     })
                 }
@@ -131,7 +131,7 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
         dreamTeam(undefined,token,(error, playersRanking) =>{
             if(error) return setError(error)
             setPlayersRanking(playersRanking)
-            setView('dream')
+            goToView('dream')
         })
        
        
@@ -150,7 +150,7 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
         {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} onCommentFwitt={handleCommentFwitt} queryPlayer={queryPlayer} likesUser={likesUser} onUserSessionExpired={onUserSessionExpired}/>}
         {view === 'sport' && <SportNews sportNews={sportNews} />}        
         {view === 'fwitter' && <Fwitter fwitter={fwitter} token={token} onUpdateFwitter={handleGoToFwitter} onUserSessionExpired={onUserSessionExpired} searchPlayer={handleGoToPlayerResults}/>}
-        {view === 'dream' && <Dream  playersRanking={playersRanking}/>}
+        {view === 'dream' && <Dream  playersRanking={playersRanking} searchPlayer={handleGoToPlayerResults}/>}
         {view === 'update-user' && <UpdateUser token={token} onGoToFwitter={handleGoToFwitter} userDetails={userDetails}  onUserSessionExpired={onUserSessionExpired}/>}
         {error && <Feedback message={error} level="error" />}
     </>
