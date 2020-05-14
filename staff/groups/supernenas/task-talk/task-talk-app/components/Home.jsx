@@ -29,8 +29,8 @@
     }
     handleAuthorize=()=>{authenticateuser(()=>{
         //Muestre los grupos
-        retrieveusergroups("juanomen",(_groups)=>{
-            this.setState({groups:_groups,navigationName:"juanomen",menu:false,view:"groups", error:false})
+        retrieveusergroups("sergi_ruiz87",(_groups)=>{
+            this.setState({groups:_groups,navigationName:"sergi_ruiz87",menu:false,view:"groups", error:false})
         },(retrieveError)=>{
             this.setState({error:retrieveError})
         })

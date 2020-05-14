@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="vendor/mocha/mocha.css" />
 
-    
+
 
 </head>
 
@@ -19,14 +19,16 @@
     <script src="vendor/chai/chai.js"></script>
 
 
-    
+
 
     <script class="mocha-init">
         mocha.setup('bdd')
         mocha.checkLeaks()
         mocha.timeout(50000)
 
-        const { expect } = chai
+        const {
+            expect
+        } = chai
     </script>
     <!-- utils -->
     <script src="utils/function.js"></script>
@@ -44,6 +46,8 @@
     <script src="logic/get-current-user.js"></script>
     <script src="logic/invitetogroup.js"></script>
     <script src="logic/leave-group.js"></script>
+    <script src="logic/update-group.js"></script>
+    <script src="logic/delete-group.js"></script>
 
 
     <!-- specs -->
@@ -57,9 +61,11 @@
     <script src="logic/get-current-user.spec.js"></script>
     <script src="logic/invitetogroup.spec.js"></script>
     <script src="logic/leave-group.spec.js"></script>
+    <script src="logic/update-group.spec.js"></script>
+    <script src="logic/delete-group.spec.js"></script>
 
-    
-    
+
+
     <script class="mocha-exec">
         mocha.run()
     </script>

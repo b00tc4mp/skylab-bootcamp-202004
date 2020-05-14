@@ -1,14 +1,15 @@
 /**
- * Actualiza el nombre, descripción
- * @param {string} id id de la actividad que se va a actualizar
- * @param {{name: string,desc: string,idList: string}} newValues objeto con las propiedades que se van a actualizar
- * @param {function} onSuccess callback que se llama cuando no hay ningún error, recibe la actividad actualizada como parámetro
- * @param {function} onFailure callback que se llama en caso de error, recibe el error como parámetro
- * @throws {TypeError} lanza un error si name, desc o idList no son un string
- * @throws {TypeError} lanza un error si onSuccess o onFailure no son una función
+ * Update the name and description
+ * @param {string} id ID of the activity to be updated
+ * @param {{name: string,desc: string,idList: string}} newValues Object with properties to be updated
+ * @param {function} onSuccess Callback that is called when there is no error, receives updated activity as parameter
+ * @param {function} onFailure Callback which is called in case of error, receives error as parameter
+ * @throws {TypeError} Throws an error if name, desc or idList are not a string
+ * @throws {TypeError} Throws an error if onSuccess or onFailure are not a function 
  */
-function updateactivity(id,newValues,onSuccess, onFailure){
-    //Comprueba el tipo de los parámetros
+
+function updateactivity(id, newValues, onSuccess, onFailure) {
+    //Check the type of the parameters
     String.validate(id);
     String.validate(newValues.name);
     String.validate(newValues.desc);
@@ -16,5 +17,5 @@ function updateactivity(id,newValues,onSuccess, onFailure){
     Function.validate(onSuccess);
     Function.validate(onFailure);
 
-    Trello.put("cards/"+id,{name: newValues.name,desc: newValues.desc,idList: newValues.idList},onSuccess,onFailure)
+    Trello.put("cards/" + id, { name: newValues.name, desc: newValues.desc, idList: newValues.idList }, onSuccess, onFailure)
 }
