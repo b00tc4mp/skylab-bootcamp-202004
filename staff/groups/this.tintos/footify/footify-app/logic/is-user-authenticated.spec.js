@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 describe.only('isUserAuthenticated', () => {
     let _name, surname, email, password
@@ -92,3 +93,5 @@ describe.only('isUserAuthenticated', () => {
     })
 })    
 
+=======
+>>>>>>> footify-develop

@@ -1,11 +1,13 @@
 
 const { useState } = React;
 
-function PlayerResults({resultsPlayers, token, onToggleFollowPlayer,onCommentFwitt, queryPlayer, likesUser, onUserSessionExpired}) {
+function PlayerResults({resultsPlayers, token, onToggleFollowPlayer,onCommentFwitt, queryPlayer, likesUser, onUserSessionExpired ,searchSubmit}) {
 
-    
     const [error,setError] = useState()
   
+    useEffect(() => {
+         address.hash.query(queryPlayer) 
+    }, [])
 
     const handleToggleplayer = (playerId) => {
        
