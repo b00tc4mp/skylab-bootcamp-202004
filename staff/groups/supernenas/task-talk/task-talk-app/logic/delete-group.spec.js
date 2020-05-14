@@ -1,4 +1,4 @@
-describe.only("deletegroup", () => {
+describe("deletegroup", () => {
     let testUsername = "pepitogrilloskylab"
     beforeEach(() => {
         Trello.setToken(localStorage.trello_token);

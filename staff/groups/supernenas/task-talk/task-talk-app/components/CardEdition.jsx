@@ -17,6 +17,12 @@ function CardEdition({onCreate,onUpdate, onDelete, editCard}) {
     const handleChangeMessage = (event) => {
         setCardMessage(event.target.value)
     }
+    const handleOnDelete=(event)=>{
+        event.preventDefault();
+        if(editCard){
+            onDelete(editCard.id)
+        }
+    }
 
 
     return  <form className="card card__editing">
@@ -25,7 +31,7 @@ function CardEdition({onCreate,onUpdate, onDelete, editCard}) {
                         {/* <button className=" button__card button__card--regular button__card--back " onClick={onReturn} >◄</button> */}
                         <button type="submit" className="button__card button__card--regular button__card--save" onClick={handleSubmit} >✔</button>
                         <input type="text" required className="card__input card__input--title" placeholder="What we need to do " onChange={handleChangeTitle}  value={cardTitle} />
-                        <button className="button__card button__card--inverted button__card--delete" onClick={onDelete}>✖</button>
+                        <button className="button__card button__card--inverted button__card--delete" onClick={handleOnDelete}>✖</button>
                     </div>
                 </div>
                 <div className="card__message">

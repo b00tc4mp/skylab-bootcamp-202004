@@ -134,6 +134,15 @@
             </div>
         </div>
     </section>
+
+    <form class="card card__editing">
+        <div class="card__title">
+            <div class="card__grid">
+                <button type="submit" className="button__card button__card--regular button__card--save" onClick={handleSubmit}>✔</button>
+                <input type="text" required className="card__input card__input--title" placeholder="What we need to do " onChange={handleChangeTitle} value={cardTitle} />
+            </div>
+        </div>
+    </form>
 </body>
 
 </html>
