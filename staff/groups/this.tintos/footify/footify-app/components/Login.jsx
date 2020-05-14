@@ -44,7 +44,7 @@ function Login({ onGoToRegister, onGoToLanding, onGoToHome }) {
                     <input type="text" name="username" className="login__input-item" placeholder="email*" />
                     <input type="password" name="password" className="login__input-item" placeholder="password*" />
                     <button className="login__input-button">LOGIN</button>
-                    {error && <Feedback message={error} level="error" />}
+                    {error && <Feedback message={error} level="login" />}
                 </form>
 
                 <div className="login__goto">

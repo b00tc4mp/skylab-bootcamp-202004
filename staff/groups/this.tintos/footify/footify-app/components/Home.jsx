@@ -11,6 +11,8 @@ function Home({ token }) {
     const [sportNews, setSportNews] = useState()
     const [queryPlayer, setQueryPlayer] = useState()
     const [fwitter, setFwitter] = useState();
+    const [playersRanking, setPlayersRanking] = useState()
+    
 
 
     useEffect(() => {
@@ -104,12 +106,20 @@ function Home({ token }) {
         }
     }
     const handleGoToDream = () => {
-        setView('dream')
+        dreamTeam(undefined,token,(error, playersRanking) =>{
+            if(error) return setError(error)
+            setPlayersRanking(playersRanking)
+            setView('dream')
+        })
+       
+       
     }
   
     const handleGoToUpdateUser = () => {
         setView('update-user')
     }
+
+
     return <>
 
         <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter} onGoToDream={handleGoToDream} onGoToUpdateUser={handleGoToUpdateUser}/>
@@ -117,7 +127,7 @@ function Home({ token }) {
         {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} onCommentFwitt={handleCommentFwitt} queryPlayer={queryPlayer} likesUser={likesUser} />}
         {view === 'sport' && <SportNews sportNews={sportNews} />}
         {view === 'fwitter' && <Fwitter fwitter={fwitter} token={token} onUpdateFwitter={handleGoToFwitter}/>}
-        {view === 'dream' && <Dream />}
+        {view === 'dream' && <Dream  playersRanking={playersRanking}/>}
         {view === 'update-user' && <UpdateUser token={token} onGoToFwitter={handleGoToFwitter} userDetails={userDetails}/>}
         {error && <Feedback message={error} level="error" />}
 

@@ -72,7 +72,7 @@ toogleFollowComment(token, idCommentUser, fwitter,cardColor,message, (error, fwi
                         )}<div >
                         </div>
                     </div>
-                    : <Feedback message="sorry, no results :(" level="warning" />
+                    : <Feedback message="sorry, no results :(" level="fwitter" />
             }
         </section>
 
