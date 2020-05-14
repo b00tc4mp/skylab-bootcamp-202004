@@ -33,6 +33,7 @@ function SurfForecast({token, forecastSelected, sportState}) {
             setSpiner(undefined)
             setError(message)
         }
+        
         hideButton(token, forecastSelected, (error, following)=>{
             if(error){ throw new TypeError('error')
         } else {

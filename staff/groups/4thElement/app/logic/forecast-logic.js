@@ -17,3 +17,4 @@ function forecastLogic({ forecastSelected }, sportState, callback) {
             }
         })
 }
+

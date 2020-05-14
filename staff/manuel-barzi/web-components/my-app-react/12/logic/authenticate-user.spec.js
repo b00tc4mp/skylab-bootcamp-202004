@@ -1,4 +1,4 @@
-describe.only('authenticateUser', () => {
+describe('authenticateUser', () => {
     let name, surname, email, password
 
     beforeEach(() => {
