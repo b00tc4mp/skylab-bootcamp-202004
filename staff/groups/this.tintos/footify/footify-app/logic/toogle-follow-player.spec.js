@@ -1,51 +1,85 @@
-describe.only('toogleFollowPlayer', () => {
-    let _name, surname, email, password
+describe('toogleFollowPlayer', () => {
+  let name, surname, email, password, confirmPassword, playerId, _token
+  const id = ['MS10', 'CR7','SR4', 'TH14', 'FL7', 'JR10', 'TS1', 'JA8', 'SE4']
+  
+  beforeEach(() => {
+      name = names.random()
+      surname = `surname-${Math.random()}`
+      email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`;
+      password = `password-${Math.random()}`;
+      confirmPassword = password;
 
-    beforeEach(() => {
-        _name = names.random();
-        surname = surnames.random();
-        email = `${_name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`;
-        password = passwords.random();
+      playerId = id.random()   
     })
 
-    describe('Async Test', () => {
+    describe('When user does not exist', () => {
+      beforeEach (done =>
+          //register
+          call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
+          `{"name":"${name}","surname":"${surname}","username":"${email}","password":"${password}"} `,
+          { 'Content-type': 'application/json' }, (error, status, body) => {
+              if (status !== 201) return done(new Error(`undexpected status ${status}`))
+              
+              //atuhenticate
+              call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
+                  `{ "username": "${email}", "password": "${password}" }`,
+                  { 'Content-type': 'application/json' },
+                  (error, status, body) => {
+                      if (status !== 200) return done(new Error(`undexpected status ${status}`))
 
-        it('Should succeed on correct data', done => {
+                      const { token } = JSON.parse(body);
 
+                        _token = token
 
-            call("GET","https://skylabcoders.herokuapp.com/api/v2/users",undefined,
-              { Authorization: `Bearer ${token}` }, (error, status, body) => {
-               if (error) return callback(error);
+                      done()
+                   })
+              })
+          )
+       it('Should check if user have "likes" array and add one player to this field', done => { debugger
+        toogleFollowPlayer(_token, playerId, (error,likes) => { 
+          expect(error).to.be.undefined
+          expect(likes).to.exist
+          expect(likes[0]).to.equal(playerId)
+          expect(likes[0]).to.be.a('string')
+          
+            done()            
+        })
+        
+        it('Should check if user unlike the player already on the array', done => {
+          call('PATCH',
+          'https://skylabcoders.herokuapp.com/api/v2/users',
+          `"likes":"${playerId}"`,
+          { "Content-type": "application/json", "Authorization": `Bearer ${_token}` },
+          (error, status) => {
+              if (error) return done(new Error(error.message))
 
               if (status === 200) {
-             const user = JSON.parse(body);
+                  toggleFollowUser(_token, playerId, (error) => {
+                      if (error) return done(new Error(error.message))
 
-              const { likes = [] } = user
+                      call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                          undefined,
+                          { 'Authorization': `Bearer ${_token}` }, (error, status, body) => {
+                              if (error) return done(new Error(error.message))
 
-              const actualIndex = likes.indexOf(playerId);
+                              if (status === 200) {
 
-              if (actualIndex !== -1) likes.splice(actualIndex, 1);  
-              else likes.push(playerId)
-              user.likes = likes
-
-             call("PATCH", "https://skylabcoders.herokuapp.com/api/v2/users", JSON.stringify( user ),
-               { Authorization: `Bearer ${token}`, "Content-type": "application/json"},
-               (error, status, body) => {
-                 if (error) return callback(error);
-
-                 if (status === 204) {
-                   callback(undefined, likes);
-                 } else {
-                   const { error } = JSON.parse(body);
-
-                   callback(new Error(error));
-            }
-          }
-        );
-      }
-    }
-  );
-        })
+                                  // debugger
+                                  let { following } = JSON.parse(body)
+                                  expect(following).to.exist
+                                  expect(following).to.be.an.instanceOf(Array)
+                                  expect(following.length).to.be(0)
+                                  expect(following).to.not.include(followingId)
+                                 
+                              }
+                          })
+                  })
+              }
+          })
+          done()
+ }) 
+     })
+  
 
 
         
@@ -72,5 +106,6 @@ describe.only('toogleFollowPlayer', () => {
                         })
                 })
         })
-    })
+  })
+
 })
