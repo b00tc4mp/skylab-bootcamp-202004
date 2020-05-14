@@ -12,9 +12,9 @@ function TopHeadlines({ news, pages, myHeadlines, token }) {
         })
     }, [])
 
-    function handleLikeNews(newsTitle) {
+    function handleLikeNews(headline) {
         try {
-            storeNews(token, newsTitle, error => {
+            storeTopHeadlines(token, headline, error => {
                 if (error) throw error
                 // setErrorNews(error.message)
                 /* if(error.message==="invalid token") */
@@ -46,7 +46,7 @@ function TopHeadlines({ news, pages, myHeadlines, token }) {
                         <a href={url} target='_blank'><img className="news__images" src={urlToImage} alt="
                                 Image not available for your region"></img>
                             <div className="news__title stroke"><p className="stroke">{name}</p><p className="stroke"> {title}</p></div></a>
-                            <div className="news__button"> <input type="image" className="news__followIMG" src={favorites? "images/heart-follow.png" : "images/heart-unfollow.png"} onClick={() => handleLikeNews(title)} /></div>
+                            <div className="news__button"> <input type="image" className="news__followIMG" src={favorites? "images/heart-follow.png" : "images/heart-unfollow.png"} onClick={() => handleLikeNews({name, title, url, urlToImage})} /></div>
 
                     </li>)}
                 

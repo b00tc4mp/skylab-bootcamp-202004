@@ -14,9 +14,9 @@
 function searchNews(token, query, language, sortBy, callback) {
 
     String.validate.notVoid(query);
+    String.validate(query);
+    String.validate.notVoid(token);
     Function.validate(callback);
-
-
 
     let allNews = []
 
@@ -36,7 +36,7 @@ function searchNews(token, query, language, sortBy, callback) {
 
                 const { favorite = [] } = user
 
-                call('GET', `https://newsapi.org/v2/everything?q=${query}&language=${language}&sortBy=${sortBy}&pageSize=40&apiKey=f8ed27ae05b44313b6a87abfea6dc48b`,
+                call('GET', `https://newsapi.org/v2/everything?q=${query}&language=${language}&sortBy=${sortBy}&pageSize=40&apiKey=55aab6760184405791eeffefcbd32733`,
 
                     undefined,
                     undefined,
@@ -77,7 +77,9 @@ function searchNews(token, query, language, sortBy, callback) {
                             numberOfPages.push(i+1)
                         }
 
-                        callback(undefined, allNews, numberOfPages);
+                        let allNewsUnique = getUnique(allNews, element=>element.title)
+
+                        callback(undefined, allNewsUnique, numberOfPages);
                     });
             }else {
                 const { error } = JSON.parse(body)

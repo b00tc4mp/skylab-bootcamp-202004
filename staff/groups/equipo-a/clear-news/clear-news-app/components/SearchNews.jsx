@@ -1,6 +1,17 @@
-const {useState} = React
+const {useState,useEffect} = React
 
 function SearchNews({ onSearch, searchNewsResults, query, language, sortBy, token, pages}) {
+
+    useEffect(() => {
+        const query = address.hash.query()
+
+        query && query.q && searchNews(token, query.q, query.language, query.sortBy , (error, searchNewsResults, pages) =>{
+            if (error) throw Error
+    
+            onSearch(searchNewsResults, query.q, query.language, query.sortBy, pages)
+        })
+    }, [])
+
 
     function handleSubmit(event) {
         event.preventDefault()
@@ -37,8 +48,10 @@ function SearchNews({ onSearch, searchNewsResults, query, language, sortBy, toke
             default:
                 throw error
         }
+    
+        
         try{
-
+            
         searchNews(token, query, language, sortBy, (error, searchNewsResults, pages) =>{
             if (error) throw Error
     
@@ -75,6 +88,6 @@ function SearchNews({ onSearch, searchNewsResults, query, language, sortBy, toke
 
 
         {searchNewsResults && <NewsResults token={token} results={searchNewsResults} onSearch={onSearch} query={query} language={language} sortBy={sortBy} pages={pages}/>}
-
+        
     </section>
 }

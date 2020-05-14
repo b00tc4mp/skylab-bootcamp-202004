@@ -9,10 +9,10 @@
   * @throws {Error} If e-mail or token does not match the expected format.
   */
 
-function profileChange(token, userUpdate, callback) {
+function changeProfilege(token, userUpdate, callback) {
 
 
-    let { name, surname, email, password, oldPassword, interests, country } = userUpdate
+    let { name, surname, email, password, oldPassword, categories, country } = userUpdate
     Email.validate(email);
     
     if (oldPassword !==""){ 
@@ -53,8 +53,8 @@ function profileChange(token, userUpdate, callback) {
     String.validate(country);
 
     let count = 0
-    for (interest in interests) {
-        if (interests[interest] === false) {
+    for (let category in categories) {
+        if (categories[category] === false) {
             count++
         }
     }
