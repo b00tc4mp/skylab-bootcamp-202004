@@ -12,7 +12,7 @@ function CoinPage({ addPortfolioSubmit }) {
         let coinName = window.location.hash
         if (!coinName) return
 
-        coinName = coinName.substring(1)
+        coinName = coinName.split('/')[1]
 
         retrieveCrypto(coinName, (_error, _crypto) => {
             if (_error) setError(_error.message);
@@ -101,6 +101,7 @@ function CoinPage({ addPortfolioSubmit }) {
                         <span className="coinpage-header__stats--contrast">Low: {Number(ohlc.low).toFixed(3)}$</span>
                         <span className="coinpage-header__stats--contrast">Close: {Number(ohlc.close).toFixed(3)}$</span>
                     </div>}
+
                     {!ohlc && <p>OHCL Data is not avaliable for this coin.</p>}
                     <button onClick={handleToggleFav} className="coinpage-header__button">{isFav ? 'Remove from Favorites' : 'Add to Favorites'}</button>
                     <form action="" name="add-portfolio" className="portfolio__input" onSubmit={addSubmit} >
@@ -110,16 +111,19 @@ function CoinPage({ addPortfolioSubmit }) {
 
 
                     </form>
+
                 </section>
             </section>
-            {/* TradingView Widget BEGIN */}
-            <div className="tradingview-widget-container">
-                <div id="tradingview_7e118" />
-                <div className="tradingview-widget-copyright">
-                    <a href={`https://www.tradingview.com/symbols/${crypto.symbol}/USD/`} rel="noopener" target="_blank">
-                        <span className="blue-text">BTCUSD Chart</span></a> by Team Jalapeño</div>
-            </div>
-            {/* TradingView Widget END */}
+            <section className="coinpage-body">
+                <h4 className="coinpage-body__title">Add {crypto.name} to Your Portfolio</h4>
+                <form action="" name="add-portfolio" className="coinpage-body__form" onSubmit={addSubmit}>
+                    <div>
+                        <input type="text" name="quantity" id="" placeholder="Quantity" className="coinpage-body__input" />
+                        <button className="coinpage-header__button coinpage-header__button--contrast" type="submit">Add to Portfolio<i className="fa fa-plus"></i></button>
+                    </div>
+                    <button className="coinpage-header__button coinpage-header__button--contrast" type="button" onClick={handleDeleteFromPortfolio}>Delete Coin From Portfolio <i className="fa fa-trash"></i></button>
+                </form>
+            </section>
         </div>
         }
 

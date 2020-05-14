@@ -4,8 +4,7 @@ retrieveUser(sessionStorage.token, (userError, user) => {
     const { portfolio } = user
     setPortfolio(portfolio)
 
-    const ids = []
-    for (let i = 0; i < portfolio.length; i++) ids.push(portfolio[i].id)
+    const ids = portfolio.map(item => item.id)
 
     if (portfolio.length) {
 
@@ -21,12 +20,11 @@ retrieveUser(sessionStorage.token, (userError, user) => {
                 return coin
             })
 
-            let result = 0
-            for (let i = 0; i < _data.length; i++) {
-                let { quantity, priceUsd } = _data[i]
-                result += subTotal(quantity, priceUsd) * 1
-            }
-            setWallet(result)
+            const total = _data.reduce((acc, { quantity, priceUsd }) => {
+                return acc + subTotal(quantity, priceUsd) * 1
+              }, 0).toFixed(2)
+
+            setWallet(total)
             setCoinCryptos(_data)
         }, ids)
     }

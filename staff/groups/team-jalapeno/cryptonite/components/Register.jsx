@@ -31,12 +31,12 @@ function Register({ goToLogin, registerSubmit }) {
                 <input name="surname" type="text" placeholder="Surname" />
                 <input name="email" type="email" placeholder="Email" />
                 <input name="password" type="password" placeholder="Password" />
+                {error && <Feedback message={error} modifier={'feedback--warning'} />}
                 <button type="submit">Create account</button>
             </form>
             <p className="register__to-login">
                 Already registered?<a href="#" onClick={goToLogin}>Login</a>
             </p>
-            {error && <p style={{ color: 'crimson' }}>{error}</p>}
         </section>
     );
 }

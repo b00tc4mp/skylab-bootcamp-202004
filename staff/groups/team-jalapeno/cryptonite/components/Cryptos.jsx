@@ -14,7 +14,8 @@ function Cryptos({ cryptoResults, handleSearchOnChange,handleClickCoin }) {
       </section>
       <section className="coins-container">
         {!cryptoResults && <p>Loading...</p>}
-        {cryptoResults &&
+        
+        {cryptoResults && !!cryptoResults.length &&
           cryptoResults.map(
             ({ id, name, symbol, rank, priceUsd, changePercent24Hr }) => {
               {
@@ -38,6 +39,7 @@ function Cryptos({ cryptoResults, handleSearchOnChange,handleClickCoin }) {
               );
             }
           )}
+          {cryptoResults && !cryptoResults.length && <Feedback message='No results found.' />}
       </section>
     </section>
   );

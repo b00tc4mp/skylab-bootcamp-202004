@@ -36,3 +36,25 @@ const passwords = [
     'poiuytr123123',
     'asdfhasdfh'
 ]
+
+const favoriteCoins1 = [
+    'bitcoin',
+    'bat', 
+    'estellar'
+    
+]
+
+const favoriteCoins2 = [
+    'litecoin',
+    'ethereum',
+    'ripple'
+
+]
+
+const favoriteCoins3 = [
+    
+    'cosmos',
+    'zcash',
+    'neo'
+    
+]

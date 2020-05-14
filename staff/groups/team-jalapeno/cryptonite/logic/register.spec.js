@@ -60,7 +60,8 @@ describe('register ', ()=>{
         })
     })
 
-    afterEach(done =>{
+    afterEach(done => {
+
         const body = JSON.stringify({ username: email, password })
         const headers = { 'Content-type': 'application/json' }
         const url = 'https://skylabcoders.herokuapp.com/api/v2/users/auth'

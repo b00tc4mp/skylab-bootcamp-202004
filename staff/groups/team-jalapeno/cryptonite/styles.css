@@ -43,7 +43,7 @@ body {
 }
 
 .nav-bar {
-  background: #fff4e3;
+  background: #f7ce78;
   padding: 0.5em 3em;
   position: sticky;
   bottom: 0;
@@ -280,12 +280,45 @@ body {
   border-radius: 0.3em;
   color: #f7ce78;
 }
+.coinpage-header__button--contrast {
+  color: #1c1c1c;
+  background: #f7ce78;
+  margin: 0.5em;
+  max-width: 15em;
+}
 .coinpage-header__stats {
   display: flex;
   justify-content: space-around;
-  width: 90%;
+  width: 100%;
   align-items: center;
   flex-wrap: wrap;
+}
+
+.coinpage-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.coinpage-body__form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+.coinpage-body__form div {
+  width: 70%;
+  display: flex;
+  align-items: center;
+}
+.coinpage-body__input {
+  border: 1em solid white;
+  border-radius: 3em;
+  margin: 1em auto;
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  font-size: 1em;
 }
 
 .login {
@@ -358,6 +391,14 @@ body {
   flex-direction: column;
   margin-right: 1.2em;
   align-items: flex-end;
+}
+
+.feedback {
+  color: white;
+  margin: 0 auto;
+}
+.feedback--warning {
+  color: darkorange;
 }
 
 /*# sourceMappingURL=styles.css.map */
