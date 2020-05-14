@@ -1,3 +1,10 @@
+/**
+ * Takes a url input and deconstructs it into an object with the search conditions for later use
+ * 
+ * @param {string} url A url obtained from the hash when the user is exectuting a search through the url. 
+ * @throws {TypeError} If the url is not a string.
+ */
+
 function createQuery(url) {
     if (typeof url !== 'string') throw new TypeError(url + ' is not a string')
     

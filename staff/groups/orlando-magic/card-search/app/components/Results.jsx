@@ -85,7 +85,7 @@ function Results({searchConditions, setSearchConditions, goToCard, handleFavouri
           <img className = "results__cards--card" src = {card.image_uris? card.image_uris.png || card.image_uris.large : (card.card_faces[0].image_uris.png || card.card_faces[0].image_uris.large)}/>
       </a>
       <div>
-        {typeof token === 'undefined'?"":<a className = "results__cards--button" onClick = {()=>{event.preventDefault(); handleFavourite(card.id)}}>{favCards && favCards.includes(card.id)?"D":"L"}</a>}
+        {typeof token === 'undefined'?"":<a className = {`results__cards--button ${favCards && favCards.includes(card.id)?"unfav":""}`} onClick = {()=>{event.preventDefault(); handleFavourite(card.id)}}></a>}
         {/* {!card.image_uris && <a className = "results__cards--button" onClick = {()=>{event.preventDefault()}}></a>} */}
       </div>
       </li>)}

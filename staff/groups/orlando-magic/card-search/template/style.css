@@ -358,6 +358,11 @@
     width: 20%;
   }
 }
+@media only screen and (min-width: 968px) {
+  .advancedsearch {
+    width: 80%;
+  }
+}
 .results {
   display: flex;
   flex-flow: column;
@@ -426,7 +431,6 @@
   justify-content: center;
   background-color: rgba(129, 127, 127, 0.6);
   color: black;
-  z-factor: 1;
   width: 3rem;
   height: 3rem;
   border-radius: 50%;

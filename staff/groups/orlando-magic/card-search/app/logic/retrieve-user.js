@@ -1,3 +1,15 @@
+/**
+ * Retrieves the nickname and email of a user
+ * 
+ * @param {string} token A token that authenticates the user when performin user API protocols.
+ * @param {string} id Optional variable. When used, it will have the id of a user (other than the logged user) to retrieve the information from.
+ *
+ * @param {callback} callback The expression to be called after retrieving the results, which receives an Error or an array of results.
+ * 
+ * @throws {TypeError} When the token is not a string.
+ * @throws {Error} When callback is not a function.
+ */
+
 function retrieveUser(token,callback, id = "") {
     String.validate.notVoid(token)
 
@@ -21,3 +33,11 @@ function retrieveUser(token,callback, id = "") {
         }
     )
 }
+
+/**
+ * Invoked when an error occurs or when results are retrieved.
+ * 
+ * @callback callback
+ * @param {Error} error It will receive an error when remote logic fails or there is a network problem.
+ * @param {string} following It receives an object with the username (nickname) and email(username) of the user.
+ */
