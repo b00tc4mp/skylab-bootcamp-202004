@@ -4,7 +4,7 @@
  * @param {string} idPlayer The id of player. 
  * @param {string} _name The player name.
  * @param {string} _message The message public by the User.
- * @param {string} token The expression to be called after checking credentials, receiving an Error or an authentication token.
+ * @param {string} token The token of the current user.
  * @param {callback} callback The expression to be called after checking credentials, receiving an Error.
  * 
  * @throws {TypeError} If any of the parameters does not match the corresponding type.

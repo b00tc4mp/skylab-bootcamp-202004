@@ -87,7 +87,7 @@ function PlayerResults({resultsPlayers, token, onToggleFollowPlayer,onCommentFwi
                     </li>
                 ))} </ul>) 
                 : 
-                ('')}
+                 <Feedback message={error} level="error" />}
             </section>
 
         </>

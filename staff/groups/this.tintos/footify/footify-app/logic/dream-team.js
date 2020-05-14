@@ -1,9 +1,11 @@
-function dreamTeam(players, token, callback) {
-    //if (players === undefined) return callback(new Error('sorry, no players found :('));
+
+
+
+function dreamTeam(token, callback) {
 
     String.validate.notVoid(token);
     Function.validate(callback)
-    console.log(players)
+
     let likePlayers = []
     let resultsLikes
     call("GET", "https://skylabcoders.herokuapp.com/api/v2/users/all",

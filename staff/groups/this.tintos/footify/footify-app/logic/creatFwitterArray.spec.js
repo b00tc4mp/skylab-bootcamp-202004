@@ -56,7 +56,6 @@ describe('Create Array Fwitts', () => {
                 })
         })
 
-
         afterEach(done => {
             call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
                 `{ "username": "${email}", "password": "${password}" }`, { 'Content-type': 'application/json' },
@@ -82,11 +81,9 @@ describe('Create Array Fwitts', () => {
         })
     })
 
-
     it('Sould fail if you use a empty array',()=>{
         expect(()=>{
             const array =[]
-            debugger
             creatFwitterArray(array);
         }).to.throw(Error,'The array is empty.')
     })

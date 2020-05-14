@@ -1,5 +1,20 @@
+/**
+ * Checks user credentials.
+ * 
+ * @param {string} query The query of the player search. 
+ * @param {callback} callback The expression to be called after checking credentials, receiving an Error and _players array.
+ * 
+ * @returns {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * @returns {Object} _players It receives a array in case credentials are correct with the info of the searched player.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {Error} If does not match the expected format.
+ */
+
+
+
 function searchPlayers(query, callback) {
-    if (query === '') throw new Error('Any result search');
+    if (query === '') return callback(new Error('The field is empty'));
 
     String.validate(query)
     Function.validate(callback)
@@ -89,3 +104,4 @@ function searchPlayers(query, callback) {
             }
         })
 }
+
