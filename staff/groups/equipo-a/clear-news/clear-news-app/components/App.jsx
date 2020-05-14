@@ -23,8 +23,8 @@ function App() {
 
             if (hash === 'login' || hash === 'register') setHashView(hash)
             else {
-                location.hash = ''
-                
+                address.hash.clear()
+
                 setView('landing')
             }
         }
@@ -32,7 +32,7 @@ function App() {
 
 
     const setHashView = view => {
-        location.hash = view
+        address.hash(view)
 
         setView(view)
     }

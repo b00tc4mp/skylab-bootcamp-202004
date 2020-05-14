@@ -31,7 +31,10 @@ function retrieveFavNews(token, callback) {
                 let counter = 0
 
                 favorite.forEach((item => {
-                    call('GET', `https://newsapi.org/v2/everything?q="${item}"&apiKey=f8ed27ae05b44313b6a87abfea6dc48b`,
+
+                    // let title = item.split(' ').join('+')
+                    call('GET', `https://newsapi.org/v2/everything?q="${item}"&apiKey=55aab6760184405791eeffefcbd32733`,
+
                         undefined,
                         undefined,
                         (error, status, body) => {
@@ -68,8 +71,7 @@ function retrieveFavNews(token, callback) {
                                 callback(undefined, favNewsUnique)
                             }
                         })
-                })
-                )
+                }))
             } else {
                 const { error } = JSON.parse(body)
                 callback(new Error(error))
@@ -79,8 +81,8 @@ function retrieveFavNews(token, callback) {
 }
 
 /**
- * 
- * 
+ *
+ *
  * @callback callback
  * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
  * @param {Array} favNews Array of objects with a users favorite news.

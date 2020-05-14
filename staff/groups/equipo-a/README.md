@@ -1,15 +1,14 @@
-# CLEAR-NEWS
+# Equipo A
 ## Participants
 
-This project we have done between 3 participants:
+This project has been coded between 3 participants:
 
 - Daria Potemkina
 - Albert Manzano    
 - Ander Martin
 
-## Description
+## Trello
+[Link to trello](https://trello.com/b/ncE7I0md)
 
-Our application brings together news from around the world, allowing you to filter by language, interests and much more!
 
 
-Al texto en Markdown puedes añadirle formato como **negrita** o *cursiva* de una manera muy sencilla.
