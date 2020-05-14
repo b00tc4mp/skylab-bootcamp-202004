@@ -81,4 +81,13 @@ describe('Create Array Fwitts', () => {
                 })
         })
     })
+
+
+    it('Sould fail if you use a empty array',()=>{
+        expect(()=>{
+            const array =[]
+            debugger
+            creatFwitterArray(array);
+        }).to.throw(Error,'The array is empty.')
+    })
 })
