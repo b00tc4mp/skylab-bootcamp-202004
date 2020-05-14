@@ -54,7 +54,8 @@ function Favorites({token, myFavorite, myHeadlines}) {
             if(error) throw error
         }
     }
-    if(!favNews || !headlines) return <Feedback message="No favorite new added yet" level="warning" />
+    if(!favNews || !headlines) return <Feedback message="No favorite news added yet" />
+
     return <>
     
     <section className="favNews">
@@ -78,9 +79,10 @@ function Favorites({token, myFavorite, myHeadlines}) {
                 </li>)}
             </ul>
         }
+        {favNews && headlines && favNews.length===0 && headlines.length===0 &&  <Feedback message="No favorite news added yet" />}
         
     </section>
-    {favNews && headlines && favNews.length===0 && headlines.length===0 &&  <Feedback message="No favorite new added yet" level="warning" />}
+    
     </>   
 }
 

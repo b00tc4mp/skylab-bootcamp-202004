@@ -1,3 +1,4 @@
+
 /**
   * Retrieve favorites news. 
   * 
@@ -13,9 +14,9 @@
   */
 function searchNews(token, query, language, sortBy, callback) {
 
+    String.validate.notVoid(token);
     String.validate.notVoid(query);
     String.validate(query);
-    String.validate.notVoid(token);
     Function.validate(callback);
 
     let allNews = []
@@ -36,7 +37,7 @@ function searchNews(token, query, language, sortBy, callback) {
 
                 const { favorite = [] } = user
 
-                call('GET', `https://newsapi.org/v2/everything?q=${query}&language=${language}&sortBy=${sortBy}&pageSize=40&apiKey=55aab6760184405791eeffefcbd32733`,
+                call('GET', `https://newsapi.org/v2/everything?q=${query}&language=${language}&sortBy=${sortBy}&pageSize=40&apiKey=0d80af4c6ef6473aae5bb15fcf9eb625`,
 
                     undefined,
                     undefined,
