@@ -62,7 +62,9 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
                         if (error) {
                             
                             setPlayers('no players')
+                            
                             setError(error.message)
+                            goToView('cards')
                             
                         }else{
                             searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => { 
@@ -86,6 +88,7 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
     }
 
     const handleGoToFwitter = () => {
+        setError()
         try {
             retriveFwitter(token, (error, results) => {
                 if (error) {
@@ -122,6 +125,7 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
     }
 
     const handleGoToSport = () => {
+        setError()
         searchSport((error, listResults) => {
             if(error) setError(error)
             setSportNews(listResults)
@@ -131,6 +135,7 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
     }
    
     const handleGoToDream = () => {
+        setError()
         dreamTeam(token,(error, playersRanking) =>{
             if (error) {
                 if (error.message === 'invalid token')
