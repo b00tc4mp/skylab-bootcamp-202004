@@ -24,7 +24,7 @@ retrieveUser(sessionStorage.token, (userError, user) => {
                 return acc + subTotal(quantity, priceUsd) * 1
               }, 0).toFixed(2)
 
-            setWallet(result)
+            setWallet(total)
             setCoinCryptos(_data)
         }, ids)
     }
