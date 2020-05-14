@@ -1,4 +1,4 @@
-function PortfolioPage() {
+function PortfolioPage({ onLogout }) {
     const [coinCryptos, setCoinCryptos] = useState(null)
     const [error, setError] = useState(null)
     const [portfolio, setPortfolio] = useState(null)
@@ -52,9 +52,10 @@ function PortfolioPage() {
 
     return <div>
         <nav className="nav">
-            <a href='#' className="nav__item logout-link">Logout</a>
+            <a href='#' className="nav__item logout-link" onClick={onLogout} >Logout</a>
         </nav>
         <section className="portfolio">
+            <h3 className="crypto-coins__title">Wallet</h3>
             <h1 className="portfolio__money">{wallet}$</h1>
             {/* <h4 className="portfolio__stats"><span className="portfolio__stats--contrast">+121,40$ (8.3%)</span> Last 24h</h4> */}
 
@@ -65,9 +66,9 @@ function PortfolioPage() {
 
                 {coinCryptos && coinCryptos.map(({ symbol, name, priceUsd, quantity }) => (
 
-                    <div className="wallet">
+                    <div className="wallet" key={symbol}>
                         <div className="wallet__head">
-                            <span className="coin__title">{symbol}</span>
+                            <span className="coin__title" >{symbol}</span>
                             <span className="coin__name">{name}</span>
                         </div>
                         <div className="wallet__body">
@@ -78,7 +79,7 @@ function PortfolioPage() {
 
 
                 ))}
-                {!coinCryptos && <h4 className="brand__description">You don't have any favorites... :( </h4>}
+                {!coinCryptos && <h4 className="brand__description">You don't have coins in portfolio... :( </h4>}
             </section>
         </section>
     </div >
