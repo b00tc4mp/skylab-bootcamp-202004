@@ -24,11 +24,13 @@ function AlbumResults({ results, token, spotyToken, onSessionExpired }) {
     };
 
     return <>
-        {results.length ? <ul>
+        {results.length ? <ul className="disc-list">
             {
                 results.map(({ name, id, artistsArray, image }) => {
-                    return <li className="disc-list">
-                        <h2 className="disc-list__title">{`${name}`}</h2> <h1 className="disc-list__artist">{`${artistsArray.join()}`} </h1><a href="" onClick={(event) => {
+                    return <li className="disc-list__item">
+                        <h2 className="disc-list__title">{`${name}`}</h2>    <h5 className="disc-list__artist">{`${artistsArray.join()}`} </h5><a href="" onClick={(event) => {
+
+                
                             event.preventDefault()
                             handleOnAlbum(id)
 

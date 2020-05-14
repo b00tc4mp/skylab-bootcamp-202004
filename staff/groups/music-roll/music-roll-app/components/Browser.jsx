@@ -70,8 +70,8 @@ const handleSubmit = (event) => {
 }
 
 
-return <section className="browser">
-    <h2 className="title">Browser</h2>
+return <section className="browser-results">
+    <h2 className="browser__title">Browser</h2>
     <form className="browser__form" onSubmit={handleSubmit} >
         <select name="browser">
             <option defaultValue>Choose one:</option>
