@@ -1,5 +1,9 @@
 function surfForecastLogic({forecastSelected}, callback){
-        call('GET', `http://api.worldweatheronline.com/premium/v1/marine.ashx?key=e440183fb8e545b0838104901200705&format=json&q=${forecastSelected.coordinates}`, undefined, undefined, (error, status, body) => {
+
+    Function.validate(callback)
+    if(typeof forecastSelected !== 'object') throw new TypeError('forecast selected is not an object')
+
+    call('GET', `http://api.worldweatheronline.com/premium/v1/marine.ashx?key=e440183fb8e545b0838104901200705&format=json&q=${forecastSelected.coordinates}`, undefined, undefined, (error, status, body) => {
         if (error) return callback(error)
 
         if (status === 200) {

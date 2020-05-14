@@ -1,6 +1,6 @@
 function retriveAllUsers (token, callback){
     if(token === undefined) throw new TypeError('LogIn first')
-    
+
     if (typeof token !== 'string') throw new TypeError(token + ' is not a string')
     
     if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
@@ -16,10 +16,10 @@ function retriveAllUsers (token, callback){
                     webUsers.push(element)
                 }
             })
-            callback(undefined, webUsers)
+            return callback(undefined, webUsers)
         }else{
             let error = JSON.parse(body)
-            callback(error, undefined)
+            return callback(error, undefined)
         }
     })
 }  

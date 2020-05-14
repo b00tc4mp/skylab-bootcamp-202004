@@ -294,8 +294,12 @@ body {
   align-items: center;
 }
 .Header__container--name {
+  padding: 0.8vh;
+  width: 70vw;
+  height: 6vh;
   margin-left: 1vw;
   color: white;
+  overflow: hidden;
 }
 .Header__container a {
   text-decoration: none;
@@ -333,8 +337,12 @@ form {
   margin-top: 4vh;
 }
 
-.Searcher {
+.Searcher--surf {
   background-color: #43a1b1;
+  height: 10.5vh;
+}
+.Searcher--snow {
+  background-color: #a1eefc;
   height: 10.5vh;
 }
 .Searcher__input-container {
@@ -373,11 +381,17 @@ form {
   text-align: center;
   width: 50vw;
 }
-.Searcher__selectorSpot--active {
+.Searcher__selectorSpotSurf--active {
   background-color: #43a1b1;
 }
-.Searcher__selectorUser--active {
+.Searcher__selectorUserSurf--active {
   background-color: #43a1b1;
+}
+.Searcher__selectorSpotSnow--active {
+  background-color: #a1eefc;
+}
+.Searcher__selectorUserSnow--active {
+  background-color: #a1eefc;
 }
 
 .SpotSearched {
@@ -393,14 +407,23 @@ form {
 .SpotSearched__item {
   border-bottom: 1px solid black;
   width: 100vw;
-  height: 10vh;
   padding: 3vh;
 }
 .SpotSearched__item:hover {
   background: gray;
 }
+.SpotSearched__spiner {
+  position: relative;
+  margin-top: 5vh;
+}
 
+.forecast {
+  margin-right: auto;
+  margin-left: auto;
+}
 .forecast__ul {
+  height: 85vh;
+  overflow: scroll;
   list-style-type: none;
   font-family: "Source Sans Pro", sans-serif;
   padding: 0;
@@ -443,6 +466,28 @@ form {
 .forecast__titles--element {
   margin-right: 18vw;
 }
+.forecast__selector {
+  font-size: 1.3rem;
+  display: flex;
+  width: 100%;
+  background-color: #e4e4e4;
+  margin-top: 6vh;
+  justify-content: center;
+}
+.forecast__selector div {
+  text-align: center;
+  width: 50vw;
+}
+.forecast__selectorForecast--active {
+  background-color: #43a1b1;
+}
+.forecast__selectorReviews--active {
+  background-color: #43a1b1;
+}
+.forecast__spiner {
+  margin-top: 10vh;
+  margin-left: 40vw;
+}
 
 p {
   margin-right: 8vw;
@@ -467,6 +512,10 @@ span {
   color: red;
 }
 
+.Favorites {
+  display: flex;
+  flex-direction: column;
+}
 .Favorites__List {
   list-style-type: none;
   margin-top: 6.5vh;
@@ -501,17 +550,21 @@ span {
   color: red;
   font-size: 30px;
 }
+.Favorites__Spiner {
+  margin-top: 10vh;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .forecastInfoSnow {
   margin-top: 6vh;
-  background: #e4e4e4;
-  height: 100vh;
+  height: 80vh;
 }
-.forecastInfoSnow__hour {
-  height: 89vh;
+.forecastInfoSnow__day {
   overflow: scroll;
+  height: 80vh;
 }
-.forecastInfoSnow h2 {
+.forecastInfoSnow__day h2 {
   padding-top: 1vh;
   text-align: center;
   font-family: "Source Sans Pro", sans-serif;
@@ -519,11 +572,10 @@ span {
   font-weight: bold;
   height: 3.5vh;
 }
-.forecastInfoSnow h4 {
+.forecastInfoSnow__day h4 {
   padding-top: 1vh;
   text-align: center;
   font-family: "Source Sans Pro", sans-serif;
-  background: #e4e4e4;
   font-size: 20px;
   height: 3.5vh;
 }
@@ -540,6 +592,115 @@ span {
 }
 .forecastInfoSnow__overAllInfo {
   color: red;
+}
+.forecastInfoSnow__selector {
+  font-size: 1.3rem;
+  display: flex;
+  width: 100%;
+  background-color: #e4e4e4;
+  margin-top: 6vh;
+  justify-content: center;
+}
+.forecastInfoSnow__selector div {
+  text-align: center;
+  width: 50vw;
+}
+.forecastInfoSnow__selectorForecast--active {
+  background-color: #a1eefc;
+}
+.forecastInfoSnow__selectorReviews--active {
+  background-color: #a1eefc;
+}
+.forecastInfoSnow__spiner {
+  margin-top: 10vh;
+  margin-left: 40vw;
+}
+
+.foro {
+  height: 100vw;
+  margin-top: 5vh;
+}
+.foro__reviews {
+  margin: 1 vh;
+  height: 79.5vh;
+  width: 90vw;
+  overflow: scroll;
+  list-style-type: none;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0;
+}
+.foro__reviewList {
+  padding: 5vh 0;
+  border-bottom: 0.3rem solid black;
+}
+.foro__userInfo {
+  font-weight: bolder;
+  font-size: 1.3rem;
+  width: 65vw;
+  border-bottom: 0.1rem solid black;
+  margin-bottom: 1vh;
+}
+.foro__element {
+  margin-top: 2vh;
+  font-size: 1.15rem;
+  color: grey;
+}
+.foro__element h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 10vh;
+  color: black;
+  margin: 0;
+  padding: 0;
+}
+.foro__newReview {
+  display: flex;
+  flex-direction: column;
+  border-top: 0.5rem solid white;
+  background-color: #bdbdbd;
+  width: 100vw;
+  top: 39.5vh;
+  height: 50vh;
+  position: absolute;
+}
+.foro__newReview textarea {
+  height: 5vh;
+  border: none;
+  margin-right: auto;
+  margin-left: auto;
+  width: 90vw;
+  margin-bottom: 2vh;
+}
+.foro__newReview label {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-left: 1.5vw;
+  margin-bottom: 1vh;
+}
+.foro__newReview button {
+  border: none;
+  width: 50vw;
+  height: 5vh;
+  margin-right: auto;
+  margin-left: auto;
+}
+.foro__newReview button:hover {
+  background-color: lightgreen;
+}
+.foro .fa-plus-circle {
+  position: absolute;
+  top: 80vh;
+  left: 80vw;
+  color: black;
+}
+.foro__spiner {
+  margin-top: 10vh;
+  margin-left: 38vw;
+}
+
+.Spiner {
+  margin: 10vh auto;
 }
 
 /*# sourceMappingURL=style.css.map */
