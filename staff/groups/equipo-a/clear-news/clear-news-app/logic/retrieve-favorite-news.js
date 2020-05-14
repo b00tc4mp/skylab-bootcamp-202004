@@ -24,15 +24,13 @@ function retrieveFavNews(token, callback) {
 
             if (status === 200) {
 
-                let user = JSON.parse(body)
-
+                const user = JSON.parse(body);
                 const { favorite = [] } = user
 
                 let counter = 0
 
                 favorite.forEach((item => {
 
-                    // let title = item.split(' ').join('+')
                     call('GET', `https://newsapi.org/v2/everything?q="${item}"&apiKey=55aab6760184405791eeffefcbd32733`,
 
                         undefined,
@@ -42,7 +40,7 @@ function retrieveFavNews(token, callback) {
 
                             if (status === 200) {
                                 counter++
-                                let news = JSON.parse(body)
+                                const news = JSON.parse(body)
 
                                 const { articles } = news
 

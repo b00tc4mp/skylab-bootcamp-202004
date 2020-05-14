@@ -7,23 +7,23 @@ function Register({ onRegister, onGoToLogin }) {
         event.preventDefault();
         
         let country=event.target.country.value
-        let business =false;
-        let entertainment = false;
-        let general = false;
-        let health = false;
-        let science = false;
-        let sports = false;
-        let technology = false;
+        let business
+        let entertainment 
+        let general 
+        let health 
+        let science 
+        let sports 
+        let technology 
  
-        if (event.target.business.checked) business = Boolean(event.target.business.value);
-        if (event.target.entertainment.checked) entertainment = Boolean(event.target.entertainment.value);
-        if (event.target.general.checked) general = Boolean(event.target.general.value);
-        if (event.target.health.checked) health = Boolean(event.target.health.value);
-        if (event.target.science.checked) science = Boolean(event.target.science.value);
-        if (event.target.sports.checked) sports = Boolean(event.target.sports.value);
-        if (event.target.technology.checked) technology = Boolean(event.target.technology.value);
+        event.target.business.checked ? business = true : business=false
+        event.target.entertainment.checked ? entertainment=true : entertainment=false
+        event.target.general.checked ? general=true : general=false
+        event.target.health.checked ? health=true : health=false
+        event.target.science.checked ? science=true : science=false
+        event.target.sports.checked ? sports=true : sports=false
+        event.target.technology.checked ? technology=true : technology=false
         
-        let categories = { business, entertainment, general, health, science, sports, technology }
+        const categories = { business, entertainment, general, health, science, sports, technology }
 
         let { name, surname, email, password } = event.target;
        
@@ -78,13 +78,13 @@ function Register({ onRegister, onGoToLogin }) {
             </select>
             <fieldset className="register__checkbox">
                 <legend>Choose your favorite topics</legend>            
-                <input type="checkbox" name="business" value="true" />Business<br/>
-                <input type="checkbox" name="entertainment" value="true" />Entertainment<br/>
-                <input type="checkbox" name="general" value="true" />General<br/>
-                <input type="checkbox" name="health" value="true" />Health<br/>
-                <input type="checkbox" name="science" value="true" />Science<br/>
-                <input type="checkbox" name="sports" value="true" />Sports<br/>
-                <input type="checkbox" name="technology" value="true" />Technology<br/>    
+                <input type="checkbox" name="business" />Business<br/>
+                <input type="checkbox" name="entertainment" />Entertainment<br/>
+                <input type="checkbox" name="general" />General<br/>
+                <input type="checkbox" name="health" />Health<br/>
+                <input type="checkbox" name="science" />Science<br/>
+                <input type="checkbox" name="sports" />Sports<br/>
+                <input type="checkbox" name="technology" />Technology<br/>    
             </fieldset>
             <section className="resister__nav-button">
             <button className="register__button">Submit</button>

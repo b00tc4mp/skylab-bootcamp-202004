@@ -21,16 +21,6 @@ function NewsResults({ onSearch, results, token, query, language, sortBy, pages 
         }
     }
 
-    // function handleMoreNews(count) {
-    //     try {
-    //         searchNews(token, query, language, sortBy, count, (error, results) => {
-    //             if (error) throw error
-    //             onSearch(results, query, language, sortBy, count)
-    //         })
-    //     } catch (error) {
-    //         if (error) throw error
-    //     }
-    // }
     function handleCurrentPage (currentPage){
         setCurrentPage(Number(currentPage))
     }

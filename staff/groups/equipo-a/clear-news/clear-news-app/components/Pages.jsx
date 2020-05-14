@@ -13,7 +13,7 @@ function Pages({ pages, handleCurrentPage }) {
                 pages.map(number => 
                     <button className={`pages__button ${handleCurrentPage === number ? 'pages__button--active':''}`} id={`${number}`} key={number} onClick={event=>{
                         event.preventDefault()
-                        let _id = event.target.id
+                        const _id = event.target.id
                         handleClick(_id)}}>{number}</button>
                 )
             }

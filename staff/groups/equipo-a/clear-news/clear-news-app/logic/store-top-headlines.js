@@ -18,30 +18,30 @@ function storeTopHeadlines(token, headline, callback) {
         { 'Authorization': `Bearer ${token}` },
         (error, status, body) => {
 
-            if (error) return callback(error)
+            if (error) return callback(error);
 
             if (status === 200) {
-                const user = JSON.parse(body)
+                const user = JSON.parse(body);
                 if (!user.headlines) user.headlines = []
                 if (!user.favorite) user.favorite = []
 
                 let newsTitle = []
                 for (let i in user.headlines) {
-                    newsTitle.push(user.headlines[i].title)
+                    newsTitle.push(user.headlines[i].title);
                 }
 
-                let toIndex = newsTitle.indexOf(headline.title)
+                let toIndex = newsTitle.indexOf(headline.title);
                 if (toIndex === -1) {
-                    user.headlines.push(headline)
+                    user.headlines.push(headline);
                 } else if (toIndex !== -1) {
-                    user.headlines.splice(toIndex, 1)
+                    user.headlines.splice(toIndex, 1);
                 }
 
                 let favIndex = user.favorite.indexOf(headline.title)
                 if (toIndex === -1) {
-                    user.favorite.push(headline.title)
+                    user.favorite.push(headline.title);
                 } else if (favIndex !== -1) {
-                    user.favorite.splice(favIndex, 1)
+                    user.favorite.splice(favIndex, 1);
                 }
 
                 call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify(user),

@@ -1,4 +1,4 @@
-describe.only('search-news', () => {
+describe('search-news', () => {
     let name,surname,email,password,favorite,query,sortBy,language,counter,_token;
 
     beforeEach(()=>{
@@ -46,18 +46,16 @@ describe.only('search-news', () => {
             
              searchNews(_token, query, language, sortBy, (error,articles,pages) => {
             
-
-                
                 expect(articles).to.exist;
-                expect(articles).to.be.an("array")
+                expect(articles).to.be.an("array");
                 expect(pages).to.exist;
-                expect(pages).to.be.an("array")
+                expect(pages).to.be.an("array");
                 expect(query).to.exist;
-                expect(query).to.be.an("string")
+                expect(query).to.be.an("string");
                 expect(language).to.exist;
-                expect(language).to.be.an("string")
+                expect(language).to.be.an("string");
                 expect(sortBy).to.exist;
-                expect(sortBy).to.be.an("string")
+                expect(sortBy).to.be.an("string");
                 done();
             })
     })

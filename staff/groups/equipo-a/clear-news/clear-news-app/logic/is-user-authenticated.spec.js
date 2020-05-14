@@ -21,7 +21,7 @@ describe('isUserAuthenticated', () => {
                         if (status !== 200) return done(new Error(`undexpected status ${status}`));
 
                         const { token } = JSON.parse(body);
-                        _token = token
+                        _token = token;
 
                         call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
                             undefined,
@@ -30,8 +30,8 @@ describe('isUserAuthenticated', () => {
                                 if (error) return done(new Error(error.message));
                                 if (status !== 200) return done(new Error(`undexpected status ${status}`));
 
-                                const { username } = JSON.parse(body)
-                                expect(username).to.equal(email)
+                                const { username } = JSON.parse(body);
+                                expect(username).to.equal(email);
                                 done()
 
                             })

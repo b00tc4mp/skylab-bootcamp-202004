@@ -10,9 +10,9 @@
   * @throws {Error} If there is no token.
   */
 function storeNews(token, title,callback) {
-    String.validate.notVoid(token)
-    String.validate(title)
-    Function.validate(callback)
+    String.validate.notVoid(token);
+    String.validate(title);
+    Function.validate(callback);
     
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined ,  
      { 'Authorization': `Bearer ${token}`}, 
@@ -33,19 +33,19 @@ function storeNews(token, title,callback) {
             call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users',JSON.stringify(user),
             { 'Content-type': 'application/json' , 'Authorization': `Bearer ${token}`}, 
             (error, status, body) => {
-            if (error) return callback(error)
+            if (error) return callback(error);
 
             if (status === 204){
-                 callback(undefined)
+                 callback(undefined);
             } else {
-                    const { error } = JSON.parse(body)
-                    callback(new Error(error))
+                    const { error } = JSON.parse(body);
+                    callback(new Error(error));
                 }
         
             })
         }else{
-            const { error } = JSON.parse(body)
-            callback(new Error(error))
+            const { error } = JSON.parse(body);
+            callback(new Error(error));
         }
     }) 
 }

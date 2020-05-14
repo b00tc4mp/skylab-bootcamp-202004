@@ -7,7 +7,7 @@ describe('authenticateUser', () => {
         email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`
         password = passwords.random()
     })
-    debugger
+
     describe('when user already exists', () => {
         beforeEach(done => {
             call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
@@ -23,9 +23,9 @@ describe('authenticateUser', () => {
 
         it('should succeed on correct credentials', done =>
             authenticateUser(email, password, (error, token) => {
-                expect(error).to.be.undefined
+                expect(error).to.be.undefined;
 
-                expect(token).to.be.a('string')
+                expect(token).to.be.a('string');
 
                 done()
             })
@@ -35,23 +35,23 @@ describe('authenticateUser', () => {
             const _email = email.substring(0, 3) + '-' + email.substring(3)
 
             authenticateUser(_email, password, (error, token) => {
-                expect(error).to.be.an.instanceOf(Error)
-                expect(error.message).to.equal('username and/or password wrong')
+                expect(error).to.be.an.instanceOf(Error);
+                expect(error.message).to.equal('username and/or password wrong');
 
-                expect(token).to.be.undefined
+                expect(token).to.be.undefined;
 
                 done()
             })
         })
 
         it('should fail on incorrect credentials (password)', done => {
-            const _password = password.substring(0, 3) + '-' + password.substring(3)
+            const _password = password.substring(0, 3) + '-' + password.substring(3);
 
             authenticateUser(email, _password, (error, token) => {
-                expect(error).to.be.an.instanceOf(Error)
-                expect(error.message).to.equal('username and/or password wrong')
+                expect(error).to.be.an.instanceOf(Error);
+                expect(error.message).to.equal('username and/or password wrong');
 
-                expect(token).to.be.undefined
+                expect(token).to.be.undefined;
 
                 done()
             })
@@ -61,10 +61,10 @@ describe('authenticateUser', () => {
                 `{ "username": "${email}", "password": "${password}" }`,
                 { 'Content-type': 'application/json' },
                 (error, status, body) => {
-                    if (error) return done(error)
-                    if (status !== 200) return done(new Error(`unexpected status ${status}`))
+                    if (error) return done(error);
+                    if (status !== 200) return done(new Error(`unexpected status ${status}`));
     
-                    let { token } = JSON.parse(body)
+                    const { token } = JSON.parse(body);
     
                     call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users',
                         `{ "password": "${password}" }`,
@@ -73,8 +73,8 @@ describe('authenticateUser', () => {
                             Authorization: `Bearer ${token}`
                         },
                         (error, status, body) => {
-                            if (error) return done(new Error(error.message))
-                            if (status !== 204) return done(new Error(`undexpected status ${status}`))
+                            if (error) return done(new Error(error.message));
+                            if (status !== 204) return done(new Error(`undexpected status ${status}`));
     
                             done()
                         })
@@ -85,9 +85,9 @@ describe('authenticateUser', () => {
     describe('when user does not exist', () => {
         it("should fail when user crendetials dont exit",done=>{
             authenticateUser("aaaaa@aaaa.aa","123123123", (error, token)=>{
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(Error)
-            expect(token).to.be.undefined
+            expect(error).to.exist;
+            expect(error).to.be.an.instanceOf(Error);
+            expect(token).to.be.undefined;
             done()
         })
     })

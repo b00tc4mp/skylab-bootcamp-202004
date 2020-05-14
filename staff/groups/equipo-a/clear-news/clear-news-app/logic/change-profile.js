@@ -9,10 +9,10 @@
   * @throws {Error} If e-mail or token does not match the expected format.
   */
 
-function changeProfilege(token, userUpdate, callback) {
+function changeProfile(token, userUpdate, callback) {
 
 
-    let { name, surname, email, password, oldPassword, categories, country } = userUpdate
+    const { name, surname, email, password, oldPassword, categories, country } = userUpdate
     Email.validate(email);
     
     if (oldPassword !==""){ 
@@ -75,7 +75,7 @@ function changeProfilege(token, userUpdate, callback) {
                     call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify(userUpdate),
                         { 'Content-type': 'application/json', 'Authorization': `Bearer ${token}` },
                         (error, status, body) => {
-                            if (error) return callback(error)
+                            if (error) return callback(error);
 
                             if (status === 204) {
                                 callback("message");
@@ -86,7 +86,7 @@ function changeProfilege(token, userUpdate, callback) {
                             }
                         });
                 } else {
-                    const { error } = JSON.parse(body)
+                    const { error } = JSON.parse(body);
 
                     callback(new Error(error))
                 }

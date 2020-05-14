@@ -34,7 +34,7 @@ describe('retrieveFavoriteNews', () => {
                                 if (error) return done(new Error(error.message));
 
                                 if (state === 200) {
-                                    let { token } = JSON.parse(body);
+                                    const { token } = JSON.parse(body);
                                     _token = token;
                                     done();
                                 }
@@ -44,19 +44,18 @@ describe('retrieveFavoriteNews', () => {
         })
 
         it('should return an array with titles of favorite news', done => {
-            let favorite = "Apple Music's web player is out of beta"
+            const favorite = "Apple Music's web player is out of beta"
 
             call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users',
                 `{"favorite": ["${favorite}"]}`,
                 { "Content-type": "application/json", "Authorization": `Bearer ${_token}` },
                 (error, state, body) => {
-                    expect(error).to.be.undefined
-                    expect(state).to.equal(204)
+                    expect(error).to.be.undefined;
+                    expect(state).to.equal(204);
 
                     retrieveFavNews(_token, (error, favNews) => {
-                        expect(error).to.be.undefined
-
-                        expect(favNews.length).to.be.greaterThan(0)
+                        expect(error).to.be.undefined;
+                        expect(favNews.length).to.be.greaterThan(0);
 
                         done()
                     })
@@ -67,10 +66,9 @@ describe('retrieveFavoriteNews', () => {
             const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWI0MDVmYjg2MmJkNTAwMTU5ODQ0NGMiLCJpYXQiOjE1ODg5NDg3NDgsImV4cCI6MTU4ODk1MjM0OH0'
 
             retrieveFavNews(token, (error, favNews) => {
-                expect(error).to.exist
-                expect(error.message).to.equal('invalid token')
-
-                expect(favNews).to.be.undefined
+                expect(error).to.exist;
+                expect(error.message).to.equal('invalid token');
+                expect(favNews).to.be.undefined;
 
                 done()
             })
@@ -111,10 +109,9 @@ describe('retrieveFavoriteNews', () => {
             `{ "username": "${email}", "password": "${password}" }`,
             { 'Content-type': 'application/json' },
             (error, status, body) => {
-                if (error) return done(error)
-                if (status !== 200) return done(new Error(`unexpected status ${status}`))
-                debugger
-                const { token } = JSON.parse(body)
+                if (error) return done(error);
+                if (status !== 200) return done(new Error(`unexpected status ${status}`));
+                const { token } = JSON.parse(body);
 
                 call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users',
                     `{ "password": "${password}" }`,
@@ -123,8 +120,8 @@ describe('retrieveFavoriteNews', () => {
                         Authorization: `Bearer ${token}`
                     },
                     (error, status, body) => {
-                        if (error) return done(new Error(error.message))
-                        if (status !== 204) return done(new Error(`undexpected status ${status}`))
+                        if (error) return done(new Error(error.message));
+                        if (status !== 204) return done(new Error(`undexpected status ${status}`));
 
                         done()
                     })

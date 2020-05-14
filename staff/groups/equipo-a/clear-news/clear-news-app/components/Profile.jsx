@@ -37,20 +37,20 @@ function Profile({ token, categories, country }) {
         event.target.sports.checked ? sports=true : sports=false
         event.target.technology.checked ? technology=true : technology=false
 
-        let categories = { business, entertainment, general, health, science, sports, technology }
+        const categories = { business, entertainment, general, health, science, sports, technology }
 
-        let name= event.target.name.value
-        let surname = event.target.surname.value
-        let email = event.target.email.value
-        let oldPassword = event.target.password.value
-        let password = event.target.newPassword.value
+         const name= event.target.name.value
+         const surname = event.target.surname.value
+         const email = event.target.email.value
+         const oldPassword = event.target.password.value
+         const password = event.target.newPassword.value
         
-        let country=event.target.country.value
+         const country=event.target.country.value
 
-        let userUpdate={name, surname, email, oldPassword, password, categories, country}
+        const userUpdate={name, surname, email, oldPassword, password, categories, country}
 
         try {
-            changeProfilege(token,userUpdate , error => {
+            changeProfile(token,userUpdate , error => {
                 if (error) return setError(error.message)
                 setSucces(message)
                 // onChangeProf()//aqui meter los valores que queremos pasar a home

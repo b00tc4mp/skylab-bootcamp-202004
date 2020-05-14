@@ -32,7 +32,7 @@ function searchNews(token, query, language, sortBy, callback) {
             if (error) return callback(error)
 
             if (status === 200) {
-                let user = JSON.parse(body)
+                const user = JSON.parse(body);
 
                 const { favorite = [] } = user
 
@@ -77,7 +77,7 @@ function searchNews(token, query, language, sortBy, callback) {
                             numberOfPages.push(i+1)
                         }
 
-                        let allNewsUnique = getUnique(allNews, element=>element.title)
+                        const allNewsUnique = getUnique(allNews, element=>element.title)
 
                         callback(undefined, allNewsUnique, numberOfPages);
                     });
