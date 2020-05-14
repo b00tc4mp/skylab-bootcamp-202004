@@ -53,7 +53,7 @@ function Profile({ token, categories, country }) {
             changeProfile(token,userUpdate , error => {
                 if (error) return setError(error.message)
                 else setSuccess ( "success 🤡")
-                // onChangeProf()//aqui meter los valores que queremos pasar a home
+                
             })
         } catch ({ message }) {
             setError(`One field ${message}`)

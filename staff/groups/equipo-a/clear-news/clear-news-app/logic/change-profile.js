@@ -79,7 +79,7 @@ function changeProfile(token, userUpdate, callback) {
                             if (error) return callback(error);
 
                             if (status === 204) {
-                                callback("success");
+                                callback(undefined,"success");
 
                             } else {
                                 const { error } = JSON.parse(body);
