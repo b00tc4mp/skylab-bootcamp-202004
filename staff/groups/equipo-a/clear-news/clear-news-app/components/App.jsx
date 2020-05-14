@@ -57,7 +57,6 @@ function App() {
         setView('landing')
     }
 
-    // const handleUserSessionExpired = () => setHashView('login')
 
     return <>
         {view === 'landing' && <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
@@ -65,6 +64,5 @@ function App() {
         {view === 'login' && <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />}
         {view === 'home' && <Home token={token} onLogout={handleLogout} />}
         
-        {/* // onUserSessionExpired={handleUserSessionExpired} */}
     </>
 }
