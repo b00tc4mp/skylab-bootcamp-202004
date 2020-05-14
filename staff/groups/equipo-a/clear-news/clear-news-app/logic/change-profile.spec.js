@@ -1,4 +1,4 @@
-describe.only('changeProfile', () => {
+describe('changeProfile', () => {
 
     let _name, _surname, _email, _password, _categories, _country
 

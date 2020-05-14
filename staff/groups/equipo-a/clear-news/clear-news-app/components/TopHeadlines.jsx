@@ -1,14 +1,16 @@
 const { useEffect, useState } = React
 
-function TopHeadlines({ news, pages, myHeadlines, token }) {
+function TopHeadlines({pages, topHeadlines, token }) {
     const [error, setError] = useState()
     const [currentPage, setCurrentPage] = useState(1)
-    // const [NewsError, setErrorNews] = useState()
+
+    const[news, setNews] = useState()
 
     useEffect(() => {
-        !news && retrieveNews(token, (error, news, pages) => { //si no hay noticias cuando pinte el compo
+        !news && retrieveNews(token, (error, news, pages) => {
             if (error) setError(error.message)
-            myHeadlines(news, pages)
+            topHeadlines(pages)
+            setNews(news)
         })
     }, [])
 
@@ -16,18 +18,17 @@ function TopHeadlines({ news, pages, myHeadlines, token }) {
         try {
             storeTopHeadlines(token, headline, error => {
                 if (error) throw error
-                // setErrorNews(error.message)
-                /* if(error.message==="invalid token") */
+
                 else {
                     retrieveNews(token, (error, news, pages) => {
                         if (error) setError(error.message)
-                        myHeadlines(news, pages)
+                        topHeadlines(pages)
+                        setNews(news)
                     })
                 }
             })
         } catch (error) {
             if (error) throw error
-            // setErrorNews(error.message)
         }
     }
 
