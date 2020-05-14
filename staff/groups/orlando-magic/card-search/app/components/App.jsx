@@ -9,8 +9,6 @@ function App(){
     const [userConditions, setUserConditions] = useState(undefined)
     const [id, setId] = useState(undefined)
     let hash
-    const [favCards, setFavCards] = useState(undefined)
-    const [socialError, setSocialError] = useState(undefined)
 
 
     useEffect(() => {
@@ -24,6 +22,8 @@ function App(){
                         setToken(sessionStorage.token)
                         if (hash === 'adv') setHashView(hash)
                         else if (hash.includes('q=')) setView('results')
+                        else if (hash === 'following') setHashView('following')
+                        else if (hash === 'user') setHashView('user')
                         else {
                             location.hash = ''
                             setView('landing')
@@ -64,10 +64,6 @@ function App(){
         location.hash = ''
         setView('landing')
     }
-
-    // function handleAdvSearch(){
-    //     setView('adv')
-    // }
 
     function handleFollowing(){
         setView('following')
@@ -117,21 +113,7 @@ function App(){
 
     function goToUser(user){
         setId(user?user.id:undefined)
-        setView('user')
-    }
-
-    const handleFavourite = id => {
-        try{
-            toggleFavouriteCard(token, id, error=>{
-                if(error) setSocialError(error.message)
-                retrieveUserCards(token, (error, cards)=>{
-                    if (error) return setSocialError(error.message)
-                    setFavCards(cards)
-                }, undefined, true)
-            })
-        }catch(error){
-            setSocialError(error.message)
-        }
+        !user?setHashView("user"):setView("user")
     }
 
     function onUserSearch(event){
@@ -147,17 +129,16 @@ function App(){
     }
 
     return <>
-        {(view !== 'landing') && (view !== 'login') && (view !== 'register') && <NavBar onLanding = {handleLanding} setHashView={setHashView} onBasicSearch = {onBasicSearch}  onUserSearch = {onUserSearch} onFollowing = {handleFollowing} goToUser = {goToUser} token = {token}/>}
-        {socialError && <Feedback message= {socialError} level = "error"/>}
-        {view==='landing' && <Landing setHashView = {setHashView} onBasicSearch = {onBasicSearch} onLogOut={handleLogOut} onUserSearch= {onUserSearch} token={token} onFollowing= {handleFollowing}  goToUser = {goToUser}/>}
+        {(view !== 'landing') && (view !== 'login') && (view !== 'register') && <NavBar onLanding = {handleLanding} setHashView={setHashView} onBasicSearch = {onBasicSearch}  onUserSearch = {onUserSearch} goToUser = {goToUser} token = {token}/>}
+        {view==='landing' && <Landing setHashView = {setHashView} onBasicSearch = {onBasicSearch} onLogOut={handleLogOut} onUserSearch= {onUserSearch} token={token}  goToUser = {goToUser}/>}
         {view==='login' && <Login onSubmit = {handleLoggedIn} setHashView = {setHashView} onLanding={handleLanding}/>}
-        {view==='register'  && <Register setHashView = {setHashView} onLanding={handleLanding}/>}
-        {view === 'results' && <Results goToCard = {goToCard} searchConditions={searchConditions} setSearchConditions={setSearchConditions} handleFavourite = {handleFavourite} favCards = {favCards} token = {token}/>}
+        {view==='register'  && <Register setHashView = {setHashView} onLanding={handleLanding} onLogin = {setHashView}/>}
+        {view === 'results' && <Results goToCard = {goToCard} searchConditions={searchConditions} setSearchConditions={setSearchConditions} token = {token}/>}
         {view === 'userresults' && <UserResults goToUser = {goToUser} userConditions={userConditions} token = {token}/>}
         {view === 'following' && <Following goToUser = {goToUser} token = {token}/>}
         {view === 'adv' && <Search onAdvancedSearch = {onAdvancedSearch} searchConditions = {searchConditions}/>}
         {view === 'card' && <Card card = {card}/>}
-        {view === 'user' && <User userId = {id} token = {token} goToCard = {goToCard} handleFavourite = {handleFavourite} favCards = {favCards}/>}              
+        {view === 'user' && <User userId = {id} token = {token} goToCard = {goToCard}/>}              
     </>
     
 }

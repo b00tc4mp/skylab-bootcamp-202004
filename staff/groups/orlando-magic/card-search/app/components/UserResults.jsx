@@ -10,6 +10,7 @@ function UserResults({userConditions, goToUser, token}){
                 if(error) setErrorUserResults(error.message)
                 searchUsers(token, userConditions,(error, userSearchResults) =>{
                     if(error) setErrorUserResults(error.message)
+                    else if (userSearchResults && (!userSearchResults.length)) setErrorUserResults("No users were found with this query")
                     else if (userSearchResults && (userSearchResults.length === 1)) goToUser(userSearchResults[0])
                     else setUserResults(userSearchResults)
                 })
@@ -23,6 +24,7 @@ function UserResults({userConditions, goToUser, token}){
         try{
             searchUsers(token, userConditions,(error, userSearchResults) =>{
                 if(error) setErrorUserResults(error.message)
+                else if (userSearchResults && (!userSearchResults.length)) setErrorUserResults("No users were found with this query")
                 else if (userSearchResults && (userSearchResults.length === 1)) goToUser(userSearchResults[0])
                 else setUserResults(userSearchResults)
             })
@@ -35,11 +37,9 @@ function UserResults({userConditions, goToUser, token}){
     },[userConditions])
 
     return <section className="userresults">
-    {/* <article className="userresults__info"></article> */}
     {errorUserResults && !userResults.length && <Feedback message= {errorUserResults} level = "warning"/>}
     <ul className="userresults__cards">
         {userResults && userResults.map(user => <li key = {user.email}>{<UserCard user = {user} handleFollow = {handleFollow} goToUser = {goToUser}/>}</li>)}
     </ul>
   </section>;
-  
 }

@@ -1,7 +1,6 @@
 function Landing({setHashView, onLogOut, token, onBasicSearch, onUserSearch, onFollowing, goToUser}){
     const [error, setError] = useState(undefined)
     const [name, setName] = useState(undefined)
-//function Landing(props){
 
     const handleLogin = event => {
         event.preventDefault()
@@ -29,7 +28,7 @@ function Landing({setHashView, onLogOut, token, onBasicSearch, onUserSearch, onF
 
     useEffect(() => {
         try {
-            retrieveUser(token , (error, user)=>{
+            retrieveUser(sessionStorage.token, (error, user)=>{
                 if (error) return setError(error.message)
                 setName(user.nickname)
             })
@@ -61,7 +60,7 @@ function Landing({setHashView, onLogOut, token, onBasicSearch, onUserSearch, onF
                     {error && <Feedback error={error} level='warning'/>}
                     <div className="card-container__nav">
                         <a className="card-container__nav-item" href="" onClick = {handleAdvSearch}>Advanced Search</a>
-                        {token && <a className="card-container__nav-item" href="" onClick = {()=>{event.preventDefault(); debugger; goToUser(undefined)}}>My Cards</a>}
+                        {token && <a className="card-container__nav-item" href="" onClick = {()=>{event.preventDefault(); goToUser(undefined)}}>My Cards</a>}
                         {token && <a className="card-container__nav-item" href="" onClick = {() =>{event.preventDefault(); onFollowing()}}>Following</a>}
                         {!token && <a className="card-container__nav-item" href="" onClick = {handleLogin}>Login</a>}
                         {!token && <a className="card-container__nav-item" href="" onClick = {handleRegister}>Register</a>}

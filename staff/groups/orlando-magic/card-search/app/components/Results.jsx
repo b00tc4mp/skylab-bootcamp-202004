@@ -1,12 +1,35 @@
 const {useState, useEffect} = React
 
-function Results({searchConditions, setSearchConditions, goToCard, handleFavourite, favCards, token}){
-  let [errorResults, setErrorResults] = useState(undefined)
-  let [results, setResults] = useState([])
+function Results({searchConditions, setSearchConditions, goToCard, token}){
+  const [errorResults, setErrorResults] = useState(undefined)
+  const [results, setResults] = useState([])
+  const [favCards, setFavCards] = useState(undefined)
   let url, query
+  
+
+  const handleFavourite = id => {
+      try{
+          toggleFavouriteCard(token, id, error=>{
+              if(error) setErrorResults(error.message)
+              retrieveUserCards(token, (error, loggedUserCards) =>{
+                  if (error) return setErrorResults(error.message)
+
+                  setFavCards(loggedUserCards)
+              }, undefined, true)
+          })
+      }catch(error){
+          setErrorResults(error.message)
+      }
+  }
 
   useEffect(()=>{
     try{
+      if (token){retrieveUserCards(token, (error, loggedUserCards) =>{
+        if (error) return setErrorResults(error.message)
+
+        setFavCards(loggedUserCards)
+      }, undefined, true)}
+
       if (searchConditions) {
         url = createUrl(searchConditions)
         location.hash = url
@@ -78,7 +101,6 @@ function Results({searchConditions, setSearchConditions, goToCard, handleFavouri
         </div>
       </form>
     </header>
-    {/* <article></article> */}
     {errorResults && !results.length && <Feedback message= {errorResults} level = "warning"/>}
     <ul className = 'results__cards'>
       {results && results.map(card => <li key={card.id}><a onClick = {() => {goToCard(card)}}>
@@ -92,20 +114,3 @@ function Results({searchConditions, setSearchConditions, goToCard, handleFavouri
     </ul> 
   </section>
 }
-
-
-{/* <div class="flip-card">
-  <div class="flip-card-inner">
-    <div class="flip-card-front">
-      <img src="img_avatar.png" alt="Avatar" style="width:300px;height:300px;">
-    </div>
-    <div class="flip-card-back">
-      <h1>John Doe</h1>
-      <p>Architect & Engineer</p>
-      <p>We love that guy</p>
-    </div>
-  </div>
-</div> */}
-
-//card.card_faces? <button onClick={}>Transform</button>:undefined
-//(card.card_faces[0].image_uris.png || card.card_faces[0].image_uris.large)

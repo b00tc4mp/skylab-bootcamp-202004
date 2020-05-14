@@ -20,7 +20,7 @@ class Register extends Component {
             registerUser(username, email, password, error => {
                 if (error) return this.setState({error: error.message})
 
-                this.props.onLogin()
+                this.props.onLogin('login')
             })
 
         } catch ({ message }) {
