@@ -24,18 +24,19 @@ function Home({ onLogout }) {
     }
   }
 
-  const updateList = () => {
-    const interval = setInterval(handleRetrieveCryptos, 5000)
-    setIntervalState(interval)
-  }
+  // const updateList = () => {
+  //   const interval = setInterval(handleRetrieveCryptos, 5000)
+  //   setIntervalState(interval)
+  // }
 
   useEffect(() => {
     handleCheckHash()
     handleRetrieveCryptos()
-    updateList()
+    // updateList()
 
     window.addEventListener('hashchange', handleCheckHash)
     return () => {
+      debugger
       window.removeEventListener('hashchange', handleCheckHash)
       clearInterval(intervalState)
     }
@@ -46,11 +47,8 @@ function Home({ onLogout }) {
     const {
       target: { value: query },
     } = event;
-    if (!query) {
-      return updateList()
-    } else {
-      clearInterval(intervalState)
-    }
+    if (!query) return handleRetrieveCryptos()
+
     searchCryptos(query, (_error, _cryptos) => {
       if (_error) setError(_error.message);
       else setCryptos(_cryptos);

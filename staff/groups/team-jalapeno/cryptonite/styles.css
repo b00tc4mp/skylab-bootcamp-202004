@@ -27,6 +27,10 @@ body {
   color: #f7ce78;
 }
 
+.logout-link {
+  color: #f7ce78;
+}
+
 .brand {
   display: flex;
   justify-content: center;
@@ -348,6 +352,15 @@ body {
   display: flex;
   justify-content: center;
   font-size: 1em;
+}
+
+.chart {
+  width: 70%;
+}
+
+.canvas-container {
+  width: 100%;
+  height: 20em;
 }
 
 .login {
