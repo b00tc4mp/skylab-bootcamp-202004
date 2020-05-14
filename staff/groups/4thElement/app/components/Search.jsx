@@ -20,7 +20,7 @@ function Search({ movingSurfForecast, sportState, token }) {
     }
 
     return <section className="Search">
-        <SearchSpotCompo onSubmitSpot={handleSubmitSpot} searchSelector={handelChangeSelector} selectorState={selectorState}/>
+        <SearchSpotCompo onSubmitSpot={handleSubmitSpot} searchSelector={handelChangeSelector} selectorState={selectorState} sportState={sportState}/>
         {query && <SpotResultsList  query={query} onGoToSurfForecast={onGoToSurfForecast} sportState={sportState} selectorState={selectorState} token={token}/>}
 
     </section>

@@ -1,6 +1,10 @@
 .Searcher
-    background-color: rgba(67, 161, 177, 1)
-    height: 10.5vh
+    &--surf
+        background-color: rgba(67, 161, 177, 1)
+        height: 10.5vh
+    &--snow
+        background-color: rgba(161, 238, 252, 1)
+        height: 10.5vh
     &__input-container
         position: absolute
         margin-top: 3vh
@@ -31,12 +35,15 @@
         div
             text-align: center
             width: 50vw
-        div:hover
-            // background-color: rgba(67, 161, 177, 1)
-    &__selectorSpot--active
+    &__selectorSpotSurf--active
         background-color: rgba(67, 161, 177, 1)
-    &__selectorUser--active
+    &__selectorUserSurf--active
         background-color: rgba(67, 161, 177, 1)
+
+    &__selectorSpotSnow--active
+        background-color: rgba(161, 238, 252, 1)
+    &__selectorUserSnow--active
+        background-color: rgba(161, 238, 252, 1)
 
     
 

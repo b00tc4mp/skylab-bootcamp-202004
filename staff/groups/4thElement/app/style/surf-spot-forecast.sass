@@ -1,5 +1,9 @@
 .forecast
+    margin-right: auto
+    margin-left: auto
     &__ul
+        height: 85vh
+        overflow: scroll
         list-style-type: none
         font-family: 'Source Sans Pro', sans-serif
         padding: 0
@@ -35,11 +39,34 @@
         width: 100vw
         &--element
             margin-right: 18vw
+
+    &__selector
+        font-size: 1.3rem
+        display: flex
+        width: 100%
+        background-color: rgb(228, 228, 228)
+        margin-top: 6vh
+        justify-content: center
+        div
+            text-align: center
+            width: 50vw
+        div:hover
+            //background-color: rgba(67, 161, 177, 1)
+    &__selectorForecast--active
+        background-color: rgba(67, 161, 177, 1)
+    &__selectorReviews--active
+        background-color: rgba(67, 161, 177, 1)
+
+    &__spiner
+        margin-top: 10vh
+        margin-left: 40vw
+
 p
     margin-right: 8vw
 span
     background: green
     font-size: 25px
+
             
             
         

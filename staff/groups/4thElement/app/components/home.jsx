@@ -54,9 +54,11 @@ function Home({sportState, ReturnsportState, pointerMapSelected}) {
     }
 
     const handelClickSnow = () => {
-        setdinamicClass('snow')
-        setworldImage('snow')
-        sportState()
+        if(dinamicClass != 'snow'){
+            setdinamicClass('snow')
+            setworldImage('snow')
+            sportState()
+        }
     }
 
     const handleSpotSelected=(coordinates)=>{

@@ -1,4 +1,4 @@
-function SearchSpotCompo({onSubmitSpot, searchSelector, selectorState}) {
+function SearchSpotCompo({onSubmitSpot, searchSelector, selectorState, sportState}) {
     //change name to search because it will seachr users to
 
     const handleSpot = (event) => {
@@ -17,7 +17,7 @@ function SearchSpotCompo({onSubmitSpot, searchSelector, selectorState}) {
     }
 
 
-return <section className='Searcher'>
+return <section className={'Searcher' + (sportState === 'surf' ? "--surf" : "--snow")}>
     <form onSubmit={handleSpot}>
         <div className="Searcher__input-container">
             <button className="Searcher__input-container__button"><img  className='Searcher__input-container__image' src="./images/icon.png"/></button>
@@ -25,8 +25,8 @@ return <section className='Searcher'>
         </div>
     </form>
     <div className="Searcher__selector">
-        <div className={"Searcher__selectorSpot" + (selectorState === 'spots' ? "--active" : "")} onClick={()=>handelClickedSelector('spots')}>Spots</div>
-        <div className={"Searcher__selectorUser" + (selectorState === 'users' ? "--active" : "")} onClick={()=>handelClickedSelector('users')}>Riders</div>
+        <div className={"Searcher__selectorSpot" + (sportState === 'surf' ? "Surf" : "Snow") + (selectorState === 'spots' ? "--active" : "")} onClick={()=>handelClickedSelector('spots')}>Spots</div>
+        <div className={"Searcher__selectorUser" + (sportState === 'surf' ? "Surf" : "Snow") + (selectorState === 'users' ? "--active" : "")} onClick={()=>handelClickedSelector('users')}>Riders</div>
     </div>
 </section>
 
