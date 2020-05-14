@@ -59,22 +59,24 @@ function Favorites({token, myFavorite, myHeadlines}) {
     return <>
     
     <section className="favNews">
+        <h1 className="news__fav">Favorite News</h1>
         {
             favNews && <ul className="news__container">
                 { favNews.map(({ name, title, url, urlToImage }) =>
                         <li className="news__item" key={title}>
                             <a href={url} target='_blank'><img className="news__images" src={urlToImage}></img>
-                            <div className="news__title stroke"><p className="stroke">{name}</p><p className="stroke"> {title}</p> </div></a>
+                            <div className="news__title"><p>{name}</p><p> {title}</p> </div></a>
                             <div className="news__button"> <input type="image" className="news__followIMG" src="images/heart-follow.png" onClick={() => handleLikeNews(title)} /></div>
                 </li>)}
             </ul>
         }
+        <h1 className="news__fav">Favorite Headlines</h1>
         {
             headlines && <ul className="news__container">
                 { headlines.map(({ name, title, url, urlToImage }) =>
                         <li className="news__item" key={title}>
                             <a href={url} target='_blank'><img className="news__images" src={urlToImage}></img>
-                            <div className="news__title stroke"><p className="stroke">{name}</p><p className="stroke"> {title}</p> </div></a>
+                            <div className="news__title"><p>{name}</p><p> {title}</p> </div></a>
                             <div className="news__button"> <input type="image" className="news__followIMG" src="images/heart-follow.png" onClick={() => handleLikeHeadlines({name, title, url, urlToImage})} /></div>
                 </li>)}
             </ul>
