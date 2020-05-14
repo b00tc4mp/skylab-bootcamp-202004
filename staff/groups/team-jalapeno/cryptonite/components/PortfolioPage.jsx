@@ -7,6 +7,7 @@ function PortfolioPage({ onLogout }) {
 
     useEffect(() => {
 
+
         retrieveUser(sessionStorage.token, (userError, user) => {
             if (userError) return setError(userError)
 
@@ -43,7 +44,7 @@ function PortfolioPage({ onLogout }) {
     }, [])
 
     const subTotal = (quantity, priceUsd) => {
-        let result = Number(quantity) * Number(priceUsd)
+        const result = Number(quantity) * Number(priceUsd)
         return result.toFixed(2)
     }
 
