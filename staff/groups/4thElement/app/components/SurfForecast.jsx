@@ -13,7 +13,8 @@ function SurfForecast({token, forecastSelected, sportState}) {
     const [following, setFollowing] = useState()
 
     useEffect(() => {
-        surfForecastLogic({forecastSelected}, function (error, info) {
+        forecastLogic({forecastSelected}, sportState, function (error, info) {
+            if(error) throw new TypeError('error')
             setForecast(info)
         })
         hideButton(token, forecastSelected, (error, following)=>{

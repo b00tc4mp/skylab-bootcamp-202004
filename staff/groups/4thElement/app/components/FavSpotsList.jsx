@@ -26,7 +26,6 @@ function FavSpotsList({ token, results, onGoToSurfForecast, sportState }) {
         return <>            
         {<FavSpots token={token} onGoToSurfForecast={onGoToSurfForecast} sportState={sportState}/>}
         </>
-
     }
 
     

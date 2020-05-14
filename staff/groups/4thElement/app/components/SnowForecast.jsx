@@ -15,7 +15,7 @@ function SnowForecast({token, forecastSelected, sportState}) {
 
 
     useEffect(() => { // add try catch
-        snowForecastLogic({forecastSelected}, function (error, info) {
+        forecastLogic({forecastSelected}, sportState, function (error, info) {
             setForecast(info)
         })
         hideButton(token, forecastSelected, (error, following)=>{
