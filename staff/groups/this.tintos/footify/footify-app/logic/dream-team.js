@@ -62,7 +62,7 @@ function dreamTeam(players, token, callback) {
                                 let pos = resultsLikes.map(function (e) { return e.id; }).indexOf(idPlayer);
                                 const posRanking = resultsLikes[pos].posRank
                                 const likes = resultsLikes[pos].likes
-                                playersImg.push({ strPlayer, strCutout, posRanking, likes })
+                                playersImg.push({ strPlayer, strCutout, posRanking, likes,idPlayer })
                                 if (counter === 11) {
                                     callback(undefined, playersImg)
                                 }

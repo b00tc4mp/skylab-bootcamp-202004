@@ -127,24 +127,6 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
         })
     }
    
-    const handleGoToFwitter = () => {
-        try {
-            retriveFwitter(token, (error, results) => {
-                if (error) return setError(error.message);
-                const arrfwitter = creatFwitterArray(results)
-                
-                //TODO
-                //const arrfwitter = creatFwitterArray(results)
-
-                commentCards(arrfwitter, token, (error, resultsComments) => {
-                    setFwitter(resultsComments)
-                })
-            })
-            setView('fwitter');
-        } catch ({ message }) {
-            setError(message)
-        }
-    }
     const handleGoToDream = () => {
         dreamTeam(undefined,token,(error, playersRanking) =>{
             if(error) return setError(error)
@@ -155,10 +137,12 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
        
     }
   
-    const handleGoToUpdateUser = () => {
-        setView('update-user')
-    }
 
+    const handleGoToUpdateUser = () => {goToView('update-user') }
+
+    const handleToggleFollowPlayers = () =>  { handleGoToPlayerResults(queryPlayer)}
+    
+    const handleCommentFwitt = () => {handleGoToPlayerResults(queryPlayer)}
 
     return <>
 

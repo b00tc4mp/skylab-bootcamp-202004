@@ -14,8 +14,8 @@ function Dream({ playersRanking }) {
 
                 <ul className="dream-team__list">
 
-                    {playersRanking.map(({ strPlayer, strCutout, posRanking, likes }) =>
-                        <li className="dream-team__row">
+                    {playersRanking.map(({ strPlayer, strCutout, posRanking, likes, idPlayer }) =>
+                        <li key={idPlayer} className="dream-team__row">
                             <div className="dream-team__info">
                                 <h1 className="dream-team__info-pos">{posRanking}</h1>
                                 <h2 className="dream-team__info-name">{strPlayer}</h2>

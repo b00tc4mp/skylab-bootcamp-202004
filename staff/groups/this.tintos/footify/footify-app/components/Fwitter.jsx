@@ -32,8 +32,8 @@ function Fwitter({ fwitter, token, onUpdateFwitter, onUserSessionExpired,searchP
             {
                 fwitter.length ?
                     <div className='fwitter'>
-                        {fwitter.map(({ idUser, nameUser, surnameUser, name, message, date, redCard, yellowCard, greenCard}) =>
-                            <div className='fwitter__user'>
+                        {fwitter.map(({ idUser, nameUser, surnameUser, name, message, date, redCard, yellowCard, greenCard,_date}) =>
+                            <div key={_date} className='fwitter__user'>
                                 <div className='fwitter__user-item'>
                                     <img className='fwitter__point' src="img/boy.svg" alt="" />
                                     <div className='fwitter__user-name'>{`@${nameUser} ${surnameUser}`}</div>

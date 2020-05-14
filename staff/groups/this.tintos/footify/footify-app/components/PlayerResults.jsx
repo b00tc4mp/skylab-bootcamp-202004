@@ -76,7 +76,7 @@ function PlayerResults({resultsPlayers, token, onToggleFollowPlayer,onCommentFwi
                         <hr className="player-card__small-line" />
 
                        <div className="player-card__comment">
-                        <form type="text" class="player-card__form" onSubmit={(event) => { event.preventDefault()
+                        <form type="text" className="player-card__form" onSubmit={(event) => { event.preventDefault()
                                 let {comment} = event.target 
                                     comment = comment.value
                                     handleCommentFwitt(id,firstName,surname,comment);}}>
