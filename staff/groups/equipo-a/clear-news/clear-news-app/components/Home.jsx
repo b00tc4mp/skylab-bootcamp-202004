@@ -6,7 +6,6 @@ class Home extends Component {
 
         this.state = {
             favNews: undefined,
-            news: undefined,
             pagesInTopHeadlines: undefined,
             pagesInSearch: undefined,
             view: 'topheadlines',
@@ -62,16 +61,6 @@ class Home extends Component {
         event.preventDefault()
 
         this.goToView('favorites')
-
-        // retrieveFavoriteTopHeadlines(this.props.token, (error, headlines) =>{
-        //     if(error) this.setState({error: error.message})
-        //     this.setState({headlines})
-        // })
-
-        // retrieveFavNews(this.props.token, (error, favNews) => {
-        //     if (error) this.setState({error: error.message})
-        //     this.setState({favNews})
-        // })
     }
 
     handleProfile = event => {
@@ -80,8 +69,8 @@ class Home extends Component {
         this.goToView('profile')
     }
 
-    handleTopHeadlines = (news, pages) => {
-        this.setState({ news, pagesInTopHeadlines: pages })
+    handleTopHeadlines = ( pages) => {
+        this.setState({ pagesInTopHeadlines: pages })
     }
 
     handleFavoritesNews = favNews => {
@@ -111,7 +100,7 @@ class Home extends Component {
             <img className="home__logo" src="images/logo.png"></img>
             {this.state.view === 'profile' && <Profile token={this.props.token} categories={this.state.categories} country={this.state.country}/>}
             {this.state.view === 'favorites' && <Favorites token={this.props.token} myFavorite={this.handleFavoritesNews} favNews={this.state.favNews} myHeadlines={this.handleFavoritesHeadlines} headlines={this.state.headlines}/>}
-            {this.state.view === 'topheadlines' && <TopHeadlines myHeadlines={this.handleTopHeadlines} token={this.props.token} news={this.state.news} pages={this.state.pagesInTopHeadlines}/>}
+            {this.state.view === 'topheadlines' && <TopHeadlines topHeadlines={this.handleTopHeadlines} token={this.props.token} pages={this.state.pagesInTopHeadlines}/>}
             {this.state.view === 'search' && <SearchNews token={this.props.token} onSearch={this.handleSearchNews} searchNewsResults={this.state.searchNewsResults} query={this.state.newsQuery} language={this.state.newsLanguage} sortBy={this.state.sortBy} pages={this.state.pagesInSearch}/>}
 
         </section>
