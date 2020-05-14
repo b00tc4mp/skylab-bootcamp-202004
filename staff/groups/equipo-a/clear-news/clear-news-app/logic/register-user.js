@@ -29,7 +29,7 @@ function registerUser(name, surname, email, password, interests, country, callba
     Function.validate(callback)
 
     let count = 0
-    for (interest in interests) {
+    for (let interest in interests) {
         if (interests[interest] === false) {
             count++
         }

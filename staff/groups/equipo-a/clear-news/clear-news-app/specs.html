@@ -16,7 +16,7 @@
 
     <script class="mocha-init">
         mocha.setup('bdd')
-        mocha.checkLeaks()
+        /* mocha.checkLeaks() */
         mocha.timeout(50000)
 
         const { expect } = chai
@@ -30,7 +30,7 @@
     <script src="utils/array.prototype.random-polyfill.js"></script>
     <script src="utils/test.js"></script>
     <script src="utils/call.js"></script>
-    <script src="utils/call.spec.js"></script>
+   <!--  <script src="utils/call.spec.js"></script> -->
 
     <script src="logic/authenticate-user.js"></script>
     <script src="logic/authenticate-user.spec.js"></script>
@@ -48,6 +48,7 @@
     <script src="logic/profile-update.spec.js"></script>
     <script src="logic/is-user-authenticated.js"></script>
     <script src="logic/is-user-authenticated.spec.js"></script>
+    
     
     <script class="mocha-exec">
         mocha.run()

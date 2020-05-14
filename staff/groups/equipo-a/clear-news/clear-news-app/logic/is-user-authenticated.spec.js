@@ -1,7 +1,8 @@
 describe('authenticateUser', () => {
     let email, password, _token
 
-    describe('validates existing token', done => {
+    describe('validates existing token',() => {
+        it('when user is create and validate', done => {
             call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
                 `{  "username": "${email}", "password": "${password}" }`,
                 { 'Content-type': 'application/json' },
@@ -50,5 +51,6 @@ describe('authenticateUser', () => {
                 done()
             });
         });
+    })
     })
 })
