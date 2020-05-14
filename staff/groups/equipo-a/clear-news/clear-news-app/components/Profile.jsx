@@ -5,7 +5,7 @@ function Profile({ token, categories, country }) {
     const [name, setName] = useState()
     const [surname, setSurname] = useState()
     const [email, setEmail] = useState()
-    const [success,setSucces] = useState()
+    const [success,setSuccess] = useState()
 
     useEffect(() => {
         retrieveUser(token, (error, user) => {
@@ -52,11 +52,11 @@ function Profile({ token, categories, country }) {
         try {
             changeProfile(token,userUpdate , error => {
                 if (error) return setError(error.message)
-                setSucces(message)
+                else setSuccess ( "success 🤡")
                 // onChangeProf()//aqui meter los valores que queremos pasar a home
             })
         } catch ({ message }) {
-            setError(message)
+            setError(`One field ${message}`)
         }
     }
 
@@ -112,12 +112,10 @@ function Profile({ token, categories, country }) {
                 <section className="resister__nav-button">
                     <button className="register__button" >Apply</button>
                 </section>
-                {
-                error && <Feedback message={error} level="error" />
-                }
-                {
-                success && <Feedback message={"success"} />
-                }
+                
+                {error && <Feedback message={error} level="error" />}
+               
+                {success && <Feedback message={success} />}
                 
             </form>
         </section>
