@@ -1,5 +1,5 @@
 function Card({card}){
-    debugger
+    
     const legalities = cardlegalities => {
         const values = Object.values(cardlegalities)
         return Object.keys(cardlegalities).map((key, i) => {

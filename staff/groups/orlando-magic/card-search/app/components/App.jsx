@@ -65,10 +65,6 @@ function App(){
         setView('landing')
     }
 
-    // function handleAdvSearch(){
-    //     setView('adv')
-    // }
-
     function handleFollowing(){
         setView('following')
     }
@@ -151,7 +147,7 @@ function App(){
         {socialError && <Feedback message= {socialError} level = "error"/>}
         {view==='landing' && <Landing setHashView = {setHashView} onBasicSearch = {onBasicSearch} onLogOut={handleLogOut} onUserSearch= {onUserSearch} token={token} onFollowing= {handleFollowing}  goToUser = {goToUser}/>}
         {view==='login' && <Login onSubmit = {handleLoggedIn} setHashView = {setHashView} onLanding={handleLanding}/>}
-        {view==='register'  && <Register setHashView = {setHashView} onLanding={handleLanding}/>}
+        {view==='register'  && <Register setHashView = {setHashView} onLanding={handleLanding} onLogin = {setHashView}/>}
         {view === 'results' && <Results goToCard = {goToCard} searchConditions={searchConditions} setSearchConditions={setSearchConditions} handleFavourite = {handleFavourite} favCards = {favCards} token = {token}/>}
         {view === 'userresults' && <UserResults goToUser = {goToUser} userConditions={userConditions} token = {token}/>}
         {view === 'following' && <Following goToUser = {goToUser} token = {token}/>}

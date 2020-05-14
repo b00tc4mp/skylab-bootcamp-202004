@@ -4,7 +4,7 @@ function Search({onAdvancedSearch, searchConditions}){
 
   const clearForm = () => {
     event.preventDefault()
-    debugger
+
     const {cardname, text, types, W, U, B, R, G, C, color_comparison, manacost, stat_1, stat_1_mode, statnumber, legality, formats, sets, blocks, mythicrare, rare, uncommon, common, artist, flavortext, lore, languages, order} = document.querySelector(".advancedsearch__form")
 
     cardname.value = ""
@@ -47,7 +47,7 @@ function Search({onAdvancedSearch, searchConditions}){
 
     document.querySelector("#textsymbols").value = true
   }
-  //defaultValue, defaultChecked
+
   return <section className="advancedsearch">
     <form className = "advancedsearch__form" onSubmit = {()=>{event.preventDefault(); onAdvancedSearch(event)}}>
       <div className="advancedsearch__section">
