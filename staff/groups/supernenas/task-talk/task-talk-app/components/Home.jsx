@@ -10,7 +10,8 @@
         groups: [],
         currentgroup:undefined,
         activities:[],
-        error:false
+        error:false,
+        selectedActivity:undefined
         }
      }
 
@@ -45,16 +46,27 @@
     }
     handleCreateCard=(title, desc)=>{//TODO esto no va así
         Trello.get(`boards/${this.state.currentgroup}/lists`,(lists)=>{
-            createnewactivity(title,lists[0].id,()=>{
+            createnewactivity(title,desc,lists[0].id,()=>{
                 this.handleGoToGroup(this.state.currentgroup);
             },()=>{})
         })
     }
 
-    handleEditCard=()=>{
-        this.setState({view: "cardEdition", menu: false, navigationName:"Add a new card"})
+    handleEditCard=(cardId)=>{
+        (cardId) ? this.setState( 
+            {view: "cardEdition", 
+            menu: false, 
+            navigationName:"Add a new card", 
+            selectedActivity:this.state.activities.find((activity)=>{  return activity.id===cardId})}):
+        this.setState({view: "cardEdition", menu: false, navigationName:"Add a new card", selectedActivity: undefined})
     }
-
+    handleUpdateCard=(cardId,listId,title, message)=>{
+        updateactivity(cardId,{name: title, desc:message, idList: listId},()=>{
+            this.handleGoToGroup(this.state.currentgroup);
+        },(error)=>{})
+    }
+//function updateactivity(id,newValues,onSuccess, onFailure)
+//Trello.put("cards/"+id,{name: newValues.name,desc: newValues.desc,idList: newValues.idList},onSuccess,onFailure)
     handleReturnToCards=()=>{
         this.setState({view: "cards", navigationName: ""})
     }
@@ -66,8 +78,8 @@
             {this.state.error && <Feedback message={this.state.error} level={"error"} /> }
                 
             {this.state.view==="groups" && <SelectGroups userGroups={this.state.groups} toSelectedGroup={this.handleGoToGroup} /> }
-            {this.state.view==="cardEdition" && <CardEdition onReturn={this.handleReturnToCards} onSubmit={this.handleCreateCard} />}
-            {this.state.view==="cards" && <CardSelection activities={this.state.activities} toEdit={(id)=>{console.log(id)}} /> }
+            {this.state.view==="cardEdition" && <CardEdition onReturn={this.handleReturnToCards} onCreate={this.handleCreateCard} onUpdate={this.handleUpdateCard}  editCard={this.state.selectedActivity} />}
+            {this.state.view==="cards" && <CardSelection activities={this.state.activities} toEdit={this.handleEditCard} /> }
         </section>
     }
  }

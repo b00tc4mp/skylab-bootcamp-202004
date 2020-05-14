@@ -7,12 +7,21 @@
  * @throws {TypeError} lanza un error si activityName o listId no son strings
  * @throws {TypeError} lanza un error si onSuccess o onFailure no son funciones
  */
-function createnewactivity(activityName, listId, onSuccess, onFailure) {
+function createnewactivity(activityName, activityMessage, listId, onSuccess, onFailure) {
     //Comprueba que se le han mandado dos callbacks
     Function.validate(onSuccess);
     Function.validate(onFailure);
+    if (activityMessage === undefined)
+        activityMessage = ""
+    else {
+        String.validate(activityMessage)
+    }
     String.validate(activityName);
     String.validate(listId);
 
-    Trello.post("cards", { name: activityName, idList: listId }, onSuccess, onFailure);
+    Trello.post("cards", {
+        name: activityName,
+        idList: listId,
+        desc: activityMessage
+    }, onSuccess, onFailure);
 }
