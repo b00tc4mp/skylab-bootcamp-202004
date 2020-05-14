@@ -21,14 +21,14 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
                 if (error) {
                     if (error.message === 'invalid token')
                         onUserSessionExpired()
-                    else throw setError(error.message);
+                    else  setError(error.message);
                 } else {
                     const arrfwitter = creatFwitterArray(results)
                     commentCards(arrfwitter, token, (error, resultsComments) => {
                         if(error){
                             if (error.message === 'invalid token')
                             onUserSessionExpired()
-                            else throw setError(error.message);
+                            else  setError(error.message);
                         }else{
                             setFwitter(resultsComments)
                             goToView('fwitter')
@@ -48,7 +48,7 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
                 if (error) {
                     if (error.message === 'invalid token')
                         onUserSessionExpired()
-                    else throw setError(error.message);
+                    else  setError(error.message);
                 } else {
                     setUserDetails(user)
                     const { likes } = user
@@ -60,15 +60,16 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
 
                     searchPlayers(queryPlayer, (error, resultsPlayer) => {
                         if (error) {
+                            
                             setPlayers('no players')
                             setError(error.message)
-                            goToView('cards')
+                            
                         }else{
                             searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => { 
                                 if (error) {
                                     if (error.message === 'invalid token')
                                         onUserSessionExpired()
-                                    else throw setError(error.message);
+                                    else  setError(error.message);
                                 } else {
                                 setPlayers(resultLikes) 
                                 goToView('cards')
@@ -90,14 +91,14 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
                 if (error) {
                     if (error.message === 'invalid token')
                         onUserSessionExpired()
-                    else throw setError(error.message);
+                    else  setError(error.message);
                 } else {
                     const arrfwitter = creatFwitterArray(results)
                     commentCards(arrfwitter, token, (error, resultsComments) => {
                         if (error) {
                             if (error.message === 'invalid token')
                                 onUserSessionExpired();
-                            else throw setError(error.message);
+                            else  setError(error.message);
                         }else{
                             const hash = address.hash()
                             !hash && address.hash('fwitter')
@@ -131,10 +132,18 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
    
     const handleGoToDream = () => {
         dreamTeam(token,(error, playersRanking) =>{
-            if(error) return setError(error)
+            if (error) {
+                if (error.message === 'invalid token')
+                    onUserSessionExpired()
+                else  setError(error.message);
+            } else {
+            
+
             setPlayersRanking(playersRanking)
             goToView('dream')
-        })
+
+         } })
+
        
        
     }
@@ -149,12 +158,12 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
     return <>
 
         <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter} onGoToDream={handleGoToDream} onGoToUpdateUser={handleGoToUpdateUser} onGoToLogOut={onGoToLogOut}/>
-        {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} onCommentFwitt={handleCommentFwitt} queryPlayer={queryPlayer} likesUser={likesUser} onUserSessionExpired={onUserSessionExpired}/>}
+        {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} onCommentFwitt={handleCommentFwitt} queryPlayer={queryPlayer} likesUser={likesUser} onUserSessionExpired={onUserSessionExpired} error={error}/>}
         {view === 'sport' && <SportNews sportNews={sportNews} />}        
         {view === 'fwitter' && <Fwitter fwitter={fwitter} token={token} onUpdateFwitter={handleGoToFwitter} onUserSessionExpired={onUserSessionExpired} searchPlayer={handleGoToPlayerResults}/>}
         {view === 'dream' && <Dream  playersRanking={playersRanking} searchPlayer={handleGoToPlayerResults}/>}
         {view === 'update-user' && <UpdateUser token={token} onGoToFwitter={handleGoToFwitter} userDetails={userDetails}  onUserSessionExpired={onUserSessionExpired}/>}
-       
+        {error && <Feedback message={error} level="login" />}
     </>
 
 }
