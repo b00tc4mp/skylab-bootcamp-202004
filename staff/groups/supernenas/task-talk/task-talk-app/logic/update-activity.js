@@ -9,13 +9,21 @@
  */
 
 function updateactivity(id, newValues, onSuccess, onFailure) {
-    //Check the type of the parameters
-    String.validate(id);
-    String.validate(newValues.name);
-    String.validate(newValues.desc);
-    String.validate(newValues.idList);
-    Function.validate(onSuccess);
-    Function.validate(onFailure);
+    String.validate(id)
 
-    Trello.put("cards/" + id, { name: newValues.name, desc: newValues.desc, idList: newValues.idList }, onSuccess, onFailure)
+    String.validate(newValues.name)
+
+    String.validate(newValues.desc)
+
+    String.validate(newValues.idList)
+    
+    Function.validate(onSuccess)
+    
+    Function.validate(onFailure)
+
+    Trello.put("cards/" + id, { 
+        name: newValues.name, 
+        desc: newValues.desc, 
+        idList: newValues.idList 
+    }, onSuccess, onFailure)
 }

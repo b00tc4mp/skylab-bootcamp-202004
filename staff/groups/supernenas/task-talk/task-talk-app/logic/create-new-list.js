@@ -8,10 +8,12 @@
  * @throws {TypeError} Throws an error if onSuccess or onFailure are not functions
  */
 function createnewlist(listName, groupId, onSuccess, onFailure) {
-    //Check the type of the parameters
     String.validate(listName)
+
     String.validate(groupId)
+
     Function.validate(onSuccess)
+    
     Function.validate(onFailure)
 
     Trello.post("list", { name: listName, idBoard: groupId }, onSuccess, onFailure)

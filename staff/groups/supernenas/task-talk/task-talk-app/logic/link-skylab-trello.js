@@ -1,6 +1,8 @@
 function linkskylabtrello(callback, tokenskylab, tokentrello) {
     Function.validate(callback)
+
     String.validate(tokenskylab)
+    
     String.validate(tokentrello)
 
     call("PATCH", 'https://skylabcoders.herokuapp.com/api/v2/users',

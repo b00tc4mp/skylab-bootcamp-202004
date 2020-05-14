@@ -89,20 +89,20 @@ describe("createnewlist", () => {
                     if (index >= 0) {
                         recursive(index, groups)
                     } else {
-                        done();
+                        done()
                     }
                 }, () => {
-                    done();
+                    done()
                 })
             } else {
-                done();
+                done()
             }
         }
         Trello.get("members/" + testUsername, (user) => {
             if (user.idBoards.length > 0) {
-                recursive(user.idBoards.length - 1, user.idBoards);
+                recursive(user.idBoards.length - 1, user.idBoards)
             } else {
-                done();
+                done()
             }
         }, () => {
             done();

@@ -10,13 +10,14 @@
 const TEXT_LENGTH = 16384
 
 function createnewgroup(groupname, groupdesc, onSuccess, onFailure) {
-    //Check that the parameters are of the correct type
     String.validate(groupname)
+
     String.validate(groupdesc)
+
     Function.validate(onSuccess)
+    
     Function.validate(onFailure)
 
-    //Check the size of the name and if it is exceeded delete it
     if (groupname.length > TEXT_LENGTH) groupname = groupname.substr(0, TEXT_LENGTH)
 
     Trello.post("boards/", {

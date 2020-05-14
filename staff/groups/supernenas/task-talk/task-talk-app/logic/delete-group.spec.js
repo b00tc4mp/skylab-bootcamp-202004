@@ -1,7 +1,10 @@
+"use strict"
+
 describe("deletegroup", () => {
     let testUsername = "pepitogrilloskylab"
+
     beforeEach(() => {
-        Trello.setToken(localStorage.trello_token);
+        Trello.setToken(localStorage.trello_token)
     })
     it("should remove a choosen group", (done) => {
         Trello.post("boards/", { name: "removeTestBoard" }, (group) => {
@@ -48,31 +51,32 @@ describe("deletegroup", () => {
         })
     })
 
-    afterEach((done) => { //Borro los tablones que he creado para las pruebas
+    afterEach((done) => {
         function recursive(index, groups) {
             if (index >= 0) {
                 Trello.delete("boards/" + groups[index], () => {
-                    index--;
+                    index--
+
                     if (index >= 0) {
                         recursive(index, groups)
                     } else {
-                        done();
+                        done()
                     }
                 }, () => {
-                    done();
+                    done()
                 })
             } else {
-                done();
+                done()
             }
         }
         Trello.get("members/" + testUsername, (user) => {
             if (user.idBoards.length > 0) {
-                recursive(user.idBoards.length - 1, user.idBoards);
+                recursive(user.idBoards.length - 1, user.idBoards)
             } else {
-                done();
+                done()
             }
         }, () => {
-            done();
+            done()
         })
     })
 })
