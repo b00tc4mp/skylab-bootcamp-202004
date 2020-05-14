@@ -1,6 +1,6 @@
-const { useEffect, useState } = React;
+const { useEffect, useState, } = React;
 
-function Home() {
+function Home({ onLogout }) {
   const [view, setView] = useState("cryptos-list");
   const [cryptos, setCryptos] = useState(null);
   const [error, setError] = useState(null);
@@ -15,11 +15,16 @@ function Home() {
   const handleCheckHash = () => {
     let view = window.location.hash
     if (view) {
-      if (view.includes('coin-page')){
+      if (view.includes('coin-page')) {
         setView('coin-page')
-      
-    } else setView(view.substring(1))
-  } 
+      } else setView(view.substring(1))
+    }
+  }
+
+  const updateList = () => {
+    const interval = setInterval(handleRetrieveCryptos, 5000)
+    setIntervalState(interval)
+
   }
 
   useEffect(() => {
@@ -49,7 +54,7 @@ function Home() {
   const handleClickCoin = (coinName) => {
     if (!coinName) return
     window.location.hash = `coin-page/${coinName}`
-    
+
   }
   const handlePortfolioClick = (event) => {
     event.preventDefault()
@@ -66,20 +71,25 @@ function Home() {
     window.location.hash = 'cryptos-list'
   }
 
+  const handleLogoutClick = (event) => {
+    event.preventDefault()
+    onLogout()
+    window.location.hash = ''
+  }
+
   const handlePortfolioSubmit = (id, quantity, callback) => {
     addPortfolioCrypto(sessionStorage.token, { id, quantity }, callback)
 
   }
 
-
-
   return (
     <>
       {view === "cryptos-list" && (
         <>
+
           <nav className="nav">
             <a href="" className="nav__item nav__item--contrast register-link"></a>
-            <a href="" className="nav__item logout-link">
+            <a href="" className="nav__item logout-link" onClick={handleLogoutClick}>
               Logout
           </a>
           </nav>
@@ -93,19 +103,11 @@ function Home() {
         </>
       )}
 
-      {view === 'coin-page' && <CoinPage addPortfolioSubmit={handlePortfolioSubmit} />}
-      {view === 'favorites-page' && <FavoritesPage />}
-      {view === 'portfolio-page' && <PortfolioPage />}
+      {view === 'coin-page' && <CoinPage addPortfolioSubmit={handlePortfolioSubmit} onLogout={handleLogoutClick} />}
+      {view === 'favorites-page' && <FavoritesPage handleClickCoin={handleClickCoin} onLogout={handleLogoutClick} />}
+      {view === 'portfolio-page' && <PortfolioPage onLogout={handleLogoutClick} />}
 
-      <footer className="footer">
-        <section>
-          <p className="footer__copyright">
-            © 2020 Team Jalapeño - Skylab Coders. All rights reserved.
-          </p>
-        </section>
-      </footer>
-
-
+      <div className="separator"></div>
       <NavBar portfolioClick={handlePortfolioClick} homeClick={handleHomeClick} favClick={handleFavClick} />
 
 

@@ -14,6 +14,10 @@
         width: 80%
         display: flex
         justify-content: center
+        background: white
+
+        & i
+            color: black
 
         & input
             // font-size: 1em
@@ -79,3 +83,20 @@
 
         &__percentage
             color: #dd7631
+
+@media (min-width: 768px)
+    .coins-container
+        .coin
+            &--large
+                max-width: 80%
+
+@media (min-width: 992px)
+    .coins-container
+        .coin
+            &--large
+                max-width: 48%
+
+@media (max-width: 455px)
+    .coins-container
+        .coin
+            width: 10em

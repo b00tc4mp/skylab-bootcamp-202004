@@ -1,6 +1,6 @@
 const { useEffect, useState } = React
 
-function FavoritesPage({ handleClickCoin }) {
+function FavoritesPage({ handleClickCoin, onLogout }) {
 
     const [coinFavs, setCoinFavs] = useState(null)
     const [error, setError] = useState(null)
@@ -36,7 +36,7 @@ function FavoritesPage({ handleClickCoin }) {
 
     return <div>
         <nav className="nav">
-            <a href='#' className="nav__item logout-link">Logout</a>
+            <a href='#' className="nav__item logout-link" onClick={onLogout}>Logout</a>
         </nav>
         <section className="brand">
             <h1 className="brand__title">Favorites</h1>

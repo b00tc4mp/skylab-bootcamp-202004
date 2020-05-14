@@ -3,6 +3,7 @@ const { useState, Component } = React
 function App() {
     const [view, setView] = useState('landing')
 
+
     useEffect(()=>{
         isAuthenticated()
         handleCheckHash()
@@ -22,7 +23,8 @@ function App() {
             else setView('home')
         })
     }
-
+    
+    
     const handleCheckHash = () => {
         let _view = window.location.hash
         if (view === 'home') return
@@ -34,6 +36,7 @@ function App() {
         } else isAuthenticated()
 
       }
+
 
     const handleGoToRegister = (event) => {
         event.preventDefault()
@@ -60,11 +63,17 @@ function App() {
         setView('home')
     }
 
+
+    const handleOnLogout = () => {
+        sessionStorage.token = undefined
+        setView('landing')
+    }
+
     return <>
         {view === 'landing' && <Landing toRegister={handleGoToRegister} toLogin={handleGoToLogin} handleGoToLoginFromLanding={handleGoToLoginFromLanding} />}
         {view === 'login' && <Login toRegister={handleGoToRegister} loginSubmit={handleLoginSubmit} />}
         {view === 'register' && <Register registerSubmit={handleRegisterSubmit} goToLogin={handleGoToLoginFromLanding } />}
-        {view === 'home' && <Home />}
+        {view === 'home' && <Home onLogout={handleOnLogout} />}
 
     </>
 }
