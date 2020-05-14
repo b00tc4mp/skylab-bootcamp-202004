@@ -29,8 +29,10 @@ function registerUser(name, surname, email, password, categories, country, callb
     Function.validate(callback)
 
     let count = 0
-    for (interest in categories) {
-        if (categories[interest] === false) {
+
+    for (let interest in interests) {
+        if (interests[interest] === false) {
+
             count++
         }
     }

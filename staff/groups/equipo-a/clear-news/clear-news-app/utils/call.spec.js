@@ -25,7 +25,6 @@ describe('call', () => {
 
                     call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users', '{ "password": "grillo" }', { 'Content-type': 'application/json', 'Authorization': `Bearer ${token}` }, (error, status, body) => {
                         if (error) return done(new Error(error))
-debugger
                         expect(status).to.equal(204)
                         expect(body).to.equal('')
 

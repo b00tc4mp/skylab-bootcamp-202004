@@ -6,7 +6,7 @@ function TopHeadlines({ news, pages, myHeadlines, token }) {
     // const [NewsError, setErrorNews] = useState()
 
     useEffect(() => {
-        !news && retrieveNews(token, (error, news, pages) => {
+        !news && retrieveNews(token, (error, news, pages) => { //si no hay noticias cuando pinte el compo
             if (error) setError(error.message)
             myHeadlines(news, pages)
         })

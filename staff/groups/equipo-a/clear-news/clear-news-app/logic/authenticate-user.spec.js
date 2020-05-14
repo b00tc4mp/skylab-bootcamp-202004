@@ -7,7 +7,7 @@ describe('authenticateUser', () => {
         email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`
         password = passwords.random()
     })
-
+    debugger
     describe('when user already exists', () => {
         beforeEach(done => {
             call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
@@ -83,7 +83,7 @@ describe('authenticateUser', () => {
     })
 
     describe('when user does not exist', () => {
-        it("should fail when user crendetials dont exit",(done)=>{
+        it("should fail when user crendetials dont exit",done=>{
             authenticateUser("aaaaa@aaaa.aa","123123123", (error, token)=>{
             expect(error).to.exist
             expect(error).to.be.an.instanceOf(Error)

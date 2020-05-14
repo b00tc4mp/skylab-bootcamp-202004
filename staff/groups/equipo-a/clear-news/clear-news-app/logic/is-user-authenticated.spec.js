@@ -1,8 +1,10 @@
 describe('isUserAuthenticated', () => {
     let email, password, _token
 
+
     describe('validates existing token', () => {
         beforeEach(done=>{
+
             call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
             `{  "username": "${email}", "password": "${password}" }`,
             { 'Content-type': 'application/json' },
@@ -51,5 +53,6 @@ describe('isUserAuthenticated', () => {
                 done()
             });
         });
+    })
     })
 })
