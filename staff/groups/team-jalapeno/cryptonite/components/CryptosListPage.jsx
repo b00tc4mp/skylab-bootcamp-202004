@@ -50,10 +50,10 @@ function CryptosListPage({ handleSearchOnChange, cryptos, handleClickCoin, handl
       <section className="portfolio">
         <h3 className="portfolio__title">Wallet</h3>
         <h1 className="portfolio__money">{wallet}$</h1>
-        <h4 className="portfolio__stats">
+        {/* <h4 className="portfolio__stats">
           <span className="portfolio__stats--contrast">+121,40$ (8.3%)</span>{" "}
           Last 24h
-        </h4>
+        </h4> */}
         <button className="portfolio__button" onClick={handlePortfolioClick}>Go to Portfolio </button>
       </section>
 
