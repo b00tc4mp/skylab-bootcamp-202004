@@ -19,8 +19,7 @@ class Login extends Component {
         
         try {
         authenticateUser(email, password, (error, token) => {
-            if (error) throw Error(error)
-            // return this.setState({ error: error.message })
+            if (error) return this.setState({error: error.message})
             this.props.onSubmit(token)
         })
         } catch ({ message }) {
@@ -46,6 +45,9 @@ class Login extends Component {
                 }}>Already not a member? Register now!</a>            
           </form> 
         </div>
+      
+      {this.state.error && <Feedback  message = {this.state.error}/>}
+      
       </section>
  
     }

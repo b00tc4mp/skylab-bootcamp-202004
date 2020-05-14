@@ -1,10 +1,11 @@
 function searchAlbum(token, query, callback) {
-  String.validate.notVoid(token)
-  String.validate(token)
+  debugger;
+  String.validate.notVoid(token);
+  String.validate(token);
 
-    String.validate(query)
+  String.validate(query);
 
-    Function.validate(callback)
+  Function.validate(callback);
 
   const queryUrl = encodeURI(query).concat(`&type=album&offset=0&limit=5`);
 
@@ -15,15 +16,19 @@ function searchAlbum(token, query, callback) {
     { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
     (error, status, body) => {
       if (error) console.log(error);
-      console.log(status)
+      console.log(status);
       debugger;
       if (status === 200) {
         const results = [],
           artistsArray = [];
 
         const {
-          albums: { items },
+          albums: { items, total },
         } = JSON.parse(body);
+
+        if (total === 0) {
+          return callback(new Error("Matches not found"));
+        }
 
         for (let i = 0; i < items.length; i++) {
           let {
@@ -32,6 +37,7 @@ function searchAlbum(token, query, callback) {
             name,
             artists,
           } = items[i];
+
           debugger;
 
           for (let j = 0; j < artists.length; j++) {
@@ -42,9 +48,9 @@ function searchAlbum(token, query, callback) {
         }
         debugger;
         callback(undefined, results);
-      }else{
-        const {error} = JSON.parse(body)
-        callback(new Error(error.message))
+      } else {
+        const { error } = JSON.parse(body);
+        callback(new Error(error.message));
       }
     }
   );

@@ -1,4 +1,4 @@
-function searchTrack(token, query, callback) {debugger
+function searchTrack(token, query, callback) {
   String.validate.notVoid(token)
   String.validate(token)
 
@@ -6,25 +6,21 @@ function searchTrack(token, query, callback) {debugger
 
   Function.validate(callback)
 
-  const queryUrl = query
-    .split(" ")
-    .join("%20")
-    .concat(`&type=track&offset=0&limit=5`);
+  const queryUrl = encodeURI(query).concat(`&type=track&offset=0&limit=5`);
   const results = [];
 
-  call(
-    "GET",
-    `https://api.spotify.com/v1/search?q=${queryUrl}`,
-    undefined,
-    { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+  call("GET", `https://api.spotify.com/v1/search?q=${queryUrl}`,
+    undefined, { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
     (error, status, body) => {
       if (error) console.log(error);
       console.log(status)
       if (status === 200) {
-        debugger;
-        const queryBody = JSON.parse(body);
-        const { tracks } = queryBody;
-        const { items } = tracks;
+        
+        const {tracks : { items, total}  } = JSON.parse(body)
+        
+        if( total === 0) {
+          callback(new Error('Matches not found'))
+        }
         for (let i = 0; i < items.length; i++) {
           let { name, album } = items[i];
 
