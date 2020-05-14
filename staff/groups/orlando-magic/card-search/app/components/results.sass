@@ -13,10 +13,10 @@
             width: 100%
             margin: 0.2rem
             align-items: center
-            & > a
+            a
                 font-size: 1.2rem
                 width: 27%
-            & > select
+            select
                 border: solid brown 0.1px
                 flex-grow: 1
                 background-color: whitesmoke
@@ -36,11 +36,11 @@
         width: 100%
         list-style-type: none
         padding: 0
-        & > li
+        li
             width: 48%
             margin: 1%
             position: relative
-            & > div
+            div
                 position: absolute
                 display: flex
                 flex-direction: column
@@ -53,27 +53,40 @@
             display: flex
             align-items: center
             justify-content: center
-            background-color: rgba(129, 127, 127, 0.60)
             color: black
             z-factor: 1
             width: 3rem
             height: 3rem
             border-radius: 50%
-            margin: 0.2rem 
+            margin: 0.2rem
+            background: url(assets/images/unfav.png) no-repeat
+            background-size: 80%
+            background-position: center
+            background-color: rgba(129, 127, 127, 0.60)
+            &:hover
+                background-color: rgba(129, 127, 127)
+        .unfav
+            background: url(assets/images/fav.png) no-repeat
+            background-size: 80%
+            background-position: center
+            background-color: rgba(129, 127, 127, 0.60)
+            &:hover
+                background-color: rgba(129, 127, 127)
+
 @media only screen and (min-width: 768px)
     .results
-        &__cards> li
+        &__cards > li
             width: 31%
-        &__header>form
+        &__header > form
             display: flex
             flex-direction: row
             align-items: center
         
 @media only screen and (min-width: 968px)
-    .results__cards> li
+    .results__cards > li
         width: 23%
 
 @media only screen and (min-width: 1025px)
-    .results__cards> li
+    .results__cards > li
         width: 18%
 
