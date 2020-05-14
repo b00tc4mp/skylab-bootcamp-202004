@@ -78,7 +78,7 @@ function Fwitter({ fwitter, token, onUpdateFwitter, onUserSessionExpired,searchP
                         )}<div >
                         </div>
                     </div>
-                    : <Feedback message="sorry, no results :(" level="warning" />
+                    : <Feedback message="sorry, no results :(" level="fwitter" />
             }
         </section>
         {error && <Feedback message={error} level="error" />}

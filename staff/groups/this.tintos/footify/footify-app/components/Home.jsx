@@ -1,6 +1,6 @@
 const { useState, useEffect } = React
 
-function Home({ token , onUserSessionExpired }) {
+function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
 
     const [view, setView] = useState('fwitter')
     const [players, setPlayers] = useState()
@@ -10,6 +10,8 @@ function Home({ token , onUserSessionExpired }) {
     const [sportNews, setSportNews] = useState()
     const [queryPlayer, setQueryPlayer] = useState()
     const [fwitter, setFwitter] = useState();
+    const [playersRanking, setPlayersRanking] = useState()
+    
 
 
 
@@ -124,22 +126,46 @@ function Home({ token , onUserSessionExpired }) {
         })
     }
    
+    const handleGoToFwitter = () => {
+        try {
+            retriveFwitter(token, (error, results) => {
+                if (error) return setError(error.message);
+                const arrfwitter = creatFwitterArray(results)
+                
+                //TODO
+                //const arrfwitter = creatFwitterArray(results)
 
-    const handleToggleFollowPlayers = () => { handleGoToPlayerResults(queryPlayer) }
-
-    const handleCommentFwitt = () => {handleGoToPlayerResults(queryPlayer)}
-   
-    const handleGoToDream = () => {goToView('dream')}
+                commentCards(arrfwitter, token, (error, resultsComments) => {
+                    setFwitter(resultsComments)
+                })
+            })
+            setView('fwitter');
+        } catch ({ message }) {
+            setError(message)
+        }
+    }
+    const handleGoToDream = () => {
+        dreamTeam(undefined,token,(error, playersRanking) =>{
+            if(error) return setError(error)
+            setPlayersRanking(playersRanking)
+            setView('dream')
+        })
+       
+       
+    }
   
-    const handleGoToUpdateUser = () => {goToView('update-user') }
+    const handleGoToUpdateUser = () => {
+        setView('update-user')
+    }
+
 
     return <>
 
-        <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter} onGoToDream={handleGoToDream} onGoToUpdateUser={handleGoToUpdateUser}/>
+        <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter} onGoToDream={handleGoToDream} onGoToUpdateUser={handleGoToUpdateUser} onGoToLogOut={onGoToLogOut}/>
         {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} onCommentFwitt={handleCommentFwitt} queryPlayer={queryPlayer} likesUser={likesUser} onUserSessionExpired={onUserSessionExpired}/>}
-        {view === 'sport' && <SportNews sportNews={sportNews} />}
+        {view === 'sport' && <SportNews sportNews={sportNews} />}        
         {view === 'fwitter' && <Fwitter fwitter={fwitter} token={token} onUpdateFwitter={handleGoToFwitter} onUserSessionExpired={onUserSessionExpired} searchPlayer={handleGoToPlayerResults}/>}
-        {view === 'dream' && <Dream />}
+        {view === 'dream' && <Dream  playersRanking={playersRanking}/>}
         {view === 'update-user' && <UpdateUser token={token} onGoToFwitter={handleGoToFwitter} userDetails={userDetails}  onUserSessionExpired={onUserSessionExpired}/>}
         {error && <Feedback message={error} level="error" />}
     </>
