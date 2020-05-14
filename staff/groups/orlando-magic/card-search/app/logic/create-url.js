@@ -1,4 +1,15 @@
 function createUrl({order, dir, name, text, type, color, colorLimit,mana, cmc, power, toughtness, loyalty, limit, format, legality, set, block, rarity, artist, flavor, lore, language}) {
+    let stringArgs = [order, dir, name, text, type, color, colorLimit,mana, limit, format, legality, set, block, rarity, artist, flavor, lore, language]
+    let numberArgs = [cmc, power, toughtness, loyalty]
+
+    stringArgs.forEach(arg => {
+        if (typeof arg !== 'string' && typeof arg !== 'undefined') throw new TypeError( arg +' is not a string and is not undefined')
+    })
+
+    numberArgs.forEach(arg => {
+        if (typeof arg !== 'string' && typeof arg !== 'boolean'&& typeof arg !== 'undefined') throw new TypeError(arg +' is different from a string and boolean and is not undefined')
+    })
+    
     let query = `include_multilingual=${!language}${order ? '&order='+order : '' }${dir ? '&dir='+dir : ''}&q=`
 
     const options = []

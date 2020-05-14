@@ -1,5 +1,5 @@
-describe('retrieveUser', () => {
-    let name, surname, email, password, _token, username
+describe('retrieveUsersById', () => {
+    let name, surname, email, password, _token, username, follow
 
     let _name,_surname, _email, _password, _id, _username
     beforeEach(() => {
@@ -15,6 +15,7 @@ describe('retrieveUser', () => {
         _password = passwords.random()
         _username = `${_name.toLowerCase().split(' ').join('')}${_surname.toLowerCase().split(' ').join('')}`
 
+        follow = []
     })
 
     beforeEach(done => {
@@ -62,6 +63,7 @@ describe('retrieveUser', () => {
                                 
                                 _id = users[0].id
 
+                                follow.push(_id)
                                 done()
                             }
                         )
@@ -71,33 +73,33 @@ describe('retrieveUser', () => {
         })
     })
 
-    it('should succeed on correct data without id', done => {
-        retrieveUser(_token, (error, username, email) => {
+    it('it should succeed on correct data', done => {
+        retrieveUsersById(_token, follow , (error, users)=>{
             expect(error).to.be.undefined
-            expect(username).to.equal(username)
-            expect(email).to.equal(email)
-
+            expect(users).to.exist
+            expect(users).to.be.an('array')
+            expect(users.length).to.be.greaterThan(0)
+            expect(users[0].nickname).to.equal(_username)
             done()
         })
     })
 
-    it('should succeed on correct data with an id', done => {
-        retrieveUser(_token, (error, username, email) => {
+    it('it should not fail if there are no follows', done => {
+        let _follow = []
+        retrieveUsersById(_token, _follow , (error, users)=>{
             expect(error).to.be.undefined
-            expect(username).to.equal(username)
-            expect(email).to.equal(email)
-
+            expect(users).to.exist
+            expect(users).to.be.an('array')
+            expect(users.length).to.equal(0)
             done()
-        },_id)
+        })
     })
 
     it('should fail if token is incorrect', done => {
         const __token = 'aaaaaaaaaaaaaaa'
-        retrieveUser(__token, (error, username, email) => {
+        retrieveUsersById(__token, [],(error, users) => {
             expect(error).to.exist
             expect(error.message).to.equal('invalid token')
-            expect(username).to.be.undefined
-            expect(email).to.be.undefined
 
             done()
         })
@@ -105,15 +107,15 @@ describe('retrieveUser', () => {
 
     it('should fail if token is not a string', () => {
         expect(() => {
-            retrieveUser(1, (error, username, email) => {})
+            retrieveUsersById(1, [],(error, users) => {})
         }).to.throw(TypeError, '1 is not a string')
 
         expect(() => {
-            retrieveUser(true, (error, username, email) => {})
+            retrieveUsersById(true, [],(error, users) => {})
         }).to.throw(TypeError, 'true is not a string')
 
         expect(() => {
-            retrieveUser(undefined, (error, username, email) => {})
+            retrieveUsersById(undefined, [],(error, users) => {})
         }).to.throw(TypeError, 'undefined is not a string')        
     })
 })

@@ -1,5 +1,5 @@
-describe('retrieveUser', () => {
-    let name, surname, email, password, _token, username
+describe('retrieveUserFollowing', () => {
+    let name, surname, email, password, _token, username, user, following
 
     let _name,_surname, _email, _password, _id, _username
     beforeEach(() => {
@@ -62,7 +62,44 @@ describe('retrieveUser', () => {
                                 
                                 _id = users[0].id
 
-                                done()
+                                call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined,
+                                {
+                                    Authorization: `Bearer ${token}`
+                                },
+                                (error, status, body) => {
+                                    if (error) return done(new Error(error.message))
+                                    if (status !== 200) return done(new Error(`undexpected status ${status}`))
+
+                                    call('GET', `https://skylabcoders.herokuapp.com/api/v2/users/`, undefined,
+                                        {
+                                            Authorization: `Bearer ${token}`
+                                        },
+                                        (error, status) => {
+                                            if (error) return done(new Error(error.message))
+                                            if (status !== 200) return done(new Error(`undexpected status ${status}`))
+
+                                            let user = JSON.parse(body)
+
+                                            let { following = [] } = user
+
+                                            let index = following.indexOf(_id)
+
+                                            if (index < 0) following.push(_id)
+                                            else following.splice(index, 1)
+
+                                            call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify({ following }),
+                                                {
+                                                    Authorization: `Bearer ${token}`,
+                                                    'Content-type': 'application/json'
+                                                },
+                                                (error, status, body) => {
+                                                    if (error) return done(new Error(error.message))
+                                                    if (status !== 204) return done(new Error(`undexpected status ${status}`))
+                                                    done()
+
+                                                })
+                                        })
+                                })
                             }
                         )
                     })
@@ -71,33 +108,23 @@ describe('retrieveUser', () => {
         })
     })
 
-    it('should succeed on correct data without id', done => {
-        retrieveUser(_token, (error, username, email) => {
+    it('should succeed on correct data', done => {
+        retrieveUserFollowing(_token, (error, following) => {
             expect(error).to.be.undefined
-            expect(username).to.equal(username)
-            expect(email).to.equal(email)
+            expect(following).to.be.an('array')
+            expect(following.length).to.be.greaterThan(0)
+            expect(following[0]).to.equal(_id)
 
             done()
         })
     })
 
-    it('should succeed on correct data with an id', done => {
-        retrieveUser(_token, (error, username, email) => {
-            expect(error).to.be.undefined
-            expect(username).to.equal(username)
-            expect(email).to.equal(email)
-
-            done()
-        },_id)
-    })
-
     it('should fail if token is incorrect', done => {
         const __token = 'aaaaaaaaaaaaaaa'
-        retrieveUser(__token, (error, username, email) => {
+        retrieveUserFollowing(__token, (error, following) => {
             expect(error).to.exist
             expect(error.message).to.equal('invalid token')
-            expect(username).to.be.undefined
-            expect(email).to.be.undefined
+            expect(following).to.be.undefined
 
             done()
         })
@@ -105,15 +132,15 @@ describe('retrieveUser', () => {
 
     it('should fail if token is not a string', () => {
         expect(() => {
-            retrieveUser(1, (error, username, email) => {})
+            retrieveUserFollowing(1, (error, following) => {})
         }).to.throw(TypeError, '1 is not a string')
 
         expect(() => {
-            retrieveUser(true, (error, username, email) => {})
+            retrieveUserFollowing(true, (error, following) => {})
         }).to.throw(TypeError, 'true is not a string')
 
         expect(() => {
-            retrieveUser(undefined, (error, username, email) => {})
+            retrieveUserFollowing(undefined, (error, following) => {})
         }).to.throw(TypeError, 'undefined is not a string')        
     })
 })
