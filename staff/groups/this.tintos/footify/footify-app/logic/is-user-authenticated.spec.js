@@ -1,9 +1,6 @@
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 
-describe.only('isUserAuthenticated', () => {
+describe('isUserAuthenticated', () => {
     let _name, surname, email, password
 
 
