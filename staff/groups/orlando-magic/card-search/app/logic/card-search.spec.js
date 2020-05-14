@@ -1,4 +1,4 @@
-describe.only('searchCard', () => {
+describe('searchCard', () => {
     it('should succed if an existing element is searched', done => {
         searchCard('q=emrakul', (error, results) => {
             expect(error).to.be.undefined
