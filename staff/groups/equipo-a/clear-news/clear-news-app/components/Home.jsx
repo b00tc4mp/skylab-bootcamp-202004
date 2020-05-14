@@ -93,7 +93,7 @@ class Home extends Component {
     }
 
     handleSearchNews = (results, query, language, sortBy, pages) =>{
-        address.hash.query({ q: query })
+        address.hash.query({ q: query,language,sortBy  })
         this.setState({searchNewsResults: results, newsQuery: query, newsLanguage: language, sortBy, pagesInSearch: pages})
         
     }
