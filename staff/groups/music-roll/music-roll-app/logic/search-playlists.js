@@ -21,10 +21,11 @@ function searchPlaylists(token, query, callback) {
         if (error) callback(error)
         
         if (status === 200) {
-          const queryBody = JSON.parse(body)
-          const {playlists} = queryBody
-          const { items } = playlists
-          
+        
+          const { playlists: { items, total } } = JSON.parse(body);
+          if(total === 0){
+            callback(new Error('Not matches found'))
+          }
 
           const results = items.map(({name, description, images, id}) => {
             const obj = {}

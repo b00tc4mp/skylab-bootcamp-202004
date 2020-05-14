@@ -8,7 +8,7 @@ class App extends Component {
 
 
             view: 'login',
-            Spotytoken: "BQDXzlsw5RPU67H_LBeyEnQliwEgsmA4SotLrZ2_Is9EJmL3lcn-MRrdkScjolsbwPBv3jNUHaMjtdPODneAPst0gaQwr-wzmZX2meqy7pC4ZrHksuPM4NyPBYrh-eglVwFxz8Fcick",
+            spotyToken: "BQDkDxsHxiEvXdh1MVFx2I3hyPZrdgBoi9xASNb2c_HWMqe-V5TQKlKN4brhkJyElTT-4ZR0lLBky2pbotM4MNFvywcrVTA45_q0NYEy5v6ENIQsyDE5RCdspFQYmpMu7OBanFYn9TA5KNb6KAuD3A1lNVOYEH_DElfSmxT6N1FWduWfIYlKMJ2pIgwd",
             token: undefined
 
         }
@@ -17,8 +17,8 @@ class App extends Component {
     onChangeView = (_view) => this.setState({ view: _view })
 
     handleLogin = (_token) => {
+        sessionStorage.token = _token
         this.setState({ token: _token })
-
         this.setState({ view: 'home' })
     }
 
@@ -27,6 +27,8 @@ class App extends Component {
     }
 
     handleSessionExpired = () => {
+        sessionStorage.token = undefined
+        this.setState({token: undefined})
         this.onChangeView('login')
     }
 
@@ -35,7 +37,7 @@ class App extends Component {
 
 
     render() {
-        const { state: { view, Spotytoken, token }, handleLogin, handleRegister, handleSessionExpired, onChangeView } = this;
+        const { state: { view, spotyToken, token }, handleLogin, handleRegister, handleSessionExpired, onChangeView } = this;
         return <>
 
            
@@ -46,8 +48,7 @@ class App extends Component {
             {view === 'register' && <Register onSubmit={handleRegister} onLogin={onChangeView} />}
             {view !== "login" && view !== "register" && <Navbar onChangeView={onChangeView} />}
             {view === 'home' && <Home />}
-            {view === 'browser' && <Browser token={Spotytoken} />}
-            {view === 'friends' && <SearchUsers token={token} onUserSessionExpired={handleSessionExpired} />}
+            {view === 'browser' && <Browser spotyToken={spotyToken} token = {token} onSessionExpired={this.handleSessionExpired}/>}
 
         </>
     }

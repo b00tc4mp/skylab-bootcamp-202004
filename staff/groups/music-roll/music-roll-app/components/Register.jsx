@@ -3,6 +3,8 @@ const { useState } = React
 
 function Register({onLogin, onSubmit}) {
 
+  const [error, setError] = useState(undefined)
+
     const handleSubmit = (event) => {
         event.preventDefault()
 
@@ -12,13 +14,16 @@ function Register({onLogin, onSubmit}) {
         surname = surname.value
         email = email.value
         password = password.value
-
+      try{
         registerUser(name,surname,email,password, error => {
-
-            if(error) console.error(error)
+          
+            if(error) setError(error.message)
             
             onSubmit()
         })
+      }catch({message}){
+        setError(message)
+      }
     }
 
     return  <section className="register">
@@ -41,6 +46,7 @@ function Register({onLogin, onSubmit}) {
             }}>Already registered? SignIn now! </a>
       </form>
     </div>
+    {error && <Feedback message={error}/>}
   </section>
   
 }

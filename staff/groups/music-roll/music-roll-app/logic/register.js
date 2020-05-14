@@ -1,10 +1,10 @@
-function registerUser(name, surname, email, password, callback) {
+function registerUser(name, surname, email, password, callback) {debugger
    
     String.validate.alphabetic(name)
     String.validate.alphabetic(surname)
 
     Email.validate(email)
-    String.isValidPassword(password)
+    Password.validate(password)
 
     Function.validate(callback) 
 
