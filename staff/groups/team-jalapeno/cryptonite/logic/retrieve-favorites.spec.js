@@ -29,7 +29,7 @@ describe('retrieve-favorites', () =>{
                 if(status === 201) { 
                     
                     const url = 'https://skylabcoders.herokuapp.com/api/v2/users/auth'
-                    const body = JSON.stringify({ username: email, password })
+                    const body = `{ "name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}" }`
                     const headers =  { 'Content-type': 'application/json' }
 
                     call('POST', url, body, headers, (error, status, response) => {
@@ -50,7 +50,7 @@ describe('retrieve-favorites', () =>{
                                     
                                     expect(error).to.be.undefined
                                     expect(data).to.exist
-                                    expect(data.length).to.equal(3)
+                                    expect(favorites.length).to.equal(3)
                                     
                                     done()
                                 }, 

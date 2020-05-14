@@ -1,3 +1,10 @@
+/**
+ * Send email and password to get a valid token.
+ * @param {email} email - data required to make a successful api call. 
+ * @param {string} password - data required to make a successful api call.
+ * @param {callback} callback 
+ */
+
 function authenticateUser(email, password, callback) {
     Email.validate(email)
     String.validate.notVoid(password)
@@ -21,3 +28,9 @@ function authenticateUser(email, password, callback) {
     })
 
 }
+/**
+ * callback is inside authencticateUser function, returns the api's answer (response or error).
+ * @callback callback
+ * @param {string} error - api's answer when an error exists.
+ * @param {string} token - destructured from api's answer when succeeds.
+ */
