@@ -1,6 +1,7 @@
 const { useState } = React
 
 import { TransitionGroup, CSSTransition} from "react-transition-group"
+import { useEffect } from "react"
 
 function App() {
     const [view, setView] = useState('home')
