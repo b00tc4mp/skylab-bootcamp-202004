@@ -1,7 +1,8 @@
 describe('authenticateUser', function() {
     let name, surname, email, password
 
-    beforeEach(() => {
+    before(() => {
+        thElement = true
         name = `name-${Math.random()}`
         surname = `surname-${Math.random()}`
         email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('')}@mail.com`
@@ -10,7 +11,7 @@ describe('authenticateUser', function() {
     })
     it('should succeed on correct data', done => {
         call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
-            `{ "name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}" }`, { 'Content-type': 'application/json' },
+            `{ "thElement": "true", "name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}" }`, { 'Content-type': 'application/json' },
             (error, status) => {
                 if (error) return done(new Error(error.message))
                 if (status !== 201) return done(new Error(`unexpected ${status}`))
