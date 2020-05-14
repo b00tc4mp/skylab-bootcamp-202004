@@ -1,6 +1,4 @@
-const { useState } = React
-
-import { TransitionGroup, CSSTransition} from "react-transition-group"
+const { useState, useEffect } = React
 
 function App() {
     const [view, setView] = useState('home')
@@ -8,6 +6,21 @@ function App() {
     const [forecastSelected, setForecastSelected] = useState('')
     const [sportState, setSportState] = useState('surf')
     
+    useEffect (() => {
+        if (sessionStorage.token){
+            try{
+                authenticateToken(sessionStorage.token, (error, status) => {
+                    if(error) throw error
+
+                    if(status){
+                        setToken(sessionStorage.token)
+                    }
+                })
+            }catch(error){
+                if (error) throw error
+            }
+        }
+    }, [])
 
     const handleGoToRegister= () => setHashView('register')
 
