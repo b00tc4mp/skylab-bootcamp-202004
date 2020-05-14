@@ -5,10 +5,10 @@ function SearchNews({ onSearch, searchNewsResults, query, language, sortBy, toke
     useEffect(() => {
         const query = address.hash.query()
 
-        query && query.q && searchNews(token, query.q, "", "", (error, searchNewsResults, pages) =>{
+        query && query.q && searchNews(token, query.q, query.language, query.sortBy , (error, searchNewsResults, pages) =>{
             if (error) throw Error
     
-            onSearch(searchNewsResults, query.q, language, sortBy, pages)
+            onSearch(searchNewsResults, query.q, query.language, query.sortBy, pages)
         })
     }, [])
 

@@ -50,7 +50,7 @@ function Profile({ token, categories, country }) {
         let userUpdate={name, surname, email, oldPassword, password, categories, country}
 
         try {
-            profileChange(token,userUpdate , error => {
+            changeProfilege(token,userUpdate , error => {
                 if (error) return setError(error.message)
                 setSucces(message)
                 // onChangeProf()//aqui meter los valores que queremos pasar a home

@@ -69,41 +69,41 @@ function retrieveFavNews(token, callback) {
                             // let titleTop=JSON.parse(item)
 
                             call('GET', `https://newsapi.org/v2/top-headlines?q=${titleTop}&apiKey=55aab6760184405791eeffefcbd32733`,
-                        undefined,
-                        undefined,
-                        (error, status, body) => {
-                            if (error) return callback(error)
+                                undefined,
+                                undefined,
+                                (error, status, body) => {
+                                    if (error) return callback(error)
 
-                            if (status === 200) {
-                                counter++
-                                let news = JSON.parse(body)
+                                    if (status === 200) {
+                                        counter++
+                                        let news = JSON.parse(body)
 
-                                const { articles } = news
+                                        const { articles } = news
 
-                                for (let i in articles) {
-                                    const { source, author, title, description, url, urlToImage, publishedAt } = articles[i]
+                                        for (let i in articles) {
+                                            const { source, author, title, description, url, urlToImage, publishedAt } = articles[i]
 
-                                    if (typeof source !== "undefined") {
-                                        const { name } = source
-                                        favNews.push({ name, author, title, description, url, urlToImage, publishedAt })
+                                            if (typeof source !== "undefined") {
+                                                const { name } = source
+                                                favNews.push({ name, author, title, description, url, urlToImage, publishedAt })
+                                            }
+                                            else {
+                                                const name = "unknown"
+                                                favNews.push({ name, author, title, description, url, urlToImage, publishedAt })
+                                            }
+                                        }
+
+                                    } else {
+                                        const { error } = JSON.parse(body)
+                                        callback(new Error(error))
                                     }
-                                    else {
-                                        const name = "unknown"
-                                        favNews.push({ name, author, title, description, url, urlToImage, publishedAt })
-                                    }
-                                }
 
-                            } else {
-                                const { error } = JSON.parse(body)
-                                callback(new Error(error))
-                            }
-                           
-        
-                            if (counter === favorite.length) callback(undefined, favNews)
-                            
+
+                                    if (counter === favorite.length) callback(undefined, favNews)
+
+                                })
                         })
-                })
-                )
+                }))
             } else {
                 const { error } = JSON.parse(body)
                 callback(new Error(error))
@@ -113,8 +113,8 @@ function retrieveFavNews(token, callback) {
 }
 
 /**
- * 
- * 
+ *
+ *
  * @callback callback
  * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
  * @param {Array} favNews Array of objects with a users favorite news.
