@@ -1,13 +1,13 @@
 /**
- * Elimina una determinada actividad
- * @param {string} id id de la actividad que va a ser borrada
- * @param {function} onSuccess callback que se llama cuando no hay ningún error
- * @param {function} onFailure callback que se llama en caso de error, recibe el error como parámetro
- * @throws {TypeError} lanza un error si id no es un string
- * @throws {TypeError} lanza un error si onSuccess o onFailure no son funciones
+ * Delete a certain activity
+ * @param {string} id ID of the activity to delete
+ * @param {function} onSuccess Callback which is called when there is no error
+ * @param {function} onFailure Callback which is called in case of error, receives error as parameter
+ * @throws {TypeError} Throws an error if the ID is not a string
+ * @throws {TypeError} Throws an error if onSuccess or onFailure are not functions
  */
 function deleteactivity(id, onSuccess, onFailure) {
-    //Comprueba el tipo de parametros
+    //Check the type of parameters
     String.validate(id)
     Function.validate(onSuccess)
     Function.validate(onFailure)
