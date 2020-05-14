@@ -18,30 +18,7 @@ describe('registerUser', () => {
         country = countries.random();
         
     });
-    // afterEach(done => {
-    //     call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
-    //         `{ "username": "${email}", "password": "${password}" }`,
-    //         { 'Content-type': 'application/json' },
-    //         (error, status, body) => {
-    //             if (error) return done(error)
-    //             if (status !== 200) return done(new Error(`unexpected status ${status}`))
-
-    //             const { token } = JSON.parse(body);
-
-    //             call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users',
-    //                 `{ "password": "${password}" }`,
-    //                 {
-    //                     'Content-type': 'application/json',
-    //                     Authorization: `Bearer ${token}`
-    //                 },
-    //                 (error, status) => {
-    //                     if (error) return done(new Error(error.message))
-    //                     if (status !== 204) return done(new Error(`undexpected status ${status}`))
-
-    //                     done();
-    //                 });
-    //         });
-    // });
+    
 
     describe('when user already exists', () => {
         it('should succed on correct data', done => {
@@ -57,9 +34,8 @@ describe('registerUser', () => {
                         if (error) return done(new Error(error.message));
                         if (status !== 200) return done(new Error(`undexpected status ${status}`)); 
                        
-                        expect(error).to.be.undefined;// ambos expect no van
-                        expect(status).to.equal(200); // 
-
+                        expect(error).to.be.undefined;
+                        expect(status).to.equal(200);  
 
                         const { token } = JSON.parse(body);
 
@@ -70,13 +46,10 @@ describe('registerUser', () => {
                                 if (error) return done(new Error(error.message));
                                 if (status !== 200) return done(new Error(`undexpected status ${status}`));
 
-
                                 let { name: _name, surname: _surname, username: _email} = JSON.parse(body)
-                                expect(_name).to.equal(name)
-                                expect(_surname).to.equal(surname)
-                                expect(_email).to.equal(email)
-
-                            
+                                expect(_name).to.equal(name);
+                                expect(_surname).to.equal(surname);
+                                expect(_email).to.equal(email);
 
                                 done();
                             }

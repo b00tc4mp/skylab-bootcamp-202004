@@ -31,7 +31,7 @@ describe('storeNews', () => {
                             if (error) return done(new Error(error.message));
 
                             if (state === 200) {
-                                let { token } = JSON.parse(body);
+                                const { token } = JSON.parse(body);
                                 _token = token;
                                 done();
                             }
@@ -45,33 +45,33 @@ describe('storeNews', () => {
         call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
             undefined,
             { 'Authorization': `Bearer ${_token}` }, (error, state, body) => {
-                expect(error).to.be.undefined
-                expect(state).to.equal(200)
-                expect(body).to.exist
+                expect(error).to.be.undefined;
+                expect(state).to.equal(200);
+                expect(body).to.exist;
 
-                const { favorite } = JSON.parse(body)
+                const { favorite } = JSON.parse(body);
 
-                expect(favorite).to.be.undefined
+                expect(favorite).to.be.undefined;
 
                 title = "hola mundo"
 
                 storeNews(_token, title, (error) => {
-                    expect(error).to.be.undefined
+                    expect(error).to.be.undefined;
 
                     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
                         undefined,
                         { 'Authorization': `Bearer ${_token}` }, (error, state, body) => {
-                            expect(error).to.be.undefined
-                            expect(state).to.equal(200)
-                            expect(body).to.exist
+                            expect(error).to.be.undefined;
+                            expect(state).to.equal(200);
+                            expect(body).to.exist;
 
                             const { favorite } = JSON.parse(body);
 
                             expect(favorite).to.exist;
                             expect(favorite).to.be.an.instanceOf(Array);
                             expect(favorite).to.include(title);
-                            expect(favorite.length).to.be.greaterThan(0)
-                            expect(favorite[0]).to.be.an('string')
+                            expect(favorite.length).to.be.greaterThan(0);
+                            expect(favorite[0]).to.be.an('string');
 
                             done();
 
@@ -84,13 +84,13 @@ describe('storeNews', () => {
         call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
             undefined,
             { 'Authorization': `Bearer ${_token}` }, (error, state, body) => {
-                expect(error).to.be.undefined
-                expect(state).to.equal(200)
-                expect(body).to.exist
+                expect(error).to.be.undefined;
+                expect(state).to.equal(200);
+                expect(body).to.exist;
 
-                const user = JSON.parse(body)
+                const user = JSON.parse(body);
 
-                expect(user.favorite).to.be.undefined
+                expect(user.favorite).to.be.undefined;
 
                 title = 'hola mundo'
 
@@ -99,18 +99,18 @@ describe('storeNews', () => {
                     `{"favorite": ["${title}"]}`,
                     { "Content-type": "application/json", "Authorization": `Bearer ${_token}` },
                     (error, state, body) => {
-                        expect(error).to.be.undefined
-                        expect(state).to.equal(204)
+                        expect(error).to.be.undefined;
+                        expect(state).to.equal(204);
 
                         storeNews(_token, title, (error) => {
-                            expect(error).to.be.undefined
+                            expect(error).to.be.undefined;
 
                             call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
                                 undefined,
                                 { 'Authorization': `Bearer ${_token}` }, (error, state, body) => {
-                                    expect(error).to.be.undefined
-                                    expect(state).to.equal(200)
-                                    expect(body).to.exist
+                                    expect(error).to.be.undefined;
+                                    expect(state).to.equal(200);
+                                    expect(body).to.exist;
 
 
                                     const { favorite } = JSON.parse(body);
@@ -130,25 +130,25 @@ describe('storeNews', () => {
     });
 
     it('should fail if invalid token is introduced', done => {
-        const __token = 'aaaaaaaaaaaa'
+        const __token = 'aaaaaaaaaaaa';
 
-        headline = 'hola mundo'
+        headline = 'hola mundo';
 
         storeNews(__token, title, error => {
 
-            expect(error).to.exist
-            expect(error.message).to.equal('invalid token')
+            expect(error).to.exist;
+            expect(error.message).to.equal('invalid token');
 
             call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
                 undefined,
                 { 'Authorization': `Bearer ${_token}` }, (error, state, body) => {
-                    expect(error).to.be.undefined
-                    expect(state).to.equal(200)
-                    expect(body).to.exist
+                    expect(error).to.be.undefined;
+                    expect(state).to.equal(200);
+                    expect(body).to.exist;
 
                     const user = JSON.parse(body)
 
-                    expect(user.title).to.be.undefined
+                    expect(user.title).to.be.undefined;
 
                     done()
 
@@ -159,8 +159,8 @@ describe('storeNews', () => {
 
 
     it('should return an error when the token is empty or blank', () => {
-        let __token = '  '
-        title = 'hola mundo'
+        let __token = '  ';
+        title = 'hola mundo';
 
         expect(function () {
             storeNews(__token, title, function () { })
@@ -193,7 +193,7 @@ describe('storeNews', () => {
     })
 
     it('should return an error when callback is not a function', () => {
-        title = "hola mundo"
+        title = "hola mundo";
 
         expect(function () {
             storeNews(_token, title, undefined)

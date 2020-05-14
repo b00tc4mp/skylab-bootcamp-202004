@@ -1,4 +1,4 @@
-describe.only('profileUpdate', () => {
+describe('profileUpdate', () => {
 
     let _name, _surname, _email, _password, _categories, _country
 
@@ -21,10 +21,10 @@ describe.only('profileUpdate', () => {
 
     describe('should succed changing paramaters', () => {
 
-        let name1 = "pepito"
-        let surname1 = "grillo"
-        let email = `${name.toLowerCase().split(' ').join('')}${surname1.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`
-        categories1 = {
+        const name1 = "pepito"
+        const surname1 = "grillo"
+        const email = `${name.toLowerCase().split(' ').join('')}${surname1.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`
+        const categories1 = {
             business: true,
             entertainment: true,
             general: false,
@@ -33,12 +33,12 @@ describe.only('profileUpdate', () => {
             sports: false,
             technology: true
         }
-        country1 = "ph";
-        password = "holamundo"
-        oldPassword = "123123123"
+        const country1 = "ph";
+        const password = "holamundo"
+        const oldPassword = "123123123"
         let _token
 
-        let updateUser = { name1, surname1, email, password, oldPassword, categories1, country1 }
+        const updateUser = { name1, surname1, email, password, oldPassword, categories1, country1 }
 
         beforeEach(done => {
             call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
@@ -50,7 +50,7 @@ describe.only('profileUpdate', () => {
                     call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth', `{"username" : "${_email}", "password" : "${_password}"}`, { 'Content-type': 'application/json' }, (error, status, body) => {
                         if (error) return done(new Error(error.message))
                         if (status !== 200) return done(new Error(`undexpected status ${status}`))
-                        let { token } = JSON.parse(body)
+                        const  { token } = JSON.parse(body)
                         _token = token
 
                         done()
@@ -59,7 +59,7 @@ describe.only('profileUpdate', () => {
         });
 
         it('should change name/surname/categories/country', done => {
-            changeProfilege(_token, updateUser, (error) => {
+            changeProfile(_token, updateUser, (error) => {
                 call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
                     undefined,
                     { 'Authorization': `Bearer ${_token}` },
@@ -69,18 +69,18 @@ describe.only('profileUpdate', () => {
                         if (status === 200) {
                             const {name, surname, username,  categories, country } = JSON.parse(body)
                            
-                            expect(name).to.be.Equal(name1)
-                            expect(surname).to.be.Equal(surname1)
-                            expect(username).to.be.Equal(email1)
-                            expect(categories).to.deep.Equal(categories1)
-                            expect(country).to.be.Equal(country1)
-                            expect(_name).to.not.Equal(name)
-                            expect(_surname).to.not.Equal(surname)
-                            expect(_username).to.not.Equal(email)
-                            expect(_categories).to.not.Equal(categories)
-                            expect(_country).to.not.Equal(country)
+                            expect(name).to.be.Equal(name1);
+                            expect(surname).to.be.Equal(surname1);
+                            expect(username).to.be.Equal(email1);
+                            expect(categories).to.deep.Equal(categories1);
+                            expect(country).to.be.Equal(country1);
+                            expect(_name).to.not.Equal(name);
+                            expect(_surname).to.not.Equal(surname);
+                            expect(_username).to.not.Equal(email);
+                            expect(_categories).to.not.Equal(categories);
+                            expect(_country).to.not.Equal(country);
                         } else {
-                            const { error } = JSON.parse(body)
+                            const { error } = JSON.parse(body);
 
                             done(new Error(error))
 

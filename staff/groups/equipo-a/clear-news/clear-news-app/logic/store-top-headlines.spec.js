@@ -31,7 +31,7 @@ describe('storeTopHeadlines', () => {
                             if (error) return done(new Error(error.message));
 
                             if (status === 200) {
-                                let { token } = JSON.parse(body);
+                                const { token } = JSON.parse(body);
                                 _token = token;
                                 done();
                             }
@@ -45,13 +45,13 @@ describe('storeTopHeadlines', () => {
         call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
             undefined,
             { 'Authorization': `Bearer ${_token}` }, (error, state, body) => {
-                expect(error).to.be.undefined
-                expect(state).to.equal(200)
-                expect(body).to.exist
+                expect(error).to.be.undefined;
+                expect(state).to.equal(200);
+                expect(body).to.exist;
 
-                const user = JSON.parse(body)
+                const user = JSON.parse(body);
 
-                expect(user.headlines).to.be.undefined
+                expect(user.headlines).to.be.undefined;
 
                 headline = {
                     name: "Svenska Dagbladet",
@@ -61,27 +61,27 @@ describe('storeTopHeadlines', () => {
                 }
 
                 storeTopHeadlines(_token, headline, error => {
-                    expect(error).to.be.undefined
+                    expect(error).to.be.undefined;
 
                     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined,
                         { 'Authorization': `Bearer ${_token}` }, (error, state, body) => {
-                            expect(error).to.be.undefined
-                            expect(state).to.equal(200)
-                            expect(body).to.exist
+                            expect(error).to.be.undefined;
+                            expect(state).to.equal(200);
+                            expect(body).to.exist;
 
-                            const user = JSON.parse(body)
+                            const user = JSON.parse(body);
 
-                            expect(user.headlines).to.exist
-                            expect(user.headlines.length).to.be.greaterThan(0)
+                            expect(user.headlines).to.exist;
+                            expect(user.headlines.length).to.be.greaterThan(0);
 
-                            expect(user.headlines[0].name).to.be.an('string')
-                            expect(user.headlines[0].title).to.be.an('string')
-                            expect(user.headlines[0].url).to.be.an('string')
-                            expect(user.headlines[0].urlImage).to.be.an('string')
-                            expect(user.headlines[0].name).to.equal(headline.name)
-                            expect(user.headlines[0].title).to.equal(headline.title)
-                            expect(user.headlines[0].url).to.equal(headline.url)
-                            expect(user.headlines[0].urlImage).to.equal(headline.urlImage)
+                            expect(user.headlines[0].name).to.be.an('string');
+                            expect(user.headlines[0].title).to.be.an('string');
+                            expect(user.headlines[0].url).to.be.an('string');
+                            expect(user.headlines[0].urlImage).to.be.an('string');
+                            expect(user.headlines[0].name).to.equal(headline.name);
+                            expect(user.headlines[0].title).to.equal(headline.title);
+                            expect(user.headlines[0].url).to.equal(headline.url);
+                            expect(user.headlines[0].urlImage).to.equal(headline.urlImage);
 
                             done()
 
@@ -95,13 +95,13 @@ describe('storeTopHeadlines', () => {
         call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
             undefined,
             { 'Authorization': `Bearer ${_token}` }, (error, state, body) => {
-                expect(error).to.be.undefined
-                expect(state).to.equal(200)
-                expect(body).to.exist
+                expect(error).to.be.undefined;
+                expect(state).to.equal(200);
+                expect(body).to.exist;
 
-                const user = JSON.parse(body)
+                const user = JSON.parse(body);
 
-                expect(user.headlines).to.be.undefined
+                expect(user.headlines).to.be.undefined;
 
                 headline = {
                     name: "Associated Press",
@@ -113,22 +113,22 @@ describe('storeTopHeadlines', () => {
                 call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', `{"headlines" : [${JSON.stringify(headline)}]}`,
                     { 'Content-type': 'application/json', 'Authorization': `Bearer ${_token}` },
                     (error, status, body) => {
-                        expect(error).to.be.undefined
-                        expect(status).to.equal(204)
+                        expect(error).to.be.undefined;
+                        expect(status).to.equal(204);
 
                         storeTopHeadlines(_token, headline, error => {
-                            expect(error).to.be.undefined
+                            expect(error).to.be.undefined;
 
                             call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined,
                                 { 'Authorization': `Bearer ${_token}` }, (error, state, body) => {
-                                    expect(error).to.be.undefined
-                                    expect(state).to.equal(200)
-                                    expect(body).to.exist
+                                    expect(error).to.be.undefined;
+                                    expect(state).to.equal(200);
+                                    expect(body).to.exist;
 
-                                    const user = JSON.parse(body)
+                                    const user = JSON.parse(body);
 
-                                    expect(user.headlines).to.exist
-                                    expect(user.headlines.length).to.equal(0)
+                                    expect(user.headlines).to.exist;
+                                    expect(user.headlines.length).to.equal(0);
 
                                     done()
 
@@ -152,19 +152,19 @@ describe('storeTopHeadlines', () => {
 
         storeTopHeadlines(__token, headline, error => {
 
-            expect(error).to.exist
-            expect(error.message).to.equal('invalid token')
+            expect(error).to.exist;
+            expect(error.message).to.equal('invalid token');
 
             call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
                 undefined,
                 { 'Authorization': `Bearer ${_token}` }, (error, state, body) => {
-                    expect(error).to.be.undefined
-                    expect(state).to.equal(200)
-                    expect(body).to.exist
+                    expect(error).to.be.undefined;
+                    expect(state).to.equal(200);
+                    expect(body).to.exist;
 
-                    const user = JSON.parse(body)
+                    const user = JSON.parse(body);
 
-                    expect(user.headlines).to.be.undefined
+                    expect(user.headlines).to.be.undefined;
 
                     done()
 

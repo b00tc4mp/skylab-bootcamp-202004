@@ -1,4 +1,4 @@
-describe.only('retrieveFavoriteTopHeadlines', () => {
+describe('retrieveFavoriteTopHeadlines', () => {
     let name, surname, email, password, categories, country, _token
 
     beforeEach(done => {
@@ -31,7 +31,7 @@ describe.only('retrieveFavoriteTopHeadlines', () => {
                             if (error) return done(new Error(error.message));
 
                             if (state === 200) {
-                                let { token } = JSON.parse(body);
+                                const { token } = JSON.parse(body);
                                 _token = token;
                                 done();
                             }
@@ -41,7 +41,7 @@ describe.only('retrieveFavoriteTopHeadlines', () => {
     })
 
     it("should retirn a news stored in a headlines array ", done => {
-        let headline = {
+        const headline = {
             name: "Svenska Dagbladet",
             title: "Ljuger jag lika mycket som Trump?",
             url: "https://www.svd.se/ljuger-jag-lika-mycket-som-trump",
@@ -61,15 +61,15 @@ describe.only('retrieveFavoriteTopHeadlines', () => {
 
                     const [{ name, title, url, urlImage }] = headlines
 
-                    expect(name).to.be.an('string')
-                    expect(title).to.be.an('string')
-                    expect(url).to.be.an('string')
-                    expect(urlImage).to.be.an('string')
+                    expect(name).to.be.an('string');
+                    expect(title).to.be.an('string');
+                    expect(url).to.be.an('string');
+                    expect(urlImage).to.be.an('string');
 
-                    expect(name).to.equal(headline.name)
-                    expect(title).to.equal(headline.title)
-                    expect(url).to.equal(headline.url)
-                    expect(urlImage).to.equal(headline.urlImage)
+                    expect(name).to.equal(headline.name);
+                    expect(title).to.equal(headline.title);
+                    expect(url).to.equal(headline.url);
+                    expect(urlImage).to.equal(headline.urlImage);
 
 
                     done()
@@ -84,10 +84,10 @@ describe.only('retrieveFavoriteTopHeadlines', () => {
         const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWI0MDVmYjg2MmJkNTAwMTU5ODQ0NGMiLCJpYXQiOjE1ODg5NDg3NDgsImV4cCI6MTU4ODk1MjM0OH0'
 
         retrieveFavoriteTopHeadlines(token, (error, favNews) => {
-            expect(error).to.exist
-            expect(error.message).to.equal('invalid token')
+            expect(error).to.exist;
+            expect(error.message).to.equal('invalid token');
 
-            expect(favNews).to.be.undefined
+            expect(favNews).to.be.undefined;
 
             done()
         })
@@ -126,10 +126,10 @@ describe.only('retrieveFavoriteTopHeadlines', () => {
             `{ "username": "${email}", "password": "${password}" }`,
             { 'Content-type': 'application/json' },
             (error, status, body) => {
-                if (error) return done(error)
-                if (status !== 200) return done(new Error(`unexpected status ${status}`))
+                if (error) return done(error);
+                if (status !== 200) return done(new Error(`unexpected status ${status}`));
 
-                const { token } = JSON.parse(body)
+                const { token } = JSON.parse(body);
 
                 call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users',
                     `{ "password": "${password}" }`,
@@ -138,8 +138,8 @@ describe.only('retrieveFavoriteTopHeadlines', () => {
                         Authorization: `Bearer ${token}`
                     },
                     (error, status, body) => {
-                        if (error) return done(new Error(error.message))
-                        if (status !== 204) return done(new Error(`undexpected status ${status}`))
+                        if (error) return done(new Error(error.message));
+                        if (status !== 204) return done(new Error(`undexpected status ${status}`));
 
                         done()
                     })

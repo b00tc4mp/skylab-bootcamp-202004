@@ -10,11 +10,11 @@
   */
 function retrieveNews(token, callback) {
 
-    String.validate.notVoid(token)
+    String.validate.notVoid(token);
 
-    Function.validate(callback)
+    Function.validate(callback);
 
-    let myNews = []
+    let __news = []
 
     const numberOfPages = []
 
@@ -28,7 +28,7 @@ function retrieveNews(token, callback) {
 
             if (status === 200) {
 
-                let user = JSON.parse(body)
+                const user = JSON.parse(body)
 
                 const { categories, country, favorite = [] } = user
 
@@ -56,7 +56,7 @@ function retrieveNews(token, callback) {
 
                             if (status === 200) {
                                 counter++
-                                let news = JSON.parse(body)
+                                const news = JSON.parse(body)
 
                                 const { articles } = news
 
@@ -65,16 +65,16 @@ function retrieveNews(token, callback) {
 
                                     if (typeof source !== "undefined") {
                                         const { name } = source
-                                        myNews.push({ name, author, title, description, url, urlToImage, publishedAt })
+                                        __news.push({ name, author, title, description, url, urlToImage, publishedAt })
 
                                     }
                                     else {
                                         const name = "unknown"
-                                        myNews.push({ name, author, title, description, url, urlToImage, publishedAt })
+                                        __news.push({ name, author, title, description, url, urlToImage, publishedAt })
                                     }
 
                                 }
-                                myNews = myNews.map(({ name, author, title, description, url, urlToImage, publishedAt }) => {
+                                __news = __news.map(({ name, author, title, description, url, urlToImage, publishedAt }) => {
                                     const _news = { name, author, title, description, url, urlToImage, publishedAt }
                                     _news.favorites = favorite.includes(title)
                                     return _news
@@ -88,13 +88,13 @@ function retrieveNews(token, callback) {
 
                             if (counter === _categories.length){
 
-                                for(let i = 0; i < Math.ceil(myNews.length/NEWS_FOR_PAGE); i++){
+                                for(let i = 0; i < Math.ceil(__news.length/NEWS_FOR_PAGE); i++){
                                     numberOfPages.push(i+1)
                                 }
 
-                                let myNewsUnique = getUnique(myNews, element=>element.title)
+                                const newsUnique = getUnique(__news, element=>element.title)
 
-                                callback(undefined, myNewsUnique, numberOfPages)
+                                callback(undefined, newsUnique, numberOfPages)
                             } 
 
                         })
@@ -113,6 +113,6 @@ function retrieveNews(token, callback) {
  * 
  * @callback callback
  * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
- * @param {Array} myNews Array of objects with the news
+ * @param {Array} __news Array of objects with the news
  * @param {Number} numberOfPages numbers of pages in news
  */

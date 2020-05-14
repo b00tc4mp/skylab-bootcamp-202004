@@ -28,8 +28,8 @@ describe('retrieveNews', () => {
                 call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth', `{"username" : "${email}", "password" : "${password}"}`, { 'Content-type': 'application/json' }, (error, status, body) => {
                     if (error) return done(new Error(error.message))
                     if (status !== 200) return done(new Error(`undexpected status ${status}`))
-                    let { token } = JSON.parse(body)
-                    _token = token
+                    const { token } = JSON.parse(body);
+                    _token = token;
 
                     done()
                 })
@@ -38,13 +38,13 @@ describe('retrieveNews', () => {
 
    it("should return all news acording to the user's preferences and country", done => {
         retrieveNews(_token, (error, myNews) => {
-            expect(error).to.be.undefined
+            expect(error).to.be.undefined;
 
-            expect(myNews.length).to.be.greaterThan(0)
+            expect(myNews.length).to.be.greaterThan(0);
 
             for (let i in myNews){
-                expect(myNews[i]).to.exist
-                expect(myNews[i]).to.be.an.instanceOf(Object)
+                expect(myNews[i]).to.exist;
+                expect(myNews[i]).to.be.an.instanceOf(Object);
             }
 
             done()
@@ -56,10 +56,10 @@ describe('retrieveNews', () => {
         const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWI0MDVmYjg2MmJkNTAwMTU5ODQ0NGMiLCJpYXQiOjE1ODg5NDg3NDgsImV4cCI6MTU4ODk1MjM0OH0'
 
         retrieveNews(token, (error, myNews) => {
-            expect(error).to.exist
-            expect(error.message).to.equal('invalid token')
+            expect(error).to.exist;
+            expect(error.message).to.equal('invalid token');
 
-            expect(myNews).to.be.undefined
+            expect(myNews).to.be.undefined;
 
             done()
         })

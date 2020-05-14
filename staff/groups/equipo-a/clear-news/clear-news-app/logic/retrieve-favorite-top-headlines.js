@@ -20,9 +20,9 @@ function retrieveFavoriteTopHeadlines(token, callback) {
             if (error) return callback(error)
 
             if (status === 200) {
-                let user = JSON.parse(body)
+                const user = JSON.parse(body);
 
-                const { headlines = [] } = user
+                const { headlines = [] } = user;
 
                 callback(undefined, headlines)
 
