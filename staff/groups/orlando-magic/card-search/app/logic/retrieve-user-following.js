@@ -8,12 +8,11 @@
  * @throws {TypeError} When the token is not a string.
  * @throws {Error} When callback is not a function.
  */
-
-function retrieveUserFollowing(token, callback, id = ""){
+function retrieveUserFollowing(token, callback){
     String.validate.notVoid(token)
     Function.validate(callback)
 
-    call('GET', `https://skylabcoders.herokuapp.com/api/v2/users/${id}`,
+    call('GET', `https://skylabcoders.herokuapp.com/api/v2/users/`,
     undefined,
     { 'Authorization': `Bearer ${token}` },
     (error, status, body) => {

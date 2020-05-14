@@ -37,7 +37,7 @@ function Results({searchConditions, setSearchConditions, goToCard, handleFavouri
       query = createQuery(location.hash.substring(1))
       query['order'] = event.target.order.value
       query['dir'] =  event.target.dir.value
-      query['language'] =  'en'
+      
       setSearchConditions(query)
 
     } else setSearchConditions({...searchConditions,  order: event.target.order.value, dir: event.target.dir.value});

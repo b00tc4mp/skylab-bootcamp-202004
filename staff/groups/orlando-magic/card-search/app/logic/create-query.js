@@ -6,7 +6,8 @@
  */
 
 function createQuery(url) {
-    String.validate.notVoid(url)
+    if (typeof url !== 'string') throw new TypeError(url + ' is not a string')
+    
     if (!url.includes('include_multilingual') || !url.includes('order')) url = 'include_multilingual=false&order=name&' + url 
     
     let colorLimit
@@ -20,7 +21,7 @@ function createQuery(url) {
     searchConditions['include_multilingual'] = url[0]
     searchConditions['order'] = url[1]
 
-    query = url[index].split('+')
+    let query = url[index].split('+')
     query = query.filter(option => option !== 'OR')
     query.forEach(option => {
         if (option.includes('color')) colorLimit = option.match(/<=|>=|>|<|=/)[0]
