@@ -1,6 +1,6 @@
 const { useState } = React
 
-function Fwitter({ fwitter, token, onUpdateFwitter, onUserSessionExpired}) {
+function Fwitter({ fwitter, token, onUpdateFwitter, onUserSessionExpired,searchPlayer}) {
 
     const [comentsInfo, setComentsInfo] = useState()
     const [error, setError] = useState()
@@ -22,6 +22,10 @@ function Fwitter({ fwitter, token, onUpdateFwitter, onUserSessionExpired}) {
         }
     }
 
+    const handleSearchPlayer = (name) =>{
+        
+        searchPlayer(name)
+    }
 
     return <>
         <section >
@@ -36,8 +40,9 @@ function Fwitter({ fwitter, token, onUpdateFwitter, onUserSessionExpired}) {
                                 </div>
 
                                 <div className='fwitter__comment'>
-
-                                    <div className='fwitter__player-name'>{`@${name} `}<span className='fwitter__message'>{message}</span></div>
+                                    <div className='fwitter__player-name'><a href="" onClick={(event) =>{
+                                        event.preventDefault()
+                                        handleSearchPlayer(name)}}>{`@${name} `}</a><span className='fwitter__message'>{message}</span></div>
                                     <div className=''>
                                         <div className='fwitter__date'>{date}</div>
                                         <div className='fwitter__card-container'>

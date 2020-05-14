@@ -69,7 +69,7 @@ function Home({ token , onUserSessionExpired }) {
                                 } else {
                                 setPlayers(resultLikes) 
                                 goToView('cards')
-                                
+
                                 }
                             }) 
                         }  
@@ -123,6 +123,7 @@ function Home({ token , onUserSessionExpired }) {
             goToView('sport')
         })
     }
+   
 
     const handleToggleFollowPlayers = () => { handleGoToPlayerResults(queryPlayer) }
 
@@ -137,7 +138,7 @@ function Home({ token , onUserSessionExpired }) {
         <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter} onGoToDream={handleGoToDream} onGoToUpdateUser={handleGoToUpdateUser}/>
         {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} onCommentFwitt={handleCommentFwitt} queryPlayer={queryPlayer} likesUser={likesUser} onUserSessionExpired={onUserSessionExpired}/>}
         {view === 'sport' && <SportNews sportNews={sportNews} />}
-        {view === 'fwitter' && <Fwitter fwitter={fwitter} token={token} onUpdateFwitter={handleGoToFwitter} onUserSessionExpired={onUserSessionExpired}/>}
+        {view === 'fwitter' && <Fwitter fwitter={fwitter} token={token} onUpdateFwitter={handleGoToFwitter} onUserSessionExpired={onUserSessionExpired} searchPlayer={handleGoToPlayerResults}/>}
         {view === 'dream' && <Dream />}
         {view === 'update-user' && <UpdateUser token={token} onGoToFwitter={handleGoToFwitter} userDetails={userDetails}  onUserSessionExpired={onUserSessionExpired}/>}
         {error && <Feedback message={error} level="error" />}
