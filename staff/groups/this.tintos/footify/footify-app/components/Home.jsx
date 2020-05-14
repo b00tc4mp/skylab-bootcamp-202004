@@ -123,6 +123,7 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
         searchSport((listResults) => {
             setSportNews(listResults)
             goToView('sport')
+            
         })
     }
    

@@ -1,4 +1,16 @@
+
+/**
+ * Checks user credentials.
+ * 
+ * @param {object} fwitters The Array of fwitters. 
+ * @return {object} Return a fwuitters array in ascendent order.   
+ * @throws {Error} If the fwitters array is empty  throw the Error.
+ */
+
+
 const creatFwitterArray = (fwitters) => {
+    if(fwitters.length === 0) throw new Error('The array is empty.');
+
     const result = []
 
     fwitters.map(({ idUser, nameUser, surnameUser, fwitter }) => {
@@ -24,3 +36,10 @@ const creatFwitterArray = (fwitters) => {
     return result
 }
 
+
+/**
+ * After exectute return.
+ * 
+ * @creatFwitterArray return a ascendent order array.
+ *
+ */

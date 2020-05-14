@@ -5,9 +5,9 @@
  * @param {string} _name The player name.
  * @param {string} _message The message public by the User.
  * @param {string} token The expression to be called after checking credentials, receiving an Error or an authentication token.
- * @param {callback} callback The expression to be called after checking credentials, receiving an Error or an authentication token.
+ * @param {callback} callback The expression to be called after checking credentials, receiving an Error.
  * 
- * @throws {TypeError} If any of the parameters does not match the corresponding type
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
  */
 
 

@@ -34,7 +34,11 @@ describe('retrive-fwitter', () => {
                                     fwitter.forEach(({ id, name, fwitt }) => {
                                         fwitt.forEach(({ message, date, _date }) => {
                                             if (_date&&id) {
+<<<<<<< HEAD
+
+=======
                                                 // console.log(idUser+':'+ nameUser+':'+ surnameUser+':'+id+':'+message+':'+_date )
+>>>>>>> footify-develop
                                                 expect(idUser).to.be.a('string');
                                                 expect(idUser).to.exist
                                                 expect(nameUser).to.exist

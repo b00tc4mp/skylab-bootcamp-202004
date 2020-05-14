@@ -1,3 +1,17 @@
+/**
+ * Checks user credentials.
+ * 
+ * @param {string} email The user e-mail. 
+ * @param {string} password The user password.
+ * @param {callback} callback The expression to be called after checking credentials, receiving an Error or an authentication token.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {Error} If e-mail does not match the expected format.
+ */
+
+
+
+
 function authenticateUser (email,password,callback) {
     Email.validate(email);
     
@@ -22,3 +36,12 @@ function authenticateUser (email,password,callback) {
         }
     )
 }
+
+
+/**
+ * Invoked after remote authentication.
+ * 
+ * @callback callback
+ * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * @param {string} token It receives a token in case credentials are correct.
+ */
