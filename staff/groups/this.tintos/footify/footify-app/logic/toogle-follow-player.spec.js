@@ -35,7 +35,7 @@ describe('toogleFollowPlayer', () => {
                    })
               })
           )
-       it('Should check if user have "likes" array and add one player to this field', done => { debugger
+       it('Should check if user have "likes" array and add one player to this field', done => { 
         toogleFollowPlayer(_token, playerId, (error,likes) => { 
           expect(error).to.be.undefined
           expect(likes).to.exist
@@ -64,7 +64,6 @@ describe('toogleFollowPlayer', () => {
 
                               if (status === 200) {
 
-                                  // debugger
                                   let { following } = JSON.parse(body)
                                   expect(following).to.exist
                                   expect(following).to.be.an.instanceOf(Array)

@@ -33,8 +33,7 @@ describe('updateUser', () => {
 
             });
 
-
-        it ('should change name/surname', done =>{ debugger
+        it ('should change name/surname', done =>{ 
             newName=names.random();
             newSurname=surnames.random();
             updateUser(token,newName,newSurname,()=>{

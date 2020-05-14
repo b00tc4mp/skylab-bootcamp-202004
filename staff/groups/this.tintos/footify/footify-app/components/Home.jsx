@@ -62,6 +62,7 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
                         if (error) {
                             setPlayers('no players')
                             setError(error.message)
+                            goToView('cards')
                         }else{
                             searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => { 
                                 if (error) {
@@ -120,7 +121,8 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
     }
 
     const handleGoToSport = () => {
-        searchSport((listResults) => {
+        searchSport((error, listResults) => {
+            if(error) setError(error)
             setSportNews(listResults)
             goToView('sport')
             
@@ -128,7 +130,7 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
     }
    
     const handleGoToDream = () => {
-        dreamTeam(undefined,token,(error, playersRanking) =>{
+        dreamTeam(token,(error, playersRanking) =>{
             if(error) return setError(error)
             setPlayersRanking(playersRanking)
             setView('dream')
@@ -152,7 +154,7 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
         {view === 'fwitter' && <Fwitter fwitter={fwitter} token={token} onUpdateFwitter={handleGoToFwitter} onUserSessionExpired={onUserSessionExpired} searchPlayer={handleGoToPlayerResults}/>}
         {view === 'dream' && <Dream  playersRanking={playersRanking}/>}
         {view === 'update-user' && <UpdateUser token={token} onGoToFwitter={handleGoToFwitter} userDetails={userDetails}  onUserSessionExpired={onUserSessionExpired}/>}
-        {error && <Feedback message={error} level="error" />}
+       
     </>
 
 }

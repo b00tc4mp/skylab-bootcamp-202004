@@ -1,4 +1,22 @@
+/**
+ * Checks user credentials.
+ * 
+ * @param {userfwitts} All the information of the person who has fwitted(date, number of cards, id user, id player...).
+ * @param {string} token The token of the current user. 
+ * @param {callback} callback The expression to be called after checking credentials, receiving an Error and userFwitts(modified, with new card added).
+ * 
+ * @returns {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * @returns {Object} userFwitts It receives a array in case credentials are correct.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {Error} If does not match the expected format.
+ */
+
 function commentCards(userfwitts, token, callback) {
+
+    if (userfwitts.length === 0) throw new Error(`${userfwitts} no have length`)
+    String.validate.notVoid(token);
+    Function.validate(callback);
 
     call("GET", "https://skylabcoders.herokuapp.com/api/v2/users/all", undefined,
         { Authorization: `Bearer ${token}` }, (error, status, body) => {
@@ -58,57 +76,6 @@ function commentCards(userfwitts, token, callback) {
         })
 }
 
-// function commentCards(idCurrentUser, token, callback) {
-
-//     call("GET", "https://skylabcoders.herokuapp.com/api/v2/users/all", undefined,
-//         { Authorization: `Bearer ${token}` }, (error, status, body) => {
-
-//             if (error) return callback(error);
-
-//             if (status === 200) {
-
-//                 let redCards = 0
-//                 let yellowCards = 0
-//                 let greenCards = 0
-
-//                 const users = JSON.parse(body)
-//                 let usersHaveCards = users.filter((user) => {
-//                     return user.red || user.green || user.yellow
-
-//                 })
-
-//                 //for red card
-//                 usersHaveCards.forEach(user => {
-//                     for (redIds of user.red) {
-//                         if (redIds === idCurrentUser) {
-//                             redCards++
-//                         }
-//                     }
-//                 })
-//                 //for yellow card
-//                 usersHaveCards.forEach(user => {
-//                     for (yellowIds of user.yellow) {
-//                         if (yellowIds === idCurrentUser) {
-//                             yellowCards++
-//                         }
-//                     }
-//                 })
-//                 //for green card
-//                 usersHaveCards.forEach(user => {
-//                     for (greenIds of user.green) {
-//                         if (greenIds === idCurrentUser) {
-//                             greenCards++
-//                         }
-//                     }
-//                 })
-//                 callback(undefined, redCards, yellowCards, greenCards)
-
-//             } else {
-//                 const { error } = JSON.parse(body)
-//                 callback(new Error(error));
-//             }
-//         })
-// }
 
 
 
