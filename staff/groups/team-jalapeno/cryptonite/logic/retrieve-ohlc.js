@@ -1,3 +1,8 @@
+/**
+ * returns handled data recived from an api call
+ * @param {string} name - crypto's name 
+ * @param {callback} callback - returns the api's response
+ */
 function retrieveOhlc(name, callback) {
 
     Function.validate(callback)
@@ -21,3 +26,9 @@ function retrieveOhlc(name, callback) {
         callback(new Error('server error'))
     })
 } 
+/**
+ * returns api's response
+ * @callback callback
+ * @param {string}  error - api's answer when an error exists.
+ * @param {object[]} data - api's answer when succeeds, destructured from response.
+ */

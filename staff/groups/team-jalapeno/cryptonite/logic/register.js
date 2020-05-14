@@ -1,3 +1,12 @@
+/**
+ * resgister sends data to make an api call.
+ * @param {string} name -data to create user's info in api.
+ * @param {string} surname -data to create user's info in api.
+ * @param {email} email -data required to create user in api.
+ * @param {string} password -data required to create user in api.
+ * @param {callback} callback 
+ */
+
 function register(name, surname, email, password, callback){
     
     String.validate.alphabetic(name)
@@ -20,3 +29,10 @@ function register(name, surname, email, password, callback){
         callback(new Error(apiError))
     })
 }
+
+/**
+ * callback is a function inside register function, 
+ * @callback callback
+ * @param {string} error - api's answer when an error exists.
+ * @param {string} response -api's answer when succeeds.
+ */

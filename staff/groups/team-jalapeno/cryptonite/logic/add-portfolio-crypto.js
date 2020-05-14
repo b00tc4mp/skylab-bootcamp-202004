@@ -1,6 +1,6 @@
 function addPortfolioCrypto(token, portfolioInfo, callback) {
-    String.validate.notVoid(token)
-    Function.validate(callback)
+   // String.validate.notVoid(token)
+   // Function.validate(callback)
    // if (typeof portfolioInfo !== 'array') throw new Error(portfolioInfo + 'is not valid')
 
     let url = 'https://skylabcoders.herokuapp.com/api/v2/users/'
