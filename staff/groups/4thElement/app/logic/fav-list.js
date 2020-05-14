@@ -4,11 +4,12 @@ function favList(token, sportState, callback) {
             if (error) return callback(error)
 
             if (status === 200) {
+        
                 const bodyInfo = JSON.parse(body)
-                const getSpots = bodyInfo.favSpots
+                const {favSpots} = bodyInfo
 
                 let filteredArray=[];
-                getSpots.map((item)=>{
+                favSpots.map((item)=>{
                     if(item.sportType === sportState) filteredArray.push(item)
                 })
 

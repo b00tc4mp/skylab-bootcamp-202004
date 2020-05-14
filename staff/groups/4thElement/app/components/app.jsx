@@ -8,6 +8,7 @@ function App() {
     const [forecastSelected, setForecastSelected] = useState('')
     const [sportState, setSportState] = useState('surf')
     
+    
 
     const handleGoToRegister= () => setHashView('register')
 
