@@ -34,6 +34,10 @@ describe('retrive-fwitter', () => {
                                     fwitter.forEach(({ id, name, fwitt }) => {
                                         fwitt.forEach(({ message, date, _date }) => {
                                             if (_date&&id) {
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
                                                 expect(idUser).to.be.a('string');
                                                 expect(idUser).to.exist
                                                 expect(nameUser).to.exist
