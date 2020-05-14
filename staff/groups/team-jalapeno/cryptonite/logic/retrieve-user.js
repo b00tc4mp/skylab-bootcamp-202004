@@ -1,4 +1,8 @@
- 
+ /**
+  * Gets user's info after an api's call.
+  * @param {string} token -required to api's call succeeds.
+  * @param {callback} callback - handles api's answer.
+  */
 function retrieveUser(token, callback) {
     String.validate.notVoid(token)
     Function.validate(callback)
@@ -19,3 +23,15 @@ function retrieveUser(token, callback) {
         callback(new Error(apiError))
     })
 }
+
+/**
+ * this function is inside retrieveUser function.
+ * @callback callback
+ * @param {string} error - api's answer when an error exists.
+ * @param {object[data]} data - api's answer when succeeds
+ * @param {string} data[].name - answer from api
+ * @param {string} data[].surname - answer from api
+ * @param {email} data[email].username - answer from api
+ * @param {object[]} data[].favorites - answer from api
+ * @param {objectg[]} data[].portfolio - answer from api
+ */
