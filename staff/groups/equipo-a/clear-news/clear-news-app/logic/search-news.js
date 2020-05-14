@@ -16,8 +16,6 @@ function searchNews(token, query, language, sortBy, callback) {
     String.validate.notVoid(query);
     Function.validate(callback);
 
-
-
     let allNews = []
 
     const numberOfPages = []
@@ -77,7 +75,9 @@ function searchNews(token, query, language, sortBy, callback) {
                             numberOfPages.push(i+1)
                         }
 
-                        callback(undefined, allNews, numberOfPages);
+                        let allNewsUnique = getUnique(allNews, element=>element.title)
+
+                        callback(undefined, allNewsUnique, numberOfPages);
                     });
             }else {
                 const { error } = JSON.parse(body)

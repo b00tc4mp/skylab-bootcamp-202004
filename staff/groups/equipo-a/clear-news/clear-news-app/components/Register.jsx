@@ -23,7 +23,7 @@ function Register({ onRegister, onGoToLogin }) {
         if (event.target.sports.checked) sports = Boolean(event.target.sports.value);
         if (event.target.technology.checked) technology = Boolean(event.target.technology.value);
         
-        let interests = { business, entertainment, general, health, science, sports, technology }
+        let categories = { business, entertainment, general, health, science, sports, technology }
 
         let { name, surname, email, password } = event.target;
        
@@ -33,7 +33,7 @@ function Register({ onRegister, onGoToLogin }) {
         password = password.value;
        
         try {
-            registerUser(name, surname, email, password, interests, country, error => {
+            registerUser(name, surname, email, password, categories, country, error => {
                 if (error) return setError(error.message);
                 
                 onRegister();

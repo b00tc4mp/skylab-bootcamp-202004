@@ -15,7 +15,7 @@ describe('retrieveNews', () => {
             sports: false,
             technology: true
         }
-        debugger
+    
         country = countries.random()
 
 
@@ -47,16 +47,6 @@ describe('retrieveNews', () => {
                 expect(myNews[i]).to.be.an.instanceOf(Object)
             }
 
-            // myNews.forEach(({ name, author, title, description, url, urlToImage, publishedAt }) => {
-            //     expect(name).to.exist
-            //     expect(author).to.exist
-            //     expect(title).to.exist
-            //     expect(description).to.exist
-            //     expect(url).to.exist
-            //     expect(urlToImage).to.exist
-            //     expect(publishedAt).to.exist
-            // });
-
             done()
         })
 
@@ -75,14 +65,33 @@ describe('retrieveNews', () => {
         })
     })
 
-    // it('should return an error because the apikey is invaid', done => {
-    //     retrieveNews(_token, error => {
-    //         expect(error).to.be.exist
+    it('should return an error when the token is empty or blank', () => {
+        let __token = '  '
+        expect(function () {
+            retrieveNews(__token, function () { })
+        }).to.throw(Error, `${__token} is empty or blank`)
 
-    //         expect(error.code).to.equal("apiKeyInvalid")
-    //         expect(error.message).to.equal(`Your API key is invalid or incorrect. Check your key, or go to https://newsapi.org to create a free API key.`)
-    //     })
-    // })
+        __token = ''
+        expect(function () {
+            retrieveNews(__token, function () { })
+        }).to.throw(Error, `${__token} is empty or blank`)
+    })
+
+    it('should return an error when headline is not a function', () => {
+
+        expect(function () {
+            retrieveNews(_token, undefined)
+        }).to.throw(TypeError, `undefined is not a function`)
+
+        expect(function () {
+            retrieveNews(_token, 'my news')
+        }).to.throw(TypeError, `my news is not a function`)
+
+        expect(function () {
+            retrieveNews(_token, 22)
+        }).to.throw(TypeError, `22 is not a function`)
+
+    })
 
 
     afterEach(done => {
@@ -92,7 +101,7 @@ describe('retrieveNews', () => {
             (error, status, body) => {
                 if (error) return done(error)
                 if (status !== 200) return done(new Error(`unexpected status ${status}`))
-                debugger
+
                 const { token } = JSON.parse(body)
 
                 call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users',

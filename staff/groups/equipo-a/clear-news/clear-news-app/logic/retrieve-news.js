@@ -10,7 +10,7 @@
   */
 function retrieveNews(token, callback) {
 
-    String.validate(token)
+    String.validate.notVoid(token)
 
     Function.validate(callback)
 
@@ -45,7 +45,7 @@ function retrieveNews(token, callback) {
                 let counter = 0
           
                 for (let i = 0; i < _categories.length; i++) {
-                    call('GET', `https://newsapi.org/v2/top-headlines?country=${country}&category=${_categories[i]}&apiKey=0d80af4c6ef6473aae5bb15fcf9eb625`,
+                    call('GET', `https://newsapi.org/v2/top-headlines?country=${country}&category=${_categories[i]}&apiKey=f8ed27ae05b44313b6a87abfea6dc48b`,
                         undefined,
                         undefined,
                         (error, status, body) => {
@@ -89,7 +89,9 @@ function retrieveNews(token, callback) {
                                     numberOfPages.push(i+1)
                                 }
 
-                                callback(undefined, myNews, numberOfPages)
+                                let myNewsUnique = getUnique(myNews, element=>element.title)
+
+                                callback(undefined, myNewsUnique, numberOfPages)
                             } 
 
                         })

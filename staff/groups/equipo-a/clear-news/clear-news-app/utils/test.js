@@ -1,17 +1,17 @@
 const names = [
-    'John',
-    'Mary',
-    'Andy',
-    'Pepito',
-    'Peter',
-    'John',
-    'Manuel',
-    'Hector',
-    'Jorge',
-    'Jose',
-    'Lisandro',
-    'Daria',
-    'Daniel'
+    'Sofia',
+    'Maria',
+    'Lucia',
+    'Ander',
+    'Aitor',
+    'Jon',
+    'Manu',
+    'Isabel',
+    'Nico',
+    'Sergi',
+    'Dani',
+    'Donald',
+    'Danila'
 ]
 
 const surnames = [
@@ -25,7 +25,10 @@ const surnames = [
     'Loquillo',
     'Pepinillo',
     'Azuquita',
-    'Capullita'
+    'Capullita',
+    'Martinez',
+    'Sanchez',
+    'Perez'
 ]
 
 const passwords = [
