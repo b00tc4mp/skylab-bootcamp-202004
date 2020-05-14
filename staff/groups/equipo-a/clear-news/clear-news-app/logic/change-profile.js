@@ -23,7 +23,6 @@ function changeProfile(token, userUpdate, callback) {
         
     } else {
         delete userUpdate.oldPassword
-        delete userUpdate.password
     }
 
     if(password!==""){
@@ -33,9 +32,7 @@ function changeProfile(token, userUpdate, callback) {
         String.validate(password);
         
     } else {
-        delete userUpdate.oldPassword
         delete userUpdate.password
-
     }
 
     String.validate.notVoid(name);
@@ -72,13 +69,17 @@ function changeProfile(token, userUpdate, callback) {
                 if (status === 200) {
                     const { username} = JSON.parse(body)
                     if(email===username) delete userUpdate.email
+                    else{
+                        userUpdate.username=email
+                        delete userUpdate.email
+                    }
                     call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify(userUpdate),
                         { 'Content-type': 'application/json', 'Authorization': `Bearer ${token}` },
                         (error, status, body) => {
                             if (error) return callback(error);
 
                             if (status === 204) {
-                                callback("message");
+                                callback("success");
 
                             } else {
                                 const { error } = JSON.parse(body);
