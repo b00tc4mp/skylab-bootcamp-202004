@@ -32,7 +32,10 @@ function retrieveFavNews(token, callback) {
                 let counter = 0
 
                 favorite.forEach((item => {
-                    call('GET', `https://newsapi.org/v2/everything?q="${item}"&apiKey=f8ed27ae05b44313b6a87abfea6dc48b`,
+
+                    // let title = item.split(' ').join('+')
+                    call('GET', `https://newsapi.org/v2/everything?q="${item}"&apiKey=55aab6760184405791eeffefcbd32733`,
+
                         undefined,
                         undefined,
                         (error, status, body) => {
@@ -62,7 +65,39 @@ function retrieveFavNews(token, callback) {
                                 callback(new Error(error))
                             }
 
-                            
+
+                            // let titleTop=JSON.parse(item)
+
+                            call('GET', `https://newsapi.org/v2/top-headlines?q=${titleTop}&apiKey=55aab6760184405791eeffefcbd32733`,
+                        undefined,
+                        undefined,
+                        (error, status, body) => {
+                            if (error) return callback(error)
+
+                            if (status === 200) {
+                                counter++
+                                let news = JSON.parse(body)
+
+                                const { articles } = news
+
+                                for (let i in articles) {
+                                    const { source, author, title, description, url, urlToImage, publishedAt } = articles[i]
+
+                                    if (typeof source !== "undefined") {
+                                        const { name } = source
+                                        favNews.push({ name, author, title, description, url, urlToImage, publishedAt })
+                                    }
+                                    else {
+                                        const name = "unknown"
+                                        favNews.push({ name, author, title, description, url, urlToImage, publishedAt })
+                                    }
+                                }
+
+                            } else {
+                                const { error } = JSON.parse(body)
+                                callback(new Error(error))
+                            }
+                           
         
                             if (counter === favorite.length) callback(undefined, favNews)
                             

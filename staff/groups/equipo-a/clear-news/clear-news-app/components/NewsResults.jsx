@@ -38,11 +38,10 @@ function NewsResults({ onSearch, results, token, query, language, sortBy, pages 
     return <section className="search-news">
 
         {
-            results && <ul className="news__container">
+            results.length ? <ul className="news__container">
                 {newsForPage(results, currentPage).map(({ name, title, url, urlToImage, favorites }) =>
                     <li className="news__item" key={title}>
-                        <a href={url} target='_blank'><img className="news__images" src={urlToImage} alt="
-Image not available for your region"></img>
+                        <a href={url} target='_blank'><img className="news__images" src={urlToImage} alt="Image not available for your region"></img>
                             <div className="news__title stroke"><p className="stroke">{name}</p><p className="stroke"> {title}</p></div></a>
 
                             <div className="news__button"> <input type="image" className="news__followIMG" src={favorites? "images/heart-follow.png" : "images/heart-unfollow.png"} onClick={() => handleLikeNews(title)} /></div>
@@ -51,6 +50,7 @@ Image not available for your region"></img>
 
                     </li>)}
             </ul>
+             : <Feedback message="sorry, no results" level="warning" />
         }
         {pages && <Pages pages={pages} handleCurrentPage={handleCurrentPage}/>}
 
