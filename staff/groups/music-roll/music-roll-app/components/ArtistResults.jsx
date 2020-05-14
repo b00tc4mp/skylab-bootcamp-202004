@@ -12,10 +12,10 @@ function ArtistResults({ results,token}) {
     
     
     return<>
-        {results.length ? <ul>
+        {results.length ? <ul className="artist-list">
             {
             results.map(({name, id, images}) => {
-                return <li key={`${id}`}>{`${name}`} <a href=""><img src={`${images}`} width="100px" height="100px"></img></a><button onClick={()=>handleToogleArtist(name,images)}>I like it!</button></li>
+                return <li className="artist-list__item" key={`${id}`}>{`${name}`} <a href=""><img src={`${images}`} width="100px" height="100px"></img></a><button className="artist-list__btn" onClick={()=>handleToogleArtist(name,images)}>I like it!</button></li>
             })
         }
         </ul> : console.error("fail")}

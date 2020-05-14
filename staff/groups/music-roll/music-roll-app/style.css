@@ -357,6 +357,10 @@ input -internal-autofill-selected {
   box-sizing: border-box;
 }
 
+body {
+  background-color: #2a2a2a;
+}
+
 .browser-results {
   height: 100%;
 }
@@ -435,7 +439,7 @@ input -internal-autofill-selected {
   width: 250px;
   margin-bottom: 5px;
   background-color: #ffffff17;
-  color: #000000;
+  color: #8f8f8f;
   padding: 7px 10px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   font-family: montserrat;
@@ -469,6 +473,40 @@ input -internal-autofill-selected {
   align-items: center;
 }
 
+.playlists-results {
+  list-style: none;
+  width: 15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+.playlists-results__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  height: 250px;
+  border-bottom: 0.02rem solid dodgerBlue;
+  box-shadow: 0.5rem;
+}
+.playlists-results__btn {
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 5rem;
+  height: 1.5rem;
+  margin-bottom: 0.3rem;
+  background-image: linear-gradient(to bottom, #d900ff81, #008cff5e);
+}
+.playlists-results__image {
+  width: 100px;
+  height: 100px;
+}
+.playlists-results__title {
+  font-size: 20px;
+}
+
 .disc-list {
   list-style: none;
   width: 15rem;
@@ -483,8 +521,17 @@ input -internal-autofill-selected {
   justify-content: space-around;
   align-items: center;
   text-align: center;
-  height: 200px;
-  padding: 1rem 0 1rem 0;
+  height: 250px;
+  border-bottom: 0.02rem solid dodgerBlue;
+  box-shadow: 0.5rem;
+}
+.disc-list__btn {
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 5rem;
+  height: 1.5rem;
+  margin-bottom: 0.3rem;
+  background-image: linear-gradient(to bottom, #d900ff81, #008cff5e);
 }
 .disc-list__image {
   width: 100px;
@@ -494,40 +541,123 @@ input -internal-autofill-selected {
   font-size: 20px;
 }
 .track-results {
-  top: -10px;
+  margin-top: -45rem;
   position: relative;
   right: 0;
   margin-left: 2rem;
 }
+.track-results__item {
+  border-top: 0.1px solid black;
+  border-bottom: 0.1px solid black;
+  padding: 0.1rem;
+  color: black;
+}
+.track-results a {
+  text-decoration: none;
+  color: black;
+}
+
+.artist-list {
+  list-style: none;
+  width: 15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+.artist-list__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  height: 250px;
+  border-bottom: 0.02rem solid dodgerBlue;
+  box-shadow: 0.5rem;
+}
+.artist-list__btn {
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 5rem;
+  height: 1.5rem;
+  margin-bottom: 0.3rem;
+  background-image: linear-gradient(to bottom, #d900ff81, #008cff5e);
+}
+.artist-list__image {
+  width: 100px;
+  height: 100px;
+}
+.artist-list__title {
+  font-size: 20px;
+}
 
 .playlists-results {
-  display: flex;
-  position: absolute;
-  justify-content: center;
-  top: 50vh;
-  left: 10vw;
-}
-.playlists-results h2 {
-  font-size: 12px;
-  text-align: center;
-}
-.playlists-results__list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  align-items: center;
-  justify-items: center;
   list-style: none;
-  width: 80vw;
-  height: 50vh;
+  width: 15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
 }
 .playlists-results__item {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 150px;
-  height: 150px;
+  text-align: center;
+  height: 250px;
+  border-bottom: 0.02rem solid dodgerBlue;
+  box-shadow: 0.5rem;
+}
+.playlists-results__btn {
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 5rem;
+  height: 1.5rem;
+  margin-bottom: 0.3rem;
+  background-image: linear-gradient(to bottom, #d900ff81, #008cff5e);
+}
+.playlists-results__image {
+  width: 100px;
+  height: 100px;
+}
+.playlists-results__title {
+  font-size: 20px;
+}
+
+.track-list {
+  list-style: none;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+.track-list__item {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  height: 6rem;
+  width: 100vw;
+  border-bottom: 0.02rem solid dodgerBlue;
+  box-shadow: 0.5rem;
+}
+.track-list a {
+  text-decoration: none;
+  color: dodgerBlue;
+  margin-left: 1rem;
+}
+.track-list__btn {
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 5rem;
+  height: 1.5rem;
+  margin: 1rem;
+  background-image: linear-gradient(to bottom, #d900ff81, #008cff5e);
+}
+.track-list__title {
+  font-size: 20px;
 }
 
 * {
