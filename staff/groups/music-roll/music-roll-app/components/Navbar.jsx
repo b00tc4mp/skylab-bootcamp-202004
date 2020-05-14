@@ -33,14 +33,6 @@ function Navbar({onChangeView }){
                     onChangeView('favorites')
                 }}><i className="far fa-heart"></i></a>
             </li>
-            <li className={`navbar__item ${view === 'friends' ? 'navbar__item--active center' : ''}`}>
-                <a href="" onClick = {event => {
-                    event.preventDefault()
-
-                    setView('friends')
-                    onChangeView('friends')
-                }}><i className="fas fa-users"></i></a>
-            </li>
             <li className="navbar__item">
                 <a href="" onClick = {event => {
                     event.preventDefault()

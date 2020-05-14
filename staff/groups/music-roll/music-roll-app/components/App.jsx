@@ -7,7 +7,7 @@ class App extends Component {
         this.state = {
 
             view: 'login',
-            Spotytoken: "BQDXzlsw5RPU67H_LBeyEnQliwEgsmA4SotLrZ2_Is9EJmL3lcn-MRrdkScjolsbwPBv3jNUHaMjtdPODneAPst0gaQwr-wzmZX2meqy7pC4ZrHksuPM4NyPBYrh-eglVwFxz8Fcick",
+            Spotytoken: "BQA-pOrqYaOQlTmpTsm5EQZoOPif-0AUonAwmwyj3VCTzg3jUOxOxbKsSHtO71GnTOOYC6ajepnejph7YIN9_pJLlaA32NG-x0SAO6m04to5bGYHUSuHPIgP1NV1aZ-GLkLXCw",
             token: undefined
         }
     }
@@ -36,7 +36,6 @@ class App extends Component {
             {view !== "login" && view !== "register" && <Navbar onChangeView={onChangeView} />}
             {view === 'home' && <Home />}
             {view === 'browser' && <Browser token={Spotytoken} />}
-            {view === 'friends' && <SearchUsers token={token} onUserSessionExpired={handleSessionExpired} />}
         </>
     }
 }

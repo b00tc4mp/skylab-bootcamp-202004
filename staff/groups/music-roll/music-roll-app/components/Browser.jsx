@@ -65,9 +65,9 @@ function Browser({ token }) {
 
     }
 
-    return <section className="browser">
-       <section className ="browser__search">
-        <h2 className="title">Browser</h2>
+    return <section className="browser-results">
+       <section className ="browser">
+        <h2 className="browser__title">Browser</h2>
         <form className="browser__form" onSubmit={handleSubmit} >
             <select name="browser">
                 <option defaultValue>Choose one:</option>
