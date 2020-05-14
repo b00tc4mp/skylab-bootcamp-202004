@@ -49,7 +49,7 @@ function Register({ onGoToLogin, onGoToLanding }) {
                     <input type="password" name="password" className="password" className="register__input-item" placeholder="password*" />
                     <input type="password" name="confirmPassword" className="password" className="register__input-item" placeholder="confirm password*" />
                     <button className="register__input-button">REGISTER</button>
-                    {error && <Feedback message={error} level="error" />}
+                    {error && <Feedback message={error} level="register" />}
                 </form>
                 <div className="register__goto">
                     <a href="" onClick={handleGoToLanding}><img src="img/arrow_left.svg" alt="go-to-landing" className="register__goto-landing" /></a>

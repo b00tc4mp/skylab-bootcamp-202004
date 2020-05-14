@@ -87,8 +87,9 @@ function PlayerResults({resultsPlayers, token, onToggleFollowPlayer,onCommentFwi
                     </li>
                 ))} </ul>) 
                 : 
-                (<Feedback message="sorry, no players found :(" level="warning" />)}
-            </section>  
+                ('')}
+            </section>
+
         </>
     
 
