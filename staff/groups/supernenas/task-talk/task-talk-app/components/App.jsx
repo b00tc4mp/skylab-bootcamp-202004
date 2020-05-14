@@ -17,12 +17,12 @@ const App = () => {
 
     const handleGoToLogin = () => setView('login')
 
-    const handleLogout = () => { setToken(); setView('landing') }
+    const handleLogout = () => { setToken(); localStorage.removeItem("trello_token"); setView('landing') }
 
     return <>
         {view === 'landing' && <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
         {view === 'login' && <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />}
         {view === 'register' && <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />}
-        {view === 'home' && <Home token={token} onLogout={handleLogout}/>}
+        {view === 'home' && <Home token={token} onLogout={handleLogout} tokenskylab={token} />}
     </>
 }

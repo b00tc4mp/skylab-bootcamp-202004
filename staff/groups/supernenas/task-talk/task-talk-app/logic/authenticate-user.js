@@ -1,15 +1,15 @@
 /**
- * Lanza un popup para que el usuario inicie sesion y ligue su cuenta con trello
- * @param {function} onSuccess callback que se llama cuando no hay ningún error
- * @param {function} onFailure callback que se llama en caso de error
- * @throws {TypeError} lanza un error si los parámetros no son funciones
+ * Launch a popup for the user to log in and link their account with trello
+ * @param {function} onSuccess Callback that is called when there is no error
+ * @param {function} onFailure Callback that is called in case of error
+ * @throws {TypeError} Throws an error if parameters are not functions
  */
-function authenticateuser(onSuccess, onFailure) {
-    //Comprueba que se le han mandado dos callbacks
-    Function.validate(onSuccess);
-    Function.validate(onFailure);
 
-    //Crea el popup de trello para que el usuario inicie sesion y llama a la callback correspondiente
+function authenticateuser(onSuccess, onFailure) {
+    Function.validate(onSuccess)
+    Function.validate(onFailure)
+
+    //Create the trello popup for the user to log in and call the corresponding callback
     window.Trello.authorize({
         type: 'popup',
         name: 'Task Talk',

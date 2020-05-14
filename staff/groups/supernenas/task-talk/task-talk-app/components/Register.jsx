@@ -24,11 +24,7 @@ function Register({ onRegister, onGoToLogin }) {
         }
     }
 
-    const handleGoToLogin = event => {
-        event.preventDefault()
-
-        onGoToLogin()
-    }
+    const handleGoToLogin = event => { event.preventDefault(); onGoToLogin() }
 
     return <div className="aux">
     <section className="register ">

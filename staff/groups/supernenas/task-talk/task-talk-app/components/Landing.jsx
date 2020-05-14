@@ -1,7 +1,7 @@
 function Landing ({ onGoToRegister, onGoToLogin }) {
     const handleGoToRegister = (event) => { event.preventDefault(); onGoToRegister() }
 
-    const handleGoToLogin = (event) =>{ event.preventDefault(); onGoToLogin() }
+    const handleGoToLogin = (event) => { event.preventDefault(); onGoToLogin() }
 
     return <div className="aux">
         <section className="landing">

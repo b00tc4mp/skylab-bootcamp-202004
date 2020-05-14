@@ -1,7 +1,7 @@
  const {useState, Component} = React;
 
  class Home extends Component {
-     constructor() {
+     constructor(props) {
         super()
         
         this.state = {
@@ -10,14 +10,38 @@
         navigationName: "usuario",
         groups: [],
         currentgroup:undefined,
+        currentuser:undefined,
         activities:[],
         error:false,
         selectedActivity:undefined
         }
+        // debemos refactorizar es largo es te codigo :DD ya esta zoom disponible
+     }
+     componentDidMount(){
         if(localStorage.trello_token){
             Trello.setToken(localStorage.trello_token)
-            this.handleShowGroups();
+            getcurrentuser((user)=>{
+                this.setState({currentuser:user,navigationName:user.fullName})
+                this.handleShowGroups();
+            },(error)=>{
+                this.setState({error: error.responseText})
+            })
         } 
+        else{
+            retrievetrellofromskylab(this.props.tokenskylab,(error, result)=>{
+                if(error){ 
+                    this.setState({error: error.responseText})
+                }else if(result){
+                    Trello.setToken(result)
+                    getcurrentuser((user)=>{
+                        this.setState({currentuser:user,navigationName:user.fullName})
+                        this.handleShowGroups();
+                    },(error)=>{
+                        this.setState({error: error.responseText})
+                    }) 
+                }
+            })
+        }
      }
     toggleMenu = ()=> { this.setState({menu: !this.state.menu})} 
     handleReturn=()=>{ 
@@ -25,16 +49,25 @@
         switch(this.state.view) {
             case "cards":
                 this.handleShowGroups();
-                //this.setState({view: "groups", navigationName:"usuario",menu:false})
                 break;
             case "cardEdition":
-                this.setState({view: "cards", navigationName:"",menu:false})
+                this.setState({view: "cards", navigationName:this.state.currentgroup[1].name,menu:false})
                 break;
         }       
     }
     handleAuthorize=()=>{authenticateuser(()=>{
-        //Muestre los grupos
-        this.handleShowGroups();
+        getcurrentuser((user)=>{
+            linkskylabtrello((error)=>{
+                if(error){
+                    this.setState({error: error.responseText})
+                }else{
+                    this.setState({currentuser:user,navigationName:user.fullName})
+                this.handleShowGroups();
+                }
+            },sessionStorage.token,Trello.token())
+        },(error)=>{
+            this.setState({error: error.responseText})
+        })
     },(authorizeError) =>{
         this.setState({error: authorizeError.responseText})
     })}
@@ -77,7 +110,7 @@
     }
   
     handleReturnToCards=()=>{
-        this.setState({view: "cards", navigationName: ""})
+        this.setState({view: "cards", navigationName: this.state.currentgroup.name}) //todo
     }
     handleCreateGroup=(groupTitle, groupDesc)=>{
         createnewgroup(groupTitle,groupDesc,(newGroup)=>{
@@ -113,8 +146,8 @@
         this.setState({view:"groupEdition",menu:false,navigationName:"Create new group",currentgroup:undefined})
     }
     handleShowGroups=()=>{
-        retrieveusergroups("sergi_ruiz87",(_groups)=>{
-            this.setState({groups:_groups,navigationName:"sergi_ruiz87",menu:false,view:"groups", error:false})
+        retrieveusergroups(this.state.currentuser.id,(_groups)=>{
+            this.setState({groups:_groups,navigationName:this.state.currentuser.name,menu:false,view:"groups", error:false})
         },(error)=>{
             this.setState({error: error.responseText})
         })
