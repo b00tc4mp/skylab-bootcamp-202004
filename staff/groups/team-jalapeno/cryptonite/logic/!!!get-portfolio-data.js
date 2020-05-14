@@ -1,3 +1,8 @@
+/**
+ * @function retrieveUser - gets portfolio user's data.
+ * @param {string} sessionStorage.token - required to make get api call. Located in sessionStorage
+ * @param {function} callback - returns api's response
+ */
 retrieveUser(sessionStorage.token, (userError, user) => {
     if (userError) return setError(userError)
 
@@ -29,3 +34,9 @@ retrieveUser(sessionStorage.token, (userError, user) => {
         }, ids)
     }
 })
+
+/**
+ * @callback callback - returns api's answer.
+ * @param {string} userError - returns api's error when exists.
+ * @param {string} user - return user info from destructurated api response.
+ */
