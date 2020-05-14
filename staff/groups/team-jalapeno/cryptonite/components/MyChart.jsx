@@ -17,7 +17,7 @@ function MyChart({ data, name }) {
 	return (
 
 		<div className="canvas-container">
-			<canvas ref={canvasRef} />
+			<canvas ref={canvasRef} width="400" height="200" />
 		</div>
 	);
 }

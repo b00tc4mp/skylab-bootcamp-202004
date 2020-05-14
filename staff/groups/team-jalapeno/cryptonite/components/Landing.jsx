@@ -51,8 +51,10 @@ function Landing({ toRegister, toLogin, handleGoToLoginFromLanding }) {
         <footer className="footer">
             <section>
                 <p className="footer__text">Not a Cryptoniter already?</p>
-                <a href="" className="footer__button footer__button--contrast" onClick={toRegister}>Register</a>
-                <a href="" className="footer__button" onClick={toLogin}>Login</a>
+                <div>
+                    <a href="" className="footer__button footer__button--contrast" onClick={toRegister}>Register</a>
+                    <a href="" className="footer__button" onClick={toLogin}>Login</a>
+                </div>
                 <p className="footer__copyright">© 2020 Team Jalapeño - Skylab Coders. All rights reserved.</p>
             </section>
 

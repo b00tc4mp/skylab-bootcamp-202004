@@ -118,11 +118,11 @@ function CoinPage({ addPortfolioSubmit, onLogout }) {
                 <form action="" name="add-portfolio" className="coinpage-body__form" onSubmit={addSubmit}>
                     <div>
                         <input type="text" name="quantity" id="" placeholder="Quantity" className="coinpage-body__input" />
-                        <button className="coinpage-header__button coinpage-header__button--contrast" type="submit">Add to Portfolio <i className="fa fa-plus"></i></button>
                     </div>
-                    <button className="coinpage-header__button coinpage-header__button--contrast" type="button" onClick={handleDeleteFromPortfolio}>Delete Coin From Portfolio <i className="fa fa-trash"></i></button>
+                    <button className="coinpage-header__button coinpage-header__button--contrast" type="submit">Add to Portfolio <i className="fa fa-plus"></i></button>
+                    <button className="coinpage-header__button coinpage-header__button--contrast" type="button" onClick={handleDeleteFromPortfolio}>Delete From Portfolio <i className="fa fa-trash"></i></button>
                 </form>
-                {chartData && <div>
+                {chartData && <div className="chart">
                     <h1>{crypto.name} Chart</h1>
                     <MyChart data={chartData} name={crypto.name} />
                 </div>
