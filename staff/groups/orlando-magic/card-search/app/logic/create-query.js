@@ -5,10 +5,9 @@ function createQuery(url) {
     let colorLimit
     let limit 
     let searchConditions = {}
-    let index
-    url.includes('dir') ? (index=3) : (index=2)
 
     url = url.split('&')
+    let index = url.length -1
     url = url.map(option => option.substring(option.indexOf('=')+1))
 
     searchConditions['include_multilingual'] = url[0]

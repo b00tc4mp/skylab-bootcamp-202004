@@ -1,6 +1,6 @@
 const {useState, useEffect} = React
 
-function Results({searchConditions, setSearchConditions, goToCard, handleFavourite, favCards}){
+function Results({searchConditions, setSearchConditions, goToCard, handleFavourite, favCards, token}){
   let [errorResults, setErrorResults] = useState(undefined)
   let [results, setResults] = useState([])
   let url, query
@@ -78,20 +78,15 @@ function Results({searchConditions, setSearchConditions, goToCard, handleFavouri
         </div>
       </form>
     </header>
-    <article>
-      1 – 60 of 155 cards where the name includes “a” and the text includes “b”
-      and the card types include “artifact” and the colors ≤ R and the mana cost
-      is greater than or equal to {"{"}1{"}"} and the converted mana cost &lt; 10
-      and it’s legal in Vintage and the rarity is equal to common
-    </article>
+    {/* <article></article> */}
     {errorResults && !results.length && <Feedback message= {errorResults} level = "warning"/>}
     <ul className = 'results__cards'>
       {results && results.map(card => <li key={card.id}><a onClick = {() => {goToCard(card)}}>
           <img className = "results__cards--card" src = {card.image_uris? card.image_uris.png || card.image_uris.large : (card.card_faces[0].image_uris.png || card.card_faces[0].image_uris.large)}/>
       </a>
       <div>
-        <a className = "results__cards--button" onClick = {()=>{event.preventDefault(); handleFavourite(card.id)}}>{favCards && favCards.includes(card.id)?"D":"L"}</a>
-        {!card.image_uris && <a className = "results__cards--button" onClick = {()=>{event.preventDefault()}}></a>}
+        {typeof token === 'undefined'?"":<a className = {`results__cards--button ${favCards && favCards.includes(card.id)?"unfav":""}`} onClick = {()=>{event.preventDefault(); handleFavourite(card.id)}}></a>}
+        {/* {!card.image_uris && <a className = "results__cards--button" onClick = {()=>{event.preventDefault()}}></a>} */}
       </div>
       </li>)}
     </ul> 

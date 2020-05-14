@@ -28,11 +28,11 @@ function NavBar(props){
 
     return <nav className = "navigation">
         <div className = "navigation__basic">
-            <a href="" onClick = {handleLanding}>Main</a>
+            <a href="" onClick = {handleLanding}><img src = "assets/images/home.svg"/></a>
             <form className = "navigation--searchbar" onSubmit = {() => {event.preventDefault(); props.onBasicSearch(event)}}>
                 <input type="text" name="query" placeholder = "Search cards by name"/>
             </form>
-            <a href="" onClick = {() => {event.preventDefault(); setMenu(menu?false:true)}}>Menu</a>
+            <a href="" onClick = {() => {event.preventDefault(); setMenu(menu?false:true)}}><img src = "assets/images/bmenu.svg"/></a>
         </div>
 
         {menu && <div className = "navigation__extended">
@@ -45,7 +45,7 @@ function NavBar(props){
                 <form className = "navigation--searchbar" onSubmit = {() => {event.preventDefault(); props.onUserSearch(event)}}>
                     <input type="text" name="userquery" placeholder = "Search users by username"/>
                 </form>
-                <a href="" onClick = {event.preventDefault}>Your Cards</a>
+                <a href="" onClick = {()=>{event.preventDefault(); props.goToUser(undefined)}}>My Cards</a>
                 <a href="" onClick = {() =>{event.preventDefault(); props.onFollowing()}}>Following</a>
             </>}
             <a href="" onClick = {handleAdvSearch}>Advanced Search</a>

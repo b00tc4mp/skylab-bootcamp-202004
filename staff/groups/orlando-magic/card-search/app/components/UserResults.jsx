@@ -35,9 +35,7 @@ function UserResults({userConditions, goToUser, token}){
     },[userConditions])
 
     return <section className="userresults">
-    <article className="userresults__info">
-      1 – 60 of 155 users where the name includes “a”
-    </article>
+    {/* <article className="userresults__info"></article> */}
     {errorUserResults && !userResults.length && <Feedback message= {errorUserResults} level = "warning"/>}
     <ul className="userresults__cards">
         {userResults && userResults.map(user => <li key = {user.email}>{<UserCard user = {user} handleFollow = {handleFollow} goToUser = {goToUser}/>}</li>)}
