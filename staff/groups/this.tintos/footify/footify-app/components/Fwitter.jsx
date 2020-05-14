@@ -23,7 +23,6 @@ function Fwitter({ fwitter, token, onUpdateFwitter, onUserSessionExpired,searchP
     }
 
     const handleSearchPlayer = (name) =>{
-        
         searchPlayer(name)
     }
 
