@@ -7,7 +7,8 @@ function ContextMenu({view, onLogout, onLinktrello, onCreateGroup, onInviteToGro
                 <a className="button__context"  onClick={onLogout}>Logout</a>
                 </>
         }
-        {view==="cards" && <>
+        {
+        view==="cards" && <>
                 <a className="button__context" onClick={onCreateCard} >Create new card</a>
                 <a className="button__context" onClick={onInviteToGroup}>Invite to group</a>
                 <a className="button__context" onClick={onLeaveGroup}>Leave group</a>

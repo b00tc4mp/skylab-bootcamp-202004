@@ -22,11 +22,7 @@ function Login ({ onLogin, onGoToRegister }) {
         }
     }
 
-    const handeGoToRegister = event => { 
-        event.preventDefault()
-         
-        onGoToRegister() 
-    }
+    const handeGoToRegister = event => { event.preventDefault(); onGoToRegister() }
 
     return <div className="aux">
         <section className="login">

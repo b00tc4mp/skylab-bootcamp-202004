@@ -14,11 +14,8 @@ function authenticateUserSkylab(email, password, callback) {
 
             if (status === 200) {
                 const { token } = JSON.parse(body)
-                // authenticateUser(() => {}, () => {}) //TODO VINCULAR CUENTA
+
                 callback(undefined, token)
-
-                //authenticateUser(callback(undefined, token), callback(`Error authenticating on Trello: ${error}`))
-
             } else {
                 callback(new Error(JSON.parse(body).error))
             }

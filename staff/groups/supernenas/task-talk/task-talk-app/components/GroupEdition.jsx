@@ -4,23 +4,21 @@ function GroupEdition({editGroup, onCreate, onUpdate, onDelete}) {
     const [groupTitle, setGroupTitle] = useState("")
     const [groupDesc, setGroupDesc] = useState("")
 
-    const handleChangeTitle = (event) => {
-        setGroupTitle(event.target.value)
-    }
+    const handleChangeTitle = (event) => setGroupTitle(event.target.value)
 
-    const handleChangeDesc = (event) => {
-        setGroupDesc(event.target.value)
-    }
+    const handleChangeDesc = (event) => setGroupDesc(event.target.value)
 
     const handleSubmit = (event) => {
         event.preventDefault()
+
         !!editGroup ? onUpdate(groupTitle, groupDesc, editGroup) : onCreate(groupTitle, groupDesc) 
     }
-    const handleDelete=()=>{
-        if(editGroup){
-            onDelete(editGroup);
-        }
+/*
+    const handleDelete = () => {
+        if(editGroup) onDelete(editGroup)
     }
+    */
+
     return  <form className="card card__editing">
                 <div className="card__title">
                     <div className="card__grid">
