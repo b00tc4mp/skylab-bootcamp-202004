@@ -3,7 +3,8 @@
  * Checks user credentials.
  * 
  * @param {object} fwitters The Array of fwitters. 
- * @return {object} Return a fwuitters array in ascendent order.   
+ * @return {object} Return a fwitters array in ascendent order.  
+ *  
  * @throws {Error} If the fwitters array is empty  throw the Error.
  */
 
