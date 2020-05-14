@@ -1,5 +1,6 @@
 
-function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDream, onGoToUpdateUser }) {
+function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDream, onGoToUpdateUser ,onGoToLogOut}) {
+
 
     const handleSubmitSearch = (event) => {
         event.preventDefault()
@@ -33,6 +34,12 @@ function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDre
         onGoToDream()
     }
 
+    const handleSubmitLogOut = (event) =>{
+        event.preventDefault()
+
+        onGoToLogOut()
+    }
+
     return <>
         <section className="navbar">
             <div className="navbar__container">
@@ -40,6 +47,7 @@ function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDre
                     <a href="" className="navbar__user-logo" > 
                         <img src="img/logo.svg" alt="logo" />
                     </a>
+                    <a href="" className="" onClick={handleSubmitLogOut}>Logout</a>
                     <a href="" className="navbar__user-img">
                         <img src="img/user.svg" alt="user" onClick={handleSubmitUpdateUser}/>
                     </a>

@@ -1,4 +1,4 @@
-describe.only('retrive-fwitter', () => {
+describe('retrive-fwitter', () => {
     let _name, surname, email, password, player, message
 
     beforeEach(() => {
@@ -34,7 +34,7 @@ describe.only('retrive-fwitter', () => {
                                     fwitter.forEach(({ id, name, fwitt }) => {
                                         fwitt.forEach(({ message, date, _date }) => {
                                             if (_date&&id) {
-                                                console.log(idUser+':'+ nameUser+':'+ surnameUser+':'+id+':'+message+':'+_date )
+                                                // console.log(idUser+':'+ nameUser+':'+ surnameUser+':'+id+':'+message+':'+_date )
                                                 expect(idUser).to.be.a('string');
                                                 expect(idUser).to.exist
                                                 expect(nameUser).to.exist

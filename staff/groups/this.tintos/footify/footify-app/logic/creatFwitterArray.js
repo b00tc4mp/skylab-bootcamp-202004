@@ -5,7 +5,7 @@ const creatFwitterArray = (fwitters) => {
         if (fwitter !== undefined) {
             fwitter.map(({ id, name, fwitt }) => {
                 fwitt.map(({ message, date, _date, greenCard, yellowCard, redCard }) => {
-                    if (_date) result.push({ idUser, nameUser, surnameUser, name, message, date, _date,  greenCard, yellowCard, redCard })
+                    if (_date) result.push({ idUser, nameUser, surnameUser,id, name, message, date, _date,  greenCard, yellowCard, redCard })
                 })
             })
         } else {
