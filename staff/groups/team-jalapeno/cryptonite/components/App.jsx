@@ -2,6 +2,8 @@ const { useState, Component } = React
 
 function App() {
     const [view, setView] = useState('landing')
+    const [error, setError] = useState()
+
 
 
     useEffect(()=>{
@@ -18,10 +20,16 @@ function App() {
     const isAuthenticated = () => {
         const token = sessionStorage.token
         if (!token) return setView('landing')
-        retrieveUser(sessionStorage.token, (_error) => {
-            if (_error) setView('landing')
-            else setView('home')
-        })
+
+        try{
+            retrieveUser(sessionStorage.token, (_error) => {
+                if (_error) setView('landing')
+                else setView('home')
+            })
+        } catch (_error) {
+            setError(_error.message)
+        }
+
     }
     
     

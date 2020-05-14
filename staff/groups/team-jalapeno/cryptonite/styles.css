@@ -85,6 +85,10 @@ body {
   align-items: center;
   justify-content: center;
 }
+.footer div {
+  display: flex;
+  justify-content: space-around;
+}
 .footer__text {
   margin: 0 auto;
   margin-bottom: 0.8em;
@@ -356,6 +360,10 @@ body {
 
 .chart {
   width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2em;
 }
 
 .canvas-container {

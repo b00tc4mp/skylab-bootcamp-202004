@@ -14,47 +14,70 @@ function CoinPage({ addPortfolioSubmit, onLogout }) {
         if (!coinName) return
 
         coinName = coinName.split('/')[1]
-
-        retrieveCrypto(coinName, (_error, _crypto) => {
-            if (_error) setError(_error.message);
-            setCrypto(_crypto);
-            checkFavorite(_crypto.id)
-        });
-
-
-        retrieveOhlc(coinName, (_error, _data) => {
-            if (_error) setError(_error.message);
-            else setOhlc(_data);
-        })
-
-        retrieveCryptoHistory(coinName, (error, data) => {
-            if (error) return setError(error.message)
-            if (data) return setChartData(data)
-
-        })
+        
+        
+        try {
+            retrieveCrypto(coinName, (_error, _crypto) => {
+                if (_error) setError(_error.message);
+                setCrypto(_crypto);
+                checkFavorite(_crypto.id)
+            });
+    
+    
+            retrieveOhlc(coinName, (_error, _data) => {
+                if (_error) setError(_error.message);
+                else setOhlc(_data);
+            })
+    
+            retrieveCryptoHistory(coinName, (error, data) => {
+                if (error) return setError(error.message)
+                if (data) return setChartData(data)
+    
+            })    
+        } catch (_error) {
+            setError(_error.message)
+        }
 
     }, [])
 
     useEffect(() => {
-        if (crypto) {
-            getPortfolioCoin()
+
+        try {
+            if (crypto) {
+                getPortfolioCoin()
+            }
+        } catch (_error) {
+            setError(_error.message) 
         }
     }, [crypto])
 
+
+
     const checkFavorite = (cryptoId) => {
-        retrieveUser(sessionStorage.token, (_error, _user) => {
-            if (_error) setError(_error.message);
-            const { favorites } = _user
-            setIsFav(favorites.includes(cryptoId || crypto.id))
-        });
+
+        try {
+            retrieveUser(sessionStorage.token, (_error, _user) => {
+                if (_error) setError(_error.message);
+                const { favorites } = _user
+                setIsFav(favorites.includes(cryptoId || crypto.id))
+            }) 
+        } catch (_error) {
+            setError(_error.message)
+        }
 
     }
 
     const handleToggleFav = () => {
-        toggleFavorite(sessionStorage.token, crypto.id, (_error) => {
-            if (_error) setError(_error.message);
-            checkFavorite()
-        })
+
+        try {
+            toggleFavorite(sessionStorage.token, crypto.id, (_error) => {
+                if (_error) setError(_error.message);
+                checkFavorite()
+            })         
+        } catch (_error) {
+            setError(_error.message)
+        }
+
     }
 
     const addSubmit = (event) => {
@@ -64,30 +87,45 @@ function CoinPage({ addPortfolioSubmit, onLogout }) {
         quantity = Number(quantity)
         event.target.quantity.value = ''
 
-        addPortfolioSubmit(crypto.id, quantity, (_error) => {
-            if (_error) setError(_error.message);
-            getPortfolioCoin()
-        })
+        try {
+            addPortfolioSubmit(crypto.id, quantity, (_error) => {
+                if (_error) setError(_error.message);
+                getPortfolioCoin()
+            })  
+        } catch (error) {
+            setError(_error.message)
+        }
+
 
     }
 
     const getPortfolioCoin = () => {
-        retrieveUser(sessionStorage.token, (_error, user) => {
-            if (_error) setError(_error.message);
 
-            const portfolioCoin = user.portfolio.find(coin => crypto.id === coin.id)
-            if (portfolioCoin) {
-                setInPortfolio(`${portfolioCoin.quantity} ${crypto.symbol}`)
-            } else setInPortfolio('')
-        })
+        try {
+            retrieveUser(sessionStorage.token, (_error, user) => {
+                if (_error) setError(_error.message);
+    
+                const portfolioCoin = user.portfolio.find(coin => crypto.id === coin.id)
+                if (portfolioCoin) {
+                    setInPortfolio(`${portfolioCoin.quantity} ${crypto.symbol}`)
+                } else setInPortfolio('')
+            }) 
+        } catch (_error) {
+            setError(_error.message)
+        }
+
     }
 
     const handleDeleteFromPortfolio = (event) => {
-        deletePortfolioCrypto(sessionStorage.token, crypto.id, (_error) => {
-            if (_error) setError(_error.message);
-            getPortfolioCoin()
-        })
 
+        try {
+            deletePortfolioCrypto(sessionStorage.token, crypto.id, (_error) => {
+                if (_error) setError(_error.message);
+                getPortfolioCoin()
+            })
+        } catch (_error) {
+            setError(_error.message)
+        }
     }
 
 
@@ -118,11 +156,11 @@ function CoinPage({ addPortfolioSubmit, onLogout }) {
                 <form action="" name="add-portfolio" className="coinpage-body__form" onSubmit={addSubmit}>
                     <div>
                         <input type="text" name="quantity" id="" placeholder="Quantity" className="coinpage-body__input" />
-                        <button className="coinpage-header__button coinpage-header__button--contrast" type="submit">Add to Portfolio <i className="fa fa-plus"></i></button>
                     </div>
-                    <button className="coinpage-header__button coinpage-header__button--contrast" type="button" onClick={handleDeleteFromPortfolio}>Delete Coin From Portfolio <i className="fa fa-trash"></i></button>
+                    <button className="coinpage-header__button coinpage-header__button--contrast" type="submit">Add to Portfolio <i className="fa fa-plus"></i></button>
+                    <button className="coinpage-header__button coinpage-header__button--contrast" type="button" onClick={handleDeleteFromPortfolio}>Delete From Portfolio <i className="fa fa-trash"></i></button>
                 </form>
-                {chartData && <div>
+                {chartData && <div className="chart">
                     <h1>{crypto.name} Chart</h1>
                     <MyChart data={chartData} name={crypto.name} />
                 </div>

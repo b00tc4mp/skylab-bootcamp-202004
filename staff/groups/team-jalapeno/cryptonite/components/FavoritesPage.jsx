@@ -8,22 +8,23 @@ function FavoritesPage({ handleClickCoin, onLogout }) {
 
     useEffect(() => {
 
-        retrieveUser(sessionStorage.token, (userError, user) => {
-            if (userError) return setError(userError)
-
-            const { favorites } = user
-
-            if (favorites.length) {
-
-                retrieveFavorites((cryptosError, data) => {
-                    if (cryptosError) return setError(cryptosError)
-                    setCoinFavs(data)
-                }, favorites)
-            }
-
-        })
-
-
+        try {
+            retrieveUser(sessionStorage.token, (userError, user) => {
+                if (userError) return setError(userError)
+    
+                const { favorites } = user
+                
+                if (favorites.length) {
+    
+                    retrieveFavorites((cryptosError, data) => {
+                        if (cryptosError) return setError(cryptosError)
+                        setCoinFavs(data)
+                    }, favorites)
+                }
+            })  
+        } catch (_error) {
+            setError(_error.message)
+        }
     }, [])
 
     const getChangePrice24Hr = (price, changePercent) => {

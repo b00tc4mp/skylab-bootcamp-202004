@@ -1,5 +1,6 @@
 
 function retrieveCryptoHistory(id, callback) {
+    String.isString(id)
     Function.validate(callback)
 
     const url = `https://api.coincap.io/v2/assets/${id}/history?interval=d1`

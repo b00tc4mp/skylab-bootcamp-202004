@@ -10,24 +10,33 @@ function Landing({ toRegister, toLogin, handleGoToLoginFromLanding }) {
     }, [])
 
 
-
     const handleSearchOnChange = (event) => {
         const {
             target: { value: query },
         } = event;
-        if (!query) return handleRetrieveCryptos();
-        searchCryptos(query, (_error, _cryptos) => {
-            if (_error) setError(_error.message);
-            else setCryptos(_cryptos);
-        });
-    };
+
+        try {
+            if (!query) return handleRetrieveCryptos();
+            searchCryptos(query, (_error, _cryptos) => {
+                if (_error) setError(_error.message);
+                else setCryptos(_cryptos);
+            })     
+        } catch (_error) {
+            setError(_error.message)
+        }  
+    }
 
     const handleRetrieveCryptos = () => {
-        retrieveCryptos((_error, _cryptos) => {
-            if (_error) setError(_error.message);
-            else setCryptos(_cryptos);
-        });
-    };
+
+        try {
+            retrieveCryptos((_error, _cryptos) => {
+                if (_error) setError(_error.message);
+                else setCryptos(_cryptos);
+            })  
+        } catch (_error) {
+            setError(_error.message)
+        }
+    }
 
     return <>
         <nav className="nav">
@@ -51,8 +60,10 @@ function Landing({ toRegister, toLogin, handleGoToLoginFromLanding }) {
         <footer className="footer">
             <section>
                 <p className="footer__text">Not a Cryptoniter already?</p>
-                <a href="" className="footer__button footer__button--contrast" onClick={toRegister}>Register</a>
-                <a href="" className="footer__button" onClick={toLogin}>Login</a>
+                <div>
+                    <a href="" className="footer__button footer__button--contrast" onClick={toRegister}>Register</a>
+                    <a href="" className="footer__button" onClick={toLogin}>Login</a>
+                </div>
                 <p className="footer__copyright">© 2020 Team Jalapeño - Skylab Coders. All rights reserved.</p>
             </section>
 

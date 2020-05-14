@@ -8,10 +8,16 @@ function Home({ onLogout }) {
 
 
   const handleRetrieveCryptos = () => {
-    retrieveCryptos((_error, _cryptos) => {
-      if (_error) setError(_error.message);
-      else setCryptos(_cryptos);
-    });
+
+    try {
+      retrieveCryptos((_error, _cryptos) => {
+        if (_error) setError(_error.message);
+        else setCryptos(_cryptos);
+      })
+    } catch (_error) {
+      setError(_error.message)
+    }
+
   };
 
   const handleCheckHash = () => {
@@ -47,13 +53,18 @@ function Home({ onLogout }) {
     const {
       target: { value: query },
     } = event;
-    if (!query) return handleRetrieveCryptos()
 
-    searchCryptos(query, (_error, _cryptos) => {
-      if (_error) setError(_error.message);
-      else setCryptos(_cryptos);
-    });
-  };
+    try {
+      if (!query) return handleRetrieveCryptos()
+  
+      searchCryptos(query, (_error, _cryptos) => {
+        if (_error) setError(_error.message);
+        else setCryptos(_cryptos);
+      })
+    } catch (_error) {
+      setError(_error.message)
+    }
+  }
 
   const handleClickCoin = (coinName) => {
     if (!coinName) return
