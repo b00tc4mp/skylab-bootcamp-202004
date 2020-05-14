@@ -1,5 +1,6 @@
 
 function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDream, onGoToUpdateUser }) {
+ 
 
     const handleSubmitSearch = (event) => {
         event.preventDefault()

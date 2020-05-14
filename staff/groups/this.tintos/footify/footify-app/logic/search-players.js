@@ -17,7 +17,6 @@ function searchPlayers(query, callback) {
                 let { player: results } = JSON.parse(body)
                 if (!results) return callback(new Error('sorry, no players found :('))
 
-
                 let counterSoccerPlayers = 0
                 let counterSearchTeam = 0
 

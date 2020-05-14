@@ -1,6 +1,6 @@
 const { useState } = React
 
-function UpdateUser({onGoToFwitter, token, userDetails}){
+function UpdateUser({onGoToFwitter, token, userDetails,onUserSessionExpired}){
     
     const [ error, setError ] = useState()
     const [success, setSuccess ] = useState()
@@ -20,9 +20,14 @@ function UpdateUser({onGoToFwitter, token, userDetails}){
 
             try {
                 updateUser(token, newData, (error, success) =>{
-                    if (error) return setError(error.message)
-                    setSuccess(success)
-                    
+                    if (error) {
+                        if (error.message === 'invalid token')
+                            onUserSessionExpired()
+                        else throw setError(error.message);
+
+                    }else{
+                        setSuccess(success)
+                    }    
                 })
             } catch ({message}) {
                 setError(message)
@@ -34,7 +39,7 @@ function UpdateUser({onGoToFwitter, token, userDetails}){
     
             onGoToFwitter()
         }
-    // const {name, surname} = userDetails
+   
 
     return <>
     <section className="update">

@@ -1,3 +1,18 @@
+/**
+ * Checks user credentials.
+ * 
+ * @param {string} idPlayer The id of player. 
+ * @param {string} _name The player name.
+ * @param {string} _message The message public by the User.
+ * @param {string} token The expression to be called after checking credentials, receiving an Error or an authentication token.
+ * @param {callback} callback The expression to be called after checking credentials, receiving an Error or an authentication token.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type
+ */
+
+
+
+
 function addFwitter(idPlayer, _name, _message, token, callback) {
     String.validate.notVoid(idPlayer);
     String.validate.notVoid(_name);
@@ -7,8 +22,8 @@ function addFwitter(idPlayer, _name, _message, token, callback) {
     Function.validate(callback);
 
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined, {
-        Authorization: `Bearer ${token}`
-    },
+            Authorization: `Bearer ${token}`
+        },
         (error, status, body) => {
             if (error) return callback(error)
 
@@ -18,7 +33,7 @@ function addFwitter(idPlayer, _name, _message, token, callback) {
 
                 let pushFwitt = false;
 
-                if (fwitter.length === 0) {
+                if (fwitter.length ===  0) {
                     const resultFwitter = {
                         id: idPlayer,
                         name: _name,
@@ -63,14 +78,13 @@ function addFwitter(idPlayer, _name, _message, token, callback) {
                             }]
                         }
                         fwitter.push(addNewFwitter)
-                        console.log(addNewFwitter + 'sergi')
                     }
                 }
 
                 call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify({ fwitter }), {
-                    Authorization: `Bearer ${token}`,
-                    'Content-type': 'application/json'
-                },
+                        Authorization: `Bearer ${token}`,
+                        'Content-type': 'application/json'
+                    },
                     (error, status, body) => {
                         if (error) return callback(error)
 
@@ -88,5 +102,13 @@ function addFwitter(idPlayer, _name, _message, token, callback) {
 
                 callback(new Error(error))
             }
-        })
+    })
 }
+
+/**
+ * Invoked after remote authentication.
+ * 
+ * @callback callback
+ * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * @param {string} token It receives a token in case credentials are correct.
+ */

@@ -1,6 +1,6 @@
 const { useState } = React
 
-function Fwitter({ fwitter, token, onUpdateFwitter }) {
+function Fwitter({ fwitter, token, onUpdateFwitter, onUserSessionExpired,searchPlayer}) {
 
     const [comentsInfo, setComentsInfo] = useState()
     const [error, setError] = useState()
@@ -8,20 +8,25 @@ function Fwitter({ fwitter, token, onUpdateFwitter }) {
     if (!fwitter) return <Spinner />
 
 
-const handletoogleComment = (idCommentUser,cardColor,message) => {
+    const handletoogleComment = (idCommentUser,cardColor,message) => {
+        try {
+            toogleFollowComment(token, idCommentUser, fwitter,cardColor,message, (error, fwitter) => {
+                if (error) {
+                    if (error.message === 'invalid token')
+                        onUserSessionExpired()
+                    else throw setError(error.message);
+                } else onUpdateFwitter();
+            });
+        } catch (error) {
+            setError(error.message);
+        }
+    }
 
-toogleFollowComment(token, idCommentUser, fwitter,cardColor,message, (error, fwitter) => {
-    if(error) return  setError(error.message)
+    const handleSearchPlayer = (name) =>{
+        
+        searchPlayer(name)
+    }
 
-    onUpdateFwitter()
-
-
-})
-
-
-}
-
-    
     return <>
         <section >
             {
@@ -35,8 +40,9 @@ toogleFollowComment(token, idCommentUser, fwitter,cardColor,message, (error, fwi
                                 </div>
 
                                 <div className='fwitter__comment'>
-
-                                    <div className='fwitter__player-name'>{`@${name} `}<span className='fwitter__message'>{message}</span></div>
+                                    <div className='fwitter__player-name'><a href="" onClick={(event) =>{
+                                        event.preventDefault()
+                                        handleSearchPlayer(name)}}>{`@${name} `}</a><span className='fwitter__message'>{message}</span></div>
                                     <div className=''>
                                         <div className='fwitter__date'>{date}</div>
                                         <div className='fwitter__card-container'>
@@ -75,6 +81,7 @@ toogleFollowComment(token, idCommentUser, fwitter,cardColor,message, (error, fwi
                     : <Feedback message="sorry, no results :(" level="warning" />
             }
         </section>
+        {error && <Feedback message={error} level="error" />}
 
     </>
 }
