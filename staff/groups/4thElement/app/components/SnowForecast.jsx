@@ -22,7 +22,7 @@ function SnowForecast({token, forecastSelected, sportState}) {
         setError(undefined)
         setSpiner('on')
         try{
-            snowForecastLogic({forecastSelected}, function (error, info) {
+            forecastLogic({forecastSelected}, sportState, function (error, info) {
                 setSpiner(undefined)
                 if(error){
                     setError(error)

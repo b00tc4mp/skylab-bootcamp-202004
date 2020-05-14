@@ -17,7 +17,7 @@ function SpotResultsList({ query, onGoToSurfForecast, sportState, selectorState 
         if(selectorState === 'spots'){
             try{
                 if(sportState === 'surf'){
-                    searchSpotList(query, (spotsFound) => { //sacaar el list para que la funcion se llame como el archivo y hacer el try catch para esta funcion tambien
+                    searchSpotList(query, sportState, (spotsFound) => { //sacaar el list para que la funcion se llame como el archivo y hacer el try catch para esta funcion tambien
                         if(spotsFound === undefined || spotsFound.length < 1){
                             setError('No results found..')
                         }else{
@@ -25,7 +25,7 @@ function SpotResultsList({ query, onGoToSurfForecast, sportState, selectorState 
                         }
                     })
                 }else{
-                    searchSpotListSnow(query, (spotsFound) => {
+                    searchSpotList(query, sportState, (spotsFound) => {
                         if(spotsFound === undefined || spotsFound.length < 1){
                             setError('No results found..')
                         }else{

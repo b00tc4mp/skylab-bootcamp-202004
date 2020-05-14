@@ -21,7 +21,7 @@ function SurfForecast({token, forecastSelected, sportState}) {
         setError(undefined)
         setSpiner('on')
         try{
-            surfForecastLogic({forecastSelected}, function (error, info) {
+            forecastLogic({forecastSelected}, sportState ,function (error, info) {
                 setSpiner(undefined)
                 if(error){
                     setError(error)
