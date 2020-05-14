@@ -4,6 +4,8 @@ function Home({ onLogout }) {
   const [view, setView] = useState("cryptos-list");
   const [cryptos, setCryptos] = useState(null);
   const [error, setError] = useState(null);
+  const [intervalState, setIntervalState] = useState(null);
+
 
   const handleRetrieveCryptos = () => {
     retrieveCryptos((_error, _cryptos) => {
@@ -17,6 +19,7 @@ function Home({ onLogout }) {
     if (view) {
       if (view.includes('coin-page')) {
         setView('coin-page')
+
       } else setView(view.substring(1))
     }
   }
@@ -24,18 +27,17 @@ function Home({ onLogout }) {
   const updateList = () => {
     const interval = setInterval(handleRetrieveCryptos, 5000)
     setIntervalState(interval)
-
   }
 
   useEffect(() => {
     handleCheckHash()
     handleRetrieveCryptos()
-    const interval = setInterval(handleRetrieveCryptos, 5000)
+    updateList()
 
     window.addEventListener('hashchange', handleCheckHash)
     return () => {
       window.removeEventListener('hashchange', handleCheckHash)
-      clearInterval(interval)
+      clearInterval(intervalState)
     }
   }, [])
 
@@ -44,7 +46,11 @@ function Home({ onLogout }) {
     const {
       target: { value: query },
     } = event;
-    if (!query) return handleRetrieveCryptos();
+    if (!query) {
+      return updateList()
+    } else {
+      clearInterval(intervalState)
+    }
     searchCryptos(query, (_error, _cryptos) => {
       if (_error) setError(_error.message);
       else setCryptos(_cryptos);
