@@ -4,13 +4,13 @@ function App() {
     const [view, setView] = useState('landing')
     const [token, setToken] = useState(null)
 
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         const token = sessionStorage.token
         token && retrieveUser(sessionStorage.token, (_error) => {
             if (!_error) setView('home')
         })
-    },[])
+    }, [])
 
     const handleGoToRegister = (event) => {
         event.preventDefault()
@@ -37,12 +37,15 @@ function App() {
         setView('home')
     }
 
+    const handleOnLogout = () => {
+        sessionStorage.token = undefined
+        setView('landing')
+    }
 
     return <>
         {view === 'landing' && <Landing toRegister={handleGoToRegister} toLogin={handleGoToLogin} handleGoToLoginFromLanding={handleGoToLoginFromLanding} />}
         {view === 'login' && <Login toRegister={handleGoToRegister} loginSubmit={handleLoginSubmit} />}
         {view === 'register' && <Register registerSubmit={handleRegisterSubmit} goToLogin={handleGoToLogin} />}
-        {view === 'home' && <Home />}
-
+        {view === 'home' && <Home onLogout={handleOnLogout} />}
     </>
 }
