@@ -1,6 +1,6 @@
 const { useEffect, useState } = React
 
-function FavoritesPage() {
+function FavoritesPage({ handleClickCoin }) {
 
     const [coinFavs, setCoinFavs] = useState(null)
     const [error, setError] = useState(null)
@@ -10,18 +10,18 @@ function FavoritesPage() {
 
         retrieveUser(sessionStorage.token, (userError, user) => {
             if (userError) return setError(userError)
-            
-            const {favorites} = user
-            
+
+            const { favorites } = user
+
             if (favorites.length) {
 
-                retrieveFavorites((cryptosError, data) =>{
+                retrieveFavorites((cryptosError, data) => {
                     if (cryptosError) return setError(cryptosError)
                     setCoinFavs(data)
                 }, favorites)
             }
 
-        })  
+        })
 
 
     }, [])
@@ -33,7 +33,7 @@ function FavoritesPage() {
         return result
     }
 
-    
+
     return <div>
         <nav className="nav">
             <a href='#' className="nav__item logout-link">Logout</a>
@@ -45,8 +45,8 @@ function FavoritesPage() {
         <section className="crypto-coins">
             <h3 className="crypto-coins__title">Crypto Favorites</h3>
             <section className="coins-container">
-                {coinFavs && coinFavs.map(({symbol, id, rank, name, priceUsd, changePercent24Hr}) => (
-                    <div className="coin coin--large" key={id} >
+                {coinFavs && coinFavs.map(({ symbol, id, rank, name, priceUsd, changePercent24Hr }) => (
+                    <div className="coin coin--large" key={id} onClick={() => handleClickCoin(id)} >
                         <div className="coin__head">
                             <span className="coin__symbol">{symbol}</span>
                             <span className="coin__rank">{rank}</span>

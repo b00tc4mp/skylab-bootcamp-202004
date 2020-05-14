@@ -1,3 +1,12 @@
+/**
+ * This is a function that calls to API and retireves one single
+ * crypto coin.
+ * 
+ * @param {string} name - ID of the coin to get from API
+ * @param {callback} callback - Asynchronous function that returns the 
+ *                              coin object.
+ */
+
 function retrieveCrypto(name, callback) {
 
     String.isString(name)
@@ -16,11 +25,18 @@ function retrieveCrypto(name, callback) {
             return callback(undefined, data)
         }
 
-        if (status === 404 ) {
+        if (status === 404) {
             const { error: notFoundError } = JSON.parse(response)
             return callback(new Error(notFoundError))
         }
 
         callback(new Error('server error'))
     })
-} 
+}
+
+/**
+ * @callback
+ *
+ * @param {string} error - returns an error if the call has failed.
+ * @param {object} data - returns an object with the data of the coin.
+ */

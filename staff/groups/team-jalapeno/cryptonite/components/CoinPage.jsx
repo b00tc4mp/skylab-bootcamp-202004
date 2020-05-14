@@ -32,7 +32,7 @@ function CoinPage({ addPortfolioSubmit }) {
     useEffect(() => {
         if (crypto) {
             getPortfolioCoin()
-        } 
+        }
     }, [crypto])
 
     const checkFavorite = (cryptoId) => {
@@ -77,7 +77,7 @@ function CoinPage({ addPortfolioSubmit }) {
     }
 
     const handleDeleteFromPortfolio = (event) => {
-        deletePortfolioCrypto(sessionStorage.token ,crypto.id, (_error) => {
+        deletePortfolioCrypto(sessionStorage.token, crypto.id, (_error) => {
             if (_error) setError(_error.message);
             getPortfolioCoin()
         })
@@ -101,8 +101,17 @@ function CoinPage({ addPortfolioSubmit }) {
                         <span className="coinpage-header__stats--contrast">Low: {Number(ohlc.low).toFixed(3)}$</span>
                         <span className="coinpage-header__stats--contrast">Close: {Number(ohlc.close).toFixed(3)}$</span>
                     </div>}
-                    {!ohlc && <p>Loading...</p>}
-                    <button onClick={handleToggleFav} className="coinpage-header__button">{isFav ? 'Remove from Favorites' : 'Add to Favorites'}<i className="fa fa-heart"></i></button>
+
+                    {!ohlc && <p>OHCL Data is not avaliable for this coin.</p>}
+                    <button onClick={handleToggleFav} className="coinpage-header__button">{isFav ? 'Remove from Favorites' : 'Add to Favorites'}</button>
+                    <form action="" name="add-portfolio" className="portfolio__input" onSubmit={addSubmit} >
+                        <input type="text" name="quantity" id="" placeholder="Quantity" />
+                        <button className="coinpage-header__button" type="submit">Add to Portfolio <i className="fa fa-bitcoin"></i></button>
+                        <button onClick={handleDeleteFromPortfolio} className="coinpage-header__button" type="button">Delete From Portfolio <i className="fa fa-bitcoin"></i></button>
+
+
+                    </form>
+
                 </section>
             </section>
             <section className="coinpage-body">
