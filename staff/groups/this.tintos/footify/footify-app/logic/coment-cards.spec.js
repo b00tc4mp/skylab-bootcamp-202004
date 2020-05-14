@@ -1,4 +1,4 @@
-describe.only("count number of card for comments", () => {
+describe("count number of card for comments", () => {
 
     let name, surname, email, password, confirmPassword, player, message, cardColor
 
