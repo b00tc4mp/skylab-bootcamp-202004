@@ -28,7 +28,7 @@ function Landing({setHashView, onLogOut, token, onBasicSearch, onUserSearch, onF
 
     useEffect(() => {
         try {
-            retrieveUser(token , (error, user)=>{
+            retrieveUser(sessionStorage.token, (error, user)=>{
                 if (error) return setError(error.message)
                 setName(user.nickname)
             })

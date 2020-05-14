@@ -46,7 +46,7 @@ function NavBar(props){
                     <input type="text" name="userquery" placeholder = "Search users by username"/>
                 </form>
                 <a href="" onClick = {()=>{event.preventDefault(); props.goToUser(undefined)}}>My Cards</a>
-                <a href="" onClick = {() =>{event.preventDefault(); props.onFollowing()}}>Following</a>
+                <a href="" onClick = {() =>{event.preventDefault(); props.setHashView("following")}}>Following</a>
             </>}
             <a href="" onClick = {handleAdvSearch}>Advanced Search</a>
         </div>}

@@ -1,12 +1,35 @@
 const {useState, useEffect} = React
 
-function Results({searchConditions, setSearchConditions, goToCard, handleFavourite, favCards, token}){
-  let [errorResults, setErrorResults] = useState(undefined)
-  let [results, setResults] = useState([])
+function Results({searchConditions, setSearchConditions, goToCard, token}){
+  const [errorResults, setErrorResults] = useState(undefined)
+  const [results, setResults] = useState([])
+  const [favCards, setFavCards] = useState(undefined)
   let url, query
+  
+
+  const handleFavourite = id => {
+      try{
+          toggleFavouriteCard(token, id, error=>{
+              if(error) setErrorResults(error.message)
+              retrieveUserCards(token, (error, loggedUserCards) =>{
+                  if (error) return setErrorResults(error.message)
+
+                  setFavCards(loggedUserCards)
+              }, undefined, true)
+          })
+      }catch(error){
+          setErrorResults(error.message)
+      }
+  }
 
   useEffect(()=>{
     try{
+      if (token){retrieveUserCards(token, (error, loggedUserCards) =>{
+        if (error) return setErrorResults(error.message)
+
+        setFavCards(loggedUserCards)
+      }, undefined, true)}
+
       if (searchConditions) {
         url = createUrl(searchConditions)
         location.hash = url

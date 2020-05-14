@@ -5,6 +5,4 @@
 - Alejandro Mascort
 - Pau Atienza
 
-## Project name: CardSearch
-
 [trello](https://trello.com/b/tb4Vg9DD/card-search)
