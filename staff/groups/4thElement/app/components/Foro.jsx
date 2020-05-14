@@ -1,4 +1,3 @@
-import { element } from "prop-types"
 
 const { useState, useEffect} = React
 
@@ -65,6 +64,8 @@ function Foro ({forecastSelected, token, sportState}) {
 
     return <section className="foro" >
         <ul className="foro__reviews" onClick={() => setNewReview('')}>
+            {spiner && sportState === 'surf' && <img className="foro__spiner" src='./images/spinerSurf.gif'/>}
+            {spiner && sportState !== 'surf' && <img className="foro__spiner" src='./images/spinerSnow.gif'/>}
             {reviews && reviews.map((element) =>{
                 if(element.coordinates === forecastSelected.coordinates) {
                     return <li className="foro__reviewList">
@@ -75,9 +76,7 @@ function Foro ({forecastSelected, token, sportState}) {
                         <div className="foro__element"><h2>Extra info</h2> <br/> {element.extraInfo} </div>
                     </li>
             }})}
-                {spiner && sportState === 'surf' && <img className="foro__spiner" src='./images/spinerSurf.gif'/>}
-                {spiner && sportState !== 'surf' && <img className="foro__spiner" src='./images/spinerSnow.gif'/>}
-                {error && <Feedback message={error} level={'error'}/>}
+            {error && <Feedback message={error} level={'error'}/>}
         </ul>
         
         <i class="fas fa-plus-circle fa-3x" onClick={()=>setNewReview('on')}></i>
