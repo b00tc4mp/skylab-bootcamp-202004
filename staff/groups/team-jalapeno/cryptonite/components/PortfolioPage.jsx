@@ -32,7 +32,7 @@ function PortfolioPage() {
 
                     const total = _data.reduce((acc, { quantity, priceUsd }) => {
                         return acc + subTotal(quantity, priceUsd) * 1
-                      }, 0).toFixed(2)
+                    }, 0).toFixed(2)
 
                     setWallet(total)
                     setCoinCryptos(_data)
@@ -56,7 +56,7 @@ function PortfolioPage() {
         </nav>
         <section className="portfolio">
             <h1 className="portfolio__money">{wallet}$</h1>
-            <h4 className="portfolio__stats"><span className="portfolio__stats--contrast">+121,40$ (8.3%)</span> Last 24h</h4>
+            {/* <h4 className="portfolio__stats"><span className="portfolio__stats--contrast">+121,40$ (8.3%)</span> Last 24h</h4> */}
 
         </section>
         <section className="crypto-coins">

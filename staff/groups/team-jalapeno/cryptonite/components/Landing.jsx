@@ -37,8 +37,7 @@ function Landing({ toRegister, toLogin, handleGoToLoginFromLanding }) {
 
         <section className="brand">
             <h1 className="brand__title">Cryptonite</h1>
-            <h4 className="brand__description">Track your coins the simplest way as never before.
-            Just the news you need. Made for hodlers by hodlers. Join Cryptonite!</h4>
+            <h4 className="brand__description">Track your coins the simplest way. Control your portfolio as never before. Made for hodlers by hodlers. Join Cryptonite!</h4>
         </section>
 
         {cryptos && (
