@@ -40,7 +40,7 @@ class Login extends Component {
             <button className="login__button">Sign In</button>
             <a href="" onClick={ event => {
                     event.preventDefault()
-            
+                    location.hash = 'register'
                     this.props.onRegister('register')
                 }}>Already not a member? Register now!</a>            
           </form> 

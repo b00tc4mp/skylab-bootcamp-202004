@@ -1,70 +1,80 @@
-const {useState} = React
+const { useState } = React
 
-function Navbar({onChangeView }){
-    
+function Navbar({ onChangeView }) {
+    const [token, setToken] = useState(undefined)
     const [view, setView] = useState('home')
-    
-    // <a className={`home__link ${this.state.view === 'users' ? 'home__link--active' : ''}`} href="" onClick={this.handleUsers}>Users </a>
 
+    // <a className={`home__link ${this.state.view === 'users' ? 'home__link--active' : ''}`} href="" onClick={this.handleUsers}>Users </a>
+    
+    useEffect(() => {debugger
+        if (sessionStorage.token)
+            try {
+                isUserAuthenticated(sessionStorage.token, (error, isAuth) => {
+                    if (error) throw error
+
+                    if (isAuth) {
+                        setToken(sessionStorage.token)
+                        setView('home')
+                    } else setHashView('login')
+                })
+            } catch (error) {
+                if (error) throw error
+            }
+      /*   else {
+            const hash = location.hash.substring(1)
+
+            if (hash === 'login' || hash === 'register') setHashView(hash)
+            else {
+                location.hash = ''
+                
+                setView('landing')
+            }
+        } */
+    }, [])
+    
+    const setHashView = view => {
+        location.hash = view
+        setView(view)
+    }
     return <nav className="navbar">
         <ul className="navbar__list">
             <li className={`navbar__item ${view === 'home' ? 'navbar__item--active left' : ''}`}>
                 <a href="" onClick={event => {
                     event.preventDefault()
 
-                    setView('home')
+                    setHashView('home')
                     onChangeView('home')
                 }}><i className="fas fa-home"></i></a>
 
             </li>
             <li className={`navbar__item ${view === 'browser' ? 'navbar__item--active center' : ''}`}>
-                <a href="" onClick = {event => {
+                <a href="" onClick={event => {
                     event.preventDefault()
-
-                    setView('browser')
+                    setHashView('browser')
                     onChangeView('browser')
                 }}><i className="fas fa-music"></i></a>
             </li>
             <li className={`navbar__item ${view === 'favorites' ? 'navbar__item--active center' : ''}`}>
-                <a href="" onClick = {event => {
+                <a href="" onClick={event => {
                     event.preventDefault()
 
-                    setView('favorites')
+                    setHashView('favorites')
                     onChangeView('favorites')
                 }}><i className="far fa-heart"></i></a>
             </li>
             <li className="navbar__item">
-                <a href="" onClick = {event => {
+                <a href="" onClick={event => {
                     event.preventDefault()
+                    delete sessionStorage.token
 
-                    setView('login')
+                    setHashView('login')
                     onChangeView('login')
                 }}><i className="fas fa-sign-out-alt"></i></a>
             </li>
         </ul>
     </nav>
-        
-     
-   
+
+
+
 }
 
-{/* <nav class="navbar">
-<ul class="navbar__list">
-    <li class="navbar__item">
-        <a href=""><i class="fas fa-home"></i></a>
-     </li>
-    <li class="navbar__item">
-        <a href=""><i class="fas fa-music"></i></a>
-     </li>
-    <li class="navbar__item">
-        <a href=""><i class="far fa-heart"></i></a>
-     </li>
-    <li class="navbar__item">
-        <a href=""><i class="fas fa-users"></i></a>
-     </li>
-    <li class="navbar__item">
-        <a href=""><i class="fas fa-sign-out-alt"></i></a>
-    </li>
-</ul>
-
-</nav> */}

@@ -1,11 +1,34 @@
+
+/**
+
+ * search an album
+
+ * 
+
+ * @param {string} token The spotify token. 
+
+ * @param {string} query The query given by the user.
+
+ * @param {callback} callback The expression to be called after search an album, reciving an album or throwing Error.
+
+ * 
+
+ * @throws {TypeError} When query its not finded 
+
+ * @throws {Error} If have network problems.
+
+ * @throws {Erorr} If status its not the expectet
+
+ 
+
+ */
+
+
+
+
 function searchAlbum(token, query, callback) {
   debugger;
-  String.validate.notVoid(token);
-  String.validate(token);
-
-  String.validate(query);
-
-  Function.validate(callback);
+  
 
   const queryUrl = encodeURI(query).concat(`&type=album&offset=0&limit=5`);
 
