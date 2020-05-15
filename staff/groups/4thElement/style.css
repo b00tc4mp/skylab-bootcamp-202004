@@ -677,11 +677,11 @@ span {
 
 .foro {
   height: 100vw;
-  margin-top: 5vh;
+  font-family: "PT Sans", sans-serif;
 }
 .foro__reviews {
   margin: 1 vh;
-  height: 79.5vh;
+  height: 84vh;
   width: 90vw;
   overflow: scroll;
   list-style-type: none;
