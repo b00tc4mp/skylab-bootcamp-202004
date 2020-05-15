@@ -42,7 +42,6 @@ function Home({ onLogout }) {
 
     window.addEventListener('hashchange', handleCheckHash)
     return () => {
-      debugger
       window.removeEventListener('hashchange', handleCheckHash)
       clearInterval(intervalState)
     }
