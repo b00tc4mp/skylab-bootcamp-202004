@@ -1,3 +1,27 @@
+/**
+
+ * search tracks
+
+ * 
+
+ * @param {string} token The spotify token. 
+
+ * @param {string} query The query given by the user.
+
+ * @param {callback} callback The expression to be called after search a track, reciving tracks or throwing Error.
+
+ * 
+
+ * @throws {TypeError} When query its not finded 
+
+ * @throws {Error} If have network problems.
+
+ * @throws {Erorr} If status its not the expectet
+
+ 
+
+ */
+
 function searchTrack(token, query, callback) {
   String.validate.notVoid(token)
   String.validate(token)

@@ -10,11 +10,14 @@ class App extends Component {
             view: 'login',
             spotyToken: "BQBFJ705rq8Mvxem7_t_ExZ8gNkGSZcqZGFcOSWn_yu7fualNDPr1D9wgv4VYcqxlHrkDUqc--CzTAKu_72iXHK7wxsNAFqBrAa9vucDcBGS4E61uNQAVs-EiUs2J93JzKsQTQ",
             token: undefined,
-            currentSong: undefined
+            currentSong: undefined          
 
         }
     }
-
+    componentDidMount(){
+        if(sessionStorage.token) this.setState({view: 'home'})  
+         this.setState({token : sessionStorage.token})  
+    }
     onChangeView = (_view) => this.setState({ view: _view })
 
     handleLogin = (_token) => {
@@ -36,6 +39,7 @@ class App extends Component {
     handleMusicTool = (preview_url) => {
         this.setState({currentSong: preview_url})
     }
+
    
 
 

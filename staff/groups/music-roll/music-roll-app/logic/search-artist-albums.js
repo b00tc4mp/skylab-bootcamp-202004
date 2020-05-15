@@ -1,3 +1,28 @@
+
+/**
+
+ * search an artist albums
+
+ * 
+
+ * @param {string} token The spotify token. 
+
+ * @param {string} id The spotify artist id.
+
+ * @param {callback} callback The expression to be called after search an album from an artist, reciving all artist albums or throwing Error.
+
+ * 
+
+ * @throws {Error} If artist id its wrong
+
+ * @throws {Error} If have network problems.
+
+ * @throws {Erorr} If status its not the expectet
+
+ 
+
+ */
+
 function searchArtistAlbum(id,token, callback) {
     String.validate.notVoid(token)
     String.validate(token)
