@@ -30,10 +30,10 @@ describe("createnewactivity", () => {
             defaultLists: false
         }, (board) => {
             Trello.post("lists", { name: "newList", idBoard: board.id }, (list) => {
-                createnewactivity("newActivity", list.id, (card) => {
+                createnewactivity("newActivity","description", list.id, (card) => {
                     expect(card.name).to.equal("newActivity");
                     expect(card.idList).to.equal(list.id);
-                    expect(card.desc).to.equal("");
+                    expect(card.desc).to.equal("description");
                     done();
                 }, () => {
                     expect(true).to.equal(false);
@@ -50,7 +50,7 @@ describe("createnewactivity", () => {
     })
 
     it("should call onFailure when given a wrong listId", (done) => {
-        createnewactivity("failedActivity", "12345678901234567890123456789012", () => {
+        createnewactivity("failedActivity","", "12345678901234567890123456789012", () => {
             expect(true).to.equal(false);
             done();
         }, (error) => {
@@ -63,29 +63,32 @@ describe("createnewactivity", () => {
 
     it("should throw an error if called with the wrong type of parameters", () => {
         expect(function() {
-            createnewactivity((123), "listID", () => {}, () => {})
+            createnewactivity((123),"desc", "listID", () => {}, () => {})
         }).to.throw(TypeError, 123 + " is not a string")
         expect(function() {
-            createnewactivity(undefined, "listID", () => {}, () => {})
+            createnewactivity(undefined,"desc", "listID", () => {}, () => {})
         }).to.throw(TypeError, undefined + " is not a string")
         expect(function() {
-            createnewactivity("123", 123, () => {}, () => {})
+            createnewactivity("123","desc", 123, () => {}, () => {})
         }).to.throw(TypeError, 123 + " is not a string")
         expect(function() {
-            createnewactivity("123", undefined, () => {}, () => {})
+            createnewactivity("123","desc", undefined, () => {}, () => {})
         }).to.throw(TypeError, undefined + " is not a string")
         expect(function() {
-            createnewactivity("123123", "123123", undefined, () => {})
+            createnewactivity("123123","desc", "123123", undefined, () => {})
         }).to.throw(TypeError, undefined + " is not a function")
         expect(function() {
-            createnewactivity("123123", "123123", "notafunction", () => {})
+            createnewactivity("123123","desc", "123123", "notafunction", () => {})
         }).to.throw(TypeError, "notafunction is not a function")
         expect(function() {
-            createnewactivity("123123", "123123", () => {}, undefined)
+            createnewactivity("123123","desc", "123123", () => {}, undefined)
         }).to.throw(TypeError, undefined + " is not a function")
         expect(function() {
-            createnewactivity("123123", "123123", () => {}, "notafunction")
+            createnewactivity("123123","desc", "123123", () => {}, "notafunction")
         }).to.throw(TypeError, "notafunction is not a function")
+        expect(function() {
+            createnewactivity("123123",123, "123123", () => {}, ()=>{})
+        }).to.throw(TypeError, 123+" is not a string")
     })
 
     afterEach((done) => { //Borro los tablones que he creado para las pruebas

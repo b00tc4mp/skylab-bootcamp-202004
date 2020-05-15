@@ -1,19 +1,9 @@
 "use strict";
 describe("retrieveusergroups",()=>{
     let testUsername="pepitogrilloskylab"
-    beforeEach((done)=>{ //Compruebo que hay autorización
-        let authoritationProblem=false;
-        window.Trello.authorize({
-            type: 'popup',
-            name: 'Task Talk',
-            scope: {
-                read: 'true',
-                write: 'true'
-            },
-            expiration: 'never',
-            success: ()=>{expect(authoritationProblem).to.equal(false); done()},
-            error: ()=>{authoritationProblem=true; expect(authoritationProblem).to.equal(false);done()}
-        });
+    beforeEach(()=>{ //Compruebo que hay autorización
+        expect(localStorage.trello_token).to.not.be.undefined
+        Trello.setToken(localStorage.trello_token)
     })
     it("should return the groups the user forms part of",(done)=>{
         //Primero creo un tablon de trello para el usuario

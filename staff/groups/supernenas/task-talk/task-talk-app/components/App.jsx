@@ -17,7 +17,7 @@ const App = () => {
 
     const handleGoToLogin = () => setView('login')
 
-    const handleLogout = () => { setToken(); localStorage.removeItem("trello_token"); setView('landing') }
+    const handleLogout = () => { setToken(); localStorage.removeItem("trello_token"); setView('landing'); Trello.setToken(undefined) }
 
     return <>
         {view === 'landing' && <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}

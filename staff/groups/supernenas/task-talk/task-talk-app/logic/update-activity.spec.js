@@ -1,18 +1,8 @@
 describe("updateactivity",()=>{
     let testUsername="pepitogrilloskylab"
-    beforeEach((done)=>{ //Compruebo que hay autorización
-        let authoritationProblem=false;
-        window.Trello.authorize({
-            type: 'popup',
-            name: 'Task Talk',
-            scope: {
-                read: 'true',
-                write: 'true'
-            },
-            expiration: 'never',
-            success: ()=>{expect(authoritationProblem).to.equal(false); done()},
-            error: ()=>{authoritationProblem=true; expect(authoritationProblem).to.equal(false);done()}
-        });
+    beforeEach(()=>{ //Compruebo que hay autorización
+        expect(localStorage.trello_token).to.not.be.undefined
+        Trello.setToken(localStorage.trello_token)
     })
     it("should change name, description and/or idList of an specified activity",(done)=>{
         Trello.post("boards/",{name: "updateactivity", defaultLists: false},(board)=>{
