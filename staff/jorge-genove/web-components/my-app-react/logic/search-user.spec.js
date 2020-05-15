@@ -15,9 +15,10 @@ describe.only("searchUser", () => {
       .concat(Math.random())}@mail.com`;
     password = passwords.random();
   });
+  
   describe("when  user already exists", () => {
     beforeEach((done) => {
-      debugger;
+      
       call(
         "POST",
         "https://skylabcoders.herokuapp.com/api/v2/users/",
@@ -38,16 +39,16 @@ describe.only("searchUser", () => {
 
               const { token } = JSON.parse(body);
               tokenValue = token;
-              debugger;
+              
               done();
             }
           );
         }
       );
     });
+    
     it("it should succed in name search", (done) => {
-      debugger;
-      debugger;
+      
       searchUsers("daniel", tokenValue, () => {
         expect(users).to.exist;
         expect(users.length).to.be.greaterThan(0);

@@ -17,7 +17,6 @@ function searchUsers(query, token, callback) {
 
       if (status === 200) {
         const user = JSON.parse(body);
-
         const { username: _username, following = [] } = user;
 
         call(
@@ -29,8 +28,7 @@ function searchUsers(query, token, callback) {
             if (error) return callback(error);
 
             if (status === 200) {
-              let users = JSON.parse(body);
-
+              const users = JSON.parse(body);
               users = users.filter(function (user) {
                 const { name, surname, username } = user;
 
