@@ -3,7 +3,7 @@ function Card({card}){
     const legalities = cardlegalities => {
         const values = Object.values(cardlegalities)
         return Object.keys(cardlegalities).map((key, i) => {
-            return <div className="card__content--legalityelement">
+            return <div key = {key} className="card__content--legalityelement">
             <p className="card__content--format">{key.charAt(0).toUpperCase() + key.slice(1) + (key === 'future'?' st': '') + ':'}</p>
             <p className={'card__content--' + (values[i] === 'legal'?'legal':'illegal')}>{values[i] === 'legal'?'LEGAL':'ILLEGAL'}</p>
         </div>
