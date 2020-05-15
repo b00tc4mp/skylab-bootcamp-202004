@@ -4,6 +4,7 @@ describe("updategroup", () => {
     let testUsername = "pepitogrilloskylab"
 
     beforeEach(() => {
+        expect(localStorage.trello_token).to.not.be.undefined
         Trello.setToken(localStorage.trello_token)
     })
 

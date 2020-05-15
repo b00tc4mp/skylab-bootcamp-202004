@@ -2,28 +2,10 @@
 
 describe("retrievegroupactivity",()=>{
     let testUsername="pepitogrilloskylab"
-
-    beforeEach((done) => { 
-        let authoritationProblem = false
-
-        window.Trello.authorize({
-            type: 'popup',
-            name: 'Task Talk',
-            scope: {
-                read: 'true',
-                write: 'true'
-            },
-            expiration: 'never',
-            success: () => {
-                expect(authoritationProblem).to.equal(false)
-                done() 
-            },
-            error: () => {
-                authoritationProblem = true
-                expect(authoritationProblem).to.equal(false)
-                done()
-            }
-        })
+    
+    beforeEach(() => {
+        expect(localStorage.trello_token).to.not.be.undefined
+        Trello.setToken(localStorage.trello_token)
     })
 
     it("should return all the activities of a group", (done) => {
@@ -37,7 +19,7 @@ describe("retrievegroupactivity",()=>{
                             expect(results.length).to.equal(1)
                             expect(results[0].name).to.equal("retrieveTestCard")
                             expect(results[0].idList).to.equal(lists[0].id)
-                            Trello.post("cards",{name: "retrieveTestCard2", idList:lists[0].id}, () => {
+                            Trello.post("cards", {name: "retrieveTestCard2", idList:lists[0].id}, () => {
                                 retrievegroupactivity(user.idBoards[0], (results) => {
                                     expect(results.length).to.equal(2)
                                     expect(results[0].name).to.equal("retrieveTestCard2")
@@ -138,8 +120,8 @@ describe("retrievegroupactivity",()=>{
                 done()
             }
         }
-        Trello.get("members/"+testUsername,(user)=>{
-            if(user.idBoards.length>0) {
+        Trello.get("members/"+testUsername, (user) => {
+            if(user.idBoards.length > 0) {
                 recursive(user.idBoards.length-1,user.idBoards)
             } else{
                 done()
