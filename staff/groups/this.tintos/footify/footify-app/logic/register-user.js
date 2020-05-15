@@ -22,6 +22,7 @@ function registerUser(name,surname,email,password,confirmPassword,callback){
     String.validate.alphabetic(name);
     String.validate.alphabetic(surname);
 
+    if(email === '') throw new Error(`${email} email can not be empty`)
     Email.validate(email);
 
     String.validate.lengthGreaterEqualThan(password,8);

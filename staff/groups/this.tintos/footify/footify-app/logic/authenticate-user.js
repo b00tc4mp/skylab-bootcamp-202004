@@ -13,6 +13,7 @@
 
 
 function authenticateUser (email,password,callback) {
+    if(email === '') throw new Error(`${email} email can not be empty`);
     Email.validate(email);
     
     String.validate.notVoid(password);
