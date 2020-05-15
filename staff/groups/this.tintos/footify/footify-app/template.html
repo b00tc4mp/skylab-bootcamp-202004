@@ -2,74 +2,275 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Templates</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+    <!-- Landing -->
+
     <section class="landing">
-        <a href="">Register</a> or <a href="">Login</a>
-    </section>
+            <div class="landing__container">
+                <div class="landing__logo">
+                    <img src="img/logo.svg" class="landing__logo-item">
+                </div>
+                <div class="landing__info">
+                    Lorem ipsum dolor sit,
+                amet consectetur adipisicing elit. Corporis reprehenderit sunt nisi et quaerat nostrum blanditiis nulla
+                maiores quae aliquam ipsam voluptatem, id numquam!
+                </div>
+                <div class="landing__nav">
+                    <button class="landing__button">LOGIN</button>
+                    <button class="landing__button">REGISTER</button>
+                </div>
+            </div>
+        </section>
+
+    <!-- Register -->
 
     <section class="register">
-        <h1>Register</h1>
-        <form>
-            <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}">
-            <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}">
-            <input type="email" name="email" placeholder="e-mail" required>
-            <input type="password" name="password" placeholder="password" required minLength="8">
-            <button>Submit</button>
-            or <a href="">Login</a>
-        </form>
-        <p class="feedback feedback--error">Wrong credentials</p>
-    </section>
+            <div class="register__container">
+                <div class="register__logo">
+                    <img src="img/logo.svg" class="register__logo-item">
+                </div>
+                <form class="register__input">
+                    <h1 class="register__title">REGISTER</h1>
+                    <input type="text" class="register__input-item" placeholder="name*">
+                    <input type="text" class="register__input-item" placeholder="surname*">
+                    <input type="text" class="register__input-item" placeholder="email*">
+                    <input type="password" class="register__input-item" placeholder="password*">
+                    <input type="password" class="register__input-item" placeholder="confirm password*">
+                    <button class="register__input-button">REGISTER</button>
+                    <p class="feedback feedback--error">Wrong credentials</p>
+                </form>
+                <div class="register__goto">
+                    <img src="img/arrow_left.svg" alt="go-to-landing" class="register__goto-landing">
+                    <p class="register__goto-text-landing">landing</p>
+                    <p class="register__goto-text-login">login</p>
+                    <img src="img/arrow_right.svg" alt="go-login" class="register__goto-login">
+                </div>
+            </div>
+        </section>
+
+    <!-- login -->
 
     <section class="login">
-        <h1>Login</h1>
-        <form>
-            <input type="email" name="email" placeholder="e-mail" required>
-            <input type="password" name="password" placeholder="password" required minLength="8">
-            <button>Submit</button>
-            or <a href="">Register</a>
+            <div class="login__container">
+                <div class="login__logo">
+                    <img src="img/logo.svg" class="login__logo-item">
+                </div>
+                <form class="login__input">
+                    <h1 class="login__title">LOGIN</h1>
+                    <input type="text" class="login__input-item" placeholder="email*">
+                    <input type="password" class="login__input-item" placeholder="password*">
+                    <button class="login__input-button">LOGIN</button>
+                    <p class="feedback feedback--error">Wrong credentials</p>
+                </form>
+                <div class="login__goto">
+                    <img src="img/arrow_left.svg" alt="go-to-landing" class="login__goto-landing">
+                    <p class="login__goto-text-landing">landing</p>
+                    <p class="login__goto-text-register">register</p>
+                    <img src="img/arrow_right.svg" alt="go-login" class="login__goto-register">
+                </div>
+            </div>
+        </section>
+
+    <!-- Player Card -->
+
+    <section class="player">
+      <ul class="player-card">
+        <li class="player-card__item">
+          <div class="player-card__player">
+            <div class="player-card__emblem">
+              <img
+                src="https:\/\/www.thesportsdb.com\/images\/media\/team\/badge\/xqwpup1473502878.png"
+                alt="team badge"
+                class="player-card__emblem-item"
+              />
+            </div>
+            <div class="player-card__number">
+              <span class="player-card__number-item">5</span>
+            </div>
+            <div class="player-card__image">
+              <img
+                src="https:\/\/www.thesportsdb.com\/images\/media\/player\/cutout\/6gm6rv1565126217.png"
+                alt="player"
+                class="player-card__image-item"
+              />
+            </div>
+            <h2 class="player-card__name-first">Sergio</h2>
+            <h2 class="player-card__name-surname">Busquets</h2>
+          </div>
+
+          <hr class="player-card__line" />
+
+          <div class="player-card__info">
+            <h3 class="player-card__team">Team: </h3><span class="player-card__team-answer">F.C. Barcelona</span>
+            <h3 class="player-card__country">Country: </h3><span class="player-card__country-answer">Spain</span>
+            <h3 class="player-card__birth">Date of birth: </h3><span class="player-card__birth-answer">25/03/86</span>
+            <a class="player-card__like">
+              <img src="img/heart_onclick.svg" alt="" />
+            </a>
+            <h4 class="player-card__count">21</h4>
+          </div>
+
+          <hr class="player-card__small-line" />
+
+          <div class="player-card__comment">
+            <form type="text" class="player-card__form" >
+                <input name="comment" id="" cols="30" rows="4" placeholder="Say something..." class="player-card__form-input"></input>
+                <button class="player-card__form-button" disabled="disabled"> Send</button>
+                </form>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!--navbar-->
+
+    <section class="navbar">
+            <div class="navbar__container">
+                <nav class="navbar__user">
+                    <a href="" class="navbar__user-logo">
+                        <img src="img/logo.svg" alt="logo">
+                    </a>
+                    <div class="navbar__user-admin">
+                    <div class="navbar__user-admin-link" id="userLinks">
+                        <a class="navbar__user-admin-link-item" href="#landing">Log-out</a>
+                        <a class="navbar__user-admin-link-item" href="#update-user">Admin</a>
+                    </div>
+                    <a href="#" class="navbar__user-img">
+                        <img src="img/user.svg" alt="user">
+                    </a>
+                </nav>
+                </div>
+                <nav class="navbar__links">
+                    <a href="">
+                        <img src="img/home.svg" alt="logo" class="navbar__links-item">
+                    </a>
+                    <a href="">
+                        <img src="img/news.svg" alt="user" id="navbar__links-news">
+                    </a>
+                    <a href="">
+                        <img src="img/dreamteam.svg" alt="user" class="navbar__links-item">
+                    </a>
+                    <input type="text" id="navbar__links-search">
+                </nav>
+            </div>
+        </section>
+     
+
+        <!-- Sport news -->
+
+        <section class="sport-news">
+            <div class="sport-news__container">
+                <ul>
+                    <li>
+                        <a href="">
+                            <div class="sport-news__image"></div>
+                            <p class="sport-news__paragraph">
+                                Lorem ipsum dolor, sit 
+                          amet consectetur adipisicing elit. Asperiores 
+                            numquam neque a odit exercitationem sint vel ab 
+                            tempora!
+                            </p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <div class="sport-news__image"></div>
+                            <p class="sport-news__paragraph"></p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+      
+
+    <!-- Fwitter -->
+
+    <section>
+        <div class="fwitter">
+            <div class='fwitter__user'>
+                <div class='fwitter__user-item'>
+                    <div class='fwitter__point'></div>
+                    <div class='fwitter__user-name'>Sérgio Luis</div>
+                </div>
+
+                <div>
+                    <div class="fwitter__comment">
+                        <div class="fwitter__player-name">Cristiano Ronaldo</div>
+                        <div>
+                            <div class='fwitter__item'>
+                                <div class='fwitter__message'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi dolorum consequuntur pariatur voluptatum obcaecati vel iusto culpa dicta, sint distinctio enim cupiditate vero natus nostrum repellendus tempora fuga aspernatur
+                                    qui.
+                                </div>
+                                <div class='fwitter__date'>3 marc 2020</div>
+                                <div class='fwitter__card-container'>
+                                    <div class='fwitter__card'></div>
+                                    <div class='fwitter__card'></div>
+                                    <div class='fwitter__card'></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Update user -->
+
+    <section class="update">
+        <form class="update__form">
+            <h1 class="update__title">Change user details</h1>
+          <input type="text" name="name" class="update__form-item" placeholder="new name(optional)"/>
+          <input type="text" name="surname" class="update__form-item" placeholder="new surname (optional)"/>
+          <input type="text" name="email" class="update__form-item" placeholder="new email (optional)"/>
+          <hr class="update__form-line"/>
+          <input type="password" name="password" class="update__form-item" placeholder="new password (optional)"/>
+          <input type="password" name="oldPassword" class="update__form-item" placeholder="old password (optional)"/>
+
+          <button type="submit" class="update__form-button">ACCEPT</button>
         </form>
-        <p class="feedback feedback--error">Wrong credentials</p>
-    </section>
 
-    <section class="home">
-        <h1>Welcome, ${name}!</h1>
-        <a class="home__link home__link--active" href="">Users</a>
-        <a class="home__link" href="">Google</a>
-        <button>Logout</button>
-        
-        <section class="search">
-            <form>
-                <input type="text" name="query">
-                <button>🔍</button>
-            </form>
-        </section>
-
-        <section class="results">
-            <ul>
-                <li>Manuel Barzi (manuelbarzi@gmail.com)</li>
-                <li>Pepito Grillo (pepito@grillo.com)</li>
-            </ul>
-        </section>
+ 
+        <div clas="update__goto">
+          <a href="#"><img src="img/arrow_left.svg" alt="go-to-home" clas="update__goto-home"/></a>
+          <p class="update__goto-text">back</p>
+        </div>
+      </div>
     </section>
 
 
+    <section class="dream-team">
 
+        <h1 class="dream-team__title">Dream team</h1>
+        <ul class="dream-team__list">
+            <li class="dream-team__row">
+                <div class="dream-team__info">
+                    <h1 class="dream-team__info-pos">1</h1>
+                    <h2 class="dream-team__info-name">Lionel Messi</h2>
+                </div>
+                <div class="dream-team__likes-container">
+                    <img class="dream-team__likes-container-image" src="img/heart_onclick.svg" alt="image-new" />
+                    <h2 class="dream-team__likes-container-num">2</h2>
+                </div>
+                    <img class="dream-team__image" src="https://www.thesportsdb.com//images//media//player//cutout//07t81y1580776864.png" alt="image-new" />
+                
+            </li>
+            <p>according to user votes</p>
+        </ul>
 
-
-
-
-
-
-    
-    
-
-
+    </section>
 </body>
 
 </html>
+

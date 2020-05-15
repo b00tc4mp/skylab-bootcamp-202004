@@ -598,6 +598,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100vw;
+  height: 100vh;
 }
 .update__logo {
   text-align: center;
@@ -608,7 +610,7 @@
 .update__title {
   font-family: Raleway;
   font-weight: 500;
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   margin-bottom: 1.5rem;
 }
 .update__container {
@@ -639,6 +641,9 @@
   color: #320090;
   font-family: Raleway;
   font-weight: 200;
+}
+.update__form-item::placeholder {
+  opacity: 50%;
 }
 .update__form-line {
   border-top: 4px solid #320090;
