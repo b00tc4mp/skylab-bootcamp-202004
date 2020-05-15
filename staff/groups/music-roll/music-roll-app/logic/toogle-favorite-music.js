@@ -1,3 +1,30 @@
+
+/**
+
+ * search an artist
+
+ * 
+
+ * @param {string} token The user app token 
+
+ * @param {object} favorite the object with favorite stuff,
+
+ * @param {string} flag the variable that track what kaind of of favorite the user tracks
+ 
+ * @param {callback} callback The expression to be throwed after follow a track, album or artist, and put the info on the user database or throw an error
+
+ * 
+
+ 
+
+ * @throws {Error} If have network problems.
+
+ * @throws {Erorr} If status its not the expectet
+
+ 
+
+ */
+
 function toggleFavoriteMusic(flag, token, favorite, callback) {
   debugger;
 

@@ -1,3 +1,22 @@
+/**
+
+ * Get the user favorites
+
+ * 
+
+ * @param {string} token The user token. 
+
+ * @param {callback} callback The expression to be called retrieve the users favorites
+
+ * @throws {Error} If the call had network error
+
+ * @throws {Error} If the status its not correct
+
+ * @throws {Error} If the token is not correct or its expired
+
+ */
+
+
 function retrieveFavorites(token, callback) {
   String.validate.notVoid(token);
 

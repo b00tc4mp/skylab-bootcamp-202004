@@ -1,3 +1,28 @@
+
+/**
+
+ * search a playslist
+
+ * 
+
+ * @param {string} token The spotify token. 
+
+ * @param {string} query The query given by the user.
+
+ * @param {callback} callback The expression to be called after search a playlist, reciving a playlist or throwing Error.
+
+ * 
+
+ * @throws {TypeError} When query its not finded 
+
+ * @throws {Error} If have network problems.
+
+ * @throws {Erorr} If status its not the expectet
+
+ 
+
+ */
+
 function searchPlaylists(token, query, callback) {
  
   String.validate.notVoid(token)

@@ -1,4 +1,23 @@
 
+/**
+
+ * Checks user credentials.
+
+ * 
+
+ * @param {string} id The album id 
+
+ * @param {string} token The spotyfy client token.
+
+ * @param {callback} callback The expression to be called after checking credentials, receiving album tracks
+
+  * @throws {Error} If the id its not correct.
+  
+  *@throws {Error} If the token its expired
+
+  *@throws {Error} If the status was not the expectet
+
+ */
 
 
 function searchAlbumTracks(id,token,callback) {
