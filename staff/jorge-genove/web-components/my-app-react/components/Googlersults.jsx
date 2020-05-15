@@ -1,5 +1,5 @@
-function GoogleResults({ googleFind }) {debugger
-
+function GoogleResults({ googleFind }) {
+    
     return <section className="results">
         {googleFind.length ?
             <ul>{googleFind.map(({ title, content, link }) => {
@@ -12,6 +12,4 @@ function GoogleResults({ googleFind }) {debugger
 
             : <Feedback message="sorry, no results :(" level="warning" />}
     </section>
-
-
 }

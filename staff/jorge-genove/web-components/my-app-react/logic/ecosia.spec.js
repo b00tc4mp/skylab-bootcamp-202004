@@ -1,18 +1,18 @@
-describe('googleSearch', () => {
-    it('should succeed on matching query', done => {
-        ecosiaSearch('hello world', function(error, results) {
-            expect(error).to.be.undefined
+describe("googleSearch", () => {
+  it("should succeed on matching query", (done) => {
+    ecosiaSearch("hello world", function (error, results) {
+      expect(error).to.be.undefined;
 
-            expect(results).to.exist
-            expect(results.length).to.be.greaterThan(0)
+      expect(results).to.exist;
+      expect(results.length).to.be.greaterThan(0);
 
-            results.forEach(({ title, content, link}) => {
-                expect(title).to.be.a('string')
-                expect(content).to.be.a('string')
-                expect(link).to.be.a('string')
-            })
+      results.forEach(({ title, content, link }) => {
+        expect(title).to.be.a("string");
+        expect(content).to.be.a("string");
+        expect(link).to.be.a("string");
+      });
 
-            done()
-        })
-    })
-})
+      done();
+    });
+  });
+});

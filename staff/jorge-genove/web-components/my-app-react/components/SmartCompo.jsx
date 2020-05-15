@@ -1,6 +1,5 @@
 const { Component } = React
 
-
 class SmartCompo extends Component {
     constructor(props) {
         super(props)

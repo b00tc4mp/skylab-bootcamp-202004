@@ -1,13 +1,11 @@
 function Landing({ onGoToRegister, onGoToLogin }) {
     function handleGoToRegister(event) {
         event.preventDefault()
-
         onGoToRegister()
     }
 
     function handleGoToLogin(event) {
         event.preventDefault()
-
         onGoToLogin()
     }
 

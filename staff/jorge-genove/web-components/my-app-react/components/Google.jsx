@@ -1,28 +1,19 @@
-const { useState,Component } = React
+const { useState, Component } = React
 
-function Google () {
+function Google() {
 
-    
-const [googleFind, setgoogleFind] = useState(undefined)
-        
-        
-        
-     
+    const [googleFind, setgoogleFind] = useState(undefined)
 
-   const handleGoogle = (query) => {
-    googleSearch (query, (error, results) => {debugger
-        setgoogleFind(results )
-    })
-   }
-
-   
-
+    const handleGoogle = (query) => {
+        googleSearch(query, (error, results) => {
+            debugger
+            setgoogleFind(results)
+        })
+    }
 
     return <section className="google">
         <h2>Google</h2>
-        <Search onSubmit={handleGoogle}/>
+        <Search onSubmit={handleGoogle} />
         {googleFind && <GoogleResults googleFind={googleFind} />}
     </section >
-
-
 }

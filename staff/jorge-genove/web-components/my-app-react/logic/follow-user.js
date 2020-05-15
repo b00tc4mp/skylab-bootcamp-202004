@@ -1,4 +1,5 @@
-function toggleFollowers(followingId, token, callback) {debugger
+function toggleFollowers(followingId, token, callback) {
+  debugger;
   String.validate.notVoid(token);
   String.validate.notVoid(followingId);
   Function.validate(callback);

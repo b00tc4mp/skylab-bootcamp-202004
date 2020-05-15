@@ -6,7 +6,7 @@ function googleSearch(googleQuery, callback) {
     `https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?q=${googleQuery}`
   );
 
-  xhr.addEventListener('load', function () {
+  xhr.addEventListener("load", function () {
     //console.log(this.responseText)
 
     const parser = new DOMParser();
@@ -17,15 +17,11 @@ function googleSearch(googleQuery, callback) {
     const appends = [];
     results.forEach((result) => {
       const title = result.querySelector(".LC20lb").innerHTML;
-
       const content = result.querySelector(".st").innerHTML;
-
       const { href: link } = result.querySelector(".r > a");
-
-      appends.push ({ title, content, link })
-
-     
+      appends.push({ title, content, link });
     });
+
     callback(undefined, appends);
   });
 

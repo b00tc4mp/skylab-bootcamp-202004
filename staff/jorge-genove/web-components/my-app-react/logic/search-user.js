@@ -50,8 +50,6 @@ function searchUsers(query, token, callback) {
                 return _user;
               });
 
-              // TODO optimize this processing by just using a single Array.prototype.reduce function
-
               callback(undefined, users);
             } else {
               const { error } = JSON.parse(body);

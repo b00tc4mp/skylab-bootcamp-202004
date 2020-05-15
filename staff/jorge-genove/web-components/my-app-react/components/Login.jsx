@@ -1,13 +1,12 @@
 const { useState, Component } = React
 
-function Login({onLogin1, onGoToRegister}) {
+function Login({ onLogin1, onGoToRegister }) {
 
     const [error, setError] = useState('')
 
     const handleOnRegister = event => {
         event.preventDefault()
     }
-
 
     const handleSubmit = event => {
         debugger
@@ -18,7 +17,6 @@ function Login({onLogin1, onGoToRegister}) {
         email = email.value
         password = password.value
 
-
         try {
             onLogin1(email, password)
         } catch ({ message }) {
@@ -27,7 +25,6 @@ function Login({onLogin1, onGoToRegister}) {
         }
     }
 
-
     return <section className="login">
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
@@ -35,8 +32,6 @@ function Login({onLogin1, onGoToRegister}) {
             <input type="password" name="password" placeholder="password" required />
             <button>Submit</button>
             or <a onClick={() => { event.preventDefault(); onGoToRegister('register') }} className="home__link" href="">Register</a>
-
-
             {error === error.message && <Feedback message={error} level='error' />}
         </form>
     </section>

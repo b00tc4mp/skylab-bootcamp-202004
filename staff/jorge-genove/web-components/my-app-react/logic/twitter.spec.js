@@ -1,5 +1,4 @@
 describe("tweet", function () {
-  
   let name, surname, email, password, token;
 
   beforeEach(function (done) {
@@ -14,14 +13,14 @@ describe("tweet", function () {
     call(
       "POST",
       "https://skylabcoders.herokuapp.com/api/v2/users",
-      {user: `${name}`,
+      {
+        user: `${name}`,
         surname: `${surname}`,
         email: `${email}`,
         password: `${password}`,
       },
       { "Content-type": "application/json" },
       (error, status, body) => {
-        
         if (error) return done(new Error(error));
         if (status !== 201) return done(new Error("unexpectet status"));
 
@@ -31,7 +30,6 @@ describe("tweet", function () {
           `{ "username": "${email}", "password": "${password}" }`,
           { "Content-type": "application/json" },
           (error, status, body) => {
-            
             if (error) return done(new Error(error));
             if (!status === 200) return done(new Error("unexpectet status"));
 
@@ -49,7 +47,6 @@ describe("tweet", function () {
         token,
         { message: "hello world", date: new Date(Date.now()) },
         (error, undefined) => {
-          
           expect(error).to.be(undefined);
           expect(token).not.to.be(undefined);
           expect(date).not.to.be(undefined);

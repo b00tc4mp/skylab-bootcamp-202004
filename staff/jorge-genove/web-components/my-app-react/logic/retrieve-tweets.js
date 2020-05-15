@@ -40,9 +40,7 @@ function retrieveTweets(email, token, callback) {
           debugger;
           let name = followerUsers[i].name;
           let surname = followerUsers[i].surname;
-
           let tweets = followerUsers[i].tweets || [];
-
           tweetsArray.push({ name, surname, tweets });
         }
 
