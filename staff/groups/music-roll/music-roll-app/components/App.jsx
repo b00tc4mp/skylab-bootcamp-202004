@@ -8,12 +8,17 @@ class App extends Component {
 
 
             view: 'login',
-            spotyToken: "BQDkDxsHxiEvXdh1MVFx2I3hyPZrdgBoi9xASNb2c_HWMqe-V5TQKlKN4brhkJyElTT-4ZR0lLBky2pbotM4MNFvywcrVTA45_q0NYEy5v6ENIQsyDE5RCdspFQYmpMu7OBanFYn9TA5KNb6KAuD3A1lNVOYEH_DElfSmxT6N1FWduWfIYlKMJ2pIgwd",
+            spotyToken: "BQBhmMElRh3Ozu6EIuLUjQ1DvW7Q2mm71LtI_EE46VynkFSEs8xgiAa5_tn3XiLPR3UqJaT-BYTVRD8fckxWL_eZg3q87H_8H7qAj21S1Gx8yTuQgk4B4U8ZGV5zHL4zyCGWqv2lhqnLguNyPY9zy5zTf0yP6noKFk3ZpRxhFLYX8v1Ij0kvwuGDRMBh",
             token: undefined
+
+            
 
         }
     }
-
+    componentDidMount(){
+        if(sessionStorage.token) this.setState({view: 'home'})  
+         this.setState({token : sessionStorage.token})  
+    }
     onChangeView = (_view) => this.setState({ view: _view })
 
     handleLogin = (_token) => {
@@ -32,7 +37,7 @@ class App extends Component {
         this.onChangeView('login')
     }
 
-
+    
    
 
 

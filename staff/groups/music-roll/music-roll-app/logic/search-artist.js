@@ -1,4 +1,35 @@
+/**
+
+ * search an artist
+
+ * 
+
+ * @param {string} token The spotify token. 
+
+ * @param {string} query The query given by the user.
+
+ * @param {callback} callback The expression to be called after search an artist, reciving an artist or throwing Error.
+
+ * 
+
+ * @throws {TypeError} When query its not finded 
+
+ * @throws {Error} If have network problems.
+
+ * @throws {Erorr} If status its not the expectet
+
+ 
+
+ */
+
 function searchArtist(token, query, callback) {
+
+    String.validate.notVoid(token);
+  String.validate(token);
+
+  String.validate(query);
+
+  Function.validate(callback);
     
     const queryUrl = encodeURI(query).concat(`&type=artist&offset=0&limit=5`);
 

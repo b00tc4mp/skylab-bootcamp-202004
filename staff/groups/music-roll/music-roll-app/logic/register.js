@@ -1,3 +1,28 @@
+
+/**
+
+ * Register a new user
+
+ *@param {string}  surname the user name
+ 
+ *@param {string} name The user name
+
+ *@param {string} email The user e-mail. 
+
+ *@param {string} password The user password.
+
+ *@param {callback} callback The expression to be called after create a new user, receiving an Error or redirection to login.
+
+ * 
+
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+
+ * @throws {Error} If e-mail does not match the expected format.
+
+ * @throws {Error} If the password dont have the requirements
+
+ */
+
 function registerUser(name, surname, email, password, callback) {debugger
    
     String.validate.alphabetic(name)
@@ -23,4 +48,4 @@ function registerUser(name, surname, email, password, callback) {debugger
     }
 
     })
-    } 
+} 

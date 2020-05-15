@@ -357,6 +357,10 @@ input -internal-autofill-selected {
   box-sizing: border-box;
 }
 
+body {
+  background-color: #2a2a2a;
+}
+
 .browser-results {
   height: 100%;
 }
@@ -528,6 +532,63 @@ input -internal-autofill-selected {
   align-items: center;
   width: 150px;
   height: 150px;
+}
+
+.favorite {
+  background-color: #2a2a2a;
+}
+.favorite__artist {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.favorite__album {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.favorite__track {
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.favorite__title {
+  margin-top: 40px;
+  text-align: center;
+  font-family: montserrat;
+}
+.favorite__list {
+  display: flex;
+  list-style: none;
+  flex-direction: column;
+}
+.favorite__items {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.favorite_title--artist {
+  display: flex;
+}
+
+.album__img {
+  align-self: center;
+}
+
+img {
+  width: 100px;
+  height: 100px;
+}
+
+.navbar {
+  top: 0;
 }
 
 * {
