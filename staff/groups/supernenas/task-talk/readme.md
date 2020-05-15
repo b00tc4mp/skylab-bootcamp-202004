@@ -8,18 +8,18 @@ This App is a notepad that helps you and other people to organize better by maki
 
 ### Use Cases
 
-![use cases diagram](resources\task-talk-use-cases.png)
+![use cases diagram](resources/task-talk-use-cases.png)
 
 ### Activities (flows)
 
-![activity diagram](resources\task-talk-activity.png)
+![activity diagram](resources/task-talk-activity.png)
 
 ## Technical Description
 
 ### Blocks
 
-![block diagram](resources\task-talk-block-diagram.png)
+![block diagram](resources/task-talk-block-diagram.png)
 
 ### QA (testing)
 
-![block diagram](resources\testing.png)
+![block diagram](resources/testing.png)
