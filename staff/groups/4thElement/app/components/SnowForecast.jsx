@@ -57,7 +57,7 @@ function SnowForecast({token, forecastSelected, sportState}) {
                     <ul className="forecastInfoSnow__hour">
                         {forecast.data.weather[0].hourly.map((element)=>{
                             return <li className="forecastInfoSnow__list">
-                                <div className="forecastInfoSnow__time">Hour: {element.time}</div>
+                                <div className="forecastInfoSnow__time">{element.time}h</div>
                                 <div className="forecastInfoSnow__overAllInfo">Snow fall (cm): {element.snowfall_cm} Freez level (m): {element.freezeLevel} Cloud cover: {element.cloudcover}</div>
                                 <div className="forecastInfoSnow__temp">Temp: Top ºC {element.top[0].tempC}, Mid ºC {element.mid[0].tempC}, Bottom ºC {element.bottom[0].tempC}</div>
                                 <div className="forecastInfoSnow__windDir">Wind degree: Top {element.top[0].winddir16Point}, Mid {element.mid[0].winddir16Point}, Bottom {element.bottom[0].winddir16Point}</div>

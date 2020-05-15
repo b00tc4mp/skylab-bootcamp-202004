@@ -1,20 +1,19 @@
 .forecastInfoSnow
     margin-top: 6vh
     height: 80vh
+    font-family: 'PT Sans', sans-serif
     &__day
         overflow: scroll
         height: 80vh
         h2
             padding-top: 1vh
             text-align: center
-            font-family: 'Source Sans Pro', sans-serif
             font-size: 1.6rem
             font-weight: bold
             height: 3.5vh
         h4
             padding-top: 1vh
             text-align: center
-            font-family: 'Source Sans Pro', sans-serif
             font-size: 20px
             height: 3.5vh
     &__hour
@@ -25,9 +24,26 @@
     &__list
         border-bottom:  1px solid black
         width: 100vw
-        padding: 3vh
+        padding: 3vh 0vh
+    &__time
+        width: 50vw
+        font-size: 1.4rem
+        text-align: center
+        background-color: rgba(161, 238, 252, 1)
     &__overAllInfo
-        color: red
+        font-family: 'PT Sans', sans-serif
+        font-size: 1.2rem
+        padding: 0 5vw
+        margin-bottom: 2vh
+        background-color: white
+        font-weight: bold
+    &__temp
+        padding: 0.5vh 5vw
+
+    &__windDir
+        padding: 0.5vh 5vw
+    &__windSpeed
+        padding: 0.5vh 5vw
     &__selector
         font-size: 1.3rem
         display: flex

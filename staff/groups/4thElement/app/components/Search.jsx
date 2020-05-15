@@ -15,12 +15,12 @@ function Search({ movingSurfForecast, sportState, token }) {
         movingSurfForecast(surfForecastSelected)
     }
 
-    const handelChangeSelector = (val) => {
+    const handleChangeSelector = (val) => {
         setselectorState(val)
     }
 
     return <section className="Search">
-        <SearchInput onSubmitSpot={handleSubmitSpot} searchSelector={handelChangeSelector} selectorState={selectorState} sportState={sportState}/>
+        <SearchInput onSubmitSpot={handleSubmitSpot} searchSelector={handleChangeSelector} selectorState={selectorState} sportState={sportState}/>
         {query && <SearchResults  query={query} onGoToSurfForecast={onGoToSurfForecast} sportState={sportState} selectorState={selectorState} token={token}/>}
 
     </section>
