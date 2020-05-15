@@ -1,3 +1,10 @@
+/**
+ * Gets the trello token stored in the skylab api
+ * @param {string} tokenskylab token associated with the user in the skylab api
+ * @param {function} callback  callback called after ending the api call, if an error happened during the call it receibes it as a parameter else it receives the trello token asociated with this user
+ * @throws {TypeError} throws an error if tokenskylab is not a string
+ * @throws {TypeError} throws an error if the callback is not a function
+ */
 function retrievetrellofromskylab(tokenskylab, callback) {
     String.validate(tokenskylab);
     Function.validate(callback);

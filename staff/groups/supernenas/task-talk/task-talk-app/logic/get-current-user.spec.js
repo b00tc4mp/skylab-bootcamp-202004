@@ -1,4 +1,8 @@
 describe("getcurrentuser",()=>{
+    beforeEach(()=>{
+        expect(localStorage.trello_token).to.not.be.undefined
+        Trello.setToken(localStorage.trello_token)
+    })
     it("should return the info about pepitogrillo",(done)=>{
         getcurrentuser((user)=>{
             expect(user.fullName).to.equal("Pepito Grillo");

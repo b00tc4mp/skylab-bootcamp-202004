@@ -1,7 +1,8 @@
 describe("updategroup", () => {
     let testUsername = "pepitogrilloskylab"
     beforeEach(() => {
-        Trello.setToken(localStorage.trello_token);
+        expect(localStorage.trello_token).to.not.be.undefined
+        Trello.setToken(localStorage.trello_token)
     })
     it("should change name and descripton of a choosen group", (done) => {
         Trello.post("boards/", { name: "updateTestBoard" }, (group) => {
