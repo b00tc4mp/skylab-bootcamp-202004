@@ -7,11 +7,11 @@
  * @param {string} token The token of the current user.
  * @param {callback} callback The expression to be called after checking credentials, receiving an Error.
  * 
+ * @returns {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * 
  * @throws {TypeError} If any of the parameters does not match the corresponding type.
  *
  */
-
-
 
 
 function addFwitter(idPlayer, _name, _message, token, callback) {

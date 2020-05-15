@@ -23,8 +23,6 @@
         height: 370px
         border-radius: 20px
         min-width: 420px          
-            
-
     &__player
         height: auto
         display: grid
@@ -157,37 +155,41 @@
             padding: .6rem 0rem .6rem .8rem
             &:focus
                 outline: none
+  
     &__form
         display: flex
-        justify-content: center
-        margin-left: 1rem
+        justify-content: space-between
         align-items: center
         border-radius: 30px
-        flex-shrink: 1
-        flex-grow: 1
+        margin: .5rem 0rem
+        opacity: 60%
+        background-color: white 
         &-input
+            padding: 0 0.5rem
             border-radius: 30px
-            width: 88%
-            height: 25px
+            width: 22rem
+            height: 2rem
             font-family: raleway
             border-style: none
             text-align: justify
-            margin-top: 0.8rem
-            padding-left: 10px
-            opacity: 50%
-            background: #ffffff
+            color: #320090    
         &-input:focus
+            background-color: white
             opacity: 100%
             text-emphasis: none
             outline: none
             user-select: none
+            
         &-button
-            position: relative
-            right: 2.4rem
-            top: 0.4rem
-            background: 0 0
-            border: 0
+            background-color: white
+            border: 0px
+            outline: none
+            padding:  0 0.5rem
             cursor: pointer
+            border-radius:40%
+            opacity: 40%
+
         &-button:hover
             color: #320090
-            opacity: 60%                
+            font-weight: 400
+            opacity: 200%                

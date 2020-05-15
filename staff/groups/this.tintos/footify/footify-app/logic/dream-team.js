@@ -1,4 +1,15 @@
+/**
+ * Checks user credentials.
+ * 
 
+ * @param {string} token The token of the current user.
+ * @param {callback} callback The expression to be called after checking credentials, receiving an Error amb playersImg.
+ * 
+ * @returns {Object} playersImg _players It receives a array in case credentials are correct with the info of the searched player(with the url's of images).
+ * @returns {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ */
 
 
 function dreamTeam(token, callback) {

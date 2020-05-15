@@ -61,7 +61,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 2px;
   font-family: Raleway;
 }
 .register__logo {
@@ -156,6 +155,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100vw;
 }
 .login__logo {
   text-align: center;
@@ -440,46 +440,43 @@
 }
 .player-card__form {
   display: flex;
-  justify-content: center;
-  margin-left: 1rem;
+  justify-content: space-between;
   align-items: center;
   border-radius: 30px;
-  flex-shrink: 1;
-  flex-grow: 1;
+  margin: 0.5rem 0rem;
+  opacity: 60%;
+  background-color: white;
 }
 .player-card__form-input {
+  padding: 0 0.5rem;
   border-radius: 30px;
-  width: 88%;
-  height: 25px;
+  width: 22rem;
+  height: 2rem;
   font-family: raleway;
   border-style: none;
   text-align: justify;
-  margin-top: 0.8rem;
-  padding-left: 10px;
-  opacity: 50%;
-  background: #ffffff;
+  color: #320090;
 }
 .player-card__form-input:focus {
+  background-color: white;
   opacity: 100%;
   text-emphasis: none;
   outline: none;
   user-select: none;
 }
 .player-card__form-button {
-  position: relative;
-  right: 2.4rem;
-  top: 0.4rem;
-  background: 0 0;
-  border: 0;
+  background-color: white;
+  border: 0px;
+  outline: none;
+  padding: 0 0.5rem;
   cursor: pointer;
+  border-radius: 40%;
+  opacity: 40%;
 }
 .player-card__form-button:hover {
   color: #320090;
-  opacity: 60%;
-}
-
-.navbar {
-  margin-left: 2px;
+  font-weight: 400;
+  opacity: 200%;
 }
 
 .navbar__container {
@@ -517,8 +514,33 @@
 }
 
 .navbar__user-img {
-  margin-right: 0.8rem;
   width: 2.4rem;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.navbar__user-image {
+  width: 100%;
+}
+
+.navbar__user-menu {
+  display: flex;
+  align-items: center;
+}
+.navbar__user-menu-container {
+  display: flex;
+  justify-content: space-between;
+  transition: 1s;
+  width: 8rem;
+  margin-right: 0.7rem;
+}
+
+.navbar__user-menu-container {
+  font-family: Raleway;
+  transition: 1s;
+}
+.navbar__user-menu-container:first-child:active {
+  color: #320090;
 }
 
 #navbar__links-news {
@@ -558,7 +580,6 @@
 .sport-news {
   display: flex;
   justify-content: center;
-  width: 100vw;
 }
 .sport-news__list li {
   list-style: none;
@@ -818,7 +839,8 @@
   text-align: center;
   margin-bottom: 5rem;
   color: #320090;
-  font-size: 3rem;
+  font-size: 2.5rem;
+  font-weight: 600;
 }
 .dream-team__list > ul {
   margin-top: 5rem;
