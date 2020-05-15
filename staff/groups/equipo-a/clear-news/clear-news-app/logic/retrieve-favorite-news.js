@@ -31,7 +31,7 @@ function retrieveFavNews(token, callback) {
 
                 favorite.forEach((item => {
 
-                    call('GET', `https://newsapi.org/v2/everything?q="${item}"&apiKey=0d80af4c6ef6473aae5bb15fcf9eb625`,
+                    call('GET', `https://newsapi.org/v2/everything?q=${item}&apiKey=0d80af4c6ef6473aae5bb15fcf9eb625`,
 
                         undefined,
                         undefined,

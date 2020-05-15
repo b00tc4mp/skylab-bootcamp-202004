@@ -13,6 +13,8 @@ function Pages({ pages, handleCurrentPage }) {
                     event.preventDefault()
                     const _id = event.target.id
                     handleClick(_id)
+                    document.body.scrollTop = 0;
+                    document.documentElement.scrollTop = 0;
                 }}>{number}</button>
             )
         }
