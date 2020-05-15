@@ -10,11 +10,14 @@
  */
 
 function updategroup(groupId, groupTitle, groupDesc = "", onSuccess, onFailure) {
-
     String.validate(groupId)
+
     String.validate(groupTitle)
+    
     String.validate(groupDesc)
+    
     Function.validate(onSuccess)
+    
     Function.validate(onFailure)
 
     Trello.put("boards/" + groupId, { name: groupTitle, desc: groupDesc }, onSuccess, onFailure)

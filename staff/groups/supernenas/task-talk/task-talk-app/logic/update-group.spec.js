@@ -1,9 +1,13 @@
+"use strict"
+
 describe("updategroup", () => {
     let testUsername = "pepitogrilloskylab"
+
     beforeEach(() => {
         expect(localStorage.trello_token).to.not.be.undefined
         Trello.setToken(localStorage.trello_token)
     })
+
     it("should change name and descripton of a choosen group", (done) => {
         Trello.post("boards/", { name: "updateTestBoard" }, (group) => {
             expect(group.name).to.equal("updateTestBoard")
@@ -21,13 +25,14 @@ describe("updategroup", () => {
             done(error)
         })
     })
+
     it("should call onFailure when given a wrong id", done => {
         updategroup("13245678901234567890123456789012", "imposibleGroup", "imposible description", (group) => {
             done(group)
         }, (error) => {
-            expect(error.responseText).to.equal("invalid id");
-            expect(error.statusText).to.equal("error");
-            expect(error.status).to.equal(400);
+            expect(error.responseText).to.equal("invalid id")
+            expect(error.statusText).to.equal("error")
+            expect(error.status).to.equal(400)
             done()
         })
     })
@@ -35,44 +40,52 @@ describe("updategroup", () => {
         expect(function() {
             updategroup(123, "string", "string", () => {}, () => {})
         }).to.throw(TypeError, 123 + " is not a string")
+       
         expect(function() {
             updategroup("string", 123, "string", () => {}, () => {})
         }).to.throw(TypeError, 123 + " is not a string")
+       
         expect(function() {
             updategroup("string", "string", 123, () => {}, () => {})
         }).to.throw(TypeError, 123 + " is not a string")
+       
         expect(function() {
             updategroup("string", "string", "string", undefined, () => {})
         }).to.throw(TypeError, undefined + " is not a function")
+        
         expect(function() {
             updategroup("string", "string", "string", () => {}, undefined)
         }).to.throw(TypeError, undefined + " is not a function")
     })
-    afterEach((done) => { //Borro los tablones que he creado para las pruebas
+
+    afterEach((done) => {
         function recursive(index, groups) {
             if (index >= 0) {
                 Trello.delete("boards/" + groups[index], () => {
-                    index--;
+                    index--
+                    
                     if (index >= 0) {
                         recursive(index, groups)
+
                     } else {
-                        done();
+                        done()
                     }
                 }, () => {
-                    done();
+                    done()
                 })
             } else {
-                done();
+                done()
             }
         }
         Trello.get("members/" + testUsername, (user) => {
             if (user.idBoards.length > 0) {
-                recursive(user.idBoards.length - 1, user.idBoards);
+                recursive(user.idBoards.length - 1, user.idBoards)
+
             } else {
-                done();
+                done()
             }
         }, () => {
-            done();
+            done()
         })
     })
 })

@@ -6,11 +6,13 @@
  * @throws {TypeError} Throws an error if the ID is not a string
  * @throws {TypeError} Throws an error if onSuccess or onFailure are not functions
  */
+
 function deleteactivity(id, onSuccess, onFailure) {
-    //Check the type of parameters
     String.validate(id)
+
     Function.validate(onSuccess)
+
     Function.validate(onFailure)
 
-    Trello.delete(`cards/${id}`, onSuccess, onFailure);
+    Trello.delete(`cards/${id}`, onSuccess, onFailure)
 }

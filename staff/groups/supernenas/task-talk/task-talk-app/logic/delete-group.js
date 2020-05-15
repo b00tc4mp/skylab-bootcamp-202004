@@ -8,9 +8,10 @@
  */
 
 function deletegroup(groupId, onSuccess, onFailure) {
-
     String.validate(groupId)
+    
     Function.validate(onSuccess)
+
     Function.validate(onFailure)
 
     Trello.delete("boards/" + groupId, onSuccess, onFailure)

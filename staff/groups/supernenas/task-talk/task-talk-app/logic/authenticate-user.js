@@ -7,9 +7,9 @@
 
 function authenticateuser(onSuccess, onFailure) {
     Function.validate(onSuccess)
+
     Function.validate(onFailure)
 
-    //Create the trello popup for the user to log in and call the corresponding callback
     window.Trello.authorize({
         type: 'popup',
         name: 'Task Talk',
@@ -20,6 +20,5 @@ function authenticateuser(onSuccess, onFailure) {
         expiration: 'never',
         success: onSuccess,
         error: onFailure
-    });
-    // http://127.0.0.1:5501/task-talk/index.html
+    })
 }

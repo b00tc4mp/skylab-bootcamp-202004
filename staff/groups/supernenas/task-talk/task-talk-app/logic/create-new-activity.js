@@ -9,6 +9,7 @@
  */
 function createnewactivity(activityName, activityMessage, listId, onSuccess, onFailure) {
     Function.validate(onSuccess)
+
     Function.validate(onFailure)
 
     if (activityMessage === undefined) {
@@ -18,6 +19,7 @@ function createnewactivity(activityName, activityMessage, listId, onSuccess, onF
     }
 
     String.validate(activityName)
+    
     String.validate(listId)
 
     Trello.post("cards", {

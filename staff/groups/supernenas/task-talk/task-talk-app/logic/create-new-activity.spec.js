@@ -1,8 +1,10 @@
-"use strict";
+"use strict"
+
 describe("createnewactivity", () => {
     let testUsername = "pepitogrilloskylab"
+
     beforeEach(done => {
-        let authoritationProblem = false;
+        let authoritationProblem = false
 
         window.Trello.authorize({
             type: 'popup',
@@ -13,12 +15,12 @@ describe("createnewactivity", () => {
             },
             expiration: 'never',
             success: () => {
-                expect(authoritationProblem).to.equal(false);
+                expect(authoritationProblem).to.equal(false)
                 done()
             },
             error: () => {
-                authorizationProblem = true;
-                expect(authoritationProblem).to.equal(false);
+                authorizationProblem = true
+                expect(authoritationProblem).to.equal(false)
                 done()
             }
         })
@@ -31,33 +33,37 @@ describe("createnewactivity", () => {
         }, (board) => {
             Trello.post("lists", { name: "newList", idBoard: board.id }, (list) => {
                 createnewactivity("newActivity","description", list.id, (card) => {
-                    expect(card.name).to.equal("newActivity");
-                    expect(card.idList).to.equal(list.id);
-                    expect(card.desc).to.equal("description");
-                    done();
+                    expect(card.name).to.equal("newActivity")
+                    expect(card.idList).to.equal(list.id)
+                    expect(card.desc).to.equal("description")
+                    done()
                 }, () => {
-                    expect(true).to.equal(false);
-                    done();
+                    expect(true).to.equal(false)
+                    done()
                 })
             }, () => {
-                expect(true).to.equal(false);
-                done();
+                expect(true).to.equal(false)
+                done()
             })
         }, () => {
-            expect(true).to.equal(false);
-            done();
+            expect(true).to.equal(false)
+            done()
         })
     })
 
     it("should call onFailure when given a wrong listId", (done) => {
-        createnewactivity("failedActivity","", "12345678901234567890123456789012", () => {
-            expect(true).to.equal(false);
-            done();
+        createnewactivity("failedActivity", "", "12345678901234567890123456789012", () => {
+            expect(true).to.equal(false)
+          
+            done()
         }, (error) => {
-            expect(error.responseText).to.equal("invalid value for idList");
-            expect(error.statusText).to.equal("error");
-            expect(error.status).to.equal(400);
-            done();
+            expect(error.responseText).to.equal("invalid value for idList")
+
+            expect(error.statusText).to.equal("error")
+
+            expect(error.status).to.equal(400)
+
+            done()
         })
     })
 
@@ -91,7 +97,7 @@ describe("createnewactivity", () => {
         }).to.throw(TypeError, 123+" is not a string")
     })
 
-    afterEach((done) => { //Borro los tablones que he creado para las pruebas
+    afterEach((done) => {
         function recursive(index, groups) {
             if (index >= 0) {
                 Trello.delete("boards/" + groups[index], () => {
@@ -99,23 +105,23 @@ describe("createnewactivity", () => {
                     if (index >= 0) {
                         recursive(index, groups)
                     } else {
-                        done();
+                        done()
                     }
                 }, () => {
-                    done();
+                    done()
                 })
             } else {
-                done();
+                done()
             }
         }
         Trello.get("members/" + testUsername, (user) => {
             if (user.idBoards.length > 0) {
-                recursive(user.idBoards.length - 1, user.idBoards);
+                recursive(user.idBoards.length - 1, user.idBoards)
             } else {
-                done();
+                done()
             }
         }, () => {
-            done();
+            done()
         })
     })
 })
