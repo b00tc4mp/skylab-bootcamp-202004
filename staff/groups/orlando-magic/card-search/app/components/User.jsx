@@ -39,10 +39,10 @@ function User({userId = "", token, goToCard}){
         }catch(error){
             setProfileError(error.message)
         }
-    }, [])
+    }, [userId])
 
     return <section className = "results">
-    {user && favCards && <><header className = "results__header"><h1>{user.nickname}</h1><h2>{user.nickname} has {user.myCards.length} cards marked as favourites{user.myCards.length ? ":" : '.'}</h2></header>
+    {user && favCards && <><header className = "results__header"><h2>{userId?user.nickname + " has ": "You have "}  {user.myCards.length} cards marked as favourites{user.myCards.length ? ":" : '.'}</h2></header>
     <ul className = 'results__cards'>
       {user.myCards && user.myCards.map(card => <li key={card.id}><a onClick = {() => {goToCard(card)}}>
           <img className = "results__cards--card" src = {card.image_uris? card.image_uris.png || card.image_uris.large : (card.card_faces[0].image_uris.png || card.card_faces[0].image_uris.large)}/>

@@ -37,18 +37,19 @@ function NavBar(props){
 
         {menu && <div className = "navigation__extended">
             {!props.token && <>
+                <a href="" onClick = {handleAdvSearch}>Advanced Search</a>
                 <a href="" onClick = {handleRegister}>Register</a> 
                 <a href="" onClick = {handleLogin}>Login</a>
             </>}
-
             {props.token && <>
                 <form className = "navigation--searchbar" onSubmit = {() => {event.preventDefault(); props.onUserSearch(event)}}>
                     <input type="text" name="userquery" placeholder = "Search users by username"/>
                 </form>
+                <a href="" onClick = {handleAdvSearch}>Advanced Search</a>
                 <a href="" onClick = {()=>{event.preventDefault(); props.goToUser(undefined)}}>My Cards</a>
                 <a href="" onClick = {() =>{event.preventDefault(); props.setHashView("following")}}>Following</a>
+                <a href="" onClick = {() =>{event.preventDefault(); props.handleLogOut()}}>Logout</a>
             </>}
-            <a href="" onClick = {handleAdvSearch}>Advanced Search</a>
         </div>}
     </nav>
 }
