@@ -85,7 +85,9 @@
   text-align: start;
   margin-bottom: 1rem;
   font-size: 0.7rem;
-  width: 100%;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .register__nav-button {
   display: flex;
@@ -102,7 +104,9 @@
   display: flex;
   border-radius: 0;
   margin-bottom: 1rem;
-  width: 100%;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .register input {
   margin-bottom: 1rem;
@@ -110,8 +114,10 @@
 .register input[type=text], .register input[type=email], .register input[type=password] {
   border: 0.05rem solid #A6ACAF;
   border-radius: 5px;
-  width: 100%;
+  width: 80%;
   padding: 0.3rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 .register h1 {
   margin-bottom: 1.5rem;
@@ -482,8 +488,8 @@
   justify-content: center;
 }
 .pages__button {
-  width: 25px;
-  height: 25px;
+  width: 40px;
+  height: 40px;
   background-color: #a67bb8;
   color: white;
   margin: 0.2rem;
@@ -559,8 +565,5 @@
 * {
   margin: 0;
 }
-
-/*# sourceMappingURL=style.css.map */
-/*# sourceMappingURL=style.sass.map */
 
 /*# sourceMappingURL=style.css.map */

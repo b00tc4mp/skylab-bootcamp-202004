@@ -1,6 +1,6 @@
 const { useState, useEffect } = React
 
-function Favorites({token, myFavorite, myHeadlines}) {
+function Favorites({token, onFavorite, onHeadlines}) {
     const [error, setError] = useState()
     const [favNews, setFavNews] = useState()
     const [headlines, setHeadlines] = useState()

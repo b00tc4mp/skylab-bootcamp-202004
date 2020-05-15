@@ -94,17 +94,17 @@ function Profile({ token, categories, country }) {
                     <legend>Change your favorite topics</legend>
 
                     {categories.business ? <input type="checkbox" name="business" defaultChecked /> : <input type="checkbox" name="business"  />}
-                    <label >Business</label>
+                    <label >Business</label><br/>
                     {categories.entertainament ? <input type="checkbox" name="entertainment" defaultChecked /> : <input type="checkbox" name="entertainment"  />}
-                    <label >Entertainment</label>
+                    <label >Entertainment</label><br/>
                     {categories.health ? <input type="checkbox" name="health" defaultChecked /> : <input type="checkbox" name="health"  />}
-                    <label >Health</label>
+                    <label >Health</label><br/>
                     {categories.science ? <input type="checkbox" name="science" defaultChecked /> : <input type="checkbox" name="science"  /> }
-                    <label >Science</label>
+                    <label >Science</label><br/>
                     {categories.sports ? <input type="checkbox" name="sports" defaultChecked /> : <input type="checkbox" name="sports"  />}
-                    <label >Sports</label>
+                    <label >Sports</label><br/>
                     {categories.general ? <input type="checkbox" name="general" defaultChecked /> : <input type="checkbox" name="general"  />}
-                    <label >General</label>
+                    <label >General</label><br/>
                     {categories.technology ? <input type="checkbox" name="technology" defaultChecked /> : <input type="checkbox" name="technology"  />}
                     <label >Technology</label>
 

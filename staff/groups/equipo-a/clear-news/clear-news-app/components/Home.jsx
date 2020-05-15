@@ -99,7 +99,7 @@ class Home extends Component {
             </nav>
             <img className="home__logo" src="images/logo.png"></img>
             {this.state.view === 'profile' && <Profile token={this.props.token} categories={this.state.categories} country={this.state.country}/>}
-            {this.state.view === 'favorites' && <Favorites token={this.props.token} myFavorite={this.handleFavoritesNews} favNews={this.state.favNews} myHeadlines={this.handleFavoritesHeadlines} headlines={this.state.headlines}/>}
+            {this.state.view === 'favorites' && <Favorites token={this.props.token} onFavorite={this.handleFavoritesNews} favNews={this.state.favNews} onHeadlines={this.handleFavoritesHeadlines} headlines={this.state.headlines}/>}
             {this.state.view === 'topheadlines' && <TopHeadlines topHeadlines={this.handleTopHeadlines} token={this.props.token} pages={this.state.pagesInTopHeadlines}/>}
             {this.state.view === 'search' && <SearchNews token={this.props.token} onSearch={this.handleSearchNews} searchNewsResults={this.state.searchNewsResults} query={this.state.newsQuery} language={this.state.newsLanguage} sortBy={this.state.sortBy} pages={this.state.pagesInSearch}/>}
 

@@ -30,7 +30,6 @@ describe('registerUser', () => {
                     { 'Content-type': 'application/json' },
                     (error, status, body) => {
 
-                        debugger
                         if (error) return done(new Error(error.message));
                         if (status !== 200) return done(new Error(`undexpected status ${status}`)); 
                        

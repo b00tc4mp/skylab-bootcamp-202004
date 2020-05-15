@@ -52,7 +52,7 @@ describe('isUserAuthenticated', () => {
         });
         it('should fail token incorrect', done => {
             const __token="1";
-            debugger
+           
             isUserAuthenticated(__token, error => {
                 expect(error).to.exist;
 
