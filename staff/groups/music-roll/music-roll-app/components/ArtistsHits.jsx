@@ -1,10 +1,17 @@
-function ArtistsHits({artistGreatestHits}){
+function ArtistsHits({artistGreatestHits, handleMusicTool, handleError}){
+const onMusicTool = (event, preview_url) => {
+    event.preventDefault()
 
+    if(!preview_url) return handleError('🤑 You have to buy premium app 💸')
+    if(preview_url) handleError(undefined)
+    handleMusicTool(preview_url)
+
+}
 return <>
         {artistGreatestHits.length ? <ol className="hits-results">
             {
                 artistGreatestHits.map(({ name, preview_url}) => {
-                    return <li> <a href={`${preview_url}`}>{`${name}`}</a><button>I like it</button></li>
+                    return <li className="hits-results__item"> <a href="" onClick={() => {onMusicTool(event, preview_url)}}>{`${name}`}</a></li>
 
                 })
             }

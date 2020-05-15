@@ -8,7 +8,7 @@ class App extends Component {
 
 
             view: 'login',
-            spotyToken: "BQBFJ705rq8Mvxem7_t_ExZ8gNkGSZcqZGFcOSWn_yu7fualNDPr1D9wgv4VYcqxlHrkDUqc--CzTAKu_72iXHK7wxsNAFqBrAa9vucDcBGS4E61uNQAVs-EiUs2J93JzKsQTQ",
+            spotyToken: "BQAGbhF9iQkKx1THuGtiv7Iqv-B2miLRLA15E0z9AH_S1KjhyBX6h85j6LHKNNZO90OFsPBwVt5Y4p_uyqYm3nWHjkMyP51VEAaPNuqv5x1SR9YbnBhWI513AyuJXFolRABqsQ",
             token: undefined,
             currentSong: undefined          
 
@@ -48,7 +48,7 @@ class App extends Component {
         return <>
 
            
-            {view === 'favorites' && <Favorites token={this.state.token}/>}
+            {view === 'favorites' && <Favorites token={this.state.token} handleMusicTool={handleMusicTool}/>}
 
 
             {view === 'login' && <Login onSubmit={handleLogin} onRegister={onChangeView} />}
@@ -56,7 +56,7 @@ class App extends Component {
             {view !== "login" && view !== "register" && <Navbar onChangeView={onChangeView} />}
             {view === 'home' && <Home />}
             {view === 'browser' && <Browser spotyToken={spotyToken} token = {token} onSessionExpired={handleSessionExpired} handleMusicTool={handleMusicTool}/>}
-            {view === 'browser' && <AudioTool currentSong={currentSong}/>}
+            {(view === 'browser' || view === 'favorites') && <AudioTool currentSong={currentSong}/>}
 
 
         </>

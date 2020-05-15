@@ -1,4 +1,4 @@
-function TrackResults({results,token, handleMusicTool}){
+function TrackResults({results,token, handleMusicTool, handleError}){
     debugger
     console.log(results)
 
@@ -12,14 +12,21 @@ function TrackResults({results,token, handleMusicTool}){
 
     }
 
-   
+    const onMusicTool = (event, preview_url) => {
+        event.preventDefault()
+    
+        if(!preview_url) return handleError('🤑 You have to buy premium app 💸')
+        if(preview_url) handleError(undefined)
+        handleMusicTool(preview_url)
+    
+    }
 
     return <>
         
         {results.length ? <ul className="track-list">
             {
             results.map(({artistName, name, preview_url}) => {
-               return <li className="track-list__item"> {`${artistName} : ${name}`} <a href= "" onClick={(event) => { event.preventDefault();  handleMusicTool(preview_url)}}>Click me!</a><button className="track-list__btn" onClick ={()=>handleToggleTrack(artistName,name,preview_url)}>I like</button> </li>
+               return <li className="track-list__item"> {`${artistName} : ${name}`} <a href= "" onClick={() => { onMusicTool(event, preview_url)}}>Click me!</a><button className="track-list__btn" onClick ={()=>handleToggleTrack(artistName,name,preview_url)}>I like</button> </li>
                 
             })
         }

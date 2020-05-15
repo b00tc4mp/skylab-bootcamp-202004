@@ -56,7 +56,7 @@ function Browser({ token, spotyToken, onSessionExpired, handleMusicTool }){
             }
 
 
-
+        }
 
 
 
@@ -81,7 +81,7 @@ function Browser({ token, spotyToken, onSessionExpired, handleMusicTool }){
         }
 
 
-        })
+        
 
 
         if (browser === 'playlist') {
@@ -91,7 +91,7 @@ function Browser({ token, spotyToken, onSessionExpired, handleMusicTool }){
                     setArtistResults(undefined)
                     setAlbumResults(undefined)
                     
-                    if (error) setError('No matches found!')
+                    if (error) setError(error)
                     if (!error) setError(undefined)
 
                     setPlaylistsResults(results)
@@ -105,7 +105,9 @@ function Browser({ token, spotyToken, onSessionExpired, handleMusicTool }){
 
     }
 
-
+    const handleError = (error) => {
+        setError(error)
+    }
 
     return <section className="browser-results">
         <section className="browser">
@@ -126,19 +128,19 @@ function Browser({ token, spotyToken, onSessionExpired, handleMusicTool }){
         <section className="results">
 
 
-            {error && <Feedback message={error} />}
 
-             {trackResults && <TrackResults results={trackResults} token={token} spotyToken={spotyToken}  handleMusicTool={handleMusicTool}/>}
+            {trackResults && <TrackResults results={trackResults} token={token} spotyToken={spotyToken}  handleMusicTool={handleMusicTool} handleError={handleError}/>}
 
-              {albumResults && <AlbumResults results={albumResults} token={token} spotyToken={spotyToken}  /* onSessionExpired={handleSessionExpired} */ handleMusicTool={handleMusicTool}  />}
+            {albumResults && <AlbumResults results={albumResults} token={token} spotyToken={spotyToken}  /* onSessionExpired={handleSessionExpired} */ handleMusicTool={handleMusicTool} handleError={handleError} />}
 
 
             {playlistsResults && <PlaylistsResults results={playlistsResults} token={token} />}
 
-            {artistResults && <ArtistResults results={artistResults} token={token} spotyToken={spotyToken} />}
-
+            {artistResults && <ArtistResults results={artistResults} token={token} spotyToken={spotyToken} handleMusicTool={handleMusicTool} handleError={handleError}/>}
 
         </section>
+        
+        {error && <Feedback message={error} />}
 
     </section>
 
