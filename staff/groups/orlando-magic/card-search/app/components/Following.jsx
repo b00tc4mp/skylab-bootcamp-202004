@@ -7,11 +7,11 @@ function Following({goToUser, token}){
     const handleFollow = (user) =>{
         try{
             toggleFollowUser(token, user.id, error=>{
-                if(error) setErrorFollowing(error.message)
+                if(error) return setErrorFollowing(error.message)
                 retrieveUserFollowing(token, (error, userFollowing) =>{
-                    if(error) setErrorFollowing(error.message)
+                    if(error) return setErrorFollowing(error.message)
                     retrieveUsersById(token, userFollowing, (error, userFollowingInfo)=>{
-                        if(error) setErrorFollowing(error.message)
+                        if(error) return setErrorFollowing(error.message)
                         else setFollowing(userFollowingInfo)
                     })
                 })
@@ -24,9 +24,9 @@ function Following({goToUser, token}){
     useEffect(()=>{
         try{
             retrieveUserFollowing(token, (error, userFollowing) =>{
-                if(error) setErrorFollowing(error.message)
+                if(error) return setErrorFollowing(error.message)
                 retrieveUsersById(token, userFollowing, (error, userFollowingInfo)=>{
-                    if(error) setErrorFollowing(error.message)
+                    if(error) return setErrorFollowing(error.message)
                     else setFollowing(userFollowingInfo)
                 })
             })

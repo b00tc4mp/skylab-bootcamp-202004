@@ -7,7 +7,7 @@ function User({userId = "", token, goToCard}){
     const handleFavourite = id => {
         try{
             toggleFavouriteCard(token, id, error=>{
-                if(error) setProfileError(error.message)
+                if(error) return setProfileError(error.message)
                 retrieveUserCards(token, (error, loggedUserCards) =>{
                     if (error) return setProfileError(error.message)
 

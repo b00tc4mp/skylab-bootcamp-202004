@@ -10,7 +10,7 @@ function Results({searchConditions, setSearchConditions, goToCard, token}){
   const handleFavourite = id => {
       try{
           toggleFavouriteCard(token, id, error=>{
-              if(error) setErrorResults(error.message)
+              if(error) return setErrorResults(error.message)
               retrieveUserCards(token, (error, loggedUserCards) =>{
                   if (error) return setErrorResults(error.message)
 
@@ -41,14 +41,14 @@ function Results({searchConditions, setSearchConditions, goToCard, token}){
         location.hash = url
       }
       searchCard(url,(error, searchResults) =>{
-        if(error) setErrorResults(error.message)
+        if(error) return setErrorResults(error.message)
         
         if (searchResults && (searchResults.length === 1)) return goToCard(searchResults[0])
         setResults(searchResults)
       })
     } catch (error) {
       if (error) {
-        setErrorResults(error.message)
+        return setErrorResults(error.message)
         setResults([])
       }
     }
@@ -101,7 +101,7 @@ function Results({searchConditions, setSearchConditions, goToCard, token}){
         </div>
       </form>
     </header>
-    {errorResults && !results.length && <Feedback message= {errorResults} level = "warning"/>}
+    {errorResults && results && !results.length && <Feedback message= {errorResults} level = "warning"/>}
     <ul className = 'results__cards'>
       {results && results.map(card => <li key={card.id}><a onClick = {() => {goToCard(card)}}>
           <img className = "results__cards--card" src = {card.image_uris? card.image_uris.png || card.image_uris.large : (card.card_faces[0].image_uris.png || card.card_faces[0].image_uris.large)}/>
