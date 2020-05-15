@@ -51,7 +51,7 @@
                 this.handleShowGroups();
                 break;
             case "cardEdition":
-                this.setState({view: "cards", navigationName:this.state.currentgroup[1].name,menu:false})
+                this.setState({view: "cards", navigationName: this.state.groups[this.state.groups.findIndex((group) => {return group.id===this.state.currentgroup})].name , menu:false})
                 break;
         }       
     }
@@ -74,6 +74,7 @@
     handleGoToGroup=(id)=>{
         retrievegroupactivity(id,(_activities)=>{
             this.setState({activities:_activities, view:"cards", menu:false, error:false, currentgroup:id})
+            this.setState({navigationName: this.state.groups[this.state.groups.findIndex((group) => {return group.id===this.state.currentgroup})].name}) 
         },(retrieveError)=>{
             this.setState({error: retrieveError.responseText})
         })
@@ -97,6 +98,7 @@
     handleUpdateCard=(cardId,listId,title, message)=>{
         updateactivity(cardId,{name: title, desc:message, idList: listId},()=>{
             this.handleGoToGroup(this.state.currentgroup);
+            this.setState({navigationName: this.state.groups[this.state.groups.findIndex((group) => {return group.id===this.state.currentgroup})].name})
         },(error)=>{
             this.setState({error: error.responseText})
         })
@@ -110,7 +112,7 @@
     }
   
     handleReturnToCards=()=>{
-        this.setState({view: "cards", navigationName: this.state.currentgroup.name}) //todo
+        this.setState({view: "cards", navigationName: this.state.groups[this.state.groups.findIndex((group) => {return group.id===this.state.currentgroup})].name}) 
     }
     handleCreateGroup=(groupTitle, groupDesc)=>{
         createnewgroup(groupTitle,groupDesc,(newGroup)=>{
@@ -147,7 +149,8 @@
     }
     handleShowGroups=()=>{
         retrieveusergroups(this.state.currentuser.id,(_groups)=>{
-            this.setState({groups:_groups,navigationName:this.state.currentuser.name,menu:false,view:"groups", error:false})
+            
+            this.setState({groups:_groups,navigationName:this.state.currentuser.fullName ,menu:false,view:"groups", error:false})
         },(error)=>{
             this.setState({error: error.responseText})
         })
