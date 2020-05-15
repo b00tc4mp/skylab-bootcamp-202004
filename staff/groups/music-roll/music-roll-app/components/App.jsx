@@ -8,11 +8,9 @@ class App extends Component {
 
 
             view: 'login',
-            spotyToken: "BQBl4Dyes0NWfOV2Af6-WweZDaqF8b1Z0e-Ns9in92Hclwl-AKAgMxClK66rS8W88MFOeVKxExSiNMVn86bogM2BIoYgolfBGShkYnYyrFoct2sRqXiVtsB3DOZm7ldP4ge7UA",
-
-            token: undefined
-
-            
+            spotyToken: "BQBFJ705rq8Mvxem7_t_ExZ8gNkGSZcqZGFcOSWn_yu7fualNDPr1D9wgv4VYcqxlHrkDUqc--CzTAKu_72iXHK7wxsNAFqBrAa9vucDcBGS4E61uNQAVs-EiUs2J93JzKsQTQ",
+            token: undefined,
+            currentSong: undefined          
 
         }
     }
@@ -38,12 +36,15 @@ class App extends Component {
         this.onChangeView('login')
     }
 
-    
+    handleMusicTool = (preview_url) => {
+        this.setState({currentSong: preview_url})
+    }
+
    
 
 
     render() {
-        const { state: { view, spotyToken, token }, handleLogin, handleRegister, handleSessionExpired, onChangeView } = this;
+        const { state: { view, spotyToken, token, currentSong }, handleLogin, handleRegister, handleSessionExpired, onChangeView , handleMusicTool} = this;
         return <>
 
            
@@ -54,7 +55,9 @@ class App extends Component {
             {view === 'register' && <Register onSubmit={handleRegister} onLogin={onChangeView} />}
             {view !== "login" && view !== "register" && <Navbar onChangeView={onChangeView} />}
             {view === 'home' && <Home />}
-            {view === 'browser' && <Browser spotyToken={spotyToken} token = {token} onSessionExpired={this.handleSessionExpired}/>}
+            {view === 'browser' && <Browser spotyToken={spotyToken} token = {token} onSessionExpired={handleSessionExpired} handleMusicTool={handleMusicTool}/>}
+            {view === 'browser' && <AudioTool currentSong={currentSong}/>}
+
 
         </>
     }

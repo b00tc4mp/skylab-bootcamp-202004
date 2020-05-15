@@ -1,6 +1,6 @@
 const { useState, useEffect } = React
 
-function AlbumResults({ results, token, spotyToken, onSessionExpired }) {
+function AlbumResults({ results, token, spotyToken, onSessionExpired, handleMusicTool }) {
 
     const [albumTracks, setAlbumTracks] = useState(undefined);
 
@@ -42,6 +42,6 @@ function AlbumResults({ results, token, spotyToken, onSessionExpired }) {
             }
         </ul> : console.error("fail")}
 
-        {albumTracks && <ResultsTracks albumTracks={albumTracks}/>} 
+        {albumTracks && <ResultsTracks albumTracks={albumTracks} handleMusicTool={handleMusicTool}/>} 
     </>
 }
