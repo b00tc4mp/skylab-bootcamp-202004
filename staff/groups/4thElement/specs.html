@@ -16,7 +16,7 @@
 
     <script class="mocha-init">
         mocha.setup('bdd')
-        mocha.checkLeaks()
+        // mocha.checkLeaks()
         mocha.timeout(50000)
 
         const { expect } = chai
@@ -30,13 +30,35 @@
     <script src="app/utils/array.prototype.random-polyfill.js"></script>
     <script src="app/utils/tests.js"></script>
     <script src="app/utils/call.js"></script>
-    <script src="app/utils/call.spec.js"></script>
+    <!-- <script src="app/utils/call.spec.js"></script> -->
     <script src="app/utils/regex.js"></script>
+    <script src="app/data/spots.js"></script>
 
     <script src="app/logic/authenticate-user.js"></script>
     <script src="app/logic/authenticate-user.spec.js"></script>
     <script src="app/logic/register-user.js"></script>
     <script src="app/logic/register-user.spec.js"></script>
+    <script src="app/logic/search-spot.js"></script>
+    <script src="app/logic/search-spot.spec.js"></script>
+    <script src="app/logic/forecast-logic.js"></script>
+    <script src="app/logic/forecast-logic.spec.js"></script>
+    <script src="app/logic/hide-button.js"></script>
+    <script src="app/logic/hide-button.spec.js"></script>
+    <script src="app/logic/fav-list.js"></script>
+    <script src="app/logic/fav-list.spec.js"></script>
+    <script src="app/logic/add-to-favs.js"></script>
+    <script src="app/logic/add-to-favs.spec.js"></script>
+    <script src="app/logic/retrive-all-users.js"></script>
+    <script src="app/logic/retrieve-all-users.spec.js"></script>
+    <script src="app/logic/add-to-favs.spec.js"></script>
+    <script src="app/logic/add-new-review.js"></script>
+    <script src="app/logic/add-new-review.spec.js"></script>
+    <script src="app/logic/authenticate-token.js"></script>
+    <script src="app/logic/authenticate-token.spec.js"></script>
+    <script src="app/logic/search-users.js"></script>
+    <script src="app/logic/search-users.spec.js"></script>
+    
+    
     
     <script class="mocha-exec">
         mocha.run()

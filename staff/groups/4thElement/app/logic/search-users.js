@@ -1,4 +1,5 @@
 function searchUsers(token, query, callback) {
+    String.validate(query)
     if(token === undefined) throw new TypeError('you first have to log in')
     if(typeof token != 'string') throw new TypeError('invalid token')
 

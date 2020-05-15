@@ -1,6 +1,4 @@
-function addToFavs(token, body, callback) {
-
-    
+function addNewReview(token, newReview, callback) {
 
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined,
         {
@@ -12,20 +10,13 @@ function addToFavs(token, body, callback) {
             if (status === 200) {
                 const userLoged = JSON.parse(body)
 
-                const { favSpots = [] } = userLoged
+                const { spotReview = [] } = userLoged
+                newReview.name = userLoged.name
+                newReview.surname = userLoged.surname
+                newReview.username = userLoged.username
+                spotReview.push(newReview)
 
-                let indexOfName;
-                favSpots.map((element) => {
-                    indexOfName = element.name.indexOf(spotSelected.name)
-                    if(indexOfName!==-1) return indexOfName;
-                })
-
-                if (indexOfName === -1) {
-                    spotSelected.following=true
-                    favSpots.push(spotSelected)
-                }
-
-                call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify({ favSpots }),
+                call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify({ spotReview }),
                     {
                         'Authorization': `Bearer ${token}`,
                         'Content-type': 'application/json'
