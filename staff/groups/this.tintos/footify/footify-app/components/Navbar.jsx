@@ -59,13 +59,13 @@ function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDre
                 
                     <a href="" className="navbar__user-img">
                         <img className="navbar__user-image" src="img/user.svg" alt="user" onClick={handleSubmitToggle} />
-                        {menu ? <a href="" className="navbar__user-menu">
+                        {menu ? <div className="navbar__user-menu">
                                     <div className="navbar__user-menu-container">
-                                        <a onClick={handleSubmitLogOut}>Logout</a>
+                                        <div onClick={handleSubmitLogOut}>Logout</div>
                                         <hr/>
-                                        <a onClick={handleSubmitUpdateUser}>Account</a>
+                                        <div onClick={handleSubmitUpdateUser}>Account</div>
                                     </div>
-                                </a>  : ''}
+                                </div>  : ''}
                     </a>
                 </nav>
                 <nav className="navbar__links">

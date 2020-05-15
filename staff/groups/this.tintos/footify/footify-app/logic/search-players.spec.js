@@ -63,12 +63,12 @@ describe('Search players',()=>{
         })
     })
 
-    it('should fail on a empty query', ()=>{
+   /* it('should fail on a empty query', ()=>{
         let _player = ''
         expect(()=>{
             searchPlayers(_player, (error, results)=>{})
         }).to.throw(Error,'Any result search')
-    })
+    })*/
 
     it('should fail on no query String', ()=>{
         player = true

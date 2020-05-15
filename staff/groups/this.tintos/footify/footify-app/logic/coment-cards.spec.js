@@ -1,4 +1,4 @@
-describe.only("count number of card for comments", () => {
+describe("count number of card for comments", () => {
 
     let name, surname, email, password, confirmPassword, player, message, cardColor
     let result = []
@@ -268,7 +268,7 @@ describe.only("count number of card for comments", () => {
                                                                                             (error, status, body) => {
                                                                                                 if (error) return callback(error);
 
-                                                                                                done()
+                                                                                             
 
 
                                                                                             }
@@ -298,7 +298,7 @@ describe.only("count number of card for comments", () => {
         commentCards(result, token, (error, results) => {
             expect(error).to.be.undefined
             expect(results.length).to.exist
-            done()
+           
         })
     })
 
