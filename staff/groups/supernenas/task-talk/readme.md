@@ -22,4 +22,4 @@ This App is a notepad that helps you and other people to organize better by maki
 
 ### QA (testing)
 
-![block diagram](resources/testing.png)
+![block diagram](resources/Testing.png)
