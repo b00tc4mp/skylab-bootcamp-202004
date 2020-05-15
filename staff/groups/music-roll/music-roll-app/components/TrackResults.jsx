@@ -1,4 +1,4 @@
-function TrackResults({results,token}){
+function TrackResults({results,token, handleMusicTool}){
     debugger
     console.log(results)
 
@@ -12,12 +12,14 @@ function TrackResults({results,token}){
 
     }
 
+   
+
     return <>
         
         {results.length ? <ul className="track-list">
             {
             results.map(({artistName, name, preview_url}) => {
-               return <li className="track-list__item"> {`${artistName} : ${name}`} <a href= {`${preview_url}`}>Click me!</a><button className="track-list__btn" onClick ={()=>handleToggleTrack(artistName,name,preview_url)}>I like</button> </li>
+               return <li className="track-list__item"> {`${artistName} : ${name}`} <a href= "" onClick={(event) => { event.preventDefault();  handleMusicTool(preview_url)}}>Click me!</a><button className="track-list__btn" onClick ={()=>handleToggleTrack(artistName,name,preview_url)}>I like</button> </li>
                 
             })
         }

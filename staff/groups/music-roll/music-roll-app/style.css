@@ -540,21 +540,39 @@ body {
 .disc-list__title {
   font-size: 20px;
 }
-.track-results {
-  margin-top: -45rem;
-  position: relative;
-  right: 0;
-  margin-left: 2rem;
+.track-list {
+  list-style: none;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
 }
-.track-results__item {
-  border-top: 0.1px solid black;
-  border-bottom: 0.1px solid black;
-  padding: 0.1rem;
-  color: black;
+.track-list__item {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  height: 6rem;
+  width: 100vw;
+  border-bottom: 0.02rem solid dodgerBlue;
+  box-shadow: 0.5rem;
 }
-.track-results a {
+.track-list a {
   text-decoration: none;
-  color: black;
+  color: dodgerBlue;
+  margin-left: 1rem;
+}
+.track-list__btn {
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 5rem;
+  height: 1.5rem;
+  margin: 1rem;
+  background-image: linear-gradient(to bottom, #d900ff81, #008cff5e);
+}
+.track-list__title {
+  font-size: 20px;
 }
 
 .artist-list {
@@ -625,39 +643,40 @@ body {
   font-size: 20px;
 }
 
-.track-list {
-  list-style: none;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
+.track-results {
+  margin-top: -45rem;
+  position: relative;
+  right: 0;
+  margin-left: 2rem;
 }
-.track-list__item {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  text-align: center;
-  height: 6rem;
-  width: 100vw;
-  border-bottom: 0.02rem solid dodgerBlue;
-  box-shadow: 0.5rem;
+.track-results__item {
+  border-top: 0.1px solid black;
+  border-bottom: 0.1px solid black;
+  padding: 0.1rem;
+  color: black;
 }
-.track-list a {
+.track-results a {
   text-decoration: none;
-  color: dodgerBlue;
-  margin-left: 1rem;
+  color: black;
 }
-.track-list__btn {
-  border: 1px solid black;
-  border-radius: 20px;
-  width: 5rem;
-  height: 1.5rem;
-  margin: 1rem;
-  background-image: linear-gradient(to bottom, #d900ff81, #008cff5e);
+
+.audio-tools {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  border: 2px solid red;
+  background-color: blue;
+  height: 10px;
+  width: 100vw;
+  top: 0;
+  position: fixed;
 }
-.track-list__title {
-  font-size: 20px;
+
+audio {
+  width: 100%;
+  height: 3rem;
+  background-color: white;
+  position: sticky;
 }
 
 * {

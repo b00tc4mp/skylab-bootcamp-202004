@@ -1,6 +1,6 @@
 const { useState, useEffect } = React
 
-function Browser({ token, spotyToken, onSessionExpired }){
+function Browser({ token, spotyToken, onSessionExpired, handleMusicTool }){
 
     const [trackResults, setTrackResults] = useState(undefined)
     const [albumResults, setAlbumResults] = useState(undefined)
@@ -87,9 +87,9 @@ return <section className="browser-results">
         
         {error && <Feedback message={error}/>}
 
-        {trackResults && <TrackResults results={trackResults} token={token} spotyToken={spotyToken} />}
+        {trackResults && <TrackResults results={trackResults} token={token} spotyToken={spotyToken}  handleMusicTool={handleMusicTool}/>}
 
-        {albumResults && <AlbumResults results={albumResults} token={token} spotyToken={spotyToken}  /* onSessionExpired={handleSessionExpired} */ />}
+        {albumResults && <AlbumResults results={albumResults} token={token} spotyToken={spotyToken}  /* onSessionExpired={handleSessionExpired} */ handleMusicTool={handleMusicTool}  />}
 
         {playlistsResults && <PlaylistsResults results={playlistsResults} token={token} />}
 
