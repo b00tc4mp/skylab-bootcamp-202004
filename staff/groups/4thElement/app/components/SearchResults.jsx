@@ -1,8 +1,7 @@
-//cambiar el nombre ya que tambien se muestran los resultados de users y no solo de spots
 
 const { useState, useEffect } = React
 
-function SpotResultsList({ query, onGoToSurfForecast, sportState, selectorState , token}) {
+function SearchResults({ query, onGoToSurfForecast, sportState, selectorState , token}) {
 
     const [spots, setSpots] = useState()
     const [users, setUsers] = useState()
@@ -17,7 +16,7 @@ function SpotResultsList({ query, onGoToSurfForecast, sportState, selectorState 
         if(selectorState === 'spots'){
             try{
                 if(sportState === 'surf'){
-                    searchSpotList(query, sportState, (spotsFound) => { //sacaar el list para que la funcion se llame como el archivo y hacer el try catch para esta funcion tambien
+                    searchSpotList(query, sportState, (spotsFound) => { 
                         if(spotsFound === undefined || spotsFound.length < 1){
                             setError('No results found..')
                         }else{
@@ -58,8 +57,6 @@ function SpotResultsList({ query, onGoToSurfForecast, sportState, selectorState 
         }
 
     }, [query, selectorState]);
-    //cambiar calss names
-    //hacer errrores asicnrons en searchusers para solo imprimir un error y no 2
     return <ul className="SpotSearched">
         {spots && selectorState === 'spots' && spots.map((element) =>{
             return <li className='SpotSearched__item' onClick={() => onGoToSurfForecast(element)}>{`${element.name}`} </li>

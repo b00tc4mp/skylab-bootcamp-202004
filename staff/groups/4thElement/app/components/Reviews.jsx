@@ -1,7 +1,7 @@
 
 const { useState, useEffect} = React
 
-function Foro ({forecastSelected, token, sportState}) {
+function Reviews({forecastSelected, token, sportState}) {
 
     const [error, setError] = useState()
     const [reviews, setReviews] = useState()

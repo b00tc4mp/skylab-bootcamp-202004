@@ -34,7 +34,7 @@ function SurfForecast({token, forecastSelected, sportState}) {
             setError(message)
         }
         
-        hideButton(token, forecastSelected, (error, following)=>{
+        favState(token, forecastSelected, (error, following)=>{
             if(error){ throw new TypeError('error')
         } else {
             setFollowing(following)
@@ -74,6 +74,6 @@ function SurfForecast({token, forecastSelected, sportState}) {
                 </ul>}
                 {error && <Feedback message={error} level={'error'}/>}    
         </div>}
-        {forecastSelector === 'Reviews' && <Foro forecastSelected={forecastSelected} token={token} sportState={sportState}/>}
+        {forecastSelector === 'Reviews' && <Reviews forecastSelected={forecastSelected} token={token} sportState={sportState}/>}
     </section>
 }

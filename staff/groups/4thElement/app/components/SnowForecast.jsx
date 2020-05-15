@@ -34,7 +34,7 @@ function SnowForecast({token, forecastSelected, sportState}) {
             setSpiner(undefined)
             setError(message)
         }
-        hideButton(token, forecastSelected, (error, following)=>{
+        favState(token, forecastSelected, (error, following)=>{
             if(error){ throw new TypeError('error')
         } else {
             setFollowing(following)
@@ -69,6 +69,6 @@ function SnowForecast({token, forecastSelected, sportState}) {
                 </div>
             }
         </div>}
-        {forecastSelector === 'Reviews' && <Foro forecastSelected={forecastSelected} token={token} sportState={sportState}/>}
+        {forecastSelector === 'Reviews' && <Reviews forecastSelected={forecastSelected} token={token} sportState={sportState}/>}
     </section>
 }

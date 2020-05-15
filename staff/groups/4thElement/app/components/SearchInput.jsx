@@ -1,4 +1,4 @@
-function SearchSpotCompo({onSubmitSpot, searchSelector, selectorState, sportState}) {
+function SearchInput({onSubmitSpot, searchSelector, selectorState, sportState}) {
     //change name to search because it will seachr users to
 
     const handleSpot = (event) => {

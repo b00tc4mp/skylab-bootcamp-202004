@@ -44,12 +44,10 @@ function Home({sportState, ReturnsportState, pointerMapSelected}) {
     }
 
     const handelMouseOver = (name) => { //on click not mouse over for movile first hover has no sense
-        console.log('in')
         setMouseOver(name)
     }
 
     const handelMouseOut = () => {
-        console.log('out')
         setMouseOver(undefined)
     }
 

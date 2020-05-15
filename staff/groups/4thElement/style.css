@@ -518,7 +518,7 @@ span {
 }
 .Favorites__List {
   list-style-type: none;
-  margin-top: 6.5vh;
+  margin-top: 6vh;
   padding: 0;
   font-family: "Source Sans Pro", sans-serif;
   font-size: 25px;
@@ -527,7 +527,7 @@ span {
   font-family: "Source Sans Pro", sans-serif;
   background: #e4e4e4;
   font-size: 20px;
-  height: 3.5vh;
+  height: 3.4vh;
 }
 .Favorites__List--elements {
   border-bottom: 1px solid black;
@@ -540,10 +540,12 @@ span {
   background-color: gray;
 }
 .Favorites__List--xButton {
+  border: none;
   background: none;
   margin-right: 10px;
 }
 .Favorites__List--xImage {
+  border: none;
   height: 2vh;
 }
 .Favorites__List h1 {
