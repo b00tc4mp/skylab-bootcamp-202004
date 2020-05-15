@@ -8,7 +8,11 @@ class App extends Component {
 
 
             view: 'login',
+
             spotyToken: "BQBhmMElRh3Ozu6EIuLUjQ1DvW7Q2mm71LtI_EE46VynkFSEs8xgiAa5_tn3XiLPR3UqJaT-BYTVRD8fckxWL_eZg3q87H_8H7qAj21S1Gx8yTuQgk4B4U8ZGV5zHL4zyCGWqv2lhqnLguNyPY9zy5zTf0yP6noKFk3ZpRxhFLYX8v1Ij0kvwuGDRMBh",
+
+            
+
             token: undefined
 
             

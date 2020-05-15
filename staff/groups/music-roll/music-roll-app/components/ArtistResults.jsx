@@ -19,7 +19,7 @@ function ArtistResults({ results, token,spotyToken }) {
     };
     
     
-    
+   
     function handleToogleArtist(name, images) {
         const flag = 'favoriteArtist'
         const favorite = { name, images }
@@ -42,6 +42,7 @@ function ArtistResults({ results, token,spotyToken }) {
                     }} href=""><img src={`${images}`} width="100px" height="100px"></img></a><button onClick={() => handleToogleArtist(name, images)}>I like it!</button></li>
                 })
             }
+
         </ul> : console.error("fail")}
     
         {artistGreatestHits && <ArtistsHits artistGreatestHits={artistGreatestHits}/>}

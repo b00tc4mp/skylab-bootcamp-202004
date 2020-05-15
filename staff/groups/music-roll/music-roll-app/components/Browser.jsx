@@ -4,6 +4,7 @@ function Browser({ token, spotyToken, onSessionExpired }) {
 
     const [trackResults, setTrackResults] = useState(undefined)
 
+
     const [albumResults, setAlbumResults] = useState(undefined)
 
     const [playlistsResults, setPlaylistsResults] = useState(undefined)
@@ -53,7 +54,8 @@ function Browser({ token, spotyToken, onSessionExpired }) {
                 if (error) setError('Somethings wrong')
             }
 
-        }
+
+
 
 
 
@@ -78,6 +80,7 @@ function Browser({ token, spotyToken, onSessionExpired }) {
         }
 
 
+        })
 
 
         if (browser === 'playlist') {
@@ -119,7 +122,9 @@ function Browser({ token, spotyToken, onSessionExpired }) {
         </section>
         <section className="results">
 
+
             {error && <Feedback message={error} />}
+
 
             {trackResults && <TrackResults results={trackResults} token={token} spotyToken={spotyToken} />}
 
