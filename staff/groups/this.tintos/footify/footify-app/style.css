@@ -3,13 +3,11 @@
 .landing {
   font-family: Raleway;
   color: #320090;
-  margin-right: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .landing__container {
-  padding: 0.5rem;
   background-image: url("img/home.jpg");
   background-size: 80vh;
   background-position: center;
@@ -129,7 +127,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  top: 2.4rem;
+  top: 2rem;
 }
 .register__goto-text-landing {
   margin-right: 11rem;
@@ -221,7 +219,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  top: 4.2rem;
+  top: 3.5rem;
 }
 .login__goto-text-landing {
   font-family: Raleway;
@@ -753,6 +751,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: #73f182;
+  padding-bottom: 2rem;
 }
 .update__logo {
   text-align: center;
@@ -763,7 +763,7 @@
 .update__title {
   font-family: Raleway;
   font-weight: 500;
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   margin-bottom: 1.5rem;
 }
 .update__container {
@@ -796,7 +796,7 @@
   font-weight: 200;
 }
 .update__form-item::placeholder {
-  opacity: 0.5;
+  opacity: 50%;
 }
 .update__form-line {
   border-top: 4px solid #320090;

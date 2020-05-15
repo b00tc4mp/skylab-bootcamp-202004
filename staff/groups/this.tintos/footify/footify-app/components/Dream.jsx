@@ -13,7 +13,7 @@ function Dream({ playersRanking ,searchPlayer}) {
 
         <section className="dream-team">
 
-            <h1 className="dream-team__title">Dream team</h1>
+            <h1 className="dream-team__title">Top 11</h1>
             {playersRanking ?
 
                 <ul className="dream-team__list">
