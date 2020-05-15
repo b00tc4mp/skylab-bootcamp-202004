@@ -8,6 +8,7 @@ function Dream({ playersRanking ,searchPlayer}) {
     const handleSearchPlayer = (name) =>{
         searchPlayer(name)
     }
+    
     return <>
 
         <section className="dream-team">

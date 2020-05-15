@@ -13,10 +13,9 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
     const [playersRanking, setPlayersRanking] = useState()
     
 
-
-
     useEffect(()=>{
         try {
+            setView()
             retriveFwitter(token, (error, results) => {
                 if (error) {
                     if (error.message === 'invalid token')
@@ -40,10 +39,10 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
             setError(error.message);
         }
     },[]);
-     
 
     const handleGoToPlayerResults = (queryPlayer) => {
         try {
+            setView()
             retrieveUser(token, (error, user) => {
                 if (error) {
                     if (error.message === 'invalid token')
@@ -67,6 +66,7 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
                             goToView('cards')
                             
                         }else{
+                            
                             searchPlayersLikes(resultsPlayer, token, (error, resultLikes) => { 
                                 if (error) {
                                     if (error.message === 'invalid token')
@@ -89,7 +89,9 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
 
     const handleGoToFwitter = () => {
         setError()
+        setView()
         try {
+
             retriveFwitter(token, (error, results) => {
                 if (error) {
                     if (error.message === 'invalid token')
@@ -125,16 +127,17 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
     }
 
     const handleGoToSport = () => {
+        setView()
         setError()
         searchSport((error, listResults) => {
             if(error) setError(error)
             setSportNews(listResults)
             goToView('sport')
-            
         })
     }
    
     const handleGoToDream = () => {
+        setView()
         setError()
         dreamTeam(token,(error, playersRanking) =>{
             if (error) {
@@ -143,14 +146,11 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
                 else  setError(error.message);
             } else {
             
-
             setPlayersRanking(playersRanking)
             goToView('dream')
 
          } })
-
-       
-       
+  
     }
   
 
@@ -163,6 +163,7 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
     return <>
 
         <Navbar onGoToPlayerResults={handleGoToPlayerResults} onGoToSportNews={handleGoToSport} onGoToFwitter={handleGoToFwitter} onGoToDream={handleGoToDream} onGoToUpdateUser={handleGoToUpdateUser} onGoToLogOut={onGoToLogOut}/>
+        {!view && <Spinner /> }
         {view === 'cards' && <PlayerResults resultsPlayers={players} token={token} onToggleFollowPlayer={handleToggleFollowPlayers} onCommentFwitt={handleCommentFwitt} queryPlayer={queryPlayer} likesUser={likesUser} onUserSessionExpired={onUserSessionExpired} error={error}/>}
         {view === 'sport' && <SportNews sportNews={sportNews} />}        
         {view === 'fwitter' && <Fwitter fwitter={fwitter} token={token} onUpdateFwitter={handleGoToFwitter} onUserSessionExpired={onUserSessionExpired} searchPlayer={handleGoToPlayerResults}/>}
