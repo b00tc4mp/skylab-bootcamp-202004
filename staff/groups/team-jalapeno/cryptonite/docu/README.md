@@ -1,4 +1,4 @@
-# Cryptonite the best way to keep accurate track of your cryptocurrency portfolio.
+# Cryptonite - The best way to keep accurate track of your cryptocurrency portfolio.
 ## Introduction
 This app is a crypto tracker, generates useful information in real time, such as the value of your favourite coins, balances and  updated graphics.
 
