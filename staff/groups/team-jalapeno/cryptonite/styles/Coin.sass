@@ -60,8 +60,7 @@
         display: flex
         justify-content: center
         font-size: 1em
-        outline: 0 
-
+        outline: 0
 
 .chart
     width: 70%
@@ -69,7 +68,12 @@
     flex-direction: column
     align-items: center
     margin-top: 2em
+    margin-bottom: 0px
 
 .canvas-container
     width: 100%
-    height: 20em
+    // height: 20em
+
+@media (min-width: 992px)
+    .canvas-container
+        margin-bottom: 3em
