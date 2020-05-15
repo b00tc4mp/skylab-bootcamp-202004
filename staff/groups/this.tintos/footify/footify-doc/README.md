@@ -34,3 +34,4 @@ The application is developed with [React] (https://reactjs.org). The design has 
 
 ![Testing-1](images/test.png)
 ![Testing-2](images/test-2.png)
+![Testing-3](images/test-3.png)
