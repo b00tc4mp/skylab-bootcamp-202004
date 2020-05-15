@@ -9,16 +9,16 @@ Music Roll its an app for music lover for play and follow music.
 
 ### Use cases
 
- ![alt.text](images/use-cases.png)
+ ![alt.text](utils/images/use-cases.png)
 
 ### Activities
 
- ![alt.text](images/flow-diagram.png)
+ ![alt.text](utils/images/flow-diagram.png)
 
 ### Technical Description
 
- ![!alt.text](images/block-diagram.png)
+ ![!alt.text](utils/images/block-diagram.png)
 
 ### Sequences
 
- ![!alt.text](images/compo-diagram.png)
+ ![!alt.text](utils/images/compo-diagram.png)
