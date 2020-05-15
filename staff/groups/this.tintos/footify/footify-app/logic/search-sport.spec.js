@@ -1,4 +1,4 @@
-describe.only('Sport News', () => {
+describe('Sport News', () => {
     it('should succeed on return results', done => {
         searchSport((error, results)=> {
             expect(error).to.be.undefined

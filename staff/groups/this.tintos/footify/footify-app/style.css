@@ -519,6 +519,10 @@
   flex-direction: row-reverse;
 }
 
+.navbar__user-img:active {
+  color: #320090;
+}
+
 .navbar__user-image {
   width: 100%;
 }
@@ -538,9 +542,6 @@
 .navbar__user-menu-container {
   font-family: Raleway;
   transition: 1s;
-}
-.navbar__user-menu-container:first-child:active {
-  color: #320090;
 }
 
 #navbar__links-news {
