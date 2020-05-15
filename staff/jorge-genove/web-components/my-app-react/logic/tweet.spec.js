@@ -1,5 +1,5 @@
 describe("tweet", function () {
-  let name, surname, email, password, token;
+  let name, surname, email, password, token, message
 
   beforeEach(function (done) {
     name = names.random();
@@ -9,7 +9,8 @@ describe("tweet", function () {
       .split(" ")
       .join("")}${surname.toLowerCase().split(" ").join("")}@mail.com`;
     password = passwords.random();
-
+    message = { message: "hello world", date: new Date(Date.now()) }
+    
     call(
       "POST",
       "https://skylabcoders.herokuapp.com/api/v2/users",
@@ -41,12 +42,12 @@ describe("tweet", function () {
       }
     );
   });
+  
   describe("Add tweets", () => {
     it("should succeed on post tweet", (done) => {
       tweet(
-        token,
-        { message: "hello world", date: new Date(Date.now()) },
-        (error, undefined) => {
+        token,message,(error, undefined) => {
+          
           expect(error).to.be(undefined);
           expect(token).not.to.be(undefined);
           expect(date).not.to.be(undefined);

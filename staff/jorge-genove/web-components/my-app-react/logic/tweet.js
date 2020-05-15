@@ -9,10 +9,10 @@ function tweet(token, message, callback) {
 
       if (status === 200) {
         const currentUser = JSON.parse(body);
-        let { tweets = [] } = currentUser;
+        const { tweets = [] } = currentUser;
 
         tweets.push({ message: message, date: Date(Date.now).slice(0, 24) });
-        let tweestString = JSON.stringify({ tweets });
+        const tweestString = JSON.stringify({ tweets });
 
         call(
           "PATCH",
