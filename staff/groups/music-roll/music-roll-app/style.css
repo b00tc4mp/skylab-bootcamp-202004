@@ -507,6 +507,89 @@ body {
   font-size: 20px;
 }
 
+.favorite {
+  background-color: #2a2a2a;
+}
+.favorite__list {
+  width: 100vw;
+  display: flex;
+  list-style: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.favorite__items {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90vw;
+  border-bottom: 1px solid dodgerBlue;
+}
+.favorite__artist {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.favorite__title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  color: white;
+  margin-top: 2px;
+  width: 100vw;
+}
+.favorite__album {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.favorite__track {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.favorite__head-title {
+  margin-top: 40px;
+  text-align: center;
+  font-family: montserrat;
+}
+.favorite__list {
+  display: flex;
+  list-style: none;
+  flex-direction: column;
+}
+.favorite__items {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.favorite__title--artist {
+  display: flex;
+}
+
+.album__img {
+  align-self: center;
+  padding: 1rem;
+}
+
+img {
+  width: 100px;
+  height: 100px;
+}
+
+.navbar {
+  top: 0;
+}
+
 .disc-list {
   list-style: none;
   width: 15rem;
@@ -679,61 +762,33 @@ audio {
   position: sticky;
 }
 
-.favorite {
-  background-color: #2a2a2a;
+.hits-results {
+  margin-top: -45rem;
+  position: relative;
+  right: 0;
+  margin-left: 2rem;
 }
-.favorite__artist {
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
-  margin-top: 20px;
+.hits-results__item {
+  border-top: 0.1px solid black;
+  border-bottom: 0.1px solid black;
+  padding: 0.1rem;
+  color: black;
 }
-.favorite__album {
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-wrap: wrap;
+.hits-results a {
+  text-decoration: none;
+  color: black;
 }
-.favorite__track {
-  width: 100vw;
-  height: 100%;
+
+.feedback {
   display: flex;
-  align-items: center;
   justify-content: center;
-}
-.favorite__title {
-  margin-top: 40px;
-  text-align: center;
-  font-family: montserrat;
-}
-.favorite__list {
-  display: flex;
-  list-style: none;
-  flex-direction: column;
-}
-.favorite__items {
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-}
-.favorite_title--artist {
-  display: flex;
-}
-
-.album__img {
-  align-self: center;
-}
-
-img {
-  width: 100px;
-  height: 100px;
-}
-
-.navbar {
-  top: 0;
+  align-items: center;
+  background-color: #ff9999;
+  position: relative;
+  width: 100vw;
+  height: 3rem;
+  font-size: 20px;
+  color: #ff0000;
 }
 
 * {
