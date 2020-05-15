@@ -31,7 +31,7 @@ function retrieveUser(token, callback) {
  * @param {object[data]} data - api's answer when succeeds
  * @param {string} data[].name - answer from api
  * @param {string} data[].surname - answer from api
- * @param {email} data[email].username - answer from api
+ * @param {email} data[].username - answer from api
  * @param {object[]} data[].favorites - answer from api
  * @param {objectg[]} data[].portfolio - answer from api
  */

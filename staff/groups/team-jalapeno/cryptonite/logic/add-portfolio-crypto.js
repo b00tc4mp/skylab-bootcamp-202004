@@ -1,3 +1,12 @@
+/**
+ * @function addPortfolioCrypto - adds coin id and quantity to user's portfolio. Needs two api's calls.
+ * @param {string} token - required to get user's info(response) from api.
+ * @param {object[]} portfolioInfo - object that contains array with ids and quantitys, can be empty.
+ * @param {string} portfolioInfo[].id - coin in portfolio's id.
+ * @param {number} portfolioInfo[].quantity - quantity of coins for  a portfolioInfo.id
+ * @param {callback} callback - returns answers from api
+ */
+
 function addPortfolioCrypto(token, portfolioInfo, callback) {
 
     String.validate.notVoid(token)
@@ -47,3 +56,8 @@ function addPortfolioCrypto(token, portfolioInfo, callback) {
     })
 
 }
+
+/**
+ * @callback callback - this function is inside addPortfolioCrypto. Returns answer from api.
+ * @param {string} error - error api's response.
+ */

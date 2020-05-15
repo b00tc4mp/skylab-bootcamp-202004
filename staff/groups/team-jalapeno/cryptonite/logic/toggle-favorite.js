@@ -1,3 +1,10 @@
+/**
+ * @function toggleFavorite - allows favorite coins modification
+ * @param {string} token - required to maje 'GET' api call.
+ * @param {string} id - crypto's name id. 
+ * @param {callback} callback - returns api's answer.
+ */
+
 function toggleFavorite(token, id, callback){ 
     String.validate.notVoid(token)
     String.isString(id)
@@ -41,6 +48,11 @@ function toggleFavorite(token, id, callback){
     })
 
 }
+
+/**
+ * @callback callback - this function is inside toggleFavorite. Retruns api's answer.
+ * @param {error} error - api's answer when error exists.
+ */
 
 
 

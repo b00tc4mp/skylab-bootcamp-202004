@@ -1,4 +1,9 @@
-
+/**
+ * @function deletePortfolioCrypto - removes cryptos from portfolio, two api calls are needed.
+ * @param {string} token - required to succeed in api call.
+ * @param {string} cryptoId - crypto's name.
+ * @param {callback} callback -returns api's answer.
+ */
 function deletePortfolioCrypto(token, cryptoId, callback) {
     String.validate.notVoid(token)
     String.validate.notVoid(cryptoId)
@@ -36,3 +41,8 @@ function deletePortfolioCrypto(token, cryptoId, callback) {
     })
 
 }
+
+/**
+ * @callback callback - this function is inside deletePortfolioCrypto, returns api'answer.
+ * @param {string} error - returns api's error when exists.
+ */
