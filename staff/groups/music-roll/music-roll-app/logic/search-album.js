@@ -27,7 +27,7 @@
 
 
 function searchAlbum(token, query, callback) {
-  debugger;
+   ;
   
 
   const queryUrl = encodeURI(query).concat(`&type=album&offset=0&limit=5`);
@@ -40,7 +40,7 @@ function searchAlbum(token, query, callback) {
     (error, status, body) => {
       if (error) console.log(error);
       console.log(status);
-      debugger;
+       ;
       if (status === 200) {
         const results = [],
           artistsArray = [];
@@ -61,7 +61,7 @@ function searchAlbum(token, query, callback) {
             artists,
           } = items[i];
 
-          debugger;
+           ;
 
           for (let j = 0; j < artists.length; j++) {
             artistsArray.push(artists[j].name);
@@ -69,7 +69,7 @@ function searchAlbum(token, query, callback) {
           let object = { image, id, name, artistsArray };
           results.push(object);
         }
-        debugger;
+         ;
         callback(undefined, results);
       } else {
         const { error } = JSON.parse(body);

@@ -30,9 +30,9 @@ describe('search-playlist', () => {
     it('should throw an error when token its wrong', done => {
         
         query = "chill beats"
-        debugger
+         
         searchPlaylists("1234", query, (error, results) => {
-            debugger
+             
             expect(results).to.be.undefined
             expect(error).to.exist
             

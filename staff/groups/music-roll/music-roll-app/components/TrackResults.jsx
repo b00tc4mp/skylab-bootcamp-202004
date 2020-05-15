@@ -1,5 +1,5 @@
 function TrackResults({results,token, handleMusicTool, handleError}){
-    debugger
+     
     console.log(results)
 
     function handleToggleTrack(name,artistName,preview_url){

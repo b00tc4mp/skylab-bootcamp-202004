@@ -11,7 +11,7 @@ describe("search-album", () => {
         expect(results.length).to.be.greaterThan(0);
   
         results.forEach((result) => {
-            debugger
+             
           expect(result).to.be.an("object");
           expect(result.name).to.exist;
           expect(result.name).to.be.a("string");
@@ -31,7 +31,7 @@ describe("search-album", () => {
       query = "chill beats";
       token = '456'
       searchAlbum(token, query, (error, results) => {
-        debugger;
+         ;
         expect(results).to.undefined;
         expect(error).to.exist;
         expect(error).to.be.an.instanceOf(Error)
