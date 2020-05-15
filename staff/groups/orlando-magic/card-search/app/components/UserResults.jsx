@@ -7,9 +7,9 @@ function UserResults({userConditions, goToUser, token}){
     const handleFollow = (user) =>{
         try{
             toggleFollowUser(token, user.id, error=>{
-                if(error) setErrorUserResults(error.message)
+                if(error) return setErrorUserResults(error.message)
                 searchUsers(token, userConditions,(error, userSearchResults) =>{
-                    if(error) setErrorUserResults(error.message)
+                    if(error) return setErrorUserResults(error.message)
                     else if (userSearchResults && (!userSearchResults.length)) setErrorUserResults("No users were found with this query")
                     else if (userSearchResults && (userSearchResults.length === 1)) goToUser(userSearchResults[0])
                     else setUserResults(userSearchResults)
@@ -23,7 +23,7 @@ function UserResults({userConditions, goToUser, token}){
     useEffect(()=>{
         try{
             searchUsers(token, userConditions,(error, userSearchResults) =>{
-                if(error) setErrorUserResults(error.message)
+                if(error) return setErrorUserResults(error.message)
                 else if (userSearchResults && (!userSearchResults.length)) setErrorUserResults("No users were found with this query")
                 else if (userSearchResults && (userSearchResults.length === 1)) goToUser(userSearchResults[0])
                 else setUserResults(userSearchResults)
