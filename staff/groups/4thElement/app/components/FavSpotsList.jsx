@@ -11,7 +11,13 @@ function FavSpotsList({ token, results, onGoToSurfForecast, sportState }) {
 
     const handleXButton = (surfForecastSelected) => {
         addToFavs(token, surfForecastSelected, undefined, (error, resultsUpdated) => {
-            setResults(resultsUpdated)
+            let filteredResultsUpdated=[]
+            if(resultsUpdated){
+                resultsUpdated.map((element)=>{
+                if(element.sportType === sportState) filteredResultsUpdated.push(element)
+            })
+            setResults(filteredResultsUpdated)
+        }
         })
     }
     

@@ -11,7 +11,7 @@ function SearchInput({onSubmitSpot, searchSelector, selectorState, sportState}) 
         onSubmitSpot(query)
     }
 
-    const handelClickedSelector = (val) => {
+    const handleClickedSelector = (val) => {
         searchSelector(val)
         
     }
@@ -25,8 +25,8 @@ return <section className={'Searcher' + (sportState === 'surf' ? "--surf" : "--s
         </div>
     </form>
     <div className="Searcher__selector">
-        <div className={"Searcher__selectorSpot" + (sportState === 'surf' ? "Surf" : "Snow") + (selectorState === 'spots' ? "--active" : "")} onClick={()=>handelClickedSelector('spots')}>Spots</div>
-        <div className={"Searcher__selectorUser" + (sportState === 'surf' ? "Surf" : "Snow") + (selectorState === 'users' ? "--active" : "")} onClick={()=>handelClickedSelector('users')}>Riders</div>
+        <div className={"Searcher__selectorSpot" + (sportState === 'surf' ? "Surf" : "Snow") + (selectorState === 'spots' ? "--active" : "")} onClick={()=>handleClickedSelector('spots')}>Spots</div>
+        <div className={"Searcher__selectorUser" + (sportState === 'surf' ? "Surf" : "Snow") + (selectorState === 'users' ? "--active" : "")} onClick={()=>handleClickedSelector('users')}>Riders</div>
     </div>
 </section>
 

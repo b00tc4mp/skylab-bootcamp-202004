@@ -58,7 +58,7 @@ function SurfForecast({token, forecastSelected, sportState}) {
                             <h2 className='forecast__titles--element'>Time</h2>
                             <h2 className='forecast__titles--element'>Air</h2>
                             <h2 className='forecast__titles--element'>Wind</h2>
-                            <h2 >Swell</h2>
+                            <h2 className='forecast__titles--element'>Swell</h2>
                             </div>
                             {element.hourly.map((forTime) => {
                                 return <li className='forecast__info'>

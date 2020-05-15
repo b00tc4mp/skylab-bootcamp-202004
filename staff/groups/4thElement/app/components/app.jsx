@@ -5,6 +5,7 @@ function App() {
     const [token, setToken] = useState(undefined)
     const [forecastSelected, setForecastSelected] = useState('')
     const [sportState, setSportState] = useState('surf')
+    const [footerState, setFooterState] = useState('home')
     
     useEffect (() => {
         if (sessionStorage.token){
@@ -34,7 +35,10 @@ function App() {
         setHashView('home')
     }
 
-    const handleGoToHome= () => setHashView('home')
+    const handleGoToHome= () => {
+        setHashView('home')
+        setFooterState('home')
+    }
     
     const setHashView = view => {
         location.hash = view
@@ -49,6 +53,7 @@ function App() {
 
     const handleGoToSearch = () => {
         setHashView('search')
+        setFooterState('search')
     }
 
     const onGoToSurfForecast = (ForecastSelected) => {
@@ -63,9 +68,10 @@ function App() {
 
     const handleGoToFavs= () => {
         setHashView('favs')
+        setFooterState('favs')
     }
 
-    const handelSportSate = () => {
+    const handleSportSate = () => {
         sportState === 'surf' ? setSportState('snow') : setSportState('surf')
     }
 
@@ -78,11 +84,11 @@ function App() {
             {<Header view={view} token={token} forecastSelected={forecastSelected} OnLogout={handleLogout} sportState={sportState}/>}
             {view === 'register' && <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>}
             {view === 'login' && <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} onGoToHome={handleGoToHome}/>}
-            {view === 'home' && <Home sportState={handelSportSate} ReturnsportState={sportState} pointerMapSelected={pointerMapSelected}/>}
+            {view === 'home' && <Home sportState={handleSportSate} ReturnsportState={sportState} pointerMapSelected={pointerMapSelected}/>}
             {view === 'search' && <Search token={token}  movingSurfForecast={onGoToSurfForecast} sportState={sportState}/>}
             {view === 'surfForecast' && <SurfForecast token={token} forecastSelected={forecastSelected} sportState={sportState}/>}
             {view === 'snowForecast' && <SnowForecast token={token} forecastSelected={forecastSelected} sportState={sportState}/>}
             {view === 'favs' && <FavSpots token={token} movingSurfForecast={onGoToSurfForecast} sportState={sportState}/>}
-            {<Footer GoToHome={handleGoToHome} GoToSearch={handleGoToSearch} GoToFavs={handleGoToFavs}/>}
+            {<Footer GoToHome={handleGoToHome} GoToSearch={handleGoToSearch} GoToFavs={handleGoToFavs} footerState={footerState} sportState={sportState}/>}
         </>
 }

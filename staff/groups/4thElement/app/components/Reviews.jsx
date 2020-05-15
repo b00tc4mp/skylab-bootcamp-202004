@@ -9,7 +9,7 @@ function Reviews({forecastSelected, token, sportState}) {
     const [spiner, setSpiner] = useState()
 
 
-    const handelPostReviews = (event) => {
+    const handlePostReviews = (event) => {
         event.preventDefault()
         let {conditions, tips, warrnings, extraInfo} = event.target
         conditions = conditions.value
@@ -80,7 +80,7 @@ function Reviews({forecastSelected, token, sportState}) {
         </ul>
         
         <i class="fas fa-plus-circle fa-3x" onClick={()=>setNewReview('on')}></i>
-        {newReview && !error &&<form className="foro__newReview" onSubmit={handelPostReviews}>
+        {newReview && !error &&<form className="foro__newReview" onSubmit={handlePostReviews}>
             <label for="conditions">Current conditions</label>
             <textarea name="conditions" maxlength="100 " minlength="5" placeholder="What are the current conditions.." required></textarea>
             <label for="tips">Tips about this spot</label>
