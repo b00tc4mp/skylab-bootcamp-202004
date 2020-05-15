@@ -9,40 +9,33 @@ This is a newfangled app where you can search for some surf and snow forecast, y
 
 ## Functional Description
 
-![alt text](app/images/logged-diagram.PNG)
-![alt text](app/images/not-logged-diagram.PNG)
-
-<!-- 
 ### Use Cases
 
-use cases diagram
+![alt text](app/images/Untitled_Diagram_2.PNG)
 
 ### Activities (flows)
 
-activity diagrams
+![alt text](app/images/logged-diagram.PNG)
+![alt text](app/images/not-logged-diagram.PNG)
 
-## Technical Description -->
+## Technical Description
 
 ### Blocks
 
-blocks diagram
+![alt text](app/images/block-diagram.png)
+
 
 ### Components
 
-components diagram (react compos vs logic vs call vs api...)
+![alt text](app/images/components-diagram.PNG)
 
-### Classes (functions)
 
-classes / functions diagram (compos and its internals: props, states, handles)
+### TESTING
 
-### Sequences
+![alt text](app/images/1st-specs.PNG)
+![alt text](app/images/2nd-spec.PNG)
+![alt text](app/images/3-specs.PNG)
+![alt text](app/images/last-spec.PNG)
 
-sequence diagram 
-
-### Data Model
-
-entity relation diagram
-
-### QA (testing)
-
-screenshot testing
+### THANK YOU
+<h2>To the tireless assistants and the big effort they are putting everyday!! </h2>
