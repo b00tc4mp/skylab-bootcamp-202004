@@ -26,7 +26,7 @@
  */
 
 function toggleFavoriteMusic(flag, token, favorite, callback) {
-  debugger;
+   ;
 
   call(
     "GET",
@@ -38,8 +38,8 @@ function toggleFavoriteMusic(flag, token, favorite, callback) {
     (error, status, body) => {
       if (error) return callback(error);
 
-      if (status === 200) {debugger
-        debugger;
+      if (status === 200) { 
+         ;
 
         const user = JSON.parse(body);
         if (user[flag]) {
@@ -61,7 +61,7 @@ function toggleFavoriteMusic(flag, token, favorite, callback) {
           (error, status, body) => {
             if (error) return callback(error);
 
-            if (status === 204) {debugger
+            if (status === 204) { 
               callback();
             } else {
               const { error } = JSON.parse(body);

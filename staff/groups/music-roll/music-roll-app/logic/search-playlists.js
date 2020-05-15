@@ -35,14 +35,14 @@ function searchPlaylists(token, query, callback) {
     //   .join("%20")
     //   //.concat('&type=playlist&limit=5');
   
-  debugger
+   
     call(
       "GET",
       `https://api.spotify.com/v1/search?q=${encodeURI(query)}&type=playlist&limit=5`,
       undefined,
       { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
       (error, status, body) => {
-        debugger
+         
         if (error) callback(error)
         
         if (status === 200) {

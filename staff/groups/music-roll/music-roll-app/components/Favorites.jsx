@@ -1,12 +1,12 @@
 const { useState, useEffect } = React
 
-function Favorites({ token, handleMusicTool}) {debugger
+function Favorites({ token, handleMusicTool}) { 
 
     const [favorites, setFavorites] = useState(undefined)
     const [error, setError] = useState(undefined)
     
 
-    useEffect(() => {debugger
+    useEffect(() => { 
     try{
         retrieveFavorites(token, (error, results) => {
             if(error) console.log(error)
@@ -23,7 +23,7 @@ function Favorites({ token, handleMusicTool}) {debugger
         handleMusicTool(preview_url)
     }
 
-debugger
+ 
     return <section className="favorites">
         {/* <h2 className= "favorite__head-title">Music that i love</h2>
         <section className="favorite__artist">

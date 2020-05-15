@@ -6411,7 +6411,7 @@ Runner.prototype.uncaught = function(err) {
   } else {
     debug('uncaught undefined/falsy exception');
     err = createInvalidExceptionError(
-      'Caught falsy/undefined exception which would otherwise be uncaught. No stack trace found; try a debugger',
+      'Caught falsy/undefined exception which would otherwise be uncaught. No stack trace found; try a  ',
       err
     );
   }
@@ -10609,7 +10609,7 @@ function setup(env) {
 
   createDebug.selectColor = selectColor;
   /**
-  * Create a debugger with the given `namespace`.
+  * Create a   with the given `namespace`.
   *
   * @param {String} namespace
   * @return {Function}

@@ -1,10 +1,10 @@
-describe("searchArtistgreatesthits", () => {debugger
+describe("searchArtistgreatesthits", () => { 
     let id;
     const VALID_QUERIES = ["extremoduro", "platero y tu", "los suaves"];
     const queryUrl = encodeURI(VALID_QUERIES.random()).concat(`&type=artist&offset=0&limit=1`);
     let token ="BQAgVv_DvbfAHMrsh0xl-EXS7-6Oo1l_OUkaEvonzucoRFtH2fxBLEmXH2NwIb-1SybFQqV_RUFK5H-7ZAPWnCb5GdbSXNbShcvAk0MlBKxJRFzvt9gLbm1LaSUe4wY4O1e6-AelvQ0MvnNFipRWPOmCQ1mwAIZ9QYCC-T1dNGJEFA4YDXxXJMMtOpVF";
     beforeEach((done) => {
-   debugger
+    
     call(
       "GET",
       `https://api.spotify.com/v1/search?q=${queryUrl}`,
@@ -13,7 +13,7 @@ describe("searchArtistgreatesthits", () => {debugger
       (error, status, body) => {
         if (error) return done(new Error(error.message));
 
-        if (status === 200) {debugger
+        if (status === 200) { 
           const { artists : {items} } = JSON.parse(body);
 
           id = items[0].id;
@@ -22,10 +22,10 @@ describe("searchArtistgreatesthits", () => {debugger
       }
     );
   });
-it('should find  artist greatest-hits by id', done =>{debugger
+it('should find  artist greatest-hits by id', done =>{ 
    
     searchArtistGreatestHits(`${id}`,`${token}`, (error,results) => {
-      debugger
+       
       expect(error).to.be.undefined;
       expect(results).to.be.an("array")
       expect(results).to.exist
@@ -41,7 +41,7 @@ it('should find  artist greatest-hits by id', done =>{debugger
 })
 
  it('should throw an error if id its not correct', done=>{
-  searchArtistGreatestHits('asdasdasdasd',`${token}`, (error,results) => {debugger
+  searchArtistGreatestHits('asdasdasdasd',`${token}`, (error,results) => { 
     expect(error).to.exist
     expect(results).to.be.undefined
     expect(error).to.be.an.instanceOf(Error)
@@ -50,8 +50,8 @@ it('should find  artist greatest-hits by id', done =>{debugger
   })
 })
 
-it('should throw an error if token its not correct', done=>{debugger
-  searchAlbumTracks(`${id}`,'adasdadas341231', (error,results) => {debugger
+it('should throw an error if token its not correct', done=>{ 
+  searchAlbumTracks(`${id}`,'adasdadas341231', (error,results) => { 
     expect(error).to.exist
     expect(results).to.be.undefined
     expect(error).to.be.an.instanceOf(Error)

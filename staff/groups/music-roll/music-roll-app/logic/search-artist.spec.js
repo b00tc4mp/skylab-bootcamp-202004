@@ -12,7 +12,7 @@ describe("search-artist", () => {
         expect(results.length).to.be.greaterThan(0);
   
         results.forEach((result) => {
-          debugger
+           
           expect(result).to.be.an("object");
           expect(result.name).to.exist;
           expect(result.name).to.be.a("string");
@@ -24,12 +24,12 @@ describe("search-artist", () => {
         done();
       });
     })    
-     debugger
+      
      it("should throw an error when token its wrong", (done) => {
       query = "chill beats";
       token = '456'
       searchArtist(token, query, (error, results) => {
-        debugger;
+         ;
         expect(results).to.undefined;
         expect(error).to.exist;
         expect(error).to.be.an.instanceOf(Error)
@@ -39,7 +39,7 @@ describe("search-artist", () => {
     }); 
   
    
-  debugger
+   
     it('should fail when token its not a string', () => {
           let query = 'hola'
           

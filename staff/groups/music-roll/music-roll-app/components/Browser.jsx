@@ -15,7 +15,7 @@ function Browser({ token, spotyToken, onSessionExpired, handleMusicTool }){
     const [error, setError] = useState(undefined)
 
     const handleSubmit = (event) => {
-        debugger
+         
         event.preventDefault()
         let { browser, query } = event.target
         browser = browser.value
@@ -139,7 +139,7 @@ function Browser({ token, spotyToken, onSessionExpired, handleMusicTool }){
             {artistResults && <ArtistResults results={artistResults} token={token} spotyToken={spotyToken} handleMusicTool={handleMusicTool} handleError={handleError}/>}
 
         </section>
-        
+
         {error && <Feedback message={error} />}
 
     </section>
