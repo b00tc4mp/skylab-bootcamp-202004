@@ -38,7 +38,7 @@ describe('String',()=>{
     })
     it('Sould be fail in equalThan',()=>{
         confirmPassword = password + '123'
-        expect(()=>{String.validate.equalThan(password,confirmPassword)}).to.throw(Error,`The password is not the same.`);
+        expect(()=>{String.validate.equalThan(password,confirmPassword)}).to.throw(Error,`Fail the comparation!`);
     })
     it('Sould be fail in notVoid',()=>{
         password = '';
