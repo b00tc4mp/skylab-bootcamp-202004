@@ -22,6 +22,8 @@ function UserResults({userConditions, goToUser, token}){
 
     useEffect(()=>{
         try{
+            setErrorUserResults(undefined)
+            setUserResults([])
             searchUsers(token, userConditions,(error, userSearchResults) =>{
                 if(error) return setErrorUserResults(error.message)
                 else if (userSearchResults && (!userSearchResults.length)) setErrorUserResults("No users were found with this query")
@@ -38,6 +40,7 @@ function UserResults({userConditions, goToUser, token}){
 
     return <section className="userresults">
     {errorUserResults && !userResults.length && <Feedback message= {errorUserResults} level = "warning"/>}
+    {!errorUserResults && !userResults.length && <Loading/>}   
     <ul className="userresults__cards">
         {userResults && userResults.map(user => <li key = {user.email}>{<UserCard user = {user} handleFollow = {handleFollow} goToUser = {goToUser}/>}</li>)}
     </ul>

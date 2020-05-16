@@ -378,6 +378,7 @@
 .results {
   display: flex;
   flex-flow: column;
+  align-items: center;
   width: 100%;
 }
 .results__header {
@@ -739,6 +740,7 @@
 .userresults {
   display: flex;
   flex-flow: column;
+  align-items: center;
   width: 100%;
 }
 .userresults__info {
@@ -825,6 +827,10 @@
     font-size: 0.8rem;
   }
 }
+.loading {
+  width: 100px;
+}
+
 body {
   margin: 0;
   padding: 0;

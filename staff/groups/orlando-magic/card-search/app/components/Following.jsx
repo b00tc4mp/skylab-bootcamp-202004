@@ -2,7 +2,7 @@ const {useState, useEffect} = React
 
 function Following({goToUser, token}){
     const [errorFollowing, setErrorFollowing] = useState(undefined)
-    const [following, setFollowing] = useState([])
+    const [following, setFollowing] = useState(undefined)
 
     const handleFollow = (user) =>{
         try{
@@ -39,7 +39,8 @@ function Following({goToUser, token}){
     },[])
 
     return <section className="userresults">
-    {errorFollowing && !following.length && <Feedback message= {errorFollowing} level = "warning"/>}
+    {errorFollowing && following && !following.length && <Feedback message= {errorFollowing} level = "warning"/>}
+    {!errorFollowing && !following && <Loading/>} 
     <ul className="userresults__cards">
         {following && following.map(user => <li key = {user.email}>{<UserCard user = {user} handleFollow = {handleFollow} goToUser = {goToUser}/>}</li>)}
     </ul>

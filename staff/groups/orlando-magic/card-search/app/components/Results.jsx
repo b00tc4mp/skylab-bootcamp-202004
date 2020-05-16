@@ -40,8 +40,10 @@ function Results({searchConditions, setSearchConditions, goToCard, token}){
         url = createUrl(query)
         location.hash = url
       }
+      setErrorResults(undefined)
+      setResults([])
       searchCard(url,(error, searchResults) =>{
-        if(error) return setErrorResults(error.message)
+        if(error) setErrorResults(error.message)
         
         if (searchResults && (searchResults.length === 1)) return goToCard(searchResults[0])
         setResults(searchResults)
@@ -102,6 +104,7 @@ function Results({searchConditions, setSearchConditions, goToCard, token}){
       </form>
     </header>
     {errorResults && results && !results.length && <Feedback message= {errorResults} level = "warning"/>}
+    {!errorResults && !results.length && <Loading/>}
     <ul className = 'results__cards'>
       {results && results.map(card => <li key={card.id}><a onClick = {() => {goToCard(card)}}>
           <img className = "results__cards--card" src = {card.image_uris? card.image_uris.png || card.image_uris.large : (card.card_faces[0].image_uris.png || card.card_faces[0].image_uris.large)}/>

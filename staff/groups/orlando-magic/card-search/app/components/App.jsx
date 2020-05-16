@@ -2,7 +2,7 @@ const {useState, useEffect} = React
 
 function App(){
 
-    const [view, setView] = useState('landing')
+    const [view, setView] = useState('loading')
     const [token, setToken] = useState(undefined)
     const [card, setCard] = useState(undefined)
     const [searchConditions, setSearchConditions] = useState(undefined)
@@ -113,7 +113,6 @@ function App(){
 
     function goToUser(user){
         setId(user?user.id:undefined)
-        // !user && setView("")
         !user?setHashView("user"):setView("user")
     }
 
@@ -130,7 +129,8 @@ function App(){
     }
 
     return <>
-        {(view !== 'landing') && (view !== 'login') && (view !== 'register') && <NavBar onLanding = {handleLanding} setHashView={setHashView} onBasicSearch = {onBasicSearch}  onUserSearch = {onUserSearch} goToUser = {goToUser} handleLogOut = {handleLogOut} token = {token}/>}
+        {view !== 'landing' && view !== 'login' && view !== 'register' && <NavBar onLanding = {handleLanding} setHashView={setHashView} onBasicSearch = {onBasicSearch}  onUserSearch = {onUserSearch} goToUser = {goToUser} handleLogOut = {handleLogOut} token = {token}/>}
+        {view==='loading' && <Loading/>}
         {view==='landing' && <Landing setHashView = {setHashView} onBasicSearch = {onBasicSearch} onLogOut={handleLogOut} onUserSearch= {onUserSearch} token={token}  goToUser = {goToUser}/>}
         {view==='login' && <Login onSubmit = {handleLoggedIn} setHashView = {setHashView} onLanding={handleLanding}/>}
         {view==='register'  && <Register setHashView = {setHashView} onLanding={handleLanding} onLogin = {setHashView}/>}
