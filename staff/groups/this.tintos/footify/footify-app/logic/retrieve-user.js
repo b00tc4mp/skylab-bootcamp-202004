@@ -1,3 +1,16 @@
+/**
+ * Checks user credentials.
+ * 
+ * @param {string} token The token of the current user. 
+ * @param {callback} callback The expression to be called after checking credentials, receiving an Error and object.
+ * 
+ * @returns {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * @returns {Object} object It receives an object, with the information of user, in case credentials are correct.
+ * 
+ * @throws {Error} If network doesn't work.
+ */
+
+
 function retrieveUser(token, callback) {
     String.validate.notVoid(token)
 

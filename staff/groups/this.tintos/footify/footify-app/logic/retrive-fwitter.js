@@ -1,8 +1,21 @@
+/**
+ * Checks user credentials.
+ * 
+ * @param {string} token The expression to be called after checking credentials, receiving an Error or an authentication token.
+ * @param {callback} callback The expression to be called after checking credentials, receiving an Error or a body.
+ * @returns Array with objects with the fwitt of all users
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ */
+
+
+
+
+
 function retriveFwitter(token, callback) {
     String.validate.notVoid(token);
 
     Function.validate(callback);
-
 
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all',
         undefined, { Authorization: `Bearer ${token}` },
@@ -19,7 +32,7 @@ function retriveFwitter(token, callback) {
                                     results.push({ idUser,nameUser,surnameUser,fwitter})
                                 } 
                             })
-                            
+                            console.log(results)
                             callback(undefined,results)
                         } else {
                             const { error } = JSON.parse(body)
@@ -30,4 +43,12 @@ function retriveFwitter(token, callback) {
                     })
 }
 
-                  
+
+/**
+ * Invoked after remote authentication.
+ * 
+ * @callback callback
+ * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * @return {object} results is an Array of objects 
+ * 
+ */                  

@@ -1,9 +1,10 @@
 describe("count number of card for comments", () => {
 
     let name, surname, email, password, confirmPassword, player, message, cardColor
+    let result = []
+    let fwitter = []
 
-
-    beforeEach(() => {
+    beforeEach((done) => {
         name = names.random();
         surname = surnames.random();
         email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`;
@@ -13,9 +14,6 @@ describe("count number of card for comments", () => {
         message = messages.random()
         cardColor = 'green'
 
-    })
-
-    it("should count the number of card likes that users have", done => {
         //register
         call('POST',
             'https://skylabcoders.herokuapp.com/api/v2/users',
@@ -115,10 +113,10 @@ describe("count number of card for comments", () => {
                                                             Authorization: `Bearer ${token}`
                                                         },
                                                             (error, status, body) => {
-                                                                
+
 
                                                                 const user = JSON.parse(body)
-                                                                const { fwitter = [] } = user
+                                                                let { fwitter = [] } = user
 
                                                                 let pushFwitt = false;
 
@@ -186,7 +184,7 @@ describe("count number of card for comments", () => {
 
                                                                                 let users = JSON.parse(body)
 
-                                                                                let results = []
+                                                                                
                                                                                 users.forEach(({ id: idUser, name: nameUser, surname: surnameUser, fwitter }) => {
 
                                                                                     if (fwitter) {
@@ -194,7 +192,7 @@ describe("count number of card for comments", () => {
                                                                                     }
                                                                                 })
 
-                                                                                let result = []
+                                                                               
                                                                                 result = results.map(({ idUser, nameUser, surnameUser, fwitter }) => {
 
                                                                                     fwitter.map(({ id, name, fwitt }) => {
@@ -270,11 +268,9 @@ describe("count number of card for comments", () => {
                                                                                             (error, status, body) => {
                                                                                                 if (error) return callback(error);
 
-                                                                                                commentCards(result, token, (error, results) => {
-                                                                                                    expect(error).to.be.undefined
-                                                                                                    expect(results.length).to.exist
-                                                                                                })
-                                                                                                done()
+                                                                                             
+
+
                                                                                             }
                                                                                         )
                                                                                     }
@@ -298,6 +294,14 @@ describe("count number of card for comments", () => {
             }
         )
     })
+    it('', done => {
+        commentCards(result, token, (error, results) => {
+            expect(error).to.be.undefined
+            expect(results.length).to.exist
+           
+        })
+    })
+
 
     afterEach(done => {
         call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',

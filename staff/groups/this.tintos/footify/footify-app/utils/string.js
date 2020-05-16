@@ -46,7 +46,7 @@
         if (!this.isLengthGreaterEqualThan(string, length)) throw new Error(`"${string}" length is not greater or equal than ${length}`)
     }.bind(String)
 
-    String.validate.equalThan = function (password, confirmPassword) {
-        if (!this.equalThan(password, confirmPassword)) throw new Error(`The password is not the same.`)
+    String.validate.equalThan = function (firstValue, secondValue) {
+        if (!this.equalThan(firstValue,secondValue)) throw new Error(`Fail the comparation!`)
     }.bind(String)
 })()

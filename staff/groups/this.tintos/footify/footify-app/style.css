@@ -3,13 +3,11 @@
 .landing {
   font-family: Raleway;
   color: #320090;
-  margin-right: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .landing__container {
-  padding: 0.5rem;
   background-image: url("img/home.jpg");
   background-size: 80vh;
   background-position: center;
@@ -61,7 +59,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 2px;
   font-family: Raleway;
 }
 .register__logo {
@@ -130,7 +127,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  top: 2.4rem;
+  top: 2rem;
 }
 .register__goto-text-landing {
   margin-right: 11rem;
@@ -156,6 +153,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100vw;
 }
 .login__logo {
   text-align: center;
@@ -221,7 +219,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  top: 4.2rem;
+  top: 3.5rem;
 }
 .login__goto-text-landing {
   font-family: Raleway;
@@ -404,6 +402,7 @@
   height: 35px;
   justify-self: center;
   margin-top: 0.3rem;
+  cursor: pointer;
 }
 .player-card__count {
   position: relative;
@@ -439,45 +438,43 @@
 }
 .player-card__form {
   display: flex;
-  justify-content: center;
-  margin-left: 1rem;
+  justify-content: space-between;
   align-items: center;
   border-radius: 30px;
-  flex-shrink: 1;
-  flex-grow: 1;
+  margin: 0.5rem 0rem;
+  opacity: 60%;
+  background-color: white;
 }
 .player-card__form-input {
+  padding: 0 0.5rem;
   border-radius: 30px;
-  width: 88%;
-  height: 25px;
+  width: 22rem;
+  height: 2rem;
   font-family: raleway;
   border-style: none;
   text-align: justify;
-  margin-top: 0.8rem;
-  padding-left: 10px;
-  opacity: 50%;
-  background: #ffffff;
+  color: #320090;
 }
 .player-card__form-input:focus {
+  background-color: white;
   opacity: 100%;
   text-emphasis: none;
   outline: none;
   user-select: none;
 }
 .player-card__form-button {
-  position: relative;
-  right: 2.4rem;
-  top: 0.4rem;
-  background: 0 0;
-  border: 0;
+  background-color: white;
+  border: 0px;
+  outline: none;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  border-radius: 40%;
+  opacity: 40%;
 }
 .player-card__form-button:hover {
   color: #320090;
-  opacity: 60%;
-}
-
-.navbar {
-  margin-left: 2px;
+  font-weight: 400;
+  opacity: 200%;
 }
 
 .navbar__container {
@@ -515,8 +512,34 @@
 }
 
 .navbar__user-img {
-  margin-right: 0.8rem;
   width: 2.4rem;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.navbar__user-img:active {
+  color: #320090;
+}
+
+.navbar__user-image {
+  width: 100%;
+}
+
+.navbar__user-menu {
+  display: flex;
+  align-items: center;
+}
+.navbar__user-menu-container {
+  display: flex;
+  justify-content: space-between;
+  transition: 1s;
+  width: 8rem;
+  margin-right: 0.7rem;
+}
+
+.navbar__user-menu-container {
+  font-family: Raleway;
+  transition: 1s;
 }
 
 #navbar__links-news {
@@ -556,7 +579,6 @@
 .sport-news {
   display: flex;
   justify-content: center;
-  width: 100vw;
 }
 .sport-news__list li {
   list-style: none;
@@ -729,6 +751,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: #73f182;
+  padding-bottom: 2rem;
 }
 .update__logo {
   text-align: center;
@@ -739,7 +763,7 @@
 .update__title {
   font-family: Raleway;
   font-weight: 500;
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   margin-bottom: 1.5rem;
 }
 .update__container {
@@ -772,7 +796,7 @@
   font-weight: 200;
 }
 .update__form-item::placeholder {
-  opacity: 0.5;
+  opacity: 50%;
 }
 .update__form-line {
   border-top: 4px solid #320090;
@@ -816,7 +840,8 @@
   text-align: center;
   margin-bottom: 5rem;
   color: #320090;
-  font-size: 3rem;
+  font-size: 2.5rem;
+  font-weight: 600;
 }
 .dream-team__list > ul {
   margin-top: 5rem;
@@ -880,6 +905,10 @@
   text-align: center;
   color: #320090;
   margin-bottom: 0.5rem;
+}
+
+a {
+  text-decoration: none;
 }
 
 * {

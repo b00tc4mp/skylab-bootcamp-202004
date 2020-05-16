@@ -1,5 +1,6 @@
 describe.only("toogleFollowPlayer", () => {
   let name, surname, email, password, confirmPassword, playerId, _token, _playerId;
+
   const ids = ["MS10", "CR7", "SR4", "TH14", "FL7", "JR10", "TS1", "JA8", "SE4"];
 
   before(done => {
@@ -48,7 +49,6 @@ describe.only("toogleFollowPlayer", () => {
       });
     });
 
-      
     it('Should check if user have the player id in the array and then take it out', (done) => {
       toogleFollowPlayer(_token, playerId, (error, likes) => {
         expect(error).to.be.undefined;
@@ -59,6 +59,7 @@ describe.only("toogleFollowPlayer", () => {
         
         done();
         });
+
 
       });
   });

@@ -4,13 +4,14 @@
  * @param {string} idPlayer The id of player. 
  * @param {string} _name The player name.
  * @param {string} _message The message public by the User.
- * @param {string} token The expression to be called after checking credentials, receiving an Error or an authentication token.
+ * @param {string} token The token of the current user.
  * @param {callback} callback The expression to be called after checking credentials, receiving an Error.
  * 
+ * @returns {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * 
  * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ *
  */
-
-
 
 
 function addFwitter(idPlayer, _name, _message, token, callback) {
@@ -111,4 +112,5 @@ function addFwitter(idPlayer, _name, _message, token, callback) {
  * @callback callback
  * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
  * @param {string} token It receives a token in case credentials are correct.
+ * 
  */

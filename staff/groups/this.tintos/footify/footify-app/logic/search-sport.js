@@ -1,3 +1,14 @@
+/**
+ * Checks user credentials.
+ * 
+ * @param {callback} callback The expression to be called after checking credentials, receiving an Error and list of results.
+ * 
+ * @returns {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * @returns {Object} listResults It receives a array in case credentials are correct.
+ * 
+ * @throws {Error} If network does not work.
+ */
+
 function searchSport(callback) {
 
     let listResults = []
@@ -23,11 +34,11 @@ function searchSport(callback) {
             listResults.push({ title, link, linkImg })
         }
 
-        callback(listResults)
+        callback(undefined, listResults)
     }
 
     xhr.onerror = function (error) {
-        console.error('KO', error.message)
+        callback(error)
     }
     xhr.send()
 }

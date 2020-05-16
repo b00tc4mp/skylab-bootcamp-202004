@@ -1,3 +1,14 @@
+/**
+ * Checks user credentials.
+ * 
+ * @param {string} token The token of the current user.
+ * @param {string} newData The objetc who contains all the info, the user wants to change.
+ * @param {callback} callback The expression to be called after checking credentials, receiving an Error.
+ * 
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ */
+
 function updateUser (token, newData, callback){
     if(typeof newData !== 'object') throw new TypeError (`field ${newData} is not and object`)
     String.validate.notVoid(token)
@@ -42,3 +53,11 @@ function updateUser (token, newData, callback){
          }
      })
 }
+
+/**
+ * Invoked after remote authentication.
+ * 
+ * @callback callback
+ * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
+ * @param {Object} newData It receives when call was made and PATCH method was executed.
+ */

@@ -1,12 +1,12 @@
-.navbar
-    margin-left: 2px
+
+    
+    
 .navbar__container
     width: 100vw
     min-width: 494px
     height: 16.5vh
     display: flex
-    flex-direction: column
-    
+    flex-direction: column 
 .navbar__user
     display: flex
     justify-content: space-between
@@ -23,12 +23,32 @@
         width: 2.2rem
         padding-top: 0.8rem
         padding-bottom: 0.8rem
+    
+
 .navbar__user-logo
     margin-left: 0.8rem
     width: 11rem
 .navbar__user-img
-    margin-right: 0.8rem
     width: 2.4rem
+    display: flex
+    flex-direction: row-reverse
+.navbar__user-img:active
+    color: #320090
+.navbar__user-image
+    width: 100% 
+// .navbar__user-menu
+.navbar__user-menu
+    display: flex
+    align-items: center
+    &-container
+        display: flex
+        justify-content: space-between
+        transition: 1s
+        width: 8rem
+        margin-right: 0.7rem
+.navbar__user-menu-container
+    font-family: Raleway
+    transition: 1s    
 #navbar__links-news
     width: 1.9rem
 #navbar__links-search

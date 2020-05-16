@@ -3,7 +3,6 @@ describe('Call', () => {
         call('GET', 'https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com', undefined, undefined, (error, status, body) => {
             if (error) return done(new Error(error))
 
-            //console.log(status, body)
             expect(status).to.equal(200)
             expect(body).to.exist
 
@@ -17,14 +16,12 @@ describe('Call', () => {
         call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users', `{ "username": "${username}", "password": "grillo" }`, { 'Content-type': 'application/json' }, (error, status, body) => {
             if (error) return done(new Error(error))
 
-            //console.log(status, body)
             expect(status).to.equal(201)
             expect(body).to.equal('')
 
             call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth', `{ "username": "${username}", "password": "grillo" }`, { 'Content-type': 'application/json' }, (error, status, body) => {
                 if (error) return done(new Error(error))
 
-                //console.log(status, body)
                 expect(status).to.equal(200)
                 expect(body).to.exist
 
@@ -34,14 +31,12 @@ describe('Call', () => {
                 call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined, { 'Authorization': `Bearer ${token}` }, (error, status, body) => {
                     if (error) return done(new Error(error))
 
-                    //console.log(status, body)
                     expect(status).to.equal(200)
                     expect(body).to.exist
 
                     call('DELETE', 'https://skylabcoders.herokuapp.com/api/v2/users', '{ "password": "grillo" }', { 'Content-type': 'application/json', 'Authorization': `Bearer ${token}` }, (error, status, body) => {
                         if (error) return done(new Error(error))
 
-                        //console.log(status, body)
                         expect(status).to.equal(204)
                         expect(body).to.equal('')
 
