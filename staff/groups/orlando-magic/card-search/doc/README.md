@@ -16,11 +16,11 @@ This app provides a detailed Magic: The Gathering card search engine as well as 
 
 ### Use cases
 
-![Use cases](./use-case-diagram.png)
+![Use cases](./use-case.png)
 
 ### Activity Diagram
 
-![Activity diagram](./activity-diagram.png)
+![Activity diagram](./activity.png)
 
 ## Technical description
 
