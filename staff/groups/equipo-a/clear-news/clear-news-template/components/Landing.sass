@@ -1,8 +1,6 @@
 .landing
     @extend %panel
 
-    background-color: #ffc003
-    color: #154360
     text-align: center
     display: flex
     flex-direction: column
@@ -17,11 +15,49 @@
         margin-left: 5rem
         margin-right: 5rem
         
-    &__imagen
+    &__image
         width: 100%
+        
 
     a
         text-decoration: none
+        background-color: #5B2C6F
+        border-radius: 10px
+        font-size: 3vw
+        padding: 0.5rem
+        width: 120px
 
         &:visited
-            color: #154360
+            color: white
+
+
+@media screen and ( min-width: 768px )  
+.landing
+    align-items: center
+    justify-content: space-evenly
+
+    &__image
+        max-width: 768px
+
+    a
+        max-width: 100px
+        margin:10px
+        width:120px
+        font-size: 20px
+
+
+@media screen and ( min-width: 1024px )  
+.landing
+    maralign-items: center
+    justify-content: space-evenly
+    
+    &__image
+        max-width: 768px
+
+    
+    a
+        max-width: 150px
+        font-size:  20px
+        margin:10px
+        width:120px
+

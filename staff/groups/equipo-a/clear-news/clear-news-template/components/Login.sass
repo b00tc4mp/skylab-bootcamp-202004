@@ -1,40 +1,97 @@
 .login
     @extend %panel
 
-    background-color: #ffc003
-    color: #154360
+    color: #5B2C6F
     text-align: center
     display: flex
     flex-direction: column
-    justify-content: center
+    justify-content: space-evenly
     align-items: center
     width: 100vw
     height: 100vh
+    font-size: 0.7rem
 
     &__button
-        background-color:#154360
+        background-color:#5B2C6F
         color: white
-        font-size: 0.8rem
-        padding: 0.3rem
         border-radius: 10px
+        font-size: 3vw
+        padding: 0.5rem
+        width: 15vw
     
     &__input
         display: flex
         flex-direction: column
+        width: 100%
+        justify-content: center
+       
 
     &__logo
         width: 50%
-        border: 2px solid #154360
         margin-bottom: 1.5rem
     
     input
-        border-color: #154360
         margin-bottom: 1.5rem
-        margin-left: 0.5rem
-
-    input:hover 
-        background-color: #154360
-        color: white
+        border: 0.05rem solid #A6ACAF
+        border-radius: 5px
+        width: 100%
+        padding: 0.3rem
+        align-self: center
     
     h1
         margin-bottom: 1.5rem
+        font-size: 1.5rem
+
+    a
+        text-decoration: none
+        background-color: #5B2C6F
+        color: white
+        border-radius: 10px
+        font-size: 3vw
+        padding: 0.5rem
+
+        &:visited
+            color: white
+
+
+@media screen and ( min-width: 768px ) 
+.register 
+    align-items: center
+    justify-content: space-evenly
+
+    &__logo
+        max-width: 168px
+        width: 168px
+    a
+        max-width: 100px
+        margin:10px
+        width:120px
+        font-size: 20px
+    button
+        max-width: 100px
+        margin:10px
+        width:120px
+        font-size: 20px
+
+
+@media screen and ( min-width: 1024px )  
+.login
+    maralign-items: center
+    justify-content: space-evenly
+    
+    &__logo
+        max-width: 168px
+        width: 168px
+    
+    a
+        max-width: 150px
+        font-size:  20px
+        margin:10px
+        width:120px
+
+    button
+        max-width: 150px
+        font-size:  20px
+        margin:10px
+        width:120px
+        
