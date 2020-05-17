@@ -14,7 +14,6 @@ function Login({ onGoToRegister, onGoToLanding, onGoToHome }) {
         event.preventDefault()
         onGoToRegister()
     }
-
     const handleSubmitLogin = (event) => {
 
         event.preventDefault()

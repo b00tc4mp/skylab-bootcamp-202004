@@ -727,7 +727,7 @@
   width: 3rem;
   height: 3rem;
 }
-.fwitter__card-and-count {
+.fwitter__card-and-count- {
   display: flex;
   color: #320090;
   font-weight: 500;
@@ -744,6 +744,39 @@
   background-color: #FFF9C7;
 }
 .fwitter__card-and-count-green:hover {
+  background-color: #EAFDED;
+}
+.fwitter__card-and-count-bkgrred {
+  display: flex;
+  color: #320090;
+  font-weight: 500;
+  font-size: 1.2rem;
+  align-items: center;
+  justify-content: center;
+  width: 133.3px;
+  height: 80px;
+  background-color: #FFE4DA;
+}
+.fwitter__card-and-count-bkgryellow {
+  display: flex;
+  color: #320090;
+  font-weight: 500;
+  font-size: 1.2rem;
+  align-items: center;
+  justify-content: center;
+  width: 133.3px;
+  height: 80px;
+  background-color: #FFF9C7;
+}
+.fwitter__card-and-count-bkgrgreen {
+  display: flex;
+  color: #320090;
+  font-weight: 500;
+  font-size: 1.2rem;
+  align-items: center;
+  justify-content: center;
+  width: 133.3px;
+  height: 80px;
   background-color: #EAFDED;
 }
 

@@ -4,10 +4,12 @@ function App() {
     const [view, setView] = useState('load')
     const [token, setToken] = useState()
     const [error,setError] = useState()
+    const [email, setEmail] = useState()
 
     useEffect(()=>{
         if(sessionStorage.token){
             try{
+               
                 isUserAuthenticated(sessionStorage.token, (error, isAuthenticated)=>{
                     if(error) setError(error.message);
                  
@@ -28,8 +30,7 @@ function App() {
             else{
                 address.hash.clear()
                 setView('landing')
-            }
-            
+            }  
         }
     },[])
 
@@ -57,9 +58,10 @@ function App() {
     }
 
     const handlGoToHome = (token) => { 
-        sessionStorage.token = token
-        setToken(token) 
-        setView('home')      
+     
+            sessionStorage.token = token
+            setToken(token) 
+            setView('home')  
     } 
     
     const handleUserSessionExpired = () =>{ setHashView('login')}

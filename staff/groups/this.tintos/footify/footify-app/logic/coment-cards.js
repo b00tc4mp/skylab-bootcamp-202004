@@ -12,11 +12,11 @@
  * @throws {Error} If does not match the expected format.
  */
 
-function commentCards(userfwitts, token, callback) {
+function commentCards(email, userfwitts, token, callback) {
 
     if (userfwitts.length === 0) throw new Error(`${userfwitts} no have length`)
-    String.validate.notVoid(token);
-    Function.validate(callback);
+    //String.validate.notVoid(token);
+    //Function.validate(callback);
 
     call("GET", "https://skylabcoders.herokuapp.com/api/v2/users/all", undefined,
         { Authorization: `Bearer ${token}` }, (error, status, body) => {
@@ -29,15 +29,23 @@ function commentCards(userfwitts, token, callback) {
 
                 let usersHaveCards = users.filter((user) => {
                     return user.red || user.green || user.yellow
-
                 })
+
+
                 //for red card
                 usersHaveCards.forEach(user => {
                     for (red of user.red) {
                         for (userfwitt of userfwitts) {
+                          
                             if (userfwitt !== undefined) {
                                 if (red.id === userfwitt.idUser && red.message === userfwitt.message) {
                                     userfwitt.redCard++
+                                    if (email === user.username) {
+                                        userfwitt.bckgRed = 'bkgrred'
+                                        userfwitt.bckgYellow = ''
+                                        userfwitt.bckgGreen = ''
+                                    }
+
                                 }
                             }
                         }
@@ -47,9 +55,16 @@ function commentCards(userfwitts, token, callback) {
                 usersHaveCards.forEach(user => {
                     for (yellow of user.yellow) {
                         for (userfwitt of userfwitts) {
+                            
                             if (userfwitt !== undefined) {
                                 if (yellow.id === userfwitt.idUser && yellow.message === userfwitt.message) {
                                     userfwitt.yellowCard++
+
+                                    if (email === user.username) {
+                                        userfwitt.bckgRed = ''
+                                        userfwitt.bckgYellow = 'bkgryellow'
+                                        userfwitt.bckgGreen = ''
+                                    }
                                 }
                             }
                         }
@@ -59,9 +74,15 @@ function commentCards(userfwitts, token, callback) {
                 usersHaveCards.forEach(user => {
                     for (green of user.green) {
                         for (userfwitt of userfwitts) {
+                           
                             if (userfwitt !== undefined) {
                                 if (green.id === userfwitt.idUser && green.message === userfwitt.message) {
                                     userfwitt.greenCard++
+                                    if (email === user.username) {
+                                        userfwitt.bckgRed = ''
+                                        userfwitt.bckgYellow = ''
+                                        userfwitt.bckgGreen = 'bkgrgreen'
+                                    }
                                 }
                             }
                         }
