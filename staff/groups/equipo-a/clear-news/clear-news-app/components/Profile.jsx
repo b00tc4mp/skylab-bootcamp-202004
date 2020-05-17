@@ -51,12 +51,18 @@ function Profile({ token, categories, country }) {
 
         try {
             changeProfile(token,userUpdate , error => {
-                if (error) return setError(error.message)
-                else setSuccess ( "success 🤡")
+                if (error) {
+                    setSuccess(undefined)
+                    return setError(error.message) 
+                }else {
+                    setSuccess ( "The change has been successfully made")
+                    setError(undefined)
+                }
                 
             })
         } catch ({ message }) {
             setError(`One field ${message}`)
+            setSuccess(undefined)
         }
     }
 

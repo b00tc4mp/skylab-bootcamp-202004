@@ -1,6 +1,6 @@
 const { useState, useEffect } = React
 
-function Favorites({token, onFavorite, onHeadlines}) {
+function Favorites({token}) {
     const [error, setError] = useState()
     const [favNews, setFavNews] = useState()
     const [headlines, setHeadlines] = useState()
@@ -54,34 +54,33 @@ function Favorites({token, onFavorite, onHeadlines}) {
             if(error) throw error
         }
     }
-    if(!favNews || !headlines) return <Feedback message="No favorite news added yet" />
+    
 
     return <>
     
-    <section className="favNews">
-        <h1 className="news__fav">Favorite News</h1>
+    <section className="favNews"> <h1 className="news__fav">Favorite News</h1>
         {
-            favNews && <ul className="news__container">
+            favNews ? <ul className="news__container">
                 { favNews.map(({ name, title, url, urlToImage }) =>
                         <li className="news__item" key={title}>
                             <a href={url} target='_blank'><img className="news__images" src={urlToImage}></img>
                             <div className="news__title"><p>{name}</p><p> {title}</p> </div></a>
                             <div className="news__button"> <input type="image" className="news__followIMG" src="images/heart-follow.png" onClick={() => handleLikeNews(title)} /></div>
                 </li>)}
-            </ul>
+            </ul> : <Feedback message="No favorite news added yet" />
         }
         <h1 className="news__fav">Favorite Headlines</h1>
+
         {
-            headlines && <ul className="news__container">
+            headlines ? <ul className="news__container"> 
                 { headlines.map(({ name, title, url, urlToImage }) =>
                         <li className="news__item" key={title}>
                             <a href={url} target='_blank'><img className="news__images" src={urlToImage}></img>
                             <div className="news__title"><p>{name}</p><p> {title}</p> </div></a>
                             <div className="news__button"> <input type="image" className="news__followIMG" src="images/heart-follow.png" onClick={() => handleLikeHeadlines({name, title, url, urlToImage})} /></div>
                 </li>)}
-            </ul>
+            </ul> : <Feedback message="No favorite headlines added yet" />
         }
-        {favNews && headlines && favNews.length===0 && headlines.length===0 &&  <Feedback message="No favorite news added yet" />}
         
     </section>
     

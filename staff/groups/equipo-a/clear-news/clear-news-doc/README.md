@@ -21,7 +21,7 @@ This app is designed the survey news world-wide. You will be able to search and 
 
 ### Use cases
 
-![Use cases](diagrams/use-cases-diagram-clear-news.png)
+![Use cases](diagrams/use-case-diagram.png)
 
 ### Activity Diagram
 
@@ -47,9 +47,9 @@ This app is designed the survey news world-wide. You will be able to search and 
 
 ### Data model
 
-![Data model](diagrams/dataModel.png)
+![Data model](diagrams/data-model.png)
 
 ### Tests
 
-![Tests](diagrams/test.png)
+![Tests](diagrams/test.png) ![test-1](diagrams/test-1.png)
 

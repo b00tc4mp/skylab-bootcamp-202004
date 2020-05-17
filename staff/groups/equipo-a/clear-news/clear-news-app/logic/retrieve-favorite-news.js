@@ -25,9 +25,15 @@ function retrieveFavNews(token, callback) {
             if (status === 200) {
 
                 const user = JSON.parse(body);
-                const { favorite = [] } = user
+
+                const { favorite = [], headlines=[] } = user
 
                 let counter = 0
+                debugger
+                for (let i in headlines){
+                    const index = favorite.indexOf(headlines[i].title)
+                    index !== -1 ? favorite.splice(index, 1) : favorite
+                }
 
                 favorite.forEach((item => {
 
@@ -46,7 +52,7 @@ function retrieveFavNews(token, callback) {
 
                                 for (let i in articles) {
                                     const { source, author, title, description, url, urlToImage, publishedAt } = articles[i]
-
+                                    if(title === item){
                                     if (typeof source !== "undefined") {
                                         const { name } = source
                                         favNews.push({ name, author, title, description, url, urlToImage, publishedAt })
@@ -56,6 +62,7 @@ function retrieveFavNews(token, callback) {
                                         favNews.push({ name, author, title, description, url, urlToImage, publishedAt })
                                     }
                                 }
+                                }
 
                             } else {
                                 const { error } = JSON.parse(body)
@@ -63,7 +70,7 @@ function retrieveFavNews(token, callback) {
                             }
 
                             
-        
+                            
                             if (counter === favorite.length) {
                                 let favNewsUnique = getUnique(favNews, element=>element.title)
                                 callback(undefined, favNewsUnique)

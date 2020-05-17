@@ -129,6 +129,21 @@ describe('changeProfile', () => {
         let _token
         let updateUser
         beforeEach(done => {
+            _name = names.random();
+            _surname = surnames.random();
+            _email = `${_name.toLowerCase().split(' ').join('')}${_surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`
+            _password = "123123123";
+            _categories = {
+                business: true,
+                entertainment: true,
+                general: false,
+                health: false,
+                science: true,
+                sports: false,
+                technology: true
+            }
+            _country = countries.random();
+
             call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
                 `{"name": "${_name}", "surname": "${_surname}", "username": "${_email}", "password": "${_password}", "categories": ${JSON.stringify(_categories)}, "country": "${_country}"}`,
                 { 'Content-type': 'application/json' },

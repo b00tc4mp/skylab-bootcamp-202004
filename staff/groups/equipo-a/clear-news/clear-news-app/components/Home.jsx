@@ -5,7 +5,6 @@ class Home extends Component {
         super()
 
         this.state = {
-            favNews: undefined,
             pagesInTopHeadlines: undefined,
             pagesInSearch: undefined,
             view: 'topheadlines',
@@ -16,7 +15,6 @@ class Home extends Component {
             sortBy: undefined,
             categories: undefined,
             country: undefined,
-            headlines: undefined,
             error: undefined
         }
 
@@ -73,13 +71,6 @@ class Home extends Component {
         this.setState({ pagesInTopHeadlines: pages })
     }
 
-    handleFavoritesNews = favNews => {
-        this.setState({favNews})
-    }
-
-    handleFavoritesHeadlines = headlines =>{
-        this.setState({headlines})
-    }
 
     handleSearchNews = (results, query, language, sortBy, pages) =>{
         address.hash.query({ q: query,language,sortBy  })
@@ -90,16 +81,15 @@ class Home extends Component {
     render() {
         return <section className="home">
             <nav className="home__nav-bar">
-                <a className={`home__link ${this.state.view === 'profile' ? 'home__link--active' : ''}`} href="" onClick={this.handleProfile}>Profile </a>
                 <a className={`home__link ${this.state.view === 'favorites' ? 'home__link--active' : ''}`} href="" onClick={this.handleFavorites}>Favorites </a>
                 <a className={`home__link ${this.state.view === 'topheadlines' ? 'home__link--active' : ''}`} href="" onClick={this.handleUser}>Top headlines</a>
                 <a className={`home__link ${this.state.view === 'search' ? 'home__link--active' : ''}`} href="" onClick={this.handleSearch}>Search </a>
-                <h1 className="home__user-name">{this.state.name}</h1>
-                <button className="home__logout"onClick={this.props.onLogout}>Logout</button>
+                <a className={`home__link ${this.state.view === 'profile' ? 'home__link--active' : ''} home__profile`} href="" onClick={this.handleProfile}>Profile<p className="home__user-name">{this.state.name}</p></a>
+                <button className="home__logout" onClick={this.props.onLogout}>Logout</button>
             </nav>
             <img className="home__logo" src="images/logo.png"></img>
             {this.state.view === 'profile' && <Profile token={this.props.token} categories={this.state.categories} country={this.state.country}/>}
-            {this.state.view === 'favorites' && <Favorites token={this.props.token} onFavorite={this.handleFavoritesNews} favNews={this.state.favNews} onHeadlines={this.handleFavoritesHeadlines} headlines={this.state.headlines}/>}
+            {this.state.view === 'favorites' && <Favorites token={this.props.token}/>}
             {this.state.view === 'topheadlines' && <TopHeadlines topHeadlines={this.handleTopHeadlines} token={this.props.token} pages={this.state.pagesInTopHeadlines}/>}
             {this.state.view === 'search' && <SearchNews token={this.props.token} onSearch={this.handleSearchNews} searchNewsResults={this.state.searchNewsResults} query={this.state.newsQuery} language={this.state.newsLanguage} sortBy={this.state.sortBy} pages={this.state.pagesInSearch}/>}
 
