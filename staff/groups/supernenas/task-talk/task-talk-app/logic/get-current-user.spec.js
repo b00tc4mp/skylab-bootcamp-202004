@@ -1,13 +1,13 @@
 "use strict"
 
-describe("getcurrentUser",() => {
+describe("getCurrentUser",() => {
     beforeEach(() => {
         expect(localStorage.trello_token).to.not.be.undefined
         Trello.setToken(localStorage.trello_token)
     })
               
     it("should return the info about pepitogrillo", (done) => {
-        getcurrentUser((user) => {
+        getCurrentUser((user) => {
             expect(user.fullName).to.equal("Pepito Grillo")
             expect(user.id).to.equal("5eb3ec705c0d190c3dd2cc89")
             expect(user.username).to.equal("pepitogrilloskylab")
@@ -20,19 +20,19 @@ describe("getcurrentUser",() => {
 
     it("should throw an error if called with the wrong type of parameters", () => {
         expect(function() {
-            getcurrentUser(undefined, () => {})
+            getCurrentUser(undefined, () => {})
         }).to.throw(TypeError, undefined + " is not a function")
        
         expect(function(){
-            getcurrentUser("notafunction", () => {})
+            getCurrentUser("notafunction", () => {})
         }).to.throw(TypeError, "notafunction" + " is not a function")
         
         expect(function(){
-            getcurrentUser(() => {}, undefined)
+            getCurrentUser(() => {}, undefined)
         }).to.throw(TypeError, undefined + " is not a function")
         
         expect(function(){
-            getcurrentUser(() => {}, "notafunction")
+            getCurrentUser(() => {}, "notafunction")
         }).to.throw(TypeError, "notafunction" + " is not a function")
     })
 
@@ -41,7 +41,7 @@ describe("getcurrentUser",() => {
 
         expect(function() {
             Trello.setToken(undefined)
-            getcurrentUser(() => {}, () => {})
+            getCurrentUser(() => {}, () => {})
         }).to.throw(Error,"Trello does not include a token")
         Trello.setToken(token)
     })
@@ -50,7 +50,7 @@ describe("getcurrentUser",() => {
         const token = Trello.token()
 
         Trello.setToken("12345678901234567890123456789012")
-        getcurrentUser(() => {
+        getCurrentUser(() => {
             Trello.setToken(token)
             expect(true).to.equal(false)
             done()

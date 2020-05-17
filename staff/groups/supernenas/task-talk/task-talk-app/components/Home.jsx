@@ -20,7 +20,7 @@
      componentDidMount(){
         if(localStorage.trello_token){
             Trello.setToken(localStorage.trello_token)
-            getcurrentUser((user)=>{
+            getCurrentUser((user)=>{
                 this.setState({currentuser:user,navigationName:user.fullName})
                 this.handleShowGroups();
             },(error)=>{
@@ -33,7 +33,7 @@
                     this.setState({error: error.responseText})
                 }else if(result){
                     Trello.setToken(result)
-                    getcurrentUser((user)=>{
+                    getCurrentUser((user)=>{
                         this.setState({currentuser:user,navigationName:user.fullName})
                         this.handleShowGroups();
                     },(error)=>{
@@ -56,7 +56,7 @@
         }       
     }
     handleAuthorize=()=>{authenticateUser(()=>{
-        getcurrentUser((user)=>{
+        getCurrentUser((user)=>{
             linkSkylabTrello((error)=>{
                 if(error){
                     this.setState({error: error.responseText})
@@ -170,7 +170,7 @@
         this.setState({view:"invitation"})
     }
     handleLeaveGroup=()=>{
-        getcurrentUser((user)=>{
+        getCurrentUser((user)=>{
             leaveGroup(user.id,this.state.currentgroup,()=>{
                 this.handleShowGroups();
             },(error)=>{
