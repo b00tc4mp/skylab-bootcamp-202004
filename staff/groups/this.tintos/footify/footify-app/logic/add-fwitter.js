@@ -1,5 +1,5 @@
 /**
- * Checks user credentials.
+ * Checks add Fwitter credentials.
  * 
  * @param {string} idPlayer The id of player. 
  * @param {string} _name The player name.

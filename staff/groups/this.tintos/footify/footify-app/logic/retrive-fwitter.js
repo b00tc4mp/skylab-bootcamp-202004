@@ -29,7 +29,7 @@ function retriveFwitter(token, callback) {
                                     results.push({ idUser,nameUser,surnameUser,fwitter, email})
                                 } 
                             })
-                            console.log(results)
+
                             callback(undefined,results)
                         } else {
                             const { error } = JSON.parse(body)
