@@ -31,7 +31,7 @@ function Fwitter({ fwitter, token, onUpdateFwitter, onUserSessionExpired,searchP
             {
                 fwitter.length ?
                     <div className='fwitter'>
-                        {fwitter.map(({ idUser, nameUser, surnameUser, name, message, date, redCard, yellowCard, greenCard,_date}) =>
+                        {fwitter.map(({ idUser, nameUser, surnameUser, name, message, date, redCard, yellowCard, greenCard, _date,bckgRed, bckgYellow, bckgGreen}) =>
                             <div key={_date} className='fwitter__user'>
                                 <div className='fwitter__user-item'>
                                     <img className='fwitter__point' src="img/boy.svg" alt="" />
@@ -45,21 +45,21 @@ function Fwitter({ fwitter, token, onUpdateFwitter, onUserSessionExpired,searchP
                                     <div className=''>
                                         <div className='fwitter__date'>{date}</div>
                                         <div className='fwitter__card-container'>
-                                            <div className="fwitter__card-and-count fwitter__card-and-count-red">
+                                            <div className={`fwitter__card-and-count-${bckgRed} fwitter__card-and-count-red `}>
                                                 <a href="" onClick={(event) => {
                                                     event.preventDefault()
                                                     handletoogleComment(idUser,'red',message)
                                                 }}><img className="fwitter__card-img" src="img/card_red.svg" alt="" /></a>
                                                 <p >{redCard}</p>
                                             </div>
-                                            <div className="fwitter__card-and-count fwitter__card-and-count-yellow">
+                                            <div className={`fwitter__card-and-count-${bckgYellow} fwitter__card-and-count-yellow`}>
                                                 <a href="" onClick={(event) => {
                                                     event.preventDefault()
                                                     handletoogleComment(idUser,'yellow',message)
                                                 }}><img className="fwitter__card-img" src="img/card_yelow.svg" alt="" /></a>
                                                 <p>{yellowCard}</p>
                                             </div>
-                                            <div className="fwitter__card-and-count fwitter__card-and-count-green">
+                                            <div className={`fwitter__card-and-count-${bckgGreen} fwitter__card-and-count-green`}>
                                                 <a href="" onClick={(event) => {
                                                     event.preventDefault()
                                                     handletoogleComment(idUser,'green',message)
