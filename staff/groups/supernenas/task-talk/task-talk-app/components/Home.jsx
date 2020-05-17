@@ -53,6 +53,8 @@
             case "cardEdition":
                 this.setState({view: "cards", navigationName: this.state.groups[this.state.groups.findIndex((group) => {return group.id===this.state.currentgroup})].name , menu:false})
                 break;
+            case "invitation" :
+                this.setState({view: "cards"})
         }       
     }
     handleAuthorize=()=>{authenticateUser(()=>{
@@ -169,6 +171,7 @@
     handleToInvite=()=>{
         this.setState({view:"invitation"})
     }
+
     handleLeaveGroup=()=>{
         getCurrentUser((user)=>{
             leaveGroup(user.id,this.state.currentgroup,()=>{
@@ -191,7 +194,7 @@
             {this.state.view==="groups" && <SelectGroups userGroups={this.state.groups} toSelectedGroup={this.handleGoToGroup} /> }
             {this.state.view==="cardEdition" && <CardEdition onReturn={this.handleReturnToCards} onCreate={this.handleCreateCard} onUpdate={this.handleUpdateCard}  editCard={this.state.selectedActivity} onDelete={this.handleDeleteCard} />}
             {this.state.view==="cards" && <CardSelection activities={this.state.activities} toEdit={this.handleEditCard} /> }
-            {this.state.view==="invitation" && <GroupInvitation onSend={this.handleInviteUser} />}
+            {this.state.view==="invitation" && <GroupInvitation onSend={this.handleInviteUser}/>}
         </section>
     }
  }
