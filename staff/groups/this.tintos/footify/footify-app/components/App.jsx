@@ -13,7 +13,7 @@ class App extends Component {
     componentDidMount (){
         if(sessionStorage.token){
             try{
-                isUserAuthenticated(sessionStorage.token, (error, isAuthenticated)=>{
+                isUserAuthenticated(sessionStorage.token , (error, isAuthenticated)=>{
                     if(error) this.setState({error:error.message})
                  
                     if(isAuthenticated){
