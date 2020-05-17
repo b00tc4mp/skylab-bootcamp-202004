@@ -68,18 +68,18 @@ function searchPlayers(query, callback) {
 
                                         let like = 0
                                     _players.push({
-                                        date: notNull(dateBorn),
+                                        date: notNull(dateBorn,'-'),
                                         image: strCutout,
-                                        firstName: notNull(firstName),
-                                        surname: notNull(surname),
-                                        position: notNull(strPosition),
-                                        clubName: notNull(strTeam),
-                                        number: notNull(strNumber),
-                                        born: notNull(strBirthLocation),
-                                        id: notNull(idPlayer),
-                                        weight: notNull(strWeight),
-                                        height: notNull(strHeight),
-                                        teamId: notNull(idTeam),
+                                        firstName: notNull(firstNam,'-'),
+                                        surname: notNull(surname,'-'),
+                                        position: notNull(strPosition,'-'),
+                                        clubName: notNull(strTeam,'-'),
+                                        number: notNull(strNumber,'-'),
+                                        born: notNull(strBirthLocation,'-'),
+                                        id: notNull(idPlayer,'-'),
+                                        weight: notNull(strWeight,'-'),
+                                        height: notNull(strHeight,'-'),
+                                        teamId: notNull(idTeam,'-'),
                                         club: emblem,
                                         likes: like
                                     })

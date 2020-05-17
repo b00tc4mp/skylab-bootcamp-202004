@@ -3,29 +3,31 @@ const { useState } = React
 function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDream, onGoToUpdateUser, onGoToLogOut }) {
 
     const [menu, setMenu] = useState()
+    const [view,setView] = useState('home')
 
     const handleSubmitSearch = (event) => {
         event.preventDefault()
 
         const queryPlayer = event.target.searchPlayer.value
-
+        
         onGoToPlayerResults(queryPlayer)
     }
     const handleSubmitSport = (event) => {
         event.preventDefault()
-
+        setView('news')
         onGoToSportNews()
 
     }
 
     const handleSubmitFwitter = (event) => {
         event.preventDefault()
-
+        setView('home')
         onGoToFwitter()
     }
 
     const handleSubmitToggle = (event) => {
         event.preventDefault()
+        setView()
         if(menu) setMenu()
         else setMenu('menu')
       
@@ -39,7 +41,7 @@ function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDre
 
     const handleSubmitDream = (event) => {
         event.preventDefault()
-
+        setView('dream')
         onGoToDream()
     }
 
@@ -48,6 +50,16 @@ function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDre
 
         onGoToLogOut()
     }
+    const handleHoverHome =()=>{
+        setView('home')
+    }
+    const handleHoverDream =()=>{
+        setView('dream')
+    }
+    const handleHoverNews =()=>{
+        setView('news')
+    }
+ 
 
     return <>
         <section className="navbar">
@@ -69,19 +81,24 @@ function Navbar({ onGoToPlayerResults, onGoToSportNews, onGoToFwitter, onGoToDre
                     </a>
                 </nav>
                 <nav className="navbar__links">
-                    <a href="">
-                        <img src="img/home.svg" alt="logo" className="navbar__links-item" onClick={handleSubmitFwitter} />
+                    <a href=""  onClick={handleSubmitFwitter}>
+                        {
+                            view ==='home'? <img src="img/home_onclick.svg" alt="logo" className="navbar__links-item" />:<img src="img/home.svg" alt="logo" className="navbar__links-item" />
+                        }
                     </a>
                     <a href="" onClick={handleSubmitSport}>
-                        <img src="img/news.svg" alt="user" id="navbar__links-news" />
+                         {
+                            view ==='news'?<img src="img/news_onclick.svg" alt="user" id="navbar__links-news" />:<img src="img/news.svg" alt="user" id="navbar__links-news" />
+                        } 
                     </a>
-                    <a href="" onClick={handleSubmitDream}>
-                        <img src="img/dreamteam.svg" alt="user" className="navbar__links-item" />
+                    <a href="" onClick={handleSubmitDream} >
+                        {
+                            view ==='dream'?<img src="img/dreamteam_onclick.svg" alt="user" className="navbar__links-item" />:<img src="img/dreamteam.svg" alt="user" className="navbar__links-item" />
+                        } 
                     </a>
 
                     <form action="" onSubmit={handleSubmitSearch}>
                         <input type="text" id="navbar__links-search" name='searchPlayer' />
-
                     </form>
                 </nav>
             </div>
