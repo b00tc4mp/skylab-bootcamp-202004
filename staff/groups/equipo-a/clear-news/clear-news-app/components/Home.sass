@@ -8,21 +8,24 @@
     &__nav-bar
         display: grid
         grid-template-columns: repeat(6, 1fr)
-        height: 40px
+        height: 60px
         width: 100vw
         margin-bottom: 1rem
+        border: 0.1rem solid #5B2C6F
         
     &__logo
         width: 30%
     
     &__user-name
-        font-size: 70%
+        font-size: 100%
         display: flex
         justify-content: center
         align-items: center
         background-color: #a67bb8
         color: white
+        padding: 0.3rem
         border: 0.1rem solid #5B2C6F
+        margin-left: 0.3rem
 
     &__link
         display: flex
@@ -31,7 +34,6 @@
         padding: 0.5rem
         text-decoration: none
         font-size: 70%
-        border: 0.1rem solid #5B2C6F
 
         &--active
             background-color: #5B2C6F
@@ -40,5 +42,12 @@
     &__logout
         background-color: #5B2C6F
         width: 100%
+        grid-column-start: 6
+    
+    &__icon
+        width: 90%
+    
+    &__profile
+        grid-column: 4/ span 2
 
 

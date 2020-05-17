@@ -85,9 +85,7 @@
   text-align: start;
   margin-bottom: 1rem;
   font-size: 0.7rem;
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
 }
 .register__nav-button {
   display: flex;
@@ -104,9 +102,7 @@
   display: flex;
   border-radius: 0;
   margin-bottom: 1rem;
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
 }
 .register input {
   margin-bottom: 1rem;
@@ -114,10 +110,8 @@
 .register input[type=text], .register input[type=email], .register input[type=password] {
   border: 0.05rem solid #A6ACAF;
   border-radius: 5px;
-  width: 80%;
+  width: 100%;
   padding: 0.3rem;
-  margin-left: auto;
-  margin-right: auto;
 }
 .register h1 {
   margin-bottom: 1.5rem;
@@ -284,21 +278,24 @@
 .home__nav-bar {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  height: 40px;
+  height: 60px;
   width: 100vw;
   margin-bottom: 1rem;
+  border: 0.1rem solid #5B2C6F;
 }
 .home__logo {
   width: 30%;
 }
 .home__user-name {
-  font-size: 70%;
+  font-size: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #a67bb8;
   color: white;
+  padding: 0.3rem;
   border: 0.1rem solid #5B2C6F;
+  margin-left: 0.3rem;
 }
 .home__link {
   display: flex;
@@ -307,7 +304,6 @@
   padding: 0.5rem;
   text-decoration: none;
   font-size: 70%;
-  border: 0.1rem solid #5B2C6F;
 }
 .home__link--active {
   background-color: #5B2C6F;
@@ -316,6 +312,13 @@
 .home__logout {
   background-color: #5B2C6F;
   width: 100%;
+  grid-column-start: 6;
+}
+.home__icon {
+  width: 90%;
+}
+.home__profile {
+  grid-column: 4/span 2;
 }
 
 .news__images {

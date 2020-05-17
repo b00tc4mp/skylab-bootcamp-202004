@@ -8,7 +8,7 @@ function SearchNews({ onSearch, searchNewsResults, query, language, sortBy, toke
         query && query.q && searchNews(token, query.q, query.language, query.sortBy , (error, searchNewsResults, pages) =>{
             if (error) throw Error
     
-            onSearch(searchNewsResults, query.q, query.language, query.sortBy, pages)
+            // onSearch(searchNewsResults, query.q, query.language, query.sortBy, pages)
         })
     }, [])
 

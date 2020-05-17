@@ -7,11 +7,16 @@ function TopHeadlines({pages, topHeadlines, token }) {
     const[news, setNews] = useState()
 
     useEffect(() => {
+        let mounted = true
         !news && retrieveNews(token, (error, news, pages) => {
             if (error) setError(error.message)
+            if (mounted){
             topHeadlines(pages)
             setNews(news)
+            }
         })
+
+        return () => mounted = false
     }, [])
 
     function handleLikeNews(headline) {
