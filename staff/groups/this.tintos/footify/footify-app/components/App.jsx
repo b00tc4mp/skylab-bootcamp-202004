@@ -10,11 +10,14 @@ class App extends Component {
         }
     }
 
+
     componentDidMount (){
         if(sessionStorage.token){
             try{
+
                 isUserAuthenticated(sessionStorage.token , (error, isAuthenticated)=>{
                     if(error) this.setState({error:error.message})
+
                  
                     if(isAuthenticated){
                         this.setState({token: sessionStorage.token})
@@ -32,9 +35,11 @@ class App extends Component {
             if(hash === 'login' || hash === 'register') setHashView(view)
             else{
                 address.hash.clear()
+
                 this.setState({view:'landing'})
             }
             
+
         }
     }
 
@@ -65,6 +70,7 @@ class App extends Component {
         sessionStorage.token = token
         this.setState({token}) 
         this.setState({view:'home'})     
+
     } 
     
     handleUserSessionExpired= () => { this.setState({view:'login'})}

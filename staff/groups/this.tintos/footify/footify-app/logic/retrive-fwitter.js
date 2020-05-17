@@ -9,9 +9,6 @@
  */
 
 
-
-
-
 function retriveFwitter(token, callback) {
     String.validate.notVoid(token);
 
@@ -26,10 +23,10 @@ function retriveFwitter(token, callback) {
                 let users = JSON.parse(body)
   
                      const results =[]
-                      users.forEach(({id:idUser,name: nameUser,surname: surnameUser,fwitter})=>{
+                      users.forEach(({id:idUser,name: nameUser,surname: surnameUser,fwitter, username: email})=>{
                                 
                                 if(fwitter){
-                                    results.push({ idUser,nameUser,surnameUser,fwitter})
+                                    results.push({ idUser,nameUser,surnameUser,fwitter, email})
                                 } 
                             })
 

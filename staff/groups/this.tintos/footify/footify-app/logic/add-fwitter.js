@@ -23,8 +23,8 @@ function addFwitter(idPlayer, _name, _message, token, callback) {
     Function.validate(callback);
 
     call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined, {
-            Authorization: `Bearer ${token}`
-        },
+        Authorization: `Bearer ${token}`
+    },
         (error, status, body) => {
             if (error) return callback(error)
 
@@ -34,7 +34,7 @@ function addFwitter(idPlayer, _name, _message, token, callback) {
 
                 let pushFwitt = false;
 
-                if (fwitter.length ===  0) {
+                if (fwitter.length === 0) {
                     const resultFwitter = {
                         id: idPlayer,
                         name: _name,
@@ -83,9 +83,9 @@ function addFwitter(idPlayer, _name, _message, token, callback) {
                 }
 
                 call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify({ fwitter }), {
-                        Authorization: `Bearer ${token}`,
-                        'Content-type': 'application/json'
-                    },
+                    Authorization: `Bearer ${token}`,
+                    'Content-type': 'application/json'
+                },
                     (error, status, body) => {
                         if (error) return callback(error)
 
@@ -103,14 +103,17 @@ function addFwitter(idPlayer, _name, _message, token, callback) {
 
                 callback(new Error(error))
             }
-    })
+        })
 }
 
 /**
  * Invoked after remote authentication.
- * 
+ *
  * @callback callback
  * @param {Error} error It may receive an error in case remote logic fails or there is a network problem.
+<<<<<<< Updated upstream
  * @param {string} token It receives a token in case credentials are correct.
- * 
+ *
+=======
+>>>>>>> Stashed changes
  */
