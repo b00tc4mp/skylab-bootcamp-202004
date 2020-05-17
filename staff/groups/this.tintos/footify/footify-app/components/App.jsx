@@ -1,25 +1,30 @@
-const { useState, useEffect } = React
-function App() {
+const { Component } = React
 
-    const [view, setView] = useState('load')
-    const [token, setToken] = useState()
-    const [error,setError] = useState()
+class App extends Component {
+    constructor(){
+        super()
+        this.state = {
+            view: 'load',
+            token: undefined,
+            error: undefined
+        }
+    }
 
-    useEffect(()=>{
+    componentDidMount (){
         if(sessionStorage.token){
             try{
                 isUserAuthenticated(sessionStorage.token, (error, isAuthenticated)=>{
-                    if(error) setError(error.message);
+                    if(error) this.setState({error:error.message})
                  
                     if(isAuthenticated){
-                        setToken(sessionStorage.token)
-                        setView('home')
+                        this.setState({token: sessionStorage.token})
+                        this.setState({view:'home'})
                     }else{
-                        setView('login')
+                        this.setState({view:'login'})
                     }
                 })
             }catch({message}){
-                setError(message)
+                this.setState({error:error.message})
             }
         }else{
             const hash = address.hash()
@@ -27,51 +32,54 @@ function App() {
             if(hash === 'login' || hash === 'register') setHashView(view)
             else{
                 address.hash.clear()
-                setView('landing')
+                this.setState({view:'landing'})
             }
             
         }
-    },[])
+    }
 
-    const setHashView = (view) =>{
+    setHashView =(view)=>{
         if(view === 'landing'){
             address.hash.clear()
-            setView(view)
+            this.setState({view})
         } else{
             address.hash(view)
-            setView(view)
+            this.setState({view})
         }
     }
 
-    const handleGoToLogin = () => {setHashView('login') }
+    handleGoToLogin =() =>{this.setState({view:'login'})}
 
-    const handleGoToRegister = () => { setHashView('register') }
+    handleGoToRegister= () =>{ this.setState({view:'register'}) }
 
-    const handleGoToLanding = () => { setHashView('landing') }
+    handleGoToLanding= () =>{ this.setState({view:'landing'}) }
 
-    const handleOnGoToLogOut = () =>{
-        setToken()
+    handleOnGoToLogOut= () =>{
+        this.setState({yoken:undefined})
         delete sessionStorage.token
         location.hash = ''
-        setView('landing')
+        this.setState({view:'landing'})
     }
 
-    const handlGoToHome = (token) => { 
+    handleGoToHome = (token)=>{ 
         sessionStorage.token = token
-        setToken(token) 
-        setView('home')      
+        this.setState({token}) 
+        this.setState({view:'home'})     
     } 
     
-    const handleUserSessionExpired = () =>{ setHashView('login')}
+    handleUserSessionExpired= () => { this.setState({view:'login'})}
 
-    return <>
-        {view === 'load' && <Spinner />}
-        {view === 'landing' && <Landing onGoToLogin={handleGoToLogin} onGoToRegister={handleGoToRegister} />}
-        {view === 'login' && <Login onGoToRegister={handleGoToRegister} onGoToLanding={handleGoToLanding} onGoToHome={handlGoToHome}/>}
-        {view === 'register' && <Register onGoToLogin={handleGoToLogin} onGoToLanding={handleGoToLanding}/>}
-        {view === 'home' && <Home token={token} onUserSessionExpired={handleUserSessionExpired} onGoToLogOut={handleOnGoToLogOut}/>}
-        {error && <Feedback message={error} level="error" />}
+    render(){
+        return <>
+        {this.state.view === 'load' && <Spinner />}
+        {this.state.view === 'landing' && <Landing onGoToLogin={this.handleGoToLogin} onGoToRegister={this.handleGoToRegister} />}
+        {this.state.view === 'login' && <Login onGoToRegister={this.handleGoToRegister} onGoToLanding={this.handleGoToLanding} onGoToHome={this.handleGoToHome}/>}
+        {this.state.view === 'register' && <Register onGoToLogin={this.handleGoToLogin} onGoToLanding={this.handleGoToLanding}/>}
+        {this.state.view === 'home' && <Home token={this.state.token} onUserSessionExpired={this.handleUserSessionExpired} onGoToLogOut={this.handleOnGoToLogOut}/>}
+        {this.state.error && <Feedback message={this.state.error} level="error" />}
     </>
+    }
+
 
 }
 
