@@ -2,12 +2,10 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Slabo+27px&display=swap");
 .news, .home, .login, .register, .landing {
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: "Montserrat", serif;
 }
 
 .landing {
-  background-color: #ffc003;
-  color: #154360;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -22,26 +20,59 @@
   margin-left: 5rem;
   margin-right: 5rem;
 }
-.landing__imagen {
+.landing__image {
   width: 100%;
 }
 .landing a {
   text-decoration: none;
+  background-color: #5B2C6F;
+  border-radius: 10px;
+  font-size: 3vw;
+  padding: 0.5rem;
+  width: 120px;
 }
 .landing a:visited {
-  color: #154360;
+  color: white;
+}
+
+.landing {
+  align-items: center;
+  justify-content: space-evenly;
+}
+.landing__image {
+  max-width: 768px;
+}
+.landing a {
+  max-width: 100px;
+  margin: 10px;
+  width: 120px;
+  font-size: 20px;
+}
+
+.landing {
+  maralign-items: center;
+  justify-content: space-evenly;
+}
+.landing__image {
+  max-width: 768px;
+}
+.landing a {
+  max-width: 150px;
+  font-size: 20px;
+  margin: 10px;
+  width: 120px;
 }
 
 .register {
-  background-color: #ffc003;
-  color: #154360;
+  color: #5B2C6F;
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   width: 100vw;
   height: 100vh;
+  font-size: 0.7rem;
 }
 .register__input {
   display: flex;
@@ -49,90 +80,201 @@
 }
 .register__logo {
   width: 50%;
-  border: 2px solid #154360;
-  margin-bottom: 1.5rem;
 }
 .register__checkbox {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  margin-bottom: 1.5rem;
-  font-size: 0.8rem;
+  text-align: start;
+  margin-bottom: 1rem;
+  font-size: 0.7rem;
+  width: 100%;
 }
 .register__nav-button {
   display: flex;
 }
 .register__button {
-  background-color: #154360;
+  background-color: #5B2C6F;
   color: white;
-  font-size: 0.8rem;
-  padding: 0.3rem;
   border-radius: 10px;
+  font-size: 3vw;
+  padding: 0.5rem;
+  width: 15vw;
 }
 .register__country {
   display: flex;
-  border-color: #154360;
-  background-color: #154360;
-  color: white;
   border-radius: 0;
+  margin-bottom: 1rem;
+  width: 100%;
 }
 .register input {
-  border-color: #154360;
   margin-bottom: 1rem;
 }
-.register input:hover {
-  background-color: #154360;
-  color: white;
+.register input[type=text], .register input[type=email], .register input[type=password] {
+  border: 0.05rem solid #A6ACAF;
+  border-radius: 5px;
+  width: 100%;
+  padding: 0.3rem;
 }
 .register h1 {
   margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+.register a {
+  text-decoration: none;
+  background-color: #5B2C6F;
+  color: white;
+  border-radius: 10px;
+  font-size: 3vw;
+  padding: 0.5rem;
+}
+.register a:visited {
+  color: white;
+}
+.register__country {
+  overflow: auto;
+}
+
+.register {
+  align-items: center;
+  justify-content: space-evenly;
+}
+.register__logo {
+  max-width: 168px;
+  width: 168px;
+}
+.register a {
+  max-width: 100px;
+  margin: 10px;
+  width: 120px;
+  font-size: 20px;
+}
+.register button {
+  max-width: 100px;
+  margin: 10px;
+  width: 120px;
+  font-size: 20px;
+}
+
+.register {
+  maralign-items: center;
+  justify-content: space-evenly;
+}
+.register__logo {
+  max-width: 168px;
+  width: 168px;
+}
+.register a {
+  max-width: 150px;
+  font-size: 20px;
+  margin: 10px;
+  width: 120px;
+}
+.register button {
+  max-width: 150px;
+  font-size: 20px;
+  margin: 10px;
+  width: 120px;
 }
 
 .login {
-  background-color: #ffc003;
-  color: #154360;
+  color: #5B2C6F;
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   width: 100vw;
   height: 100vh;
+  font-size: 0.7rem;
 }
 .login__button {
-  background-color: #154360;
+  background-color: #5B2C6F;
   color: white;
-  font-size: 0.8rem;
-  padding: 0.3rem;
   border-radius: 10px;
+  font-size: 3vw;
+  padding: 0.5rem;
+  width: 15vw;
 }
 .login__input {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  justify-content: center;
 }
 .login__logo {
   width: 50%;
-  border: 2px solid #154360;
   margin-bottom: 1.5rem;
 }
 .login input {
-  border-color: #154360;
   margin-bottom: 1.5rem;
-  margin-left: 0.5rem;
-}
-.login input:hover {
-  background-color: #154360;
-  color: white;
+  border: 0.05rem solid #A6ACAF;
+  border-radius: 5px;
+  width: 100%;
+  padding: 0.3rem;
+  align-self: center;
 }
 .login h1 {
   margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+.login a {
+  text-decoration: none;
+  background-color: #5B2C6F;
+  color: white;
+  border-radius: 10px;
+  font-size: 3vw;
+  padding: 0.5rem;
+}
+.login a:visited {
+  color: white;
+}
+
+.register {
+  align-items: center;
+  justify-content: space-evenly;
+}
+.register__logo {
+  max-width: 168px;
+  width: 168px;
+}
+.register a {
+  max-width: 100px;
+  margin: 10px;
+  width: 120px;
+  font-size: 20px;
+}
+.register button {
+  max-width: 100px;
+  margin: 10px;
+  width: 120px;
+  font-size: 20px;
+}
+
+.login {
+  maralign-items: center;
+  justify-content: space-evenly;
+}
+.login__logo {
+  max-width: 168px;
+  width: 168px;
+}
+.login a {
+  max-width: 150px;
+  font-size: 20px;
+  margin: 10px;
+  width: 120px;
+}
+.login button {
+  max-width: 150px;
+  font-size: 20px;
+  margin: 10px;
+  width: 120px;
 }
 
 .feedback {
-  color: green;
-  margin: 1rem;
-}
-.feedback--warning {
-  color: orange;
+  font-size: 1rem;
+  color: #5B2C6F;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 15px;
 }
 .feedback--error {
   color: red;
@@ -140,107 +282,130 @@
 
 .home {
   width: 100vw;
-}
-.home__nav-bar {
-  background-color: #ffc003;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #154360;
-}
-.home__menu {
   display: flex;
   flex-direction: column;
-  width: 20%;
-  background-color: #ffc003;
-  color: #154360;
-  font-size: 0.8rem;
-  padding: 0.6rem;
-  text-align: center;
+  align-items: center;
 }
-.home__icon {
-  width: 25%;
-}
-.home__user-name {
-  font-size: 0.6rem;
-}
-.home__nav-bar-title {
-  font-size: 1rem;
-}
-.home__link {
-  text-decoration: none;
-}
-.home__link:visited {
-  color: #154360;
-}
-.home__search {
-  text-align: center;
-  background-color: #ffc003;
-  color: #154360;
-}
-.home input {
-  margin-left: 2.5rem;
-  margin-top: 0.5rem;
-  border-color: #154360;
-}
-.home input:hover {
-  background-color: #154360;
-  color: white;
-}
-.home__button {
-  background-color: #154360;
-  color: white;
-  font-size: 0.6rem;
-  padding: 0.3rem;
-  border-radius: 10px;
-}
-.home__title {
-  text-align: center;
-  margin-top: 1rem;
-}
-.home__content {
-  font-family: "Slabo", serif;
-  font-size: 0.8rem;
-}
-.home__images {
-  width: 100%;
-}
-.home__notice-content {
-  padding: 1rem;
-}
-.home__notice-content > a {
-  text-decoration: none;
-  font-size: 1.5rem;
-  color: #154360;
-}
-.home p {
-  font-size: 0.9rem;
+.home__nav-bar {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  height: 40px;
+  width: 100vw;
   margin-bottom: 1rem;
 }
-.home__notice-text {
-  border-bottom: 1px solid;
-  padding-bottom: 2rem;
+.home__logo {
+  width: 30%;
+}
+.home__user-name {
+  font-size: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #a67bb8;
+  color: white;
+  border: 0.1rem solid #5B2C6F;
+}
+.home__link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  text-decoration: none;
+  font-size: 70%;
+  border: 0.1rem solid #5B2C6F;
+}
+.home__link--active {
+  background-color: #5B2C6F;
+  color: white;
+}
+.home__logout {
+  background-color: #5B2C6F;
+  width: 100%;
 }
 
+.news__images {
+  height: 100%;
+  margin: 5px;
+  padding: 0;
+  width: 100vw;
+}
+.news__container {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+}
 .news__item {
   position: relative;
   text-align: start;
+  text-decoration: none;
+  width: 100vw;
+  height: 220px;
 }
 .news__title {
   position: absolute;
-  bottom: 1rem;
-  left: 0.5rem;
+  top: 0.1rem;
+  left: 0px;
   font-size: 4vw;
-  font-family: "Montserrat", serif;
-  padding: 0.5rem;
+  background-color: rgba(167, 172, 175, 0.7);
   color: white;
 }
-
-.stroke {
-  -webkit-text-fill-color: 1px black;
-  -webkit-text-stroke: 0.5px white;
+.news__button {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+}
+.news__followIMG {
+  width: 70px;
+  height: 70px;
 }
 
+@media screen and (min-width: 768px) {
+  .news__images {
+    width: 50vw;
+  }
+  .news__item {
+    width: 50vw;
+    height: 300px;
+  }
+  .news__container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    justify-content: none;
+    align-items: none;
+  }
+  .news__followIMG {
+    width: 120px;
+    height: 120px;
+  }
+  .news__title {
+    font-size: 2vw;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .news__container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    justify-content: none;
+    align-items: none;
+  }
+  .news__images {
+    width: 25vw;
+  }
+  .news__item {
+    width: 25vw;
+    height: 250px;
+  }
+  .news__title {
+    font-size: 2vw;
+  }
+  .news__followIMG {
+    width: 70px;
+    height: 70px;
+  }
+}
 * {
   margin: 0;
 }
