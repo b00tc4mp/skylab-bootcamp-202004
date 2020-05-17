@@ -7,7 +7,7 @@
  * @throws {TypeError} Throws an error if onSuccess o onFailure are not functions
  */
 
-function deletegroup(groupId, onSuccess, onFailure) {
+function deleteGroup(groupId, onSuccess, onFailure) {
     String.validate(groupId)
     
     Function.validate(onSuccess)

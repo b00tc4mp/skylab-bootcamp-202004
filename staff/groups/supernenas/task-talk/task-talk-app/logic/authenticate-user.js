@@ -5,7 +5,7 @@
  * @throws {TypeError} Throws an error if parameters are not functions
  */
 
-function authenticateuser(onSuccess, onFailure) {
+function authenticateUser(onSuccess, onFailure) {
     Function.validate(onSuccess)
 
     Function.validate(onFailure)

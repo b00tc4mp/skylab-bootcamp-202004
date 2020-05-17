@@ -1,6 +1,6 @@
 "use strict"
 
-describe("retrieveusergroups", () => {
+describe("retrieveUserGroups", () => {
     let testUsername="pepitogrilloskylab"
     
     beforeEach(() => {
@@ -12,11 +12,11 @@ describe("retrieveusergroups", () => {
         let testError
 
         Trello.post("boards/",{name: "retrieveTest"},() => {
-            retrieveusergroups(testUsername,(results) => {
+            retrieveUserGroups(testUsername,(results) => {
                 expect(results.length).to.equal(1)
                 expect(results[0].name).to.equal("retrieveTest")
                 Trello.post("boards/",{name:"retrieveTest2"},() => {
-                    retrieveusergroups(testUsername,(results) => {
+                    retrieveUserGroups(testUsername,(results) => {
                         expect(results.length).to.equal(2)
                         expect(results[0].name).to.equal("retrieveTest")
                         expect(results[1].name).to.equal("retrieveTest2")
@@ -44,7 +44,7 @@ describe("retrieveusergroups", () => {
     })
 
     it("should call onFailure when given an unexistent id/name", (done) => {
-        retrieveusergroups("pepitogrilskylab",() => {
+        retrieveUserGroups("pepitogrilskylab",() => {
             expect(true).to.equal(false)
             done()
         },(error) => {
@@ -58,27 +58,27 @@ describe("retrieveusergroups", () => {
 
     it("should throw an error when called with incorrect parameters",() => {
         expect(function() {
-            retrieveusergroups((123), () => {}, () => {})
+            retrieveUserGroups((123), () => {}, () => {})
         }).to.throw(TypeError, 123 +" is not a string")
         
         expect(function() {
-            retrieveusergroups(undefined, () => {}, () => {})
+            retrieveUserGroups(undefined, () => {}, () => {})
         }).to.throw(TypeError, undefined + " is not a string")
         
         expect(function() {
-            retrieveusergroups("user")
+            retrieveUserGroups("user")
         }).to.throw(TypeError, undefined +" is not a function")
         
         expect(function() {
-            retrieveusergroups("user","notafunction")
+            retrieveUserGroups("user","notafunction")
         }).to.throw(TypeError, "notafunction" +" is not a function")
         
         expect(function() {
-            retrieveusergroups("user", () => {})
+            retrieveUserGroups("user", () => {})
         }).to.throw(TypeError, undefined +" is not a function")
         
         expect(function() {
-            retrieveusergroups("user", () => {}, "notafunction")
+            retrieveUserGroups("user", () => {}, "notafunction")
         }).to.throw(TypeError, "notafunction" + " is not a function")
     })
 

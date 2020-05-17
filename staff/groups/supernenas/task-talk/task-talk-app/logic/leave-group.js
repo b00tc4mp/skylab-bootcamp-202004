@@ -7,7 +7,7 @@
  * @throws {TypeError} Throws an error if userid or groupid are not strings or if onSuccess or onFailure are not functions
  */
 
-function leavegroup(userid,groupid,onSuccess,onFailure){
+function leaveGroup(userid,groupid,onSuccess,onFailure){
     String.validate(userid)
 
     String.validate(groupid)

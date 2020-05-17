@@ -6,7 +6,7 @@
  * @throws {TypeError} throws an error if tokentrello or tokenskylab are not a string
  * @throws {TypeError} throws an error if callback is not a function
  */
-function linkskylabtrello(callback, tokenskylab, tokentrello) {
+function linkSkylabTrello(callback, tokenskylab, tokentrello) {
     Function.validate(callback)
 
     String.validate(tokenskylab)

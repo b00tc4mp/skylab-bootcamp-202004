@@ -1,5 +1,5 @@
 "use strict"
-describe('deleteactivity', () => {
+describe('deleteActivity', () => {
     let testUsername = 'pepitogrilloskylab'
     beforeEach( () => {
         expect(localStorage.trello_token).to.not.be.undefined
@@ -11,7 +11,7 @@ describe('deleteactivity', () => {
         Trello.post('boards/', { name: 'deleteActivityTest' }, (board) => { 
             Trello.get(`boards/${board.id}/lists`, (lists) => {
                 Trello.post('cards', { name: 'holaDelete', idList: lists[1].id} , (card)=> {
-                    deleteactivity(card.id, () => { 
+                    deleteActivity(card.id, () => { 
                         Trello.get(`lists/${lists[1].id}/cards`, (cards) => {
                             expect(cards.length).to.equal(0)
                             done()
@@ -43,7 +43,7 @@ describe('deleteactivity', () => {
         })        
     })
     it("should call onFailure when given a wrong cardId",(done)=>{
-        deleteactivity("12345678901234567890123456789012",()=>{
+        deleteActivity("12345678901234567890123456789012",()=>{
             expect(true).to.equal(false)
             done();
         },(error)=>{
@@ -55,23 +55,23 @@ describe('deleteactivity', () => {
     })
     it("should throw an error if called with the wrong type of parameters",()=>{
         expect(function(){
-            deleteactivity((123),()=>{},()=>{})
+            deleteActivity((123),()=>{},()=>{})
         }).to.throw(TypeError, 123 +" is not a string")
         
         expect(function(){
-            deleteactivity("123123123",undefined,()=>{})
+            deleteActivity("123123123",undefined,()=>{})
         }).to.throw(TypeError, undefined +" is not a function")
         
         expect(function(){
-            deleteactivity("123123123","notafunction",()=>{})
+            deleteActivity("123123123","notafunction",()=>{})
         }).to.throw(TypeError, "notafunction" +" is not a function")
        
         expect(function(){
-            deleteactivity("123123123",()=>{},undefined)
+            deleteActivity("123123123",()=>{},undefined)
         }).to.throw(TypeError, undefined +" is not a function")
         
         expect(function(){
-            deleteactivity("123123123",()=>{},"notafunction")
+            deleteActivity("123123123",()=>{},"notafunction")
         }).to.throw(TypeError, "notafunction" +" is not a function")
     })
     afterEach((done)=>{ //Borro los tablones que he creado para las pruebas

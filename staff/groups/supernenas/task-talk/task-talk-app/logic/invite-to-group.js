@@ -7,7 +7,7 @@
  * @throws {TypeError} Throws an error if userid or groupid is not a string or if onSucces or onFailure is not a function
  */
 
-function invitetogroup(userid,groupid,onSuccess,onFailure){
+function inviteToGroup(userid,groupid,onSuccess,onFailure){
     String.validate(userid)
 
     String.validate(groupid)

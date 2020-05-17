@@ -1,6 +1,6 @@
 "use strict"
 
-describe("updategroup", () => {
+describe("updateGroup", () => {
     let testUsername = "pepitogrilloskylab"
 
     beforeEach(() => {
@@ -13,7 +13,7 @@ describe("updategroup", () => {
             expect(group.name).to.equal("updateTestBoard")
             expect(group.desc).to.equal("")
 
-            updategroup(group.id, "updatedTestBoard", "I have been updated", (updatedGroup) => {
+            updateGroup(group.id, "updatedTestBoard", "I have been updated", (updatedGroup) => {
                 expect(group.id).to.equal(updatedGroup.id)
                 expect(updatedGroup.name).to.equal("updatedTestBoard")
                 expect(updatedGroup.desc).to.equal("I have been updated")
@@ -27,7 +27,7 @@ describe("updategroup", () => {
     })
 
     it("should call onFailure when given a wrong id", done => {
-        updategroup("13245678901234567890123456789012", "imposibleGroup", "imposible description", (group) => {
+        updateGroup("13245678901234567890123456789012", "imposibleGroup", "imposible description", (group) => {
             done(group)
         }, (error) => {
             expect(error.responseText).to.equal("invalid id")
@@ -38,23 +38,23 @@ describe("updategroup", () => {
     })
     it("should throw an error when called with wrong type of parameters", () => {
         expect(function() {
-            updategroup(123, "string", "string", () => {}, () => {})
+            updateGroup(123, "string", "string", () => {}, () => {})
         }).to.throw(TypeError, 123 + " is not a string")
        
         expect(function() {
-            updategroup("string", 123, "string", () => {}, () => {})
+            updateGroup("string", 123, "string", () => {}, () => {})
         }).to.throw(TypeError, 123 + " is not a string")
        
         expect(function() {
-            updategroup("string", "string", 123, () => {}, () => {})
+            updateGroup("string", "string", 123, () => {}, () => {})
         }).to.throw(TypeError, 123 + " is not a string")
        
         expect(function() {
-            updategroup("string", "string", "string", undefined, () => {})
+            updateGroup("string", "string", "string", undefined, () => {})
         }).to.throw(TypeError, undefined + " is not a function")
         
         expect(function() {
-            updategroup("string", "string", "string", () => {}, undefined)
+            updateGroup("string", "string", "string", () => {}, undefined)
         }).to.throw(TypeError, undefined + " is not a function")
     })
 

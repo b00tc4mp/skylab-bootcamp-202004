@@ -1,6 +1,6 @@
 "use strict"
 
-describe("updateactivity", () => {
+describe("updateActivity", () => {
     let testUsername="pepitogrilloskylab"
     
     beforeEach(() => {
@@ -9,14 +9,14 @@ describe("updateactivity", () => {
     })
 
     it("should change name, description and/or idList of an specified activity", (done) => {
-        Trello.post("boards/", {name: "updateactivity", defaultLists: false}, (board) => {
+        Trello.post("boards/", {name: "updateActivity", defaultLists: false}, (board) => {
             Trello.post("lists", { name: "updateList", idBoard: board.id }, (list) => {
                 Trello.post("cards/",{name: "updateCard", idList: list.id}, (card) => {
                     expect(card.name).to.equal("updateCard")
                     expect(card.idList).to.equal(list.id)
                     expect(card.desc).to.equal("")
 
-                    updateactivity(card.id,{
+                    updateActivity(card.id,{
                         name:"updatedCard", 
                         desc:"Description of the card", 
                         idList: list.id
@@ -47,56 +47,56 @@ describe("updateactivity", () => {
 
     it("should throw an error when called with the wrong type of parameters", () => {
         expect(function() {
-            updateactivity(undefined, {name: "name", desc: "desc", idList: "idList"}, () => {}, () => {})
+            updateActivity(undefined, {name: "name", desc: "desc", idList: "idList"}, () => {}, () => {})
         }).to.throw(TypeError, undefined +" is not a string")
        
         expect(function(){
-            updateactivity(123, {name: "name", desc: "desc", idList: "idList"},() => {}, () => {})
+            updateActivity(123, {name: "name", desc: "desc", idList: "idList"},() => {}, () => {})
         }).to.throw(TypeError, 123 +" is not a string")
        
         expect(function(){
-            updateactivity("id",{name: undefined, desc: "desc", idList: "idList"},() => {},() => {})
+            updateActivity("id",{name: undefined, desc: "desc", idList: "idList"},() => {},() => {})
         }).to.throw(TypeError, undefined +" is not a string")
        
         expect(function(){
-            updateactivity("id",{name: 123, desc: "desc", idList: "idList"},() => {},() => {})
+            updateActivity("id",{name: 123, desc: "desc", idList: "idList"},() => {},() => {})
         }).to.throw(TypeError, 123 +" is not a string")
        
         expect(function(){
-            updateactivity("id",{name: "name", desc: undefined, idList: "idList"},() => {},() => {})
+            updateActivity("id",{name: "name", desc: undefined, idList: "idList"},() => {},() => {})
         }).to.throw(TypeError, undefined +" is not a string")
        
         expect(function(){
-            updateactivity("id", {name: "name", desc: 123, idList: "idList"},() => {},() => {})
+            updateActivity("id", {name: "name", desc: 123, idList: "idList"},() => {},() => {})
         }).to.throw(TypeError, 123 +" is not a string")
        
         expect(function(){
-            updateactivity("id", {name: "name", desc: "desc", idList: undefined},() => {},() => {})
+            updateActivity("id", {name: "name", desc: "desc", idList: undefined},() => {},() => {})
         }).to.throw(TypeError, undefined +" is not a string")
        
         expect(function(){
-            updateactivity("id", {name: "name", desc: "desc", idList: 123},() => {},() => {})
+            updateActivity("id", {name: "name", desc: "desc", idList: 123},() => {},() => {})
         }).to.throw(TypeError, 123 +" is not a string")
        
         expect(function(){
-            updateactivity("id", {name: "name", desc: "desc", idList: "idList"},undefined,() => {})
+            updateActivity("id", {name: "name", desc: "desc", idList: "idList"},undefined,() => {})
         }).to.throw(TypeError, undefined +" is not a function")
        
         expect(function(){
-            updateactivity("id", {name: "name", desc: "desc", idList: "idList"},"notafunction", () => {})
+            updateActivity("id", {name: "name", desc: "desc", idList: "idList"},"notafunction", () => {})
         }).to.throw(TypeError, "notafunction" +" is not a function")
        
         expect(function(){
-            updateactivity("id", {name: "name", desc: "desc", idList: "idList"}, () => {},undefined)
+            updateActivity("id", {name: "name", desc: "desc", idList: "idList"}, () => {},undefined)
         }).to.throw(TypeError, undefined +" is not a function")
        
         expect(function(){
-            updateactivity("id", {name: "name", desc: "desc", idList: "idList"}, () => {},"notafunction")
+            updateActivity("id", {name: "name", desc: "desc", idList: "idList"}, () => {},"notafunction")
         }).to.throw(TypeError, "notafunction" +" is not a function")
     })
 
     it("should call onFailure when given an unexistent id",(done) => {
-        updateactivity("12345678901234567890123456789012", {
+        updateActivity("12345678901234567890123456789012", {
             name:"name", 
             desc:"description",
             idList:"123465"

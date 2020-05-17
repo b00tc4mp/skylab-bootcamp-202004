@@ -9,7 +9,7 @@
  * @throws {TypeError} Throws an error if onSuccess or onFailure  are not functions
  */
 
-function updategroup(groupId, groupTitle, groupDesc = "", onSuccess, onFailure) {
+function updateGroup(groupId, groupTitle, groupDesc = "", onSuccess, onFailure) {
     String.validate(groupId)
 
     String.validate(groupTitle)
