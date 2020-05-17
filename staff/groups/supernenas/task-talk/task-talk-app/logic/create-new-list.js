@@ -7,7 +7,7 @@
  * @throws {TypeError} Throws an error if listName or groupId are not a string
  * @throws {TypeError} Throws an error if onSuccess or onFailure are not functions
  */
-function createnewlist(listName, groupId, onSuccess, onFailure) {
+function createNewList(listName, groupId, onSuccess, onFailure) {
     String.validate(listName)
 
     String.validate(groupId)

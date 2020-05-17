@@ -7,7 +7,7 @@
  * @throws {TypeError} throws an error if onSuccess or onFailure are not functions
  */
 
-function retrieveusergroups(username,onSuccess,onFailure){
+function retrieveUserGroups(username,onSuccess,onFailure){
     const groups = []
     
     String.validate(username)

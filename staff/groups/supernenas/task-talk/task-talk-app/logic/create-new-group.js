@@ -9,7 +9,7 @@
 
 const TEXT_LENGTH = 16384
 
-function createnewgroup(groupname, groupdesc, onSuccess, onFailure) {
+function createNewGroup(groupname, groupdesc, onSuccess, onFailure) {
     String.validate(groupname)
 
     String.validate(groupdesc)

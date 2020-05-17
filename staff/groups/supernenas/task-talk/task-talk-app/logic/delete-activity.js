@@ -7,7 +7,7 @@
  * @throws {TypeError} Throws an error if onSuccess or onFailure are not functions
  */
 
-function deleteactivity(id, onSuccess, onFailure) {
+function deleteActivity(id, onSuccess, onFailure) {
     String.validate(id)
 
     Function.validate(onSuccess)

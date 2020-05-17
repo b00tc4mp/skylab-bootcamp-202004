@@ -5,7 +5,7 @@
  * @throws  {Error} Throws an error if Trello is not saving any tokens
  * @throws {TypeError} Throws an error if onSuccess or onFailure are not functions
  */
-function getcurrentuser(onSuccess,onFailure) {
+function getCurrentUser(onSuccess,onFailure) {
     if(!Trello.token()) throw new Error("Trello does not include a token")
 
     Function.validate(onSuccess)

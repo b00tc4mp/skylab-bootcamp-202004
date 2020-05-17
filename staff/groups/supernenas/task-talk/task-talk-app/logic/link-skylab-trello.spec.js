@@ -1,4 +1,4 @@
-describe("linkskylabtrello",()=>{
+describe("linkSkylabTrello",()=>{
     let name,surname,email,password;
     beforeEach(()=>{
         expect(localStorage.trello_token).to.not.be.undefined
@@ -19,7 +19,7 @@ describe("linkskylabtrello",()=>{
             `{ "username": "${email}","password": "${password}" }`, {"Content-type": "application/json"},(error,status,body)=>{
                 
                 const token=JSON.parse(body).token
-                linkskylabtrello((error)=>{
+                linkSkylabTrello((error)=>{
                     if(!error){
                         call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', 
                         undefined, 
@@ -53,26 +53,26 @@ describe("linkskylabtrello",()=>{
     })
     it("should throw an error if called with the wrong type of parameters",()=>{
         expect(function(){
-            linkskylabtrello(undefined,"123423412",Trello.token())
+            linkSkylabTrello(undefined,"123423412",Trello.token())
         }).to.throw(TypeError, undefined +" is not a function");
         expect(function(){
-            linkskylabtrello("notafunction","123423412",Trello.token())
+            linkSkylabTrello("notafunction","123423412",Trello.token())
         }).to.throw(TypeError, "notafunction" +" is not a function");
         expect(function(){
-            linkskylabtrello(()=>{},123,Trello.token())
+            linkSkylabTrello(()=>{},123,Trello.token())
         }).to.throw(TypeError, 123 +" is not a string");
         expect(function(){
-            linkskylabtrello(()=>{},undefined,Trello.token())
+            linkSkylabTrello(()=>{},undefined,Trello.token())
         }).to.throw(TypeError, undefined +" is not a string");
         expect(function(){
-            linkskylabtrello(()=>{},"123423412",undefined)
+            linkSkylabTrello(()=>{},"123423412",undefined)
         }).to.throw(TypeError, undefined +" is not a string");
         expect(function(){
-            linkskylabtrello(()=>{},"123423412",123456)
+            linkSkylabTrello(()=>{},"123423412",123456)
         }).to.throw(TypeError, 123456 +" is not a string");
     })
     it("should receive an error if given an invalid skylab token",(done)=>{
-        linkskylabtrello((error)=>{
+        linkSkylabTrello((error)=>{
             expect(error).to.not.be.undefined
             expect(error.message).to.equal("invalid token")
             done()

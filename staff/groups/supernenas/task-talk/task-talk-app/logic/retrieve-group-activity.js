@@ -6,7 +6,7 @@
  * @throws {TypeError} throws an error if groupId is not a string
  * @throws {TypeError} throws an error if onSuccess or onFailure are not functions
  */
-function retrievegroupactivity(groupId, onSuccess, onFailure){
+function retrieveGroupActivity(groupId, onSuccess, onFailure){
     String.validate(groupId)
 
     Function.validate(onSuccess)

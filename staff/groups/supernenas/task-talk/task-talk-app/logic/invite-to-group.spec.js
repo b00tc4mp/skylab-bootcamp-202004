@@ -1,6 +1,6 @@
 "use strict"
 
-describe("invitetogroup",()=>{
+describe("inviteToGroup",()=>{
     let testUsername="pepitogrilloskylab"
 
     beforeEach(() => { 
@@ -13,7 +13,7 @@ describe("invitetogroup",()=>{
             Trello.get(`boards/${group.id}/members`, (members) => {
                 expect(members.length).to.equal(1)
 
-                invitetogroup("5bc71f9b224462720874c409", group.id, (newmembers) => {
+                inviteToGroup("5bc71f9b224462720874c409", group.id, (newmembers) => {
                     expect(newmembers.id).to.equal(group.id)
                     expect(newmembers.members.length).to.equal(2)
                     expect(newmembers.members[0].username).to.equal("graciahector")
@@ -35,40 +35,40 @@ describe("invitetogroup",()=>{
 
     it("should trow an error when called with the wrong type of parameters",() => {
         expect(function() {
-            invitetogroup((123), "listID", () => {}, () => {})
+            inviteToGroup((123), "listID", () => {}, () => {})
         }).to.throw(TypeError, 123 +" is not a string")
 
         expect(function(){
-            invitetogroup(undefined, "listID", () => {}, () => {})
+            inviteToGroup(undefined, "listID", () => {}, () => {})
         }).to.throw(TypeError, undefined + " is not a string")
        
         expect(function(){
-            invitetogroup("123",123,() => {}, () => {}) 
+            inviteToGroup("123",123,() => {}, () => {}) 
         }).to.throw(TypeError, 123 +" is not a string")
         
         expect(function(){
-            invitetogroup("123",undefined, () => {}, () => {})
+            inviteToGroup("123",undefined, () => {}, () => {})
         }).to.throw(TypeError, undefined +" is not a string")
         
         expect(function(){ 
-            invitetogroup("123123","123123", undefined, () => {})
+            inviteToGroup("123123","123123", undefined, () => {})
         }).to.throw(TypeError, undefined +" is not a function")
         
         expect(function(){
-            invitetogroup("123123","123123", "notafunction", () => {})
+            inviteToGroup("123123","123123", "notafunction", () => {})
         }).to.throw(TypeError, "notafunction is not a function")
         
         expect(function(){
-            invitetogroup("123123","123123", () => {}, undefined)
+            inviteToGroup("123123","123123", () => {}, undefined)
         }).to.throw(TypeError, undefined +" is not a function")
         
         expect(function(){
-            invitetogroup("123123","123123",() => {}, "notafunction")
+            inviteToGroup("123123","123123",() => {}, "notafunction")
         }).to.throw(TypeError, "notafunction is not a function")
     })
 
     it("should call onFailure when given a wrong userid", (done) => {
-        invitetogroup("123456789012345678901234567890", "123456789012345678901234567890", () => {
+        inviteToGroup("123456789012345678901234567890", "123456789012345678901234567890", () => {
             expect(true).to.equal(false)
             done()
         }, (error) => {
@@ -79,7 +79,7 @@ describe("invitetogroup",()=>{
         })
     })
     it("should call onFailure when given a wrong groupid",(done)=>{
-        invitetogroup("5bc71f9b224462720874c409", "123456789012345678901234567890", () => {
+        inviteToGroup("5bc71f9b224462720874c409", "123456789012345678901234567890", () => {
             expect(true).to.equal(false)
             done()
         },(error) => {

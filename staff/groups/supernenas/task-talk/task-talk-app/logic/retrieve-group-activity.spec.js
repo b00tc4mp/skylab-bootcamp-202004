@@ -1,6 +1,6 @@
 "use strict"
 
-describe("retrievegroupactivity",()=>{
+describe("retrieveGroupActivity",()=>{
     let testUsername="pepitogrilloskylab"
     
     beforeEach(() => {
@@ -15,12 +15,12 @@ describe("retrievegroupactivity",()=>{
             Trello.get("members/" + testUsername, (user) => {
                 Trello.get("boards/" + user.idBoards[0] + "/lists",(lists) => {
                     Trello.post("cards",{name: "retrieveTestCard",idList: lists[0].id},()=>{
-                        retrievegroupactivity(user.idBoards[0], (results) => {
+                        retrieveGroupActivity(user.idBoards[0], (results) => {
                             expect(results.length).to.equal(1)
                             expect(results[0].name).to.equal("retrieveTestCard")
                             expect(results[0].idList).to.equal(lists[0].id)
                             Trello.post("cards", {name: "retrieveTestCard2", idList:lists[0].id}, () => {
-                                retrievegroupactivity(user.idBoards[0], (results) => {
+                                retrieveGroupActivity(user.idBoards[0], (results) => {
                                     expect(results.length).to.equal(2)
                                     expect(results[0].name).to.equal("retrieveTestCard2")
                                     expect(results[0].idList).to.equal(lists[0].id)
@@ -66,32 +66,32 @@ describe("retrievegroupactivity",()=>{
 
     it("should throw an error if called with the wrong type of parameters",() => {
         expect(function(){
-            retrievegroupactivity((123),()=>{},()=>{})
+            retrieveGroupActivity((123),()=>{},()=>{})
         }).to.throw(TypeError, 123 +" is not a string")
         
         expect(function(){
-            retrievegroupactivity(undefined,()=>{},()=>{})
+            retrieveGroupActivity(undefined,()=>{},()=>{})
         }).to.throw(TypeError, undefined +" is not a string")
         
         expect(function(){
-            retrievegroupactivity("(123)",undefined,()=>{})
+            retrieveGroupActivity("(123)",undefined,()=>{})
         }).to.throw(TypeError, undefined +" is not a function")
         
         expect(function(){
-            retrievegroupactivity("(123)",()=>{})
+            retrieveGroupActivity("(123)",()=>{})
         }).to.throw(TypeError, undefined +" is not a function")
        
         expect(function(){
-            retrievegroupactivity("(123)","notafunction",()=>{})
+            retrieveGroupActivity("(123)","notafunction",()=>{})
         }).to.throw(TypeError, "notafunction is not a function")
        
         expect(function(){
-            retrievegroupactivity("(123)",()=>{},"notafunction")
+            retrieveGroupActivity("(123)",()=>{},"notafunction")
         }).to.throw(TypeError, "notafunction is not a function")
     })
 
     it("should call onFailure when given a wrong idBoard",(done) => {
-        retrievegroupactivity("12345678901234567890123456789012", () => {
+        retrieveGroupActivity("12345678901234567890123456789012", () => {
             expect(true).to.equal(false)
             done()
         },(error)=>{

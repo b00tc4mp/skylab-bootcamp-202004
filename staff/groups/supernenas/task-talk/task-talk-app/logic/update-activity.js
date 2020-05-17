@@ -8,7 +8,7 @@
  * @throws {TypeError} Throws an error if onSuccess or onFailure are not a function 
  */
 
-function updateactivity(id, newValues, onSuccess, onFailure) {
+function updateActivity(id, newValues, onSuccess, onFailure) {
     String.validate(id)
 
     String.validate(newValues.name)

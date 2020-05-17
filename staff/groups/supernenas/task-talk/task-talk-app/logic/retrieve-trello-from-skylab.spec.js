@@ -1,4 +1,4 @@
-describe("retrievetrellofromskylab",()=>{
+describe("retrieveTrelloFromSkylab",()=>{
     let name,surname,email,password,secretToken;
     beforeEach(()=>{
         name=Math.random().toString()
@@ -24,7 +24,7 @@ describe("retrievetrellofromskylab",()=>{
                     if(status!==204){
                         return done(new Error(JSON.parse(body).error))
                     }
-                    retrievetrellofromskylab(token,(error,trello)=>{
+                    retrieveTrelloFromSkylab(token,(error,trello)=>{
                         if(error) return done(error)
                         expect(trello).to.equal(secretToken)
                         call("DELETE","https://skylabcoders.herokuapp.com/api/v2/users",`{ "password": "${password}"}`,
@@ -41,20 +41,20 @@ describe("retrievetrellofromskylab",()=>{
     })
     it("should thrown an error if called whith the wrong type of parameters",()=>{
         expect(function(){
-            retrievetrellofromskylab(undefined,()=>{})
+            retrieveTrelloFromSkylab(undefined,()=>{})
         }).to.throw(TypeError, undefined+" is not a string")
         expect(function(){
-            retrievetrellofromskylab(123,()=>{})
+            retrieveTrelloFromSkylab(123,()=>{})
         }).to.throw(TypeError, 123+" is not a string")
         expect(function(){
-            retrievetrellofromskylab("123456789",undefined)
+            retrieveTrelloFromSkylab("123456789",undefined)
         }).to.throw(TypeError, undefined+" is not a function")
         expect(function(){
-            retrievetrellofromskylab("123123456","notafunction")
+            retrieveTrelloFromSkylab("123123456","notafunction")
         }).to.throw(TypeError, "notafunction"+" is not a function")
     })
     it("should receive an error if given an invalid token",(done)=>{
-        retrievetrellofromskylab("123456789",(error,token)=>{
+        retrieveTrelloFromSkylab("123456789",(error,token)=>{
             expect(error).to.not.be.undefined
             expect(error.message).to.equal("invalid token")
             done()

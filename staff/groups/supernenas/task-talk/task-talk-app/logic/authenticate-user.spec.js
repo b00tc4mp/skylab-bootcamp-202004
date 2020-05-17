@@ -1,16 +1,16 @@
-describe("authenticateuser",()=>{
+describe("authenticateUser",()=>{
     it("should throw an error if called with the wrong type of parameters",()=>{
         expect(function(){
-            authenticateuser(undefined,()=>{})
+            authenticateUser(undefined,()=>{})
         }).to.throw(TypeError, undefined+" is not a function")
         expect(function(){
-            authenticateuser("notafuntion",()=>{})
+            authenticateUser("notafuntion",()=>{})
         }).to.throw(TypeError, "notafuntion"+" is not a function")
         expect(function(){
-            authenticateuser(()=>{},undefined)
+            authenticateUser(()=>{},undefined)
         }).to.throw(TypeError, undefined+" is not a function")
         expect(function(){
-            authenticateuser(()=>{},"notafunciton")
+            authenticateUser(()=>{},"notafunciton")
         }).to.throw(TypeError, "notafunciton"+" is not a function")
     })
 })

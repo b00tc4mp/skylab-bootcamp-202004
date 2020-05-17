@@ -20,7 +20,7 @@
      componentDidMount(){
         if(localStorage.trello_token){
             Trello.setToken(localStorage.trello_token)
-            getcurrentuser((user)=>{
+            getCurrentUser((user)=>{
                 this.setState({currentuser:user,navigationName:user.fullName})
                 this.handleShowGroups();
             },(error)=>{
@@ -28,12 +28,12 @@
             })
         } 
         else{
-            retrievetrellofromskylab(this.props.tokenskylab,(error, result)=>{
+            retrieveTrelloFromSkylab(this.props.tokenskylab,(error, result)=>{
                 if(error){ 
                     this.setState({error: error.responseText})
                 }else if(result){
                     Trello.setToken(result)
-                    getcurrentuser((user)=>{
+                    getCurrentUser((user)=>{
                         this.setState({currentuser:user,navigationName:user.fullName})
                         this.handleShowGroups();
                     },(error)=>{
@@ -55,9 +55,9 @@
                 break;
         }       
     }
-    handleAuthorize=()=>{authenticateuser(()=>{
-        getcurrentuser((user)=>{
-            linkskylabtrello((error)=>{
+    handleAuthorize=()=>{authenticateUser(()=>{
+        getCurrentUser((user)=>{
+            linkSkylabTrello((error)=>{
                 if(error){
                     this.setState({error: error.responseText})
                 }else{
@@ -72,7 +72,7 @@
         this.setState({error: authorizeError.responseText})
     })}
     handleGoToGroup=(id)=>{
-        retrievegroupactivity(id,(_activities)=>{
+        retrieveGroupActivity(id,(_activities)=>{
             this.setState({activities:_activities, view:"cards", menu:false, error:false, currentgroup:id})
             this.setState({navigationName: this.state.groups[this.state.groups.findIndex((group) => {return group.id===this.state.currentgroup})].name}) 
         },(retrieveError)=>{
@@ -81,7 +81,7 @@
     }
     handleCreateCard=(title, desc)=>{//TODO esto no va así
         Trello.get(`boards/${this.state.currentgroup}/lists`,(lists)=>{
-            createnewactivity(title,desc,lists[0].id,()=>{
+            createNewActivity(title,desc,lists[0].id,()=>{
                 this.handleGoToGroup(this.state.currentgroup);
             },()=>{})
         })
@@ -96,7 +96,7 @@
         this.setState({view: "cardEdition", menu: false, navigationName:"Add a new card", selectedActivity: undefined})
     }
     handleUpdateCard=(cardId,listId,title, message)=>{
-        updateactivity(cardId,{name: title, desc:message, idList: listId},()=>{
+        updateActivity(cardId,{name: title, desc:message, idList: listId},()=>{
             this.handleGoToGroup(this.state.currentgroup);
             this.setState({navigationName: this.state.groups[this.state.groups.findIndex((group) => {return group.id===this.state.currentgroup})].name})
         },(error)=>{
@@ -104,7 +104,7 @@
         })
     }
     handleDeleteCard=(cardId)=>{
-        deleteactivity(cardId,()=>{
+        deleteActivity(cardId,()=>{
             this.handleGoToGroup(this.state.currentgroup)
         },(error)=>{
             this.setState({error: error.responseText})
@@ -115,8 +115,8 @@
         this.setState({view: "cards", navigationName: this.state.groups[this.state.groups.findIndex((group) => {return group.id===this.state.currentgroup})].name}) 
     }
     handleCreateGroup=(groupTitle, groupDesc)=>{
-        createnewgroup(groupTitle,groupDesc,(newGroup)=>{
-            createnewlist("TODO",newGroup.id,()=>{
+        createNewGroup(groupTitle,groupDesc,(newGroup)=>{
+            createNewList("TODO",newGroup.id,()=>{
                 this.handleShowGroups()
             },()=>{
                 this.setState({error: error.responseText})
@@ -130,7 +130,7 @@
 
     }
     handleDeleteGroup=()=>{
-        deletegroup(this.state.currentgroup,()=>{
+        deleteGroup(this.state.currentgroup,()=>{
             this.handleShowGroups();
         },(error)=>{
             this.setState({error: error.responseText})
@@ -148,7 +148,7 @@
         this.setState({view:"groupEdition",menu:false,navigationName:"Create new group",currentgroup:undefined})
     }
     handleShowGroups=()=>{
-        retrieveusergroups(this.state.currentuser.id,(_groups)=>{
+        retrieveUserGroups(this.state.currentuser.id,(_groups)=>{
             
             this.setState({groups:_groups,navigationName:this.state.currentuser.fullName ,menu:false,view:"groups", error:false})
         },(error)=>{
@@ -157,7 +157,7 @@
     }
     handleInviteUser=(username)=>{
         Trello.get("members/"+username,(user)=>{//TODO usar logica
-            invitetogroup(user.id,this.state.currentgroup,()=>{
+            inviteToGroup(user.id,this.state.currentgroup,()=>{
                 this.handleReturnToCards();
             },(error)=>{
                 this.setState({error: error.responseText})
@@ -170,8 +170,8 @@
         this.setState({view:"invitation"})
     }
     handleLeaveGroup=()=>{
-        getcurrentuser((user)=>{
-            leavegroup(user.id,this.state.currentgroup,()=>{
+        getCurrentUser((user)=>{
+            leaveGroup(user.id,this.state.currentgroup,()=>{
                 this.handleShowGroups();
             },(error)=>{
                 this.setState({error: error.responseText})

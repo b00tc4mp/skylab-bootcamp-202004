@@ -1,6 +1,6 @@
 "use strict"
 
-describe("deletegroup", () => {
+describe("deleteGroup", () => {
     let testUsername = "pepitogrilloskylab"
 
     beforeEach(() => {
@@ -9,7 +9,7 @@ describe("deletegroup", () => {
     })
     it("should remove a choosen group", (done) => {
         Trello.post("boards/", { name: "removeTestBoard" }, (group) => {
-            deletegroup(group.id, (response) => {
+            deleteGroup(group.id, (response) => {
                 Trello.get("boards/" + group.id, (_group) => {
                     done(group)
                 }, (error) => {
@@ -28,20 +28,20 @@ describe("deletegroup", () => {
 
     it("should throw an error when called with wrong type of parameters", () => {
         expect(function() {
-            deletegroup(123, () => {}, () => {})
+            deleteGroup(123, () => {}, () => {})
         }).to.throw(TypeError, 123 + " is not a string")
 
         expect(function() {
-            deletegroup("string", undefined, () => {})
+            deleteGroup("string", undefined, () => {})
         }).to.throw(TypeError, undefined + " is not a function")
 
         expect(function() {
-            deletegroup("string", () => {}, undefined)
+            deleteGroup("string", () => {}, undefined)
         }).to.throw(TypeError, undefined + " is not a function")
     })
 
     it("should call onFailure when called with an incorrect id", (done) => {
-        deletegroup("12346578901234567890123456789012", (error) => {
+        deleteGroup("12346578901234567890123456789012", (error) => {
             done(error)
         }, (error) => {
             expect(error.status).to.equal(400)
