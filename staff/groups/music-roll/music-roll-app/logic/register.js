@@ -32,20 +32,18 @@ function registerUser(name, surname, email, password, callback) {debugger
     Password.validate(password)
 
     Function.validate(callback) 
-
+    debugger
     call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
      `{"name": "${name}", "surname": "${surname}", "username": "${email}","password": "${password}"}`,
-    { 'Content-type': 'application/json'},
+    { "Content-Type": "application/json"},
     (error,status,body) => {
         if (error) return callback(error)
-
-        if(status === 201)
-        callback()
-    else {
-        const {error} = JSON.parse(body)
-
-        callback(new Error(error))
-    }
+        if(status === 201) callback()
+        else {
+            const {error} = JSON.parse(body)
+            callback(new Error(error))
+        }
 
     })
+   
 } 

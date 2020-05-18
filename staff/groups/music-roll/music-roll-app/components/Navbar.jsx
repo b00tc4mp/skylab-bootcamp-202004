@@ -63,10 +63,11 @@ function Navbar({ onChangeView }) {
                 }}><i className="far fa-heart"></i></a>
             </li>
             <li className="navbar__item">
-                <a href="" onClick={event => {
+                <a href="" onClick={event => {debugger
                     event.preventDefault()
+                    debugger
                     delete sessionStorage.token
-
+                    setToken()
                     setHashView('login')
                     onChangeView('login')
                 }}><i className="fas fa-sign-out-alt"></i></a>

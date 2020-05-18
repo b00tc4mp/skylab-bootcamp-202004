@@ -2,10 +2,10 @@ const { useState, useEffect } = React
 
 function AlbumResults({ results, token, spotyToken, onSessionExpired, handleMusicTool, handleError }) {
 
-    const [albumTracks, setAlbumTracks] = useState(undefined);
+    const [albumTracks, setAlbumTracks] = useState();
 
     useEffect(() => {
-        setAlbumTracks(undefined);
+        setAlbumTracks();
     }, [results]);
     
     function handleOnAlbum(id) {

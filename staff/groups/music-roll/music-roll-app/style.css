@@ -743,23 +743,36 @@ img {
   color: black;
 }
 
-.audio-tools {
+.audio-tools__player {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
-  border: 2px solid red;
-  background-color: blue;
+  justify-content: center;
   height: 10px;
   width: 100vw;
   top: 0;
-  position: fixed;
 }
-
-audio {
+.audio-tools audio {
   width: 100%;
   height: 3rem;
   background-color: white;
   position: sticky;
+}
+.audio-tools__controls {
+  background-color: white;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  bottom: 0;
+}
+.audio-tools i {
+  margin: 1rem;
+}
+.audio-tools__song {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25rem;
 }
 
 .hits-results {
