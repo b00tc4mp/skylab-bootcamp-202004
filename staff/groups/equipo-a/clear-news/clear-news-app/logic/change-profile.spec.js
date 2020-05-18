@@ -1,4 +1,4 @@
-describe('changeProfile', () => {
+describe.only('changeProfile', () => {
 
     let _name, _surname, _email, _password, _categories, _country
 
@@ -123,51 +123,47 @@ describe('changeProfile', () => {
         });
     });
 
-    describe('should fail on  password input only, 2 required maching the old pass', () => {
-        let password 
-        let oldPassword 
-        let _token
-        let updateUser
-        beforeEach(done => {
-            _name = names.random();
-            _surname = surnames.random();
-            _email = `${_name.toLowerCase().split(' ').join('')}${_surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`
-            _password = "123123123";
-            _categories = {
-                business: true,
-                entertainment: true,
-                general: false,
-                health: false,
-                science: true,
-                sports: false,
-                technology: true
-            }
-            _country = countries.random();
-
-            call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',
-                `{"name": "${_name}", "surname": "${_surname}", "username": "${_email}", "password": "${_password}", "categories": ${JSON.stringify(_categories)}, "country": "${_country}"}`,
-                { 'Content-type': 'application/json' },
-                (error, status, body) => {
-                    if (error) return done(new Error(error.message))
-                    if (status !== 201) return done(new Error(`unexpected status ${status}`))
-                    call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth', `{"username" : "${_email}", "password" : "${_password}"}`, { 'Content-type': 'application/json' }, (error, status, body) => {
-                        if (error) return done(new Error(error.message))
-                        if (status !== 200) return done(new Error(`undexpected status ${status}`))
-                        const { token } = JSON.parse(body)
-                        _token = token
-
-                        done()
-                    });
-                });
-           
-        })
-
-        it('should fail 1 input only',()=>{
-            password=""
-            oldPassword="123123123"
-            updateUser = { name: _name, surname: _surname, email: _email, password, oldPassword, categories: _categories, country: _country }  
-
-            expect(() => changeProfile(_token, updateUser, () => {})).to.throw(Error, `${password} is empty or blank`)
-        })
+    describe('should fail on incorrect input', () => {
+           it('should fail on non-string field', () => {
+            let password=""
+            let oldPassword=""
+            let _token=""
+            expect(() => {
+                changeProfile(_token,{name:undefined, surname:_surname, email:_email, password,oldPassword,  categories:_categories, country:_country}, function () { })
+            }).to.throw(TypeError, 'undefined is not a string');
+    
+            expect(() => {
+                changeProfile(_token,{name:1, surname:_surname, email:_email, password,oldPassword, categories:_categories, country:_country}, function () { })
+            }).to.throw(TypeError, '1 is not a string');
+    
+            expect(() => {
+                changeProfile(_token,{name:true, surname:_surname, email:_email, password, oldPassword,  categories:_categories,country:_country}, function () { })
+            }).to.throw(TypeError, 'true is not a string');
+    
+            expect(() => {
+                changeProfile(_token,{name:_name, surname:undefined, email:_email, password, oldPassword, categories:_categories, country:_country}, function () { })
+            }).to.throw(TypeError, 'undefined is not a string');
+    
+            expect(() => {
+                changeProfile(_token,{name:_name, surname:1, email:_email, password, oldPassword, categories:_categories, country:_country}, function () { })
+            }).to.throw(TypeError, '1 is not a string');
+    
+            expect(() => {
+                changeProfile(_token,{name:_name, surname:true, email:_email, password,oldPassword, categories:_categories, country:_country}, function () { })
+            }).to.throw(TypeError, 'true is not a string');
+    
+            expect(() => {
+                changeProfile(_token,{name:_name, surname:_surname, email:1, password, oldPassword, categories:_categories, country:_country}, function () { })
+            }).to.throw(Error, '1 is not an e-mail');
+    
+            expect(() => {
+                changeProfile(_token,{name:_name, surname:_surname, email:true, password, oldPassword, categories:_categories, country:_country}, function () { })
+            }).to.throw(Error, 'true is not an e-mail');
+    
+            expect(() => {
+                changeProfile(_token,{name:_name, surname:_surname, email:undefined,password ,oldPassword,  categories:_categories, country:_country}, function () { })
+            }).to.throw(Error, 'undefined is not an e-mail');
+            })
     })
 })
+
