@@ -52,6 +52,7 @@ function AudioTool ({songsArray}) {
         <section className="audio-tools__player">
         <audio controls src={`${currentSong}`} onEnded={onEnd}/>
         </section>
+
     </section>
         
 }

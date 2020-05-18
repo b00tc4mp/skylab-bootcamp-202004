@@ -6,7 +6,7 @@ function Navbar({ onChangeView }) {
 
     // <a className={`home__link ${this.state.view === 'users' ? 'home__link--active' : ''}`} href="" onClick={this.handleUsers}>Users </a>
     
-    useEffect(() => {debugger
+    useEffect(() => { 
         if (sessionStorage.token)
             try {
                 isUserAuthenticated(sessionStorage.token, (error, isAuth) => {

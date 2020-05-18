@@ -1,4 +1,4 @@
-function ResultsTracks({albumTracks, handleMusicTool, handleError}) { debugger
+function ResultsTracks({albumTracks, handleMusicTool, handleError}) {  
 
     const onMusicTool = (event, preview_url) => {
         event.preventDefault()

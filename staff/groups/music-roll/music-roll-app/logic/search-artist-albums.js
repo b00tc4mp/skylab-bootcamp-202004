@@ -41,7 +41,7 @@ function searchArtistAlbum(id,token, callback) {
       (error, status, body) => {
         if (error) console.log(error);
         console.log(status)
-        debugger;
+         ;
         if (status === 200) {
           const results = [],
             artistsArray = [];
@@ -55,7 +55,7 @@ function searchArtistAlbum(id,token, callback) {
               name,
               artists,
             } = items[i];
-            debugger;
+             ;
   
             for (let j = 0; j < artists.length; j++) {
               artistsArray.push(artists[j].name);
@@ -63,7 +63,7 @@ function searchArtistAlbum(id,token, callback) {
             let object = { image, id, name, artistsArray };
             results.push(object);
           }
-          debugger;
+           ;
           callback(undefined, results);
         }else{
           const {error} = JSON.parse(body)

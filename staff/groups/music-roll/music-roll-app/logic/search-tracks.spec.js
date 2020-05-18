@@ -8,7 +8,7 @@ describe("search-track", () => {
     query = VALID_QUERIES.random();
     searchTrack(token, query, (error, results) => {
       expect(error).to.be.undefined;
-    debugger
+     
       expect(results).to.exist;
       expect(results).to.be.an("array");
       expect(results.length).to.be.greaterThan(0);
@@ -30,7 +30,7 @@ describe("search-track", () => {
     token = 'invalid'
     query = VALID_QUERIES.random();
     searchTrack(token, query, (error, results) => {
-      debugger;
+       ;
       expect(results).to.be.undefined;
       expect(error).to.exist;
       expect(error).to.be.an.instanceOf(Error)

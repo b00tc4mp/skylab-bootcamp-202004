@@ -41,7 +41,7 @@ function searchArtistGreatestHits(id,token, callback) {
       (error, status, body) => {
         if (error) console.log(error);
         console.log(status)
-        debugger;
+         ;
         if (status === 200) {
           const results = []
            
@@ -55,14 +55,14 @@ function searchArtistGreatestHits(id,token, callback) {
               preview_url,
               
             } = tracks[i];
-            debugger;
+             ;
   
             
             
             let object = { preview_url, id, name };
             results.push(object);
           }
-          debugger;
+           ;
           callback(undefined, results);
         }else{
           const {error} = JSON.parse(body)

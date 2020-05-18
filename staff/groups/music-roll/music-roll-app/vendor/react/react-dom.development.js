@@ -23304,7 +23304,7 @@
 
     beginWork$1 = function (current, unitOfWork, expirationTime) {
       // If a component throws an error, we replay it again in a synchronously
-      // dispatched event, so that the debugger will treat it as an uncaught
+      // dispatched event, so that the   will treat it as an uncaught
       // error See ReactErrorUtils for more information.
       // Before entering the begin phase, copy the work-in-progress onto a dummy
       // fiber. If beginWork throws, we'll use this to reset the state.
