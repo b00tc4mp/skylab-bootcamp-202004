@@ -1,0 +1,101 @@
+.landing {
+  padding: 0px 25px 25px;
+  background: #fff;
+  box-shadow: 0px 0px 0px 5px rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50%;
+  text-align: center;
+  width: 300px;
+  height: 300px;
+}
+
+a:link, a:visited {
+  background-color: #f44336;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: red;
+}
+
+.login {
+  padding: 0px 25px 25px;
+  background: #fff;
+  box-shadow: 0px 0px 0px 5px rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50%;
+}
+
+.register {
+  padding: 0px 25px 25px;
+  background: #fff;
+  box-shadow: 0px 0px 0px 5px rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50%;
+}
+
+body {
+  background-image: url(http://kreativo.se/backlogin.jpg);
+  display: flex;
+  font-family: Arial, Helvetica, sans-serif;
+  background-repeat: no-repeat;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  background-size: cover;
+}
+
+.home {
+  padding: 0px 25px 25px;
+  background: #fff;
+  box-shadow: 0px 0px 0px 5px rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.news {
+  display: flex;
+  flex-direction: column;
+}
+
+#titlelink {
+  background-color: white;
+  color: black;
+}
+
+.results__link {
+  color: -webkit-link !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+}
+
+.feedback {
+  color: green;
+}
+.feedback--warning {
+  color: orange;
+}
+.feedback--error {
+  color: red;
+}
+
+/*# sourceMappingURL=style.css.map */
