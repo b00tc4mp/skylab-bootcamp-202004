@@ -51,22 +51,22 @@ function PlayerResults({ resultsPlayers, token, onToggleFollowPlayer, onCommentF
                         <li key={id} className="player-card__item">
                             <div className="player-card__player">
                                 <div className="player-card__emblem">
-                                    <img src={club} alt="team badge" className="player-card__emblem-item" />
+                                    <img src={club} alt="team badge" />
                                 </div>
                                 <div className="player-card__number">
-                                    <span className="player-card__number-item">{number}</span>
+                                    <span>{number}</span>
                                 </div>
                                 <div className="player-card__image">
-                                    <img src={image} alt="player" className="player-card__image-item" />
+                                    <img src={image} alt="player" />
                                 </div>
                                 <h2 className="player-card__name-first">{firstName}</h2>
                                 <h2 className="player-card__name-surname">{surname}</h2>
                             </div>
                             <hr className="player-card__line" />
                             <div className="player-card__info">
-                                <h3 className="player-card__team"> Team:{" "} <span className="player-card__team-answer"> {clubName}</span></h3>
-                                <h3 className="player-card__country">Country:{" "}<span className="player-card__country-answer">{born}</span></h3>
-                                <h3 className="player-card__birth">Date of birth:{" "}<span className="player-card__birth-answer">{date}</span></h3>
+                                <h3 className="player-card__team"> Team:{" "} <span > {clubName}</span></h3>
+                                <h3 className="player-card__country">Country:{" "}<span >{born}</span></h3>
+                                <h3 className="player-card__birth">Date of birth:{" "}<span >{date}</span></h3>
                                 <a className="player-card__like" onClick={(event) => {
                                     event.preventDefault();
                                     handleToggleplayer(id);
