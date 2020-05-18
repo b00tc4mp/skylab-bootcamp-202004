@@ -36,10 +36,6 @@ function Home(props) {
         } catch (error){
             if (error) throw error
         }
-        // toggleFollowUser(props.token, followEmail, (error, email) => {
-        //     if(error) throw error
-        //     handleSearchUsers(query)
-        // })
     }
 
 
@@ -75,6 +71,7 @@ function Home(props) {
          {view === 'google' && <Google />}
          {view === 'twitter' && <Twitter token={props.token}/> }
 
+         {/* <button onClick={()=> }>Logout</button> */}
         </section>}
         {!user && <p>LOADING...</p>}
     </>
