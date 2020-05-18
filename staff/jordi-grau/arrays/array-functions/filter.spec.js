@@ -11,14 +11,14 @@ describe('filter', function () {
         expect(newArray[0]).toBe(2);
         expect(newArray[1]).toBe(1);
     });
-    it('filter a array and return -1 if no find coincidence', function () {
+    it('filter a array and return an empty array if find no coincidence', function () {
         var array = ['Hola','que','Tal'];
         var newArray = filter(array, function(element){
             return element.length > 5;
         });
         expect(newArray).toBe(-1);
     });
-    it('filter a array is empty return -1 if no find coincidence', function () {
+    it('filter a array is empty return an em', function () {
         var array = [];
         var newArray = filter(array, function(element){
             return element.length > 5;
