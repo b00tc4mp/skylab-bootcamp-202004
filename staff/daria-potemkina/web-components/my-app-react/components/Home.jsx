@@ -25,27 +25,23 @@ class Home extends Component {
         }
     }
 
-    componentDidMount(){
-        try{
-            retrieveUser(this.props.token, (error, user)=>{
-                if(error) throw error
+    componentDidMount() {
+        try {
+            retrieveUser(this.props.token, (error, user) => {
+                if (error) throw error
 
-                // const hash = location.hash.substring(1)
-
-                // location.hash = hash ? hash : 'users'
- 
-                this.setState({name: user.name, following: user.following})
+                this.setState({ name: user.name, following: user.following })
 
             })
-        }catch(error){
+        } catch (error) {
             throw error
         }
     }
-    
+
     goToView = view => {
         location.hash = view
 
-        this.setState({view})
+        this.setState({ view })
     }
 
     handleGoToUsers = (event) => {
@@ -55,10 +51,14 @@ class Home extends Component {
     }
 
     handleSearchUsers = query => {
-        searchUsers(this.props.token, query, (error, users) => {
-            if (error) this.setState({ errorUsers: error.message })
-            else this.setState({ usersResults: users, userQuery: query })
-        })
+        try {
+            searchUsers(this.props.token, query, (error, users) => {
+                if (error) this.setState({ errorUsers: error.message })
+                else this.setState({ usersResults: users, userQuery: query })
+            })
+        } catch (error) {
+            throw error
+        }
     }
 
     handleGoToGoogle = (event) => {
@@ -68,10 +68,14 @@ class Home extends Component {
     }
 
     handleGoogle = query => {
-        searchGoogle(query, (error, results) => {
-            if (error) this.setState({ errorGoogle: error.message })
-            else this.setState({ googleResults: results })
-        })
+        try {
+            searchGoogle(query, (error, results) => {
+                if (error) this.setState({ errorGoogle: error.message })
+                else this.setState({ googleResults: results })
+            })
+        } catch (error) {
+            throw error
+        }
     }
 
     handleGoToEcosia = event => {
@@ -81,10 +85,14 @@ class Home extends Component {
     }
 
     handleEcosia = query => {
-        searchEcosia(query, (error, results) => {
-            if (error) this.setState({ errorEcosia: error.message })
-            else this.setState({ ecosiaResults: results })
-        })
+        try {
+            searchEcosia(query, (error, results) => {
+                if (error) this.setState({ errorEcosia: error.message })
+                else this.setState({ ecosiaResults: results })
+            })
+        } catch (error) {
+            throw error
+        }
     }
 
     handleGoToTwitter = (event) => {
@@ -100,24 +108,31 @@ class Home extends Component {
     }
 
     handleFollowing = id => {
-        toggleFollowUser(this.props.token, id, error => {
-            if (error) this.setState({ toggleFollowError: error.message })
-
-            retrieveUser(this.props.token, (error, user) => {
-                if (error) return this.setState({ error: error.message })
-                else {
-                    this.setState({ following: user.following })
-                    this.handleSearchUsers(this.state.userQuery)
+        try {
+            toggleFollowUser(this.props.token, id, error => {
+                if (error) this.setState({ toggleFollowError: error.message })
+                try {
+                    retrieveUser(this.props.token, (error, user) => {
+                        if (error) return this.setState({ error: error.message })
+                        else {
+                            this.setState({ following: user.following })
+                            this.handleSearchUsers(this.state.userQuery)
+                        }
+                    })
+                } catch (error) {
+                    throw error
                 }
             })
-        })
+        } catch (error) {
+            throw error
+        }
     }
 
     handleDailyNews = news => {
         this.setState({ news })
     }
 
-  
+
 
     render() {
         return <section className="home">

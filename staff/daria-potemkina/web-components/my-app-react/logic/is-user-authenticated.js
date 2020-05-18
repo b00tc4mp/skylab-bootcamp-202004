@@ -1,4 +1,4 @@
-function isUserAuthenticate(token, callback){
+function isUserAuthenticated(token, callback){
     if (typeof token !== 'string' ) throw new TypeError (`${token} is not a string`)
 
     if(typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)

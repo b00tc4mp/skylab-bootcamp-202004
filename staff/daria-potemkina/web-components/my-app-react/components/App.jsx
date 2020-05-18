@@ -3,14 +3,12 @@ const { useState, useEffect } = React
 function App() {
 
     const [view, setView] = useState('load')
-    // const [name, setName] = useState()
     const [token, setToken] = useState()
-    // const [following, setFollowing] = useState([])
 
     useEffect(() => {
         if (sessionStorage.token) {
             try {
-                isUserAuthenticate(sessionStorage.token, (error, isAuthenticated) => {
+                isUserAuthenticated(sessionStorage.token, (error, isAuthenticated) => {
                     if (error) throw error
 
                     if (isAuthenticated) {
@@ -38,8 +36,6 @@ function App() {
         setToken(token)
         setView('home')
         location.hash = ''
-        // setName(name)
-        // if (following) setFollowing(following)
     }
 
     function handleGoToRegister() {

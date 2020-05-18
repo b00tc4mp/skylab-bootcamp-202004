@@ -67,8 +67,8 @@ describe('tweet', () => {
 
 
     it('should fail if invalid token is introduced', done => {
-        let __token = 'aaaaaaaaaaaa'
-        let message = 'hello world'
+        const __token = 'aaaaaaaaaaaa'
+        const message = 'hello world'
 
         tweet(__token, message, error => {
             expect(error).to.exist
