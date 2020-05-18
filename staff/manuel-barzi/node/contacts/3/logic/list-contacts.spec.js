@@ -1,0 +1,1 @@
+// TODO check list contacts returns an array of valid contacts
