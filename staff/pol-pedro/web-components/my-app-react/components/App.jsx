@@ -147,7 +147,7 @@ class App extends Component {
     render() {
         return <>
             {this.state.view && <Landing onRegister = {this.handelRegister} onLogin = {this.handelLogin} userInfo = {this.state.user} onNavigator = {this.onNav} onUsers = {this.onSearchUser} onTweeter = {this.onBird}/>}
-            {this.state.clickNav && <GoogleComp onGoogle = {this.googleSearch} results = {this.state.google} query = {this.state.navQuery} loadSpiner = {this.loadQuery} spiner={this.state.navOnserch}/>}
+            {this.state.clickNav && <GoogleComp onGoogle = {this.googleSearch} results = {this.state.google} query = {this.state.navQuery} loadSpinner = {this.loadQuery} spiner={this.state.navOnserch}/>}
             {this.state.clickUser && <Home onUsers = {this.userSearch} token = {this.state.token} results = {this.state.userLooker} newFollower = {this.handelNewFollow} unFollow = {this.handelUnFollow} query = {this.state.userQuery} loadSpiner = {this.loadQuery} spiner={this.state.navOnserch} userInfo = {this.state.user}/>}
             {this.state.header === 'register' && <Register onLogin = {this.handelLogin} onLanding = {this.handelLanding} onSumbmit = {this.searchUser} onError = {this.state.errorState}/>}
             {this.state.header === 'login' && <Login onRegister = {this.handelRegister} onLanding = {this.handelLanding} onSumbmit = {this.loginUser}/>}

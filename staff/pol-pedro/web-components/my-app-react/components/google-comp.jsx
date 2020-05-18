@@ -1,10 +1,10 @@
-function GoogleComp ({ onGoogle, results, query, loadSpiner, spiner }) { //hacer un calss para poder usar el spiner cambiando el state
+function GoogleComp ({ onGoogle, results, query, loadSpinner, spiner }) { //hacer un calss para poder usar el spiner cambiando el state
     function handelSubmit(event){ //handel errors
         event.preventDefault()
-        loadSpiner()
+        loadSpinner()
         let searchValue = event.target.search.value
         google(searchValue, results => {
-            loadSpiner()
+            loadSpinner()
             onGoogle(results, searchValue)
         })
     }
