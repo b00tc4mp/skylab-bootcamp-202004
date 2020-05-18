@@ -1,13 +1,12 @@
-const fs = require('fs')
+const readline = require('readline')
 
-fs.readdir('.', (error, files) => {
-    if (error) throw error
-
-    console.log(files)
+const prompt = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
 })
 
-fs.mkdir('pepito', error => {
-    if (error) throw error
+prompt.question('What do you think of Node.js? ', answer => {
+  console.log(`Thank you for your valuable feedback: ${answer}`)
 
-    console.log('directory created')
+  prompt.close()
 })
