@@ -54,12 +54,12 @@ function App(){
     setView('home')
   }
 
-//   const handleLogout = () => {
-//     setToken()
-//     delete sessionStorage.token
-//     location.hash = ''
-//     setView('landing')
-// }
+  const handleLogout = () => {
+    setToken()
+    sessionStorage.token = null
+    location.hash = ''
+    setView('landing')
+}
 
   const handleUserSessionExpired = () => setHashView('login')
 
@@ -82,7 +82,7 @@ function App(){
             onRegister={handleGoToRegister}
           />
         )}
-        {view === "home" && <Home token={eltoken} onUserSessionExpired={handleUserSessionExpired} />}
+        {view === "home" && <Home token={eltoken} onUserSessionExpired={handleUserSessionExpired} handleLogout={handleLogout} />}
       </>
     );
   }

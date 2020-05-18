@@ -38,11 +38,6 @@ function Home(props) {
         }
     }
 
-
-    function changeView(view){
-        setView(view)
-    }
-
     const setHashView = view => {
         location.hash = view
         setView(view)
@@ -71,7 +66,7 @@ function Home(props) {
          {view === 'google' && <Google />}
          {view === 'twitter' && <Twitter token={props.token}/> }
 
-         {/* <button onClick={()=> }>Logout</button> */}
+         <button onClick={props.handleLogout}>Logout</button>
         </section>}
         {!user && <p>LOADING...</p>}
     </>
