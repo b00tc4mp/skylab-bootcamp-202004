@@ -5,4 +5,3 @@ function Tweets({tweets, view}) {
 
     return <ul>{list}</ul>
 }
-// key={`${date}--${name}--${text}`}
