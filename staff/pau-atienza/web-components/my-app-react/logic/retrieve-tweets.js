@@ -2,9 +2,9 @@ function retrieveTweets(token, user, callback) {
     if (typeof token !== 'string') throw new TypeError(token + ' is not a string')
     if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
 
-    let body = undefined
-    let url = "https://skylabcoders.herokuapp.com/api/v2/users/all"
-    let headers = { Authorization: `Bearer ${token}` }
+    const body = undefined
+    const url = "https://skylabcoders.herokuapp.com/api/v2/users/all"
+    const headers = { Authorization: `Bearer ${token}` }
 
     if (!user.following)return callback(undefined, user.tweets)
 
@@ -16,7 +16,7 @@ function retrieveTweets(token, user, callback) {
             const followerUsers = allUsers.filter(element => 
                 user.following.some(id => id === element.id))
 
-            let allTweets = followerUsers.reduce((accumulator, element)=>{
+            const allTweets = followerUsers.reduce((accumulator, element)=>{
                 element.tweets && element.tweets.forEach(({text, message = text, date}) => 
                     {accumulator.push({username: element.username, message, date})}) 
                 return accumulator

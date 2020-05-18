@@ -8,52 +8,61 @@ function Home(props){
     const [latestTweet, setLatestTweet] = useState(undefined)
 
     useEffect(()=>{
-        retrieveUser(props.token, (error, user) => {
-            if(error) return props.setError(error.message)
-            setUser(user)
-            setLatestTweet(user.tweets[user.tweets.length-1])
-        })
-      }, []
-    )
-
-    const handleSearchUsers = (event)=>{
-        let query = event.target.query.value
-
-        searchUser(props.token, query, (error, foundUsers) => {
-            if(error) return props.setError(error.message)
-            setFoundUsers(foundUsers)
-        })
-    }
-
-    const handleFollow = (followID) => {
-        toggleFollowUser(props.token, followID, user.following, (error, email) => {
-            if(error) return props.setError(error.message)
-            
-            retrieveUser(props.token, (error, user) => {
-                if(error) return props.setError(error.message)
-                setUser(user)
-            })
-        })
-    }
-
-    const handleSearchGoogle = (query) => {
-        googleSearch(query, (error, googleResults)=>{
-            if(error) return props.setError(error.message)
-            setGoogleResults(googleResults)
-        })
-    }
-    
-    const handleTweet = (event) => {
-        let text = event.target.tweet.value
-        tweet(props.token, text, user.tweets, (error, latestTweet) => {
-            if(error) return props.setError(error.message)
-
+        try{
             retrieveUser(props.token, (error, user) => {
                 if(error) return props.setError(error.message)
                 setUser(user)
                 setLatestTweet(user.tweets[user.tweets.length-1])
             })
-        })
+        }catch(error) {props.setError(error.message)}
+      }, []
+    )
+
+    const handleSearchUsers = (event)=>{
+        const query = event.target.query.value
+        try{
+            searchUser(props.token, query, (error, foundUsers) => {
+                if(error) return props.setError(error.message)
+                setFoundUsers(foundUsers)
+            })
+        }catch(error) {props.setError(error.message)}
+    }
+
+    const handleFollow = (followID) => {
+        try{
+            toggleFollowUser(props.token, followID, user.following, (error, email) => {
+                if(error) return props.setError(error.message)
+                
+                retrieveUser(props.token, (error, user) => {
+                    if(error) return props.setError(error.message)
+                    setUser(user)
+                })
+            })
+        }catch(error) {props.setError(error.message)}
+    }
+
+    const handleSearchGoogle = (query) => {
+        try{
+            googleSearch(query, (error, googleResults)=>{
+                if(error) return props.setError(error.message)
+                setGoogleResults(googleResults)
+            })
+        }catch(error) {props.setError(error.message)}
+    }
+    
+    const handleTweet = (event) => {
+        const text = event.target.tweet.value
+        try{
+            tweet(props.token, text, user.tweets, (error, latestTweet) => {
+                if(error) return props.setError(error.message)
+    
+                retrieveUser(props.token, (error, user) => {
+                    if(error) return props.setError(error.message)
+                    setUser(user)
+                    setLatestTweet(user.tweets[user.tweets.length-1])
+                })
+            })
+        }catch(error) {props.setError(error.message)}
     }
 
     return <>

@@ -11,7 +11,7 @@ describe("retrieveUser", function(){
     })
     
     it("should return a specified user", function(){
-        let result = retrieveUser(email)
+        const result = retrieveUser(email)
         
         expect(result).to.deep.equal({name: name, surname: surname, email: email, password: password})
     })

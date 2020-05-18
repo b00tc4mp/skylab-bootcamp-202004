@@ -8,7 +8,7 @@ function holaNews(callback) {
 
         const doc = parser.parseFromString(this.responseText, 'text/html')
 
-        let results = doc.querySelectorAll('.highlighted__item')
+        const results = doc.querySelectorAll('.highlighted__item')
 
         const news = []
 

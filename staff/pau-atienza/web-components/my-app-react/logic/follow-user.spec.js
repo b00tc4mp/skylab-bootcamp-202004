@@ -52,7 +52,7 @@ describe('toggleFollowUser', () => {
                     if (error) return done(new Error(error.message))
     
                     if (status !== 200) return done(new Error(`undexpected status ${status}`))
-                    let {token, _token = token} = JSON.parse(response)
+                    const {token, _token = token} = JSON.parse(response)
                     
                     call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
                     `{"username": "${email}", "password": "${password}" }`,
@@ -61,16 +61,16 @@ describe('toggleFollowUser', () => {
                         if (error) return done(new Error(error.message))
         
                         if (status !== 200) return done(new Error(`undexpected status ${status}`))
-                        let {token} = JSON.parse(response)
+                        const {token} = JSON.parse(response)
                         call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all', undefined,
                         { Authorization: `Bearer ${_token}`},
                         (error, status, response) => {
                             if (error) return done(new Error(error.message))
             
                             if (status !== 200) return done(new Error(`undexpected status ${status}`))
-                            let users = JSON.parse(response)
+                            const users = JSON.parse(response)
                             
-                            let {id: _id} = users.find(({username: __email}) => __email === _email)
+                            const {id: _id} = users.find(({username: __email}) => __email === _email)
                             
                             //we get the array of followers from the first user
                             call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined,
@@ -79,7 +79,7 @@ describe('toggleFollowUser', () => {
                                 if (error) return done(new Error(error.message))
                                 
                                 if (status !== 200) return done(new Error(`undexpected status ${status}`))
-                                let {following = []} = JSON.parse(response)
+                                const {following = []} = JSON.parse(response)
                                 //The first user follows the second
                                 toggleFollowUser(token, _id, following, (error, followerID)=>{
                                     expect(error).to.be.undefined
@@ -89,7 +89,7 @@ describe('toggleFollowUser', () => {
                                     { Authorization: `Bearer ${token}`},
                                     (error, status, response) => {
                                         expect(error).to.be.undefined
-                                        let {following = []} = JSON.parse(response)
+                                        const {following = []} = JSON.parse(response)
                                         expect(following[0]).to.equal(_id)
                                         
                                         //We unfollow the user
@@ -100,7 +100,7 @@ describe('toggleFollowUser', () => {
                                             { Authorization: `Bearer ${token}`},
                                             (error, status, response) => {
                                                 expect(error).to.be.undefined
-                                                let {following = []} = JSON.parse(response)
+                                                const {following = []} = JSON.parse(response)
                                                 expect(following[0]).to.be.undefined
                                                 done()
                                             })

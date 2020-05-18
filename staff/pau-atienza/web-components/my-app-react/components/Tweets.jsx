@@ -5,10 +5,12 @@ function Tweets(props){
   const [followersTweets, setFollowersTweets] = useState(undefined)
 
   useEffect(()=>{
-      retrieveTweets(props.token, props.user,(error, followersTweets) => {
-        if(error) throw error
-        setFollowersTweets(followersTweets)
-      })
+      try{
+        retrieveTweets(props.token, props.user,(error, followersTweets) => {
+          if(error) throw error
+          setFollowersTweets(followersTweets)
+        })
+      }catch(error) {props.setError(error.message)}
     }, [props.tweet]
   )
 

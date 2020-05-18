@@ -27,7 +27,7 @@ function searchUser(token, query, callback) {
 
       return callback(undefined, users);
     }
-    let { _error } = JSON.parse(response);
+    const { _error } = JSON.parse(response);
     return callback(new Error(_error));
   });
 }

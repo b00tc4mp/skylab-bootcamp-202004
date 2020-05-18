@@ -17,7 +17,7 @@ describe("registerUser",function(){
             { "Content-type": "application/json" },
             (error, status, response) => {
                 expect(error).to.be.undefined
-                let {token} = JSON.parse(response)
+                const {token} = JSON.parse(response)
 
                 call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined,
                 { Authorization: `Bearer ${token}`},

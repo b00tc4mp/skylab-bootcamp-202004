@@ -37,15 +37,15 @@ describe('tweet', () => {
     })
 
     it("should return an error email is not a string", function(){
-        let email = 'pauatienza@hotmail.com'
-        let text = 'khaoulatanane@hotmail.com'
+        const email = 'pauatienza@hotmail.com'
+        const text = 'khaoulatanane@hotmail.com'
         expect(() => tweet(123, text)).to.throw(TypeError, 'pauatienza@hotmail.com is not a string') 
         expect(() => tweet(email, 123)).to.throw(TypeError, '123 is not a string') 
 
     })
 
     it("should return an error the email does not pass the criteria", function(){
-        let text = 'khaoulatanane@hotmail.com'
+        const text = 'khaoulatanane@hotmail.com'
         expect(() => tweet('123', text)).to.throw(Error, '123 is not an e-mail') 
         
     })

@@ -7,7 +7,7 @@ class News extends Component{
         } 
         else {
             for (let i in news){
-                let resultItem = document.createElement("article");
+                const resultItem = document.createElement("article");
                
                 resultItem.innerHTML= 
                     `<a href = ${news[i].link}>
