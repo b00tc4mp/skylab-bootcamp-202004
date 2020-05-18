@@ -1,0 +1,309 @@
+.results {
+  display: flex;
+  justify-content: center;
+}
+
+.results > ul > li {
+  margin: 0.8rem;
+}
+
+.main {
+  min-width: 370px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  color: black;
+}
+
+.navbar {
+  box-sizing: content-box;
+  width: 100%;
+  height: 5rem;
+  background-color: #3366ff;
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+}
+.navbar__title {
+  margin: 1rem;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+.navbar__button {
+  font-size: 1.2rem;
+  color: white;
+  background-color: #3366ff;
+  border: 2px solid white;
+  border-radius: 10px;
+  margin: 1rem;
+}
+.navbar__button:hover {
+  box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.75);
+}
+.navbar__ancor {
+  color: white;
+  text-decoration: none;
+  font-size: 1.3rem;
+  transition-duration: 300ms;
+  margin: 1.5rem 0.2rem;
+  padding: 0 1rem;
+}
+.navbar__ancor:hover {
+  padding-bottom: 0.5rem;
+  border-bottom: 4px solid white;
+}
+
+* {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.landing {
+  min-width: 375px;
+  margin: 10%;
+  height: 10vh;
+  border: 5px solid black;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  font-size: 2rem;
+}
+.landing__a {
+  margin: 1rem;
+  font-size: 2rem;
+  text-decoration: none;
+}
+.landing__a:hover {
+  background-color: #3366ff;
+  color: white;
+  padding: 1rem;
+}
+
+.login {
+  min-width: 10rem;
+  border: 5px solid black;
+  border-radius: 1rem;
+  margin: 1rem 20%;
+}
+.login__title {
+  text-align: center;
+  color: black;
+  padding: 1rem;
+}
+.login__form {
+  margin: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.login__input {
+  padding: 0.5rem;
+  margin: 0.3rem 1rem;
+  background-color: white;
+  font-size: 1rem;
+  text-align: center;
+}
+.login__button {
+  margin: 0.3rem 20%;
+  background-color: #3366ff;
+  color: white;
+  font-size: 1rem;
+  padding: 1rem;
+  border: 2px solid blue;
+}
+.login__button:hover {
+  box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.75);
+}
+
+a {
+  text-align: center;
+  font-size: 2rem;
+}
+
+.register {
+  min-width: 10rem;
+  border: 5px solid black;
+  border-radius: 1rem;
+  margin: 1rem 20%;
+}
+.register__title {
+  text-align: center;
+  color: black;
+  padding: 1rem;
+}
+.register__form {
+  margin: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.register__input {
+  padding: 0.5rem;
+  margin: 0.3rem 1rem;
+  background-color: white;
+  font-size: 1rem;
+  text-align: center;
+}
+.register__button {
+  margin: 0.3rem 20%;
+  background-color: #3366ff;
+  color: white;
+  font-size: 1rem;
+  padding: 1rem;
+  border: 2px solid blue;
+}
+.register__button:hover {
+  box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+a {
+  text-align: center;
+  font-size: 2rem;
+}
+
+.search .search {
+  min-width: 10rem;
+  border: 5px solid white;
+  border-radius: 1rem;
+  margin: 1rem;
+}
+.search .search__form {
+  margin: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.search .search__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.search .search__input {
+  padding: 0.5rem;
+  margin-right: 0.3rem;
+  background-color: white;
+  font-size: 1rem;
+  text-align: center;
+  outline: none;
+}
+.search .search__button {
+  font-size: 1rem;
+  width: 3rem;
+  height: 2.3rem;
+  border: 1px solid black;
+}
+.search .search__button:hover {
+  background-color: silver;
+}
+
+.feedback {
+  color: green;
+  text-align: center;
+  font-size: 1.3rem;
+  margin: 1rem;
+}
+.feedback--warning {
+  color: orange;
+}
+.feedback--error {
+  color: red;
+}
+
+.search__img {
+  width: 300px;
+  margin: 10px;
+}
+
+a {
+  font-size: 1rem;
+}
+
+.results {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.results {
+  margin: 1rem 5%;
+}
+
+.news {
+  color: black;
+}
+.news__container {
+  margin: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+.news__img {
+  border: 1px solid black;
+  width: 15rem;
+  margin: 0 1rem 0 0;
+}
+.news__ancor {
+  text-decoration: none;
+  color: black;
+}
+
+.search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.twitter {
+  display: flex;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin: 2rem;
+}
+.twitter__form {
+  display: flex;
+  align-items: center;
+}
+.twitter__text {
+  width: 20rem;
+  height: 10rem;
+  font-size: 1.5rem;
+  resize: none;
+  outline: none;
+}
+.twitter__button {
+  font-size: 4rem;
+  padding: 2.7rem 0.3rem;
+  margin-left: 0.5rem;
+  color: black;
+  background-color: #3366ff;
+  transition-duration: 400ms;
+  outline: none;
+}
+.twitter__button:hover {
+  color: white;
+}
+
+.fallowers {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.fallowers__button {
+  width: 10rem;
+  display: block;
+  color: black;
+  background-color: #3366ff;
+  transition-duration: 400ms;
+  outline: none;
+}
+.fallowers__button:hover {
+  color: white;
+}
+
+/*# sourceMappingURL=style.css.map */
