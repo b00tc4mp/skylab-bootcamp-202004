@@ -1,0 +1,23 @@
+.register {
+  border: 1rem solid red;
+  display: inline-block;
+}
+
+.login {
+  border: 1rem solid blue;
+  display: inline-block;
+}
+
+.main{
+  display: flex;
+  flex-direction: row;
+}
+
+.searchbar{
+  width: 80vh;
+}
+
+.news{
+  width: 20vh;
+}
+/*# sourceMappingURL=style.css.map */
