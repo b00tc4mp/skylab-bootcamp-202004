@@ -15,7 +15,7 @@ const creatFwitterArray = (fwitters) => {
     const result = []
 
     fwitters.map(({ email, idUser, nameUser, surnameUser, fwitter }) => {
-        if (fwitter !== undefined) {
+        if (typeof fwitter !== undefined) {
             fwitter.map(({ id, name, fwitt }) => {
                 fwitt.map(({ message, date, _date, greenCard, yellowCard, redCard, bckgRed = '' , bckgYellow = '', bckgGreen = ''}) => {
                     if (_date) result.push({ email, idUser, nameUser, surnameUser,id, name, message, date, _date,  greenCard, yellowCard, redCard, bckgRed , bckgYellow, bckgGreen})

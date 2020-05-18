@@ -121,7 +121,6 @@
   font-family: Raleway;
   font-weight: 200;
 }
-
 .register__goto {
   display: flex;
   justify-content: center;
@@ -144,8 +143,7 @@
 .register__goto-login {
   width: 2.5rem;
 }
-
-::placeholder {
+.register ::placeholder {
   color: #320090;
 }
 
@@ -281,7 +279,7 @@
   justify-content: center;
   align-items: center;
 }
-.player-card__emblem-item {
+.player-card__emblem > img {
   width: 70px;
   height: auto;
   min-width: 60px;
@@ -298,7 +296,7 @@
   color: #320090;
   margin-bottom: 1rem;
 }
-.player-card__number-item {
+.player-card__number > span {
   height: 50px;
   text-align: center;
   width: 50px;
@@ -311,7 +309,7 @@
   justify-content: flex-end;
   align-items: flex-end;
 }
-.player-card__image-item {
+.player-card__image > img {
   max-width: 180px;
   max-height: auto;
 }
@@ -356,7 +354,7 @@
   grid-area: team;
   margin-top: 1rem;
 }
-.player-card__team-answer {
+.player-card__team > span {
   grid-area: team-answer;
   font-size: 1rem;
   margin-top: 0.3rem;
@@ -372,7 +370,7 @@
   margin-top: 0.4rem;
   grid-area: country;
 }
-.player-card__country-answer {
+.player-card__country > span {
   grid-area: country-answer;
   font-size: 1rem;
   margin-top: 0.3rem;
@@ -387,7 +385,7 @@
   margin-top: 0.4rem;
   grid-area: birth;
 }
-.player-card__birth-answer {
+.player-card__birth > span {
   grid-area: birth-answer;
   font-size: 1rem;
   margin-top: 0.3rem;
