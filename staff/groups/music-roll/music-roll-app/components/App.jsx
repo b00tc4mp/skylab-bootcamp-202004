@@ -8,9 +8,9 @@ class App extends Component {
 
 
             view: 'login',
-            spotyToken: "BQAGbhF9iQkKx1THuGtiv7Iqv-B2miLRLA15E0z9AH_S1KjhyBX6h85j6LHKNNZO90OFsPBwVt5Y4p_uyqYm3nWHjkMyP51VEAaPNuqv5x1SR9YbnBhWI513AyuJXFolRABqsQ",
+            spotyToken: "BQDk4WghDXrGV2KRDFA1_hvrocV6jtzXoK_bzWH6EjK2LNA-HoU4X1pTzs1fpUfmg2WGU0bSF_h8fItSxd__UahY07bu8jbjkengs8hppPn9V0jRhtqss7j9NL_NnYF8B-IEmg",
             token: undefined,
-            currentSong: undefined          
+            songsList: undefined          
 
         }
     }
@@ -36,15 +36,15 @@ class App extends Component {
         this.onChangeView('login')
     }
 
-    handleMusicTool = (preview_url) => {
-        this.setState({currentSong: preview_url})
+    handleMusicTool = (randomSongs) => {
+        this.setState({songsList: randomSongs})
     }
 
    
 
 
     render() {
-        const { state: { view, spotyToken, token, currentSong }, handleLogin, handleRegister, handleSessionExpired, onChangeView , handleMusicTool} = this;
+        const { state: { view, spotyToken, token, songsList }, handleLogin, handleRegister, handleSessionExpired, onChangeView , handleMusicTool} = this;
         return <>
 
            
@@ -54,9 +54,9 @@ class App extends Component {
             {view === 'login' && <Login onSubmit={handleLogin} onRegister={onChangeView} />}
             {view === 'register' && <Register onSubmit={handleRegister} onLogin={onChangeView} />}
             {view !== "login" && view !== "register" && <Navbar onChangeView={onChangeView} />}
-            {view === 'home' && <Home />}
+            {view === 'home' && <Home token = {token} handleMusicTool={handleMusicTool}/>}
             {view === 'browser' && <Browser spotyToken={spotyToken} token = {token} onSessionExpired={handleSessionExpired} handleMusicTool={handleMusicTool}/>}
-            {(view === 'browser' || view === 'favorites') && <AudioTool currentSong={currentSong}/>}
+            {(view === 'browser' || view === 'favorites' || view === 'home') && <AudioTool songsArray={songsList}/>}
 
 
         </>

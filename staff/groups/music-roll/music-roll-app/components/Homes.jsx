@@ -1,4 +1,4 @@
-function Homes() {
+function Homes() { //TODO borrar
     return <section className="home">
        
         <img className="home-image" src="utils/images/197906006-small.jpg"/>

@@ -8,7 +8,7 @@ const Password = (() => {
         },
 
         validate(password) {
-            if (!this.isPassword(password)) throw new Error("password don't have the minimum requisits")
+            if (this.isPassword(password)) throw new Error("password don't have the minimum requisits")
         }
     }
 })()

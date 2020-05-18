@@ -1,6 +1,17 @@
+const {useEffect} = React
+function Home ({token,handleMusicTool}) {
+    const handleRandomMusic = () => {
+        try {
+            capsule(token, (error, randomSongs) => { debugger
+                if(error) throw new Error(error)                
+                handleMusicTool(randomSongs)
 
-
-function Home () {
+            })
+        } catch (error) {
+            if(error) throw new Error(error)
+        }
+        
+    }
 
     return <>
          
@@ -15,9 +26,9 @@ function Home () {
             
             <p className="home-groupies__text" /* onClick={handleGroupies} */>My groupies</p>
         </section>
-        <section className="home-music">
+        <section className="home-music" onClick={handleRandomMusic}>
             <p className="home-music__text">Cápsula de 20 minutos de música</p>
         </section>
     </section> 
-</>
+    </>
 } 

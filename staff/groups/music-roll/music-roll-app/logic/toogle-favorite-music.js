@@ -15,8 +15,6 @@
 
  * 
 
- 
-
  * @throws {Error} If have network problems.
 
  * @throws {Erorr} If status its not the expectet
@@ -33,14 +31,13 @@ function toggleFavoriteMusic(flag, token, favorite, callback) {
     "https://skylabcoders.herokuapp.com/api/v2/users",
     undefined,
     {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`
     },
     (error, status, body) => {
       if (error) return callback(error);
 
-      if (status === 200) { 
-         ;
-
+      if (status === 200) {
+       
         const user = JSON.parse(body);
         if (user[flag]) {
           const index = user[flag].indexOf(favorite);

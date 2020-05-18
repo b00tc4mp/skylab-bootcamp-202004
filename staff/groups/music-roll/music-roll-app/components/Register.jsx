@@ -14,16 +14,16 @@ function Register({onLogin, onSubmit}) {
         surname = surname.value
         email = email.value
         password = password.value
-      try{
+      // try{
         registerUser(name,surname,email,password, error => {
           
-            if(error) setError(error.message)
+            if(error) return setError(error.message)
             
             onSubmit()
         })
-      }catch({message}){
-        setError(message)
-      }
+      // }catch({message}){
+      //   setError(message)
+      // }
     }
 
     return  <section className="register">
@@ -36,7 +36,7 @@ function Register({onLogin, onSubmit}) {
         <label htmlFor="surname">Surname</label>
         <input className="register__input" type="text" name="surname" placeholder="Doe" />
         <label htmlFor="email">Email</label>
-        <input className="register__input" type="text" name="email" placeholder="john@doe.com" />
+        <input className="register__input" type="email" name="email" placeholder="john@doe.com" />
         <label htmlFor="password">Password</label>
         <input className="register__input" type="password" name="password" placeholder="********" />
         <button className="register__button">Sing Up</button>
