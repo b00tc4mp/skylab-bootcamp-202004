@@ -1,0 +1,12 @@
+const users = [{name: 'Khaoula', surname: 'Tanane', email: 'khaoulatanane@gmail.com', password: '123123123'},
+{name: 'Pau', surname: 'Atienza', email: 'pauatro@gmail.com', password: '123123123'},
+{name: 'Jose', surname: 'Mes', email: 'josemes@gmail.com', password: '123123123'},
+{name: 'Ander', surname: 'Ezate', email: 'anderezate@gmail.com', password: '123123123'},
+{name: 'Jorge', surname: 'San', email: 'sanjordi@gmail.com', password: '123123123'},
+{name: 'Aitor', surname: 'Menta', email: 'aitormenta@gmail.com', password: '123123123'},
+{name: 'Dani', surname: 'Jefe', email: 'danijefe@gmail.com', password: '123123123'},
+{name: 'Juan', surname: 'Delarco', email: 'juanadelarco@gmail.com', password: '123123123'},
+{name: 'Serginho', surname: 'Luis', email: 'serginho@gmail.com', password: '123123123'},
+{name: 'Manu', surname: 'Gafas', email: 'manolitogafotas@gmail.com', password: '123123123'},
+{name: 'Alex', surname: 'Straza', email: 'alexstraza@gmail.com', password: '123123123'},
+]
