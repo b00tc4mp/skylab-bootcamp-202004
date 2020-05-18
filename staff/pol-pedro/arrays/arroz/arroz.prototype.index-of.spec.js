@@ -1,25 +1,64 @@
 describe('Arroz.prototype.index-of', function () {
-    it('it should delete the last elment of in array and return it in a new variable', function () {
+    it('it should return the indeox of 1 in this case 0', function () {
         var array = new Arroz(1, 2, 3);
-        var iPop;
+        var index;
 
-        iPop = array.pop();
+        index = array.indexOf(1);
 
-        expect(array[0]).toBe(1);
-        expect(array[1]).toBe(2);
-        expect(array[2]).toBe(undefined);
-        expect(iPop).toBe(3);
+        expect(index).toBe(0);
     });
 
-    it('it should delete the last elment of in array and return it in a new variable', function () {
-        var array = new Arroz(['hola', 'pepito'], [1, 2, 3], ['hola', 'pepito']);
-        var iPop;
+    it('it should return  -1 because we are looking for a existing number but pass its postion', function () {
+        var array = new Arroz(1, 2, 3);
+        var index;
 
-        iPop = array.pop();
+        index = array.indexOf(1, 1);
 
-        expect(array[0]).toEqual(['hola', 'pepito']);
-        expect(array[1]).toEqual([1, 2, 3]);
-        expect(array[2]).toBe(undefined);
-        expect(iPop).toEqual(['hola', 'pepito']);
+        expect(index).toBe(-1);
+    });
+
+    it('it should return  -1 because the value isnt on the array', function () {
+        var array = new Arroz(1, 2, 3);
+        var index;
+
+        index = array.indexOf(15);
+
+        expect(index).toBe(-1);
+    });
+
+    it('it should return  3 because we are looking for a existing number with an intial index were the value is includedd', function () {
+        var array = new Arroz(1, 2, 3);
+        var index;
+
+        index = array.indexOf(3, 1);
+
+        expect(index).toBe(2);
+    });
+
+    it('it should return  3 because we are looking for a existing number with an intial negative index were the value is included', function () {
+        var array = new Arroz(1, 2, 3);
+        var index;
+
+        index = array.indexOf(3, -2);
+
+        expect(index).toBe(2);
+    });
+
+    it('it should return  -1 because we are looking for a existing number with an intial negative index were the value isnt included', function () {
+        var array = new Arroz(1, 2, 3);
+        var index;
+
+        index = array.indexOf(1, -2);
+
+        expect(index).toBe(-1);
+    });
+
+    it('it should return  1 because we are looking for a existing number with an intial negative index greater that the array length sow it will look in all the array', function () {
+        var array = new Arroz(1, 2, 3);
+        var index;
+
+        index = array.indexOf(1, -10);
+
+        expect(index).toBe(0);
     });
 });

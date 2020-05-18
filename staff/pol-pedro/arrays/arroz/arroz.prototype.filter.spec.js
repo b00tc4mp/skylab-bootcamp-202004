@@ -31,30 +31,14 @@ describe('filter', function () {
         expect(result[2]).toBe(47);
     });
 
-    it('should iterate on each element and keep each value that pass the condition in the new array results', function () {
+    it('should return apple because it exists', function () {
         var array = new Arroz('apple', 'banana', 'grapes', 'mango', 'orange');
         var result = [];
         result = array.filter(function(element) {
-            var condition = ['a', 'p']
-            var cont = 1;
-            for (var i = 0; i < element.length; i++) {
-                if(element[i] === condition[0]) {
-                    for (var g = 1; g < condition.length; g++) {
-                        if( element[i+g] === condition[g]) {
-                            cont++
-                            if (cont === condition.length) {
-                                return true;
-                            }
-                        }
-                        
-                    }
-                }
-            }
-            return false
-        });
+            return element === 'apple'
+        })
 
         expect(result[0]).toBe('apple');
-        expect(result[1]).toBe('grapes');
     });
 
     
