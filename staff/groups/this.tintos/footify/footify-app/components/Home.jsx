@@ -17,8 +17,9 @@ function Home({ token , onUserSessionExpired ,onGoToLogOut}) {
         try {
             retrieveUser(token, (error, user) => {
 
-                const {email} = user
+                const {email, name, surname } = user
                 setEmail(email)
+                setUserDetails({name, surname})
                 
        
             retriveFwitter(token, (error, results) => {
