@@ -1,10 +1,31 @@
-// TODO list contacts in a column
-// Name     Surname     E-mail      Phone       Age     Birthdate
-// a        b           e@mail.com  123         30      1-1-1
-// ...
+const listContacts = require('../logic/list-contacts')
+const Feedback = require('./Feedback')
+const style = require('./ListContacts.style')
 
-function ListContacts(contacts) {
-    console.log('TODO list all contacts')
+function ListContacts(callback) {
+    console.log(style.color, '=============')
+    console.log(style.color, 'List Contacts')
+    console.log(style.color, '=============')
+
+    listContacts((error, contacts) => {
+        if (error) {
+            Feedback(error.message, 'error')
+
+            callback(error)
+
+            return
+        }
+
+        //console.table(contacts)
+
+        console.log(style.color, 'Name              Surname             E-mail              Phone')
+        console.log(style.color, '===============================================================')
+        
+        contacts.forEach(({ name = '', surname = '', email = '', phone = '' }) => console.log(style.color, `${name}             ${surname}              ${email}            ${phone}`))
+
+        console.log('asdfasdfasdflajlkdsjfakls')
+        callback(null)
+    })
 }
 
 module.exports = ListContacts
