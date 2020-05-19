@@ -2,7 +2,7 @@ function Ecosia ({ onSearch, query, results }) {
   const handleSearch = (query) => {
     ecosia(query, (error, results) => {
       if (error) {
-        throw error // TODO do something with error (feedback panel?)
+        throw error
       }
       onSearch(results, query);
 

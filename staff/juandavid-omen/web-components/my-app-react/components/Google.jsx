@@ -2,7 +2,7 @@ function Google ({ onSearch, query, results }) {
   const handleSearch = (query) => {
     google(query, (error, results) => {
       if (error) {
-          throw error; // TODO do something with error (feedback panel?)
+          throw error
       }
       onSearch(results, query);
     
