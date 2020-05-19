@@ -5,10 +5,9 @@ function ListContacts() {
     try {
         listContacts((error, data) => {
             if (error) {
-                console.log(error)
-                Feedback('Cannot load users data', 'error')
+                return Feedback('Cannot load users data', 'error')
             } else {
-                console.log(data)
+                console.table(data)
             }
             
         })

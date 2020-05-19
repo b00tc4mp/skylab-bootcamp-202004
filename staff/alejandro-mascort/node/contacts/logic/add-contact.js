@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 require('../utils/string')
 const Email = require('../utils/email')
+const uid = require('../utils/uid')
 
 function addContact(contact, callback) {
     if (typeof contact !== 'object') throw new TypeError(`${contact} is not an object`)
@@ -31,18 +32,16 @@ function addContact(contact, callback) {
         String.validate.notVoid(country)
 
 
-    const id = `${Date.now()}`
+    const id = uid()
 
     const file = `${id}.json`
 
     function replacer(key, value) {
-        if (typeof value === 'string')
-            return value.toUpperCase()
 
         return value;
     }
 
-    fs.writeFile(path.join(__dirname, '..', 'data', file), JSON.stringify(contact, replacer, 4), error => {
+    fs.writeFile(path.join(__dirname, '..', 'data', file), JSON.stringify({ name, surname, email, phone, birth, country }, replacer, 4), error => {
         if (error) return callback(error)
 
         callback(null, id)

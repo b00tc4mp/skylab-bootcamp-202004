@@ -16,13 +16,14 @@ const fs = require('fs')
         assert(fs.existsSync(path.join(__dirname, '..', 'data', `${id}.json`)))
 
         fs.readFile(path.join(__dirname,'..','data', `${id}.json`), (error, data) => {
-            assert(error === null)
+            assert(!error)
+            assert(data)
 
             const user = JSON.parse(data)
             
-            assert(user.name === name.toUpperCase())
-            assert(user.surname === surname.toUpperCase())
-            assert(user.email === email.toUpperCase())
+            assert.equal(user.name.toUpperCase(), name.toUpperCase())
+            assert.equal(user.surname.toUpperCase(), surname.toUpperCase())
+            assert.equal(user.email.toUpperCase(), email.toUpperCase())
         })
     })
 }

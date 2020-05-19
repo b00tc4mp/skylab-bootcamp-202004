@@ -13,7 +13,7 @@ function AddContact(callback) {
         output: process.stdout
     })
 
-    const fields = ['name', 'surname', 'email', 'phone', 'birth', 'country']
+    const fields = ['name', 'surname', 'email', 'phone', 'birthdate', 'country']
 
     const contact = {}
     let count = 0;
@@ -29,22 +29,24 @@ function AddContact(callback) {
 
                 askField()
             } else {
+                interface.close()
+
                 try {
                     addContact(contact, error => {
                         if (error) {
-                            console.log(error)
-
                             Feedback('Failed to write contact file :(', 'error')
+
+                            return callback(error)
                         }
 
                         Feedback('Contact saved')
 
-                        interface.close()
-
                         callback()
                     })
-                } catch ({ message }) {
-                    Feedback(message, 'error')
+                } catch (error) {
+                    Feedback(error.message, 'error')
+
+                    callback(error)
                 }
             }
         })

@@ -2,8 +2,8 @@ const fs = require('fs')
 const path = require('path')
 require('../utils/function')
 
-function listContacts(callback) {
-    Function.validate(callback)
+function searchContacts(value,callback) {
+    // Function.validate(callback)
 
     fs.readdir(path.join(__dirname,'..','data'), (error, files) => {
         if (error) return callback(error)
@@ -39,4 +39,4 @@ function listContacts(callback) {
     })
 }
 
-module.exports = listContacts
+module.exports = searchContacts
