@@ -1,13 +1,33 @@
-const readFilesList = require('../logic/list-contacts')
+const listContacts = require('../logic/list-contacts')
+const Feedback = require('./Feedback')
+const style = require('./List-contacts.style')
 
+function ListContacts(callback) {
+    console.log(style.color, '=============')
+    console.log(style.color, 'List Contacts')
+    console.log(style.color, '=============')
 
-function ListContacts() {
-   
-    readFilesList((error,results)=>{
-        if (error) throw error
+    listContacts((error, contacts) => {
+        if (error) {
+            Feedback(error.message, 'error')
 
-        console.table(results)
+            callback(error)
+
+            return
+        }
+
+        //console.table(contacts)
+
+        console.log(style.color, 'Name              Surname             E-mail              Phone')
+        console.log(style.color, '===============================================================')
+        
+        contacts.forEach(({ name = '', surname = '', email = '', phone = '' }) => console.log(style.color, `${name}             ${surname}              ${email}            ${phone}`))
+
+        console.log('asdfasdfasdflajlkdsjfakls')
+        callback(null)
     })
 }
 
 module.exports = ListContacts
+
+// module.exports = ListContacts

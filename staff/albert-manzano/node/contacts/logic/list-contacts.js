@@ -1,30 +1,55 @@
-const fs = require('fs');
+const fs = require('fs')
 const path = require('path')
 
-function readFilesList(callback) {
-    
-    fs.readdir(path.join( __dirname, '..', 'data'), (error, files) => {
-        if (error) throw error
-        const results = [];
-        let count = 0;
-        console.log(files)
-        for (let i in files) {
-            fs.readFile(path.join( __dirname, '..', 'data', files[i]), (error, data) => {
-                if (error) throw error
+module.exports = callback => {
+    fs.readdir(path.join(__dirname, '..', 'data'), (error, files) => {
+        if (error) return callback(error)
 
-                const obj = JSON.parse(data);
-                
-                results.push(obj);
-                
-                count++
+        let wasError = false
 
-                if (count === files.length) callback( undefined, results)
+        const contacts = []
+
+        files.forEach(file => {
+            fs.readFile(path.join(__dirname, '..', 'data', file), 'utf8', (error, json) => {
+                if (error) {
+                    if (!wasError) {
+                        callback(error)
+
+                        wasError = true
+                    }
+
+                    return
+                }
+
+                if (!wasError) {
+                    const contact = JSON.parse(json)
+
+                    contact.id = file.substring(0, file.indexOf('.json'))
+
+                    contacts.push(contact)
+
+                    if (contacts.length === files.length) callback(null, contacts)
+                }
             })
-        }
-        
+        })
     })
 }
 
+// const results = [];
+// let count = 0;
+// console.log(files)
+// for (let i in files) {
+//     fs.readFile(path.join( __dirname, '..', 'data', files[i]), (error, data) => {
+//         if (error) throw error
 
-module.exports = readFilesList
+//         const obj = JSON.parse(data);
+
+//         results.push(obj);
+
+//         count++
+
+//         if (count === files.length) callback( null, results)
+//     })
+// }
+
 
