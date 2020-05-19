@@ -1,0 +1,93 @@
+.landing {
+  padding-top: 400px;
+  height: 100vh;
+  width: 100vw;
+}
+
+.login {
+  display: block;
+  margin-top: 230px;
+  margin-bottom: 50px;
+}
+
+h1 {
+  margin-bottom: 50px;
+}
+
+input {
+  margin-bottom: 50px;
+}
+
+.register {
+  display: block;
+  margin-top: 180px;
+  margin-bottom: 50px;
+}
+
+h1 {
+  margin-bottom: 50px;
+}
+
+input {
+  margin-bottom: 50px;
+}
+
+.feedback {
+  margin-top: 20px;
+  color: red;
+}
+
+* {
+  font-family: sans-serif;
+  font-size: 20px;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: #212f3d;
+  text-align: center;
+  color: white;
+}
+
+a {
+  color: #0066c0;
+  text-decoration: none;
+}
+
+#root {
+  text-align: center;
+}
+
+input {
+  background-color: white;
+  color: gray;
+}
+
+.logo {
+  height: 100px;
+  width: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+h1 {
+  color: #e47911;
+  font-size: 40px;
+}
+
+.button {
+  background: #f0c14b;
+  border-color: #a88734 #9c7e31 #846a29;
+  padding: 5px 110px;
+  border-radius: 5px;
+  color: black;
+}
+.button--magnifier {
+  padding: 3px;
+  padding-top: 1px;
+  background-color: #f0c14b;
+}
+.button--logout {
+  margin-bottom: 10px;
+}
+
+/*# sourceMappingURL=style.css.map */
