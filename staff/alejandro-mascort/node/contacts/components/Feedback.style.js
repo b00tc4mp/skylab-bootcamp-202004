@@ -1,5 +1,5 @@
 module.exports = {
-    error: '\x1b[31m',
+    success: '\x1b[32m',
     warning: '\x1b[33m',
-    succes: '\x1b[32m'
+    error: '\x1b[31m'
 }

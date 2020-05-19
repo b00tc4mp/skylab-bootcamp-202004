@@ -1,7 +1,7 @@
-const {warning, error, succes} = require('./Feedback.style')
+const { success, warning, error } = require('./Feedback.style')
 
 function Feedback(message, level) {
-    switch(level) {
+    switch (level) {
         case 'warning':
             console.log(warning, message)
             break
@@ -9,7 +9,7 @@ function Feedback(message, level) {
             console.log(error, message)
             break
         default:
-            console.log(succes, message)
+            console.log(success, message)
     }
 }
 

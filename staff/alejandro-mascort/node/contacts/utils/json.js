@@ -1,3 +1,3 @@
-JSON.prettify = function(target) {
-    return this.stringify(target, null, 4)
-}
+JSON.prettify = function(object) {
+    return this.stringify(object, null, 4)
+} 

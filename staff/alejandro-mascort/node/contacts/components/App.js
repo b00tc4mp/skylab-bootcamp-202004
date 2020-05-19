@@ -1,15 +1,38 @@
-const addContact = require('./components/AddContact')
-const listContacts = require('./components/ListContacts')
+const AddContact = require('./AddContact')
+const ListContacts = require('./ListContacts')
+const SearchContacts = require('./SearchContacts')
 const Landing = require('./Landing')
 const Feedback = require('./Feedback')
-addContact(error => !error && listContacts())
+const style = require('./App.style')
 
-module.exports = () => Landing((error, option) => {
-    if (error) return Feedback(error.message, 'error')
+//module.exports = () => AddContact(error => !error && ListContacts(() => {}))
+module.exports = () => {
+    console.log(style.color, '========')
+    console.log(style.color, 'Contacts')
+    console.log(style.color, '========');
 
-    if (option === 'add contact') {
-        addContact(error => {
+    (function loop() {
+        Landing((error, option) => {
             if (error) return Feedback(error.message, 'error')
+        
+            if (option === 'add contact')
+                AddContact(error => {
+                    //if (error) return Feedback(error.message, 'error')
+        
+                    loop()
+                })
+            else if (option === 'list contacts')
+                ListContacts(error => {
+                    if (error) return Feedback(error.message, 'error')
+        
+                    loop()
+                })
+            else if (option === 'search users')
+                SearchContacts(error => {
+                    if (error) return Feedback(error.message, 'error')
+        
+                    loop()
+                })
         })
-    }
-})
+    })()
+}

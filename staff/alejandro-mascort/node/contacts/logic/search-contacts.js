@@ -1,42 +1,36 @@
 const fs = require('fs')
 const path = require('path')
-require('../utils/function')
 
-function searchContacts(value,callback) {
-    // Function.validate(callback)
-
+module.exports = (query, callback) => {
     fs.readdir(path.join(__dirname,'..','data'), (error, files) => {
         if (error) return callback(error)
 
         let wasError = false
-
         const contacts = []
 
-        files.forEach((file) => {
-            fs.readFile(path.join(__dirname,'..','data',`${file}`), (error, data) => {
+        files.forEach(file => {
+            fs.readFile(path.join(__dirname,'..','data', file), (error, json) => {
                 if (error) {
-
                     if (!wasError) {
-                        callback(error)
-
                         wasError = true
+                        callback(error)
                     }
-
                     return 
                 }
 
-                if (!wasError) {
-                    const contact = JSON.parse(data)
-
-                    contact.id = file.substring(0, file.indexOf('.json'))
-
+                if (!wasError){
+                    const contact = JSON.parse(json)
                     contacts.push(contact)
-                    
-                    if (contacts.length=== files.length) callback(null, contacts)
+                
+                    if (contacts.length === files.length) {
+                        let contactsFound = contacts.filter(contact => {
+                            return contact.name.toLowerCase().includes(query) || contact.surname.toLowerCase().includes(query)
+                        })
+
+                        callback(null, contactsFound)
+                    }
                 }
             })
         })
     })
 }
-
-module.exports = searchContacts

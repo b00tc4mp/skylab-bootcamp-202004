@@ -1,4 +1,4 @@
-const addContact = require('./components/AddContact')
-const listContacts = require('./components/ListContacts')
+const App = require('./components/App')
 
-addContact(error => !error && listContacts())
+App()
+

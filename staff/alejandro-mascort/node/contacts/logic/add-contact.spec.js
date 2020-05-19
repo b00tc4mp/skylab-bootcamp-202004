@@ -1,8 +1,8 @@
 const assert = require('assert')
 const addContact = require('./add-contact')
-const path = require('path')
 const { random } = Math
 const fs = require('fs')
+const path = require('path')
 
 {
     const name = `name-${random()}`
@@ -10,33 +10,24 @@ const fs = require('fs')
     const email = `e-${random()}@mail.com`
 
     addContact({ name, surname, email }, (error, id) => {
-        assert(error === null)
+        assert(!error)
 
         assert(typeof id === 'string')
-        assert(fs.existsSync(path.join(__dirname, '..', 'data', `${id}.json`)))
 
-        fs.readFile(path.join(__dirname,'..','data', `${id}.json`), (error, data) => {
+        // fs.readFile(path.join(__dirname, '..', 'data', `${id}.json`), (error, content) => {
+        fs.readFile(path.join(__dirname, '..', 'data', `${id}.json`), 'utf8', (error, content) => {
             assert(!error)
-            assert(data)
 
-            const user = JSON.parse(data)
-            
-            assert.equal(user.name.toUpperCase(), name.toUpperCase())
-            assert.equal(user.surname.toUpperCase(), surname.toUpperCase())
-            assert.equal(user.email.toUpperCase(), email.toUpperCase())
+            assert(content)
+
+            // const json = content.toString()
+
+            // const contact = JSON.parse(json)
+            const contact = JSON.parse(content)
+
+            assert.equal(contact.name, name)
+            assert.equal(contact.surname, surname)
+            assert.equal(contact.email, email)
         })
     })
-}
-
-{
-    const name = `name-${random()}`
-    const surname = true
-    const email = `e-${random()}@mail.com`
-    try {
-        addContact({name, surname, email}, (error, id) => {}) 
-    } catch (error) {
-        assert(error !== null)
-        assert(error.message === 'true is not a string')
-    }
-   
 }

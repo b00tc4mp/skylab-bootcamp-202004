@@ -1,29 +1,28 @@
-const readline = require('readline')
 const searchContacts = require('../logic/search-contacts')
-const Feedback = require('./Feedback.style')
+const Feedback = require('./Feedback')
+const readline = require('readline')
 
-function SearchContacts() {
+function SearchContacts(callback) {
     const interface = readline.createInterface({
         input: process.stdin,
         output: process.stdout
     })
-
-    interface.question('User Search: ', value => {
+    interface.question("search user:", value =>{
         try {
-            searchContacts(value, (error, data) =>{
+             searchContacts(value, (error, results) => {
                 if (error) {
                     interface.close()
-                    return Feedback('An error has ocurred', 'error')
+                    return callback(error)
                 }
-
-                console.log(data)
                 interface.close()
-            })
-        } catch ({message}) {
+                console.table(results)
+                callback(null)
+             })
+        } catch (error) {
             interface.close()
-            Feedback(message, 'error')
+            return callback(error)
         }
     })
 }
 
-SearchContacts()
+module.exports = SearchContacts
