@@ -1,0 +1,25 @@
+@import utils
+@import components/Panel
+    
+@import components/Landing
+@import components/Login
+@import components/Register
+@import components/Home
+@import components/Feedback
+@import components/Search
+
+.Twitwer
+    @extend %panel
+
+    border-color: yellow
+    
+    &__link
+        text-decoration: none
+    
+        &:visited
+            color: blue
+        &--active
+            font-weight: bold
+            color: lighblue
+            &:visited
+                color: lighblue
