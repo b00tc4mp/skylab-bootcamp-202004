@@ -1,4 +1,4 @@
-'use strict'
+ 'use strict'
 Arroz.prototype.reduce = function reduce(expression, initialValue) {
     var result = 0
     if (this.length !== 0) {
