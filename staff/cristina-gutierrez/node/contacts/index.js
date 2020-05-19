@@ -1,9 +1,24 @@
-const addContact = require('./logic/add-contact')
+const net = require('net')
+const listContacts = require('./logic/list-contacts')
 
-const questions = ["name", "surname", "number", "e-mail", "website",
-"instagram", "facebook", "twitter", "tiktok"]
+const server = net.createServer(socket => {
+    socket.on('data', data => {
+        listContacts((error, contacts) => {
+            if (error) throw error
 
-addContact(questions)
+            socket.write(`HTTP/1.1 200
+content-type: text/html
 
-const totalResult = require("./logic/list-contacts");
-totalResult(error, console.log)
+<h2>Contacts list</h2>
+<ul>
+    ${contacts.map(({ name }) => `<li>${name}</li>`).join('')}
+</ul>
+`)
+            socket.end()
+        })
+    })
+
+    socket.on('error', console.log)
+})
+
+server.listen(8080)

@@ -1,30 +1,46 @@
-const readline = require('readline')
 const fs = require('fs')
+const path = require('path')
+require('../utils/string')
+const Email = require('../utils/email')
+const uid = require('../utils/uid')
+require('../utils/json')
 
-const addContact = (array, counter = 0, answers = {})=>{
-  const prompt = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-  });
-  
-  const createContact = (array) => {
-    prompt.question(`${array[counter]}? `, answer => {
-      console.log(`Your answer was: ${answer}`)
-      answers[array[counter]] = answer.toLowerCase()
-      counter++
-      if (counter < array.length){
-        createContact(array, counter, answers);
-      }
-      else {
-        fs.writeFile(`./data/${answers["name"].toLowerCase()}-${answers["surname"].toLowerCase()}.json`,JSON.stringify(answers), error => {
-          if (error) console.error("Failed to write the file")
-          console.log("Contact saved")
-          prompt.close()
-        })
-      } 
+module.exports = (contact, callback) => {
+    if (typeof contact !== 'object') throw new TypeError(`${contact} is not an object`)
+
+    // TODO make it so that at least should have the following fields: (name || suranme) && (email || phone)
+
+    const { name, surname, email, phone, birthdate, country } = contact
+
+    if (name)
+        String.validate.notVoid(name)
+
+    if (surname)
+        String.validate.notVoid(surname)
+
+    if (email) {
+        String.validate.notVoid(email)
+        Email.validate(email)
+    }
+
+    if (phone)
+        String.validate.notVoid(phone)
+
+    if (birthdate) {
+        String.validate.notVoid(birthdate)
+        //Date.validate(birthdate) // TODO create this polyfill
+    }
+
+    if (country)
+        String.validate.notVoid(country)
+
+    const id = uid()
+
+    const file = `${id}.json`
+
+    fs.writeFile(path.join(__dirname, '..', 'data', file), JSON.prettify(contact), error => {
+        if (error) return callback(error)
+
+        callback(null, id)
     })
-  };
-  createContact(array)
 }
-
-module.exports = addContact
