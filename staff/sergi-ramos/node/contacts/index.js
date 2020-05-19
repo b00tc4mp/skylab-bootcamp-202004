@@ -1,6 +1,5 @@
-const addContact = require('./logic/add-contact')
-const listContacts = require('./logic/list-contacts')
+const AddContact = require('./components/AddContact')
+const listContacts = require('./components/ListContact')
 
 
-//addContact('name', 'surname', 'phone', 'email', 'age', 'birthdate', 'country')
-listContacts()
+AddContact( () => ListContacts() )

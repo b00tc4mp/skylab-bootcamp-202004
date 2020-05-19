@@ -6,26 +6,33 @@
 // - output each file info in a row
 
 const fs = require('fs')
+const path = require('path')
 
-function listContacts() {
+function listContacts(callback) {
 
-    fs.readdir('./data', (error, files) => {
-        console.log('Name   Surname    Phone   E-mail        Age    Birthdate   Country')
+    fs.readdir(path.join(__dirname,'..','data'), (error, files) => {
+     
         files.forEach((file) => {
-            fs.readFile(`./data/${file}`, (error, data) => {
+            
+            fs.readFile(path.join(__dirname,'..','data',file), (error, data) => {
+                if(error) console.error(error)
+                debugger
                 data = JSON.parse(data)
+                
+                console.log(data)
                 const {name,surname,phone, email, age, birthdate, country} = data
-                console.log(`${name}\t${surname}\t${phone}\t${ email}\t${age}\t${birthdate}\t${country}`)
+
+
+
+                //console.log(`${name}\t${surname}\t${phone}\t${ email}\t${age}\t${birthdate}\t${country}`)
             })
+            if(count < files.length) {
+                callback(undefined, data)
+            }
         })
     })
 }
-
 module.exports = listContacts
 
-// fs.readdir('.', (error, files) => {
-//     if (error) throw error
 
-//     console.log(files)
-// })
 
