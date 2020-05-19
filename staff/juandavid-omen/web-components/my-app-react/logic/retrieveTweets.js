@@ -33,8 +33,9 @@ function retrieveTweets(token, callback) {
 
                             callback(new Error(error));
                         }
-                    })
-                });
-            }
+                    }
+                )
+            });
+        }
     })
 }   

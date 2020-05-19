@@ -29,9 +29,9 @@ function createTweet(token, message, callback) {
 
                             callback(new Error(error))
                         }
-
-                    })
+                    }
+                )
             }
-        })
-
+        }
+    )
 }

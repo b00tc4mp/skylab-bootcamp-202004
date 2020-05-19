@@ -17,14 +17,14 @@ describe("registerUser", () => {
                 `{ "username": "${email}","password": "${password}" }`, 
                 { "Content-type": "application/json" }, 
                 (error, status, body) => {
-                    expect(error).to.be.undefined;
+                    expect(error).to.be.undefined
                   
-                    expect(status).to.equal(200);
+                    expect(status).to.equal(200)
                   
-                    expect(body).to.exist;
+                    expect(body).to.exist
                   
-                    const token = JSON.parse(body).token;
-                    //Ahora usa el token para acceder a sus datos
+                    const token = JSON.parse(body).token
+
                     call("GET", 'https://skylabcoders.herokuapp.com/api/v2/users', undefined, { 'Authorization': `Bearer ${token}` }, 
                     (error, status, body) => {
                         expect(error).to.be.undefined;

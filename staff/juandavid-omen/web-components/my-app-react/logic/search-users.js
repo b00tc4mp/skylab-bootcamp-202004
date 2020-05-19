@@ -42,7 +42,6 @@ function searchUsers(token, query, callback) {
                             }
                             return _user
                         })
-                        // TODO optimize this processing by just using a single Array.prototype.reduce function
                         callback(undefined, users)
                     } else {
                         callback(new Error(JSON.parse(body).error));

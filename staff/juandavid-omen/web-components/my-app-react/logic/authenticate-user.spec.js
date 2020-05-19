@@ -8,16 +8,13 @@ describe("authenticateUser", () => {
         password = passwords.random();
     })
     it("should return a token if there is a user with the specified email and password in the API", (done) => {
-        //Registrar el email de estrangis
         call("POST", "https://skylabcoders.herokuapp.com/api/v2/users",
             `{ "username": "${email}","password": "${password}", "name": "${name}", "surname": "${surname}" }`,
             { 'Content-type': 'application/json' },
             (error, status, body) => {
-                //Comprobar que este usuario existe y que tiene esa contraseña
                 authenticateUser(email, password, (error, token) => {
                     expect(error).to.be.undefined;
                     expect(token).to.exist;
-                    //Ahora que lo hemos comprobado borramos el nombre de la lista
                    call("DELETE", "https://skylabcoders.herokuapp.com/api/v2/users", `{ "password": "${password}"}`, { "Content-type": "application/json", "Authorization": `Bearer ${token}` },
                         (error, status, body) => {
                             expect(error).to.be.undefined;
