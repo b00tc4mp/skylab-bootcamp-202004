@@ -7,7 +7,7 @@ function retrieveNews(callback) {
     xhr.open('GET', `https://skylabcoders.herokuapp.com/proxy?url=${NEWS_URL}`);
 
     xhr.onload = function () {
-        const parser = new DOMParser()//bloc-subtitular-container
+        const parser = new DOMParser()
 
         const doc = parser.parseFromString(this.responseText, 'text/html')
 
