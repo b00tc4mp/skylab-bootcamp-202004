@@ -1,7 +1,4 @@
-//IU (consola) ==> logic ==> data
+const App = require('./components/App')
 
-const AddContact = require('./components/AddContact')
-const ListContacts = require('./components/ListContacts')
-
-AddContact(error => !error && ListContacts())
+App()
 
