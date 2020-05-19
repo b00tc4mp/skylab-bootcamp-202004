@@ -1,4 +1,3 @@
-const AddContact = require('./components/AddContact')
-const ListContacts = require('./components/ListContacts')
+const App = require('./components/App')
 
-AddContact(() => ListContacts())
+App()
