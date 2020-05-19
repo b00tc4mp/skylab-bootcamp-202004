@@ -1,6 +1,5 @@
 const readline = require('readline')
 const fs = require('fs')
-const path = require('path')
 
 function addContact(...fields) {
     const interface = readline.createInterface({
@@ -33,11 +32,8 @@ function addContact(...fields) {
                     return value;
                 }
 
-                fs.writeFile(path.join(__dirname, '..', 'data', file), JSON.stringify(contact, replacer, 4), error => {
-                    if (error) {
-                        console.log(error)
-                        console.error('Failed to write contact file :(')
-                    }
+                fs.writeFile(`data/${file}`, JSON.stringify(contact, replacer, 4), error => {
+                    if (error) console.error('Failed to write contact file :(')
 
                     console.log('Contact saved')
 

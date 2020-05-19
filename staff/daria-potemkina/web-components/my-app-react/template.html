@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class='landing'>
+        <h1>Already member? Are you new? </h1>
+        <a href="">Login</a> or <a href="">Register</a>
+    </section>
+    <section class="register">
+        <h1>Register</h1>
+        <form>
+            <input type="text" name="name" placeholder="name" required patern = "[A-Za-z]{1,20}">
+            <input type="text" name="surname" placeholder="surname" required patern = "[A-Za-z]{1,20}">
+            <input type="email" name="email" placeholder="e-mail" required>
+            <input type="password" name="password" placeholder="password" required minLength = "8">
+            <button>Submit</button>
+            <a href="">Log in</a>
+        </form>
+        <p class="feedback feedback--error">Wrong credencials</p>
+    </section>
+
+    <section class="login">
+        <h1>Login</h1>
+        <form>
+            <input type="email" name="email" placeholder="e-mail">
+            <input type="password" name="name" placeholder="password">
+            <button>Submit</button>
+            <a href="">Register</a>
+        </form>
+        <p class="feedback feedback--error">Wrong credencials</p>
+    </section>
+
+    <section class="home">
+        <h1>Welcome!</h1>
+        <button>Log out</button>
+        <section class = "search">
+            <form>
+                <input type="text" name="query">
+                <button type="submit">🔍</button>
+            </form>
+            <form>
+                <input type="text" name="googlequery">
+                <button type="submit">Google Search 🧐</button>
+              </form>
+              <form>
+                <input type="text" name="ecosiaxquery">
+                <button type="submit">Ecosia 🌳</button>
+              </form>
+        </section>
+        <section class="result">
+            <ul>
+                <li>Daria Potemkina (dariapotemkina@mail.ru)</li>
+            </ul>
+            <h1>Title</h1>
+            <p>Text</p>
+            <a href:>https://............</a>
+            <p class="feedback feedback--error">You has 0 results.</p>
+        </section>
+        <section class="news">
+            <h5>SECTION</h5>
+            <h1>Title</h1>
+            <p>Text</p>
+        </section>
+    </section>
+</body>
+</html>
