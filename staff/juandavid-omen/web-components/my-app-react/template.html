@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <section class="landing">
+            <a href="">Register</a> or <a href="">Login</a>
+        </section>
+
+        <section class="register">
+            <h1>Register</h1>
+            <form>
+                <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}">
+                <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}">
+                <input type="email" name="email" placeholder="e-mail" required>
+                <input type="password" name="password" placeholder="password" required minLength="6">
+                <button>Submit</button>
+                or <a href="">Login</a>
+            </form>
+            <p class="feedback feedback--error">Wrong credentials</p>
+        </section>
+
+        <section class="login">
+            <h1>Login</h1>
+            <form>
+                <input type="email" name="email" placeholder="e-mail" required>
+                <input type="password" name="password" placeholder="password" required minLength="6">
+                <button>Submit</button>
+                or <a href="">Register</a>
+            </form>
+            <p class="feedback feedback--error">Wrong credentials</p>
+        </section>
+
+        <section class="home">
+            <h1>Hello ${name}, Welcome!</h1>
+            <button>Logout</button>
+            <div class="w3-bar w3-black">
+                <button id="users" class="w3-bar-item w3-button tablink w3-red">Users</button>
+                <button id="google" class="w3-bar-item w3-button tablink">Google</button>
+                <button id="ecosia" class="w3-bar-item w3-button tablink">Ecosia</button>
+                <button id="news" class="w3-bar-item w3-button tablink">News</button>
+            </div>
+            <section class="search">
+                <form>
+                    <input type="text" name="query">
+                    <button>🔍</button>
+                </form>
+            </section>
+
+            <section class="results">
+                <ul>
+                    <li>Juan Omen (anvidmen@gmail.com)</li>
+                    <li>Juanito Tim (juanito@tim.com)</li>
+                    <li>Tito Shon (tito@shon.com)</li>
+                </ul>
+            </section>
+
+            <section class="search">
+                <form>
+                    <input type="text" name="query">
+                    <button>🔍</button>
+                </form>
+            </section>
+
+            <section class="results">
+                <ul>
+                    <h4>
+                        <a href=${link}>${title}</a>
+                    </h4>
+                    <p>${content}</p>
+                    <hr>
+                </ul>
+            </section>
+
+            <section class="search">
+                <form>
+                    <input type="text" name="query">
+                    <button>🔍</button>
+                </form>
+            </section>
+            <section class="results">
+                <ul>
+                    <h4>
+                        <a href=${link}>${title}</a>
+                    </h4>
+                    <p>${content}</p>
+                    <hr>
+                </ul>
+            </section>
+    
+            <section class="search">
+                <form>
+                    <button value="text">news</button>
+                </form>
+            </section>
+
+            <section class="news">
+                <ul>
+                    <img />
+                    <h4>
+                        <a href=${link}></a>
+                    </h4>
+                    <p>${content}</p>
+                    <hr>
+                </ul>
+            </section>
+
+        </section>
+    </body>
+    
+</html>
