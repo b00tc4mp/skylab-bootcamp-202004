@@ -1,13 +1,14 @@
 const fs = require('fs')
 const path = require('path')
 
-module.exports = callback => {
+module.exports = (query, callback) => {
     fs.readdir(path.join(__dirname, '..', 'data'), (error, files) => {
         if (error) return callback(error)
 
         let wasError = false
 
         const contacts = []
+        let count = 0
 
         files.forEach(file => {
             fs.readFile(path.join(__dirname, '..', 'data', file), 'utf8', (error, json) => {
@@ -24,11 +25,17 @@ module.exports = callback => {
                 if (!wasError) {
                     const contact = JSON.parse(json)
 
-                    contact.id = file.substring(0, file.indexOf('.json'))
+                    const values = Object.values(contact)
 
-                    contacts.push(contact)
+                    const matches = values.some(value => value.includes(query))
 
-                    if (contacts.length === files.length) callback(null, contacts)
+                    if (matches) {
+                        contact.id = file.substring(0, file.indexOf('.json'))
+    
+                        contacts.push(contact)
+                    }
+
+                    if (++count === files.length) callback(null, contacts)
                 }
             })
         })
