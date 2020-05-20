@@ -2,12 +2,9 @@ const net = require('net')
 
 const server = net.createServer(socket => {
     socket.on('data', data => {
-        socket.write(`HTTP/1.1 200
-content-type: text/html
+        //console.log(data.toString())
 
-<h1>hola mundo</h1>`)
-
-        socket.end()
+        socket.write(`i send you back your message in upper case :P ${data.toString().toUpperCase()}`)
     })
 
     socket.on('error', console.log)
