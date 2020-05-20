@@ -25,7 +25,7 @@ ${contacts.map(({ name }) => `<li>${name}</li>`).join('')}
             const [, query] = path.split('?q=');
             searchContacts(query, (error, searchResults) => {
                 if (error) throw error;
-                debugger;
+            
                 socket.write(`HTTP/1.1 200
 content-type: text/html
 
@@ -79,7 +79,6 @@ content-type: text/html
                         socket.end();
                     }
                 });
-                debugger;
             }
         }
     });
