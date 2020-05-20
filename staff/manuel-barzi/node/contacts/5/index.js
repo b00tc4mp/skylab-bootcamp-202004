@@ -1,86 +1,50 @@
-const net = require('net')
+const http = require('http')
 const listContacts = require('./logic/list-contacts')
 const searchContacts = require('./logic/search-contacts')
+const ListContacts = require('./components/ListContacts')
+const SearchContacts = require('./components/SearchContacts')
+const App = require('./components/App')
+const fs = require('fs')
+const path = require('path')
 
-const server = net.createServer(socket => {
-    socket.on('data', data => {
-        debugger
-        const [line] = data.toString().split('\n')
+const server = http.createServer((req, res) => {
+    const { url } = req
 
-        const [method, path] = line.split(' ').map(item => item.trim())
+    res.setHeader('content-type', 'text/html')
 
-        if (path === '/contacts') {
-            listContacts((error, contacts) => {
-                if (error) throw error
+    if (url === '/contacts') {
+        listContacts((error, contacts) => {
+            if (error) throw error
 
-                socket.write(`HTTP/1.1 200
-content-type: text/html
-
-<h2>Contacts list</h2>
-<ul>
-    ${contacts.map(({ name }) => `<li>${name}</li>`).join('')}
-</ul>
-`)
-                socket.end()
-            })
-        } else if (path.startsWith('/contacts') && path.includes('?')) {
-            const [, queryString] = path.split('?')
+            res.end(App(ListContacts(contacts)))
+        })
+    } else if (url.startsWith('/search')) {
+        if (!url.includes('?')) {
+            res.end(SearchContacts())
+        } else {
+            const [, queryString] = url.split('?')
 
             const [, query] = queryString.split('=')
 
-            debugger
-
             searchContacts(query, (error, contacts) => {
                 if (error) throw error
-
-                socket.write(`HTTP/1.1 200
-content-type: text/html
-
-<h2>Contacts list</h2>
-<ul>
-    ${contacts.map(({ name }) => `<li>${name}</li>`).join('')}
-</ul>
-`)
-                socket.end()
+              
+                res.end(App(`${SearchContacts(query)}${ListContacts(contacts)}`))
             })
-        } else if (path === '/add-contact') {
-            debugger
-            if (method === 'GET') {
-                socket.write(`HTTP/1.1 200
-content-type: text/html
-
-<h2>Add contact</h2>
-<form action="/add-contact" method="POST">
-            <input type="text" name="name">
-            <input type="text" name="surname">
-            <input type="email" name="email">
-            <input type="text" name="phone">
-            <button>Add</button>
-</form>
-`)
-                socket.end()
-            } else if (method === 'POST') {
-                socket.write(`HTTP/1.1 200
-content-type: text/html
-
-<h2>Add contact</h2>
-// TODO parse the body of the request data, the last line. ex: name=manuel&surname=barzi&email=manuelbarzi%40gmail.com&phone=679344751'
-// TODO call addContact and return a feedback message => "contact saved"
-`)
-                socket.end()
-            }
-
-        } else {
-            socket.write(`HTTP/1.1 404
-content-type: text/html
-
-<h2>Not Found :(</h2>
-`)
-            socket.end()
         }
-    })
+    } else if (url === '/add-contact') {
 
-    socket.on('error', console.log)
+    } else if (url === '/style.css') {
+        fs.readFile(path.join(__dirname, url), 'utf8', (error, content) => {
+            if (error) throw error
+
+            res.setHeader('Content-Type', 'text/css')
+
+            res.end(content)
+        })
+    } else {
+
+    }
 })
 
 server.listen(8080)
