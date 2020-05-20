@@ -28,7 +28,7 @@ module.exports = (contact, callback) => {
 
     if (birthdate) {
         String.validate.notVoid(birthdate)
-        //Date.validate(birthdate) // TODO create this polyfill
+        String.validate.isDate(birth)
     }
 
     if (country)
@@ -44,3 +44,5 @@ module.exports = (contact, callback) => {
         callback(null, id)
     })
 }
+
+  

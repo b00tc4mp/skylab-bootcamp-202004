@@ -1,3 +1,4 @@
+
 const assert = require('assert')
 const addContact = require('./add-contact')
 const { random } = Math
@@ -28,8 +29,6 @@ const path = require('path')
             assert.equal(contact.name, name)
             assert.equal(contact.surname, surname)
             assert.equal(contact.email, email)
-
-            // TODO clean data
         })
     })
 }
