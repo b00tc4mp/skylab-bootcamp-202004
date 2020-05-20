@@ -3,13 +3,13 @@ const path = require("path");
 
 const contactList = (callback) => {
   console.log('hola')
-  fs.readdir(path.join(__dirname, "..", "data"), (error, totalDir) => {
+  fs.readdir(path.join(__dirname, "..", "data", "contacts"), (error, totalDir) => {
    
     if (error) throw error(error);
     console.log('serginho')
 
      function extractData(files = totalDir, count = 0, contactList = []) {
-      fs.readFile(path.join(__dirname, "..", "data", files[count]),(error, data) => {
+      fs.readFile(path.join(__dirname, "..", "data", "contacts", files[count]),(error, data) => {
           if (error) return callback(error); 
 
           const contact = JSON.parse(data);

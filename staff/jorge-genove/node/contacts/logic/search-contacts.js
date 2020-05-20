@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 
 const searchContacts = (query, callback) => {console.log ('he entrado')
-    fs.readdir(path.join(__dirname, '..', 'data'), (error, files) => {
+    fs.readdir(path.join(__dirname, '..', 'data','contacts'), (error, files) => {
         if (error) return callback(error)
 
         let wasError = false
@@ -11,7 +11,7 @@ const searchContacts = (query, callback) => {console.log ('he entrado')
         let count = 0
 
         files.forEach(file => {
-            fs.readFile(path.join(__dirname, '..', 'data', file), 'utf8', (error, json) => {
+            fs.readFile(path.join(__dirname, '..', 'data','contacts', file), 'utf8', (error, json) => {
                 if (error) {
                     if (!wasError) {
                         callback(error)
