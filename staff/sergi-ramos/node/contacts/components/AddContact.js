@@ -2,10 +2,10 @@ const readline = require('readline')
 const fs = require('fs')
 const addContact = require('../logic/add-contact')
 
-function AddContact() {
-    console.log(style.color, '===========')
-    console.log(style.color, 'Add Contact')
-    console.log(style.color, '===========')
+function AddContact(callback) {
+    console.log('===========')
+    console.log('Add Contact')
+    console.log('===========')
     const interface = readline.createInterface({
         input: process.stdin,
         output: process.stdout
@@ -30,6 +30,8 @@ function AddContact() {
                     addContact(contact, (error, id) => {
 
                         if (error) console.log(error) //TODO feedback
+
+                        callback()
                     })
 
                 } catch (error) {
