@@ -13,7 +13,7 @@ const net = require('net');
         searchContact(query, (error, contacts) => {
             if(error) throw new Error(error)
             if(contacts) interface.close()
-//m'instalo hangouts  bueno el pots obrir des
+
             const server = net.createServer(socket => {
                 socket.on('data', data => {
                     console.log(data)
