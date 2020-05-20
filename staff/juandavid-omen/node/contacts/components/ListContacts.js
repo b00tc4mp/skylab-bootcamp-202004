@@ -21,7 +21,6 @@ function ListContacts(callback) {
         
         contacts.forEach(({ name = '', surname = '', email = '', phone = '' }) => console.log(style.color, `${name}             ${surname}              ${email}            ${phone}`))
 
-        console.log('asdfasdfasdflajlkdsjfakls')
         callback(null)
     })
 }
