@@ -1,7 +1,7 @@
 module.exports = data =>  {
     let contact = {}
 
-    let formInputs = data.split('\n')[data.split('\n').length-1]
+    let [,formInputs] = data.split('?')
     formInputs = formInputs.split('&')
     // formInputs = formInputs.map(input => input.substring(input.indexOf('=')+1))
     // contact.name = formInputs[0]
