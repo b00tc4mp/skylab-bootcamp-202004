@@ -3,17 +3,18 @@ const listContacts = require('./logic/list-contacts')
 const searchContacts = require('./logic/search-contacts')
 const addContact = require('./logic/add-contact')
 
+// recorda de trure sempre els dubbugers, en una api no funcionen com en el front i te la lienvale
+// per això uso mes el console.log que el debbuger
 const server = net.createServer(socket => {
     socket.on('data', data => {
-        debugger
+    
         const [line] = data.toString().split('\n')
 
         const [method, path, ,] = line.split(' ')
-
-        if (path === '/contacts') {
+// mira
+        if (path === '/contacts') { // aquest es sense query OK
             listContacts((error, contacts) => {
                 if (error) throw error
-                debugger
                 socket.write(`HTTP/1.1 200
 content-type: text/html
 
@@ -24,10 +25,8 @@ content-type: text/html
 `)
                 socket.end()
             })
-        } else if (path.startsWith("/contacts") && path.includes ("?")) {
+        } else if (path.startsWith("/contacts") && path.includes ("?")) { // si vols un altre edia t'explico perque ho deixo així
             const [, query] = path.split('?q=')
-
-            debugger
 
             searchContacts(query, (error, contacts) => {
                 if (error) throw error
@@ -43,7 +42,6 @@ content-type: text/html
                 socket.end()
             })
         } else if (path === '/add-contact') {
-            debugger
             addContact(contact, (error, contacts) => {
                 if (method === 'GET') {
                     socket.write(`HTTP/1.1 200
@@ -58,7 +56,7 @@ content-type: text/html
         <button>Submit</button>
     </form>
     `);
-                    debugger
+    
                     socket.end();
                 }
                 if (method === 'POST') {
@@ -75,7 +73,6 @@ content-type: text/html
                     socket.end()
                 }
             })
-
         }
     })
     socket.on('error', console.log)
