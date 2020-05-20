@@ -3,6 +3,9 @@ const listContacts = require('./logic/list-contacts')
 const searchContacts = require('./logic/search-contacts')
 const ListContacts = require('./components/ListContacts')
 const SearchContacts = require('./components/SearchContacts')
+const App = require('./components/App')
+const fs = require('fs')
+const path = require('path')
 
 const server = http.createServer((req, res) => {
     const { url } = req
@@ -13,7 +16,7 @@ const server = http.createServer((req, res) => {
         listContacts((error, contacts) => {
             if (error) throw error
 
-            res.end(ListContacts(contacts))
+            res.end(App(ListContacts(contacts)))
         })
     } else if (url.startsWith('/search')) {
         if (!url.includes('?')) {
@@ -26,11 +29,19 @@ const server = http.createServer((req, res) => {
             searchContacts(query, (error, contacts) => {
                 if (error) throw error
               
-                res.end(`${SearchContacts(query)}${ListContacts(contacts)}`)
+                res.end(App(`${SearchContacts(query)}${ListContacts(contacts)}`))
             })
         }
     } else if (url === '/add-contact') {
 
+    } else if (url === '/style.css') {
+        fs.readFile(path.join(__dirname, url), 'utf8', (error, content) => {
+            if (error) throw error
+
+            res.setHeader('Content-Type', 'text/css')
+
+            res.end(content)
+        })
     } else {
 
     }
