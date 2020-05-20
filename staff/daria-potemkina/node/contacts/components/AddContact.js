@@ -43,7 +43,7 @@ function AddContact(callback) {
 
                         // prompt.close()
         
-                        callback()
+                        callback(null)
                     })
                 } catch (error) {
                     callback(error)

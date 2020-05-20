@@ -1,10 +1,12 @@
 const listContacts = require('../logic/list-contacts')
 
-function ListContacts(){
+function ListContacts(callback){
     listContacts((error, obj) =>{
-        if (error) throw error
+        if (error) return callback(error)
         
         console.table(obj)
+
+        callback(null)
     })
 }
 

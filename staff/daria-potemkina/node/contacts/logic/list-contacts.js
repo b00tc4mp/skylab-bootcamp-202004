@@ -7,20 +7,22 @@ function listContacts(callback) {
 
         let results = []
         let count = 0
-        let noError = true
+        let wasError = false
 
         for (let i in files) {
             fs.readFile(path.join(__dirname, '..', 'data', files[i]), (error, data) => {
                 if (error) {
-                    if (noError) {
+                    if (!wasError) {
                         callback(error)
 
-                        noError = false
+                        wasError = true
                     }
                     return
                 }
-                if (noError) {
+                if (!wasError) {
                     const obj = JSON.parse(data)
+
+                    obj.id = files[i].substring(0, files[i].indexOf('.json'))
 
                     results.push(obj)
 
