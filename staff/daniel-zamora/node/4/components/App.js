@@ -29,7 +29,7 @@ module.exports = () => {
         });
       else if (option === "search")
         Search((error) => {
-          if (error) return Feedback(error.message, "error");
+        //   if (error) return Feedback(error.message, "error");
 
           loop();
         });

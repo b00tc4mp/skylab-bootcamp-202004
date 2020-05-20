@@ -1,4 +1,23 @@
-const App = require('./components/App')
+const net = require('net')
+const listContacts = require('./logic/list-contacts')
 
-App()
+const server = net.createServer(socket => {
+    socket.on('data', data => {
+        listContacts ((error, contacts) => {
+            if(error) throw error;
+
+            socket.write(`HTTP/1.1 200
+            content-type: text/html
+            <h2>Contact List</h2>
+            <ul>${contacts.map(({name}) => 
+                `<li>${name}</li>`).join('')}
+            </ul>`)
+
+            socket.end()
+        })
+    })
+    socket.on('error', console.log)
+})
+
+server.listen(8080);
 
