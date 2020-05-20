@@ -14,7 +14,7 @@ const path = require('path')
 
         assert(typeof id === 'string')
 
-        fs.readFile(path.join(__dirname, '..', 'data', `${id}.json`), 'utf8', (error, content) => {
+        fs.readFile(path.join(__dirname, '..', 'data', 'contacts', `${id}.json`), 'utf8', (error, content) => {
             assert(!error)
 
             assert(content)

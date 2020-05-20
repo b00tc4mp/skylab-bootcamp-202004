@@ -1,0 +1,26 @@
+.feedback {
+  color: green;
+}
+.feedback--warning {
+  color: orange;
+}
+.feedback--error {
+  color: red;
+}
+
+.contacts {
+  border: 1px solid blue;
+  margin-left: 0.3rem;
+}
+
+.search-contacts {
+  border: 1px solid black;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*# sourceMappingURL=style.css.map */

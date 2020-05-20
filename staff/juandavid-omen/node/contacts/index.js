@@ -1,88 +1,81 @@
-const net = require('net');
-const listContacts = require('./logic/list-contacts');
-const searchContacts = require('./logic/search-contacts');
-const addContact = require('./logic/add-contact');
+const http = require('http')
+const listContacts = require('./logic/list-contacts')
+const searchContacts = require('./logic/search-contacts')
+const addContact = require('./logic/add-contact')
+const ListContacts = require('./components/ListContacts')
+const SearchContacts = require('./components/SearchContacts')
+const AddContact = require('./components/AddContact')
+const Landing = require('./components/Landing')
+const App = require('./components/App')
+const fs = require('fs')
+const path = require('path')
+const Feedback = require('./components/Feedback')
+const objetize = require('./helper/objetize')
 
-const server = net.createServer((socket) => {
-    socket.on('data', (data) => {
-        const [line] = data.toString().split('\n');
-        const [method, path, ,] = line.split(' ');
+const server = http.createServer((req, res) => {
+    const {
+        url,
+        method
+    } = req
+    
+    res.setHeader('content-type', 'text/html')
 
-        if (path === '/contacts') {
-            listContacts((error, contacts) => {
-                if (error) throw error;
+    if (url === '/contacts') {
+        listContacts((error, contacts) => {
+            if (error) throw error
 
-                socket.write(`HTTP/1.1 200
-content-type: text/html
+            res.end(App(ListContacts(contacts)))
+        })
+    } else if (url.startsWith('/search')) {
+        if (!url.includes('?')) {
+            res.end(App(SearchContacts()))
+        } else {
+            const [, queryString] = url.split('?')
 
-<h2>Contacts list</h2>
-<ul>
-${contacts.map(({ name }) => `<li>${name}</li>`).join('')}
-</ul>`);
-                socket.end();
-            });
-        } else if (path.startsWith('/search') && path.includes('?')) {
-            const [, query] = path.split('?q=');
-            searchContacts(query, (error, searchResults) => {
-                if (error) throw error;
-            
-                socket.write(`HTTP/1.1 200
-content-type: text/html
+            const [, query] = queryString.split('=')
 
-<h2>Contacts list</h2>
-<ul>
-${searchResults.map(({ name }) => `<li>${name}</li>`).join('')}
-</ul>`);
-                socket.end();
-            });
-        } else if (path === '/addcontacts') {
-            if (method === 'GET') {
-                socket.write(`HTTP/1.1 200
-content-type: text/html
+            searchContacts(query, (error, contacts) => {
+                if (error) throw error
 
-<h2>Add Contacts</h2>
-<form action="/addcontacts" method="POST">
-<input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}" />
-<input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}" />
-<input type="email" name="email" placeholder="e-mail" required />
-<input type="password" name="password" placeholder="password" required minLength="8" />
-<button>TRAP</button>
-</form>
-`);
-
-                socket.end();
-            }
-            if (method === 'POST') {
-                const contact = {};
-                const lines = data.toString().split('\n');
-                const finalLine = lines[lines.length - 1];
-                finalLine.split('&').forEach((element) => {
-                    contact[element.split('=')[0]] = element.split('=')[1];
-                });
-
-                contact.email = decodeURIComponent(contact.email);
-
-                addContact(contact, (error) => {
-                    if (error) {
-                        socket.write(`HTTP/1.1 400
-content-type: text/html
-                
-<h2>Problem</h2>
-`);
-                        socket.end();
-                    } else {
-                        socket.write(`HTTP/1.1 204
-content-type: text/html
-
-<h2>Succed</h2>
-`);
-                        socket.end();
-                    }
-                });
-            }
+                res.end(App(`${SearchContacts(query)}${ListContacts(contacts)}`))
+            })
         }
-    });
-    socket.on('error', console.log);
-});
+    } else if (url === '/add-contact') {
+        if (method === 'GET') {
 
-server.listen(8080);
+            res.end(App(AddContact()))
+
+        }else if(method==='POST'){
+            
+            req.on('data' , data =>{ 
+                
+                let obj = objetize(data, callback)
+                addContact(obj, (error, id)=>{
+                    const {name} = obj
+
+                    if(error){
+                        res.end(App(Feedback("Fail:(",'error')))
+                    }else{
+                        res.end(App(Feedback(`Contact ${name} created!`)))
+                    }
+                })
+            })
+        }
+
+    } else if (url === '/landing') {
+        res.end(App(Landing()))
+
+    } else if (url === '/style.css') {
+        fs.readFile(path.join(__dirname, url), 'utf8', (error, content) => {
+            if (error) throw error
+
+            res.setHeader('Content-Type', 'text/css')
+
+            res.end(content)
+        })
+    } else {
+
+    }
+})
+
+server.listen(8080)
