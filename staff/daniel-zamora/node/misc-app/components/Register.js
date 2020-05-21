@@ -1,7 +1,7 @@
 module.exports = ()=>{
     return `<section class="register">
     <h1>Register</h1>
-    <form>
+    <form action="/register" method="POST">
         <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}">
         <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}">
         <input type="email" name="email" placeholder="e-mail" required>
@@ -9,6 +9,6 @@ module.exports = ()=>{
         <button>Submit</button>
         or <a href="/login">Login</a>
     </form>
-    <p class="feedback feedback--error">Wrong credentials</p>
-</section>`
+    </section>`
 }
+// <p class="feedback feedback--error">Wrong credentials</p>

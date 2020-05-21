@@ -41,7 +41,7 @@ module.exports = (user , callback)=>{
        else {
         const id = `${Date.now()}`
         const title = `${id}.json`
-        user.id=title;
+        user.id = id;
         fs.writeFile(path.join(__dirname, '..', 'data', 'users', title), JSON.stringify(user,null,4),error =>{
             if(error) return callback(error) 
             callback(null, id) 
