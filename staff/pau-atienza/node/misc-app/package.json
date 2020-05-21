@@ -1,0 +1,20 @@
+{
+  "name": "misc-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "watch": "npx nodemon .",
+    "test": "echo NO TESTSTSTS YES :["
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "express": "^4.17.1",
+    "mocha": "^7.1.2",
+    "nodemon": "^2.0.4"
+  }
+}
