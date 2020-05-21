@@ -6,26 +6,28 @@ const interface = readline.createInterface({
     output: process.stdout
 })
 
+const socket = net.createConnection({ host: 'localhost', port: 8080 }, () => {
+    askFrom(name => {
+        socket.write(`FROM: ${name}`)
 
-const client = net.createConnection({ host: 'localhost', port: 8080 }, () => {
-    authenticate()
+        askToMessage(toMessage => {
+            socket.write(toMessage)
+        })
+    })
 })
 
-
-const authenticate = () => {
-    interface.question('user name?', name => {
-        client.write(name)
-    })
+function askFrom (callback) { 
+    interface.question('from? ', callback)
 }
 
-function ask() {
-    interface.question(`${this.name}?`, message => {
-        client.write(message)
-    })
+function ask (callback) {
+    interface.question(`to: message?`, callback)
 }
 
-client.on('data', data => {
-    console.log(data.toString())
+socket.on('data', data => {
+    console.log(`${data.toString()}`)
 
-    ask()
+    askToMessage(toMessage => {
+        socket.write(toMessage)
+    })
 })
