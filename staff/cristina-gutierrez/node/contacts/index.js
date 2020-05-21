@@ -1,81 +1,92 @@
-const net = require('net')
+const http = require('http')
 const listContacts = require('./logic/list-contacts')
 const searchContacts = require('./logic/search-contacts')
-const addContact = require('./logic/add-contact')
+const ListContacts = require('./components/ListContacts')
+const SearchContacts = require('./components/SearchContacts')
+const App = require('./components/App')
+const fs = require('fs')
+const path = require('path')
+const NotFound404 = require('./components/NotFound404')
 
-// recorda de trure sempre els dubbugers, en una api no funcionen com en el front i te la lienvale
-// per això uso mes el console.log que el debbuger
-const server = net.createServer(socket => {
-    socket.on('data', data => {
-    
-        const [line] = data.toString().split('\n')
+const server = http.createServer((req, res) => {
+    const { url } = req
 
-        const [method, path, ,] = line.split(' ')
-// mira
-        if (path === '/contacts') { // aquest es sense query OK
-            listContacts((error, contacts) => {
-                if (error) throw error
-                socket.write(`HTTP/1.1 200
-content-type: text/html
+    res.setHeader('content-type', 'text/html')
 
-<h2>Contacts list</h2>
-<ul>
-    ${contacts.map(({ name }) => `<li>${name}</li>`).join('')}
-</ul>
-`)
-                socket.end()
-            })
-        } else if (path.startsWith("/contacts") && path.includes ("?")) { // si vols un altre edia t'explico perque ho deixo així
-            const [, query] = path.split('?q=')
+    if (url === '/contacts') {
+        listContacts((error, contacts) => {
+            if (error) throw error
+
+            res.end(App(ListContacts(contacts)))
+        })
+    } else if (url.startsWith('/search')) {
+        if (!url.includes('?')) {
+            res.end(App(SearchContacts()))
+        } else {
+            const [, queryString] = url.split('?')
+
+            const [, query] = queryString.split('=')
 
             searchContacts(query, (error, contacts) => {
                 if (error) throw error
 
-                socket.write(`HTTP/1.1 200
-content-type: text/html
-
-<h2>Contacts list</h2>
-<ul>
-    ${contacts.map(({ name }) => `<li>${name}</li>`).join('')}
-</ul>
-`)
-                socket.end()
-            })
-        } else if (path === '/add-contact') {
-            addContact(contact, (error, contacts) => {
-                if (method === 'GET') {
-                    socket.write(`HTTP/1.1 200
-    content-type: text/html
-
-    <h2>Add Contacts</h2>
-    <form action="/add-contact" method="POST">
-        <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}" />
-        <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}" />
-        <input type="email" name="email" placeholder="email" required />
-        <input type="text" name="password" placeholder="password" required minLength="8" />
-        <button>Submit</button>
-    </form>
-    `);
-    
-                    socket.end();
-                }
-                if (method === 'POST') {
-                    socket.write(`HTTP/1.1 200
-    content-type: text/html`)
-                    const contact={}
-                    const lines = data.toString().split("\n")
-                    const finalLine =(lines[lines.length - 1])
-                    finalLine.split("&").forEach(element=>{
-                        contact[element.split("=")[0]]=element.split("=")[1]
-                    })
-    // TODO call addContact and return a feedback message => "contact saved"
-
-                    socket.end()
-                }
+                res.end(App(`${SearchContacts(query)}${ListContacts(contacts)}`))
             })
         }
-    })
-    socket.on('error', console.log)
+    } else if (url === '/add-contact') {
+        const { method } = req
+
+        if (method === 'GET') {
+            // TODO show form
+        } else if (method === 'POST') {
+            // TODO call add-contact logic and show some feedback
+        } else {
+            // TODO show some error (like "cannot <method>")
+        }
+    } else if (url === '/style.css') {
+        fs.readFile(path.join(__dirname, url), 'utf8', (error, content) => {
+            if (error) throw error
+
+            res.setHeader('Content-Type', 'text/css')
+
+            res.end(content)
+        })
+    } else if (url == '/wtf') {
+        //req.pipe(res)
+
+        let content = ''
+
+        req.on('data', chunk => content += chunk)
+
+        req.on('end', () => {
+            console.log(content)
+
+            res.end(content)
+        })
+    } else {
+        const resource = path.join(__dirname, url)
+
+        fs.access(resource, fs.F_OK, (err) => {
+            if (err) {
+                res.statusCode = 404
+
+                res.end(App(NotFound404()))
+
+                return
+            }
+
+            const extension = path.extname(resource).substring(1)
+
+            res.setHeader('Content-Type', `image/${extension}`) // WARN! this only works for image files!
+
+            fs.readFile(resource, (error, content) => {
+                if (error) throw error
+    
+                res.end(content)
+            })
+        })
+    }
 })
 
 server.listen(8080)
+

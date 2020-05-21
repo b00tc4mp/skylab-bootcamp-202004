@@ -10,28 +10,23 @@ const socket = net.createConnection({ host: 'localhost', port: 8080 }, () => {
     askFrom(name => {
         socket.write(`FROM: ${name}`)
 
-        askTo(name => {
-            askMessage(message => {
-                socket.write(`${name}: ${message}`)
-            })
+        askToMessage(toMessage => {
+            socket.write(toMessage)
         })
     })
 })
 
 function askFrom(callback) {
-    interface.question('from?', callback)
+    interface.question('from? ', callback)
 }
 
-function askTo(callback) {
-    interface.question('to?', callback)
-}
-
-function askMessage(callback) {
-    interface.question('message? ', callback)
+function askToMessage(callback) {
+    interface.question('to: message? ', callback)
 }
 
 socket.on('data', data => {
-    console.log(`${data.toString()}`)
+    console.log(`
+${data.toString()}`)
 
     askToMessage(toMessage => {
         socket.write(toMessage)
