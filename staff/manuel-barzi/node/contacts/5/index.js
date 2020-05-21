@@ -51,6 +51,18 @@ const server = http.createServer((req, res) => {
 
             res.end(content)
         })
+    } else if (url == '/wtf') {
+        //req.pipe(res)
+
+        let content = ''
+
+        req.on('data', chunk => content += chunk)
+
+        req.on('end', () => {
+            console.log(content)
+
+            res.end(content)
+        })
     } else {
         const resource = path.join(__dirname, url)
 
