@@ -10,7 +10,7 @@ module.exports = callback => {
         const contacts = []
 
         files.forEach(file => {
-            fs.readFile(path.join(__dirname, '..', 'data', file), 'utf8', (error, json) => {
+            fs.readFile(path.join(__dirname, '..', 'data', 'contacts', file), 'utf8', (error, json) => {
                 if (error) {
                     if (!wasError) {
                         callback(error)
