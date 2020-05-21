@@ -42,7 +42,7 @@ module.exports = (userId, contact, callback) => {
     const id = uid()
 
     const file = `${id}.json`
-
+    
     fs.writeFile(path.join(__dirname, '..', 'data', 'contacts', file), JSON.prettify(contact), error => {
         if (error) return callback(error)
 
