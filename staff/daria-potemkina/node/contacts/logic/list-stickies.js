@@ -1,8 +1,8 @@
 const fs = require('fs')
 const path = require('path')
 
-function listContacts(callback) {
-    fs.readdir(path.join(__dirname, '..', 'data', 'contacts'), (error, files) => {
+module.exports = callback => {
+    fs.readdir(path.join(__dirname, '..', 'data', 'stickies'), (error, files) => {
         if (error) return callback(error)
 
         let results = []
@@ -10,7 +10,7 @@ function listContacts(callback) {
         let wasError = false
 
         for (let i in files) {
-            fs.readFile(path.join(__dirname, '..', 'data', 'contacts', files[i]), (error, data) => {
+            fs.readFile(path.join(__dirname, '..', 'data', 'stickies', files[i]), (error, data) => {
                 if (error) {
                     if (!wasError) {
                         callback(error)
@@ -34,5 +34,3 @@ function listContacts(callback) {
         }
     })
 }
-
-module.exports = listContacts

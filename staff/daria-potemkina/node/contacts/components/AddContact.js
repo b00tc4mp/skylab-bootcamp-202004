@@ -1,56 +1,13 @@
-const readline = require('readline')
-const addContact = require('../logic/add-contact')
-
-function AddContact(callback) {
-    console.log('===========')
-    console.log('Add Contact')
-    console.log('===========')
-
-    const prompt = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    })
-
-    const fields = ['name', 'surname', 'email', 'phone', 'birth', 'country']
-
-    const contact = {}
-
-    let count = 0;
-
-    (function askField() {
-        const field = fields[count]
-
-        prompt.question(`${field}?`, value => {
-            contact[field] = value
-
-            if (count < fields.length-1) {
-                count++
-
-                askField()
-            } else {
-                prompt.close()
-                try {
-                    addContact(contact, error => {
-                        if (error) {
-                            console.log(error)
-
-                            console.log('Failed to write contact file')
-
-                            return callback(error)
-                        }
-
-                        console.log('Contact saved')
-
-                        // prompt.close()
-        
-                        callback(null)
-                    })
-                } catch (error) {
-                    callback(error)
-                }
-            }
-        })
-    })()
+module.exports = () =>{
+    return `<section class="add-contact">
+    <form action="/add-contact" method="POST">
+        <input type="text" name="name" placeholder="John">
+        <input type="text" name="surname" placeholder="Doe">
+        <input type="email" name="email" placeholder="johndoe@mail.com">
+        <input type="tel" name="phone" placeholder="+34 123-45-67-89">
+        <input type="date" name="birthdate">
+        <input type="text" name="country", placeholder="Spain">
+        <button>Add</button>
+</form>
+</section>`
 }
-
-module.exports = AddContact

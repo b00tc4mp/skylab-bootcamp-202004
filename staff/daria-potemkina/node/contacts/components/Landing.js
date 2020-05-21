@@ -1,32 +1,14 @@
-const readline = require('readline')
-
-function Landing(callback) {
-    console.log('=======')
-    console.log('Landing')
-    console.log('=======')
-
-    const prompt = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-
-    (function chooseAnOption() {
-        prompt.question(`Choose an option:
--add contact
--list contacts
--search contacts
-`, value => {
-            if (value.trim() !== 'add contact' && value.trim() !== 'list contacts' && value.trim() !== 'search contacts') {
-                console.log('invalid option')
-
-                chooseAnOption()
-            } else {
-                prompt.close()
-
-                callback(null, value)
-            }
-        })
-    })()
+function Landing() {
+   return `<section class="landing">
+    <h1>Landing</h1>
+    <ul>
+    <li><a href="http://localhost:8080/contacts">List contacts</a></li>
+    <li><a href="http://localhost:8080/add-contact">Add contact</a></li>
+    <li><a href="http://localhost:8080/search">Search contacts</a></li>
+    <li><a href="http://localhost:8080/add-sticky">Add sticky</a></li>
+    <li><a href="http://localhost:8080/stickies">List stickies</a></li>
+    </ul>
+   </section>`
 }
 
 module.exports = Landing

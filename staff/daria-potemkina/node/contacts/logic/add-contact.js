@@ -40,7 +40,7 @@ function addContact(contact, callback) {
         return value
     }
 
-    fs.writeFile(path.join(__dirname, '..', 'data', file), JSON.stringify(contact, replacer, 4), error => {
+    fs.writeFile(path.join(__dirname, '..', 'data', 'contacts', file), JSON.stringify(contact, replacer, 4), error => {
         if (error) return callback(error)
 
         callback(null, id)
