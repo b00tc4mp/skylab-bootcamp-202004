@@ -1,9 +1,6 @@
 module.exports = () =>{
     
-  
-
-
-return `<h1>Add Sticky</h1> 
+  return `<h1>Add Sticky</h1> 
 <form action="/add-stickie" method="POST" id="usrform" >
   Name: <input type="text" name="usrname">
   <input type="submit">

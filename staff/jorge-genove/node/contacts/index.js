@@ -1,3 +1,5 @@
+const fs = require("fs");
+const path = require("path");
 const http = require("http");
 const App = require("./components/App");
 const listContacts = require("./logic/contact-list");
@@ -7,8 +9,9 @@ const searchContacts = require("./logic/search-contacts");
 const addContact = require("./logic/add-contact");
 const AddContacts = require("./components/AddContact");
 const Landing = require("./components/Landing");
-const AddStickies = require("./components/AddStickies")
-const addStickies = require("./logic/add-stickies")
+const AddStickies = require("./components/AddStickies");
+const addStickies = require("./logic/add-stickies");
+const addStickiesList = require("./logic/list-stickies");
 
 const server = http.createServer((req, res) => {
   const { method, url } = req;
@@ -45,7 +48,7 @@ const server = http.createServer((req, res) => {
           const split = element.split("=");
           contact[split[0]] = split[1];
         });
-        
+
         contact.email = decodeURIComponent(contact.email);
 
         addContact(contact, (error, contact) => {
@@ -53,27 +56,36 @@ const server = http.createServer((req, res) => {
           res.end(App(AddContacts()));
         });
       });
-    } 
-
-    }else if(url === "/add-stickie") {
-      if (method === "GET"){
-      res.end(App(AddStickies()))
-    }else if (method === 'POST'){
-      req.on('data', (chunk) => {
-        const stickie = {}
-        const keyValues = chunk.toString().split("&")
-        keyValues.forEach(element => {
-         const splitStickie = element.split('=')
-         stickie[splitStickie[0]] = splitStickie[1]
-
-        })
-        stickie.comment = decodeURIComponent(stickie.comment)
-        addStickies(stickie, (error,stickieResult) =>{
-        if(error) throw error
-      })
-      })
-
     }
+  } else if (url === "/add-stickie") {
+    if (method === "GET") {
+      res.end(App(AddStickies()));
+    } else if (method === "POST") {
+      req.on("data", (chunk) => {
+        const stickie = {};
+        const keyValues = chunk.toString().split("&");
+        keyValues.forEach((element) => {
+          const splitStickie = element.split("=");
+          stickie[splitStickie[0]] = splitStickie[1];
+        });
+        stickie.comment = decodeURIComponent(stickie.comment);
+        addStickies(stickie, (error, stickieResult) => {
+          if (error) throw error;
+
+          res.end(App(addStickiesList(stickieResult)));
+        });
+      });
+    }
+  } else if (url === '/style.css') {
+    fs.readFile(path.join(__dirname, url), 'utf8', (error, content) => {
+        if (error) throw error
+
+        res.setHeader('Content-Type', 'text/css')
+
+        res.end(content)
+    })
   }
 });
+  
+
 server.listen(8080);
