@@ -1,13 +1,7 @@
 module.exports = () => {
 
-    return `<section class="contacts">
-     <h2>Contacts list</h2>
- <ul>
-    <li><a href="http://localhost:8080/add-contact" target="_blank">add contact</a></li>
-    <li><a href="http://localhost:8080/contacts" target="_blank">list contacts</a></li>
-    <li><a href="http://localhost:8080/search" target="_blank">search contacts</a></li>
-    <li><a href="http://localhost:8080/sticky" target="_blank">add sticky</a></li>
- </ul>
- </section>`
+    return `<section class="landing">
+    <a href="/register">Register</a> or <a href="/login">Login</a>
+</section>`
  }
   
