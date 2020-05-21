@@ -1,31 +1,43 @@
-const assert = require('assert')
 const addContact = require('./add-contact')
 const { random } = Math
 const fs = require('fs')
 const path = require('path')
+const uid = require('../utils/uid')
+const { expect } = require('chai')
 
-{
-    const name = `name-${random()}`
-    const surname = `surname-${random()}`
-    const email = `e-${random()}@mail.com`
+describe.only('addContact', () => {
+    let name, surname, email
 
-    addContact({ name, surname, email }, (error, id) => {
-        assert(!error)
+    beforeEach(() => {
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `e-${random()}@mail.com`
+    })
 
-        assert(typeof id === 'string')
+    it('should succeed on valid data', done => {
+        addContact(uid(), { name, surname, email }, (error, id) => { // WARN do not use uid directly... create a user first in before each
+            expect(error).to.be.null
+    
+            expect(id).to.be.a('string')
+    
+            debugger
+            fs.readFile(path.join(__dirname, '..', 'data', 'contacts', `${id}.json`), 'utf8', (error, content) => {
 
-        fs.readFile(path.join(__dirname, '..', 'data', 'contacts', `${id}.json`), 'utf8', (error, content) => {
-            assert(!error)
+                debugger
+                expect(error).to.be.null
+    
+                expect(content).to.exist
+    
+                const contact = JSON.parse(content)
+    
+                expect(contact.name).to.equal(name)
+                expect(contact.surname).to.equal(surname)
+                expect(contact.email).to.equal(email)
 
-            assert(content)
-
-            const contact = JSON.parse(content)
-
-            assert.equal(contact.name, name)
-            assert.equal(contact.surname, surname)
-            assert.equal(contact.email, email)
-
-            // TODO clean data
+                done()
+            })
         })
     })
-}
+
+    // TODO clean data (on after)
+})
