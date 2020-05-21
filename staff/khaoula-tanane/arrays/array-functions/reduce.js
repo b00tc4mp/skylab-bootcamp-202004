@@ -4,4 +4,8 @@ function reduce(array, callback, initialValue = 0){
         result = callback(result, array[i], i,  array)
     }
     return result
+<<<<<<< Updated upstream
 } 
+=======
+}
+>>>>>>> Stashed changes
