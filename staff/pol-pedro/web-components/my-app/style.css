@@ -1,0 +1,478 @@
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Special+Elite&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+.register {
+  top: 5vh;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  z-index: 99;
+  background-color: rgba(201, 199, 204, 0.7);
+}
+.register__container {
+  background-color: #dec4cb;
+  width: 60vw;
+  height: 46vh;
+  margin-top: 15vh;
+  padding: 0.5rem;
+  box-shadow: 0.9vw 0.7vw #888888;
+}
+.register__container h1 {
+  text-align: center;
+  font-family: "Special Elite", cursive;
+  font-size: 2rem;
+}
+.register__container form {
+  font-family: "Special Elite", cursive;
+  display: flex;
+  flex-direction: column;
+  margin: 1vw;
+}
+.register__container form label {
+  margin-top: 1vw;
+}
+.register__container form input {
+  height: 4vh;
+}
+.register__container form button {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  font-family: "Special Elite", cursive;
+  font-weight: 600;
+  font-size: 1.5rem;
+  border: none;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 2vw;
+  width: 20vw;
+  height: 5vh;
+}
+.register__container form button:hover {
+  background-color: #7d978b;
+  color: white;
+}
+.register__container form a {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 2vw;
+  text-decoration: none;
+  color: white;
+  font-size: 1.3rem;
+}
+.register__container form a:hover {
+  color: #7d978b;
+  text-decoration: underline;
+}
+.register__container form .feedback--error {
+  transform: rotate(-15deg);
+  position: absolute;
+  text-align: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(-360deg);
+  }
+}
+* {
+  margin: none;
+  box-sizing: border-box;
+  trainsition: 2s;
+}
+
+.home {
+  -moz-transition: 2s;
+  transition-delay: 2s;
+  -moz-transition-duration: 2s;
+  margin-top: 5vh;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+  width: 70vW;
+  background-color: #a7b9fb;
+}
+.home .home__search {
+  display: flex;
+  flex-direction: column;
+}
+.home .home__search button {
+  height: vh;
+  font-family: "Special Elite", cursive;
+  font-size: 1.2rem;
+  padding: 0.6rem 1rem;
+  margin-left: 0.7rem;
+  border: none;
+  background-color: #a7b9fb;
+}
+.home .home__search button:hover {
+  color: white;
+  font-weight: 600;
+}
+.home .home__search .change {
+  display: none;
+  width: 3vw;
+  font-family: "Special Elite", cursive;
+  font-size: 1.2rem;
+  padding: none;
+  margin: none;
+  border: none;
+  background-color: #a7b9fb;
+}
+.home .home__search input {
+  font-family: "Special Elite", cursive;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-left: 0vw;
+  padding: 0.6rem;
+  height: 5vh;
+  width: 45vw;
+  border: none;
+  background-color: #fba7b4;
+  color: white;
+  border-radius: 0px;
+  border-top: 3px solid black;
+  border-right: 3px solid black;
+  border-left: 3px solid black;
+  border-bottom: 3px solid black;
+}
+.home .home__search .feedback--error {
+  position: absolute;
+  font-weight: 600;
+  padding: 0.5rem;
+  font-family: "Special Elite", cursive;
+  text-align: center;
+}
+.home .home__search .change {
+  font-size: 1rem;
+  font-family: "Special Elite", cursive;
+}
+.home i {
+  align-self: center;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  display: none;
+  color: white;
+  animation: spin 1.5s linear infinite;
+}
+.home ul {
+  font-family: "Bebas Neue", cursive;
+  flex-direction: column;
+  margin-right: 3.5vw;
+  list-style-type: none;
+  max-height: 60vh;
+  overflow-y: scroll;
+  display: flex;
+  -ms-overflow-style: none;
+  margin-top: 3vh;
+}
+.home ul::-webkit-scrollbar {
+  display: none;
+}
+.home ul {
+  display: flex;
+  -ms-overflow-style: none;
+  margin-top: 3vh;
+}
+.home ul li {
+  font-size: 1.2rem;
+  transition: 1s;
+  margin: 0.3rem;
+  margin-right: 16px;
+  background-color: #fba7b4;
+  text-align: center;
+  padding: 0.5rem;
+}
+.home ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.5rem;
+}
+.home ul li a:hover {
+  text-decoration: underline;
+}
+
+.news-grid {
+  display: grid;
+  margin-top: 6.5vh;
+  grid-gap: 0.6vh;
+  grid-template: repeat(4, 1fr)/repeat(3, 1fr);
+  margin-right: auto;
+  margin-left: auto;
+  width: 95vw;
+}
+.news-grid div {
+  display: flex;
+  background-color: #fba7b4;
+  align-items: center;
+}
+.news-grid div a {
+  text-decoration: none;
+  font-family: "Special Elite", cursive;
+  text-align: center;
+  padding: 2vh;
+  font-size: 2rem;
+}
+.news-grid div:nth-child(1) {
+  grid-row: 1/span 2;
+}
+.news-grid div:nth-child(1) a {
+  color: white;
+}
+.news-grid div:nth-child(2) {
+  color: black;
+  grid-column: 2/span 2;
+}
+.news-grid div:nth-child(2) a {
+  color: black;
+}
+.news-grid div:nth-child(3) {
+  grid-column: 2/span 2;
+}
+.news-grid div:nth-child(3) a {
+  color: white;
+}
+.news-grid div:nth-child(4) {
+  grid-column: 1/span 2;
+}
+.news-grid div:nth-child(4) a {
+  color: black;
+}
+.news-grid div:nth-child(5) {
+  grid-column: 3;
+  grid-row: 3/span 2;
+}
+.news-grid div:nth-child(5) a {
+  color: white;
+}
+.news-grid div:nth-child(6) {
+  grid-column: 1/span 2;
+}
+.news-grid div:nth-child(6) a {
+  color: black;
+}
+.news-grid div:hover {
+  z-index: 90;
+  background-color: #d6cccf;
+  box-shadow: 7px 7px #888888;
+}
+.news-grid div:hover a {
+  text-decoration: underline;
+}
+
+.news-grid2 {
+  display: grid;
+  margin-top: 6.5vh;
+  margin-bottom: 5vh;
+  grid-gap: 0.6vh;
+  grid-template: repeat(4, 1fr)/repeat(3, 1fr);
+  margin-right: auto;
+  margin-left: auto;
+  width: 95vw;
+}
+.news-grid2 div {
+  display: flex;
+  background-color: #a7b9fb;
+  align-items: center;
+}
+.news-grid2 div a {
+  text-decoration: none;
+  font-family: "Special Elite", cursive;
+  text-align: center;
+  padding: 2vh;
+  font-size: 2rem;
+}
+.news-grid2 div:nth-child(1) {
+  grid-row: 1/span 2;
+}
+.news-grid2 div:nth-child(1) a {
+  color: white;
+}
+.news-grid2 div:nth-child(2) {
+  color: black;
+  grid-column: 2/span 2;
+}
+.news-grid2 div:nth-child(2) a {
+  color: black;
+}
+.news-grid2 div:nth-child(3) {
+  grid-column: 2/span 2;
+}
+.news-grid2 div:nth-child(3) a {
+  color: white;
+}
+.news-grid2 div:nth-child(4) {
+  grid-column: 1/span 2;
+}
+.news-grid2 div:nth-child(4) a {
+  color: black;
+}
+.news-grid2 div:nth-child(5) {
+  grid-column: 3;
+  grid-row: 3/span 2;
+}
+.news-grid2 div:nth-child(5) a {
+  color: white;
+}
+.news-grid2 div:nth-child(6) {
+  grid-column: 1/span 2;
+}
+.news-grid2 div:nth-child(6) a {
+  color: black;
+}
+.news-grid2 div:hover {
+  z-index: 99;
+  background-color: #d6cccf;
+  box-shadow: 7px 7px #888888;
+}
+.news-grid2 div:hover a {
+  text-decoration: underline;
+}
+
+* {
+  margin: 0;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.header {
+  z-index: 99;
+  top: 0;
+  position: fixed;
+  background-color: #fba7b4;
+  width: 100vw;
+}
+.header__landing {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 100vw;
+  height: 5vh;
+}
+.header__landing h1 {
+  font-family: "Special Elite", cursive;
+  font-size: 1.5rem;
+  margin-left: 1vw;
+  color: white;
+}
+.header__landing h2 {
+  font-weight: 600;
+  font-family: "Special Elite", cursive;
+  font-size: 1.4rem;
+  margin-left: 1vw;
+  color: black;
+  margin-left: 5vw;
+}
+.header__landing h2:hover {
+  color: white;
+  font-weight: 600;
+}
+.header__landing i {
+  margin-left: 70vw;
+  display: none;
+}
+.header__landing i:hover {
+  color: white;
+}
+.header__landing a {
+  font-family: "Special Elite", cursive;
+  margin-right: 1vw;
+  text-decoration: none;
+  color: white;
+  font-size: 1.3rem;
+}
+.header__landing a:nth-child(2) {
+  margin-left: 70vw;
+}
+.header__landing a:nth-child(3) {
+  margin-left: 2vw;
+}
+.header__landing a:hover {
+  color: gray;
+  text-decoration: underline;
+}
+
+.login {
+  top: 5vh;
+  z-index: 99;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(201, 199, 204, 0.7);
+}
+.login__container {
+  background-color: #dec4cb;
+  width: 60vw;
+  height: 32vh;
+  margin-top: 15vh;
+  padding: 0.5rem;
+  box-shadow: 0.9vw 0.7vw #888888;
+}
+.login__container h1 {
+  text-align: center;
+  font-family: "Special Elite", cursive;
+  font-size: 2rem;
+}
+.login__container form {
+  font-family: "Special Elite", cursive;
+  display: flex;
+  flex-direction: column;
+  margin: 1vw;
+}
+.login__container form label {
+  margin-top: 1vw;
+}
+.login__container form input {
+  height: 4vh;
+}
+.login__container form button {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  font-family: "Special Elite", cursive;
+  font-weight: 600;
+  font-size: 1.5rem;
+  border: none;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 2vw;
+  width: 20vw;
+  height: 5vh;
+}
+.login__container form button:hover {
+  background-color: #7d978b;
+  color: white;
+}
+.login__container form a {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 2vw;
+  text-decoration: none;
+  color: white;
+  font-size: 1.3rem;
+}
+.login__container form a:hover {
+  color: #7d978b;
+  text-decoration: underline;
+}
+.login__container form .feedback--error {
+  transform: rotate(-15deg);
+  position: absolute;
+  text-align: center;
+}
+
+.feedback {
+  color: green;
+  position: absolute;
+}
+.feedback--warning {
+  color: orange;
+}
+.feedback--error {
+  color: red;
+}
+
+/*# sourceMappingURL=style.css.map */
