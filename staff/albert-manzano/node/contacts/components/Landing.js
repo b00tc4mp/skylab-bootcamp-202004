@@ -1,33 +1,14 @@
-const readline = require('readline')
-const Feedback = require('./Feedback')
-const style = require('./Landing.style');
+module.exports = () => {
 
-function Landing(callback) {
-    console.log(style.color, '=======')
-    console.log(style.color, 'Landing')
-    console.log(style.color, '=======')
-
-    const interface = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-
-    (function chooseAnOption() {
-        console.log(style.color)
-        interface.question(`Choose an option:
-- add contact
-- list contacts
-- search contacts
-`, value => {
-            if (value.trim() !== 'add contact' && value.trim() !== 'list contacts'&& value.trim() !== 'search contacts') {
-                Feedback('invalid option', 'error')
-
-                chooseAnOption()
-            } else {
-                interface.close()
-                
-                callback(null, value)
-            }
-        })
-    })()
-}
+    return `<section class="contacts">
+     <h2>Contacts list</h2>
+ <ul>
+    <li><a href="http://localhost:8080/add-contact" target="_blank">add contact</a></li>
+    <li><a href="http://localhost:8080/contacts" target="_blank">list contacts</a></li>
+    <li><a href="http://localhost:8080/search" target="_blank">search contacts</a></li>
+    <li><a href="http://localhost:8080/stickies" target="_blank">stickies</a></li>
+ </ul>
+ </section>`
+ }
+  
+ 

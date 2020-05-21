@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 
 module.exports = callback => {
-    fs.readdir(path.join(__dirname, '..', 'data'), (error, files) => {
+    fs.readdir(path.join(__dirname, '..', 'data','contacts'), (error, files) => {
         if (error) return callback(error)
 
         let wasError = false
@@ -10,7 +10,7 @@ module.exports = callback => {
         const contacts = []
 
         files.forEach(file => {
-            fs.readFile(path.join(__dirname, '..', 'data', file), 'utf8', (error, json) => {
+            fs.readFile(path.join(__dirname, '..', 'data','contacts', file), 'utf8', (error, json) => {
                 if (error) {
                     if (!wasError) {
                         callback(error)
