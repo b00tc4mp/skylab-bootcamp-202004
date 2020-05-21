@@ -9,6 +9,7 @@ const searchContacts = require('./logic/search-contacts')
 const AddContact = require('./components/AddContact')
 const addContact = require('./logic/add-contact')
 const extractInputs = require('./logic/extract-inputs')
+const NotFound404 = require('./components/NotFound404')
 
 const server = http.createServer((req, res) => {
     const { url } = req
@@ -35,17 +36,22 @@ const server = http.createServer((req, res) => {
                 res.end(App(`${SearchContacts(query)}${ListContacts(contacts)}`))
             })
         }
-    } else if (url.startsWith('/add-contact')) {
-        
-        if (!url.includes('&')) {
-            res.end(App(AddContact()))
-        } else {
-            const _contact = extractInputs(url)
-            addContact(_contact, (error) => {
-                if (error) throw error
+    } else if (url === '/add-contact') {
+        const { method } = req
 
-                res.end(App('<h2>Contact Saved!</h2>'))
+        if (method === 'GET') {
+            res.end(App(AddContact()))
+        } else if (method === 'POST') {
+            req.on('data', chunk => {
+                const _contact = extractInputs(chunk.toString())
+                addContact(_contact, (error) => {
+                    if (error) throw error
+    
+                    res.end(App('<h2>Contact Saved!</h2>'))
+                })
             })
+        } else {
+            res.end(App('<h2>Incorrect method obtained :(</h2>'))
         }
 
     } else if (url === '/style.css') {
@@ -57,7 +63,24 @@ const server = http.createServer((req, res) => {
             res.end(content)
         })
     } else {
-        res.end(App('<h2>Cannot found the requested page :(</h2>'))
+        const resource = path.join(__dirname, url)
+
+        fs.access(resource, fs.F_OK, (err) => {
+            if (err) {
+                res.statusCode = 404
+                res.end(App(NotFound404()))
+            }
+        })
+
+        const extension = resource.extname(resource).substring(1)
+
+        res.setHeader('content-type', `image/${extension}`)
+
+        fs.readFile(resource,(error, content) => {
+            if (error) throw error
+
+            res.end(content)
+        })
     }
 })
 

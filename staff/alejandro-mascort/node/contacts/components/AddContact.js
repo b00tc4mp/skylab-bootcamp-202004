@@ -3,7 +3,7 @@ const addContact = require('../logic/add-contact')
 module.exports = ()  => {
 
     return `<section class="add-contact">
-    <form action="/add-contact" method="GET">
+    <form action="/add-contact" method="POST">
         <input name="name" placeholder="name">
         <input name="surname" placeholder="surname">
         <input name="email" placeholder="email">
