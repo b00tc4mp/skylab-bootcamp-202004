@@ -1,5 +1,4 @@
 module.exports = () => {
-
    return `<section class="contacts">
     <h2>Contacts list</h2>
 <ul>

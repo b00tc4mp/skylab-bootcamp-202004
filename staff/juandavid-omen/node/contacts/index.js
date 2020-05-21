@@ -45,7 +45,7 @@ const server = http.createServer((req, res) => {
 
             res.end(App(AddContact()))
 
-        }else if(method==='POST'){
+        } else if (method==='POST'){
             
             req.on('data' , data =>{ 
                 
@@ -53,9 +53,10 @@ const server = http.createServer((req, res) => {
                 addContact(obj, (error, id)=>{
                     const {name} = obj
 
-                    if(error){
+                    if (error) {
                         res.end(App(Feedback("Fail:(",'error')))
-                    }else{
+
+                    }else {
                         res.end(App(Feedback(`Contact ${name} created!`)))
                     }
                 })
