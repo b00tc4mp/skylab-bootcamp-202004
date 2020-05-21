@@ -50,10 +50,10 @@ const server  = http.createServer((req,res) => {
         } else if (method === 'POST') {
 
             req.on('data', data => {
-                let obj = objetize(data, callback)
+                let obj = objetize(data)
                 addContact(obj, (error, id) => {
                     const { name } = obj
-
+                    
                     if(error) {
                         res.end(App(Feedback('Fail', 'error')))
 
@@ -69,7 +69,7 @@ const server  = http.createServer((req,res) => {
         } else if (method === 'POST'){
 
             req.on('data', data => {
-                let obj = objetize(data, callback)
+                let obj = objetize(data)
                 addSticky(obj, (error, id) =>{
                     const { name } = obj;
 
@@ -90,7 +90,7 @@ const server  = http.createServer((req,res) => {
 
                 res.setHeader('Content-Type', 'text/css')
 
-                res.end(contact)
+                res.end(content)
             })
     } else {
 
