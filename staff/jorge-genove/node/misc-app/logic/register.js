@@ -5,11 +5,11 @@ const Email = require('../utils/email')
 require('../utils/string')
 
 function register({name, surname, email, password}, callback) {
-  /* String.validate.alphabetic(name);
+  String.validate.alphabetic(name);
   String.validate.alphabetic(surname);
 
   Email.validate(email);
-  String.validate.lengthGreaterEqualThan(password, 8);  */
+  String.validate.lengthGreaterEqualThan(password, 8); 
   let matched = false 
 
   fs.readdir(path.join(__dirname, "..", "data", "users"), (error, files) => {
