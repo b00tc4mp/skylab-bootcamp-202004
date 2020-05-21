@@ -1,40 +1,43 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs')
+const path = require('path')
 
-function searchContacts(query, callback) {
-    
-    let wasError = false;
-    let count = 0
-    const searchResults = []
+module.exports = (query, callback) => {
+    fs.readdir(path.join(__dirname, '..', 'data', 'contacts'), (error, files) => {
+        if (error) return callback(error)
 
-    fs.readdir(path.join(__dirname, '..', 'data'), (error, files) => {
-       
-        if (error) return callback(error);
+        let wasError = false
 
-        files.forEach((file) => {
-            fs.readFile(path.join(__dirname, '..', 'data', file), (error, data) => {
+        const contacts = []
+        let count = 0
+
+        files.forEach(file => {
+            fs.readFile(path.join(__dirname, '..', 'data', 'contacts', file), 'utf8', (error, json) => {
                 if (error) {
-                    if (!wasError) callback(error);
+                    if (!wasError) {
+                        callback(error)
 
-                    wasError = true;
+                        wasError = true
+                    }
 
                     return
                 }
+
                 if (!wasError) {
+                    const contact = JSON.parse(json)
 
-                    data = JSON.parse(data);
+                    const values = Object.values(contact)
 
-                    const { name } = data;
+                    const matches = values.some(value => value.includes(query))
 
-                    if (name.includes(query))searchResults.push(data)
+                    if (matches) {
+                        contact.id = file.substring(0, file.indexOf('.json'))
+    
+                        contacts.push(contact)
+                    }
 
-                    count++
-
-                    if (count === files.length -1) callback(null, searchResults) 
+                    if (++count === files.length) callback(null, contacts)
                 }
-            });
-        });
-    });
+            })
+        })
+    })
 }
-
-module.exports = searchContacts

@@ -1,45 +1,77 @@
+module.exports = () => {
+    return `<h2>Add contact</h2>
+    <form action="/add-contact" method="POST">
+                <input type="text" name="name">
+                <input type="text" name="surname">
+                <input type="email" name="email">
+                <input type="text" name="phone">
+                <button>Add</button>
+    </form>`
+}
+
+
+
+
+
+
+
+
+
+/* // TODO web
+
 const readline = require('readline')
-const fs = require('fs')
 const addContact = require('../logic/add-contact')
+const Feedback = require('./Feedback')
+const style = require('./AddContact.style')
 
 function AddContact(callback) {
-    console.log('===========')
-    console.log('Add Contact')
-    console.log('===========')
+    console.log(style.color, '===========')
+    console.log(style.color, 'Add Contact')
+    console.log(style.color, '===========')
+
     const interface = readline.createInterface({
         input: process.stdin,
         output: process.stdout
     })
-    const fields = ['name', 'surname', 'email', 'phone', 'birth', 'country']
+
+    const fields = ['name', 'surname', 'email', 'phone', 'birthdate', 'country']
+
     const contact = {}
     let count = 0;
 
     (function askField() {
         const field = fields[count]
+
         interface.question(`${field}? `, value => {
             contact[field] = value
+
             if (count < fields.length - 1) {
                 count++
 
                 askField()
-
             } else {
                 interface.close()
+
                 try {
+                    addContact(contact, error => {
+                        if (error) {
+                            Feedback('Failed to write contact file :(', 'error')
 
-                    addContact(contact, (error, id) => {
+                            return callback(error)
+                        }
 
-                        if (error) console.log(error) //TODO feedback
+                        Feedback('Contact saved')
 
                         callback()
                     })
-
                 } catch (error) {
-                    //TODO feedback
+                    Feedback(error.message, 'error')
+
+                    callback(error)
                 }
             }
         })
     })()
 }
 
-module.exports = AddContact
+module.exports = AddContact */
