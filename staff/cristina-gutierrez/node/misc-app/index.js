@@ -48,7 +48,7 @@ app.listen(8080)
 
 
 
-/* 
+
     if (url === '/contacts') {
         listContacts((error, contacts) => {
             if (error) throw error
@@ -108,4 +108,4 @@ app.listen(8080)
     }
 })
 
-server.listen(8080) */
+server.listen(8080)
