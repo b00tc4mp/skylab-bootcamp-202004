@@ -16,7 +16,7 @@ function find(filter, callback) { // filter => { name: 'pepito', surname: 'grill
 
         if (!files.length) return callback(null, null)
 
-        const matches = []
+        const results = []
 
         let i = 0;
 
@@ -36,15 +36,15 @@ function find(filter, callback) { // filter => { name: 'pepito', surname: 'grill
                     if (existingUser[key] !== value) {
                         if (++i < files.length) return readFile()
 
-                        return callback(null, matches)
+                        return callback(null, results)
                     }
                 }
 
-                matches.push(existingUser)
+                results.push(existingUser)
 
                 if (++i < files.length) return readFile()
 
-                callback(null, matches)
+                callback(null, results)
             })
         })()
     })
