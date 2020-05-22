@@ -5,7 +5,34 @@ const uid = require('../utils/uid')
 require('../utils/function')
 const path = require('path')
 require('../utils/json')
-const { findUserByEmail } = require('./helpers/users')
+
+function findUserByEmail(email, callback) {
+    const data = path.join(__dirname, '..', 'data')
+
+    fs.readdir(path.join(data, 'users'), (error, files) => {
+        if (error) return callback(error)
+
+        files = files.filter(file => path.extname(file) === '.json')
+
+        if (!files.length) return callback(null, null)
+
+        let i = 0;
+
+        (function readFile() {
+            fs.readFile(path.join(data, 'users', files[i]), 'utf8', (error, json) => {
+                if (error) return callback(error)
+
+                const existingUser = JSON.parse(json)
+
+                if (existingUser.email === email) return callback(null, existingUser)
+
+                if (++i < files.length) return readFile()
+                
+                callback(null, null)
+            })
+        })()
+    })
+}
 
 module.exports = (name, surname, email, password, callback) => {
     String.validate.notVoid(name)
