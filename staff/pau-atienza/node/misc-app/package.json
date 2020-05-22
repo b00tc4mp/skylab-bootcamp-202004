@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node .",
     "watch": "npx nodemon .",
-    "test": "echo NO TESTSTSTS YES :["
+    "test": "npx mocha logic/*.spec.js",
+    "test:debug": "npx mocha debug logic/*.spec.js"
   },
   "keywords": [],
   "author": "",

@@ -1,23 +1,19 @@
 const fs = require('fs')
 const path = require('path')
 require('../utils/string')
-const uid = require('../utils/uid')
 require('../utils/json')
+require('../utils/function')
 
 module.exports = (sticky, callback) => {
     if (typeof sticky !== 'object') throw new TypeError(`${sticky} is not an object`)
+    Function.validate(callback)
 
-    // TODO make it so that at least should have the following fields: (name || suranme) && (email || phone)
+    const { name, tag, comment, id } = sticky
 
-    const { name, tag, comment } = sticky
-
-        String.validate.notVoid(name)
-
-        String.validate.notVoid(tag)
-
-        String.validate.notVoid(comment)
-
-    const id = uid()
+    String.validate.notVoid(name)
+    String.validate.notVoid(tag)
+    String.validate.notVoid(comment)
+    String.validate.notVoid(id)
 
     const file = `sticky-${id}.json`
 

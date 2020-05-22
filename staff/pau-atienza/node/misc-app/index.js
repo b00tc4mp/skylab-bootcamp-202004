@@ -21,6 +21,7 @@ const addSticky = require('./logic/add-sticky')
 const listContacts = require('./logic/list-contacts')
 const listStickies = require('./logic/list-stickies')
 const authenticateUser = require('./logic/authenticate-user')
+const uid = require('../utils/uid')
 
 app.use(express.static('public'))
 
@@ -64,6 +65,8 @@ app.post('/add-contact',(req, res)=>{
             obj[split[0]] = split[1]
         })
 
+        obj.id = uid()
+        
         addContact(obj, (error,id)=>{
             const {name} = obj
 
@@ -143,6 +146,9 @@ app.post('/add-sticky',(req, res)=>{
             const [key, value] = element.split('=')
             obj[key] = decodeURIComponent(value.split('+').join(' '))
         })
+        
+        obj.id = uid()
+
         addSticky(obj, (error,id)=>{
             const {tag} = obj
 
