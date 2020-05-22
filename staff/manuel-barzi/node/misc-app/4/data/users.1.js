@@ -14,9 +14,9 @@ function find(filter, callback) { // filter => { name: 'pepito', surname: 'grill
 
         files = files.filter(file => path.extname(file) === '.json')
 
-        if (!files.length) return callback(null, null)
-
         const results = []
+        
+        if (!files.length) return callback(null, results)
 
         let i = 0;
 

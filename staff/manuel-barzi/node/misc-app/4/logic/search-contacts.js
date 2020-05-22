@@ -1,7 +1,10 @@
 const fs = require('fs')
 const path = require('path')
 
-module.exports = (query, callback) => {
+module.exports = (userId, query, callback) => {
+    // TODO validate input fields
+    // TODO check user exists, otherwise error
+    
     fs.readdir(path.join(__dirname, '..', 'data', 'contacts'), (error, files) => {
         if (error) return callback(error)
 

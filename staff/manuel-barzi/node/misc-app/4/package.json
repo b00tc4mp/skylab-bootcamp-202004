@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node .",
     "watch": "npx nodemon .",
+    "debug": "node debug .",
     "test": "npx mocha logic/*.spec.js",
     "test:debug": "npx mocha debug logic/*.spec.js",
     "style": "npx sass style.sass public/style.css"

@@ -11,7 +11,9 @@ const app = express()
 
 app.use(express.static('public'))
 
-app.get('/register', (req, res) => res.send(App(Register()))) // TODO redirect to home if cookie userId exists
+let _userId // WARN! users replace this value on each login!
+
+app.get('/register', (req, res) => res.send(App(Register())))
 
 app.post('/register', (req, res) => {
     let body = ''
@@ -41,17 +43,7 @@ app.post('/register', (req, res) => {
     })
 })
 
-app.get('/login', (req, res) => {
-    const cookie = req.header('cookie')
-
-    if (cookie) {
-        const [, userId] = cookie.split('=')
-
-        if (userId) return res.redirect('/home')
-    }
-
-    res.send(App(Login()))
-})
+app.get('/login', (req, res) => res.send(App(Login())))
 
 app.post('/login', (req, res) => {
     let body = ''
@@ -73,11 +65,12 @@ app.post('/login', (req, res) => {
 
         const { email, password } = credentials
 
+        debugger
+
         authenticateUser(email, password, (error, userId) => {
             if (error) throw error // TODO error handling
 
-            //res.setHeader('set-cookie', `userId=${userId}`)
-            res.cookie('userId', userId)
+            _userId = userId
 
             res.redirect('/home')
         })
@@ -85,25 +78,11 @@ app.post('/login', (req, res) => {
 })
 
 app.get('/home', (req, res) => {
-    const cookie = req.header('cookie')
-
-    if (!cookie) return res.redirect('/login')
-
-    const [, userId] = cookie.split('=')
-
-    if (!userId) return res.redirect('/login')
-
-    retrieveUser(userId, (error, { name }) => {
+    retrieveUser(_userId, (error, { name }) => {
         if (error) throw error // TODO error handling
 
         res.send(App(Home(name)))
     })
 })
 
-app.post('/logout', (req, res) => {
-    res.clearCookie('userId')
-
-    res.redirect('/login')
-})
-
-app.listen(8080, () => console.log('server running'))
+app.listen(8080)
