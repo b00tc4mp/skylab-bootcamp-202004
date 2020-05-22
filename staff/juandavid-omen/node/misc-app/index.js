@@ -65,19 +65,16 @@ app.get('/register', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
-    const {
-        body
-    } = req
+    const { body } = req
 
     register(body, (error, userMatched) => {
-        const {name} = body
         if(userMatched) res.send(App(Feedback(`This email already exists!`)))
 
         if (error) {
             res.send(App(Feedback("Fail:(", 'error')))
 
         } else {
-            res.send(App(Feedback(`User ${name} created!`)))
+            res.send(res.send(App(Login)))
         }
     })
 })

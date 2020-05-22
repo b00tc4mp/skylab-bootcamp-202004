@@ -1,8 +1,10 @@
-const assert = require('assert')
 const addContact = require('./add-contact')
-const { random } = Math
+const {random} = Math
 const fs = require('fs')
 const path = require('path')
+const uid = require('../utils/uid')
+const {expect} = require('chai')
+
 
 {
     const name = `name-${random()}`
