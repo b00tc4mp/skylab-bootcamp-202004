@@ -1,4 +1,4 @@
-module.exports = (userId, followingId, callback) {
+module.exports = (userId, followingId, callback) => {
     // TODO
 
     /*
