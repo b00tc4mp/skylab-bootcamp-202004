@@ -6,13 +6,13 @@ const uid = require("../utils/uid");
 const { expect } = require("chai");
 
 describe.only("login", () => {
-  let name, surname, email, password;
+  let name, surname, email, password, user
 
   beforeEach(() => {
     name = `name-${random()}`;
     surname = `surname-${random()}`;
     email = `e-${random()}@mail.com`;
-    password = `${random}`;
+    password = `password-${random()}`;
     user = uid();
 
     fs.writeFile(
@@ -26,7 +26,7 @@ describe.only("login", () => {
     );
   });
   it("should succeed on valid data", (done) => {
-    login({ email, password }, (error) => {
+    login( email, password , (error) => {
       expect(error).to.be.null;
 
       expect(id).to.be.a("string");

@@ -64,7 +64,7 @@ function register({name, surname, email, password}, callback) {
                 surname,
                 email,
                 password,
-                user: id
+                
             }
             console.log(_user)
             fs.writeFile(path.join(__dirname, "..", "data", "users", file), JSON.stringify(_user, null, 4), error => {
