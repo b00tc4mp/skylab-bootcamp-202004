@@ -4,6 +4,7 @@ const Email = require('../utils/email')
 require('../utils/string')
 
 
+
 module.exports = (email, password, callback) => {
 
     Email.validate(email)
@@ -11,23 +12,26 @@ module.exports = (email, password, callback) => {
 
     fs.readdir(path.join(__dirname, '..', 'data', 'users'), (error, files) => {
         if (error) throw new Error(error)
-        debugger
+
         let count = 0
         if (files.length) {
-            files.forEach(file => {
-                debugger
+
+            (function foreach() {
                 fs.readFile(path.join(__dirname, '..', 'data', 'users', file), (error, data) => {
                     debugger
-                    console.log(data)
+
                     data = JSON.parse(data)
                     if (error) throw new Error(error)
 
                     const { email: _email, password: _password } = data
-                    debugger
-                    if (email === _email && password === _password) return callback(null)
-                    if (++count === files.length) callback(new Error('wrong credentials'))
+
+                    if (email !== _email && password !== _password) return foreach()
+
+                    if (email === _email && password === _password) return callback(null, path.basename(file))
+                    if (++count === files.length) return callback(new Error('wrong credentials'))
                 })
-            })
+
+            })()
         } else {
             callback(new Error('no user'))
         }
