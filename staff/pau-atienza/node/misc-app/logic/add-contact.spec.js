@@ -4,7 +4,8 @@ const fs = require('fs')
 const path = require('path')
 const uid = require('../utils/uid')
 const { expect } = require('chai')
-var assert = require('assert');
+
+
 
 describe.only('addContact', () => {
     let name, surname, email, id
@@ -17,7 +18,7 @@ describe.only('addContact', () => {
     })
 
     it('should succeed on valid data', done => {
-        addContact({ name, surname, email, id }, (error, id) => { // WARN do not use uid directly... create a user first in before each
+        addContact({ name, surname, email, id }, (error, id) => {
             expect(error).to.be.null
     
             expect(id).to.be.a('string')

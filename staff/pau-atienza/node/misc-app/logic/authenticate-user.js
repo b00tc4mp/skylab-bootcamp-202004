@@ -35,8 +35,9 @@ module.exports = (credentials, callback) => {
                     const user = JSON.parse(json)
 
                     if (user.email === email && user.password === password) {
+                        
                         wasMatch = true
-                        callback(null, user)
+                        callback(null, {username: user.username, email: user.email, id: user.id})
                     }
 
                     if (++count === files.length) callback(null, false)
