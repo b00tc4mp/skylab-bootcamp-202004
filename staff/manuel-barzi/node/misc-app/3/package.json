@@ -8,17 +8,18 @@
     "watch": "npx nodemon .",
     "test": "npx mocha logic/*.spec.js",
     "test:debug": "npx mocha debug logic/*.spec.js",
-    "style": "sass style.sass public/style.css"
+    "style": "npx sass style.sass public/style.css"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
-    "nodemon": "^2.0.4"
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^7.1.2"
+    "nodemon": "^2.0.4",
+    "mocha": "^7.1.2",
+    "sass": "^1.26.5"
   }
 }
