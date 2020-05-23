@@ -4,6 +4,8 @@ const fs = require('fs')
 const path = require('path')
 const {deleteFilesByExtensionFromDirectory} = require('../utils/files.js')
 const { expect } = require('chai')
+const uid = require('../utils/uid')
+
 describe('registerUser', () => {
     const data = path.join(__dirname, '..', 'data')
 
@@ -24,9 +26,9 @@ describe('registerUser', () => {
 
 
     it('Sould sucess to creat a new user',done=>{
-    
+        
         register({name,surname,email,password},(error, id)=>{
-            console.log(error)
+            
             expect(error).to.be.null
             expect(id).to.exist
 
@@ -44,73 +46,38 @@ describe('registerUser', () => {
             })
         })
     })
+
+    it('Sould fail wend user already exist',done=>{
+
+        const _name = `name-${random()}`;
+        const _surname = `surname${random()}`;
+        const _email = `${random()}@mail.com`;
+        const _password = `${random()}` ;
+        const _id = uid()
+        const newUser = {name:_name,surname:_surname,email:_email,password:_password,id:_id};
+
+        fs.writeFile(path.join(data, 'users', `${_id}.json`), JSON.prettify(newUser), error => {
+            expect(error).to.be.null 
+            
+            register(newUser,(error, id)=>{
+                expect(error).to.be.an.instanceof(Error);
+                expect(id).to.be.undefined
+                expect(error.message).to.equal(`user with e-mail ${_email} already exists`);
+                done()
+            })
+        })
+    })
     
-    // afterEach(done=>{
-        
-    // })
+    afterEach(done=>{
+        deleteFilesByExtensionFromDirectory(path.join(data, 'users'), '.json', error => {
+            if (error) return done(error)
+
+            done()
+        })
+    })    
 
 })
 
     
 
   
-
-// //UNHAPPY //TODO problem with feedback!!
-// {
-//     let name = `name-${random()}`;
-//     let surname = `surname${random()}`;
-//     let email = `${random()}@mail.com`;
-//     let password = `${random()}` 
-
-//     register({name,surname,email,password},(error, id)=>{
-//         assert(!error);
-//         assert(typeof id === 'string');
-
-//         fs.readFile(path.join(__dirname,'..','data','users',`${id}.json`), 'utf-8',(error,body)=>{
-     
-//             assert(!error);
-
-//             assert(body)
-
-//             const {name: _name , surname:_surname,email:_email, password:_password ,id:_id}= JSON.parse(body);
-
-//             assert.equal(_name,name);
-//             assert.equal(_surname,surname)
-//             assert.equal(_email,email)
-//             assert.equal(_password,password)
-//             assert.equal(_id,id)
-          
-//             register({name,surname,email,password},(error, body)=>{
-//                 cdebugger
-//                 console.log(body)
-//                 assert(!error)
-//                 assert(body);
-//                 assert.equal(body,'The user already exist');
-//             })    
-
-//             fs.unlink(path.join(__dirname,"..","data","users",`${id}.json`),(error)=>{
-//                 assert(!error)
-//                 // fs.access(path.join(__dirname,"..","data","users",`${id}.json`),fs.F_OK,(error)=>{
-//                 //     assert(error);
-//                 //     assert.equal(error.message,`ENOENT: no such file or directory, access '/Users/sergioluis/bootcamp/collab/skylab-bootcamp-202004/staff/sergio-luis/node/misc-app/data/users/${id}.json'`)
-                
-//             })
-//         })
-//     })
-// }
-
-//     // try{
-//     //     addStickie({name:undefined ,tag ,comment},(error, id)=>{
-//     //         assert.equal(true,false)
-//     //     })
-//     // }catch({message}){
-//     //
-//     // }
-    
-//     // assert.throws(()=>{
-//     //     addStickie({name:undefined ,tag ,comment},(error, id)=>{
-            
-//     //         assert.equal(true,false)
-//     //     })
-//     // },TypeError)
-    

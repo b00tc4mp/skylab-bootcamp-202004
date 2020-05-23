@@ -15,14 +15,14 @@ module.exports = (userId, callback) => {
         if (!user) return callback(new Error(`user with ${userId} does not exist`))
 
         
-        fs.readdir(path.join(__dirname, '..', 'data','contacts'), (error, files) => {
+        fs.readdir(path.join(__dirname, '..', 'data','stickies'), (error, files) => {
             if (error) return callback(error)
 
             let wasError = false
-            const contacts = []
+            const stickies = []
     
             files.forEach(file => {
-                fs.readFile(path.join(__dirname, '..', 'data', 'contacts', file), 'utf8', (error, json) => {
+                fs.readFile(path.join(__dirname, '..', 'data', 'stickies', file), 'utf8', (error, json) => {
                     if (error) {
                         if (!wasError) {
                             callback(error)
@@ -33,31 +33,20 @@ module.exports = (userId, callback) => {
                     }
     
                     if (!wasError) {
-
-                        const contact = JSON.parse(json)
+                        const stickie = JSON.parse(json)
+                        
+                        if(stickie.user === userId){
+                            stickie.id = file.substring(0, file.indexOf('.json'))
     
-                        if(contact.user === userId){
-                            contact.id = file.substring(0, file.indexOf('.json'))
-    
-                            contacts.push(contact)
-        
+                            stickies.push(stickie)
                         }
-
-                        if (contacts.length === files.length) callback(null, contacts)
-                      
+                     
+                        if (stickies.length === files.length) callback(null, stickies)
                     }
                 })
             })
         })
 
     })
-    
-
-    
-
-
-    
-    
-
         
 }

@@ -1,21 +1,21 @@
-
 const { random } = Math
 const fs = require('fs')
 const path = require('path')
 const {deleteFilesByExtensionFromDirectory} = require('../utils/files.js')
 const { expect } = require('chai')
 const uid = require('../utils/uid')
-const listStickies = require('../logic/list-stickies')
+const removeStickie = require('../logic/remove-stickie')
 
-describe('listStickies', () => {
+describe('removeStickie', () => {
     const data = path.join(__dirname, '..', 'data')
 
-    let name, surname, email, password, id, stickie
+    let name, surname, email, password, id,stickie
 
     beforeEach(done =>{
-     stickie = {
-            tag: 'Go dinner',
-            message: 'Diner at 8:00 a.m.'
+        stickie = {
+            tag: 'Dinner',
+            message: 'Dinner at 8 o´clock',
+            stickieId: uid()
         }
 
         deleteFilesByExtensionFromDirectory(path.join(data, 'users'), '.json', error => {
@@ -35,9 +35,10 @@ describe('listStickies', () => {
                 fs.writeFile(path.join(data, 'users', `${id}.json`), JSON.prettify(newUser), error => {
                     if (error) return done(error) 
 
-                    const file = `${uid()}.json`
+                    const file = `${stickie.stickieId}.json`
+
                     stickie.user = id;
-                    
+        
                     fs.writeFile(path.join(__dirname, '..', 'data', 'stickies', file), JSON.prettify(stickie), error => {
                         if (error) return callback(error)
                 
@@ -50,48 +51,51 @@ describe('listStickies', () => {
         
     })
 
-    it('Sould sucess to list a stickies',done =>{
-        listStickies(id,(error,stickies)=>{
-            const [{tag:_tag ,message:_message,user:_id}] = stickies
-            expect(error).to.be.null
 
-            expect(stickies).to.be.instanceof(Array)
-            expect(stickies.length).to.be.greaterThan(0)
-            expect(_tag).to.equal(stickie.tag)
-            expect(_message).to.equal(stickie.message)            
-            expect(_id).to.equal(stickie.user)
+    it('Sould sucess to remove a stickie',done=>{
+
+        removeStickie(id, stickie, (error, message) => {
+            expect(error).to.be.null
+            expect(message).to.exist
+            expect(message).to.equal(`Deleted "${stickie.tag}" tag!`)
+
+            done()
+        })
+    })
+
+    it('Sould fail wend id don`t exist',done=>{
+        const _id = `${id}-id`
+
+        removeStickie(_id, stickie, (error, message) => {
+            expect(message).to.be.undefined
+            expect(error).to.exist
+            expect(error).to.instanceof(Error)
+            expect(error.message).to.equal(`user with id: ${_id}, does not exist`)
             
             done()
         })
     })
 
-    it('Sould fail wend don`t exist userId',done =>{
-
-        const __id = uid()
-        listStickies(__id,(error, stickies) => {            
+    it('Sould fail wend stickieId don`t exist',done=>{
+        let _stickie = stickie
+        _stickie.stickieId = uid()
+       
+        removeStickie(id, _stickie, (error, message) => {
+            expect(message).to.be.undefined
             expect(error).to.exist
-            expect(error).to.be.an.instanceof(Error);
-            expect(error.message).to.equal(`user with ${__id} does not exist`)
-            expect(stickies).to.be.undefined
-
+            expect(error).to.instanceof(Error)
+            expect(error.message).to.equal(`this ${_stickie.stickieId} does not exist`)
+    
             done()
-        
         })
     })
- 
-
     
     afterEach(done=>{
         deleteFilesByExtensionFromDirectory(path.join(data, 'users'), '.json', error => {
             if (error) return done(error)
-             
-            deleteFilesByExtensionFromDirectory(path.join(data, 'stickies'), '.json', error => {
-                if (error) return done(error)
-                    done()
-            })
+
+            done()
         })
     })    
 
 })
-
-    

@@ -1,35 +1,74 @@
-// const register = require('./register-user')
-// const authenticate = require('./authenticate-user')
-// const retrieve = require('./retrieve-user')
-// const assert = require('assert')
-// const { random } = Math
-// const fs = require('fs')
-// const path = require('path')
+const { random } = Math
+const fs = require('fs')
+const path = require('path')
+const {deleteFilesByExtensionFromDirectory} = require('../utils/files.js')
+const { expect } = require('chai')
+const uid = require('../utils/uid')
+const retrieve = require('../logic/retrieve-user');
+
+describe('retrieveUser', () => {
+    const data = path.join(__dirname, '..', 'data')
+
+    let name, surname, email, password, id
+
+    beforeEach(done =>{
+        deleteFilesByExtensionFromDirectory(path.join(data, 'users'), '.json', error => {
+            if (error) return done(error)
+            
+            name = `name-${random()}`;
+            surname = `surname${random()}`;
+            email = `${random()}@mail.com`;
+            password = `${random()}` ;
+            id = uid()
+
+            const newUser = {name,surname,email,password,id};
+
+            fs.writeFile(path.join(data, 'users', `${id}.json`), JSON.prettify(newUser), error => {
+                if (error) return done(error) 
+                
+                done()
+            })
+        })
+    })
 
 
-// //TODO Test with mocha
-//     let name = `name-${random()}`;
-//     let surname = `surname${random()}`;
-//     let email = `${random()}@mail.com`;
-//     let password = `${random()}` 
+    it('Sould sucess to retrieve user',done=>{
+       
+        retrieve(id, (error, user) => {
+            expect(error).to.be.null
+            expect(user.name).to.equal(name)
+            expect(user.surname).to.equal(surname)
+            expect(user.email).to.equal(email)
+            expect(user.password).to.be.undefined
+            expect(user.id).to.be.undefined
 
-//     register({name, surname, email, password}, (error,body)=>{
-//         assert(!error)
+            done()
+        })
+    })
+
+    it('Sould fail wend user id don`t exist',done=>{
+        const _id = uid()
         
-//         debugger
-//         authenticate({email,password},(error,body)=>{
-//             assert(!error)
-//             const id = body
-//             debugger
-//             retrieve(id,(error,body)=>{
-//                 assert(!error)
+        retrieve(_id, (error, user) => {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceof(Error);
+            expect(error.message).to.equal(`user with id ${_id} does not exist`);
+            
+            expect(user).to.be.undefined
+            done()
+        })  
+    })
 
-//                 const {name:_name,surname:_surname,email:_email} = body
-//                 cdebugger
-//                 assert.equal(name,_name)
-//                 assert.equal(surname,_surname)
-//                 assert.equal(email,_email)
-//             })
+    afterEach(done=>{
+        deleteFilesByExtensionFromDirectory(path.join(data, 'users'), '.json', error => {
+            if (error) return done(error)
 
-//         })
-//     })
+            done()
+        })
+    })    
+
+})
+
+    
+
+  

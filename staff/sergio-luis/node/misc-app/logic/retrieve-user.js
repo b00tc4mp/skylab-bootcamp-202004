@@ -1,19 +1,19 @@
-const fs = require('fs')
-const path = require('path')
+require('../utils/string')
+require('../utils/function')
+const { find } = require('../data/findData')
 
-module.exports = (id, callback) => {
-
-    String.validate.notVoid(id)
+module.exports = (userId, callback) => {
+    String.validate.notVoid(userId)
     Function.validate(callback)
 
-
-    fs.readFile(path.join(__dirname, '..', 'data', 'users', `${id}.json`), 'utf8', (error, body) => {
+    find({ id: userId }, 'users',(error, [user]) => {
         if (error) return callback(error)
 
-        const { name, surname, email } = JSON.parse(body)
+        if (!user) return callback(new Error(`user with id ${userId} does not exist`))
 
-        return callback(null, { name, surname, email })
+        delete user.id
+        delete user.password
 
+        callback(null, user)
     })
-
 }
