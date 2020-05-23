@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
-module.exports = callback => {
+module.exports = (id, callback) => {
     fs.readdir(path.join(__dirname, '..', 'data', 'stickies'), (error, files) => {
         if (error) return callback(error)
 

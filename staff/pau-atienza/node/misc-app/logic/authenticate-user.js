@@ -21,6 +21,9 @@ module.exports = (credentials, callback) => {
         let count = 0
 
         files.forEach(file => {
+
+            if (!files.length) callback(null, false)
+
             fs.readFile(path.join(__dirname, '..', 'data', 'users', file), 'utf8', (error, json) => {
                 if (error) {
                     if (!wasError) {
@@ -39,8 +42,7 @@ module.exports = (credentials, callback) => {
                         wasMatch = true
                         callback(null, {username: user.username, email: user.email, id: user.id})
                     }
-
-                    if (++count === files.length) callback(null, false)
+                    else if (++count === files.length) callback(null, false)
                 }
             })
         })

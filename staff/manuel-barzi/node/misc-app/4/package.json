@@ -19,8 +19,8 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "nodemon": "^2.0.4",
     "mocha": "^7.1.2",
+    "nodemon": "^2.0.4",
     "sass": "^1.26.5"
   }
 }

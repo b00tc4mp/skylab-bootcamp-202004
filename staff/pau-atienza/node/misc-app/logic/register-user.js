@@ -5,23 +5,23 @@ const Email = require('../utils/email')
 const uid = require('../utils/uid')
 require('../utils/json')
 
-module.exports = (contact, callback) => {
-    if (typeof contact !== 'object') throw new TypeError(`${contact} is not an object`)
+module.exports = (user, callback) => {
+    if (typeof user !== 'object') throw new TypeError(`${user} is not an object`)
 
-    const { username, email, password } = contact
+    const { username, email, password } = user
     
     String.validate.notVoid(username)
     String.validate.notVoid(email)
     Email.validate(email)
     String.validate.lengthGreaterEqualThan(password, 8)
 
-    const id = uid()
+    user.id = uid()
 
-    const file = `${id}.json`
+    const file = `${user.id}.json`
 
-    fs.writeFile(path.join(__dirname, '..', 'data', 'users', file), JSON.prettify(contact), error => {
+    fs.writeFile(path.join(__dirname, '..', 'data', 'users', file), JSON.prettify(user), error => {
         if (error) return callback(error)
 
-        callback(null, id)
+        callback(null, user.id)
     })
 }

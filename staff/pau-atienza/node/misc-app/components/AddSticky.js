@@ -1,5 +1,4 @@
-module.exports = () => {
-    return `<section class = "add-sticky">
+module.exports = () => `<section class = "add-sticky">
     <h2>Add Sticky</h2>
     <form action="/add-sticky" method="POST" id="textarea">
       Name: <input type="text" name="name" placeholder='name'>
@@ -8,6 +7,5 @@ module.exports = () => {
     </form>
     <br>
     <textarea rows="4" cols="50" name="comment" form="textarea" placeholder='Introduce your sticky!!!'></textarea>
-</section>
-    `
-} 
+    <a href = '/home'>Home</a>
+</section>`

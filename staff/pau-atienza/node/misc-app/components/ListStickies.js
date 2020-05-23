@@ -1,8 +1,8 @@
 module.exports = (stickies) => {
     return `<section class="contacts">
-    <h2>Contacts list</h2>
+    <h2>List Stickies</h2>
 <ul>
-    ${stickies.map(({ tag,  comment}) => `<li>${tag}: ${comment}</li>`).join('')}
+    ${stickies.map(({ tag,  comment}) => `<li><a href="#">${tag}: ${comment}</a></li>`).join('')}
 </ul>
 </section>`
 }

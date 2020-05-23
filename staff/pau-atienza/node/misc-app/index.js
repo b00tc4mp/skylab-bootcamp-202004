@@ -4,7 +4,8 @@ const app = express()
 
 //Components
 const App = require('./components/App')
-const SearchContacts = require('./components/SearchContacts')
+const Home = require('./components/Home')
+const Search = require('./components/Search')
 const ListContacts = require('./components/ListContacts')
 const AddContact = require('./components/AddContact')
 const Feedback = require('./components/Feedback')
@@ -16,70 +17,107 @@ const Login = require('./components/Login')
 //Methods
 const addContact = require('./logic/add-contact')
 const registerUser = require('./logic/register-user')
-const searchContacts = require('../misc-app/logic/search-contacts')
+const search = require('./logic/search')
 const addSticky = require('./logic/add-sticky')
 const listContacts = require('./logic/list-contacts')
 const listStickies = require('./logic/list-stickies')
 const authenticateUser = require('./logic/authenticate-user')
-const uid = require('../utils/uid')
+const uid = require('./utils/uid')
 
 app.use(express.static('public'))
 
-app.get('/hello-world', (req, res) => {
-    res.send(App(`hola mundo!!!
-<form method = "POST">
-<input type = "text"  name = "hola">
-</form>`))
-})
+app.get('/contacts', (req, res) => {
+    const cookie = req.header('cookie')
 
-app.post('/hello-world', (req, res) => {
-    res.send('ok, post received')
-})
+    if(!cookie) return res.redirect('/login')
 
-app.get('/search', (req, res) => {
-    
     const {url} = req
     if (url.includes('?')){
         const [, queryString] = url.split('?')
         const [, query] = queryString.split('=')
-
-        searchContacts(query, (error, contacts) => {
+        const [,id] = cookie.split('=')
+        const string = "contacts"
+        search(id, query, string,(error, contacts) => {
             if (error) throw error
 
-            res.send(App(`${SearchContacts(query)}${ListContacts(contacts)}`))
+            res.send(App(`${Search(string, query)}${ListContacts(contacts)}`))
         })
     }
-    else res.send(App(SearchContacts()))       
+    else{
+        const [,id] = cookie.split('=')
+        const string = "contacts"
+        listContacts(id, (error, contacts)=>{
+            if (error) res.send(App(`${Search(string)}${Feedback(error.message, 'error')}`))
+            res.send(App(`${Search(string)}${ListContacts(contacts)}`))
+        })
+    }       
 })
+
 app.get('/add-contact',(req, res)=>{
-    res.send(App(AddContact()))
+    const cookie = req.header('cookie')
+
+    if(!cookie) return res.redirect('/login')
+    else res.send(App(AddContact()))
 })
 
 app.post('/add-contact',(req, res)=>{
+    const cookie = req.header('cookie')
+
+    if(!cookie) return res.redirect('/login')
+
     req.on('data' , data =>{
+        
         const arrList = data.toString().replace('%40','@').split('&')
 
-        let obj = {};
+        let contact = {};
         arrList.forEach(element =>{
             const split = element.split('=')
-            obj[split[0]] = split[1]
+            contact[split[0]] = split[1]
         })
-
-        obj.id = uid()
+        const [,id] = cookie.split('=')
+        contact.id = id
         
-        addContact(obj, (error,id)=>{
-            const {name} = obj
-
-            if(error){
-                res.send(App(Feedback("Fail:(",'error')))
+        addContact(contact, (error,id)=>{
+            if(error){res.send(App(Feedback("Fail:(",'error')))
             }else{
-                res.send(App(Feedback(`Contact ${name} created!`)))
+                const {name} = contact
+                res.send(App(AddContact() + Feedback(`Contact ${name} created!`)))
             }
         })
     })                
 })
 
+app.get('/stickies', (req, res) => {
+    const cookie = req.header('cookie')
+
+    if(!cookie) return res.redirect('/login')
+
+    const {url} = req
+    if (url.includes('?')){
+        const [, queryString] = url.split('?')
+        const [, query] = queryString.split('=')
+        const [,id] = cookie.split('=')
+        const string = "stickies"
+        search(id, query, string,(error, stickies) => {
+            if (error) throw error
+
+            res.send(App(`${Search(string, query)}${ListStickies(stickies)}`))
+        })
+    }
+    else{
+        const [,id] = cookie.split('=')
+        listStickies(id, (error, stickies)=>{
+            const string = "stickies"
+            if (error) res.send(App(`${Search(string)}${Feedback(error.message, 'error')}`))
+            res.send(App(`${Search(string)}${ListStickies(stickies)}`))
+        })
+    }       
+})
+
+
+
 app.get('/register', (req, res)=>{
+    
     res.send(App(Register()))
 })
 
@@ -94,11 +132,9 @@ app.post('/register',(req, res)=>{
         })
 
         registerUser(obj, (error,id)=>{
-            const {username} = obj
-
-            if(error){
-                res.send(App(Feedback("Fail:(",'error')))
+            if(error){res.send(App(Feedback("Fail:(",'error')))
             }else{
+                const {username} = obj
                 res.send(App(Feedback(`User ${username} created!`)))
             }
         })
@@ -110,6 +146,7 @@ app.get('/login', (req, res)=>{
 })
 
 app.post('/login',(req, res)=>{
+
     req.on('data' , data =>{
         const arrList = decodeURIComponent(data.toString()).split('&')
 
@@ -120,45 +157,71 @@ app.post('/login',(req, res)=>{
         })
 
         authenticateUser(obj, (error,user)=>{
-            const {username, id} = user
-            if(error){
-                res.send(App(Feedback("Fail:(",'error')))
+            if(error){res.send(App(Feedback("Fail:(",'error')))
             }else if (!user){
                 res.send(App(Feedback("Wrong e-mail or password",'warning')))
             }else{
-                res.send(App(Feedback(`You were successfully authenticated as ${username}!`)))
+                const {username, id} = user
+                
+                res.cookie(`${username}`, id)
+                res.redirect('/home')
             }
         })
     })                
 })
 
+app.get('/home', (req, res) =>{
+    const cookie = req.header('cookie')
+
+    if(!cookie) return res.redirect('/login')
+    
+    const [username, id] = cookie.split('=')
+
+    if (!id) return res.redirect('/login')
+    
+    res.send(App(Home(username)))
+})
+
 app.get('/add-sticky',(req, res)=>{
+    const cookie = req.header('cookie')
+
+    if(!cookie) return res.redirect('/login')
+
     res.send(App(AddSticky()))
 })
 
 app.post('/add-sticky',(req, res)=>{
+    const cookie = req.header('cookie')
+
+    if(!cookie) return res.redirect('/login')
+
     req.on('data' , data =>{
         
         const arrList = data.toString().split('&')
 
-        let obj = {};
+        let sticky = {};
         arrList.forEach(element =>{
             const [key, value] = element.split('=')
-            obj[key] = decodeURIComponent(value.split('+').join(' '))
+            sticky[key] = decodeURIComponent(value.split('+').join(' '))
         })
         
-        obj.id = uid()
+        const [,id] = cookie.split('=')
+        sticky.id = id
 
-        addSticky(obj, (error,id)=>{
-            const {tag} = obj
-
-            if(error){
-                res.send(App(Feedback("Fail:(",'error')))
+        addSticky(sticky, (error)=>{
+            if(error){res.send(App(Feedback("Fail:(",'error')))
             }else{
+                const {tag} = sticky
                 res.send(App(Feedback(`Sticky "${tag}" created!`)))
             }
         })
     })
+})
+
+app.post('/logout', (req, res) => {
+    res.clearCookie('userId')
+
+    res.redirect('/login')
 })
 
 app.listen(8080)
