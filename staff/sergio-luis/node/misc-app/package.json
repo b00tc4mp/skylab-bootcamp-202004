@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node .",
     "watch": "npx nodemon .",
-    "test": "echo NO TESTS YES :[",
+    "test": "npx mocha logic/*.spec.js",
     "style": "sass style.sass public/style.css"
   },
   "keywords": [],
