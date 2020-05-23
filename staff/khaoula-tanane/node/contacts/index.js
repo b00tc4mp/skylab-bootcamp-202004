@@ -1,94 +1,88 @@
-const net = require("net");
-const listContacts = require("./logic/list-contacts");
-const searchContacts = require("./logic/search-contacts");
-const addContacts = require("./logic/add-contact")
 
-const server = net.createServer((socket) => {
-  socket.on("data", (data) => {
-    const [line, ...rest] = data.toString().split("\n");
+const http = require('http')
+const fs = require('fs')
+const path = require('path')
+const listContacts = require('./logic/list-contacts')
+const ListContacts = require('./components/ListContacts')
+const App = require('./components/App')
+const SearchContacts = require('./components/SearchContacts')
+const searchContacts = require('./logic/search-contacts')
+const AddContact = require('./components/AddContact')
+const addContact = require('./logic/add-contact')
+const extractInputs = require('./logic/extract-inputs')
+const NotFound404 = require('./components/NotFound404')
 
-    const [method, path] = line.split(" ").map((item) => item.trim());
+const server = http.createServer((req, res) => {
+    const { url } = req
 
-    if (path === "/contacts") {
-      listContacts((error, contacts) => {
-        if (error) throw error;
+    res.setHeader('content-type', 'text/html')
 
-        socket.write(`HTTP/1.1 200
-content-type: text/html
+    if (url === '/contacts') {
+        listContacts((error, contacts) => {
+            if (error) throw error 
 
-<h2>Contacts list</h2>
-<ul>
-    ${contacts.map(({ name }) => `<li>${name}</li>`).join("")}
-</ul>
-`);
-        socket.end();
-      });
-    } else if (path.startsWith("/contacts") && path.includes("?")) {
-      const [, queryString] = path.split("?");
+            res.end(App(ListContacts(contacts)))
+        })
 
-      const [, query] = queryString.split("=");
+    } else if (url.startsWith('/search')) {
+        if (!url.includes('?')) {
+            res.end(SearchContacts())
+        } else {
+            const [, queryString] = url.split('?')
+            const [, query] = queryString.split('=')
 
-      searchContacts(query, (error, contacts) => {
-        if (error) throw error;
+            searchContacts(query, (error, contacts) => {
+                if (error) throw error
 
-        socket.write(`HTTP/1.1 200
-content-type: text/html
+                res.end(App(`${SearchContacts(query)}${ListContacts(contacts)}`))
+            })
+        }
+    } else if (url === '/add-contact') {
+        const { method } = req
 
-<h2>Contacts list</h2>
-<ul>
-    ${contacts.map(({ name }) => `<li>${name}</li>`).join("")}
-</ul>
-`);
-        socket.end();
-      });
-    } else if (path === "/add-contact") {
-      if (method === "GET") {
-        socket.write(`HTTP/1.1 200
-content-type: text/html
+        if (method === 'GET') {
+            res.end(App(AddContact()))
+        } else if (method === 'POST') {
+            req.on('data', chunk => {
+                const _contact = extractInputs(chunk.toString())
+                addContact(_contact, (error) => {
+                    if (error) throw error
+    
+                    res.end(App('<h2>Contact Saved!</h2>'))
+                })
+            })
+        } else {
+            res.end(App('<h2>Incorrect method obtained :(</h2>'))
+        }
 
-<h2>Add contact</h2>
-<form action="/add-contact" method="POST">
-            <input type="text" name="name">
-            <input type="text" name="surname">
-            <input type="email" name="email">
-            <input type="text" name="phone">
-            <button>Add</button>
-</form>
-`);
-        socket.end();
-      } else if (method === "POST") {
-        let params = rest.pop().replace('%40', '@').split("&")
-        let obj = {}
-        params.forEach((param) => {
-          const key = param.split('=')[0]
-          const value = param.split('=')[1]
-          obj[key] = value
-        });
-        console.log(obj);
-
-        addContacts(obj, (error, id)=>{
+    } else if (url === '/style.css') {
+        fs.readFile(path.join(__dirname, url), 'utf8', (error, content) => {
             if (error) throw error
 
+            res.setHeader('Content-type', 'text/css')
+
+            res.end(content)
         })
-        socket.write(`HTTP/1.1 200
-content-type: text/html
-
-<h2>Add contact</h2>
-${obj}
-`);
-        socket.end();
-      }
     } else {
-      socket.write(`HTTP/1.1 404
-content-type: text/html
+        const resource = path.join(__dirname, url)
 
-<h2>Not Found :(</h2>
-`);
-      socket.end();
+        fs.access(resource, fs.F_OK, (err) => {
+            if (err) {
+                res.statusCode = 404
+                res.end(App(NotFound404()))
+            }
+        })
+
+        const extension = resource.extname(resource).substring(1)
+
+        res.setHeader('content-type', `image/${extension}`)
+
+        fs.readFile(resource,(error, content) => {
+            if (error) throw error
+
+            res.end(content)
+        })
     }
-  });
+})
 
-  socket.on("error", console.log);
-});
-
-server.listen(8080);
+server.listen(8080)
