@@ -5,7 +5,7 @@ const uid = require('../utils/uid')
 require('../utils/function')
 const path = require('path')
 require('../utils/json')
-const { findUserByEmail } = require('./helpers/users')
+const { find } = require('../data/users')
 
 module.exports = (name, surname, email, password, callback) => {
     String.validate.notVoid(name)
@@ -17,14 +17,14 @@ module.exports = (name, surname, email, password, callback) => {
 
     const data = path.join(__dirname, '..', 'data')
 
-    findUserByEmail(email, (error, user) => {
+    find({ email }, (error, [user]) => {
         if (error) return callback(error)
 
         if (user) return callback(new Error(`user with e-mail ${email} already exists`))
 
-        const newUser = { name, surname, email, password }
-
         const id = uid()
+        
+        const newUser = { id, name, surname, email, password }
 
         fs.writeFile(path.join(data, 'users', `${id}.json`), JSON.prettify(newUser), error => {
             if (error) return callback(error)
