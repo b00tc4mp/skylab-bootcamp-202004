@@ -6,34 +6,38 @@ const uid = require('../utils/uid')
 require('../utils/json')
 
 module.exports = (userId, contact, callback) => {
-    // TODO validate userId (string, not empty) and callback (function)
+    if (!userId) throw new TypeError(`${userId} does not exist`)
+    if (typeof userId !== 'string') throw new TypeError(`${userId} is not a string`) 
     if (typeof contact !== 'object') throw new TypeError(`${contact} is not an object`)
-
+    if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
     // TODO make it so that at least should have the following fields: (name || suranme) && (email || phone)
-
     const { name, surname, email, phone, birthdate, country } = contact
 
-    if (name)
+    if (name) {
         String.validate.notVoid(name)
+    }
 
-    if (surname)
+    if (surname) {
         String.validate.notVoid(surname)
+    }
 
     if (email) {
         String.validate.notVoid(email)
         Email.validate(email)
     }
 
-    if (phone)
+    if (phone) {
         String.validate.notVoid(phone)
+    }
 
     if (birthdate) {
         String.validate.notVoid(birthdate)
         //Date.validate(birthdate) // TODO create this polyfill
     }
 
-    if (country)
+    if (country) {
         String.validate.notVoid(country)
+    }
 
     // TODO check userId is valid (i.e. the user exists), otherwise throw error
 
