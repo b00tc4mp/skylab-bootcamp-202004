@@ -1,7 +1,3 @@
-const listContacts = require('./list-contacts')
+const listContacts = require('./list-contacs')
 
-listContacts((error, contacts) => {
-    if(error) return console.error(error)
-
-    console.log(contacts)
-})
+listContacts('1590337721344-0.010484210846277486', console.log)

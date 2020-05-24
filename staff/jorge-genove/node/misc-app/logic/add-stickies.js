@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 require("../utils/string");
+const uid = require("../utils/uid");
 
-function addStickie(stickie, callback) {
+function addStickie(userId,stickie, callback) {
   if (typeof stickie !== "object")
     throw new TypeError(`${stickie} is not an object`);
 
@@ -15,8 +16,9 @@ function addStickie(stickie, callback) {
 
  
 
-  const id = `${Date.now()}`;
-
+  const id = uid()
+  stickie.stickieId = id
+  stickie.userId = userId
   const file = `${id}.json`;
 
   fs.writeFile(
@@ -25,7 +27,7 @@ function addStickie(stickie, callback) {
     (error) => {
       if (error) return callback(error);
 
-      callback(null, id);
+      callback(null, stickie.stickieId);
     }
   );
 }

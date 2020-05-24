@@ -2,12 +2,18 @@ const fs = require('fs');
 const path = require('path');
 require("../utils/string");
 const Email = require("../utils/email");
+const uid = require("../utils/uid");
+require("../utils/function")
+debugger
 
-function addContact(contact, callback) {
+function addContact(contact,userId, callback) {
   if (typeof contact !== "object")
     throw new TypeError(`${contact} is not an object`);
 
-  const { name, surname, email, phone, birth, country } = contact;
+  Function.validate(callback)
+  String.validate(userId)
+
+  const { name, surname, email, phone, birth, country} = contact;
 
   if (name) String.validate.notVoid(name);
 
@@ -27,18 +33,26 @@ function addContact(contact, callback) {
 
   if (country) String.validate.notVoid(country);
 
-  const id = `${Date.now()}`;
-
+  fs.readFile(path.join(__dirname, "..", "data", "users", `${userId}.json`),(error, json) => {debugger
+    if(error) return callback(new Error('user dont exist'))
+  const user = JSON.parse(json)
+  if (user.id === userId) {debugger 
+  debugger
+  const id = uid()
+  contact.userId = userId
   const file = `${id}.json`;
+  contact.contactId = id
+  fs.writeFile(path.join(__dirname, '..', 'data','contacts',file),JSON.stringify(contact, null, 4),
+  (error) => {if (error) return callback(error);
+    callback(null, contact.contactId);
+  })
+  }else throw new Error('user id dosnt exist')
+  
+    
+      
+    
+  
+  })
 
-  fs.writeFile(
-    path.join(__dirname, "..", "data", file),
-    JSON.stringify(contact, null, 4),
-    (error) => {
-      if (error) return callback(error);
-
-      callback(null, id);
-    }
-  );
 }
 module.exports = addContact

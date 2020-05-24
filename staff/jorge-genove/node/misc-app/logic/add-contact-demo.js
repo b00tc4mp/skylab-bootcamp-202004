@@ -8,4 +8,5 @@ const contact = {
     birth: '1980/10/1'
 }
 
-addContact(contact, console.log)
+addContact(contact,'1590330090701-0.7272191527517649'
+    ,console.log)

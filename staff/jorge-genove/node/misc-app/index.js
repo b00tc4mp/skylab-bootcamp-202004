@@ -4,10 +4,10 @@ const Register = require("./components/Register");
 const register = require("./logic/register");
 const Login = require("./components/Login");
 const login = require("./logic/login");
-// app.use(express.static('public'))
 const App = require("./components/App");
-const listContacts = require("./logic/contact-list");
+/* const listContacts = require("./logic/contact-list"); */
 const ListContacts = require("./components/ListContacts");
+const listContacts = require("./logic/list-contacs")
 const SearchContacts = require("./components/SearchContacts");
 const searchContacts = require("./logic/search-contacts");
 const addContact = require("./logic/add-contact");
@@ -19,6 +19,7 @@ const addStickiesList = require("./logic/list-stickies");
 const AddStickiesList = require("./components/ListStickies");
 const Home = require("./components/Home");
 const Feedback = require("./components/Feedback");
+const retrieveUser = require("./logic/retrieve-user");
 
 app.get("/landing", (req, res) => {
   res.send(App(Landing()));
@@ -28,51 +29,95 @@ app.get("/register", (req, res) => {
   res.send(App(Register()));
 });
 app.post("/register", (req, res) => {
-  req.on("data", (chunk) => {
-    const data = {};
-    const userName = chunk.toString().split("&");
-    userName.forEach((userName) => {
-      data[userName.split("=")[0]] = userName.split("=")[1];
-    });
+  let body = "";
+  req.on("data", (chunk) => (body += chunk));
 
-    data.email = decodeURIComponent(data.email);
-    register(data, (error, matched) => {
-      if (error) throw error;
-      if (!matched) res.send(App(Login()));
-      else {
-        res.send(App(Feedback("User already exist")));
-      }
+  req.on("end", () => {
+    const keyValues = body.split("&");
+
+    const user = keyValues.reduce((user, keyValue) => {
+      const [key, value] = keyValue.split("=");
+
+      user[key] = decodeURIComponent(value);
+
+      return user;
+    }, {});
+
+    const { name, surname, email, password } = user;
+
+    register(name, surname, email, password, (error, id) => {
+      if (error) throw error; // TODO error handling
+
+      res.redirect("/login");
     });
   });
 });
 
 app.get("/login", (req, res) => {
+  const cookie = req.header("cookie");
+
+  if (cookie) {
+    const [, id] = cookie.split("=");
+
+    if (id) return res.redirect("/home");
+  }
+
   res.send(App(Login()));
 });
 
 app.post("/login", (req, res) => {
-  req.on("data", (chunk) => {
-    const data = {};
-    const userName = chunk.toString().split("&");
-    userName.forEach((userName) => {
-      data[userName.split("=")[0]] = userName.split("=")[1];
-    });
-    data.email = decodeURIComponent(data.email);
+  req.on("data", (chunk) => (body += chunk));
+  let body = "";
 
-    login(data, (error, matched) => {
-      if (matched === true) res.send(App(Home()));
+  req.on("end", () => {
+    const keyValues = body.split("&");
+    const credentials = keyValues.reduce((user, keyValue) => {
+      const [key, value] = keyValue.split("=");
+
+      user[key] = decodeURIComponent(value);
+
+      return user;
+    }, {});
+
+    const { email, password } = credentials;
+
+    login(email, password, (error, id) => {
+      if (error) return res.redirect('/login') 
+                           
+      res.cookie("userId", id);
+      res.redirect("/home");
     });
   });
 });
 
-app.get("/contacts", (req, res) => {
-  listContacts((error, contacts) => {
+app.get("/home", (req, res) => {
+  const cookie = req.header("cookie");
+  if (!cookie) return res.redirect("/login");
+
+  const [, id] = cookie.split("=");
+  if (!id) return res.redirect("/login");
+debugger
+  /* retrieveUser(id, (error, { name }) => {
+    if (error) console.log(error); */
+    res.send(App(Home(/* name */)));
+  });
+/* }); */
+
+ app.get("/contacts", (req, res) => {
+
+const cookie =req.header('cookie')
+if(!cookie) return res.redirect('/login')
+
+const [, userId] = cookie.split("=")
+if(!userId) return res.redirect('/login')
+
+  listContacts(userId,(error, results) => {
     if (error) throw error;
-    res.send(App(ListContacts(contacts)));
+    res.send(App(ListContacts(results)));
   });
 });
 
-app.get("/search", (req, res) => {
+/*  app.get("/search", (req, res) => {
   const { url } = req;
   if (!url.includes("?")) {
     res.send(App(SearchContacts()));
@@ -86,30 +131,52 @@ app.get("/search", (req, res) => {
       res.send(App(`${SearchContacts(query)}${ListContacts(contactResults)}`));
     });
   }
-});
+}); */
+ 
+app.post("/logout", (req, res) => {
+  res.clearCookie("userId");
 
+  res.redirect("/login");
+});
 app.get("/add-contact", (req, res) => {
+  const cookie = req.header('cookie');
+  if (!cookie) return res.redirect("/login");
+
+  const [, id] = cookie.split("=");
+  if (!id) return res.redirect("/login");
+
   res.send(App(AddContacts()));
 });
 
 app.post("/add-contact", (req, res) => {
-  req.on("data", (chunck) => {
-    let contact = {};
-    const arrList = chunck.toString().split("&");
-    arrList.forEach((element) => {
-      const split = element.split("=");
-      contact[split[0]] = split[1];
-    });
-    contact.email = decodeURI(contact.email);
-    addContact(contact, (error) => {
+  
+  const cookie = req.header('cookie');
+  if (!cookie) return res.redirect("/login");
+
+  const [, userId] = cookie.split("=");
+  if (!userId) return res.redirect("/login");
+  
+  let body = "";
+  req.on("data", (chunk) => (body += chunk));
+  req.on("end", () => {
+    const keyValue = body.split("&");
+    const contact = keyValue.reduce((contact, keyValue) => {
+      const [key, value] = keyValue.split("=");
+      contact[key] = decodeURIComponent(value);
+
+      return contact;
+    }, {});
+    const { name, surname, email, phone, birth, country } = contact;
+
+    addContact(contact, userId, (error, contactId) => {debugger
       if (error) throw error;
 
-      res.send(App(AddContacts()));
+      res.redirect("/add-contact");
     });
   });
-});
+}); 
 
-app.get("/add-stickies", (req, res) => {
+/*app.get("/add-stickies", (req, res) => {
   res.send(App(AddStickies()));
 });
 
@@ -137,6 +204,6 @@ app.get("/stickies", (req, res) => {
 
     res.send(App(AddStickiesList(stickies)));
   });
-});
+}); */
 
 app.listen(8080);

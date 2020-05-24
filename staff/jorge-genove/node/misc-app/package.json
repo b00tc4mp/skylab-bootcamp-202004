@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node .",
+    "test:debug": "npx mocha debug logic/*.spec.js",
     "watch": "npx nodemon .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx mocha logic/*.spec.js",
+    "style": "npx sass style.sass public/style.css"
   },
   "keywords": [],
   "author": "",

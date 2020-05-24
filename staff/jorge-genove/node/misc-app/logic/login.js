@@ -1,34 +1,22 @@
-const path = require("path");
-const fs = require("fs");
+require('../utils/function')
 const Email = require("../utils/email");
 require("../utils/string");
+const { find } = require('../data/users')
 
-function login(user, callback) {
-  const { email, password } = user;
-
-  let matched = false;
+module.exports = (email, password, callback) => {
+  String.validate.notVoid(email)
   Email.validate(email);
   String.validate.notVoid(password);
+  Function.validate(callback)
 
-  fs.readdir(path.join(__dirname, "..", "data", "users"), (error, files) => {
-    if (error) throw error;
+ find({email}, (error,[user]) =>{
+   if (error) return callback(error)
 
-    files.forEach((file) => {
-      fs.readFile(
-        path.join(__dirname, "..", "data", "users", file),
-        (error, data) => {
-          if (error) throw error;
+   if (!user) return callback (new Error(`user wihdsasda`))
 
-          data = JSON.parse(data);
-
-          if (data.email === email && password === data.password) {
-            matched = true;
-            callback(null, matched);
-          } else matched = false;
-          callback(null, matched);
-        }
-      );
-    });
-  });
-}
-module.exports = login;
+   if (user.password !== password) return callback(new Error('wrong credentials'))
+ 
+   callback(null, user.id)
+ 
+  })
+}  
