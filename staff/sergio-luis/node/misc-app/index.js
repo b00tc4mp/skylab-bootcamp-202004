@@ -184,6 +184,7 @@ app.post('/add-contact', (req, res) => {
 })
 // **********LIST-contact***********************************************
 app.get('/contacts',(req,res)=>{
+debugger
     const cookie = req.header('cookie')
 
     if (cookie) {

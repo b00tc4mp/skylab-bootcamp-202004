@@ -19,6 +19,7 @@ module.exports = (userId, callback) => {
             if (error) return callback(error)
 
             let wasError = false
+            let count=0;
             const stickies = []
 
             if (!files.length) callback(null, stickies)
@@ -42,8 +43,8 @@ module.exports = (userId, callback) => {
     
                             stickies.push(stickie)
                         }
-                     
-                        if (stickies.length === files.length) callback(null, stickies)
+                        count++
+                        if (count === files.length) callback(null, stickies)
                     }
                 })
             })

@@ -20,7 +20,9 @@ module.exports = (userId,query, callback) => {
             let wasError = false
     
             const stickies = []
+            
             if (!files.length) callback(null, stickies)
+        
             let count = 0
     
             files.forEach(file => {

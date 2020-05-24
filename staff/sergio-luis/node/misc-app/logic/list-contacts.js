@@ -19,6 +19,7 @@ module.exports = (userId, callback) => {
             if (error) return callback(error)
 
             let wasError = false
+            let count = 0;
             const contacts = []
 
             if (!files.length) callback(null, contacts)
@@ -44,8 +45,8 @@ module.exports = (userId, callback) => {
                             contacts.push(contact)
         
                         }
-
-                        if (contacts.length === files.length) callback(null, contacts)
+                        count++
+                        if (count === files.length) callback(null, contacts)
                       
                     }
                 })
