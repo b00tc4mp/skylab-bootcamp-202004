@@ -17,6 +17,10 @@ const registerUser=require("./logic/register-user.js")
 const Login=require("./components/Login")
 const authenticateUser=require("./logic/authenticate-user")
 const retrieveUser=require("./logic/retrieve-user")
+const ListStickies= require("./components/ListSticky")
+const listStickies=require("./logic/list-stickies")
+const AddSticky=require("./components/AddSticky")
+const addSticky=require("./logic/add-sticky")
 const Home=require("./components/Home")
 const Feedback=require("./components/Feedback")
 
@@ -55,9 +59,8 @@ app.post("/add-contact",(req,res)=>{
     const {body}= req
     const {name,surname,email,phone}= body
     try{
-        addContact(userId,{name,surname,email,phone},(error,contactId)=>{
+        addContact(userId,{name,surname,email,phone},(error,contactId)=>{//TODO hacer que tras crear el contacto te lleve al contact info directamente aprovechando el contactId
             if(error) return res.send(App(Feedback(error.message)));
-            console.log("tiene que hacer el redirect")
             res.redirect("/list-contacts");
         })
     }catch(error){
@@ -78,6 +81,43 @@ app.get("/list-contacts",(req,res)=>{
         res.send(App(Feedback(error.message)));
     }
 })
+app.get("/list-stickies",(req,res)=>{
+    const cookie= req.header("cookie");
+    if(!cookie) return res.redirect("/login");
+    const [,userId]=cookie.split("=");
+    if(!userId) return res.redirect("/login")
+    try{
+        listStickies(userId,(error,stickies)=>{
+            if(error) return res.send(App(Feedback(error.message)));
+            res.send(App(ListStickies(stickies)));
+        })
+    }catch(error){
+        res.send(App(Feedback(error.message)));
+    }
+})
+app.get("/add-sticky",(req,res)=>{
+    const cookie= req.header("cookie");
+    if(!cookie) return res.redirect("/login");
+    const [,userId]=cookie.split("=");
+    if(!userId) return res.redirect("/login");
+    res.send(App(AddSticky()));
+})
+app.post("/add-sticky",(req,res)=>{
+    const cookie= req.header("cookie");
+    if(!cookie) return res.redirect("/login");
+    const [,userId]=cookie.split("=");
+    if(!userId) return res.redirect("/login");
+    const {body}= req
+    const {title,description}= body
+    try{
+        addSticky(userId,{title,description},(error)=>{
+            if(error) return res.send(App(Feedback(error.message)));
+            res.redirect("/list-stickies")
+        })
+    }catch(error){
+        res.send(App(Feedback(error.message)));
+    }
+})
 app.get("/register", (req, res) => {
     const cookie =req.header("cookie")
     if(cookie){
@@ -85,7 +125,6 @@ app.get("/register", (req, res) => {
         try{
             retrieveUser(userId,(error)=>{
                 if(error){ 
-                    console.log("ha entrado")
                     res.clearCookie('userId');
                     res.send(App(RegisterUser()));
                 }
