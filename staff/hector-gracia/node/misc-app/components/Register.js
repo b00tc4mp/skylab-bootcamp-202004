@@ -2,7 +2,7 @@ module.exports = () => {
     return `<div class="register">
     <section class="register__container">
         <h1>Register</h1>
-        <form action="/register" method="post">
+        <form action="/register" method="POST">
             <label for="name">First name</label>
             <input type="text" name="name" placeholder="name">
             <label for="surname">Second name</label>

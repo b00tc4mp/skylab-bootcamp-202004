@@ -15,6 +15,10 @@ const addContact=require("./logic/add-contact")
 const RegisterUser=require("./components/Register")
 const registerUser=require("./logic/register-user.js")
 const Login=require("./components/Login")
+const authenticateUser=require("./logic/authenticate-user")
+const retrieveUser=require("./logic/retrieve-user")
+const Home=require("./components/Home")
+const Feedback=require("./components/Feedback")
 
 app.use(express.static("public"))
 app.use(bodyParser.urlencoded({extended: false}))
@@ -22,16 +26,6 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.get("/hello-world",(req,res)=>{
     res.send(App("<h1>Hola mundo</h1>"))
 })
-app.get("/list-contacts",(req,res)=>{
-    listContacts((error,contacts)=>{
-        if(error){
-            throw error
-        }
-        res.send(App(ListContacts(contacts)))
-    })
-
-})
-
 app.get("/search", (req, res)=>{
     if(!req.url.includes('?')){
         res.send(App(SearchContacts()))
@@ -46,35 +40,132 @@ app.get("/search", (req, res)=>{
     }
 })
 app.get("/add-contact",(req,res)=>{
+    const cookie= req.header("cookie");
+    if(!cookie) return res.redirect("/login");
+    const [,userId]=cookie.split("=");
+    if(!userId) return res.redirect("/login")
     res.send(App(AddContact()))
 })
 app.post("/add-contact",(req,res)=>{
+    const cookie= req.header("cookie");
+    if(!cookie) return res.redirect("/login");
+    const [,userId]=cookie.split("=");
+    if(!userId) return res.redirect("/login")
+
     const {body}= req
     const {name,surname,email,phone}= body
-    console.log(name+surname+email+phone)
-    
-    //const {name}
-    // req.on("data",(chunk)=>{
-    //     console.log(chunk.toString())
-    //     const [name,surname,email,password]=chunk.toString().split("&")
-    //     res.send(App(AddContact()))
-    // })
+    try{
+        addContact(userId,{name,surname,email,phone},(error,contactId)=>{
+            if(error) return res.send(App(Feedback(error.message)));
+            console.log("tiene que hacer el redirect")
+            res.redirect("/list-contacts");
+        })
+    }catch(error){
+        res.send(App(Feedback(error.message)));
+    }
 })
-
+app.get("/list-contacts",(req,res)=>{
+    const cookie= req.header("cookie");
+    if(!cookie) return res.redirect("/login");
+    const [,userId]=cookie.split("=");
+    if(!userId) return res.redirect("/login")
+    try{
+        listContacts(userId,(error,contacts)=>{
+            if(error) return res.send(App(AddContact()));
+            res.send(App(ListContacts(contacts)));
+        })
+    }catch(error){
+        res.send(App(Feedback(error.message)));
+    }
+})
 app.get("/register", (req, res) => {
-    res.send(App(RegisterUser()))
+    const cookie =req.header("cookie")
+    if(cookie){
+        const [, userId] = cookie.split('=')
+        try{
+            retrieveUser(userId,(error)=>{
+                if(error){ 
+                    console.log("ha entrado")
+                    res.clearCookie('userId');
+                    res.send(App(RegisterUser()));
+                }
+                else{
+                    res.redirect("/home");
+                }
+            })
+        }catch(e){
+            res.clearCookie('userId');
+            res.send(App(RegisterUser()));
+        }
+    }else{
+        res.send(App(RegisterUser()));
+    }
 })
 app.post("/register",(req,res)=>{
     const {body} = req
-    registerUser(body,(error)=>{
-        if(error)
-        req.url.split('/') = 
-        res.send(App(Login()))
-    })
-})
+    try{
+        registerUser(body,(error,userId)=>{//Que te mande directamente al home tras un registro exitoso
+            if(error) return res.send(App(Feedback(error.message)));
+            res.redirect("/login")
 
+        })
+    }catch(error){
+        res.send(App(Feedback(error.message)));
+    }
+})
 app.get("/login", (req, res) => {
-    res.send(App(Login()))
+    const cookie =req.header("cookie")
+    if(cookie){
+        const [, userId] = cookie.split('=')
+        try{
+            retrieveUser(userId,(error)=>{
+                if(error){ 
+                    res.clearCookie('userId');
+                    res.send(App(Login()))
+                }
+                else{
+                    res.redirect("/home");
+                }
+            })
+        }catch(e){
+            res.clearCookie('userId');
+            res.send(App(Login()));
+        }
+    }else{
+        res.send(App(Login()));
+    }
+    
+})
+app.post("/login",(req,res)=>{
+    const{body}=req;
+    try{
+        authenticateUser(body.email,body.password,(error,userId)=>{
+            //Meter cookie e ir a home
+            if(error) return res.send(App(Feedback(error.message)));
+            res.cookie("userId",userId);
+            res.redirect("/home")
+        })
+    }catch(e){
+        res.send(App(Feedback(error.message)));
+    }
+})
+app.get("/home",(req,res)=>{
+    const cookie= req.header("cookie");
+    if(!cookie) return res.redirect("/login");
+    const [,userId]=cookie.split("=");
+    if(!userId) return res.redirect("/login")
+    try{
+        retrieveUser(userId,(error,user)=>{
+            if(error) return res.send(App(Feedback(error.message)));
+            res.send(App(Home(user.name)))
+        })
+    }catch(error){
+        res.send(App(Feedback(error.message)));
+    }
+})
+app.post("/logout",(req,res)=>{
+    res.clearCookie('userId')
+    res.redirect("/login")
 })
 app.get("/style.css",(req,res)=>{
     fs.readFile(path.join(__dirname,"style.css"),"utf8",(error,content)=>{
@@ -83,15 +174,4 @@ app.get("/style.css",(req,res)=>{
         res.end(content)
     })
 })
-/*
-else if (url === '/style.css') {
-    fs.readFile(path.join(__dirname, url), 'utf8', (error, content) => {
-        if (error) throw error
-
-        res.setHeader('Content-Type', 'text/css')
-
-        res.end(content)
-    })
-    */
-
 app.listen(8080)
