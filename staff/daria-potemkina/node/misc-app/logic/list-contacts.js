@@ -1,38 +1,22 @@
-const fs = require('fs')
-const path = require('path')
+const { find } = require('../data/users')
+const { findContacts } = require('../data/contacts')
+require('../utils/function')
+require('../utils/string')
 
-function listContacts(callback) {
-    fs.readdir(path.join(__dirname, '..', 'data', 'contacts'), (error, files) => {
-        if (error) return callback(error)
+module.exports = (userId, callback)  => {
+    String.validate.notVoid(userId)
 
-        let results = []
-        let count = 0
-        let wasError = false
+    Function.validate(callback)
 
-        for (let i in files) {
-            fs.readFile(path.join(__dirname, '..', 'data', 'contacts', files[i]), (error, data) => {
-                if (error) {
-                    if (!wasError) {
-                        callback(error)
+    find({id: userId}, (error, [user]) =>{
+        if(error) return callback(error)
+        if(!user) return callback(new Error(`user with id ${userId} does not exist`))
 
-                        wasError = true
-                    }
-                    return
-                }
-                if (!wasError) {
-                    const obj = JSON.parse(data)
+        findContacts({user: userId}, (error, contacts) =>{
+            if(error) return callback(error)
+            if(!contacts.length) return callback(new Error('contacts is empty'))
 
-                    obj.id = files[i].substring(0, files[i].indexOf('.json'))
-
-                    results.push(obj)
-
-                    count++
-
-                    if (count === files.length) callback(null, results)
-                }
-            })
-        }
+            callback(null, contacts)
+        })
     })
 }
-
-module.exports = listContacts

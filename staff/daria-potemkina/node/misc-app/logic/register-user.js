@@ -1,61 +1,37 @@
 const fs = require('fs')
 const path = require('path')
 require('../utils/string')
-//require('../utils/function')
+require('../utils/function')
 const Email = require('../utils/email')
 const uid = require('../utils/uid')
 require('../utils/json')
+const { find } = require('../data/users')
 
 
-module.exports = (register, callback) => {
+module.exports = (name, surname, email, password, callback) => {
+    String.validate.notVoid(name)
+    String.validate.notVoid(surname)
 
-    const {name,surname,email,password} = register
+    String.validate.notVoid(email)
+    Email.validate(email)
 
-    // debugger
-    // String.validate.notVoid(name)
-    // String.validate.notVoid(surname)
+    String.validate.lengthGreaterEqualThan(password, 8)
 
-    // String.validate.notVoid(email)
-    // Email.validate(email)
+    Function.validate(callback)
 
-    // String.validate.lengthGreaterEqualThan(password, 8)
-
-    //Function.validate(callback)
-
-
-    fs.readdir(path.join(__dirname, '..', 'data','users'), (error, files) => {
+    find({ email }, (error, [user]) => {
         if (error) return callback(error)
 
-        let wasError = false
-        let findEmail = false
-        files.forEach(file => {
-            fs.readFile(path.join(__dirname, '..', 'data', 'users', file), 'utf8', (error, body) => {
-                if (error) {
-                    if (!wasError) {
-                        callback(error)
+        if (user) return callback(new Error(`user with ${email} is already exists`))
 
-                        wasError = true
-                    }
+        const id = uid()
 
-                    return
-                }
+        const newUser = { id, name, surname, email, password }
 
-                if (!wasError) {
-                    const {email:_email} = JSON.parse(body)
+        fs.writeFile(path.join(__dirname, '..', 'data', 'users', `${id}.json`), JSON.prettify(newUser), error => {
+            if (error) return callback(error)
 
-                    if(_email === email) return callback(null,'The user already exist'); //TODO is right???  
-                }
-            })
-        })
-
-        const id = uid();
-        fs.writeFile(path.join(__dirname, '..', 'data', 'users', `${id}.json`),
-                    JSON.prettify({name,surname,email,password,id}), 
-                    (error)=>{
-                        if(error) return callback(error);
-
-                        callback(null,id)
-
+            callback(null, id)
         })
     })
 }

@@ -9,7 +9,6 @@ module.exports = body => {
     <body>
         ${body}
     </body>
-    <script src="components/Compo.js" ></script>
 </html>
 `
 }
