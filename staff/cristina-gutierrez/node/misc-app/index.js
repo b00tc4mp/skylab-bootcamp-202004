@@ -2,18 +2,37 @@ const express = require('express')
 const App = require('./components/App')
 const Landing = require('./components/Landing')
 const Register = require('./components/Register')
+const registerUser = require('./logic/register-user')
 const Login = require('./components/Login')
 
 const app = express()
 
 app.use(express.static('public'))
-
-app.get('/register', (req, res) => res.send(App(Register())))
-
-app.post('/register', (req, res) => res.json(req.body))
-
-app.get('/login', (req, res) => res.send(App(Login())))
+app.use(express.urlencoded({ extended: true }))
 
 app.get('/landing', (req, res) => res.send(App(Landing())))
+app.get('/register', (req, res) => res.send(App(Register())))
+app.get('/login', (req, res) => res.send(App(Login())))
+
+app.post('/register', (req, res) => {
+    const { name, surname, email, password } = req.body
+
+    registerUser(name, surname, email, password, (error, id) => {
+        if (error) throw error
+
+        res.redirect('/login')
+    })
+})
+app.get('/auth', (req, res) => {
+    const { email, password } = req.query
+
+    authenticateUser(email, password, (error, userId) => {
+        if (error) throw error
+
+        res.cookie('userId', userId)
+
+        res.redirect('/home')
+    })
+})
 
 app.listen(8080, () => console.log(`Server up and running on port ${8080}`))
