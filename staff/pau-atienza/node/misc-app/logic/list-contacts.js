@@ -9,6 +9,8 @@ module.exports = (id, callback) => {
 
         const contacts = []
         let count = 0
+
+        if (!files.length) return callback(new Error("You have no contacts"))
         
         files.forEach(file => {
             fs.readFile(path.join(__dirname, '..', 'data', 'contacts', file), 'utf8', (error, json) => {
@@ -24,7 +26,8 @@ module.exports = (id, callback) => {
 
                 if (!wasError) {
                     const contact = JSON.parse(json)
-                    
+
+                    contact.uniqueid = file.substring(8,file.length-5)
                     if (contact.id === id) contacts.push(contact)
                     if (++count === files.length) callback(null, contacts)
                 }

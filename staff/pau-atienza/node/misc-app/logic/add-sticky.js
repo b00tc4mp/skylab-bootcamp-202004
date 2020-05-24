@@ -9,9 +9,7 @@ module.exports = (sticky, callback) => {
     if (typeof sticky !== 'object') throw new TypeError(`${sticky} is not an object`)
     Function.validate(callback)
 
-    const { name, tag, comment, id } = sticky
-
-    String.validate.notVoid(name)
+    const {tag, comment, id } = sticky
     String.validate.notVoid(tag)
     String.validate.notVoid(comment)
     String.validate.notVoid(id)

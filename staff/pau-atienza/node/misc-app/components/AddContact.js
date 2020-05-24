@@ -7,7 +7,7 @@ module.exports = () => {
     <label for = "email">E-mail:</label><input type="email" id="email" name="email"> <br>
     <label for = "phone">Phone:</label><input type="text" id="phone" name="phone"> 
     <button>Add</button>
-    <a href = '/home'>Home</a>
+    <a href = '/contacts'>Contacts</a>
 </form>
 </section>
     `
