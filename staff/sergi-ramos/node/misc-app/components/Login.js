@@ -7,6 +7,7 @@ module.exports = () => {
       <input type="password" name="password" placeholder="password">
       <button>Submit</button>
   </form>
+  <a href="/register">Register</a>
   </section>`
   }
   
