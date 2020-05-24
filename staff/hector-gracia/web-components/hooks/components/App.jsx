@@ -48,10 +48,3 @@ function App() {
 }
 
 ReactDOM.render(<App />, document.getElementById('root'))
-/*
-debugger
-        if(score>highscore) {
-            debugger
-            setHighScore(score)};
-        //setScore(0);
-        */

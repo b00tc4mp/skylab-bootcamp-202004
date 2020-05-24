@@ -51,9 +51,6 @@ class User{
             this.liked.push(targetPete);
             targetPete.liked(this);
         }
-        
-        //TODO dislike pete
-
     }
 
 }

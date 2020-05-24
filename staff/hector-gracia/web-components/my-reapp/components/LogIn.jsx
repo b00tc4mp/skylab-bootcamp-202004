@@ -13,10 +13,8 @@ class Login extends Component{
         this.props.onRegister();
         this.cleanForm();
     }
-    //Mete los datos del formulario dentro del estado del componente a medida que se cambian
     handleChangeEmail=event=>this.setState({formEmail:event.target.value})
     handleChangePassword=event=>this.setState({formPassword:event.target.value})
-    //Vacia los campos cuando cambio de pantalla
     cleanForm(){
         this.state.formEmail="";
         this.state.password="";

@@ -94,23 +94,6 @@ describe(("toggleFollow"), () => {
                 }
             }
         )
-        //Call con el register(name1,surname1) x
-        //Meter a dos usuarios x
-
-        //Que usuario 1 siga a 2
-
-        //Comprobar que user1.following incluye a user 2
-        //Comprobar que user2.following no se ha visto afectado
-
-        //Que usuario 1 deje de seguir a usuario 2
-
-        //Comprobar que user1.following no incluye a user 2
-        //Comprobar que user2.following no se ha visto afectado
-
-        //Eliminar a los usuarios 1 y 2 de la base de datos
-
-
-
     }).timeout(10000)
     afterEach(done => {
         //Buscar si hay user con username===email1 y si existe lo borra
@@ -141,11 +124,6 @@ describe(("toggleFollow"), () => {
                             })
                     })
             })
-        //Errores de tipo: si (user,emailFollowing, token, callback) no son del tipo adecuado
-
-        //Error de que se le pasan parametros del tipo adecuado pero con valores invalidos
-
-        //Error de que los usuarios que se le pasan no existen
 
     })
 })

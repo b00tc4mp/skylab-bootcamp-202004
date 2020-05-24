@@ -78,10 +78,8 @@ class Navigation extends Component{
     handleOnFollow=(id)=>{
         toogleFollow(this.state.token,id,(error)=>{
             if(error===undefined){
-
-                //this.handleSearchUsers(this.state.usersResults,this.state.usersQuery)
                 this.handleDiscoverOnSearch(this.state.usersQuery);
-                this.setState({view:"discover"});//Chuta a medias
+                this.setState({view:"discover"});
             }
         });
     }

@@ -38,35 +38,4 @@ function searchUser(token,query,callback){
             
         }
     )
-    
-/*
-call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', 
-        undefined, 
-        { "Authorization": `Bearer ${token}`}, 
-        (error, status, body) => {
-            if(error) return callback(error);
-            if(status==200){
-                const {following=[]} = JSON.parse(body); //El usuario en el que stoy buscando
-                //Coger todos los usuarios y filtrar los que tenga id que coincidan con user.following
-                call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all', 
-                undefined, 
-                { "Authorization": `Bearer ${token}`}, 
-                (error, status, body) => {
-                    if(error) return callback(error);
-                    if(status==200){
-                        const users = JSON.parse(body);
-                        let results=users.filter(function(user){return user.name && user.name.toLowerCase().includes(query) || user.surname && user.surname.toLowerCase().includes(query) || user.username && user.username.toLowerCase().includes(query)})
-                        results = results.map(({ name, surname, username, id }) => {({ name, surname, email: username, id , following: following.includes(id)})});
-                        callback(undefined, results);
-                    }else{
-                        callback(new Error(JSON.parse(body).error))
-                    }
-            
-                })
-            }else{
-                callback(new Error(JSON.parse(body).error))
-            }
-        })
-        */
-    }
-    //Not allowed to load local resource: chrome-error://chromewebdata/#buttons
+}

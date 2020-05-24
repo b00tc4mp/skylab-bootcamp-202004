@@ -21,5 +21,3 @@ function call(method,url,body,headers,callback){
     
     xhr.send(body ? body : undefined) 
 }
-//Que me voy a ir a merendar, copiate las cosas; okey makey 
-//  se te oyr entrecortadoo , valee ve ve; yo tambien ire vale, gtacias
