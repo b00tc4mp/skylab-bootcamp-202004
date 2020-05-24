@@ -1,32 +1,37 @@
 const fs = require('fs')
 const path = require('path')
-require('../utils/json')
 const Email = require('../utils/email')
+const { find } = require('../data/users')
+const uid = require('../utils/uid')
+require('../utils/function')
+require('../utils/json')
 require('../utils/string')
-const uid = require ('../utils/uid')
-require ('../utils/function')
+
 
 module.exports = (newUser, callback) => {
 
-    const {name, surname, email, password } = newUser
-
-    String.validate.alphabetic(name)
-    String.validate.alphabetic(surname)
-
-    Email.validate(email)
-
-    String.validate.lengthGreaterEqualThan(password, 8)
-
-    Function.validate(callback)
-
-    const id = uid()
+    const { name, surname, email, password } = newUser
+    String.validate.notVoid(name)
+    String.validate.notVoid(surname)
+    String.validate.notVoid(email)
+    String.validate.lengthGreaterEqualThan(password, 8) 
     
-    newUser.user = id
+    const id = uid()
 
-    fs.writeFile(path.join(__dirname, '..','data','users', `${id}.json`), JSON.prettify(newUser), error => {
-        if (error) throw new Error(error)
-   
+    const data = path.join(__dirname, '..', 'data')
+
+    find({ email }, (error, [user]) => {
+
+        if (error) return callback(error)
+
+        if (user) return callback(new Error('user already exists'))
+
+        newUser.userId = id
+
+        fs.writeFile(path.join(data, 'users', `${id}.json`), JSON.prettify(newUser), error => {
+            if (error) return callback(error)
+        })
+
         callback(null, id)
-   
     })
 }

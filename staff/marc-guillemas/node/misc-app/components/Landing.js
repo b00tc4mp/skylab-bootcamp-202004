@@ -1,4 +1,3 @@
-// TODO web
 module.exports = () => {
     return `<nav class="landing">
     <ul>

@@ -1,5 +1,5 @@
-// const listContacts = require('../logic/list-contacts')
-function ListContacts(contacts) {
+
+module.exports = (contacts) => {
     return `<section class="contacts">
     <h2>Contacts list</h2>
 <ul>
@@ -8,4 +8,3 @@ function ListContacts(contacts) {
 </section>`
 }
 
-module.exports = ListContacts

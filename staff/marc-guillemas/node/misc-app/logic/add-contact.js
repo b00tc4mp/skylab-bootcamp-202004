@@ -4,13 +4,17 @@ require('../utils/string')
 const Email = require('../utils/email')
 const uid = require('../utils/uid')
 require('../utils/json')
+require('../utils/function')
+const { find } = require('../data/users')
 
-module.exports = (contact, callback) => {
+module.exports = (userId, contact, callback) => {
     if (typeof contact !== 'object') throw new TypeError(`${contact} is not an object`)
-
-    // TODO make it so that at least should have the following fields: (name || suranme) && (email || phone)
-
+    
     const { name, surname, email, phone, birthdate, country } = contact
+
+    String.validate.notVoid(userId)
+
+    Function.validate(callback)
 
     if (name)
         String.validate.notVoid(name)
@@ -34,14 +38,23 @@ module.exports = (contact, callback) => {
     if (country)
         String.validate.notVoid(country)
 
-    const id = uid()
+    find({userId}, (error, [user])=> {
+        
+        if(error) return callback(error)
+        if(!user) return callback(new Error('something wrong happen'))
 
-    const file = `${id}.json`
-
-
-    fs.writeFile(path.join(__dirname, '..', 'data', 'contacts', file), JSON.prettify(contact), error => {
-        if (error) return callback(error)   
-
-        callback(null, id)
+        const idContact = uid()
+    
+        const file = `${idContact}.json`
+    
+        contact.idContact = idContact
+    
+        contact.userId = userId
+       
+        fs.writeFile(path.join(__dirname, '..', 'data', 'contacts', file), JSON.prettify(contact), error => {
+            if (error) return callback(error)
+    
+            callback(null, idContact)
+        })
     })
 }
