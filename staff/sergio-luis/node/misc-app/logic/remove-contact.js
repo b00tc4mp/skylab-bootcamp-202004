@@ -6,14 +6,12 @@ const {find} =require('../data/findData')
 
 
 
-module.exports = (userId, contact, callback) => {
+module.exports = (userId, contactId, callback) => {
 
-    const {name,surname,contactId} = contact
+
 
     String.validate.notVoid(userId)
     String.validate.notVoid(contactId)
-    if (name) String.validate.notVoid(name)
-    else String.validate.notVoid(surname)
     Function.validate(callback)
 
 
@@ -31,7 +29,7 @@ module.exports = (userId, contact, callback) => {
             fs.unlink(path.join(__dirname, "..", "data", "contacts", `${contactId}.json`), (error) => {
                 if (error) return callback(error)
 
-                return callback(null, `Deleted user ${name || surname}`)
+                return callback(null, `Deleted user`)
             })
         })
     })

@@ -20,6 +20,8 @@ module.exports = (userId, callback) => {
 
             let wasError = false
             const stickies = []
+
+            if (!files.length) callback(null, stickies)
     
             files.forEach(file => {
                 fs.readFile(path.join(__dirname, '..', 'data', 'stickies', file), 'utf8', (error, json) => {

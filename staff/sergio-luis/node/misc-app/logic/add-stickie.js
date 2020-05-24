@@ -23,7 +23,7 @@ module.exports = (userId, stickie, callback) => {
         stickie.stickieId = uid()
 
         const file = `${stickie.stickieId }.json`
-    
+    debugger
         fs.writeFile(path.join(__dirname, '..', 'data', 'stickies', file), JSON.prettify(stickie), error => {
             if (error) return callback(error)
     

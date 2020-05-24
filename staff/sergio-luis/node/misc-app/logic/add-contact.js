@@ -29,7 +29,7 @@ module.exports = (userId, contact, callback) => {
 
     if (birthdate) {
         String.validate.notVoid(birthdate)
-        _Date.validate(birthdate) // format - 30/12/2020
+        // _Date.validate(birthdate) // format - 30/12/2020
     }
 
     if (country) String.validate.notVoid(country)

@@ -20,6 +20,7 @@ module.exports = (userId,query, callback) => {
             let wasError = false
     
             const stickies = []
+            if (!files.length) callback(null, stickies)
             let count = 0
     
             files.forEach(file => {
@@ -36,12 +37,11 @@ module.exports = (userId,query, callback) => {
     
                     if (!wasError) {
                         const stickie = JSON.parse(json)
-    
-                        
+      
                         if (stickie.user === userId) {
     
                             const values = Object.values(stickie)
-                            const matches = values.some(value => value.includes(query))
+                            const matches = values.some(value => value.toLowerCase().includes(query.toLowerCase()))
     
                             if (matches) {
                                 stickie.id = file.substring(0, file.indexOf('.json'))

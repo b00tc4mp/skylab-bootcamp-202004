@@ -6,11 +6,9 @@ const {find} =require('../data/findData')
 
 
 
-module.exports = (userId, stickie , callback) => {
+module.exports = (userId, stickieId , callback) => {
     
-    const {tag,stickieId} = stickie
     String.validate.notVoid(userId)
-    String.validate.notVoid(tag)
     String.validate.notVoid(stickieId)
     Function.validate(callback)
 
@@ -29,7 +27,7 @@ module.exports = (userId, stickie , callback) => {
             fs.unlink(path.join(__dirname, "..", "data", "stickies", `${stickieId}.json`), (error) => {
                 if (error) return callback(error)
 
-                return callback(null, `Deleted "${tag}" tag!`)
+                return callback(null, `Deleted tag!`)
             })
         })
     })

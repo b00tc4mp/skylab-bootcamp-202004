@@ -36,6 +36,15 @@
     }.bind(String)
 
     String.validate.lengthGreaterEqualThan = function (string, length) {
-        if (!this.isLengthGreaterEqualThan(string, length)) throw new Error(`"${string}" length is not greater or equal than ${length}`)
+        if (!this.isLengthGreaterEqualThan(string, length)) throw new Error(`password length is not greater or equal than ${length}`)
     }.bind(String)
+
+    String.prototype.convertChunk = function(){
+        let data = {}
+        const user = this.replace('%40','@').replace(' ', '+').split('&')
+        user.forEach( _user => {
+            data[_user.split('=')[0]] = _user.split('=')[1]
+        })
+        return data
+    }
 })()

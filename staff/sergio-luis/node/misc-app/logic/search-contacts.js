@@ -20,6 +20,7 @@ module.exports = (userId,query, callback) => {
             let wasError = false
     
             const contacts = []
+            if (!files.length) callback(null, contacts)
             let count = 0
     
             files.forEach(file => {
@@ -41,7 +42,7 @@ module.exports = (userId,query, callback) => {
                         if (contact.user === userId) {
     
                             const values = Object.values(contact)
-                            const matches = values.some(value => value.includes(query))
+                            const matches = values.some(value => value.toLowerCase().includes(query.toLowerCase()))
     
                             if (matches) {
                                 contact.id = file.substring(0, file.indexOf('.json'))

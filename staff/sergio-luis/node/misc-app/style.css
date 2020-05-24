@@ -1,4 +1,4 @@
-.search, .home, .register, .login {
+.home, .register, .login {
   display: inline-block;
   border: 1rem dashed gray;
   border-radius: 2rem;
@@ -45,8 +45,34 @@
   color: red;
 }
 
-.search {
-  border-color: skyblue;
+.table {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.table__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+}
+.table__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+  border: 1px solid black;
+}
+.table__item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+  border: 1px solid black;
 }
 
 /*# sourceMappingURL=style.css.map */

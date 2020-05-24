@@ -9,7 +9,7 @@ module.exports = (feedback) => {
         <button>Submit</button>
         or <a href="/login">Login</a>
     </form>
-    ${feedback}
+    ${feedback ? feedback : ''}
 </section>`
 
 }

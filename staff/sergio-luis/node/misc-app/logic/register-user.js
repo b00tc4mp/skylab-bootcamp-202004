@@ -8,7 +8,7 @@ const {find} =require('../data/findData')
 
 
 module.exports = (register, callback) => {
-
+debugger
     const { name, surname, email, password } = register
     String.validate.notVoid(name)
     String.validate.notVoid(surname)
