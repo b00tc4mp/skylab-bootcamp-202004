@@ -1,11 +1,10 @@
-require('../utils/string')
-const Email = require('../utils/email')
+require('../utils/polyfills/string')
+const { Email, uid } = require('../utils')
 const fs = require('fs')
-const uid = require('../utils/uid')
-require('../utils/function')
+require('../utils/polyfills/function')
 const path = require('path')
-require('../utils/json')
-const { find } = require('../data/users')
+require('../utils/polyfills/json')
+const { users: { find } } = require('../data')
 
 module.exports = (name, surname, email, password, callback) => {
     String.validate.notVoid(name)
@@ -23,13 +22,13 @@ module.exports = (name, surname, email, password, callback) => {
         if (user) return callback(new Error(`user with e-mail ${email} already exists`))
 
         const id = uid()
-        
+
         const newUser = { id, name, surname, email, password }
 
         fs.writeFile(path.join(data, 'users', `${id}.json`), JSON.prettify(newUser), error => {
             if (error) return callback(error)
 
-            callback(null, id)
+            callback(null)
         })
     })
 }
