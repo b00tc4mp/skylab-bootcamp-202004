@@ -10,6 +10,10 @@
   text-align: center;
 }
 
+.cookies {
+  border: 1px solid orange;
+}
+
 .login {
   border-color: blue;
 }

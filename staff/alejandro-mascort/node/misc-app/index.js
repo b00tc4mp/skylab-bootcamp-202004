@@ -26,116 +26,128 @@ const removeStickies = require('./logic/remove-stickie')
 const searchStickies = require('./logic/search-stickies')
 require('./utils/string');
 //MIDDLEWARES
-const {parseBody, parseBodyAndCookies, parseCookies} = require('./utils/middlewares')
+const {parseBody, parseCookies, cookieSession} = require('./utils/middlewares')
+
 const app = express()
 
 app.use(express.static('public'))
 
-app.get('/landing', (req, res) => res.send(App(Landing())))
+app.get('/', parseCookies, cookieSession, (req, res) => {
+    const { session: { cookiesAccepted, userId } } = req
+
+    if (userId) return res.redirect('/home')
+
+    res.send(App(Landing(), cookiesAccepted))
+})
+
+app.post('/accept-cookies', parseCookies, cookieSession, (req, res) => {
+    const { session } = req
+
+    session.cookiesAccepted = true
+
+    session.save(error => {
+        if (error) throw error
+
+        res.redirect(req.header('referer'))
+    })
+})
 
 //////////
 //REGISTER
 //////////
-app.get('/register', parseCookies, (req, res) => {
-    const { cookies: { userId } } = req
+app.get('/register', parseCookies, cookieSession, (req, res) => {
+    const { session: { cookiesAccepted, userId } } = req
 
     if (userId) return res.redirect('/home')
     
-    res.send(App(Register()))
+    res.send(App(Register(), cookiesAccepted))
 })
 
-app.post('/register', (req, res) => {
-    let data ={};
-
-    req.on('data', chunk => {data = chunk.toString().convertChunk()})
-
-    req.on('end',()=>{
-        try {
-            register(data, error => {
-                if (error) return res.send(App(Register(Feedback(error.message,'warning'))))
-                
-                res.redirect('/login')
-            })
-        } catch ({message}) {
-            res.send(App(Register(Feedback(message,'error'))))
-            return
-        }
-    })    
+app.post('/register', parseBody, (req, res) => {
+    const { data } = req
+    
+    try {
+        register(data, error => {
+            if (error) return res.send(App(Register(Feedback(error.message,'warning')), cookiesAccepted))
+            
+            res.redirect('/login')
+        })
+    } catch ({message}) {
+        res.send(App(Register(Feedback(message,'error'), cookiesAccepted)))
+        return
+    }   
 })
 
 //////////
 //LOGIN
 //////////
-app.get('/login', (req, res) => {
-    const cookie = req.header('cookie')
+app.get('/login', parseCookies, cookieSession, (req, res) => {
+    const { session: { cookiesAccepted, userId } } = req
 
-    if (cookie) {
-        const [, userId] = cookie.split('=')
-
-        if (userId) return res.redirect('/home')
-    }
+    if (userId) return res.redirect('/home')
     
-    res.send(App(Login()))
+    res.send(App(Login(), cookiesAccepted))
 })
 
-app.post('/login', (req, res) => {
-    let data ={};
-    
-    req.on('data', chunk => {data = chunk.toString().convertChunk()})
-    
-    req.on('end', () =>{
-       
-       try{
-            authenticated(data,(error,userId)=>{    
-                if (error) return res.send(App(Login(Feedback(error.message,'warning'))))
-                res.cookie('userId', userId)
-                
+app.post('/login', parseBody, parseCookies, cookieSession, (req, res) => {
+    const { data, session } = req
+
+    try{
+        authenticated(data,(error,userId)=>{    
+            if (error) return res.send(App(Login(Feedback(error.message,'warning'))))
+
+            session.userId = userId
+
+            session.save(error => {
+                if (error) throw error //TODO handle error
+
                 res.redirect('/home')
-            }) 
-       }catch({message}){
-            res.send(App(Login(Feedback(message,'error'))))
-            return 
-       }
+            })
+            
+        }) 
+    }catch({message}){
+        res.send(App(Login(Feedback(message,'error'), cookiesAccepted)))
+        return 
+    }
        
-    })
 })
 
 //////////
 //HOME
 //////////
-app.get('/home',(req,res) => {
-    const cookie = req.header('cookie')
-
-    if (!cookie) return res.redirect('/login')
-
-    const [, userId] = cookie.split('=')
+app.get('/home', parseCookies, cookieSession, (req,res) => {
+    const { session: { userId, cookiesAccepted } } = req
 
     if (!userId) return res.redirect('/login')
 
     try {
         retrieveUser(userId, (error, { name }) => {
-            if (error) return res.send(App(Home(name,Feedback(error.message,'error'))))
+            if (error) return res.send(App(Home(name,Feedback(error.message,'error')), cookiesAccepted))
     
-            res.send(App(Home(name,undefined)))
+            res.send(App(Home(name,undefined), cookiesAccepted))
         })
     } catch ({message}) {
-        res.send(App(Home(name,Feedback(message,'error'))))
+        res.send(App(Home(name,Feedback(message,'error')), cookiesAccepted))
         return
     }
 })
 
 
-app.post('/logout', (req, res) => {
-    res.clearCookie('userId')
-debugger
-    res.redirect('/login')
+app.post('/logout', parseCookies, cookieSession, (req, res) => {
+    const { session } = req
+
+    session.destroy( error => {
+        if (error) throw error //TODO handle error
+
+        res.redirect('/login')
+    })
 })
 
 //////////
 //CONTACT
 /////////
 // **********Add-contact***********************************************
-app.get('/add-contact', (req, res) => {
+app.get('/add-contact', parseCookies, (req, res) => {
     const cookie = req.header('cookie')
     if (cookie) {
         const [, userId] = cookie.split('=')

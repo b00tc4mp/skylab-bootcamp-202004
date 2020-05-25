@@ -1,19 +1,19 @@
 module.exports = (req, res, next) => {
-    let body = ''
+    let data = ''
 
-    req.on('data', chunk => body += chunk)
+    req.on('data', chunk => data += chunk)
 
     req.on('end', () => {
         // hola=mundo&hello=world
 
-        const keyValues = body.split('&')
+        const keyValues = data.split('&')
 
-        req.body = keyValues.reduce((body, keyValue) => {
+        req.data = keyValues.reduce((data, keyValue) => {
             const [key, value] = keyValue.split('=')
 
-            body[key] = decodeURIComponent(value)
+            data[key] = decodeURIComponent(value)
 
-            return body
+            return data
         }, {})
 
         next()

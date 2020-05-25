@@ -3,6 +3,7 @@ const fs = require('fs')
 require('../utils/function')
 const path = require('path')
 require('../utils/json')
+const  uid  = require('../utils/uid')
 
 function find(filter,folder, callback) { // filter => { name: 'pepito', surname: 'grillo' }
 
@@ -52,6 +53,37 @@ function find(filter,folder, callback) { // filter => { name: 'pepito', surname:
     })
 }
 
+function create(data, folder, callback) {
+    data.id = uid()
+
+    fs.writeFile(path.join(__dirname, folder, `${data.id}.json`), JSON.prettify(data), error => {
+        if (error) return callback(error)
+
+        callback(null, data.id)
+    })
+}
+
+function update(id, data, folder, callback) {
+    data.id = id
+
+    fs.writeFile(path.join(__dirname, folder,`${id}.json`), JSON.prettify(data), error => {
+        if (error) return callback(error)
+
+        callback(null)
+    })
+}
+
+function remove(id, folder, callback) {
+    fs.unlink(path.join(__dirname, folder, `${id}.json`), error => {
+        if (error) return callback(error)
+
+        callback(null)
+    })
+}
+
 module.exports = {
-    find
+    find,
+    create,
+    update,
+    remove
 }
