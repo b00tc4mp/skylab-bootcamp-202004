@@ -6,9 +6,11 @@ const { deleteFilesByExtensionFromDirectory } = require('../utils/files')
 const authenticate = require('./authenticate')
 const { expect } = require('chai')
 require('../utils/json')
+
 describe('logic - authenticate-user', () => {
     const data = path.join(__dirname, '..', 'data')
     let name, surname, email, password, userId
+
     beforeEach(done => {
         deleteFilesByExtensionFromDirectory(path.join(data, 'users'), ".json", error => {
             debugger
@@ -60,6 +62,8 @@ describe('logic - authenticate-user', () => {
         expect(() => { authenticate(undefined, password, () => { }) }).to.throw(Error, (undefined + " is not an e-mail"))
         expect(() => { authenticate(email, undefined, () => { }) }).to.throw(TypeError, (undefined + " is not a string"))
         expect(() => { authenticate(email, password, undefined) }).to.throw(TypeError, (undefined + " is not a function"))
+
+        
     })
     it('should fail on wrong credentials', done => {
 

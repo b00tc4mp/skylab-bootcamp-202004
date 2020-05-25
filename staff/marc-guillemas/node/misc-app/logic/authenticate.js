@@ -11,9 +11,9 @@ module.exports = (email, password, callback) => {
   String.validate.notVoid(email)
   String.validate.lengthGreaterEqualThan(password, 8)
   Function.validate(callback)
-  debugger
+
   find({ email }, (error, [user]) => {
-    debugger
+
     if (error) return callback(error)
 
     if (!user) return callback(new Error(`User with e-mail ${email} does not exists`))
