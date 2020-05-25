@@ -1,7 +1,6 @@
 require('../utils/string')
-const Email = require('../utils/email')
+const { Email, uid } = require('../utils')
 const fs = require('fs')
-const uid = require('../utils/uid')
 require('../utils/function')
 const path = require('path')
 require('../utils/json')
@@ -23,13 +22,13 @@ module.exports = (name, surname, email, password, callback) => {
         if (user) return callback(new Error(`user with e-mail ${email} already exists`))
 
         const id = uid()
-        
+
         const newUser = { id, name, surname, email, password }
 
         fs.writeFile(path.join(data, 'users', `${id}.json`), JSON.prettify(newUser), error => {
             if (error) return callback(error)
 
-            callback(null, id)
+            callback(null)
         })
     })
 }
