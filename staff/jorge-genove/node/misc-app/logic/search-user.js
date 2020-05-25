@@ -1,18 +1,18 @@
 const fs = require('fs')
 const path = require('path')
 
-const searchContacts = (userId,query,callback) => {console.log ('he entrado')
+const searchUsers = (userId,query,callback) => {
     fs.readdir(path.join(__dirname, '..', 'data','contacts'), (error, files) => {
         if (error) return callback(error)
 
         files = files.filter(file => path.extname(file) === '.json')
         let wasError = false
 
-        const contacts = []
+        const users = []
         let count = 0
 
-        files.forEach(file => {
-            fs.readFile(path.join(__dirname, '..', 'data','contacts', file), 'utf8', (error, json) => {
+        files.forEach(file => {debugger
+            fs.readFile(path.join(__dirname, '..', 'data','users', file), 'utf8', (error, json) => {debugger
                 if (error) {
                     if (!wasError) {
                         callback(error)
@@ -24,23 +24,25 @@ const searchContacts = (userId,query,callback) => {console.log ('he entrado')
                 }
 
                 if (!wasError) {
-                    const contact = JSON.parse(json)
-                    if(contact.userId!==userId) return
+                    const user = JSON.parse(json)
+                    
 
-                    const values = Object.values(contact)
+                    const values = Object.values(user)
 
                     const matches = values.some(value => value.includes(query))
 
-                    if (matches) {
-                        contact.id = file.substring(0, file.indexOf('.json'))
-    
-                        contacts.push(contact)
+                    if (matches) {debugger
+                        user.id = file.substring(0, file.indexOf('.json'))
+                        if(user.id!==userId) {debugger
+
+                            users.push(user)
+                        }
                     }
 
-                    if (++count === files.length) callback(null, contacts)
+                    if (++count === files.length) callback(null, users)
                 }
             })
         })
     })
 }
-module.exports = searchContacts
+module.exports = searchUsers

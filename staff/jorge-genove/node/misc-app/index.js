@@ -20,6 +20,10 @@ const AddStickiesList = require("./components/ListStickies");
 const Home = require("./components/Home");
 const Feedback = require("./components/Feedback");
 const retrieveUser = require("./logic/retrieve-user");
+const {parseCookies, parseBody} = require('./utils/middlewares')
+const SearchUsers = require('./components/SearchUser')
+const searchUsers= require("./logic/search-user")
+const ListUsers = require("./components/ListUsers")
 
 app.get("/landing", (req, res) => {
   res.send(App(Landing()));
@@ -117,21 +121,25 @@ if(!userId) return res.redirect('/login')
   });
 });
 
-/*  app.get("/search", (req, res) => {
-  const { url } = req;
-  if (!url.includes("?")) {
-    res.send(App(SearchContacts()));
-  } else {
-    const [, queryString] = url.split("?");
-    const [, query] = queryString.split("=");
+   app.get("/search-contact",parseCookies ,(req, res) => {
+   const {cookies: {userId}} = req
+   
+    if(!userId) return res.redirect('/login') 
 
-    searchContacts(query, (error, contactResults) => {
-      if (error) throw error;
+    res.send(App(SearchContacts()))
+    
 
-      res.send(App(`${SearchContacts(query)}${ListContacts(contactResults)}`));
-    });
-  }
-}); */
+}); 
+app.post("/search-contact",parseCookies,parseBody,(req,res) =>{
+  const {cookies: {userId}} = req
+  if(!userId) return res.redirect('/login') 
+  
+  const {body : {q}} = req
+  searchContacts(userId,q, (error, contacts)=>{
+    if (error) throw error
+    res.send(App(SearchContacts(q)+ListContacts(contacts)))
+  })
+}) 
  
 app.post("/logout", (req, res) => {
   res.clearCookie("userId");
@@ -176,6 +184,22 @@ app.post("/add-contact", (req, res) => {
   });
 }); 
 
+app.get("/search-users", parseCookies, (req,res) => {
+  const {cookies : {userId}} = req
+  if(!userId) res.redirect('/login')
+
+  res.send(App(SearchUsers()))
+})
+app.post("/search-users",parseBody,parseCookies,(req,res)=>{
+  const {cookies: {userId}} = req
+  if(!userId) return res.redirect('/login') 
+  
+  const {body : {q}} = req
+  searchUsers(userId,q, (error, users)=>{
+    if (error) throw error
+    res.send(App(SearchUsers(q)+ListUsers(users)))
+  })
+})
 /*app.get("/add-stickies", (req, res) => {
   res.send(App(AddStickies()));
 });
