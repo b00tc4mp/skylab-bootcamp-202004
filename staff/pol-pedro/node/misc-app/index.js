@@ -78,8 +78,7 @@ app.post("/register",(req,res)=>{
         }else{
             console.log(body.name+body.surname+body.email+body.phone)
 
-            res.send(App(RegisterUser()))
-            req.url = '/login'
+            res.redirect('/login')
             // console.log('change url: ' + req.url)
         }
 
