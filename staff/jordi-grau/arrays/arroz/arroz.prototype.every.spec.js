@@ -1,7 +1,7 @@
 'use strict'
 
 describe('arroz.prototype.every', function () {
-    it('delete the last index position of one array', function () {
+    it('returns a boolean depending if all elements into an array passes or not a specificatd condition', function () {
         var array = new Arroz(1,2,3,4,5,6,7);
 
         var result1 = array.every(function(element){
@@ -16,7 +16,7 @@ describe('arroz.prototype.every', function () {
        
     
     });
-    it('should show the value of the last position of one array as a variable', function(){
+    it('should return true or false if all elements pass or not a condition ', function(){
         var array = new Arroz('hola','hola','hola','hola');
 
         var result1 = array.every(function(element){
@@ -25,7 +25,22 @@ describe('arroz.prototype.every', function () {
         var result2 = array.every(function(element){
             return typeof element === 'string';
         })
-       expect(result1).toBe(true)
+        expect(result1).toBe(true)
         expect(result2).toBe(true)
-     });
+        
+    });
+    it('should return true with an empty array for any condition', function () {         
+        var array2 = new Arroz()
+        var result3 = array2.every(function(element){
+            return typeof element === 'string';
+        })
+        
+        var result4 = array2.every(function(element){
+            return typeof element === 'number';
+        })
+             
+        expect(result3).toBe(true);
+        expect(result4).toBe(true);
+
+        });
 });

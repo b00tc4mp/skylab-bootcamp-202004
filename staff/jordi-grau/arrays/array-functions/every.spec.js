@@ -18,7 +18,7 @@ describe('every', function () {
        
     
     });
-    it('should show the value of the last position of one array as a variable', function(){
+    it('should return true or false if all elements pass the condition', function(){
         var array = ['hola','hola','hola','hola'];
 
         var result1 = every(array,function(element){
