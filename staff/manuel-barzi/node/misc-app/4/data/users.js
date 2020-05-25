@@ -1,8 +1,8 @@
-require('../utils/string')
+require('../utils/polyfills/string')
 const fs = require('fs')
-require('../utils/function')
+require('../utils/polyfills/function')
 const path = require('path')
-require('../utils/json')
+require('../utils/polyfills/json')
 
 function find(filter, callback) { // filter => { name: 'pepito', surname: 'grillo' }
     if (typeof filter !== 'object') throw new TypeError(`${filter} is not an object`)
