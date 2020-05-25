@@ -6,7 +6,7 @@ const { expect } = require('chai')
 require('../utils/polyfills/json')
 const { Files: { deleteFilesByExtensionFromDirectory }, uid } = require('../utils')
 
-describe.only('logic - addContact', () => {
+describe('logic - add contact', () => {
     const data = path.join(__dirname, '..', 'data')
 
     let name, surname, email, password, userId
@@ -41,12 +41,12 @@ describe.only('logic - addContact', () => {
 
             expect(id).to.be.a('string')
 
-            fs.readFile(path.join(data, 'contacts', `${id}.json`), 'utf8', (error, content) => {
+            fs.readFile(path.join(data, 'contacts', `${id}.json`), 'utf8', (error, json) => {
                 expect(error).to.be.null
 
-                expect(content).to.exist
+                expect(json).to.exist
 
-                const contact = JSON.parse(content)
+                const contact = JSON.parse(json)
 
                 expect(contact.name).to.equal(name)
                 expect(contact.surname).to.equal(surname)

@@ -1,9 +1,8 @@
 const fs = require('fs')
 const path = require('path')
-require('../utils/string')
-const Email = require('../utils/email')
-const uid = require('../utils/uid')
-require('../utils/json')
+require('../utils/polyfills/string')
+const { Email, uid } = require('../utils')
+require('../utils/polyfills/json')
 
 module.exports = (userId, contact, callback) => {
     // TODO validate userId (string, not empty) and callback (function)
@@ -44,7 +43,7 @@ module.exports = (userId, contact, callback) => {
     contact.id = id
 
     const file = `${id}.json`
-    
+
     fs.writeFile(path.join(__dirname, '..', 'data', 'contacts', file), JSON.prettify(contact), error => {
         if (error) return callback(error)
 
