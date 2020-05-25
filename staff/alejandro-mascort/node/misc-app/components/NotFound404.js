@@ -1,3 +1,3 @@
 module.exports = () => {
-    return '<h2>Cannot found the requested page :(</h2>'
+    return '<h1>Not found :( </h1>'
 }

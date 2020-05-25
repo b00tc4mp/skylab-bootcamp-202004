@@ -1,35 +1,61 @@
 const fs = require('fs')
 const path = require('path')
+const {find} = require('../data/findData');
+require('../utils/string')
+require('../utils/function')
 
-module.exports = (query, callback) => {
-    fs.readdir(path.join(__dirname,'..','data', 'contacts'), (error, files) => {
+module.exports = (userId,query, callback) => {
+    String.validate.notVoid(userId)
+    String.validate.notVoid(query)
+    Function.validate(callback)
+
+    find({id:userId}, 'users', (error, [user]) => {
         if (error) return callback(error)
 
-        let wasError = false
-        const contacts = []
+        if (!user) return callback(new Error(`user with ${userId} does not exist`))
 
-        files.forEach(file => {
-            fs.readFile(path.join(__dirname,'..','data', 'contacts',file), (error, json) => {
-                if (error) {
+        fs.readdir(path.join(__dirname, '..', 'data', 'contacts'), (error, files) => {
+            if (error) return callback(error)
+    
+            let wasError = false
+    
+            const contacts = []
+            if (!files.length) callback(null, contacts)
+            let count = 0
+    
+            files.forEach(file => {
+                fs.readFile(path.join(__dirname, '..', 'data', 'contacts', file), 'utf8', (error, json) => {
+                    if (error) {
+                        if (!wasError) {
+                            callback(error)
+    
+                            wasError = true
+                        }
+    
+                        return
+                    }
+    
                     if (!wasError) {
-                        wasError = true
-                        callback(error)
+                        const contact = JSON.parse(json)
+    
+                        
+                        if (contact.user === userId) {
+    
+                            const values = Object.values(contact)
+                            const matches = values.some(value => value.toLowerCase().includes(query.toLowerCase()))
+    
+                            if (matches) {
+                                contact.id = file.substring(0, file.indexOf('.json'))
+            
+                                contacts.push(contact)
+                            }
+    
+                            
+                        }
+    
+                        if (++count === files.length) callback(null, contacts)
                     }
-                    return 
-                }
-
-                if (!wasError){
-                    const contact = JSON.parse(json)
-                    contacts.push(contact)
-                
-                    if (contacts.length === files.length) {
-                        let contactsFound = contacts.filter(contact => {
-                            return contact.name.toLowerCase().includes(query) || contact.surname.toLowerCase().includes(query)
-                        })
-
-                        callback(null, contactsFound)
-                    }
-                }
+                })
             })
         })
     })

@@ -1,8 +1,9 @@
-module.exports = query => {
-    return `<section class="search-contacts">
-    <form action="/search" method="GET">
-        <input name="q" placeholder="contact" ${query ? `value="${query}"` : ''}>
-        <button>Search</button>
+module.exports = (query, results) => {
+    return `<section class="search">
+    <form action="/search-contacts" method="GET">
+        <input name="q" placeholder="Search" ${query ? `value="${query}"` : ''}>
+        <button>🔍</button>
     </form>
+    <div>${results?results:''}</div>
 </section>`
 }

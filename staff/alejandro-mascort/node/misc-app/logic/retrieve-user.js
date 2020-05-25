@@ -1,12 +1,12 @@
 require('../utils/string')
 require('../utils/function')
-const { find } = require('../data/users')
+const { find } = require('../data/findData')
 
 module.exports = (userId, callback) => {
     String.validate.notVoid(userId)
     Function.validate(callback)
 
-    find({ id: userId }, (error, [user]) => {
+    find({ id: userId }, 'users',(error, [user]) => {
         if (error) return callback(error)
 
         if (!user) return callback(new Error(`user with id ${userId} does not exist`))

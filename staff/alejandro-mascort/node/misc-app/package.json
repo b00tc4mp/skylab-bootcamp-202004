@@ -1,13 +1,13 @@
 {
   "name": "misc-app",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node .",
     "watch": "npx nodemon .",
     "test": "npx mocha logic/*.spec.js",
-    "debug": "node debug ."
+    "test:debug": "npx mocha debug logic/*.spec.js",
+    "style": "sass style.sass public/style.css"
   },
   "keywords": [],
   "author": "",
@@ -19,5 +19,6 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^7.1.2"
-  }
+  },
+  "description": ""
 }

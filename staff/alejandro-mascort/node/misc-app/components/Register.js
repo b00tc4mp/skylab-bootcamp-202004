@@ -1,4 +1,4 @@
-module.exports = () => {
+module.exports = (feedback) => {
     return `<section class="register">
     <h1>Register</h1>
     <form action='/register' method="POST" >
@@ -9,6 +9,7 @@ module.exports = () => {
         <button>Submit</button>
         or <a href="/login">Login</a>
     </form>
+    ${feedback ? feedback : ''}
 </section>`
 
 }

@@ -1,16 +1,20 @@
-const addContact = require('../logic/add-contact')
+module.exports = feedback => {
+    return `<section class = "add-contact">
+    <a href='/home'>Home</a>
 
-module.exports = ()  => {
+    <h2>Add contact</h2>
+        <form action="/add-contact" method="POST">
+            <input type="text" name="name" placeholder='Name'>
+            <input type="text" name="surname" placeholder='Surname'>
+            <input type="email" name="email" placeholder='E-mail'>
+            <input type="text" name="phone" placeholder='Phone'>
+            <input type="text" name="birthdate" placeholder="dd/mm/yyyy">
+            <input type="text" name="country" placeholder="country">
+            <button>Add</button>
+        </form>
 
-    return `<section class="add-contact">
-    <form action="/add-contact" method="POST">
-        <input name="name" placeholder="name">
-        <input name="surname" placeholder="surname">
-        <input name="email" placeholder="email">
-        <input name="phone" placeholder="phone">
-        <input name="birthdate" placeholder="birthdate">
-        <input name="country" placeholder="country">
-        <button>Save</button>
-    </form>
-</section>`
+        ${feedback ? feedback:''}
+    
+    </section>
+    `
 }

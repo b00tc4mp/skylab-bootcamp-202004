@@ -1,32 +1,35 @@
-const fs = require('fs');
-const path = require('path');
-require("../utils/string");
+const fs = require('fs')
+const path = require('path')
+require('../utils/string')
+const uid = require('../utils/uid')
+require('../utils/json')
+const {find} = require('../data/findData')
 
-function addStickie(stickie, callback) {
-  if (typeof stickie !== "object")
-    throw new TypeError(`${stickie} is not an object`);
+module.exports = (userId, stickie, callback) => {
+    if (typeof stickie !== 'object') throw new TypeError(`${stickie} is not an object`)
 
-  const { usrname, comment} = stickie;
+    const { tag, message } = stickie
 
-  if (usrname) String.validate.notVoid(usrname);
+    String.validate.notVoid(userId)
+    String.validate.notVoid(tag)
+    String.validate.notVoid(message)
 
+    find({id:userId}, 'users', (error, [user]) => {
+        if (error) return callback(error)
 
-  if (comment) String.validate.notVoid(comment);
+        if (!user) return callback(new Error(`user with ${userId} does not exist`))
+    
+        stickie.user = userId
+        stickie.stickieId = uid()
 
- 
-
-  const id = `${Date.now()}`;
-
-  const file = `${id}.json`;
-
-  fs.writeFile(
-    path.join(__dirname, "..", "data",'stickies', file),
-    JSON.stringify(stickie, null, 4),
-    (error) => {
-      if (error) return callback(error);
-      console.log(path.join(__dirname, "..", "data",'stickies', file))
-      callback(null, id);
-    }
-  );
+        const file = `${stickie.stickieId }.json`
+    debugger
+        fs.writeFile(path.join(__dirname, '..', 'data', 'stickies', file), JSON.prettify(stickie), error => {
+            if (error) return callback(error)
+    
+            callback(null, stickie.stickieId)
+        })
+    
+    })
 }
-module.exports = addStickie
+           

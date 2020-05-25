@@ -1,3 +1,4 @@
+const uid = require('../utils/uid')
 const addContact = require('./add-contact')
 
 const contact = {
@@ -9,4 +10,4 @@ const contact = {
     country: 'Spain'
 }
 
-addContact(contact, console.log)
+addContact(uid(), contact, console.log)
