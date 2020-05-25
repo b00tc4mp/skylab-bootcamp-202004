@@ -9,11 +9,13 @@ const Home = require('./components/Home')
 const retrieveUser = require('./logic/retrieve-user')
 const AddContact = require('./components/AddContact')
 const addContact = require('./logic/add-contact')
+const parseCookies = require('./utils/parse-cookies')
 
 const app = express()
 
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
+app.use(parseCookies)
 
 app.get('/landing', (req, res) => res.send(App(Landing())))
 app.get('/register', (req, res) => res.send(App(Register())))
