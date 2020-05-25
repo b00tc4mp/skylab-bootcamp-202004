@@ -1,3 +1,5 @@
-module.exports = (message, level) => {
-    return `<p className={feedback feedback--${level}}>${message}</p>`
-}
+module.exports = (message, level = 'success')=>{
+    return `<section class = 'feedback--${level}'>
+    ${message}
+</section>`
+} 

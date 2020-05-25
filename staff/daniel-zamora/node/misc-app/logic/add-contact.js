@@ -2,43 +2,36 @@ const fs = require('fs')
 const path = require('path')
 require('../utils/string')
 const Email = require('../utils/email')
+require('../utils/json')
+require('../utils/function')
+const uid = require('../utils/uid')
 
-function addContact (contact, callback){
 
-    const {name, surname, email, phone, birthdate, country} = contact
+module.exports = (contact, callback) => {
+    if (typeof contact !== 'object') throw new TypeError(`${contact} is not an object`)
+    Function.validate(callback)
+    // TODO make it so that at least should have the following fields: (name || suranme) && (email || phone)
+
+    const { name, surname, email, id} = contact
 
     if (name)
-    String.validate.notVoid(name)
+        String.validate.notVoid(name)
 
-if (surname)
-    String.validate.notVoid(surname)
+    if (surname)
+        String.validate.notVoid(surname)
 
-if (email) {
-    String.validate.notVoid(email)
-    Email.validate(email)
-}
+    if (email) {
+        String.validate.notVoid(email)
+        Email.validate(email)
+    }
 
-if (phone)
-    String.validate.notVoid(phone)
+    String.validate.notVoid(id)
 
-if (birthdate) {
-    String.validate.notVoid(birthdate)
-    //Date.validate(birthdate) // TODO create this polyfill
-}
+    const file = `contact-${uid()}.json`
 
-if (country)
-    String.validate.notVoid(country)
-
-    const id = `${Date.now}`
-
-    const file = `${id}.json`
-
-    fs.writeFile(path.join(__dirname, '..', 'data','contacts', file), JSON.stringify(contact, null, 4), error => {
-        if(error) return callback(error)
+    fs.writeFile(path.join(__dirname, '..', 'data', 'contacts', file), JSON.prettify(contact), error => {
+        if (error) return callback(error)
 
         callback(null, id)
     })
-    
 }
-
-module.exports = addContact

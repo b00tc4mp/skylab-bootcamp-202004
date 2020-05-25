@@ -7,8 +7,9 @@ module.exports = body => {
     <link rel="stylesheet" href="style.css"> 
     </head>
     <body>
-        ${body}
+    ${body}
     </body>
-</html>
-`
+    </html>
+    `
 }
+        // <link href="images/skylab-icon.png" type="image/png" rel="Shortcut Icon">

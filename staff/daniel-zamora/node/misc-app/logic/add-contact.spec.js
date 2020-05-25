@@ -4,192 +4,100 @@ const fs = require('fs')
 const path = require('path')
 const uid = require('../utils/uid')
 const { expect } = require('chai')
-require('../utils/json')
 
-describe.only('logic - addContact', () => { debugger
-    const data = path.join(__dirname, '..', 'data')
 
-    let name, surname, email, password, userId
 
-    beforeEach(done => {
-        fs.readdir(path.join(data, 'users'), (error, files) => {
-            if (error) return done(error)
-
-            files = files.filter(file => path.extname(file) === '.json')
-
-            debugger
-
-            if (!files.length) {
-                fs.readdir(path.join(data, 'contacts'), (error, files) => {
-                    if (error) return done(error)
-
-                    files = files.filter(file => path.extname(file) === '.json')
-
-                    if (!files.length) {
-                        name = `name-${random()}`
-                        surname = `surname-${random()}`
-                        email = `e-${random()}@mail.com`
-                        password = `password-${random()}`
-                        userId = uid()
-
-                        const user = { name, surname, email, password }
-
-                        fs.writeFile(path.join(data, 'users', `${userId}.json`), JSON.prettify(user), error => {
-                            if (error) return done(error)
-
-                            done()
-                        })
-
-                        return
-                    }
-
-                    let deleted = 0
-
-                    files.forEach(file => fs.unlink(path.join(data, 'contacts', file), error => {
-                        if (error) return done(error)
-
-                        deleted++
-
-                        if (deleted === files.length) {
-                            name = `name-${random()}`
-                            surname = `surname-${random()}`
-                            email = `e-${random()}@mail.com`
-                            password = `password-${random()}`
-                            userId = uid()
-
-                            const user = { name, surname, email, password }
-
-                            fs.writeFile(path.join(data, 'users', `${userId}.json`), JSON.prettify(user), error => {
-                                if (error) return done(error)
-
-                                done()
-                            })
-                        }
-                    }))
-                })
-
-                return
-            }
-
-            let deleted = 0
-
-            files.forEach(file => fs.unlink(path.join(data, 'users', file), error => {
-                if (error) return done(error)
-
-                deleted++
-
-                if (deleted === files.length) {
-                    fs.readdir(path.join(data, 'contacts'), (error, files) => {
-                        if (error) return done(error)
-
-                        files = files.filter(file => path.extname(file) === '.json')
-
-                        let deleted = 0
-
-                        files.forEach(file => fs.unlink(path.join(data, 'contacts', file), error => {
-                            if (error) return done(error)
-
-                            deleted++
-
-                            if (deleted === files.length) {
-                                name = `name-${random()}`
-                                surname = `surname-${random()}`
-                                email = `e-${random()}@mail.com`
-                                password = `password-${random()}`
-                                userId = uid()
-
-                                const user = { name, surname, email, password }
-
-                                fs.writeFile(path.join(data, 'users', `${userId}.json`), JSON.prettify(user), error => {
-                                    if (error) return done(error)
-
-                                    done()
-                                })
-                            }
-                        }))
-                    })
-                }
-            }))
-        })
+describe('addContact', () => {
+    let name, surname, email, id
+    
+    beforeEach(() => {
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `e-${random()}@mail.com`
+        id = uid()
     })
 
     it('should succeed on valid data', done => {
-        addContact(userId, { name, surname, email }, (error, id) => {
+        addContact({ name, surname, email, id }, (error, id) => {
             expect(error).to.be.null
-
+    
             expect(id).to.be.a('string')
+            
+            fs.readFile(path.join(__dirname, '..', 'data', 'contacts', `${id}.json`), 'utf8', (error, content) => {
 
-            fs.readFile(path.join(data, 'contacts', `${id}.json`), 'utf8', (error, content) => {
                 expect(error).to.be.null
-
+    
                 expect(content).to.exist
-
+    
                 const contact = JSON.parse(content)
-
+    
                 expect(contact.name).to.equal(name)
                 expect(contact.surname).to.equal(surname)
                 expect(contact.email).to.equal(email)
-
                 done()
             })
         })
     })
 
-    afterEach(done => {
-        fs.readdir(path.join(data, 'users'), (error, files) => {
-            if (error) return done(error)
+    it('should fail when inputs do not meet the criteria', () => {
+        expect(function(){
+            addContact({ name: 1, surname, email, id }, (error, id) => { 
+                if(error) throw error
+               
+            })
+        }).to.throw(TypeError)
 
-            files = files.filter(file => path.extname(file) === '.json')
+        expect(function(){
+            addContact({ name, surname: 1, email, id }, (error, id) => { 
+                if(error) throw error
+               
+            })
+        }).to.throw(TypeError)
 
-            if (!files.length) {
-                fs.readdir(path.join(data, 'contacts'), (error, files) => {
-                    if (error) return done(error)
+        expect(function(){
+            addContact({ name, surname, email: 1, id }, (error, id) => { 
+                if(error) throw error
+               
+            })
+        }).to.throw(TypeError)
 
-                    files = files.filter(file => path.extname(file) === '.json')
+        expect(function(){
+            addContact({ name, surname, email, id: 1 }, (error, id) => { 
+                if(error) throw error
+               
+            })
+        }).to.throw(TypeError)
 
-                    let deleted = 0
+        expect(function(){
+            addContact({ name, surname, email, id}, 1)
+        }).to.throw(TypeError)
 
-                    files.forEach(file => fs.unlink(path.join(data, 'contacts', file), error => {
-                        if (error) return done(error)
+        expect(function(){
+            addContact(1, (error, id) => { 
+                if(error) throw error
+               
+            })
+        }).to.throw(TypeError)
+    })
 
-                        deleted++
-
-                        if (deleted === files.length) {
-                            done()
-                        }
-                    }))
-                })
-
-                return
-            }
-
-            let deleted = 0
-
-            files.forEach(file => fs.unlink(path.join(data, 'users', file), error => {
-                if (error) return done(error)
-
-                deleted++
-
-                if (deleted === files.length) {
-                    fs.readdir(path.join(data, 'contacts'), (error, files) => {
-                        if (error) return done(error)
-
-                        files = files.filter(file => path.extname(file) === '.json')
-
-                        let deleted = 0
-
-                        files.forEach(file => fs.unlink(path.join(data, 'contacts', file), error => {
-                            if (error) return done(error)
-
-                            deleted++
-
-                            if (deleted === files.length) {
-                                done()
-                            }
-                        }))
+    afterEach(()=>{
+        fs.readdir(path.join(__dirname, '..', 'data', 'contacts'), (error, files) => {
+            if (error) throw error
+    
+            files.forEach(file => {
+                if (file === `${id}.json`){
+                    fs.unlink(path.join(__dirname, '..', 'data', 'contacts', file),error=>{
+                        if (error) throw error
+                        
                     })
                 }
-            }))
+            })
         })
     })
 })
+
+
+
+
+
+

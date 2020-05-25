@@ -1,24 +1,24 @@
 const fs = require('fs')
 const path = require('path')
 require('../utils/string')
-const Email = require('../utils/email')
-const uid = require('../utils/uid')
 require('../utils/json')
+require('../utils/function')
+const uid = require('../utils/uid')
 
-module.exports = (stiky, callback) => {
-    if (typeof contact !== 'object') throw new TypeError(`${contact} is not an object`)
+module.exports = (sticky, callback) => {
+    if (typeof sticky !== 'object') throw new TypeError(`${sticky} is not an object`)
+    Function.validate(callback)
 
-    for (key in stiky) {
-        String.validate.notVoid(key)
-       }
+    const {tag, comment, id } = sticky
+    String.validate.notVoid(tag)
+    String.validate.notVoid(comment)
+    String.validate.notVoid(id)
 
-    const id = uid()
+    const file = `sticky-${uid()}.json`
 
-    const file = `${id}.json`
-
-    fs.writeFile(path.join(__dirname, '..', 'data', 'stickies', file), JSON.prettify(stiky), error => {
+    fs.writeFile(path.join(__dirname, '..', 'data', 'stickies', file), JSON.prettify(sticky), error => {
         if (error) return callback(error)
 
         callback(null, id)
     })
-}
+} 

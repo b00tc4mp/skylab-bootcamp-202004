@@ -1,47 +1,50 @@
-const path = require('path')
-const Email = require('../utils/email')
 const fs = require('fs')
-require ('../utils/string')
+const path = require('path')
+require('../utils/string')
+const Email = require('../utils/email')
+require('../utils/function')
 
-module.exports = (userEmail, userPassword, callback) => {
-    
-    if(userEmail) {
-        String.validate.notVoid(userEmail)
-        Email.validate(userEmail)
-    }
+module.exports = (credentials, callback) => {
+    if (typeof credentials !== 'object') throw new TypeError(`${credentials} is not an object`)
 
-    if(userPassword){
-        String.validate.notVoid(userPassword)
-    }
+    const {email, password} = credentials
+    String.validate.notVoid(email)
+    Email.validate(email)
+    String.validate.lengthGreaterEqualThan(password, 8)
+    Function.validate(callback)
 
-    fs.readdir(path.join(__dirname, '..', 'data', 'users'), (error, files) =>{
-        if(error) return callback(error)
+    fs.readdir(path.join(__dirname, '..', 'data', 'users'), (error, files) => {
+        if (error) return callback(error)
 
-        let isAuthenticated = false
+        let wasError = false
+        let wasMatch = false
         let count = 0
+
         files.forEach(file => {
-            fs.readFile(path.join(__dirname, '..','data','users', file), 'utf8', (error, json) =>{ debugger
-                if(error) return callback(error)
-                   
-                if(!isAuthenticated){
-                    
-                    count++
+
+            if (!files.length) callback(null, false)
+
+            fs.readFile(path.join(__dirname, '..', 'data', 'users', file), 'utf8', (error, json) => {
+                if (error) {
+                    if (!wasError) {
+                        callback(error)
+
+                        wasError = true
+                    }
+                    return
+                }
+
+                if (!wasError && !wasMatch) {
                     const user = JSON.parse(json)
 
-                    const { email, password, id, name } = user
-     
-                    if (userEmail === email && userPassword === password){
-
-                        isAuthenticated = true                        
+                    if (user.email === email && user.password === password) {
                         
-                        return callback(null, {name, id})
-
-                    } 
-                } if(count === files.length && !isAuthenticated)
-                    return callback('Wrong credentials')
+                        wasMatch = true
+                        callback(null, {username: user.username, email: user.email, id: user.id})
+                    }
+                    else if (++count === files.length) callback(null, false)
+                }
             })
         })
-        
     })
-
-}
+} 
