@@ -17,7 +17,6 @@ const ListUsers = require('./components/ListUsers')
 const ContactDetails = require('./components/ContactDetails')
 const NotFound404 = require('./components/NotFound404')
 
-
 //Methods
 const addContact = require('./logic/add-contact')
 const registerUser = require('./logic/register-user')
@@ -57,12 +56,15 @@ app.post('/register',(req, res)=>{
             const split = element.split('=')
             obj[split[0]] = split[1]
         })
-
-        registerUser(obj, (error,id)=>{
-            if(error) return res.send(App(Feedback("Fail:(",'error')))
-            const {username} = obj
-            res.send(App(Feedback(`User ${username} created!`)))
-        })
+        try{
+            registerUser(obj, (error,id)=>{
+                if(error) return res.send(App(Feedback("Fail:(",'error')))
+                const {username} = obj
+                res.send(App(Feedback(`User ${username} created!`)))
+            })
+        }catch(error){
+            if(error) return res.send(App(Feedback("Fail:(",'error')))  
+        }
     })                
 })
 
@@ -81,14 +83,18 @@ app.post('/login',(req, res)=>{
             obj[split[0]] = split[1]
         })
 
-        authenticateUser(obj, (error,user)=>{
-            if(error) return res.send(App(Feedback("Fail:(",'error')))
-            if (!user) return res.send(App(Feedback("Wrong e-mail or password",'warning')))
-           
-            const {username, id} = user
-            res.cookie(`${username}`, id)
-            res.redirect('/home') 
-        })
+        try{
+            authenticateUser(obj, (error,user)=>{
+                if(error) return res.send(App(Feedback("Fail:(",'error')))
+                if (!user) return res.send(App(Feedback("Wrong e-mail or password",'warning')))
+               
+                const {username, id} = user
+                res.cookie(`${username}`, id)
+                res.redirect('/home') 
+            })
+        }catch(error){
+            if(error) return res.send(App(Feedback("Fail:(",'error')))  
+        }
     })                
 })
 
@@ -103,10 +109,14 @@ app.get('/users', (req, res) => {
         const [, query] = queryString.split('=')
         const [,id] = cookie.split('=')
         const string = "users"
-        search(id, query, string, (error, users) => {
-            if (error) return res.send(App(`${Search(string)}${ListUsers(users)}${Feedback(error.message, 'error')}`))
-            res.send(App(`${Search(string, query)}${ListUsers(users)}`))
-        })
+        try{
+            search(id, query, string, (error, users) => {
+                if (error) return res.send(App(`${Search(string)}${ListUsers(users)}${Feedback(error.message, 'error')}`))
+                res.send(App(`${Search(string, query)}${ListUsers(users)}`))
+            })
+        }catch(error){
+            if(error) return res.send(App(Feedback("Fail:(",'error')))  
+        }
     }
     else{
         const string = "users"
@@ -135,15 +145,18 @@ app.post("/contact-delete", (req, res) => {
         const string = 'contacts'
         let [, contact] = decodeURIComponent(data.toString()).split('=')
         contact = JSON.parse(contact.split('/')[0])
-        deleteFile(contact.uniqueid, string, deleteerror => {
-            const [,id] = cookie.split('=')
-            listContacts(id, (error, contacts)=>{
-                if (deleteerror)  return res.send(App(`${Search()}${Feedback(deleteerror.message, 'error')}`))
-                if (error) return res.send(App(`${Search(string)}${Feedback(error.message, 'error')}`))
-                res.send(App(`${Search(string)}${ListContacts(contacts)}${Feedback('Contact deleted')}`))
+        try{
+            deleteFile(contact.uniqueid, string, deleteerror => {
+                const [,id] = cookie.split('=')
+                listContacts(id, (error, contacts)=>{
+                    if (deleteerror)  return res.send(App(`${Search()}${Feedback(deleteerror.message, 'error')}`))
+                    if (error) return res.send(App(`${Search(string)}${Feedback(error.message, 'error')}`))
+                    res.send(App(`${Search(string)}${ListContacts(contacts)}${Feedback('Contact deleted')}`))
+                })
             })
-        })
-        
+        }catch(error){
+            if(error) return res.send(App(Feedback("Fail:(",'error')))  
+        }       
     })
 })
 
@@ -158,19 +171,30 @@ app.get('/contacts', (req, res) => {
         const [, query] = queryString.split('=')
         const [,id] = cookie.split('=')
         const string = "contacts"
-        search(id, query, string,(error, contacts) => {
-            if (error) return res.send(App(`${Search(string)}${ListContacts(contacts)}${Feedback(error.message, 'error')}`))
 
-            res.send(App(`${Search(string, query)}${ListContacts(contacts)}`))
-        })
+        try{
+            search(id, query, string,(error, contacts) => {
+                if (error) return res.send(App(`${Search(string)}${ListContacts(contacts)}${Feedback(error.message, 'error')}`))
+    
+                res.send(App(`${Search(string, query)}${ListContacts(contacts)}`))
+            })
+        }catch(error){
+            if(error) return res.send(App(Feedback("Fail:(",'error')))  
+        } 
+        
     }
     else{
         const [,id] = cookie.split('=')
         const string = "contacts"
-        listContacts(id, (error, contacts)=>{
-            if (error) return res.send(App(`${Search(string)}${ListContacts()}${Feedback(error.message, 'error')}`))
-            res.send(App(`${Search(string)}${ListContacts(contacts)}`))
-        })
+
+        try{
+            listContacts(id, (error, contacts)=>{
+                if (error) return res.send(App(`${Search(string)}${ListContacts()}${Feedback(error.message, 'error')}`))
+                res.send(App(`${Search(string)}${ListContacts(contacts)}`))
+            })
+        }catch(error){
+            if(error) return res.send(App(Feedback("Fail:(",'error')))  
+        } 
     }       
 })
 
@@ -196,13 +220,16 @@ app.post('/add-contact',(req, res)=>{
         })
         const [,id] = cookie.split('=')
         contact.id = id
-        
-        addContact(contact, (error,id)=>{
-            if(error)return res.send(App(`${AddContact()}${Feedback("Fail:(",'error')}`))
-            
-            const {name} = contact
-            res.send(App(`${AddContact()}${Feedback(`Contact ${name} created!`)}`))
-        })
+        try{
+            addContact(contact, (error,id)=>{
+                if(error)return res.send(App(`${AddContact()}${Feedback("Fail:(",'error')}`))
+                
+                const {name} = contact
+                res.send(App(`${AddContact()}${Feedback(`Contact ${name} created!`)}`))
+            })  
+        }catch(error){
+            if(error) return res.send(App(Feedback("Fail:(",'error')))  
+        } 
     })                
 })
 
@@ -217,19 +244,27 @@ app.get('/stickies', (req, res) => {
         const [, query] = queryString.split('=')
         const [,id] = cookie.split('=')
         const string = "stickies"
-        search(id, query, string,(error, stickies) => {
-            if (error) return res.send(App(`${Search(string)}${Feedback(error.message, 'error')}`))
-
-            res.send(App(`${Search(string, query)}${ListStickies(stickies)}`))
-        })
+        try{
+            search(id, query, string,(error, stickies) => {
+                if (error) return res.send(App(`${Search(string)}${Feedback(error.message, 'error')}`))
+    
+                res.send(App(`${Search(string, query)}${ListStickies(stickies)}`))
+            })
+        }catch(error){
+            if(error) return res.send(App(Feedback("Fail:(",'error')))  
+        } 
     }
     else{
         const [,id] = cookie.split('=')
-        listStickies(id, (error, stickies)=>{
-            const string = "stickies"
-            if (error) return res.send(App(`${Search(string)}${Feedback(error.message, 'error')}`))
-            res.send(App(`${Search(string)}${ListStickies(stickies)}`))
-        })
+        try{
+            listStickies(id, (error, stickies)=>{
+                const string = "stickies"
+                if (error) return res.send(App(`${Search(string)}${Feedback(error.message, 'error')}`))
+                res.send(App(`${Search(string)}${ListStickies(stickies)}`))
+            })
+        }catch(error){
+            if(error) return res.send(App(Feedback("Fail:(",'error')))  
+        } 
     }       
 })
 
@@ -258,14 +293,17 @@ app.post('/add-sticky',(req, res)=>{
         
         const [,id] = cookie.split('=')
         sticky.id = id
-
-        addSticky(sticky, (error)=>{
-            if(error){ return res.send(App(Feedback("Fail:(",'error')))
-            }else{
-                const {tag} = sticky
-                res.send(App(`${AddSticky()}${Feedback(`Sticky "${tag}" created!`)}`))
-            }
-        })
+        try{
+            addSticky(sticky, (error)=>{
+                if(error){ return res.send(App(Feedback("Fail:(",'error')))
+                }else{
+                    const {tag} = sticky
+                    res.send(App(`${AddSticky()}${Feedback(`Sticky "${tag}" created!`)}`))
+                }
+            })
+        }catch(error){
+            if(error) return res.send(App(Feedback("Fail:(",'error')))  
+        } 
     })
 })
 
@@ -274,7 +312,6 @@ app.post('/logout', (req, res) => {
 
     res.redirect('/login')
 })
-
 app.get('\*', (req,res)=>{
     res.status(404).send(App(NotFound404()));
 })
