@@ -20,6 +20,8 @@ module.exports = (userId,query, callback) => {
             let wasError = false
     
             const stickies = []
+
+            files = files.filter(file => path.extname(file) === '.json')
             
             if (!files.length) callback(null, stickies)
         

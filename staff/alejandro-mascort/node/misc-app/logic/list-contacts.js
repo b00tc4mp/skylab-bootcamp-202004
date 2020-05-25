@@ -22,6 +22,8 @@ module.exports = (userId, callback) => {
             let count = 0;
             const contacts = []
 
+            files = files.filter(file => path.extname(file) === '.json')
+
             if (!files.length) callback(null, contacts)
     
             files.forEach(file => {

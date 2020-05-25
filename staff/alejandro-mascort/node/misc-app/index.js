@@ -25,7 +25,8 @@ const listStickies = require('./logic/list-stickies')
 const removeStickies = require('./logic/remove-stickie')
 const searchStickies = require('./logic/search-stickies')
 require('./utils/string');
-
+//MIDDLEWARES
+const {parseBody, parseBodyAndCookies, parseCookies} = require('./utils/middlewares')
 const app = express()
 
 app.use(express.static('public'))
@@ -35,14 +36,10 @@ app.get('/landing', (req, res) => res.send(App(Landing())))
 //////////
 //REGISTER
 //////////
-app.get('/register', (req, res) => {
-    const cookie = req.header('cookie')
+app.get('/register', parseCookies, (req, res) => {
+    const { cookies: { userId } } = req
 
-    if (cookie) {
-        const [, userId] = cookie.split('=')
-
-        if (userId) return res.redirect('/home')
-    }
+    if (userId) return res.redirect('/home')
     
     res.send(App(Register()))
 })

@@ -20,6 +20,9 @@ module.exports = (userId,query, callback) => {
             let wasError = false
     
             const contacts = []
+
+            files = files.filter(file => path.extname(file) === '.json')
+            
             if (!files.length) callback(null, contacts)
             let count = 0
     
