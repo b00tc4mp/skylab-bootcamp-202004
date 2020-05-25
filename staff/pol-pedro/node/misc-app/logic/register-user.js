@@ -2,7 +2,7 @@ const fs= require("fs")
 const path=require("path")
 const Email = require('../utils/email')
 const uid = require('../utils/uid')
-require('../utils/json')
+require('../utils/polyfills/json')
 const { find } = require('../data/users')
 //TODO que no registre usuario si ya existe
 module.exports=(user,callback)=>{

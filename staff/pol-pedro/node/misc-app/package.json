@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node .",
     "watch": "npx nodemon .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx mocha logic/*.spec.js",
+    "test:debug": "npx mocha debug logic/*.spec.js",
+    "debug": "node --inspect=7000 ."
   },
   "keywords": [],
   "author": "",
@@ -17,6 +19,6 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "moca": "^0.4.3"
+    "mocha": "git+https://github.com/mochajs/mocha.git"
   }
 }

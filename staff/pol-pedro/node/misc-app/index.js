@@ -5,23 +5,32 @@ const fs= require("fs")
 const path = require("path")
 
 
-const App=require("./components/App")
-const ListContacts=require("./components/ListContacts")
-const listContacts=require("./logic/list-contacts")
-const SearchContacts=require("./components/SearchContacts")
-const searchContacts=require("./logic/search-contacts")
-const AddContact=require("./components/AddContact")
-const addContact=require("./logic/add-contact")
-const RegisterUser=require("./components/Register")
-const registerUser=require("./logic/register-user.js")
+const App = require("./components/App")
+const ListContacts = require("./components/ListContacts")
+const listContacts = require("./logic/list-contacts")
+const SearchContacts = require("./components/SearchContacts")
+const searchContacts = require("./logic/search-contacts")
+const AddContact = require("./components/AddContact")
+const addContact = require("./logic/add-contact")
+const RegisterUser = require("./components/Register")
+const registerUser = require("./logic/register-user")
 const Login=require("./components/Login")
+const login = require('./logic/login-user')
+const Landing = require("./components/Landing")
+const Home = require("./components/Home")
 
 app.use(express.static("public"))
 app.use(bodyParser.urlencoded({extended: false}))
 
-app.get("/hello-world",(req,res)=>{
-    res.send(App("<h1>Hola mundo</h1>"))
+app.get('/', (req,res) => {
+    res.send(App(Landing()))
 })
+
+app.get('/home', (req,res) => {
+
+    res.send(App(Home()))
+})
+
 app.get("/list-contacts",(req,res)=>{
     listContacts((error,contacts)=>{
         if(error){
@@ -68,7 +77,7 @@ app.post("/add-contact",(req,res)=>{
 })
 
 app.get("/register", (req, res) => {
-    res.send(App(RegisterUser()))
+    res.send(App(Landing()+RegisterUser()))
 })
 app.post("/register",(req,res)=>{
     const {body} = req
@@ -86,8 +95,23 @@ app.post("/register",(req,res)=>{
 })
 
 app.get("/login", (req, res) => {
-    res.send(App(Login()))
+    res.send(App(Landing()+Login()))
 })
+
+app.post("/login", (req, res) => {
+    const {body: {email, password}} = req
+    login(email, password, (error, id) =>{
+        if (error) throw (error)
+
+        if(id){
+            res.cookie('userId', id)
+            res.redirect('/home')
+        }
+    })
+})
+
+
+
 app.get("/style.css",(req,res)=>{
     fs.readFile(path.join(__dirname,"style.css"),"utf8",(error,content)=>{
         if(error) throw error
