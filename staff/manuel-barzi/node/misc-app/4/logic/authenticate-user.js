@@ -1,5 +1,5 @@
 require('../utils/string')
-const Email = require('../utils/email')
+const { Email } = require('../utils')
 require('../utils/function')
 const { find } = require('../data/users')
 
