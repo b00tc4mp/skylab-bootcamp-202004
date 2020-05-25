@@ -7,11 +7,6 @@ function authenticateUser(email, password, callback) {
 
     if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
 
-    // const user = users.find(function (user) {
-    //     return user.email === email && user.password === password
-    // })
-
-    // if (!user) throw new Error('wrong credentials')
 
     call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth', `{"username" : "${email}", "password" : "${password}"}`, { 'Content-type': 'application/json' }, (error, status, body) => {
         if (error) return callback(error)

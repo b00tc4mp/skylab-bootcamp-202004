@@ -16,7 +16,6 @@ function dailyNews(callback) {
         const news = []
 
         articles.forEach(result => {
-            // const section = result.querySelector('.e4e4i5l0').innerHTML
 
             const title = result.querySelector('.e4e4i5l1 > a').innerHTML
 
