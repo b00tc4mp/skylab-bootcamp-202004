@@ -2,10 +2,9 @@ const addContact = require('./add-contact')
 const { random } = Math
 const fs = require('fs')
 const path = require('path')
-const uid = require('../utils/uid')
 const { expect } = require('chai')
-require('../utils/json')
-const { deleteFilesByExtensionFromDirectory } = require('../utils/files')
+require('../utils/polyfills/json')
+const { Files: { deleteFilesByExtensionFromDirectory }, uid } = require('../utils')
 
 describe.only('logic - addContact', () => {
     const data = path.join(__dirname, '..', 'data')
