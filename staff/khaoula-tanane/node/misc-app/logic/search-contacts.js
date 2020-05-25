@@ -1,8 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const { find } = require("../data/users");
-require("../utils/string");
-require("../utils/function");
+require("../utils/polyfills/json");
+require("../utils/polyfills/function");
 
 module.exports = (userId, query, callback) => {
   String.validate.notVoid(userId);
@@ -35,7 +35,6 @@ module.exports = (userId, query, callback) => {
 
                   wasError = true;
                 }
-
                 return;
               }
 

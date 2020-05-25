@@ -8,5 +8,8 @@ module.exports = () => {
         <a href="/add-stickies">Add-stikies</a>
         <a href="/stickies">Stickies</a>
     </ul>
+    <form action="/logout" method="POST">
+    <button>LOGOUT</button>
+    </form>
     </section>`
 }

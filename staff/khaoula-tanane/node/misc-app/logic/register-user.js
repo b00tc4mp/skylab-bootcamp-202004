@@ -1,10 +1,10 @@
-require('../utils/string')
+require('../utils/polyfills/string')
 const Email = require('../utils/email')
 const fs = require('fs')
 const uid = require('../utils/uid')
-require('../utils/function')
+require('../utils/polyfills/function')
 const path = require('path')
-require('../utils/json')
+require('../utils/polyfills/json')
 const { find } = require('../data/users')
 
 module.exports = ({name, surname, email, password}, callback) => {
