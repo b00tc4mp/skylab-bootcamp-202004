@@ -8,7 +8,9 @@ const app = express()
 app.use(express.static('public'))
 
 app.get('/', parseCookies, cookieSession, (req, res) => {
-    const { session: { cookiesAccepted } } = req
+    const { session: { cookiesAccepted, userId } } = req
+
+    if (userId) return res.redirect('/home')
 
     res.send(App(Landing(), cookiesAccepted))
 })
@@ -49,7 +51,11 @@ app.post('/login', parseBody, parseCookies, cookieSession, (req, res) => {
 
         session.userId = userId
 
-        res.redirect('/home')
+        session.save(error => {
+            if (error) throw error
+
+            res.redirect('/home')
+        })
     })
 })
 
@@ -70,9 +76,11 @@ app.get('/home', parseCookies, cookieSession, (req, res) => {
 app.post('/logout', parseCookies, cookieSession, (req, res) => {
     const { session } = req
 
-    session.destroy()
+    session.destroy(error => {
+        if (error) throw error
 
-    res.redirect('/login')
+        res.redirect('/login')
+    })
 })
 
 app.post('/accept-cookies', parseCookies, cookieSession, (req, res) => {
@@ -80,7 +88,12 @@ app.post('/accept-cookies', parseCookies, cookieSession, (req, res) => {
 
     session.cookiesAccepted = true
 
-    res.redirect(req.header('referer'))
+    session.save(error => {
+        if (error) throw error // TODO error handling
+
+        res.redirect(req.header('referer'))
+    })
+
 })
 
 app.listen(8080, () => console.log('server running'))

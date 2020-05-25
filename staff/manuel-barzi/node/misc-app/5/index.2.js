@@ -1,11 +1,32 @@
 const express = require('express')
 const { App, Register, Login, Home, Landing } = require('./components')
 const { registerUser, authenticateUser, retrieveUser } = require('./logic')
-const { parseBody, parseCookies, cookieSession } = require('./utils/middlewares')
+const { parseBody, parseCookies } = require('./utils/middlewares')
+const { uid } = require('./utils')
 
 const app = express()
 
 app.use(express.static('public'))
+
+const sessions = {}
+
+function cookieSession(req, res, next) {
+    let { cookies: { sessionId } } = req, session
+
+    if (!sessionId) {
+        sessionId = uid()
+
+        session = sessions[sessionId] = { cookiesAccepted: false }
+
+        res.cookie('sessionId', sessionId)
+    } else {
+        session = sessions[sessionId]
+    }
+
+    req.session = session
+
+    next()
+}
 
 app.get('/', parseCookies, cookieSession, (req, res) => {
     const { session: { cookiesAccepted } } = req
@@ -68,9 +89,11 @@ app.get('/home', parseCookies, cookieSession, (req, res) => {
 })
 
 app.post('/logout', parseCookies, cookieSession, (req, res) => {
-    const { session } = req
+    const { session: { sessionId } } = req
 
-    session.destroy()
+    delete sessions[sessionId]
+
+    res.clearCookie('sessionId')
 
     res.redirect('/login')
 })
