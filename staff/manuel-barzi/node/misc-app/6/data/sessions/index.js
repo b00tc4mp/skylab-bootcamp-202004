@@ -68,8 +68,28 @@ function create(data, callback) {
     })
 }
 
+function update(id, data, callback) {
+    data.id = id
+
+    fs.writeFile(path.join(__dirname, `${id}.json`), JSON.prettify(data), error => {
+        if (error) return callback(error)
+
+        callback(null)
+    })
+}
+
+function remove(id, callback) {
+    fs.unlink(path.join(__dirname, `${id}.json`), error => {
+        if (error) return callback(error)
+
+        callback(null)
+    })
+}
+
 module.exports = {
     find,
     deleteMany,
-    create
+    create,
+    update,
+    remove
 }
