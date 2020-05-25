@@ -1,3 +1,3 @@
-function Spinner() {
-    return <img src="https://media1.giphy.com/media/dTamK3G20B2CI/source.gif" />
+function Spinner(){
+    return <img className='spinner' src='https://i.gifer.com/ZhKG.gif'/>
 }

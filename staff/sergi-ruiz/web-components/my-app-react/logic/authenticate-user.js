@@ -1,30 +1,28 @@
 function authenticateUser(email, password, callback) {
-    Email.validate(email)
+    if (typeof email !== 'string') throw new TypeError(email + ' is not a string')
+    if (!EMAIL_REGEX.test(email)) throw new Error(email + ' is not an email')
 
-    String.validate.notVoid(password)
+    if (typeof password !== 'string') throw new TypeError(password + ' is not a string')
+    if (!password.trim().length) throw new Error('password is empty or blank')
 
-    Function.validate(callback)
+    if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
 
-    call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
-        `{ "username": "${email}", "password": "${password}" }`,
-        { 'Content-type': 'application/json' },
-        (error, status, body) => {
-            // if (error) {
-            //     callback(error)
-            //     return
-            // }
+    // const user = users.find(function (user) {
+    //     return user.email === email && user.password === password
+    // })
 
-            if (error) return callback(error)
+    // if (!user) throw new Error('wrong credentials')
 
-            if (status === 200) {
-                const { token } = JSON.parse(body)
+    call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth', `{"username" : "${email}", "password" : "${password}"}`, { 'Content-type': 'application/json' }, (error, status, body) => {
+        if (error) return callback(error)
 
-                callback(undefined, token)
-            } else {
-                const { error } = JSON.parse(body)
+        if (status === 200) {
+            const { token } = JSON.parse(body)
+            callback(undefined, token)
+        } else {
+            const { error } = JSON.parse(body)
 
-                callback(new Error(error))
-            }
+            callback(new Error(error))
         }
-    )
+    })
 }

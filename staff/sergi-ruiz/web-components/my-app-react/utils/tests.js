@@ -1,38 +1,30 @@
 const names = [
-    'John',
-    'Mary',
-    'Andy',
+    'Jonh',
+    'Maria',
+    'Sofia',
     'Pepito',
-    'Peter',
-    'John',
-    'Manuel',
-    'Hector',
     'Jorge',
-    'Jose',
-    'Lisandro',
+    'Jordi',
+    'Sergio',
+    'Sergi',
     'Daria',
-    'Daniel'
+    'Juan'
 ]
 
 const surnames = [
-    'Wayne',
-    'Poppins',
     'Garcia',
-    'Grillo',
+    'Martinez',
+    'Rodriguez',
+    'Poppins',
+    'Potter',
     'Pan',
-    'Doe',
-    'Boludo',
-    'Loquillo',
-    'Pepinillo',
-    'Azuquita',
-    'Capullita'
+    'Doe'
 ]
 
 const passwords = [
-    '123123123',
-    'abcabcabc',
-    'quertyquerty',
-    'poiuytr123123',
-    'asdfhasdfh'
+    '12345678',
+    'winter123',
+    'summer456',
+    'queryquery',
+    'spring2020'
 ]
-

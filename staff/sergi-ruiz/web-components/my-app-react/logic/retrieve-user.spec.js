@@ -1,6 +1,7 @@
-describe('toggleFollowUser', () =>{
-    let name, surname, email, password, _token, _followId
-    beforeEach(() => {
+describe('retrieveUser', () =>{
+    let name, surname, email, password, _token
+
+    beforeEach( () => {
         name = names.random()
         surname = surnames.random()
         email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}@mail.com`
@@ -19,30 +20,35 @@ describe('toggleFollowUser', () =>{
                     if (status !== 200) return done(new Error(`undexpected status ${status}`))
                     let { token } = JSON.parse(body)
                     _token = token
-                    call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all', 
-                    undefined,
-                    {Authorization: `Bearer ${_token}`},
-                    (error, status, body) =>{
-                        if (error) return done(new Error(`undexpected status ${status}`))
-                        let random = Math.floor(Math.random()*10)
 
-                        const users = JSON.parse(body)
-
-                        const _user = users[random]
-
-                        const {id} = _user
-                        
-                        _followId = id
-                    }
-                    )
                     done()
                 })
             })
     })
 
-    it('should add a new user to a following array', done =>{
-        a
-        
+    it('should return user data', done =>{
+        retrieveUser(_token, (error, user) =>{
+            expect(error).to.be.undefined
+
+            expect(user.name).to.equal(name)
+            expect(user.surname).to.equal(surname)
+            expect(user.email).to.equal(email)
+            expect(user.password).to.be.undefined
+
+            done()
+        })
+    })
+
+    it('shoud return an error because invalid token is passed', done =>{
+        let __token = '12132fkdjfkdjfkdjd'
+        retrieveUser(__token, (error, user) =>{
+            expect(error).to.exist
+            expect(error.message).to.equal('invalid token')
+
+            expect(user).to.be.undefined
+
+            done()
+        })
     })
 
     afterEach(done => {
@@ -68,6 +74,18 @@ describe('toggleFollowUser', () =>{
                         done()
                     })
             })
+    })
+
+    it('should return a type error', () => {
+        _token = 1234567
+        expect(() => {
+            retrieveUser(_token, function() {})
+        }).to.throw(TypeError, `${_token} is not a string`)
+
+        _token = undefined
+        expect(function(){
+            retrieveUser(_token,  function() {})
+        }).to.throw(TypeError, `${_token} is not a string`)
     })
 
 })

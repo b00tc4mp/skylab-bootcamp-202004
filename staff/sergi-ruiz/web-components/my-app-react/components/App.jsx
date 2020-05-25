@@ -1,13 +1,12 @@
 const { useState, useEffect } = React
 
 function App() {
+
     const [view, setView] = useState('load')
-    // const [view, setView] = useState('home')
     const [token, setToken] = useState()
-    // const [token, setToken] = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWFjNDg5OTZiMzNjNzAwMTU0MmU5MmIiLCJpYXQiOjE1ODg2NzE4MDEsImV4cCI6MTU4ODY3NTQwMX0.RS0HvoBYhCY7Li4oEAiOB1AtwfoPSLRTQTAd4vKk4OA')
 
     useEffect(() => {
-        if (sessionStorage.token)
+        if (sessionStorage.token) {
             try {
                 isUserAuthenticated(sessionStorage.token, (error, isAuthenticated) => {
                     if (error) throw error
@@ -15,57 +14,52 @@ function App() {
                     if (isAuthenticated) {
                         setToken(sessionStorage.token)
                         setView('home')
-                    } else setHashView('login')
+                    }
                 })
             } catch (error) {
                 if (error) throw error
             }
-        else {
-            const hash = location.hash.substring(1)
-
-            if (hash === 'login' || hash === 'register') setHashView(hash)
-            else {
-                location.hash = ''
-                
-                setView('landing')
-            }
-        }
+        }else setHashView('landing')
     }, [])
 
-
-    const setHashView = view => {
+    const setHashView =(view)=> {
         location.hash = view
-
         setView(view)
     }
 
-    const handleGoToRegister = () => setHashView('register')
+    function handleGoToLogin() {
+        setHashView('login')
+    }
 
-    const handleRegister = () => setHashView('login')
-
-    const handleLogin = token => {
+    function handleLogin(token) {
         sessionStorage.token = token
         setToken(token)
-        location.hash = ''
         setView('home')
+        location.hash = ''
     }
 
-    const handleGoToLogin = () => setHashView('login')
+    function handleGoToRegister() {
+        setHashView('register')
+    }
 
-    const handleLogout = () => {
+    function handleRegister() {
+        setHashView('login')
+    }
+
+    function handleGoToLanding() {
         setToken()
         delete sessionStorage.token
-        location.hash = ''
         setView('landing')
+        location.hash = ''
     }
 
-    const handleUserSessionExpired = () => setHashView('login')
 
     return <>
         {view === 'load' && <Spinner />}
-        {view === 'landing' && <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
-        {view === 'register' && <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />}
-        {view === 'login' && <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />}
-        {view === 'home' && <Home token={token} onLogout={handleLogout} onUserSessionExpired={handleUserSessionExpired} />}
+        {view === 'landing' && <Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister} />}
+        {view === 'login' && <Login onSubmit={handleLogin} onRegister={handleGoToRegister} />}
+        {view === 'register' && <Register onSubmit={handleRegister} onLogin={handleGoToLogin} />}
+        {view === 'home' && <Home token={token} onLogout={handleGoToLanding} />}
     </>
+
 }

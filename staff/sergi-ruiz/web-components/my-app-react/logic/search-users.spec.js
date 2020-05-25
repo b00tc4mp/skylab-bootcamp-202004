@@ -1,5 +1,6 @@
-describe('toggleFollowUser', () =>{
-    let name, surname, email, password, _token, _followId
+describe('searchUsers', () => {
+    let name, surname, email, password, _token
+
     beforeEach(() => {
         name = names.random()
         surname = surnames.random()
@@ -19,30 +20,33 @@ describe('toggleFollowUser', () =>{
                     if (status !== 200) return done(new Error(`undexpected status ${status}`))
                     let { token } = JSON.parse(body)
                     _token = token
-                    call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users/all', 
-                    undefined,
-                    {Authorization: `Bearer ${_token}`},
-                    (error, status, body) =>{
-                        if (error) return done(new Error(`undexpected status ${status}`))
-                        let random = Math.floor(Math.random()*10)
 
-                        const users = JSON.parse(body)
-
-                        const _user = users[random]
-
-                        const {id} = _user
-                        
-                        _followId = id
-                    }
-                    )
                     done()
                 })
             })
     })
 
-    it('should add a new user to a following array', done =>{
-        a
-        
+    it('should return an empty array with no results', done => {
+        searchUsers(_token, 'dhsdjshdjahhdfhjdhfjdhfjdhjk', (error, users) => {
+
+            expect(users.length).to.equal(0)
+
+            done()
+        })
+    })
+
+    it('should return an array with results', done => {
+        searchUsers(_token, 'pepito', (error, users) => {
+            expect(error).to.be.undefined
+
+            expect(users.length).to.be.greaterThan(0)
+            expect(users[0].name).to.exist
+            expect(users[0].surname).to.exist
+            expect(users[0].email).to.exist
+            expect(users[0].id).to.exist
+
+            done()
+        })
     })
 
     afterEach(done => {
@@ -70,4 +74,16 @@ describe('toggleFollowUser', () =>{
             })
     })
 
+    it('should return an error', () => {
+        expect(() => {
+            searchUsers(_token, '    ', function(){})
+        }).to.throw(Error, 'query is empty')
+    })
+
+    it('should return a type error', () => {
+        let __token = 123
+        expect(() => {
+            searchUsers(__token, 'hola', function(){})
+        }).to.throw(TypeError, '123 is not a string')
+    })
 })

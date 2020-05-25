@@ -1,6 +1,6 @@
-describe('google', () => {
+describe('ecosia', () => {
     it('it should succeed on matching query', done => {
-        searchGoogle('barcelona', function (error, results) {
+        searchEcosia('barcelona', function (error, results) {
             expect(error).to.be.undefined
 
             expect(results).to.exist
@@ -18,14 +18,13 @@ describe('google', () => {
 
     it('should return an error', () => {
         expect( () => {
-            searchGoogle('    ')
+            searchEcosia('    ')
             }).to.throw(Error, 'query is empty')
     })
 
     it('should return a type error', () =>{
         expect( () =>{
-            searchGoogle(123)
+            searchEcosia(123)
         }).to.throw(TypeError, '123 is not a string')
     })
 })
-

@@ -1,50 +1,29 @@
-function toggleFollowUser(token, followingId, callback) {
-    String.validate.notVoid(token)
-    String.validate.notVoid(followingId)
-    Function.validate(callback)
+function toggleFollowUser(token, followId, callback) {
+    if (typeof token !== 'string') throw new TypeError(`${token} is not a string`)
 
-    call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined,
-        {
-            Authorization: `Bearer ${token}`
-        },
+    if (typeof followId !== 'string') throw new TypeError(`${followId} is not a string`)
+
+    if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
+
+    call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',
+        undefined,
+        { 'Authorization': `Bearer ${token}` },
         (error, status, body) => {
             if (error) return callback(error)
 
             if (status === 200) {
-                call('GET', `https://skylabcoders.herokuapp.com/api/v2/users/${followingId}`, undefined,
-                    {
-                        Authorization: `Bearer ${token}`
-                    },
-                    (error, status) => {
+                let user = JSON.parse(body);
+                const index = (user.following || (user.following = [])).indexOf(followId);
+                if (index === -1) user.following.push(followId);
+                else user.following.splice(index, 1);
+
+                call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users',
+                    `{ "following" : ${JSON.stringify(user.following)} }`,
+                    { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+                    (error, status, body) => {
                         if (error) return callback(error)
-
-                        if (status == 200) {
-                            const user = JSON.parse(body)
-
-                            const { following = [] } = user
-
-                            const index = following.indexOf(followingId)
-
-                            if (index < 0) following.push(followingId)
-                            else following.splice(index, 1)
-
-                            call('PATCH', 'https://skylabcoders.herokuapp.com/api/v2/users', JSON.stringify({ following }),
-                                {
-                                    Authorization: `Bearer ${token}`,
-                                    'Content-type': 'application/json'
-                                },
-                                (error, status, body) => {
-                                    if (error) return callback(error)
-
-                                    if (status === 204) {
-                                        callback()
-                                    } else {
-                                        const { error } = JSON.parse(body)
-
-                                        callback(new Error(error))
-                                    }
-                                })
-                        } else {
+                        if (status === 204) callback()
+                        else {
                             const { error } = JSON.parse(body)
 
                             callback(new Error(error))
@@ -52,7 +31,6 @@ function toggleFollowUser(token, followingId, callback) {
                     })
             } else {
                 const { error } = JSON.parse(body)
-
                 callback(new Error(error))
             }
         })

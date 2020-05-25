@@ -1,52 +1,17 @@
-.search, .home, .register, .login {
-  display: inline-block;
-  border: 1rem dashed gray;
-  border-radius: 2rem;
-  padding: 1rem;
-}
+/* Error: Can't find stylesheet to import.
+ *   ,
+ * 9 | @import components/Results
+ *   |         ^^^^^^^^^^^^^^^^^^
+ *   '
+ *   style.sass 9:9  root stylesheet */
 
-.landing {
-  background-color: orange;
-  text-align: center;
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Can't find stylesheet to import.\a   \2577 \a 9 \2502  @import components/Results\a   \2502          ^^^^^^^^^^^^^^^^^^\a   \2575 \a   style.sass 9:9  root stylesheet";
 }
-
-.login {
-  border-color: blue;
-}
-
-.register {
-  border-color: red;
-}
-
-.home {
-  border-color: yellow;
-}
-.home__link {
-  text-decoration: none;
-}
-.home__link:visited {
-  color: lightgray;
-}
-.home__link--active {
-  font-weight: bold;
-  color: gray;
-}
-.home__link--active:visited {
-  color: gray;
-}
-
-.feedback {
-  color: green;
-}
-.feedback--warning {
-  color: orange;
-}
-.feedback--error {
-  color: red;
-}
-
-.search {
-  border-color: skyblue;
-}
-
-/*# sourceMappingURL=style.css.map */

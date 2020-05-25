@@ -1,16 +1,20 @@
-function Google({ onSearch, query, results }) {
-    function handleSearch(query) {
-        google(query, (error, results) => {
-            if (error) throw error // TODO do something with error (feedback panel?) 
+function Google({ onSubmit, results, error }) {
+    function handleSubmit(event) {
+        event.preventDefault()
 
-            onSearch(results, query)
-        })
+        let { query } = event.target
+
+        query = query.value
+
+        onSubmit(query)
     }
-
     return <section className="google">
         <h2>Google</h2>
-
-        <Search onSubmit={handleSearch} query={query} />
-        {results && <GoogleResults results={results} />}
-    </section >
+        <form onSubmit={handleSubmit}>
+            <input type="text" name="query"/>
+            <button type="submit">🧐</button>
+        </form>
+        {results && <SearchResults results={results}/>}
+        {error && <Feedback message = {error} level = {'warning'} />}
+    </section>
 }
