@@ -1,0 +1,135 @@
+*{
+  box-sizing: border-box;
+  /*background-color: #151E29;*/
+  border-color: white;
+  color: white;
+  margin: 0px;
+  padding: 0px;
+}
+body{
+  background-color: #151E29;
+}
+/*////////////////////////Register/////////////////////////*/
+.register {
+  background-color: #151E29;
+  border: 0.01rem solid white;
+  display: inline-block;
+  width: 100vw;
+}
+
+/*////////////////////////Register/////////////////////////*/
+.login {
+  background-color: #151E29;
+  border: 0.01rem solid white;
+  display: inline-block;
+  width: 100vw;
+}
+/*////////////////////////Landing/////////////////////////*/
+.landing{
+  background-color: #151E29;
+  border: 0.01rem solid white;
+  width: 100vw;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: min-content,30vw,min-content;
+}
+.landing__title{
+  width: fit-content;
+  font-size: 3rem;
+  margin:0.5rem;
+  margin-left: 10vw;
+  grid-column-start: 1;
+  grid-row-start: 1;
+}
+.landing__user-management{
+  width: fit-content;
+  height: fit-content;
+  grid-column-start: 3;
+  grid-row-start: 1;
+  text-align: center;
+  margin-top: 1vh;
+}
+/*////////////////////////Navigation/////////////////////////*/
+.navigation{
+  width: fit-content;
+  min-height: 100vh;
+  border:0.01rem solid white;
+  text-align: center;
+}
+.navigation__title{
+  margin-top: 1vh;
+  font-size: 2rem;
+}
+.navigation__button{
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: bold;
+  background-color: transparent;
+  padding: 0.5rem;
+  margin: 1vh;
+  border-style: hidden;
+  border-radius: 50%;
+  font-size: 1rem;
+}
+.navigation__button:hover{
+  color: #1D8DEE;
+}
+.user__view{
+  display: inline-flex;
+}
+/*////////////////////////Results/////////////////////////*/
+.results{
+  padding-left: 5vw;
+  width: 75vw;
+}
+.pete__message{
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  border:0.04rem solid white;
+  padding: 1rem;
+  width: inherit;
+}
+.pete__list{
+  list-style: none;
+}
+/*////////////////////////Misc/////////////////////////*/
+.peter__button{
+  background-color: #1D8DEE;
+  padding: 0.5rem;
+  margin: 1vh;
+  border-style: hidden;
+  border-radius: 50%;
+  font-size: 1rem;
+}
+.peter__button:hover{
+  background-color: white;
+  color: #1D8DEE;
+}
+.peter__link{
+  color: #1D8DEE;
+  width: fit-content;
+  height: fit-content;
+}
+.peter__link:hover{
+  color: white;
+}
+.peter__title{
+  font-size: 2rem;
+  margin-left: 10vw;
+  margin-top: 1vh;
+}
+.peter__form{
+  margin-left: 10vw;
+}
+.peter__input{
+  background-color: rgb(67, 84, 104);
+  color: white;
+  margin-left: 1vw;
+}
+.peter__input::placeholder{
+  color: lightblue;
+}
+.pete__feedback{
+  margin-left: 10vw;
+}
+
+/*# sourceMappingURL=style.css.map */
