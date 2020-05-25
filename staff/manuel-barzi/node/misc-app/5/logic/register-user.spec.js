@@ -1,18 +1,14 @@
 const registerUser = require('./register-user')
 const { random } = Math
-const fs = require('fs')
-const path = require('path')
 const { expect } = require('chai')
 require('../utils/polyfills/json')
-const { Files: { deleteFilesByExtensionFromDirectory }, uid } = require('../utils')
+const { users: { deleteMany, create, find } } = require('../data')
 
 describe('logic - register user', () => {
-    const data = path.join(__dirname, '..', 'data')
-
     let name, surname, email, password
 
     beforeEach(done => {
-        deleteFilesByExtensionFromDirectory(path.join(data, 'users'), '.json', error => {
+        deleteMany(error => {
             if (error) return done(error)
 
             name = `name-${random()}`
@@ -28,41 +24,28 @@ describe('logic - register user', () => {
         registerUser(name, surname, email, password, error => {
             expect(error).to.be.null
 
-            fs.readdir(path.join(data, 'users'), (error, files) => {
+            find({}, (error, users) => {
                 if (error) return done(error)
 
-                files = files.filter(file => path.extname(file) === '.json')
+                expect(users.length).to.equal(1)
 
-                expect(files.length).to.equal(1)
+                const [user] = users
 
-                const [file] = files
+                expect(user.name).to.equal(name)
+                expect(user.surname).to.equal(surname)
+                expect(user.email).to.equal(email)
+                expect(user.password).to.equal(password)
 
-                fs.readFile(path.join(data, 'users', file), 'utf8', (error, json) => {
-                    expect(error).to.be.null
-
-                    expect(json).to.exist
-
-                    const user = JSON.parse(json)
-
-                    expect(user.name).to.equal(name)
-                    expect(user.surname).to.equal(surname)
-                    expect(user.email).to.equal(email)
-                    expect(user.password).to.equal(password)
-
-                    done()
-                })
+                done()
             })
-
         })
     })
 
     describe('when user already exists', () => {
         beforeEach(done => {
-            const userId = uid()
+            const user = { name, surname, email, password }
 
-            const user = { name, surname, email, password, id: userId }
-
-            fs.writeFile(path.join(data, 'users', `${userId}.json`), JSON.prettify(user), error => {
+            create(user, error => {
                 if (error) return done(error)
 
                 done()
@@ -82,7 +65,7 @@ describe('logic - register user', () => {
     })
 
     afterEach(done => {
-        deleteFilesByExtensionFromDirectory(path.join(data, 'users'), '.json', error => {
+        deleteMany(error => {
             if (error) return done(error)
 
             done()
