@@ -1,4 +1,4 @@
-const { find } = require('./users')
+const { find } = require('.')
 
 find({
     // name: 'Pepito2',

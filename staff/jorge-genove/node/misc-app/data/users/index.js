@@ -49,6 +49,26 @@ function find(filter, callback) { // filter => { name: 'pepito', surname: 'grill
     })
 }
 
+function deleteMany(callback) {
+    deleteFilesByExtensionFromDirectory(__dirname, '.json', error => {
+        if (error) return callback(error)
+
+        callback()
+    })
+}
+
+function create(data, callback) {
+    data.id = uid()
+
+    fs.writeFile(path.join(__dirname, `${data.id}.json`), JSON.prettify(data), error => {
+        if (error) return callback(error)
+
+        callback(null, data.id)
+    })
+}
+
 module.exports = {
-    find
+    find,
+    deleteMany,
+    create
 }
