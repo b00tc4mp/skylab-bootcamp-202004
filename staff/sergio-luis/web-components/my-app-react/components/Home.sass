@@ -1,0 +1,41 @@
+.main
+    min-width: 370px
+    display: flex
+    justify-content: center
+    flex-wrap: wrap
+    color: black
+
+.navbar
+    box-sizing: content-box
+    width: 100%
+    height: 5rem
+    background-color: #3366ff 
+    display: flex
+    justify-content: space-between
+    position: sticky
+    top: 0
+    &__title
+        margin: 1rem
+        color: white
+        display: flex
+        align-items: center
+    &__button
+        font-size: 1.2rem
+        color: white 
+        background-color: #3366ff
+        border: 2px solid white
+        border-radius: 10px
+        margin:1rem
+        &:hover
+            box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75)    
+    &__ancor
+        color: white
+        text-decoration: none
+        font-size: 1.3rem
+        transition-duration: 300ms
+        margin: 1.5rem .2rem 
+        padding: 0 1rem
+        &:hover
+            padding-bottom: 0.5rem 
+            border-bottom: 4px solid white
+            

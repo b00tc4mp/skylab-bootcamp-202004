@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="register">
+        <h1>Register</h1>
+        <form>
+            <input type="text" name="name" placeholder="name">
+            <input type="text" name="surname" placeholder="surname">
+            <input type="email" name="email" placeholder="e-mail">
+            <input type="password" name="name" placeholder="password">
+            <button>Submit</button>
+        </form>
+    </section>
+
+    <section class="login">
+        <h1>Login</h1>
+        <form>
+            <input type="email" name="email" placeholder="e-mail">
+            <input type="password" name="name" placeholder="password">
+            <button>Submit</button>
+        </form>
+    </section>
+    
+    <span> 
+        <h1>Welcome ${name}</h1>
+        <button>Log out</button>
+
+        <form method="GET">
+            <input type="text" name = "text" placeholder="search">
+            <button>🦗</button>
+        </form>
+    </span>
+    <section class="landing">
+        <h1 class="landing__title">Welcome to PETER 🦗</h1>
+        <div class="landing__user-management">
+            <a href="" class="peter__link">Start usign Peter</a> </br> or </br> <a href="" class="peter__link">I already have an acount</a>
+        </div>
+    </section>
+    <section class="navigation">
+        <h1 class="navigation__title">${user.name}</h1></br>
+        
+        <input class="peter__input" placeholder="What's in your mind?" required>
+        <button class="peter__button">SHARE 🦗</button></br>
+        
+        <button class="navigation__button">MY PROFILE</button></br>
+        <button class="navigation__button">DISCOVER</button></br>
+        <button class="navigation__button">FEED</button></br>
+        <button class="navigation__button">FOLLOWING</button></br>
+        <button class="navigation__button">FOLLOWERS</button></br>
+        <button class="navigation__button">LIKES</button></br>
+        <button class="navigation__button">LOG OUT</button></br>
+        <button class="navigation__button">NEWS</button></br>
+    </section>
+</body>
+</html>
