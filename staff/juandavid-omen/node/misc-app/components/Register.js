@@ -1,6 +1,6 @@
 module.exports = () => `<section class="register">
 <h1>Register</h1>
-<form action='/register' method='POST'>
+<form action="/register" method="POST">
     <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}">
     <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}">
     <input type="email" name="email" placeholder="e-mail" required>
