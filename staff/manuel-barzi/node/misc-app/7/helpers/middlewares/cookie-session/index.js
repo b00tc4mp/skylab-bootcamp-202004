@@ -1,4 +1,7 @@
-const { createSession, retrieveSession, updateSession, removeSession } = require('../../logic')
+const createSession = require('./create-session')
+const retrieveSession = require('./retrieve-session')
+const updateSession = require('./update-session')
+const removeSession = require('./remove-session')
 
 module.exports = (req, res, next) => {
     let { cookies: { sessionId } } = req
