@@ -1,0 +1,111 @@
+const express = require('express')
+const { App, Register, Login, Home, Landing } = require('./components')
+const { registerUser, authenticateUser, retrieveUser } = require('./logic')
+const bodyParser = require('body-parser')
+const session = require('express-session')
+
+const app = express()
+
+const parseBody = bodyParser.urlencoded({ extended: false })
+
+const cookieSession = session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    // cookie: { secure: true } // WARN this does not make it work => RTFM!
+    cookie: {}
+})
+
+app.use(express.static('public'))
+
+app.get('/', cookieSession, (req, res) => {
+    debugger
+    const { session: { cookiesAccepted, userId } } = req
+
+    if (userId) return res.redirect('/home')
+
+    res.send(App(Landing(), cookiesAccepted))
+})
+
+app.get('/register', cookieSession, (req, res) => {
+    const { session: { cookiesAccepted, userId } } = req
+
+    if (userId) return res.redirect('/home')
+
+    res.send(App(Register(), cookiesAccepted))
+})
+
+app.post('/register', parseBody, (req, res) => {
+    const { body: { name, surname, email, password } } = req
+
+    registerUser(name, surname, email, password, (error, id) => {
+        if (error) throw error // TODO error handling
+
+        res.redirect('/login')
+    })
+})
+
+app.get('/login', cookieSession, (req, res) => {
+    const { session: { cookiesAccepted, userId } } = req
+
+    if (userId) return res.redirect('/home')
+
+    res.send(App(Login(), cookiesAccepted))
+})
+
+app.post('/login', parseBody, cookieSession, (req, res) => {
+    const { body: { email, password } } = req
+
+    authenticateUser(email, password, (error, userId) => {
+        if (error) throw error // TODO error handling
+
+        const { session } = req
+
+        session.userId = userId
+
+        session.save(error => {
+            if (error) throw error
+
+            res.redirect('/home')
+        })
+    })
+})
+
+app.get('/home', cookieSession, (req, res) => {
+    const { session: { cookiesAccepted, userId } } = req
+
+    if (!userId) return res.redirect('/login')
+
+    retrieveUser(userId, (error, user) => {
+        if (error) throw error // TODO error handling
+
+        const { name } = user
+
+        res.send(App(Home(name), cookiesAccepted))
+    })
+})
+
+app.post('/logout', cookieSession, (req, res) => {
+    const { session } = req
+
+    session.destroy(error => {
+        if (error) throw error
+
+        res.redirect('/login')
+    })
+})
+
+app.post('/accept-cookies', cookieSession, (req, res) => {
+    const { session } = req
+
+    session.cookiesAccepted = true
+
+    session.save(error => {
+        if (error) throw error // TODO error handling
+
+        res.redirect(req.header('referer'))
+    })
+
+})
+
+app.listen(8080, () => console.log('server running'))
