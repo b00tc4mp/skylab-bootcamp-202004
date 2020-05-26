@@ -9,4 +9,5 @@ block body
             button Submit
             |         or 
             a(href='/register') Register
-        |     #{feedback ? feedback : ''}
+            if feedback
+                include Feedback.pug

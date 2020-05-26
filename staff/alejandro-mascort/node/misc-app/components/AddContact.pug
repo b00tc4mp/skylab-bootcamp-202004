@@ -12,4 +12,5 @@ block Compo
         input(type='text' name='birthdate' placeholder='dd/mm/yyyy')
         input(type='text' name='country' placeholder='country')
         button Add
-    |         #{feedback ? feedback : ''}
+    if feedback
+        include Feedback.pug

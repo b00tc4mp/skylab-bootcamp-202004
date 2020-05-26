@@ -11,4 +11,5 @@ block body
             button Submit
             |         or 
             a(href='/login') Login
-        |     #{feedback ? feedback : ''}
+            if feedback
+                include Feedback.pug
