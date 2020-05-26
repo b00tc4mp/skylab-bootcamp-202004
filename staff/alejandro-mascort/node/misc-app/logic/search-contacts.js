@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const {find} = require('../data/findData');
+const {find} = require('../data');
 require('../utils/string')
 require('../utils/function')
 

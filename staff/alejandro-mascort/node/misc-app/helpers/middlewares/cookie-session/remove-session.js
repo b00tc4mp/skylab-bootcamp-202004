@@ -1,6 +1,6 @@
-const { find, remove }  = require('../data/findData')
-require('../utils/function')
-require('../utils/string')
+const { find, remove }  = require('../../../data')
+require('../../../utils/function')
+require('../../../utils/string')
 
 module.exports = (sessionId, callback) => {
     String.validate.notVoid(sessionId)

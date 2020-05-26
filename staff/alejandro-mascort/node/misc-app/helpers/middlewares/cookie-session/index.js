@@ -1,4 +1,7 @@
-const { createSession, retrieveSession, updateSession, removeSession } = require('../../logic')
+const createSession = require('./create-session') 
+const retrieveSession = require('./retrieve-session')
+const updateSession = require('./update-session')
+const removeSession = require('./remove-session')
 
 module.exports = (req, res, next) => {
     let { cookies : { sessionId } } = req
@@ -19,13 +22,11 @@ module.exports = (req, res, next) => {
                 },
 
                 destroy(callback) {
-                    this.__res__.clearCookie('sessionId')
+                    res.clearCookie('sessionId')
 
                     removeSession(id, callback)
                 }
             }
-
-            req.session.__res__ = res
 
             next()
         })
@@ -44,12 +45,10 @@ module.exports = (req, res, next) => {
             }
 
             session.destroy = function(callback) {
-                this.__res__.clearCookie('sessionId')
+                res.clearCookie('sessionId')
 
                 removeSession(sessionId, callback)
             }
-
-            session.__res__ = res
 
             next()
         })

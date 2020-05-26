@@ -3,7 +3,7 @@ const path = require('path')
 require('../utils/string')
 const uid = require('../utils/uid')
 require('../utils/json')
-const {find} = require('../data/findData')
+const {find} = require('../data')
 
 module.exports = (userId, stickie, callback) => {
     if (typeof stickie !== 'object') throw new TypeError(`${stickie} is not an object`)

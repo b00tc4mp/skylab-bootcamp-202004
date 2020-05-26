@@ -1,6 +1,6 @@
 require('../utils/string')
 require('../utils/function')
-const { find } = require('../data/findData')
+const { find } = require('../data')
 
 module.exports = (userId, callback) => {
     String.validate.notVoid(userId)

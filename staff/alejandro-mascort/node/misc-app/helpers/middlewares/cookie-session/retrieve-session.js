@@ -1,6 +1,6 @@
-const {find} = require('../data/findData')
-require('../utils/function')
-require('../utils/string')
+const {find} = require('../../../data')
+require('../../../utils/function')
+require('../../../utils/string')
 
 module.exports = (id,callback) => {
     String.validate.notVoid(id)

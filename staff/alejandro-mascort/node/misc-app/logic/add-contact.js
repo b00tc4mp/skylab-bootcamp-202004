@@ -5,7 +5,7 @@ const Email = require('../utils/email')
 const uid = require('../utils/uid')
 require('../utils/json')
 require('../utils/date')
-const { find } = require('../data/findData')
+const { find } = require('../data')
 
 module.exports = (userId, contact, callback) => {
     const { name, surname, email, phone, birthdate, country } = contact

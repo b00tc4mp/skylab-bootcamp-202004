@@ -1,5 +1,5 @@
-const { create } = require('../data/findData')
-require('../utils/function')
+const { create } = require('../../../data')
+require('../../../utils/function')
 
 module.exports = callback => {
     Function.validate(callback)

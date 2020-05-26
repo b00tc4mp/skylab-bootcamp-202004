@@ -5,7 +5,7 @@ require('../utils/function')
 const Email = require('../utils/email')
 const uid = require('../utils/uid')
 require('../utils/json')
-const { find } = require('../data/findData')
+const { find } = require('../data')
 
 
 module.exports = (date, callback) => {

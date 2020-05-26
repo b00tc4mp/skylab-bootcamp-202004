@@ -26,7 +26,13 @@ const removeStickies = require('./logic/remove-stickie')
 const searchStickies = require('./logic/search-stickies')
 require('./utils/string');
 //MIDDLEWARES
-const {parseBody, parseCookies, cookieSession} = require('./utils/middlewares')
+const {parseBody, parseCookies} = require('./utils/middlewares')
+const cookieSession = require('./helpers/middlewares/cookie-session')
+
+// const bodyParser = require('body-parser')
+// const session = require('express-session')
+
+// const parseBody = bodyParser.urlencoded({ extended: false })
 
 const app = express()
 
@@ -138,7 +144,7 @@ app.post('/logout', parseCookies, cookieSession, (req, res) => {
 
     session.destroy( error => {
         if (error) throw error //TODO handle error
-
+        debugger
         res.redirect('/login')
     })
 })
@@ -147,72 +153,54 @@ app.post('/logout', parseCookies, cookieSession, (req, res) => {
 //CONTACT
 /////////
 // **********Add-contact***********************************************
-app.get('/add-contact', parseCookies, (req, res) => {
-    const cookie = req.header('cookie')
-    if (cookie) {
-        const [, userId] = cookie.split('=')
+app.get('/add-contact', parseCookies, cookieSession, (req, res) => {
+    const { session : {  cookiesAccepted, userId}} = req
 
-        if (!userId) return res.redirect('/login')
+    if (!userId) return res.redirect('/login')
 
-        res.send(App(Home(undefined,AddContact())))
-    } else return res.redirect('/login')  
+    res.send(App(Home(undefined,AddContact()), cookiesAccepted))
 })
 
 
 // **********Add-contact-POST***********************************************
-app.post('/add-contact', (req, res) => {
-    let data ={};
-    let userId
-    const cookie = req.header('cookie')
-    if (cookie) {
-        [, userId] = cookie.split('=')
+app.post('/add-contact', parseBody, parseCookies, cookieSession, (req, res) => {
+    const { session : {  cookiesAccepted, userId}, data } = req
 
-        if (!userId) return res.redirect('/login')
-
-    } else return res.redirect('/login')  
-    
-    req.on('data', chunk => {data = chunk.toString().convertChunk()})
-    
-    data.birthdate = decodeURIComponent(data.birthdate)
-    req.on('end', () =>{
-        try {
-            addContact(userId, data, (error, contactId) => {
-                debugger
-
-                if (error) return res.send(App(Home(undefined, AddContact(Feedback(error.message, 'error')))))
+    if (!userId) return res.redirect('/login')  
         
-                res.send(App(Home(undefined,AddContact(Feedback('Contact Saved!')))))
-            })
-        } catch ({message}) {
-            res.send(App(Home(undefined,AddContact(Feedback(message, 'error')))))
-            return
-        }
+    data.birthdate = decodeURIComponent(data.birthdate)
+
+    try {
+        addContact(userId, data, (error, contactId) => {
+
+            if (error) return res.send(App(Home(undefined, AddContact(Feedback(error.message, 'error'))), cookiesAccepted))
     
-    })
+            res.send(App(Home(undefined,AddContact(Feedback('Contact Saved!'))), cookiesAccepted))
+        })
+    } catch ({message}) {
+        res.send(App(Home(undefined,AddContact(Feedback(message, 'error'))), cookiesAccepted))
+        return
+    }
+    
        
 })
 // **********LIST-contact***********************************************
-app.get('/contacts',(req,res)=>{
-debugger
-    const cookie = req.header('cookie')
+app.get('/contacts', parseCookies, cookieSession, (req,res)=>{
+    const { session : {  cookiesAccepted, userId} } = req
 
-    if (cookie) {
-        const [, userId] = cookie.split('=')
+    if (!userId) return res.redirect('/login')
 
-        if (!userId) return res.redirect('/login')
+    try {
+        listContact(userId,(error,contacts)=>{
+            if(error) return res.send((App(Home(undefined, ListContacts(undefined, Feedback(error.message,'error'))), cookiesAccepted)))
 
-        try {
-            listContact(userId,(error,contacts)=>{
-                if(error) return res.send((App(Home(undefined, ListContacts(undefined, Feedback(error.message,'error'))))))
-
-                res.send((App(Home(undefined,ListContacts(contacts)))))
-            })
-            
-        } catch ({message}) {
-            res.send((App(Home(undefined,ListContacts(undefined,Feedback(message,'error'))))))
-            return
-        }
-    } else return res.redirect('/login')
+            res.send((App(Home(undefined,ListContacts(contacts)), cookiesAccepted)))
+        })
+        
+    } catch ({message}) {
+        res.send((App(Home(undefined,ListContacts(undefined,Feedback(message,'error'))))))
+        return
+    }
     
 })
 // **********LIST-contact-POST***********************************************

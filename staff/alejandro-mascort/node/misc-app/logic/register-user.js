@@ -4,7 +4,7 @@ require('../utils/function')
 const uid = require('../utils/uid')
 const fs = require('fs')
 const path = require('path')
-const {find} =require('../data/findData')
+const {find} =require('../data')
 
 
 module.exports = (register, callback) => {
