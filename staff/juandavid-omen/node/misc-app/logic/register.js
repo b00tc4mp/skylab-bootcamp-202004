@@ -1,10 +1,10 @@
 const fs = require('fs')
 const path = require('path')
 const uid = require('../utils/uid')
-require('../utils/json')
-require('../utils/string')
+require('../utils/polyfills/json')
+require('../utils/polyfills/string')
 const Email= require('../utils/email')
-require('../utils/json')
+require('../utils/polyfills/json')
 
 module.exports = (newUser, callback) => {
     const {name, surname, email, password} = newUser
