@@ -35,6 +35,7 @@ app.get('/home', (req, res) => {
         res.send(App(Home(name))) 
     })
 })
+app.get('/add-contact', (req, res) => res.send(App(AddContact())))
 
 app.post('/register', (req, res) => {
     const { name, surname, email, password } = req.body
@@ -52,6 +53,19 @@ app.get('/auth', (req, res) => {
         if (error) throw error
 
         res.cookie('userId', userId)
+
+        res.redirect('/home')
+    })
+})
+app.post('/add-contact', (req, res) => {
+    const cookie = req.header('cookie')
+    if(!cookie) return res.redirect('/login')
+    const [,userId] = cookie.split('=')
+
+    const { name, surname, email, phone, birthdate, country } = req.body
+
+    addContact(userId, { name, surname, email, phone, birthdate, country }, (error, id) => {
+        if (error) throw error
 
         res.redirect('/home')
     })

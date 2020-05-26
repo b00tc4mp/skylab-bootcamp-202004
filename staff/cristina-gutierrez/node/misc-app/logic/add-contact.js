@@ -4,14 +4,16 @@ require('../utils/string')
 const Email = require('../utils/email')
 const uid = require('../utils/uid')
 require('../utils/json')
+require('../utils/date')
 
 module.exports = (userId, contact, callback) => {
+    const { name, surname, email, phone, birthdate, country } = contact
+
     if (!userId) throw new TypeError(`${userId} does not exist`)
     if (typeof userId !== 'string') throw new TypeError(`${userId} is not a string`) 
     if (typeof contact !== 'object') throw new TypeError(`${contact} is not an object`)
     if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
-    // TODO make it so that at least should have the following fields: (name || suranme) && (email || phone)
-    const { name, surname, email, phone, birthdate, country } = contact
+    if (!(name || surname) && (email || phone)) throw new TypeError(`Fill the ${name} or ${surname} and ${email} or ${phone} fields`)
 
     if (name) {
         String.validate.notVoid(name)
@@ -32,6 +34,7 @@ module.exports = (userId, contact, callback) => {
 
     if (birthdate) {
         String.validate.notVoid(birthdate)
+        /* Date.validate(birthdate) */
         //Date.validate(birthdate) // TODO create this polyfill
     }
 
@@ -45,8 +48,10 @@ module.exports = (userId, contact, callback) => {
 
     const id = uid()
 
+    contact.id = id
+
     const file = `${id}.json`
-    
+
     fs.writeFile(path.join(__dirname, '..', 'data', 'contacts', file), JSON.prettify(contact), error => {
         if (error) return callback(error)
 
