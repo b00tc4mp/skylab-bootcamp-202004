@@ -1,10 +1,10 @@
-require("../utils/string");
+require("../utils/polyfills/string");
 const fs = require("fs");
 const path = require("path");
 const uid = require("../utils/uid");
 const Email = require("../utils/email");
-require("../utils/function");
-require("../utils/json");
+require("../utils/polyfills/function");
+require("../utils/polyfills/json");
 const { find } = require("../data/users");
 
 module.exports = (name, surname, email, password, callback) => {
@@ -19,9 +19,9 @@ module.exports = (name, surname, email, password, callback) => {
   debugger
   find({ email }, (error, [user]) => {
     if (error) return callback(error);
-debugger
+
     if (user) return callback(new Error(`user with e-mail ${email}, already exist`));
-debugger
+
     const id = uid();
 
     const newUser = { id, name, surname, email, password };

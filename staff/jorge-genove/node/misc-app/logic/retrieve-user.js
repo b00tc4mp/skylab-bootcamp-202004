@@ -1,5 +1,5 @@
-require("../utils/string");
-require("../utils/function");
+require("../utils/polyfills/string");
+require("../utils/polyfills/function");
 const { find } = require("../data/users");
 
 module.exports = (id, callback) => {

@@ -1,152 +1,147 @@
 const express = require("express");
 const app = express();
-const Register = require("./components/Register");
-const register = require("./logic/register");
-const Login = require("./components/Login");
-const login = require("./logic/login");
-const App = require("./components/App");
-/* const listContacts = require("./logic/contact-list"); */
-const ListContacts = require("./components/ListContacts");
-const listContacts = require("./logic/list-contacs")
-const SearchContacts = require("./components/SearchContacts");
-const searchContacts = require("./logic/search-contacts");
-const addContact = require("./logic/add-contact");
-const AddContacts = require("./components/AddContact");
-const Landing = require("./components/Landing");
-const AddStickies = require("./components/AddStickies");
-const addStickies = require("./logic/add-stickies");
-const addStickiesList = require("./logic/list-stickies");
-const AddStickiesList = require("./components/ListStickies");
-const Home = require("./components/Home");
-const Feedback = require("./components/Feedback");
-const retrieveUser = require("./logic/retrieve-user");
-const {parseCookies, parseBody} = require('./utils/middlewares')
-const SearchUsers = require('./components/SearchUser')
-const searchUsers= require("./logic/search-user")
-const ListUsers = require("./components/ListUsers")
+const { register, login, retrieveUser, addContact, addStickies, listContacts, listStickies, searchUser, searchContacts } = require('./logic');
+const bodyParser = require('body-parser')
+const session = require('express-session')
+const FileStore = require('session-file-store')(session)
+const path = require('path')
 
-app.get("/landing", (req, res) => {
-  res.send(App(Landing()));
+
+
+app.set('view engine', 'pug')
+app.set('views', './components')
+
+const parseBody = bodyParser.urlencoded({ extended: false })
+
+const cookieSession = session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {},
+  store: new FileStore({
+    path: path.join(__dirname, 'data', 'sessions')
+  })
+})
+
+app.use(express.static('public'))
+
+app.get("/landing", cookieSession, (req, res) => {
+  const { session: { cookiesAccepted, userId } } = req
+
+  if (userId) return res.redirect('/home')
+
+  res.render('Landing', { cookiesAccepted })
 });
 
-app.get("/register", (req, res) => {
-  res.send(App(Register()));
+app.get("/register", cookieSession, (req, res) => {
+  const { session: { cookiesAccepted, userId } } = req
+
+  if (userId) return res.redirect('/home')
+
+  res.render('Register', { cookiesAccepted })
+
 });
-app.post("/register", (req, res) => {
-  let body = "";
-  req.on("data", (chunk) => (body += chunk));
+app.post("/register", parseBody, (req, res) => {
+  const { body: { name, surname, email, password } } = req
 
-  req.on("end", () => {
-    const keyValues = body.split("&");
+  register(name, surname, email, password, (error, id) => {
+    if (error) throw error
 
-    const user = keyValues.reduce((user, keyValue) => {
-      const [key, value] = keyValue.split("=");
-
-      user[key] = decodeURIComponent(value);
-
-      return user;
-    }, {});
-
-    const { name, surname, email, password } = user;
-
-    register(name, surname, email, password, (error, id) => {
-      if (error) throw error; // TODO error handling
-
-      res.redirect("/login");
-    });
-  });
+    res.redirect('/login')
+  })
 });
 
-app.get("/login", (req, res) => {
-  const cookie = req.header("cookie");
+app.get("/login", cookieSession, (req, res) => {
+  const { session: { cookiesAccepted, userId } } = req
 
-  if (cookie) {
-    const [, id] = cookie.split("=");
+  if (userId) return res.redirect('/home')
 
-    if (id) return res.redirect("/home");
-  }
-
-  res.send(App(Login()));
+  res.render('Login', { cookiesAccepted })
 });
 
-app.post("/login", (req, res) => {
-  req.on("data", (chunk) => (body += chunk));
-  let body = "";
+app.post("/login", parseBody, cookieSession, (req, res) => {
+  const { body: { email, password } } = req
 
-  req.on("end", () => {
-    const keyValues = body.split("&");
-    const credentials = keyValues.reduce((user, keyValue) => {
-      const [key, value] = keyValue.split("=");
+  login(email, password, (error, userId) => {
+    if (error) throw error
 
-      user[key] = decodeURIComponent(value);
+    const { session } = req
 
-      return user;
-    }, {});
+    session.userId = userId
 
-    const { email, password } = credentials;
+    session.save(error => {
+      if (error) throw error
+      res.redirect('/home')
+    })
+  })
+})
 
-    login(email, password, (error, id) => {
-      if (error) return res.redirect('/login') 
-                           
-      res.cookie("userId", id);
-      res.redirect("/home");
-    });
-  });
-});
+app.get("/home", cookieSession, (req, res) => {
+  const {session : { cookiesAccepted, userId} } = req
 
-app.get("/home", (req, res) => {
-  const cookie = req.header("cookie");
-  if (!cookie) return res.redirect("/login");
+  if(!userId) return res.redirect('/login')
 
-  const [, id] = cookie.split("=");
-  if (!id) return res.redirect("/login");
-debugger
-  /* retrieveUser(id, (error, { name }) => {
-    if (error) console.log(error); */
-    res.send(App(Home(/* name */)));
-  });
-/* }); */
+  retrieveUser(userId, (error, user) => {
+    if(error) throw error
 
- app.get("/contacts", (req, res) => {
+    const {name} = user
 
-const cookie =req.header('cookie')
-if(!cookie) return res.redirect('/login')
+    res.render('Home', {cookiesAccepted, name})
+  })
+})
+app.post('/accept-cookies',cookieSession,(req,res) => {
+  const {session} = req
+  
+  session.cookiesAccepted = true
 
-const [, userId] = cookie.split("=")
-if(!userId) return res.redirect('/login')
+  session.save((error) => {
+    res.redirect(req.header('referer'))
+  })
+})
 
-  listContacts(userId,(error, results) => {
+/* app.get("/contacts", (req, res) => {
+
+  const cookie = req.header('cookie')
+  if (!cookie) return res.redirect('/login')
+
+  const [, userId] = cookie.split("=")
+  if (!userId) return res.redirect('/login')
+
+  listContacts(userId, (error, results) => {
     if (error) throw error;
     res.send(App(ListContacts(results)));
   });
 });
 
-   app.get("/search-contact",parseCookies ,(req, res) => {
-   const {cookies: {userId}} = req
-   
-    if(!userId) return res.redirect('/login') 
+app.get("/search-contact", parseCookies, (req, res) => {
+  const { cookies: { userId } } = req
 
-    res.send(App(SearchContacts()))
-    
+  if (!userId) return res.redirect('/login')
 
-}); 
-app.post("/search-contact",parseCookies,parseBody,(req,res) =>{
-  const {cookies: {userId}} = req
-  if(!userId) return res.redirect('/login') 
-  
-  const {body : {q}} = req
-  searchContacts(userId,q, (error, contacts)=>{
+  res.send(App(SearchContacts()))
+
+
+});
+app.post("/search-contact", parseCookies, parseBody, (req, res) => {
+  const { cookies: { userId } } = req
+  if (!userId) return res.redirect('/login')
+
+  const { body: { q } } = req
+  searchContacts(userId, q, (error, contacts) => {
     if (error) throw error
-    res.send(App(SearchContacts(q)+ListContacts(contacts)))
+    res.send(App(SearchContacts(q) + ListContacts(contacts)))
   })
-}) 
- 
-app.post("/logout", (req, res) => {
-  res.clearCookie("userId");
+})
+ */
+app.post("/logout",cookieSession, (req, res) => {
+  const { session } = req
+
+  session.destroy(error => {
+    if(error) throw error
 
   res.redirect("/login");
 });
-app.get("/add-contact", (req, res) => {
+/* app.get("/add-contact", (req, res) => {
   const cookie = req.header('cookie');
   if (!cookie) return res.redirect("/login");
 
@@ -157,13 +152,13 @@ app.get("/add-contact", (req, res) => {
 });
 
 app.post("/add-contact", (req, res) => {
-  
+
   const cookie = req.header('cookie');
   if (!cookie) return res.redirect("/login");
 
   const [, userId] = cookie.split("=");
   if (!userId) return res.redirect("/login");
-  
+
   let body = "";
   req.on("data", (chunk) => (body += chunk));
   req.on("end", () => {
@@ -176,30 +171,31 @@ app.post("/add-contact", (req, res) => {
     }, {});
     const { name, surname, email, phone, birth, country } = contact;
 
-    addContact(contact, userId, (error, contactId) => {debugger
+    addContact(contact, userId, (error, contactId) => {
+      debugger
       if (error) throw error;
 
       res.redirect("/add-contact");
     });
   });
-}); 
+});
 
-app.get("/search-users", parseCookies, (req,res) => {
-  const {cookies : {userId}} = req
-  if(!userId) res.redirect('/login')
+app.get("/search-users", parseCookies, (req, res) => {
+  const { cookies: { userId } } = req
+  if (!userId) res.redirect('/login')
 
   res.send(App(SearchUsers()))
 })
-app.post("/search-users",parseBody,parseCookies,(req,res)=>{
-  const {cookies: {userId}} = req
-  if(!userId) return res.redirect('/login') 
-  
-  const {body : {q}} = req
-  searchUsers(userId,q, (error, users)=>{
+app.post("/search-users", parseBody, parseCookies, (req, res) => {
+  const { cookies: { userId } } = req
+  if (!userId) return res.redirect('/login')
+
+  const { body: { q } } = req
+  searchUsers(userId, q, (error, users) => {
     if (error) throw error
-    res.send(App(SearchUsers(q)+ListUsers(users)))
+    res.render('SearchUsers',{users,cookiesAccepted} 
   })
-})
+}) */
 /*app.get("/add-stickies", (req, res) => {
   res.send(App(AddStickies()));
 });
@@ -229,5 +225,5 @@ app.get("/stickies", (req, res) => {
     res.send(App(AddStickiesList(stickies)));
   });
 }); */
-
+})
 app.listen(8080);

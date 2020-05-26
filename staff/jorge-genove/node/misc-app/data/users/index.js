@@ -1,14 +1,14 @@
-require('../utils/string')
+require('../../utils/polyfills/string')
 const fs = require('fs')
-require('../utils/function')
+require('../../utils/polyfills/function')
 const path = require('path')
-require('../utils/json')
+require('../../utils/polyfills/json')
 
 function find(filter, callback) { // filter => { name: 'pepito', surname: 'grillo' }
     if (typeof filter !== 'object') throw new TypeError(`${filter} is not an object`)
     Function.validate(callback)
 
-    fs.readdir(path.join(__dirname, 'users'), (error, files) => {
+    fs.readdir(path.join(__dirname), (error, files) => {
         if (error) return callback(error)
 
         files = files.filter(file => path.extname(file) === '.json')
@@ -20,7 +20,7 @@ function find(filter, callback) { // filter => { name: 'pepito', surname: 'grill
         let i = 0;
 
         (function readFile() {
-            fs.readFile(path.join(__dirname, 'users', files[i]), 'utf8', (error, json) => {
+            fs.readFile(path.join(__dirname, files[i]), 'utf8', (error, json) => {
                 if (error) return callback(error)
 
                 const existing = JSON.parse(json)
