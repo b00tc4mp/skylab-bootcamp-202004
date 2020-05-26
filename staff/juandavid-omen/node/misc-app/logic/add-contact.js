@@ -1,9 +1,9 @@
 const fs = require('fs')
 const path = require('path')
-require('../utils/string')
+require('../utils/polyfills/string')
 const Email = require('../utils/email')
 const uid = require('../utils/uid')
-require('../utils/json')
+require('../utils/polyfills/json')
 
 module.exports = (contact, callback) => {
     if (typeof contact !== 'object') throw new TypeError(`${contact} is not an object`)
