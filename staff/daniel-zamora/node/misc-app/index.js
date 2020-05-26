@@ -3,16 +3,12 @@ const express = require('express')
 const app = express()
 
 //Components
-const App = require('./components/App')
-const Home = require('./components/Home')
 const Search = require('./components/Search')
 const ListContacts = require('./components/ListContacts')
-const AddContact = require('./components/AddContact')
 const Feedback = require('./components/Feedback')
 const ListStickies = require('./components/ListStickies')
 const AddSticky = require('./components/AddSticky')
 const Register = require('./components/Register')
-const Login = require('./components/Login')
 const ListUsers = require('./components/ListUsers')
 const ContactDetails = require('./components/ContactDetails')
 const NotFound404 = require('./components/NotFound404')
@@ -31,6 +27,9 @@ const deleteFile = require('./logic/delete-file')
 
 app.use(express.static('public'))
 
+app.set('view engine', 'pug')
+app.set('views', './components')
+
 app.get('/home', (req, res) =>{ 
     const cookie = req.header('cookie')
 
@@ -40,7 +39,7 @@ app.get('/home', (req, res) =>{
 
     if (!id) return res.redirect('/login')
     
-    res.send(App(Home(username)))
+    res.render('Home')
 })
 
 app.get('/register', (req, res)=>{
@@ -70,9 +69,8 @@ app.post('/register',(req, res)=>{
 })
 
 app.get('/login', (req, res)=>{
-    res.send(App(Login()))
+    res.render('Login')
 })
-
 app.post('/login',(req, res)=>{
 
     req.on('data' , data =>{
@@ -203,7 +201,7 @@ app.get('/add-contact',(req, res)=>{
     const cookie = req.header('cookie')
 
     if(!cookie) return res.redirect('/login')
-    else res.send(App(AddContact()))
+    res.render('AddContact')
 })
 
 app.post('/add-contact',(req, res)=>{
