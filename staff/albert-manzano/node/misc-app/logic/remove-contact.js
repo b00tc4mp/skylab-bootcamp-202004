@@ -1,7 +1,7 @@
-require('../utils/string')
+require('../utils/polyfills/string')
 const fs = require('fs')
 const path = require('path')
-const { find } = require('../data/users')
+const { users: { find } } = require('../data')
 
 module.exports = (userId, idContact, callback) => {
     String.validate.notVoid(userId)

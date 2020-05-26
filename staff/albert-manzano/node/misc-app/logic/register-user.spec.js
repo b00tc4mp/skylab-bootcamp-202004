@@ -5,7 +5,7 @@ const path = require("path");
 const { expect } = require("chai");
 const { deleteFilesByExtensionFromDirectory } = require("../utils/files");
 
-describe.only("register", () => {
+describe("register", () => {
   let name, surname, email, password, file;
   const data = path.join(__dirname, "..", "data");
 

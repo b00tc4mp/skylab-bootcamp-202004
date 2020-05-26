@@ -1,11 +1,8 @@
-const fs = require('fs')
-const path = require('path')
-require('../utils/string')
-const Email = require('../utils/email')
-const uid = require('../utils/uid')
-require('../utils/json')
-require('../utils/function')
-const { find } = require('../data/users')
+require('../utils/polyfills/string')
+const { Email } = require('../utils')
+require('../utils/polyfills/function')
+require('../utils/polyfills/json')
+const { users: { find } } = require('../data')
 
 module.exports = (userId, contact, callback) => {
     if (typeof contact !== 'object') throw new TypeError(`${contact} is not an object`)

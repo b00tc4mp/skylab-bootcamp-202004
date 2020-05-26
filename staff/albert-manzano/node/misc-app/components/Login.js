@@ -1,4 +1,4 @@
-module.exports = () => `<section class="login">
+module.exports = (feedback) => `<section class="login">
 <h1>Login</h1>
 <form action="/login" method="POST">
 <input type="email" name="email" placeholder="e-mail" required>
@@ -6,4 +6,5 @@ module.exports = () => `<section class="login">
     <button>Submit</button>
     or <a href="/register">Register</a>
 </form>
+${feedback?feedback:''}
 </section>`

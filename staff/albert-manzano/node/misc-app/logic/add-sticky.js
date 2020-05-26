@@ -1,10 +1,7 @@
-const fs = require('fs')
-const path = require('path')
-require('../utils/string')
-const uid = require('../utils/uid')
-require('../utils/json')
-require('../utils/function')
-const { find } = require('../data/users')
+require('../utils/polyfills/string')
+require('../utils/polyfills/function')
+require('../utils/polyfills/json')
+const { users: { find } } = require('../data')
 
 module.exports = ( userId ,{message}, callback) => {
     if (message) {

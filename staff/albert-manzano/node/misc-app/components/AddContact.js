@@ -1,4 +1,4 @@
-module.exports = () =>{
+module.exports = (feedback) =>{
     return `<section class="add-contact">
     <form action="/add-contact" method="POST">
         <input type="text" name="name" placeholder="John">
@@ -9,5 +9,6 @@ module.exports = () =>{
         <input type="text" name="country", placeholder="Spain">
         <button>Add</button>
 </form>
+${feedback?feedback:''}
 </section>`
 }

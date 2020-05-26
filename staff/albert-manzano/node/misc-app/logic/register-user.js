@@ -1,11 +1,8 @@
-require("../utils/string");
-const fs = require("fs");
-const path = require("path");
-const uid = require("../utils/uid");
-const Email = require("../utils/email");
-require("../utils/function");
-require("../utils/json");
-const { find } = require("../data/users");
+require('../utils/polyfills/string')
+const { Email } = require('../utils')
+require('../utils/polyfills/function')
+require('../utils/polyfills/json')
+const { users: { find, create } } = require('../data')
 
 module.exports = (name, surname, email, password, callback) => {
   String.validate.notVoid(name);

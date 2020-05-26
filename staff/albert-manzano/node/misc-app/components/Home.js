@@ -1,4 +1,4 @@
-module.exports = (name) => {
+module.exports = (name,feedback) => {
 
     return `<section class="contacts">
      <h2>Hello ${name}</h2>
@@ -10,7 +10,11 @@ module.exports = (name) => {
     <li><a href="/list-stickies" target="_blank">list stickies</a></li>
     <li><a href="/search-stickies" target="_blank">search stickies</a></li>
  </ul>
- </section>`
- }
-  
  
+ <form action="/logout" method="POST">
+    <button>Logout</button>
+</form>
+${feedback?feedback:''}
+ </section>`
+}
+

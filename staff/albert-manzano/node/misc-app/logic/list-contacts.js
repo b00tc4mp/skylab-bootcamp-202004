@@ -1,8 +1,5 @@
 const fs = require('fs')
 const path = require('path')
-require('../utils/string')
-require('../utils/json')
-require('../utils/function')
 
 module.exports = (userId, callback) => {
 
@@ -14,7 +11,6 @@ module.exports = (userId, callback) => {
         let wasError = false
 
         const contacts = []
-        let count = 0
 
         files.forEach(file => {
             fs.readFile(path.join(contactsPath, file), 'utf8', (error, json) => {

@@ -1,7 +1,8 @@
-require('../utils/string')
-const Email = require('../utils/email')
-require('../utils/function')
-const { find } = require('../data/users')
+require('../utils/polyfills/string')
+const { Email } = require('../utils')
+require('../utils/polyfills/function')
+require('../utils/polyfills/json')
+const { users: { find } } = require('../data')
 
 module.exports = (email, password, callback) => {
     String.validate.notVoid(email)

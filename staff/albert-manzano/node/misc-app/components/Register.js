@@ -1,4 +1,4 @@
-module.exports = () => `<section class="register">
+module.exports = (feedback) => `<section class="register">
 <h1>Register</h1>
 <form action="/register" method="POST">
     <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}">
@@ -7,5 +7,7 @@ module.exports = () => `<section class="register">
     <input type="password" name="password" placeholder="password" required minLength="8">
     <button>Submit</button>
     or <a href="/login">Login</a>
+
 </form>
+${feedback?feedback:''}
 </section>`
