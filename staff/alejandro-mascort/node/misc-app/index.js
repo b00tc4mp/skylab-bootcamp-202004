@@ -1,11 +1,5 @@
 const express = require('express')
 //COMPONENTS
-const App = require('./components/App')
-const Landing = require('./components/Landing')
-const Register = require('./components/Register')
-const Login = require('./components/Login')
-const Home = require('./components/Home')
-const Feedback = require('./components/Feedback')
 const AddContact = require('./components/AddContact')
 const AddStickie = require('./components/AddStickie')
 const ListContacts = require('./components/ListContacts')
@@ -36,14 +30,18 @@ const cookieSession = require('./helpers/middlewares/cookie-session')
 
 const app = express()
 
+app.set('view engine', 'pug')
+app.set('views', './components')
+
+
 app.use(express.static('public'))
 
 app.get('/', parseCookies, cookieSession, (req, res) => {
     const { session: { cookiesAccepted, userId } } = req
 
-    if (userId) return res.redirect('/home')
+    if (userId) return res.render('Home')
 
-    res.send(App(Landing(), cookiesAccepted))
+    res.render('Landing', {cookiesAccepted})
 })
 
 app.post('/accept-cookies', parseCookies, cookieSession, (req, res) => {
@@ -64,22 +62,22 @@ app.post('/accept-cookies', parseCookies, cookieSession, (req, res) => {
 app.get('/register', parseCookies, cookieSession, (req, res) => {
     const { session: { cookiesAccepted, userId } } = req
 
-    if (userId) return res.redirect('/home')
+    if (userId) return res.render('Home', { cookiesAccepted })
     
-    res.send(App(Register(), cookiesAccepted))
+    res.render('Register', {cookiesAccepted})
 })
 
 app.post('/register', parseBody, (req, res) => {
-    const { data } = req
+    const { data } = req 
     
     try {
         register(data, error => {
-            if (error) return res.send(App(Register(Feedback(error.message,'warning')), cookiesAccepted))
+            if (error) return res.render('Register',{ cookiesAccepted, feedback: `${error.message}` })
             
             res.redirect('/login')
         })
     } catch ({message}) {
-        res.send(App(Register(Feedback(message,'error'), cookiesAccepted)))
+        res.render('Register',{ cookiesAccepted, feedback: `${message}` })
         return
     }   
 })
@@ -90,9 +88,9 @@ app.post('/register', parseBody, (req, res) => {
 app.get('/login', parseCookies, cookieSession, (req, res) => {
     const { session: { cookiesAccepted, userId } } = req
 
-    if (userId) return res.redirect('/home')
+    if (userId) return res.render('Home', { cookiesAccepted })
     
-    res.send(App(Login(), cookiesAccepted))
+    res.render('Login',{ cookiesAccepted })
 })
 
 app.post('/login', parseBody, parseCookies, cookieSession, (req, res) => {
@@ -100,7 +98,7 @@ app.post('/login', parseBody, parseCookies, cookieSession, (req, res) => {
 
     try{
         authenticated(data,(error,userId)=>{    
-            if (error) return res.send(App(Login(Feedback(error.message,'warning'))))
+            if (error) return  res.render('Login',{ cookiesAccepted: session.cookiesAccepted, feedback: `${error.message}` })
 
             session.userId = userId
 
@@ -112,7 +110,7 @@ app.post('/login', parseBody, parseCookies, cookieSession, (req, res) => {
             
         }) 
     }catch({message}){
-        res.send(App(Login(Feedback(message,'error'), cookiesAccepted)))
+        res.render('Login',{ cookiesAccepted, feedback: `${message}` })
         return 
     }
        
@@ -124,16 +122,16 @@ app.post('/login', parseBody, parseCookies, cookieSession, (req, res) => {
 app.get('/home', parseCookies, cookieSession, (req,res) => {
     const { session: { userId, cookiesAccepted } } = req
 
-    if (!userId) return res.redirect('/login')
+    if (!userId) return res.render('Login', { cookiesAccepted })
 
     try {
         retrieveUser(userId, (error, { name }) => {
-            if (error) return res.send(App(Home(name,Feedback(error.message,'error')), cookiesAccepted))
+            if (error) return res.render('Home', {cookiesAccepted })
     
-            res.send(App(Home(name,undefined), cookiesAccepted))
+            res.render('Home', {cookiesAccepted})
         })
     } catch ({message}) {
-        res.send(App(Home(name,Feedback(message,'error')), cookiesAccepted))
+        res.render(App(Home(name,Feedback(message,'error')), cookiesAccepted))
         return
     }
 })
