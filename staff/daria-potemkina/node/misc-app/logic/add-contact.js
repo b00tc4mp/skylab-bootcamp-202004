@@ -1,10 +1,9 @@
 const fs = require('fs')
 const path = require('path')
-require('../utils/string')
-const Email = require('../utils/email')
-const uid = require('../utils/uid')
-require('../utils/json')
-require('../utils/function')
+require('../utils/polyfills/string')
+const { Email, uid } = require('../utils')
+require('../utils/polyfills/json')
+require('../utils/polyfills/function')
 const { find } = require('../data/users')
 
 function addContact(userId, contact, callback) {

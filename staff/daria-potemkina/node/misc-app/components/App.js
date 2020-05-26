@@ -1,4 +1,6 @@
-module.exports = body => {
+const Coockies = require('./Cookies')
+
+module.exports = (body, cookiesAccepted) => {
     return `<!DOCTYPE html>
 <html>
     <head>
@@ -7,6 +9,7 @@ module.exports = body => {
     <link rel="stylesheet" href="style.css"> 
     </head>
     <body>
+        ${!cookiesAccepted && Coockies() || ''}
         ${body}
     </body>
 </html>

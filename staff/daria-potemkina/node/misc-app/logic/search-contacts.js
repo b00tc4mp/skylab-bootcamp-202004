@@ -1,7 +1,7 @@
 const { find } = require('../data/users')
 const { findContacts } = require('../data/contacts')
-require('../utils/function')
-require('../utils/string')
+require('../utils/polyfills/function')
+require('../utils/polyfills/string')
 
 module.exports = (userId, query, callback) => {
     String.validate.notVoid(userId)

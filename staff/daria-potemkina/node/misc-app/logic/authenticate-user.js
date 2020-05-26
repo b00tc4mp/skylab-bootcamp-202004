@@ -1,7 +1,7 @@
-require('../utils/string')
-require('../utils/function')
+require('../utils/polyfills/string')
+require('../utils/polyfills/function')
 const Email = require('../utils/email')
-const {find} = require('../data/users')
+const { users: { find } } = require('../data/')
 
 
 module.exports = (email, password, callback) => {

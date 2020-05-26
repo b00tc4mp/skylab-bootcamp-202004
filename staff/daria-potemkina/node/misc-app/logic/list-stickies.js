@@ -2,8 +2,8 @@ const fs = require('fs')
 const path = require('path')
 const { find } = require('../data/users')
 const { findStickies } = require('../data/stickies')
-require('../utils/function')
-require('../utils/string')
+require('../utils/polyfills/function')
+require('../utils/polyfills/string')
 
 module.exports = (userId, callback) => {
     String.validate.notVoid(userId)
