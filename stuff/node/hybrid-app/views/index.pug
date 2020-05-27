@@ -1,0 +1,26 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Document
+    link(rel='stylesheet', href='style.css')
+  body
+    include components/HelloWorld
+
+    form(action="/search", method="get")
+      input(type="text", name="q", placeholder="query", value=query)
+      button(type="submit") Search
+
+    if items
+      ul
+        each item in items
+          li= item
+
+    #root
+    script(src='vendor/react/react.development.js')
+    script(src='vendor/react/react-dom.development.js')
+    script(src='vendor/babel/babel.min.js')
+    script(src='components/App.jsx', type='text/babel')
+    script(src='components/Hello.jsx', type='text/babel')
+    script(src='main.jsx', type='text/babel')
