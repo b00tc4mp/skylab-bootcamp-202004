@@ -1,0 +1,10 @@
+extend App
+
+block body
+  section.home
+    h1 Welcome, #{name}!
+    a.home__link(href='') Users
+    a.home__link(href='') Google
+    a.home__link(href='') Hola News
+    form(action='/logout', method='POST')
+      button Logout

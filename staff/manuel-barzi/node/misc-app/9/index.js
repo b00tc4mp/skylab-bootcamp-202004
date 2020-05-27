@@ -1,11 +1,14 @@
 const express = require('express')
-const { App, Register, Login, Home, Landing } = require('./components')
 const { registerUser, authenticateUser, retrieveUser } = require('./logic')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const FileStore = require('session-file-store')(session)
+const path = require('path')
 
 const app = express()
+
+app.set('view engine', 'pug')
+app.set('views', './components')
 
 const parseBody = bodyParser.urlencoded({ extended: false })
 
@@ -15,7 +18,9 @@ const cookieSession = session({
     saveUninitialized: true,
     // cookie: { secure: true } // WARN this does not make it work => RTFM!
     cookie: {},
-    store: new FileStore
+    store: new FileStore({
+        path: path.join(__dirname, 'data', 'sessions')
+    })
 })
 
 app.use(express.static('public'))
@@ -26,7 +31,7 @@ app.get('/', cookieSession, (req, res) => {
 
     if (userId) return res.redirect('/home')
 
-    res.send(App(Landing(), cookiesAccepted))
+    res.render('Landing', { cookiesAccepted })
 })
 
 app.get('/register', cookieSession, (req, res) => {
@@ -34,7 +39,7 @@ app.get('/register', cookieSession, (req, res) => {
 
     if (userId) return res.redirect('/home')
 
-    res.send(App(Register(), cookiesAccepted))
+    res.render('Register', { cookiesAccepted })
 })
 
 app.post('/register', parseBody, (req, res) => {
@@ -52,7 +57,7 @@ app.get('/login', cookieSession, (req, res) => {
 
     if (userId) return res.redirect('/home')
 
-    res.send(App(Login(), cookiesAccepted))
+    res.render('Login', { cookiesAccepted })
 })
 
 app.post('/login', parseBody, cookieSession, (req, res) => {
@@ -83,7 +88,7 @@ app.get('/home', cookieSession, (req, res) => {
 
         const { name } = user
 
-        res.send(App(Home(name), cookiesAccepted))
+        res.render('Home', { cookiesAccepted, name })
     })
 })
 
@@ -108,6 +113,14 @@ app.post('/accept-cookies', cookieSession, (req, res) => {
         res.redirect(req.header('referer'))
     })
 
+})
+
+app.get('*', cookieSession, (req, res) => {
+    const { session: { cookiesAccepted, userId } } = req
+
+    if (userId) return res.redirect('/home')
+
+    res.status(404).render('NotFound404', { cookiesAccepted })
 })
 
 app.listen(8080, () => console.log('server running'))
