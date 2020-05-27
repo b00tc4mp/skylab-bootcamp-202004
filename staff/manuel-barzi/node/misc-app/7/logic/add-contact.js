@@ -1,12 +1,13 @@
-const fs = require('fs')
-const path = require('path')
 require('../utils/polyfills/string')
-const { Email, uid } = require('../utils')
 require('../utils/polyfills/json')
+require('../utils/polyfills/function')
+const { Email } = require('../utils')
+const { users, contacts } = require('../data')
 
 module.exports = (userId, contact, callback) => {
-    // TODO validate userId (string, not empty) and callback (function)
+    String.validate.notVoid(userId)
     if (typeof contact !== 'object') throw new TypeError(`${contact} is not an object`)
+    Function.validate(callback)
 
     // TODO make it so that at least should have the following fields: (name || suranme) && (email || phone)
 
@@ -34,19 +35,17 @@ module.exports = (userId, contact, callback) => {
     if (country)
         String.validate.notVoid(country)
 
-    // TODO check userId is valid (i.e. the user exists), otherwise throw error
-
-    contact.user = userId
-
-    const id = uid()
-
-    contact.id = id
-
-    const file = `${id}.json`
-
-    fs.writeFile(path.join(__dirname, '..', 'data', 'contacts', file), JSON.prettify(contact), error => {
+    users.find({ id: userId }, (error, users) => {
         if (error) return callback(error)
 
-        callback(null, id)
+        if (!users.length) return callback(new Error(`user with id ${userId} not found`))
+
+        contact.user = userId
+
+        contacts.create(contact, (error, id) => {
+            if (error) return callback(error)
+
+            callback(null, id)
+        })
     })
 }
