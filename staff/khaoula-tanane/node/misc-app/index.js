@@ -1,5 +1,5 @@
 const express = require("express");
-const { App, Register, Login, Home, Landing, Cookies, Feedback, AddContact, AddStickies, ListContacts, SearchContacts } = require('./components')
+// const { App, Register, Login, Home, Landing, Cookies, Feedback, AddContact, AddStickies, ListContacts, SearchContacts } = require('./components')
 const { registerUser, authenticateUser, retrieveUser, createSession, updateSession, retrieveSession, removeSession, addContact, listContacts, searchContacts, addStickies } = require('./logic')
 const { cookieSession } = require('./utils/middlewares')
 const cookieParser = require('cookie-parser');
@@ -7,9 +7,10 @@ const bodyParser = require("body-parser");
 const { find } = require("./data/users");
 
 const app = express();
+app.set('view engine', 'pug')
+app.set('views', './components/')
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser())
-
 app.use(express.static("public"));
 
 app.get('/', cookieParser, cookieSession, (req, res) => {
@@ -17,7 +18,7 @@ app.get('/', cookieParser, cookieSession, (req, res) => {
 
   if (userId) return res.redirect('/home')
 
-  res.send(App(Landing(), cookiesAccepted))
+  res.render('Landing', {cookiesAccepted})
 })
 
 // app.get("/", (req, res) => res.send(App(Landing())));
@@ -25,7 +26,7 @@ app.get('/', cookieParser, cookieSession, (req, res) => {
 app.get("/register", cookieSession, (req, res) => {
   const { session: { cookiesAccepted, userId } } = req
   if (userId) return res.redirect('/home')
-  res.send(App(Register(), cookiesAccepted))
+  res.render('Register', {cookiesAccepted})
 });
 
 app.post("/register", (req, res) => {
@@ -43,7 +44,7 @@ app.get("/login", cookieSession, (req, res) => {
     const {id} = cookies;
     if (id) return res.redirect("/home");
   }
-  res.send(App(Login(), cookiesAccepted));
+  res.render('Login', {cookiesAccepted});
 });
 app.post("/login", cookieSession, (req, res) => {
   const {
@@ -71,7 +72,7 @@ app.get("/home", cookieSession, (req, res) => {
 
   retrieveUser(id, (error, { name }) => {
     if (error) return res.send(App(Home() + Feedback(error.message)));
-    res.send(App(Home(name), cookiesAccepted));
+    res.render('Home', {cookiesAccepted, name});
   });
 });
 
@@ -119,10 +120,12 @@ app.get("/search", (req, res) => {
     });
   }
 });
-
 app.get("/add-contact", (req, res) => {
-    res.send(App(AddContact()));
+    res.render('AddContact');
   });
+// app.get("/add-contact", (req, res) => {
+//     res.send(App(AddContact()));
+//   });
   
   app.post("/add-contact", (req, res) => {
     const { body, cookies } = req;
@@ -137,7 +140,8 @@ app.get("/add-contact", (req, res) => {
     });
 
     app.get("/add-stickies", (req, res) => {
-        res.send(App(AddStickies()));
+    // const { session: { cookiesAccepted } } = req;
+        res.render('AddStickie');
       });
       
       app.post("/add-stickie", (req, res) => {
@@ -160,6 +164,14 @@ app.get("/add-contact", (req, res) => {
       res.redirect(req.header('referer'))
     })
   })
-  
 
-app.listen(8080);
+  app.get('*', cookieSession, (req, res) => {
+    const { session: { cookiesAccepted, userId } } = req
+
+    if (userId) return res.redirect('/home')
+
+    res.render('NotFound404', { cookiesAccepted })
+})
+  
+app.listen(8080, () => console.log('Server running!'))
+
