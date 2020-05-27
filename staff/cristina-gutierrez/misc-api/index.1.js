@@ -1,14 +1,7 @@
-require('dotenv').config()
-
-const { PORT, SECRET } = process.env
-
 const express = require('express')
 const { registerUser, authenticateUser, retrieveUser, addContact } = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
-const jwt = require('jsonwebtoken')
-
-const { JsonWebTokenError } = jwt
 
 const app = express()
 
@@ -37,9 +30,7 @@ app.post('/users/auth', parseBody, (req, res) => {
         authenticateUser(email, password, (error, userId) => {
             if (error) return res.status(401).json({ error: error.message })
 
-            const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
-
-            res.send({ token })
+            res.send({ userId })
         })
     } catch (error) {
         res.status(406).json({ error: error.message })
@@ -54,27 +45,18 @@ app.get('/users/:userId?', (req, res) => {
 // contacts
 
 app.post('/contacts', parseBody, (req, res) => {
+    const [, userId] = req.header('authorization').split(' ')
+
+    const { body: contact } = req
+
     try {
-        const [, token] = req.header('authorization').split(' ')
-
-        const { sub: userId } = jwt.verify(token, SECRET)
-
-        // what if we move all this token stuff to... a middleware? ,)
-
-        const { body: contact } = req
-
         addContact(userId, contact, (error, contactId) => {
             if (error) return res.status(401).json({ error: error.message })
 
             res.send({ contactId })
         })
     } catch (error) {
-        if (error instanceof JsonWebTokenError)
-            res.status(401)
-        else
-            res.status(406)
-
-        res.json({ error: error.message })
+        res.status(406).json({ error: error.message })
     }
 })
 
@@ -88,4 +70,4 @@ app.get('*', (req, res) => {
     res.status(404).send('Not Found :(')
 })
 
-app.listen(PORT, () => console.log(`${name} ${version} running on port ${PORT}`))
+app.listen(8080, () => console.log(`${name} ${version} running`))
