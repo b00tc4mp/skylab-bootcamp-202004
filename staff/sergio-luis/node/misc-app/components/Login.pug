@@ -1,0 +1,15 @@
+extend App
+
+block body
+  section.login
+    h1 Login
+    form(method='POST', action='/login')
+      input(type='email', name='email', placeholder='e-mail', required='')
+      input(type='password', name='password', placeholder='password', required='')
+      button Submit
+      |         or 
+      a(href='/register') Register
+      if feedback
+        include Feedback.pug
+      else
+        #{' '}   
