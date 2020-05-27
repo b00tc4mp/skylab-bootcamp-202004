@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node .",
+    "watch": "npx nodemon .",
+    "test": "npx mocha logic/*.spec.js",
+    "test:debug": "npx mocha debug logic/*.spec.js",
+    "debug": "node --inspect=7000 ."
   },
   "keywords": [],
   "author": "",
