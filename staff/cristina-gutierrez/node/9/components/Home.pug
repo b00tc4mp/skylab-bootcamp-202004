@@ -1,0 +1,10 @@
+extend App
+
+block body
+  section.home
+    h1 Welcome, #{name}!
+    a.home__link(href='/add-contact') Add Contact
+    a.home__link(href='/search-contacts') Search Contacts
+    a.home__link(href='/stickies') Stickies
+    form(action='/logout', method='POST')
+      button Logout
