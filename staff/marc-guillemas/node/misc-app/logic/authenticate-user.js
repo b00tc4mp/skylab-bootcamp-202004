@@ -1,6 +1,6 @@
 const Email = require('../utils/email')
-require('../utils/string')
-require('../utils/function')
+require('../utils/polyfills/string')
+require('../utils/polyfills/function')
 const { find } = require('../data/users')
 
 

@@ -1,9 +1,9 @@
 const fs = require('fs')
 const path = require('path')
-require('../utils/string')
-const Email = require('../utils/email')
+require('../utils/polyfills/string')
+const Email = require('../utils/polyfills/email')
 const uid = require('../utils/uid')
-require('../utils/json')
+require('../utils/polyfills/json')
 require('../utils/function')
 const { find } = require('../data/users')
 

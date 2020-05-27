@@ -1,9 +1,9 @@
 const fs = require('fs')
 const path = require('path')
-require('../utils/string')
 const uid = require('../utils/uid')
-require('../utils/json')
-require('../utils/function')
+require('../utils/polyfills/string')
+require('../utils/polyfills/json')
+require('../utils/polyfills/function')
 const { find } = require('../data/stickies')
 
 module.exports = (userId, sticky, callback) => {

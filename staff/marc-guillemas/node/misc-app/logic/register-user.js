@@ -3,9 +3,9 @@ const path = require('path')
 const Email = require('../utils/email')
 const { find } = require('../data/users')
 const uid = require('../utils/uid')
-require('../utils/function')
-require('../utils/json')
-require('../utils/string')
+require('../utils/polyfills/string')
+require('../utils/polyfills/json')
+require('../utils/polyfills/function')
 
 
 module.exports = (newUser, callback) => {
