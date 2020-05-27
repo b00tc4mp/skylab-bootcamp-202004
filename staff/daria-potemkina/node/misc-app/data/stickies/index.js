@@ -12,7 +12,7 @@ function findStickies(filter, callback) {
     if (typeof filter !== 'object') throw new TypeError(`${filter} is not an object`) //TODO add polifill
     Function.validate(callback)
 
-    fs.readdir(path.join(__dirname, 'stickies'), (error, files) => {
+    fs.readdir(path.join(__dirname), (error, files) => {
         if (error) return callback(error)
 
         files = files.filter(file => path.extname(file) === '.json')
@@ -24,7 +24,7 @@ function findStickies(filter, callback) {
         let i = 0;
 
         (function readFile() {
-            fs.readFile(path.join(__dirname, 'stickies', files[i]), 'utf8', (error, body) => {
+            fs.readFile(path.join(__dirname, files[i]), 'utf8', (error, body) => {
                 if (error) return callback(error)
 
                 const existing = JSON.parse(body)

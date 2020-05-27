@@ -30,7 +30,10 @@ module.exports = (userId, query, callback) =>{
 
                 count++
 
-                if(count === stickies.length) callback(null, results)
+                if(count === stickies.length) {
+                    if(!results.length) return callback(new Error('no stickies'))
+                    callback(null, results)
+                }
             }
         })
     })

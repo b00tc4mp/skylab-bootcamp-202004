@@ -9,8 +9,4 @@ module.exports = {
     retrieveUser: require('./retrieve-user'),
     searchContacts: require('./search-contacts'),
     searchStickies: require('./search-stickies'),
-    createSession: require('./create-session'),
-    removeSession: require('./remove-session'),
-    retrieveSession: require('./retrieve-session'),
-    updateSession: require('./update-session')
 }

@@ -15,7 +15,7 @@ module.exports = (userId, query, callback) => {
         debugger
         findContacts({user: userId}, (error, contacts) =>{
             if(error) return callback(error)
-            if(!contacts.length) return callback(new Error('contacts are empty'))
+            if(!contacts.length) return callback(new Error('contacts is empty'))
 
             let results = []
 
@@ -30,7 +30,10 @@ module.exports = (userId, query, callback) => {
 
                 count++
 
-                if(count === contacts.length) callback(null, results)
+                if(count === contacts.length) {
+                    if (!results.length) return callback(new Error(`no results`))
+                    callback(null, results)
+                }
             }
         })
     })
