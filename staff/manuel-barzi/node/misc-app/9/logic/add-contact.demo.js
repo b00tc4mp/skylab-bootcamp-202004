@@ -10,4 +10,4 @@ const contact = {
     country: 'Spain'
 }
 
-addContact(uid(), contact, console.log)
+addContact('1590572120776-0.4543098325900867', contact, console.log)
