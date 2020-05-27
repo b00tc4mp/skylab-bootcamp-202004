@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,gBAAgB,CAAC;EACb,MAAM,EAAE,eAAe;CAAG",
-    "sources": [
-        "SearchContacts.sass"
-    ],
-    "names": [],
-    "file": "SearchContacts.css"
-}
