@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const {users} = require('../data');
+const {find} = require('../data');
 require('../utils/polyfills/string')
 require('../utils/polyfills/function')
 
@@ -9,7 +9,7 @@ module.exports = (userId,query, callback) => {
     String.validate.notVoid(query)
     Function.validate(callback)
 
-    users.find({id:userId}, (error, [user]) => {
+    find({id:userId}, 'users', (error, [user]) => {
         if (error) return callback(error)
 
         if (!user) return callback(new Error(`user with ${userId} does not exist`))

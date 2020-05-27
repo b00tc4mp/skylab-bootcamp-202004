@@ -6,12 +6,10 @@ const {find} =require('../data')
 
 
 
-module.exports = (userId, contactId, callback) => {
-
-
-
+module.exports = (userId, stickieId , callback) => {
+    
     String.validate.notVoid(userId)
-    String.validate.notVoid(contactId)
+    String.validate.notVoid(stickieId)
     Function.validate(callback)
 
 
@@ -20,16 +18,16 @@ module.exports = (userId, contactId, callback) => {
         
         if (!user) return callback(new Error(`user with id: ${userId}, does not exist`))
 
-        find({contactId}, 'contacts', (error, [contact]) => {
+        find({stickieId}, 'stickies', (error, [stickie]) => {
             
             if (error) return callback(error)
 
-            if (!contact) return callback(new Error(`this ${contactId} does not exist`))
+            if (!stickie) return callback(new Error(`this ${stickieId} does not exist`))
 
-            fs.unlink(path.join(__dirname, "..", "data", "contacts", `${contactId}.json`), (error) => {
+            fs.unlink(path.join(__dirname, "..", "data", "stickies", `${stickieId}.json`), (error) => {
                 if (error) return callback(error)
 
-                return callback(null, `Deleted user`)
+                return callback(null, `Deleted tag!`)
             })
         })
     })

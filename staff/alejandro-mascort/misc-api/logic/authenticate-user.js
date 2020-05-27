@@ -1,15 +1,22 @@
+const fs = require('fs')
+const path = require('path')
 require('../utils/polyfills/string')
-const { Email } = require('../utils')
 require('../utils/polyfills/function')
-const { users: { find } } = require('../data')
+const Email = require('../utils/email')
+const uid = require('../utils/uid')
+require('../utils/polyfills/json')
+const { find } = require('../data')
 
-module.exports = (email, password, callback) => {
+
+module.exports = (date, callback) => {
+    
+    const {email,password} = date
     String.validate.notVoid(email)
     Email.validate(email)
-    String.validate.notVoid(password)
+    String.validate.lengthGreaterEqualThan(password, 8)
     Function.validate(callback)
 
-    find({ email }, (error, [user]) => {
+    find({ email }, 'users', (error, [user]) => {
         if (error) return callback(error)
 
         if (!user) return callback(new Error(`user with e-mail ${email} does not exist`))
@@ -18,4 +25,4 @@ module.exports = (email, password, callback) => {
 
         callback(null, user.id)
     })
-} 
+}

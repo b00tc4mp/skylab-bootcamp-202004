@@ -1,74 +1,83 @@
-const registerUser = require('./register-user')
+const register = require('./register-user');
 const { random } = Math
+const fs = require('fs')
+const path = require('path')
+const {deleteFilesByExtensionFromDirectory} = require('../utils/files.js')
 const { expect } = require('chai')
-require('../utils/polyfills/json')
-const { users: { deleteMany, create, find } } = require('../data')
+const uid = require('../utils/uid')
 
-describe('logic - register user', () => {
+describe('registerUser', () => {
+    const data = path.join(__dirname, '..', 'data')
+
     let name, surname, email, password
 
-    beforeEach(done => {
-        deleteMany(error => {
+    beforeEach(done =>{
+        deleteFilesByExtensionFromDirectory(path.join(data, 'users'), '.json', error => {
             if (error) return done(error)
-
-            name = `name-${random()}`
-            surname = `surname-${random()}`
-            email = `e-${random()}@mail.com`
-            password = `password-${random()}`
+            
+            name = `name-${random()}`;
+            surname = `surname${random()}`;
+            email = `${random()}@mail.com`;
+            password = `${random()}` ;
 
             done()
         })
     })
 
-    it('should succeed on valid data', done => {
-        registerUser(name, surname, email, password, error => {
+
+    it('Sould sucess to creat a new user',done=>{
+        
+        register({name,surname,email,password},(error, id)=>{
+            
             expect(error).to.be.null
+            expect(id).to.exist
 
-            find({}, (error, users) => {
-                if (error) return done(error)
-
-                expect(users.length).to.equal(1)
-
-                const [user] = users
-
-                expect(user.name).to.equal(name)
-                expect(user.surname).to.equal(surname)
-                expect(user.email).to.equal(email)
-                expect(user.password).to.equal(password)
-
-                done()
-            })
-        })
-    })
-
-    describe('when user already exists', () => {
-        beforeEach(done => {
-            const user = { name, surname, email, password }
-
-            create(user, error => {
-                if (error) return done(error)
-
-                done()
-            })
-        })
-
-        it('should fail on trying to register an existing user', done => {
-            registerUser(name, surname, email, password, error => {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(Error)
-                expect(error.message).to.equal(`user with e-mail ${email} already exists`)
+            fs.readFile(path.join(__dirname,'..','data','users',`${id}.json`), 'utf-8',(error,body)=>{
+                expect(error).to.be.null
+                const {name: _name , surname:_surname,email:_email, password:_password ,id:_id}= JSON.parse(body);
+           
+                expect(name).to.equal(_name)
+                expect(surname).to.equal(_surname)
+                expect(email).to.equal(_email)
+                expect(password).to.equal(_password)
+                expect(id).to.equal(_id)
 
                 done()
             })
         })
     })
 
-    afterEach(done => {
-        deleteMany(error => {
+    it('Sould fail wend user already exist',done=>{
+
+        const _name = `name-${random()}`;
+        const _surname = `surname${random()}`;
+        const _email = `${random()}@mail.com`;
+        const _password = `${random()}` ;
+        const _id = uid()
+        const newUser = {name:_name,surname:_surname,email:_email,password:_password,id:_id};
+
+        fs.writeFile(path.join(data, 'users', `${_id}.json`), JSON.prettify(newUser), error => {
+            expect(error).to.be.null 
+            
+            register(newUser,(error, id)=>{
+                expect(error).to.be.an.instanceof(Error);
+                expect(id).to.be.undefined
+                expect(error.message).to.equal(`user with e-mail ${_email} already exists`);
+                done()
+            })
+        })
+    })
+    
+    afterEach(done=>{
+        deleteFilesByExtensionFromDirectory(path.join(data, 'users'), '.json', error => {
             if (error) return done(error)
 
             done()
         })
-    })
+    })    
+
 })
+
+    
+
+  

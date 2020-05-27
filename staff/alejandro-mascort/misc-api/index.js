@@ -1,8 +1,16 @@
+require('dotenv').config()
+
+const { PORT, SECRET } = process.env
+
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, addContact, addSticky, searchContacts } = require('./logic')
-const { users, contacts, stickies } = require('./data')
+const { registerUser, authenticateUser, retrieveUser, addContact, searchContacts, listContacts, addStickie, searchStickies, listStickies, removeContact, removeStickies } = require('./logic')
+const parseToken = require('./helpers/middlewares/token')
+const { find } = require('./data')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
+const jwt = require('jsonwebtoken')
+
+const { JsonWebTokenError } = jwt
 
 const app = express()
 
@@ -11,10 +19,10 @@ const parseBody = bodyParser.json()
 // users
 
 app.post('/users', parseBody, (req, res) => {
-    const { body: { name, surname, email, password } } = req
+    const { body } = req
 
     try {
-        registerUser(name, surname, email, password, error => {
+        registerUser(body, error => {
             if (error) return res.status(409).json({ error: error.message })
 
             res.status(201).send()
@@ -24,78 +32,125 @@ app.post('/users', parseBody, (req, res) => {
     }
 })
 
-app.post('/users/auth', parseBody, (req, res) => {
-    const { body: { email, password } } = req
+app.get('/users', parseToken, (req, res) => {
+    // TODO extract userId from authorization (bearer token) then retrieve user and send it back
+    // TODO if userId is received as a param, the retrieve that user instead of requester user
+    const {sub: userId, token} = req
 
     try {
-        authenticateUser(email, password, (error, userId) => {
+        retrieveUser(userId, (error, userFound)=>{
+            if (error) return res.status(404).json({error: error.message})
+
+            res.send(userFound)
+        })
+            
+    } catch (error) {
+        if (error instanceof JsonWebTokenError)
+            res.status(401)
+        else
+            res.status(406)
+
+        res.json({error: error.message})
+    }
+})
+
+app.post('/users/auth', parseBody, (req, res) => {
+    const { body } = req
+
+    try {
+        authenticateUser(body, (error, userId) => {
             if (error) return res.status(401).json({ error: error.message })
 
-            res.send({ userId })
+            const token = jwt.sign({sub:userId}, SECRET, {expiresIn: '1d'})
+
+            res.send({ token })
         })
     } catch (error) {
         res.status(406).json({ error: error.message })
     }
 })
 
-app.get('/users/:userId', (req, res) => {
+app.get('/users/:id', parseToken, (req, res) => {
     // TODO extract userId from authorization (bearer token) then retrieve user and send it back
     // TODO if userId is received as a param, the retrieve that user instead of requester user
-    const [, loggedUser] = req.header('authorization').split(' ')
-
-    const { userId } = req.params
+    const {sub: userId, token} = req
+    const { id } = req.params
 
     try {
 
-        users.find({id: loggedUser}, (error, [user]) => {
+        find({id: userId}, 'users', (error, [user]) => {
             if (error) return res.status(401).json({error: error.message})
 
-            if (user) {
-                
-                    retrieveUser(userId, (error, userFound)=>{
-                        if (error) return res.status(404).json({error: error.message})
+            if (!user) return res.status(406).json({error: 'user not authorized'})
+
+            retrieveUser(id, (error, userFound)=>{
+                if (error) return res.status(404).json({error: error.message})
+    
+                res.send(userFound)
+            })
             
-                        res.send(userFound)
-                    })
-                
-            } else res.status(406).json({error: 'user not authorized'})
         }) 
-    } catch ({message}) {
-        res.status(406).json({error: message})
+    } catch (error) {
+        if (error instanceof JsonWebTokenError)
+            res.status(401)
+        else
+            res.status(406)
+
+        res.json({error: error.message})
     }
 })
 
 
 // contacts
 
-app.post('/contacts', parseBody, (req, res) => {
-    const [, userId] = req.header('authorization').split(' ')
-
-    const { body: contact } = req
+app.post('/contacts', parseBody, parseToken, (req, res) => {
+    const {sub: userId, body} = req
 
     try {
-        addContact(userId, contact, (error, contactId) => {
+        addContact(userId, body, (error, contactId) => {
             if (error) return res.status(401).json({ error: error.message })
 
-            res.send({ contactId })
+            res.status(201).send({ contactId })
         })
     } catch (error) {
         res.status(406).json({ error: error.message })
     }
 })
 
-app.get('/contacts/:contactId', (req, res) => {
+app.get('/contacts', parseToken, (req, res) => {
     // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
-    const [, loggedUser] = req.header('authorization').split(' ')
+    const {sub: userId} = req
+
+    try{
+        listContacts(userId, (error, contacts)=>{
+            if (error) return res.status(401).json({error: error.message})
+
+            res.send(contacts)
+        })
+                
+    } catch (error) {
+        if (error instanceof JsonWebTokenError)
+            res.status(401)
+        else
+            res.status(406)
+
+        res.json({error: error.message})
+    }
+
+})
+
+app.get('/contacts/:contactId', parseToken, (req, res) => {
+    // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
+    const {sub: userId} = req
 
     const { contactId } = req.params
 
     try{
-        users.find({id: loggedUser}, (error, [user]) => {
+        find({id: userId}, 'users', (error, [user]) => {
             if (error) return res.status(404).json({error: error.message})
 
             if (user) {
-                    contacts.find({id: contactId}, (error, [contactFound])=>{
+                    find({contactId}, 'contacts', (error, [contactFound])=>{
                         if (error) return res.status(401).json({error: error.message})
 
                         if (!contactFound) return res.status(404).json({error: "No contact found"})
@@ -105,21 +160,25 @@ app.get('/contacts/:contactId', (req, res) => {
                 
             } else res.status(401).json({error: 'user not authorized'})
         }) 
-    } catch ({message}) {
-        res.status(406).json({error: message})
+    } catch (error) {
+        if (error instanceof JsonWebTokenError)
+            res.status(401)
+        else
+            res.status(406)
+
+        res.json({error: error.message})
     }
 
 })
 
-app.get('/contacts/q/:query', (req, res) => {
+app.get('/contacts/search/q=:query', parseToken,(req, res) => {
     // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
-    const [, loggedUser] = req.header('authorization').split(' ')
+    const {sub: userId} = req
 
     const { query } = req.params
 
     try {
-        
-        searchContacts(loggedUser, query, (error, results)=>{
+        searchContacts(userId, query, (error, results)=>{
             if (error) return res.status(401).json({error: error.message})
 
             if (!results) return res.status(404).json({error: "No contacts found"})
@@ -128,56 +187,161 @@ app.get('/contacts/q/:query', (req, res) => {
 
         })
        
-    } catch ({message}) {
-        res.status(406).json({error: message})
+    } catch (error) {
+        if (error instanceof JsonWebTokenError)
+            res.status(401)
+        else
+            res.status(406)
+
+        res.json({error: error.message})
+    }
+
+})
+
+app.patch('/contacts', parseBody, parseToken,(req, res) => {
+    const {sub: userId, body} = req
+
+    try {
+        removeContact(userId, body.contactId, (error, message)=>{
+            if (error) return res.status(401).json({error: error.message})
+
+            res.status(204).send()
+        })
+       
+    } catch (error) {
+        if (error instanceof JsonWebTokenError)
+            res.status(401)
+        else
+            res.status(406)
+
+        res.json({error: error.message})
     }
 
 })
 
 // stickie
 
-app.post('/stickies', parseBody, (req, res) => {
-    const [, userId] = req.header('authorization').split(' ')
+app.get('/stickies', parseToken, (req, res) => {
+    // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
+    const {sub: userId} = req
 
-    const { body: sticky } = req
+    try{
+        listStickies(userId, (error, stickies)=>{
+            if (error) return res.status(401).json({error: error.message})
+
+            res.send(stickies)
+        })
+                
+    } catch (error) {
+        if (error instanceof JsonWebTokenError)
+            res.status(401)
+        else
+            res.status(406)
+
+        res.json({error: error.message})
+    }
+
+})
+
+app.post('/stickies', parseBody, parseToken, (req, res) => {
+    const {sub: userId, body} = req
 
     try {
-        addSticky(userId, sticky, (error, stickyId) => {
+        addStickie(userId, body, (error, stickieId) => {
             if (error) return res.status(401).json({ error: error.message })
 
-            res.send({ stickyId })
+            res.status(201).send({ stickieId })
         })
     } catch (error) {
-        res.status(406).json({ error: error.message })
+        if (error instanceof JsonWebTokenError)
+            res.status(401)
+        else
+            res.status(406)
+
+        res.json({error: error.message})
     }
 })
 
-app.get('/stickies/:stickyId', (req, res) => {
+app.get('/stickies/:stickieId', parseToken, (req, res) => {
     // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
-    const [, loggedUser] = req.header('authorization').split(' ')
+    const {sub: userId} = req
 
-    const { stickyId } = req.params
+    const { stickieId } = req.params
 
     try{
-        users.find({id: loggedUser}, (error, [user]) => {
+        find({id: userId}, 'users', (error, [user]) => {
             if (error) return res.status(404).json({error: error.message})
 
             if (user) {
-                    stickies.find({id: stickyId}, (error, [stickyFound])=>{
+                    find({stickieId}, 'stickies', (error, [stickieFound])=>{
                         if (error) return res.status(401).json({error: error.message})
 
-                        if (!stickyFound) return res.status(404).json({error: "No stickies found"})
+                        if (!stickieFound) return res.status(404).json({error: "No contact found"})
             
-                        res.json(stickyFound)
+                        res.send(stickieFound)
                     })
                 
             } else res.status(401).json({error: 'user not authorized'})
         }) 
-    } catch ({message}) {
-        res.status(406).json({error: message})
+    } catch (error) {
+        if (error instanceof JsonWebTokenError)
+            res.status(401)
+        else
+            res.status(406)
+
+        res.json({error: error.message})
     }
 
 })
+
+app.get('/stickies/search/q=:query', parseToken,(req, res) => {
+    // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
+    const {sub: userId} = req
+
+    const { query } = req.params
+
+    try {
+        searchStickies(userId, query, (error, results)=>{
+            if (error) return res.status(401).json({error: error.message})
+
+            if (!results) return res.status(404).json({error: "No stickies found"})
+
+            res.send(results)
+
+        })
+       
+    } catch (error) {
+        if (error instanceof JsonWebTokenError)
+            res.status(401)
+        else
+            res.status(406)
+
+        res.json({error: error.message})
+    }
+
+})
+
+app.patch('/stickies', parseBody, parseToken,(req, res) => {
+    const {sub: userId, body} = req
+
+    try {
+        removeStickies(userId, body.stickieId, (error, message)=>{
+            if (error) return res.status(401).json({error: error.message})
+
+            res.status(204).send()
+        })
+       
+    } catch (error) {
+        if (error instanceof JsonWebTokenError)
+            res.status(401)
+        else
+            res.status(406)
+
+        res.json({error: error.message})
+    }
+
+})
+
 
 // other
 
@@ -187,4 +351,4 @@ app.get('*', (req, res) => {
 
 
 
-app.listen(8080, () => console.log(`${name} ${version} running`))
+app.listen(PORT, () => console.log(`${name} ${version} running at port ${PORT}`))

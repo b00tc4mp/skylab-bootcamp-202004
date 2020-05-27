@@ -1,39 +1,68 @@
 const fs = require('fs')
 const path = require('path')
+const {find} = require('../data');
+require('../utils/polyfills/string')
+require('../utils/polyfills/function')
 
 module.exports = (userId, callback) => {
-    // TODO validate input fields
-    // TODO check user exists, otherwise error
 
-    fs.readdir(path.join(__dirname, '..', 'data'), (error, files) => {
+    String.validate.notVoid(userId)
+    Function.validate(callback)
+
+    find({id:userId},'users',(error, [user]) => {
         if (error) return callback(error)
 
-        let wasError = false
+        if (!user) return callback(new Error(`user with ${userId} does not exist`))
 
-        const contacts = []
+        
+        fs.readdir(path.join(__dirname, '..', 'data','contacts'), (error, files) => {
+            if (error) return callback(error)
 
-        files.forEach(file => {
-            fs.readFile(path.join(__dirname, '..', 'data', 'contacts', file), 'utf8', (error, json) => {
-                if (error) {
-                    if (!wasError) {
-                        callback(error)
+            let wasError = false
+            let count = 0;
+            const contacts = []
 
-                        wasError = true
+            files = files.filter(file => path.extname(file) === '.json')
+
+            if (!files.length) callback(null, contacts)
+    
+            files.forEach(file => {
+                fs.readFile(path.join(__dirname, '..', 'data', 'contacts', file), 'utf8', (error, json) => {
+                    if (error) {
+                        if (!wasError) {
+                            callback(error)
+
+                            wasError = true
+                        }
+                        return
                     }
+    
+                    if (!wasError) {
 
-                    return
-                }
-
-                if (!wasError) {
-                    const contact = JSON.parse(json)
-
-                    contact.id = file.substring(0, file.indexOf('.json'))
-
-                    contacts.push(contact)
-
-                    if (contacts.length === files.length) callback(null, contacts)
-                }
+                        const contact = JSON.parse(json)
+    
+                        if(contact.user === userId){
+                            contact.id = file.substring(0, file.indexOf('.json'))
+    
+                            contacts.push(contact)
+        
+                        }
+                        count++
+                        if (count === files.length) callback(null, contacts)
+                      
+                    }
+                })
             })
         })
+
     })
+    
+
+    
+
+
+    
+    
+
+        
 }

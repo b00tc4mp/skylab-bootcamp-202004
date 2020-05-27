@@ -1,78 +1,85 @@
-const authenticateUser = require('./authenticate-user')
+const register = require('./register-user');
 const { random } = Math
+const fs = require('fs')
+const path = require('path')
+const {deleteFilesByExtensionFromDirectory} = require('../utils/files.js')
 const { expect } = require('chai')
-require('../utils/polyfills/json')
-const { users: { deleteMany, create } } = require('../data')
+const uid = require('../utils/uid')
+const authenticated = require('../logic/authenticate-user')
 
-describe('logic - authenticate user', () => {
-    let name, surname, email, password, userId
+describe('authenticatedUser', () => {
+    const data = path.join(__dirname, '..', 'data')
 
-    beforeEach(done => {
-        deleteMany(error => {
+    let name, surname, email, password, id
+
+    beforeEach(done =>{
+        deleteFilesByExtensionFromDirectory(path.join(data, 'users'), '.json', error => {
+            if (error) return done(error)
+            
+            name = `name-${random()}`;
+            
+            surname = `surname${random()}`;
+            email = `${random()}@mail.com`;
+            password = `${random()}` ;
+            id = uid()
+
+            const newUser = {name,surname,email,password,id};
+
+            fs.writeFile(path.join(data, 'users', `${id}.json`), JSON.prettify(newUser), error => {
+                if (error) return done(error) 
+                done()
+            })
+        })
+    })
+
+
+    it('Sould sucess to authenticate a user',done=>{
+        const user = {email,password}
+
+        authenticated(user, (error, id) => {
+            expect(error).to.be.null
+            expect(id).to.exist
+
+            done()
+        })
+    })
+
+    it('Sould fail wend email don`t exist',done=>{
+        const _email = `${random()}@Email.com`;
+        const user = {email:_email,password}
+
+        authenticated(user, (error, id) => {
+            expect(error).to.be.an.instanceof(Error);
+            expect(id).to.be.undefined
+            expect(error.message).to.equal(`user with e-mail ${_email} does not exist`);
+
+            done()
+        })
+    })
+    it('Sould fail on incorrect password',done=>{
+        const _password = `${random()}`
+        const user = {email,password:_password}
+
+        authenticated(user, (error, id) => {
+            expect(error).to.be.an.instanceof(Error);
+            expect(id).to.be.undefined
+            expect(error.message).to.equal('wrong password');
+
+            done()
+        })
+    })
+
+    
+    afterEach(done=>{
+        deleteFilesByExtensionFromDirectory(path.join(data, 'users'), '.json', error => {
             if (error) return done(error)
 
-            name = `name-${random()}`
-            surname = `surname-${random()}`
-            email = `e-${random()}@mail.com`
-            password = `password-${random()}`
-
             done()
         })
-    })
+    })    
 
-    describe('when user already exists', () => {
-        beforeEach(done => {
-            const user = { name, surname, email, password }
-
-            create(user, (error, id) => {
-                if (error) return done(error)
-
-                userId = id
-
-                done()
-            })
-        })
-
-        it('should succeed on correct credentials', done => {
-            authenticateUser(email, password, (error, _userId) => {
-                expect(error).to.be.null
-
-                expect(_userId).to.equal(userId)
-
-                done()
-            })
-        })
-
-        it('should fail on wrong password', done => {
-            password += 'wrong-'
-
-            authenticateUser(email, password, error => {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(Error)
-                expect(error.message).to.equal(`wrong password`)
-
-                done()
-            })
-        })
-    })
-
-    it('should fail when user does not exist', done => {
-        authenticateUser(email, password, error => {
-            expect(error).to.exist
-
-            expect(error).to.be.an.instanceof(Error)
-            expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
-
-            done()
-        })
-    })
-
-    afterEach(done => {
-        deleteMany(error => {
-            if (error) return done(error)
-
-            done()
-        })
-    })
 })
+
+    
+
+  
