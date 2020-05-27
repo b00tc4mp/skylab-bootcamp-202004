@@ -39,8 +39,25 @@ app.post('/users/auth', parseBody, (req, res) => {
 
 app.get('/users/:userId?', (req, res) => {
     // TODO extract userId from authorization (bearer token) then retrieve user and send it back
-    // TODO if userId is received as a param, the retrieve that user instead of requester user
+    const [, userId] = req.header('authorization').split('')
+
+    if (!userId) {
+
+        try {
+            retrieveUser(userId, (error, user) => {
+                if (error) return res.status(401).json({ error: error.message })
+
+                res.send({ user })
+            })
+        } catch (error) {
+            res.status(406).json({ error: error.message })
+        }
+    }
 })
+
+
+
+
 
 // contacts
 
