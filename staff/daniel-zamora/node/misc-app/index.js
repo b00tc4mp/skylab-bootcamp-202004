@@ -3,14 +3,9 @@ const express = require('express')
 const app = express()
 
 //Components
-const Search = require('./components/Search')
-const ListContacts = require('./components/ListContacts')
-const Feedback = require('./components/Feedback')
 const ListStickies = require('./components/ListStickies')
 const AddSticky = require('./components/AddSticky')
-const Register = require('./components/Register')
 const ListUsers = require('./components/ListUsers')
-const ContactDetails = require('./components/ContactDetails')
 const NotFound404 = require('./components/NotFound404')
 
 
@@ -30,6 +25,11 @@ app.use(express.static('public'))
 app.set('view engine', 'pug')
 app.set('views', './components')
 
+app.get('/supu', (req,res)=> {
+
+    res.render('Search',{ string:'contacts', contacts:[{name: 'manu'}], query: 'cagoen'} )
+})
+
 app.get('/home', (req, res) =>{ 
     const cookie = req.header('cookie')
 
@@ -39,12 +39,12 @@ app.get('/home', (req, res) =>{
 
     if (!id) return res.redirect('/login')
     
-    res.render('Home')
+    res.render('Home',{username})
 })
 
 app.get('/register', (req, res)=>{
     
-    res.send(App(Register()))
+    res.render('Register')
 })
 
 app.post('/register',(req, res)=>{
@@ -58,12 +58,14 @@ app.post('/register',(req, res)=>{
         })
         try{
             registerUser(obj, (error,id)=>{ debugger
-                if(error) return res.send(App(Feedback("Fail:(",'error')))
-                const {username} = obj
-                res.send(App(Feedback(`User ${username} created!`)))
+                if(error) return res.render("Feedback",{message:error.message, level:"error"})
+                //const {username} = obj
+                //const feedback = {message: `User ${username} created!` , level:"error"}
+                //res.render('Feedback', feedback)
+                res.redirect("/login")
             })
         }catch(error){
-            if(error) return res.send(App(Feedback("Fail:(",'error')))  
+            if(error) return res.render('Feedback'("Fail:(",'error'))
         }
     })                
 })
@@ -87,9 +89,9 @@ app.post('/login',(req, res)=>{
                 if(error) return res.send(App(Feedback("Fail:(",'error')))
                 if (!user) return res.send(App(Feedback("Wrong e-mail or password",'warning')))
                
-                const {username, id} = user
-                res.cookie(`${username}`, id)
-                res.redirect('/home') 
+                const { id} = user
+                res.cookie("userId", id)
+                res.render('Home') 
             })
         }catch(error){
             if(error) return res.send(App(Feedback("Fail:(",'error')))  
@@ -130,8 +132,9 @@ app.post("/contact-details", (req, res) => {
 
     req.on('data', data=>{
         let [, contact] = decodeURIComponent(data.toString()).split('=')
-        contact = JSON.parse(contact.split('/')[0])
-        res.send(App(ContactDetails(contact)))
+        contact = JSON.parse(contact.split('&')[0])
+        
+        res.render('ContactDetails', { contact })
     })
 })
 
@@ -175,7 +178,7 @@ app.get('/contacts', (req, res) => {
             search(id, query, string,(error, contacts) => {
                 if (error) return res.send(App(`${Search(string)}${ListContacts(contacts)}${Feedback(error.message, 'error')}`))
     
-                res.send(App(`${Search(string, query)}${ListContacts(contacts)}`))
+                res.render('Search',{string, query})
             })
         }catch(error){
             if(error) return res.send(App(Feedback("Fail:(",'error')))  
@@ -183,13 +186,14 @@ app.get('/contacts', (req, res) => {
         
     }
     else{
+        // const cookieId = cookie.split(';')//A veces hay que meterlo ¯\_(ツ)_/¯
         const [,id] = cookie.split('=')
         const string = "contacts"
 
         try{
             listContacts(id, (error, contacts)=>{
-                if (error) return res.send(App(`${Search(string)}${ListContacts()}${Feedback(error.message, 'error')}`))
-                res.send(App(`${Search(string)}${ListContacts(contacts)}`))
+                if (error) return res.render('Search',{string, contacts, Feedback:{level: 'error', message: error.message} })
+                res.render('Search',{string, contacts})
             })
         }catch(error){
             if(error) return res.send(App(Feedback("Fail:(",'error')))  
@@ -217,14 +221,15 @@ app.post('/add-contact',(req, res)=>{
             const split = element.split('=')
             contact[split[0]] = split[1]
         })
-        const [,id] = cookie.split('=')
+        const [cookieId] = cookie.split(';')
+        const [,id] = cookieId.split('=')
         contact.id = id
         try{
             addContact(contact, (error,id)=>{
                 if(error)return res.send(App(`${AddContact()}${Feedback("Fail:(",'error')}`))
                 
                 const {name} = contact
-                res.send(App(`${AddContact()}${Feedback(`Contact ${name} created!`)}`))
+                res.render('AddContact')
             })  
         }catch(error){
             if(error) return res.send(App(Feedback("Fail:(",'error')))  
@@ -312,8 +317,8 @@ app.post('/logout', (req, res) => {
     res.redirect('/login')
 })
 
-app.get('\*', (req,res)=>{
-    res.status(404).send(App(NotFound404()));
-})
+// app.get('\*', (req,res)=>{
+//     res.status(404).send(App(NotFound404()));
+// })
 
 app.listen(8081)

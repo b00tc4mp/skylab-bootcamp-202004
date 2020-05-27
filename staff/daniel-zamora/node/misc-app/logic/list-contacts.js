@@ -10,7 +10,7 @@ module.exports = (id, callback) => {
         const contacts = []
         let count = 0
 
-        if (!files.length) return callback(new Error("You have no contacts"))
+        if (!files.length) return callback(null, null)
         
         files.forEach(file => {
             fs.readFile(path.join(__dirname, '..', 'data', 'contacts', file), 'utf8', (error, json) => {
