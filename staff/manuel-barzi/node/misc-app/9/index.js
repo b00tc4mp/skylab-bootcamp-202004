@@ -120,7 +120,7 @@ app.get('*', cookieSession, (req, res) => {
 
     if (userId) return res.redirect('/home')
 
-    res.render('NotFound404', { cookiesAccepted })
+    res.status(404).render('NotFound404', { cookiesAccepted })
 })
 
 app.listen(8080, () => console.log('server running'))

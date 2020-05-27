@@ -1,4 +1,5 @@
 module.exports = {
-    contacts: require('./contacts'),
-    users: require('./users')
+    contacts: require('./manager')('contacts'),
+    users: require('./manager')('users'),
+    stickies: require('./manager')('stickies')
 }
