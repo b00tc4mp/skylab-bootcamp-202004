@@ -1,5 +1,6 @@
 module.exports = {
-    contacts: require('./contacts'),
-    users: require('./users'),
-    sessions: require('./sessions')
+    contacts: require('./manager')('contacts'),
+    users: require('./manager')('users'),
+    sessions: require('./manager')('sessions'),
+    stickies: require('./manager')('stickies')
 }
