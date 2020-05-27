@@ -1,6 +1,6 @@
-require('../utils/string')
+require('../utils/polyfills/string')
 const Email = require('../utils/email')
-require('../utils/function')
+require('../utils/polyfills/function')
 const uid = require('../utils/uid')
 const fs = require('fs')
 const path = require('path')

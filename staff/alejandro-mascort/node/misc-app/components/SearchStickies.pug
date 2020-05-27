@@ -1,0 +1,10 @@
+extend Home
+
+block Compo
+    section.search
+        form(action='/search-stickies' method='GET')
+            input(name='q' placeholder='Search' value=`${query || ''}`)
+            button Search
+        
+        if feedback
+            include Feedback.pug

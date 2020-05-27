@@ -1,8 +1,8 @@
 const fs = require('fs')
 const path = require('path')
 const {find} = require('../data');
-require('../utils/string')
-require('../utils/function')
+require('../utils/polyfills/string')
+require('../utils/polyfills/function')
 
 module.exports = (userId, callback) => {
 

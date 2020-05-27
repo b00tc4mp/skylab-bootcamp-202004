@@ -1,10 +1,5 @@
 const express = require('express')
 const path = require('path')
-//COMPONENTS
-// const AddContact = require('./components/AddContact')
-const AddStickie = require('./components/AddStickie')
-const ListStickies = require('./components/ListStickies')
-const SearchStickies = require('./components/SearchStickies')
 //LOGIC
 const register = require('./logic/register-user')
 const authenticated = require('./logic/authenticate-user')
@@ -17,7 +12,7 @@ const addStickie = require('./logic/add-stickie')
 const listStickies = require('./logic/list-stickies')
 const removeStickies = require('./logic/remove-stickie')
 const searchStickies = require('./logic/search-stickies')
-require('./utils/string');
+require('./utils/polyfills/string');
 
 const bodyParser = require('body-parser')
 const session = require('express-session')
@@ -261,134 +256,96 @@ debugger
 /////////
 
 // **********ADD-stickie***********************************************
-app.get('/add-stickie', (req, res) => {
-    const cookie = req.header('cookie')
-
-    if (!cookie) return res.redirect('/login')
-
-    const [, userId] = cookie.split('=')
+app.get('/add-stickie', cookieSession, (req, res) => {
+    const { session : {  cookiesAccepted, userId }} = req
 
     if (!userId) return res.redirect('/login')
 
-    res.render(App(Home(undefined, AddStickie())))
+    res.render('AddStickie', {cookiesAccepted})
 })
 
 // **********ADD-stickie-POST***********************************************
-app.post('/add-stickie', (req, res) => {
-    let body ={};
-    let userId
-    const cookie = req.header('cookie')
-    if (cookie) {
-        [, userId] = cookie.split('=')
+app.post('/add-stickie', parseBody, cookieSession,(req, res) => {
+    const { session : {  cookiesAccepted, userId}, body } = req
 
-        if (!userId) return res.redirect('/login')
-
-    } else return res.redirect('/login')  
-    
-    req.on('body', chunk => {body = chunk.toString().convertChunk()})
-    
-    req.on('end', () =>{
-        try {
-            addStickie(userId, body, (error, stickieId) => {
-                debugger
-                if (error) return res.render(App(Home(undefined ,AddStickie(Feedback(error.message, 'error')))))
+    if (!userId) return res.redirect('/login')  
         
-                res.render(App(Home(undefined,AddStickie(Feedback('stickie Saved!')))))
-            })
-        } catch ({message}) {
-            res.render(App(Home(undefined,AddStickie(Feedback(message, 'error')))))
-            return
-        }
+    try {
+        addStickie(userId, body, (error, stickieId) => {
+
+            if (error) return res.render('AddStickie',{ cookiesAccepted, feedback: true, message:error.message })
     
-    })
+            res.render('AddStickie',{ cookiesAccepted, feedback: true, message:'Stickie Saved!' })
+        })
+    } catch ({message}) {
+        res.render('AddStickie',{ cookiesAccepted, feedback: true, message:message })
+        return
+    }
        
 })
 // **********LIST-stickie***********************************************
-app.get('/stickies',(req,res)=>{
-    const cookie = req.header('cookie')
+app.get('/stickies',  cookieSession, (req,res)=>{
+    const { session : {  cookiesAccepted, userId} } = req
 
-    if (cookie) {
-        const [, userId] = cookie.split('=')
+    if (!userId) return res.redirect('/login')
 
-        if (!userId) return res.redirect('/login')
+    try {
+        listStickies(userId,(error,stickies)=>{
+            if(error) return res.render('Home',{ cookiesAccepted, feedback: true, message:error.message})
 
-        try {
-            listStickies(userId,(error,stickies)=>{
-                if(error) return res.render((App(Home(ListStickies(undefined,Feedback(error.message,'error'))))))
-
-                res.render((App(Home(undefined,ListStickies(stickies)))))
-            })
-            
-        } catch ({message}) {
-            res.render((App(Home(undefined,ListStickies(undefined,Feedback(message,'error'))))))
-            return
-        }
-    } else return res.redirect('/login')
+            return res.render('Home',{ cookiesAccepted, stickies})
+        })
+        
+    } catch ({message}) {
+        res.render('Home',{ cookiesAccepted, feedback: true, message })
+        return
+    }
     
 })
 // **********LIST-stickie-POST***********************************************
-app.post('/stickies',(req,res)=>{
-    const cookie = req.header('cookie')
-    let body= {}
-    if (cookie) {
-        const [, userId] = cookie.split('=')
+app.post('/stickies', parseBody, cookieSession, (req,res)=>{
+    const { session : {  cookiesAccepted, userId}, body } = req
 
-        if (!userId) return res.redirect('/login')
+    if (!userId) return res.redirect('/login')
 
-        req.on('body', chunk => {body = chunk.toString().convertChunk()})
-       
-        req.on('end',()=>{
-            try {
-                debugger
-                removeStickies(userId, body.stickieId,(error,stickies)=>{
-                    if(error) return res.render((App(Home(ListStickies(undefined,Feedback(error.message,'error'))))))
-    
-                    res.redirect('/stickies')
-                })
-                
-            } catch ({message}) {
-                res.render((App(Home(undefined,ListStickies(undefined,Feedback(message,'error'))))))
-                return
-            }
-        
+    try {
+        removeStickies(userId, body.stickieId,(error, stickies)=>{
+            if(error) return res.render('Home',{ cookiesAccepted, feedback: true, message:error.message})
+
+            res.redirect('/stickies')
         })
-    } else return res.redirect('/login')
+        
+    } catch ({message}) {
+        res.render('Home',{ cookiesAccepted, feedback: true, message})
+        return
+    }
 })
 // **********Search-stickie-GET***********************************************
-app.get('/search-stickies',(req,res)=>{
-    const cookie = req.header('cookie')
-    const { url } = req
+app.get('/search-stickies', cookieSession,(req,res)=>{
+    const { session : {  cookiesAccepted, userId }, url } = req
 
-    if (cookie) {
-        const [, userId] = cookie.split('=')
+    if (!userId) return res.redirect('/login')
+debugger
+    if (url.includes('?')) {
+        const [, queryString] = url.split('?')
+        const [, query] = queryString.split('=')   
 
-        if (!userId) return res.redirect('/login')
+        try {
+            searchStickies(userId, query,(error,stickies)=>{
+                
+                if (error) return res.render('SearchStickies',{ cookiesAccepted, feedback: true, message:error.message})
 
-        if (url.includes('?')) {
-                const [, queryString] = url.split('?')
-                const [, query] = queryString.split('=')   
-
-                try {
-                    debugger
-                    searchStickies(userId, query,(error,contacts)=>{
-                        
-                        if (error) return res.render((App(Home(undefined,SearchStickies(query, ListStickies(undefined,Feedback(error.message,'error')))))))
-        
-                        return res.render((App(Home(undefined,SearchStickies(query,ListStickies(contacts))))))
-                    })
-                    
-                } catch ({message}) {
-                    res.render((App(Home(undefined,SearchStickies(query,ListStickies(undefined,Feedback(message,'error')))))))
-                    return
-                }
-        } else {
-            res.render(App(Home(undefined, SearchStickies())))
+                return res.render('SearchStickies',{ cookiesAccepted, stickies})
+            })
+            
+        } catch ({message}) {
+            res.render('SearchStickies',{ cookiesAccepted, feedback: true, message })
+            return
         }
-    } else return res.redirect('/login')
+    } else {
+        res.render('SearchStickies',{ cookiesAccepted })
+    }
 })
-
-
-
 
 app.listen(8080, () => console.log('server running'))
 
