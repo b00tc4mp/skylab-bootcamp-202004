@@ -98,22 +98,18 @@ app.post('/accept-cookies',cookieSession,(req,res) => {
     res.redirect(req.header('referer'))
   })
 })
+ 
+ app.get("/contacts",cookieSession, (req, res) => {
 
-/* app.get("/contacts", (req, res) => {
-
-  const cookie = req.header('cookie')
-  if (!cookie) return res.redirect('/login')
-
-  const [, userId] = cookie.split("=")
-  if (!userId) return res.redirect('/login')
+ const {session : {cookiesAccepted, userId}} = req
 
   listContacts(userId, (error, results) => {
     if (error) throw error;
-    res.send(App(ListContacts(results)));
+    res.render('ListContacts', {cookiesAccepted, results});
   });
 });
-
-app.get("/search-contact", parseCookies, (req, res) => {
+  
+/*app.get("/search-contact", parseCookies, (req, res) => {
   const { cookies: { userId } } = req
 
   if (!userId) return res.redirect('/login')
@@ -141,46 +137,33 @@ app.post("/logout",cookieSession, (req, res) => {
 
   res.redirect("/login");
 });
-/* app.get("/add-contact", (req, res) => {
-  const cookie = req.header('cookie');
-  if (!cookie) return res.redirect("/login");
+app.get("/add-contact",cookieSession, (req, res) => {
 
-  const [, id] = cookie.split("=");
-  if (!id) return res.redirect("/login");
+  const {session : {cookiesAccepted, userId} } = req
 
-  res.send(App(AddContacts()));
+  if(!userId) return res.redirect ('/login')
+
+  res.render('AddContact', {cookiesAccepted})
+
 });
 
-app.post("/add-contact", (req, res) => {
+  app.post("/add-contact",parseBody,cookieSession, (req, res) => {
+  const { body : {  name, surname, email, phone, birth, country}} = req
 
-  const cookie = req.header('cookie');
-  if (!cookie) return res.redirect("/login");
+  const contact = { name, surname, email, phone, birth, country}
 
-  const [, userId] = cookie.split("=");
-  if (!userId) return res.redirect("/login");
+  const { session : { userId}} =req
 
-  let body = "";
-  req.on("data", (chunk) => (body += chunk));
-  req.on("end", () => {
-    const keyValue = body.split("&");
-    const contact = keyValue.reduce((contact, keyValue) => {
-      const [key, value] = keyValue.split("=");
-      contact[key] = decodeURIComponent(value);
+  addContact(contact,userId, (error) => {
+    if (error) throw error 
 
-      return contact;
-    }, {});
-    const { name, surname, email, phone, birth, country } = contact;
+  res.redirect('/home')
+  })
+ }) 
 
-    addContact(contact, userId, (error, contactId) => {
-      debugger
-      if (error) throw error;
 
-      res.redirect("/add-contact");
-    });
-  });
-});
 
-app.get("/search-users", parseCookies, (req, res) => {
+/*app.get("/search-users", parseCookies, (req, res) => {
   const { cookies: { userId } } = req
   if (!userId) res.redirect('/login')
 
