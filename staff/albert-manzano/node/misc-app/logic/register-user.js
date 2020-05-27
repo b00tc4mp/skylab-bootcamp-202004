@@ -12,23 +12,17 @@ module.exports = (name, surname, email, password, callback) => {
   String.validate.lengthGreaterEqualThan(password, 8);
   Function.validate(callback);
 
-  const data = path.join(__dirname, "..", "data");
- 
   find({ email }, (error, [user]) => {
-    if (error) return callback(error);
+    if (error) return callback(error)
 
-    if (user) return callback(new Error(`user with e-mail ${email}`));
+    if (user) return callback(new Error(`user with e-mail ${email} already exists`))
 
-    const id = uid();
+    const newUser = { name, surname, email, password }
 
-    const newUser = { id, name, surname, email, password };
+    create(newUser, error => {
+      if (error) return callback(error)
 
-    fs.writeFile(path.join(data, "users", `${id}.json`),
-      JSON.prettify(newUser),
-      (error) => {
-        if (error) return callback(error);
-
-        callback(null, id);
-      });
-  });
-};
+      callback(null)
+    })
+  })
+}

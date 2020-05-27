@@ -1,28 +1,43 @@
 const express = require('express')
-const { retrieveUser, createSession, registerUser, authenticateUser, listContacts, addContact, searchContacts, addSticky, searchStickies, listStickies, removeContact, removeSticky } = require('./logic')
-const { App, Landing, Home, Register, Login, ListContacts, ListStickies, AddContact, AddSticky, SearchContacts, SearchStickies } = require('./components')
-const { parseBody, parseCookies, cookieSession } = require('./utils/middlewares')
+const { retrieveUser, registerUser, authenticateUser, listContacts, addContact, searchContacts, addSticky, searchStickies, listStickies, removeContact, removeSticky } = require('./logic')
+// const { App, Landing, Home, Register, Login, ListContacts, ListStickies, AddContact, AddSticky, SearchContacts, SearchStickies } = require('./components')
+const bodyParser = require('body-parser')
+const session = require('express-session')
+const FileStore = require('session-file-store')(session)
+
+const parseBody = bodyParser.urlencoded({ extended: false })
 
 const app = express()
 
 app.use(express.static('public'))
 
-app.get('/', parseCookies, cookieSession, (req, res) => {
+const cookieSession = session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    // cookie: { secure: true } // WARN this does not make it work => RTFM!
+    cookie: {},
+    store: new FileStore({
+        path: path.join(__dirname, 'data', 'sessions')
+    })
+})
+
+app.get('/', cookieSession, (req, res) => {
     const { session: { cookiesAccepted, userId } } = req;
 
     if (userId) return res.redirect('/home');
 
-    res.send(App(Landing(), cookiesAccepted));
+    res.render('Landing', { cookiesAccepted });
 })
 
 //========== REGISTER
 
-app.get('/register', parseCookies, cookieSession, (req, res) => {
+app.get('/register', cookieSession, (req, res) => {
     const { session: { cookiesAccepted, userId } } = req;
 
     if (userId) res.redirect('./home');
 
-    res.send(App(Register(), cookiesAccepted));
+    res.render('Register', { cookiesAccepted });
 })
 
 app.post('/register', parseBody, (req, res) => {
@@ -30,78 +45,77 @@ app.post('/register', parseBody, (req, res) => {
 
     try {
         registerUser(name, surname, email, password, (error, id) => {
-            if (error) return res.send(App(Register(error.message)));
+            if (error) return res.render('Register', { message });
 
             res.redirect('/login');
         })
     } catch ({ message }) {
-        res.send(App(Register(message)));
+        return res.reder('Register', { message, cookiesAccepted });
 
-        return
     }
 });
 
 //========== LOGIN
 
-app.post('/login', parseBody, cookieSession, (req, res) => {
+app.get('/login', parseBody, cookieSession, (req, res) => {
     const { session: { cookiesAccepted, userId } } = req;
 
     if (userId) return res.redirect('./home');
 
-    res.send(App(Login(), cookiesAccepted));
+    res.render('Login', { cookiesAccepted });
 });
 
-app.post('/login', parseBody, parseCookies, cookieSession, (req, res) => {
+app.post('/login', parseBody, cookieSession, (req, res) => {
     const { body: { email, password } } = req;
 
     try {
         authenticateUser(email, password, (error, userId) => {
-            if (error) throw res.send(App(Login(error.message)));
+            if (error) return res.render('Login', { message });
 
             const { session } = req;
 
             session.userId = userId;
 
             session.save(error => {
-                if (error) throw res.send(App(Login(error)));
+                if (error) return res.render('Login', { message });
 
                 res.redirect('./home');
             })
         })
     } catch (message) {
-        res.send(App(Login(message)));
+        res.render('Login', { message, cookiesAccepted });
 
     }
 });
 
 //=========== HOME
 
-app.get('/home', parseCookies, cookieSession, (req, res) => {
+app.get('/home', cookieSession, (req, res) => {
     const { session: { cookiesAccepted, userId } } = req;
 
     if (!userId) return res.redirect('/login');
 
     try {
         retrieveUser(userId, (error, user) => {
-            if (error) throw res.send(App(Home(error)));
+            if (error) return res.render('Home', { error });
 
             const { name } = user;
 
-            res.send(App(Home(name), cookiesAccepted));
+            res.render('Home', { name, cookiesAccepted });
         })
     } catch (message) {
-        res.send(App(Home(message), cookiesAccepted));
+        res.render('Home', { message, cookiesAccepted });
     }
 });
 
 //================ ADD CONTACT
 
-app.get('/add-contact', parseCookies, cookieSession, (req, res) => {
+app.get('/add-contact', cookieSession, (req, res) => {
     const { session: { cookiesAccepted, userId } } = req;
 
     if (!userId) return res.redirect('/login');
 
-    res.send(App(AddContact(), cookiesAccepted));
+    res.render('AddContact', { cookiesAccepted });
 });
 
 app.post('/add-contact', parseBody, (req, res) => {
@@ -109,32 +123,37 @@ app.post('/add-contact', parseBody, (req, res) => {
 
     try {
         addContact(userId, contact, (error, id) => {
-            if (error) throw res.send(App(AddContact(error.message)));
+            if (error) return res.render(AddContact, { message });
 
             res.redirect('/add-contact');
         })
 
     } catch (message) {
-        res.send(App(AddContact(message)));
+        res.render('AddContact', { message });
     }
 });
 
 //================= LIST CONTACTS
 
-app.get('/list-contacts', parseCookies, cookieSession, (req, res) => {
+app.get('/list-contacts', cookieSession, (req, res) => {
     const { session: { cookiesAccepted, userId } } = req;
 
     if (!userId) return res.redirect('/login');
 
-    listContacts(userId, (error, contacts) => {
-        if (error) throw res.send(App(ListContacts(error.message)));
+    try {
+        listContacts(userId, (error, stickies) => {
+            if (error) return res.render('ListContacts', { message });
 
-        res.send(App(ListContacts(contacts), cookiesAccepted));
-    })
+            res.render('ListContacts', { stickies, cookiesAccepted });
+        })
+
+    } catch (message) {
+        res.render('ListContacts', { message, });
+    }
 
 })
 
-app.get('/list-contacts/:idContact', parseBody, parseCookies, cookieSession, (req, res) => {
+app.get('/list-contacts/:idContact', parseBody, cookieSession, (req, res) => {
     const { idContact } = req.params;
     const { session: { cookiesAccepted, userId } } = req;
 
@@ -142,43 +161,57 @@ app.get('/list-contacts/:idContact', parseBody, parseCookies, cookieSession, (re
 
     try {
         removeContact(userId, idContact, (error, feedback) => {
-            if (error) throw res.send(App(ListContacts(error)));
-            if (feedback) return res.send(App(ListContacts(feedback)));
-            else throw res.send(App(ListContacts(error.message)));
+            if (error) return res.render('ListContacts', { error });
+            if (feedback) return res.render('ListContacts', { feedback });
+            else return res.render('ListContacts', { message });
         })
-    } catch (message) {
-        res.send(App(ListContacts(message), cookiesAccepted));
+    } catch (error) {
+        const { message } = error
+        res.render('ListContacts', { message, cookiesAccepted });
     }
 });
 
 //================= Search Contacts
 
-app.get('/search-contacts', (req, res) => {
-    checkCookie(req, (error, userId) => {
-        if (error) return res.redirect('/login')
-        if (userId) {
-            if (req.query.q) {
-                const query = req.query.q
-                searchContacts(query, (error, contacts) => {
-                    if (error) throw error
-                    return res.send(App(SearchContacts(query, contacts) + ListContacts(contacts)))
+app.get('/search-contacts', cookieSession, (req, res) => {
+    const { session: { cookiesAccepted, userId } } = req;
 
-                })
-            } else return res.send(App(SearchContacts()))
+    if (!userId) return res.redirect('/login');
+
+    if (req.query.q) {
+        const query = req.query.q
+
+        try {
+            searchContacts(query, (error, contacts) => {
+                if (error) throw error
+
+                return res.send(App(SearchContacts(query, contacts) + ListContacts(contacts)))
+            })
+        } catch (error) {
+
         }
-    })
+
+    } else return res.send(App(SearchContacts()))
 })
+
+
 
 // ============= Sticky Notes
 
-app.get('/add-sticky', (req, res) => {
-    checkCookie(req, (error, userId) => {
-        if (error) return res.redirect('/login')
-        if (userId) {
-            res.send(App(AddSticky()))
-        }
+
+app.get('/list-stickies', cookieSession, (req, res) => {
+    const { session: { cookiesAccepted, userId } } = req;
+
+    if (!userId) return res.redirect('/login');
+
+    listStickies(userId, (error, contacts) => {
+        if (error) throw res.send(App(ListStickies(error.message)));
+
+        res.send(App(ListStickies(contacts), cookiesAccepted));
     })
+
 })
+
 
 app.post('/add-sticky', (req, res) => {
     let body = ''
@@ -265,16 +298,48 @@ app.get('/search-stickies', (req, res) => {
     })
 })
 
-//======================= LOGOUT
+//======================= ACCEPT COOKIES
 
-app.post('/logout', parseCookies, cookieSession, (req, res) => {
+app.post('/accept-cookies', cookieSession, (req, res) => {
     const { session } = req;
 
-    session.destroy(error => {
-        if (error) throw error
+    session.cookiesAccepted = true;
 
-        res.redirect('/login');
+    session.save(error => {
+        if (error) throw res.redirect(req.header('referer'), { message })
+
+        res.redirect(req.header('referer'));
     });
 });
 
+//======================= LOGOUT
+
+app.post('/logout', cookieSession, (req, res) => {
+    const { session } = req;
+
+    try {
+        session.destroy(error => {
+            if (error) throw error
+
+            res.redirect('/login');
+        });
+    } catch (error) {
+        const { message } = error
+        res.redirect(req.header('referer'), { message })
+    }
+});
+
 app.listen(8080, () => console.log('server running'));
+
+//**************** undefined */
+
+
+app.get('*', cookieSession, (req, res) => {
+    const { session: { cookiesAccepted, userId } } = req
+
+    if (userId) return res.redirect('/home')
+
+    res.render('NotFound404', { cookiesAccepted })
+})
+
+app.listen(8080, () => console.log('server running'))
