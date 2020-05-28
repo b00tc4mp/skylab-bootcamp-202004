@@ -9,6 +9,7 @@ module.exports = (body) => {
     <link rel="stylesheet" href="style.css"> 
     </head>
     <body>
+        ${!cookiesAccepted && Cookies() || ''}
         ${body}
     </body>
 </html>
