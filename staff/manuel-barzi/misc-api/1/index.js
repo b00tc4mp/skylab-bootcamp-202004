@@ -1,6 +1,7 @@
 require('dotenv').config()
 
-const { PORT, SECRET } = process.env
+const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET } } = process
+const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
 const { registerUser, authenticateUser, retrieveUser, addContact } = require('./logic')

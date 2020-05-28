@@ -1,0 +1,31 @@
+section.contacts
+  a(href='/home') Home
+  h2 Contacts list
+  .table
+    .table__body
+        if contacts
+            each contact in contacts 
+                .table__item
+                    if contact.name 
+                        p  #{contact.name}
+                    if contact.surnmae 
+                        p  #{contact.surname}
+                    if contact.email 
+                        p  #{contact.email}
+                    if contact.phone 
+                        p  #{contact.phone}
+                    if contact.birthdate 
+                        p  #{contact.birthdate}
+                    if contact.country 
+                        p  #{contact.country}
+
+                    div
+                        form(method='POST' action='/contacts')
+                            input(name='contactId' style='visibility:hidden;' value=`${contact.contactId}`)
+                            button Remove
+
+        if contacts.length === 0
+            p No contacts added
+
+        if feedback
+            include Feedback.pug

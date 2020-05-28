@@ -1,0 +1,13 @@
+extends App
+
+block body
+
+
+
+  section.stickies
+    h2 Stickies list
+    ul
+      each sticky in stickies
+        li= 'Title:' + sticky.title  + '  Comment: ' + sticky.comment
+        
+          
