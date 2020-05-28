@@ -8,6 +8,7 @@ const { registerUser, authenticateUser, retrieveUser, addContact } = require('./
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const jwt = require('jsonwebtoken')
+const { DuplicityError, VoidError } = require('./errors')
 
 const { JsonWebTokenError } = jwt
 
@@ -22,12 +23,15 @@ app.post('/users', parseBody, (req, res) => {
 
     try {
         registerUser(name, surname, email, password, error => {
-            if (error) return res.status(409).json({ error: error.message })
+            if (error)
+                if (error instanceof DuplicityError) return res.status(409).json({ error: error.message })
+                else return res.status(500).json({ error: error.message })
 
             res.status(201).send()
         })
     } catch (error) {
-        res.status(406).json({ error: error.message })
+        if (error instanceof TypeError || error instanceof VoidError) res.status(406).json({ error: error.message })
+        else res.status(500).json({ error: error.message })
     }
 })
 
