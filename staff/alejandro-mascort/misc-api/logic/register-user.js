@@ -32,7 +32,7 @@ debugger
             fs.writeFile(path.join(data, 'users', `${id}.json`), JSON.prettify(newUser), error => {
                 if (error) return reject(error)
         
-                resolve(null, id)
+                resolve()
             })
         })
     })

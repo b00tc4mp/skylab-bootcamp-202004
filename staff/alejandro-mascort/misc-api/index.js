@@ -3,13 +3,13 @@ require('dotenv').config()
 const { PORT, SECRET } = process.env
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, addContact, searchContacts, listContacts, addStickie, searchStickies, listStickies, removeContact, removeStickies } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser, retrieveContact, retrieveStickie, addContact, searchContacts, listContacts, addStickie, searchStickies, listStickies, removeContact, removeStickies } = require('./logic')
 const parseToken = require('./helpers/middlewares/token')
 const { find } = require('./data')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
-const jwt = require('jsonwebtoken')
 const { handleError } = require('./helpers/errors')
+const { sign } = require('./utils/jwt-promised')
 
 const app = express()
 
@@ -36,12 +36,9 @@ app.get('/users', parseToken, (req, res) => {
     const {sub: userId, token} = req
 
     try {
-        retrieveUser(userId, (error, userFound)=>{
-            if (error) return handleError(error, res)
-
-            res.send(userFound)
-        })
-            
+        retrieveUser(userId)
+            .then(user => res.status(200).send(user))
+            .catch(error => handleError(error, res))            
     } catch (error) {
         handleError(error, res)
     }
@@ -51,39 +48,30 @@ app.post('/users/auth', parseBody, (req, res) => {
     const { body } = req
 
     try {
-        authenticateUser(body, (error, userId) => {
-            if (error) return handleError(error, res)
-
-            const token = jwt.sign({sub:userId}, SECRET, {expiresIn: '1d'})
-
-            res.send({ token })
-        })
+        authenticateUser(body)
+            .then(userId => sign({sub:userId}, SECRET, { expiresIn: '1d'}))
+            .then(token => res.status(200).send({token}))
+            .catch(error => handleError(error, res))
     } catch (error) {
-        res.status(406).json({ error: error.message })
+        handleError(error, res)
     }
 })
 
-app.get('/users/:id', parseToken, (req, res) => {
+app.get('/users/id:id', parseToken, (req, res) => {
     // TODO extract userId from authorization (bearer token) then retrieve user and send it back
     // TODO if userId is received as a param, the retrieve that user instead of requester user
-    const {sub: userId, token} = req
+    const {sub: userId} = req
     const { id } = req.params
 
-    try {
-
-        find({id: userId}, 'users', (error, [user]) => {
-            if (error) return handleError(error, res)
-
-            if (!user) return res.status(406).json({error: 'user not authorized'})
-
-            retrieveUser(id, (error, userFound)=>{
-                if (error) return res.status(404).json({error: error.message})
-    
-                res.send(userFound)
-            })
-            
-        }) 
-    } catch (error) {
+    try{
+        retrieveUser(userId)
+            .then(user => {
+                if (!id) return res.send(user)
+                retrieveUser(id)
+                    .then(otherUser => res.status(200).json(otherUser))
+                    .catch( error => handleError(error, res)) 
+            }) 
+    }catch(error){
         handleError(error, res)
     }
 })
@@ -95,13 +83,11 @@ app.post('/contacts', parseBody, parseToken, (req, res) => {
     const {sub: userId, body} = req
 
     try {
-        addContact(userId, body, (error, contactId) => {
-            if (error) return handleError(error, res)
-
-            res.status(201).send({ contactId })
-        })
+        addContact(userId, body)
+            .then(contactId => {res.status(201).send({ contactId })})
+            .catch(error => handleError(error, res))
     } catch (error) {
-        res.status(406).json({ error: error.message })
+        handleError(error, res)
     }
 })
 
@@ -110,11 +96,9 @@ app.get('/contacts', parseToken, (req, res) => {
     const {sub: userId} = req
 
     try{
-        listContacts(userId, (error, contacts)=>{
-            if (error) return handleError(error, res)
-
-            res.send(contacts)
-        })
+        listContacts(userId)
+            .then(contacts => {res.send(contacts)})
+            .catch(error => handleError(error, res))
                 
     } catch (error) {
         handleError(error, res)
@@ -129,15 +113,13 @@ app.get('/contacts/q=:query', parseToken,(req, res) => {
     const { query } = req.params
 
     try {
-        searchContacts(userId, query, (error, results)=>{
-            if (error) return handleError(error, res)
+        searchContacts(userId, query)
+            .then(results => {
+                if (!results) return res.status(404).json({error: "No contacts found"})
 
-            if (!results) return res.status(404).json({error: "No contacts found"})
-
-            res.send(results)
-
-        })
-       
+                else res.send(results)  
+            })
+            .catch(error => handleError(error, res))
     } catch (error) {
         handleError(error, res)
     }
@@ -150,21 +132,10 @@ app.get('/contacts/id:contactId/', parseToken, (req, res) => {
 
     const { contactId } = req.params
 
-    try{
-        find({id: userId}, 'users', (error, [user]) => {
-            if (error) return res.status(404).json({error: error.message})
-
-            if (user) {
-                    find({contactId}, 'contacts', (error, [contactFound])=>{
-                        if (error) return handleError(error, res)
-
-                        if (!contactFound) return res.status(404).json({error: "No contact found"})
-            
-                        res.send(contactFound)
-                    })
-                
-            } else res.status(401).json({error: 'user not authorized'})
-        }) 
+    try {
+        retrieveContact(userId, contactId)
+            .then(contact => res.status(200).send(contact))
+            .catch(error => handleError(error, res))            
     } catch (error) {
         handleError(error, res)
     }
@@ -175,12 +146,9 @@ app.delete('/contacts', parseBody, parseToken,(req, res) => {
     const {sub: userId, body} = req
 
     try {
-        removeContact(userId, body.contactId, (error, message)=>{
-            if (error) return handleError(error, res)
-
-            res.status(204).send()
-        })
-       
+        removeContact(userId, body.contactId)
+            .then(() => {res.status(204).send()})
+            .catch(error => handleError(error, res))       
     } catch (error) {
         handleError(error, res)
     }
@@ -194,11 +162,9 @@ app.get('/stickies', parseToken, (req, res) => {
     const {sub: userId} = req
 
     try{
-        listStickies(userId, (error, stickies)=>{
-            if (error) return handleError(error, res)
-
-            res.send(stickies)
-        })
+        listStickies(userId)
+            .then(stickies => {res.send(stickies)})
+            .catch(error => handleError(error, res))
                 
     } catch (error) {
         handleError(error, res)
@@ -226,21 +192,10 @@ app.get('/stickies/id:stickieId', parseToken, (req, res) => {
 
     const { stickieId } = req.params
 
-    try{
-        find({id: userId}, 'users', (error, [user]) => {
-            if (error) return res.status(404).json({error: error.message})
-
-            if (user) {
-                    find({stickieId}, 'stickies', (error, [stickieFound])=>{
-                        if (error) return handleError(error, res)
-
-                        if (!stickieFound) return res.status(404).json({error: "No contact found"})
-            
-                        res.send(stickieFound)
-                    })
-                
-            } else res.status(401).json({error: 'user not authorized'})
-        }) 
+    try {
+        retrieveStickie(userId, stickieId)
+            .then(stickie => res.status(200).send(stickie))
+            .catch(error => handleError(error, res))            
     } catch (error) {
         handleError(error, res)
     }
@@ -254,15 +209,13 @@ app.get('/stickies/q=:query', parseToken,(req, res) => {
     const { query } = req.params
 
     try {
-        searchStickies(userId, query, (error, results)=>{
-            if (error) return handleError(error, res)
+        searchStickies(userId, query)
+            .then(results => {
+                if (!results) return res.status(404).json({error: "No contacts found"})
 
-            if (!results) return res.status(404).json({error: "No stickies found"})
-
-            res.send(results)
-
-        })
-       
+                else res.send(results)  
+            })
+            .catch(error => handleError(error, res))
     } catch (error) {
         handleError(error, res)
     }
@@ -273,11 +226,9 @@ app.delete('/stickies', parseBody, parseToken,(req, res) => {
     const {sub: userId, body} = req
 
     try {
-        removeStickies(userId, body.stickieId, (error, message)=>{
-            if (error) return handleError(error, res)
-
-            res.status(204).send()
-        })
+        removeStickies(userId, body.stickieId)
+            .then(() => {res.status(204).send()})
+            .catch(error => handleError(error, res))    
        
     } catch (error) {
         handleError(error, res)

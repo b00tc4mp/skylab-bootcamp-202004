@@ -6,14 +6,16 @@ const uid = require('../utils/uid')
 require('../utils/polyfills/json')
 const { find } = require('../data')
 
-module.exports = (userId, contact, callback) => {
+const { UnexistenceError } = require('../errors')
+
+module.exports = (userId, contact) => {
     const { name, surname, email, phone, birthdate, country } = contact
 
     String.validate.notVoid(userId)
 
     if (typeof contact !== 'object') throw new TypeError(`${contact} is not an object`)
     
-    if(!((name || surname) && (email || phone))) return callback(new Error('should have name or surname and email or phone'))
+    if(!((name || surname) && (email || phone))) throw new Error('should have name or surname and email or phone')
 
     if (name) String.validate.notVoid(name)
 
@@ -34,23 +36,27 @@ module.exports = (userId, contact, callback) => {
     if (country) String.validate.notVoid(country)
 
 
-
-    find({id:userId}, 'users', (error, [user]) => {
-        if (error) return callback(error)
-
-        if (!user) return callback(new Error(`user with ${userId} does not exist`))
+    return new Promise((resolve, reject) => {
+        find({id:userId}, 'users', (error, users) => {
+            if (error) return reject(error)
     
-        contact.user = userId
-        contact.contactId = uid()
+            const [ user ] = users
 
-        const file = `${contact.contactId}.json`
+            if (!user) return reject(new UnexistenceError(`user with ${userId} does not exist`))
         
+            contact.user = userId
+            contact.contactId = uid()
     
-        fs.writeFile(path.join(__dirname, '..', 'data', 'contacts', file), JSON.prettify(contact), error => {
-            if (error) return callback(error)
+            const file = `${contact.contactId}.json`
+            
+        
+            fs.writeFile(path.join(__dirname, '..', 'data', 'contacts', file), JSON.prettify(contact), error => {
+                if (error) return reject(error)
+        
+                resolve(contact.contactId)
+            })
+        
+        }) 
+    })
     
-            callback(null, contact.contactId)
-        })
-    
-    }) 
 }

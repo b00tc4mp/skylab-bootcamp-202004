@@ -8,21 +8,24 @@ require('../utils/polyfills/json')
 const { find } = require('../data')
 const { UnexistenceError, CredentialsError } = require('../errors')
 
-module.exports = (date, callback) => {
+module.exports = (date) => {
     
     const {email,password} = date
     String.validate.notVoid(email)
     Email.validate(email)
     String.validate.lengthGreaterEqualThan(password, 8)
-    Function.validate(callback)
 
-    find({ email }, 'users', (error, [user]) => {
-        if (error) return callback(error)
+    return new Promise((resolve, reject) => {
+        find({ email }, 'users',(error, users) => {
+            if (error)  reject(error)
 
-        if (!user) return callback(new UnexistenceError(`user with e-mail ${email} does not exist`))
-
-        if (user.password !== password) return callback(new CredentialsError('wrong password'))
-
-        callback(null, user.id)
+            const [user] = users
+    
+            if (!user) return reject(new UnexistenceError(`user with e-mail ${email} does not exist`))
+    
+            if (user.password !== password) return reject(new CredentialsError('wrong password'))
+    
+            resolve(user.id)
+        })
     })
 }

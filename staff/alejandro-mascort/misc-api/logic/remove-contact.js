@@ -4,32 +4,33 @@ const fs = require('fs')
 const path = require('path')
 const {find} =require('../data')
 
+const { UnexistenceError} = require('../errors')
 
-
-module.exports = (userId, contactId, callback) => {
-
-
-
+module.exports = (userId, contactId) => {
     String.validate.notVoid(userId)
     String.validate.notVoid(contactId)
-    Function.validate(callback)
 
-
-    find({ id:userId }, 'users',(error, [user]) => {
-        if (error) return callback(error)
-        
-        if (!user) return callback(new Error(`user with id: ${userId}, does not exist`))
-
-        find({contactId}, 'contacts', (error, [contact]) => {
+    return new Promise((resolve, reject) => {
+        find({ id:userId }, 'users',(error, users) => {
+            if (error) return reject(error)
             
-            if (error) return callback(error)
+            const [user] = users
 
-            if (!contact) return callback(new Error(`this ${contactId} does not exist`))
+            if (!user) return reject(new UnexistenceError(`user with id: ${userId}, does not exist`))
+    
+            find({contactId}, 'contacts', (error, contacts) => {
+                
+                if (error) return reject(error)
 
-            fs.unlink(path.join(__dirname, "..", "data", "contacts", `${contactId}.json`), (error) => {
-                if (error) return callback(error)
-
-                return callback(null, `Deleted user`)
+                const [contact] = contacts
+    
+                if (!contact) return reject(new UnexistenceError(`this ${contactId} does not exist`))
+    
+                fs.unlink(path.join(__dirname, "..", "data", "contacts", `${contactId}.json`), (error) => {
+                    if (error) return reject(error)
+    
+                    resolve()
+                })
             })
         })
     })

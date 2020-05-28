@@ -33,40 +33,34 @@ describe('authenticatedUser', () => {
     })
 
 
-    it('Sould sucess to authenticate a user',done=>{
+    it('Sould sucess to authenticate a user',()=>{
         const user = {email,password}
 
-        authenticated(user, (error, id) => {
-            expect(error).to.be.null
-            expect(id).to.exist
-
-            done()
-        })
+        return authenticated(user)
+            .then(() => {})
     })
 
-    it('Sould fail wend email don`t exist',done=>{
+    it('Sould fail wend email don`t exist', () =>{
         const _email = `${random()}@Email.com`;
         const user = {email:_email,password}
 
-        authenticated(user, (error, id) => {
-            expect(error).to.be.an.instanceof(Error);
-            expect(id).to.be.undefined
-            expect(error.message).to.equal(`user with e-mail ${_email} does not exist`);
-
-            done()
-        })
+        return authenticated(user)
+            .then(() => {throw new Error('should not reach this point')})
+            .catch(error => {
+                expect(error).to.be.an.instanceof(Error);
+                expect(error.message).to.equal(`user with e-mail ${_email} does not exist`);
+            })
     })
-    it('Sould fail on incorrect password',done=>{
+    it('Sould fail on incorrect password',()=>{
         const _password = `${random()}`
         const user = {email,password:_password}
 
-        authenticated(user, (error, id) => {
-            expect(error).to.be.an.instanceof(Error);
-            expect(id).to.be.undefined
-            expect(error.message).to.equal('wrong password');
-
-            done()
-        })
+        authenticated(user)
+            .then(() => {throw new Error('should not reach this point')})
+            .catch(error => {
+                expect(error).to.be.an.instanceof(Error);
+                expect(error.message).to.equal('wrong password');
+            })
     })
 
     

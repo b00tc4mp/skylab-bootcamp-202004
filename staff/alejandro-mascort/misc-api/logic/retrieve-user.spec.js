@@ -32,31 +32,28 @@ describe('retrieveUser', () => {
     })
 
 
-    it('Sould sucess to retrieve user',done=>{
+    it('Sould sucess to retrieve user',()=>{
        
-        retrieve(id, (error, user) => {
-            expect(error).to.be.null
-            expect(user.name).to.equal(name)
-            expect(user.surname).to.equal(surname)
-            expect(user.email).to.equal(email)
-            expect(user.password).to.be.undefined
-            expect(user.id).to.be.undefined
-
-            done()
-        })
+        return retrieve(id)
+            .then(user => {
+                expect(user.name).to.equal(name)
+                expect(user.surname).to.equal(surname)
+                expect(user.email).to.equal(email)
+                expect(user.password).to.be.undefined
+                expect(user.id).to.be.undefined
+            })
     })
 
-    it('Sould fail wend user id don`t exist',done=>{
+    it('Sould fail wend user id don`t exist',()=>{
         const _id = uid()
         
-        retrieve(_id, (error, user) => {
-            expect(error).to.exist
-            expect(error).to.be.an.instanceof(Error);
-            expect(error.message).to.equal(`user with id ${_id} does not exist`);
-            
-            expect(user).to.be.undefined
-            done()
-        })  
+        retrieve(_id)
+            .then(() => {throw new Error('should not reach this point')})
+            .catch(error => {
+                expect(error).to.exist
+                expect(error).to.be.an.instanceof(Error);
+                expect(error.message).to.equal(`user with id ${_id} does not exist`);
+            })
     })
 
     afterEach(done=>{

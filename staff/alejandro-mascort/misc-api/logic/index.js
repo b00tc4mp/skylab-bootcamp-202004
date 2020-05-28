@@ -5,6 +5,8 @@ module.exports = {
     listContacts: require('./list-contacts'),
     listStickies: require('./list-stickies'),
     registerUser: require('./register-user'),
+    retrieveContact: require('./retrieve-contact'),
+    retrieveStickie: require('./retrieve-stickie'),
     removeContact: require('./remove-contact'),
     removeStickies: require('./remove-stickie'),
     searchStickies: require('./search-stickies'),

@@ -25,29 +25,27 @@ describe('registerUser', () => {
     })
 
 
-    it('Sould sucess to creat a new user',done=>{
+    it('Sould sucess to creat a new user', () =>{
         
-        register({name,surname,email,password},(error, id)=>{
-            
-            expect(error).to.be.null
-            expect(id).to.exist
-
-            fs.readFile(path.join(__dirname,'..','data','users',`${id}.json`), 'utf-8',(error,body)=>{
+        register({name,surname,email,password}) 
+            .then(() =>{
                 expect(error).to.be.null
-                const {name: _name , surname:_surname,email:_email, password:_password ,id:_id}= JSON.parse(body);
-           
-                expect(name).to.equal(_name)
-                expect(surname).to.equal(_surname)
-                expect(email).to.equal(_email)
-                expect(password).to.equal(_password)
-                expect(id).to.equal(_id)
+                expect(id).to.exist
 
-                done()
-            })
+                fs.readFile(path.join(__dirname,'..','data','users',`${id}.json`), 'utf-8',(error,body)=>{
+                    expect(error).to.be.null
+                    const {name: _name , surname:_surname,email:_email, password:_password ,id:_id}= JSON.parse(body);
+            
+                    expect(name).to.equal(_name)
+                    expect(surname).to.equal(_surname)
+                    expect(email).to.equal(_email)
+                    expect(password).to.equal(_password)
+                    expect(id).to.equal(_id)
+                })
         })
     })
 
-    it('Sould fail wend user already exist',done=>{
+    it('Sould fail wend user already exist',()=>{
 
         const _name = `name-${random()}`;
         const _surname = `surname${random()}`;
@@ -59,7 +57,9 @@ describe('registerUser', () => {
         fs.writeFile(path.join(data, 'users', `${_id}.json`), JSON.prettify(newUser), error => {
             expect(error).to.be.null 
             
-            register(newUser,(error, id)=>{
+            register(newUser)
+            .then(()=> { throw new Error('should not reach this point')})
+            .catch(error => {
                 expect(error).to.be.an.instanceof(Error);
                 expect(id).to.be.undefined
                 expect(error.message).to.equal(`user with e-mail ${_email} already exists`);
