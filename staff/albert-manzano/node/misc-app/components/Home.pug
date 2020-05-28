@@ -1,0 +1,20 @@
+extend App
+
+block body
+  section.home
+    h1 Welcome #{name}
+    ul
+        li
+        a(href='http://localhost:8080/contacts') List contacts
+        li
+        a(href='http://localhost:8080/add-contact') Add contact
+        li
+        a(href='http://localhost:8080/search') Search contacts
+        li
+        a(href='http://localhost:8080/add-sticky') Add sticky
+        li
+        a(href='http://localhost:8080/stickies') List stickies
+        li
+        a(href='http://localhost:8080/search-stickies') Search stickies
+    form(action='/logout', method='POST')
+        button Logout

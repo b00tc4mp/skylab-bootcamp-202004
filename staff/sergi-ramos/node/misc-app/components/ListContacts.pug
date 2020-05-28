@@ -1,0 +1,9 @@
+extends App
+
+block body
+
+  section.contacts
+    h2 Contacts list
+    ul
+      each contact in contacts
+        li= contact.name
