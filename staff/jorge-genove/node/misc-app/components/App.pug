@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    title Hello World
+    link(href='images/skylab-icon.png', type='image/png', rel='Shortcut Icon')
+    link(rel='stylesheet', href='style.css')
+  body
+
+    if !cookiesAccepted
+        include Cookies.pug
+
+    block body
