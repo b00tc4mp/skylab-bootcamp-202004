@@ -1,0 +1,13 @@
+extend App
+
+block body
+    section.contacts
+    h1 Contacts List
+    if contacts
+        ul
+            each contact in contacts
+                li= contact.name
+                    form(action='/delete-contact', method='POST')
+                        button(name= "contactId" value =contact.id ) remove
+    if message
+        include Feedback.pug
