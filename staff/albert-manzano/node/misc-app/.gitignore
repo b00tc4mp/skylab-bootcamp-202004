@@ -1,0 +1,12 @@
+tmp/
+temp/	temp/
+
+
+# End of https://www.gitignore.io/api/node 	# End of https://www.gitignore.io/api/node
+
+# Other
+
+package-lock.json
+yarn.lock
+
+# End Other 
