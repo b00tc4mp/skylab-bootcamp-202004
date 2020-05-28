@@ -8,11 +8,33 @@ const { registerUser, authenticateUser, retrieveUser, addContact } = require('./
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const jwt = require('jsonwebtoken')
-const { handleError } = require('./helpers')
+const { DuplicityError, VoidError, UnexistenceError, CredentialsError } = require('./errors')
+
+const { JsonWebTokenError } = jwt
 
 const app = express()
 
 const parseBody = bodyParser.json()
+
+// handle error
+
+function handleError(error, res) {
+    let status = 500
+
+    switch (true) {
+        case error instanceof TypeError || error instanceof VoidError:
+            status = 406
+            break
+        case error instanceof DuplicityError || error instanceof UnexistenceError:
+            status = 409
+            break
+        case error instanceof CredentialsError:
+            status = 401
+            break
+    }
+
+    res.status(status).json({ error: error.message })
+}
 
 // users
 
@@ -27,7 +49,7 @@ app.post('/users', parseBody, (req, res) => {
             res.status(201).send()
         })
     } catch (error) {
-        handleError(error, res)
+        handleError(error)
     }
 })
 
@@ -65,12 +87,17 @@ app.post('/contacts', parseBody, (req, res) => {
         const { body: contact } = req
 
         addContact(userId, contact, (error, contactId) => {
-            if (error) return handleError(error, res)
+            if (error) return res.status(401).json({ error: error.message })
 
             res.send({ contactId })
         })
     } catch (error) {
-        handleError(error, res)
+        if (error instanceof JsonWebTokenError)
+            res.status(401)
+        else
+            res.status(406)
+
+        res.json({ error: error.message })
     }
 })
 
