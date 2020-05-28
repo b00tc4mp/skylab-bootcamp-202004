@@ -33,40 +33,31 @@ describe('logic - authenticate user', () => {
             })
         })
 
-        it('should succeed on correct credentials', done => {
-            authenticateUser(email, password, (error, _userId) => {
-                expect(error).to.be.null
+        it('should succeed on correct credentials', () =>
+            authenticateUser(email, password)
+                .then(_userId => expect(_userId).to.equal(userId))
+        )
 
-                expect(_userId).to.equal(userId)
-
-                done()
-            })
-        })
-
-        it('should fail on wrong password', done => {
+        it('should fail on wrong password', () => {
             password += 'wrong-'
 
-            authenticateUser(email, password, error => {
-                expect(error).to.exist
+            return authenticateUser(email, password)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    expect(error).to.be.an.instanceof(Error)
+                    expect(error.message).to.equal(`wrong password`)
+                })
+        })
+    })
 
+    it('should fail when user does not exist', () =>
+        authenticateUser(email, password)
+            .then(() => { throw new Error('should not reach this point') })
+            .catch(error => {
                 expect(error).to.be.an.instanceof(Error)
-                expect(error.message).to.equal(`wrong password`)
-
-                done()
+                expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
             })
-        })
-    })
-
-    it('should fail when user does not exist', done => {
-        authenticateUser(email, password, error => {
-            expect(error).to.exist
-
-            expect(error).to.be.an.instanceof(Error)
-            expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
-
-            done()
-        })
-    })
+    )
 
     afterEach(done => {
         deleteMany(error => {
