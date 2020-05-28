@@ -3,6 +3,7 @@ const { Email } = require('../utils')
 require('../utils/polyfills/function')
 require('../utils/polyfills/json')
 const { users: { find, create } } = require('../data')
+const { DuplicityError } = require('../errors')
 
 module.exports = (name, surname, email, password, callback) => {
     String.validate.notVoid(name)
@@ -12,10 +13,12 @@ module.exports = (name, surname, email, password, callback) => {
     String.validate.notVoid(password)
     Function.validate(callback)
 
-    find({ email }, (error, [user]) => {
+    find({ email }, (error, users) => {
         if (error) return callback(error)
 
-        if (user) return callback(new Error(`user with e-mail ${email} already exists`))
+        const [user] = users
+
+        if (user) return callback(new DuplicityError(`user with e-mail ${email} already exists`))
 
         const newUser = { name, surname, email, password }
 
