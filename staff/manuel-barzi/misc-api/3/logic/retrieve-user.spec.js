@@ -33,44 +33,41 @@ describe('logic - retrieve user', () => {
             })
         })
 
-        it('should succeed on correct user id', done => {
-            retrieveUser(userId, (error, user) => {
-                expect(error).to.be.null
+        it('should succeed on correct user id', () =>
+            retrieveUser(userId)
+                .then(user => {
+                    expect(user.name).to.equal(name)
+                    expect(user.surname).to.equal(surname)
+                    expect(user.email).to.equal(email)
+                    expect(user.password).to.be.undefined
+                })
+        )
 
-                expect(user.name).to.equal(name)
-                expect(user.surname).to.equal(surname)
-                expect(user.email).to.equal(email)
-                expect(user.password).to.be.undefined
-
-                done()
-            })
-        })
-
-        it('should fail on wrong user id', done => {
+        it('should fail on wrong user id', () => {
             userId += 'wrong-'
 
-            retrieveUser(userId, error => {
+            return retrieveUser(userId)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    expect(error).to.exist
+
+                    expect(error).to.be.an.instanceof(Error)
+                    expect(error.message).to.equal(`user with id ${userId} does not exist`)
+                })
+        })
+    })
+
+    it('should fail when user does not exist', () => {
+        const userId = 'unexisting'
+
+        return retrieveUser(userId)
+            .then(() => { throw new Error('should not reach this point') })
+            .catch(error => {
                 expect(error).to.exist
 
                 expect(error).to.be.an.instanceof(Error)
                 expect(error.message).to.equal(`user with id ${userId} does not exist`)
-
-                done()
             })
-        })
-    })
-
-    it('should fail when user does not exist', done => {
-        const userId = 'unexisting'
-
-        retrieveUser(userId, error => {
-            expect(error).to.exist
-
-            expect(error).to.be.an.instanceof(Error)
-            expect(error.message).to.equal(`user with id ${userId} does not exist`)
-
-            done()
-        })
     })
 
     afterEach(done => {
