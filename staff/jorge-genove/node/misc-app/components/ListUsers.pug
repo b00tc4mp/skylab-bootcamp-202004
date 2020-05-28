@@ -1,0 +1,10 @@
+extend app
+
+block body
+
+section.users
+  h2 Users list
+  ul
+     each val in users
+        li = #{val.name}
+                

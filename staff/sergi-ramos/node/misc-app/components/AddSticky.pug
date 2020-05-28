@@ -1,0 +1,14 @@
+extends App
+
+block body
+
+  section.stickies
+    h1 Add Sticky
+    form#textarea(action='/add-sticky', method='POST')
+      input(type='text', name='title', placeholder='title')
+      button Submit
+    br
+    textarea(rows='4', cols='50', name='comment', form='textarea', placeholder='Enter text here...')
+  
+    if message
+      p #{message}
