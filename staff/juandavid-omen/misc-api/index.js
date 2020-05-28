@@ -1,7 +1,15 @@
+require('dotenv').config()
+
+const { PORT, SECRET } = process.env
+
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, addContact } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser, addContact, searchUsers, unregisterUser } = require('./logic')
+const { users: { update } } = require("./data")
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
+const jwt = require('jsonwebtoken')
+const { JsonWebTokenError } = jwt
+
 
 const app = express()
 
@@ -25,51 +33,128 @@ app.post('/users', parseBody, (req, res) => {
 
 app.post('/users/auth', parseBody, (req, res) => {
     const { body: { email, password } } = req
-
+    debugger
     try {
         authenticateUser(email, password, (error, userId) => {
             if (error) return res.status(401).json({ error: error.message })
 
-            res.send({ userId })
+            const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
+
+            res.send({ token })
         })
     } catch (error) {
         res.status(406).json({ error: error.message })
     }
 })
 
-app.get('/users/:userId?', (req, res) => {
-    // const [userId] =req.param
-    // if(userId)
-    const [, userId] = req.header('authorization').split(' ')
+app.get('/users/id=:userId?', (req, res) => {
 
     try {
+        const [, token] = req.header('authorization').split(' ')
+
+        let { sub: userId } = jwt.verify(token, SECRET)
+
+        const { params: { userId: _userId } } = req
+        if (_userId) {
+            userId = _userId
+        }
         retrieveUser(userId, (error, user) => {
-            if (error) return res.status(400).json({error: error.message})
+            if (error) return res.status(400).json({ error: error.message })
 
             res.send(user)
         })
     } catch (error) {
-        res.status(401).json({error: error.message})
+        if (error instanceof JsonWebTokenError) res.status(401)
+
+        else res.status(406).json({ error: error.message })
     }
 
-    // TODO if userId is received as a param, the retrieve that user instead of requester user
+})
+
+
+app.get('/users/q=:query?', (req, res) => {
+
+    try {
+        const [, token] = req.header('authorization').split(' ')
+
+        const { sub: userId } = jwt.verify(token, SECRET)
+
+        const { params: { query } } = req
+
+        searchUsers(userId, query, (error, users) => {
+            if (error) return res.status(400).json({ error: error.message })
+
+            res.send(users)
+        })
+    } catch (error) {
+        if (error instanceof JsonWebTokenError) res.status(401)
+
+        else res.status(406).json({ error: error.message })
+    }
+})
+
+app.delete('/users/delete', parseBody, (req, res) => {
+    debugger
+    try {
+        const [, token] = req.header('authorization').split(' ')
+
+        const { sub: userId } = jwt.verify(token, SECRET)
+
+        const { body: { email, password } } = req
+        unregisterUser(email, password, userId, (error) => {
+            if (error) return res.status(403).json({ error: error.message })
+            res.status(204).send()
+        })
+    } catch (error) {
+        if (error instanceof JsonWebTokenError)
+            res.status(401).send()
+        else
+            res.status(406).json({ error: error.message })
+    }
+})
+
+app.patch('/users/update', parseBody, (req, res) => {
+    debugger
+    try {
+        const [, token] = req.header('authorization').split(' ')
+
+        const { sub: userId } = jwt.verify(token, SECRET)
+
+        const { body } = req
+
+        update(userId, body, error => {
+            if (error) return res.status(403).json({ error: error.message })
+            res.json({ "message": "user updated" })  //TODO
+        })
+
+    } catch (error) {
+        if (error instanceof JsonWebTokenError)
+            res.status(401).send()
+        else
+            res.status(406).json({ error: error.message })
+    }
 })
 
 // contacts
 
 app.post('/contacts', parseBody, (req, res) => {
-    const [, userId] = req.header('authorization').split(' ')
-
-    const { body: contact } = req
-
     try {
+        const [, token] = req.header('authorization').split(' ')
+
+        const { sub: userId } = jwt.verify(token, SECRET)
+
+        const { body: contact } = req
+
         addContact(userId, contact, (error, contactId) => {
             if (error) return res.status(401).json({ error: error.message })
 
             res.send({ contactId })
         })
     } catch (error) {
-        res.status(406).json({ error: error.message })
+        if (error instanceof JsonWebTokenError)
+            res.status(401).send()
+        else
+            res.status(406).json({ error: error.message })
     }
 })
 
@@ -83,4 +168,4 @@ app.get('*', (req, res) => {
     res.status(404).send('Not Found :(')
 })
 
-app.listen(8080, () => console.log(`${name} ${version} running`))
+app.listen(8080, () => console.log(`${name} ${version} running in ${PORT}`))
