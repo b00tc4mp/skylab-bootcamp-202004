@@ -1,0 +1,15 @@
+extend App
+
+block body
+    section.search-stickies
+      form(action='/search-stickies', method='GET')
+        input(name='q', placeholder='?', 
+            script
+                query ? value= query : " ")
+       
+        button Search
+    if stickies
+        include ListStickies.pug
+    if message
+        include Feedback.pug
+
