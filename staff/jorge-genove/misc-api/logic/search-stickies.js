@@ -3,5 +3,5 @@ module.exports = (userId, query, callback) => {
     
     // TODO check user exists, otherwise error
 
-    // TODO retrieve stickies from this user and return them if exist, otherwise return []
+    // TODO filter stickies from this user and return them if found, otherwise return []
 }

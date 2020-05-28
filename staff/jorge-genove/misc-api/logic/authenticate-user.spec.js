@@ -1,10 +1,10 @@
-const retrieveUser = require('./retrieve-user')
+const authenticateUser = require('./authenticate-user')
 const { random } = Math
 const { expect } = require('chai')
 require('../utils/polyfills/json')
 const { users: { deleteMany, create } } = require('../data')
 
-describe('logic - retrieve user', () => {
+describe('logic - authenticate user', () => {
     let name, surname, email, password, userId
 
     beforeEach(done => {
@@ -33,27 +33,24 @@ describe('logic - retrieve user', () => {
             })
         })
 
-        it('should succeed on correct user id', done => {
-            retrieveUser(userId, (error, user) => {
+        it('should succeed on correct credentials', done => {
+            authenticateUser(email, password, (error, _userId) => {
                 expect(error).to.be.null
 
-                expect(user.name).to.equal(name)
-                expect(user.surname).to.equal(surname)
-                expect(user.email).to.equal(email)
-                expect(user.password).to.be.undefined
+                expect(_userId).to.equal(userId)
 
                 done()
             })
         })
 
-        it('should fail on wrong user id', done => {
-            userId += 'wrong-'
+        it('should fail on wrong password', done => {
+            password += 'wrong-'
 
-            retrieveUser(userId, error => {
+            authenticateUser(email, password, error => {
                 expect(error).to.exist
 
                 expect(error).to.be.an.instanceof(Error)
-                expect(error.message).to.equal(`user with id ${userId} does not exist`)
+                expect(error.message).to.equal(`wrong password`)
 
                 done()
             })
@@ -61,13 +58,11 @@ describe('logic - retrieve user', () => {
     })
 
     it('should fail when user does not exist', done => {
-        const userId = 'unexisting'
-
-        retrieveUser(userId, error => {
+        authenticateUser(email, password, error => {
             expect(error).to.exist
 
             expect(error).to.be.an.instanceof(Error)
-            expect(error.message).to.equal(`user with id ${userId} does not exist`)
+            expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
 
             done()
         })

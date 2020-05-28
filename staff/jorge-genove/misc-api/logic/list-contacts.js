@@ -1,17 +1,16 @@
 const fs = require('fs')
 const path = require('path')
 
-module.exports = (userId, query, callback) => {
+module.exports = (userId, callback) => {
     // TODO validate input fields
     // TODO check user exists, otherwise error
-    
-    fs.readdir(path.join(__dirname, '..', 'data', 'contacts'), (error, files) => {
+
+    fs.readdir(path.join(__dirname, '..', 'data'), (error, files) => {
         if (error) return callback(error)
 
         let wasError = false
 
         const contacts = []
-        let count = 0
 
         files.forEach(file => {
             fs.readFile(path.join(__dirname, '..', 'data', 'contacts', file), 'utf8', (error, json) => {
@@ -28,17 +27,11 @@ module.exports = (userId, query, callback) => {
                 if (!wasError) {
                     const contact = JSON.parse(json)
 
-                    const values = Object.values(contact)
+                    contact.id = file.substring(0, file.indexOf('.json'))
 
-                    const matches = values.some(value => value.includes(query))
+                    contacts.push(contact)
 
-                    if (matches) {
-                        contact.id = file.substring(0, file.indexOf('.json'))
-    
-                        contacts.push(contact)
-                    }
-
-                    if (++count === files.length) callback(null, contacts)
+                    if (contacts.length === files.length) callback(null, contacts)
                 }
             })
         })

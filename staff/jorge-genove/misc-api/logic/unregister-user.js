@@ -1,25 +1,30 @@
-require("../utils/polyfills/string");
-require("../utils/polyfills/function");
-const { users : {find} } = require("../data");
-const Email = require("../utils/email");
-const fs = require("fs");
-const path = require("path");
+require("../utils/polyfills/string")
+const { users: { find } } = require("../data")
+const Email = require("../utils/email")
+const fs = require("fs")
+const path = require("path")
+const { UnexistenceError } = require('../errors')
 
-module.exports = (email, password, callback) => {
-  Email.validate(email);
-  Function.validate(callback);
-  String.validate.notVoid(password)
+module.exports = (email, password, id) => {
+    Email.validate(email)
+    String.validate.notVoid(password)
+    String.validate.notVoid(id)
+    
+    return new Promise((resolve, reject) => {
 
-  find({ email, password }, (error, [user]) => {
-    if (error) return callback (error); //TODO
+    find({ email, password, id }, (error, [user]) => {
+        if (error) return reject(error)
 
-    if (!user) return callback(new Error("user dosent exist"));
+        if (!user) return reject(new UnexistenceError("wrong credentials for unregister"));
 
-    if (user) {debugger
-      const { id } = user;
-      fs.unlink(path.join(__dirname,'..','data','users', `${id}.json`), error => { 
-        if(error) return callback (error)
-      });
-    }
-  });
-};
+        if (user) {
+
+            fs.unlink(path.join(__dirname, '..', 'data', 'users', `${id}.json`), error => {
+                if (error) return reject(error)
+                
+                return resolve()
+            })
+        }
+    })
+})
+}

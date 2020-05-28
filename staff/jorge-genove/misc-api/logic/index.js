@@ -1,13 +1,8 @@
 module.exports = {
-    register: require('./register'),
-    login: require('./login'),
+    registerUser: require('./register-user'),
+    authenticateUser: require('./authenticate-user'),
     retrieveUser: require('./retrieve-user'),
     addContact: require('./add-contact'),
-    addStickies: require('./add-stickies'),
-    listContacts: require('./list-contacs'),
-    listStickies: require('./list-stickies'),
-    searchContacts: require('./search-contacts'),
-    searchUsers: require('./search-user'),
-    retrieveContact: require('./retrieve-contact'),
+    searchUsers: require('./search-users'),
     unregisterUser: require('./unregister-user')
 }
