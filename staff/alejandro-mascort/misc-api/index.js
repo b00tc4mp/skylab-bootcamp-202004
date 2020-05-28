@@ -9,6 +9,7 @@ const { find } = require('./data')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const jwt = require('jsonwebtoken')
+const { DuplicityError, VoidError } = require('./errors')
 
 const { JsonWebTokenError } = jwt
 
@@ -23,13 +24,14 @@ app.post('/users', parseBody, (req, res) => {
 
     try {
         registerUser(body, error => {
-            if (error) return res.status(409).json({ error: error.message })
+            if (error instanceof DuplicityError) return res.status(409).json({ error: error.message })
+            else if (error) return res.status(500).json({ error: error.message })
 
             res.status(201).send()
         })
     } catch (error) {
-        res.status(406).json({ error: error.message })
-    }
+        if (error instanceof TypeError || error instanceof VoidError) return res.status(406).json({ error: error.message })
+        else return res.status(500).json({ error: error.message })    }
 })
 
 app.get('/users', parseToken, (req, res) => {
@@ -139,7 +141,34 @@ app.get('/contacts', parseToken, (req, res) => {
 
 })
 
-app.get('/contacts/:contactId', parseToken, (req, res) => {
+app.get('/contacts/q=:query', parseToken,(req, res) => {
+    // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
+    const {sub: userId} = req
+
+    const { query } = req.params
+
+    try {
+        searchContacts(userId, query, (error, results)=>{
+            if (error) return res.status(401).json({error: error.message})
+
+            if (!results) return res.status(404).json({error: "No contacts found"})
+
+            res.send(results)
+
+        })
+       
+    } catch (error) {
+        if (error instanceof JsonWebTokenError)
+            res.status(401)
+        else
+            res.status(406)
+
+        res.json({error: error.message})
+    }
+
+})
+
+app.get('/contacts/id:contactId/', parseToken, (req, res) => {
     // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
     const {sub: userId} = req
 
@@ -171,34 +200,7 @@ app.get('/contacts/:contactId', parseToken, (req, res) => {
 
 })
 
-app.get('/contacts/search/q=:query', parseToken,(req, res) => {
-    // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
-    const {sub: userId} = req
-
-    const { query } = req.params
-
-    try {
-        searchContacts(userId, query, (error, results)=>{
-            if (error) return res.status(401).json({error: error.message})
-
-            if (!results) return res.status(404).json({error: "No contacts found"})
-
-            res.send(results)
-
-        })
-       
-    } catch (error) {
-        if (error instanceof JsonWebTokenError)
-            res.status(401)
-        else
-            res.status(406)
-
-        res.json({error: error.message})
-    }
-
-})
-
-app.patch('/contacts', parseBody, parseToken,(req, res) => {
+app.delete('/contacts', parseBody, parseToken,(req, res) => {
     const {sub: userId, body} = req
 
     try {
@@ -262,7 +264,7 @@ app.post('/stickies', parseBody, parseToken, (req, res) => {
     }
 })
 
-app.get('/stickies/:stickieId', parseToken, (req, res) => {
+app.get('/stickies/id:stickieId', parseToken, (req, res) => {
     // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
     const {sub: userId} = req
 
@@ -294,7 +296,7 @@ app.get('/stickies/:stickieId', parseToken, (req, res) => {
 
 })
 
-app.get('/stickies/search/q=:query', parseToken,(req, res) => {
+app.get('/stickies/q=:query', parseToken,(req, res) => {
     // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
     const {sub: userId} = req
 
@@ -321,7 +323,7 @@ app.get('/stickies/search/q=:query', parseToken,(req, res) => {
 
 })
 
-app.patch('/stickies', parseBody, parseToken,(req, res) => {
+app.delete('/stickies', parseBody, parseToken,(req, res) => {
     const {sub: userId, body} = req
 
     try {

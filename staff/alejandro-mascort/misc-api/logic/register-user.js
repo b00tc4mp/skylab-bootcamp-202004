@@ -5,6 +5,7 @@ const uid = require('../utils/uid')
 const fs = require('fs')
 const path = require('path')
 const {find} =require('../data')
+const { DuplicityError } = require('../errors')
 
 
 module.exports = (register, callback) => {
@@ -22,7 +23,7 @@ debugger
     find({ email },'users', (error, [user]) => {
         if (error) return callback(error)
     
-        if (user) return callback(new Error(`user with e-mail ${email} already exists`))
+        if (user) return callback(new DuplicityError(`user with e-mail ${email} already exists`))
     
         const id = uid()
         
