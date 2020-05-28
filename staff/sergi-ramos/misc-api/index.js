@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const jwt = require('jsonwebtoken')
 const { JsonWebTokenError } = jwt
+const { handleError } = require('./helpers')
 
 
 const app = express()
@@ -22,12 +23,13 @@ app.post('/users', parseBody, (req, res) => {
 
     try {
         registerUser(name, surname, email, password, error => {
-            if (error) return res.status(409).json({ error: error.message })
+            if (error) 
+                return handleError(error, res)   
 
             res.status(201).send()
         })
     } catch (error) {
-        res.status(406).json({ error: error.message })
+       handleError(error, res)
     }
 })
 
@@ -36,14 +38,15 @@ app.post('/users/auth', parseBody, (req, res) => {
     debugger
     try {
         authenticateUser(email, password, (error, userId) => {
-            if (error) return res.status(401).json({ error: error.message })
+            if (error) return handleError(error, res)
 
             const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
 
             res.send({ token })
         })
     } catch (error) {
-        res.status(406).json({ error: error.message })
+        handleError(error, res)
+
     }
 })
 
@@ -59,14 +62,13 @@ app.get('/users/id=:userId?', (req, res) => {
             userId = _userId
         }
         retrieveUser(userId, (error, user) => {
-            if (error) return res.status(400).json({ error: error.message })
+            if(error) handleError(error, res)
 
             res.send(user)
         })
     } catch (error) {
-        if (error instanceof JsonWebTokenError) res.status(401)
+        handleError(error, res)
 
-        else res.status(406).json({ error: error.message })
     }
 
 })
@@ -89,7 +91,7 @@ app.get('/users/q=:query?', (req, res) => {
     } catch (error) {
         if (error instanceof JsonWebTokenError) res.status(401)
 
-        else res.status(406).json({ error: error.message })
+        else  res.status(406).json({ error: error.message })
     }
 })
 
