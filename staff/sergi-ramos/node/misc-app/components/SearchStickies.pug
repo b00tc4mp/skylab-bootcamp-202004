@@ -1,0 +1,11 @@
+extends App
+
+include listStickiesSearch
+block body
+
+  section.search-stickies
+    form(action='/search-stickies', method='GET')
+      input(name='q', placeholder='search',  ) 
+      button Search
+    if stickies
+      +listStickiesSearch(stickies)
