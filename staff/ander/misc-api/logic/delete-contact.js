@@ -1,5 +1,4 @@
-const { find } = require('../data/users')
-const { findContacts } = require('../data/contacts')
+const { users, contacts } = require('../data')
 const fs = require('fs')
 const path = require('path')
 require('../utils/polyfills/function')
@@ -11,11 +10,11 @@ module.exports = (userId, contactId, callback) => {
 
     Function.validate(callback)
 
-    find({ id: userId }, (error, [user]) => {
+    users.find({ id: userId }, (error, [user]) => {
         if (error) return callback(error)
         if (!user) return callback(new Error(`user with id ${userId} does not exist`))
 
-        findContacts({ user: userId, id: contactId }, (error, [contact]) => {
+        contacts.find({ user: userId, id: contactId }, (error, [contact]) => {
             if(error) return callback(error)
             if(!contact) return callback(new Error(`contact with id ${contactId} does not exist`))
 

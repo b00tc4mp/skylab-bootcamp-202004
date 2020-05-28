@@ -1,46 +1,39 @@
-const fs = require('fs')
-const path = require('path')
+const { users, contacts } = require('../data')
+require('../utils/polyfills/function')
+require('../utils/polyfills/string')
 
 module.exports = (userId, query, callback) => {
-    // TODO validate input fields
-    // TODO check user exists, otherwise error
-    
-    fs.readdir(path.join(__dirname, '..', 'data', 'contacts'), (error, files) => {
+    String.validate.notVoid(userId)
+    String.validate.notVoid(query)
+
+    Function.validate(callback)
+
+    users.find({id: userId}, (error, [user])=>{
         if (error) return callback(error)
+        if(!user) return callback(new Error(`user with id ${userId} does not exist`))
+        debugger
+        contacts.find({user: userId}, (error, contacts) =>{
+            if(error) return callback(error)
+            if(!contacts.length) return callback(new Error('contacts is empty'))
 
-        let wasError = false
+            let results = []
 
-        const contacts = []
-        let count = 0
+            count = 0
 
-        files.forEach(file => {
-            fs.readFile(path.join(__dirname, '..', 'data', 'contacts', file), 'utf8', (error, json) => {
-                if (error) {
-                    if (!wasError) {
-                        callback(error)
+            for (let i in contacts){
+                //TODO have to normalize the results, case insensitive for query
+                const values = Object.values(contacts[i])
+                const matches = values.some(value => value.includes(query))
 
-                        wasError = true
-                    }
+                if(matches) results.push(contacts[i])
 
-                    return
+                count++
+
+                if(count === contacts.length) {
+                    if (!results.length) return callback(new Error(`no results`))
+                    callback(null, results)
                 }
-
-                if (!wasError) {
-                    const contact = JSON.parse(json)
-
-                    const values = Object.values(contact)
-
-                    const matches = values.some(value => value.includes(query))
-
-                    if (matches) {
-                        contact.id = file.substring(0, file.indexOf('.json'))
-    
-                        contacts.push(contact)
-                    }
-
-                    if (++count === files.length) callback(null, contacts)
-                }
-            })
+            }
         })
     })
 }

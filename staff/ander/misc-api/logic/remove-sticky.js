@@ -1,8 +1,29 @@
-module.expots = (userId, stickyId, callback) => {
-    // TODO validate input fields
+require('../utils/polyfills/string')
+const fs = require('fs')
+const path = require('path')
+const { users: { find } } = require('../data')
 
-    // TODO check user exists, if not error
-    // TODO check sticky exists, otherwise error
+module.exports = (userId, idSticky, callback)=>{
 
-    // TODO delect sticky from disk
+    String.validate.notVoid(userId)
+    String.validate.notVoid(idSticky)
+    String.validate.notVoid(idSticky)
+    
+    find({id:userId}, (error, [user])=> {
+            
+        if(error) return callback (error)
+        if(!user) return callback(new Error('something wrong happen'))
+
+        // find({stickieId}, 'stickies', (error, [stickie]) => { 
+        //     if (error) return callback(error)
+        //     if (!stickie) return callback(new Error(`this ${stickieId} does not exist`))
+
+ 
+        fs.unlink(path.join(__dirname, '..', 'data', 'stickies',`${idSticky}.json`), error => {
+            if (error) return callback(error)
+    
+            return callback(null, "succes")
+        })
+    })
+
 }
