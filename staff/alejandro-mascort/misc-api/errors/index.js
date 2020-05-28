@@ -1,4 +1,9 @@
+const buildError = require('./build-error')
+
+
 module.exports = {
-    DuplicityError: require('./duplicity-error'),
-    VoidError: require('./void-error')
+    DuplicityError: buildError('DuplicityError'),
+    VoidError: buildError('VoidError'),
+    UnexistenceError: buildError('UnexistenceError'),
+    CredentialsError: buildError('CredentialsError')
 }

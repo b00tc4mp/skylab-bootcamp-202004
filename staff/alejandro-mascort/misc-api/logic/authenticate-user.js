@@ -6,7 +6,7 @@ const Email = require('../utils/email')
 const uid = require('../utils/uid')
 require('../utils/polyfills/json')
 const { find } = require('../data')
-
+const { UnexistenceError, CredentialsError } = require('../errors')
 
 module.exports = (date, callback) => {
     
@@ -19,9 +19,9 @@ module.exports = (date, callback) => {
     find({ email }, 'users', (error, [user]) => {
         if (error) return callback(error)
 
-        if (!user) return callback(new Error(`user with e-mail ${email} does not exist`))
+        if (!user) return callback(new UnexistenceError(`user with e-mail ${email} does not exist`))
 
-        if (user.password !== password) return callback(new Error('wrong password'))
+        if (user.password !== password) return callback(new CredentialsError('wrong password'))
 
         callback(null, user.id)
     })

@@ -9,9 +9,7 @@ const { find } = require('./data')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const jwt = require('jsonwebtoken')
-const { DuplicityError, VoidError } = require('./errors')
-
-const { JsonWebTokenError } = jwt
+const { handleError } = require('./helpers/errors')
 
 const app = express()
 
@@ -24,14 +22,13 @@ app.post('/users', parseBody, (req, res) => {
 
     try {
         registerUser(body, error => {
-            if (error instanceof DuplicityError) return res.status(409).json({ error: error.message })
-            else if (error) return res.status(500).json({ error: error.message })
+            if (error) return handleError(error, res)
 
             res.status(201).send()
         })
     } catch (error) {
-        if (error instanceof TypeError || error instanceof VoidError) return res.status(406).json({ error: error.message })
-        else return res.status(500).json({ error: error.message })    }
+        handleError(error)
+    }
 })
 
 app.get('/users', parseToken, (req, res) => {
@@ -41,18 +38,13 @@ app.get('/users', parseToken, (req, res) => {
 
     try {
         retrieveUser(userId, (error, userFound)=>{
-            if (error) return res.status(404).json({error: error.message})
+            if (error) return handleError(error, res)
 
             res.send(userFound)
         })
             
     } catch (error) {
-        if (error instanceof JsonWebTokenError)
-            res.status(401)
-        else
-            res.status(406)
-
-        res.json({error: error.message})
+        handleError(error)
     }
 })
 
@@ -61,7 +53,7 @@ app.post('/users/auth', parseBody, (req, res) => {
 
     try {
         authenticateUser(body, (error, userId) => {
-            if (error) return res.status(401).json({ error: error.message })
+            if (error) return handleError(error, res)
 
             const token = jwt.sign({sub:userId}, SECRET, {expiresIn: '1d'})
 
@@ -81,7 +73,7 @@ app.get('/users/:id', parseToken, (req, res) => {
     try {
 
         find({id: userId}, 'users', (error, [user]) => {
-            if (error) return res.status(401).json({error: error.message})
+            if (error) return handleError(error, res)
 
             if (!user) return res.status(406).json({error: 'user not authorized'})
 
@@ -93,12 +85,7 @@ app.get('/users/:id', parseToken, (req, res) => {
             
         }) 
     } catch (error) {
-        if (error instanceof JsonWebTokenError)
-            res.status(401)
-        else
-            res.status(406)
-
-        res.json({error: error.message})
+        handleError(error)
     }
 })
 
@@ -110,7 +97,7 @@ app.post('/contacts', parseBody, parseToken, (req, res) => {
 
     try {
         addContact(userId, body, (error, contactId) => {
-            if (error) return res.status(401).json({ error: error.message })
+            if (error) return handleError(error, res)
 
             res.status(201).send({ contactId })
         })
@@ -125,18 +112,13 @@ app.get('/contacts', parseToken, (req, res) => {
 
     try{
         listContacts(userId, (error, contacts)=>{
-            if (error) return res.status(401).json({error: error.message})
+            if (error) return handleError(error, res)
 
             res.send(contacts)
         })
                 
     } catch (error) {
-        if (error instanceof JsonWebTokenError)
-            res.status(401)
-        else
-            res.status(406)
-
-        res.json({error: error.message})
+        handleError(error)
     }
 
 })
@@ -149,7 +131,7 @@ app.get('/contacts/q=:query', parseToken,(req, res) => {
 
     try {
         searchContacts(userId, query, (error, results)=>{
-            if (error) return res.status(401).json({error: error.message})
+            if (error) return handleError(error, res)
 
             if (!results) return res.status(404).json({error: "No contacts found"})
 
@@ -158,12 +140,7 @@ app.get('/contacts/q=:query', parseToken,(req, res) => {
         })
        
     } catch (error) {
-        if (error instanceof JsonWebTokenError)
-            res.status(401)
-        else
-            res.status(406)
-
-        res.json({error: error.message})
+        handleError(error)
     }
 
 })
@@ -180,7 +157,7 @@ app.get('/contacts/id:contactId/', parseToken, (req, res) => {
 
             if (user) {
                     find({contactId}, 'contacts', (error, [contactFound])=>{
-                        if (error) return res.status(401).json({error: error.message})
+                        if (error) return handleError(error, res)
 
                         if (!contactFound) return res.status(404).json({error: "No contact found"})
             
@@ -190,12 +167,7 @@ app.get('/contacts/id:contactId/', parseToken, (req, res) => {
             } else res.status(401).json({error: 'user not authorized'})
         }) 
     } catch (error) {
-        if (error instanceof JsonWebTokenError)
-            res.status(401)
-        else
-            res.status(406)
-
-        res.json({error: error.message})
+        handleError(error)
     }
 
 })
@@ -205,18 +177,13 @@ app.delete('/contacts', parseBody, parseToken,(req, res) => {
 
     try {
         removeContact(userId, body.contactId, (error, message)=>{
-            if (error) return res.status(401).json({error: error.message})
+            if (error) return handleError(error, res)
 
             res.status(204).send()
         })
        
     } catch (error) {
-        if (error instanceof JsonWebTokenError)
-            res.status(401)
-        else
-            res.status(406)
-
-        res.json({error: error.message})
+        handleError(error)
     }
 
 })
@@ -229,18 +196,13 @@ app.get('/stickies', parseToken, (req, res) => {
 
     try{
         listStickies(userId, (error, stickies)=>{
-            if (error) return res.status(401).json({error: error.message})
+            if (error) return handleError(error, res)
 
             res.send(stickies)
         })
                 
     } catch (error) {
-        if (error instanceof JsonWebTokenError)
-            res.status(401)
-        else
-            res.status(406)
-
-        res.json({error: error.message})
+        handleError(error)
     }
 
 })
@@ -250,17 +212,12 @@ app.post('/stickies', parseBody, parseToken, (req, res) => {
 
     try {
         addStickie(userId, body, (error, stickieId) => {
-            if (error) return res.status(401).json({ error: error.message })
+            if (error) return handleError(error, res)
 
             res.status(201).send({ stickieId })
         })
     } catch (error) {
-        if (error instanceof JsonWebTokenError)
-            res.status(401)
-        else
-            res.status(406)
-
-        res.json({error: error.message})
+        handleError(error)
     }
 })
 
@@ -276,7 +233,7 @@ app.get('/stickies/id:stickieId', parseToken, (req, res) => {
 
             if (user) {
                     find({stickieId}, 'stickies', (error, [stickieFound])=>{
-                        if (error) return res.status(401).json({error: error.message})
+                        if (error) return handleError(error, res)
 
                         if (!stickieFound) return res.status(404).json({error: "No contact found"})
             
@@ -286,12 +243,7 @@ app.get('/stickies/id:stickieId', parseToken, (req, res) => {
             } else res.status(401).json({error: 'user not authorized'})
         }) 
     } catch (error) {
-        if (error instanceof JsonWebTokenError)
-            res.status(401)
-        else
-            res.status(406)
-
-        res.json({error: error.message})
+        handleError(error)
     }
 
 })
@@ -304,7 +256,7 @@ app.get('/stickies/q=:query', parseToken,(req, res) => {
 
     try {
         searchStickies(userId, query, (error, results)=>{
-            if (error) return res.status(401).json({error: error.message})
+            if (error) return handleError(error, res)
 
             if (!results) return res.status(404).json({error: "No stickies found"})
 
@@ -313,12 +265,7 @@ app.get('/stickies/q=:query', parseToken,(req, res) => {
         })
        
     } catch (error) {
-        if (error instanceof JsonWebTokenError)
-            res.status(401)
-        else
-            res.status(406)
-
-        res.json({error: error.message})
+        handleError(error)
     }
 
 })
@@ -328,18 +275,13 @@ app.delete('/stickies', parseBody, parseToken,(req, res) => {
 
     try {
         removeStickies(userId, body.stickieId, (error, message)=>{
-            if (error) return res.status(401).json({error: error.message})
+            if (error) return handleError(error, res)
 
             res.status(204).send()
         })
        
     } catch (error) {
-        if (error instanceof JsonWebTokenError)
-            res.status(401)
-        else
-            res.status(406)
-
-        res.json({error: error.message})
+        handleError(error)
     }
 
 })
