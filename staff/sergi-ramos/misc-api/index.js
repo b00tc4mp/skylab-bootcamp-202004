@@ -22,31 +22,29 @@ app.post('/users', parseBody, (req, res) => {
     const { body: { name, surname, email, password } } = req
 
     try {
-        registerUser(name, surname, email, password, error => {
-            if (error) 
-                return handleError(error, res)   
+        registerUser(name, surname, email, password)
+            .then(() => res.status(201).send())
+            .catch(error => handleError(error, res))
 
-            res.status(201).send()
-        })
     } catch (error) {
-       handleError(error, res)
+        handleError(error, res)
     }
 })
 
 app.post('/users/auth', parseBody, (req, res) => {
     const { body: { email, password } } = req
-    debugger
+
     try {
-        authenticateUser(email, password, (error, userId) => {
-            if (error) return handleError(error, res)
+        authenticateUser(email, password)
 
-            const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
+            .then(userId => {
+                const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
+                res.send({ token })
+            })
+            .catch(error => handleError(error, res))
 
-            res.send({ token })
-        })
     } catch (error) {
         handleError(error, res)
-
     }
 })
 
@@ -58,42 +56,39 @@ app.get('/users/id=:userId?', (req, res) => {
         let { sub: userId } = jwt.verify(token, SECRET)
 
         const { params: { userId: _userId } } = req
-        if (_userId) {
-            userId = _userId
-        }
-        retrieveUser(userId, (error, user) => {
-            if(error) handleError(error, res)
 
-            res.send(user)
-        })
+        if (_userId) userId = _userId
+        retrieveUser(userId)
+            .then(user => res.send(user))
+            .catch(error => handleError(error, res))
+
     } catch (error) {
         handleError(error, res)
 
     }
-
 })
 
 
-app.get('/users/q=:query?', (req, res) => {
+app.get('/users/search', (req, res) => {
 
     try {
         const [, token] = req.header('authorization').split(' ')
 
         const { sub: userId } = jwt.verify(token, SECRET)
+        debugger
+        const { query: { q } } = req
 
-        const { params: { query } } = req
+        searchUsers(userId, q)
+            .then(users => {
+                res.send(users)
+            })
+            .catch(error => handleError(error, res))
 
-        searchUsers(userId, query, (error, users) => {
-            if (error) return res.status(400).json({ error: error.message })
-
-            res.send(users)
-        })
     } catch (error) {
-        if (error instanceof JsonWebTokenError) res.status(401)
-
-        else  res.status(406).json({ error: error.message })
+        handleError(error, res)
     }
 })
+
 
 app.delete('/users/delete', parseBody, (req, res) => {
     debugger
@@ -103,37 +98,33 @@ app.delete('/users/delete', parseBody, (req, res) => {
         const { sub: userId } = jwt.verify(token, SECRET)
 
         const { body: { email, password } } = req
-        unregisterUser(email, password, userId, (error) => {
-            if (error) return res.status(403).json({ error: error.message })
-            res.status(204).send()
-        })
+
+        unregisterUser(email, password, userId)
+            .then(() => res.status(204).send())
+            .catch(error => handleError(error, res))
+
     } catch (error) {
-        if (error instanceof JsonWebTokenError)
-            res.status(401).send()
-        else
-            res.status(406).json({ error: error.message })
+        handleError(error, res)
     }
 })
 
 app.patch('/users/update', parseBody, (req, res) => {
-    debugger
+
     try {
         const [, token] = req.header('authorization').split(' ')
 
         const { sub: userId } = jwt.verify(token, SECRET)
 
         const { body } = req
-
-        update(userId, body, error => {
-            if (error) return res.status(403).json( { error: error.message } )
-            res.json({ "message": "user updated" } )  //TODO
-        })
-
+debugger
+        update(userId, body)
+            .then(() => res.status(201).send())
+            .catch(error => handleError(error,res))
+            // if (error) return res.status(403).json({ error: error.message })
+            // res.json({ "message": "user updated" })  //TODO
+        
     } catch (error) {
-        if (error instanceof JsonWebTokenError)
-            res.status(401).send()
-        else
-            res.status(406).json({ error: error.message })
+        handleError(error, res)
     }
 })
 

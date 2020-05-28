@@ -69,23 +69,31 @@ module.exports = target => {
         })
     }
 
-    function update(id, data, callback) {
-        data.id = id
-        fs.readFile(path.join(path.join(__dirname, target), `${id}.json`), (error, user) => {
-            if (error) return callback(error)
-            
-            const userData = JSON.parse(user)
-            const keys = Object.keys(data)
-            const values = Object.values(data)
-            
-            keys.forEach((key, i)=> userData[key] = values[i])
-            
-            fs.writeFile(path.join(path.join(__dirname, target), `${id}.json`), JSON.prettify(userData), error => {
-                if (error) return callback(error)
     
-                callback(null)
+    function update(id, data) {
+        String.validate.notVoid(id)
+        
+        if(!data instanceof Object) return reject(new TypeError(`${data} is not an object`))
+        
+        return new Promise((resolve, reject) => {
+            
+            data.id = id
+            fs.readFile(path.join(path.join(__dirname, target), `${id}.json`), (error, user) => {
+                if (error) return reject(error)
+                
+                const userData = JSON.parse(user)
+                const keys = Object.keys(data)
+                const values = Object.values(data)
+                
+                keys.forEach((key, i) => userData[key] = values[i])
+                
+                fs.writeFile(path.join(path.join(__dirname, target), `${id}.json`), JSON.prettify(userData), error => {
+                    if (error) return reject(error)
+        
+                    resolve()
+                })
             })
-        }) 
+        })
     }
 
     function remove(id, callback) {
