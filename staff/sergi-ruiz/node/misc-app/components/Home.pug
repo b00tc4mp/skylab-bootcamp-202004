@@ -1,0 +1,19 @@
+extend App
+
+block body
+  section.landing
+    h2 #{name ? Welcome name : '' } 
+    ul.link-list
+      div
+        a(href='/add-contact') Add Contact
+        a(href='/contacts') List Contacts
+        a(href='/search-contacts') Search Contacts
+      div
+        a(href='/add-stickie') Add Stickie
+        a(href='/stickies') List Stickies
+        a(href='/search-stickies') Search Stickies
+      form(action='/logout' method='POST')
+        button Logout
+    |     
+        block Compo
+  
