@@ -28,11 +28,11 @@ app.post('/users', parseBody, (req, res) => {
     const { body: { name, surname, email, password } } = req
 
     try {
-        registerUser(name, surname, email, password, error => {
-            if (error) return res.status(409).json({ error: error.message })
+        registerUser(name, surname, email, password)
+            .catch( error => handleError(error, res))
 
-            res.status(201).send()
-        })
+            .then( () => res.status(201).send())
+            
     } catch (error) {
         res.status(406).json({ error: error.message })
     }
@@ -42,35 +42,35 @@ app.post('/users/auth', parseBody, (req, res) => {
     const { body: { email, password } } = req
 
     try {
-        authenticateUser(email, password, (error, userId) => {
-            if (error) return res.status(401).json({ error: error.message })
-            const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
-            res.send({ token })
-        })
+        authenticateUser(email, password)
+            .then(userId => {
+                const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
+                res.status(200).send({token})
+            })
+            .catch(error => res.status(406).json({ error: error.message }))
     } catch (error) {
-        res.status(406).json({ error: error.message })
-    }
+        handleError(error, res)    }
 })
 
-app.get('/users/:userId?', parseBody, (req, res) => {
+app.get('/users/:id?', parseBody, (req, res) => {
     if(!req.headers.authorization) return res.status(411).json({ error: "Authorization required" })
 
-    const { params: {userId}, headers: {authorization} } = req
+    const { params: {id}, headers: {authorization} } = req
     const [, token] = authorization.split(' ')
     
     try{
-        retrieveUser(token, (error, user) =>{
-            if(error) return res.status(401).json({ error: 'Invalid token' })
+        const {sub: userId} = jwt.verify(token, SECRET)
+        retrieveUser(userId)
+            .catch(error => handleError(error, res))
+            .then(user => {
+                if(!id) res.status(201).json(user)
+                retrieveUser(id)
+                .catch( error => handleError (error, res))
+                .then(()=>res.status(201).json(user)) 
+            }) 
 
-            if(!userId) return res.status(201).json(user)
-            retrieveUser( userId, (error, user)=>{
-                if(error) return res.status(400).json({ error: error.message })
-
-                res.status(201).json(user)
-            })
-        })
     }catch(error){
-        res.status(411).json({ error: error.message })
+        handleError(error, res)
     }
 })
 
@@ -78,12 +78,10 @@ app.get('/users/:userId?', parseBody, (req, res) => {
 
 app.post('/contacts', parseBody, (req, res) => {
     const [, token] = req.header('authorization').split(' ')
-
-    const {sub: userId} = jwt.verify(token, SECRET)
-
     const { body: contact } = req
 
     try {
+        const {sub: userId} = jwt.verify(token, SECRET)
         addContact(userId, contact, (error, contactId) => {
             if (error) return res.status(401).json({ error: error.message })
 
