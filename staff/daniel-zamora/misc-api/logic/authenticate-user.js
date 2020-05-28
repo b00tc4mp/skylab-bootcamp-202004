@@ -9,9 +9,10 @@ module.exports = (email, password, callback) => {
     String.validate.notVoid(password)
     Function.validate(callback)
 
-    find({ email }, (error, [user]) => {
+    find({ email }, (error, users) => {
         if (error) return callback(error)
 
+        [user] = users
         if (!user) return callback(new Error(`user with e-mail ${email} does not exist`))
 
         if (user.password !== password) return callback(new Error('wrong password'))
