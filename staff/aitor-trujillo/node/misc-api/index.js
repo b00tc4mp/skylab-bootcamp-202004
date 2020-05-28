@@ -1,7 +1,4 @@
-// Review dotenv
 // Review token implementation and understand
-
-
 require('dotenv').config()
 
 const { PORT, SECRET } = process.env
