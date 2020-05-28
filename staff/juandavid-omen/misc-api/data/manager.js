@@ -71,11 +71,20 @@ module.exports = target => {
 
     function update(id, data, callback) {
         data.id = id
-
-        fs.writeFile(path.join(path.join(__dirname, target), `${id}.json`), JSON.prettify(data), error => {
+        fs.readFile(path.join(path.join(__dirname, target), `${id}.json`), (error, user) => {
             if (error) return callback(error)
 
-            callback(null)
+            const userData = JSON.parse(user)
+            const keys = Object.keys(data)
+            const values = Object.values(data)
+
+            keys.forEach((key, i) => userData[key] = values[i])
+
+            fs.writeFile(path.join(path.join(__dirname, target), `${id}.json`), JSON.prettify(userData), error => {
+                if (error) return callback(error)
+
+                callback(null)
+            })
         })
     }
 
@@ -87,11 +96,5 @@ module.exports = target => {
         })
     }
 
-    return {
-        find,
-        deleteMany,
-        create,
-        update,
-        remove
-    }
+    return { find, deleteMany, create, update, remove }
 }
