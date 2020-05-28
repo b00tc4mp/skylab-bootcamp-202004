@@ -21,13 +21,12 @@ app.post('/users', parseBody, (req, res) => {
     const { body } = req
 
     try {
-        registerUser(body, error => {
-            if (error) return handleError(error, res)
-
-            res.status(201).send()
-        })
+        registerUser(body) 
+            .then(() => res.status(201).send())
+            .catch(error => handleError(error, res))
+        
     } catch (error) {
-        handleError(error)
+        handleError(error, res)
     }
 })
 
@@ -44,7 +43,7 @@ app.get('/users', parseToken, (req, res) => {
         })
             
     } catch (error) {
-        handleError(error)
+        handleError(error, res)
     }
 })
 
@@ -85,7 +84,7 @@ app.get('/users/:id', parseToken, (req, res) => {
             
         }) 
     } catch (error) {
-        handleError(error)
+        handleError(error, res)
     }
 })
 
@@ -118,7 +117,7 @@ app.get('/contacts', parseToken, (req, res) => {
         })
                 
     } catch (error) {
-        handleError(error)
+        handleError(error, res)
     }
 
 })
@@ -140,7 +139,7 @@ app.get('/contacts/q=:query', parseToken,(req, res) => {
         })
        
     } catch (error) {
-        handleError(error)
+        handleError(error, res)
     }
 
 })
@@ -167,7 +166,7 @@ app.get('/contacts/id:contactId/', parseToken, (req, res) => {
             } else res.status(401).json({error: 'user not authorized'})
         }) 
     } catch (error) {
-        handleError(error)
+        handleError(error, res)
     }
 
 })
@@ -183,7 +182,7 @@ app.delete('/contacts', parseBody, parseToken,(req, res) => {
         })
        
     } catch (error) {
-        handleError(error)
+        handleError(error, res)
     }
 
 })
@@ -202,7 +201,7 @@ app.get('/stickies', parseToken, (req, res) => {
         })
                 
     } catch (error) {
-        handleError(error)
+        handleError(error, res)
     }
 
 })
@@ -217,7 +216,7 @@ app.post('/stickies', parseBody, parseToken, (req, res) => {
             res.status(201).send({ stickieId })
         })
     } catch (error) {
-        handleError(error)
+        handleError(error, res)
     }
 })
 
@@ -243,7 +242,7 @@ app.get('/stickies/id:stickieId', parseToken, (req, res) => {
             } else res.status(401).json({error: 'user not authorized'})
         }) 
     } catch (error) {
-        handleError(error)
+        handleError(error, res)
     }
 
 })
@@ -265,7 +264,7 @@ app.get('/stickies/q=:query', parseToken,(req, res) => {
         })
        
     } catch (error) {
-        handleError(error)
+        handleError(error, res)
     }
 
 })
@@ -281,7 +280,7 @@ app.delete('/stickies', parseBody, parseToken,(req, res) => {
         })
        
     } catch (error) {
-        handleError(error)
+        handleError(error, res)
     }
 
 })

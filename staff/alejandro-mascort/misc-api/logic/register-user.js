@@ -8,7 +8,7 @@ const {find} =require('../data')
 const { DuplicityError } = require('../errors')
 
 
-module.exports = (register, callback) => {
+module.exports = (register) => {
 debugger
     const { name, surname, email, password } = register
     String.validate.notVoid(name)
@@ -16,26 +16,25 @@ debugger
     String.validate.notVoid(email)
     Email.validate(email)
     String.validate.lengthGreaterEqualThan(password, 8)
-    Function.validate(callback)
 
     const data = path.join(__dirname, '..', 'data')
 
-    find({ email },'users', (error, [user]) => {
-        if (error) return callback(error)
-    
-        if (user) return callback(new DuplicityError(`user with e-mail ${email} already exists`))
-    
-        const id = uid()
+    return new Promise((resolve, reject) => {
+        find({ email },'users', (error, [user]) => {
+            if (error) return reject(error)
         
-        const newUser = { id, name, surname, email, password }
-    
-        fs.writeFile(path.join(data, 'users', `${id}.json`), JSON.prettify(newUser), error => {
-            if (error) return callback(error)
-    
-            callback(null, id)
+            if (user) return reject(new DuplicityError(`user with e-mail ${email} already exists`))
+        
+            const id = uid()
+            
+            const newUser = { id, name, surname, email, password }
+        
+            fs.writeFile(path.join(data, 'users', `${id}.json`), JSON.prettify(newUser), error => {
+                if (error) return reject(error)
+        
+                resolve(null, id)
+            })
         })
     })
-
-
 }
 

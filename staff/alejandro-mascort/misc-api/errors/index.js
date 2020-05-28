@@ -1,6 +1,5 @@
 const buildError = require('./build-error')
 
-
 module.exports = {
     DuplicityError: buildError('DuplicityError'),
     VoidError: buildError('VoidError'),
