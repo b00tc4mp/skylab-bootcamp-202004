@@ -20,26 +20,23 @@ describe('logic - register user', () => {
         })
     })
 
-    it('should succeed on valid data', done => {
-        registerUser(name, surname, email, password, error => {
-            expect(error).to.be.null
+    it('should succeed on valid data', () =>
+        registerUser(name, surname, email, password)
+            .then(() => {
+                find({}, (error, users) => {
+                    if (error) throw error
 
-            find({}, (error, users) => {
-                if (error) return done(error)
+                    expect(users.length).to.equal(1)
 
-                expect(users.length).to.equal(1)
+                    const [user] = users
 
-                const [user] = users
-
-                expect(user.name).to.equal(name)
-                expect(user.surname).to.equal(surname)
-                expect(user.email).to.equal(email)
-                expect(user.password).to.equal(password)
-
-                done()
+                    expect(user.name).to.equal(name)
+                    expect(user.surname).to.equal(surname)
+                    expect(user.email).to.equal(email)
+                    expect(user.password).to.equal(password)
+                })
             })
-        })
-    })
+    )
 
     describe('when user already exists', () => {
         beforeEach(done => {
@@ -52,16 +49,16 @@ describe('logic - register user', () => {
             })
         })
 
-        it('should fail on trying to register an existing user', done => {
-            registerUser(name, surname, email, password, error => {
-                expect(error).to.exist
+        it('should fail on trying to register an existing user', () =>
+            registerUser(name, surname, email, password)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    expect(error).to.exist
 
-                expect(error).to.be.an.instanceof(Error)
-                expect(error.message).to.equal(`user with e-mail ${email} already exists`)
-
-                done()
-            })
-        })
+                    expect(error).to.be.an.instanceof(Error)
+                    expect(error.message).to.equal(`user with e-mail ${email} already exists`)
+                })
+        )
     })
 
     afterEach(done => {

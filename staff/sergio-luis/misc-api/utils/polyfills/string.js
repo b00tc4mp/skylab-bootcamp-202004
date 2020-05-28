@@ -1,3 +1,6 @@
+const {VoidError} = require('../../errors');
+
+
 (() => {
     const ALPHABETIC_REGEX = /^[a-zA-Z ]+$/
 
@@ -28,7 +31,7 @@
     }
 
     String.validate.notVoid = function (string) {
-        if (this.isVoid(string)) throw new Error(`${string} is empty or blank`)
+        if (this.isVoid(string)) throw new VoidError(`${string} is empty or blank`)
     }.bind(String)
 
     String.validate.alphabetic = function (string) {

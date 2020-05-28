@@ -1,19 +1,33 @@
 const {contacts,users}= require("../data")
+const {CredentialsError,UnexistenceError} = require('../errors');
+require('../utils/polyfills/string')
 
-module.exports = (userId, callback) => {
-    // TODO validate input fields
-    // TODO check user exists, otherwise error
-    users.find({id:userId},(error,[user])=>{
-        if(error) return callback(error)
-        if(!user) return callback(new Error("no user found"))
-        
-        
-        contacts.find({user:userId},(error,results)=>{
-            if(error) return callback(error)
-            if(results.length===0) return callback(new Error("no contact found"))
+module.exports = (userId,contactId) => {
+    if(contactId)
+        String.validate.notVoid(contactId)
+    String.validate.notVoid(userId)
+    return new Promise((resolve,reject)=>{
+        users.find({id:userId},(error,[user])=>{
+            if(error) return reject(error)
     
-            callback(null,results)   
-        })  
+            contacts.find({user:userId},(error,results)=>{
+                if(error) return reject(error)
+                if(results.length===0) return reject(new UnexistenceError("no contact found"))
+                //let _results = results
+                if(contactId){
+                    let result = false;
+                    results.forEach(contact =>{
+                        const {id}= contact
+                        if(id === contactId) {
+                            result=contact
+                        }; 
+                    });
+                    results=result
+                    if(!result) return reject(new UnexistenceError("no contact found"))
+                }
+                resolve(results)   
+            })  
+        })
     })
     
 

@@ -3,49 +3,53 @@ require('../utils/polyfills/json')
 require('../utils/polyfills/function')
 const { Email } = require('../utils')
 const { users, contacts } = require('../data')
+const {CredentialsError,UnexistenceError,VoidError} = require('../errors');
 
-module.exports = (userId, contact, callback) => {
+module.exports = (userId, contact) => {
     String.validate.notVoid(userId)
     if (typeof contact !== 'object') throw new TypeError(`${contact} is not an object`)
-    Function.validate(callback)
-
-    // TODO make it so that at least should have the following fields: (name || suranme) && (email || phone)
 
     const { name, surname, email, phone, birthdate, country } = contact
 
-    if (name)
+    if(typeof name==="undefined" && typeof surname==="undefined"){
+        throw new VoidError( "introduce name or surname")
+    }
+    if (typeof name !== 'undefined')
         String.validate.notVoid(name)
 
-    if (surname)
+    if (typeof surname !== 'undefined')
         String.validate.notVoid(surname)
 
-    if (email) {
+    if (typeof email !== 'undefined') {
         String.validate.notVoid(email)
         Email.validate(email)
     }
 
-    if (phone)
+    if (typeof phone !== 'undefined')
         String.validate.notVoid(phone)
 
-    if (birthdate) {
+    if (typeof birthdate !== 'undefined') {
         String.validate.notVoid(birthdate)
         //Date.validate(birthdate) // TODO create this polyfill
     }
 
-    if (country)
+    if (typeof country !== 'undefined')
         String.validate.notVoid(country)
 
-    users.find({ id: userId }, (error, users) => {
-        if (error) return callback(error)
 
-        if (!users.length) return callback(new Error(`user with id ${userId} not found`))
-
-        contact.user = userId
-
-        contacts.create(contact, (error, id) => {
-            if (error) return callback(error)
-
-            callback(null, id)
+    return new Promise((resolve,reject)=>{
+        users.find({ id: userId }, (error, users) => {
+            if (error) return reject(error)
+    
+            if (!users.length) return reject(new CredentialsError(`user with id ${userId} not found`))
+    
+            contact.user = userId
+    
+            contacts.create(contact, (error, id) => {
+                if (error) return reject(error)
+    
+                resolve(id)
+            })
         })
-    })
-}
+    }) 
+}       

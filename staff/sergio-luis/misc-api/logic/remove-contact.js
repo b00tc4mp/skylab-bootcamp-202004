@@ -1,27 +1,33 @@
 const { users, contacts } = require('../data')
 require("../utils/polyfills/function")
 require("../utils/polyfills/string")
+const {CredentialsError,UnexistenceError} = require('../errors');
 
 
-module.exports = (userId, contactId, callback) => {
+module.exports = (userId, contactId) => {
     String.validate.notVoid(userId)
     String.validate.notVoid(contactId)
-    Function.validate(callback)
-debugger
-    users.find({id:userId},(error,[user])=>{
-        if(error) return callback(error)
 
-        if(!user) return callback(new Error(`user with id ${userId} not found`))
-
-        contacts.find({id:contactId},(error,[contact])=>{
-            if(error) return callback(error)
+    return new Promise((resolve,reject)=>{
+        users.find({id:userId},(error,[user])=>{
+            if(error) return reject(error)
     
-            if(userId!==contact.user) return callback(new Error("trying remove contacts from other user"))
-       
-            contacts.remove(contactId,(error)=>{
-                if(error) return callback(error)
-                return callback(null, `Deleted contact ${contactId}`)
-            })   
+            if(!user) return reject(new UnexistenceError(`user with id ${userId} not found`))
+    
+            contacts.find({id:contactId},(error,_contacts)=>{
+               
+                const [contact]=_contacts
+                if(!contact) return reject(new UnexistenceError(`contact with id ${contactId} not found`))
+            
+                if(error) return reject(error)
+        
+                if(userId!==contact.user) return reject(new CredentialsError("trying remove contacts from other user"))
+           
+                contacts.remove(contactId,(error)=>{
+                    if(error) return reject(error)
+                    return resolve(`Deleted contact ${contactId}`)
+                })   
+            })
         })
     })
 }

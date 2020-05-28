@@ -1,32 +1,30 @@
 const { users, stickies } = require('../data')
-require("../utils/polyfills/function")
 require("../utils/polyfills/string")
 
+const {UnexistenceError , CredentialsError} = require('../errors');
 
-module.exports = (userId, stickyId, callback) => {
-    
+module.exports = (userId, stickieId) => {
     String.validate.notVoid(userId)
-    String.validate.notVoid(stickyId)
-    Function.validate(callback)
+    String.validate.notVoid(stickieId)
 
-
-    users.find({ id:userId },(error, [user]) => {
-        if (error) return callback(error)
-        
-        if (!user) return callback(new Error(`user with id: ${userId}, does not exist`))
-
-        stickies.find({id:stickyId},(error, [sticky]) => {
+    return new Promise((resolve,reject)=>{
+        users.find({ id:userId },(error, _user) => {
+            const [user] = _user
+            if (error) return reject(error)
             
-            if (error) return callback(error)
-
-            if (!sticky) return callback(new Error(`this ${stickyId} does not exist`))
+            if (!user) return reject(new UnexistenceError(`user with id: ${userId}, does not exist`))
+    
+            stickies.find({id:stickieId}, (error, _stickies) => {
+                const [sticky]= _stickies
+                if (error) return reject(error)
+                if (!sticky) return reject(new UnexistenceError(`this ${stickieId} does not exist`))
+                if(sticky.user!==userId) return reject(new CredentialsError("this sticky is not yours"))
             
-            if(userId!==sticky.user) return callback(new Error("trying remove stickies from other user"))
-       
-            stickies.remove(stickyId,(error)=>{
-                if(error) return callback(error)
-                return callback(null, `Deleted sticky ${stickyId}`)
-            })   
+                stickies.remove(stickieId,(error)=>{
+                    if(error) return reject(error)
+                    return resolve(stickieId)
+                }) 
+            })
         })
     })
 }
