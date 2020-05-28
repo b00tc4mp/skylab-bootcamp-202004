@@ -1,0 +1,12 @@
+extend App
+
+block body
+    section.stickies
+    h1 Stickies List
+    if stickies
+        ul
+            each sticky in stickies
+                li= sticky.note
+                    form(action='/delete-contact', method='POST')
+                        button(name= "stickyId" value =sticky.id ) remove
+    include Feedback.pug
