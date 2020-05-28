@@ -1,14 +1,14 @@
 require('dotenv').config()
 
-const { PORT, SECRET } = process.env
+const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET } } = process
+const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
 const { registerUser, authenticateUser, retrieveUser, addContact } = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
-const jwt = require('jsonwebtoken')
-
-const { JsonWebTokenError } = jwt
+const { handleError } = require('./helpers')
+const { jwtPromised } = require('./utils')
 
 const app = express()
 
@@ -20,35 +20,44 @@ app.post('/users', parseBody, (req, res) => {
     const { body: { name, surname, email, password } } = req
 
     try {
-        registerUser(name, surname, email, password, error => {
-            if (error) return res.status(409).json({ error: error.message })
-
-            res.status(201).send()
-        })
+        registerUser(name, surname, email, password)
+            .then(() => res.status(201).send())
+            .catch(error => handleError(error, res))
     } catch (error) {
-        res.status(406).json({ error: error.message })
+        handleError(error, res)
     }
 })
 
-app.post('/users/auth', parseBody, (req, res) => { // get
+app.post('/users/auth', parseBody, (req, res) => {
     const { body: { email, password } } = req
 
     try {
-        authenticateUser(email, password, (error, userId) => {
-            if (error) return res.status(401).json({ error: error.message })
-
-            const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
-
-            res.send({ token })
-        })
+        authenticateUser(email, password)
+            .then(userId => jwtPromised.sign({ sub: userId }, SECRET, { expiresIn: '1d' }))
+            .then(token => res.send({ token }))
+            .catch(error => handleError(error, res))
     } catch (error) {
-        res.status(406).json({ error: error.message })
+        handleError(error, res)
     }
 })
 
-app.get('/users/:userId', (req, res) => {
-    // TODO extract userId from authorization (bearer token) then retrieve user and send it back
-    // TODO if userId is received as a param, the retrieve that user instead of requester user
+app.get('/users/:userId?', (req, res) => {
+    try {
+        const [, token] = req.header('authorization').split(' ')
+
+        jwtPromised.verify(token, SECRET)
+            .then(payload => {
+                const { sub: userId } = payload
+
+                const { params: { userId: otherUserId } } = req
+
+                return retrieveUser(otherUserId || userId)
+            })
+            .then(user => res.send(user))
+            .catch(error => handleError(error, res))
+    } catch (error) {
+        handleError(error, res)
+    }
 })
 
 // contacts
@@ -57,24 +66,28 @@ app.post('/contacts', parseBody, (req, res) => {
     try {
         const [, token] = req.header('authorization').split(' ')
 
-        const { sub: userId } = jwt.verify(token, SECRET)
-
         // what if we move all this token stuff to... a middleware? ,)
 
-        const { body: contact } = req
+        jwtPromised.verify(token, SECRET)
+            .then(payload => {
+                const { sub: userId } = payload
 
-        addContact(userId, contact, (error, contactId) => {
-            if (error) return res.status(401).json({ error: error.message })
+                const { params: { userId: otherUserId } } = req
 
-            res.send({ contactId })
-        })
+                const { body: contact } = req
+
+                return new Promise((resolve, reject) => {
+                    addContact(userId, contact, (error, contactId) => {
+                        if (error) return reject(error)
+
+                        resolve(contactId)
+                    })
+                })
+            })
+            .then(contactId => res.send({ contactId }))
+            .catch(error => handleError(error, res))
     } catch (error) {
-        if (error instanceof JsonWebTokenError)
-            res.status(401)
-        else
-            res.status(406)
-
-        res.json({ error: error.message })
+        handleError(error, res)
     }
 })
 

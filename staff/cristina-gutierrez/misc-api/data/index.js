@@ -1,5 +1,7 @@
+const buildManager = require('./build-manager')
+
 module.exports = {
-    contacts: require('./manager')('contacts'),
-    users: require('./manager')('users'),
-    stickies: require('./manager')('stickies')
+    contacts: buildManager('contacts'),
+    users: buildManager('users'),
+    stickies: buildManager('stickies')
 }
