@@ -3,6 +3,7 @@ const { random } = Math
 const { expect } = require('chai')
 require('../utils/polyfills/json')
 const { users: { deleteMany, create } } = require('../data')
+const { UnexistenceError, CredentialsError } = require('../errors')
 
 describe('logic - authenticate user', () => {
     let name, surname, email, password, userId
@@ -33,45 +34,37 @@ describe('logic - authenticate user', () => {
             })
         })
 
-        it('should succeed on correct credentials', done => {
-            authenticateUser(email, password, (error, _userId) => {
-                expect(error).to.be.null
+        it('should succeed on correct credentials', () => 
+            authenticateUser(email, password)
+                .then(_userId=>expect(_userId).to.equal(userId)) 
+        )
 
-                expect(_userId).to.equal(userId)
-
-                done()
-            })
-        })
-
-        it('should fail on wrong password', done => {
-            password += 'wrong-'
-
-            authenticateUser(email, password, error => {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(Error)
-                expect(error.message).to.equal(`wrong password`)
-
-                done()
-            })
-        })
+        it('should fail on wrong password', () => 
+            authenticateUser(email, "123")
+                .then(()=>{throw new Error("Should not be here")})
+                .catch(error=> { 
+                    expect(error).to.be.an.instanceOf(CredentialsError)
+                    
+                    expect(error.message).to.equal(`wrong password`)
+                })
+        )
     })
-
-    it('should fail when user does not exist', done => {
-        authenticateUser(email, password, error => {
-            expect(error).to.exist
-
-            expect(error).to.be.an.instanceof(Error)
-            expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
-
-            done()
-        })
+    
+    describe('when user does not exist', ()=>{
+        it('should fail when user does not exist', () => 
+            authenticateUser(email, password)
+                .then(()=>{throw new Error("Should throw error")})
+                .catch(error=>{
+                    expect(error).to.be.an.instanceof(UnexistenceError)
+                    expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
+                })
+        )
     })
-
+        
     afterEach(done => {
         deleteMany(error => {
             if (error) return done(error)
-
+            
             done()
         })
     })

@@ -22,21 +22,21 @@ module.exports = target => {
             let i = 0;
 
             (function readFile() {
-                fs.readFile(path.join(path.join(__dirname, target), files[i]), 'utf8', (error, json) => {
+                fs.readFile(path.join(__dirname, target, files[i]), 'utf8', (error, json) => {
                     if (error) return callback(error)
 
                     const existing = JSON.parse(json)
 
                     const keys = Object.keys(filter)
 
-                    let matches = true
+                    let matches = false
 
-                    for (let j = 0; j < keys.length && matches; j++) {
+                    for (let j = 0; j < keys.length && !matches; j++) {
                         const key = keys[j]
 
                         const value = filter[key]
 
-                        matches = existing[key] === value
+                        matches = existing[key].toLowerCase() === value.toLowerCase()
                     }
 
                     if (matches) {
@@ -69,21 +69,19 @@ module.exports = target => {
         })
     }
 
-    function update(id, data, callback) {
-        data.id = id
-        fs.readFile(path.join(path.join(__dirname, target), `${id}.json`), (error, user) => {
+    function update(id, newData, callback) {
+        fs.readFile(path.join(path.join(__dirname, target), `${id}.json`), (error, file) => {
             if (error) return callback(error)
             
-            const userData = JSON.parse(user)
-            const keys = Object.keys(data)
-            const values = Object.values(data)
+            const fileData = JSON.parse(file)
+            const keys = Object.keys(newData)
             
-            keys.forEach((key, i)=> userData[key] = values[i])
+            keys.forEach(key=> fileData[key] = newData[key])
             
-            fs.writeFile(path.join(path.join(__dirname, target), `${id}.json`), JSON.prettify(userData), error => {
+            fs.writeFile(path.join(path.join(__dirname, target), `${id}.json`), JSON.prettify(fileData), error => {
                 if (error) return callback(error)
     
-                callback(null)
+                callback(null, fileData)
             })
         }) 
     }

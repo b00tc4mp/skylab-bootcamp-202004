@@ -2,6 +2,7 @@ require('../utils/polyfills/string')
 const { Email } = require('../utils')
 require('../utils/polyfills/json')
 const { users: { find, create } } = require('../data')
+const { DuplicityError } = require('../errors')
 
 module.exports = (name, surname, email, password) => {
     String.validate.notVoid(name)
@@ -16,7 +17,7 @@ module.exports = (name, surname, email, password) => {
     
             const [user] = users
     
-            if (user) return reject(new Error(`user with e-mail ${email} already exists`))
+            if (user) return reject(new DuplicityError(`user with e-mail ${email} already exists`))
     
             const newUser = { name, surname, email, password }
     
