@@ -1,0 +1,10 @@
+extend App
+
+block body
+    section.add-sticky
+        h1 Add your sticky
+        form(action='/add-sticky', method='POST')
+            textarea(name='note', placeholder='Write your note here...')
+            button Add
+        if message
+            include Feedback.pug
