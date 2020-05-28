@@ -11,7 +11,8 @@ module.exports = (name, surname, email, password, callback) => {
     Email.validate(email)
     String.validate.notVoid(password)
     Function.validate(callback)
-
+    
+    return new Promise((resolve, reject) => {
     find({ email }, (error, [user]) => {
         if (error) return callback(error)
 
@@ -25,4 +26,5 @@ module.exports = (name, surname, email, password, callback) => {
             callback(null)
         })
     })
+})
 }
