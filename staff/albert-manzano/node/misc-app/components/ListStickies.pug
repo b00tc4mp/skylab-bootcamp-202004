@@ -1,0 +1,22 @@
+extend App
+
+block body
+    section.contacts
+    h1 stickies List
+    if sitckies
+        ul
+            each sticky in stickies
+                li= sticky.note
+                    form(action='/list-stickies/#{idSticky}', method='GET')
+                        button remove
+    if feedback
+        include Feedback.pug
+        
+//- module.exports = stickies =>{
+//- return `<section class="stickies__list">
+//-     <h2>Stickies list</h2>
+//- <ul>
+//-     ${stickies.map(({ message, idSticky})  => `<li><form action="/list-stickies/${idSticky}" method="GET">${message}<button>remove</button></form></li>`).join('')}
+//- </ul>
+//- </section>`
+//- }
