@@ -1,0 +1,14 @@
+extend App
+
+block body
+    section.search-contacts
+      form(action='/search', method='GET')
+        input(name='q', placeholder='?', 
+            script
+                query ? value= query : " ")
+        button Search
+        if contacts
+            include ListContacts.pug
+        else
+            include Feedback.pug
+
