@@ -8,12 +8,33 @@ const { registerUser, authenticateUser, retrieveUser, addContact } = require('./
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const jwt = require('jsonwebtoken')
+const { DuplicityError, VoidError, UnexistenceError, CredentialsError } = require('./errors')
 
 const { JsonWebTokenError } = jwt
 
 const app = express()
 
 const parseBody = bodyParser.json()
+
+// handle error
+
+function handleError(error, res) {
+    let status = 500
+
+    switch (true) {
+        case error instanceof TypeError || error instanceof VoidError:
+            status = 406
+            break
+        case error instanceof DuplicityError || error instanceof UnexistenceError:
+            status = 409
+            break
+        case error instanceof CredentialsError:
+            status = 401
+            break
+    }
+
+    res.status(status).json({ error: error.message })
+}
 
 // users
 
@@ -22,12 +43,13 @@ app.post('/users', parseBody, (req, res) => {
 
     try {
         registerUser(name, surname, email, password, error => {
-            if (error) return res.status(409).json({ error: error.message })
+            if (error)
+                return handleError(error, res)
 
             res.status(201).send()
         })
     } catch (error) {
-        res.status(406).json({ error: error.message })
+        handleError(error)
     }
 })
 
@@ -36,14 +58,14 @@ app.post('/users/auth', parseBody, (req, res) => {
 
     try {
         authenticateUser(email, password, (error, userId) => {
-            if (error) return res.status(401).json({ error: error.message })
+            if (error) return handleError(error, res)
 
             const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
 
             res.send({ token })
         })
     } catch (error) {
-        res.status(406).json({ error: error.message })
+        handleError(error, res)
     }
 })
 
