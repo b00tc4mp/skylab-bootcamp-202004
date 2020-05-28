@@ -1,7 +1,22 @@
+require('dotenv').config()
+const { SECRET, PORT } = process.env
+
 const express = require('express')
 const { registerUser, authenticateUser, retrieveUser, addContact, retrieveContact } = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
+const jwt = require('jsonwebtoken')
+const { handleError } = require('./helpers')
+//npm i jsonwebtoken
+//npm i dotenv
+// .env ---> SECRET = MI SECRETO
+// PORT = 8080
+
+//const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
+
+//const { sub: userId } = jwt.verify(token, SECRET)
+
+require('dotenv').config()
 
 const app = express()
 
@@ -29,8 +44,8 @@ app.post('/users/auth', parseBody, (req, res) => {
     try {
         authenticateUser(email, password, (error, userId) => {
             if (error) return res.status(401).json({ error: error.message })
-
-            res.send({ userId })
+            const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
+            res.send({ token })
         })
     } catch (error) {
         res.status(406).json({ error: error.message })
@@ -62,7 +77,9 @@ app.get('/users/:userId?', parseBody, (req, res) => {
 // contacts
 
 app.post('/contacts', parseBody, (req, res) => {
-    const [, userId] = req.header('authorization').split(' ')
+    const [, token] = req.header('authorization').split(' ')
+
+    const {sub: userId} = jwt.verify(token, SECRET)
 
     const { body: contact } = req
 
@@ -108,4 +125,4 @@ app.get('*', (req, res) => {
     res.status(404).send('Not Found :(')
 })
 
-app.listen(8080, () => console.log(`${name} ${version} running`))
+app.listen(PORT, () => console.log(`${name} ${version} running`))
