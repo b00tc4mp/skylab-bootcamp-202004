@@ -1,0 +1,13 @@
+extend Home
+
+block Compo
+  section.add-stickie
+    h2 Add Sticky
+    form#textarea(action='/add-stickie' method='POST')
+      | Tag: 
+      input(type='text' name='tag' placeholder='e.g. idea, task, etc. or the name of the sticky')
+      input(type='submit')
+    br
+    textarea(rows='4' cols='30' name='message' form='textarea' placeholder='Introduce your sticky!!!')
+    if feedback
+      include Feedback.pug
