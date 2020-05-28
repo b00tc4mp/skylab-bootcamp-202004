@@ -30,7 +30,7 @@ app.post('/users', parseBody, (req, res) => {
     }
 })
 
-app.post('/users/auth', parseBody, (req, res) => {
+app.post('/users/auth', parseBody, (req, res) => { // get
     const { body: { email, password } } = req
 
     try {
@@ -46,7 +46,7 @@ app.post('/users/auth', parseBody, (req, res) => {
     }
 })
 
-app.get('/users/:userId?', (req, res) => {
+app.get('/users/:userId', (req, res) => {
     // TODO extract userId from authorization (bearer token) then retrieve user and send it back
     // TODO if userId is received as a param, the retrieve that user instead of requester user
 })
