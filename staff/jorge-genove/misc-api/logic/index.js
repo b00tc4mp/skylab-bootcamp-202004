@@ -7,5 +7,7 @@ module.exports = {
     listContacts: require('./list-contacs'),
     listStickies: require('./list-stickies'),
     searchContacts: require('./search-contacts'),
-    searchUser: require('./search-user')
+    searchUsers: require('./search-user'),
+    retrieveContact: require('./retrieve-contact'),
+    unregisterUser: require('./unregister-user')
 }

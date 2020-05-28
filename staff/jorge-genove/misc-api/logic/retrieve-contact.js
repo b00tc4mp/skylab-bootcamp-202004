@@ -1,6 +1,6 @@
 require("../utils/polyfills/string");
 require("../utils/polyfills/function");
-const { users : {find} } = require("../data");
+const { contacts: { find } } = require("../data")
 
 module.exports = (id, callback) => {
   String.validate(id);
@@ -8,12 +8,11 @@ module.exports = (id, callback) => {
 
   find({ id }, (error, [user]) => {
     if (error) return callback(error);
-    if(!user) return callback (new Error('user dosent exist'))
+    if(!user) return callback (new Error('contact dosent exist'))
     
     
     
-    delete user.id
-    delete user.password
+    
     return callback(null, user);
 
   });

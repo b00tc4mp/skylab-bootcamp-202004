@@ -5,7 +5,7 @@ const uid = require("../utils/uid");
 const Email = require("../utils/email");
 require("../utils/polyfills/function");
 require("../utils/polyfills/json");
-const { find } = require("../data/users");
+const { users : { find }} = require("../data");
 
 module.exports = (name, surname, email, password, callback) => {
   String.validate.notVoid(name);

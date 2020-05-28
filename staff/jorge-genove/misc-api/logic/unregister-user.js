@@ -1,8 +1,7 @@
-require("../utils/string");
-require("../utils/function");
-const { find } = require("../data/users");
+require("../utils/polyfills/string");
+require("../utils/polyfills/function");
+const { users : {find} } = require("../data");
 const Email = require("../utils/email");
-require("../utils/function");
 const fs = require("fs");
 const path = require("path");
 
