@@ -1,0 +1,23 @@
+section.stickies
+  a(href='/home') Home
+  h2 stickies list
+  .table
+    .table__body
+        if stickies
+            each stickie in stickies 
+                .table__item
+                    if stickie.tag 
+                        p  #{stickie.tag}
+                    if stickie.surname 
+                        p  #{stickie.message}
+
+                    div
+                        form(method='POST' action='/stickies')
+                            input(name='stickieId' style='visibility:hidden;' value=`${stickie.stickieId}`)
+                            button Remove
+
+        if stickies.length === 0
+            p No stickies added
+
+        if feedback
+            include Feedback.pug
