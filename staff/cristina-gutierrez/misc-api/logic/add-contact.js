@@ -34,18 +34,20 @@ module.exports = (userId, contact, callback) => {
 
     if (typeof country !== 'undefined')
         String.validate.notVoid(country)
+    
+    const promise  = new Promise ((resolve, reject) => {
 
-    users.find({ id: userId }, (error, users) => {
-        if (error) return callback(error)
+        users.find(({ userId }) => {
+            if (error) return reject(error)
 
-        if (!users.length) return callback(new Error(`user with id ${userId} not found`))
+            if (!users.length) return reject(new Error(`user with id ${userId} not found`))
 
-        contact.user = userId
+            contact.user = userId
 
-        contacts.create(contact, (error, id) => {
-            if (error) return callback(error)
-
-            callback(null, id)
+            contacts.create(id => {
+                then(id)
+                .catch(error)
+            })
         })
     })
 }
