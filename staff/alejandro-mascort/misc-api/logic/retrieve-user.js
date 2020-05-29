@@ -3,22 +3,26 @@ require('../utils/polyfills/function')
 const { find } = require('../data')
 const { UnexistenceError} = require('../errors')
 
-module.exports = (userId) => {
+const mongo = require('../data/mongo')
+const { ObjectId } = mongo
+
+module.exports = userId => {
     String.validate.notVoid(userId)
 
-    return new Promise((resolve,reject) => {
-        find({ id: userId }, 'users',(error, users) => {
-            if (error) return reject(error)
-    
-            const [user] = users
-            
-            if (!user) return reject(new UnexistenceError(`user with id ${userId} does not exist`))
-    
-            delete user.id
-            delete user.password
-    
-            resolve(user)
+    return mongo.connect()
+        .then(connection => {
+            const users = connection.db().collection('users')
+
+            debugger
+
+            return users.findOne({ _id: ObjectId(userId) })
         })
-    })
-    
+        .then(user => {
+            if (!user) throw new Error(`user with id ${userId} does not exist`)
+
+            delete user._id
+            delete user.password
+
+            return user
+        })
 }

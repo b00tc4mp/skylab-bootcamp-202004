@@ -1,12 +1,9 @@
 require('../utils/polyfills/string')
 const Email = require('../utils/email')
 require('../utils/polyfills/function')
-const uid = require('../utils/uid')
-const fs = require('fs')
-const path = require('path')
-const {find} =require('../data')
 const { DuplicityError } = require('../errors')
 
+const mongo = require('../data/mongo')
 
 module.exports = (register) => {
 debugger
@@ -17,24 +14,20 @@ debugger
     Email.validate(email)
     String.validate.lengthGreaterEqualThan(password, 8)
 
-    const data = path.join(__dirname, '..', 'data')
+    return mongo.connect()
+        .then(connection => {
+            const db = connection.db()
 
-    return new Promise((resolve, reject) => {
-        find({ email },'users', (error, [user]) => {
-            if (error) return reject(error)
-        
-            if (user) return reject(new DuplicityError(`user with e-mail ${email} already exists`))
-        
-            const id = uid()
-            
-            const newUser = { id, name, surname, email, password }
-        
-            fs.writeFile(path.join(data, 'users', `${id}.json`), JSON.prettify(newUser), error => {
-                if (error) return reject(error)
-        
-                resolve()
-            })
+            const users = db.collection('users')
+
+            return users.findOne({email})
+                .then(user => {                
+                    if (user) throw new DuplicityError(`user with e-mail ${email} already exists`)
+                
+                    return users.insertOne(register)
+                })
         })
-    })
+        
+
 }
 

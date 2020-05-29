@@ -7,7 +7,7 @@ const { expect } = require('chai')
 const uid = require('../utils/uid')
 const addContact = require('../logic/add-contact')
 
-describe.only('addContact', () => {
+describe('addContact', () => {
     const data = path.join(__dirname, '..', 'data')
 
     let name, surname, email, password, id

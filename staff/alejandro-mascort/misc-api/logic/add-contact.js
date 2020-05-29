@@ -1,10 +1,7 @@
-const fs = require('fs')
-const path = require('path')
 require('../utils/polyfills/string')
 const Email = require('../utils/email')
-const uid = require('../utils/uid')
 require('../utils/polyfills/json')
-const { find } = require('../data')
+const { find, create } = require('../data')
 
 const { UnexistenceError } = require('../errors')
 
@@ -36,27 +33,14 @@ module.exports = (userId, contact) => {
     if (country) String.validate.notVoid(country)
 
 
-    return new Promise((resolve, reject) => {
-        find({id:userId}, 'users', (error, users) => {
-            if (error) return reject(error)
-    
-            const [ user ] = users
+    return find({ id: userId }, 'users')
+        .then(users => { 
+            if (!users.length) throw new UnexistenceError(`user with id ${userId} not found`)
 
-            if (!user) return reject(new UnexistenceError(`user with ${userId} does not exist`))
-        
             contact.user = userId
-            contact.contactId = uid()
-    
-            const file = `${contact.contactId}.json`
+
+            return create(contact,'contacts')
             
-        
-            fs.writeFile(path.join(__dirname, '..', 'data', 'contacts', file), JSON.prettify(contact), error => {
-                if (error) return reject(error)
-        
-                resolve(contact.contactId)
-            })
-        
-        }) 
-    })
+        })
     
 }

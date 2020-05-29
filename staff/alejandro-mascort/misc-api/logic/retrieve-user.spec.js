@@ -1,71 +1,64 @@
+require('dotenv').config()
+
+const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+
 const { random } = Math
-const fs = require('fs')
-const path = require('path')
-const {deleteFilesByExtensionFromDirectory} = require('../utils/files.js')
 const { expect } = require('chai')
-const uid = require('../utils/uid')
-const retrieve = require('../logic/retrieve-user');
 
-describe('retrieveUser', () => {
-    const data = path.join(__dirname, '..', 'data')
+const mongo = require('../data/mongo')
 
-    let name, surname, email, password, id
+const retrieveUser = require('./retrieve-user');
 
-    beforeEach(done =>{
-        deleteFilesByExtensionFromDirectory(path.join(data, 'users'), '.json', error => {
-            if (error) return done(error)
-            
-            name = `name-${random()}`;
-            surname = `surname${random()}`;
-            email = `${random()}@mail.com`;
-            password = `${random()}` ;
-            id = uid()
+describe.only('logic - retrieve user', () => {
+    let users
 
-            const newUser = {name,surname,email,password,id};
+    before(() => mongo.connect(MONGODB_URL).then(connection => users = connection.db().collection('users')))
 
-            fs.writeFile(path.join(data, 'users', `${id}.json`), JSON.prettify(newUser), error => {
-                if (error) return done(error) 
-                
-                done()
+    let name, surname, email, password, userId
+
+    beforeEach(() =>
+        users.deleteMany()
+            .then(() => {
+                name = `name-${random()}`
+                surname = `surname-${random()}`
+                email = `e-${random()}@mail.com`
+                password = `password-${random()}`
             })
+    )
+
+    describe('when user already exists', () => {
+        beforeEach(() => {
+            const user = { name, surname, email, password }
+
+            return users.insertOne(user)
+                .then(result => userId = result.insertedId.toString())
         })
+
+        it('should succeed on correct user id', () =>
+            retrieveUser(userId)
+                .then(user => {
+                    expect(user.name).to.equal(name)
+                    expect(user.surname).to.equal(surname)
+                    expect(user.email).to.equal(email)
+                    expect(user.password).to.be.undefined
+                })
+        )
     })
 
+    it('should fail when user does not exist', () => {
+        const userId = '5ed1204ee99ccf6fae798aef'
 
-    it('Sould sucess to retrieve user',()=>{
-       
-        return retrieve(id)
-            .then(user => {
-                expect(user.name).to.equal(name)
-                expect(user.surname).to.equal(surname)
-                expect(user.email).to.equal(email)
-                expect(user.password).to.be.undefined
-                expect(user.id).to.be.undefined
-            })
-    })
-
-    it('Sould fail wend user id don`t exist',()=>{
-        const _id = uid()
-        
-        retrieve(_id)
-            .then(() => {throw new Error('should not reach this point')})
+        return retrieveUser(userId)
+            .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
                 expect(error).to.exist
-                expect(error).to.be.an.instanceof(Error);
-                expect(error.message).to.equal(`user with id ${_id} does not exist`);
+
+                expect(error).to.be.an.instanceof(Error)
+                expect(error.message).to.equal(`user with id ${userId} does not exist`)
             })
     })
 
-    afterEach(done=>{
-        deleteFilesByExtensionFromDirectory(path.join(data, 'users'), '.json', error => {
-            if (error) return done(error)
+    afterEach(() => users.deleteMany())
 
-            done()
-        })
-    })    
-
+    after(() => users.deleteMany().then(mongo.disconnect))
 })
-
-    
-
-  

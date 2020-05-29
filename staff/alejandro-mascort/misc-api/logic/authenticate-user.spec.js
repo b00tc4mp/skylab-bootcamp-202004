@@ -1,79 +1,66 @@
-const register = require('./register-user');
+require('dotenv').config()
+
+const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+
 const { random } = Math
-const fs = require('fs')
-const path = require('path')
-const {deleteFilesByExtensionFromDirectory} = require('../utils/files.js')
 const { expect } = require('chai')
-const uid = require('../utils/uid')
-const authenticated = require('../logic/authenticate-user')
 
-describe('authenticatedUser', () => {
-    const data = path.join(__dirname, '..', 'data')
+const mongo = require('../data/mongo')
 
-    let name, surname, email, password, id
+const authenticateUser = require('./authenticate-user')
 
-    beforeEach(done =>{
-        deleteFilesByExtensionFromDirectory(path.join(data, 'users'), '.json', error => {
-            if (error) return done(error)
-            
-            name = `name-${random()}`;
-            
-            surname = `surname${random()}`;
-            email = `${random()}@mail.com`;
-            password = `${random()}` ;
-            id = uid()
+describe('logic - authenticate user', () => {
+    let users
 
-            const newUser = {name,surname,email,password,id};
+    before(() => mongo.connect(MONGODB_URL).then(connection => users = connection.db().collection('users')))
 
-            fs.writeFile(path.join(data, 'users', `${id}.json`), JSON.prettify(newUser), error => {
-                if (error) return done(error) 
-                done()
+    let name, surname, email, password, userId
+
+    beforeEach(() =>
+        users.deleteMany()
+            .then(() => {
+                name = `name-${random()}`
+                surname = `surname-${random()}`
+                email = `e-${random()}@mail.com`
+                password = `password-${random()}`
             })
+    )
+
+    describe('when user already exists', () => {
+        beforeEach(() => {
+            const user = { name, surname, email, password }
+
+            return users.insertOne(user)
+                .then(result => userId = result.insertedId.toString())
+        })
+
+        it('should succeed on correct credentials', () =>
+            authenticateUser({email, password})
+                .then(_userId => expect(_userId).to.equal(userId))
+        )
+
+        it('should fail on wrong password', () => {
+            password += 'wrong-'
+
+            return authenticateUser({email, password})
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    expect(error).to.be.an.instanceof(Error)
+                    expect(error.message).to.equal(`wrong password`)
+                })
         })
     })
 
-
-    it('Sould sucess to authenticate a user',()=>{
-        const user = {email,password}
-
-        return authenticated(user)
-            .then(() => {})
-    })
-
-    it('Sould fail wend email don`t exist', () =>{
-        const _email = `${random()}@Email.com`;
-        const user = {email:_email,password}
-
-        return authenticated(user)
-            .then(() => {throw new Error('should not reach this point')})
+    it('should fail when user does not exist', () =>
+        authenticateUser({email, password})
+            .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
-                expect(error).to.be.an.instanceof(Error);
-                expect(error.message).to.equal(`user with e-mail ${_email} does not exist`);
+                expect(error).to.be.an.instanceof(Error)
+                expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
             })
-    })
-    it('Sould fail on incorrect password',()=>{
-        const _password = `${random()}`
-        const user = {email,password:_password}
+    )
 
-        authenticated(user)
-            .then(() => {throw new Error('should not reach this point')})
-            .catch(error => {
-                expect(error).to.be.an.instanceof(Error);
-                expect(error.message).to.equal('wrong password');
-            })
-    })
+    afterEach(() => users.deleteMany())
 
-    
-    afterEach(done=>{
-        deleteFilesByExtensionFromDirectory(path.join(data, 'users'), '.json', error => {
-            if (error) return done(error)
-
-            done()
-        })
-    })    
-
+    after(() => users.deleteMany().then(mongo.disconnect))
 })
-
-    
-
-  
