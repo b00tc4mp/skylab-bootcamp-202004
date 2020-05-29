@@ -1,0 +1,7 @@
+extend App
+
+block body
+    section.searchContacts
+        form(action="/contacts" method="GET")
+            imput(type="text" name="q" placeholder="?" value=query)
+            button Search
