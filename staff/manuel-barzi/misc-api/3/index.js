@@ -72,8 +72,6 @@ app.post('/contacts', parseBody, (req, res) => {
             .then(payload => {
                 const { sub: userId } = payload
 
-                const { params: { userId: otherUserId } } = req
-
                 const { body: contact } = req
 
                 return new Promise((resolve, reject) => {
