@@ -1,21 +1,25 @@
 require('../utils/polyfills/string')
 const { Email } = require('../utils')
-require('../utils/polyfills/function')
 const { users: { find } } = require('../data')
+const { UnexistanceError, CredentialsError } = require('../errors/')
 
-module.exports = (email, password, callback) => {
+module.exports = (email, password) => {
     String.validate.notVoid(email)
     Email.validate(email)
     String.validate.notVoid(password)
-    Function.validate(callback)
+    // Function.validate(callback)
+
+return new Promise((resolve, reject)=> {
 
     find({ email }, (error, [user]) => {
-        if (error) return callback(error)
-
-        if (!user) return callback(new Error(`user with e-mail ${email} does not exist`))
-
-        if (user.password !== password) return callback(new Error('wrong password'))
-
-        callback(null, user.id)
+        if (error) return reject(error)
+        
+        if (!user) return reject(new UnexistanceError(`user with e-mail ${email} does not exist`))
+        
+        if (user.password !== password) return reject(new CredentialsError('wrong password'))
+        
+        resolve(user.id)
     })
+})
+
 } 
