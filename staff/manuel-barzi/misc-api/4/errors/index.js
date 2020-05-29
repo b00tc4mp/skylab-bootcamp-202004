@@ -1,4 +1,4 @@
-const buildError = require('./build-error')
+const buildError = require('./error-builder')
 
 module.exports = {
     DuplicityError: buildError('DuplicityError'),
