@@ -8,47 +8,57 @@ const { Files: { deleteFilesByExtensionFromDirectory }, uid } = require('../util
 module.exports = target => {
     function find(filter, callback) {
         if (typeof filter !== 'object') throw new TypeError(`${filter} is not an object`)
-        Function.validate(callback)
+        if (arguments.length > 1) Function.validate(callback)
 
-        fs.readdir(path.join(__dirname, target), (error, files) => {
-            if (error) return callback(error)
+        const promise = new Promise((resolve, reject) => {
 
-            files = files.filter(file => path.extname(file) === '.json')
 
-            const results = []
+            fs.readdir(path.join(__dirname, target), (error, files) => {
+                if (error) return reject(error)
 
-            if (!files.length) return callback(null, results)
+                files = files.filter(file => path.extname(file) === '.json')
 
-            let i = 0;
+                const results = []
 
-            (function readFile() {
-                fs.readFile(path.join(path.join(__dirname, target), files[i]), 'utf8', (error, json) => {
-                    if (error) return callback(error)
+                if (!files.length) return resolve(results)
 
-                    const existing = JSON.parse(json)
+                let i = 0;
 
-                    const keys = Object.keys(filter)
+                (function readFile() {
+                    fs.readFile(path.join(path.join(__dirname, target), files[i]), 'utf8', (error, json) => {
+                        if (error) return reject(error)
 
-                    let matches = true
+                        const existing = JSON.parse(json)
 
-                    for (let j = 0; j < keys.length && matches; j++) {
-                        const key = keys[j]
+                        const keys = Object.keys(filter)
 
-                        const value = filter[key]
+                        let matches = true
 
-                        matches = existing[key] === value
-                    }
+                        for (let j = 0; j < keys.length && matches; j++) {
+                            const key = keys[j]
 
-                    if (matches) {
-                        results.push(existing)
-                    }
+                            const value = filter[key]
 
-                    if (++i < files.length) return readFile()
+                            matches = existing[key] === value
+                        }
 
-                    callback(null, results)
-                })
-            })()
+                        if (matches) {
+                            results.push(existing)
+                        }
+
+                        if (++i < files.length) return readFile()
+
+                        resolve(results)
+                    })
+                })()
+            })
         })
+
+        if (arguments.length === 1) return promise
+
+        promise()
+            .then(results => callback(null, results))
+            .catch(callback)
     }
 
     function deleteMany(callback) {
@@ -60,31 +70,70 @@ module.exports = target => {
     }
 
     function create(data, callback) {
+        if (typeof data !== 'object') throw new TypeError(`${data} is not an object`)
+
+        if (arguments.length > 1) Function.validate(callback)
+
         data.id = uid()
+        const promise = new Promise((resolve, reject) => {
+            fs.writeFile(path.join(path.join(__dirname, target), `${data.id}.json`), JSON.prettify(data), error => {
+                if (error) return reject(error)
 
-        fs.writeFile(path.join(path.join(__dirname, target), `${data.id}.json`), JSON.prettify(data), error => {
-            if (error) return callback(error)
+                resolve(data.id)
+            })
 
-            callback(null, data.id)
         })
+        if (arguments.length === 1) return promise
+
+        promise()
+            .then(id => callback(null, id))
+            .catch(callback)
     }
 
     function update(id, data, callback) {
+        String.validate.notVoid(id)
+
+        if (typeof data !== 'object') throw new TypeError(`${data} is not an object`)
+
+        if (arguments.length > 2) Function.validate(callback)
+
         data.id = id
 
-        fs.writeFile(path.join(path.join(__dirname, target), `${id}.json`), JSON.prettify(data), error => {
-            if (error) return callback(error)
+        const promise = new Promise((resolve, reject) => {
+            fs.writeFile(path.join(path.join(__dirname, target), `${id}.json`), JSON.prettify(data), error => {
+                if (error) return reject(error)
 
-            callback(null)
+                resolve()
+            })
         })
+
+        if (arguments.length === 2) return promise
+
+        promise()
+            .then(() => callback(null))
+            .catch(callback)
     }
 
-    function remove(id, callback) {
-        fs.unlink(path.join(path.join(__dirname, target), `${id}.json`), error => {
-            if (error) return callback(error)
 
-            callback(null)
+    function remove(id, callback) {
+        String.validate.notVoid(id)
+
+        if (arguments.length > 1) Function.validate(callback)
+
+        const promise = new Promise((resolve, reject) => {
+            fs.unlink(path.join(path.join(__dirname, target), `${id}.json`), error => {
+                if (error) return reject(error)
+
+                resolve()
+            })
         })
+
+        if (arguments.length === 1) return promise
+
+        promise()
+            .then(() => callback(null))
+            .catch(callback)
+        
     }
 
     return {

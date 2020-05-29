@@ -1,39 +1,21 @@
-const fs = require('fs')
-const path = require('path')
+const { users, contacts } = require('../data')
+require('../utils/polyfills/function')
+require('../utils/polyfills/string')
 
 module.exports = (userId, callback) => {
-    // TODO validate input fields
-    // TODO check user exists, otherwise error
+    String.validate.notVoid(userId)
 
-    fs.readdir(path.join(__dirname, '..', 'data'), (error, files) => {
+    Function.validate(callback)
+
+    users.find({ id: userId }, (error, [user]) => {
         if (error) return callback(error)
+        if (!user) return callback(new Error(`user with id ${userId} does not exist`))
 
-        let wasError = false
+        contacts.find({ user: userId }, (error, contacts) => {
+            if (error) return callback(error)
+            if (!stickies.length) return callback(new Error('stickies is empty'))
 
-        const contacts = []
-
-        files.forEach(file => {
-            fs.readFile(path.join(__dirname, '..', 'data', 'contacts', file), 'utf8', (error, json) => {
-                if (error) {
-                    if (!wasError) {
-                        callback(error)
-
-                        wasError = true
-                    }
-
-                    return
-                }
-
-                if (!wasError) {
-                    const contact = JSON.parse(json)
-
-                    contact.id = file.substring(0, file.indexOf('.json'))
-
-                    contacts.push(contact)
-
-                    if (contacts.length === files.length) callback(null, contacts)
-                }
-            })
+            callback(null, contacts)
         })
     })
 }

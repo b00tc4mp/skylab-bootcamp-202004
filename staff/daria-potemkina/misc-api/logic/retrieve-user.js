@@ -1,19 +1,20 @@
 require('../utils/polyfills/string')
 require('../utils/polyfills/function')
 const { users: { find } } = require('../data')
+const { UnexistenceError } = require('../errors')
 
-module.exports = (userId, callback) => {
+module.exports = (userId) => {
     String.validate.notVoid(userId)
-    Function.validate(callback)
 
-    find({ id: userId }, (error, [user]) => {
-        if (error) return callback(error)
+    return find({ id: userId })
+        .then(users => {
+            const [user] = users
 
-        if (!user) return callback(new Error(`user with id ${userId} does not exist`))
+            if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
-        delete user.id
-        delete user.password
+            delete user.id
+            delete user.password
 
-        callback(null, user)
-    })
+            return user
+        })
 }

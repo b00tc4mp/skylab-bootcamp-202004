@@ -1,11 +1,12 @@
 const express = require('express')
-// require('dotenv').config()
+require('dotenv').config()
 // const { PORT, SECRET } = process.env
+const PORT = 8080
 const SECRET = 'my secret'
 const { registerUser, authenticateUser, retrieveUser, addContact, searchContacts, removeContact, updateUser, addSticky, updateContact, searchStickies, removeSticky } = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
-// const parseToken = require('./utils/middlewares/token')
+const { handleError } = require('./helpers')
 const app = express()
 
 const parseBody = bodyParser.json()
@@ -26,13 +27,12 @@ app.post('/users', parseBody, (req, res) => {
     const { body: { name, surname, email, password } } = req
 
     try {
-        registerUser(name, surname, email, password, error => {
-            if (error) return res.status(409).json({ error: error.message })
+        registerUser(name, surname, email, password)
+            .then(() => res.status(201).send())
+            .catch(error => handleError(error, res))
 
-            res.status(201).send()
-        })
     } catch (error) {
-        res.status(406).json({ error: error.message })
+        handleError(error, res)
     }
 })
 
@@ -60,15 +60,15 @@ app.post('/users/auth', parseBody, (req, res) => {
     const { body: { email, password } } = req
 
     try {
-        authenticateUser(email, password, (error, userId) => {
-            if (error) return res.status(401).json({ error: error.message })
+        authenticateUser(email, password)
+            .then(userId => {
+                const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
 
-            const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
-
-            res.send({ token })
-        })
+                res.send({ token })
+            })
+            .catch(error => handleError(error, res))
     } catch (error) {
-        res.status(406).json({ error: error.message })
+        handleError(error, res)
     }
 })
 
@@ -79,12 +79,11 @@ app.get('/users/:userId?', (req, res) => {
         const { userId } = req.params
 
         try {
-            retrieveUser(userId, (error, user) => {
-                if (error) return res.status(404).json({ error: error.message })
-                res.send(user)
-            })
+            retrieveUser(userId)
+                .then(user => res.send(user))
+                .catch(error => handleError(error, res))
         } catch (error) {
-            res.status(406).json({ error: error.message })
+            handleError(error, res)
         }
     } else {
         try {
@@ -92,12 +91,11 @@ app.get('/users/:userId?', (req, res) => {
 
             const { sub: userId } = jwt.verify(token, SECRET)
 
-            retrieveUser(userId, (error, user) => {
-                if (error) return res.status(404).json({ error: error.message })
-                res.send(user)
-            })
+            retrieveUser(userId)
+                .then(user => res.send(user))
+                .catch(error => handleError(error, res))
         } catch (error) {
-            res.status(406).json({ error: error.message })
+            handleError(error, res)
         }
     }
 })
@@ -105,7 +103,7 @@ app.get('/users/:userId?', (req, res) => {
 //======== update =====
 
 app.patch('/update', parseBody, (req, res) => {
-    const { body: { name, surname, email, password } } = req
+    const { body } = req
 
     try {
 
@@ -113,13 +111,12 @@ app.patch('/update', parseBody, (req, res) => {
 
         const { sub: userId } = jwt.verify(token, SECRET)
 
-        updateUser(userId, name, surname, email, password, (error) => {
-            if (error) return res.status(404).json({ error: error.message })
+        updateUser(userId, body)
+            .then(() => res.status(200).send())
+            .catch(error => handleError(error, res))
 
-            res.send('updated')
-        })
     } catch (error) {
-        res.status(406).json({ error: error.message })
+        handleError(error, res)
     }
 })
 
@@ -136,19 +133,12 @@ app.post('/contacts', parseBody, (req, res) => {
 
         const { sub: userId } = jwt.verify(token, SECRET)
 
+        addContact(userId, contact)
+            .then(() => res.status(201).send())
+            .catch(error => handleError(error, res))
 
-        addContact(userId, contact, (error, contactId) => {
-            if (error) return res.status(401).json({ error: error.message })
-
-            res.send({ contactId })
-        })
     } catch (error) {
-        if (error instanceof JsonWebTokenError)
-            res.status(401)
-        else
-            res.status(406)
-
-        res.json({ error: error.message })
+        handleError(error, res)
     }
 })
 
@@ -304,4 +294,4 @@ app.get('*', (req, res) => {
     res.status(404).send('Not Found :(')
 })
 
-app.listen(8080, () => console.log(`${name} ${version} running`))
+app.listen(PORT, () => console.log(`${name} ${version} running`))
