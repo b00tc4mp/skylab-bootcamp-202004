@@ -4,10 +4,9 @@ require('../utils/polyfills/function')
 const { Email } = require('../utils')
 const { users, contacts } = require('../data')
 
-module.exports = (userId, contact, callback) => {
+module.exports = (userId, contact) => {
     String.validate.notVoid(userId)
     if (typeof contact !== 'object') throw new TypeError(`${contact} is not an object`)
-    Function.validate(callback)
 
     // TODO make it so that at least should have the following fields: (name || suranme) && (email || phone)
 
@@ -35,17 +34,19 @@ module.exports = (userId, contact, callback) => {
     if (country)
         String.validate.notVoid(country)
 
-    users.find({ id: userId }, (error, users) => {
-        if (error) return callback(error)
+    return new Promise ((resolve, reject) =>{
+        users.find({ id: userId }, (error, users) => {
+            if (error) return reject(error)
 
-        if (!users.length) return callback(new Error(`user with id ${userId} not found`))
+            if (!users.length) return reject(new Error(`user with id ${userId} not found`))
 
-        contact.user = userId
+            contact.user = userId
 
-        contacts.create(contact, (error, id) => {
-            if (error) return callback(error)
+            contacts.create(contact, (error, id) => {
+                if (error) return reject(error)
 
-            callback(null, id)
+                resolve(id)
+            })
         })
-    })
+    })           
 }

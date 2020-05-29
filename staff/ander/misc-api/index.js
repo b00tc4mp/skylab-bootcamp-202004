@@ -26,11 +26,10 @@ app.post('/users', parseBody, (req, res) => {
     const { body: { name, surname, email, password } } = req
 
     try {
-        registerUser(name, surname, email, password, error => {
-            if (error) return res.status(409).json({ error: error.message })
+        registerUser(name, surname, email, password)
+            .then(() => res.status(201).send())
+            .catch(error => res.status(409).json({ error: error.message }))
 
-            res.status(201).send()
-        })
     } catch (error) {
         res.status(406).json({ error: error.message })
     }
@@ -133,12 +132,10 @@ app.post('/contacts', parseBody, (req, res) => {
         const { sub: userId } = jwt.verify(token, SECRET)
 
         const { body: contact } = req
-
-        addContact(userId, contact, (error, contactId) => {
-            if (error) return res.status(401).json({ error: error.message })
-
-            res.send({ contactId })
-        })
+        
+            addContact(userId, contact) 
+                .then( contactId=> res.status(200).send({ contactId }))
+                .catch(error => res.status(401).json({ error: error.message }))
     } catch (error) {
         if (error instanceof JsonWebTokenError)
             res.status(401)
