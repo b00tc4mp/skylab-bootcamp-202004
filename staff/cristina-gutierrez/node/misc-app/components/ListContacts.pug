@@ -1,0 +1,9 @@
+extend App
+
+block body
+    section.listContacts
+        h2 Contacts list
+        ul
+            each contact in contacts
+                li= contact.name
+        form(action="/contacts-list" method="GET")
