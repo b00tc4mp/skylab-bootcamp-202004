@@ -20,7 +20,7 @@ const parseBody = bodyParser.json()
 
 app.post('/users', parseBody, (req, res) => {
     const { body: { name, surname, email, password } } = req
-
+debugger
     try {
         registerUser(name, surname, email, password)
             .then(() => res.status(201).send())
