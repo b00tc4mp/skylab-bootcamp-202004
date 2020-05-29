@@ -8,8 +8,10 @@ const { Files: { deleteFilesByExtensionFromDirectory }, uid } = require('../util
 module.exports = target => {
     function find(filter, callback) { // filter => { name: 'pepito', surname: 'grillo' }
         if (typeof filter !== 'object') throw new TypeError(`${filter} is not an object`)
-        Function.validate(callback)
+        if (arguments.length > 1) Function.validate(callback)
 
+       
+       const promise = new Promise()
         fs.readdir(path.join(__dirname, target), (error, files) => {
             if (error) return callback(error)
 
