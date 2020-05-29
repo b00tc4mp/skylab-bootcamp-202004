@@ -1,6 +1,7 @@
 require('dotenv').config()
 
-const { PORT, SECRET } = process.env
+const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET } } = process
+const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
 const { registerUser, authenticateUser, retrieveUser, addContact, searchUsers, unregisterUser } = require('./logic')
@@ -21,11 +22,10 @@ app.post('/users', parseBody, (req, res) => {
     const { body: { name, surname, email, password } } = req
 
     try {
-        registerUser(name, surname, email, password, error => {
-            if (error) return res.status(409).json({ error: error.message })
+        registerUser(name, surname, email, password)
+            .then(() => res.status(201).send())
+            .catch(error => res.status(409).json({ error: error.message }))
 
-            res.status(201).send()
-        })
     } catch (error) {
         res.status(406).json({ error: error.message })
     }
@@ -33,15 +33,13 @@ app.post('/users', parseBody, (req, res) => {
 
 app.post('/users/auth', parseBody, (req, res) => {
     const { body: { email, password } } = req
-    debugger
+
     try {
-        authenticateUser(email, password, (error, userId) => {
-            if (error) return res.status(401).json({ error: error.message })
+        authenticateUser(email, password)
+            .then(userId => jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' }))
+            .then(token => res.send({ token }))
+            .catch(error => res.status(401).json({ error: error.message }))
 
-            const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
-
-            res.send({ token })
-        })
     } catch (error) {
         res.status(406).json({ error: error.message })
     }
