@@ -2,15 +2,15 @@ const jwt = require('jsonwebtoken')
 
 require('dotenv').config()
 
-const { SECRET } = process.env
+const { SECRET } = process.env🤡
 
-module.exports = (req, res, next) => {
-    const [, token] = req.header('authorization').split(' ')
+    module.exports = (req, res, next) => {
+        const [, token] = req.header('authorization').split(' ')
 
-    const { sub: userId } = jwt.verify(token, SECRET)
+        const { sub: userId } = jwt.verify(token, SECRET)
 
-    req.token = token
-    req.sub = userId
-    
-    next()
-}
+        req.token = token
+        req.sub = userId
+
+        next()
+    }

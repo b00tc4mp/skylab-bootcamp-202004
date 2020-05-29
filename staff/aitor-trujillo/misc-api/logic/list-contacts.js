@@ -1,68 +1,58 @@
 const fs = require('fs')
 const path = require('path')
-const {find} = require('../data');
+const { find } = require('../data');
 require('../utils/polyfills/string')
 require('../utils/polyfills/function')
 
-module.exports = (userId, callback) => {
+module.exports = userId => {
 
     String.validate.notVoid(userId)
-    Function.validate(callback)
 
-    find({id:userId},'users',(error, [user]) => {
-        if (error) return callback(error)
+    return new Promise((resolve, reject) => {
 
-        if (!user) return callback(new Error(`user with ${userId} does not exist`))
+        find({ id: userId }, 'users', (error, [user]) => {
+            if (error) return reject(error)
 
-        
-        fs.readdir(path.join(__dirname, '..', 'data','contacts'), (error, files) => {
-            if (error) return callback(error)
+            if (!user) return reject(new Error(`user with ${userId} does not exist`))
 
-            let wasError = false
-            let count = 0;
-            const contacts = []
 
-            files = files.filter(file => path.extname(file) === '.json')
+            fs.readdir(path.join(__dirname, '..', 'data', 'contacts'), (error, files) => {
+                if (error) return reject(error)
 
-            if (!files.length) callback(null, contacts)
-    
-            files.forEach(file => {
-                fs.readFile(path.join(__dirname, '..', 'data', 'contacts', file), 'utf8', (error, json) => {
-                    if (error) {
+                let wasError = false
+                let count = 0;
+                const contacts = []
+
+                files = files.filter(file => path.extname(file) === '.json')
+
+                if (!files.length) resolve(contacts)
+
+                files.forEach(file => {
+                    fs.readFile(path.join(__dirname, '..', 'data', 'contacts', file), 'utf8', (error, json) => {
+                        if (error) {
+                            if (!wasError) {
+                                reject(error)
+
+                                wasError = true
+                            }
+                            return
+                        }
+
                         if (!wasError) {
-                            callback(error)
 
-                            wasError = true
-                        }
-                        return
-                    }
-    
-                    if (!wasError) {
+                            const contact = JSON.parse(json)
 
-                        const contact = JSON.parse(json)
-    
-                        if(contact.user === userId){
-                            contact.id = file.substring(0, file.indexOf('.json'))
-    
-                            contacts.push(contact)
-        
+                            if (contact.user === userId) {
+                                contact.id = file.substring(0, file.indexOf('.json'))
+
+                                contacts.push(contact)
+
+                            }
+                            if (++count === files.length) resolve(contacts)
                         }
-                        count++
-                        if (count === files.length) callback(null, contacts)
-                      
-                    }
+                    })
                 })
             })
         })
-
     })
-    
-
-    
-
-
-    
-    
-
-        
 }

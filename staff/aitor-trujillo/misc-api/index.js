@@ -24,12 +24,14 @@ app.post('/users', parseBody, (req, res) => {
     const { body } = req
 
     try {
-        registerUser(body, error => {
-            if (error instanceof DuplicityError) return res.status(409).json({ error: error.message })
-            else if (error) return res.status(500).json({ error: error.message })
+        registerUser(body)
+            .then(id => res.status(201).json({ id }))
+            .catch(error => {
+                if (error instanceof DuplicityError) res.status(409)
+                else if (error) res.status(500)
 
-            res.status(201).send()
-        })
+                res.json({ error: error.message })
+            })
     } catch (error) {
         if (error instanceof TypeError || error instanceof VoidError) return res.status(406).json({ error: error.message })
         else return res.status(500).json({ error: error.message })
@@ -42,11 +44,9 @@ app.get('/users', parseToken, (req, res) => {
     const { sub: userId, token } = req
 
     try {
-        retrieveUser(userId, (error, userFound) => {
-            if (error) return res.status(404).json({ error: error.message })
-
-            res.send(userFound)
-        })
+        retrieveUser(userId)
+            .then(userFound => res.send(userFound))
+            .catch(error => res.status(404).json({ error: error.message }))
 
     } catch (error) {
         if (error instanceof JsonWebTokenError)
@@ -62,38 +62,27 @@ app.post('/users/auth', parseBody, (req, res) => {
     const { body } = req
 
     try {
-        authenticateUser(body, (error, userId) => {
-            if (error) return res.status(401).json({ error: error.message })
+        authenticateUser(body)
+            .then(userId => {
+                const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
+                res.send({ token })
+            })
+            .catch(error => res.status(401).json({ error: error.message }))
 
-            const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
-
-            res.send({ token })
-        })
     } catch (error) {
         res.status(406).json({ error: error.message })
     }
 })
 
 app.get('/users/:id', parseToken, (req, res) => {
-    // TODO extract userId from authorization (bearer token) then retrieve user and send it back
-    // TODO if userId is received as a param, the retrieve that user instead of requester user
     const { sub: userId, token } = req
     const { id } = req.params
 
     try {
+        retrieveUser(id)
+            .then(userFound => res.send(userFound))
+            .catch(error => res.status(404).json({ error: error.message }))
 
-        find({ id: userId }, 'users', (error, [user]) => {
-            if (error) return res.status(401).json({ error: error.message })
-
-            if (!user) return res.status(406).json({ error: 'user not authorized' })
-
-            retrieveUser(id, (error, userFound) => {
-                if (error) return res.status(404).json({ error: error.message })
-
-                res.send(userFound)
-            })
-
-        })
     } catch (error) {
         if (error instanceof JsonWebTokenError)
             res.status(401)
@@ -111,26 +100,22 @@ app.post('/contacts', parseBody, parseToken, (req, res) => {
     const { sub: userId, body } = req
 
     try {
-        addContact(userId, body, (error, contactId) => {
-            if (error) return res.status(401).json({ error: error.message })
+        addContact(userId, body)
+            .then(contactId => res.status(201).send({ contactId }))
+            .catch(error => res.status(401).json({ error: error.message }))
 
-            res.status(201).send({ contactId })
-        })
     } catch (error) {
         res.status(406).json({ error: error.message })
     }
 })
 
 app.get('/contacts', parseToken, (req, res) => {
-    // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
     const { sub: userId } = req
 
     try {
-        listContacts(userId, (error, contacts) => {
-            if (error) return res.status(401).json({ error: error.message })
-
-            res.send(contacts)
-        })
+        listContacts(userId)
+            .then(contacts => res.send(contacts))
+            .catch(error => res.status(401).json({ error: error.message }))
 
     } catch (error) {
         if (error instanceof JsonWebTokenError)
@@ -150,14 +135,13 @@ app.get('/contacts/q=:query', parseToken, (req, res) => {
     const { query } = req.params
 
     try {
-        searchContacts(userId, query, (error, results) => {
-            if (error) return res.status(401).json({ error: error.message })
+        searchContacts(userId, query)
+            .then(contacts => {
+                if (!contacts) return res.status(404).json({ error: "No contacts found" })
 
-            if (!results) return res.status(404).json({ error: "No contacts found" })
-
-            res.send(results)
-
-        })
+                return res.send(contacts)
+            })
+            .catch(error => res.status(401).json({ error: error.message }))  
 
     } catch (error) {
         if (error instanceof JsonWebTokenError)
