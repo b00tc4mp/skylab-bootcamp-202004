@@ -1,32 +1,36 @@
+require('dotenv').config()
+
+const { env: {TEST_MONGODB_URL}} = process
 const registerUser = require('./register-user')
 const { random } = Math
 const { expect } = require('chai')
 require('../utils/polyfills/json')
-const { users: { deleteMany, create, find } } = require('../data')
+const { mongo } = require('../data')
 
-describe('logic - register user', () => {
+describe.only('logic - register user', () => {
+    let users
+
+    before(() =>
+        mongo.connect(TEST_MONGODB_URL)
+            .then(connection => users = connection.db().collection('users'))
+    )
+
     let name, surname, email, password
+    beforeEach(() =>
 
-    beforeEach(done => {
-        deleteMany(error => {
-            if (error) return done(error)
+        users.deleteMany()
+            .then(() => {
+                name = `name-${random()}`
+                surname = `surname-${random()}`
+                email = `e-${random()}@mail.com`
+                password = `password-${random()}`
+            })
+    )
 
-            name = `name-${random()}`
-            surname = `surname-${random()}`
-            email = `e-${random()}@mail.com`
-            password = `password-${random()}`
-
-            done()
-        })
-    })
-
-    it('should succeed on valid data', done => {
-        registerUser(name, surname, email, password, error => {
-            expect(error).to.be.null
-
-            find({}, (error, users) => {
-                if (error) return done(error)
-
+    it('should succeed on valid data', () =>
+        registerUser(name, surname, email, password)
+            .then(() => users.find().toArray())
+            .then(users => {
                 expect(users.length).to.equal(1)
 
                 const [user] = users
@@ -36,39 +40,33 @@ describe('logic - register user', () => {
                 expect(user.email).to.equal(email)
                 expect(user.password).to.equal(password)
 
-                done()
+
             })
-        })
-    })
+    )
 
     describe('when user already exists', () => {
-        beforeEach(done => {
+        beforeEach(() => {
             const user = { name, surname, email, password }
 
-            create(user, error => {
-                if (error) return done(error)
+            return users.insertOne(user)
 
-                done()
-            })
         })
 
-        it('should fail on trying to register an existing user', done => {
-            registerUser(name, surname, email, password, error => {
-                expect(error).to.exist
 
-                expect(error).to.be.an.instanceof(Error)
-                expect(error.message).to.equal(`user with e-mail ${email} already exists`)
+        it('should fail on trying to register an existing user', () =>
+            registerUser(name, surname, email, password)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    expect(error).to.exist
+                    expect(error).to.be.an.instanceOf(Error)
+                    expect(error.message).to.equal(`user with e-mail ${email} already exists`)
+                })
 
-                done()
-            })
-        })
+        )
     })
 
-    afterEach(done => {
-        deleteMany(error => {
-            if (error) return done(error)
 
-            done()
-        })
-    })
+    afterEach(() => users.deleteMany())
+
+    after(() => users.deleteMany({}).then(mongo.disconnect))
 })

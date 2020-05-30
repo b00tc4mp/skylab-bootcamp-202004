@@ -2,7 +2,7 @@ require('../utils/polyfills/string')
 const { Email } = require('../utils')
 require('../utils/polyfills/function')
 require('../utils/polyfills/json')
-const { users, contacts } = require('../data')
+
 
 module.exports = (userId, contactId, contact, callback) => {
     String.validate.notVoid(userId)

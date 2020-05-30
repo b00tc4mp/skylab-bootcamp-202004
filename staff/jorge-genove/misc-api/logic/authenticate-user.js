@@ -1,8 +1,7 @@
 require('../utils/polyfills/string')
 const { Email } = require('../utils')
-require('../utils/polyfills/function')
-const { users: { find } } = require('../data')
 const { UnexistenceError, CredentialsError } = require('../errors')
+const {mongo} = require('../data')
 
 module.exports = (email, password) => {
     String.validate.notVoid(email)
@@ -10,19 +9,17 @@ module.exports = (email, password) => {
     String.validate.notVoid(password)
     
 
-    return new Promise((resolve, reject) => {
+    return mongo.connect()
+        .then(connection => {
+            const users = connection.db().collection('users')
         
-        find({ email }, (error, users) => {
-            if (error) return reject(error)
-            
-            const [user] = users
-            
-            debugger
-            if (!user) return reject((new UnexistenceError(`user with e-mail ${email} does not exist`)))
-            
-            if (user.password !== password) return reject((new CredentialsError('wrong password')))
-            
-            resolve(user.id)
+            return users.findOne({email})
+        })    
+        .then(user => {
+            if(!user) throw new UnexistenceError(`users with that ${email} already exist`)
+
+            if(user.password !== password) throw new CredentialsError('Wrong password')
+
+            return user._id.toString()
         })
-    })
 } 

@@ -1,8 +1,8 @@
 require('../utils/polyfills/string')
 const { Email } = require('../utils')
 require('../utils/polyfills/json')
-const { users: { find, create } } = require('../data')
-const { DuplicityError} = require('../errors')
+const { DuplicityError } = require('../errors')
+const { mongo } = require('../data')
 
 module.exports = (name, surname, email, password) => {
     String.validate.notVoid(name)
@@ -10,21 +10,18 @@ module.exports = (name, surname, email, password) => {
     String.validate.notVoid(email)
     Email.validate(email)
     String.validate.notVoid(password)
-   
 
-    return new Promise ((resolve, reject) => {
-        find({ email }, (error, users) => {
-            if (error) return reject(error)
-            const [user] = users
-            if (user) return reject(new DuplicityError(`user with e-mail ${email} already exists`))
-    
-            const newUser = { name, surname, email, password }
-    
-            create(newUser, error => {
-                if (error) return reject(error)
-    
-                resolve()
-            })
+
+    return mongo.connect()
+        .then(connection => {
+            const users = connection.db().collection('users')
+
+            return users.findOne({ email })
+                .then(user => {
+                    if (user) throw new DuplicityError(`user with e-mail ${email} already exists`)
+
+                    return users.insertOne({ name, surname, email, password })
+                })
+
         })
-    })  
 }

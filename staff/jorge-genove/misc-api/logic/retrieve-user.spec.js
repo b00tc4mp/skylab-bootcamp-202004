@@ -1,83 +1,64 @@
+require('dotenv').config()
+
+const { env : { TEST_MONGODB_URL: MONGODB_URL} } = process
+
 const retrieveUser = require('./retrieve-user')
 const { random } = Math
 const { expect } = require('chai')
 require('../utils/polyfills/json')
-const { users: { deleteMany, create } } = require('../data')
+const { mongo } = require('../data')
 
 describe('logic - retrieve user', () => {
-    let name, surname, email, password, userId
+    let users
 
-    beforeEach(done => {
-        deleteMany(error => {
-            if (error) return done(error)
+    before(() => mongo.connect(MONGODB_URL).then(connection => users = connection.db().collection('users')))
 
+    let name,surname,email,password,userId
+    
+    beforeEach(() =>
+        users.deleteMany()
+          .then(() => {
             name = `name-${random()}`
             surname = `surname-${random()}`
             email = `e-${random()}@mail.com`
             password = `password-${random()}`
-
-            done()
-        })
-    })
+          })
+    )
 
     describe('when user already exists', () => {
-        beforeEach(done => {
+        beforeEach(() => {
             const user = { name, surname, email, password }
 
-            create(user, (error, id) => {
-                if (error) return done(error)
-
-                userId = id
-
-                done()
-            })
+            return users.insertOne(user)
+                .then(result => userId = result.insertedId.toString())
         })
 
-        it('should succeed on correct user id', done => {
-            retrieveUser(userId, (error, user) => {
-                expect(error).to.be.null
-
-                expect(user.name).to.equal(name)
-                expect(user.surname).to.equal(surname)
-                expect(user.email).to.equal(email)
-                expect(user.password).to.be.undefined
-
-                done()
-            })
+        it('should succeed on correct user id', () =>
+            retrieveUser(userId)
+                .then(user => {
+                    expect(user.name).to.equal(name)
+                    expect(user.surname).to.equal(surname)
+                    expect(user.email).to.equal(email)
+                    expect(user.password).to.be.undefined
+                })
+        )
+    })            
+        
+    it('should fail on wrong user id', () => {
+        userId = '5ed1204ee99ccf6fae798aef'
+         return retrieveUser(userId)
+                .then(() => {throw new Error('should not reach that point')})
+                .catch(error => {
+                    expect(error).to.exist
+                    expect(error).to.be.an.instanceof(Error)
+                expect(error.message).to.equal(`users doesn't exist`)
+                })
         })
+  
 
-        it('should fail on wrong user id', done => {
-            userId += 'wrong-'
 
-            retrieveUser(userId, error => {
-                expect(error).to.exist
+    afterEach(() => users.deleteMany())
 
-                expect(error).to.be.an.instanceof(Error)
-                expect(error.message).to.equal(`user with id ${userId} does not exist`)
+    after(() => users.deleteMany().then(mongo.disconnect))
 
-                done()
-            })
-        })
-    })
-
-    it('should fail when user does not exist', done => {
-        const userId = 'unexisting'
-
-        retrieveUser(userId, error => {
-            expect(error).to.exist
-
-            expect(error).to.be.an.instanceof(Error)
-            expect(error.message).to.equal(`user with id ${userId} does not exist`)
-
-            done()
-        })
-    })
-
-    afterEach(done => {
-        deleteMany(error => {
-            if (error) return done(error)
-
-            done()
-        })
-    })
 })

@@ -1,30 +1,24 @@
 require("../utils/polyfills/string")
-const { users: { find } } = require("../data")
 const Email = require("../utils/email")
-const fs = require("fs")
-const path = require("path")
 const { UnexistenceError } = require('../errors')
+const {mongo} =require('../data')
+const {ObjectId} = mongo
 
-module.exports = (email, password, id) => {
-    Email.validate(email)
-    String.validate.notVoid(password)
-    String.validate.notVoid(id)
+module.exports = (id) => {
+
     
-    return new Promise((resolve, reject) => {
 
-    find({ email, password, id }, (error, [user]) => {
-        if (error) return reject(error)
+    return mongo.connect()
+        .then(connection => {
+            const users = connection.db().collection('users')
 
-        if (!user) return reject(new UnexistenceError("wrong credentials for unregister"));
+            return users.deleteOne({ _id: ObjectId(id) })
+        })
+        .then(user => {
+            if(!user) throw new UnexistenceError('user dosent exist')
+        })
+    }
+    
 
-        if (user) {
 
-            fs.unlink(path.join(__dirname, '..', 'data', 'users', `${id}.json`), error => {
-                if (error) return reject(error)
-                
-                return resolve()
-            })
-        }
-    })
-})
-}
+
