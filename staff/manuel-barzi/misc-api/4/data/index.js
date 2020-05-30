@@ -1,4 +1,4 @@
-const buildManager = require('./build-manager')
+const buildManager = require('./manager-builder')
 
 module.exports = {
     contacts: buildManager('contacts'),
