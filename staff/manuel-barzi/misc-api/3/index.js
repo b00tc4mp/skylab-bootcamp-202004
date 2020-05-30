@@ -7,8 +7,8 @@ const express = require('express')
 const { registerUser, authenticateUser, retrieveUser, addContact } = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
-const jwt = require('jsonwebtoken')
 const { handleError } = require('./helpers')
+const { jwtPromised } = require('./utils')
 
 const app = express()
 
@@ -32,21 +32,32 @@ app.post('/users/auth', parseBody, (req, res) => {
     const { body: { email, password } } = req
 
     try {
-        authenticateUser(email, password, (error, userId) => {
-            if (error) return handleError(error, res)
-
-            const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
-
-            res.send({ token })
-        })
+        authenticateUser(email, password)
+            .then(userId => jwtPromised.sign({ sub: userId }, SECRET, { expiresIn: '1d' }))
+            .then(token => res.send({ token }))
+            .catch(error => handleError(error, res))
     } catch (error) {
         handleError(error, res)
     }
 })
 
 app.get('/users/:userId?', (req, res) => {
-    // TODO extract userId from authorization (bearer token) then retrieve user and send it back
-    // TODO if userId is received as a param, the retrieve that user instead of requester user
+    try {
+        const [, token] = req.header('authorization').split(' ')
+
+        jwtPromised.verify(token, SECRET)
+            .then(payload => {
+                const { sub: userId } = payload
+
+                const { params: { userId: otherUserId } } = req
+
+                return retrieveUser(otherUserId || userId)
+            })
+            .then(user => res.send(user))
+            .catch(error => handleError(error, res))
+    } catch (error) {
+        handleError(error, res)
+    }
 })
 
 // contacts
@@ -55,17 +66,24 @@ app.post('/contacts', parseBody, (req, res) => {
     try {
         const [, token] = req.header('authorization').split(' ')
 
-        const { sub: userId } = jwt.verify(token, SECRET)
-
         // what if we move all this token stuff to... a middleware? ,)
 
-        const { body: contact } = req
+        jwtPromised.verify(token, SECRET)
+            .then(payload => {
+                const { sub: userId } = payload
 
-        addContact(userId, contact, (error, contactId) => {
-            if (error) return handleError(error, res)
+                const { body: contact } = req
 
-            res.send({ contactId })
-        })
+                return new Promise((resolve, reject) => {
+                    addContact(userId, contact, (error, contactId) => {
+                        if (error) return reject(error)
+
+                        resolve(contactId)
+                    })
+                })
+            })
+            .then(contactId => res.send({ contactId }))
+            .catch(error => handleError(error, res))
     } catch (error) {
         handleError(error, res)
     }
