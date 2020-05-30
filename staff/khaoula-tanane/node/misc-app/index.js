@@ -34,7 +34,8 @@ app.post("/register", (req, res) => {
 
   registerUser(body, (error, id) => {
     if (error) throw error;
-    res.redirect("/login");
+    const feedback = error.message
+    return res.render('Register',{cookiesAccepted,feedback})
   });
 });
 
@@ -46,13 +47,15 @@ app.get("/login", cookieSession, (req, res) => {
   }
   res.render('Login', {cookiesAccepted});
 });
+
 app.post("/login", cookieSession, (req, res) => {
   const {
     body: { email, password },
   } = req;
 
   authenticateUser(email, password, (error, id) => {
-    if (error) res.send(App(Login() + Feedback(error.message)));
+    const feedback = error.message
+    if (error) return res.render('Login',{cookiesAccepted,feedback})
     const { session } = req;
     session.userId = id
     session.save(error => {
@@ -71,7 +74,8 @@ app.get("/home", cookieSession, (req, res) => {
   if (!id) return res.redirect("/login");
 
   retrieveUser(id, (error, { name }) => {
-    if (error) return res.send(App(Home() + Feedback(error.message)));
+    const feedback = error.message
+    if (error) return res.render('Home', {cookiesAccepted,name,feedback})
     res.render('Home', {cookiesAccepted, name});
   });
 });
