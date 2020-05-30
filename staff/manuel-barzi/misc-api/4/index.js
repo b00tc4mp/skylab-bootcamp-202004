@@ -9,10 +9,13 @@ const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
 const { jwtPromised } = require('./utils')
+const { jwtVerifierExtractor } = require('./middlewares')
 
 const app = express()
 
 const parseBody = bodyParser.json()
+
+const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
 
 // users
 
@@ -41,18 +44,11 @@ app.post('/users/auth', parseBody, (req, res) => {
     }
 })
 
-app.get('/users/:userId?', (req, res) => {
+app.get('/users/:userId?', verifyExtractJwt, (req, res) => {
     try {
-        const [, token] = req.header('authorization').split(' ')
+        const { payload: { sub: userId }, params: { userId: otherUserId } } = req
 
-        jwtPromised.verify(token, SECRET)
-            .then(payload => {
-                const { sub: userId } = payload
-
-                const { params: { userId: otherUserId } } = req
-
-                return retrieveUser(otherUserId || userId)
-            })
+        retrieveUser(otherUserId || userId)
             .then(user => res.send(user))
             .catch(error => handleError(error, res))
     } catch (error) {
@@ -62,28 +58,17 @@ app.get('/users/:userId?', (req, res) => {
 
 // contacts
 
-app.post('/contacts', parseBody, (req, res) => {
+app.post('/contacts', verifyExtractJwt, parseBody, (req, res) => {
     try {
-        const [, token] = req.header('authorization').split(' ')
+        const { payload: { sub: userId }, body: contact } = req
 
-        // what if we move all this token stuff to... a middleware? ,)
+        new Promise((resolve, reject) => {
+            addContact(userId, contact, (error, contactId) => {
+                if (error) return reject(error)
 
-        jwtPromised.verify(token, SECRET)
-            .then(payload => {
-                const { sub: userId } = payload
-
-                const { params: { userId: otherUserId } } = req
-
-                const { body: contact } = req
-
-                return new Promise((resolve, reject) => {
-                    addContact(userId, contact, (error, contactId) => {
-                        if (error) return reject(error)
-
-                        resolve(contactId)
-                    })
-                })
+                resolve(contactId)
             })
+        })
             .then(contactId => res.send({ contactId }))
             .catch(error => handleError(error, res))
     } catch (error) {
