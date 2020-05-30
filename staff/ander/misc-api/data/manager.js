@@ -8,22 +8,23 @@ const { Files: { deleteFilesByExtensionFromDirectory }, uid } = require('../util
 module.exports = target => {
     function find(filter, callback) { // filter => { name: 'pepito', surname: 'grillo' }
         if (typeof filter !== 'object') throw new TypeError(`${filter} is not an object`)
-        Function.validate(callback)
+        if(argument.length>1)Function.validate(callback)
 
+    const promise = new Promise((resolve,reject)=>{
         fs.readdir(path.join(__dirname, target), (error, files) => {
-            if (error) return callback(error)
+            if (error) return reject(error)
 
             files = files.filter(file => path.extname(file) === '.json')
 
             const results = []
 
-            if (!files.length) return callback(null, results)
+            if (!files.length) return resolve(results)
 
             let i = 0;
 
             (function readFile() {
                 fs.readFile(path.join(path.join(__dirname, target), files[i]), 'utf8', (error, json) => {
-                    if (error) return callback(error)
+                    if (error) return reject(error)
 
                     const existing = JSON.parse(json)
 
@@ -45,28 +46,49 @@ module.exports = target => {
 
                     if (++i < files.length) return readFile()
 
-                    callback(null, results)
+                    resolve(results)
                 })
             })()
         })
+        
+    })
+    if(arguments.length===1) return promise
+    promise
+        .then(results => callback(null, results))
+        .catch(callback)
     }
 
+    
     function deleteMany(callback) {
+       const promise = new Promise ((resolve,reject)=>{     
         deleteFilesByExtensionFromDirectory(path.join(__dirname, target), '.json', error => {
-            if (error) return callback(error)
-
-            callback()
+            if (error) return reject(error)
+            
+            resolve()
         })
+     
+    })    
+    if(arguments.length==0) return promise
+    promise
+        .then(()=>callback())
+        .catch(error=>callback(error))
     }
-
+   
     function create(data, callback) {
+        const promise = new Promise ((resolve,reject)=>{
+            
         data.id = uid()
 
         fs.writeFile(path.join(path.join(__dirname, target), `${data.id}.json`), JSON.prettify(data), error => {
-            if (error) return callback(error)
+            if (error) return reject(error)
 
-            callback(null, data.id)
+            resolve(data.id)
         })
+    })
+    if(arguments.length===1) return promise
+    promise
+        .then(dataId=> callback(null, dataId))
+        .catch(callback)
     }
 
     function update(id, data, callback) {
