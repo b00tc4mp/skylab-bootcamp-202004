@@ -23,8 +23,8 @@
 // const SearchStickies = require('./components/SearchStickies')
 // const searchStickies = require('./logic/search-stickies')
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser} = require('./logic')
-// , addContact, addSticky, searchContacts, searchStickies, listContacts, listStickies 
+const { registerUser, authenticateUser, retrieveUser, addContact} = require('./logic')
+// , addSticky, searchContacts, searchStickies, listContacts, listStickies 
 const path = require('path')
 const bodyParser = require('body-parser')
 const session = require('express-session')
@@ -189,13 +189,15 @@ app.get('/search-contacts', (req, res) => {
     }
 })
 
-app.get('/add-contacts', (req, res) => {
+app.get('/add-contacts', cookieSession,  (req, res) => {
+    const {session: { cookiesAccepted}} = req
+    
 
-    res.send(App(`${Home()} ${AddContact()}`))
+    res.render('AddContact', {cookiesAccepted})
 })
 
-app.post('/add-contacts', (req, res) => {
-
+app.post('/add-contacts', parseBody, (req, res) => {
+    debugger
     const { body } = req
     const cookie = req.header('cookie')
     const [, userId] = cookie.split('=')
