@@ -1,5 +1,13 @@
+require('dotenv').config()
+
+const { env: { MONGODB_URL } } = process
+const { mongo } = require('../data')
+
 const authenticateUser = require('./authenticate-user')
 
-authenticateUser('pepigri@mail.com', '123')
-    .then(console.log)
+mongo.connect(MONGODB_URL)
+    .then(() =>
+        authenticateUser('pepigri@mail.com', '123')
+            .then(console.log)
+    )
     .catch(console.error)

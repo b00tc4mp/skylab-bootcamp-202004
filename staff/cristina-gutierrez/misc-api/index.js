@@ -1,104 +1,81 @@
 require('dotenv').config()
 
-const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET } } = process
+const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET, MONGODB_URL } } = process
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, addContact } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser } = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
 const { jwtPromised } = require('./utils')
+const { jwtVerifierExtractor } = require('./middlewares')
+const { mongo } = require('./data')
 
-const app = express()
+mongo.connect(MONGODB_URL)
+    .then(connection => {
+        console.log('You are connected to mongo now')
 
-const parseBody = bodyParser.json()
+        const app = express()
 
-// users
+        const parseBody = bodyParser.json()
 
-app.post('/users', parseBody, (req, res) => {
-    const { body: { name, surname, email, password } } = req
+        const verifyExtractJwt = jwtVerifierExtractor (SECRET, handleError)
 
-    try {
-        registerUser(name, surname, email, password)
-            .then(() => res.status(201).send())
-            .catch(error => handleError(error, res))
-    } catch (error) {
-        handleError(error, res)
-    }
-})
+        app.post('/users', parseBody, (req, res) => {
+            const { body: { name, surname, email, password } } = req
+        
+            try {
+                registerUser(name, surname, email, password)
+                    .then(() => res.status(201).send())
+                    .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
 
-app.post('/users/auth', parseBody, (req, res) => {
-    const { body: { email, password } } = req
+        app.post('/users/auth', parseBody, (req, res) => {
+            const { body: { email, password } } = req
+        
+            try {
+                authenticateUser(email, password)
+                    .then(userId => jwtPromised.sign({ sub: userId }, SECRET, { expiresIn: '1d' }))
+                    .then(token => res.send({ token }))
+                    .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
 
-    try {
-        authenticateUser(email, password)
-            .then(userId => jwtPromised.sign({ sub: userId }, SECRET, { expiresIn: '1d' }))
-            .then(token => res.send({ token }))
-            .catch(error => handleError(error, res))
-    } catch (error) {
-        handleError(error, res)
-    }
-})
+        app.get('/users/:userId?', verifyExtractJwt, (req, res) => {
+            try {
+                const { payload: { sub: userId }, params: { userId: otherUserId } } = req
+        
+                retrieveUser(otherUserId || userId)
+                    .then(user => res.send(user))
+                    .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
 
-app.get('/users/:userId?', (req, res) => {
-    try {
-        const [, token] = req.header('authorization').split(' ')
+        app.get('*', (req, res) => {
+            res.status(404).send('Not Found :(')
+        })
 
-        jwtPromised.verify(token, SECRET)
-            .then(payload => {
-                const { sub: userId } = payload
+        app.listen(PORT, () => console.log(`${name} ${version} running on port ${PORT}`))
 
-                const { params: { userId: otherUserId } } = req
+        process.on('SIGINT', () => {
+            connection.close()
+                .then(() => console.log('\ndisconnected mongo'))
+                .catch(error => console.error('could not disconnect from mongo', error))
+                .finally(() => {
+                    console.log(`${name} ${version} stopped`)
 
-                return retrieveUser(otherUserId || userId)
-            })
-            .then(user => res.send(user))
-            .catch(error => handleError(error, res))
-    } catch (error) {
-        handleError(error, res)
-    }
-})
-
-// contacts
-
-app.post('/contacts', parseBody, (req, res) => {
-    try {
-        const [, token] = req.header('authorization').split(' ')
-
-        // what if we move all this token stuff to... a middleware? ,)
-
-        jwtPromised.verify(token, SECRET)
-            .then(payload => {
-                const { sub: userId } = payload
-
-                const { params: { userId: otherUserId } } = req
-
-                const { body: contact } = req
-
-                return new Promise((resolve, reject) => {
-                    addContact(userId, contact, (error, contactId) => {
-                        if (error) return reject(error)
-
-                        resolve(contactId)
-                    })
+                    process.exit()
                 })
-            })
-            .then(contactId => res.send({ contactId }))
-            .catch(error => handleError(error, res))
-    } catch (error) {
-        handleError(error, res)
-    }
-})
-
-app.get('/contacts/:contactId', (req, res) => {
-    // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
-})
-
-// other
-
-app.get('*', (req, res) => {
-    res.status(404).send('Not Found :(')
-})
-
-app.listen(PORT, () => console.log(`${name} ${version} running on port ${PORT}`))
+        })
+    })
+    .catch(error => {
+        console.error('could not connect to mongo', error)
+    })

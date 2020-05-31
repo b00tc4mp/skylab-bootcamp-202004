@@ -3,8 +3,8 @@ const { random } = Math
 const fs = require('fs')
 const path = require('path')
 const { expect } = require('chai')
-require('../utils/polyfills/json')
-const { Files: { deleteFilesByExtensionFromDirectory }, uid } = require('../utils')
+require('../../utils/polyfills/json')
+const { Files: { deleteFilesByExtensionFromDirectory }, uid } = require('../../utils')
 
 describe('logic - add contact', () => {
     const data = path.join(__dirname, '..', 'data')

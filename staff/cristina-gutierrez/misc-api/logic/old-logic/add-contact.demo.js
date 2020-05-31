@@ -1,5 +1,5 @@
-const uid = require('../utils/uid')
-const addContact = require('./add-contact')
+const uid = require('../../utils/uid')
+const addContact = require('../add-contact')
 
 const contact = {
     name: 'Pepito',
