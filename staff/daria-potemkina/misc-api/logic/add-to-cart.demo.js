@@ -1,13 +1,13 @@
 require('dotenv').config()
-debugger
-const { MONGODB_URL } = process.env
+
+const { env: { MONGODB_URL } } = process
 const { mongo } = require('../data')
-const registerUser = require('./register-user')
+const addToCart = require('./add-to-cart')
 
 mongo.connect(MONGODB_URL)
     .then(() => {
         try {
-            return registerUser('Menga', 'Nito', 'menganito@mail.com', '123')
+            return addToCart('5ed0f11b5322491a5a887b2d', '5ed2405381bcf6b01d9e38aa')
                 .then(() => console.log('OK'))
                 .catch(error => console.error('KO async', error))
         } catch (error) {

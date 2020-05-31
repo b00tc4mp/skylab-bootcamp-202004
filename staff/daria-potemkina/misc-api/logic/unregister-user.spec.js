@@ -2,18 +2,18 @@ require('dotenv').config()
 
 const { env: { MONGODB_URL_TEST } } = process
 
-const retrieveUser = require('./retrieve-user')
+const unregisterUser = require('./unregister-user')
 const { random } = Math
 const { expect } = require('chai')
 const { mongo } = require('../data')
 
-
-describe('logic - retrieveUser', () => {
+describe('logic - unregisterUser', () => {
     let users
 
-    before(() => mongo.connect(MONGODB_URL_TEST)
-        .then(connection => users = connection.db().collection('users')))
-
+    before(() =>
+        mongo.connect(MONGODB_URL_TEST)
+            .then(connection => users = connection.db().collection('users'))
+    )
 
     let name, surname, email, password, userId
 
@@ -35,58 +35,57 @@ describe('logic - retrieveUser', () => {
                 .then(result => userId = result.insertedId.toString())
         })
 
-        it('should return the user data', () => {
-            retrieveUser(userId)
-                .then(user => {
-                    expect(user.password).to.be.undefined
-                    expect(user.name).to.equal(name)
-                    expect(user.surname).to.equal(surname)
-                    expect(user.email).to.equal(email)
-                })
+        it('should remove the registered user from database', () =>{
+            unregisterUser(userId)
+            .then(() => users.find().toArray())
+            .then(users => {
+                expect(users).to.have.lengthOf(0)
+            })
         })
     })
 
     it('should fail when user does not exists', () => {
         userId = '123455678990'
-        retrieveUser(userId)
-            .then(() => { throw new Error('should not reach this point') })
-            .catch(error => {
-                expect(error).to.be.exist
-                expect(error).to.be.an.instanceOf(Error)
-                expect(error.message).to.equal(`user with id ${userId} does not exist`)
-            })
+
+        unregisterUser(userId)
+        .then(() => { throw new Error('should not reach this point') })
+        .catch(error => {
+            expect(error).to.be.exist
+            expect(error).to.be.an.instanceOf(Error)
+            expect(error.message).to.equal(`user with id ${userId} does not exist`)
+        })
     })
 
     it('should return a type error', () => {
         userId = undefined
         expect( () => {
-            retrieveUser(userId)
+            unregisterUser(userId)
         }).to.throw(TypeError, `${userId} is not a string`)
 
         userId = 123
         expect( () => {
-            retrieveUser(userId)
+            unregisterUser(userId)
         }).to.throw(TypeError, `${userId} is not a string`)
 
         userId = true
         expect( () => {
-            retrieveUser(userId)
+            unregisterUser(userId)
         }).to.throw(TypeError, `${userId} is not a string`)
     })
 
     it('should return an error', () => {
         userId = ''
         expect( () => {
-            retrieveUser(userId)
+            unregisterUser(userId)
         }).to.throw(Error, `${userId} is empty or blank`)
 
         userId = '    '
         expect( () => {
-            retrieveUser(userId)
+            unregisterUser(userId)
         }).to.throw(Error, `${userId} is empty or blank`)
     })
 
-    afterEach(() => users.deleteMany())
+    afterEach(() => users.deleteMany({}))
 
-    after(() => users.deleteMany().then(mongo.disconnect))
+    after(() => users.deleteMany({}).then(mongo.disconnect))
 })
