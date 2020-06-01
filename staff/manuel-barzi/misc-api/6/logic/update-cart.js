@@ -12,33 +12,41 @@ module.exports = (userId, productId, quantity) => {
 
     return mongo.connect()
         .then(connection => {
-            const users = connection.db().collection('users')
+            const db = connection.db()
+
+            const users = db.collection('users')
+            const products = db.collection('products')
 
             return users.findOne({ _id: ObjectId(userId) })
                 .then(user => {
                     if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
-                    const { cart = [] } = user
+                    return products.findOne({ _id: ObjectId(productId) })
+                        .then(product => {
+                            if (!product) throw new UnexistenceError(`product with id ${productId} does not exist`)
 
-                    const index = cart.findIndex(item => item.product.toString() === productId)
+                            const { cart = [] } = user
 
-                    if (quantity === 0) {
-                        if (index < 0) throw new UnexistenceError(`product with id ${productId} does not exist in cart for user with id ${userId}`)
+                            const index = cart.findIndex(item => item.product.toString() === productId)
 
-                        cart.splice(index, 1)
-                    } else {
-                        let product
+                            if (quantity === 0) {
+                                if (index < 0) throw new UnexistenceError(`product with id ${productId} does not exist in cart for user with id ${userId}`)
 
-                        if (index < 0) {
-                            product = { product: ObjectId(productId) }
+                                cart.splice(index, 1)
+                            } else {
+                                let product
 
-                            cart.push(product)
-                        } else product = cart[index]
+                                if (index < 0) {
+                                    product = { product: ObjectId(productId) }
 
-                        product.quantity = quantity
-                    }
+                                    cart.push(product)
+                                } else product = cart[index]
 
-                    return users.updateOne({ _id: ObjectId(userId) }, { $set: { cart } })
+                                product.quantity = quantity
+                            }
+
+                            return users.updateOne({ _id: ObjectId(userId) }, { $set: { cart } })
+                        })
                 })
                 .then(() => { })
         })
