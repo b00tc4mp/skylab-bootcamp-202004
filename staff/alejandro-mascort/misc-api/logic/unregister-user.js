@@ -1,31 +1,30 @@
-const fs = require('fs')
-const path = require('path')
-const {find} = require('../data')
 require('../utils/polyfills/string')
 require('../utils/polyfills/function')
 const Email = require('../utils/email')
+const {mongo} = require('../data')
+const {CredentialsError,UnexistenceError} = require('../errors');
 
 
-module.exports = (date, callback) => {
-    
-    const {email,password} = date
+module.exports = (userId,email,password) => {
+    String.validate.notVoid(userId)
     String.validate.notVoid(email)
     Email.validate(email)
     String.validate.lengthGreaterEqualThan(password, 8)
-    Function.validate(callback)
 
-    find({ email }, 'users',(error, [user]) => {
-        if (error) return callback(error)
+    return mongo.connect()
+        .then(connection=>{
+            const users = connection.db().collection('users')
 
-        if (!user) return callback(new Error(`user with e-mail ${email} does not exist`))
-
-        if (user.password !== password) return callback(new Error('wrong password'))
-
-
-        fs.unlink(path.join(__dirname, "..", "data", "users", `${user.id}.json`), (error) => {
-            if (error) return callback(error)
-
-            return callback(null, `Deleted user ${email}`)
-        })
-    })
+            return users.findOne({email})
+                .then(user => {
+                    if (!user) throw new UnexistenceError(`user with e-mail ${email} does not exist`)
+                    
+                    if(user._id.toString() !== userId) throw new CredentialsError("trying to unregister other user")
+                    
+                    if (user.password !== password) throw new CredentialsError('wrong password')
+                    
+                    return users.deleteOne(user)
+                })
+                .then(() => `Deleted user ${email}`)
+        })   
 }

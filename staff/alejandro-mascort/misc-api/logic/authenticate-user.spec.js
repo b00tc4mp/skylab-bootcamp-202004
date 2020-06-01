@@ -1,13 +1,12 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
-
-const { random } = Math
-const { expect } = require('chai')
-
-const mongo = require('../data/mongo')
+const { env: { MONGODB_URL_TEST: MONGODB_URL } } = process
 
 const authenticateUser = require('./authenticate-user')
+const { random } = Math
+const { expect } = require('chai')
+require('../utils/polyfills/json')
+const { mongo } = require('../data')
 
 describe('logic - authenticate user', () => {
     let users
@@ -35,14 +34,14 @@ describe('logic - authenticate user', () => {
         })
 
         it('should succeed on correct credentials', () =>
-            authenticateUser({email, password})
+            authenticateUser(email, password)
                 .then(_userId => expect(_userId).to.equal(userId))
         )
 
         it('should fail on wrong password', () => {
             password += 'wrong-'
 
-            return authenticateUser({email, password})
+            return authenticateUser(email, password)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.be.an.instanceof(Error)
@@ -51,14 +50,14 @@ describe('logic - authenticate user', () => {
         })
     })
 
-    it('should fail when user does not exist', () =>
-        authenticateUser({email, password})
+    it('should fail when user does not exist', () => {
+        return authenticateUser(email, password)
             .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
                 expect(error).to.be.an.instanceof(Error)
                 expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
             })
-    )
+        })
 
     afterEach(() => users.deleteMany())
 

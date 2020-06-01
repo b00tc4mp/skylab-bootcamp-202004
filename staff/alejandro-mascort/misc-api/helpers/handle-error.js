@@ -1,4 +1,4 @@
-const { DuplicityError, VoidError, UnexistenceError, CredentialsError } = require('../../errors')
+const { DuplicityError, VoidError, UnexistenceError, CredentialsError } = require('../errors')
 const { JsonWebTokenError } = require('jsonwebtoken')
 
 module.exports = function (error, res) {
@@ -13,6 +13,10 @@ module.exports = function (error, res) {
             break
         case error instanceof CredentialsError || error instanceof JsonWebTokenError:
             status = 401
+            break
+        case (error.message === "Argument passed in must be a single String of 12 bytes or a string of 24 hex characters"):
+            status = 409
+            error.message = "these are not the files you are looking for ;)"
             break
     }
 

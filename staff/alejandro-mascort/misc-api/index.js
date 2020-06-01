@@ -3,250 +3,145 @@ require('dotenv').config()
 const { PORT, SECRET, MONGODB_URL } = process.env
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, retrieveContact, retrieveStickie, addContact, searchContacts, listContacts, addStickie, searchStickies, listStickies, removeContact, removeStickies } = require('./logic')
-const parseToken = require('./helpers/middlewares/jwt-verifier-extractor')
+const { registerUser, authenticateUser, retrieveUser, retrieveCart, unRegister, searchProducts,  placeOrder, updateCart } = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
-const { handleError } = require('./helpers/errors')
-const { sign } = require('./utils/jwt-promised')
-const mongo = require('./data/mongo')
+const { handleError } = require('./helpers')
+const { jwtPromised } = require('./utils')
+const { jwtVerifierExtractor } = require('./middlewares')
 
-const app = express()
-
-const parseBody = bodyParser.json()
+const {mongo} = require('./data')
 
 mongo.connect(MONGODB_URL)
     .then(connection => {
+        console.log('connected to mongo')
 
+        const app = express()
+
+        const parseBody = bodyParser.json()
+
+        const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
+////////////USERS////////////////////////////////////////
         app.post('/users', parseBody, (req, res) => {
-            const { body } = req
-        
+            const { body: { name, surname, email, password } } = req
+
             try {
-                registerUser(body) 
+                registerUser(name, surname, email, password)
                     .then(() => res.status(201).send())
                     .catch(error => handleError(error, res))
-                
+
             } catch (error) {
                 handleError(error, res)
             }
         })
-        
-        app.get('/users', parseToken, (req, res) => {
-            const {sub: userId, token} = req
-        debugger
-            try {
-                retrieveUser(userId)
-                    .then(user => res.status(200).send(user))
-                    .catch(error => handleError(error, res))            
-            } catch (error) {
-                handleError(error, res)
-            }
-        })
-        
+
         app.post('/users/auth', parseBody, (req, res) => {
-            const { body } = req
-        
+            const { body: { email, password } } = req
+
+            try {
+                authenticateUser(email, password)
+                    .then(id => jwtPromised.sign({ sub: id }, SECRET, { expiresIn: '1d' }))
+                    .then(token => res.status(200).send({ token }))
+                    .catch((error) => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        app.get('/users/userId/:user?', verifyExtractJwt,(req, res) => {
+            
             try {
                 debugger
-                authenticateUser(body)
-                    .then(userId => sign({sub:userId}, SECRET, { expiresIn: '1d'}))
-                    .then(token => res.status(200).send({token}))
-                    .catch(error => handleError(error, res))
+                const { params: { user: otherUserId },payload: { sub: userId} } = req
+                
+                retrieveUser(otherUserId || userId)
+                    .then(user => { res.status(200).send(user) })
+                    .catch((error) => handleError(error, res))
             } catch (error) {
                 handleError(error, res)
             }
         })
-        
-        app.get('/users/id:id', parseToken, (req, res) => {
-            const {sub: userId} = req
-            const { id } = req.params
-        
-            try{
-                retrieveUser(userId)
-                    .then(user => {
-                        if (!id) return res.send(user)
-                        retrieveUser(id)
-                            .then(otherUser => res.status(200).json(otherUser))
-                            .catch( error => handleError(error, res)) 
-                    }) 
-            }catch(error){
-                handleError(error, res)
-            }
-        })
-        
-        // contacts
-        
-        app.post('/contacts', parseBody, parseToken, (req, res) => {
-            const {sub: userId, body} = req
-        
+
+
+        app.delete('/users/remove', parseBody, verifyExtractJwt, (req, res) => {
             try {
-                addContact(userId, body)
-                    .then(contactId => {res.status(201).send({ contactId })})
-                    .catch(error => handleError(error, res))
+                const { body: { email, password }, payload: { sub: userId} } = req
+
+                unRegister(userId, email, password)
+                    .then(message => { res.status(204).send(message) })
+                    .catch(error => { handleError(error, res) })
             } catch (error) {
                 handleError(error, res)
             }
         })
-        
-        app.get('/contacts', parseToken, (req, res) => {
-            const {sub: userId} = req
-        
-            try{
-                listContacts(userId)
-                    .then(contacts => {res.send(contacts)})
-                    .catch(error => handleError(error, res))
-                        
-            } catch (error) {
-                handleError(error, res)
-            }
-        
-        })
-        
-        app.get('/contacts/q=:query', parseToken,(req, res) => {
-            const {sub: userId} = req
-        
-            const { query } = req.params
-        
+//////////////////////////////////////////////////////////
+//////////// CART ////////////////////////////////////////
+/////////////////////////////////////////////////////////
+
+        app.post('/cart', parseBody, verifyExtractJwt,(req, res) => {
+                    
             try {
-                searchContacts(userId, query)
-                    .then(results => {
-                        if (!results) return res.status(404).json({error: "No contacts found"})
-        
-                        else res.send(results)  
-                    })
-                    .catch(error => handleError(error, res))
+                const { payload: { sub: userId} ,body:{productId, quantity}} = req
+                
+                updateCart(userId,productId, quantity)
+                    .then(() => res.status(204).send())
+                    .catch((error) => handleError(error, res))
             } catch (error) {
                 handleError(error, res)
             }
-        
         })
-        
-        app.get('/contacts/id:contactId/', parseToken, (req, res) => {
-            const {sub: userId} = req
-        
-            const { contactId } = req.params
-        
+
+        // app.get('/carts',verifyExtractJwt,(req,res)=>{
+        //     try {
+        //         const {payload: { sub: userId} } = req
+                
+        //         retrieveCart(userId)
+        //             .then(cart => res.status(200).send(cart))
+        //             .catch((error) => handleError(error, res))
+        //     } catch (error) {
+        //         handleError(error, res)
+        //     }
+        // })
+
+        app.get('/products/:query', parseBody, verifyExtractJwt,(req,res)=>{
             try {
-                retrieveContact(userId, contactId)
-                    .then(contact => res.status(200).send(contact))
-                    .catch(error => handleError(error, res))            
+                const { params:{query:_query}} = req
+                
+                searchProducts(_query)
+                    .then(results => res.status(200).send(results))
+                    .catch((error) => handleError(error, res))
             } catch (error) {
                 handleError(error, res)
             }
-        
         })
-        
-        app.delete('/contacts', parseBody, parseToken,(req, res) => {
-            const {sub: userId, body} = req
-        
+
+        app.post('/order', parseBody, verifyExtractJwt,(req, res) => {
             try {
-                removeContact(userId, body.contactId)
-                    .then(() => {res.status(204).send()})
-                    .catch(error => handleError(error, res))       
-            } catch (error) {
-                handleError(error, res)
-            }
-        
-        })
-        
-        // stickie
-        
-        app.get('/stickies', parseToken, (req, res) => {
-            const {sub: userId} = req
-        
-            try{
-                listStickies(userId)
-                    .then(stickies => {res.send(stickies)})
-                    .catch(error => handleError(error, res))
-                        
-            } catch (error) {
-                handleError(error, res)
-            }
-        
-        })
-        
-        app.post('/stickies', parseBody, parseToken, (req, res) => {
-            const {sub: userId, body} = req
-        
-            try {
-                addStickie(userId, body, (error, stickieId) => {
-                    if (error) return handleError(error, res)
-        
-                    res.status(201).send({ stickieId })
-                })
+                const { payload: { sub: userId}} = req
+
+                placeOrder(userId)
+                    .then(() => res.status(201).send())
+                    .catch((error) => handleError(error, res))
             } catch (error) {
                 handleError(error, res)
             }
         })
-        
-        app.get('/stickies/id:stickieId', parseToken, (req, res) => {
-            const {sub: userId} = req
-        
-            const { stickieId } = req.params
-        
-            try {
-                retrieveStickie(userId, stickieId)
-                    .then(stickie => res.status(200).send(stickie))
-                    .catch(error => handleError(error, res))            
-            } catch (error) {
-                handleError(error, res)
-            }
-        
-        })
-        
-        app.get('/stickies/q=:query', parseToken,(req, res) => {
-            const {sub: userId} = req
-        
-            const { query } = req.params
-        
-            try {
-                searchStickies(userId, query)
-                    .then(results => {
-                        if (!results) return res.status(404).json({error: "No contacts found"})
-        
-                        else res.send(results)  
-                    })
-                    .catch(error => handleError(error, res))
-            } catch (error) {
-                handleError(error, res)
-            }
-        
-        })
-        
-        app.delete('/stickies', parseBody, parseToken,(req, res) => {
-            const {sub: userId, body} = req
-        
-            try {
-                removeStickies(userId, body.stickieId)
-                    .then(() => {res.status(204).send()})
-                    .catch(error => handleError(error, res))    
-               
-            } catch (error) {
-                handleError(error, res)
-            }
-        
-        })
-        
-        // other
-        
+
         app.get('*', (req, res) => {
             res.status(404).send('Not Found :(')
         })
-        
-        app.listen(PORT, () => console.log(`${name} ${version} running at port ${PORT}`))
 
-        process.on('SIGINT', () => {
+        app.listen(PORT, () => console.log(`${name} ${version} running on port ${PORT}`))
+
+        process.on('SIGINT',()=>{
             connection.close()
-                .then(() => console.log('disconnected mongo'))
-                .catch(error => console.error('Could not disconnect to mongo'))
-                .finally(() => {
+                .then(()=> console.log('\ndisconnected'))
+                .catch(error => console.log('Could not disconnect'))
+                .finally(()=>{
                     console.log(`${name} ${version} stopped`)
-
                     process.exit()
                 })
-        })
+            })
 
     })
-
-    .catch((error => console.error('Could not connect to mongo', error)))
-// users
+    .catch(error => console.error('could not connect to mongo',error))

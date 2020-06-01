@@ -1,11 +1,12 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { MONGODB_URL_TEST: MONGODB_URL } } = process
 
-const registerUser = require('./register-user');
+const registerUser = require('./register-user')
 const { random } = Math
 const { expect } = require('chai')
-const mongo = require('../data/mongo')
+require('../utils/polyfills/json')
+const { mongo } = require('../data')
 
 describe('logic - register user', () => {
     let users
@@ -24,12 +25,11 @@ describe('logic - register user', () => {
                 surname = `surname-${random()}`
                 email = `e-${random()}@mail.com`
                 password = `password-${random()}`
-
             })
     )
 
     it('should succeed on valid data', () =>
-        registerUser({name, surname, email, password})
+        registerUser(name, surname, email, password)
             .then(() => users.find().toArray())
             .then(users => {
                 expect(users.length).to.equal(1)
@@ -51,7 +51,7 @@ describe('logic - register user', () => {
         })
 
         it('should fail on trying to register an existing user', () =>
-            registerUser({name, surname, email, password})
+            registerUser(name, surname, email, password)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.exist
@@ -64,5 +64,5 @@ describe('logic - register user', () => {
 
     afterEach(() => users.deleteMany())
 
-    after(() => users.deleteMany({}).then(mongo.disconnect))
+    after(() => users.deleteMany().then(mongo.disconnect))
 })
