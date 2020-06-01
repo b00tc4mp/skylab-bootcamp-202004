@@ -1,0 +1,19 @@
+extend App
+
+block body
+    section.add-contact
+    h2 Add contact🩺
+    form(action='/add-contact', method='POST')
+        label(for='name') Name:
+        input#name(type='text', name='name')
+        br
+        label(for='surname') Surname:
+        input#surname(type='text', name='surname')
+        br
+        label(for='email') E-mail:
+        input#email(type='email', name='email')
+        br
+        label(for='phone') Phone:
+        input#phone(type='text', name='phone')
+        button Add
+        a(href='/contacts') Contacts
