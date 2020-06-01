@@ -8,9 +8,6 @@ module.exports = userId => {
     return mongo.connect()
         .then(connection => {
             const users = connection.db().collection('users')
-
-            debugger
-
             return users.findOne({ _id: ObjectId(userId) })
         })
         .then(user => {

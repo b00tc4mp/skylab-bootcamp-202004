@@ -22,7 +22,6 @@ describe.only("logic - update-cart", () => {
             })
     })
     beforeEach(()=>{
-        debugger
         return Promise.all([
             users.deleteMany(),
             products.deleteMany()
@@ -48,6 +47,28 @@ describe.only("logic - update-cart", () => {
                     ])
             })
     })
+    
+    it("should succeed in deleting item from the cart",()=>{
+        return updateCart(userId,productId,3)
+            .then(result=>{
+                expect(result).to.be.undefined
+                return updateCart(userId, productId, 0)
+                    .then(result => {
+                        expect(result).to.be.undefined
+                        return users.findOne({_id:ObjectId(userId)})
+                    })
+                    .then(user=>{
+                        expect(user).to.exist
+                        const {cart} = user
+                        expect(cart).to.exist
+                        expect(cart.length).to.equal(0)
+        
+                        expect(cart[0]).to.be.undefined
+                    })
+            })
+            
+    })
+
     it("should succeed in changing the user's cart",()=>{
         return updateCart(userId,productId,3)
             .then(result=>{
@@ -65,6 +86,7 @@ describe.only("logic - update-cart", () => {
                 expect(cart[0].quantity).to.equal(3)
             })
     })
+
     it("should fail when the user does not exist",()=>{
         
         return updateCart(fakeId, productId, 10)
@@ -75,6 +97,17 @@ describe.only("logic - update-cart", () => {
                 expect(error.message).to.equal(`user with _id ${fakeId} not found`)
             })
     })
+
+    it("hould fail when trying to remove a whole product that is not in the user's cart",()=>{
+        updateCart(userId,productId,0)
+            .then(()=>{throw new Error("should not reach this ponit")})
+            .catch(error=>{
+                expect(error).to.exist
+                expect(error).to.be.instanceOf(UnexistenceError)
+                expect(error.message).to.equal(`product with id ${productId} not found in the cart of user ${userId}`)
+            })
+    })
+
     it("should fail when the product does not exist",()=>{
         return updateCart (userId, fakeId, 3)
             .then(()=>{ throw new Error('should not reach this point')})
@@ -96,6 +129,7 @@ describe.only("logic - update-cart", () => {
             expect(error.message).to.equal(undefined+" is not a string")
         }
     })
+
     it('should throw error when the productId is not a string', () => {
         try{
             return updateCart(userId, undefined, 3)
@@ -106,6 +140,7 @@ describe.only("logic - update-cart", () => {
             expect(error.message).to.equal(undefined+" is not a string")
         }
     })
+
     it('should throw error when the quantity is not a number', () => {
         try{
             return updateCart(userId, productId, undefined)

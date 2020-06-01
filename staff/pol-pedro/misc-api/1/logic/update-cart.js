@@ -23,10 +23,11 @@ module.exports = (userId, productId, quantity)=>{
                     return products.findOne({_id:ObjectId(productId)})
                         .then(_product=>{
                             if(!_product) throw new UnexistenceError(`product with _id ${productId} not found`)
+
                             const index= cart.findIndex(currentValue => currentValue.product.toString() === productId) 
                    
                             if(quantity === 0){
-                                if(index<0) throw new UnexistenceError(`product with id ${productIndex} not found in the cart of user ${userId}`)
+                                if(index<0) throw new UnexistenceError(`product with id ${productId} not found in the cart of user ${userId}`)
                                 
                                 cart.splice(index, 1)
 

@@ -4,7 +4,7 @@ const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, JWT_SECRET: SECRET, MONGODB
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, addContact } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser, addContact , updateCart } = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
@@ -61,6 +61,26 @@ mongo.connect(MONGODB_URL)
             }
         })
 
+        app.get('/users/cart/product=:productId&qnt=:quantitiy', verifyExtractJwt, (req, res) => {
+            try {   
+                const { payload: {sub : userId}, params: {productId: productId, quantitiy: quantitiy}} = req
+                updateCart(userId, productId, quantitiy)
+                    .then(()=> {
+                        try {
+                            retrieveUser(userId)
+                                .then(user => res.send(user.cart))
+                                .catch(error => handleError(error, res))
+                        } catch (error) {
+                            handleError(error, res)
+                        }
+                        
+                    })
+                    .catch(error => handleError(error, res))
+            }catch (error){ //todo errror cuando no existe el producto
+                handleError(error, res)
+            }
+        })
+
         // contacts
 
         app.post('/contacts', verifyExtractJwt, parseBody, (req, res) => {
@@ -80,6 +100,7 @@ mongo.connect(MONGODB_URL)
                 handleError(error, res)
             }
         })
+
 
         app.get('/contacts/:contactId', (req, res) => {
             // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
