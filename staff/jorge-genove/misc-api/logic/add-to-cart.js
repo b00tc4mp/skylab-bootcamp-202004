@@ -1,5 +1,5 @@
 
-
+require('../utils/polyfills/string')
 const { mongo } = require('../data')
 const {ObjectId} = mongo
 

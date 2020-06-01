@@ -35,10 +35,10 @@ describe('logic-add-cart', () => {
 
                 const [product] = products
 
-                expect(products.name).to.equal(name)
-                expect(products.description).to.equal(description)
-                expect(products.price).to.equal(price)
-                expect(products.url).to.equal(url)
+                expect(product.name).to.equal(name)
+                expect(product.description).to.equal(description)
+                expect(product.price).to.equal(price)
+                expect(product.url).to.equal(url)
             })
     )
 

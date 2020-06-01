@@ -17,7 +17,7 @@ module.exports = (name, description, price, url) => {
                 .then(product => {
                     if (product) throw  new DuplicityError(`Product with that ${name} already exist`)
 
-                    return products.instertOne({ name, description, price, url })
+                    return products.insertOne({ name, description, price, url })
                 })
         })
 
