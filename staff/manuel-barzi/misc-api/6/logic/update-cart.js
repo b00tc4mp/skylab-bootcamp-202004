@@ -15,11 +15,12 @@ module.exports = (userId, productId, quantity) => {
             const db = connection.db()
 
             const users = db.collection('users')
-            const products = db.collection('products')
 
             return users.findOne({ _id: ObjectId(userId) })
                 .then(user => {
                     if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
+
+                    const products = db.collection('products')
 
                     return products.findOne({ _id: ObjectId(productId) })
                         .then(product => {
