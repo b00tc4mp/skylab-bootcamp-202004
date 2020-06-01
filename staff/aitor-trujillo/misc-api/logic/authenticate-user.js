@@ -1,29 +1,24 @@
-const fs = require('fs')
-const path = require('path')
 require('../utils/polyfills/string')
-require('../utils/polyfills/function')
-const Email = require('../utils/email')
-const uid = require('../utils/uid')
-require('../utils/polyfills/json')
-const { find } = require('../data')
+const { Email } = require('../utils')
+const { mongo } = require('../data')
+const { UnexistenceError, CredentialsError } = require('../errors')
 
-
-module.exports = (date) => {
-
-    const { email, password } = date
+module.exports = (email, password) => {
     String.validate.notVoid(email)
     Email.validate(email)
-    String.validate.lengthGreaterEqualThan(password, 8)
+    String.validate.notVoid(password)
 
-    return new Promise((resolve, reject) => {
-        find({ email }, 'users', (error, [user]) => {
-            if (error) return reject(error)
+    return mongo.connect()
+        .then(connection => {
+            const users = connection.db().collection('users')
 
-            if (!user) return reject(new Error(`user with e-mail ${email} does not exist`))
-
-            if (user.password !== password) return reject(new Error('wrong password'))
-
-            resolve(user.id)
+            return users.findOne({ email })
         })
-    })
-}
+        .then(user => {
+            if (!user) throw new UnexistenceError(`user with e-mail ${email} does not exist`)
+
+            if (user.password !== password) throw new CredentialsError('wrong password')
+
+            return user._id.toString()
+        })
+} 

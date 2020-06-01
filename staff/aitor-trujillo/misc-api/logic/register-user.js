@@ -1,40 +1,25 @@
 require('../utils/polyfills/string')
-const Email = require('../utils/email')
-require('../utils/polyfills/function')
-const uid = require('../utils/uid')
-const fs = require('fs')
-const path = require('path')
-const { find } = require('../data')
+const { Email } = require('../utils')
+require('../utils/polyfills/json')
 const { DuplicityError } = require('../errors')
+const { mongo } = require('../data')
 
-
-module.exports = (register) => {
-    const { name, surname, email, password } = register
+module.exports = (name, surname, email, password) => {
     String.validate.notVoid(name)
     String.validate.notVoid(surname)
     String.validate.notVoid(email)
     Email.validate(email)
-    String.validate.lengthGreaterEqualThan(password, 8)
+    String.validate.notVoid(password)
 
-    const data = path.join(__dirname, '..', 'data')
+    return mongo.connect()
+        .then(connection => {
+            const users = connection.db().collection('users')
 
-    return new Promise((resolve, reject) => {
+            return users.findOne({ email })
+                .then(user => {
+                    if (user) throw new DuplicityError(`user with e-mail ${email} already exists`)
 
-        find({ email }, 'users', (error, [user]) => {
-            if (error) return reject(error)
-
-            if (user) return reject(new DuplicityError(`user with e-mail ${email} already exists`))
-
-            const id = uid()
-
-            const newUser = { id, name, surname, email, password }
-
-            fs.writeFile(path.join(data, 'users', `${id}.json`), JSON.prettify(newUser), error => {
-                if (error) return reject(error)
-
-                resolve(id)
-            })
+                    return users.insertOne({ name, surname, email, password })
+                })
         })
-    })
 }
-
