@@ -1,0 +1,18 @@
+extend App
+
+block body 
+
+    section.users
+    h2 Contact Details
+        ul
+            each val, key in contact
+                li= key + ':' + val
+
+
+    a.home__link(href='/contacts' ) Contacts
+
+
+
+
+    
+      
