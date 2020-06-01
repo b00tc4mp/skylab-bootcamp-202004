@@ -18,7 +18,7 @@ describe('arroz.prototype.filter', function () {
         });
         expect(newArray).toBe(-1);
     });
-    it('filter a array is empty return -1 if no find coincidence', function () {
+    it('returns -1 if an empty array is passed', function () {
         var array = new Arroz();
         var newArray = array.filter(function(element){
             return element.length > 5;

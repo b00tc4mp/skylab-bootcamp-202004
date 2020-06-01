@@ -28,4 +28,13 @@ describe('arroz.prototype.findIndex', function () {
         expect(result1).toBe(0)
         expect(result2).toBe(-1)
      });
+
+     it('Returns -1 if an empty array is passed', function (){
+         var array = new Arroz();
+
+         var result3 = array.findIndex(function(element){
+             return element > 2
+         })
+         expect(result3).toBe(-1)
+     })
 });
