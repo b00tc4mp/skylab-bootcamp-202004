@@ -4,7 +4,7 @@ const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET } } = process
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, createProduct, searchUsers, unregisterUser } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser, createProduct, addTocart, unregisterUser } = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
@@ -54,7 +54,8 @@ mongo.connect(MONGODB_URL)
         app.get('/users/:userId?', verifyExtractJwt, (req, res) => {
         
             try {
-               const {payload: { sub: userId }, params: { userId: otherUserId } } = req
+                const {payload: { sub: userId }, params: { userId: otherUserId } } = req
+                
                 retrieveUser(otherUserId || userId) 
                     .then(user => res.send(user))
                     .catch(error => handleError(error, res))
@@ -65,7 +66,19 @@ mongo.connect(MONGODB_URL)
         
         })
 
-        // 
+        app.delete('/users', verifyExtractJwt, parseBody, (req, res) => {
+            try {
+                const { sub: userId } = req.payload
+                
+                unregisterUser(userId)
+                    .then(() => res.status(201).send())
+                    .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        // Products
 
         app.post('/products', parseBody, (req, res) => {
             const { body: { name, description, price, url } } = req
@@ -79,72 +92,23 @@ mongo.connect(MONGODB_URL)
             }
         })
 
-        //
+        app.post('/products/cart', verifyExtractJwt, parseBody, (req, res) => {
+            const {body: {productId} } = req
 
-        app.get('/users/q=:query?', (req, res) => {
-        
+            const { payload: { sub: userId } } = req
+
             try {
-                const [, token] = req.header('authorization').split(' ')
-        
-                const { sub: userId } = jwt.verify(token, SECRET)
-        
-                const { params: { query } } = req
-        
-                searchUsers(userId, query, (error, users) => {
-                    if (error) return res.status(400).json({ error: error.message })
-        
-                    res.send(users)
-                })
-            } catch (error) {
-                if (error instanceof JsonWebTokenError) res.status(401)
-        
-                else res.status(406).json({ error: error.message })
-            }
-        })
-        
-        app.delete('/users/delete', verifyExtractJwt, parseBody, (req, res) => {
-            try {
-                
-                const [, token] = req.header('authorization').split(' ')
-        
-                const { sub: userId } = jwt.verify(token, SECRET)
-        
-                const { body: { email, password } } = req
-                unregisterUser(email, password, userId, (error) => {
-                    if (error) return res.status(403).json({ error: error.message })
-                    res.status(204).send()
-                })
-            } catch (error) {
-                if (error instanceof JsonWebTokenError)
-                    res.status(401).send()
-                else
-                    res.status(406).json({ error: error.message })
-            }
-        })
-        
-        app.patch('/users/update', parseBody, (req, res) => {
-            debugger
-            try {
-                const [, token] = req.header('authorization').split(' ')
-        
-                const { sub: userId } = jwt.verify(token, SECRET)
-        
-                const { body } = req
-        
-                update(userId, body, error => {
-                    if (error) return res.status(403).json({ error: error.message })
-                    res.json({ "message": "user updated" })  //TODO
-                })
+                addTocart(userId, productId)
+                    .then(() => res.status(201).send('The product is added.'))
+                    .catch(error => handleError(error, res))
         
             } catch (error) {
-                if (error instanceof JsonWebTokenError)
-                    res.status(401).send()
-                else
-                    res.status(406).json({ error: error.message })
+                handleError(error, res)
             }
         })
 
         // other
+        
         app.get('*', (req, res) => {
             res.status(404).send('Not Found :(')
         })
