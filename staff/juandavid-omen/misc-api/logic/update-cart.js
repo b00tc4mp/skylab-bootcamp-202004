@@ -32,10 +32,9 @@ module.exports = (userId, productId, quantity) => {
                         if (index < 0) {
                             product = { product: ObjectId(productId) }
 
-                            cart.push(product)
-                        } else product = cart[index]
-
-                        product.quantity = quantity
+                            product.quantity = quantity
+                            cart.push(product) 
+                        } else cart[index].quantity = quantity
                     }
                     return users.updateOne({ _id: ObjectId(userId) }, { $set: { cart } })
                 })

@@ -1,10 +1,10 @@
 require('dotenv').config()
 
-const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET } } = process
+const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, JWT_SECRET: SECRET, MONGODB_URL } } = process
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, createProduct, addTocart, unregisterUser } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser, createProduct, addTocart, unregisterUser, updateCart, deleteCart, placeOrder} = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
@@ -42,7 +42,7 @@ mongo.connect(MONGODB_URL)
         
             try {
                 authenticateUser(email, password)
-                    .then(userId => jwtPromised({ sub: userId }, SECRET, { expiresIn: '1d' }))
+                    .then(userId => jwtPromised.sign({ sub: userId }, SECRET, { expiresIn: '1d' }))
                     .then(token => res.send({ token }))
                     .catch(error => handleError(error, res))
         
@@ -71,7 +71,7 @@ mongo.connect(MONGODB_URL)
                 const { sub: userId } = req.payload
                 
                 unregisterUser(userId)
-                    .then(() => res.status(201).send())
+                    .then(() => res.status(200).send())
                     .catch(error => handleError(error, res))
             } catch (error) {
                 handleError(error, res)
@@ -80,7 +80,7 @@ mongo.connect(MONGODB_URL)
 
         // Products
 
-        app.post('/products', parseBody, (req, res) => {
+        app.post('/products', verifyExtractJwt, parseBody, (req, res) => {
             const { body: { name, description, price, url } } = req
         
             try {
@@ -92,17 +92,41 @@ mongo.connect(MONGODB_URL)
             }
         })
 
-        app.post('/products/cart', verifyExtractJwt, parseBody, (req, res) => {
-            const {body: {productId} } = req
-
-            const { payload: { sub: userId } } = req
-
+        //Cart
+        app.post('/cart', verifyExtractJwt, parseBody, (req, res) => {
             try {
-                addTocart(userId, productId)
+                const {body: {productId, amount} } = req
+    
+                const { payload: { sub: userId } } = req
+                updateCart(userId, productId, parseInt(amount))
                     .then(() => res.status(201).send('The product is added.'))
                     .catch(error => handleError(error, res))
         
             } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        app.delete('/cart', verifyExtractJwt, (req, res) =>{
+            try{
+                const { payload: { sub: userId } } = req
+                deleteCart(userId)
+                    .then(() => res.status(200).send('Deleted cart.'))
+                    .catch(error => handleError(error, res))
+            }catch(error){
+                handleError(error, res)
+            }
+        })
+        
+        //Orders
+
+        app.post('/orders', verifyExtractJwt, (req, res) =>{
+            try{
+                const { payload: { sub: userId } } = req
+                placeOrder(userId)
+                    .then(() => res.status(201).send("Your order has been placed."))
+                    .catch(error => handleError(error, res))
+            }catch(error){
                 handleError(error, res)
             }
         })

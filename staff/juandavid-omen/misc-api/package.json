@@ -8,7 +8,7 @@
     "watch": "npx nodemon --ignore ./data .",
     "debug": "node debug .",
     "test": "npx mocha logic/*.spec.js",
-    "test:debug": "npx mocha debug logic/*.spec.js"
+    "test:debug": "npx mocha inspect logic/*.spec.js"
   },
   "keywords": [],
   "author": "",

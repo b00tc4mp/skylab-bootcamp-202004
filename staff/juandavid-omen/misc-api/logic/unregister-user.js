@@ -1,6 +1,5 @@
 require("../utils/polyfills/string")
 require("../utils/polyfills/function")
-const { users: { find } } = require("../data")
 const Email = require("../utils/email")
 const fs = require("fs")
 const path = require("path")
