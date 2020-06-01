@@ -1,78 +1,65 @@
+require('dotenv').config()
+
+const { env: { MONGODB_URL_TEST: MONGODB_URL } } = process
+
 const authenticateUser = require('./authenticate-user')
 const { random } = Math
 const { expect } = require('chai')
 require('../utils/polyfills/json')
-const { users: { deleteMany, create } } = require('../data')
+const { mongo } = require('../data')
 
 describe('logic - authenticate user', () => {
+    let users
+
+    before(() => mongo.connect(MONGODB_URL).then(connection => users = connection.db().collection('users')))
+
     let name, surname, email, password, userId
 
-    beforeEach(done => {
-        deleteMany(error => {
-            if (error) return done(error)
-
-            name = `name-${random()}`
-            surname = `surname-${random()}`
-            email = `e-${random()}@mail.com`
-            password = `password-${random()}`
-
-            done()
-        })
-    })
+    beforeEach(() =>
+        users.deleteMany()
+            .then(() => {
+                name = `name-${random()}`
+                surname = `surname-${random()}`
+                email = `e-${random()}@mail.com`
+                password = `password-${random()}`
+            })
+    )
 
     describe('when user already exists', () => {
-        beforeEach(done => {
+        beforeEach(() => {
             const user = { name, surname, email, password }
 
-            create(user, (error, id) => {
-                if (error) return done(error)
-
-                userId = id
-
-                done()
-            })
+            return users.insertOne(user)
+                .then(result => userId = result.insertedId.toString())
         })
 
-        it('should succeed on correct credentials', done => {
-            authenticateUser(email, password, (error, _userId) => {
-                expect(error).to.be.null
+        it('should succeed on correct credentials', () =>
+            authenticateUser(email, password)
+                .then(_userId => expect(_userId).to.equal(userId))
+        )
 
-                expect(_userId).to.equal(userId)
-
-                done()
-            })
-        })
-
-        it('should fail on wrong password', done => {
+        it('should fail on wrong password', () => {
             password += 'wrong-'
 
-            authenticateUser(email, password, error => {
-                expect(error).to.exist
+            return authenticateUser(email, password)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    expect(error).to.be.an.instanceof(Error)
+                    expect(error.message).to.equal(`wrong password`)
+                })
+        })
+    })
 
+    it('should fail when user does not exist', () => {
+        return authenticateUser(email, password)
+            .then(() => { throw new Error('should not reach this point') })
+            .catch(error => {
                 expect(error).to.be.an.instanceof(Error)
-                expect(error.message).to.equal(`wrong password`)
-
-                done()
+                expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
             })
         })
-    })
 
-    it('should fail when user does not exist', done => {
-        authenticateUser(email, password, error => {
-            expect(error).to.exist
+    afterEach(() => users.deleteMany())
 
-            expect(error).to.be.an.instanceof(Error)
-            expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
-
-            done()
-        })
-    })
-
-    afterEach(done => {
-        deleteMany(error => {
-            if (error) return done(error)
-
-            done()
-        })
-    })
+    after(() => users.deleteMany().then(mongo.disconnect))
 })

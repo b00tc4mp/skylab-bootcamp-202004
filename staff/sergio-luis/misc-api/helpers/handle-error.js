@@ -14,6 +14,10 @@ module.exports = function (error, res) {
         case error instanceof CredentialsError || error instanceof JsonWebTokenError:
             status = 401
             break
+        case (error.message === "Argument passed in must be a single String of 12 bytes or a string of 24 hex characters"):
+            status = 409
+            error.message = "these are not the files you are looking for ;)"
+            break
     }
 
     res.status(status).json({ error: error.message })
