@@ -4,7 +4,7 @@ module.exports = {
     retrieveUser: require('./retrieve-user'),
     addContact: require('./add-contact'),
     searchUsers: require('./search-users'),
-    unregisterUser: require('./delete-user'),
+    unregisterUser: require('./unregister-user'),
     updateUser: require('./update-user')
 
 }

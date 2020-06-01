@@ -1,42 +1,40 @@
+require('dotenv').config()
+const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { mongo } = require('../data')
+
 const authenticateUser = require('./authenticate-user')
 const { random } = Math
 const { expect } = require('chai')
-require('../utils/polyfills/json')
-const { users: { deleteMany, create } } = require('../data')
 const { UnexistenceError, CredentialsError } = require('../errors')
 
 describe('logic - authenticate user', () => {
+    let users
+
+    before(() =>
+        mongo.connect(MONGODB_URL).then(connection=>users = connection.db().collection('users'))
+    )
     let name, surname, email, password, userId
 
-    beforeEach(done => {
-        deleteMany(error => {
-            if (error) return done(error)
-
-            name = `name-${random()}`
-            surname = `surname-${random()}`
-            email = `e-${random()}@mail.com`
-            password = `password-${random()}`
-
-            done()
-        })
-    })
+    beforeEach(()=> 
+        users.deleteMany()
+            .then(()=>{
+                name = `name-${random()}`
+                surname = `surname-${random()}`
+                email = `e-${random()}@mail.com`
+                password = `password-${random()}`
+            })
+    )
 
     describe('when user already exists', () => {
-        beforeEach(done => {
+        beforeEach(() =>{ 
             const user = { name, surname, email, password }
-
-            create(user, (error, id) => {
-                if (error) return done(error)
-
-                userId = id
-
-                done()
-            })
+            return users.insertOne(user)
+                .then(result=>userId = result.insertedId.toString())
         })
 
         it('should succeed on correct credentials', () => 
             authenticateUser(email, password)
-                .then(_userId=>expect(_userId).to.equal(userId)) 
+                .then(_userId=>expect(_userId).to.equal(userId))
         )
 
         it('should fail on wrong password', () => 
@@ -48,6 +46,36 @@ describe('logic - authenticate user', () => {
                     expect(error.message).to.equal(`wrong password`)
                 })
         )
+
+        it('should fail when incorrect inputs are introduced', () => {
+            try{
+                authenticateUser( 1, password)          
+            }catch(error){
+                expect(error).to.be.an.instanceof(TypeError)
+                expect(error.message).to.equal(`1 is not a string`)
+            }
+    
+            try{
+                authenticateUser( '', password)          
+            }catch(error){
+                expect(error).to.be.an.instanceof(Error)
+                expect(error.message).to.equal(` is empty or blank`)
+            }
+    
+            try{
+                authenticateUser(email, 1)          
+            }catch(error){
+                expect(error).to.be.an.instanceof(TypeError)
+                expect(error.message).to.equal(`1 is not a string`)
+            }
+    
+            try{
+                authenticateUser(email, '')          
+            }catch(error){
+                expect(error).to.be.an.instanceof(Error)
+                expect(error.message).to.equal(` is empty or blank`)
+            }
+        })
     })
     
     describe('when user does not exist', ()=>{
@@ -56,16 +84,14 @@ describe('logic - authenticate user', () => {
                 .then(()=>{throw new Error("Should throw error")})
                 .catch(error=>{
                     expect(error).to.be.an.instanceof(UnexistenceError)
+
                     expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
                 })
         )
     })
         
-    afterEach(done => {
-        deleteMany(error => {
-            if (error) return done(error)
-            
-            done()
-        })
-    })
+    afterEach(() => 
+        users.deleteMany()
+    )
+    after(() => users.deleteMany().then(()=> mongo.disconnect()))
 })

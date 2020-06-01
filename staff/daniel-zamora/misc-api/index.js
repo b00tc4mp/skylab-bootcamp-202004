@@ -1,189 +1,123 @@
 require('dotenv').config()
 
-const { PORT = 8080, SECRET } = process.env
+const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, JWT_SECRET: SECRET, MONGODB_URL } } = process
+const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { register, login, retrieveUser, addContact, searchUsers, unregisterUser, updateUser,retrieveContact } = require('./logic')
+const { register, login, retrieveUser, searchUsers, unregisterUser, updateUser } = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const jwt = require('jsonwebtoken')
-const app = express()
 const { handleError } = require('./helpers')
-const parseBody = bodyParser.json()
+const { mongo } = require('./data')
+const { jwtVerifierExtractor } = require('./middlewares')
+const { jwtPromised } = require('./utils')
 
 // users
+mongo.connect(MONGODB_URL)
+    .then(connetion => {
+        console.log('mongo listening')
+        
+        const app = express()
+        
+        const parseBody = bodyParser.json()
 
-app.post('/users', parseBody, (req, res) => { debugger
+        const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
 
-    const { body: { name, surname, email, password } } = req
 
-    try {
-        register(name, surname, email, password)
-            .then(()=>res.status(201).send())
-            .catch(error => handleError(error, res))
+        app.post('/users', parseBody, (req, res) => { 
 
-    } catch (error) {
-        handleError(error, res)
-    }
-})
+            const { body: { name, surname, email, password } } = req
 
-app.post('/users/auth', parseBody, (req, res) => {
-    const { body: { email, password } } = req
+            try {
+                register(name, surname, email, password)
+                    .then(()=>res.status(201).send())
+                    .catch(error => handleError(error, res))
 
-    try {
-        login(email, password)
-            .then(userId=> { 
-                const token = jwt.sign({ sub: userId }, SECRET)
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
 
-                res.send({ token })
-            })
+        app.post('/users/auth', parseBody, (req, res) => { 
+            const { body: { email, password } } = req
 
-            .catch(error => handleError(error, res))
-    }catch(error){
-        handleError(error, res)
-    }
-})
+            try {
+                login(email, password)
+                    .then(userId => jwtPromised.sign({ sub: userId }, SECRET, {expiresIn: '1d'}))
+                    .then(token => res.send({ token }))
+                    .catch(error => handleError(error, res))
+            } catch(error){handleError(error, res)}
+        })
 
-app.get('/users/:userId?', (req, res) => { debugger
-    try {
-        const [, token] = req.headers.authorization.split(' ')
+        app.get('/users/retrieve/:userId?', verifyExtractJwt, (req, res) => { 
+            try{
+                const { params: { userId }, payload: {sub: id} } = req
+                
+                retrieveUser(userId || id)
+                    .then(user=> res.status(200).send(user))
+                    .catch(error => handleError(error, res)) 
+        
+            }catch(error){
+                handleError(error, res)
+            }
+        })
 
-        let { sub: id } = jwt.verify(token, SECRET)
+        app.get('/users/search/q=:query', verifyExtractJwt, (req, res) => { debugger
+            try {
+                const { params: { query }, payload: {sub: id} } = req
 
-        let { params: { userId } } = req
-        if (!userId) userId = id
-        try{
-            retrieveUser(userId)
-                .then(user=> res.send(user))
-                .catch(error => handleError(error, res)) 
-    
-        }catch(error){
-            handleError(error, res)
-        }
-    } catch (error) {
-        handleError(error, res)
-    }
-})
+                const queryObject = {}
+                query.split('&').forEach(element => {
+                    const [key, value] = element.split('=')
+                    queryObject[key] = value
+                })
 
-app.get('/users/search/:query?', (req, res) => {
-    try {
-        const [, token] = req.header('authorization').split(' ')
+                searchUsers(id, queryObject)
+                    .then(users => res.status(200).send(users))
+                    .catch(error => handleError(error, res))
 
-        const { sub: userId } = jwt.verify(token, SECRET)
-        const { params: { query } } = req
-        searchUsers(userId, query)
-            .then(users => res.send(users))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
 
-            .catch(error => handleError(error, res))
-    } catch (error) {
-        handleError(error, res)
-    }
-})
+        app.delete('/users/delete', parseBody, verifyExtractJwt, (req, res) => {
 
-app.delete('/users/delete', parseBody, (req, res) => {
+            try {
+                const { params: { query }, payload: {sub: id} } = req
 
-    try {
-        const [, token] = req.header('authorization').split(' ')
+                const { body: { email, password } } = req
 
-        const { sub: userId } = jwt.verify(token, SECRET)
+                unregisterUser(email, password, id)
+                    .then(()=>res.status(204).send())
+                    .catch(error => handleError(error, res))
 
-        const { body: { email, password } } = req
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
 
-        unregisterUser(email, password, userId)
-            .then(()=>res.status(204).send())
-            .catch(error => handleError(error, res))
+        app.patch('/users/update', parseBody, (req, res) => {
+            try {
+                const [, token] = req.header('authorization').split(' ')
 
-    } catch (error) {
-        handleError(error, res)
-    }
-})
+                const { sub: userId } = jwt.verify(token, SECRET)
+                const { body } = req
 
-app.patch('/users/update', parseBody, (req, res) => {
-    try {
-        const [, token] = req.header('authorization').split(' ')
+                updateUser(userId, body) 
+                    .then(()=> res.status(204).send())
+                    .catch(error => handleError(error, res))
 
-        const { sub: userId } = jwt.verify(token, SECRET)
-        const { body } = req
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
 
-        updateUser(userId, body) 
-            .then(()=> res.status(204).send())
-            .catch(error => handleError(error, res))
 
-    } catch (error) {
-        handleError(error, res)
-    }
-})
+        app.get('*', (req, res) => {
+            res.status(404).send('Not Found :(')
+        })
 
-// contacts
-
-// app.post('/contacts', parseBody, (req, res) => {
-
-//     try {
-
-//         const [, token] = req.header('authorization').split(' ')
-
-//         const { sub: userId } = jwt.verify(token, SECRET)
-
-//         const { body: contact } = req
-
-//         addContact(userId, contact, (error, contactId) => {
-//             if (error) return res.status(401).json({ error: error.message })
-
-//             res.send({ contactId })
-//         })
-//     } catch (error) {
-//         if (error instanceof JsonWebTokenError)
-//             res.status(401).send()
-//         else
-//             res.status(406).json({ error: error.message })
-//     }
-// })
-
-// app.get('/contacts/contactsId:contactId', (req, res) => {
-// try{
-//     const [, token] = req.header('authorization').split(' ')
-
-//     const { sub: userId } = jwt.verify(token, SECRET)
-
-//     const { params : { contactId } }= req
-
-//     retrieveContact(contactId, (error, [users] ) => {
-//         if (error) return res.status(401).json({error : error.message})
-
-//         res.send({users})
-//     })
-    
-//     }catch(error) {
-//         if (error instanceof JsonWebTokenError)
-//             res.status(401).send()
-//         else
-//             res.status(406).json({error: error.message})
-//     }
-
-// })
-
-// app.delete('/contacts/delete', bodyParser, (req, res) => {
-//     try{
-//         const [, token] = req.header('authorization').split(' ')
-
-//         const  { sub: userId } = jwt.verify(token,SECRET)
-
-//         const {params : { contactId } } = req
-
-//         deleteContact(userId, contactId, (error) => {
-
-//         })
-//     }catch(error){
-//         if(error instanceof JsonWebTokenError)
-//             res.status(401).send()
-//         else
-//             res.status(406).json({error: error.message})
-//     }
-// })
-// other
-
-app.get('*', (req, res) => {
-    res.status(404).send('Not Found :(')
-})
-
-app.listen(8080, () => console.log(`${name} ${version} running in ${PORT}`))
+        app.listen(8080, () => console.log(`${name} ${version} running in ${PORT}`))
+    })
