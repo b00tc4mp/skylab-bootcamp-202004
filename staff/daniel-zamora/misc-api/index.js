@@ -4,7 +4,7 @@ const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, JWT_SECRET: SECRET, MONGODB
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { register, login, retrieveUser, searchUsers, unregisterUser, updateUser } = require('./logic')
+const { register, login, retrieveUser, searchUsers, unregisterUser, updateUser, updateCart } = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const jwt = require('jsonwebtoken')
@@ -106,6 +106,21 @@ mongo.connect(MONGODB_URL)
                 const { body } = req
 
                 updateUser(userId, body) 
+                    .then(()=> res.status(204).send())
+                    .catch(error => handleError(error, res))
+
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        app.patch('/users/cart', parseBody, verifyExtractJwt, (req, res) => {
+            try {
+                const { params: { query }, payload: {sub: id} } = req
+
+                const { body: { productId, quantity } } = req
+
+                updateCart(id, productId, quantity) 
                     .then(()=> res.status(204).send())
                     .catch(error => handleError(error, res))
 

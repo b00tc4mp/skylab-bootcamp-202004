@@ -5,6 +5,7 @@ module.exports = {
     addContact: require('./add-contact'),
     searchUsers: require('./search-users'),
     unregisterUser: require('./unregister-user'),
-    updateUser: require('./update-user')
+    updateUser: require('./update-user'),
+    updateCart: require('./update-cart')
 
 }
