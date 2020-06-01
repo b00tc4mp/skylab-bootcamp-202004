@@ -22,7 +22,7 @@ mongo.connect(MONGODB_URL)
 
     // users
 
-    app.post('/users', parseBody, (req, res) => {
+    app.post('/users', parseBody, (req, res) => {debugger
         const { body: { name, surname, email, password } } = req
 
         try {
@@ -150,4 +150,4 @@ app.post('/carts', verifyExtractJwt, parseBody, (req, res) => {
         res.status(404).send('Not Found :(')
     })
 
-    app.listen(8080, () => console.log(`${name} ${version} running in ${PORT}`))
+    app.listen(PORT, () => console.log(`${name} ${version} running in ${PORT}`))
