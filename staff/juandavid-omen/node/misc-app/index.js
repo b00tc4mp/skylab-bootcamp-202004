@@ -7,6 +7,9 @@ const path = require('path')
 
 const app = express()
 
+app.set('view engine')
+app.set('views', './components')
+
 const parseBody = bodyParser.urlencoded({ extended: false })
 
 const cookieSession = session({
