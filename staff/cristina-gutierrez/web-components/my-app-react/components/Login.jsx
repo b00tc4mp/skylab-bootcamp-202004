@@ -19,18 +19,14 @@ class Login extends Component {
             authenticateUser(email, password, (error, token) => {
                 if (error) return this.setState({ error: error.message })
 
-                retrieveUser(token, (error, user) => {
-                    if (error) return this.setState({error: error.message})
-                    else this.props.onSubmit(user.name, token, user.following)
-                })
+                this.props.onLogin(token)
             })
-
         } catch ({ message }) {
             this.setState({ error: message })
         }
     }
 
-    handleGoToRegister = event => {
+    handeGoToRegister = event => {
         event.preventDefault()
 
         this.props.onGoToRegister()
@@ -43,7 +39,7 @@ class Login extends Component {
                 <input type="email" name="email" placeholder="e-mail" required />
                 <input type="password" name="password" placeholder="password" required minLength="8" />
                 <button>Submit</button>
-                or <a href="" onClick={this.handleGoToRegister}>Register</a>
+                or <a href="" onClick={this.handeGoToRegister}>Register</a>
 
                 {this.state.error && <Feedback message={this.state.error} level="error" />}
             </form>

@@ -2,50 +2,62 @@ const { useState, useEffect } = React
 
 function Home ({onLogout, token}) {
     
-        const [view, setView] = useState ("home");
-        const [googleResults, setGoogleResult] = useState ();
-        const [googleQuery, setGoogleQuery] = useState ();
-        const [holaNews, setHolaNews] = useState ();
-        const [userResults, setUserResults] = useState ();
-        const [usersQuery, setUsersQuery] = useState ();
-        const [tweets, setTweets] = useState ();
-        const [following, setFollowing] = useState ();
-        const [name, setName] = useState ();
-       
-        useEffect(() => {
-            try {
-                retrieveUser(token, (error, user) => {
-                    if (error) throw error
+    const [view, setView] = useState ("home");
+    const [googleResults, setGoogleResult] = useState ();
+    const [googleQuery, setGoogleQuery] = useState ();
+    const [holaNews, setHolaNews] = useState ();
+    const [userResults, setUserResults] = useState ();
+    const [usersQuery, setUsersQuery] = useState ();
+    const [tweets, setTweets] = useState ();
+    const [following, setFollowing] = useState ();
+    const [name, setName] = useState ();
     
-                    setName (user.name)
-                })
-            } catch (error) {
-                throw error
-            }
-        }, [])
+    useEffect(() => {
+        try {
+            retrieveUser(token, (error, user) => {
+                if (error) throw error
+
+                const hash = location.hash.substring(1)
+
+                location.hash = hash ? hash : 'users'
+
+                setName (user.name)
+
+                setView (hash ? hash : 'users')
+            })
+        } catch (error) {
+            throw error
+        }
+    }, [])
+
+    const setHashView = view => {
+        location.hash = view
+
+        setView(view)
+    }
 
     const handleUsers = event => {
         event.preventDefault()
 
-        setView("users")
+        setHashView("users")
     }
 
     const handleGoogle = event => {
         event.preventDefault()
 
-        setView("google")
+        setHashView("google")
     }
 
     const handleHolaNews = event => {
         event.preventDefault()
 
-        setView("hola-news")
+        setHashView("hola-news")
     }
 
     const handleTwitter = event => {
         event.preventDefault()
 
-       setView("twitter")
+       setHashView("twitter")
     }
     
     const handleFollowing = event => {

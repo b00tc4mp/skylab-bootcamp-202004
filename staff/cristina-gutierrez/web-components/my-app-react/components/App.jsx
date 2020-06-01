@@ -14,23 +14,39 @@ function App() {
                     if (isAuthenticated) {
                         setToken(sessionStorage.token)
                         setView("home")
-                    } else setView("login")
+                    } else setHashView("login")
                 })
             } catch (error) {
-                if (error) setView("login")
+                if (error) throw error
             }
-        else setView("landing")
+        else {
+            const hash = location.hash.substring(1)
+
+            if (hash === 'login' || hash === 'register') setHashView(hash)
+            else {
+                location.hash = ''
+                
+                setView('landing')
+            }
+        }
     }, [])
 
-    const handleGoToRegister = () => setView("register")
+    const setHashView = view => {
+        location.hash = view
 
-    const handleGoToLogin = () => setView("login")
+        setView(view)
+    }
+    
+    const handleGoToRegister = () => setHashView("register")
 
-    const handleRegister = () => setView("login")
+    const handleGoToLogin = () => setHashView("login")
+
+    const handleRegister = () => setHashView("login")
 
     const handleLogin = (name, token, following) => {
         sessionStorage.token = token
         setToken(token)
+        location.hash = ''
         setView("home")
         if (following) setFollowing (following)
     }
@@ -38,10 +54,11 @@ function App() {
     const handleLogout = () => {
         setToken()
         delete sessionStorage.token
+        location.hash = ''
         setView("landing")
     }
 
-    const handleUserSessionExpired = () => setView("login")
+    const handleUserSessionExpired = () => setHashView("login")
 
     
     return <>
@@ -50,6 +67,5 @@ function App() {
         {view === 'register' && <Register onSubmit={handleRegister} onGoToLogin={handleGoToLogin}/>}
         {view === 'login' && <Login onSubmit={handleLogin} onGoToRegister={handleGoToRegister}/>}
         {view === 'home' && <Home name={name} following={following} token={token} onLogout={handleLogout} onUserSessionExpired={handleUserSessionExpired} />}
-    </>
-    
+    </>  
 }
