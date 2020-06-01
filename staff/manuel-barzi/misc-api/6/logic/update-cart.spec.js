@@ -42,7 +42,8 @@ describe('logic - update cart', () => {
                 const product = {
                     name: `name-${random()}`,
                     description: `description-${random()}`,
-                    price: random() * 1000
+                    price: random() * 1000,
+                    url: `url-${random()}`
                 }
 
                 quantity = randomIntegerBetween(1, 100)
