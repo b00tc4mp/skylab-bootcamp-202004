@@ -4,7 +4,7 @@ const {argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET, MONGODB_URL} } = pro
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, unregisterUser, createProduct,addToCart } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser, unregisterUser, createProduct,addToCart,searchProduct } = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { jwtPromised } = require('./utils')
@@ -116,6 +116,18 @@ app.post('/products',  parseBody, (req, res) => {
             .catch(error => handleError(error, res))
     } catch (error) {
         handleError(error, res)
+    }
+})
+
+app.get('/products/:query?', verifyExtractJwt, (req, res) => {
+    
+    try {
+    const {params : {query : searchQuery} } = req
+    searchProduct(searchQuery)
+        .then((product) => res.send(product))
+        .catch(error => handleError(error,res))
+}catch (error) {
+    handleError(error, res)      
     }
 })
 

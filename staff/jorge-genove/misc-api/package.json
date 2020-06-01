@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node .",
     "watch": "npx nodemon --ignore ./data .",
-    "debug": "node debug .",
+    "debug": "node --inspect=7000 .",
     "test": "npx mocha logic/*.spec.js",
     "test:debug": "npx mocha debug logic/*.spec.js"
   },
