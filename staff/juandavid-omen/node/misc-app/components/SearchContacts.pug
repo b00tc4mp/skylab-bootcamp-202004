@@ -1,0 +1,12 @@
+extend App
+
+block body
+    section.search-contacts
+        form(action='/search' method='GET')
+            imput(name='q', placeholder='?', #{query ? `value=`${query}`})
+        
+    section.search-contacts
+  form(action='/search', method='GET')
+    input(name='q', placeholder='?', ${query='', ?='', `value='${query}', `='', :='')
+    button Search
+| }
