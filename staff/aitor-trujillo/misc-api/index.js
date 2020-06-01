@@ -4,7 +4,7 @@ const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET, MONGODB_URL } } = p
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, unregisterUser, addToCart, createProduct } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser, unregisterUser, updateCart, createProduct } = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
@@ -94,7 +94,7 @@ mongo.connect(MONGODB_URL)
             const { payload: { sub: userId } } = req
 
             try {
-                addToCart(userId, productId)
+                updateCart(userId, productId)
                     .then(() => res.status(201).send('Product added.'))
                     .catch(error => handleError(error, res))
             } catch (error) {
