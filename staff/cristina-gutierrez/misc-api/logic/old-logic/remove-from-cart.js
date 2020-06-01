@@ -1,12 +1,16 @@
-require('../utils/polyfills/string')
-require('../utils/polyfills/json')
-const { UnexistenceError } = require('../errors')
-const { mongo } = require('../data')
+require('../../utils/polyfills/string')
+require('../../utils/polyfills/json')
+require('../../utils/polyfills/number') // FALTA CREAR EL POLYFILL NUMBER Y PONER EL VALUE ERROR EN EL INDEX DE ERRORES, V6
+const { UnexistenceError } = require('../../errors')
+const { mongo } = require('../../data')
 const { ObjectId } = mongo
 
-module.exports = (userId, productId) => {
+module.exports = (userId, productId, quantity = 0) => {
     String.validate.notVoid(userId)
     String.validate.notVoid(ProductId)
+    Number.validate(quantity)
+
+    //ACABAR REMOVE FROM CART
 
     return mongo.connect()
         .then(connection => {
