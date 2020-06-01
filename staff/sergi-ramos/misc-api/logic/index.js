@@ -2,7 +2,11 @@ module.exports = {
     registerUser: require('./register-user'),
     authenticateUser: require('./authenticate-user'),
     retrieveUser: require('./retrieve-user'),
-    addContact: require('./add-contact'),
     searchUsers: require('./search-users'),
-    unregisterUser: require('./unregister-user')
+    unregisterUser: require('./unregister-user'),
+    updateUser: require('./update-user'),
+    addToCart: require('./add-to-cart'),
+    retrieveCart: require('./retrieve-cart'),
+    addProduct: require('./add-product'),
+    searchProducts: require('./search-product')
 }
