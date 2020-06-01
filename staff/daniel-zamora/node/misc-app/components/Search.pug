@@ -1,0 +1,17 @@
+extend App
+
+block body
+    section.search-contacts
+        form(action="/"+string, method='GET')
+            input(name='q', placeholder='?', value=(query ? query : ""))
+            button Search
+        a(href='/home') Home
+        
+    if string==='contacts'
+        include ListContacts.pug
+    
+    //- if string==='stickies'
+    //-     include ListStickies.pug
+
+    //- if string==='users'
+    //-     include ListUsers.pug
