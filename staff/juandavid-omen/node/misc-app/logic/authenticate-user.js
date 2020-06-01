@@ -1,35 +1,21 @@
-const fs = require('fs')
-const path = require('path')
+require('../utils/polyfills/string')
+const { Email } = require('../utils')
+require('../utils/polyfills/function')
+const { users: { find } } = require('../data')
 
-module.exports = (body, callback) => {
-    const {email, password} = body
+module.exports = (email, password, callback) => {
+    String.validate.notVoid(email)
+    Email.validate(email)
+    String.validate.notVoid(password)
+    Function.validate(callback)
 
-    fs.readdir(path.join(__dirname, '..', 'data', 'users'), (error, files) => {
-        if(error) return callback(error)
+    find({ email }, (error, [user]) => {
+        if (error) return callback(error)
 
-        let wasError = false
+        if (!user) return callback(new Error(`user with e-mail ${email} does not exist`))
 
-        let userMatched;
-        let count = 0
-    
-        files.forEach(file => {
-            fs.readFile(path.join(__dirname, '..', 'data', 'users', file), 'utf8', (error, json)=>{
-                if(error) {
-                    if(!wasError) {
-                        callback(error)
-                    }
+        if (user.password !== password) return callback(new Error('wrong password'))
 
-                    return
-                }
-
-                if(!wasError){
-                    const user = JSON.parse(json)
-                    
-                    if(user.email === email && user.password===password) userMatched = true
-
-                    if(++count === files.length) callback(null, userMatched)
-                }
-            })
-        })
+        callback(null, user.id)
     })
-}
+} 

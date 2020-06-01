@@ -2,9 +2,9 @@ require('../utils/polyfills/string')
 const { Email } = require('../utils')
 require('../utils/polyfills/function')
 require('../utils/polyfills/json')
-const { users: { find, create } } = require('../data')
+const { users: { find, update } } = require('../data')
 
-module.exports = (name, surname, email, password, callback) => {
+module.exports = (userId, name, surname, email, password, callback) => {
     String.validate.notVoid(name)
     String.validate.notVoid(surname)
     String.validate.notVoid(email)
@@ -12,16 +12,13 @@ module.exports = (name, surname, email, password, callback) => {
     String.validate.notVoid(password)
     Function.validate(callback)
 
-    find({ email }, (error, [user]) => {
+    find({ id: userId }, (error) => {
         if (error) return callback(error)
-
-        if (user) return callback(new Error(`user with e-mail ${email} already exists`))
 
         const newUser = { name, surname, email, password }
 
-        create(newUser, error => {
+        update(userId, newUser, error => {
             if (error) return callback(error)
-
             callback(null)
         })
     })

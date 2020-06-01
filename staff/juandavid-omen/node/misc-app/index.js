@@ -1,91 +1,122 @@
 const express = require('express')
-const { App, Register, Login, Home, Landing } = require('./components')
 const { register, authenticateUser, retrieveUser } = require('./logic')
-const listContacts = require('./logic/list-contacts')
-const searchContacts = require('./logic/search-contacts')
-const addContact = require('./logic/add-contact')
-const ListContacts = require('./components/ListContacts')
-const SearchContacts = require('./components/SearchContacts')
-const AddContact = require('./components/AddContact')
-const Feedback = require('./components/Feedback')
-const objetize = require('./helper/objetize')
-
 const bodyParser = require('body-parser')
+const session = require('express-session')
+const FileStore = require('session-file-store')(session)
+const path = require('path')
+
 const app = express()
+
+const parseBody = bodyParser.urlencoded({ extended: false })
+
+const cookieSession = session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {},
+    store: new FileStore({
+        path: path.join(__dirname, 'data', 'sessions')
+    })
+})
 
 app.use(express.static('public'))
 
+app.get('/', cookieSession, (req, res) => {
+    debugger
+    const { session: { cookiesAccepted, userId } } = req
 
-app.use(bodyParser.urlencoded({
-    extended: false
-}))
+    if (userId) return res.redirect('/home')
 
-app.get('/contacts', (req, res) => {
-    listContacts((error, contacts) => {
-        if (error) throw error
-        res.send(App(ListContacts(contacts)))
+    res.render('Landing', { cookiesAccepted })
+})
+
+app.get('/register', cookieSession, (req, res) => {
+    const { session: { cookiesAccepted, userId } } = req
+
+    if (userId) return res.redirect('/home')
+
+    res.render('Register', { cookiesAccepted })
+})
+
+app.post('/register', parseBody, (req, res) => {
+    const { body: { name, surname, email, password } } = req
+
+    register(name, surname, email, password, (error, id) => {
+        if (error) throw error 
+
+        res.redirect('/login')
     })
 })
 
-app.get('/landing', (req, res) => {
-    res.send(App(Landing()))
+app.get('/login', cookieSession, (req, res) => {
+    const { session: { cookiesAccepted, userId } } = req
 
+    if (userId) return res.redirect('/home')
+
+    res.render('Login', { cookiesAccepted })
 })
 
-app.get('/add-contact', (req, res) => {
-    res.send(App(AddContact()))
-})
+app.post('/login', parseBody, cookieSession, (req, res) => {
+    const { body: { email, password } } = req
 
-app.post('/add-contact', (req, res) => {
-    req.on('data', data => {
+    authenticateUser(email, password, (error, userId) => {
+        if (error) throw error 
 
-        let obj = objetize(data)
+        const { session } = req
 
-        addContact(obj, (error, id) => {
-            const {
-                name
-            } = obj
+        session.userId = userId
 
-            if (error) {
-                res.send(App(Feedback("Fail:(", 'error')))
+        session.save(error => {
+            if (error) throw error
 
-            } else {
-                res.send(App(Feedback(`Contact ${name} created!`)))
-            }
+            res.redirect('/home')
         })
-
     })
 })
 
-app.get('/register', (req, res) => res.send(App(Register())))
+app.get('/home', cookieSession, (req, res) => {
+    const { session: { cookiesAccepted, userId } } = req
 
-app.post('/register', (req, res) => {
-    const { body } = req
+    if (!userId) return res.redirect('/login')
 
-    register(body, (error, userMatched) => {
-        if(userMatched) res.send(App(Feedback(`This email already exists!`)))
+    retrieveUser(userId, (error, user) => {
+        if (error) throw error
 
-        if (error) {
-            res.send(App(Feedback("Fail:(", 'error')))
+        const { name } = user
 
-        } else {
-            res.send(App(Login))
-        }
+        res.render('Home', { cookiesAccepted, name })
     })
 })
 
-app.get('/login', (req, res) => {
-    res.send(App(Login()))
-    
-})
+app.post('/logout', cookieSession, (req, res) => {
+    const { session } = req
 
-app.post('/login', (req, res) => {
-    const {body} = req
+    session.destroy(error => {
+        if (error) throw error
 
-    authenticateUser(body, (error, emailFound)=> {
-        if(error) throw error
-
-        !emailFound? res.send(App(Feedback("There was an error loging in"))) : res.send(App(Home()))
+        res.redirect('/login')
     })
 })
-app.listen(8080)
+
+app.post('/accept-cookies', cookieSession, (req, res) => {
+    const { session } = req
+
+    session.cookiesAccepted = true
+
+    session.save(error => {
+        if (error) throw error 
+
+        res.redirect(req.header('referer'))
+    })
+
+})
+
+app.get('*', cookieSession, (req, res) => {
+    const { session: { cookiesAccepted, userId } } = req
+
+    if (userId) return res.redirect('/home')
+
+    res.render('NotFound404', { cookiesAccepted })
+})
+
+app.listen(8080, () => console.log('server running'))

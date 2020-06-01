@@ -5,11 +5,28 @@ const Email = require('../utils/email')
 const uid = require('../utils/uid')
 require('../utils/polyfills/json')
 
-module.exports = (contact, callback) => {
+module.exports = (userId, contact, callback) => {
     if (typeof contact !== 'object') throw new TypeError(`${contact} is not an object`)
 
-    validations(contact)
+    const { name, surname, email, phone, birthdate, country } = contact
 
+    if (name) String.validate.notVoid(name)
+
+    if (surname) String.validate.notVoid(surname)
+
+    if (email) {
+        String.validate.notVoid(email)
+        Email.validate(email)
+    }
+
+    if (phone) String.validate.notVoid(phone)
+
+    if (birthdate) String.validate.notVoid(birthdate)
+
+    if (country) String.validate.notVoid(country)
+
+    contact.user = userId
+    
     const id = uid()
 
     const file = `${id}.json`
@@ -19,24 +36,4 @@ module.exports = (contact, callback) => {
 
         callback(null, id)
     })
-}
-
-function validations(contact) {
-    const { name, surname, email, phone, birthdate, country } = contact
-    if (name)
-        String.validate.notVoid(name)
-    if (surname)
-        String.validate.notVoid(surname)
-    if (email) {
-        String.validate.notVoid(email)
-        Email.validate(email)
-    }
-    if (phone)
-        String.validate.notVoid(phone)
-    if (birthdate) {
-        String.validate.notVoid(birthdate)
-        //Date.validate(birthdate) // TODO create this polyfill
-    }
-    if (country)
-        String.validate.notVoid(country)
 }
