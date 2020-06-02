@@ -1,7 +1,5 @@
-require('../../misc-commons/polyfills/string')
-const { Email } = require('../../misc-commons/utils')
-require('../../misc-commons/polyfills/json')
-const { DuplicityError } = require('../../misc-commons/errors')
+require('misc-commons/polyfills/string')
+const { utils : {Email}, errors : {DuplicityError }} = require('misc-commons')
 const { mongo } = require('../data')
 
 module.exports = (name, surname, email, password) => {

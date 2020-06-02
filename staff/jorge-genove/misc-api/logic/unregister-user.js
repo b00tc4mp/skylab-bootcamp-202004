@@ -1,6 +1,5 @@
-require("../../misc-commons/polyfills/string")
-const Email = require("../../misc-commons/utils/email")
-const { UnexistenceError } = require('../../misc-commons/errors')
+require('misc-commons/polyfills/string')
+const { errors : { UnexistenceError }, utils : {Email} } = require('misc-commons')
 const {mongo} =require('../data')
 const {ObjectId} = mongo
 

@@ -1,6 +1,6 @@
-require('../../misc-commons/polyfills/string')
-require('../../misc-commons/polyfills/json')
-require('../../misc-commons/polyfills/number')
+require('misc-commons/polyfills/string')
+require('misc-commons/polyfills/json')
+require('misc-commons/polyfills/number')
 const { mongo } = require('../data')
 
 module.exports = query => {

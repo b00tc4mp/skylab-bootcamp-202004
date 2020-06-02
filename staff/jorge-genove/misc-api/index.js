@@ -7,9 +7,10 @@ const express = require('express')
 const { registerUser, authenticateUser, retrieveUser, unregisterUser, createProduct,addToCart,searchProduct } = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
-const { jwtPromised } = require('../misc-commons/utils')
+const { utils : {jwtPromised }} = require('misc-commons')
 const { jwtVerifierExtractor } = require('./middlewares')
 const { handleError } = require('./helpers')
+const {mongo} = require('./data')
 
 mongo.connect(MONGODB_URL)
     

@@ -5,7 +5,6 @@ const { env : { TEST_MONGODB_URL: MONGODB_URL} }  = process
 const authenticateUser = require('./authenticate-user')
 const { random } = Math
 const { expect } = require('chai')
-require('../utils/polyfills/json')
 const { mongo } =require('../data')
 
 describe('logic - authenticate user', () => {

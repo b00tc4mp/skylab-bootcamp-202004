@@ -1,6 +1,6 @@
 const { mongo } = require("../data");
 const { ObjectId } = mongo;
-require("../utils/polyfills/string");
+require('misc-commons/polyfills/string');
 
 module.exports = (userId) => {
   
