@@ -5,8 +5,9 @@ const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 const registerUser = require('./register-user')
 const { random } = Math
 const { expect } = require('chai')
-require('../utils/polyfills/json')
+require('misc-commons/polyfills/json')
 const { mongo } = require('misc-data')
+const bcrypt = require('bcryptjs')
 
 describe('logic - register user', () => {
     let users
@@ -40,8 +41,10 @@ describe('logic - register user', () => {
                 expect(user.name).to.equal(name)
                 expect(user.surname).to.equal(surname)
                 expect(user.email).to.equal(email)
-                expect(user.password).to.equal(password)
+                
+                return bcrypt.compare(password, user.password)
             })
+            .then(match => expect(match).to.be.true)
     )
 
     describe('when user already exists', () => {
