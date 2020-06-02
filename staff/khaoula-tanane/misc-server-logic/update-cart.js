@@ -3,7 +3,7 @@ require('misc-commons/polyfills/json')
 require('misc-commons/polyfills/number')
 
 // const { error: {UnexistenceError} } = require('misc-commons')
-const { mongo } = require('../data')
+const { mongo } = require('misc-data')
 const { ObjectId } = mongo
 
 module.exports = (userId, productId, quantity) => {

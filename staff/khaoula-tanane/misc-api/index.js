@@ -1,16 +1,16 @@
 require('dotenv').config()
 
-const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET, MONGODB_URL } } = process
+const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, JWT_SECRET, MONGODB_URL } } = process
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, updateCart } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser, updateCart } = require('misc-server-logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
 const { utils : {jwtPromised} } = require('misc-commons')
 const { jwtVerifierExtractor } = require('./middlewares')
-const { mongo } = require('./data')
+const { mongo } = require('misc-data')
 
 mongo.connect(MONGODB_URL)
     .then(connection => {
@@ -20,7 +20,7 @@ mongo.connect(MONGODB_URL)
 
         const parseBody = bodyParser.json()
 
-        const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
+        const verifyExtractJwt = jwtVerifierExtractor(JWT_SECRET, handleError)
 
         // users
 
@@ -41,7 +41,7 @@ mongo.connect(MONGODB_URL)
 
             try {
                 authenticateUser(email, password)
-                    .then(userId => jwtPromised.sign({ sub: userId }, SECRET, { expiresIn: '1d' }))
+                    .then(userId => jwtPromised.sign({ sub: userId }, JWT_SECRET, { expiresIn: '1d' }))
                     .then(token => res.send({ token }))
                     .catch(error => handleError(error, res))
             } catch (error) {
@@ -52,7 +52,7 @@ mongo.connect(MONGODB_URL)
         app.get('/users/:userId?', verifyExtractJwt, (req, res) => {
             try {
                 const { payload: { sub: userId }, params: { userId: otherUserId } } = req
-
+                debugger
                 retrieveUser(otherUserId || userId)
                     .then(user => res.send(user))
                     .catch(error => handleError(error, res))
@@ -60,7 +60,6 @@ mongo.connect(MONGODB_URL)
                 handleError(error, res)
             }
         })
-
 
         app.post('/updateCart/', parseBody,(req, res) => {
             try {
@@ -104,7 +103,5 @@ mongo.connect(MONGODB_URL)
         })
     })
     .catch(error => {
-        debugger // WTF! why is not reaching this point when mongodb server is off!? 🤬
-
         console.error('could not connect to mongo', error)
     })

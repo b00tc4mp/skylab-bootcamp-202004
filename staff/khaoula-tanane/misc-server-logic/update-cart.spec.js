@@ -7,7 +7,7 @@ const { expect } = require('chai')
 require('misc-commons/polyfills/json')
 require('misc-commons/polyfills/math')
 const { random, randomIntegerBetween } = Math
-const { mongo } = require('../data')
+const { mongo } = require('misc-data')
 const { ObjectId } = mongo
 const { errors: {UnexistenceError, ValueError} } = require('misc-commons')
 

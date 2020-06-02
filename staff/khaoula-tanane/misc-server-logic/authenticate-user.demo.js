@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const { env: { MONGODB_URL } } = process
-const { mongo } = require('../data')
+const { mongo } = require('misc-data')
 
 const authenticateUser = require('./authenticate-user')
 

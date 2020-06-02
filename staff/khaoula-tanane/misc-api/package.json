@@ -19,6 +19,8 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "misc-commons": "file:../misc-commons",
+    "misc-data": "file:../misc-data",
+    "misc-server-logic": "file:../misc-server-logic",
     "mongodb": "^3.5.8"
   },
   "devDependencies": {
