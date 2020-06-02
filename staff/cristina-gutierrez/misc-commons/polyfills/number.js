@@ -1,4 +1,4 @@
-const { ValueError } = require('../../errors')
+const { ValueError } = require('../errors')
 
 Number.isNumber = function (number) {
     return typeof number !== 'boolean' && !isNaN(number)

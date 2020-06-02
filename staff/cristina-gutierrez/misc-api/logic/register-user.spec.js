@@ -5,7 +5,7 @@ const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 const registerUser = require('./register-user')
 const { random } = Math
 const { expect } = require('chai')
-require('../utils/polyfills/json')
+require('misc-commons/polyfills/json')
 const { mongo } = require('../data')
 
 describe('logic - register user', () => {

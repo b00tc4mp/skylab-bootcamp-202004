@@ -8,7 +8,7 @@ const { registerUser, authenticateUser, retrieveUser } = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
-const { jwtPromised } = require('./utils')
+const { jwtPromised } = require('misc-commons/utils')
 const { jwtVerifierExtractor } = require('./middlewares')
 const { mongo } = require('./data')
 
