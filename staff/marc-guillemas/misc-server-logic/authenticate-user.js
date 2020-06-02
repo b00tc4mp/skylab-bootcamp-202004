@@ -1,7 +1,7 @@
 require('misc-commons/polyfills/string')
 require('misc-commons/polyfills/function')
 const { errors: {UnexistenceError, CredentialsError}, utils: {Email} } = require('misc-commons')
-const { mongo } = require('../data')
+const { mongo } = require('misc-data')
 
 module.exports = (email, password) => {
     String.validate.notVoid(email)

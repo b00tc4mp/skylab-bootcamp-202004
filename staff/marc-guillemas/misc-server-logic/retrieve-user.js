@@ -1,10 +1,10 @@
 require('misc-commons/polyfills/string')
-const { mongo } = require('../data')
+const { mongo } = require('misc-data')
 const { ObjectId } = mongo
 
 module.exports = userId => {
     String.validate.notVoid(userId)
-
+    debugger
     return mongo.connect()
         .then(connection => {
             const users = connection.db().collection('users')

@@ -1,4 +1,4 @@
-const { mongo } = require("../data");
+const { mongo } = require("misc-data");
 const { ObjectId } = mongo;
 require('misc-commons/polyfills/string')
 const {  errors: { UnexistenceError }} = require('misc-commons')

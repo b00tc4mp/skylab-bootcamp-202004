@@ -4,11 +4,11 @@ const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, JWT_SECRET, MONGODB_URL } }
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, searchUsers, unregisterUser, updateUser, updateCart, placeOrder, addProduct, searchProducts } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser, searchUsers, unregisterUser, updateUser, updateCart, placeOrder, addProduct, searchProducts } = require('misc-server-logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
-const { mongo } = require('./data')
+const { mongo } = require('misc-data')
 const { jwtVerifierExtractor } = require('./middlewares')
 const { utils: {jwtPromised} } = require('misc-commons')
 
@@ -23,7 +23,7 @@ mongo.connect(MONGODB_URL)
         const verifyToken = jwtVerifierExtractor(JWT_SECRET, handleError)
 
 
-        app.post('/users', parseBody, (req, res) => {debugger
+        app.post('/users', parseBody, (req, res) => {
             const { body: { name, surname, email, password } } = req
 
             try {
@@ -41,6 +41,7 @@ mongo.connect(MONGODB_URL)
             const { body: { email, password } } = req
 
             try {
+                debugger
                 authenticateUser(email, password)
                     .then(userId => jwtPromised.sign({ sub: userId }, JWT_SECRET, { expiresIn: '1d' }))
                     .then(token => res.send({ token }))
@@ -51,12 +52,10 @@ mongo.connect(MONGODB_URL)
             }
         })
 
-        app.get('/users/id=:userId?', verifyToken, (req, res) => {
-
+        app.get('/users/:userId?', verifyToken, (req, res) => {
             try {
 
                 const { payload: { sub: userId }, params: { userId: otherUserId } } = req
-
                 retrieveUser(otherUserId || userId)
                     .then(user => res.send(user))
                     .catch(error => handleError(error, res))
