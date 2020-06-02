@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node .",
     "watch": "npx nodemon --ignore ./data .",
-    "debug": "node debug .",
+    "debug": "node --inspect=7000 .",
     "test": "npx mocha logic/*.spec.js",
     "test:debug": "npx mocha inspect logic/*.spec.js"
   },
@@ -19,6 +19,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "misc-commons": "file:../misc-commons",
     "mongodb": "^3.5.8",
     "promise": "^8.1.0"
   },

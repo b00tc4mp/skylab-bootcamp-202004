@@ -1,6 +1,6 @@
-require("../utils/polyfills/string")
-require("../utils/polyfills/function")
-const Email = require("../utils/email")
+require("misc-commons/polyfills/string")
+require("misc-commons/polyfills/function")
+const {utils: { Email } } = require('misc-commons')
 const fs = require("fs")
 const path = require("path")
 

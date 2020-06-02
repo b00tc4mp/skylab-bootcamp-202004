@@ -8,5 +8,5 @@ module.exports = {
     deleteCart: require('./delete-cart'),
     updateCart: require('./update-cart'),
     placeOrder: require('./place-order'),
-    searchProduct: require('./search-products')
+    searchProducts: require('./search-products')
 }
