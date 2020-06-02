@@ -1,9 +1,8 @@
-require("../utils/polyfills/string")
+/*require('misc-commons/polyfills/string')
 const { users: { find } } = require("../data")
-const Email = require("../utils/email")
+const { utils: { Email }, errors: { UnexistenceError }} = require('misc-commons')
 const fs = require("fs")
 const path = require("path")
-const { UnexistenceError } = require('../errors')
 
 module.exports = (email, password, id) => {
     Email.validate(email)
@@ -27,4 +26,4 @@ module.exports = (email, password, id) => {
         }
     })
 })
-}
+}*/

@@ -27,7 +27,7 @@ describe('logic - retrieve cart', () => {
                 pPrice = `"${random()}"`
                 pColor = `color${random()}`
                 pDescripition = `Description-${random()}`
-debugger
+
                 return users.insertOne({ name, surname, email, password })
                     .then(result => {
                         userId = result.insertedId.toString()

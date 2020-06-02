@@ -4,13 +4,13 @@ const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, JWT_SECRET, MONGODB_URL } }
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, searchUsers, unregisterUser, updateUser, addToCart, retrieveCart, addProduct, searchProducts } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser, searchUsers, unregisterUser, updateUser, retrieveCart, addProduct, searchProducts } = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
 const { mongo } = require('./data')
 const { jwtVerifierExtractor } = require('./middlewares')
-const { jwtPromised } = require('./utils')
+const { utils: { jwtPromised } } = require('misc-commons')
 
 const app = express()
 const parseBody = bodyParser.json()

@@ -1,7 +1,5 @@
-require('../utils/polyfills/string')
-const { Email } = require('../utils')
-require('../utils/polyfills/json')
-const { DuplicityError } = require('../errors')
+require('misc-commons/polyfills/string')
+const { utils: { Email }, errors: { DuplicityError } } = require('misc-commons/')
 const { mongo } = require('../data')
 
 

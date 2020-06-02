@@ -1,7 +1,6 @@
 const authenticateUser = require('./authenticate-user')
 const { random } = Math
 const { expect } = require('chai')
-require('../utils/polyfills/json')
 const { users: { deleteMany, create } } = require('../data')
 
 describe('logic - authenticate user', () => {

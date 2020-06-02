@@ -1,5 +1,5 @@
-require('../utils/polyfills/string')
-const { UnexistenceError } = require('../errors')
+require('misc-commons/polyfills/string')
+const { errors: { UnexistenceError } } = require('misc-commons')
 const { mongo } = require('../data')
 const { ObjectId } = mongo
 
