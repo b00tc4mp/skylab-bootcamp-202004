@@ -1,0 +1,22 @@
+{
+  "name": "misc-client-logic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "misc-commons": "file:../misc-commons",
+    "xhr2": "^0.2.0"
+  },
+  "devDependencies": {
+    "mocha": "^7.2.0"
+  },
+  "scripts": {
+    "test": "mocha",
+    "debug": "node --inspect=7000 ."
+
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
