@@ -15,6 +15,6 @@ module.exports = function (error, res) {
             status = 401
             break
     }
-
+    console.log(error)
     res.status(status).json({ error: error.message })
 }
