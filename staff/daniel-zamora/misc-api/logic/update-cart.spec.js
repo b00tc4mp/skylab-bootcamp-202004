@@ -47,7 +47,7 @@ describe.only('logic - update cart', () => {
 
         it('should succeed on existing product and user', () => 
             updateCart(userId, productId, quantity) 
-                .then(result=>{ debugger
+                .then(result=>{ 
                     expect(result).to.be.undefined
                     return users.findOne({_id: mongo.ObjectId(userId)})
                 })

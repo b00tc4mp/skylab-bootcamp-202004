@@ -1,41 +1,36 @@
 require('../utils/polyfills/string')
-const {users: {find, update}} = require('../data')
+const { mongo } = require('../data')
+const { ObjectId } = mongo
 const { UnexistenceError, CredentialsError, ForbiddenError } = require('../errors')
 
 module.exports = (userId, data) => {
     String.validate.notVoid(userId)
-
     if(typeof data !== 'object') throw new TypeError (`${data} is not a JSON`) 
     if(data.password && !data.oldPassword) throw new CredentialsError("oldPassword is required")
     if(data.email) throw new ForbiddenError ("Email cannot be updated")
+    
+    return mongo.connect()
+    .then(connection => {
+        const users = connection.db().collection('users')
 
-    else if (data.password && data.oldPassword){
-        return new Promise((resolve, reject)=>{
-            find({ id: userId }, (error, users) => { debugger
-                if (error) return reject(error)
+        return users.findOne({_id: ObjectId(userId)})
+            .then(user => {
+                if(!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
                 
-                const [user] = users
-                 
-                if (!user) return reject(new UnexistenceError(`user with id ${userId} does not exist`))
-                if (user.password !== data.oldPassword) return reject(new CredentialsError('Wrong password'))
-            
-                delete data.oldPassword
-                update(userId, data, error=>{
-                    if (error) return reject(error)
+                if(data.password && data.oldPassword){
+                    if(data.oldPassword !== user.password) throw new CredentialsError('Wrong old password')
+                    delete data.password
+                    delete data.oldPassword
+                    return users.updateOne({_id: ObjectId(userId)}, { $set:  data })
 
-                    delete user.password
-                    resolve(user)     
-                })
+                } else { return users.updateOne({_id: ObjectId(userId)}, { $set: data })}
             })
-        })
-    }
-    else {
-        return new Promise((resolve, reject)=>{
-            update(userId, data, (error, user)=>{
-                if (error) return reject(error)
-                
-                resolve(user)            
-            })
-        })
-    }
+    .then(({result: { nModied }})=> {
+        if(nModied === 0) return "No changes"
+        return 'User updated'
+    })        
+    })
 }
+
+
+

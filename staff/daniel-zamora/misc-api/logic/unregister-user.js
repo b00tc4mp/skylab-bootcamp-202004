@@ -9,7 +9,7 @@ module.exports = ( email, password, userId) => {
     Email.validate(email)
 
     return mongo.connect()
-        .then(connection => { debugger
+        .then(connection => { 
             const users = connection.db().collection('users')
             
             return users.findOne({ email})

@@ -85,7 +85,7 @@ mongo.connect(MONGODB_URL)
         app.delete('/users/delete', parseBody, verifyExtractJwt, (req, res) => {
 
             try {
-                const { params: { query }, payload: {sub: id} } = req
+                const { payload: {sub: id} } = req
 
                 const { body: { email, password } } = req
 
@@ -98,15 +98,12 @@ mongo.connect(MONGODB_URL)
             }
         })
 
-        app.patch('/users/update', parseBody, (req, res) => {
+        app.patch('/users/update', parseBody, verifyExtractJwt, (req, res) => { debugger
             try {
-                const [, token] = req.header('authorization').split(' ')
-
-                const { sub: userId } = jwt.verify(token, SECRET)
-                const { body } = req
-
-                updateUser(userId, body) 
-                    .then(()=> res.status(204).send())
+                const { payload: {sub: id}, body} = req
+                
+                updateUser(id, body) 
+                    .then((message)=> res.status(204).send({message: message}))
                     .catch(error => handleError(error, res))
 
             } catch (error) {
@@ -116,7 +113,7 @@ mongo.connect(MONGODB_URL)
 
         app.patch('/users/cart', parseBody, verifyExtractJwt, (req, res) => {
             try {
-                const { params: { query }, payload: {sub: id} } = req
+                const { payload: {sub: id} } = req
 
                 const { body: { productId, quantity } } = req
 
