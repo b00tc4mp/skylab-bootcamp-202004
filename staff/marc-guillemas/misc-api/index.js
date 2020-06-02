@@ -10,7 +10,7 @@ const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
 const { mongo } = require('./data')
 const { jwtVerifierExtractor } = require('./middlewares')
-const { jwtPromised } = require('./utils')
+const { utils: {jwtPromised} } = require('misc-commons')
 
 const app = express()
 const parseBody = bodyParser.json()
@@ -23,7 +23,7 @@ mongo.connect(MONGODB_URL)
         const verifyToken = jwtVerifierExtractor(JWT_SECRET, handleError)
 
 
-        app.post('/users', parseBody, (req, res) => {
+        app.post('/users', parseBody, (req, res) => {debugger
             const { body: { name, surname, email, password } } = req
 
             try {

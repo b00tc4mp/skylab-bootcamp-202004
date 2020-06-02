@@ -7,11 +7,12 @@ const {
 const placeOrder = require("./place-order");
 // const { random } = Math;
 const { expect } = require("chai");
-require("../utils/polyfills/json");
-require('../utils/polyfills/math')
+require("misc-commons/polyfills/json");
+require("misc-commons/polyfills/math")
 const { random } = Math
 const { mongo } = require("../data");
 const { ObjectId } = mongo;
+
 
 describe("logic - place order", () => {
   debugger;
@@ -73,5 +74,19 @@ describe("logic - place order", () => {
     
   });
 
+  
+  describe('unhappy path', () => {
+    it('should fail on non existing cart', () => {
+    users.updateOne({ _id: ObjectId(userId) }, { $unset: { cart } })
+      .then(() => placeOrder(userId))
+      .then(() => { throw new Error('should not reach this point') })
+      .catch(error => 
+        expect(error).to.be.instanceof(Error),
+        expect(error.message).to.equal('Dont have products on your cart yet')
+      )
+    });
+  })
+    
+
   after(() => users.deleteMany({}).then(mongo.disconnect));
-});
+})

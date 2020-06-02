@@ -1,6 +1,7 @@
 const { mongo } = require("../data");
 const { ObjectId } = mongo;
-require("../utils/polyfills/string");
+require('misc-commons/polyfills/string')
+const {  errors: { UnexistenceError }} = require('misc-commons')
 
 module.exports = (userId) => {
   
@@ -15,7 +16,7 @@ module.exports = (userId) => {
     .then(user => {
         const {cart , orders = []} = user 
         
-        if(!cart) throw Error
+        if(!cart) throw UnexistenceError('Dont have products on your cart yet')
 
         cart.forEach(product => {
             orders.push(product)
