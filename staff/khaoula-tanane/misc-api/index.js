@@ -74,6 +74,18 @@ mongo.connect(MONGODB_URL)
             }
         })
 
+        app.post('/orders', verifyExtractJwt, (req, res) => {
+            try {
+                const {payload: {sub: userId} } = req
+                placeOrder(userId)
+                    .then(()=> res.status(201).send("Your order has been placed"))
+                    .catch(error => handleError(error, res))                    
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+        
+
         app.get('*', (req, res) => {
             res.status(404).send('Not Found :(')
         })
