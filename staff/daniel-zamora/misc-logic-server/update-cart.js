@@ -1,4 +1,4 @@
-require('mis../c-comdata/mons/polyfills/string')
+require('misc-commons/polyfills/string')
 require('misc-commons/polyfills/number')
 const { errors: {UnexistenceError}, utils: {Email}} = require('misc-commons')
 const { mongo } = require('misc-data')
