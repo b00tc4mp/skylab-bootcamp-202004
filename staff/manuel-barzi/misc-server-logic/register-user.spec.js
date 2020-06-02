@@ -26,7 +26,6 @@ describe('logic - register user', () => {
                 surname = `surname-${random()}`
                 email = `e-${random()}@mail.com`
                 password = `password-${random()}`
-
             })
     )
 
