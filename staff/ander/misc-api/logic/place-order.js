@@ -1,7 +1,5 @@
-require('../utils/polyfills/string')
-
-const {UnexistenceError, CredentialsError} = require('../errors');
-
+require('misc-commons/utils/polyfills/string')
+const {errors: {UnexistenceError, CredentialsError}} = require('misc-commons');
 const { mongo } = require('../data')
 
 module.exports = (userId, cartId)=>{
@@ -11,43 +9,47 @@ module.exports = (userId, cartId)=>{
     return mongo.connect()
         .then(connection => {
             const users = connection.db().collection('users')
-
+            const products = connection.db().collection('products')
             return users.findOne({_id: mongo.ObjectId(userId) })
                 .then(user => {
                     if (!user) throw new UnexistenceError(`this ${userId} does not exist`)
+                
+                    if (!user.cart.length) throw new UnexistenceError(`cart is empty`)
 
-                    const carts = connection.db().collection('carts')
+                    let date = new Date()
+                    cart.date = date.toISOString()
 
-                    return carts.findOne({user: userId})
-                        .then(cart => {
-                            debugger
-                            if (!cart) throw new UnexistenceError(`cart does not exist`)
+                    // {userid, products: [{name: , price: , quantity: }, {}], totalprice: x}
 
-                            if (cart._id.toString() !== cartId) throw new CredentialsError(`cart with this cart id does not exist`)
+                    const order = {userId, products: [], totalprice: 0}
+                    let products
+                    Promise.all(
+                        user.cart.map(({product})=>{
+                            return products.findOne({_id: product})
+                        })
+                    ).then(_products =>{console.log(products); return products = _products})
 
-                            delete cart.user
-                            delete cart._id
-
-                            let date = new Date()
-                            cart.date = date.toISOString()
-
-                            const orders = connection.db().collection('orders')
-                            // add to histoy
-                            return orders.findOne({user: userId})
-                                .then(order => {
-                                    if (!order) {
-                                        return orders.insertOne({'history': [cart], 'user' : userId})
-                                    }
-                                    else {
-                                        return orders.updateOne({user: userId},{
-                                            $push : {'history': { $each: [cart] } }
-                                        })
-                                    }
+                    // products.forEach(({name, })=>{
+                    //     const container= {id, quantity}
+                    // })
+                    
+                    const orders = connection.db().collection('orders')
+                    // add to histoy
+                    return orders.findOne({user: userId})
+                        .then(order => {
+                            if (!order) {
+                                return orders.insertOne({'history': [products], 'user' : userId})
+                            }
+                            else {
+                                return orders.updateOne({user: userId},{
+                                    $push : {'history': { $each: [products] } }
                                 })
+                            }
+                        })
 
-                                .then(()=>carts.remove({'user': userId}))
+                        .then(()=>carts.remove({'user': userId}))
                               
-                        })   
+                         
                            
                 })          
     })

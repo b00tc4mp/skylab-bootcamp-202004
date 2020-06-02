@@ -1,4 +1,4 @@
-require('../utils/polyfills/string')
+require('misc-commons/polyfills/string')
 const { mongo } = require('../data')
 const { ObjectId } = mongo
 

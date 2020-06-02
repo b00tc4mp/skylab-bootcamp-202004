@@ -1,5 +1,5 @@
-require('../utils/polyfills/string')
-require('../utils/polyfills/number')
+require('misc-commons/polyfills/string')
+require('misc-commons/polyfills/number')
 const { mongo } = require('../data')
 
 module.exports = (name, description, price, url ) => {

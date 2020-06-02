@@ -8,7 +8,7 @@ const { registerUser, authenticateUser, retrieveUser ,createProducts,updateCart,
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
-const { jwtPromised } = require('./utils')
+const { utils: {jwtPromised} } = require('misc-commons')
 const { jwtVerifierExtractor } = require('./middlewares')
 const { mongo } = require('./data')
 
@@ -63,6 +63,17 @@ mongo.connect(MONGODB_URL)
 
         app.post('/add-products',  parseBody, (req, res) => {
             const { body :{ name, description, price, url} } =req
+
+            try {
+                createProducts(name, description, price, url)
+                    .then(() => res.status(201).send())
+                    .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        app.post('/add-products',  parseBody, (req, res) => {
 
             try {
                 createProducts(name, description, price, url)
