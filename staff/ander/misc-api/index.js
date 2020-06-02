@@ -1,10 +1,10 @@
 require('dotenv').config()
 
-const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET, MONGODB_URL } } = process
+const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, JWT_SECRET: SECRET, MONGODB_URL } } = process
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, addContact } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser ,createProducts,updateCart,searchProducts} = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
@@ -60,11 +60,12 @@ mongo.connect(MONGODB_URL)
                 handleError(error, res)
             }
         })
-        app.post('/products',  parseBody, (req, res) => {
+
+        app.post('/add-products',  parseBody, (req, res) => {
             const { body :{ name, description, price, url} } =req
 
             try {
-                createProduct(name, description, price, url)
+                createProducts(name, description, price, url)
                     .then(() => res.status(201).send())
                     .catch(error => handleError(error, res))
             } catch (error) {
@@ -72,31 +73,30 @@ mongo.connect(MONGODB_URL)
             }
         })
 
-        // contacts
+        app.patch('/update-cart', parseBody, verifyExtractJwt, (req, res) => {
+            try{
+            const {body: {productId, quantity}, payload:{sub:userId}} = req
 
-        app.post('/contacts', verifyExtractJwt, parseBody, (req, res) => {
-            try {
-                const { payload: { sub: userId }, body: contact } = req
+            updateCart(userId,productId,quantity)
+                .then(()=>res.status(204).send())
+                .catch(error => handleError(error, res))
+            }catch(error){  
+                handleError(error, res)
+            }
+        })
+   
+        app.get('/search-products/:query?', (req, res) => {
+            try{
+                const { params: { query: query }} = req
 
-                new Promise((resolve, reject) => {
-                    addContact(userId, contact, (error, contactId) => {
-                        if (error) return reject(error)
-
-                        resolve(contactId)
-                    })
-                })
-                    .then(contactId => res.send({ contactId }))
+                searchProducts(query)
+                    .then(products => res.status(200).send(products))
                     .catch(error => handleError(error, res))
-            } catch (error) {
+            } catch(error){
                 handleError(error, res)
             }
         })
 
-        app.get('/contacts/:contactId', (req, res) => {
-            // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
-        })
-
-        // other
 
         app.get('*', (req, res) => {
             res.status(404).send('Not Found :(')
@@ -116,7 +116,12 @@ mongo.connect(MONGODB_URL)
         })
     })
     .catch(error => {
-        debugger // WTF! why is not reaching this point when mongodb server is off!? 🤬
+        debugger // WTF! why is not reaching this point when mongodb server is off!? 
 
         console.error('could not connect to mongo', error)
     })
+
+
+
+
+
