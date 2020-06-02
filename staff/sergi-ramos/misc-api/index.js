@@ -50,7 +50,7 @@ mongo.connect(MONGODB_URL)
             }
         })
 
-        app.get('/users/id=:userId?', verifyToken, (req, res) => {
+        app.get('/users/:userId?', verifyToken, (req, res) => {
             try {
 
                 const { payload: { sub: userId }, params: { userId: otherUserId } } = req
@@ -148,7 +148,7 @@ mongo.connect(MONGODB_URL)
 
         })
 
-        app.get('/product/q=:product?', verifyToken, (req,res) => {
+        app.get('/products/:product?', verifyToken, (req,res) => {
             const { params: { product: query } } = req
 debugger
             searchProducts(query)

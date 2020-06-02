@@ -7,7 +7,7 @@ const { random } = Math
 const { handleError } = require('../errors')
 
 
-describe.only('logic - add-to-cart', () => {
+describe('logic - add-to-cart', () => {
     let users, products, cart
 
     before(() => mongo.connect(MONGODB_URL).then(connection => {

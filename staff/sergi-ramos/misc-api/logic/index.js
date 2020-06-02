@@ -5,8 +5,8 @@ module.exports = {
     searchUsers: require('./search-users'),
     unregisterUser: require('./unregister-user'),
     updateUser: require('./update-user'),
-    addToCart: require('./add-to-cart'),
     retrieveCart: require('./retrieve-cart'),
     addProduct: require('./add-product'),
-    searchProducts: require('./search-product')
+    searchProducts: require('./search-product'),
+    placeOrder: require('./place-order')
 }
