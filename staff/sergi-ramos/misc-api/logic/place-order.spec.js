@@ -44,10 +44,10 @@ describe.only('logic - place-order', () => {
             })
             .then(([user, product]) => {
                 userId = user.insertedId.toString()
-                productId = productId = product.insertedId.toString()
-               
+                productId = product.insertedId.toString()
 
-                users.updateOne({ _id: ObjectId(userId) }, { $set: { cart: [{product: productId, quantity: 2 }]} })
+
+                users.updateOne({ _id: ObjectId(userId) }, { $set: { cart: [{ product: productId, quantity: 2 }] } })
             })
     })
 
@@ -56,12 +56,18 @@ describe.only('logic - place-order', () => {
         placeOrder(userId)
             .then(() => {
                 users.findOne({ _id: ObjectId(userId) })
-                    .then(({cart,order}) => {
+                    .then(({ cart, order }) => {
                         expect(cart.length).to.be.equal(0)
                         expect(order).to.exist
                     })
-
             })
     })
 
+
+
+    afterEach(() => {
+        return Promise.all(
+            [users.deleteMany(), products.deleteMany()])
+    })
+    after(() => mongo.disconnect())
 })
