@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { env: { MONGODB_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 const { mongo } = require('misc-data')
 const registerUser = require('./register-user')
 
