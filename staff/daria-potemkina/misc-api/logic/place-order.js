@@ -10,33 +10,35 @@ module.exports = userId => {
 
     return mongo.connect()
         .then(connection => {
-            const carts = connection.db().collection('carts')
-            const product = connection.db().collection('products')
+            const users = connection.db().collection('users')
+            const products = connection.db().collection('products')
             const orders = connection.db().collection('orders')
 
             let price = 0
-            let count = 0
 
-            return carts.findOne({ user: userId })
-                .then(cart => {
-                    if (!cart) throw new UnexistenceError(`cart is not exists`)
+            return users.findOne({ _id: ObjectId(userId) })
+                .then(user => {
+                    if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
-                    const { products, _id } = cart
+                    const { cart = [] } = user
 
-                    products.forEach(item => {
-                        return product.findOne({ _id: ObjectId(item) })
-                            .then(_product => {
-                                price += _product.price
-                                count++
-
-                                if (count === products.length) {
-                                    return orders.insertOne({ user: userId, products, price })
-                                    .then(() => {
-                                        return carts.deleteOne({_id})
-                                    })
-                                }
+                    if (cart.length === 0 ) throw new UnexistenceError(`cart is empty`)
+        
+                       const results = cart.map(({ product, quantity}) => {
+                            return products.findOne({ _id: ObjectId(product) })
+                                .then(_product => {
+                                    if(!_product) throw new UnexistenceError(`product with id ${product} does not exist`)
+                                    
+                                    price += _product.price*quantity
+                                    return price
+                                })
                             })
-                    })
+ 
+                    return Promise.all(results)
+                        .then(result => orders.insertOne({user: userId, price: result[result.length - 1], cart, date: new Date()}))
+                        .then(() => users.updateOne({_id: ObjectId(userId)}, { $set : { cart : [] } }))
                 })
+                
         })
+        .then(() => { })
 }

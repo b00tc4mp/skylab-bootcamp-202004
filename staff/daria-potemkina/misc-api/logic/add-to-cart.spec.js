@@ -43,7 +43,7 @@ describe('logic - addToCart', () => {
         })
 
         it('should add the first product to the cart', () => {
-            addToCart(userId, productId)
+            return addToCart(userId, productId)
                 .then(() => carts.find().toArray())
                 .then(carts => {
                     expect(carts).to.have.lengthOf(1)
@@ -73,7 +73,7 @@ describe('logic - addToCart', () => {
         })
 
         it('should add the product to the cart when one already exist', () => {
-            addToCart(userId, productId)
+            return addToCart(userId, productId)
                 .then(() => carts.find().toArray())
                 .then(results => {
                     expect(results).to.have.lengthOf(1)
@@ -92,7 +92,7 @@ describe('logic - addToCart', () => {
 
     it('shoud return an error when user does not exist', () => {
         userId = '123455678990'
-        addToCart(userId, productId)
+        return addToCart(userId, productId)
             .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
                 expect(error).to.be.an.instanceOf(Error)

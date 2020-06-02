@@ -9,15 +9,16 @@ module.exports = userId => {
 
     return mongo.connect()
         .then(connection => {
-            const carts = connection.db().collection('carts')
+            const users = connection.db().collection('users')
 
-            return carts.findOne({user: userId})
+            return users.findOne({_id: ObjectId(userId)})
         })
-        .then(cart => {
-            if(!cart) throw new UnexistenceError(`cart does not exist`)
+        .then(user => {
+            if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
-            delete cart._id
-            delete cart.user
+            const {cart = []} = user
+
+            if(cart.length === 0) throw new UnexistenceError(`cart does not exist`)
 
             return cart
         })

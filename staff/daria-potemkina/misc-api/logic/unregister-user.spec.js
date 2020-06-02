@@ -36,7 +36,7 @@ describe('logic - unregisterUser', () => {
         })
 
         it('should remove the registered user from database', () =>{
-            unregisterUser(userId)
+            return unregisterUser(userId)
             .then(() => users.find().toArray())
             .then(users => {
                 expect(users).to.have.lengthOf(0)
@@ -47,7 +47,7 @@ describe('logic - unregisterUser', () => {
     it('should fail when user does not exists', () => {
         userId = '123455678990'
 
-        unregisterUser(userId)
+        return unregisterUser(userId)
         .then(() => { throw new Error('should not reach this point') })
         .catch(error => {
             expect(error).to.be.exist

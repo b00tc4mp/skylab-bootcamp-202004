@@ -41,7 +41,7 @@ describe('logic-updateUser', () => {
 
             const newUser = { name: _name, surname: _surname, email, password }
 
-            updateUser(userId, newUser)
+            return updateUser(userId, newUser)
                 .then(() => users.find().toArray())
                 .then(results => {
                     expect(results).to.have.lengthOf(1)
@@ -57,7 +57,7 @@ describe('logic-updateUser', () => {
     })
 
     it('should fail when user does not exist', () => {
-        updateUser(userId, { name, surname, email, password })
+        return updateUser(userId, { name, surname, email, password })
             .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
                 expect(error).to.exist

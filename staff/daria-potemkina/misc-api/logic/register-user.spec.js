@@ -28,7 +28,7 @@ describe('logic - registerUser', () => {
     )
 
     it('should add a user to the database', () => {
-        registerUser(name, surname, email, password)
+        return registerUser(name, surname, email, password)
             .then(() => users.find().toArray())
             .then(users => {
                 expect(users).to.have.lengthOf(1)
@@ -51,7 +51,7 @@ describe('logic - registerUser', () => {
         })
 
         it('should return an error when the user already exists', () => {
-            registerUser(name, surname, email, password)
+            return registerUser(name, surname, email, password)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.exist

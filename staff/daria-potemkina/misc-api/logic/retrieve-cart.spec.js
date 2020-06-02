@@ -3,67 +3,87 @@ require('dotenv').config()
 const { env: { MONGODB_URL_TEST } } = process
 
 const retrieveCart = require('./retrieve-cart')
-const { random } = Math
+const { random, floor } = Math
 const { expect } = require('chai')
 const { mongo } = require('../data')
+const { UnexistenceError } = require('../errors')
+const { ObjectId } = mongo
 
 describe('logic - retrieveCart', () => {
-    let carts, users
+    let products, users
 
     before(() =>
         mongo.connect(MONGODB_URL_TEST)
             .then(connection => {
-                carts = connection.db().collection('carts')
                 users = connection.db().collection('users')
+                products = connection.db().collection('products')
             })
     )
 
-    let name, surname, email, password, userId, products
+    let user, product, _quantity
 
     beforeEach(() => {
-        return carts.deleteMany()
-            .then(() => users.deleteMany())
+        return Promise.all([users.deleteMany(), products.deleteMany()])
             .then(() => {
-                name = `name-${random()}`
-                surname = `surname-${random()}`
-                email = `e-${random()}@mail.com`
-                password = `password-${random()}`
+                user = {
+                    name: `name-${random()}`,
+                    surname: `surname-${random()}`,
+                    email: `e-${random()}@mail.com`,
+                    password: `password-${random()}`,
+                }
 
+                product = {
+                    _name: `car-${random()}`,
+                    description: `description-${random()}`,
+                    price: random() * 1000
+                }
 
-                return users.insertOne({ name, surname, email, password })
-                    .then(result => userId = result.insertedId.toString())
+                _quantity = floor(random() * 10)
 
+                return products.insertOne(product)
+                    .then(_product => {
+                        productId = _product.insertedId.toString()
+                        user.cart = [{ product: productId, quantity: _quantity }]
+
+                        return users.insertOne(user).then(_user => userId = _user.insertedId.toString())
+                    })
             })
     })
 
-    describe('when the cart already exist', () => {
-        beforeEach(() => {
-            products = [`product-${random()}`, `product-${random()}`]
+    it('should return the user cart with products', () => {
+        return retrieveCart(userId)
+            .then(result => {
+                const [cart] = result
 
-            return carts.insertOne({ user: userId, products })
-
-        })
-        it('should return the user cart with products', () => {
-            retrieveCart(userId)
-                .then(cart => {
-                    expect(cart.user).to.be.undefined
-                    expect(cart.products).to.be.an('array')
-                    expect(cart.products).to.have.lengthOf(2)
-                    expect(cart.products[0]).to.equal(products[0])
-                    expect(cart.products[1]).to.equal(products[1])
-                })
-        })
-
+                expect(cart.product).to.equal(productId)
+                expect(cart.quantity).to.equal(_quantity)
+            })
     })
 
     it('should return an error when the cart does not exist', () => {
-        retrieveCart(userId)
+        return users.updateOne({ _id: ObjectId(userId) }, { $set: { cart: [] } })
+            .then(() => {
+                return retrieveCart(userId)
+                    .then(() => { throw new Error('should not reach this point') })
+                    .catch(error => {
+                        expect(error).to.exist
+
+                        expect(error).to.be.an.instanceof(UnexistenceError)
+                        expect(error.message).to.equal(`cart does not exist`)
+                    })
+            })
+    })
+
+    it('should return an error when the user does not exist', () => {
+        const randomId = ObjectId().toString()
+
+        return retrieveCart(randomId)
             .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
                 expect(error).to.exist
 
-                expect(error).to.be.an.instanceof(Error)
-                expect(error.message).to.equal(`cart does not exist`)
+                expect(error).to.be.an.instanceof(UnexistenceError)
+                expect(error.message).to.equal(`user with id ${randomId} does not exist`)
             })
     })
 
@@ -97,15 +117,10 @@ describe('logic - retrieveCart', () => {
         }).to.throw(Error, `${userId} is empty or blank`)
     })
 
-    afterEach(() => {
-        return users.deleteMany()
-            .then(() => carts.deleteMany())
-    })
+    afterEach(() => Promise.all([users.deleteMany(), products.deleteMany()]))
 
-    after(() => {
-        users.deleteMany()
-            .then(() => carts.deleteMany().then(mongo.disconnect))
-    })
+    after(() => mongo.disconnect)
+
 })
 
 

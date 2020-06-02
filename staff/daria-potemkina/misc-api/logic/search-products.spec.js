@@ -31,7 +31,7 @@ describe('logic - searchProducts', () => {
 
     it('should return a result from search', () => {
         query = 'description'
-        searchProducts(query)
+        return searchProducts(query)
             .then(results => {
                 expect(results).to.be.an('array')
                 expect(results).to.have.lengthOf(1)
@@ -42,13 +42,14 @@ describe('logic - searchProducts', () => {
                 expect(result.description).to.equal(description)
                 expect(result.price).to.equal(price)
                 expect(result.url).to.equal(url)
+                expect(result._id).to.be.undefined
             })
     })
 
     it('should return an empty array when there are no results', () => {
         query = 'pepito'
 
-        searchProducts(query)
+        return searchProducts(query)
             .then(results => {
                 expect(results).to.be.an('array')
                 expect(results).to.have.lengthOf(0)

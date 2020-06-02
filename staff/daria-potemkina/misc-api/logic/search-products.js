@@ -8,10 +8,13 @@ module.exports = query => {
         .then(connection => {
             const products = connection.db().collection('products')
 
-            return products.find({ $or: [{ name: new RegExp(query, 'i') }, { description: new RegExp(query, 'i') }] })
+            return products.find({ $or: [{ name: new RegExp(query, 'i') }, { description: new RegExp(query, 'i') }] }).toArray()
         })
 
         .then(products => {
-            return products.toArray()
+            products.forEach(product => {
+                delete product._id
+            })
+            return products
         })
 }

@@ -36,7 +36,7 @@ describe('logic - retrieveUser', () => {
         })
 
         it('should return the user data', () => {
-            retrieveUser(userId)
+            return retrieveUser(userId)
                 .then(user => {
                     expect(user.password).to.be.undefined
                     expect(user.name).to.equal(name)
@@ -48,7 +48,7 @@ describe('logic - retrieveUser', () => {
 
     it('should fail when user does not exists', () => {
         userId = '123455678990'
-        retrieveUser(userId)
+        return retrieveUser(userId)
             .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
                 expect(error).to.be.exist

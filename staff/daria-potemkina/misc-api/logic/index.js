@@ -8,5 +8,6 @@ module.exports = {
     addToCart: require('./add-to-cart'),
     removeFromCart: require('./remove-from-cart'),
     retrieveCart: require('./retrieve-cart'),
-    placeOrder: require('./place-order')
+    placeOrder: require('./place-order'),
+    updateCart: require('./update-cart')
 }

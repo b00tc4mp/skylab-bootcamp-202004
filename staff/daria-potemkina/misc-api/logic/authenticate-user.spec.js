@@ -35,14 +35,14 @@ describe('logic - authenticateUser', () => {
         })
 
         it('should secceed on correct credentials', () => {
-            authenticateUser(email, password)
+            return authenticateUser(email, password)
                 .then(_userId => expect(_userId).to.equal(userId))
         })
 
         it('should fail on wrong credentials - password', () => {
             _password = '123456789'
 
-            authenticateUser(email, _password)
+            return authenticateUser(email, _password)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.exist
@@ -53,7 +53,7 @@ describe('logic - authenticateUser', () => {
     })
 
     it('should fail when user does not exist', () => {
-        authenticateUser(email, password)
+        return authenticateUser(email, password)
             .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
                 expect(error).to.be.an.instanceOf(Error)

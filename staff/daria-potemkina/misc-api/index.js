@@ -4,7 +4,7 @@ require('dotenv').config()
 const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET, MONGODB_URL } } = process
 const PORT = PORT_CLI || PORT_ENV || 8080
 
-const { registerUser, authenticateUser, retrieveUser, updateUser, unregisterUser, addToCart, retrieveCart, searchProducts, removeFromCart } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser, updateUser, unregisterUser, updateCart, retrieveCart, searchProducts, placeOrder } = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
@@ -96,11 +96,11 @@ mongo.connect(MONGODB_URL)
             }
         })
 
-        app.post('/add-product', parseBody, verifyExtractJwt, (req, res) => {
+        app.post('/cart', parseBody, verifyExtractJwt, (req, res) => {
             try {
-                const { payload: { sub: userId }, body: productId } = req
+                const { payload: { sub: userId }, body: {productId, quantity } } = req
 
-                addToCart(userId, productId.product)
+                updateCart(userId, productId, quantity)
                     .then(() => res.status(200).send())
                     .catch(error => handleError(error, res))
 
@@ -109,7 +109,7 @@ mongo.connect(MONGODB_URL)
             }
         })
 
-        app.get('/cart', verifyExtractJwt, (req, res) => {
+        app.get('/cart/', verifyExtractJwt, (req, res) => {
             try {
                 const { payload: { sub: userId } } = req
 
@@ -135,18 +135,30 @@ mongo.connect(MONGODB_URL)
             }
         })
 
-        app.delete('/products/delete/:productId', verifyExtractJwt, (req, res) => {
+        app.post('/order', verifyExtractJwt, (req, res) => {
             try {
-                const { payload: { sub: userId }, params: { productId } } = req
+                const { payload: { sub: userId } } = req
 
-                removeFromCart(userId, productId)
+                placeOrder(userId)
                     .then(() => res.status(200).send())
                     .catch(error => handleError(error, res))
-
             } catch (error) {
                 handleError(error, res)
             }
         })
+
+        // app.delete('/products/delete/:productId', verifyExtractJwt, (req, res) => {
+        //     try {
+        //         const { payload: { sub: userId }, params: { productId } } = req
+
+        //         removeFromCart(userId, productId)
+        //             .then(() => res.status(200).send())
+        //             .catch(error => handleError(error, res))
+
+        //     } catch (error) {
+        //         handleError(error, res)
+        //     }
+        // })
 
         app.get('*', (req, res) => {
             res.status(404).send('Not Found :(')
