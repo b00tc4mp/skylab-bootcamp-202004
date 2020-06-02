@@ -1,5 +1,5 @@
 require('misc-commons/polyfills/string')
-const { mongo } = require('../data')
+const { mongo } = require('misc-data')
 const { utils: { Email }, errors: { UnexistenceError, CredentialsError } } = require('misc-commons')
 
 module.exports = (email, password) => {
