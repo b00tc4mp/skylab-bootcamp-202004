@@ -8,6 +8,7 @@ const { expect } = require('chai')
 require('../utils/polyfills/json')
 const { mongo } = require('../data')
 const { ObjectId } = mongo
+const { UnexistenceError, ValueError } = require('../errors')
 
 describe('logic - update cart', () => {
     let users
@@ -83,7 +84,7 @@ describe('logic - update cart', () => {
                 .catch(error => {
                     expect(error).to.exist
 
-                    expect(error).to.be.an.instanceOf(Error)
+                    expect(error).to.be.an.instanceOf(UnexistenceError)
                     expect(error.message).to.equal(`user with id 5ed4d71d9569dfdc03e519f8 does not exist`)
                 })
 
@@ -95,7 +96,7 @@ describe('logic - update cart', () => {
                 .catch(error => {
                     expect(error).to.exist
 
-                    expect(error).to.be.an.instanceOf(Error)
+                    expect(error).to.be.an.instanceOf(UnexistenceError)
                     expect(error.message).to.equal(`product with id ${productId} does not exist in cart for user with id ${userId}`)
                 })
 
