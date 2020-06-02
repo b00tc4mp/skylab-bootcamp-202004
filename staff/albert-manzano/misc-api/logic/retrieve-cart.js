@@ -13,12 +13,9 @@ module.exports = userId => {
 
             return users.findOne({ _id: ObjectId(userId) })
         })
-        .then(user => {
-            if (!user) throw new Error(`user with id ${userId} does not exist`)
-
-            delete user._id
-            delete user.password
-
-            return user
+        .then(cart => {
+            const { cart } = user
+            if (!cart) throw new Error(`cart with id ${userId} does not exist`)
+            return cart
         })
 }

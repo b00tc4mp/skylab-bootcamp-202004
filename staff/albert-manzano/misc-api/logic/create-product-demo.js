@@ -7,8 +7,7 @@ const registerUser = require('./register-user')
 mongo.connect(MONGODB_URL)
     .then(() => {
         try {
-            //registerUser('Pepito', 'Grillo', 'pepigri@mail.com', '123')
-            return registerUser('Menga', 'Nito', 'menganito@mail.com', '123')
+            return registerUser('Jean', 'Nice blue pants', 10.99, 'https://img.ltwebstatic.com/images2_pi/2018/08/31/1535706293727658319_thumbnail_600x799.webp')
                 .then(() => console.log('OK'))
                 .catch(error => console.error('KO async', error))
         } catch (error) {
