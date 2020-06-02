@@ -30,6 +30,4 @@ function deleteFilesByExtensionFromDirectory(directory, extension, callback) {
     })
 }
 
-module.exports = {
-    deleteFilesByExtensionFromDirectory
-}
+module.exports = { deleteFilesByExtensionFromDirectory }

@@ -7,5 +7,6 @@ module.exports = {
     unregisterUser: require('./unregister-user'),
     deleteCart: require('./delete-cart'),
     updateCart: require('./update-cart'),
-    placeOrder: require('./place-order')
+    placeOrder: require('./place-order'),
+    searchProduct: require('./search-products')
 }

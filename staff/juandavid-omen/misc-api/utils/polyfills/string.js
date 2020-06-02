@@ -1,41 +1,41 @@
-(() => {
-    const ALPHABETIC_REGEX = /^[a-zA-Z ]+$/
+const { VoidError } = require('../../errors')
 
-    String.isString = function (string) {
-        return typeof string === 'string'
-    }
+const ALPHABETIC_REGEX = /^[a-zA-Z ]+$/
 
-    String.isVoid = function (string) {
-        this.validate(string)
+String.isString = function (string) {
+    return typeof string === 'string'
+}
 
-        return !string.trim().length
-    }
+String.isVoid = function (string) {
+    this.validate(string)
 
-    String.isAlphabetic = function (string) {
-        this.validate(string)
+    return !string.trim().length
+}
 
-        return ALPHABETIC_REGEX.test(string)
-    }
+String.isAlphabetic = function (string) {
+    this.validate(string)
 
-    String.isLengthGreaterEqualThan = function (string, length) {
-        this.validate(string)
+    return ALPHABETIC_REGEX.test(string)
+}
 
-        return string.length >= length
-    }
+String.isLengthGreaterEqualThan = function (string, length) {
+    this.validate(string)
 
-    String.validate = function (string) {
-        if (!this.isString(string)) throw new TypeError(`${string} is not a string`)
-    }
+    return string.length >= length
+}
 
-    String.validate.notVoid = function (string) {
-        if (this.isVoid(string)) throw new Error(`${string} is empty or blank`)
-    }.bind(String)
+String.validate = function (string) {
+    if (!this.isString(string)) throw new TypeError(`${string} is not a string`)
+}
 
-    String.validate.alphabetic = function (string) {
-        if (!this.isAlphabetic(string)) throw new Error(`${string} is not alphabetic`)
-    }.bind(String)
+String.validate.notVoid = function (string) {
+    if (this.isVoid(string)) throw new VoidError(`string is empty or blank`)
+}.bind(String)
 
-    String.validate.lengthGreaterEqualThan = function (string, length) {
-        if (!this.isLengthGreaterEqualThan(string, length)) throw new Error(`"${string}" length is not greater or equal than ${length}`)
-    }.bind(String)
-})()
+String.validate.alphabetic = function (string) {
+    if (!this.isAlphabetic(string)) throw new Error(`${string} is not alphabetic`)
+}.bind(String)
+
+String.validate.lengthGreaterEqualThan = function (string, length) {
+    if (!this.isLengthGreaterEqualThan(string, length)) throw new Error(`"${string}" length is not greater or equal than ${length}`)
+}.bind(String)

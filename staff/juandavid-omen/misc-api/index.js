@@ -4,7 +4,7 @@ const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, JWT_SECRET: SECRET, MONGODB
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, createProduct, addTocart, unregisterUser, updateCart, deleteCart, placeOrder} = require('./logic')
+const { registerUser, authenticateUser, retrieveUser, createProduct, searchProduct, unregisterUser, updateCart, deleteCart, placeOrder} = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
@@ -92,6 +92,19 @@ mongo.connect(MONGODB_URL)
             }
         })
 
+        app.get('/products/search', (req, res) => {
+            try {
+                const query = req.query.q
+
+                searchProducts(query)
+                    .then(results => res.status(200).send(results))
+                    .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+
+            }
+        })
+        
         //Cart
         app.post('/cart', verifyExtractJwt, parseBody, (req, res) => {
             try {
@@ -149,7 +162,6 @@ mongo.connect(MONGODB_URL)
                     process.exit()
                 })
         })
-
     })
 
     .catch(error => {
