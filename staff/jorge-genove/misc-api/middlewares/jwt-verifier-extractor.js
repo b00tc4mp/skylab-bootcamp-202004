@@ -1,4 +1,4 @@
-const { jwtPromised } = require('../utils')
+const { jwtPromised } = require('../../misc-commons/utils')
 
 module.exports = (secret, errorHandler) =>
     (req, res, next) => {

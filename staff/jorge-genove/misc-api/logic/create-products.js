@@ -1,6 +1,6 @@
-require('../utils/polyfills/string')
+require('../../misc-commons/polyfills/string')
 const { mongo } = require('../data')
-const { DuplicityError } = require('../errors')
+const { DuplicityError } = require('../../misc-commons/errors')
 
 module.exports = (name, description, price, url) => {
     debugger
