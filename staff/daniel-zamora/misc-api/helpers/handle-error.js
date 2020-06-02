@@ -1,5 +1,4 @@
-const { DuplicityError, VoidError, UnexistenceError, CredentialsError, ForbiddenError } = require('../errors')
-const { JsonWebTokenError } = require('jsonwebtoken')
+const { errors: { UnexistenceError, CredentialsError, ForbiddenError }} = require('misc-commons')
 
 module.exports = function (error, res) {
     let status = 500
