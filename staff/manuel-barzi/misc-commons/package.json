@@ -11,5 +11,10 @@
   "license": "ISC",
   "dependencies": {
     "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.2.0",
+    "xhr2": "^0.2.0"
   }
 }
