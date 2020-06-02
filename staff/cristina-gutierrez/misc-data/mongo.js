@@ -10,7 +10,7 @@ module.exports = {
             Promise.resolve(connection)
             :
             connect(url, { useUnifiedTopology: true })
-                .then(_connection => connection = _connection_)
+                .then(_connection => connection = _connection)
     },
 
     disconnect() {
