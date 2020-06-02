@@ -1,4 +1,4 @@
-const { mongo } = require('../data')
+const { mongo } = require('misc-data')
 require('misc-commons/polyfills/string')
 
 module.exports = (userId => {

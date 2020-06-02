@@ -1,6 +1,6 @@
 require('misc-commons/polyfills/string')
 const { errors: { UnexistenceError } } = require('misc-commons')
-const { mongo } = require('../data')
+const { mongo } = require('misc-data')
 const { ObjectId } = mongo
 
 module.exports = userId => {
