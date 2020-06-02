@@ -1,7 +1,6 @@
-require('../utils/polyfills/string')
-const { Email } = require('../utils')
+require('misc-commons/polyfills/string')
 const { mongo } = require('../data')
-const { UnexistenceError, CredentialsError } = require('../errors')
+const { utils: { Email }, errors: { UnexistenceError, CredentialsError } } = require('misc-commons')
 
 module.exports = (email, password) => {
     String.validate.notVoid(email)

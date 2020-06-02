@@ -4,7 +4,7 @@ const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 const placeOrder = require('./place-order')
 const { random } = Math
 const { expect } = require('chai')
-require('../utils/polyfills/json')
+require('misc-commons/polyfills/json')
 const { mongo } = require('../data')
 const {ObjectId} = mongo 
 

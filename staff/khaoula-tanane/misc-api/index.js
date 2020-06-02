@@ -8,7 +8,7 @@ const { registerUser, authenticateUser, retrieveUser, updateCart } = require('./
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
-const { jwtPromised } = require('./utils')
+const { utils : {jwtPromised} } = require('misc-commons')
 const { jwtVerifierExtractor } = require('./middlewares')
 const { mongo } = require('./data')
 
