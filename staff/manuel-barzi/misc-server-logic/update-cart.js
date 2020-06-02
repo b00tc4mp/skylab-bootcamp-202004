@@ -1,8 +1,8 @@
-require('../utils/polyfills/string')
-require('../utils/polyfills/json')
-require('../utils/polyfills/number')
-const { UnexistenceError } = require('../errors')
-const { mongo } = require('../data')
+require('misc-commons/polyfills/string')
+require('misc-commons/polyfills/json')
+require('misc-commons/polyfills/number')
+const { errors: { UnexistenceError } } = require('misc-commons')
+const { mongo } = require('misc-data')
 const { ObjectId } = mongo
 
 module.exports = (userId, productId, quantity) => {
