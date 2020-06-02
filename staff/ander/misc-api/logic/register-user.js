@@ -23,3 +23,5 @@ module.exports = (name, surname, email, password) => {
                 })
         })
 }
+
+
