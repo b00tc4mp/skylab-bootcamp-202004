@@ -6,7 +6,7 @@ const authenticateUser = require('./authenticate-user')
 const { random } = Math
 const { expect } = require('chai')
 require('misc-commons/polyfills/json')
-const { mongo } = require('../data')
+const { mongo } = require('misc-data')
 
 describe('logic - authenticate user', () => {
     let users
