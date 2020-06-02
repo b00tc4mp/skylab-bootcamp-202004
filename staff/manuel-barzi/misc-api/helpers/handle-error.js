@@ -1,4 +1,4 @@
-const { DuplicityError, VoidError, UnexistenceError, CredentialsError } = require('../errors')
+const { errors: { DuplicityError, VoidError, UnexistenceError, CredentialsError } } = require('misc-commons')
 const { JsonWebTokenError } = require('jsonwebtoken')
 
 module.exports = function (error, res) {
