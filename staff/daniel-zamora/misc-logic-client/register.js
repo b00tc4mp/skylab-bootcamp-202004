@@ -12,16 +12,14 @@ module.exports = (name, surname, email, password) => { debugger
 
 
     return call('POST', 'http://localhost:8080/users',
-    `"name": "${name}", "surname": "${surname}", "email": "${email}", "password": "${password}"`,
-    { 'Content-type': 'application/json','Access-Control-Allow-Origin': 'http://localhost:8080' })
+    `{"name": "${name}", "surname": "${surname}", "email": "${email}", "password": "${password}"}`,
+    { 'Content-type': 'application/json'})
         .then(({status, body}) => {
-            console.log(body)
-            if (status === 200) return status
+            if (status === 201) return ('User crated')
             
             else throw new Error('an error has ocurred')
         }) 
 }
-//     const
 //     const URL = 'http://localhost:8080/users'
 //     const data= { name: name, surname: surname, email: email, password: password}
 
@@ -34,21 +32,3 @@ module.exports = (name, surname, email, password) => { debugger
 //         }) 
 // }
 
-// fetch('./api/some.json')
-//   .then(
-//     function(response) {
-//       if (response.status !== 200) {
-//         console.log('Looks like there was a problem. Status Code: ' +
-//           response.status);
-//         return;
-//       }
-
-//       // Examine the text in the response
-//       response.json().then(function(data) {
-//         console.log(data);
-//       });
-//     }
-//   )
-//   .catch(function(err) {
-//     console.log('Fetch Error :-S', err);
-//   });

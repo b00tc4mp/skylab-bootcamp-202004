@@ -1,4 +1,4 @@
-const { errors: { UnexistenceError, CredentialsError, ForbiddenError }} = require('misc-commons')
+const { errors: { UnexistenceError, CredentialsError, ForbiddenError, VoidError, DuplicityError, JsonWebTokenError }} = require('misc-commons')
 
 module.exports = function (error, res) {
     let status = 500

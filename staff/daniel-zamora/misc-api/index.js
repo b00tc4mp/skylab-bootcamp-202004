@@ -9,7 +9,7 @@ const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
 const { mongo } = require('misc-data')
-const { jwtVerifierExtractor } = require('./middlewares')
+const { jwtVerifierExtractor, cors} = require('./middlewares')
 const {utils: { jwtPromised }} = require('misc-commons')
 
 // users
@@ -23,16 +23,18 @@ mongo.connect(MONGODB_URL)
 
         const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
 
-        // app.use((req, res, next) => {
+        // const accesControl = app.use((req, res, next) => {
         //     res.header('Access-Control-Allow-Origin', '*');
         //     next();
         //   });
+
+        app.use(cors)
 
         app.post('/users', parseBody, (req, res) => { 
 
             const { body: { name, surname, email, password } } = req
 
-            res.header('Access-Control-Allow-Origin', '*')
+            // res.header('Access-Control-Allow-Origin', '*')
 
             try {
                 register(name, surname, email, password)
