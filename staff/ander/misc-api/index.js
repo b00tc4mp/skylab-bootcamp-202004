@@ -6,11 +6,10 @@ const PORT = PORT_CLI || PORT_ENV || 8080
 const express = require('express')
 const bodyParser = require('body-parser')
 const { registerUser, authenticateUser, retrieveUser ,createProducts,updateCart,searchProducts} = require('misc-server-logic')
-
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
 const { utils: {jwtPromised} } = require('misc-commons')
-const { jwtVerifierExtractor } = require('./middlewares')
+const { jwtVerifierExtractor, cors } = require('./middlewares')
 const { mongo } = require('misc-data')
 
 mongo.connect(MONGODB_URL)
@@ -18,6 +17,8 @@ mongo.connect(MONGODB_URL)
         console.log('connected to mongo')
 
         const app = express()
+
+        app.use(cors)
 
         const parseBody = bodyParser.json()
 

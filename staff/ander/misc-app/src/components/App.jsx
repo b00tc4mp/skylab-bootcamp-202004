@@ -1,60 +1,49 @@
 import React from 'react';
-import logo from '../logo.svg';
 import './App.css';
 import Register from './Register';
+import Landing from './Landing';
+import Login from './Login';
 import registerUser from 'misc-client-logic/register-user'
-const { useState }  = React
+import authenticateUser from 'misc-client-logic/authenticate-user'
 
+const { useState }  = React 
 
 function App() {
-  const [view, setView ] = useState('app')
+  const [view, setView ] = useState('landing')
+  const [token, setToken ] = useState(null)
   const [error, setError] = useState(null)
 
   const goToRegister = event=>{event.preventDefault(); setView('register')}
+  const goToLanding = ()=>setView('landing') 
+  const goToLogin = ()=>setView('login')
 
-  const goToApp = ()=>setView('app') 
-
-  const handleRegister = ({target: form})=>{ // event.target.name.value
-   
+  const onRegister = ({target: form})=>{ // event.target.name.value
     const name = form.name.value
+
     const surname = form.surname.value
     const email = form.email.value
     const password = form.password.value
     registerUser(name, surname, email, password)
-      .then(()=>setView('app'))
+      .then(()=>setView('login'))
+
       .catch(error=>{setError(error)})
   }
-  // return <>
-  // {view === 'landing' && <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
- 
+    
+  const onLogin = ({target: form})=>{
+    const email = form.email.value
+
+    const password = form.password.value
+    authenticateUser(email, password)
+      .then(token=>{setView('home'); setToken(token)})
+      
+      .catch(error=>{setError(error)})
+  }
 
   return <div className="App">
-  <header className="App-header">
-    <img src={logo} className="App-logo" alt="logo" />
-    <p>
-      Edit <code>src/App.js</code> and save to reload.
-    </p>
-    <a
-      className="App-link"
-      href="https://reactjs.org"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Learn React
-    </a>
-    <a 
-      onClick = {goToRegister}
-      className="App-link"
-      href=""
-    >
-      Register
-    </a>
-  </header>
-  <>
-    {view === 'register' && <Register goToApp = {goToApp} onRegister = {handleRegister}/>}
+    {view === 'landing' && <Landing goToRegister = {goToRegister} goToLogin = {goToLogin}/>}
+    {view === 'register' && <Register goToLanding = {goToLanding} goToLogin = {goToLogin} handleRegister = {onRegister}/>}
+    {view === 'login' && <Login goToLanding = {goToLanding} goToRegister = {goToRegister} handleLogin = {onLogin}/>}
     {error && <p>{error.message}</p>}
-  </>
-
 </div>
 }
 

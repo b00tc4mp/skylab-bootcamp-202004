@@ -1,6 +1,7 @@
 require('misc-commons/polyfills/string') 
-const {Email} = require('misc-commons/utils') 
-const fetch = require('node-fetch')
+const {Email, call} = require('misc-commons/utils') 
+
+/* const fetch = require('node-fetch') */
 
 module.exports = (name,surname,email,password)=>{
     String.validate.alphabetic(name)
@@ -11,11 +12,10 @@ module.exports = (name,surname,email,password)=>{
     const body = JSON.stringify({name, surname, email, password})
     const method = 'POST'
     const headers = {'Content-Type': 'application/json'}
-    const mode = 'no-cors'
+   /*  const mode = 'no-cors' */
     const url = 'http://localhost:8080/users'
 
-    return fetch(url, { method, body, headers, mode })
-        .then(res =>res.json())
+    return call(method, url, body, headers)
         .then(({status, body}) => {
             if(status !== 201){
                 const { error } = JSON.parse(body)
