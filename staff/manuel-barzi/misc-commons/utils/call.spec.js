@@ -1,6 +1,6 @@
 const { expect } = require('chai')
 const call = require('./call')
-global.XMLHttpRequest = require('xhr2')
+require('../polyfills/xhr')
 
 describe('call', () => {
     it('should suceed on correct parameters in Google', done => {

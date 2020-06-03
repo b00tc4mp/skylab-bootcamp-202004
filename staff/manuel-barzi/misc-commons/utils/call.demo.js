@@ -1,5 +1,5 @@
 const call = require('./call')
-global.XMLHttpRequest = require('xhr2')
+require('../polyfills/xhr')
 
 call('GET', 'https://skylabcoders.herokuapp.com/api/hotwheels/vehicles?q=black')
     .then(response => {
