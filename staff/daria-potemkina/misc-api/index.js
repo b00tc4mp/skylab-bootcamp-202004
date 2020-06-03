@@ -4,13 +4,13 @@ require('dotenv').config()
 const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET, MONGODB_URL } } = process
 const PORT = PORT_CLI || PORT_ENV || 8080
 
-const { registerUser, authenticateUser, retrieveUser, updateUser, unregisterUser, updateCart, retrieveCart, searchProducts, placeOrder } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser, updateUser, unregisterUser, updateCart, retrieveCart, searchProducts, placeOrder } = require('misc-server-logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
-const { jwtPromised } = require('./utils')
+const { utils: { jwtPromised } } = require('misc-commons')
 const { jwtVerifierExtractor } = require('./middlewares')
-const { mongo } = require('./data')
+const { mongo } = require('misc-data')
 
 mongo.connect(MONGODB_URL)
     .then(connection => {
@@ -98,7 +98,7 @@ mongo.connect(MONGODB_URL)
 
         app.post('/cart', parseBody, verifyExtractJwt, (req, res) => {
             try {
-                const { payload: { sub: userId }, body: {productId, quantity } } = req
+                const { payload: { sub: userId }, body: { productId, quantity } } = req
 
                 updateCart(userId, productId, quantity)
                     .then(() => res.status(200).send())
@@ -146,19 +146,6 @@ mongo.connect(MONGODB_URL)
                 handleError(error, res)
             }
         })
-
-        // app.delete('/products/delete/:productId', verifyExtractJwt, (req, res) => {
-        //     try {
-        //         const { payload: { sub: userId }, params: { productId } } = req
-
-        //         removeFromCart(userId, productId)
-        //             .then(() => res.status(200).send())
-        //             .catch(error => handleError(error, res))
-
-        //     } catch (error) {
-        //         handleError(error, res)
-        //     }
-        // })
 
         app.get('*', (req, res) => {
             res.status(404).send('Not Found :(')
