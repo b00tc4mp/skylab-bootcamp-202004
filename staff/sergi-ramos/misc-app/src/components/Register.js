@@ -1,6 +1,9 @@
+/* eslint-disable no-unused-expressions */
+
 import React from 'react'
 import './Register.sass'
-import { register } from '../../src copy/serviceWorker'
+import { register } from '../serviceWorker'
+import { registerUser } from 'misc-client-logic'
 
 
 export default function () {
@@ -11,18 +14,17 @@ export default function () {
 
         let { name, surname, email, password } = event.target
 
-        name = name.value,
+            name = name.value,
             surname = surname.value,
             email = email.value,
             password = password.value
-
+debugger
         try {
-            registerUser(name, surname, email, password)
+          registerUser(name, surname, email, password)
         } catch (error) {
 
         }
     }
-
 
     return <section onSubmit={handleOnSubmit} class="Register">
         <form>

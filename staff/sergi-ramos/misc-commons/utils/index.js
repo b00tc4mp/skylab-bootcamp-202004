@@ -1,6 +1,6 @@
 module.exports = {
     Email: require('./email'),
-    Files: require('./files'),
     uid: require('./uid'),
-    jwtPromised: require('../utils/jwt-promised')
+    jwtPromised: require('../utils/jwt-promised'),
+    Http: require('./http')
 }
