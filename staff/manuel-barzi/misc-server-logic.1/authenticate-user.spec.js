@@ -8,8 +8,6 @@ const { expect } = require('chai')
 require('misc-commons/polyfills/json')
 const { mongo } = require('misc-data')
 const bcrypt = require('bcryptjs')
-require('misc-commons/ponyfills/xhr')
-require('misc-commons/ponyfills/atob')
 
 describe('logic - authenticate user', () => {
     let users
@@ -41,17 +39,7 @@ describe('logic - authenticate user', () => {
 
         it('should succeed on correct credentials', () =>
             authenticateUser(email, password)
-                .then(token => {
-                    const [, payloadBase64] = token.split('.')
-
-                    const payloadJson = atob(payloadBase64)
-
-                    const payload = JSON.parse(payloadJson)
-
-                    const { sub: _userId } = payload
-
-                    expect(_userId).to.equal(userId)
-                })
+                .then(_userId => expect(_userId).to.equal(userId))
         )
 
         it('should fail on wrong password', () => {
