@@ -21,6 +21,14 @@ mongo.connect(MONGODB_URL)
         const parseBody =bodyParser.json()
 
         const verifyExtractJwt =jwtVerifierExtractor(SECRET, handleError)
+
+        app.use((req, res, next)=>{
+            res.setHeader('Allow-Control-Allow-Origin', '*')
+            res.setHeader('Allow-Control-Allow-Headers', '*')
+            res.setHeader('Allow-Control-Allow-Methods', '*')
+
+            next()
+        })
         
         // users
 
