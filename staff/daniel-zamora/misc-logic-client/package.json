@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "register.js",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "misc-commons": "file:../misc-commons"
   },
   "devDependencies": {

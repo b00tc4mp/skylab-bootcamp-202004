@@ -1,11 +1,13 @@
 require('misc-commons/polyfills/string')
 const { utils: { Email, call } } = require('misc-commons') 
+const bcrypt = require('bcryptjs')
 
 module.exports = (email, password) => {
     Email.validate(email)
     String.validate.notVoid(password)
 
-    debugger
+
+
     return call('POST', 'http://localhost:8080/users/auth',
         `{ "email": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json' })
@@ -14,10 +16,8 @@ module.exports = (email, password) => {
      
             .then(({status, body}) => {
                 if (status === 200) {
-                    const { token } = JSON.parse(body)
-                    console.log(token)
+                    const { token } = JSON.parse(body)                
                     
-    
                     return token
                 
                 } else {
