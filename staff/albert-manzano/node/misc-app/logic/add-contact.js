@@ -1,8 +1,8 @@
-require('../utils/polyfills/string')
+require('misc-commons/polyfills/string')
 const { Email } = require('../utils')
 require('../utils/polyfills/function')
-require('../utils/polyfills/json')
-const { users: { find } } = require('../data')
+require('misc-commons/polyfills/json')
+const { users: { find } } = require('misc-data')
 
 module.exports = (userId, contact, callback) => {
     if (typeof contact !== 'object') throw new TypeError(`${contact} is not an object`)

@@ -1,7 +1,7 @@
-require('../utils/polyfills/string')
+require('misc-commons/polyfills/string')
 const fs = require('fs')
 const path = require('path')
-const { users: { find } } = require('../data')
+const { users: { find } } = require('misc-data')
 
 module.exports = (userId, idSticky, callback)=>{
 

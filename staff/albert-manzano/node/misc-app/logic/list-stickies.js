@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-require('../utils/polyfills/string')
+require('misc-commons/polyfills/string')
 
 module.exports = (userId, callback) => {
 

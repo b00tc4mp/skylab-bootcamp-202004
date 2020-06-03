@@ -1,7 +1,7 @@
-require('../utils/polyfills/string')
+require('misc-commons/polyfills/string')
 require('../utils/polyfills/function')
-require('../utils/polyfills/json')
-const { users: { find } } = require('../data')
+require('misc-commons/polyfills/json')
+const { users: { find } } = require('misc-data')
 
 module.exports = ( userId ,{message}, callback) => {
     if (message) {
