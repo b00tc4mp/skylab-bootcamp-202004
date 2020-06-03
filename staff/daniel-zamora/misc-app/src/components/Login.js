@@ -1,10 +1,10 @@
 import React from 'react';
-import { login, retrieveUser } from 'misc-logic-client'
 import { useState } from 'react'
 import Feedback from './Feedback'
+const login = require('misc-logic-client/login')
 
 
-export default function({onSubmit, onRegister}) {
+export default function({ onRegister, onGoToHome}) {
     const [error, setError] = useState(undefined)
     
     function handleSubmit(event) {
@@ -16,14 +16,16 @@ export default function({onSubmit, onRegister}) {
         password = password.value
 
         try {
+            debugger
             return login(email, password)
-                .then(token => {
-                    retrieveUser(token, (error) => {
-                        if (error) return setError(error.message)
-                        else onSubmit(token)
-                    })
-                })
+                .then(token => onGoToHome(token))
                 .catch(error => setError(error.message))
+             
+                    // retrieveUser(token, (error) => {
+                    //     if (error) return setError(error.message)
+                    //     else onSubmit(token)
+                    // })
+            
         
 
         } catch ({ message }) {
@@ -43,7 +45,7 @@ export default function({onSubmit, onRegister}) {
             <input type="email" name="email" placeholder="e-mail" required />
             <input type="password" name="password" placeholder="password" required minLength="8" />
             <button>Submit</button>
-            <a href="" onClick={handleGoToRegister}>Register</a>
+            <a href="#" onClick={handleGoToRegister}>Register</a>
             {error && <Feedback message={error} level='error' />}
         </form>
     </section>

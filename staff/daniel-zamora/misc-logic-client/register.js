@@ -3,7 +3,7 @@ const { utils: { Email, call } } = require('misc-commons')
 require('misc-commons/polyfills/string')
 const fetch = require('fetch')
 
-module.exports = (name, surname, email, password) => { debugger
+module.exports = (name, surname, email, password) => {
     String.validate.alphabetic(name)
     String.validate.alphabetic(surname)
     Email.validate(email)

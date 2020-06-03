@@ -4,10 +4,12 @@ import './App.sass';
 import { useState } from 'react';
 import Register from './components/Register';
 import Login from './components/Login';
+import Home from './components/Home';
 
 
 function App() {
   const [view, setView] = useState('register')
+  const [token, setToken] = useState()
 
   function handleGoToLogin() {
       setView('login')
@@ -15,6 +17,11 @@ function App() {
 
   function handleGoToRegister() {
     setView('register')
+  }
+
+  function handleGoToHome(token) {
+    setToken(token)
+    setView('home')
   } 
 
   return  <>
@@ -35,7 +42,8 @@ function App() {
         </header>
       </div>)}
     {view === 'register' && <Register onLogin={handleGoToLogin} />}
-    {view === 'login' && <Login onRegister={handleGoToRegister} />}
+    {view === 'login' && <Login onRegister={handleGoToRegister} onGoToHome={handleGoToHome} />}
+    {view === 'home' && <Home />}
   </>
 }
 

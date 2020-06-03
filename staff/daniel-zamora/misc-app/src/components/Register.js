@@ -2,7 +2,6 @@ import React from 'react';
 import { useState } from 'react'
 import Feedback from './Feedback'
 import register from 'misc-logic-client'
-global.XMLHttpRequest = require('xhr2')
 
 
 export default function({onLogin}) { debugger
