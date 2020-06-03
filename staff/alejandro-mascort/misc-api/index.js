@@ -91,17 +91,17 @@ mongo.connect(MONGODB_URL)
             }
         })
 
-        // app.get('/carts',verifyExtractJwt,(req,res)=>{
-        //     try {
-        //         const {payload: { sub: userId} } = req
+        app.get('/cart',verifyExtractJwt,(req,res)=>{
+            try {
+                const {payload: { sub: userId} } = req
                 
-        //         retrieveCart(userId)
-        //             .then(cart => res.status(200).send(cart))
-        //             .catch((error) => handleError(error, res))
-        //     } catch (error) {
-        //         handleError(error, res)
-        //     }
-        // })
+                retrieveCart(userId)
+                    .then(cart => res.status(200).send(cart))
+                    .catch((error) => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
 
         app.get('/products/:query', parseBody, verifyExtractJwt,(req,res)=>{
             try {
