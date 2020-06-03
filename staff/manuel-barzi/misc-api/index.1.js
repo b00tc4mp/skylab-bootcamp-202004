@@ -9,7 +9,7 @@ const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
 const { utils: { jwtPromised } } = require('misc-commons')
-const { jwtVerifierExtractor, cors } = require('./middlewares')
+const { jwtVerifierExtractor } = require('./middlewares')
 const { mongo } = require('misc-data')
 
 mongo.connect(MONGODB_URL)
@@ -22,12 +22,20 @@ mongo.connect(MONGODB_URL)
 
         const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
 
-        app.use(cors)
+        app.use((req, res, next) => {
+            res.setHeader('Access-Control-Allow-Origin', '*')
+            res.setHeader('Access-Control-Allow-Headers', '*')
+            res.setHeader('Access-Control-Allow-Methods', '*')
+
+            next()
+        })
 
         // users
 
         app.post('/users', parseBody, (req, res) => {
             const { body: { name, surname, email, password } } = req
+
+            //res.setHeader('Access-Control-Allow-Origin', '*')
 
             try {
                 registerUser(name, surname, email, password)
@@ -40,6 +48,8 @@ mongo.connect(MONGODB_URL)
 
         app.post('/users/auth', parseBody, (req, res) => {
             const { body: { email, password } } = req
+
+            //res.setHeader('Access-Control-Allow-Origin', '*')
 
             try {
                 authenticateUser(email, password)
