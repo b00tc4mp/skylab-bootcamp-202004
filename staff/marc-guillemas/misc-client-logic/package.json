@@ -15,6 +15,7 @@
   },
   "description": "",
   "dependencies": {
-    "misc-commons": "file:../misc-commons"
+    "misc-commons": "file:../misc-commons",
+    "xhr2": "^0.2.0"
   }
 }

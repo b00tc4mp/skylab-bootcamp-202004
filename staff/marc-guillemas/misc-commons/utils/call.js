@@ -6,7 +6,7 @@ module.exports = (method, url, body, headers) => {
   Http.validateMethod(method);
   URL.validate(url);
 
-  new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
 
     xhr.open(method, url);

@@ -9,7 +9,7 @@ const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
 const { mongo } = require('misc-data')
-const { jwtVerifierExtractor } = require('./middlewares')
+const { jwtVerifierExtractor, cors } = require('./middlewares')
 const { utils: {jwtPromised} } = require('misc-commons')
 
 const app = express()
@@ -22,6 +22,7 @@ mongo.connect(MONGODB_URL)
 
         const verifyToken = jwtVerifierExtractor(JWT_SECRET, handleError)
 
+        app.use(cors)
 
         app.post('/users', parseBody, (req, res) => {
             const { body: { name, surname, email, password } } = req
@@ -36,7 +37,7 @@ mongo.connect(MONGODB_URL)
             }
         })
 
-        app.post('/users/auth', parseBody, (req, res) => {
+        app.post('/users/auth',  parseBody, (req, res) => {
             debugger
             const { body: { email, password } } = req
 
@@ -52,7 +53,7 @@ mongo.connect(MONGODB_URL)
             }
         })
 
-        app.get('/users/:userId?', verifyToken, (req, res) => {
+        app.get('/users/:userId?',  verifyToken, (req, res) => {
             try {
 
                 const { payload: { sub: userId }, params: { userId: otherUserId } } = req
@@ -140,7 +141,7 @@ mongo.connect(MONGODB_URL)
 
 
 
-        app.post('/product',parseBody, (req, res) => {
+        app.post('/product', parseBody, (req, res) => {
 
             const { body: product } = req
 
@@ -196,5 +197,5 @@ mongo.connect(MONGODB_URL)
     })
 
     .catch(error => {
-        console.error('coulud not connect to mongo', error)
+        console.error('could not connect to mongo', error)
     }) 

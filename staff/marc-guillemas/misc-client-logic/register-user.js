@@ -25,13 +25,14 @@ module.exports = (name, surname, email, password) => {
   body: JSON.stringify(opts)
 }). */
 
-  // call('POST', 'http://localhost:8080/users',`{"name": ${name} , "surname": ${surname}, "email" : ${email} ,"password": ${password}}`,
-  // {'Content-type' : 'Application/json'})
-  // .then(({status}) => {
-  //   if(status !== 201) throw Error('panteras wrong')
-  // })
-  // .then(() => {})
-  // .catch(error => {
-    // handleError(error)
-  // })
+  return call('POST', 'http://localhost:8080/users',`{"name": "${name}" , "surname": "${surname}", "email" : "${email}" ,"password": "${password}"}`,
+  {'Content-type' : 'Application/json'})
+    .then(({status}) => {
+      // console.log(status)
+      if(status !== 201) throw Error('panteras wrong')
+      return 
+    })
+    .catch(error => {
+      throw error
+    })
 }
