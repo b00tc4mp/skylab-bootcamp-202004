@@ -14,7 +14,7 @@ const { mongo } = require('misc-data')
 
 mongo.connect(MONGODB_URL)
     .then(connection => {
-        console.log('connected to mongo')
+        console.log(`connected to mongo ${MONGODB_URL}`)
 
         const app = express()
 
