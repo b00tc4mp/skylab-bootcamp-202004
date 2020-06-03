@@ -84,7 +84,6 @@ mongo.connect(MONGODB_URL)
             }
         })
         
-
         app.get('*', (req, res) => {
             res.status(404).send('Not Found :(')
         })

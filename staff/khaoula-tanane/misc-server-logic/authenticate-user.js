@@ -1,6 +1,7 @@
 require('misc-commons/polyfills/string')
 const { mongo } = require('misc-data')
 const { utils: { Email }, errors: { UnexistenceError, CredentialsError } } = require('misc-commons')
+const bcrypt = require('bcryptjs')
 
 module.exports = (email, password) => {
     String.validate.notVoid(email)
@@ -16,8 +17,11 @@ module.exports = (email, password) => {
         .then(user => {
             if (!user) throw new UnexistenceError(`user with e-mail ${email} does not exist`)
 
-            if (user.password !== password) throw new CredentialsError('wrong password')
+            return bcrypt.compare(password, user.password)
+                .then(match => {
+                    if (!match) throw new CredentialsError('wrong password')
 
-            return user._id.toString()
+                    return user._id.toString()
+                })
         })
 } 
