@@ -1,5 +1,5 @@
 {
-  "name": "misc-data",
+  "name": "landing",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "misc-commons": "file:../misc-commons",
     "mongoose": "^5.9.17"
   }
 }
