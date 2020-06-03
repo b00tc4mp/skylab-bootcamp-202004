@@ -1,0 +1,19 @@
+{
+  "name": "misc-commons",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx mocha utils/*.spec.js",
+    "test:debug": "npx mocha debug utils/*.spec.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mocha": "^7.2.0",
+    "xhr2": "^0.2.0"
+  }
+}

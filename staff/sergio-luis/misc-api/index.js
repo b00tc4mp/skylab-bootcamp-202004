@@ -3,14 +3,14 @@ require('dotenv').config()
 const { PORT, SECRET, MONGODB_URL } = process.env
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, unRegister, addToCart,retrieveCart, searchProducts, removeFromCart, placeOrder } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser, unRegister,retrieveCart, searchProducts, placeOrder ,updateCart} = require('../misc-server-logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
-const { jwtPromised } = require('./utils')
-const { jwtVerifierExtractor } = require('./middlewares')
+const { jwtPromised } = require('misc-commons/utils')
+const { jwtVerifierExtractor , cors} = require('./middlewares')
 
-const {mongo} = require('./data')
+const {mongo} = require('../misc-data')
 
 mongo.connect(MONGODB_URL)
     .then(connection => {
@@ -18,13 +18,15 @@ mongo.connect(MONGODB_URL)
 
         const app = express()
 
+        app.use(cors)
+
         const parseBody = bodyParser.json()
 
         const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
 ////////////USERS////////////////////////////////////////
         app.post('/users', parseBody, (req, res) => {
             const { body: { name, surname, email, password } } = req
-
+            
             try {
                 registerUser(name, surname, email, password)
                     .then(() => res.status(201).send())
@@ -78,19 +80,7 @@ mongo.connect(MONGODB_URL)
 //////////// CART ////////////////////////////////////////
 /////////////////////////////////////////////////////////
 
-        app.post('/carts', parseBody, verifyExtractJwt,(req, res) => {
-                    
-            try {
-                const { payload: { sub: userId} ,body:{productId}} = req
-                
-                addToCart(userId,productId)
-                    .then((result) => {
-                        return (typeof result === 'string')? res.status(201).send(result) : res.status(201).send()})
-                    .catch((error) => handleError(error, res))
-            } catch (error) {
-                handleError(error, res)
-            }
-        })
+  
 
         app.get('/carts',verifyExtractJwt,(req,res)=>{
             try {
@@ -116,18 +106,7 @@ mongo.connect(MONGODB_URL)
             }
         })
 
-        app.patch('/carts/remove', parseBody, verifyExtractJwt,(req, res) => {
-            try {
-                const { payload: { sub: userId} ,body:{productId}} = req
-                
-                removeFromCart(userId,productId)
-                    .then(() => res.status(204).send())
-                    .catch((error) => handleError(error, res))
-            } catch (error) {
-                handleError(error, res)
-            }
-        })
-
+     
         app.post('/orders', parseBody, verifyExtractJwt,(req, res) => {
             try {
                 const { payload: { sub: userId}, body: {cartId}} = req
@@ -138,6 +117,19 @@ mongo.connect(MONGODB_URL)
             } catch (error) {
                 handleError(error, res)
             }
+        })
+
+// updateCart
+        app.patch('/updateCart', verifyExtractJwt, parseBody, (req, res) => {
+            try {
+                const { payload: { sub: userId }, body: {productId , quantity} } = req
+
+                    updateCart(userId, productId, quantity)
+                        .then(() => res.status(204).send())
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
         })
 
         app.get('*', (req, res) => {
