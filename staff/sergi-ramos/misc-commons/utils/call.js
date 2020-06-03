@@ -6,21 +6,25 @@ module.exports = (method, url, body, headers) => {
     Http.validateMethod(method)
     URL.validate(url)
 
-    const xhr = new XMLHttpRequest()
+    return new Promise((resolve, reject) => {
 
-    xhr.open(method, url)
 
-    if (headers)
-        for (const key in headers)
-            xhr.setRequestHeader(key, headers[key])
+        const xhr = new XMLHttpRequest()
 
-    xhr.onload = function () {
-        resolve( { status: this.status, body: this.responseText } )
-    }
+        xhr.open(method, url)
 
-    xhr.onerror = function () {
-        reject(new Error('network error'))
-    }
+        if (headers)
+            for (const key in headers)
+                xhr.setRequestHeader(key, headers[key])
 
-    xhr.send(body ? body : undefined)
+        xhr.onload = function () {
+            resolve({ status: this.status, body: this.responseText })
+        }
+
+        xhr.onerror = function () {
+            reject(new Error('network error'))
+        }
+
+        xhr.send(body ? body : undefined)
+    })
 }

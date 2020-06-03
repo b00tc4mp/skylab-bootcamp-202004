@@ -9,23 +9,24 @@ const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
 const { mongo } = require('misc-data')
-const { jwtVerifierExtractor } = require('./middlewares')
+const { jwtVerifierExtractor, cors } = require('./middlewares')
 const { utils: { jwtPromised } } = require('misc-commons')
 
 const app = express()
 const parseBody = bodyParser.json()
 
-// users
+
 
 mongo.connect(MONGODB_URL)
     .then(connection => {
 
         const verifyToken = jwtVerifierExtractor(JWT_SECRET, handleError)
 
+        app.use(cors)
 
         app.post('/users', parseBody, (req, res) => {
             const { body: { name, surname, email, password } } = req
-            
+
             try {
                 registerUser(name, surname, email, password)
                     .then(() => res.status(201).send())
@@ -35,6 +36,7 @@ mongo.connect(MONGODB_URL)
                 handleError(error, res)
             }
         })
+        // users
 
         app.post('/users/auth', parseBody, (req, res) => {
             const { body: { email, password } } = req
@@ -103,9 +105,9 @@ mongo.connect(MONGODB_URL)
         })
 
         app.patch('/users/update', verifyToken, parseBody, (req, res) => {
-            
+
             try {
-                
+
                 const { payload: { sub: userId }, body } = req
 
 
@@ -139,7 +141,7 @@ mongo.connect(MONGODB_URL)
 
 
 
-        app.post('/product',parseBody, (req, res) => {
+        app.post('/product', parseBody, (req, res) => {
 
             const { body: product } = req
 
@@ -148,16 +150,16 @@ mongo.connect(MONGODB_URL)
 
         })
 
-        app.get('/products/:product?', verifyToken, (req,res) => {
+        app.get('/products/:product?', verifyToken, (req, res) => {
             const { params: { product: query } } = req
-debugger
+            debugger
             searchProducts(query)
                 .then(productList => {
                     console.log(productList)
                     res.status(201).send(productList)
                 })
                 .catch(error => handleError(error, res))
-            
+
         })
 
 

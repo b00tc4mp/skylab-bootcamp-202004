@@ -1,3 +1,5 @@
 module.exports = {
-    salute: require('./salute')
+    salute: require('./salute'),
+    registerUser: require('./register-user'),
+    authenticateUser: require('./authenticate-user')
 }

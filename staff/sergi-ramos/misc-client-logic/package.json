@@ -4,13 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx mocha *.spec.js",
+    "test:debug": "npx mocha debug *.spec.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "chai": "^4.2.0",
+    "misc-commons": "file:../misc-commons",
     "mocha": "^7.2.0"
+  },
+  "devDependencies": {
+    "xhr2": "^0.2.0"
   }
 }
