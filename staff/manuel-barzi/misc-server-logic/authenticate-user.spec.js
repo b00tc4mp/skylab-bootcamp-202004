@@ -7,13 +7,14 @@ const { random } = Math
 const { expect } = require('chai')
 require('misc-commons/polyfills/json')
 const { mongo } = require('misc-data')
+const bcrypt = require('bcryptjs')
 
 describe('logic - authenticate user', () => {
     let users
 
     before(() => mongo.connect(MONGODB_URL).then(connection => users = connection.db().collection('users')))
 
-    let name, surname, email, password, userId
+    let name, surname, email, password, userId, hash
 
     beforeEach(() =>
         users.deleteMany()
@@ -22,12 +23,15 @@ describe('logic - authenticate user', () => {
                 surname = `surname-${random()}`
                 email = `e-${random()}@mail.com`
                 password = `password-${random()}`
+
+                return bcrypt.hash(password, 10)
             })
+            .then(_hash => hash = _hash)
     )
 
     describe('when user already exists', () => {
         beforeEach(() => {
-            const user = { name, surname, email, password }
+            const user = { name, surname, email, password: hash }
 
             return users.insertOne(user)
                 .then(result => userId = result.insertedId.toString())
