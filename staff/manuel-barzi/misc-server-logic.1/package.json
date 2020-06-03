@@ -1,5 +1,5 @@
 {
-  "name": "misc-client-logic",
+  "name": "misc-server-logic",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,14 +11,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "bcryptjs": "^2.4.3",
     "chai": "^4.2.0",
     "dotenv": "^8.2.0",
-    "misc-data": "file:../misc-data",
-    "mocha": "^7.2.0",
-    "xhr2": "^0.2.0"
+    "mocha": "^7.2.0"
   },
   "dependencies": {
-    "misc-commons": "file:../misc-commons"
+    "bcryptjs": "^2.4.3",
+    "misc-commons": "file:../misc-commons",
+    "misc-data": "file:../misc-data"
   }
 }
