@@ -23,7 +23,7 @@ describe('registerUser', () => {
                 `{ "username": "${email}", "password": "${password}" }`,
                 { 'Content-type': 'application/json' },
                 (error, status, body) => {
-                    expect(error).to.be.undefined
+                    expect(error).to.be.null
                     expect(status).to.equal(200)
 
                     const { token } = JSON.parse(body)
@@ -34,7 +34,7 @@ describe('registerUser', () => {
                         undefined,
                         { Authorization: `Bearer ${token}` },
                         (error, status, body) => {
-                            expect(error).to.be.undefined
+                            expect(error).to.be.null
                             expect(status).to.equal(200)
 
                             const user = JSON.parse(body)
