@@ -13,5 +13,8 @@
     "chai": "^4.2.0",
     "mocha": "^7.2.0"
   },
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "misc-commons": "file:../misc-commons"
+  }
 }
