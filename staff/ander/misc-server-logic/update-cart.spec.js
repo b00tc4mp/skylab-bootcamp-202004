@@ -4,12 +4,12 @@ const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 
 const updateCart = require('./update-cart')
 const { expect } = require('chai')
-require('../utils/polyfills/json')
-require('../utils/polyfills/math')
+require('misc-commons/utils/json')
+require('misc-commons/utils/math')
 const { random, randomIntegerBetween } = Math
-const { mongo } = require('../data')
+const { mongo } = require('misc-data')
 const { ObjectId } = mongo
-const { UnexistenceError, ValueError } = require('../errors')
+const {errors: { UnexistenceError, ValueError }} = require('misc-commons')
 
 describe('logic - update cart', () => {
     let users, products

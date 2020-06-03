@@ -4,12 +4,12 @@ const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 
 const searchProducts = require('./search-products')
 const { expect } = require('chai')
-require('../utils/polyfills/json')
-require('../utils/polyfills/math')
+require('misc-commons/polyfills/json')
+require('misc-commons/polyfills/math')
 const { random, randomIntegerBetween } = Math
-const { mongo } = require('../data')
+const { mongo } = require('misc-data')
 const { ObjectId } = mongo
-const { UnexistenceError, ValueError } = require('../errors')
+const {errors: { UnexistenceError, ValueError }} = require('../misc-data')
 
 describe.only('logic - search products', () => {
     let products, query, name, description,price,productId

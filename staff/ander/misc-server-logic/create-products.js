@@ -1,6 +1,6 @@
 require('misc-commons/polyfills/string')
 require('misc-commons/polyfills/number')
-const { mongo } = require('../data')
+const { mongo } = require('misc-data')
 
 module.exports = (name, description, price, url ) => {
     String.validate.notVoid(name)

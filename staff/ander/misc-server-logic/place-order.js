@@ -1,6 +1,6 @@
-require('misc-commons/utils/polyfills/string')
-const {errors: {UnexistenceError, CredentialsError}} = require('misc-commons');
-const { mongo } = require('../data')
+require('misc-commons/polyfills/string')
+const { errors: { UnexistenceError, CredentialsError } } = require('misc-commons');
+const { mongo } = require('misc-data')
 
 module.exports = (userId, cartId)=>{
     String.validate.notVoid(userId)

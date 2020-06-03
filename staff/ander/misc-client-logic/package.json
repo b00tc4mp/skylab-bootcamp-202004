@@ -1,0 +1,16 @@
+{
+  "name": "misc-client-logic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "register-user.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "misc-commons": "file:../misc-commons",
+    "node-fetch": "^2.6.0"
+  }
+}
