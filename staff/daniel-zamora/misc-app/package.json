@@ -6,11 +6,13 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "fetch": "^1.1.0",
     "misc-commons": "file:../misc-commons",
     "misc-logic-client": "file:../misc-logic-client",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "xhr2": "^0.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

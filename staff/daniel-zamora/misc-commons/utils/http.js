@@ -29,3 +29,4 @@ const Http = (() => {
     return http
 })()
 
+module.exports = Http

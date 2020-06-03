@@ -1,10 +1,11 @@
 import React from 'react';
-
-import { register } from 'misc-logic-client'
-
 import { useState } from 'react'
+import Feedback from './Feedback'
+import register from 'misc-logic-client'
+global.XMLHttpRequest = require('xhr2')
 
-export default function({onLogin}) {
+
+export default function({onLogin}) { debugger
     const [error, setError] = useState()
     
     function handleSubmit(event){
@@ -17,7 +18,7 @@ export default function({onLogin}) {
         password = password.value
 
         try {
-            register(name, surname, email, password)
+            return register(name, surname, email, password)
                 .then(() => onLogin()) 
                 .catch(error => setError(error.message))
                 
@@ -27,11 +28,11 @@ export default function({onLogin}) {
     
     }
 
-    // function handleGoToLogin(event) {
-    //     event.preventDefault()
+    function handleGoToLogin(event) {
+        event.preventDefault()
 
-    //     onLogin()
-    // }
+        onLogin()
+    }
 
     return <section className="register"><h1>Register</h1>
         <form onSubmit={handleSubmit}>
@@ -40,8 +41,8 @@ export default function({onLogin}) {
             <input type="email" name="email" placeholder="e-mail" required />
             <input type="password" name="password" placeholder="password" required minLength="8" />
             <button>Submit</button>
-            {/* <a href="" onClick={handleGoToLogin}>Log in</a> */}
-            {/* {error && <Feedback message={error} level='error' />} */}
+            <a href="#" onClick={handleGoToLogin}>Log in</a> 
+            {error && <Feedback message={error} level='error' />}
         </form>
     </section>
 } 

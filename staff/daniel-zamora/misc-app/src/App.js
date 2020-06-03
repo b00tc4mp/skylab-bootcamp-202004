@@ -3,13 +3,19 @@ import logo from './logo.svg';
 import './App.sass';
 import { useState } from 'react';
 import Register from './components/Register';
+import Login from './components/Login';
+
 
 function App() {
   const [view, setView] = useState('register')
 
   function handleGoToLogin() {
-      setView('success')
+      setView('login')
   }
+
+  function handleGoToRegister() {
+    setView('register')
+  } 
 
   return  <>
     {view === 'success' && (<div className="App">
@@ -29,6 +35,7 @@ function App() {
         </header>
       </div>)}
     {view === 'register' && <Register onLogin={handleGoToLogin} />}
+    {view === 'login' && <Login onRegister={handleGoToRegister} />}
   </>
 }
 

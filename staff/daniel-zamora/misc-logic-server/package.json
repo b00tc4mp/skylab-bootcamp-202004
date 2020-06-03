@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
+    "misc-commons": "file:../misc-commons",
     "misc-data": "file:../misc-data"
   },
   "devDependencies": {},

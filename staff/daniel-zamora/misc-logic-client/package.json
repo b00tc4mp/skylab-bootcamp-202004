@@ -5,7 +5,9 @@
   "dependencies": {
     "misc-commons": "file:../misc-commons"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "xhr2": "^0.2.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

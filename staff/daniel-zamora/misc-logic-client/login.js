@@ -1,34 +1,27 @@
-require('misc-commmons/polyfills/function')
-require('misc-commmons/polyfills/string')
-const { utils: { email, call } } = require('misc-commons') 
+require('misc-commons/polyfills/string')
+const { utils: { Email, call } } = require('misc-commons') 
 
-function authenticateUser(email, password, callback) {
+module.exports = (email, password) => {
     Email.validate(email)
 
     String.validate.notVoid(password)
 
-    Function.validate(callback)
+    return call('POST', 'http://localhost:8080/users/auth',
+        `{ "email": "${email}", "password": "${password}" }`,
+        { 'Content-type': 'application/json' })
 
-    call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',
-        `{ "username": "${email}", "password": "${password}" }`,
-        { 'Content-type': 'application/json' },
-        (error, status, body) => {
-            // if (error) {
-            //     callback(error)
-            //     return
-            // }
-
-            if (error) return callback(error)
-
-            if (status === 200) {
-                const { token } = JSON.parse(body)
-
-                callback(undefined, token)
-            } else {
-                const { error } = JSON.parse(body)
-
-                callback(new Error(error))
-            }
-        }
-    )
+        //https://skylabcoders.herokuapp.com/api/v2/users/auth
+     
+            .then(({status, body}) => {
+                if (status === 200) {
+                    const { token } = JSON.parse(body)
+    
+                    return token
+                
+                } else {
+                    const { error } = JSON.parse(body)
+        
+                    if (error) throw new Error(error)
+                }
+            })   
 }

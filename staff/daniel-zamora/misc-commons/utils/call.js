@@ -1,24 +1,28 @@
-function call(method, url, body, headers, callback) {
+const Http = require('./http')
+require('./url')
+
+
+module.exports = (method, url, body, headers) => {
     Http.validateMethod(method)
     URL.validate(url)
+    
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest()
 
-    Function.validate(callback)
+        xhr.open(method, url)
 
-    const xhr = new XMLHttpRequest()
+        if (headers)
+            for (const key in headers)
+                xhr.setRequestHeader(key, headers[key])
 
-    xhr.open(method, url)
+        xhr.onload = function () {
+            resolve({status: this.status, body: this.responseText})
+        }
 
-    if (headers)
-        for (const key in headers)
-            xhr.setRequestHeader(key, headers[key])
+        xhr.onerror = function () {
+            reject(new Error('network error'))
+        }
 
-    xhr.onload = function () {
-        callback(undefined, this.status, this.responseText)
-    }
-
-    xhr.onerror = function () {
-        callback(new Error('network error'))
-    }
-
-    xhr.send(body ? body : undefined)
+        xhr.send(body ? body : undefined)
+    })
 }

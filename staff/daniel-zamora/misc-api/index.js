@@ -23,10 +23,16 @@ mongo.connect(MONGODB_URL)
 
         const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
 
+        // app.use((req, res, next) => {
+        //     res.header('Access-Control-Allow-Origin', '*');
+        //     next();
+        //   });
 
         app.post('/users', parseBody, (req, res) => { 
 
             const { body: { name, surname, email, password } } = req
+
+            res.header('Access-Control-Allow-Origin', '*')
 
             try {
                 register(name, surname, email, password)
