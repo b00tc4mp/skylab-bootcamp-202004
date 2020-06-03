@@ -8,13 +8,15 @@ const { registerUser, authenticateUser, retrieveUser, unregisterUser, createProd
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { utils : {jwtPromised }} = require('misc-commons')
-const { jwtVerifierExtractor } = require('./middlewares')
+const { jwtVerifierExtractor, cors } = require('./middlewares')
 const { handleError } = require('./helpers')
 const {mongo} = require('../misc-data')
 
 mongo.connect(MONGODB_URL)
     
     const app = express()
+
+    app.use(cors)
 
     const parseBody = bodyParser.json()
 

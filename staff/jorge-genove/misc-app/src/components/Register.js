@@ -1,27 +1,32 @@
 /* eslint-disable no-unused-expressions */
-
+import Feedback from './Feedback'
 import React from 'react'
 import './Register.sass'
-// import { register } from '../../src copy/serviceWorker'
-import { registerUser } from 'misc-client-logic'
+import {registerUser} from 'misc-client-logic'
 
- 
+const { useState } = React
+
+
 export default function () {
 
+    const [error, setError] = useState()
 
     function handleOnSubmit(event) {
         event.preventDefault()
 
         let { name, surname, email, password } = event.target
         debugger
-        name = name.value,
-        surname = surname.value,
-        email = email.value,
+        name = name.value
+        surname = surname.value
+        email = email.value
         password = password.value
 
         try {
             registerUser(name, surname, email, password)
-        } catch (error) {
+                .then(() => console.log('ok'))
+                .catch(error => setError(error.message))
+        } catch ({message}) {
+            setError(message)
 
         }
     }
@@ -35,6 +40,7 @@ export default function () {
             <button>Submit</button>
         </form>
 
+{error && <Feedback  message ={error} level = {error}/>}
     </section>
 }
 

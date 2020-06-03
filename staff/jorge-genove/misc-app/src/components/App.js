@@ -1,12 +1,12 @@
 import React from 'react'
 import './App.sass'
-import Hello from './Hello'
+import Register from './Register'
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Hello name="Manuel" />
+        <Register />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
