@@ -1,7 +1,7 @@
 require('misc-commons/polyfills/string')
 const { utils: { call } } = require('misc-commons')
 
-module.exports = (token, callback) => {
+module.exports = token => {
     String.validate.notVoid(token)
 
     return call('GET', 'http://localhost:8080/users',
