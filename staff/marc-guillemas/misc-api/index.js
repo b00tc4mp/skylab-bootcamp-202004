@@ -8,7 +8,7 @@ const { registerUser, authenticateUser, retrieveUser, searchUsers, unregisterUse
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
-const { mongo } = require('misc-data')
+const { mongoose } = require('misc-data')
 const { jwtVerifierExtractor, cors } = require('./middlewares')
 const { utils: {jwtPromised} } = require('misc-commons')
 
@@ -17,14 +17,15 @@ const parseBody = bodyParser.json()
 
 // users
 
-mongo.connect(MONGODB_URL)
-    .then(connection => {
+mongoose.connect(MONGODB_URL)
+    .then(() => {
 
         const verifyToken = jwtVerifierExtractor(JWT_SECRET, handleError)
 
         app.use(cors)
 
         app.post('/users', parseBody, (req, res) => {
+            debugger 
             const { body: { name, surname, email, password } } = req
 
             try {

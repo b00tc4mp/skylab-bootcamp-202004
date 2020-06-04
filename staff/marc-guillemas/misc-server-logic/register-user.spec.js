@@ -5,21 +5,18 @@ const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 const registerUser = require('./register-user')
 const { random } = Math
 const { expect } = require('chai')
-require('../utils/polyfills/json')
-const { mongo } = require('../data')
+require('misc-commons/polyfills/json')
+const { mongoose, model: { User } } = require('misc-data')
+const bcrypt = require('bcryptjs')
 
 describe('logic - register user', () => {
-    let users
 
-    before(() =>
-        mongo.connect(MONGODB_URL)
-            .then(connection => users = connection.db().collection('users'))
-    )
+    before(() => mongoose.connect(MONGODB_URL))
 
     let name, surname, email, password
 
     beforeEach(() =>
-        users.deleteMany()
+        User.deleteMany()
             .then(() => {
                 name = `name-${random()}`
                 surname = `surname-${random()}`
@@ -31,7 +28,7 @@ describe('logic - register user', () => {
 
     it('should succeed on valid data', () =>
         registerUser(name, surname, email, password)
-            .then(() => users.find().toArray())
+            .then(() => User.find())
             .then(users => {
                 expect(users.length).to.equal(1)
 
@@ -40,16 +37,15 @@ describe('logic - register user', () => {
                 expect(user.name).to.equal(name)
                 expect(user.surname).to.equal(surname)
                 expect(user.email).to.equal(email)
-                expect(user.password).to.equal(password)
+                
+
+                return bcrypt.compare(password, user.password)
             })
+            .then(match => expect(match).to.be.true)
     )
 
     describe('when user already exists', () => {
-        beforeEach(() => {
-            const user = { name, surname, email, password }
-
-            return users.insertOne(user)
-        })
+        beforeEach(() => User.create({name, surname, email, password}))
 
         it('should fail on trying to register an existing user', () =>
             registerUser(name, surname, email, password)
@@ -63,7 +59,7 @@ describe('logic - register user', () => {
         )
     })
 
-    afterEach(() => users.deleteMany())
+    afterEach(() => User.deleteMany())
 
-    after(() => users.deleteMany({}).then(mongo.disconnect))
+    after(() => mongoose.disconnect)
 })

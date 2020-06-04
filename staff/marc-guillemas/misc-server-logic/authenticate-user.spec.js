@@ -5,23 +5,23 @@ const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 const authenticateUser = require('./authenticate-user')
 const { random } = Math
 const { expect } = require('chai')
-require('../utils/polyfills/json')
-const { mongo } = require('../data')
+require('misc-commons/polyfills/json')
+const { mongoose, models: {Users} } = require('misc-data')
+const bcrypt = require('bcryptjs')
 
 describe('logic - authenticate user', () => {
-    let users
 
-    before(() => mongo.connect(MONGODB_URL).then(connection => users = connection.db().collection('users')))
+    before(() => mongoose.connect())
 
     let name, surname, email, password, userId
 
     beforeEach(() =>
-        users.deleteMany()
+        Users.deleteMany()
             .then(() => {
                 name = `name-${random()}`
                 surname = `surname-${random()}`
                 email = `e-${random()}@mail.com`
-                password = `password-${random()}`
+                password = bcrypt(`password-${random()}`)
             })
     )
 
@@ -29,7 +29,7 @@ describe('logic - authenticate user', () => {
         beforeEach(() => {
             const user = { name, surname, email, password }
 
-            return users.insertOne(user)
+            return Users.insertOne(user)
                 .then(result => userId = result.insertedId.toString())
         })
 
