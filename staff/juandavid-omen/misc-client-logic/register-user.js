@@ -1,8 +1,7 @@
 require('misc-commons/polyfills/string')
-require('misc-commons/polyfills/function')
 const { utils: { Email, call } } = require('misc-commons')
 
-module.exports = (name, surname, email, password, callback) => {
+module.exports = (name, surname, email, password) => {
     String.validate.alphabetic(name)
 
     String.validate.alphabetic(surname)
@@ -11,27 +10,18 @@ module.exports = (name, surname, email, password, callback) => {
 
     String.validate.lengthGreaterEqualThan(password, 6)
 
-    Function.validate(callback)
-
-
-    return call('POST', 'http://localhost:8080/users',
+    return call(
+        'POST', 
+        'http://localhost:8080/users',
         `{ "name": "${name}", "surname": "${surname}", "email": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json' }
     )
-    .then(({ body, status }) =>  {
-        
-        body 
-            if (error) return callback(error)
-    
-            if (status === 201)
-                callback()
-    
-            else {
+        .then(({ body, status }) =>  {            
+            if (status === 201) return
+            
                 const { error } = JSON.parse(body)
-                
-                callback(new Error(error))
-            }
 
-    })
+                throw new Error(error)        
+        })
 
 }
