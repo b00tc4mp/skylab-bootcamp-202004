@@ -35,7 +35,7 @@ function App() {
     const password = form.password.value
     authenticateUser(email, password)
       .then(token=>{setView('home'); setToken(token)})
-      
+
       .catch(error=>{setError(error)})
   }
 
