@@ -1,0 +1,5 @@
+%panel {
+    display: inline-block;
+    @include round-border(1rem, dashed, gray, 2rem);
+    padding: 1rem;
+}

@@ -24,41 +24,6 @@ URL.validate = function (url) {
 
 const { Schema, model, SchemaTypes: { ObjectId } } = mongoose
 
-const productQuantity = new Schema({
-    product: {
-        type: ObjectId,
-        ref: 'Product',
-        required: true
-    },
-
-    quantity: {
-        type: Number,
-        required: true
-    }
-})
-
-const ProductQuantity = model('ProductQuantity', productQuantity)
-
-const order = new Schema({
-    products: {
-        type: [productQuantity],
-
-        required: true
-    },
-
-    amount: {
-        type: Number,
-        required: true
-    },
-
-    date: {
-        type: Date,
-        required: true
-    }
-})
-
-const Order = model('Order', order)
-
 const user = new Schema({
     name: {
         type: String,
@@ -84,9 +49,53 @@ const user = new Schema({
 
     nickname: String,
 
-    cart: [productQuantity],
+    cart: {
+        type: [{
+            product: {
+                type: ObjectId,
+                ref: 'Product',
+                required: true
+            },
 
-    orders: [order]
+            quantity: {
+                type: Number,
+                required: true
+            }
+        }],
+
+        required: false
+    },
+
+    orders: {
+        type: [{
+            products: {
+                type: [{
+                    product: {
+                        type: ObjectId,
+                        ref: 'Product',
+                        required: true
+                    },
+
+                    quantity: {
+                        type: Number,
+                        required: true
+                    }
+                }],
+
+                required: true
+            },
+
+            amount: {
+                type: Number,
+                required: true
+            },
+
+            date: {
+                type: Date,
+                required: true
+            }
+        }]
+    }
 })
 
 const User = model('User', user)
@@ -121,13 +130,7 @@ mongoose.connect('mongodb://localhost:27017/skylab', { useUnifiedTopology: true,
         Product.deleteMany()
     ]))
     .then(() => {
-        //return User.create({ name: 'Pepito', surname: 'Grillo', email: 'pepigri@mail.com', password: '123123123' })
-
-        // OR
-
-        const user = new User({ name: 'Pepito', surname: 'Grillo', email: 'pepigri@mail.com', password: '123123123' })
-
-        return user.save()
+        return User.create({ name: 'Pepito', surname: 'Grillo', email: 'pepigri@mail.com', password: '123123123' })
     })
     .then(user => {
         const jeans = new Product({
@@ -146,15 +149,15 @@ mongoose.connect('mongodb://localhost:27017/skylab', { useUnifiedTopology: true,
 
         return Product.insertMany([jeans, socks])
             .then(([jeans, socks]) => {
-                user.cart.push(new ProductQuantity({
+                user.cart.push({
                     product: jeans._id,
                     quantity: 2
-                }))
+                })
 
-                user.cart.push(new ProductQuantity({
+                user.cart.push({
                     product: socks._id,
                     quantity: 3
-                }))
+                })
 
                 return user.save()
             })
@@ -176,11 +179,13 @@ mongoose.connect('mongodb://localhost:27017/skylab', { useUnifiedTopology: true,
 
                 const amount = user.cart.reduce((accum, item) => accum + item.product.price * item.quantity, 0)
 
-                user.orders.push(new Order({
+                const order = {
                     products: user.cart,
                     amount,
                     date: new Date
-                }))
+                }
+
+                user.orders.push(order)
 
                 user.cart = []
 
