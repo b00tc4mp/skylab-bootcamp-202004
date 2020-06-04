@@ -19,7 +19,7 @@ export default function App() {
       <header className="App-header">
         {view === 'register' && <Register goToLogin={handleGoToLogin} />}
         {view === 'login' && <Login goToRegister={handleGoToRegister} />}
-        {view === 'home' && <Home onLogout={handleGoToRegister} />}
+        {/* {view === 'home' && <Home onLogout={handleGoToRegister} />} */}
       
 
       </header>

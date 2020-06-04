@@ -12,7 +12,7 @@ module.exports = (name, surname, email, password) => {
 
     String.validate.notVoid(password)
     String.validate.lengthGreaterEqualThan(password, 8)
-
+debugger
 
     return call('POST', 'http://localhost:8080/users', `{ "name": "${name}", "surname": "${surname}", "email": "${email}", "password": "${password}" }`,
         { 'Content-type': 'Application/json' })

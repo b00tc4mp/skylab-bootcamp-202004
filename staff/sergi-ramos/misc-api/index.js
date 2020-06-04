@@ -8,17 +8,17 @@ const { registerUser, authenticateUser, retrieveUser, searchUsers, unregisterUse
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
-const { mongo } = require('misc-data')
 const { jwtVerifierExtractor, cors } = require('./middlewares')
 const { utils: { jwtPromised } } = require('misc-commons')
+const { mongoose } = require('misc-data')
 
 const app = express()
 const parseBody = bodyParser.json()
 
 
 
-mongo.connect(MONGODB_URL)
-    .then(connection => {
+mongoose.connect(MONGODB_URL)
+    .then(() => {
 
         const verifyToken = jwtVerifierExtractor(JWT_SECRET, handleError)
 
@@ -166,7 +166,7 @@ mongo.connect(MONGODB_URL)
         app.listen(PORT, () => console.log(`${name} ${version} running in ${PORT}`))
 
         process.on('SIGINT', () => {   //TODO
-            connection.close()
+            mongoose.disconnect()
                 .then(() => console.log('\ndisconnected'))
                 .catch(error => console.error('could not disconnect from mongo', error))
                 .finally(() => {
