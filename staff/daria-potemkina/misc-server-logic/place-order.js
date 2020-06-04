@@ -1,44 +1,39 @@
 require('misc-commons/polyfills/string')
-const { mongo } = require('misc-data')
-const { ObjectId } = mongo
 const { errors: { UnexistenceError } } = require('misc-commons')
-
+const { models: { User, Order, Product } } = require('misc-data')
 
 
 module.exports = userId => {
     String.validate.notVoid(userId)
 
-    return mongo.connect()
-        .then(connection => {
-            const users = connection.db().collection('users')
-            const products = connection.db().collection('products')
-            const orders = connection.db().collection('orders')
+    return User.findById(userId).populate('cart.product')
+        .then(_user => {
+            if (!_user) throw new UnexistenceError(`user with id ${userId} does not exist`)
+            
+            const { cart } = _user
 
-            let price = 0
+            if (cart.length === 0) throw new UnexistenceError(`cart is empty`)
 
-            return users.findOne({ _id: ObjectId(userId) })
-                .then(user => {
-                    if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
+            for (let i in cart) {
+                return Product.findById(cart[i].product)
 
-                    const { cart = [] } = user
-
-                    if (cart.length === 0) throw new UnexistenceError(`cart is empty`)
-
-                    const results = cart.map(({ product, quantity }) => {
-                        return products.findOne({ _id: ObjectId(product) })
-                            .then(_product => {
-                                if (!_product) throw new UnexistenceError(`product with id ${product} does not exist`)
-
-                                price += _product.price * quantity
-                                return price
-                            })
-                    })
-
-                    return Promise.all(results)
-                        .then(result => orders.insertOne({ user: userId, price: result[result.length - 1], cart, date: new Date() }))
-                        .then(() => users.updateOne({ _id: ObjectId(userId) }, { $set: { cart: [] } }))
+                .then(_product => {
+                    if(!_product) throw new UnexistenceError(`product does not exist`)
                 })
+            }
 
+            const totalPrice = _user.cart.reduce((accum, item) => accum + item.product.price * item.quantity, 0)
+            
+            const _order = {  user: userId, products: _user.cart, totalPrice, date: new Date }
+
+            return Order.create(_order)
+
+                .then(() => {
+                    _user.cart = []
+
+                    return _user.save()
+
+                })
         })
         .then(() => { })
 }

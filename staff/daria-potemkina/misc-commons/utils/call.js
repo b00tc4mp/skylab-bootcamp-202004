@@ -18,12 +18,11 @@ module.exports = (method, url, body, headers) => {
                 xhr.setRequestHeader(key, headers[key])
 
         xhr.onload = function () {
-            resolve({ status: this.status, response: this.responseText })
+            resolve({ status: this.status, body: this.responseText })
         }
 
         xhr.onerror = function () {
-            const error = new Error('network error')
-            reject(error)
+            reject(new Error('network error'))
         }
 
         xhr.send(body ? body : undefined)

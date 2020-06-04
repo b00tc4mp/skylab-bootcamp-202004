@@ -3,13 +3,14 @@ require('misc-commons/polyfills/number')
 const { errors: { UnexistenceError } } = require('misc-commons')
 const { mongo } = require('misc-data')
 const { ObjectId } = mongo
+const { env: { MONGODB_URL } } = process
 
 module.exports = (userId, productId, quantity) => {
     String.validate.notVoid(userId)
     String.validate.notVoid(productId)
     Number.validate.positive(quantity)
-
-    return mongo.connect()
+    debugger
+    return mongo.connect(MONGODB_URL)
         .then(connection => {
             const users = connection.db().collection('users')
 

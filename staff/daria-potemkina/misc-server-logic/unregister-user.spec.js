@@ -5,20 +5,15 @@ const { env: { MONGODB_URL_TEST } } = process
 const unregisterUser = require('./unregister-user')
 const { random } = Math
 const { expect } = require('chai')
-const { mongo } = require('misc-data')
+const { mongoose, models: { User } } = require('misc-data')
 
 describe('logic - unregisterUser', () => {
-    let users
-
-    before(() =>
-        mongo.connect(MONGODB_URL_TEST)
-            .then(connection => users = connection.db().collection('users'))
-    )
+    before(() => mongoose.connect(MONGODB_URL_TEST))
 
     let name, surname, email, password, userId
 
     beforeEach(() =>
-        users.deleteMany()
+        User.deleteMany()
             .then(() => {
                 name = `name-${random()}`
                 surname = `surname-${random()}`
@@ -29,18 +24,16 @@ describe('logic - unregisterUser', () => {
 
     describe('when user already exist', () => {
         beforeEach(() => {
-            const user = { name, surname, email, password }
-
-            return users.insertOne(user)
-                .then(result => userId = result.insertedId.toString())
+            return User.create({name, surname, email, password})
+                .then(user => userId = user._id.toString())
         })
 
-        it('should remove the registered user from database', () =>{
+        it('should remove the registered user from database', () => {
             return unregisterUser(userId)
-            .then(() => users.find().toArray())
-            .then(users => {
-                expect(users).to.have.lengthOf(0)
-            })
+                .then(() => User.find())
+                .then(users => {
+                    expect(users).to.have.lengthOf(0)
+                })
         })
     })
 
@@ -48,44 +41,44 @@ describe('logic - unregisterUser', () => {
         userId = '123455678990'
 
         return unregisterUser(userId)
-        .then(() => { throw new Error('should not reach this point') })
-        .catch(error => {
-            expect(error).to.be.exist
-            expect(error).to.be.an.instanceOf(Error)
-            expect(error.message).to.equal(`user with id ${userId} does not exist`)
-        })
+            .then(() => { throw new Error('should not reach this point') })
+            .catch(error => {
+                expect(error).to.be.exist
+                expect(error).to.be.an.instanceOf(Error)
+                expect(error.message).to.equal(`user with id ${userId} does not exist`)
+            })
     })
 
     it('should return a type error', () => {
         userId = undefined
-        expect( () => {
+        expect(() => {
             unregisterUser(userId)
         }).to.throw(TypeError, `${userId} is not a string`)
 
         userId = 123
-        expect( () => {
+        expect(() => {
             unregisterUser(userId)
         }).to.throw(TypeError, `${userId} is not a string`)
 
         userId = true
-        expect( () => {
+        expect(() => {
             unregisterUser(userId)
         }).to.throw(TypeError, `${userId} is not a string`)
     })
 
     it('should return an error', () => {
         userId = ''
-        expect( () => {
+        expect(() => {
             unregisterUser(userId)
         }).to.throw(Error, `${userId} is empty or blank`)
 
         userId = '    '
-        expect( () => {
+        expect(() => {
             unregisterUser(userId)
         }).to.throw(Error, `${userId} is empty or blank`)
     })
 
-    afterEach(() => users.deleteMany({}))
+    afterEach(() => User.deleteMany())
 
-    after(() => users.deleteMany({}).then(mongo.disconnect))
+    after(mongoose.disconnect)
 })

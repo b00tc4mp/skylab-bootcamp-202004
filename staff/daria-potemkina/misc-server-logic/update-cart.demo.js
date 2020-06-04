@@ -7,7 +7,7 @@ const updateCart = require('./update-cart')
 
 mongo.connect(MONGODB_URL)
     .then(() =>
-        updateCart('5ed3ca3b5322491a5a887b2f', '5ed38af7fd95209e1c9efe8e', 1)
+        updateCart('5ed8dcc4bdbe512ef5cb37dd', '5ed8dc5d1e54692e7cf9f0c2', 3)
             .then(console.log)
     )
     .catch(console.error)

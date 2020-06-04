@@ -1,50 +1,42 @@
 import React from 'react'
+
+import './Register.sass'
 import { registerUser } from 'misc-client-logic'
 
-const { useState } = React
+export default function ({goToLogin}) {
 
-function Register({ onSubmit, onLogin }) {
-
-    const [error, setError] = useState()
-
-    function handleSubmit(event) {
+    function handleOnSubmit(event) {
         event.preventDefault()
 
         let { name, surname, email, password } = event.target
 
-        name = name.value,
-            surname = surname.value,
-            email = email.value,
-            password = password.value
+        name = name.value
+        surname = surname.value
+        email = email.value
+        password = password.value
 
         try {
-            registerUser(name, surname, email, password, error => {
-                if (error) return setError(error.message)
-
-                onSubmit();
-            })
-
-        } catch ({ message }) {
-            setError(message)
+            return registerUser(name, surname, email, password)
+                .then((response) => response ? console.log(response): goToLogin())
+                .catch(error => console.error('KO', error))
+        } catch (error) {
+            console.log(error)
         }
     }
 
-    function handleGoToLogin(event) {
-        event.preventDefault()
-
-        onLogin()
-    }
-
-    return <section className="register"><h1>Register</h1>
-        <form onSubmit= {handleSubmit}>
-            <input type="text" name="name" placeholder="name" required patern="[A-Za-z]{1,20}" />
-            <input type="text" name="surname" placeholder="surname" required patern="[A-Za-z]{1,20}" />
-            <input type="email" name="email" placeholder="e-mail" required />
-            <input type="password" name="password" placeholder="password" required minLength="8" />
+    return <section  className="Register">
+        <form onSubmit={handleOnSubmit}>
+            <input type="text" name="name"></input>
+            <input type="text" name="surname"></input>
+            <input type="email" name="email"></input>
+            <input type="password" name="password"></input>
             <button>Submit</button>
-            <a href="" onClick = {handleGoToLogin}>Log in</a>
         </form>
+        <a href="" onClick={ event => {
+            event.preventDefault()
+            goToLogin()
+        }
+            }>Login</a>
+
     </section>
 }
-
-export default Register;

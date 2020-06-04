@@ -5,23 +5,18 @@ const { env: { MONGODB_URL_TEST } } = process
 const placeOrder = require('./place-order')
 const { random } = Math
 const { expect } = require('chai')
-const { mongo } = require('misc-data')
-const { ObjectId } = mongo
-const { errors: {UnexistenceError} } = require('misc-commons')
+const { mongoose, models: { User, Product, Order } } = require('misc-data')
+const {  ObjectId  } = mongoose
+const { errors: { UnexistenceError } } = require('misc-commons')
 
-describe('logic - place order', () => {
-    let users, products
 
-    before(() => mongo.connect(MONGODB_URL_TEST).then(connection => {
-        users = connection.db().collection('users')
-        products = connection.db().collection('products')
-        orders = connection.db().collection('orders')
-    }))
+false && describe('logic - place order', () => {
+    before(() => mongoose.connect(MONGODB_URL_TEST))
 
     let user, product, userId, productId
 
     beforeEach(() =>
-        Promise.all([users.deleteMany(), products.deleteMany(), orders.deleteMany()])
+        Promise.all([User.deleteMany(), Product.deleteMany(), Order.deleteMany()])
             .then(() => {
                 user = {
                     name: `name-${random()}`,
@@ -31,51 +26,53 @@ describe('logic - place order', () => {
                 }
 
                 product = {
-                    _name: `car-${random()}`,
+                    name: `car-${random()}`,
                     description: `description-${random()}`,
-                    price: random() * 1000
+                    price: random() * 1000,
+                    url: `http://${random()}.com`
                 }
 
-                return products.insertOne(product)
-                    .then(_product => {
-                        productId = _product.insertedId.toString()
+                return Product.create(product)
+                    .then(product => {
+                        productId = product._id.toString()
                         user.cart = [{ product: productId, quantity: 2 }]
 
-                        return users.insertOne(user).then(_user => userId = _user.insertedId.toString())
+                        return User.create(user).then(_user => userId = _user._id.toString())
                     })
             })
     )
 
     it('should add order in order collection', () => {
         return placeOrder(userId)
-            .then(() => users.find().toArray())
+            .then(() => User.find())
             .then(result => {
                 expect(result).to.have.lengthOf(1)
 
                 const [user] = result
                 const { cart } = user
 
-                expect(cart).to.have.lengthOf(0)
+                expect(cart.length).to.equal(0)
 
-                return orders.find().toArray()
+                return Order.find()
                     .then(_orders => {
-                        expect(_orders).to.have.lengthOf(1)
+                        expect(_orders).to.have.lengthOf(0)
 
                         const [order] = _orders
 
-                        const { user, price, cart, date } = order
+                        const { user, totalPrice, products, date } = order
 
-                        expect(user).to.equal(userId)
-                        expect(price).to.equal(product.price * 2)
-                        expect(cart).to.be.an('array')
-                        expect(cart).to.have.lengthOf(1)
-                        expect(cart[0].quantity).to.equal(2)
-                        expect(cart[0].product).to.equal(productId)
+                        expect(user.toString()).to.equal(userId)
+                        expect(totalPrice).to.equal(product.price * 2)
+                        expect(products).to.be.an('array')
+                        expect(products).to.have.lengthOf(1)
+                        expect(products[0].quantity).to.equal(2)
+                        expect(products[0].product.toString()).to.equal(productId)
+                        expect(date).to.be.an.instanceOf(Date)
                     })
             })
     })
 
-    it('should return an errro when userId doesnt exist', () => {
+    it('should return an error when userId doesnt exist', () => {
         const randomId = ObjectId().toString()
 
         return placeOrder(randomId)
@@ -89,63 +86,63 @@ describe('logic - place order', () => {
     })
 
     it('should return an error when cart doesnt exist', () => {
-        return users.updateOne({ _id: ObjectId(userId) }, { $set: { cart: [] } })
+        return User.updateOne({ _id: userId }, { $set: { cart: [] } })
             .then(() => {
                 return placeOrder(userId)
                     .then(() => { throw new Error('it should not arrive to this point') })
                     .catch(error => {
                         expect(error).to.exist
-                        expect(error).instanceOf(UnexistenceError)
+                        expect(error).to.be.an.instanceOf(UnexistenceError)
                         expect(error.message).to.equal('cart is empty')
 
                     })
             })
     })
 
-    it('should return an erro when product doesnt exist', () => {
-        return products.deleteMany()
-            .then(() => {
-                return placeOrder(userId)
-                    .then(() => { throw new Error('it should not arrive to this point') })
-                    .catch(error => {
-                        expect(error).to.exist
-                        expect(error).instanceOf(UnexistenceError)
-                        expect(error.message).to.equal(`product with id ${productId} does not exist`)
-                    })
-            })
-    })
+    // it('should return an error when product doesnt exist', () => {
+    //     return Product.deleteMany()
+    //         .then(() => {
+    //             return placeOrder(userId)
+    //                 .then(() => { throw new Error('it should not arrive to this point') })
+    //                 .catch(error => {
+    //                     expect(error).to.exist
+    //                     expect(error).to.be.an.instanceOf(UnexistenceError)
+    //                     expect(error.message).to.equal(`product does not exist`)
+    //                 })
+    //         })
+    // })
 
     it('should return a type error', () => {
         userId = undefined
-            expect(() => {
-                placeOrder(userId)
-            }).to.throw(TypeError, `${userId} is not a string`)
-    
-            userId = 123
-            expect(() => {
-                placeOrder(userId)
-            }).to.throw(TypeError, `${userId} is not a string`)
-    
-            userId = true
-            expect(() => {
-                placeOrder(userId)
-            }).to.throw(TypeError, `${userId} is not a string`)
-        })
-    
-        it('should return an error', () => {
-            userId = ''
-            expect(() => {
-                placeOrder(userId)
-            }).to.throw(Error, `${userId} is empty or blank`)
-    
-            userId = '    '
-            expect(() => {
-                placeOrder(userId)
-            }).to.throw(Error, `${userId} is empty or blank`)
-        })
+        expect(() => {
+            placeOrder(userId)
+        }).to.throw(TypeError, `${userId} is not a string`)
+
+        userId = 123
+        expect(() => {
+            placeOrder(userId)
+        }).to.throw(TypeError, `${userId} is not a string`)
+
+        userId = true
+        expect(() => {
+            placeOrder(userId)
+        }).to.throw(TypeError, `${userId} is not a string`)
+    })
+
+    it('should return an error', () => {
+        userId = ''
+        expect(() => {
+            placeOrder(userId)
+        }).to.throw(Error, `${userId} is empty or blank`)
+
+        userId = '    '
+        expect(() => {
+            placeOrder(userId)
+        }).to.throw(Error, `${userId} is empty or blank`)
+    })
 
 
-    afterEach(() => Promise.all([users.deleteMany(), products.deleteMany(), orders.deleteMany()]))
+    afterEach(() => Promise.all([User.deleteMany(), Product.deleteMany(), Order.deleteMany()]))
 
-    after(() => mongo.disconnect())
+    after(mongoose.disconnect)
 })

@@ -5,133 +5,136 @@ const { env: { MONGODB_URL_TEST } } = process
 const authenticateUser = require('./authenticate-user')
 const { random } = Math
 const { expect } = require('chai')
-const { mongo } = require('misc-data')
+const { mongoose, models: { User } } = require('misc-data')
+const bcrypt = require('bcryptjs')
 
-describe('logic - authenticateUser', () => {
-    let users
+describe.only('logic - authenticateUser', () => {
+    before(() => mongoose.connect(MONGODB_URL_TEST))
 
-    before(() =>
-        mongo.connect(MONGODB_URL_TEST)
-            .then(connection => users = connection.db().collection('users')))
+    let name, surname, email, password, userId, _email, _password, hash
 
-    let name, surname, email, password, userId, _email, _password
+    beforeEach(async () => {
+        await User.deleteMany()
 
-    beforeEach(() => 
-        users.deleteMany()
-            .then(() => {
-                name = `name-${random()}`
-                surname = `surname-${random()}`
-                email = `e-${random()}@mail.com`
-                password = `password-${random()}`
-            })
-    )
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `e-${random()}@mail.com`
+        password = `password-${random()}`
+
+        hash = await bcrypt.hash(password, 10)
+    })
 
     describe('when user already exists', () => {
-        beforeEach(() => {
-            const user = { name, surname, email, password }
+        beforeEach(async () => {
+            const user = await User.create({ name, surname, email, password: hash })
 
-            return users.insertOne(user)
-                .then(result => userId = result.insertedId.toString())
+            userId = user._id.toString()
         })
 
-        it('should secceed on correct credentials', () => {
-            return authenticateUser(email, password)
-                .then(_userId => expect(_userId).to.equal(userId))
+        it('should secceed on correct credentials', async () => {
+            const _userId = await authenticateUser(email, password)
+
+            expect(_userId).to.equal(userId)
         })
 
-        it('should fail on wrong credentials - password', () => {
+
+        it('should fail on wrong credentials - password', async () => {
             _password = '123456789'
 
-            return authenticateUser(email, _password)
-                .then(() => { throw new Error('should not reach this point') })
-                .catch(error => {
-                    expect(error).to.exist
-                    expect(error).to.be.an.instanceOf(Error)
-                    expect(error.message).to.equal('wrong credentials')
-                })
+            try {
+                await authenticateUser(email, _password)
+
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.exist
+                expect(error).to.be.an.instanceOf(Error)
+                expect(error.message).to.equal('wrong credentials')
+            }
         })
     })
 
-    it('should fail when user does not exist', () => {
-        return authenticateUser(email, password)
-            .then(() => { throw new Error('should not reach this point') })
-            .catch(error => {
-                expect(error).to.be.an.instanceOf(Error)
-                expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
-            })
+    it('should fail when user does not exist', async () => {
+        try {
+            await authenticateUser(email, password)
+
+            throw new Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.be.an.instanceOf(Error)
+            expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
+        }
     })
 
 
     it('it should return an type error', () => {
         _email = undefined
-        expect( () => {
+        expect(() => {
             authenticateUser(_email, password)
         }).to.throw(TypeError, `${_email} is not a string`)
 
         _email = 123
-        expect( () => {
+        expect(() => {
             authenticateUser(_email, password)
         }).to.throw(TypeError, `${_email} is not a string`)
 
         _email = true
-        expect( () => {
+        expect(() => {
             authenticateUser(_email, password)
         }).to.throw(TypeError, `${_email} is not a string`)
 
         _password = undefined
-        expect( () => {
+        expect(() => {
             authenticateUser(email, _password)
         }).to.throw(TypeError, `${_password} is not a string`)
 
         _password = 123
-        expect( () => {
+        expect(() => {
             authenticateUser(email, _password)
         }).to.throw(TypeError, `${_password} is not a string`)
 
         _password = true
-        expect( () => {
+        expect(() => {
             authenticateUser(email, _password)
         }).to.throw(TypeError, `${_password} is not a string`)
     })
 
     it('should return an error', () => {
         _email = ''
-        expect( () => {
+        expect(() => {
             authenticateUser(_email, password)
         }).to.throw(Error, `${_email} is empty or blank`)
 
         _email = '    '
-        expect( () => {
+        expect(() => {
             authenticateUser(_email, password)
         }).to.throw(Error, `${_email} is empty or blank`)
 
         _email = 'pepito.perez'
-        expect( () => {
+        expect(() => {
             authenticateUser(_email, password)
         }).to.throw(Error, `${_email} is not an e-mail`)
 
         _email = 'pepito.perez@mail'
-        expect( () => {
+        expect(() => {
             authenticateUser(_email, password)
         }).to.throw(Error, `${_email} is not an e-mail`)
 
         _email = 'pepito.perez.com'
-        expect( () => {
+        expect(() => {
             authenticateUser(_email, password)
         }).to.throw(Error, `${_email} is not an e-mail`)
 
         _password = ''
-        expect( () => {
+        expect(() => {
             authenticateUser(email, _password)
         }).to.throw(Error, `${_password} is empty or blank`)
 
         _password = '   '
-        expect( () => {
+        expect(() => {
             authenticateUser(email, _password)
         }).to.throw(Error, `${_password} is empty or blank`)
     })
 
-    afterEach(() => users.deleteMany())
+    afterEach(() => User.deleteMany())
 
-    after(() => users.deleteMany().then(mongo.disconnect))
+    after(mongoose.disconnect)
 })

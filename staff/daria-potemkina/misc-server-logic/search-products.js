@@ -1,10 +1,12 @@
 require('misc-commons/polyfills/string')
 const { mongo } = require('misc-data')
+const { env: { MONGODB_URL } } = process
+
 
 module.exports = query => {
     String.validate.notVoid(query)
 
-    return mongo.connect()
+    return mongo.connect(MONGODB_URL)
         .then(connection => {
             const products = connection.db().collection('products')
 

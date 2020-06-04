@@ -1,13 +1,13 @@
 require('misc-commons/polyfills/string')
-
 const { mongo } = require('misc-data')
 const { ObjectId } = mongo
 const { errors: { UnexistenceError } } = require('misc-commons')
+const { env: { MONGODB_URL } } = process
 
 module.exports = userId => {
     String.validate.notVoid(userId)
 
-    return mongo.connect()
+    return mongo.connect(MONGODB_URL)
         .then(connection => {
             const users = connection.db().collection('users')
 

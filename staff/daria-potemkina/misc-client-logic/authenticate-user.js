@@ -9,9 +9,12 @@ module.exports = (email, password) => {
     return call('POST', 'http://localhost:8080/users/auth',
         `{ "email": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json' })
-        .then(({ status, response }) => {
-            if (status !== 200) throw new Error({ response: { error } })
-            const { token } = JSON.parse(response)
+        .then(({ status, body }) => {
+            if (status !== 200) {
+                const {error} = JSON.parse(body)
+                throw new Error(error)
+            }
+            const { token } = JSON.parse(body)
             return token
         })
 

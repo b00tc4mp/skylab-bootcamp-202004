@@ -5,11 +5,14 @@ module.exports = (token) => {
     String.validate(token)
 
     return call('GET', 'http://localhost:8080/users/',
-    undefined,
-    { 'Authorization': `Bearer ${token}` })
-        .then(({ status, response }) => {
-            if (status !== 200) throw new Error({ error: { response } })
+        undefined,
+        { 'Authorization': `Bearer ${token}` })
+        .then(({ status, body }) => {
+            if (status !== 200) {
+                const { error } = body
+                throw new Error(error)
+            }
 
-            return JSON.parse(response)
+            return JSON.parse(body)
         })
 }

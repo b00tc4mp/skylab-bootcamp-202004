@@ -1,13 +1,13 @@
 require('dotenv').config()
 
 const { env: { MONGODB_URL } } = process
-const { mongo } = require('misc-data')
+const { mongoose } = require('misc-data')
 const placeOrder = require('./place-order')
 
-mongo.connect(MONGODB_URL)
+mongoose.connect(MONGODB_URL)
     .then(() => {
         try {
-            return placeOrder('5ed3ca3b5322491a5a887b2f')
+            return placeOrder('5ed8dcc4bdbe512ef5cb37dd')
                 .then(() => console.log('OK'))
                 .catch(error => console.error('KO async', error))
         } catch (error) {

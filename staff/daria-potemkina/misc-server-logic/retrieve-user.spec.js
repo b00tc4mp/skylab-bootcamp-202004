@@ -5,88 +5,81 @@ const { env: { MONGODB_URL_TEST } } = process
 const retrieveUser = require('./retrieve-user')
 const { random } = Math
 const { expect } = require('chai')
-const { mongo } = require('misc-data')
-
+const { mongoose, models: { User } } = require('misc-data')
 
 describe('logic - retrieveUser', () => {
-    let users
-
-    before(() => mongo.connect(MONGODB_URL_TEST)
-        .then(connection => users = connection.db().collection('users')))
-
+    before(() => mongoose.connect(MONGODB_URL_TEST))
 
     let name, surname, email, password, userId
 
-    beforeEach(() =>
-        users.deleteMany()
-            .then(() => {
-                name = `name-${random()}`
-                surname = `surname-${random()}`
-                email = `e-${random()}@mail.com`
-                password = `password-${random()}`
-            })
-    )
+    beforeEach(async () => {
+        await User.deleteMany()
+
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `e-${random()}@mail.com`
+        password = `password-${random()}`
+    })
 
     describe('when user already exist', () => {
-        beforeEach(() => {
-            const user = { name, surname, email, password }
-
-            return users.insertOne(user)
-                .then(result => userId = result.insertedId.toString())
+        beforeEach(async () => {
+            const user = await User.create({ name, surname, email, password })
+            userId = user._id.toString()
         })
 
-        it('should return the user data', () => {
-            return retrieveUser(userId)
-                .then(user => {
-                    expect(user.password).to.be.undefined
-                    expect(user.name).to.equal(name)
-                    expect(user.surname).to.equal(surname)
-                    expect(user.email).to.equal(email)
-                })
+        it('should return the user data', async () => {
+            const result = await retrieveUser(userId)
+
+            expect(result.password).to.be.undefined
+            expect(result.name).to.equal(name)
+            expect(result.surname).to.equal(surname)
+            expect(result.email).to.equal(email)
         })
     })
 
-    it('should fail when user does not exists', () => {
+    it('should fail when user does not exists', async () => {
         userId = '123455678990'
-        return retrieveUser(userId)
-            .then(() => { throw new Error('should not reach this point') })
-            .catch(error => {
-                expect(error).to.be.exist
-                expect(error).to.be.an.instanceOf(Error)
-                expect(error.message).to.equal(`user with id ${userId} does not exist`)
-            })
+        try {
+            await retrieveUser(userId)
+
+            throw new Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.be.exist
+            expect(error).to.be.an.instanceOf(Error)
+            expect(error.message).to.equal(`user with id ${userId} does not exist`)
+        }
     })
 
     it('should return a type error', () => {
         userId = undefined
-        expect( () => {
+        expect(() => {
             retrieveUser(userId)
         }).to.throw(TypeError, `${userId} is not a string`)
 
         userId = 123
-        expect( () => {
+        expect(() => {
             retrieveUser(userId)
         }).to.throw(TypeError, `${userId} is not a string`)
 
         userId = true
-        expect( () => {
+        expect(() => {
             retrieveUser(userId)
         }).to.throw(TypeError, `${userId} is not a string`)
     })
 
     it('should return an error', () => {
         userId = ''
-        expect( () => {
+        expect(() => {
             retrieveUser(userId)
         }).to.throw(Error, `${userId} is empty or blank`)
 
         userId = '    '
-        expect( () => {
+        expect(() => {
             retrieveUser(userId)
         }).to.throw(Error, `${userId} is empty or blank`)
     })
 
-    afterEach(() => users.deleteMany())
+    afterEach(() => User.deleteMany())
 
-    after(() => users.deleteMany().then(mongo.disconnect))
+    after(mongoose.disconnect)
 })

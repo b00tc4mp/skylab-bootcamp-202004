@@ -3,6 +3,7 @@ const { utils: { Email } } = require('misc-commons')
 const { mongo } = require('misc-data')
 const { ObjectId } = mongo
 const { errors: { UnexistenceError } } = require('misc-commons')
+const { env: { MONGODB_URL } } = process
 
 module.exports = (userId, data) => {
     if (typeof data !== 'object') throw new TypeError(`${data} is not an object`)
@@ -16,7 +17,7 @@ module.exports = (userId, data) => {
     Email.validate(email)
     String.validate.notVoid(password)
 
-    return mongo.connect()
+    return mongo.connect(MONGODB_URL)
         .then(connection => {
             const users = connection.db().collection('users')
 

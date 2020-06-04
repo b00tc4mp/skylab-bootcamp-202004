@@ -12,11 +12,11 @@ module.exports = (name, surname, email, password) => {
     return call('POST', 'http://localhost:8080/users',
         `{ "name": "${name}", "surname": "${surname}", "email": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json' })
-        .then(({ status, response }) => {
+        .then(({ status, body }) => {
             if (status !== 201) {
-                const { error } = JSON.parse(response)
+                const { error } = JSON.parse(body)
                 throw new Error(error)
             }
-            return {}
+            return
         })
 }

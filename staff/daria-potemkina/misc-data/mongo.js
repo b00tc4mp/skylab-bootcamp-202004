@@ -1,5 +1,7 @@
 const mongodb = require('mongodb')
 
+const {ObjectId,connect} = mongodb
+
 let connection
 
 module.exports = {
@@ -12,5 +14,5 @@ module.exports = {
         return connection.close().then(() => connection = undefined)
     },
 
-    ObjectId: mongodb.ObjectId
+    ObjectId
 }

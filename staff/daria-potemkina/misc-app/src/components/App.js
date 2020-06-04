@@ -1,26 +1,38 @@
-import React from 'react';
-import './App.css';
+import React, { useState } from 'react'
+import './App.sass'
 import Register from './Register'
+import Login from './Login'
+import Home from './Home'
 
-function App() {
+
+export default function App() {
+
+  const [view, setView] = useState('register')
+  const [token, setToken] = useState()
+
+
+  const handleGoToLogin = () => setView('login')
+
+  const handleLogin = (token) => {
+    sessionStorage.token = token
+    setView('home')
+    setToken(token)
+  }
+
+  const handleGoToRegister = () => setView('register')
+
+
+
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {view === 'register' && <Register goToLogin={handleGoToLogin} />}
+        {view === 'login' && <Login goToRegister={handleGoToRegister} onSubmit={handleLogin}/>}
+        {view === 'home' && <Home token={token} onLogout={handleGoToRegister} />}
+      
+
       </header>
-  <Register />
     </div>
   )
-}
 
-export default App;
+}

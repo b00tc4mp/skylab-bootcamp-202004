@@ -3,7 +3,7 @@ require('dotenv').config()
 const { env: { MONGODB_URL } } = process
 const { mongo } = require('misc-data')
 
-const product = [
+const products = [
     {
         name: "Phone Case - 3 Card",
         description: "iPhone 11 / 11 Pro / 11 Pro Max, 3 cards",
@@ -79,7 +79,7 @@ const product = [
 
 mongo.connect(MONGODB_URL)
     .then(connection => {
-        const products = connection.db().collection('products')
+        const _products = connection.db().collection('products')
 
-        return products.insertMany(product)
+        return _products.insertMany(products)
     })

@@ -14,7 +14,10 @@
     "misc-commons": "file:../misc-commons"
   },
   "devDependencies": {
+    "bcryptjs": "^2.4.3",
     "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
+    "misc-data": "file:../misc-data",
     "mocha": "^7.2.0",
     "xhr2": "^0.2.0"
   }

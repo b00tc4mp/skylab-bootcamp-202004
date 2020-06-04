@@ -1,3 +1,3 @@
 const authenticateUser = require('./authenticate-user')
 
-authenticateUser('pepigri@mail.com', '123', console.log)
+authenticateUser('dariapotemkina@mail.ru', '123123123', console.log)

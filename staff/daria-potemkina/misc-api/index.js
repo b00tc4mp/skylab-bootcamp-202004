@@ -9,18 +9,19 @@ const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
 const { utils: { jwtPromised } } = require('misc-commons')
-const { jwtVerifierExtractor } = require('./middlewares')
-const { mongo } = require('misc-data')
+const { jwtVerifierExtractor, cors } = require('./middlewares')
+const { mongoose } = require('misc-data')
 
-mongo.connect(MONGODB_URL)
-    .then(connection => {
+mongoose.connect(MONGODB_URL)
+    .then(() => {
         const app = express()
 
         const parseBody = bodyParser.json()
 
         const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
 
-
+        app.use(cors)
+        
         app.post('/users', parseBody, (req, res) => {
             const { body: { name, surname, email, password } } = req
 
@@ -96,20 +97,21 @@ mongo.connect(MONGODB_URL)
             }
         })
 
-        app.post('/cart', parseBody, verifyExtractJwt, (req, res) => {
+        app.post('/cart', parseBody, verifyExtractJwt, (req, res) => {debugger
+        
             try {
                 const { payload: { sub: userId }, body: { productId, quantity } } = req
 
                 updateCart(userId, productId, quantity)
                     .then(() => res.status(200).send())
                     .catch(error => handleError(error, res))
-
+                debugger
             } catch (error) {
                 handleError(error, res)
             }
         })
 
-        app.get('/cart/', verifyExtractJwt, (req, res) => {
+        app.get('/cart', verifyExtractJwt, (req, res) => {
             try {
                 const { payload: { sub: userId } } = req
 
@@ -154,7 +156,7 @@ mongo.connect(MONGODB_URL)
         app.listen(PORT, () => console.log(`${name} ${version} running`))
 
         process.on('SIGINT', () => {
-            connection.close()
+            mongoose.disconnect()
                 .then(() => console.log('\ndisconnected mongo'))
                 .catch(error => console.error('could not disconnect from mongo', error))
                 .finally(() => {
