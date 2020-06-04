@@ -6,20 +6,18 @@ const authenticateUser = require('./authenticate-user')
 const { random } = Math
 const { expect } = require('chai')
 require('misc-commons/polyfills/json')
-const { mongo } = require('misc-data')
+const { mongoose, models: { User } } = require('misc-data')
 const bcrypt = require('bcryptjs')
 require('misc-commons/ponyfills/xhr')
 require('misc-commons/ponyfills/atob')
 
 describe('logic - authenticate user', () => {
-    let users
-
-    before(() => mongo.connect(MONGODB_URL).then(connection => users = connection.db().collection('users')))
+    before(() => mongoose.connect(MONGODB_URL))
 
     let name, surname, email, password, userId, hash
 
     beforeEach(() =>
-        users.deleteMany()
+        User.deleteMany()
             .then(() => {
                 name = `name-${random()}`
                 surname = `surname-${random()}`
@@ -32,12 +30,10 @@ describe('logic - authenticate user', () => {
     )
 
     describe('when user already exists', () => {
-        beforeEach(() => {
-            const user = { name, surname, email, password: hash }
-
-            return users.insertOne(user)
-                .then(result => userId = result.insertedId.toString())
-        })
+        beforeEach(() =>
+            User.create({ name, surname, email, password: hash })
+                .then(user => userId = user.id)
+        )
 
         it('should succeed on correct credentials', () =>
             authenticateUser(email, password)
@@ -75,7 +71,7 @@ describe('logic - authenticate user', () => {
             })
     )
 
-    afterEach(() => users.deleteMany())
+    afterEach(() => User.deleteMany())
 
-    after(() => users.deleteMany().then(mongo.disconnect))
+    after(mongoose.disconnect)
 })
