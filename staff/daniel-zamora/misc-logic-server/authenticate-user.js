@@ -11,11 +11,10 @@ module.exports = (email, password) => { debugger
     return User.findOne({email})
         .then(user => {
             if (!user) throw new UnexistenceError(`user with e-mail ${email} does not exist`)
-            debugger
             
             return bcrypt.compare(password, user.password)
-            .then(match => {
-                debugger
+            .then(match => { debugger
+        
                 if (!match) throw new CredentialsError('wrong password')
                 return user.id
             })

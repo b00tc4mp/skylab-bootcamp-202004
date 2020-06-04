@@ -1,7 +1,6 @@
 
 const { utils: { Email, call } } = require('misc-commons') 
 require('misc-commons/polyfills/string')
-const bcrypt = require('bcryptjs')
 
 
 module.exports = (name, surname, email, password) => { debugger
@@ -11,17 +10,17 @@ module.exports = (name, surname, email, password) => { debugger
 
     String.validate.lengthGreaterEqualThan(password, 8)
 
-    return bcrypt.hash(password, 10)
-        .then(hash =>  call('POST', 'http://localhost:8080/users',
-    `{"name": "${name}", "surname": "${surname}", "email": "${email}", "password": "${hash}"}`,
-    { 'Content-type': 'application/json'}))
-        .then(({status, body}) => {
-            if (status === 201) return ('User crated')
-            
-            else throw new Error('an error has ocurred')
-        })
+    
+        return call('POST', 'http://localhost:8080/users',
+        `{"name": "${name}", "surname": "${surname}", "email": "${email}", "password": "${password}"}`,
+        { 'Content-type': 'application/json'})
+            .then(({status, body}) => {
+                if (status === 201) return ('User crated')
+                
+                else throw new Error('an error has ocurred')
+            })
 
-                 
+  
 }
 //     const URL = 'http://localhost:8080/users'
 //     const data= { name: name, surname: surname, email: email, password: password}

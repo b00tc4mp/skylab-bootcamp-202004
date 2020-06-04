@@ -1,5 +1,4 @@
 require('misc-commons/polyfills/string')
-const { mongo } = require('misc-data')
 const {utils: {Email}, errors: {DuplicityError}} = require('misc-commons')
 const { models: { User } } = require('misc-data')
 const bcrypt = require('bcryptjs')

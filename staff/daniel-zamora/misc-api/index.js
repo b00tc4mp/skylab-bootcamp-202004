@@ -1,4 +1,4 @@
-require('dotenv').config()
+ require('dotenv').config()
 
 const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, JWT_SECRET: SECRET, MONGODB_URL } } = process
 const PORT = PORT_CLI || PORT_ENV || 8080
@@ -8,13 +8,13 @@ const { register, login, retrieveUser, searchUsers, unregisterUser, updateUser, 
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
-const { mongo } = require('misc-data')
+const { mongoose } = require('misc-data')
 const { jwtVerifierExtractor, cors} = require('./middlewares')
 const {utils: { jwtPromised }} = require('misc-commons')
 
 // users
-mongo.connect(MONGODB_URL)
-    .then(connetion => {
+mongoose.connect(MONGODB_URL)
+    .then(() => {
         console.log('mongo listening')
         
         const app = express()

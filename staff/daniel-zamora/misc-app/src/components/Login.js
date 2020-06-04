@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react'
 import Feedback from './Feedback'
+// import login from 'misc-logic-client'
 const login = require('misc-logic-client/login')
 
 
@@ -16,18 +17,10 @@ export default function({ onRegister, onGoToHome}) {
         password = password.value
 
         try {
-            debugger
             return login(email, password)
                 .then(token => onGoToHome(token))
                 .catch(error => setError(error.message))
              
-                    // retrieveUser(token, (error) => {
-                    //     if (error) return setError(error.message)
-                    //     else onSubmit(token)
-                    // })
-            
-        
-
         } catch ({ message }) {
             setError(message)
         }

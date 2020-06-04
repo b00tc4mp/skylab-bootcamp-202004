@@ -1,4 +1,5 @@
 module.exports = {
     register: require('./register'),
-    login: require('./login')
+    login: require('./login'),
+    retrieveUser: require('./retrieve-user')
 }

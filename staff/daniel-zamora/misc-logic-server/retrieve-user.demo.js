@@ -1,3 +1,10 @@
 const retrieveUser = require('./retrieve-user')
+const { mongoose } = require('../misc-data')
 
-retrieveUser('1590156394031-0.29786867989032717', console.log)
+mongoose.connect('mongodb://localhost:27017/misc-api')
+    .then(() => {
+        
+    return retrieveUser('5ed8f22e6956145aa1508941')
+            .then((user) => console.log(user))
+            .catch(console.log)
+     })

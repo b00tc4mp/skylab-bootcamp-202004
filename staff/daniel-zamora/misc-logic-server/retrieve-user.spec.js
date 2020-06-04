@@ -1,32 +1,35 @@
 require('dotenv').config()
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
-const { mongo } = require('../data')
+const { env: { TEST_MONGOOSE_URL: MONGODB_URL } } = process
+const { mongoose, models: { User } } = require('misc-data')
 
 const retrieveUser = require('./retrieve-user')
 const { random } = Math
 const { expect } = require('chai')
+const bcrypt = require('bcryptjs')
 
 describe('logic - retrieve user', () => {
-    let users 
 
-    before(() => mongo.connect(MONGODB_URL).then(connection => users = connection.db().collection('users')))
+    before(() => mongoose.connect(MONGODB_URL))
     
-    let name, surname, email, password, userId
+    let name, surname, email, password, userId, hash
     
     beforeEach(() => 
-        users.deleteMany() 
+        User.deleteMany() 
             .then(() => {
                 name = `name-${random()}`
                 surname = `surname-${random()}`
                 email = `e-${random()}@mail.com`
                 password = `password-${random()}`
+
+                return bcrypt.hash(password, 10)
             })
+            .then(_hash => hash = _hash)
     )
 
     describe('when user already exists', () => {
         beforeEach(() => {
-            const user = { name, surname, email, password }
-            return users.insertOne(user).then(user=>userId = user.insertedId.toString())
+            const user = { name, surname, email, password: hash }
+            return User.create(user).then(user=>userId = user.id)
         })
 
         it('should succeed on correct user id', () => 
@@ -49,15 +52,6 @@ describe('logic - retrieve user', () => {
         )
     })
 
-    it('should fail on wrong user id', () => 
-        retrieveUser('5ed43b913578a050d5600ee0')
-            .catch(error => {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(Error)
-                expect(error.message).to.equal(`user with id 5ed43b913578a050d5600ee0 does not exist`)
-            })
-    )
 
     it('should fail when incorrect inputs are introduced', () => {
         try{
@@ -75,7 +69,7 @@ describe('logic - retrieve user', () => {
         }
     })
 
-    afterEach(() => users.deleteMany())
-    after(()=>users.deleteMany().then(mongo.disconnect))
+    afterEach(() => User.deleteMany())
+    after(()=> mongoose.disconnect())
 
 })
