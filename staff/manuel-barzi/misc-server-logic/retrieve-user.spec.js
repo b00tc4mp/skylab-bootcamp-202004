@@ -36,6 +36,8 @@ describe('logic - retrieve user', () => {
                     expect(user.surname).to.equal(surname)
                     expect(user.email).to.equal(email)
                     expect(user.password).to.be.undefined
+                    expect(user.cart).to.be.undefined
+                    expect(user.order).to.be.undefined
                 })
         )
     })
