@@ -1,7 +1,7 @@
 require('misc-commons/polyfills/string')
 require('misc-commons/polyfills/json')
 const { utils: { Email }, errors: { DuplicityError } } = require('misc-commons')
-const { mongo } = require('misc-data')
+const { models: { User } } = require('misc-data')
 const bcrypt = require('bcryptjs')
 
 module.exports = (name, surname, email, password) => {
@@ -11,17 +11,12 @@ module.exports = (name, surname, email, password) => {
     Email.validate(email)
     String.validate.notVoid(password)
 
-    return mongo.connect()
-        .then(connection => {
-            const users = connection.db().collection('users')
+    return User.findOne({ email })
+        .then(user => {
+            if (user) throw new DuplicityError(`user with e-mail ${email} already exists`)
 
-            return users.findOne({ email })
-                .then(user => {
-                    if (user) throw new DuplicityError(`user with e-mail ${email} already exists`)
-
-                    return bcrypt.hash(password, 10)
-                })
-                .then(hash => users.insertOne({ name, surname, email, password: hash }))
-                .then(() => { })
+            return bcrypt.hash(password, 10)
         })
+        .then(hash => User.create({ name, surname, email, password: hash }))
+        .then(() => { })
 }
