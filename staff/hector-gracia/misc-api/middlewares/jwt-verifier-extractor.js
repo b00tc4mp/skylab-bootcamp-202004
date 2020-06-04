@@ -1,4 +1,4 @@
-const {jwtPromise}=require("../utils")
+const {jwtPromise}=require("misc-commons/utils")
 
 module.exports=(secret,errorHandler)=>{
     return (req,res,next)=>{

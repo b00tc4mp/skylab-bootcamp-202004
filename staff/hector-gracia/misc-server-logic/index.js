@@ -1,8 +1,8 @@
 module.exports = {
-    registerUser: require('./register-user'),
     authenticateUser: require('./authenticate-user'),
     retrieveUser: require('./retrieve-user'),
     unRegister: require('./unregister-user'),
+    registerUser: require('./register-user')/*
     addProduct: require("./add-product"),
     retrieveProduct: require("./retrieve-product"),
     removeProduct: require("./remove-product"),
@@ -14,4 +14,5 @@ module.exports = {
     makeOrder: require("./make-order"),
     retrieveOrder: require("./retrieve-order"),
     retrieveAllOrders: require("./retrieve-all-orders")
+    */
 }

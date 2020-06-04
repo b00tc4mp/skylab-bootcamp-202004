@@ -5,33 +5,33 @@ const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 const registerUser = require('./register-user')
 const { random } = Math
 const { expect } = require('chai')
-require('../utils/polyfills/json')
-const { mongo } = require('../misc-api/data')
+const { mongoose, models:{User} } = require('misc-data')
+const bcrypt= require("bcryptjs")
 
-describe('logic - register user', () => {
-    let users
+describe.only('logic - register user', () => {
+
 
     before(() =>
-        mongo.connect(MONGODB_URL)
-            .then(connection => users = connection.db().collection('users'))
+        mongoose.connect(MONGODB_URL)
     )
 
     let name, surname, email, password
 
     beforeEach(() =>
-        users.deleteMany()
+        User.deleteMany()
             .then(() => {
                 name = `name-${random()}`
                 surname = `surname-${random()}`
                 email = `e-${random()}@mail.com`
                 password = `password-${random()}`
 
+                
             })
     )
 
-    it('should succeed on valid data', () =>
+    it('should succeed on valid data', () =>{ 
         registerUser(name, surname, email, password)
-            .then(() => users.find().toArray())
+            .then(() => User.find())
             .then(users => {
                 expect(users.length).to.equal(1)
 
@@ -40,15 +40,17 @@ describe('logic - register user', () => {
                 expect(user.name).to.equal(name)
                 expect(user.surname).to.equal(surname)
                 expect(user.email).to.equal(email)
-                expect(user.password).to.equal(password)
+                return bcrypt.compare(password,user.password)
+                    .then(match=> expect(match).to.be.true)
             })
+        }
     )
 
     describe('when user already exists', () => {
         beforeEach(() => {
             const user = { name, surname, email, password }
 
-            return users.insertOne(user)
+            return User.create(user)
         })
 
         it('should fail on trying to register an existing user', () =>
@@ -58,12 +60,12 @@ describe('logic - register user', () => {
                     expect(error).to.exist
 
                     expect(error).to.be.an.instanceof(Error)
-                    expect(error.message).to.equal(`user with e-mail ${email} already exists`)
+                    expect(error.message).to.equal(`user with email ${email} already exists`)
                 })
         )
     })
 
-    afterEach(() => users.deleteMany())
+    afterEach(() => User.deleteMany())
 
-    after(() => users.deleteMany({}).then(mongo.disconnect))
+    after(mongoose.disconnect)
 })

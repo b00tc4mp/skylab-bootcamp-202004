@@ -1,4 +1,4 @@
-const {VoidError} = require('../../errors');
+const {VoidError} = require('../errors');
 
 
 (() => {

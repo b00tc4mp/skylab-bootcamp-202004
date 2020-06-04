@@ -2,23 +2,26 @@ require('dotenv').config()
 const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, JWT_SECRET, MONGODB_URL } } = process
 const PORT = PORT_CLI || PORT_ENV || 8080
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, unRegister,
+/*const { registerUser, authenticateUser, retrieveUser, unRegister,
         addProduct,retrieveProduct,removeProduct,
         addCart, addToCart,retrieveCart,removeFromCart,removeCart,
-        makeOrder,retrieveOrder, retrieveAllOrders} = require('./logic')
+        makeOrder,retrieveOrder, retrieveAllOrders} = require('misc-server-logic') */
+const {registerUser,authenticateUser,retrieveUser,unRegister}=require("misc-server-logic")
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
-const { jwtPromise } = require('./utils')
-const {  jwtVerifierExtractor} = require('./middlewares')
-const { mongo } = require('./data')
+const { jwtPromise } = require('misc-commons/utils')
+const {  jwtVerifierExtractor,cors} = require('./middlewares')
+const { mongoose } = require('misc-data')
 
-mongo.connect(MONGODB_URL)
+mongoose.connect(MONGODB_URL)
     .then(connection=>{
         console.log("Connection to mongo successfull")
         const app=express()
         const parseBody=bodyParser.json()
         const verifyExtractJwT= jwtVerifierExtractor(JWT_SECRET,handleError)
+        
+        app.use(cors)
 
         /////////
         //USERS//
