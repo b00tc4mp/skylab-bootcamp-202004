@@ -1,25 +1,21 @@
 require('dotenv').config()
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
-const { mongo } = require('../data')
+const { env: { TEST_MONGOOSE_URL: MONGODB_URL } } = process
+const { mongoose, models: {User} } = require('misc-data')
 
 const registerUser = require('./register-user')
 const { random } = Math
 const { expect } = require('chai')
-require('misc-commons/polyfills/json')
-const { errors: {DuplicityError, VoidError, UnexistenceError, CredentialsError, ForbiddenError} } = require('misc-commons')
-
+const { errors: { DuplicityError }} = require('misc-commons')
 
 describe('logic - register user', () => {
-    let users
-
     before(() =>
-        mongo.connect(MONGODB_URL)
-            .then(connection => users = connection.db().collection('users'))
+        mongoose.connect(MONGODB_URL)
     )
+    
     let name, surname, email, password
     
     beforeEach(() => 
-        users.deleteMany()
+        User.deleteMany()
             .then(()=>{
                 name = `name-${random()}`
                 surname = `surname-${random()}`
@@ -30,7 +26,7 @@ describe('logic - register user', () => {
 
     it('should succeed on valid data', () => 
         registerUser(name, surname, email, password)
-            .then(()=>users.findOne({ email }))
+            .then(()=>User.findOne({ email }))
             .then(user=> {
                 expect(user.name).to.equal(name)
                 expect(user.surname).to.equal(surname)
@@ -40,8 +36,7 @@ describe('logic - register user', () => {
 
     describe('when user already exists', () => {
         beforeEach(() => {
-            const user = { name, surname, email, password }
-            return users.insertOne(user)
+            return User.create({name, surname, email, password})
         })
 
         it('should fail on trying to register an existing user', () => 
@@ -49,7 +44,7 @@ describe('logic - register user', () => {
                 .then(()=> {throw new Error( "Should throw error")})
                 .catch(error=>{
                     expect(error).to.be.an.instanceof(DuplicityError)
-                    expect(error.message).to.equal(`user with e-mail ${email} already exists`)
+                    expect(error.message).to.equal(`${email} already exist`)
                 })         
         )
     })
@@ -112,7 +107,7 @@ describe('logic - register user', () => {
         }
     })
 
-    afterEach(() => users.deleteMany())
-    after(() => users.deleteMany().then(() =>mongo.disconnect()))
+    afterEach(() => User.deleteMany())
+    after(mongoose.disconnect)
         
 })

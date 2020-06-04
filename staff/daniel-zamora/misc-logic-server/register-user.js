@@ -16,19 +16,9 @@ module.exports = (name, surname, email, password) => {
         .then(user => {
             if(user) throw new DuplicityError (`${email} already exist`)
 
-            return bycrypt.hash(password, 10)
+            return bcrypt.hash(password, 10)
         })
         .then(hash => User.create({ name, surname, email, password: hash}))
         .then(user => {})
 
-    // return mongo.connect()
-    //     .then(connection =>{
-    //         const users = connection.db().collection('users')
-    //         return users.findOne({ email })
-    //             .then(user => {
-    //                 if (user) throw new DuplicityError(`user with e-mail ${email} already exists`)
-    //                 if (!user) return users.insertOne({name, surname, email, password})
-        
-    //             })
-    //     }) 
-}
+}   
