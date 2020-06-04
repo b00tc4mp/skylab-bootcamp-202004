@@ -9,15 +9,14 @@ module.exports = (email, password) => {
     Email.validate(email)
     String.validate.notVoid(password)
 
-
-return User.findOne({ email })
-
+    debugger
+    return User.findOne({ email })
         .then(user => {
             if (!user) throw new UnexistenceError(`users with that ${email} already exist`)
 
-            return bcrypt.compare(user.password, password)
-                .then(comparison => {
-                    if(comparison) return user.id
+            return bcrypt.compare(password, user.password)
+                .then(match => {
+                    if(match) return user.id
 
                     else throw new CredentialsError('wrong password')
                 })

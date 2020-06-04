@@ -1,24 +1,20 @@
 require('misc-commons/polyfills/string')
+require('misc-commons/polyfills/number')
+require('misc-commons/polyfills/URL')
 const { mongo } = require('misc-data')
+const {model :{Product}}  = require('misc-data')
 const { errors : {DuplicityError}} = require('misc-commons')
 
 module.exports = (name, description, price, url) => {
-    debugger
     String.validate.notVoid(name)
     String.validate.notVoid(description)
-    // if (isNaN(price)) throw new TypeError(wrong ${price} input)
-    String.validate.notVoid(url)
+    Number.validate(price)
+    URL.validate(url)
 
-    return mongo.connect()
-        .then(connection => {
-            const products = connection.db().collection('products')
+    return Product.findOne({ name })
+        .then(product => {
+            if (product) throw  new DuplicityError(`Product with name ${name} already exist`)
 
-            return products.findOne({ name })
-                .then(product => {
-                    if (product) throw  new DuplicityError(`Product with that ${name} already exist`)
-
-                    return products.insertOne({ name, description, price, url })
-                })
+            return Product.create({ name, description, price, url })
         })
-
 }

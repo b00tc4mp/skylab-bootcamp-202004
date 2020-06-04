@@ -4,7 +4,7 @@ const {argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET, MONGODB_URL} } = pro
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, unregisterUser, createProduct,addToCart,searchProduct } = require('misc-server-logic')
+const { registerUser, authenticateUser, retrieveUser, unregisterUser, createProduct, updateCart,searchProduct } = require('misc-server-logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { utils : {jwtPromised }} = require('misc-commons')
@@ -125,24 +125,24 @@ app.post('/products',  parseBody, (req, res) => {
 })
 
 app.get('/products/:query?', verifyExtractJwt, (req, res) => {
-    
+    debugger
     try {
-    const {params : {query : searchQuery} } = req
-    searchProduct(searchQuery)
-        .then((product) => res.send(product))
-        .catch(error => handleError(error,res))
-}catch (error) {
-    handleError(error, res)      
+        const {params : {query : searchQuery} } = req
+        searchProduct(searchQuery)
+            .then((product) => res.send(product))
+            .catch(error => handleError(error,res))
+    }catch (error) {
+        handleError(error, res)      
     }
 })
 
-app.post('/carts', verifyExtractJwt, parseBody, (req, res) => {
+app.post('/carts', verifyExtractJwt, parseBody, (req, res) => {debugger
     
     try {
         const {payload: {sub: userId}} = req
-        const {body :{productId}} = req
+        const {body :{productId, quantity}} = req
     
-        addToCart(userId, productId)
+        updateCart(userId, productId, quantity)
             .then(()=> res.status(204).send())
             .catch(error => handleError(error,res))
     }catch(error) {

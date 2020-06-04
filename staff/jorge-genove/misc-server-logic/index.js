@@ -4,6 +4,6 @@ module.exports = {
     retrieveUser: require('./retrieve-user'),
     unregisterUser: require('./unregister-user'),
     createProduct: require('./create-products'),
-    addToCart: require('./add-to-cart'),
+    updateCart: require('./update-cart'),
     searchProduct: require('./search-product')
 }
