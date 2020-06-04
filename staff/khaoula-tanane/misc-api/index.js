@@ -4,15 +4,15 @@ const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, JWT_SECRET, MONGODB_URL } }
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, updateCart } = require('misc-server-logic')
+const { registerUser, authenticateUser, retrieveUser, updateCart, unregisterUser } = require('misc-server-logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
 const { utils : {jwtPromised} } = require('misc-commons')
 const { jwtVerifierExtractor } = require('./middlewares')
-const { mongo } = require('misc-data')
+const { mongoose } = require('misc-data')
 
-mongo.connect(MONGODB_URL)
+mongoose.connect(MONGODB_URL)
     .then(connection => {
         console.log('connected to mongo')
 
@@ -52,10 +52,21 @@ mongo.connect(MONGODB_URL)
         app.get('/users/:userId?', verifyExtractJwt, (req, res) => {
             try {
                 const { payload: { sub: userId }, params: { userId: otherUserId } } = req
-                debugger
                 retrieveUser(otherUserId || userId)
                     .then(user => res.send(user))
                     .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        app.delete('/users/unregister', verifyExtractJwt, parseBody, (req, res)=>{
+            try {
+                const { payload: { sub: userId }, body: { email, password }} = req
+                unregisterUser(userId, email, password)
+                .then((response) => res.send(response))
+                .catch(error => handleError(error, res))
+                
             } catch (error) {
                 handleError(error, res)
             }

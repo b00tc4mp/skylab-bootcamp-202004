@@ -1,7 +1,5 @@
-const mongoose = require('mongoose')
-require('misc-commons/polyfills/URL')
-
-const { Schema } = mongoose
+const { Schema } = require('mongoose')
+require('misc-commons/polyfills/url')
 
 module.exports = new Schema({
     name: {
