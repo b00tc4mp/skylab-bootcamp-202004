@@ -3,11 +3,11 @@ require('dotenv').config()
 const { env: { MONGODB_URL } } = process
 const { mongo } = require('../data')
 
-const updateCart = require('./update-cart')
+const searchProducts = require('./search-products')
 
 mongo.connect(MONGODB_URL)
     .then(() =>
-        updateCart('5ed12206441b6a71cfb30ee7', '5ed4d71d9569dfdc03e519f8', 5)
+        searchProducts('blah')
             .then(console.log)
     )
     .catch(console.error)

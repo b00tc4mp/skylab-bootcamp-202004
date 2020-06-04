@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mongodb": "^3.5.8"
+    "misc-commons": "file:../misc-commons",
+    "mongoose": "^5.9.17"
   }
 }

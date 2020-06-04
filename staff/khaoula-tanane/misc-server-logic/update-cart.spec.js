@@ -9,7 +9,7 @@ require('misc-commons/polyfills/math')
 const { random, randomIntegerBetween } = Math
 const { mongo } = require('misc-data')
 const { ObjectId } = mongo
-const { errors: {UnexistenceError, ValueError} } = require('misc-commons')
+const { errors: { UnexistenceError, ValueError } } = require('misc-commons')
 
 describe('logic - update cart', () => {
     let users, products

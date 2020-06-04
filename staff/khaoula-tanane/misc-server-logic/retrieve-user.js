@@ -1,5 +1,6 @@
 require('misc-commons/polyfills/string')
 const { mongo } = require('misc-data')
+
 const { ObjectId } = mongo
 
 module.exports = userId => {
