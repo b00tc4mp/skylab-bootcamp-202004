@@ -5,7 +5,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             jwt.sign(payload, secret, options, (error, token) => {
                 if (error) return reject(error)
-
+                debugger
                 resolve(token)
             })
         })

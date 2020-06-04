@@ -21,6 +21,6 @@ module.exports = (name, surname, email, password) => {
             return bcrypt.hash(password, 10)
         })
         .then(hash => User.create({ name, surname, email, password: hash }))
-        .then((user) => {debugger})
+        .then(() => {})
         
 }

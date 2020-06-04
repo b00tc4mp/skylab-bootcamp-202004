@@ -1,33 +1,34 @@
-const { mongo } = require("misc-data");
-const { ObjectId } = mongo;
 require('misc-commons/polyfills/string')
 const {  errors: { UnexistenceError }} = require('misc-commons')
+const {model: {User, Order,Product}, mongoose} = require('misc-data')
 
 module.exports = (userId) => {
-  
-  return mongo
-    .connect()
-    .then((connection) => {
-      users = connection.db().collection("users");
-      
-
-      return users.findOne({ _id: ObjectId(userId) });
-    })
+  // String.validate(userId)
+  debugger
+  return User.findById(userId)
     .then(user => {
+      debugger
         const {cart , orders = []} = user 
         
-        if(!cart) throw UnexistenceError('Dont have products on your cart yet')
+        if(!cart) throw UnexistenceError('Dont have products on your cart yet 🤡')
 
         cart.forEach(product => {
             orders.push(product)
         }); 
 
-        users.updateOne({ _id: ObjectId(userId) }, {$unset: {cart: ""}})
-        return users.updateOne({ _id: ObjectId(userId) }, { $set: {orders} }, {$unset: {cart: ""}})
-        
-       
-    })
+        //orders []
+        //cart==> orders
+        //orders []1,p2
+        //Orden (orders) => orderId
+
+        const {id: orderId} = Order.create({ orders });        
+        return User.findByIdAndUpdate(userId, {$set: {cart: []},  $addToSet: {orderId} })
+})
     
+
+
+
+
 
     // PAAAL RECUEERDOO PANTERAS
 
