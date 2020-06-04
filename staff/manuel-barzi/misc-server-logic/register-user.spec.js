@@ -14,48 +14,50 @@ describe('logic - register user', () => {
 
     let name, surname, email, password
 
-    beforeEach(() =>
-        User.deleteMany()
-            .then(() => {
-                name = `name-${random()}`
-                surname = `surname-${random()}`
-                email = `e-${random()}@mail.com`
-                password = `password-${random()}`
-            })
-    )
+    beforeEach(async () => {
+        await User.deleteMany()
 
-    it('should succeed on valid data', () =>
-        registerUser(name, surname, email, password)
-            .then(() => User.find())
-            .then(users => {
-                expect(users.length).to.equal(1)
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `e-${random()}@mail.com`
+        password = `password-${random()}`
+    })
 
-                const [user] = users
+    it('should succeed on valid data', async () => {
+        const result = await registerUser(name, surname, email, password)
 
-                debugger
+        expect(result).to.be.undefined
 
-                expect(user.name).to.equal(name)
-                expect(user.surname).to.equal(surname)
-                expect(user.email).to.equal(email)
+        const users = await User.find()
 
-                return bcrypt.compare(password, user.password)
-            })
-            .then(match => expect(match).to.be.true)
-    )
+        expect(users.length).to.equal(1)
+
+        const [user] = users
+
+        expect(user.name).to.equal(name)
+        expect(user.surname).to.equal(surname)
+        expect(user.email).to.equal(email)
+
+        const match = await bcrypt.compare(password, user.password)
+
+        expect(match).to.be.true
+    })
 
     describe('when user already exists', () => {
         beforeEach(() => User.create({ name, surname, email, password }))
 
-        it('should fail on trying to register an existing user', () =>
-            registerUser(name, surname, email, password)
-                .then(() => { throw new Error('should not reach this point') })
-                .catch(error => {
-                    expect(error).to.exist
+        it('should fail on trying to register an existing user', async () => {
+            try {
+                await registerUser(name, surname, email, password)
 
-                    expect(error).to.be.an.instanceof(Error)
-                    expect(error.message).to.equal(`user with e-mail ${email} already exists`)
-                })
-        )
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.exist
+
+                expect(error).to.be.an.instanceof(Error)
+                expect(error.message).to.equal(`user with e-mail ${email} already exists`)
+            }
+        })
     })
 
     afterEach(() => User.deleteMany())
