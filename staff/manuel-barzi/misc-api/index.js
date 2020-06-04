@@ -10,11 +10,11 @@ const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
 const { utils: { jwtPromised } } = require('misc-commons')
 const { jwtVerifierExtractor, cors } = require('./middlewares')
-const { mongo } = require('misc-data')
+const { mongoose } = require('misc-data')
 
-mongo.connect(MONGODB_URL)
-    .then(connection => {
-        console.log('connected to mongo')
+mongoose.connect(MONGODB_URL)
+    .then(() => {
+        console.log(`connected to mongo ${MONGODB_URL}`)
 
         const app = express()
 
@@ -96,7 +96,7 @@ mongo.connect(MONGODB_URL)
         app.listen(PORT, () => console.log(`${name} ${version} running on port ${PORT}`))
 
         process.on('SIGINT', () => {
-            connection.close()
+            mongoose.disconnect()
                 .then(() => console.log('\ndisconnected mongo'))
                 .catch(error => console.error('could not disconnect from mongo', error))
                 .finally(() => {
