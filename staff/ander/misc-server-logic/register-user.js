@@ -1,7 +1,8 @@
 require('misc-commons/polyfills/string')
 require('misc-commons/polyfills/json')
 const { utils: {Email}, errors: { DuplicityError } } = require('misc-commons')
-const { mongo } = require('misc-data')
+const { models:{User} } = require('misc-data')
+const bc
 
 module.exports = (name, surname, email, password) => {
     String.validate.notVoid(name)
