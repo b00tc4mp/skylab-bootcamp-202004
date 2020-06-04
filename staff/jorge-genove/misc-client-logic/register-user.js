@@ -1,23 +1,25 @@
-require('misc-commons/polyfills/string')
-const { utils: { Email, call } } = require('misc-commons')
-debugger
-module.exports = (name, surname, email, password) =>{
-    String.validate.notVoid(name)
-    String.validate.notVoid(surname)
-    Email.validate(email)
-    String.validate.lengthGreaterEqualThan(password, 8)
+require("../misc-commons/polyfills/string");
+const { Email } = require("../misc-commons/utils");
+const {utils: { call }} = require("misc-commons");
+const {errors: { handleError }} = require('misc-commons')
 
-    return new Promise((resolve,reject)=> {
-        return call('POST',
-        'http://localhost:8080/users',
-        `{ "name": "${name}", "surname": "${surname}", "email": "${email}", "password": "${password}" }`,
-        { 'Content-type': 'application/json' })
-        .then(({status,body})=>{
-            if (status === 201) return resolve()
-            else {
-                const { error } = JSON.parse(body)
-                return reject(new Error(error))
-            }
-        })
+module.exports = (name, surname, email, password) => {
+  String.validate.notVoid(name);
+  String.validate.notVoid(surname);
+  
+  Email.validate(email);
+  Email.isEmail(email);
+  String.validate.notVoid(password);
+  String.validate.lengthGreaterEqualThan(password, 8);
+  
+  return call('POST', 'http://localhost:8080/users',JSON.stringify({name, surname, email, password}),
+  {'Content-type' : 'Application/json'})
+    .then(({status, body}) => {
+      // console.log(status)
+      if(status !== 201) throw Error('panteras wrong')
+      return 
     })
-}  
+    .catch(error => {
+      throw error
+    })
+}

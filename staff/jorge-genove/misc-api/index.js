@@ -10,9 +10,12 @@ const { name, version } = require('./package.json')
 const { utils : {jwtPromised }} = require('misc-commons')
 const { jwtVerifierExtractor, cors } = require('./middlewares')
 const { handleError } = require('./helpers')
-const {mongo} = require('../misc-data')
+const {mongoose} = require('../misc-data')
 
-mongo.connect(MONGODB_URL)
+mongoose.connect(MONGODB_URL)
+    .then(() => {
+        console.log(`connected to mongo ${MONGODB_URL}`)
+    
     
     const app = express()
 
@@ -153,3 +156,20 @@ app.post('/carts', verifyExtractJwt, parseBody, (req, res) => {
     })
 
     app.listen(PORT, () => console.log(`${name} ${version} running in ${PORT}`))
+
+    process.on('SIGINT', () => {
+        mongoose.disconnect()
+            .then(() => console.log('\ndisconnected mongo'))
+            .catch(error => console.error('could not disconnect from mongo', error))
+            .finally(() => {
+                console.log(`${name} ${version} stopped`)
+
+                process.exit()
+            })
+    })
+})
+.catch(error => {
+    debugger // WTF! why is not reaching this point when mongodb server is off!? 🤬
+
+    console.error('could not connect to mongo', error)
+})
