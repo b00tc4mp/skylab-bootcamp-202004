@@ -1,24 +1,24 @@
 require('misc-commons/polyfills/string')
-const { utils: { Email }, errors: { UnexistenceError, CredentialsError } } = require('misc-commons')
-const { mongoose, model: { User } } = require('misc-data')
-const bcrypt = require('bcryptjs')
-
+require('misc-commons/polyfills/function')
+const { errors: {UnexistenceError, CredentialsError}, utils: {Email} } = require('misc-commons')
+const { model: {User} } = require('misc-data')
+const bcrypt = require("bcryptjs")
 
 module.exports = (email, password) => {
     String.validate.notVoid(email)
     Email.validate(email)
     String.validate.notVoid(password)
 
-    debugger
-    return User.findOne({ email })
-        .then(user => {
-            if (!user) throw new UnexistenceError(`users with that ${email} already exist`)
 
-            return bcrypt.compare(password, user.password)
-                .then(match => {
-                    if(match) return user.id
+    return (async() => { 
+        const user = await User.findOne({ email })   
 
-                    else throw new CredentialsError('wrong password')
-                })
-        })
-}
+        if (!user) throw new UnexistenceError('user does not exist')
+
+        const match = await bcrypt.compare(password, user.password)
+
+        if (!match) throw new CredentialsError('wrong password')
+
+        return user._id
+    })()
+}  
