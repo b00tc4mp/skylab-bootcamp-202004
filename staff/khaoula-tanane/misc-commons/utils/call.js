@@ -1,4 +1,3 @@
-
 const Http = require('./http')
 require('../polyfills/url')
 require('../polyfills/function')
