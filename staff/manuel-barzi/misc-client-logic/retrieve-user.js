@@ -1,10 +1,11 @@
 require('misc-commons/polyfills/string')
 const { utils: { call } } = require('misc-commons')
+const context = require('./context')
 
-module.exports = token => {
+module.exports = function (token) {
     String.validate.notVoid(token)
 
-    return call('GET', 'http://localhost:8080/users',
+    return call('GET', `${this.API_URL}/users`,
         undefined,
         { 'Authorization': `Bearer ${token}` })
         .then(({ status, body }) => {
@@ -16,4 +17,4 @@ module.exports = token => {
                 throw new Error(error)
             }
         })
-}
+}.bind(context)

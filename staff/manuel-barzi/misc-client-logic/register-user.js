@@ -1,7 +1,8 @@
 require('misc-commons/polyfills/string')
 const { utils: { Email, call } } = require('misc-commons')
+const context = require('./context')
 
-module.exports = (name, surname, email, password) => {
+module.exports = function (name, surname, email, password) {
     String.validate(name)
     String.validate(surname)
 
@@ -11,7 +12,7 @@ module.exports = (name, surname, email, password) => {
 
     return call(
         'POST',
-        'http://localhost:8080/users',
+        `${this.API_URL}/users`,
         `{ "name": "${name}", "surname": "${surname}", "email": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json' }
     )
@@ -24,4 +25,4 @@ module.exports = (name, surname, email, password) => {
 
             throw new Error(error)
         })
-}
+}.bind(context)
