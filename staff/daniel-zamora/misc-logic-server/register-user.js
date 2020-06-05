@@ -11,13 +11,14 @@ module.exports = (name, surname, email, password) => {
     Email.validate(email)
     String.validate.notVoid(password)
 
-    return User.findOne({ email })
-        .then(user => {
-            if(user) throw new DuplicityError (`${email} already exist`)
+    return (async () => {
+        const user = await User.findOne({ email })
 
-            return bcrypt.hash(password, 10)
-        })
-        .then(hash => User.create({ name, surname, email, password: hash}))
-        .then(user => {})
-
+        if(user) throw new DuplicityError (`${email} already exist`)
+    
+        const hash = await bcrypt.hash(password, 10)
+    
+        await User.create({ name, surname, email, password: hash})
+    }) 
+      
 }   

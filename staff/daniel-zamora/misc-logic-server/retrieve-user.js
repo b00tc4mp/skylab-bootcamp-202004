@@ -3,7 +3,7 @@ const { errors: {UnexistenceError} } = require('misc-commons')
 const { mongoose : {ObjectId}, models: { User } } = require('misc-data')
 
 module.exports = (userId) => {
-    String.validate.notVoid(userId)
+    // String.validate.notVoid(userId)
 
     return User.findOne({ _id: ObjectId(userId) })
         

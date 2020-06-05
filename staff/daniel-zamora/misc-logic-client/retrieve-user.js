@@ -1,8 +1,8 @@
-require('misc-commons/polyfills/string')
+// require('misc-commons/polyfills/string')
 const { utils: { Email, call } } = require('misc-commons') 
 
 module.exports = (token) => {
-    String.validate.notVoid(token)
+    // String.validate.notVoid(token)
 
     return call('GET', 'http://localhost:8080/users/retrieve',undefined,
         { Authorization: `Bearer ${token}`})

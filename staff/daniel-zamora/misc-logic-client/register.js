@@ -4,11 +4,11 @@ require('misc-commons/polyfills/string')
 
 
 module.exports = (name, surname, email, password) => { debugger
-    String.validate.alphabetic(name)
-    String.validate.alphabetic(surname)
+    // String.validate.alphabetic(name)
+    // String.validate.alphabetic(surname)
     Email.validate(email)
 
-    String.validate.lengthGreaterEqualThan(password, 8)
+    // String.validate.lengthGreaterEqualThan(password, 8)
 
     
         return call('POST', 'http://localhost:8080/users',
@@ -19,9 +19,8 @@ module.exports = (name, surname, email, password) => { debugger
                 
                 else throw new Error('an error has ocurred')
             })
-
-  
 }
+  
 //     const URL = 'http://localhost:8080/users'
 //     const data= { name: name, surname: surname, email: email, password: password}
 
@@ -32,5 +31,4 @@ module.exports = (name, surname, email, password) => { debugger
             
 //             else throw new Error('an error has ocurred')
 //         }) 
-// }
-
+// 
