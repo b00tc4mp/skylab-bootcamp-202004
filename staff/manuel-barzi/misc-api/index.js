@@ -3,6 +3,13 @@ require('dotenv').config()
 const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET, MONGODB_URL } } = process
 const PORT = PORT_CLI || PORT_ENV || 8080
 
+const path = require('path')
+const { Logger, singletonFileLogger, singletonConsoleLogger } = require('./logger')
+const file = singletonFileLogger(path.join(__dirname, 'server.log'))
+const console = singletonConsoleLogger()
+file.level = Logger.WARN
+console.level = Logger.DEBUG
+
 const express = require('express')
 const { registerUser, authenticateUser, retrieveUser, addContact } = require('misc-server-logic')
 const bodyParser = require('body-parser')
@@ -12,102 +19,124 @@ const { utils: { jwtPromised } } = require('misc-commons')
 const { jwtVerifierExtractor, cors } = require('./middlewares')
 const { mongoose } = require('misc-data')
 
-mongoose.connect(MONGODB_URL)
-    .then(() => {
-        console.log(`connected to mongo ${MONGODB_URL}`)
+console.debug('starting server')
 
-        const app = express()
+try {
+    console.debug('connecting to database')
 
-        const parseBody = bodyParser.json()
+    mongoose.connect(MONGODB_URL)
+        .then(() => {
+            console.info(`connected to database ${MONGODB_URL}`)
 
-        const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
+            const app = express()
 
-        app.use(cors)
+            const parseBody = bodyParser.json()
 
-        // users
+            const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
 
-        app.post('/users', parseBody, (req, res) => {
-            const { body: { name, surname, email, password } } = req
+            app.use(cors)
 
-            try {
-                registerUser(name, surname, email, password)
-                    .then(() => res.status(201).send())
-                    .catch(error => handleError(error, res))
-            } catch (error) {
-                handleError(error, res)
-            }
-        })
+            // users
 
-        app.post('/users/auth', parseBody, (req, res) => {
-            const { body: { email, password } } = req
+            app.post('/users', parseBody, (req, res) => {
+                const { body: { name, surname, email, password } } = req
 
-            try {
-                authenticateUser(email, password)
-                    .then(userId => jwtPromised.sign({ sub: userId }, SECRET, { expiresIn: '1d' }))
-                    .then(token => res.send({ token }))
-                    .catch(error => handleError(error, res))
-            } catch (error) {
-                handleError(error, res)
-            }
-        })
+                try {
+                    registerUser(name, surname, email, password)
+                        .then(() => res.status(201).send())
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
 
-        app.get('/users/:userId?', verifyExtractJwt, (req, res) => {
-            try {
-                const { payload: { sub: userId }, params: { userId: otherUserId } } = req
+            app.post('/users/auth', parseBody, (req, res) => {
+                const { body: { email, password } } = req
 
-                retrieveUser(otherUserId || userId)
-                    .then(user => res.send(user))
-                    .catch(error => handleError(error, res))
-            } catch (error) {
-                handleError(error, res)
-            }
-        })
+                try {
+                    authenticateUser(email, password)
+                        .then(userId => jwtPromised.sign({ sub: userId }, SECRET, { expiresIn: '1d' }))
+                        .then(token => res.send({ token }))
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
 
-        // contacts
+            app.get('/users/:userId?', verifyExtractJwt, (req, res) => {
+                try {
+                    const { payload: { sub: userId }, params: { userId: otherUserId } } = req
 
-        app.post('/contacts', verifyExtractJwt, parseBody, (req, res) => {
-            try {
-                const { payload: { sub: userId }, body: contact } = req
+                    retrieveUser(otherUserId || userId)
+                        .then(user => res.send(user))
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
 
-                new Promise((resolve, reject) => {
-                    addContact(userId, contact, (error, contactId) => {
-                        if (error) return reject(error)
+            // contacts
 
-                        resolve(contactId)
+            app.post('/contacts', verifyExtractJwt, parseBody, (req, res) => {
+                try {
+                    const { payload: { sub: userId }, body: contact } = req
+
+                    new Promise((resolve, reject) => {
+                        addContact(userId, contact, (error, contactId) => {
+                            if (error) return reject(error)
+
+                            resolve(contactId)
+                        })
                     })
-                })
-                    .then(contactId => res.send({ contactId }))
-                    .catch(error => handleError(error, res))
-            } catch (error) {
-                handleError(error, res)
-            }
+                        .then(contactId => res.send({ contactId }))
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+
+            app.get('/contacts/:contactId', (req, res) => {
+                // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
+            })
+
+            // other
+
+            app.get('*', (req, res) => {
+                res.status(404).send('Not Found :(')
+            })
+
+            app.listen(PORT, () => console.info(`server ${name} ${version} running on port ${PORT}`))
+
+            let interrupted = false
+
+            process.on('SIGINT', () => {
+                if (!interrupted) {
+                    interrupted = true
+
+                    console.debug('stopping server')
+
+                    console.debug('disconnecting database')
+
+                    mongoose.disconnect()
+                        .then(() => console.info('disconnected database'))
+                        .catch(error => file.error('could not disconnect from mongo', error))
+                        .finally(() => {
+                            console.info(`server ${name} ${version} stopped`)
+
+                            setTimeout(() => {
+                                file.close()
+
+                                setTimeout(() => {
+                                    process.exit()
+                                }, 500)
+                            }, 500)
+                        })
+                }
+            })
         })
-
-        app.get('/contacts/:contactId', (req, res) => {
-            // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
+        .catch(error => {
+            file.error('could not connect to mongo', error)
         })
-
-        // other
-
-        app.get('*', (req, res) => {
-            res.status(404).send('Not Found :(')
-        })
-
-        app.listen(PORT, () => console.log(`${name} ${version} running on port ${PORT}`))
-
-        process.on('SIGINT', () => {
-            mongoose.disconnect()
-                .then(() => console.log('\ndisconnected mongo'))
-                .catch(error => console.error('could not disconnect from mongo', error))
-                .finally(() => {
-                    console.log(`${name} ${version} stopped`)
-
-                    process.exit()
-                })
-        })
-    })
-    .catch(error => {
-        debugger // WTF! why is not reaching this point when mongodb server is off!? 🤬
-
-        console.error('could not connect to mongo', error)
-    })
+} catch (error) {
+    file.error(error)
+}
