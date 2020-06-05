@@ -9,17 +9,16 @@ module.exports = (email, password) => {
     Email.validate(email)
     String.validate.notVoid(password)
 
-    debugger
-    return User.findOne({ email })   
-        .then(user => {
-            if (!user) throw new UnexistenceError('user does not exist')
+
+    return (async() => { 
+        const user = await User.findOne({ email })   
+        
+        if (!user) throw new UnexistenceError('user does not exist')
             
-            return bcrypt.compare(password, user.password)
-                .then(match => {
-                    if (!match) throw new CredentialsError('wrong password')
-                    debugger
-                    return user._id.toString()
-                })
-                .catch(error => error)
-        })
+        const match = await bcrypt.compare(password, user.password)
+                
+        if (!match) throw new CredentialsError('wrong password')
+                    
+        return user._id
+    })()
 }  

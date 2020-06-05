@@ -1,57 +1,46 @@
-require('misc-commons/polyfills/string')
-const {  errors: { UnexistenceError }} = require('misc-commons')
-const {model: {User, Order,Product}, mongoose} = require('misc-data')
+require("misc-commons/polyfills/string");
+const { errors: { UnexistenceError } } = require("misc-commons");
+const {  model : { User, Order } } = require("misc-data");
 
 module.exports = (userId) => {
-  // String.validate(userId)
-  debugger
-  return User.findById(userId)
-    .then(user => {
-      debugger
-        const {cart , orders = []} = user 
-        
-        if(!cart) throw UnexistenceError('Dont have products on your cart yet 🤡')
+  String.validate(userId)
 
-        cart.forEach(product => {
-            orders.push(product)
-        }); 
-
-        //orders []
-        //cart==> orders
-        //orders []1,p2
-        //Orden (orders) => orderId
-
-        const {id: orderId} = Order.create({ orders });        
-        return User.findByIdAndUpdate(userId, {$set: {cart: []},  $addToSet: {orderId} })
-})
+  return (async () => {
+    const user = await User.findById(userId).populate('cart.product');
+    debugger
+    const { cart = [], orders = [] } = user;
     
+    if (!cart.length) throw new UnexistenceError("Dont have products on your cart yet ");
 
+    const amount = user.cart.reduce((accumulator, item) => accumulator + item.product.price * item.quantity, 0)
 
+    orders.push(new Order( {products: user.cart, amount, date: new Date}))
 
-
-
-    // PAAAL RECUEERDOO PANTERAS
-
-    // .then(({ cart }) => {
-    //   const promises = cart.map((item) => {
-    //     const { product, quantity } = item;
-
-    //     return products
-    //       .findOne({ product: product._id })
-
-    //       .then((product) => {
-    //         debugger;
-
-    //         delete product.description;
-    //         delete product.url;
-    //         product.quantity = quantity;
-
-            
-    //       });
-    //   });
-    //   debugger
-    //   return promises;
-    // })
-    // .then((promises) =>{debugger
-    //   Promise.all(promises)}).then(results => results);
+    await User.findByIdAndUpdate(userId, { $set: { cart: [], orders} });
+    
+  })();
 };
+
+// PAAAL RECUEERDOO PANTERAS
+
+// .then(({ cart }) => {
+//   const promises = cart.map((item) => {
+//     const { product, quantity } = item;
+
+//     return products
+//       .findOne({ product: product._id })
+
+//       .then((product) => {
+//         debugger;
+
+//         delete product.description;
+//         delete product.url;
+//         product.quantity = quantity;
+
+//       });
+//   });
+//   debugger
+//   return promises;
+// })
+// .then((promises) =>{debugger
+//   Promise.all(promises)}).then(results => results);

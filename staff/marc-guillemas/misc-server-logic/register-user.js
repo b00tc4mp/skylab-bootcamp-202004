@@ -14,13 +14,13 @@ module.exports = (name, surname, email, password) => {
 
     // const users = connection.db().collection('users')
 
-    return User.findOne({ email })
-        .then(user => {
-            if (user) throw new DuplicityError(`user with e-mail ${email} already exists`)
+    return (async() => {
+        const user = await User.findOne({ email })
+       
+        if (user) throw new DuplicityError(`user with e-mail ${email} already exists`)
 
-            return bcrypt.hash(password, 10)
-        })
-        .then(hash => User.create({ name, surname, email, password: hash }))
-        .then(() => {})
-        
+        const hash = await bcrypt.hash(password, 10)
+      
+        await User.create({ name, surname, email, password: hash })
+    })()  
 }

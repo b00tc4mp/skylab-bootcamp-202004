@@ -93,7 +93,6 @@ mongoose.connect(MONGODB_URL)
             try {
                 const { payload: { sub: userId }, params: { userId: otherUserId } } = req
 
-
                 const { body: { email, password } } = req
 
                 unregisterUser(email, password, userId)
@@ -108,9 +107,7 @@ mongoose.connect(MONGODB_URL)
         app.patch('/users/update', verifyToken, parseBody, (req, res) => {
 
             try {
-
                 const { payload: { sub: userId }, body } = req
-
 
                 updateUser(userId, body)
                     .then((message) => res.status(201).send({ message: message }))
@@ -143,12 +140,15 @@ mongoose.connect(MONGODB_URL)
 
 
         app.post('/product', parseBody, (req, res) => {
-
-            const { body: product } = req
-
-            addProduct(product)
-                .then(() => res.status(201).send())
-
+            try{
+                const { body: product } = req
+    debugger
+                addProduct(product)
+                    .then(() => res.status(201).send())
+                    .catch(error=>{handleError(error, res)})
+            }catch(error){
+                handleError(error, res)
+            }
         })
 
         // app.get('/product/q=:product?', verifyToken, (req,res) => {
