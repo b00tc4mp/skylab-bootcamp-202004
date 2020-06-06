@@ -1,0 +1,21 @@
+{
+  "name": "misc-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "watch": "npx nodemon .",
+    "test": "npx mocha logic/*.spec.js",
+    "test:debug": "npx mocha debug logic/*.spec.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "express": "^4.17.1",
+    "mocha": "^7.1.2",
+    "nodemon": "^2.0.4"
+  }
+}
