@@ -1,7 +1,7 @@
 const { Email } = require('misc-commons/utils')
 const { mongoose: { ObjectId }, models: { User } } = require('misc-data')
 require("misc-commons/polyfills/string")
-const {UnexistenceError} = require("misc-commons/errors")
+const {UnexistenceError, CredentialsError} = require("misc-commons/errors")
 const bcrypt= require("bcryptjs")
 
 

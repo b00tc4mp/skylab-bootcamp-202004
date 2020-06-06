@@ -1,5 +1,4 @@
 require("misc-commons/polyfills/string")
-require("misc-commons/polyfills/function")
 const{utils:{Email,call}}= require("misc-commons")
 
 module.exports=(name,surname,email,password)=>{
