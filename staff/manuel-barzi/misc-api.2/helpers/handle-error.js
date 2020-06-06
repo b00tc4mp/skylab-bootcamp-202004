@@ -2,6 +2,7 @@ const { DuplicityError, VoidError, UnexistenceError, CredentialsError } = requir
 const { JsonWebTokenError } = require('jsonwebtoken')
 
 module.exports = function (error, res) {
+
     let status = 500
 
     switch (true) {

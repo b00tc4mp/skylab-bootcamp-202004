@@ -20,6 +20,7 @@ module.exports = (userId, productId, quantity) => {
                 .then(user => {
                     if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
+
                     const products = db.collection('products')
 
                     return products.findOne({ _id: ObjectId(productId) })
@@ -29,6 +30,7 @@ module.exports = (userId, productId, quantity) => {
                             const { cart = [] } = user
 
                             const index = cart.findIndex(item => item.product.toString() === productId)
+
 
                             if (quantity === 0) {
                                 if (index < 0) throw new UnexistenceError(`product with id ${productId} does not exist in cart for user with id ${userId}`)
@@ -42,6 +44,7 @@ module.exports = (userId, productId, quantity) => {
 
                                     cart.push(product)
                                 } else product = cart[index]
+
 
                                 product.quantity = quantity
                             }

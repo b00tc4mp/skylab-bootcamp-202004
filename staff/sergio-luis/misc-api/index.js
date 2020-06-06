@@ -10,10 +10,10 @@ const { handleError } = require('./helpers')
 const { jwtPromised } = require('misc-commons/utils')
 const { jwtVerifierExtractor , cors} = require('./middlewares')
 
-const {mongo} = require('../misc-data')
+const {mongoose} = require('misc-data')
 
-mongo.connect(MONGODB_URL)
-    .then(connection => {
+mongoose.connect(MONGODB_URL)
+    .then(()=> {
         console.log('connected to mongo')
 
         const app = express()
@@ -139,9 +139,9 @@ mongo.connect(MONGODB_URL)
         app.listen(PORT, () => console.log(`${name} ${version} running on port ${PORT}`))
 
         process.on('SIGINT',()=>{
-            connection.close()
-                .then(()=> console.log('\ndisconnected'))
-                .catch(error => console.log('Could not disconnect'))
+            mongoose.disconnect()
+                .then(()=> console.log('\ndisconnected mongo'))
+                .catch(error => console.log('Could not disconnect from mongo',error))
                 .finally(()=>{
                     console.log(`${name} ${version} stopped`)
                     process.exit()
@@ -153,162 +153,3 @@ mongo.connect(MONGODB_URL)
     })
     .catch(error => console.error('could not connect to mongo',error))
 
-
-
-
-
-
-// /////////
-// // CONTACTS
-// ////////
-// //POST -CONTACTS
-// app.post('/contacts', parseBody, (req, res) => {
-//     try {
-//         const  [,token] = req.header('authorization').split(' ') 
-//         const { body: contact } = req
-
-//         jwtPromise.verify(token, SECRET)
-//             .then(({ sub: userId })=>addContact(userId, contact))
-//             .then(contactId=>res.send({ contactId }))
-//             .catch(error=>handleError(error,res))
-//     } catch (error) {
-//         handleError(error,res)
-//     }
-// })
-// // //1590688154405-0.8074044852810498
-// //GET -CONTACTS by id
-// app.get('/contacts/searchid/:contact', (req, res) => {
-//     try {
-//         const {params :{contact: contactId}} = req
-
-//         const  [,token] = req.header('authorization').split(' ') 
-//       jwtPromise.verify(token, SECRET)
-//         .then(({sub:userId})=>listContacts(userId,contactId))
-//         .then(contact =>res.send(contact))
-//         .catch((error)=>handleError(error,res))    
-//     }catch(error) {
-//         handleError(error,res)
-//     }
-// })
-
-// //GET all contact
-// app.get('/contacts/all', (req, res) => {
-//     try {
-//         const  [,token] = req.header('authorization').split(' ') 
-//         jwtPromise.verify(token, SECRET)
-//             .then(({sub:userId})=>listContacts(userId))
-//             .then(contact =>res.send(contact))
-//             .catch((error)=>handleError(error,res))    
-//     }catch(error) {
-//         handleError(error,res)
-//     }
-// })
-
-// //Search contact by query
-
-// app.get('/contacts/searchQuery/:query', (req, res) => {
-//     try {
-//         const {params :{query: query}} = req
-//         const  [,token] = req.header('authorization').split(' ') 
-//         jwtPromise.verify(token, SECRET)
-//             .then(({sub: userId})=>searchContacts(userId,query))
-//             .then(contacts => res.send(contacts))
-//             .catch((error)=>handleError(error,res)) 
-//     }catch(error) {
-//         handleError(error,res)
-//     }
-// })
-
-// app.delete("/contacts/remove",parseBody,(req,res)=>{
-//     try{
-//         const{body: {contactId}} = req
-//         const  [,token] = req.header('authorization').split(' ') 
-
-//         debugger
-//         jwtPromise.verify(token, SECRET)
-
-//             .then(({sub:userId})=>removeContact(userId , contactId))
-//             .then(result=>res.send(result))
-//             .catch(error=>handleError(error,res))
-//     }catch(error){
-//         handleError(error,res)
-//     }
-// })
-
-
-
-// ////////////
-// // STICKIESsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-// ///////////
-// //POST -stickies
-// app.post('/stickies', parseBody, (req, res) => {
-//     try {
-//         const  [,token] = req.header('authorization').split(' ') 
-//         const { body: sticky } = req
-
-//         jwtPromise.verify(token, SECRET)
-//         .then(({sub:userId})=>addSticky(userId,sticky))
-//         .then(stickyId=> res.send(`Created ${stickyId}`))
-//         .catch(error=> handleError(error,res))
-//     } catch (error) {
-//         handleError(error,res)
-//     }
-// })
-// //GET -stickies by id
-// app.get('/stickies/searchId/:stickyId',parseBody, (req, res) => {
-
-//     try {
-//         const {params :{stickyId:stickyId}} = req
-//         const  [,token] = req.header('authorization').split(' ') 
-
-//         jwtPromise.verify(token, SECRET)
-//             .then(({sub:userId})=>listStickies(userId,stickyId))
-//             .then(sticky =>res.send(sticky))
-//             .catch((error)=>handleError(error,res))    
-//     }catch(error) {
-//         handleError(error,res)
-//     }
-// })
-
-// //GET all contact
-
-// app.get('/stickies/all',parseBody, (req, res) => {
-//     try {
-//     const  [,token] = req.header('authorization').split(' ') 
-//     jwtPromise.verify(token, SECRET)
-//         .then(({sub:userId})=>listStickies(userId))
-//         .then(result => res.send(result))
-//         .catch(error => handleError(error,res))
-//     }catch(error) {
-//         handleError(error,res)
-//     }
-// })
-
-// //Search contact by query
-
-// app.get('/stickies/searchQuery/:query',parseBody, (req, res) => {
-//     try {
-//         const {params :{query:query}} = req
-
-//         const  [,token] = req.header('authorization').split(' ') 
-//         jwtPromise.verify(token, SECRET)
-//             .then(({sub:userId})=>searchStickies(userId,query))
-//             .then(result => res.send(result))
-//             .catch(error => handleError(error,res))
-//     }catch(error) {
-//         handleError(error,res)
-//     }
-// })
-
-// app.delete("/stickies/remove",parseBody,(req,res)=>{
-//     try{
-//         const  [,token] = req.header('authorization').split(' ') 
-//         const{body: {stickyId}} = req
-//         jwtPromise.verify(token, SECRET)
-//         .then(({sub:userId})=>removeSticky(userId,stickyId))
-//         .then(result =>res.send(`Finishimmmm ${result}`))
-//         .catch(error => handleError(error,res))
-//     }catch(error){
-//         handleError(error,res)
-//     }
-// })

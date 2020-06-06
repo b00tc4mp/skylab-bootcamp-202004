@@ -3,25 +3,21 @@ require('misc-commons/polyfills/string')
 
 const{errors:{UnexistenceError}}= require("misc-commons")
 
-const { mongo } = require('misc-data')
+const {models:{User}, mongoose:{ObjectId}} = require('misc-data')
 
 module.exports = (userId) => {
     String.validate.notVoid(userId)
 
-    return mongo.connect()
-        .then(connection => {
-            const users = connection.db().collection('users')
+    return (async () =>{
+       const user =  await User.findOne({_id: ObjectId(userId) })
 
-            return users.findOne({_id: mongo.ObjectId(userId) })
-        })
+       if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
-        .then(user => {
-            if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
+        delete user.id
+        delete user.password
 
-            delete user.id
-            delete user.password
-
-            return user
-        })
+        return  await user
+    })()
+       
   
 }

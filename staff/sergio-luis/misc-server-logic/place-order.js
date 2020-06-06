@@ -1,56 +1,57 @@
-require('misc-commons/polyfills/string')
+// require('misc-commons/polyfills/string')
+
+// //not finish......
+// const{errors:{CredentialsError,UnexistenceError}}= require("misc-commons")
 
 
-const{errors:{CredentialsError,UnexistenceError}}= require("misc-commons")
+// const {models:{User}, mongoose:{ObjectId}} = require('misc-data')
 
 
-const { mongo } = require('misc-data')
+// module.exports = (userId, cartId)=>{
+//     String.validate.notVoid(userId)
+//     String.validate.notVoid(cartId)
 
-module.exports = (userId, cartId)=>{
-    String.validate.notVoid(userId)
-    String.validate.notVoid(cartId)
+//     return mongo.connect()
+//         .then(connection => {
+//             const users = connection.db().collection('users')
 
-    return mongo.connect()
-        .then(connection => {
-            const users = connection.db().collection('users')
+//             return users.findOne({_id: mongo.ObjectId(userId) })
+//                 .then(user => {
+//                     if (!user) throw new UnexistenceError(`this ${userId} does not exist`)
 
-            return users.findOne({_id: mongo.ObjectId(userId) })
-                .then(user => {
-                    if (!user) throw new UnexistenceError(`this ${userId} does not exist`)
+//                     const carts = connection.db().collection('carts')
 
-                    const carts = connection.db().collection('carts')
+//                     return carts.findOne({user: userId})
+//                         .then(cart => {
+//                             debugger
+//                             if (!cart) throw new UnexistenceError(`cart does not exist`)
 
-                    return carts.findOne({user: userId})
-                        .then(cart => {
-                            debugger
-                            if (!cart) throw new UnexistenceError(`cart does not exist`)
+//                             if (cart._id.toString() !== cartId) throw new CredentialsError(`cart with this cart id does not exist`)
 
-                            if (cart._id.toString() !== cartId) throw new CredentialsError(`cart with this cart id does not exist`)
+//                             delete cart.user
+//                             delete cart._id
 
-                            delete cart.user
-                            delete cart._id
+//                             let date = new Date()
+//                             cart.date = date.toISOString()
 
-                            let date = new Date()
-                            cart.date = date.toISOString()
+//                             const orders = connection.db().collection('orders')
+//                             // add to histoy
+//                             return orders.findOne({user: userId})
+//                                 .then(order => {
+//                                     if (!order) {
+//                                         return orders.insertOne({'history': [cart], 'user' : userId})
+//                                     }
+//                                     else {
+//                                         return orders.updateOne({user: userId},{
+//                                             $push : {'history': { $each: [cart] } }
+//                                         })
+//                                     }
+//                                 })
 
-                            const orders = connection.db().collection('orders')
-                            // add to histoy
-                            return orders.findOne({user: userId})
-                                .then(order => {
-                                    if (!order) {
-                                        return orders.insertOne({'history': [cart], 'user' : userId})
-                                    }
-                                    else {
-                                        return orders.updateOne({user: userId},{
-                                            $push : {'history': { $each: [cart] } }
-                                        })
-                                    }
-                                })
-
-                                .then(()=>carts.remove({'user': userId}))
+//                                 .then(()=>carts.remove({'user': userId}))
                               
-                        })   
+//                         })   
                            
-                })          
-    })
-}
+//                 })          
+//     })
+// }

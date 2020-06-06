@@ -1,6 +1,6 @@
 const mongodb = require('mongodb');
 
-let connection
+let {ObjectId, connection} = mongodb
 
 module.exports = {
     connect(url) {
@@ -15,6 +15,7 @@ module.exports = {
                 .then(()=>connection = undefined)
 
     },
-    ObjectId: mongodb.ObjectId
+    
+    ObjectId
 
 }

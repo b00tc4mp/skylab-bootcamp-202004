@@ -4,7 +4,7 @@ const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET, MONGODB_URL } } = p
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, addContact } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser,updateCart } = require('./logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
@@ -63,22 +63,16 @@ mongo.connect(MONGODB_URL)
 
         // contacts
 
-        app.post('/contacts', verifyExtractJwt, parseBody, (req, res) => {
+        app.patch('/updateCart', verifyExtractJwt, parseBody, (req, res) => {
             try {
-                const { payload: { sub: userId }, body: contact } = req
+                const { payload: { sub: userId }, body: {productId , quantity} } = req
 
-                new Promise((resolve, reject) => {
-                    addContact(userId, contact, (error, contactId) => {
-                        if (error) return reject(error)
-
-                        resolve(contactId)
-                    })
-                })
-                    .then(contactId => res.send({ contactId }))
-                    .catch(error => handleError(error, res))
-            } catch (error) {
-                handleError(error, res)
-            }
+                    updateCart(userId, productId, quantity)
+                        .then(() => res.status(204).send())
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
         })
 
         app.get('/contacts/:contactId', (req, res) => {

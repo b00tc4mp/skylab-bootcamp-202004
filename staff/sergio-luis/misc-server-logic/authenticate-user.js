@@ -1,8 +1,8 @@
 const{errors:{CredentialsError,UnexistenceError},utils:{Email}}= require("misc-commons")
+const { models : {User}} = require('misc-data')
 
 require("misc-commons/polyfills/string")
-
-const { mongo } = require('misc-data')
+const {models :{User}} = require('misc-data')
 const bcrypt = require('bcryptjs')
 
 module.exports = (email, password) => {
@@ -10,22 +10,15 @@ module.exports = (email, password) => {
     Email.validate(email)
     String.validate.notVoid(password)
 
-    return mongo.connect()
-        .then(connection => {
-            const users = connection.db().collection('users')
+    return (async () =>{
+        const user = await User.findOne({email})
 
-            return users.findOne({email})
-        })
-        .then(user=>{
-            debugger
-            if(!user) throw new UnexistenceError (`user with e-mail ${email} does not exist`)
-            
-            return bcrypt.compare(password,user.password)
-            .then(match =>{
-                if(!match) throw new CredentialsError('wrong password')
-        
-                return user._id.toString()
-            })
-            
-        })       
+        if(!user) throw new UnexistenceError (`user with e-mail ${email} does not exist`)
+
+        const match = await bcrypt.compare(password,user.password);
+
+        if(!match) throw new CredentialsError('wrong password')
+
+        return await user._id.toString()
+    })()         
 } 

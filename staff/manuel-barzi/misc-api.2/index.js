@@ -43,6 +43,7 @@ app.post('/users/auth', parseBody, (req, res) => {
             res.send({ token })
         })
     } catch (error) {
+        debugger
         handleError(error, res)
     }
 })
