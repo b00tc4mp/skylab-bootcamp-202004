@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cook-server-logic": "file:../cook-server-logic",
     "cook-wise-commons": "file:../cook-wise-commons",
@@ -16,7 +17,11 @@
     "nodemon": "^2.0.4"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node .",
+    "watch": "npx nodemon --ignore ./data .",
+    "debug": "node --inspect=7000 .",
+    "test": "npx mocha logic/*.spec.js",
+    "test:debug": "npx mocha debug logic/*.spec.js"
   },
   "keywords": [],
   "author": "",

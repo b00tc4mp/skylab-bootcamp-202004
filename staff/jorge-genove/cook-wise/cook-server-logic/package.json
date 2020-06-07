@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "bcrypt": "^4.0.1",
+    "bcryptjs": "^2.4.3",
     "chai": "^4.2.0",
     "cook-wise-commons": "^1.0.0",
     "cook-wise-data": "^1.0.0",

@@ -1,5 +1,7 @@
 const { Schema } = require('mongoose')
-const { utils: { Email } } = require('misc-commons')
+const { utils: { Email } } = require('cook-wise-commons')
+const recipes = require('./recipes')
+
 
 
 module.exports = new Schema({
@@ -13,7 +15,7 @@ module.exports = new Schema({
         required: true
     },
 
-    username: {
+    email: {
         type: String,
         required: true,
         unique: true,
@@ -24,6 +26,10 @@ module.exports = new Schema({
         type: String,
         required: true
     },
+
+    recipes: [recipes],
+
+    menus: [[recipes],[recipes],[recipes],[recipes],[recipes],[recipes],[recipes]]
 
 
 })
