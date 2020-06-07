@@ -2,10 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
+import { HashRouter as Router } from 'react-router-dom'
+import { context } from 'misc-client-logic'
+
+const { REACT_APP_API_URL: API_URL } = process.env
+
+context.API_URL = API_URL
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router><App /></Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

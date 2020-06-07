@@ -1,6 +1,5 @@
 const { errors: { DuplicityError, VoidError, UnexistenceError, CredentialsError } } = require('misc-commons')
 const { JsonWebTokenError } = require('jsonwebtoken')
-const logger = require('../logger').singletonFileLogger()
 
 module.exports = function (error, res) {
     let status = 500
@@ -16,11 +15,6 @@ module.exports = function (error, res) {
             status = 401
             break
     }
-
-    if (status < 500)
-        logger.warn(`response with error status ${status} - ${error}`)
-    else
-        logger.error(`response with error status ${status} - ${error}`)
 
     res.status(status).json({ error: error.message })
 }
