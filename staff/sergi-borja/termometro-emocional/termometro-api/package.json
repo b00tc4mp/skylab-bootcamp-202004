@@ -10,7 +10,8 @@
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.4",
     "termometro-commons": "file:../termometro-commons",
-    "termometro-data": "file:../termometro-data"
+    "termometro-data": "file:../termometro-data",
+    "termometro-server-logic": "file:../termometro-server-logic"
   },
   "devDependencies": {},
   "scripts": {
