@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_SECRET: SECRET } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_SECRET: SECRET, TEST_API_URL: API_URL } } = process
 
 const retrieveUser = require('./retrieve-user')
 const { random } = Math
@@ -9,6 +9,9 @@ require('misc-commons/polyfills/json')
 const { mongoose, models: { User } } = require('misc-data')
 require('misc-commons/ponyfills/xhr')
 const { utils: { jwtPromised } } = require('misc-commons')
+const context = require('./context')
+
+context.API_URL = API_URL
 
 describe('logic - retrieve user', () => {
     before(() => mongoose.connect(MONGODB_URL))
