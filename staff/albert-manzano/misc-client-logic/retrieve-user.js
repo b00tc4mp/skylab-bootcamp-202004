@@ -1,11 +1,24 @@
-function retrieveUser(email) {
-    if (typeof email !== 'string') throw new TypeError(email + ' is not a string')
-    if (!EMAIL_REGEX.test(email)) throw new Error(email + ' is not an e-mail')
+require('misc-commons/polyfills/string')
+const { utils: { Email, call } } = require('misc-commons')
 
-    const user = users.find(function(user) { return user.email === email })
+module.exports = (token) => {
+    String.validate(token)
 
-    
-    const { name, surname, email: _email } = user
+    return call(
+        'GET',
+        'http://localhost:8080/users',
+        null,
+        { 'Content-type': 'application/json', 'Authorization': 'Bearer' `${token}` }
+    )
+        .then(({ status, body }) => {
+            if (status === 200) {
 
-    return { name, surname, email: _email }
+                const { user } = JSON.parse(body)
+                return user
+            } else {
+                const { error } = JSON.parse(body)
+
+                throw new Error(error)
+            }
+        })
 }

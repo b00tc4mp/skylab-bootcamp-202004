@@ -1,6 +1,4 @@
-global.XMLHttpRequest = require('xhr2')
 
-var URL = require('url').URL;
 
 URL.isUrl = function (url) {
     try {

@@ -4,17 +4,19 @@ const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET, MONGODB_URL } } = p
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, addContact } = require('misc-server-logic')
+const { registerUser, authenticateUser, retrieveUser } = require('misc-server-logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
 const { utils: { jwtPromised } } = require('misc-commons')
 const { jwtVerifierExtractor } = require('./middlewares')
-const { mongo } = require('misc-data')
+const { mongoose } = require('misc-data')
 
-mongo.connect(MONGODB_URL)
+// mongoose
+
+mongoose.connect(MONGODB_URL)
     .then(connection => {
-        console.log('connected to mongo')
+        console.log(`connected to mongo ${MONGODB_URL}`)
 
         const app = express()
 
@@ -22,10 +24,20 @@ mongo.connect(MONGODB_URL)
 
         const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
 
+        app.options('*', (req, res) => {
+            res.setHeader('Access-Control-Allow-Origin', '*')
+            res.setHeader('Access-Control-Allow-Headers', '*')
+            res.setHeader('Access-Control-Allow-Headers', '*')
+
+            res.send()
+        })
+
         // users
 
         app.post('/users', parseBody, (req, res) => {
             const { body: { name, surname, email, password } } = req
+
+            res.setHeader('Access-Control-Allow-Origin', '*')
 
             try {
                 registerUser(name, surname, email, password)
@@ -61,31 +73,9 @@ mongo.connect(MONGODB_URL)
             }
         })
 
-        // contacts
+        
 
-        app.post('/contacts', verifyExtractJwt, parseBody, (req, res) => {
-            try {
-                const { payload: { sub: userId }, body: contact } = req
-
-                new Promise((resolve, reject) => {
-                    addContact(userId, contact, (error, contactId) => {
-                        if (error) return reject(error)
-
-                        resolve(contactId)
-                    })
-                })
-                    .then(contactId => res.send({ contactId }))
-                    .catch(error => handleError(error, res))
-            } catch (error) {
-                handleError(error, res)
-            }
-        })
-
-        app.get('/contacts/:contactId', (req, res) => {
-            // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
-        })
-
-        // other
+      
 
         app.get('*', (req, res) => {
             res.status(404).send('Not Found :(')
@@ -105,7 +95,5 @@ mongo.connect(MONGODB_URL)
         })
     })
     .catch(error => {
-        debugger // WTF! why is not reaching this point when mongodb server is off!? 🤬
-
         console.error('could not connect to mongo', error)
     })
