@@ -1,0 +1,1 @@
+export { default as Landing } from "./src/screens/Landing.js";
