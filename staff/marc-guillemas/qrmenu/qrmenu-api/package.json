@@ -1,0 +1,22 @@
+{
+  "name": "qrmenu-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "qrmenu-data": "file:../qrmenu-data"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
