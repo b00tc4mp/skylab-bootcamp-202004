@@ -53,7 +53,9 @@ try {
                         .finally(() => {
                             console.info(`server ${name} ${version} stopped`)
  */
-                            
+                .then(()=>setTimeout(() => {
+                process.exit()
+                }, 500))
                        /*  }) */
                /*  } */
             }) 

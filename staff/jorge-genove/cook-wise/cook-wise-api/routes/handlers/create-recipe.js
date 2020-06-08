@@ -4,11 +4,11 @@ const { handleError } = require('../../helpers')
 
 
 
-module.exports = (req, res) => {
-    const { payload: { sub: userId }, body: { name, author, description, ingredients, time} } = req
+module.exports = (req, res) => {debugger
+    const { payload: { sub: userId }, body: { name, author, time, ingredients, description} } = req
 
     try {
-        createRecipe(name, author, description, ingredients,time,userId )
+        createRecipe({name, author, time, ingredients,description,userId} )
             .then (() => res.status(201).send())
             .catch(error => handleError(error, res))
     } catch (error) {
