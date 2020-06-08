@@ -1,4 +1,5 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
+const mongoose = require('mongoose')
 
 const Category = new Schema({
     name: {
@@ -9,7 +10,8 @@ const Category = new Schema({
     challenges: {
         type: [ObjectId],
         ref: 'challenge',
-        required: true
     }
 })
-module.exports = Category
+module.exports = mongoose.model('Category', Category)
+
+

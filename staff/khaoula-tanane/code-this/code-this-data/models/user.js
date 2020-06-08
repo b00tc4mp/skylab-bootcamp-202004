@@ -1,9 +1,11 @@
 const { Schema, SchemaTypes: {ObjectId} } = require('mongoose')
-const { utils: { Email } = require('code-this-commons') }
+const mongoose = require('mongoose')
+const { utils: { Email } } = require('code-this-commons') 
+
 
 const User = new Schema({
     name: {
-        type: String;
+        type: String,
         required: true
     },
     email: {
@@ -18,8 +20,8 @@ const User = new Schema({
     },
     completedChallenges: {
         type: [ObjectId],
-        ref: 'challenge',
-        required: true
+        ref: 'challenge'
     }
 })
-module.exports = User
+
+module.exports = mongoose.model('User', User)

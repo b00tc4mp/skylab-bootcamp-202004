@@ -1,4 +1,5 @@
 const { Schema } = require('mongoose')
+const mongoose = require('mongoose')
 
 const Challenge = new Schema({
     description: {
@@ -24,8 +25,7 @@ const Challenge = new Schema({
             if (this.difficulty === 'Easy') return 5
             if (this.difficulty === 'Medium') return 10
             if (this.difficulty === 'Advanced') return 15
-        },
-        required: true,
+        }
     }
 })
-module.exports = Challenge
+module.exports = mongoose.model('Challenge',  Challenge)

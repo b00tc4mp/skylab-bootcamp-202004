@@ -1,0 +1,17 @@
+{
+  "name": "code-this-server-logic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "code-this-commons": "^1.0.0",
+    "code-this-data": "file:../code-this-data"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
