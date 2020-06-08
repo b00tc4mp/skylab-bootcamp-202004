@@ -18,7 +18,7 @@ try {
             app.use('/api', api)
 
             app.use(cors)
-            
+
             app.get('*', (req, res) => {
                 res.status(404).send('Not Found :(')
             })
