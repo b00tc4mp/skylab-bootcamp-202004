@@ -6,22 +6,18 @@ const registerUser = require('./register-user')
 const { random } = Math
 const { expect } = require('chai')
 require('misc-commons/polyfills/json')
-const { mongo } = require('misc-data')
+const { mongoose, models: { User } } = require('misc-data')
+const bcrypt = require('bcryptjs')
 
 describe('logic - register user', () => {
-    let users
+let name, surname, email, password
 
-    before(() =>
-        mongo.connect(MONGODB_URL)
-            .then(connection => users = connection.db().collection('users'))
-    )
-
-    let name, surname, email, password
+before(() =>mongoose.connect(MONGODB_URL))
 
     beforeEach(() =>
-        users.deleteMany()
-            .then(() => {
-                name = `name-${random()}`
+        User.deleteMany()
+    beforeEach(() =>
+        users.deleteMany()me-${random()}`
                 surname = `surname-${random()}`
                 email = `e-${random()}@mail.com`
                 password = `password-${random()}`
@@ -31,7 +27,7 @@ describe('logic - register user', () => {
 
     it('should succeed on valid data', () =>
         registerUser(name, surname, email, password)
-            .then(() => users.find().toArray())
+            .then(() => User.find())
             .then(users => {
                 expect(users.length).to.equal(1)
 

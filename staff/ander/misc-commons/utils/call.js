@@ -19,6 +19,7 @@ module.exports = function (method, url, body, headers, callback) {
                 xhr.setRequestHeader(key, headers[key])
 
         xhr.onload = function () {
+            debugger
             resolve({ status: this.status, body: this.responseText })
         }
 

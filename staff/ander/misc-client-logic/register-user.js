@@ -17,6 +17,7 @@ module.exports = (name,surname,email,password)=>{
 
     return call(method, url, body, headers)
         .then(({status, body}) => {
+            debugger
             if(status !== 201){
                 const { error } = JSON.parse(body)
 

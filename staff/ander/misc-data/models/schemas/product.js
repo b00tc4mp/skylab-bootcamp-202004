@@ -1,6 +1,6 @@
 const {Schema} = require('mongoose')
 
-required('misc-commons/polyfills/URL')
+require('misc-commons/polyfills/URL')
 module.exports = new Schema({
     name: { type: String, 
         required: true
@@ -12,7 +12,7 @@ module.exports = new Schema({
     },
 
     price: {
-        tyope: Number,
+        type: Number,
         required:true
     },
 

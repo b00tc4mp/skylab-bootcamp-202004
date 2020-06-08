@@ -10,20 +10,17 @@ const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
 const { utils: {jwtPromised} } = require('misc-commons')
 const { jwtVerifierExtractor, cors } = require('./middlewares')
-const { mongo } = require('misc-data')
+const { mongoose } = require('misc-data')
 
-mongo.connect(MONGODB_URL)
-    .then(connection => {
-        console.log('connected to mongo')
+mongoose.connect(MONGODB_URL)
+    .then(() => {
+        console.log(`connected to mongo ${MONGODB_URL}`)
 
         const app = express()
-
-        app.use(cors)
-
         const parseBody = bodyParser.json()
 
         const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
-
+        app.use(cors)
         // users
 
         app.post('/users', parseBody, (req, res) => {

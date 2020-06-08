@@ -23,10 +23,13 @@ function App() {
     const surname = form.surname.value
     const email = form.email.value
     const password = form.password.value
-    registerUser(name, surname, email, password)
+    try{
+      registerUser(name, surname, email, password)
       .then(()=>setView('login'))
-
-      .catch(error=>{setError(error)})
+      .catch(error=>{console.log(error.message)})
+    }catch(error){
+      console.log(error.message)
+    }
   }
     
   const onLogin = ({target: form})=>{
