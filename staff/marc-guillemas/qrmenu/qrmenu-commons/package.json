@@ -1,5 +1,5 @@
 {
-  "name": "qrmenu-data",
+  "name": "qrmenu-commons",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,9 +8,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "mongoose": "^5.9.18",
-    "qrmenu-commons": "file:../qrmenu-commons"
-  }
+  "license": "ISC"
 }

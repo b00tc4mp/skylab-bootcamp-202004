@@ -1,3 +1,4 @@
 module.exports = {
-    mongoose: require('./mongoose')
+    mongoose: require('./mongoose'),
+    models: require('./models')
 }
