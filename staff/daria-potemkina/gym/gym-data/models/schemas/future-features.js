@@ -2,7 +2,7 @@ const { Schema } = require('mongoose')
 const price = require('./price')
 
 module.exports = new Schema({
-    expiratinDate: {
+    expirationDate: {
         type: Date,
         required: true
     },

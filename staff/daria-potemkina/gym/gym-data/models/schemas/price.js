@@ -1,4 +1,4 @@
-const { Schema } = require('moongose')
+const { Schema } = require('mongoose')
 
 module.exports = new Schema({
     date: {

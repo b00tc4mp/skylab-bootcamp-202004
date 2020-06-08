@@ -28,20 +28,20 @@ module.exports = new Schema({
     card: {
         number: {
             type: String,
-            required: true,
+            // required: true,
             unique: true
         },
         holder: {
             type: String,
-            required: true,
+            // required: true,
         },
         expirationDate: {
             type: Date,
-            required: true
+            // required: true
         },
         cvv: {
             type: String,
-            required: true
+            // required: true
         }
     },
 
