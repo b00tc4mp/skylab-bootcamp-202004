@@ -8,7 +8,7 @@ module.exports = new Schema({
         required: true
     },
 
-    url: {
+    img: {
         type: String,
         required: true
     }

@@ -8,20 +8,24 @@ module.exports = new Schema({
         required: true
     },
 
-    street: {
-        type: String,
-        required: true
-    },
+    adress: {
 
-    number: {
-        type: Number,
-        required: true
-    },
-
-    city: {
-        type: String,
-        required: true
-    },
+        street: {
+            type: String,
+            required: true
+        },
+    
+        number: {
+            type: Number,
+            required: true
+        },
+    
+        city: {
+            type: String,
+            required: true
+        },
+        require: true
+    },    
 
     members: [{
         type: ObjectId,
@@ -29,7 +33,7 @@ module.exports = new Schema({
         required: true
     }],
 
-    password: {
+    accesCode: {
         type: String,
         required: true
     },
@@ -38,7 +42,7 @@ module.exports = new Schema({
         foodItem: {
 
             type: ObjectId,
-            ref: 'Food',
+            ref: 'FoodItem',
             required: true
 
         },
@@ -47,7 +51,9 @@ module.exports = new Schema({
             type: Number,
             required: true
         }
-    }]
+    }],
+
+    messages: [message]
 })
 
 

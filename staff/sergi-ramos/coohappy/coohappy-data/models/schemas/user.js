@@ -25,39 +25,30 @@ module.exports = new Schema({
         required: true
     },
 
-    admin: {
+    role: {
         type: String,
         enum: ['user', 'admin'],
         default: 'user'
     },
 
-    foodListUser: [{
+    foodList: [{
         foodItem: {
             type: ObjectId,
-            ref: 'Food'
-         
+            ref: 'FoodItem',
+            require: true
         },
-
         weight: {
-            type: Number
+            type: Number,
+            require: true
         }
-    }
-
-    ],
+    }],
 
     laundry: {
-
-        date: {
-            type: Date
-        },
-
-        hour: {
-            type: String
-        }
+         type: Date
 
     },
 
-    cohousingId: {
+    cohousing: {
         type: ObjectId,
         ref: 'Cohousing'
     }
