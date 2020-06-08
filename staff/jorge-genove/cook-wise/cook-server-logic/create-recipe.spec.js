@@ -8,7 +8,7 @@ const { expect } = require('chai')
 require('cook-wise-commons/polyfills/json')
 const { mongoose, models: { User, Recipes, Ingredients } } = require('cook-wise-data')
 const bcrypt = require('bcryptjs')
-const {UnexistenceError} = require('cook-wise-commons/errors')
+const {DuplicityError,UnexistenceError} = require('cook-wise-commons/errors')
 
 describe("createRecipe", () => {
     let name, surname, email, password, encryptedPassword, userId;
@@ -61,7 +61,7 @@ describe("createRecipe", () => {
         expect(result).to.be.undefined;
         
         const recipes = await Recipes.find().populate("ingredients").lean();
-        console.log(recipes)
+    
         expect(recipes).to.exist;
         expect(recipes).to.be.instanceof(Array);
         expect(recipes.length).to.equal(1);
@@ -94,6 +94,21 @@ describe("createRecipe", () => {
         expect(user.recipes[0]._id.toString()).to.equal(singleRecipe._id.toString())
     });
 
+    it("shold throw an error when recipe with same name an author already exist", async () => {
+        await Recipes.create({name: recipeName, author: recipeAuthor, description, time, ingredients})
+
+        let _error;
+        try {
+            await createRecipe({ name: recipeName, author: recipeAuthor, description, time, ingredients, userId })
+        }catch(error) {
+            _error = error;
+        }
+
+        expect(_error).to.exist;
+        expect(_error).to.be.instanceof(DuplicityError);
+        expect(_error.message).to.equal(`${recipeName} of ${recipeAuthor} already exist` );
+    })
+
     it("should fail to create the recipe if the user doesnt exist", async () => {
         await User.deleteMany();
 
@@ -112,7 +127,7 @@ describe("createRecipe", () => {
     it("should fail if ingredients have no quantity or quantity under 0", async () => {
        ingredient.quantity = 0
    
-        console.log(ingredients)
+        
         let _error;
         try {
             await createRecipe({name: recipeName, author: recipeAuthor, description, time, ingredients, userId })
