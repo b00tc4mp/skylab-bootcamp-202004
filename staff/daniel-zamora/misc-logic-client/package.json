@@ -1,0 +1,19 @@
+{
+  "name": "misc-logic-client",
+  "version": "1.0.0",
+  "main": "register.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "misc-commons": "file:../misc-commons"
+  },
+  "devDependencies": {
+    "xhr2": "^0.2.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
