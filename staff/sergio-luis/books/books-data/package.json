@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "misc-commons": "file:../books-commons",
+    "books-commons": "file:../books-commons",
     "mongoose": "^5.9.18"
   }
 }

@@ -2,8 +2,8 @@ const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 const { utils: { Email } } = require('misc-commons')
 const following = require('./following')
 const rating = require('./rating')
-const books = require('./books')
-const messages = require('./messages')
+const book = require('./book')
+const message = require('./message')
 
 module.exports = new Schema({
     name: {
@@ -27,13 +27,11 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-    books:[books],
+    books:[book],
 
     following :[following],
 
     rating:[rating],
-
-    recivedMessages:[messages],
 
     ratingAvg:{
         type: Number
@@ -41,12 +39,10 @@ module.exports = new Schema({
 
     localizationGps:{
         lat: {
-            type:Number,
-            required: true
+            type:Number
         },
         lon:{
-            type:Number,
-            required: true
+            type:Number
         },
     }
 })
