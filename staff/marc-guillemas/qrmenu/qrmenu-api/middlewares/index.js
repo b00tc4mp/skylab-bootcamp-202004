@@ -1,3 +1,4 @@
 module.exports = {
-    cors: require('./cors')
+    cors: require('./cors'),
+    jwtVerifierExtractor: require('./jwt-verifier-extractor')
 }

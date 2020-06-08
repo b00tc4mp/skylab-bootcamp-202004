@@ -14,7 +14,9 @@
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "qrmenu-data": "file:../qrmenu-data"
+    "qrmenu-commons": "file:../qrmenu-commons",
+    "qrmenu-data": "file:../qrmenu-data",
+    "qrmenu-server-logic": "file:../qrmenu-server-logic"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
