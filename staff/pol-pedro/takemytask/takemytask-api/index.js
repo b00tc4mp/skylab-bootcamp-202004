@@ -4,13 +4,13 @@ const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET, MONGODB_URL } } = p
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, addContact } = require('misc-server-logic')
+const { registerUser} = require('takemytask-server-logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
-const { utils: { jwtPromised } } = require('misc-commons')
+const { utils: { jwtPromised } } = require('takemytask-commons')
 const { jwtVerifierExtractor, cors } = require('./middlewares')
-const { mongoose } = require('misc-data')
+const { mongoose } = require('takemytask-data')
 
 console.debug('starting server')
 
@@ -32,10 +32,10 @@ try {
             // users
 
             app.post('/users', parseBody, (req, res) => {
-                const { body: { name, surname, email, password } } = req
+                const { body: { name, surname, email, password, adress } } = req
 
                 try {
-                    registerUser(name, surname, email, password)
+                    registerUser(name, surname, email, password, adress)
                         .then(() => res.status(201).send())
                         .catch(error => handleError(error, res))
                 } catch (error) {
@@ -87,12 +87,6 @@ try {
                     handleError(error, res)
                 }
             })
-
-            app.get('/contacts/:contactId', (req, res) => {
-                // TODO extract userId from authorization (bearer token) then retrieve contact by contact id param and send it back
-            })
-
-            // other
 
             app.get('*', (req, res) => {
                 res.status(404).send('Not Found :(')

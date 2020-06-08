@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "misc-commons": "file:../takemytask-commons",
+    "takemytask-commons": "file:../takemytask-commons",
     "mongoose": "^5.9.18"
   }
 }
