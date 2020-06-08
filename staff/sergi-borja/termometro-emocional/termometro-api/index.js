@@ -1,4 +1,4 @@
-request('dotenv').config()
+require('dotenv').config()
 
 const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, MONGODB_URL } } = process
 const PORT = PORT_CLI || PORT_ENV || 8080
@@ -23,7 +23,6 @@ try {
                 res.status(404).send('Not Found :(')
             })
             
-            /*WHY THIS THING DOWN HERE*/
             app.listen(PORT, () => console.info(`server ${name} ${version} running on port ${PORT}`))
 
             let interrupted = false
@@ -37,7 +36,10 @@ try {
                     console.debug('disconnecting database')
 
                     mongoose.disconnect()
-                    .then(() => console.info('disconnected database'))
+                        .then(()=> setTimeout(() => {
+                                process.exit()
+                                }, 500))
+                        .then(() => console.info('disconnected database'))
                 //     .catch(error => file.error('could not disconnect from mongo', error))
                 //     .finally(() => {
                 //         console.info(`server ${name} ${version} stopped`)

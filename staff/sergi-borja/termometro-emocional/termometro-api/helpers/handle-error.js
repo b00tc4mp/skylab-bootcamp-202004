@@ -1,4 +1,4 @@
-const { errors: { DuplicityError, VoidError, UnexistenceError, CredentialsError } } = require('misc-commons')
+const { errors: { DuplicityError, VoidError, UnexistenceError, CredentialsError } } = require('termometro-commons')
 const { JsonWebTokenError } = require('jsonwebtoken')
 
 module.exports = function (error, res) {
@@ -16,10 +16,10 @@ module.exports = function (error, res) {
             break
     }
     
-    if (status < 500)
-        logger.warn(`response with error status ${status} - ${error}`)
-    else
-        logger.error(`response with error status ${status} - ${error}`)
+    // if (status < 500)
+    //     logger.warn(`response with error status ${status} - ${error}`)
+    // else
+    //     logger.error(`response with error status ${status} - ${error}`)
 
     res.status(status).json({ error: error.message })
 }

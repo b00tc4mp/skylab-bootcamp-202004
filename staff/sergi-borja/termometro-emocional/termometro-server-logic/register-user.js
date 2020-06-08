@@ -1,7 +1,7 @@
-require('misc-commons/polyfills/string')
-require('misc-commons/polyfills/json')
-const { errors: {DuplicityError}} = require('termometro-commons')
-const { model: { User } } = require('termometro-data')
+require('termometro-commons/polyfills/string')
+require('termometro-commons/polyfills/json')
+const { errors: {DuplicityError}, utils: {Email}} = require('termometro-commons')
+const { models: { User } } = require('termometro-data')
 const bcrypt = require('bcryptjs')
 
 module.exports = (name, surname, age, sexo, email, password) => {
@@ -18,6 +18,6 @@ module.exports = (name, surname, age, sexo, email, password) => {
 
         const hash = await bcrypt.hash(password, 10)
 
-        await User.create({name, surname, age, sexo, email, password})
+        await User.create({name, surname, age, sexo, email, password: hash})
     })()
 }

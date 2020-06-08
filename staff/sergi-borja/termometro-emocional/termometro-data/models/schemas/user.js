@@ -1,4 +1,5 @@
-const { Schema } = require('mongoose')
+const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
+const { utils: {Email} } = require('termometro-commons')
 
 module.exports = new Schema({
     name: {
@@ -31,7 +32,16 @@ module.exports = new Schema({
     password: {
         type: String,
         required: true
+    },
+
+    members: [{
+        type: ObjectId,
+        ref: 'users'
+    }],
+
+    administrator: {
+        type: ObjectId,
+        ref: 'users'
     }
 })
 
-// Como se relaciona error de campo con frontent. Como crear un USE misc api. Cors.

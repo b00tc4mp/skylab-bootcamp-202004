@@ -1,9 +1,9 @@
-const { utils: { jwtPromised} } = require('misc-commons')
+const { utils: { jwtPromised} } = require('termometro-commons')
 
 module.exports = (secret, errorHandler) => 
     (req, res, next) => {
         try {
-            const [, token] = req.header('authorization').split('')
+            const [, token] = req.header('authorization').split(' ')
 
             jwtPromised.verify(token, secret)
                 .then(payload => {

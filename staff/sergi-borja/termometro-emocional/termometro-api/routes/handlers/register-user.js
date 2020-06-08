@@ -1,4 +1,4 @@
-const { registerUser } = require('termometro-server-logic')
+const  {registerUser}  = require('termometro-server-logic')
 const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
