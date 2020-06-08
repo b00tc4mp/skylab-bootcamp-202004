@@ -6,7 +6,7 @@ const PORT = PORT_CLI || PORT_ENV || 8080
 const path = require('path')
 
 
-/* const { api } = require('./routes') */
+ const { api } = require('./routes') 
 
 const express = require('express')
 
@@ -27,7 +27,7 @@ try {
 
             app.use(cors)
 
-            /* app.use('/api', api) */
+             app.use('/api', api) 
 
             // other
 
@@ -40,23 +40,25 @@ try {
             let interrupted = false
 
             process.on('SIGINT', () => {
-                if (!interrupted) {
+               /*  if (!interrupted) {
                     interrupted = true
 
                     console.debug('stopping server')
 
-                    console.debug('disconnecting database')
+                    console.debug('disconnecting database') */
 
                     mongoose.disconnect()
-                        .then(() => console.info('disconnected database'))
+                        /* .then(() => console.info('disconnected database'))
                         .catch(error => file.error('could not disconnect from mongo', error))
                         .finally(() => {
                             console.info(`server ${name} ${version} stopped`)
-
+ */
                             
-                        })
-                }
-            })
+                       /*  }) */
+               /*  } */
+            }) 
         })
        
-}finally{}
+}catch(error) {
+    console.error(error)
+}

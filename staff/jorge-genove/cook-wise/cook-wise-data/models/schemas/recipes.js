@@ -1,5 +1,6 @@
 const { Schema } = require('mongoose')
-const ingredientsQuantity = require('./ingredients-quantity')
+
+const { SchemaTypes: { ObjectId } } = require('mongoose')
 
 module.exports = new Schema({
     name: {
@@ -12,8 +13,17 @@ module.exports = new Schema({
         required: true
     },
 
-    ingredients: [ingredientsQuantity] ,
-    
+
+    ingredients: [{
+        ingredient: {
+            type: ObjectId,
+            ref: 'Ingredients'
+        },
+        quantity: {
+            type: Number
+        }
+    }],
+
 
     description: {
         type: String,

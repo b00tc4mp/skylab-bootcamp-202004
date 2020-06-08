@@ -29,7 +29,11 @@ module.exports = new Schema({
 
     recipes: [recipes],
 
-    menus: [[recipes],[recipes],[recipes],[recipes],[recipes],[recipes],[recipes]]
-
-
+    // menus: [{
+    //     type: {
+    //         name: {
+    //         type: String,
+    //         required: true
+    //     }
+    // }}]
 })
