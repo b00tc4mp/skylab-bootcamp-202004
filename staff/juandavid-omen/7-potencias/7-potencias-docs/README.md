@@ -38,3 +38,7 @@ In this web site will be shown all relevant information about the school, like t
 ### Data model
 
 ![data](./images/7-potencias-data-model.png)
+
+## Link to Trello
+
+[7 Potencias - Trello](https://trello.com/b/89PVF4pr/7-potencias)
