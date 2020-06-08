@@ -7,20 +7,16 @@ model.exports = new Schema ({
         required: true
     },
 
-    dishes: [{
-        type: ObjectId,
-        ref: "Dish"
-    }],
+    dishStatus: [dishStatus],
 
     total: {
         type: Number,
         required: true
     },
 
-    status: {
-        type: String,
-        enum: ["ordered", "served", "payed"],
-        default: "ordered"
+    payed: {
+        type: Boolean, 
+        default: false
     },
 
     date: {

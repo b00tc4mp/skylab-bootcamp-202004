@@ -28,13 +28,17 @@ model.exports = new Schema ({
         required: true
     },
 
-    menu: [dish],
+    dishes: [dish],
+
+    menus: [menu],
 
     orders: [order],
 
     roles: {
         type: String,
         enum: ["owner", "chef", "waiter"]
-    }
+    },
+
+    staff : [user]
 
 })
