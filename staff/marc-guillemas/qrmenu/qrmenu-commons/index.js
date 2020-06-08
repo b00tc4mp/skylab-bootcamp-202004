@@ -1,3 +1,4 @@
 module.exports = {
-    utils: require('./utils')
+    utils: require('./utils'),
+    errors: require('./errors')
 }
