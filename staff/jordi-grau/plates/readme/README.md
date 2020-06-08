@@ -16,4 +16,8 @@
     -Search restaurants by location, name or plate.
     -Menu's management
     -Follow a plate in a restaurant
-    
+
+
+## Use cases
+
+![](platesUseCases.jpg)
