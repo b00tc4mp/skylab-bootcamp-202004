@@ -1,5 +1,5 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
-const { utils: { Schema } } = require('coohappy-commons')
+
 
 
 module.exports = new Schema({

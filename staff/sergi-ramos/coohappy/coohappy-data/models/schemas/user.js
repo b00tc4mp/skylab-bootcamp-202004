@@ -2,7 +2,6 @@ const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 const { utils: { Email } } = require('coohappy-commons')
 
 
-
 module.exports = new Schema({
 
     name: {
@@ -27,34 +26,35 @@ module.exports = new Schema({
     },
 
     admin: {
-        type: Boolean,
-        required: true
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user'
     },
 
     foodListUser: [{
         foodItem: {
             type: ObjectId,
-            ref: 'Food',
-            required: true
+            ref: 'Food'
+         
         },
 
         weight: {
-            type: Number,
-            required: true
+            type: Number
         }
-    }],
+    }
+
+    ],
 
     laundry: {
 
         date: {
-            type: Date,
-            required: true
+            type: Date
         },
 
         hour: {
-            type: String,
-            required: true
+            type: String
         }
+
     },
 
     cohousingId: {
