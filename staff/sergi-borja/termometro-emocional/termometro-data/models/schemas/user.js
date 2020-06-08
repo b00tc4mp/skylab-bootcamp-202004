@@ -11,6 +11,16 @@ module.exports = new Schema({
         required: true
     },
 
+    age: {
+        type: Number,
+        required: true
+    },
+    
+    sexo: {
+        type: String,
+        required: true
+    },
+
     email: {
         type: String,
         required: true,
@@ -23,3 +33,5 @@ module.exports = new Schema({
         required: true
     }
 })
+
+// Como se relaciona error de campo con frontent. Como crear un USE misc api. Cors.
