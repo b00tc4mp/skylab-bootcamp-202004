@@ -1,4 +1,4 @@
-const { errors: { DuplicityError, VoidError, UnexistenceError, CredentialsError } } = require('misc-commons')
+const { errors: { DuplicityError, VoidError, UnexistenceError, CredentialsError } } = require('escape-me-commons')
 const { JsonWebTokenError } = require('jsonwebtoken')
 const logger = require('../logger').singletonFileLogger()
 

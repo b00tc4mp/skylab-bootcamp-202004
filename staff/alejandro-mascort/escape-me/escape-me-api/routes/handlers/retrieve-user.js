@@ -1,4 +1,4 @@
-const { retrieveUser } = require('misc-server-logic')
+const { retrieveUser } = require('escape-me-server-logic')
 const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {

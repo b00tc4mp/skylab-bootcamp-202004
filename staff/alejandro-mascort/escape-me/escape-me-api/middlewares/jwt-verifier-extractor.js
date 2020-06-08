@@ -1,4 +1,4 @@
-const { utils: { jwtPromised } } = require('misc-commons')
+const { utils: { jwtPromised } } = require('escape-me-commons')
 
 module.exports = (secret, errorHandler) =>
     (req, res, next) => {

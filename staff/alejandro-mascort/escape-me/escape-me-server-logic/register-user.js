@@ -1,7 +1,7 @@
-require('misc-commons/polyfills/string')
-require('misc-commons/polyfills/json')
-const { utils: { Email }, errors: { DuplicityError } } = require('misc-commons')
-const { models: { User } } = require('misc-data')
+require('escape-me-commons/polyfills/string')
+require('escape-me-commons/polyfills/json')
+const { utils: { Email }, errors: { DuplicityError } } = require('escape-me-commons')
+const { models: { User } } = require('escape-me-data')
 const bcrypt = require('bcryptjs')
 
 module.exports = (name, surname, email, password) => {

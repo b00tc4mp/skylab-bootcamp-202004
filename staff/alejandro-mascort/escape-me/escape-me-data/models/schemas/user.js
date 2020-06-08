@@ -1,5 +1,5 @@
 const { Schema } = require('mongoose')
-const { utils: { Email } } = require('misc-commons')
+const { utils: { Email } } = require('escape-me-commons')
 const productQuantity = require('./product-quantity')
 const order = require('./order')
 

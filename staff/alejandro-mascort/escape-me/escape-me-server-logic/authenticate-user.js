@@ -1,6 +1,6 @@
-require('misc-commons/polyfills/string')
-const { models: { User } } = require('misc-data')
-const { utils: { Email }, errors: { UnexistenceError, CredentialsError } } = require('misc-commons')
+require('escape-me-commons/polyfills/string')
+const { models: { User } } = require('escape-me-data')
+const { utils: { Email }, errors: { UnexistenceError, CredentialsError } } = require('escape-me-commons')
 const bcrypt = require('bcryptjs')
 
 module.exports = (email, password) => {

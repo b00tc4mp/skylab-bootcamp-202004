@@ -1,4 +1,4 @@
-const { registerUser } = require('misc-server-logic')
+const { registerUser } = require('escape-me-server-logic')
 const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {

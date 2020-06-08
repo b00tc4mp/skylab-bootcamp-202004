@@ -1,4 +1,4 @@
-require('../escape-me-server-logic/node_modules/dotenv').config()
+require('dotenv').config()
 
 const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET, MONGODB_URL } } = process
 const PORT = PORT_CLI || PORT_ENV || 8080
@@ -13,11 +13,11 @@ console.level = Logger.DEBUG
 const express = require('express')
 const { registerUser, authenticateUser, retrieveUser, addContact } = require('misc-server-logic')
 const bodyParser = require('body-parser')
-const { name, version } = require('./package.json.js.js')
+const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
 const { utils: { jwtPromised } } = require('misc-commons')
 const { jwtVerifierExtractor, cors } = require('./middlewares')
-const { mongoose } = require('../escape-me-server-logic/node_modules/misc-data')
+const { mongoose } = require('misc-data')
 
 console.debug('starting server')
 

@@ -1,5 +1,5 @@
 {
-  "name": "misc-api",
+  "name": "escape-me-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,17 +8,15 @@
     "watch": "npx nodemon --ignore ./data .",
     "debug": "node debug ."
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "misc-commons": "file:../misc-commons",
-    "misc-data": "file:../misc-data",
-    "misc-server-logic": "file:../misc-server-logic"
+    "escape-me-commons": "file:../escape-me-commons",
+    "escape-me-data": "file:../escape-me-data",
+    "escape-me-server-logic": "file:../escape-me-server-logic",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

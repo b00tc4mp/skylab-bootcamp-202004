@@ -1,16 +1,15 @@
 {
-  "name": "misc-data",
+  "name": "escape-me-data",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "misc-commons": "file:../misc-commons",
-    "mongoose": "^5.9.17"
+    "escape-me-commons": "file:../escape-me-commons",
+    "mongoose": "^5.9.18"
   }
 }

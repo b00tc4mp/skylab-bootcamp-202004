@@ -1,5 +1,5 @@
-require('misc-commons/polyfills/string')
-const { mongoose: { ObjectId }, models: { User } } = require('misc-data')
+require('escape-me-commons/polyfills/string')
+const { mongoose: { ObjectId }, models: { User } } = require('escape-me-data')
 
 module.exports = userId => {
     String.validate.notVoid(userId)
