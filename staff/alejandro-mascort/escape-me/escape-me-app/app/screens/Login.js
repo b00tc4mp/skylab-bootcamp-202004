@@ -7,7 +7,7 @@ import {
 import AppButton from '../components/AppButton'
 
 
-export default function App() {
+export default function Login() {
     return (
         <ImageBackground style={styles.container} source={require('../assets/puzzle.jpg')}>
             <AppButton title="Login" onPress={() => console.log('tapped')}></AppButton>
