@@ -15,9 +15,10 @@ console.level = Logger.DEBUG
 const { api } = require('./routes') //----------------------------------------------- 
 
 const {name, version} = require('./package.json')
-const { cors } = require('./middlewares') //------------------------------------------
+const { cors } = require('./middlewares')
 const {mongoose} = require('qrmenu-data')
 
+console.debug('starting server')
 
 try {
     console.debug('connecting to database')
@@ -26,10 +27,10 @@ try {
     .then(() => {
         console.info(`connected to mongo ${MONGODB_URL}`)
 
+        const app = express()
 
 
-
-
+        app.use(cors)
 
 
         app.get('*', (req, res) => {
