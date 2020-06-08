@@ -1,5 +1,4 @@
 const { registerEstablishment } = require('qrmenu-server-logic')
-const { } = require('../../helpers')
 const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {

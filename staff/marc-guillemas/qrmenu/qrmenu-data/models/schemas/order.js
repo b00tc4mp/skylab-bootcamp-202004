@@ -1,7 +1,7 @@
-const { model, Schema, Types: {ObjectId} } = require("mongoose");
+const { Schema } = require("mongoose");
+const dishStatus = require('./dishStatus')
 
-
-model.exports = new Schema ({
+module.exports = new Schema ({
     table: {
         type: Number,
         required: true

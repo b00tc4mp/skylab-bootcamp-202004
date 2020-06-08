@@ -1,6 +1,6 @@
-const { Schema } = require("mongoose");
+const { Schema, Types: {ObjectId} } = require("mongoose");
 
-model.exports = new Schema ({
+module.exports = new Schema ({
     dish: {
         type: ObjectId,
         ref: "Dish"
@@ -18,5 +18,5 @@ model.exports = new Schema ({
     },
     servedDate: {
         type: Date
-    },
+    }
 })

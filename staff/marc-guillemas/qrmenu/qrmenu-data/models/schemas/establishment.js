@@ -1,8 +1,10 @@
 const { Schema } = require('mongoose')
-const { Email, NIF } = require('qrmenu-commons')
-const { dish } = require('./dish')
+const { utils: { Email, NIF } } = require('qrmenu-commons')
+const dish = require('./dish')
+const order = require('./order')
+const user = require('./user')
 
-model.exports = new Schema ({
+module.exports = new Schema ({
     
     name: {
         type: String,
@@ -30,7 +32,7 @@ model.exports = new Schema ({
 
     dishes: [dish],
 
-    menus: [menu],
+    // menus: [menu],
 
     orders: [order],
 
@@ -39,6 +41,6 @@ model.exports = new Schema ({
         enum: ["owner", "chef", "waiter"]
     },
 
-    staff : [user]
+    staff: [user]
 
 })
