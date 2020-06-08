@@ -37,6 +37,7 @@ try {
         app.listen(PORT, () => console.info(`server ${name} ${version} running on port ${PORT}`))
 
 
+        let interrupted = false
         process.on('SIGINT', () => {
             if (!interrupted) {
                 interrupted = true
