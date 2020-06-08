@@ -1,6 +1,6 @@
 require('cook-wise-commons/polyfills/string')
 require('cook-wise-commons/polyfills/number')
-const { errors: {UnexistenceError } } = require('cook-wise-commons')
+const { errors: {DuplicityError,UnexistenceError } } = require('cook-wise-commons')
 const { models: { Recipes, User} } = require('cook-wise-data')
 
 /**
@@ -9,11 +9,11 @@ const { models: { Recipes, User} } = require('cook-wise-data')
  * 
  * params {Object} data data to create the recipe
  * 
- */
-module.exports = ({name, author, time, ingredients, description,userId}) => {
+ */console
+module.exports = ({name, author, time, ingredients, description,userId}) => {debugger
+    
     String.validate.notVoid(name)
     String.validate.notVoid(author)
-    console.log(userId)
     String.validate.notVoid(userId)
     Number.validate(time)
     if (!(ingredients instanceof Array)) throw new Error('you must put ingredients on the recipe')
@@ -27,6 +27,9 @@ module.exports = ({name, author, time, ingredients, description,userId}) => {
             
             if (ingredient.quantity <= 0)  throw new UnexistenceError(`ingredient must have a quantity`);
         });
+
+        const recipes = await Recipes.findOne({name, author})
+        if(recipes) throw new DuplicityError(`${name} of ${author} already exist` )
         
         const recipe = await Recipes.create({
             name, author, description, time, ingredients 
