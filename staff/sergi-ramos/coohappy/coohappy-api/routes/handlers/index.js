@@ -3,6 +3,7 @@ module.exports = {
     authenticate: require('./authenticate-user'),
     retrieveUser: require('./retrieve-user'),
     registerCohousing: require('./register-coohounsing'),
+    retrieveCohousing: require('./retrieve-cohousing')
    
   
 }
