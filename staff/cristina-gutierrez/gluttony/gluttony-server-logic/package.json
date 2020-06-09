@@ -9,7 +9,8 @@
   "author": "crispine",
   "license": "ISC",
   "dependencies": {
-    "gluttony-data": "file:../gluttony-data"
+    "gluttony-data": "file:../gluttony-data",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "jest": "^26.0.1"

@@ -9,7 +9,9 @@
   "author": "crispine",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.2"
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "gluttony-api": "file:../gluttony-api"
   },
   "devDependencies": {
     "jest": "^26.0.1"
