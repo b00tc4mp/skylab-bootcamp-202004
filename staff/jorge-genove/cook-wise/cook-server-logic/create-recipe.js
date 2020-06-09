@@ -1,15 +1,23 @@
+/**
+ * It must create a new recipe
+ * 
+ * @param Object with the data for create the recipe
+ * 
+ * @throws Unexistance error if user doesn't exist
+ * 
+ * @throws DuplicityError if the recipe already exist
+ * 
+ * @throws if the ingredients quantity is 0 or less
+ * 
+ * @returns a recipe
+ */
+
 require('cook-wise-commons/polyfills/string')
 require('cook-wise-commons/polyfills/number')
 const { errors: {DuplicityError,UnexistenceError } } = require('cook-wise-commons')
 const { models: { Recipes, User} } = require('cook-wise-data')
 
-/**
- * 
- * Creates a new recipe with embedded ingredientsQuantity
- * 
- * params {Object} data data to create the recipe
- * 
- */console
+console
 module.exports = ({name, author, time, ingredients, description,userId}) => {debugger
     
     String.validate.notVoid(name)
