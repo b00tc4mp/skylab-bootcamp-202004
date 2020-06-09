@@ -1,5 +1,5 @@
-const { Schema } = require('mongoose')
-
+const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
+const { utils: { Email } } = require('nomad-commons')
 
 module.exports = new Schema({
     name: {
@@ -14,7 +14,33 @@ module.exports = new Schema({
         type: String,
         required: true,
         unique: true,
-        validate: []
-    }
-
+        validate: [Email.validate, 'invalid email']
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    title: {
+        type: String
+    },
+    photo: {
+        type: String // TODO review this check npm
+    },
+    activeBookingsCount: Number,
+    workspacesVisitedCount: Number,
+    workspacesPublishedCount: Number,
+    favorites: [{
+        id: ObjectId
+    }],
+    userWorkspaces: [{
+        type: ObjectId,
+        ref: 'Workspace'
+    }],
+    bookings: [{ // TODO Review this
+        id: {
+            type: ObjectId,
+            ref: 'Workspace'
+        },
+        expiry: Date
+    }],
 })
