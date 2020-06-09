@@ -1,5 +1,5 @@
-require('qrmenu-commons/pollyfills/string')
-require('qrmenu-commons/pollyfills/json')
+require('qrmenu-commons/polyfills/string')
+require('qrmenu-commons/polyfills/json')
 const { utils: {Email}, errors: { UnexistenceError, CredentialsError } } = require('qrmenu-commons')
 const { models: {Establishment} } = require('qrmenu-data')
 const bcrypt = require('bcryptjs')

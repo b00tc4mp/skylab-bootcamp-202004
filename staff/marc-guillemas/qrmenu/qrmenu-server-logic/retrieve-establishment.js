@@ -1,4 +1,4 @@
-require('qrmenu-commons/pollyfills/string')
+require('qrmenu-commons/polyfills/string')
 const { models: {Establishment}, mongoose: {ObjectId} } = require('qrmenu-data')
 const {errors: {UnexistenceError}} = require('qrmenu-commons')
 module.exports = userId => {
