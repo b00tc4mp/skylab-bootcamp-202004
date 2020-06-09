@@ -1,5 +1,4 @@
 const { Schema } = require('mongoose')
-const { utils: { Email } } = require('misc-commons')
 const productQuantity = require('./product-quantity')
 const order = require('./order')
 
@@ -17,8 +16,7 @@ module.exports = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true,
-        validate: [Email.validate, 'invalid e-mail']
+        unique: true
     },
 
     password: {

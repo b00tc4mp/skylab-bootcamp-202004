@@ -1,0 +1,18 @@
+{
+  "name": "moove-it-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "moove-it-commons": "file:../moove-it-commons",
+    "moove-it-data": "file:../moove-it-data",
+    "node": "^14.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
