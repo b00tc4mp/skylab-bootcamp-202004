@@ -5,5 +5,6 @@ module.exports = {
     retrieveUser : require('./retrieve-user'),
     registerCohousing : require('./register-cohousing'),
     retrieveCohousing: require('./retrieve-cohousing'),
-    updateUser: require('./update-user')
+    updateUser: require('./update-user'),
+    updateCohousing: require('./update-cohousing')
 }
