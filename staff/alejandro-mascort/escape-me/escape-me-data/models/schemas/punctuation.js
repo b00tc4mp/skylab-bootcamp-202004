@@ -1,14 +1,17 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
+const comment = require('./comment')
 
 module.exports = new Schema({
-    product: {
+    escapeRoom: {
         type: ObjectId,
-        ref: 'Product',
+        // ref: 'EscapeRooms',
         required: true
     },
 
-    quantity: {
+    rating: {
         type: Number,
         required: true
-    }
+    },
+
+    comment: comment
 })

@@ -1,15 +1,14 @@
 const { Schema } = require('mongoose')
 const { utils: { Email } } = require('escape-me-commons')
-const productQuantity = require('./product-quantity')
-const order = require('./order')
+const punctuation = require('./punctuation')
+require('escape-me-commons/polyfills/url')
 
 module.exports = new Schema({
-    name: {
-        type: String,
-        required: true
-    },
+    name: String,
 
-    surname: {
+    surname: String,
+
+    username: {
         type: String,
         required: true
     },
@@ -26,9 +25,18 @@ module.exports = new Schema({
         required: true
     },
 
-    nickname: String,
+    done: [productQuantity],
 
-    cart: [productQuantity],
+    pending: [escapeRoom],
 
-    orders: [order]
+    favorites: [escapeRoom],
+
+    following: [escapeRoom],
+
+    ratings: [punctuation],
+
+    // image: {
+    //     type: String,
+    //     required: true
+    // }
 })
