@@ -1,14 +1,17 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
+const comment = require('./comment')
 
 module.exports = new Schema({
-    product: {
+    user: {
         type: ObjectId,
-        ref: 'Product',
+        ref: 'User',
+        required: true
+    },
+    rating: {
+        type: Number,
+        enum: [0, 1, 2, 3, 4, 5],
         required: true
     },
 
-    quantity: {
-        type: Number,
-        required: true
-    }
+    comment: comment
 })

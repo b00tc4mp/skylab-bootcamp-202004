@@ -9,8 +9,8 @@
  * @throws {TypeError} If any of the parameters does not match the corresponding type.
  * @throws {Error} If e-mail does not match the expected format.
  */
-require('misc-commons/polyfills/string')
-const { utils: { Email, call } } = require('misc-commons')
+require('escape-me-commons/polyfills/string')
+const { utils: { Email, call } } = require('escape-me-commons')
 const context = require('./context')
 
 module.exports = function (email, password) {

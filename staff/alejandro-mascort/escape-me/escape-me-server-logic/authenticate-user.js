@@ -1,6 +1,7 @@
-require('escape-me-commons/polyfills/string')
+const { errors: { CredentialsError, UnexistenceError }, utils: { Email } } = require("escape-me-commons")
+
+require("escape-me-commons/polyfills/string")
 const { models: { User } } = require('escape-me-data')
-const { utils: { Email }, errors: { UnexistenceError, CredentialsError } } = require('escape-me-commons')
 const bcrypt = require('bcryptjs')
 
 module.exports = (email, password) => {
@@ -8,15 +9,15 @@ module.exports = (email, password) => {
     Email.validate(email)
     String.validate.notVoid(password)
 
-    return User.findOne({ email })
-        .then(user => {
-            if (!user) throw new UnexistenceError(`user with e-mail ${email} does not exist`)
+    return (async () => {
+        const user = await User.findOne({ email })
 
-            return bcrypt.compare(password, user.password)
-                .then(match => {
-                    if (!match) throw new CredentialsError('wrong password')
+        if (!user) throw new UnexistenceError(`user with e-mail ${email} does not exist`)
 
-                    return user.id
-                })
-        })
+        const match = await bcrypt.compare(password, user.password);
+
+        if (!match) throw new CredentialsError('wrong password')
+
+        return user._id.toString()
+    })()
 } 

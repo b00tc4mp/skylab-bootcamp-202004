@@ -1,15 +1,14 @@
-const { Schema } = require('mongoose')
+const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 const { utils: { Email } } = require('escape-me-commons')
-const productQuantity = require('./product-quantity')
-const order = require('./order')
+const punctuation = require('./punctuation')
+require('escape-me-commons/polyfills/url')
 
 module.exports = new Schema({
-    name: {
-        type: String,
-        required: true
-    },
+    name: String,
 
-    surname: {
+    surname: String,
+
+    username: {
         type: String,
         required: true
     },
@@ -26,9 +25,13 @@ module.exports = new Schema({
         required: true
     },
 
-    nickname: String,
+    participated: [{ type: ObjectId, required: true, ref: 'EscapeRoom' }],
 
-    cart: [productQuantity],
+    pending: [{ type: ObjectId, required: true, ref: 'EscapeRoom' }],
 
-    orders: [order]
+    favorites: [{ type: ObjectId, required: true, ref: 'EscapeRoom' }],
+
+    following: [{ type: ObjectId, required: true, ref: 'User' }],
+
+    image: String
 })

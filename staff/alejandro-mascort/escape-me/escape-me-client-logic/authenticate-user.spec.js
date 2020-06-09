@@ -5,27 +5,37 @@ const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } } = proces
 const authenticateUser = require('./authenticate-user')
 const { random } = Math
 const { expect } = require('chai')
-require('misc-commons/polyfills/json')
-const { mongoose, models: { User } } = require('misc-data')
+require('escape-me-commons/polyfills/json')
+const { mongo } = require('escape-me-data')
 const bcrypt = require('bcryptjs')
-require('misc-commons/ponyfills/xhr')
-require('misc-commons/ponyfills/atob')
+require('escape-me-commons/ponyfills/xhr')
+require('escape-me-commons/ponyfills/atob')
 const context = require('./context')
 
 context.API_URL = API_URL
 
 describe('logic - authenticate user', () => {
-    before(() => mongoose.connect(MONGODB_URL))
+    let users
 
-    let name, surname, email, password, userId, hash
+    before(() =>
+        mongo.connect(MONGODB_URL)
+            .then(connection => users = connection.db().collection('users'))
+    )
+
+    let name, surname, email, password, userId, participated, following, pending, favorites
 
     beforeEach(() =>
-        User.deleteMany()
+        users.deleteMany()
             .then(() => {
                 name = `name-${random()}`
                 surname = `surname-${random()}`
+                username = `${name}${surname}`
                 email = `e-${random()}@mail.com`
                 password = `password-${random()}`
+                participated = []
+                following = []
+                pending = []
+                favorites = []
 
                 return bcrypt.hash(password, 10)
             })
@@ -34,8 +44,8 @@ describe('logic - authenticate user', () => {
 
     describe('when user already exists', () => {
         beforeEach(() =>
-            User.create({ name, surname, email, password: hash })
-                .then(user => userId = user.id)
+            users.insertOne({ name, surname, email, password: hash, participated, following, pending, favorites })
+                .then(user => userId = user.insertedId.toString())
         )
 
         it('should succeed on correct credentials', () =>
@@ -55,7 +65,7 @@ describe('logic - authenticate user', () => {
 
         it('should fail on wrong password', () => {
             password += 'wrong-'
-
+            debugger
             return authenticateUser(email, password)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
@@ -74,7 +84,26 @@ describe('logic - authenticate user', () => {
             })
     )
 
-    afterEach(() => User.deleteMany())
+    it('should fail when inputs are incorrect', () => {
+        expect(() => {
+            authenticateUser(email, 1)
+        }).to.throw(TypeError, '1 is not a string')
 
-    after(mongoose.disconnect)
+        expect(() => {
+            authenticateUser(email, true)
+        }).to.throw(TypeError, 'true is not a string')
+
+        expect(() => {
+            authenticateUser('amail.com', password)
+        }).to.throw(Error, 'amail.com is not an e-mail')
+
+        expect(() => {
+            authenticateUser(true, password)
+        }).to.throw(Error, 'true is not an e-mail')
+
+    })
+
+    afterEach(() => users.deleteMany())
+
+    after(mongo.disconnect)
 })
