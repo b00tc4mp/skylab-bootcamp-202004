@@ -12,7 +12,7 @@ const { errors: { VoidError } } = require('coohappy-commons')
 
 let name, surname, email, password, hash, userId, nameCohousing, street, number, city, accessCode, newNameCohousing
 
-describe('logic - udpate-cohousing', () => {
+describe.only('logic - udpate-cohousing', () => {
 
     before(() => mongoose.connect(MONGODB_URL))
 
@@ -66,6 +66,26 @@ describe('logic - udpate-cohousing', () => {
             }
         })
     })
+    describe('when user has not cohousing', () => {
+
+        it('should fail when user has not cohousing', async () => {
+
+            await Cohousing.deleteMany()
+
+            try {
+                await updateCohousing(userId, { name: newNameCohousing })
+
+            } catch (error) {
+
+                const cohousing = await Cohousing.findOne({ members: userId })
+                expect(cohousing).to.be.null
+                expect(error).to.exist
+                expect(error.message).to.equal(`user with id ${userId} has not already cohousing`)
+               
+            }
+        })
+
+    })
 
     describe('when new data is empty or blank', () => {
 
@@ -94,8 +114,8 @@ describe('logic - udpate-cohousing', () => {
 
         it('on wrong type ofe data', () => {
 
-            expect(() => updateCohousing(userId, true )).to.throw(TypeError, 'true is not an object')
-            expect(() => updateCohousing(true, {name: 'hola'})).to.throw(TypeError, 'true is not a string')
+            expect(() => updateCohousing(userId, true)).to.throw(TypeError, 'true is not an object')
+            expect(() => updateCohousing(true, { name: 'hola' })).to.throw(TypeError, 'true is not a string')
         })
     })
 
