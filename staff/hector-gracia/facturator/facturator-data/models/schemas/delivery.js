@@ -15,9 +15,9 @@ module.exports= new Schema({
         required:true
     },
     date:{
-        type:Date
+        type:Date //TODO required: true
     },
-    payed:{
+    paid:{
         type:Boolean,
         required:true
     }
