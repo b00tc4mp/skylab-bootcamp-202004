@@ -47,7 +47,13 @@ module.exports = new Schema({
 
     products: [product],
 
-    guarantee: {
-        type: Number
+    balance: {
+        guarantee: {
+            type: Number
+        },
+
+        profitAndLoss: {
+            type: Number
+        }
     }
 })

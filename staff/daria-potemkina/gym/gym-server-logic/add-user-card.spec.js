@@ -10,7 +10,7 @@ const { errors: { UnexistenceError } } = require('gym-commons')
 const { ObjectId } = mongoose
 const bcrypt = require('bcryptjs')
 
-describe.only('logic - addUserCard', () => {
+describe('logic - addUserCard', () => {
     before(() => mongoose.connect(MONGODB_URL_TEST))
 
     let name, surname, email, password, userId, number, holder, expirationDate, cvv, _userId, _number, _holder, _expirationDate, _cvv

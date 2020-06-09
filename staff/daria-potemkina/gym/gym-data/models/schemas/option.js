@@ -1,5 +1,5 @@
 const { Schema } = require('mongoose')
-const optionFeatures = require('./option-features')
+const price = require('./price')
 
 module.exports = new Schema({
     type: {
@@ -23,7 +23,7 @@ module.exports = new Schema({
     },
 
     contractSize: {
-        type: String,
+        type: Number,
         required: true
     },
 
@@ -37,5 +37,10 @@ module.exports = new Schema({
         required: true
     },
 
-    features: [optionFeatures]
+    strike: {
+        type: Number,
+        required: true
+    },
+
+    prices: [price]
 })
