@@ -1,5 +1,5 @@
 const fs = require('fs')
-const {termsNdjson: transform} = require('bionode-obo')
+const {termsNdjson: transform} = require('./oboparser')
 const path = require('path')
 
 const stream = fs.createReadStream(path.join(__dirname, 'hp.obo'))
