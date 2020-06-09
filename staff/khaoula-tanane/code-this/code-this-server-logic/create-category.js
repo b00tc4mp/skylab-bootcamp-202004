@@ -3,10 +3,6 @@ const { models: { Category } } = require('code-this-data')
 
 module.exports = (name, challenges) => {
     String.validate.notVoid(name)
-
-    console.log(Category)
-    console.log(name, challenges)
-
   
     return (async () => {
     try {
