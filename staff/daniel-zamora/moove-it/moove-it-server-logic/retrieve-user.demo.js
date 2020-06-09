@@ -1,10 +1,17 @@
-const retrieveUser = require('./retrieve-user')
-const { mongoose } = require('../moove-it-data')
+require('dotenv').config()
+const { env: { MONGODB_URL } } = process
 
-mongoose.connect('mongodb://localhost:27017/misc-api')
+const { mongoose } = require('moove-it-data')
+const retrieveUser = require('./retrieve-user')
+
+mongoose.connect(MONGODB_URL)
     .then(() => {
+        try{
         
-    return retrieveUser('5ed8f22e6956145aa1508941')
-            .then((user) => console.log(user))
-            .catch(console.log)
-     })
+            return retrieveUser('5edfbc9cd4292d5036cd25e2')
+                .then(({name, surname, email}) => console.log(name, surname, email))
+                .catch(error => console.error('KO async', error))
+        } catch (error) {
+            console.error('KO sync', error)
+        }
+    })
