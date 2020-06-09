@@ -11,7 +11,7 @@ const bcrypt = require('bcryptjs')
 const { errors: { DuplicityError, UnexistenceError } } = require('coohappy-commons')
 const { utils: { randomAccessCode } } = require('coohappy-commons')
 
-describe('logic - retrieve cohousing', () => {
+describe.only('logic - retrieve cohousing', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let name, surname, email, password, userId, hash, street, number, city, cohousingId, accesCode
@@ -52,7 +52,7 @@ describe('logic - retrieve cohousing', () => {
     describe('when cohousing exist', () => {
 
         it('should succeed on valid cohousingId', () =>
-            retrieveCohousing(cohousingId)
+            retrieveCohousing(userId)
                 .then((cohousing) => {
 
                     expect(cohousing).to.exist
@@ -72,13 +72,13 @@ describe('logic - retrieve cohousing', () => {
             let cohousing
             await Cohousing.deleteMany()
             try {
-                cohousing = await retrieveCohousing(cohousingId)
+                cohousing = await retrieveCohousing(userId)
 
             } catch (error) {
 
                 expect(cohousing).to.be.undefined
                 expect(error).to.exist
-                expect(error.message).to.equal(`cohousing with id ${cohousingId} does not exist`)
+                expect(error.message).to.equal(`cohousing of user with id ${userId} does not exist`)
 
             }
         })

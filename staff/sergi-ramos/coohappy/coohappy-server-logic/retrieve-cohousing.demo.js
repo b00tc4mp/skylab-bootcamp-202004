@@ -6,7 +6,7 @@ const { env: { MONGODB_URL } } = process
 mongoose.connect(MONGODB_URL)
     .then(() => {
         try {
-            return retrieveCohousing('5ede5594e704638a7e2d7771')
+            return retrieveCohousing('5ede010a6fbff729acfdbceb')
                 .then(coohousing => {
                     return console.log(coohousing)
                 })
