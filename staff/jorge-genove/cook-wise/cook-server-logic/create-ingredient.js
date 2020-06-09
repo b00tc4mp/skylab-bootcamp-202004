@@ -1,3 +1,12 @@
+/**
+ * it must create a ingredient in the DB
+ * 
+ * @param name the name of the ingridient
+ * 
+ * @throws a Duplicity error if ingredient already exist
+ * 
+ * @returns an ingredient
+ */
 require('cook-wise-commons/polyfills/string')
 const { errors: { DuplicityError } } = require('cook-wise-commons')
 const { models: { Ingredients } } = require('cook-wise-data')
