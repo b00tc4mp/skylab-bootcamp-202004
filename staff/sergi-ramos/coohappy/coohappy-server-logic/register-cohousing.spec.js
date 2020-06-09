@@ -10,10 +10,10 @@ const { mongoose, models: { User, Cohousing } } = require('coohappy-data')
 const bcrypt = require('bcryptjs')
 const { errors: { DuplicityError, UnexistenceError } } = require('coohappy-commons')
 
-describe.only('logic - register cohousing', () => {
+describe('logic - register cohousing', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let name, surname, email, password, userId, hash, street, number, city
+    let name, surname, email, password, userId, hash, street, number, city, userRole
 
     beforeEach(() =>
         Promise.all(
@@ -45,77 +45,77 @@ describe.only('logic - register cohousing', () => {
 
         it('should succeed on valid data', () =>
             registerCohousing(nameCohousing, { street, number, city }, userId)
-                .then(() => {
-                    Cohousing.findOne({ author: userId })
-                        .then(cohousing => {
-                            expect(cohousing).to.exist
-                            expect(cohousing.author.toString()).to.equal(userId.toString())
-                            expect(cohousing.name.toString()).to.equal(nameCohousing)
-                            expect(cohousing.address.street.toString()).to.equal(street)
-                            expect(cohousing.address.number).to.equal(number)
-                            expect(cohousing.address.city.toString()).to.equal(city)
-                        }
-                        )
-                }
-                )
-        )
-    })
-
-    describe('when user already create any coohousing', () => {
-
-        it('should succeed on valid data', () =>
-
-            registerCohousing(nameCohousing, { street, number, city }, userId)
-                .then(() => registerCohousing(nameCohousing, { street, number, city }, userId))
-
-                .catch(error => {
-                    expect(error).to.be.an.instanceOf(DuplicityError)
-                    expect(error.message).to.equal(`user: ${name} ${surname} already create an cohousing`)
+                .then(() => Cohousing.findOne({ author: userId }))
+                .then(cohousing => {
+                    expect(cohousing).to.exist
+                    expect(cohousing.author.toString()).to.equal(userId.toString())
+                    expect(cohousing.name.toString()).to.equal(nameCohousing)
+                    expect(cohousing.address.street.toString()).to.equal(street)
+                    expect(cohousing.address.number).to.equal(number)
+                    expect(cohousing.address.city.toString()).to.equal(city)
+                    return User.findById(userId)
+                })
+                .then((user) => {
+                    expect(user.role).to.equal('admin')
                 })
         )
+})
+
+describe('when user already create any coohousing', () => {
+
+    it('should succeed on valid data', () =>
+
+        registerCohousing(nameCohousing, { street, number, city }, userId)
+            .then(() => registerCohousing(nameCohousing, { street, number, city }, userId))
+
+            .catch(error => {
+                expect(error).to.be.an.instanceOf(DuplicityError)
+                expect(error.message).to.equal(`user: ${name} ${surname} already create an cohousing`)
+            })
+    )
+})
+
+describe('when user already create any coohousing', () => {
+
+    it('should throw an error when user already creates an cohousing', () =>
+
+        registerCohousing(nameCohousing, { street, number, city }, userId)
+            .then(() => registerCohousing(nameCohousing, { street, number, city }, userId))
+
+            .catch(error => {
+                expect(error).to.be.an.instanceOf(DuplicityError)
+                expect(error.message).to.equal(`user: ${name} ${surname} already create an cohousing`)
+            })
+    )
+})
+
+describe('when user does not exist', () => {
+
+    beforeEach(() => User.deleteMany())
+    it('should throw an error when user does not exist', async () => {
+        try {
+            await registerCohousing(nameCohousing, { street, number, city }, userId)
+            throw new Error('should not reach this point')
+
+        } catch (error) {
+
+            expect(error).to.be.an.instanceOf(UnexistenceError)
+            expect(error.message).to.equal(`user does not exists`)
+        }
     })
+})
+describe('sync errors', () => {
+    it('should throw error on wrong data', () => {
 
-    describe('when user already create any coohousing', () => {
+        expect(() => registerCohousing(2, { street, number, city }, userId)).to.throw(TypeError, '2 is not a string')
+        expect(() => registerCohousing(nameCohousing, name, userId)).to.throw(TypeError, `${name} is not an object`)
+        expect(() => registerCohousing(nameCohousing, { street, number, city }, undefined)).to.throw(TypeError, `${undefined} is not a string`)
 
-        it('should throw an error when user already creates an cohousing', () =>
-
-            registerCohousing(nameCohousing, { street, number, city }, userId)
-                .then(() => registerCohousing(nameCohousing, { street, number, city }, userId))
-
-                .catch(error => {
-                    expect(error).to.be.an.instanceOf(DuplicityError)
-                    expect(error.message).to.equal(`user: ${name} ${surname} already create an cohousing`)
-                })
-        )
     })
-
-    describe('when user does not exist', () => {
-
-        beforeEach(() => User.deleteMany())
-        it('should throw an error when user does not exist', async () => {
-            try {
-                await registerCohousing(nameCohousing, { street, number, city }, userId)
-                throw new Error('should not reach this point')
-
-            } catch (error) {
-
-                expect(error).to.be.an.instanceOf(UnexistenceError)
-                expect(error.message).to.equal(`user does not exists`)
-            }
-        })
-    })
-    describe('sync errors', () => {
-        it('should throw error on wrong data', () => {
-
-            expect(()=> registerCohousing(2, { street, number, city }, userId)).to.throw(TypeError, '2 is not a string')
-            expect(()=> registerCohousing(nameCohousing, name, userId)).to.throw(TypeError, `${name} is not an object`)
-            expect(()=> registerCohousing(nameCohousing, { street, number, city }, undefined)).to.throw(TypeError, `${undefined} is not a string`)
-
-        })
-    })
+})
 
 
-    afterEach(() => Promise.all([User.deleteMany(), Cohousing.deleteMany()]))
+afterEach(() => Promise.all([User.deleteMany(), Cohousing.deleteMany()]))
 
-    after(mongoose.disconnect)
+after(mongoose.disconnect)
 })

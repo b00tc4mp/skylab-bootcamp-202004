@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "coohappy-api": "file:../coohappy-api",
     "coohappy-commons": "file:../coohappy-commons",
     "coohappy-data": "file:../coohappy-data"
   },
