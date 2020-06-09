@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .plane {
+            width: 50vw;
+            height: 50vh;
+            background-color: lightgray;
+            position: absolute;
+            left: 5vw;
+            top: 5vh;
+        }
+
+        .axis-x {
+            width: 50vw;
+            height: 1px;
+            background-color: red;
+            transform-origin: center;
+            position: absolute;
+            top: 25vh;
+        }
+
+        .axis-y {
+            width: 1px;
+            height: 50vh;
+            background-color: blue;
+            transform-origin: center;
+            position: absolute;
+            left: 25vw;
+        }
+
+        .bed {
+            width: 10vw;
+            height: 15vh;
+            background-color: skyblue;
+            transform-origin: center;
+            position: absolute;
+            transform: translateX(20vw) translateY(17.5vh) rotate(45deg);            
+        }
+    </style>
+</head>
+
+<body>
+    <div class="plane">
+        <div class="axis-x"></div>
+        <div class="axis-y"></div>
+        <div class="bed"></div>
+    </div>
+</body>
+
+</html>
