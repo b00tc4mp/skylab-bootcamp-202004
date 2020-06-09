@@ -4,20 +4,21 @@ const { utils: { Email }, errors: { DuplicityError } } = require('escape-me-comm
 const { models: { User } } = require('escape-me-data')
 const bcrypt = require('bcryptjs')
 
-module.exports = (name, surname, email, password) => {
-    String.validate.notVoid(name)
-    String.validate.notVoid(surname)
+module.exports = (name, surname, username, email, password) => {
+    if (name) String.validate.notVoid(name)
+    if (surname) String.validate.notVoid(surname)
+    String.validate.notVoid(username)
     String.validate.notVoid(email)
     Email.validate(email)
     String.validate.notVoid(password)
 
-    return (async () => {
-        const user = await User.findOne({ email })
+        (async () => {
+            const user = await User.findOne({ $or: [{ email }, { username }] })
 
-        if (user) throw new DuplicityError(`user with e-mail ${email} already exists`)
+            if (user) throw new DuplicityError(`user with e-mail ${email} already exists`)
 
-        const hash = await bcrypt.hash(password, 10)
+            const hash = await bcrypt.hash(password, 10)
 
-        await User.create({ name, surname, email, password: hash })
-    })()
+            await User.create({ name, surname, email, username, password: hash })
+        })()
 }

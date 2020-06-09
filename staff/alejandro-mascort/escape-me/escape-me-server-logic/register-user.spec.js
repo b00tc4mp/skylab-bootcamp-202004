@@ -12,19 +12,20 @@ const bcrypt = require('bcryptjs')
 describe('logic - register user', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let name, surname, email, password
+    let name, surname, username, email, password
 
     beforeEach(async () => {
         await User.deleteMany()
 
         name = `name-${random()}`
         surname = `surname-${random()}`
+        username = `${name}${surname}`
         email = `e-${random()}@mail.com`
         password = `password-${random()}`
     })
 
-    it('should succeed on valid data', async () => {
-        const result = await registerUser(name, surname, email, password)
+    it('should succeed on valid data using all the fields', async () => {
+        const result = await registerUser(name, surname, username, email, password)
 
         expect(result).to.be.undefined
 
@@ -36,6 +37,49 @@ describe('logic - register user', () => {
 
         expect(user.name).to.equal(name)
         expect(user.surname).to.equal(surname)
+        expect(user.username).to.equal(username)
+        expect(user.email).to.equal(email)
+
+        const match = await bcrypt.compare(password, user.password)
+
+        expect(match).to.be.true
+    })
+
+    it('should succeed on valid data without providing a name', async () => {
+        const result = await registerUser(surname, username, email, password)
+
+        expect(result).to.be.undefined
+
+        const users = await User.find()
+
+        expect(users.length).to.equal(1)
+
+        const [user] = users
+
+        expect(user.name).to.be.undefined
+        expect(user.surname).to.equal(surname)
+        expect(user.username).to.equal(username)
+        expect(user.email).to.equal(email)
+
+        const match = await bcrypt.compare(password, user.password)
+
+        expect(match).to.be.true
+    })
+
+    it('should succeed on valid data without providing a surname', async () => {
+        const result = await registerUser(name, username, email, password)
+
+        expect(result).to.be.undefined
+
+        const users = await User.find()
+
+        expect(users.length).to.equal(1)
+
+        const [user] = users
+
+        expect(user.name).to.equal(name)
+        expect(user.surname).to.be.undefined
+        expect(user.username).to.equal(username)
         expect(user.email).to.equal(email)
 
         const match = await bcrypt.compare(password, user.password)

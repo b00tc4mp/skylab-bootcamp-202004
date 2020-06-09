@@ -44,5 +44,11 @@ module.exports = new Schema({
     //     required: true
     // }
 
+    //city: String
+
+    //Province: String
+
+    //Street: String
+
     // reviews: [punctuation]
 })

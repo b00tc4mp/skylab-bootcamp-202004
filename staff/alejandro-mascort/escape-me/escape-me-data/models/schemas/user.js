@@ -25,18 +25,15 @@ module.exports = new Schema({
         required: true
     },
 
-    done: [productQuantity],
+    participated: [escapeRoom],
 
     pending: [escapeRoom],
 
     favorites: [escapeRoom],
 
-    following: [escapeRoom],
+    following: [],
 
     ratings: [punctuation],
 
-    // image: {
-    //     type: String,
-    //     required: true
-    // }
+    image: String
 })
