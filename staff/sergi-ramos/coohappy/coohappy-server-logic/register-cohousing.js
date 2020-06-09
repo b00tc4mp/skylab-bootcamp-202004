@@ -11,7 +11,7 @@ module.exports = (name, address, userId) => {
     String.validate.notVoid(userId)
     const members = []
 
-    return (async () => { //TODO change role when user create cohousing
+    return (async () => { 
         const [user, cohousing] = await Promise.all([
             User.findById(userId),
             Cohousing.findOne({author: userId})

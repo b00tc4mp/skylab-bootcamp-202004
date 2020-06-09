@@ -4,5 +4,6 @@ module.exports = {
     authenticateUser : require('./authenticate-user'),
     retrieveUser : require('./retrieve-user'),
     registerCohousing : require('./register-cohousing'),
-    retrieveCohousing: require('./retrieve-cohousing')
+    retrieveCohousing: require('./retrieve-cohousing'),
+    updateUser: require('./update-user')
 }
