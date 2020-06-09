@@ -3,7 +3,7 @@ const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
     const { body: {name, nif, email, password } } = req
-
+    debugger
     try {
         registerEstablishment(name, nif, email, password)
             .then(() => res.status(201).send())

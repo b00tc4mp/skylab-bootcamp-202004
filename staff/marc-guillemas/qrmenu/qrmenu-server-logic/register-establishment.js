@@ -2,7 +2,7 @@ require('qrmenu-commons/pollyfills/string')
 require('qrmenu-commons/pollyfills/json')
 const { utils: { Email, NIF }, errors: { DuplicityError }} = require('qrmenu-commons')
 const { models: {Establishment} } = require('qrmenu-data')
-const { bcrypt } = require('bcryptjs')
+const bcrypt = require('bcryptjs')
 
 module.exports = (name, nif, email, password) => {
     String.validate.notVoid(name)
@@ -13,7 +13,8 @@ module.exports = (name, nif, email, password) => {
     String.validate.notVoid(password)
 
     return (async() => {
-        const user = Establishment.findOne({ nif })
+        debugger
+        const user = await Establishment.findOne({ nif })
         
         if(user) throw new DuplicityError(`user with nif ${nif} already exists`)
 

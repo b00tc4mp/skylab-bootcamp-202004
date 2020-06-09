@@ -31,7 +31,7 @@ try {
 
 
         app.use(cors)
-
+        debugger
         app.use('/api', api)
         
         app.get('*', (req, res) => {
