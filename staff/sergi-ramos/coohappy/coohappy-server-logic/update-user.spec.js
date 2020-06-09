@@ -52,7 +52,7 @@ describe('logic - update-user', () => {
         })
     })
 
-    describe('when data is undefined', () => {
+    describe('when data is empty or blank', () => {
 
         it('should faild on blank or empty data', async () => {
 

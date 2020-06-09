@@ -12,6 +12,7 @@ module.exports = (userId, dataToUpdate) => {
     for (const key in dataToUpdate) {
         if (key === 'name') String.validate.notVoid(dataToUpdate[key])
         if (key === 'address') {
+            if (typeof dataToUpdate.address !== 'object') throw new TypeError(`${dataToUpdate.address} is not an object`)
             const values = Object.values(dataToUpdate[key])
             values.forEach(value => String.validate.notVoid(value))
         }

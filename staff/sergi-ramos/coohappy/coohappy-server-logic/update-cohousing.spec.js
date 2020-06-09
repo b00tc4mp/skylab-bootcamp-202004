@@ -8,10 +8,11 @@ const updateCohousing = require('./update-cohousing')
 const bcrypt = require('bcryptjs')
 const { utils: { randomAccessCode } } = require('coohappy-commons')
 const { mongoose, models: { User, Cohousing } } = require('coohappy-data')
+const { errors: { VoidError } } = require('coohappy-commons')
 
 let name, surname, email, password, hash, userId, nameCohousing, street, number, city, accessCode, newNameCohousing
 
-describe.only('logic - udpate-cohousing', () => {
+describe('logic - udpate-cohousing', () => {
 
     before(() => mongoose.connect(MONGODB_URL))
 
@@ -32,7 +33,6 @@ describe.only('logic - udpate-cohousing', () => {
 
         newNameCohousing = `name-${random()}`
 
-
         hash = await bcrypt.hash(password, 10)
         const user = await User.create({ name, surname, email, password: hash })
         userId = user.id
@@ -51,18 +51,55 @@ describe.only('logic - udpate-cohousing', () => {
             expect(cohousing.address.street).to.equal(street)
             expect(cohousing.address.number).to.equal(number)
             expect(cohousing.address.city).to.equal(city)
-            
         })
 
-        it('should fail on wrong userId', () => {
+        it('should fail on unexistent userId', async () => {
 
-            await updateCohousing(userId, { name: newNameCohousing })
+            await User.deleteMany()
 
+            try {
+                await updateCohousing(userId, { name: newNameCohousing })
 
-
-
+            } catch (error) {
+                expect(error).to.exist
+                expect(error.message).to.equal(`User with id ${userId} does not exist`)
+            }
         })
     })
+
+    describe('when new data is empty or blank', () => {
+
+        it('should do not apply any changes when one field is blank', async () => {
+
+            const blankString = ''
+
+            try {
+                await updateCohousing(userId, { name: blankString })
+
+            } catch (error) {
+
+                const cohousing = await Cohousing.findOne({ members: userId })
+                expect(error).to.exist
+                expect(error.message).to.equal(`string is empty or blank`)
+                expect(cohousing.name).to.equal(nameCohousing)
+                expect(cohousing.address).to.be.an('object')
+                expect(cohousing.address.street).to.equal(street)
+                expect(cohousing.address.number).to.equal(number)
+                expect(cohousing.address.city).to.equal(city)
+            }
+        })
+    })
+
+    describe('sync errors', () => {
+
+        it('on wrong type ofe data', () => {
+
+            expect(() => updateCohousing(userId, true )).to.throw(TypeError, 'true is not an object')
+            expect(() => updateCohousing(true, {name: 'hola'})).to.throw(TypeError, 'true is not a string')
+        })
+    })
+
+
 
     afterEach(() => User.deleteMany())
 
