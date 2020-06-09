@@ -8,12 +8,15 @@ import Register from './Register';
 
 function App({history}) {
 
+  const handleGoToHome = () => {
+    console.log('HOMEEEEEEEE')
+  }
 
   return (
     <div className="App">
       <header className="App-header">
         <Container>
-          <Route exact path="/" render={()=> <Login />}/>
+          <Route exact path="/" render={()=> <Login onLogin={handleGoToHome}/>}/>
           <Route path="/register" render={()=> <Register/>}/>
         </Container>
       </header>
