@@ -1,6 +1,7 @@
 const { Schema } = require('mongoose')
 const { utils: { Email } } = require('cook-wise-commons')
 const recipes = require('./recipes')
+const { SchemaTypes: { ObjectId } } = require('mongoose')
 
 
 
@@ -29,6 +30,10 @@ module.exports = new Schema({
 
     recipes: [recipes],
 
+    favoriterecipes: [{
+            type: ObjectId,
+            ref: 'Recipes'
+        }]
     // menus: [{
     //     type: {
     //         name: {

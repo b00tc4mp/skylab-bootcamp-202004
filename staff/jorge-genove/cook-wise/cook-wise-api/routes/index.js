@@ -6,7 +6,10 @@ const {
     authenticateUser, 
     createIngredient,
     createRecipe,
-    searchRecipe
+    searchRecipe,
+    toogleFavorite,
+    retrieveFavorite,
+    retrieveUser
 } = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
@@ -26,6 +29,12 @@ api.post('/ingredients', parseBody, createIngredient)
 api.post('/recipes', parseBody, verifyExtractJwt, createRecipe)
 
 api.get('/recipes', verifyExtractJwt, searchRecipe)
+
+api.patch('/toogle',[parseBody,verifyExtractJwt],toogleFavorite)
+
+api.get('/retrievefavorites', verifyExtractJwt, retrieveFavorite)
+
+api.get('/users/retrieve', verifyExtractJwt, retrieveUser)
 
 module.exports = {
     api
