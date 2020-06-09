@@ -1,7 +1,5 @@
 const { Schema } = require('mongoose')
-const { utils: { Email } } = require('misc-commons')
-const productQuantity = require('./product-quantity')
-const order = require('./order')
+const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
 module.exports = new Schema({
     name: {
@@ -18,7 +16,6 @@ module.exports = new Schema({
         type: String,
         required: true,
         unique: true,
-        validate: [Email.validate, 'invalid e-mail']
     },
 
     password: {
@@ -26,12 +23,13 @@ module.exports = new Schema({
         required: true
     },
 
-    confirmPassword: {
-        type: String,
-        required: true
+    planes: {
+        type: [ObjectId], 
+        ref: 'Blueprint'
     },
 
-    planes: [blueprint],
-
-    favPlanes: [order]
+    // favPlanes: {
+    //     type: [ObjectId], 
+    //     ref: 'Blueprint'
+    // }
 })
