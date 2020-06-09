@@ -1,12 +1,12 @@
 require('dotenv').config()
-const updateUser = require('./update-user')
+const updateCohousing = require('./update-cohousing')
 const { mongoose } = require('coohappy-data')
 const { env: { MONGODB_URL } } = process
 
 mongoose.connect(MONGODB_URL)
     .then(() => {
         try {
-            updateUser('5edf6a175f3a974228a71f41', {name:'jorge', surname: 'ramos', email:'jordi@mail.com', oldPassword: '123123123', newPassword: '123123'})
+            updateCohousing('5edfbc5ba3e7709f288730bd', {name:'hello', address: { street: 'c/lala', number:'', city: 'barcelona'}})
 
         } catch (error) {
             console.error('KO sync', error.message)
