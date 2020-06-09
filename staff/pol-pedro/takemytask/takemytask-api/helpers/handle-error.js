@@ -16,11 +16,13 @@ module.exports = function (error, res) {
             status = 401
             break
     }
+    
+    res.status(status).json({ error: error.message })
     //TODO LOGGER
     // if (status < 500)
     //     logger.warn(`response with error status ${status} - ${error}`)
     // else
     //     logger.error(`response with error status ${status} - ${error}`)
 
-    // res.status(status).json({ error: error.message })
+    
 }

@@ -37,8 +37,9 @@ try {
                 try {
                     registerUser(name, surname, email, password, adress)
                         .then(() => res.status(201).send())
-                        .catch(error => handleError(error, res))
+                        .catch(error => handleError(error, res), console.log('error 1'))
                 } catch (error) {
+                    console.log('error 2')
                     handleError(error, res)
                 }
             })
@@ -55,38 +56,7 @@ try {
                     handleError(error, res)
                 }
             })
-
-            app.get('/users/:userId?', verifyExtractJwt, (req, res) => {
-                try {
-                    const { payload: { sub: userId }, params: { userId: otherUserId } } = req
-
-                    retrieveUser(otherUserId || userId)
-                        .then(user => res.send(user))
-                        .catch(error => handleError(error, res))
-                } catch (error) {
-                    handleError(error, res)
-                }
-            })
-
-            // contacts
-
-            app.post('/contacts', verifyExtractJwt, parseBody, (req, res) => {
-                try {
-                    const { payload: { sub: userId }, body: contact } = req
-
-                    new Promise((resolve, reject) => {
-                        addContact(userId, contact, (error, contactId) => {
-                            if (error) return reject(error)
-
-                            resolve(contactId)
-                        })
-                    })
-                        .then(contactId => res.send({ contactId }))
-                        .catch(error => handleError(error, res))
-                } catch (error) {
-                    handleError(error, res)
-                }
-            })
+            
 
             app.get('*', (req, res) => {
                 res.status(404).send('Not Found :(')
