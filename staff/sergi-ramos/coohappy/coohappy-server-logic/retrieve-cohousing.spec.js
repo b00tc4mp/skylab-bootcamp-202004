@@ -11,7 +11,7 @@ const bcrypt = require('bcryptjs')
 const { errors: { DuplicityError, UnexistenceError } } = require('coohappy-commons')
 const { utils: { randomAccessCode } } = require('coohappy-commons')
 
-describe.only('logic - retrieve cohousing', () => {
+describe('logic - retrieve cohousing', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let name, surname, email, password, userId, hash, street, number, city, cohousingId, accesCode
