@@ -1,20 +1,21 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { MONGODB_URL_TEST: MONGODB_URL } } = process
 
 const registerUser = require('./register-user')
 const { random } = Math
 const { expect } = require('chai')
 require('books-commons/polyfills/json')
+const { errors: { VoidError, AssertionError } } = require('books-commons')
 const { mongoose, models: { User } } = require('books-data')
 const bcrypt = require('bcryptjs')
 
-describe('logic - register user', () => {
+describe('server-logic register user', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let name, surname, email, password
 
-    beforeEach(async () => {
+    beforeEach(async() => {
         await User.deleteMany()
 
         name = `name-${random()}`
@@ -23,7 +24,7 @@ describe('logic - register user', () => {
         password = `password-${random()}`
     })
 
-    it('should succeed on valid data', async () => {
+    it('should succeed on valid data', async() => {
         const result = await registerUser(name, surname, email, password)
 
         expect(result).to.be.undefined
@@ -46,7 +47,7 @@ describe('logic - register user', () => {
     describe('when user already exists', () => {
         beforeEach(() => User.create({ name, surname, email, password }))
 
-        it('should fail on trying to register an existing user', async () => {
+        it('should fail on trying to register an existing user', async() => {
             try {
                 await registerUser(name, surname, email, password)
 
@@ -58,6 +59,71 @@ describe('logic - register user', () => {
                 expect(error.message).to.equal(`user with e-mail ${email} already exists`)
             }
         })
+    })
+
+
+    describe('Validate fiels sync tests', () => {
+        it('should fail on non-string field', () => {
+            expect(() => {
+                registerUser(undefined, surname, email, password)
+            }).to.throw(TypeError, 'undefined is not a string')
+
+            expect(() => {
+                registerUser(1, surname, email, password)
+            }).to.throw(TypeError, '1 is not a string')
+
+            expect(() => {
+                registerUser(true, surname, email, password)
+            }).to.throw(TypeError, 'true is not a string')
+
+            expect(() => {
+                registerUser(name, undefined, email, password)
+            }).to.throw(TypeError, 'undefined is not a string')
+
+            expect(() => {
+                registerUser(name, 1, email, password)
+            }).to.throw(TypeError, '1 is not a string')
+
+            expect(() => {
+                registerUser(name, true, email, password)
+            }).to.throw(TypeError, 'true is not a string')
+        })
+        it('should fail on void field', () => {
+            expect(() => {
+                registerUser('', surname, email, password)
+            }).to.throw(VoidError, 'string is empty or blank')
+
+            expect(() => {
+                registerUser(name, '', email, password)
+            }).to.throw(VoidError, 'string is empty or blank')
+
+            expect(() => {
+                registerUser(name, surname, '', password)
+            }).to.throw(VoidError, 'string is empty or blank')
+
+            expect(() => {
+                registerUser(name, surname, email, '')
+            }).to.throw(VoidError, 'string is empty or blank')
+
+        })
+
+        it('should fail on incorrect email', () => {
+            email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}`
+
+            expect(() => {
+                registerUser(name, surname, email, password)
+            }).to.throw(Error, `${email} is not an e-mail`)
+        })
+
+        it('should fail on password minlength of 8', () => {
+            password = `123123`
+
+            expect(() => {
+                registerUser(name, surname, email, password)
+            }).to.throw(Error, `"${password}" length is not greater or equal than 8`)
+
+        })
+
     })
 
     afterEach(() => User.deleteMany())

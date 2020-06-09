@@ -1,12 +1,13 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { MONGODB_URL_TEST: MONGODB_URL } } = process
 
 const retrieveUser = require('./retrieve-user')
 const { random } = Math
 const { expect } = require('chai')
 require('books-commons/polyfills/json')
 const { mongoose, models: { User } } = require('books-data')
+const {errors:{VoidError}} = require('books-commons')
 
 describe('logic - retrieve user', () => {
     before(() => mongoose.connect(MONGODB_URL))
@@ -36,8 +37,10 @@ describe('logic - retrieve user', () => {
                     expect(user.surname).to.equal(surname)
                     expect(user.email).to.equal(email)
                     expect(user.password).to.be.undefined
-                    expect(user.cart).to.be.undefined
-                    expect(user.order).to.be.undefined
+                    expect(user.book).to.be.undefined
+                    expect(user.following).to.be.undefined
+                    expect(user.id).to.exist
+                    expect(user.id).to.equal(userId)
                 })
         )
     })
@@ -53,6 +56,12 @@ describe('logic - retrieve user', () => {
                 expect(error).to.be.an.instanceof(Error)
                 expect(error.message).to.equal(`user with id ${userId} does not exist`)
             })
+    })
+
+    it('should fail when for a empty userId', () => {
+        expect(() => {
+            retrieveUser('')
+        }).to.throw(VoidError, 'string is empty or blank')  
     })
 
     afterEach(() => User.deleteMany())

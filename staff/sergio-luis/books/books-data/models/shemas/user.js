@@ -1,5 +1,5 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
-const { utils: { Email } } = require('misc-commons')
+const { utils: { Email } } = require('books-commons')
 const following = require('./following')
 const rating = require('./rating')
 const book = require('./book')

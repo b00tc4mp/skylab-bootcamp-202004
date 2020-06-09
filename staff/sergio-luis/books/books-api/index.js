@@ -11,7 +11,7 @@ file.level = Logger.WARN
 console.level = Logger.DEBUG
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser } = require('books-server-logic')
+const { registerUser, authenticateUser, retrieveUser,findBook,createBook,deleteBook,searchBook} = require('books-server-logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
@@ -75,6 +75,52 @@ try {
                 }
             })
 
+            app.get('/find-book/:query?', (req, res) => {
+                try {
+                    const { params: { query:query} } = req
+                    findBook(query)
+                        .then(book => res.send(book))
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+
+            app.post('/create-book', verifyExtractJwt ,parseBody, (req, res) => { 
+                const { body: {title,image,description,barCode} ,payload: { sub: userId },} = req
+
+                try {
+                    createBook(userId,title,image,description,barCode)
+                        .then(() => res.status(201).send())
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+
+            app.delete('/remove-book', verifyExtractJwt ,parseBody, (req, res) => { 
+                const { body: {bookId} ,payload: { sub: userId }} = req
+
+                try {
+                    deleteBook(userId,bookId)
+                        .then(() => res.status(201).send())
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+
+            app.get('/search-book/:query?', verifyExtractJwt ,parseBody, (req, res) => { 
+                const { params: { query:query} ,payload: { sub: userId }} = req
+
+                try {
+                   searchBook(userId,query)
+                        .then((book) => res.status(201).send(book))
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
 
 
             app.get('*', (req, res) => {

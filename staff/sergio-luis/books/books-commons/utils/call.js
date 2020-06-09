@@ -1,25 +1,23 @@
 const Http = require('./http')
 require('../polyfills/url')
-require('../polyfills/function')
+const XMLHttpRequest = require('xhr2');
 
-module.exports = function (method, url, body, headers, callback) {
+module.exports = (method, url, body, headers) => {
     Http.validateMethod(method)
     URL.validate(url)
 
-    if (arguments.length > 4)
-        Function.validate(callback)
+    const xhr = new XMLHttpRequest()
 
-    const promise = new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest()
-
+    return new Promise((resolve,reject)=>{
+        
         xhr.open(method, url)
-
+debugger
         if (headers)
             for (const key in headers)
                 xhr.setRequestHeader(key, headers[key])
 
         xhr.onload = function () {
-            resolve({ status: this.status, body: this.responseText })
+            resolve({status:this.status,body:this.responseText})
         }
 
         xhr.onerror = function () {
@@ -28,10 +26,5 @@ module.exports = function (method, url, body, headers, callback) {
 
         xhr.send(body ? body : undefined)
     })
-
-    if (arguments.length < 5) return promise
-
-    promise
-        .then(({ status, body }) => callback(null, status, body))
-        .catch(callback)
+   
 }

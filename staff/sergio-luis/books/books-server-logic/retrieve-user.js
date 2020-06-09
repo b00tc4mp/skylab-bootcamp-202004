@@ -1,3 +1,14 @@
+/**
+ * Authenticate User.
+ * 
+ * @param {string} userId The id of the user normaly we take this value by token. 
+ * @throws {VoidError} if don`t introduce any userId.
+ * @throws {Error} if the userId don`t exist in database.
+ * 
+ * @return {Object} return a object with the {name,surname,email,id}.
+ *
+ */
+
 require('books-commons/polyfills/string')
 const { mongoose: { ObjectId }, models: { User } } = require('books-data')
 
@@ -12,7 +23,6 @@ module.exports = userId => {
 
             delete user._id
         
-
             return user
         })
 }
