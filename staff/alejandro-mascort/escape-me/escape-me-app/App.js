@@ -1,130 +1,42 @@
-// import React, { useState } from "react";
-// import {
-//   StyleSheet,
-//   View
-// } from "react-native";
-// import WelcomeScreen from './app/screens/WelcomeScreen'
-// import Home from './app/screens/Home'
-// import Login from './app/screens/Login'
-// import CardDetails from './app/screens/CardDetails'
-
-// export default function App() {
-//   return (
-//     // <WelcomeScreen />
-//     // <Home />
-//     // <Login />
-//     <CardDetails />
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#fff",
-//     justifyContent: "center",
-//     alignItems: "center",
-//   },
-// })
-
-// In App.js in a new project
-
-// import 'react-native-gesture-handler';
-// import * as React from 'react';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createStackNavigator } from '@react-navigation/stack';
-// import { createCompatNavigatorFactory } from '@react-navigation/compat';
-// import Home from './app/screens/Home'
-// import CardDetails from './app/screens/CardDetails'
-
-
-// const RootStack = createCompatNavigatorFactory(createStackNavigator)(
-//   {
-//     Home: { screen: Home },
-//     CardDetail: { screen: CardDetails },
-//   },
-//   {
-//     initialRouteName: 'Home',
-//   }
-// );
-
-// const Stack = createStackNavigator();
-
-// export default function App() {
-//   return (
-//     <NavigationContainer>
-//       <RootStack />
-//     </NavigationContainer>
-//   );
-// }
-
-// import React from 'react'
-// import { StyleSheet, View } from 'react-native'
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-// import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-// import Home from './app/screens/Home'
-// import CardDetails from './app/screens/CardDetails'
-
-
-// const Tab = createMaterialBottomTabNavigator();
-// const TopTab = createMaterialTopTabNavigator();
-
-// function MyTabs() {
-//   return (
-//     // <View style={styles.container}>
-//     //   <NavigationContainer>
-//     //     <TopTab.Navigator>
-//     //       <TopTab.Screen name="Home" component={Home} />
-//     //       <TopTab.Screen name="Card Details" component={CardDetails} />
-//     //     </TopTab.Navigator>
-//     //   </NavigationContainer>
-
-//     <NavigationContainer>
-//       <Tab.Navigator>
-//         <Tab.Screen name="Home" component={Home} />
-//         <Tab.Screen name="Card Details" component={CardDetails} />
-//       </Tab.Navigator>
-//     </NavigationContainer>
-//     // </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1
-//   }
-// })
-
-// export default function App() {
-//   return <MyTabs />
-// }
-
 import Home from './app/screens/Home'
+import Login from './app/screens/Login'
 import CardDetails from './app/screens/CardDetails'
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import Profile from './app/screens/Profile'
+import AppPicker from './app/components/AppPicker'
+import AppTextInput from './app/components/AppTextInput'
 
+const categories = [
+  { label: "Barcelona", value: 1 },
+  { label: "Madrid", value: 2 },
+  { label: "Valencia", value: 3 }
+]
+export default function () {
+  const [category, setCategory] = useState()
+  return (
+    // <View style={styles.container}>
+    //   <View style={styles.appheader}>
+    //     <Text style={styles.title}>Escape Me</Text>
+    //     <TouchableOpacity style={styles.logOut}>
+    //       <AntDesign name="logout" size={24} color="white" />
+    //     </TouchableOpacity>
+    //   </View>
+    //   <AppContainer />
+    // </View>
+    // <Login />
+    <SafeAreaView>
+      <AppPicker icon="city" placeholder="Province" items={categories}
+        selectedItem={category} onSelectItem={item => setCategory(item)} />
+      <AppTextInput placeholder='Email' icon="email" />
+    </SafeAreaView>
+  );
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.appheader}>
-          <Text style={styles.title}>Escape Me</Text>
-          <TouchableOpacity style={styles.logOut}>
-            <AntDesign name="logout" size={24} color="white" />
-          </TouchableOpacity>
-        </View>
-        <AppContainer />
-      </View>
-    );
-  }
 }
 const styles = StyleSheet.create({
   appheader: {

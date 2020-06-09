@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { ImageBackground, StyleSheet, SafeAreaView, View, Text, Linking, Button, TouchableOpacity, ScrollView, Platform } from 'react-native'
 import { FontAwesome, MaterialIcons, Entypo, SimpleLineIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating'
-import Review from '../components/Review'
+import Review from '../components/Review/'
 
 export default function () {
     const url = 'http://www.roomwhitechapel.com/index.php'
