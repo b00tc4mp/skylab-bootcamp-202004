@@ -45,12 +45,14 @@ describe('retrieveClient', () => {
     })
     it("should throw an error when given an id that does not exist", async ()=>{
         const id=mongoose.ObjectId().toString()
+        let error
         try{
             await retrieveClient(id)
-        }catch(error){
-            expect(error).to.be.instanceOf(UnexistenceError)
-            expect(error.message).to.equal(`client with id ${id} does not exist`)
+        }catch(_error){
+            error=_error
         }
+        expect(error).to.be.instanceOf(UnexistenceError)
+        expect(error.message).to.equal(`client with id ${id} does not exist`)
     })
     afterEach(() => Client.deleteMany())
 

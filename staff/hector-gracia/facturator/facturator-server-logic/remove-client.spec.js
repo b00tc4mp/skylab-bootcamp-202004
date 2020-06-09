@@ -36,13 +36,15 @@ describe('removeClient', () => {
     })
     it("should throw an error when trying to remove a client that does not exist",async ()=>{
         const id=mongoose.ObjectId().toString()
+        let error
 
         try{
             await removeClient(id)
-        }catch(error){
-            expect(error).to.be.instanceOf(UnexistenceError)
-            expect(error.message).to.equal(`client with id ${id} does not exist`)
+        }catch(_error){
+            error=_error
         }
+        expect(error).to.be.instanceOf(UnexistenceError)
+        expect(error.message).to.equal(`client with id ${id} does not exist`)
     })
     it("should throw an error when not given an id string",()=>{
         expect(()=>{removeClient()}).to.throw(TypeError,"undefined is not a string")
