@@ -26,42 +26,7 @@ mongoose.connect(MONGODB_URL)
 
         app.use(cors)
 
-        app.post('/users', parseBody, (req, res) => { 
 
-            const { body: { name, surname, email, password, confPassword } } = req
-
-            try {
-                register(name, surname, email, password, confPassword)
-                    .then(()=>res.status(201).send())
-                    .catch(error => handleError(error, res))
-
-            } catch (error) {
-                handleError(error, res)
-            }
-        })
-
-        app.post('/users/auth', parseBody, (req, res) => { 
-            const { body: { email, password } } = req
-
-            try {
-                login(email, password)
-                    .then(userId => jwtPromised.sign({ sub: userId }, SECRET, {expiresIn: '1d'}))
-                    .then(token => res.send({ token }))
-                    .catch(error => handleError(error, res))
-            } catch(error){handleError(error, res)}
-        })
-
-        app.get('/users/retrieve/:userId?', verifyExtractJwt, (req, res) => { 
-            try{
-                const { params: { userId }, payload: {sub: id} } = req
-                
-                retrieveUser(userId || id)
-                    .then(user=> res.status(200).send(user))
-                    .catch(error => handleError(error, res)) 
-        
-            }catch(error){
-                handleError(error, res)
-            }
         })
 
         // app.get('/users/search/q=:query', verifyExtractJwt, (req, res) => { debugger
@@ -99,18 +64,6 @@ mongoose.connect(MONGODB_URL)
         //     }
         // })
 
-        app.patch('/users/update', parseBody, verifyExtractJwt, (req, res) => { debugger
-            try {
-                const { payload: {sub: id}, body} = req
-                
-                updateUser(id, body) 
-                    .then((message)=> res.status(204).send({message: message}))
-                    .catch(error => handleError(error, res))
-
-            } catch (error) {
-                handleError(error, res)
-            }
-        })
 
         // app.patch('/users/cart', parseBody, verifyExtractJwt, (req, res) => {
         //     try {
@@ -133,4 +86,4 @@ mongoose.connect(MONGODB_URL)
         })
 
         app.listen(8080, () => console.log(`${name} ${version} running in ${PORT}`))
-    })
+    
