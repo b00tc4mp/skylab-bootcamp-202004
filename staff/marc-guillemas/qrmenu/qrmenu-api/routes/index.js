@@ -1,7 +1,7 @@
 const { env: { SECRET } } = process
 
 const { Router } = require('express')
-const { registerEstablishment, authenticateEstablishment } = require('./handlers')
+const { registerEstablishment, authenticateEstablishment, retrieveEstablishment } = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
 const { handleError } = require('../helpers')
@@ -13,6 +13,7 @@ const api = new Router()
 debugger
 api.post('/establishment', parseBody, registerEstablishment)
 api.post('/establishment/auth', parseBody, authenticateEstablishment)
+api.get('/establishment', verifyExtractJwt, retrieveEstablishment)
 
 module.exports = {
     api
