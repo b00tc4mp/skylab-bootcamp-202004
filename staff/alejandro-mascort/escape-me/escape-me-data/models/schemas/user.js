@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose')
+const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 const { utils: { Email } } = require('escape-me-commons')
 const punctuation = require('./punctuation')
 require('escape-me-commons/polyfills/url')
@@ -25,15 +25,13 @@ module.exports = new Schema({
         required: true
     },
 
-    participated: [escapeRoom],
+    participated: [{ type: ObjectId, required: true, ref: 'EscapeRoom' }],
 
-    pending: [escapeRoom],
+    pending: [{ type: ObjectId, required: true, ref: 'EscapeRoom' }],
 
-    favorites: [escapeRoom],
+    favorites: [{ type: ObjectId, required: true, ref: 'EscapeRoom' }],
 
-    following: [],
-
-    ratings: [punctuation],
+    following: [{ type: ObjectId, required: true, ref: 'User' }],
 
     image: String
 })

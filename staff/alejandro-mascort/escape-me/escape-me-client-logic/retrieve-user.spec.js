@@ -5,33 +5,47 @@ const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_SECRET: SECRET, TEST_API_URL:
 const retrieveUser = require('./retrieve-user')
 const { random } = Math
 const { expect } = require('chai')
-require('misc-commons/polyfills/json')
-const { mongoose, models: { User } } = require('misc-data')
-require('misc-commons/ponyfills/xhr')
-const { utils: { jwtPromised } } = require('misc-commons')
+require('escape-me-commons/polyfills/json')
+const { mongo } = require('escape-me-data')
+require('escape-me-commons/ponyfills/xhr')
+const { utils: { jwtPromised } } = require('escape-me-commons')
 const context = require('./context')
+const bcrypt = require('bcryptjs')
 
 context.API_URL = API_URL
 
 describe('logic - retrieve user', () => {
-    before(() => mongoose.connect(MONGODB_URL))
+    let users
 
-    let name, surname, email, password, token
+    before(() =>
+        mongo.connect(MONGODB_URL)
+            .then(connection => users = connection.db().collection('users'))
+    )
+
+    let name, surname, email, password, token, participated, following, pending, favorites
 
     beforeEach(() =>
-        User.deleteMany()
+        users.deleteMany()
             .then(() => {
                 name = `name-${random()}`
                 surname = `surname-${random()}`
+                username = `${name}${surname}`
                 email = `e-${random()}@mail.com`
                 password = `password-${random()}`
+                participated = []
+                following = []
+                pending = []
+                favorites = []
+
+                return bcrypt.hash(password, 10)
             })
+            .then(_hash => hash = _hash)
     )
 
     describe('when user already exists', () => {
         beforeEach(() =>
-            User.create({ name, surname, email, password })
-                .then(user => jwtPromised.sign({ sub: user.id }, SECRET))
+            users.insertOne({ name, surname, email, username, password: hash, participated, following, pending, favorites })
+                .then(_user => jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET))
                 .then(_token => token = _token)
         )
 
@@ -40,7 +54,16 @@ describe('logic - retrieve user', () => {
                 .then(user => {
                     expect(user.name).to.equal(name)
                     expect(user.surname).to.equal(surname)
+                    expect(user.username).to.equal(username)
                     expect(user.email).to.equal(email)
+                    expect(user['participated']).to.be.an.instanceOf(Array)
+                    expect(user['pending']).to.be.an.instanceOf(Array)
+                    expect(user['favorites']).to.be.an.instanceOf(Array)
+                    expect(user['following']).to.be.an.instanceOf(Array)
+                    expect(user['participated'].length).to.equal(0)
+                    expect(user['pending'].length).to.equal(0)
+                    expect(user['favorites'].length).to.equal(0)
+                    expect(user['following'].length).to.equal(0)
                     expect(user.password).to.be.undefined
                 })
         )
@@ -67,7 +90,18 @@ describe('logic - retrieve user', () => {
         )
     })
 
-    afterEach(() => User.deleteMany())
+    it('should fail if token is not a string', () => {
+        expect(() => {
+            retrieveUser(1)
+        }).to.throw(TypeError, '1 is not a string')
 
-    after(mongoose.disconnect)
+        expect(() => {
+            retrieveUser(true)
+        }).to.throw(TypeError, 'true is not a string')
+
+    })
+
+    afterEach(() => users.deleteMany())
+
+    after(mongo.disconnect)
 })

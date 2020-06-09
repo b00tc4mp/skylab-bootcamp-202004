@@ -2,12 +2,11 @@ const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 const comment = require('./comment')
 
 module.exports = new Schema({
-    escapeRoom: {
+    user: {
         type: ObjectId,
-        // ref: 'EscapeRooms',
+        ref: 'User',
         required: true
     },
-
     rating: {
         type: Number,
         enum: [0, 1, 2, 3, 4, 5],

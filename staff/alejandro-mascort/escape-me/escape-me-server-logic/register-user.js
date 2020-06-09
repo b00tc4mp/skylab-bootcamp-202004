@@ -10,15 +10,15 @@ module.exports = (name, surname, username, email, password) => {
     String.validate.notVoid(username)
     String.validate.notVoid(email)
     Email.validate(email)
-    String.validate.notVoid(password)
+    String.validate.notVoid(password);
 
-        (async () => {
-            const user = await User.findOne({ $or: [{ email }, { username }] })
+    return (async () => {
+        const user = await User.findOne({ $or: [{ email }, { username }] })
 
-            if (user) throw new DuplicityError(`user with e-mail ${email} already exists`)
+        if (user) throw new DuplicityError(`user with email or username provided already exists`)
 
-            const hash = await bcrypt.hash(password, 10)
+        const hash = await bcrypt.hash(password, 10)
 
-            await User.create({ name, surname, email, username, password: hash })
-        })()
+        await User.create({ name, surname, email, username, password: hash })
+    })()
 }

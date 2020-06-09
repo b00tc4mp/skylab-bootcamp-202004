@@ -2,5 +2,5 @@ module.exports = {
     user: require('./user'),
     punctuation: require('./punctuation'),
     comment: require('./comment'),
-    escapeRoom: require('./escapeRoom')
+    escapeRoom: require('./escape-room')
 }

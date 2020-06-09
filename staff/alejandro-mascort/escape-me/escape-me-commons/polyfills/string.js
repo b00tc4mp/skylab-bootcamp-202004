@@ -37,5 +37,5 @@ String.validate.alphabetic = function (string) {
 }.bind(String)
 
 String.validate.lengthGreaterEqualThan = function (string, length) {
-    if (!this.isLengthGreaterEqualThan(string, length)) throw new Error(`"${string}" length is not greater or equal than ${length}`)
+    if (!this.isLengthGreaterEqualThan(string, length)) throw new Error(`length is not greater or equal than ${length}`)
 }.bind(String)
