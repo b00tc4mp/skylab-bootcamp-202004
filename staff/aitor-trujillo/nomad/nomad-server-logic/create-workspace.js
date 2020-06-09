@@ -21,7 +21,7 @@ module.exports = (userId, workspace) => {
     String.validate.notVoid(street)
     String.validate.notVoid(city)
     String.validate.notVoid(country)
-    // String.validate.notVoid(coordinates)
+    if (typeof coffee !== 'boolean') throw new TypeError(`${coffee} is not boolean`)
     Number.validate(lat)
     Number.validate(lon)
     String.validate.notVoid(photo)

@@ -4,7 +4,7 @@ const { PORT, MONGODB_URL, SECRET } = process.env
 
 const path = require('path')
 const bodyParser = require('body-parser')
-const { registerUser, authenticateUser, createWorkspace } = require('nomad-server-logic')
+const { registerUser, authenticateUser, createWorkspace, retrieveWorkspaceById } = require('nomad-server-logic')
 const { mongoose } = require('nomad-data')
 const { jwtVerifierExtractor, cors } = require('./middlewares')
 const { handleError } = require('./helpers')
@@ -62,6 +62,30 @@ mongoose.connect(MONGODB_URL)
                     .then(() => res.status(201).send())
                     .catch(error => handleError(error, res))
 
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        app.get('/workspaces/:workspaceId', verifyExtractJwt, (req, res) => {
+            try {
+                const { payload: { sub: userId }, params: { workspaceId } } = req
+
+                retrieveWorkspaceById(workspaceId)
+                    .then(result => res.send(result))
+                    .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        app.get('/workspaces/search?q=:query', verifyExtractJwt, (req, res) => {
+            try {
+                const { payload: { sub: userId }, params: { query } } = req
+
+                searchWorkspaces(query)
+                    .then(result => res.send(result))
+                    .catch(error => handleError(error, res))
             } catch (error) {
                 handleError(error, res)
             }
