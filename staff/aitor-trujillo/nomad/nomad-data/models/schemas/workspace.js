@@ -8,6 +8,12 @@ module.exports = new Schema({
         required: true
     },
 
+    score: {
+        type: Number,
+        default: 0,
+        required: true
+    },
+
     name: {
         type: String,
         required: true

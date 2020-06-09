@@ -75,22 +75,66 @@ describe('logic - create workspace', () => {
         expect(workspace.capacity).to.equal(workspaceRandom.capacity)
     })
 
-    // describe('when user already exists', () => {
-    //     beforeEach(() => User.create({ name, surname, email, password }))
+    describe('when workspace already exists', () => {
+        beforeEach(async () => {
+            workspaceRandom.creator = userId
+            return await Workspace.create(workspaceRandom)
+        })
 
-    //     it('should fail on trying to register an existing user', async () => {
-    //         try {
-    //             await registerUser(name, surname, email, password)
+        // ASYNC UNHAPPY PATHS
 
-    //             throw new Error('should not reach this point')
-    //         } catch (error) {
-    //             expect(error).to.exist
+        it('should fail on trying to create an existing workspace with same phone', async () => {
+            try {
+                await createWorkspace(userId, workspaceRandom)
 
-    //             expect(error).to.be.an.instanceof(Error)
-    //             expect(error.message).to.equal(`user with e-mail ${email} already exists`)
-    //         }
-    //     })
-    // })
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.exist
+
+                expect(error).to.be.an.instanceof(Error)
+                expect(error.message).to.equal(`workspace with phone ${workspaceRandom.phone} already exists`)
+            }
+        })
+
+        // SYNC UNHAPPY PATHS
+
+        it('should fail on trying to add number userId', async () => {
+            try {
+                await createWorkspace(1, workspaceRandom)
+
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.exist
+
+                expect(error).to.be.an.instanceof(Error)
+                expect(error.message).to.equal('1 is not a string')
+            }
+        })
+        it('should fail on trying to add boolean userId', async () => {
+            try {
+                await createWorkspace(true, workspaceRandom)
+
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.exist
+
+                expect(error).to.be.an.instanceof(Error)
+                expect(error.message).to.equal('true is not a string')
+            }
+        })
+        it('should fail on trying to add null userId', async () => {
+            try {
+                await createWorkspace(null, workspaceRandom)
+
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.exist
+
+                expect(error).to.be.an.instanceof(Error)
+                expect(error.message).to.equal('null is not a string')
+            }
+        })
+    })
 
     afterEach(() => User.deleteMany().then(() => Workspace.deleteMany()))
 
