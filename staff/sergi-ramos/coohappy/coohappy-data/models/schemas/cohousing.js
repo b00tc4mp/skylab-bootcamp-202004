@@ -1,31 +1,40 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
+const  message  = require('./message')
 
 
 module.exports = new Schema({
-
-    name: {
-        type: String,
+    author: {
+        type: ObjectId,
+        ref: 'User',
         required: true
     },
 
-    adress: {
+    name: {
+        type: String,
+        required: true,
+        unique: true
+    },
 
-        street: {
-            type: String,
-            required: true
-        },
-    
-        number: {
-            type: Number,
-            required: true
-        },
-    
-        city: {
-            type: String,
-            required: true
+    address: {
+        type: {
+
+            street: {
+                type: String,
+                required: true
+            },
+
+            number: {
+                type: Number,
+                required: true
+            },
+
+            city: {
+                type: String,
+                required: true
+            }
         },
         require: true
-    },    
+    },
 
     members: [{
         type: ObjectId,
@@ -33,7 +42,7 @@ module.exports = new Schema({
         required: true
     }],
 
-    accesCode: {
+    accessCode: {
         type: String,
         required: true
     },
