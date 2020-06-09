@@ -1,0 +1,20 @@
+{
+  "name": "gluttony-client-logic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "crispine",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "gluttony-api": "file:../gluttony-api",
+    "uuid": "^8.1.0"
+  },
+  "devDependencies": {
+    "jest": "^26.0.1"
+  }
+}
