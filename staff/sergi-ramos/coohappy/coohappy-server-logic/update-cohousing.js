@@ -23,7 +23,7 @@ module.exports = (userId, dataToUpdate) => {
         if (!user) throw new UnexistenceError(`User with id ${userId} does not exist`)
 
         const cohousing = await Cohousing.findOneAndUpdate({ members: ObjectId(userId) }, dataToUpdate)
-        
+        if(!cohousing) throw new UnexistenceError(`user with id ${userId} has not already cohousing`)
         return
     })()
 
