@@ -1,7 +1,7 @@
 const { env: { JWT_SECRET: SECRET } } = process
 
 const { Router } = require('express')
-const { registerUser, authenticate, retrieveUser,registerCohousing, retrieveCohousing } = require('./handlers')
+const { registerUser, authenticate, retrieveUser,registerCohousing, retrieveCohousing, updateUser } = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
 const { handleError } = require('../helpers')
@@ -17,9 +17,12 @@ api.post('/users/auth', parseBody, authenticate)
 
 api.get('/users/:userId?', verifyExtractJwt, retrieveUser)
 
-api.post('/cohousings', parseBody, registerCohousing)
+api.patch('/users', [parseBody, verifyExtractJwt], updateUser)
+
+api.post('/cohousings', [parseBody, verifyExtractJwt], registerCohousing)
 
 api.get('/cohousings', verifyExtractJwt, retrieveCohousing)
+
 
 
 

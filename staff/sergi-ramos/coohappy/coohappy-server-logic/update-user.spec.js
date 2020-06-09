@@ -9,7 +9,7 @@ const { mongoose, models: { User } } = require('coohappy-data')
 const bcrypt = require('bcryptjs')
 const { errors: { CredentialsError, VoidError } } = require('coohappy-commons')
 
-describe.only('logic - update-user', () => {
+describe('logic - update-user', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let name, surname, email, password, userId, hash, newName, newSurname, newEmail, newPassword

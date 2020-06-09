@@ -6,7 +6,7 @@ module.exports = (req, res) => {
         const { payload: { sub: userId } } = req
 
         retrieveCohousing(userId)
-            .then(user => res.send(user))
+            .then(cohousing => res.status(200).json(cohousing))
             .catch(error => handleError(error, res))
     } catch (error) {
         handleError(error, res)
