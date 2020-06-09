@@ -4,4 +4,7 @@ module.exports = {
     createIngredient: require('./create-ingredient'),
     createRecipe: require('./create-recipe'),
     searchRecipe: require('./search-recipe'),
+    toogleFavorite: require('./toogle-favorite'),
+    retrieveFavorite: require('./retrieve-favorite'),
+    retrieveUser: require('./retrieve-user')
 }
