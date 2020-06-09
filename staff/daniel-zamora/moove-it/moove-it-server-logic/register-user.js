@@ -1,6 +1,6 @@
-require('misc-commons/polyfills/string')
-const {utils: {Email}, errors: {DuplicityError}} = require('misc-commons')
-const { models: { User } } = require('misc-data')
+require('moove-it-commons/polyfills/string')
+const {utils: {Email}, errors: {DuplicityError}} = require('moove-it-commons')
+const { models: { User } } = require('moove-it-data')
 const bcrypt = require('bcryptjs')
 
 

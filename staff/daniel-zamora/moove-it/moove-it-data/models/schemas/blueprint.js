@@ -1,4 +1,3 @@
-const { Schema } = require('mongoose')
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
 module.exports = new Schema({

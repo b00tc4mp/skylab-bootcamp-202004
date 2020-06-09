@@ -1,6 +1,6 @@
-require('misc-commons/polyfills/string')
-const { errors: {UnexistenceError, CredentialsError}, utils: {Email}} = require('misc-commons')
-const { models: {User} } = require('../misc-data')
+require('moove-it-commons/polyfills/string')
+const { errors: {UnexistenceError, CredentialsError}, utils: {Email}} = require('moove-it-commons')
+const { models: {User} } = require('../moove-it-data')
 const bcrypt = require('bcryptjs')
 
 module.exports = (email, password) => { debugger

@@ -1,5 +1,5 @@
 const registerUser = require('./register-user')
-const { mongoose } = require('../misc-data')
+const { mongoose } = require('../moove-it-data')
 
 debugger
 mongoose.connect('mongodb://localhost:27017/misc-api')

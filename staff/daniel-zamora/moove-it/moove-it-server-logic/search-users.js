@@ -1,6 +1,6 @@
-require('misc-commons/polyfills/string')
-const { errors: {UnexistenceError} } = require('misc-commons')
-const {mongo} = require('misc-data')
+require('moove-it-commons/polyfills/string')
+const { errors: {UnexistenceError} } = require('moove-it-commons')
+const {mongo} = require('moove-it-data')
 
 module.exports = (userId, query) => {
     if(typeof query !== 'object') throw new Error

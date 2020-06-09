@@ -1,6 +1,6 @@
-require('misc-commons/polyfills/string')
-const { errors: {UnexistenceError} } = require('misc-commons')
-const { mongoose : {ObjectId}, models: { User } } = require('misc-data')
+require('moove-it-commons/polyfills/string')
+const { errors: {UnexistenceError} } = require('moove-it-commons')
+const { mongoose : {ObjectId}, models: { User } } = require('moove-it-data')
 
 module.exports = (userId) => {
     // String.validate.notVoid(userId)

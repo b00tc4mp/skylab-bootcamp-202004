@@ -1,33 +1,78 @@
  require('dotenv').config()
 
-const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, JWT_SECRET: SECRET, MONGODB_URL } } = process
+const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, MONGODB_URL } } = process
 const PORT = PORT_CLI || PORT_ENV || 8080
 
+const path = require('path')
+const { Logger, singletonConsoleLogger, singletonFileLogger } = require('./logger')
+const file = singletonFileLogger(path.join(__dirname, 'server.log'))
+const console = singletonConsoleLogger()
+file.level = Logger.WARN
+console.level = Logger.DEBUG
+
+const { api } = require('./routes')
+
 const express = require('express')
-const { register, login, retrieveUser, searchUsers, unregisterUser, updateUser, updateCart } = require('moove-it-client-logic')
-const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
-const { handleError } = require('./helpers')
 const { mongoose } = require('moove-it-data')
-const { jwtVerifierExtractor, cors} = require('./middlewares')
-const {utils: { jwtPromised }} = require('moove-it-commons')
+const { cors } = require('./middlewares')
 
-// users
-mongoose.connect(MONGODB_URL)
-    .then(() => {
-        console.log('mongoose listening')
-        
-        const app = express()
-        
-        const parseBody = bodyParser.json()
+console.debug('Starting server')
 
-        const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
+try{
+    console.debug('connecting to database')
 
+    mongoose.connect(MONGODB_URL)
+        .then( () => {
+            console.info(`connected to database ${MONGODB_URL}`)
 
-        app.use(cors)
+            const app = express()
 
+            app.use(cors)
 
+            app.use('./api', api)
+
+            app.get('*', (req, res) => {
+                res.status(404).send('Not Found :(')
+            })
+
+            app.listen(PORT, () => console.info(`server ${name} ${version} running on port ${PORT}`))
+
+            let interrupted = false
+
+            proccess.on('SIGINT', () => {
+                if(!interrupted) {
+                    interrupted = true
+
+                    console.debug('Stopping server')
+
+                    console.debug('disconnecting database')
+
+                    mongoose.disconnect()
+                        .then( () => console.info('disconnected database'))
+                        .catch(error => file.error('could not disconnect from mongo', error))
+                        .finally(() => {
+                            console.info(`server ${name} ${version} stopped`)
+
+                            setTimeout(() => {
+                                file.close()
+
+                                setTimeout(()=> {
+                                    proccess.exit()
+                                },500)
+                            },500)
+                        })
+                }
+            })
         })
+        .catch(error => {
+            file.error('could not connect to mongo', error)
+        })
+
+} catch (error){
+    file.error(error)
+}
+
 
         // app.get('/users/search/q=:query', verifyExtractJwt, (req, res) => { debugger
         //     try {
@@ -81,9 +126,5 @@ mongoose.connect(MONGODB_URL)
         // })
 
 
-        app.get('*', (req, res) => {
-            res.status(404).send('Not Found :(')
-        })
-
-        app.listen(8080, () => console.log(`${name} ${version} running in ${PORT}`))
+        
     

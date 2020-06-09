@@ -1,11 +1,11 @@
 require('dotenv').config()
 const { env: { TEST_MONGOOSE_URL: MONGODB_URL } } = process
-const { mongoose, models: {User} } = require('misc-data')
+const { mongoose, models: {User} } = require('moove-it-data')
 
 const registerUser = require('./register-user')
 const { random } = Math
 const { expect } = require('chai')
-const { errors: { DuplicityError }} = require('misc-commons')
+const { errors: { DuplicityError }} = require('moove-it-commons')
 
 describe('logic - register user', () => {
     before(() =>

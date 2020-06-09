@@ -1,5 +1,5 @@
-require('misc-commons/polyfills/string')
-const {utils: { Email }, errors: { UnexistenceError, CredentialsError }} = require('misc-commons')
+require('moove-it-commons/polyfills/string')
+const {utils: { Email }, errors: { UnexistenceError, CredentialsError }} = require('moove-it-commons')
 
 module.exports = (email, password, userId) => {
     String.validate.notVoid(userId)

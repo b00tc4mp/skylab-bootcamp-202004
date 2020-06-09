@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "moove-it-commons": "file:../moove-it-commons"
+    "bcryptjs": "^2.4.3",
+    "moove-it-commons": "file:../moove-it-commons",
+    "moove-it-data": "file:../moove-it-data"
   },
   "devDependencies": {},
   "description": ""
