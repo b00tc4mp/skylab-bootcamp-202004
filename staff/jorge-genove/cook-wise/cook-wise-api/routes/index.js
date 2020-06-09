@@ -1,7 +1,13 @@
 const { env: { SECRET } } = process
 
 const { Router } = require('express')
-const { registerUser, authenticateUser, createIngredient,createRecipe } = require('./handlers')
+const { 
+    registerUser, 
+    authenticateUser, 
+    createIngredient,
+    createRecipe,
+    searchRecipe
+} = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
 const { handleError } = require('../helpers')
@@ -18,6 +24,8 @@ api.post('/users/auth', parseBody, authenticateUser)
 api.post('/ingredients', parseBody, createIngredient)
 
 api.post('/recipes', parseBody, verifyExtractJwt, createRecipe)
+
+api.get('/recipes', verifyExtractJwt, searchRecipe)
 
 module.exports = {
     api

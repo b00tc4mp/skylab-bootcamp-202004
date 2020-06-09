@@ -240,16 +240,7 @@ it('should throw an error if description its not an string', () => {
         }).to.throw(TypeError, 'true is not a string')
     })
   
-  
-
- 
-
-    
-    
-
-
-
-    after(async() => {
+  after(async() => {
         await Promise.all([User.deleteMany(), Ingredients.deleteMany(), Recipes.deleteMany(), ]);
         await mongoose.disconnect();
     });

@@ -1,4 +1,19 @@
-require('cook-wise-commons/polyfills/string')
+/**
+ * It must authentincate an existing user
+ * 
+ * @param email the username email
+ * 
+ * @param password the username secret key
+ * 
+ * @throws Unexistance error if user dosen't exist
+ * 
+ * @throws Credentials error if username and password dosen't match
+ * 
+ * @returns a username token
+ * 
+ */
+
+ require('cook-wise-commons/polyfills/string')
 const { models: { User } } = require('cook-wise-data')
 const { utils: { Email }, errors: { UnexistenceError, CredentialsError } } = require('cook-wise-commons')
 const bcrypt = require('bcryptjs') 
