@@ -1,8 +1,7 @@
 require('facturator-commons/polyfills/string')
 const { mongoose:{ObjectId},models: { Client,Product } } = require('facturator-data')
-const { errors:{UnexistenceError}} = require('facturator-commons')
-const {round}= Math//TODO utils para redondear a dos decimales
-
+const { errors:{UnexistenceError},utils:{Rounder:{round}}} = require('facturator-commons')
+//TODO check every product exist
 module.exports=(clientId)=>{
     String.validate.notVoid(clientId)
     
@@ -21,10 +20,10 @@ module.exports=(clientId)=>{
             const aux={}
             aux.name= currentDiscount.product.name
             aux.description= currentDiscount.product.description
-            aux.basePrice= round(currentDiscount.product.price*100)/100
+            aux.basePrice= round(currentDiscount.product.price,2)
             aux.discount= currentDiscount.discount
             aux.finalPrice= aux.basePrice-(aux.discount*aux.basePrice*0.01)
-            aux.finalPrice= round(aux.finalPrice*100)/100
+            aux.finalPrice= round(aux.finalPrice,2)
             aux.productId= currentDiscount.product._id.toString()
             results.push(aux)
         });
