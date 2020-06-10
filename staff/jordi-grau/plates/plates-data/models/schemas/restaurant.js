@@ -1,6 +1,6 @@
 const { Schema } = require('mongoose')
 const { Menu } =require ('.')
-const { utils: { Email } } = require('./plates-commons')
+const { utils: { Email } } = require('plates-commons')
 
 module.exports = new Schema({
 
