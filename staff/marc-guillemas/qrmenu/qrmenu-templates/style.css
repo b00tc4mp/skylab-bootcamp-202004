@@ -71,6 +71,18 @@
   transition: 0.4s ease all;
   width: 40%;
 }
+.register a {
+  cursor: pointer;
+  height: 2rem;
+  margin: 0.5rem 0 0 0;
+  color: black;
+  font-size: 1em;
+  text-decoration: none;
+}
+.register a:active {
+  transition: 0.35s ease;
+  color: blue;
+}
 
 .login {
   display: flex;
@@ -99,8 +111,8 @@
   height: 20%;
   box-shadow: 2px 2px 10px 4px #f8bf75;
   background-color: #FF9100;
-  border-bottom-left-radius: 60px;
-  border-bottom-right-radius: 60px;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
 }
 .login label {
   display: flex;
@@ -143,6 +155,56 @@
 .login__button:hover {
   transition: 0.4s ease all;
   width: 40%;
+}
+.login a {
+  cursor: pointer;
+  height: 2rem;
+  margin: 0.5rem 0 0 0;
+  color: black;
+  font-size: 1em;
+  text-decoration: none;
+}
+.login a:active {
+  transition: 0.35s ease;
+  color: blue;
+}
+
+.landing {
+  border: 1px solid red;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.landing__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid red;
+  height: 80%;
+}
+.landing__intro {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.landing__views {
+  display: flex;
+  height: 5rem;
+  justify-content: space-around;
+  align-items: center;
+}
+.landing a {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background-color: #FF9100;
+  box-shadow: 2px 2px 10px 4px #f8bf75;
 }
 
 * {
