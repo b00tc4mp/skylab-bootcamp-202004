@@ -7,7 +7,7 @@ const { models: { Workspace } } = require('nomad-data')
 
 module.exports = (userId, workspace) => {
 
-    const { name, price, address, geoLocation, photos, phone, features, description, capacity, reviews } = workspace
+    const { name, price, category, address, geoLocation, photos, phone, features, description, capacity, reviews } = workspace
     const { amount, term } = price
     const { street, city, country } = address
     const { coordinates } = geoLocation
@@ -16,6 +16,7 @@ module.exports = (userId, workspace) => {
     const { wifi, parking, coffee, meetingRooms } = features
     String.validate.notVoid(userId)
     String.validate.notVoid(name)
+    String.validate.notVoid(category)
     Number.validate(amount)
     String.validate.notVoid(term)
     String.validate.notVoid(street)

@@ -2,18 +2,39 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 
-const retrieveWorkspaceById = require('./retrieve-workspace-by-id')
+const retrieveByLocation = require('./retrieve-by-location')
 const { random } = Math
 const { expect } = require('chai')
 require('nomad-commons/polyfills/json')
 const { mongoose, models: { Workspace, User } } = require('nomad-data')
 
-describe('logic - create workspace', () => {
+describe('logic - retrieve ws by location', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let workspaceRandom = {}
+    let workspace1 = {}
+    let workspace2 = {}
     let userName, surname, email, password, userId
-    let workspaceId
+    let workspaceId1
+    let workspaceId2
+    let ws1, ws2
+
+    const generateWorkspace = (id) => {
+        return {
+            creator: id,
+            name: `name-${random()}`,
+            category: 'cowork',
+            price: { amount: random() + 100, term: 'month' },
+            address: { street: `${random()} st`, city: `${random()} city`, country: `${random()} country` },
+            geoLocation: { coordinates: [random() * 15 + 1, random() * 15 + 1] },
+            // timetable = `timetable-${random()}`
+            photos: [`photo-${random()}`],
+            phone: `phone-${random()}`,
+            features: { wifi: '100mb', parking: `km-${random()}`, coffee: true, meetingRooms: random() },
+            description: `description-${random()}`,
+            capacity: random(),
+        }
+    }
+
 
     beforeEach(async () => {
 
@@ -32,29 +53,29 @@ describe('logic - create workspace', () => {
                 userId = id
             })
 
-        workspaceRandom = {
-            creator: userId,
-            name: `name-${random()}`,
-            category: 'cowork',
-            price: { amount: random() + 100, term: 'month' },
-            address: { street: `${random()} st`, city: `${random()} city`, country: `${random()} country` },
-            geoLocation: { coordinates: [random(), random()] },
-            // timetable = `timetable-${random()}`
-            photos: [`photo-${random()}`],
-            phone: `phone-${random()}`,
-            features: { wifi: '100mb', parking: `km-${random()}`, coffee: true, meetingRooms: random() },
-            description: `description-${random()}`,
-            capacity: random(),
-        }
+        workspace1 = generateWorkspace(userId)
+        workspace2 = generateWorkspace(userId)
+        debugger
 
-        await Workspace.create(workspaceRandom)
-            .then(({ id }) => { workspaceId = id })
+
+        ws1 = await Workspace.create(workspace1)
+        ws2 = await Workspace.create(workspace2)
+
+        workspaceId1 = ws1.id
+        workspaceId2 = ws2.id
+        return
+
+
     })
 
-    it('should succeed on valid workspaceId', async () => {
-        const workspace = await retrieveWorkspaceById(workspaceId)
+    it('should get the results by location', async () => {
+        let location = [random() * 15 + 1, random() * 15 + 1]
 
-        expect(workspace).to.exist
+        const results = await retrieveByLocation(userId, location)
+
+        expect(results).to.exist
+
+        const [workspace] = results
 
         expect(workspace.name).to.equal(workspaceRandom.name)
         expect(workspace.price.amount).to.equal(workspaceRandom.price.amount)

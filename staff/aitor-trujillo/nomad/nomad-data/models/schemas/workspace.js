@@ -1,4 +1,5 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
+const review = require('./review')
 
 module.exports = new Schema({
 
@@ -36,7 +37,8 @@ module.exports = new Schema({
 
     category: {
         type: String,
-        enum: ['cowork', 'coffee', 'library', 'shared']
+        enum: ['cowork', 'coffee', 'library', 'shared'],
+        required: true
     },
 
     address: {
@@ -107,19 +109,5 @@ module.exports = new Schema({
         type: Number,
         required: true
     },
-    reviews: [{
-        id: {
-            type: ObjectId,
-            ref: 'User',
-            required: true
-        }, // userId
-        stars: {
-            type: Number,
-            required: true
-        },
-        text: {
-            type: String,
-            required: true
-        }
-    }]
+    reviews: [review]
 })
