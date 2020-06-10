@@ -3,7 +3,8 @@ const { utils: { Email } } = require('cook-wise-commons')
 const recipes = require('./recipes')
 const { SchemaTypes: { ObjectId } } = require('mongoose')
 
-
+const WEEKDAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+const TIMELINE = ["lunch", "dinner"]
 
 module.exports = new Schema({
     name: {
@@ -28,17 +29,24 @@ module.exports = new Schema({
         required: true
     },
 
-    recipes: [recipes],
+    recipes:  [{
+        type: ObjectId,
+        ref: 'Recipes'
+    }],
 
     favoriterecipes: [{
             type: ObjectId,
             ref: 'Recipes'
-        }]
-    // menus: [{
-    //     type: {
-    //         name: {
-    //         type: String,
-    //         required: true
-    //     }
-    // }}]
+    }],
+
+    schedule :[
+        {
+            weekday : { type: String, enum: WEEKDAYS},
+            timeline : {type: String, enum: TIMELINE},
+            recipe: {
+                type: ObjectId,
+                ref: 'Recipes'
+            }
+        }
+    ] 
 })

@@ -6,5 +6,6 @@ module.exports = {
     searchRecipe: require('./search-recipe'),
     toogleFavorite: require('./toogle-favorite'),
     retrieveFavorite: require('./retrieve-favorite'),
-    retrieveUser: require('./retrieve-user')
+    retrieveUser: require('./retrieve-user'),
+    toogleMenu: require('./toogle-menu')
 }
