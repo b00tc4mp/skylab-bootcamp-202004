@@ -407,7 +407,7 @@ describe('logic - addProduct', () => {
 
             expect(balance.user.toString()).to.equal(userId)
             expect(balance.date).to.be.an.instanceOf(Date)
-            expect(balance.guarantee).to.equal(round(option.contractSize * quantity * 0.1 * option.type.strike * 100) / 100)
+            expect(balance.guarantee).to.equal(_balance.guarantee + round(option.contractSize * quantity * 0.1 * option.type.strike * 100) / 100)
             expect(balance.profitAndLoss).to.equal(round(option.contractSize * quantity * optionPrice.price * 100) / 100)
 
             const contract = await Contract.find()
@@ -444,7 +444,7 @@ describe('logic - addProduct', () => {
 
             expect(balance.user.toString()).to.equal(userId)
             expect(balance.date).to.be.an.instanceOf(Date)
-            expect(balance.guarantee).to.equal(round(future.contractSize * quantity * 0.1 * price.price * 100) / 100)
+            expect(balance.guarantee).to.equal(_balance.guarantee + round(future.contractSize * quantity * 0.1 * price.price * 100) / 100)
             expect(balance.profitAndLoss).to.equal(0)
 
             const contract = await Contract.find()

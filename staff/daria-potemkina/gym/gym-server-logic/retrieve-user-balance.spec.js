@@ -7,7 +7,7 @@ const { random, round } = Math
 const { expect } = require('chai')
 const { mongoose, models: { User, AccountBalance } } = require('gym-data')
 
-describe.only('logic - retrieveUserBalance', () => {
+describe('logic - retrieveUserBalance', () => {
     before(() => mongoose.connect(MONGODB_URL_TEST))
 
     let name, surname, email, password, userId, card, guarantee, profitAndLoss, accountId
