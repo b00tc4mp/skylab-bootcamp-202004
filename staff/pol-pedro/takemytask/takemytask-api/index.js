@@ -4,13 +4,10 @@ const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET, MONGODB_URL } } = p
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser} = require('takemytask-server-logic')
-const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
-const { handleError } = require('./helpers')
-const { utils: { jwtPromised } } = require('takemytask-commons')
-const { jwtVerifierExtractor, cors } = require('./middlewares')
+const {cors } = require('./middlewares')
 const { mongoose } = require('takemytask-data')
+const { api } = require('./routes')
 
 console.debug('starting server')
 
@@ -23,40 +20,9 @@ try {
 
             const app = express()
 
-            const parseBody = bodyParser.json()
-
-            const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
-
             app.use(cors)
 
-            // users
-
-            app.post('/users', parseBody, (req, res) => {
-                const { body: { name, surname, email, password, adress } } = req
-
-                try {
-                    registerUser(name, surname, email, password, adress)
-                        .then(() => res.status(201).send())
-                        .catch(error => handleError(error, res), console.log('error 1'))
-                } catch (error) {
-                    console.log('error 2')
-                    handleError(error, res)
-                }
-            })
-
-            app.post('/users/auth', parseBody, (req, res) => {
-                const { body: { email, password } } = req
-
-                try {
-                    authenticateUser(email, password)
-                        .then(userId => jwtPromised.sign({ sub: userId }, SECRET, { expiresIn: '1d' }))
-                        .then(token => res.send({ token }))
-                        .catch(error => handleError(error, res))
-                } catch (error) {
-                    handleError(error, res)
-                }
-            })
-            
+            app.use('/api', api)
 
             app.get('*', (req, res) => {
                 res.status(404).send('Not Found :(')

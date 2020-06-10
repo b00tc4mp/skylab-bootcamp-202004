@@ -10,6 +10,7 @@ module.exports = (name, surname, email, password, adress) => {
     String.validate.notVoid(email)
     Email.validate(email)
     String.validate.notVoid(password)
+    String.validate.notVoid(adress)
 
     return (async () => {
         const user = await User.findOne({ email })

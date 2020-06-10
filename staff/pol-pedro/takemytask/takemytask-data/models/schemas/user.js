@@ -1,6 +1,5 @@
-const { Schema } = require('mongoose')
 const { utils: { Email } } = require('takemytask-commons')
-const idChat = require('./idChat')
+const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
 module.exports = new Schema({
     name: {
@@ -30,6 +29,8 @@ module.exports = new Schema({
         required: true
     },
 
-    chat: [idChat],
+    chat: [{type: ObjectId, ref: 'chat'}],
+
+    contracts : [{type: ObjectId, ref: 'contract'}]
 
 })
