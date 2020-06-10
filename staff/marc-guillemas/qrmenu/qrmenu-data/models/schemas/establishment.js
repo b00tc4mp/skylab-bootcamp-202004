@@ -36,10 +36,6 @@ module.exports = new Schema ({
 
     orders: [order],
 
-    roles: {
-        type: String,
-        enum: ["owner", "chef", "waiter"]
-    },
 
     staff: [user]
 
