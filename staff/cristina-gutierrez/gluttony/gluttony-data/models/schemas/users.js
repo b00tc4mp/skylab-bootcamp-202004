@@ -1,9 +1,12 @@
 const { Schema } = require("mongoose")
-const { utils: { Email } } = require('gluttony-commons')
-const favorites = require('./favorites')
-const comments = require('./comments')
+const { utils: { Email } } = require("gluttony-commons")
 
 module.exports = new Schema({
+    _id: {
+        type: String,
+        alias: "id"
+    },
+    
     name: {
         type: String,
         required: true
@@ -18,7 +21,7 @@ module.exports = new Schema({
         type: String,
         required: true,
         unique: true,
-        validate: [Email.validate, 'invalid e-mail']
+        validate: [Email.validate, "invalid e-mail"]
     },
 
     password: {
@@ -26,7 +29,8 @@ module.exports = new Schema({
         required: true
     },
 
-    favorites: [favorites],
-
-    comments: [comments]
+    favouriteStores: [{
+        type: String,
+        ref: "Stores"
+    }]
 })

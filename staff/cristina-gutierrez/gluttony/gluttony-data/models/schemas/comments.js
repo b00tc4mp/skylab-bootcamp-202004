@@ -1,9 +1,9 @@
-const { Schema } = require('mongoose')
+const { Schema } = require("mongoose")
 
 module.exports = new Schema({
-    title: {
+    _id: {
         type: String,
-        required: true
+        alias: "id"
     },
 
     text: {
@@ -11,8 +11,20 @@ module.exports = new Schema({
         required:true
     },
 
-    date: {
+    creationDate: {
         type: Date,
+        required: true
+    },
+
+    userId: {
+        type: String,
+        ref: "Users",
+        require: true
+    },
+
+    storeId: {
+        type: String,
+        ref: "Stores",
         required: true
     }
 })

@@ -1,13 +1,12 @@
-const mongoose = require("mongoose")
+require("dotenv").config()
+const { connect, disconnect } = require("mongoose")
 
-const { Types: { ObjectId }, connect, disconnect } = mongoose
+const MONGODB_URL = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@gluttony-stegt.gcp.mongodb.net/${process.env.MONGODB_DATABASE}?retryWrites=true&w=majority`
 
 module.exports = {
-    connect(MONGODB_URL) {
+    connect() {
         return connect(MONGODB_URL, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
     },
 
-    disconnect,
-
-    ObjectId
+    disconnect
 }
