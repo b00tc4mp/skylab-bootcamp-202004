@@ -20,5 +20,7 @@ module.exports = (name, surname, email, password) => {
         const hash = await bcrypt.hash(password, 10)
 
         await User.create({ name, surname, email, password: hash})
+
+        return;
     } )()
 }
