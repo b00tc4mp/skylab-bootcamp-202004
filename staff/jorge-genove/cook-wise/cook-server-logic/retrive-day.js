@@ -4,7 +4,7 @@ const { models: { Recipes, User } } = require('cook-wise-data')
 
 module.exports = (weekday, userId) => {
     String.validate.notVoid(userId)
-    let recipe
+    
     return (async () => {
 
         const user = await User.findById(userId).populate('user.schedule').lean()
@@ -18,7 +18,10 @@ module.exports = (weekday, userId) => {
         }
         for (var j = 0; j < recipeArray.length; j++) {
 
-            recipe = await Recipes.findById(recipeArray[j]).populate('ingredients.ingridient', "name").lean()
+            const recipe = await Recipes.findById(recipeArray[j]).populate("ingredients.ingredient", "name").lean()
+
+            if (!recipe) throw new UnexistenceError(`recipe with id ${recipeArray[j]} does not exist`)
+
 
             delete recipe._id
             delete recipe.__v
@@ -28,11 +31,14 @@ module.exports = (weekday, userId) => {
                 const name = singleIng.ingredient.name
 
                 singleIng.ingredient = name
+
                 result.push(recipe)
             })
+
+
         }
 
-        console.log(result)
+        return result
 
     })()
 }

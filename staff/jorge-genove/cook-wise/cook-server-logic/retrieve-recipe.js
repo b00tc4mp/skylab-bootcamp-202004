@@ -7,9 +7,7 @@ module.exports = (recipeId) => {
 
     return (async () => {
         
-        const recipe = await Recipes.findById(recipeId).populate("ingredients.ingredient","name")
-      
-        .lean()
+        const recipe = await Recipes.findById(recipeId).populate("ingredients.ingredient","name").lean()
 
         if (!recipe) throw new UnexistenceError(`recipe with id ${recipeId} does not exist`)
 
