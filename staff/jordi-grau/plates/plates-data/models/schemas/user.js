@@ -1,5 +1,6 @@
-const { Schema } = require('mongoose')
+const { Schema, SchemaTypes: {ObjectId} } = require('mongoose')
 const Restaurant = require('./restaurant')
+const {Email} = require('plates-commons/utils')
 
 
 module.exports = new Schema({
@@ -21,7 +22,7 @@ module.exports = new Schema({
     },
 
     password:{
-        tpye: String,
+        type: String,
         required: true
     },
 
@@ -30,6 +31,6 @@ module.exports = new Schema({
         ref: 'Plate'
     },
 
-    restaurant: Restaurant
+    restaurant: {type: ObjectId, ref: 'Restaurant'}
     
 })

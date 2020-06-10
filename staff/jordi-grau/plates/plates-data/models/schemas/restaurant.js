@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose')
+const { Schema, SchemaTypes: {ObjectId} } = require('mongoose')
 const { Menu } =require ('.')
 const { utils: { Email } } = require('plates-commons')
 
@@ -33,5 +33,5 @@ module.exports = new Schema({
 
     // TODO mapLocation
 
-    menu: Menu
+    menu: {type: ObjectId, ref: 'Menu'}
 })
