@@ -1,7 +1,7 @@
 const { utils: { Email } } = require('takemytask-commons')
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
-const {coments} = require('./coments')
-const {rates} = require('./rates')
+const coments = require('./coments')
+const rates = require('./rates')
 
 module.exports = new Schema({
     name: {
@@ -31,12 +31,12 @@ module.exports = new Schema({
         required: true
     },
 
-    photo: {
-        type: Image,
-        //TODO UPLOAD A PHOTO AND MAKE IT REQUIRED
-    },
+    // photo: {
+    //     type: Image,
+    //     //TODO UPLOAD A PHOTO AND MAKE IT REQUIRED
+    // },
 
-    bankAccount : {
+    bankAcount : {
         type: String,
         require: true
     },
@@ -47,14 +47,14 @@ module.exports = new Schema({
     },
 
     pricingHour : {
-        type: String,
+        type: Number,
         require: true
     },
 
-    jobCategories : [{
+    jobCategories : {
         type: String,
         require: true
-    }],
+    },
 
     workingDistance : {
         type: Number,

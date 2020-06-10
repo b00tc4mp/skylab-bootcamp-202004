@@ -2,6 +2,7 @@ module.exports = {
     user: require('./user'),
     worker: require('./worker'),
     chat: require('./chat'),
-    idChat: require('./idChat'),
-    contract: require('./contract')
+    rates: require('./rates'),
+    contract: require('./contract'),
+    coments: require('./coments')
 }
