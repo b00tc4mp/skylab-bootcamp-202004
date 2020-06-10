@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap')
+    
+* 
+    box-sizing: border-box
+    margin: 0
+    padding: 0
+=color()
+    color: white
+    align-self: center
+    font-family: Raleway
+    font-size: 1.5rem
+    text-shadow: 2px 2px black
+    text-align: center
+
+=buttons()
+    width: 16vw
+    border-radius: 10%
+    padding: 5px
+    background: none
+    border: 2px solid white
+    
+.landing
+    height: 100vh
+    width: 100vw
+    background-image: url(./images/blueprint-background.jpg)
+    display: inline-flex
+    flex-direction: column
+    align-items: center
+    justify-content: space-evenly
+    &__logo
+        height: 40%
+        width: auto
+        justify-self: flex-start
+        top: 1px
+    &__logo > img
+        height: 90%
+        width: auto
+    &__description
+        width: 80%
+        height: 30%
+        text-align: center
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: baseline
+        &-text
+            +color()
+    &__description-img
+        height: auto
+        width: 15%
+        align-self: center
+    &__description-img>img
+        width: 100%
+        height: auto
+        transform: rotate(90deg)
+    &__footer
+        display: grid
+        justify-items: center
+        grid-template-columns: 1fr 1fr 1fr
+        grid-template-rows: 1fr
+        gap: 1px 1px
+        grid-template-areas: "register . login"
+    &__footer-register  
+            grid-area: register 
+            +buttons()
+            +color()
+    &__footer-login  
+            grid-area: login 
+            +buttons()
+            +color()
+
+
+
+
