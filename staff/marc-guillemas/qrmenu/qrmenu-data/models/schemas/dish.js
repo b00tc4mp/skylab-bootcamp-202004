@@ -16,10 +16,10 @@ module.exports = new Schema ({
         required: true
     },
 
-    qty: {
-        type: Number,
-        required: true
-    },
+    // qty: {
+    //     type: Number,
+    //     required: true
+    // },
     
     tags: [{
         type: String,

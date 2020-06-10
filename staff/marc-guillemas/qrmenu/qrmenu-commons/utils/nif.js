@@ -1,6 +1,6 @@
 const NIF_REGEX = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$/i;
 
-debugger
+
 const NIF = {
     
     isNIF(nif) {
@@ -9,7 +9,7 @@ const NIF = {
 }
 
 NIF.validate = function (nif) {
-    debugger
+  
     if (!this.isNIF(nif)) throw new Error(`${nif} is not a NIF`)
 }.bind(NIF)
 

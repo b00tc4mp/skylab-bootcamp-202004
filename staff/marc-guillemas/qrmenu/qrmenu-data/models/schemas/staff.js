@@ -10,14 +10,14 @@ module.exports = new Schema ({
         type: String,
         required: true
     },
-
+    
+    role: {
+        type: String,
+        enum: ["owner", "chef", "waiter"]
+    },
     password: {
         type: String,
         required: true
-    },
-
-    roles: {
-        type: String,
-        enum: ["owner", "chef", "waiter"]
     }
+
 })

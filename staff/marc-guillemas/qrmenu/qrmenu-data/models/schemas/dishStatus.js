@@ -7,7 +7,7 @@ module.exports = new Schema ({
     },
     status: {
         type: String,
-        enum: ["ordered", "cooking", "served"],
+        enum: ["ordered", /* "cooking", */ "served"],
         default: "ordered"
     },
     orderedDate: {

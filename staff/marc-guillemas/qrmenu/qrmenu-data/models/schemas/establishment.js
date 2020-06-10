@@ -2,7 +2,7 @@ const { Schema } = require('mongoose')
 const { utils: { Email, NIF } } = require('qrmenu-commons')
 const dish = require('./dish')
 const order = require('./order')
-const user = require('./user')
+const staff = require('./staff')
 
 module.exports = new Schema ({
     
@@ -37,6 +37,6 @@ module.exports = new Schema ({
     orders: [order],
 
 
-    staff: [user]
+    staff: [staff]
 
 })

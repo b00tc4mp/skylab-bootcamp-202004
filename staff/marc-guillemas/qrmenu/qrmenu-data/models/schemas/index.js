@@ -1,5 +1,5 @@
 module.exports = {
-    user: require('./user'),
+    staff: require('./staff'),
     establishment: require('./establishment'),
     dish: require('./dish'),
     order: require('./order'),
