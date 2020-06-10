@@ -1,3 +1,4 @@
 module.exports = {
-    term: require('./term')
+    term: require('./term'),
+    admin: require('./admin')
 }
