@@ -8,7 +8,7 @@ const { models: { Message, Cohousing } } = require('coohappy-data')
 module.exports = ((userId, singleMessage, date) => {
 
     String.validate.notVoid(singleMessage)
-    if (typeof date !== 'object' ) throw new TypeError(`${date} is not a Date`)
+    String.validate.notVoid(date)
     String.validate.notVoid(userId)
 
     return (async () => {

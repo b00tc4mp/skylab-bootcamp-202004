@@ -33,7 +33,7 @@ describe('logic - udpate-cohousing', () => {
         accessCode = randomAccessCode(name)
 
         message = `message-${random()}`
-        date = new Date
+        date = (new Date).toString()
 
         hash = await bcrypt.hash(password, 10)
         const user = await User.create({ name, surname, email, password: hash })
@@ -82,7 +82,7 @@ describe('logic - udpate-cohousing', () => {
 
             expect(() => sendMessage(userId, true, date)).to.throw(TypeError, 'true is not a string')
             expect(() => sendMessage(2, message, date)).to.throw(TypeError, '2 is not a string')
-            expect(() => sendMessage(userId, message, 'hola')).to.throw(TypeError, 'hola is not a Date')
+            expect(() => sendMessage(userId, message, undefined)).to.throw(TypeError, 'undefined is not a string')
         })
     })
 
