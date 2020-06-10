@@ -1,0 +1,15 @@
+.plane-builder {
+  position: relative;
+  display: flex;
+}
+.plane-builder__plane {
+  background-image: url(../images/blueprint-background.jpg);
+}
+.plane-builder__item {
+  flex: 1;
+  border: 1px solid #445DF9;
+  border-left: none;
+  background: #445DF9;
+}
+
+/*# sourceMappingURL=PlaneBuilder.css.map */
