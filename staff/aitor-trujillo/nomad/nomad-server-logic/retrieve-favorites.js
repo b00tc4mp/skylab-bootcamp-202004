@@ -1,23 +1,20 @@
 require('nomad-commons/polyfills/string')
+const { errors: { UnexistenceError } } = require('nomad-commons')
+const { models: { User } } = require('nomad-data')
 
-const { models: { Workspace } } = require('nomad-data')
+module.exports = async (userId) => {
 
-module.exports = async (query) => {
+    String.validate.notVoid(userId)
 
-    String.validate.notVoid(query)
+    const userPopulated = await User.findOne({ _id: userId }).populate({
+        path: 'favorites',
+    })
+    if (!userPopulated) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
-    User
+    const favWorkspaces = userPopulated.favorites
 
-    const workspaces = await Workspace.find({
-        $or: [
-            { 'address.city': { $regex: `.*${query}.*` } },
-            { 'address.country': { $regex: `.*${query}.*` } },
-            { name: { $regex: `.*${query}.*` } }, { phone: { $regex: `.*${query}.*` } }
-        ]
-    }).lean();
-    // const workspaces = await Workspace.find({ name: { $regex: `.*${query}.*` } }).lean();
+    if (!favWorkspaces.length) throw new Error("You don't have favorite workspaces :(")
 
-    if (!workspaces.length) throw new Error(`no matchings for "${query}"`)
-
-    return workspaces
+    return favWorkspaces
 }
+

@@ -26,11 +26,20 @@ module.exports = new Schema({
     photo: {
         type: String // TODO review this check npm
     },
-    activeBookingsCount: Number,
-    workspacesVisitedCount: Number,
-    workspacesPublishedCount: Number,
+    activeBookingsCount: {
+        type: Number,
+        default: 0
+    },
+    workspacesVisitedCount: {
+        type: Number,
+        default: 0
+    },
+    workspacesPublishedCount: {
+        type: Number,
+        default: 0
+    },
     favorites: [{
-        id: ObjectId,
+        type: ObjectId,
         ref: 'Workspace'
     }],
     userWorkspaces: [{

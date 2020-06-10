@@ -6,9 +6,14 @@ module.exports = async (workspaceId) => {
 
     String.validate.notVoid(workspaceId)
 
-    const workspaceFound = await Workspace.findById(workspaceId).lean()
+    const workspaceFound = await Workspace.findOne({ _id: workspaceId }).populate({
+        path: 'reviews',
+        populate: { path: 'user', select: 'name' },
+        populate: { path: 'user', select: 'surname' }
+    })
 
     if (!workspaceFound) throw new Error(`workspace with id ${workspaceId} does not exist`)
 
     return workspaceFound
 }
+

@@ -2,18 +2,19 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 
-const retrieveWorkspaceById = require('./retrieve-workspace-by-id')
+const searchFavorites = require('./retrieve-favorites')
 const { random } = Math
 const { expect } = require('chai')
 require('nomad-commons/polyfills/json')
 const { mongoose, models: { Workspace, User } } = require('nomad-data')
 
-describe('logic - create workspace', () => {
+describe('logic - search in user favorites', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let workspaceRandom = {}
     let userName, surname, email, password, userId
     let workspaceId
+
 
     beforeEach(async () => {
 
@@ -47,16 +48,29 @@ describe('logic - create workspace', () => {
             capacity: random(),
         }
 
-        await Workspace.create(workspaceRandom)
-            .then(({ id }) => { workspaceId = id })
+        const workspace = await Workspace.create(workspaceRandom)
+
+        workspaceId = workspace.id
+
+        const user = await User.findById(userId)
+        user.favorites.push(workspaceId)
+        await user.save()
+        return
+
+
     })
 
     it('should succeed on valid workspaceId', async () => {
-        const workspace = await retrieveWorkspaceById(workspaceId)
+        const result = await searchFavorites(userId, 'name')
 
-        expect(workspace).to.exist
+        expect(result).to.exist
+        debugger
+
+        const [workspace] = result
+        debugger
 
         expect(workspace.name).to.equal(workspaceRandom.name)
+        expect(workspace.category).to.equal(workspaceRandom.category)
         expect(workspace.price.amount).to.equal(workspaceRandom.price.amount)
         expect(workspace.price.term).to.equal(workspaceRandom.price.term)
         expect(workspace.address.street).to.equal(workspaceRandom.address.street)

@@ -20,6 +20,7 @@ describe('logic - create workspace', () => {
 
         workspaceRandom = {
             name: `name-${random()}`,
+            category: 'cowork',
             price: { amount: random() + 100, term: 'month' },
             address: { street: `${random()} st`, city: `${random()} city`, country: `${random()} country` },
             geoLocation: { coordinates: [random(), random()] },

@@ -2,13 +2,13 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 
-const retrieveWorkspaceById = require('./retrieve-workspace-by-id')
+const addToFavorites = require('./add-to-favorites')
 const { random } = Math
 const { expect } = require('chai')
 require('nomad-commons/polyfills/json')
 const { mongoose, models: { Workspace, User } } = require('nomad-data')
 
-describe('logic - create workspace', () => {
+describe('logic - place review in workspace', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let workspaceRandom = {}
@@ -52,24 +52,15 @@ describe('logic - create workspace', () => {
     })
 
     it('should succeed on valid workspaceId', async () => {
-        const workspace = await retrieveWorkspaceById(workspaceId)
+        const result = await addToFavorites(userId, workspaceId)
 
-        expect(workspace).to.exist
+        expect(result).to.be.undefined
 
-        expect(workspace.name).to.equal(workspaceRandom.name)
-        expect(workspace.price.amount).to.equal(workspaceRandom.price.amount)
-        expect(workspace.price.term).to.equal(workspaceRandom.price.term)
-        expect(workspace.address.street).to.equal(workspaceRandom.address.street)
-        expect(workspace.address.city).to.equal(workspaceRandom.address.city)
-        expect(workspace.address.country).to.equal(workspaceRandom.address.country)
-        expect(workspace.geoLocation.coordinates[0]).to.equal(workspaceRandom.geoLocation.coordinates[0])
-        expect(workspace.photos[0]).to.equal(workspaceRandom.photos[0])
-        expect(workspace.features.wifi).to.equal(workspaceRandom.features.wifi)
-        expect(workspace.features.parking).to.equal(workspaceRandom.features.parking)
-        expect(workspace.features.coffee).to.equal(workspaceRandom.features.coffee)
-        expect(workspace.features.meetingRooms).to.equal(workspaceRandom.features.meetingRooms)
-        expect(workspace.description).to.equal(workspaceRandom.description)
-        expect(workspace.capacity).to.equal(workspaceRandom.capacity)
+        const workspace = await User.findOne({ _id: userId })
+        const { favorites } = workspace
+        const [favorite] = favorites
+
+        expect(favorite.toString()).to.equal(workspaceId)
     })
 
     afterEach(() => User.deleteMany().then(() => Workspace.deleteMany()))

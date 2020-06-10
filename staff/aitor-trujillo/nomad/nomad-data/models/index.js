@@ -3,5 +3,6 @@ const schemas = require('./schemas')
 
 module.exports = {
     User: model('User', schemas.user),
-    Workspace: model('Workspace', schemas.workspace)
+    Workspace: model('Workspace', schemas.workspace),
+    Review: model('Review', schemas.review)
 }
