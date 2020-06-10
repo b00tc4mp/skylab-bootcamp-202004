@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Icon } from 're
 // import { createAppContainer } from 'react-navigation';
 // import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { Entypo } from '@expo/vector-icons';
-import { FontAwesome, AntDesign } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 import Landing from './app/screens/Landing'
 import Home from './app/screens/Home'
@@ -11,6 +11,10 @@ import Login from './app/screens/Login'
 import Register from './app/screens/Register'
 import CardDetails from './app/screens/CardDetails'
 import Profile from './app/screens/Profile'
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function () {
   const [view, setView] = useState('landing')
@@ -38,24 +42,20 @@ export default function () {
   }
 
   return (
-    // <View style={styles.container}>
-    //   <View style={styles.appheader}>
-    //     <Text style={styles.title}>Escape Me</Text>
-    //     <TouchableOpacity style={styles.logOut}>
-    //       <AntDesign name="logout" size={24} color="white" />
-    //     </TouchableOpacity>
-    //   </View>
-    //   <AppContainer />
-    // </View>
     <View style={styles.container}>
       {view === 'landing' && <Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister} />}
       {view === 'login' && <Login onRegister={handleGoToRegister} onHome={handleGoToHome} handleToken={handleToken} />}
       {view === 'register' && <Register onLogin={handleGoToLogin} />}
-      {view === 'home' && <Home onLogOut={handleLogOut} />}
+      {view != 'landing' && view != 'login' && view != 'register' &&
+        <NavigationContainer>
+          <MyTabs />
+        </NavigationContainer>}
     </View>
+
   );
 
 }
+
 const styles = StyleSheet.create({
   appheader: {
     width: '100%',
@@ -78,64 +78,57 @@ const styles = StyleSheet.create({
   }
 })
 
-// class NotificationsScreen extends React.Component {
-//   render() {
-//     return (
-//       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' }}>
-//         <Text> This is my Notifications screen </Text>
-//       </View>
-//     );
-//   }
-// }
+const Tab = createMaterialBottomTabNavigator();
 
-// const bottomTabNavigator = createBottomTabNavigator(
-//   {
-//     Home: {
-//       screen: Home,
-//       navigationOptions: {
-//         tabBarIcon: ({ tintColor }) => (
-//           <Icon name="home" size={25} color={tintColor} />
-//         )
-//       }
-//     },
-//     Search: {
-//       screen: NotificationsScreen,
-//       navigationOptions: {
-//         tabBarIcon: ({ tintColor }) => (
-//           <AntDesign name="search1" size={24} color={tintColor} />)
-//       }
-//     },
-//     Pending: {
-//       screen: CardDetails,
-//       navigationOptions: {
-//         tabBarIcon: ({ tintColor }) => (
-//           <Entypo name="list" size={24} color={tintColor} />
-//         )
-//       }
-//     },
-//     Follow: {
-//       screen: CardDetails,
-//       navigationOptions: {
-//         tabBarIcon: ({ tintColor }) => (
-//           <AntDesign name="adduser" size={24} color={tintColor} />
-//         )
-//       }
-//     },
-//     Profile: {
-//       screen: Profile,
-//       navigationOptions: {
-//         tabBarIcon: ({ tintColor }) => (
-//           <Icon name="user" size={25} color={tintColor} />
-//         )
-//       }
-//     },
-//   },
-//   {
-//     initialRouteName: 'Home',
-//     tabBarOptions: {
-//       activeTintColor: '#4ecdc4'
-//     }
-//   }
-// );
+function MyTabs() {
+  return (
+    <Tab.Navigator
+      initialRouteName="Home"
+      activeColor="white"
+      labelStyle={{ fontSize: 12 }}
+      barStyle={{ backgroundColor: "#4ecdc4" }}
 
-// const AppContainer = createAppContainer(bottomTabNavigator);
+    >
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="CardDetails"
+        component={CardDetails}
+        options={{
+          tabBarLabel: 'CardDetails',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="bell" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Card"
+        component={CardDetails}
+        options={{
+          tabBarLabel: 'CardDetails',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="bell" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="account" color={color} size={26} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
