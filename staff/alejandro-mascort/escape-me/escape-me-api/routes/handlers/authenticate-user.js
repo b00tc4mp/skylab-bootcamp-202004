@@ -2,7 +2,7 @@ const { env: { SECRET } } = process
 
 const { authenticateUser } = require('escape-me-server-logic')
 const { handleError } = require('../../helpers')
-const { utils: { jwtPromised } } = require('escape-me-commons')
+const { utils: { jwtPromised } } = require('escape-me-node-commons')
 
 module.exports = (req, res) => {
     const { body: { email, password } } = req

@@ -14,17 +14,6 @@ export default function Login({ onRegister }) {
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
 
-    function handleLogin() {
-        (async () => {
-            try {
-                const token = await authenticateUser(email, password)
-                console.log(token)
-            } catch (error) {
-                console.error(error.message)
-            }
-        })()
-    }
-
     return (
         <ImageBackground style={styles.container} source={require('../assets/puzzle.jpg')}>
             <Image style={styles.logo} source={require('../assets/logo.svg')}></Image>
@@ -34,8 +23,8 @@ export default function Login({ onRegister }) {
             <AppTextInput placeholder="Password"
                 autoCapitalize="none"
                 autoCorrect={false} icon="lock" secureTextEntry
-                textContentType="password" onChange={text => console.log(text)} />
-            <AppButton title="Login" onPress={handleLogin}></AppButton>
+                textContentType="password" onChange={text => setPassword(text)} />
+            <AppButton title="Login" onPress={() => console.log('tapped')}></AppButton>
             <AppButton style={styles.register} title='Register' color='#4ecdc4' />
         </ImageBackground>
     );

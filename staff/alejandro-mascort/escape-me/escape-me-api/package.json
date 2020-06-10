@@ -15,6 +15,7 @@
     "dotenv": "^8.2.0",
     "escape-me-commons": "file:../escape-me-commons",
     "escape-me-data": "file:../escape-me-data",
+    "escape-me-node-commons": "file:../escape-me-node-commons",
     "escape-me-server-logic": "file:../escape-me-server-logic",
     "jsonwebtoken": "^8.5.1"
   },
