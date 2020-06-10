@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const { models: {Term}, mongoose } = require('..')
-const { errors: { DuplicityError } } = require('../misc-commons')
+const { errors: { DuplicityError } } = require('../commons')
 const MONGODB_URL = "mongodb://localhost:27017/symptomiser"
 
 try{
@@ -22,6 +22,7 @@ try{
                         })
                         .then(() => {})
                         .catch(error => {throw error})
+                        .finally(mongoose.disconnect)
                 })
             })
         })
