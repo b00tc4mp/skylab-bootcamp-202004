@@ -13,7 +13,7 @@ const { errors: { VoidError } } = require('coohappy-commons')
 
 let name, surname, email, password, hash, userId, nameCohousing, street, number, city, accessCode, message, date
 
-describe('logic - udpate-cohousing', () => {
+describe('logic - send-message', () => {
 
     before(() => mongoose.connect(MONGODB_URL))
 

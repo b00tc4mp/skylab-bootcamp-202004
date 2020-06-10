@@ -11,12 +11,12 @@ module.exports = (name, address, userId) => {
     String.validate.notVoid(userId)
     const members = []
 
-    return (async () => { 
+    return (async () => {
         const [user, cohousing] = await Promise.all([
             User.findById(userId),
-            Cohousing.findOne({author: userId})
+            Cohousing.findOne({ author: userId })
         ])
-        
+
         if (cohousing) throw new DuplicityError(`user: ${user.name} ${user.surname} already create an cohousing`)
         if (!user) throw new UnexistenceError(`user does not exists`)
 
@@ -24,8 +24,8 @@ module.exports = (name, address, userId) => {
 
         members.push(user)
 
-        await Cohousing.create({ author: userId, name, address, members, accessCode })
+        const newCohousing = await Cohousing.create({ author: userId, name, address, members, accessCode })
 
-        await User.updateOne({role: 'admin'})
+        await User.updateOne({ role: 'admin', cohousing: newCohousing._id})
     })()
 }

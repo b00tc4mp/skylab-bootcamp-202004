@@ -54,9 +54,11 @@ describe('logic - register cohousing', () => {
                     expect(cohousing.address.number).to.equal(number)
                     expect(cohousing.address.city.toString()).to.equal(city)
                     return User.findById(userId)
-                })
-                .then((user) => {
-                    expect(user.role).to.equal('admin')
+                    .then((user) => {
+                        expect(user.role).to.equal('admin')
+                        expect(user.cohousing).to.exist
+                        expect(user.cohousing.toString()).to.equal(cohousing._id.toString())
+                    })
                 })
         )
 })
