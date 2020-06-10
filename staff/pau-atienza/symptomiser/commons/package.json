@@ -1,7 +1,6 @@
 {
-  "name": "misc-commons",
+  "name": "commons",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,5 +15,6 @@
     "chai": "^4.2.0",
     "mocha": "^7.2.0",
     "xhr2": "^0.2.0"
-  }
+  },
+  "description": ""
 }
