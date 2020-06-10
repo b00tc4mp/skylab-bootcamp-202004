@@ -1,3 +1,8 @@
+
+require('termometro-commons/polyfills/string')
+const { utils: { Email, call } } = require('termometro-commons')
+const context = require('./context')
+
 /**
  * Checks user credentials.
  * 
@@ -9,16 +14,13 @@
  * @throws {TypeError} If any of the parameters does not match the corresponding type.
  * @throws {Error} If e-mail does not match the expected format.
  */
-require('termometro-commons/polyfills/string')
-const { utils: { Email, call } } = require('termometro-commons')
-const context = require('./context')
 
 module.exports = function (email, password) {
     Email.validate(email)
 
     String.validate.notVoid(password)
 
-    return call('GET', `http://localhost:8080/api/users/auth`,
+    return call('POST', `${this.API_URL}/users/auth`,
         `{ "email": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json' })
         .then(({ status, body }) => {

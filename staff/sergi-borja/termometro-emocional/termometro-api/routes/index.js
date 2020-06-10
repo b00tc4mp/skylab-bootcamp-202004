@@ -13,7 +13,7 @@ const api = new Router()
 
 api.post('/users', parseBody, registerUser)
 
-api.get('/users/auth', parseBody, authenticateUser)
+api.post('/users/auth', parseBody, authenticateUser)
 
 api.get('/users', verifyExtractJwt, retrieveUser)
 

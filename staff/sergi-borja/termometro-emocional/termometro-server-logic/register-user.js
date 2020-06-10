@@ -4,7 +4,7 @@ const { errors: {DuplicityError}, utils: {Email}} = require('termometro-commons'
 const { models: { User } } = require('termometro-data')
 const bcrypt = require('bcryptjs')
 
-module.exports = (name, surname, age, sexo, email, password) => {
+module.exports = (name, surname, age, sex, email, password) => {
     String.validate.notVoid(name)
     String.validate.notVoid(surname)
     String.validate.notVoid(email)
@@ -18,6 +18,6 @@ module.exports = (name, surname, age, sexo, email, password) => {
 
         const hash = await bcrypt.hash(password, 10)
 
-        await User.create({name, surname, age, sexo, email, password: hash})
+        await User.create({name, surname, age, sex, email, password: hash})
     })()
 }

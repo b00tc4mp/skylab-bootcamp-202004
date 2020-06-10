@@ -17,7 +17,7 @@ function Login({onLogin}) {
 
     try {
       authenticateUser(email, password)
-        .then(()=> onLogin)
+        .then((token)=> onLogin(token))
         .catch(error => console.log(error))
     } catch (error) {
       
@@ -31,7 +31,7 @@ function Login({onLogin}) {
       <img src={logo} className='loginContainer__logo'></img>
       <h1 className='loginContainer__title'>El termometro del autoestima</h1>
         <span className='loginContainer__loginText'>Alguien de mi familia ya me ha registrado:</span>
-      <form onSubmit={()=>handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <input type="email" name="email" className='loginContainer__emailInput' placeholder='Email' required></input>
         <input type="password" name="password" className='loginContainer__passInput' placeholder='Contraseña' required minLength="8"></input>
         <button className='loginContainer__loginButton'>

@@ -17,7 +17,7 @@ module.exports = new Schema({
         required: true
     },
     
-    sexo: {
+    sex: {
         type: String,
         required: true
     },
