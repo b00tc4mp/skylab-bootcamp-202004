@@ -12,7 +12,6 @@ const { models: { Temperature,User } } = require('aquaponics-data')
 const { errors: { CredentialsError, UnexistenceError } } = require('aquaponics-commons')
 
 module.exports = userId => {
-    debugger
     String.validate.notVoid(userId)
 
     return User.findById(userId)

@@ -24,7 +24,6 @@ module.exports = {
 
     createEvent:require('./create-event'),
     updateEvent:require('./update-event'),
-    deleteEvent:require('./delete-event'),
-    retrieveAllEvents:require('./retrieve-all-events'),
-    // retrieveEvent:require('./retrieve-event'),
+    removeEvent:require('./remove-event'),
+    retrieveEvents:require('./retrieve-events'),
 }

@@ -40,7 +40,6 @@ describe('logic - retrievePhs', () => {
         it('should array of phs', () => {
             return retrievePhs(userId)
                 .then(phs => {
-                    console.log(phs)
                     expect(phs).to.be.an.instanceOf(Array)
                     expect(phs.length).to.equal(3)
                     expect(phs[0].date).to.exist

@@ -14,10 +14,10 @@ require('aquaponics-commons/polyfills/string')
 require('aquaponics-commons/polyfills/json')
 
 const { errors: { UnexistenceError } } = require('aquaponics-commons')
-const { models: { User } } = require('aquaponics-data')
+const { models: { User, Event } } = require('aquaponics-data')
 
 module.exports = (date, description, userId, eventId) => {
-    Date.validate.notVoid(date)
+    if(!date) throw new Error (`date is empty or blank`)
     String.validate.notVoid(description)
     String.validate.notVoid(userId)
     String.validate.notVoid(eventId)
@@ -26,26 +26,27 @@ module.exports = (date, description, userId, eventId) => {
     String.validate(userId)
     String.validate(eventId)
 
-    return User.findById({ userId })
-        .then(user => {
-            if (user) throw new UnexistenceError(`user with id ${userId} does not exist`)
-            const { events } = user
-
-            const index =events.findIndex(eventId)
-            if(index<0) throw UnexistenceError (`event with id ${eventId} does not exist`)
-            
-            events.slice(0,[index])
-            
-            User.save()
+    return Event.findById(eventId )
+        .then(event => {
+            if (!event) throw new UnexistenceError(`event with id ${eventId} does not exist`)
+            return User.findById(userId)
         })
+        .then(user => {
+            if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
+            
+            const {events} = user
 
+            user.events = events.filter(event=> event.toString() !== eventId)
+          
+            return user.save()
+        })
+        .then(()=>{Event.findByIdAndDelete({eventId})})
         .then(() => { })
-
 }
 
 /**
  * @promise returns :
- * @return {UnexistenceError} if userid passed does not match one in data base.
+ * @return {UnexistenceError} if userid/eventid passed does not match one in data base.
  * @return {Error} It may receive an error in case remote logic fails or there is a network problem.
  * @return empty if every succeded.
  *

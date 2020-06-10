@@ -1,9 +1,8 @@
 /**
- * should retireve users events using by eventId and his own userId
+ * should retrieve user's events by his own userId.
  * 
  * @param {string} description user's input of his event, should be string.
  * @param {string} userId user's id, should be string.
- * @param {string} eventId evnets id, should be string.
  * @param {date} date user's date for the event, should be a date.
  * @throws {TypeError} if users input are/is not matching the type needed.
  * @throws {VoidError} if users inputs doesnt exist.
@@ -14,31 +13,31 @@ require('aquaponics-commons/polyfills/string')
 require('aquaponics-commons/polyfills/json')
 
 const { errors: { UnexistenceError } } = require('aquaponics-commons')
-const { models: { User, Event } } = require('aquaponics-data')
+const { models: { User} } = require('aquaponics-data')
 
-module.exports = (date, description, userId, eventId) => {
-    Date.validate.notVoid(date)
+module.exports = (date, description, userId) => {
+    if (!date) throw new Error(`date is empty or blank`)
     String.validate.notVoid(description)
     String.validate.notVoid(userId)
-    String.validate.notVoid(eventId)
     Date.validate(date)
     String.validate(description)
     String.validate(userId)
-    String.validate(eventId)
 
-    return User.findById({ userId })
-        .then(user => {
-            if (user) throw new UnexistenceError(`user with id ${userId} does not exist`)
-            const { events } = user
-
-            return events
+    return User.findById(userId).populate('events').lean()
+        .then(allEvents => {
+            if (!allEvents) throw new UnexistenceError(`event with id ${eventId} does not exist`)
+            return allEvents = allEvents.map(event => {
+                event.id = event_.id
+                delete event._id
+                return event
+            })
         })
 }
 
 /**
  * @promise returns :
- * @return {UnexistenceError} if userid passed does not match one in data base.
+ * @return {UnexistenceError} if userid/eventid passed does not match one in data base.
  * @return {Error} It may receive an error in case remote logic fails or there is a network problem.
- * @return empty if every succeded.
+ * @return {Array} of events if succeded.
  *
  */

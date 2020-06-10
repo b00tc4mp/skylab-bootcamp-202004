@@ -1,9 +1,14 @@
-const { Schema } = require('mongoose')
+const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
 module.exports = new Schema({
+    createdBy: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
+    
     date: {
         type: Date,
-        ref: 'Event',
         required: true
     },
 

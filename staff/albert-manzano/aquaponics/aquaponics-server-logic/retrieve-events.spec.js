@@ -1,17 +1,18 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
-const updateEvent = require('./update-event')
+const retrieveEvents = require('./retrieve-events')
 const { random } = Math
 const { expect } = require('chai')
 require('aquaponics-commons/polyfills/json')
 const { mongoose, models: { User, Event } } = require('aquaponics-data')
 
 
-describe('logic - updateEvent', () => {
+describe('logic - retrieveEvents', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let userId, eventId, name, surname, email, password, role, confirmed, status, phone, description, date
+    let userId, name, surname, email, password, role, confirmed, status, phone
+    let description1, description2, date1, date2, eventId, eventId1, eventId2
 
     beforeEach(() =>
         User.deleteMany()
@@ -23,25 +24,33 @@ describe('logic - updateEvent', () => {
                 role = "user"
                 status = "enable"
                 phone = random()
-                description = "hello world"
                 date = new Date()
-                newDate = new Date()
-                newDescription = "hola mundo"
+                date1 = new Date()
+                date2 = new Date()
+                description = "hello world"
+                description1 = "hola mundo"
+                description2 = "hola mon"
             })
     )
 
     describe('when user already exists', () => {
         beforeEach(() => {
-            debugger
             return User.create({ name, surname, email, password, role, confirmed, status, phone, password })
-                .then(result => userId = result.id)
-                .then(()=> Event.create({ createdBy: userId , date, description}))
-                .then(event => eventId = event.id)
-                .then(() => User.findByIdAndUpdate(userId, { $addToSet: { events: eventId } }))
+                .then(([result]) => userId = result.id)
+                .then(() => {
+                    return Promise.all([
+                        Event.create({ createdBy: userId, date, description }),
+                        Event.create({ createdBy: userId, date: date1, description: description1 }),
+                        Event.create({ createdBy: userId, date: date2, description: description2 }),
+                    ])
+                        .then(([, result]) => eventId = result.id)
+                        .then(([, , result]) => eventId1 = result.id)
+                        .then(([, , , result]) => eventId2 = result.id)
+                })
         })
 
         it('should upadate event on proper data', () => {
-            return updateEvent(newDate, newDescription, userId, eventId)
+            return retrieveEvents(date, description, userId)
                 .then(() => User.find().populate('events'))
                 .then(users => {
                     expect(users).to.have.lengthOf(1)
@@ -59,15 +68,14 @@ describe('logic - updateEvent', () => {
                     expect(user.events).to.exist
                     const { events } = user
                     expect(events).to.exist
-                    const [event] = events
-                    expect(events.length).to.equal(1)
-                    expect(event.date).to.exist
-                    expect(event.date).to.be.an.instanceOf(Date)
-                    expect(event.date).to.deep.equal(newDate)
-                    expect(event.description).to.exist
-                    expect(event.description).to.be.a('string')
-                    expect(event.description).to.equal(newDescription)
-                    expect(event._id).to.exist
+                    expect(events.length).to.equal(3)
+                    expect(events[0].date).to.exist
+                    expect(events[0].date).to.be.an.instanceOf(Date)
+                    expect(events[0].date).to.deep.equal(date)
+                    expect(events[0].description).to.exist
+                    expect(events[0].description).to.be.a('string')
+                    expect(events[0].description).to.equal(description)
+                    expect(events[0]._id).to.exist
                 })
         })
     })
@@ -76,52 +84,41 @@ describe('logic - updateEvent', () => {
 
         it('should fail on wrong input', () => {
             expect(() => {
-                updateEvent(true, newDescription, userId, eventId)
+                retrieveEvents(true, description, userId)
             }).to.throw(TypeError, `true is not a date`)
 
             expect(() => {
-                updateEvent(undefined, newDescription, userId, eventId)
+                retrieveEvents(undefined, description, userId)
             }).to.throw(Error, `date is empty or blank`)
 
             expect(() => {
-                updateEvent(9, newDescription, userId, eventId)
+                retrieveEvents(9, description, userId)
             }).to.throw(TypeError, `${'9'} is not a date`)
 
             expect(() => {
-                updateEvent(newDate, true, userId, eventId)
+                retrieveEvents(date, true, userId)
             }).to.throw(TypeError, `${'true'} is not a string`)
 
             expect(() => {
-                updateEvent(newDate, undefined, userId, eventId)
+                retrieveEvents(date, undefined, userId)
             }).to.throw(TypeError, `${'undefined'} is not a string`)
 
             expect(() => {
-                updateEvent(newDate, 9, userId, eventId)
+                retrieveEvents(date, 9, userId)
             }).to.throw(TypeError, `${'9'} is not a string`)
 
             expect(() => {
-                updateEvent(newDate, newDescription, true, eventId)
+                retrieveEvents(date, description, true)
             }).to.throw(TypeError, `${'true'} is not a string`)
 
             expect(() => {
-                updateEvent(newDate, newDescription, undefined, eventId)
+                retrieveEvents(date, description, undefined)
             }).to.throw(TypeError, `${'undefined'} is not a string`)
 
             expect(() => {
-                updateEvent(newDate, newDescription, 9, eventId)
+                retrieveEvents(date, description, 9)
             }).to.throw(TypeError, `${'9'} is not a string`)
 
-            expect(() => {
-                updateEvent(newDate, newDescription, userId, true)
-            }).to.throw(TypeError, `${'true'} is not a string`)
-
-            expect(() => {
-                updateEvent(newDate, newDescription, userId, undefined)
-            }).to.throw(TypeError, `${'undefined'} is not a string`)
-
-            expect(() => {
-                updateEvent(newDate, newDescription, userId, 9)
-            }).to.throw(TypeError, `${'9'} is not a string`)
         })
     })
 
@@ -129,34 +126,18 @@ describe('logic - updateEvent', () => {
         beforeEach(() => {
             it('should fail when creating event because user does not exist', () => {
                 return Event.deleteMany()
-                    .then(() => updateEvent(newDate, newDescription, userId, eventId))
+                    .then(() => retrieveEvents(date, description, userId))
                     .then(() => { throw new Error('should not reach this point') })
                     .catch(error => {
                         expect(error).to.be.exist
                         expect(error).to.be.an.instanceOf(Error)
-                        expect(error.message).to.equal(`event with id ${eventId} does not exist`)
+                        expect(error.message).to.equal(`event user id ${userId} does not exist`)
                     })
 
             })
         })
     })
 
-    describe('when user does not exists', () => {
-        beforeEach(() => {
-            it('should fail when creating event because user does not exist', () => {
-                return User.deleteMany()
-                    .then(() => updateEvent(newDate, newDescription, userId, eventId))
-                    .then(() => { throw new Error('should not reach this point') })
-                    .catch(error => {
-                        expect(error).to.be.exist
-                        expect(error).to.be.an.instanceOf(Error)
-                        expect(error.message).to.equal(`user with id ${userId} does not exist`)
-                    })
-
-            })
-        })
-
-    })
     afterEach(() => User.deleteMany())
 
     after(mongoose.disconnect)

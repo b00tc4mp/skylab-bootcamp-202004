@@ -24,7 +24,7 @@ describe('logic - confirm-user',()=>{
                 phone = random()
             })
     )
-            debugger
+            
     describe('when user exist', ()=>{
         beforeEach(()=>{
             const user= {name,surname,email,password,role,phone}

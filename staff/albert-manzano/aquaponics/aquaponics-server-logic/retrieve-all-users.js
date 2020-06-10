@@ -12,7 +12,6 @@ const { models: { User } } = require('aquaponics-data')
 const { errors: { CredentialsError, UnexistenceError } } = require('aquaponics-commons')
 
 module.exports = userId => {
-    debugger
     String.validate.notVoid(userId)
 
     return User.findById(userId)
@@ -25,7 +24,7 @@ module.exports = userId => {
                     allUsers = allUsers.map(user => {
                         delete user._id
                         delete user.password
-                        debugger
+                        
                         return user
                     })
                 )

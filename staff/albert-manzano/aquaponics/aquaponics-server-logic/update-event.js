@@ -14,34 +14,28 @@ require('aquaponics-commons/polyfills/string')
 require('aquaponics-commons/polyfills/json')
 
 const { errors: { UnexistenceError } } = require('aquaponics-commons')
-const { models: { User } } = require('aquaponics-data')
+const { models: { User,Event } } = require('aquaponics-data')
 
-module.exports = (date, description, userId, eventId) => {
-    Date.validate.notVoid(date)
-    String.validate.notVoid(description)
+module.exports = (newDate, newDescription, userId, eventId) => {
+    if(!newDate) throw new Error (`date is empty or blank`)
+    String.validate.notVoid(newDescription)
     String.validate.notVoid(userId)
     String.validate.notVoid(eventId)
-    Date.validate(date)
-    String.validate(description)
+    Date.validate(newDate)
+    String.validate(newDescription)
     String.validate(userId)
     String.validate(eventId)
 
-    return User.findById({ userId })
+    return User.findById( userId )
         .then(user => {
-            if (user) throw new UnexistenceError(`user with id ${userId} does not exist`)
-            const { events } = user
-
-            const index =events.findIndex(eventId)
-            if(index<0) throw UnexistenceError (`event with id ${eventId} does not exist`)
-            
-            events[index].description=description
-            events[index].date=date
-
-            User.save()
+            if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
+            return Event.findById(eventId)
         })
-
+        .then(event=>{ 
+            if(!event)throw new UnexistenceError(`event with id ${eventId} does not exist`)
+            return Event.findByIdAndUpdate(eventId,{$set:{date:newDate,description:newDescription}})
+        })
         .then(() => { })
-
 }
 
 /**

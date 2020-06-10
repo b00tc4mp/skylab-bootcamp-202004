@@ -23,19 +23,14 @@ module.exports = (date, description, userId) => {
     String.validate(description)
     String.validate(userId)
 
-    return User.findById({ userId })
+    return User.findById( userId )
         .then(user => {
-            if (user) throw new UnexistenceError(`user with e-mail ${userId} does not exist`)
-            const { events } = user
+            if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
-            const event= new Event(date,description)
-
-            events.push(event)
-
-            return user.save()
+            return Event.create({createdBy: userId, date, description})
         })
-        .then(() => { })
-
+        .then(event => User.findByIdAndUpdate(userId, {$addToSet: {events: event.id}}))
+        .then(() => {})
 }
 
 /**
