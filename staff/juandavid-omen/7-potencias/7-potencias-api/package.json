@@ -12,6 +12,7 @@
   "author": "anvidmen",
   "license": "ISC",
   "dependencies": {
+    "7-potencias-commons": "file:../7-potencias-commons",
     "7-potencias-data": "file:../7-potencias-data",
     "7-potencias-server-logic": "file:../7-potencias-server-logic",
     "body-parser": "^1.19.0",
