@@ -1,3 +1,3 @@
 module.exports = {
-    handleError: require('./handle-error')
+  handleError: require('./handle-error')
 }
