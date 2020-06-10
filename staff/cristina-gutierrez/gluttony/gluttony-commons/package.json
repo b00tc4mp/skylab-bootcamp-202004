@@ -1,5 +1,5 @@
 {
-  "name": "gluttony-client-logic",
+  "name": "gluttony-commons",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,11 +9,7 @@
   "author": "crispine",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.2",
-    "dotenv": "^8.2.0",
-    "gluttony-api": "file:../gluttony-api",
-    "gluttony-commons": "file:../gluttony-commons",
-    "uuid": "^8.1.0"
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "jest": "^26.0.1"
