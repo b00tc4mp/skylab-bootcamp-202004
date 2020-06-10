@@ -1,0 +1,54 @@
+.form
+    height: 93vh
+    display: flex
+    flex-flow: column
+    margin: auto
+    &__main
+        display: flex
+        flex-direction: column
+        align-items: center
+        button
+            padding: 0.5rem
+            color: white
+            margin: 0.2rem
+            border-radius: 1rem
+            background-color: #a45ba2
+            border: none
+            text-decoration: none
+            display: flex
+            align-items: center
+            justify-content: center
+            width: 5rem
+    &__title
+        text-align: center
+    &__element
+        display: flex
+        flex-flow: column
+        border-bottom: solid grey 0.1px
+        width: 98%
+        padding: 1%
+        justify-content: center
+        align-items: center
+        &--name
+            text-align: center
+            width: 100%
+            font-size: 1.2rem
+            margin-bottom: 0.5rem
+            margin-top: 0.5rem
+        &--input
+            width: 100%
+            border: solid 0.1px
+            height: 2.5rem  
+            text-align: center
+            text-align-last: center
+
+@media only screen and (min-width: 768px)
+    .form__element
+        flex-direction: row
+        &--name
+            width: 20%
+
+@media only screen and (min-width: 968px)
+    .form
+        width: 80%
+    
