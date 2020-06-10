@@ -1,6 +1,6 @@
-require ('misc-commons/polyfills/string')
-require('misc-commons/polyfills/json')
-const { utils: { Email }, errors:{ DuplicityError } } = require('misc-commons')
+require ('plates-commons/polyfills/string')
+require('plates-commons/polyfills/json')
+const { utils: { Email }, errors:{ DuplicityError } } = require('plates-commons')
 const { models: { User } } = require('plates-data')
 const bcrypt = require('bcryptjs')
 

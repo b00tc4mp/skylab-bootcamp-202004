@@ -3,6 +3,6 @@ module.exports = {
     restaurant: require('./restaurant'),
     plate: require('./plate'),
     menu: require('./menu'),
-    menuDaily: require('./menuDaily')
+    //  menuDaily: require('./menuDaily')
     
 }

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
-const { types: {ObjectId}, connect, disconnect} = mongoose
+const { Types: {ObjectId}, connect, disconnect} = mongoose
 
-module.exprots = {
+module.exports = {
     connect(url){
         return connect(url, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
     },

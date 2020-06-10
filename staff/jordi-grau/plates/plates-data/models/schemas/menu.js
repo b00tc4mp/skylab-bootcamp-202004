@@ -1,5 +1,6 @@
-const { mongoose } = require('mongoose')
-const plate = requiere('./plate')
+const { Schema } = require('mongoose')
+
+const plate = require('./plate')
 
 module.exports = new Schema ({
     plates:{
