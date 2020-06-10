@@ -5,7 +5,8 @@ module.exports = {
     registerCohousing: require('./register-coohounsing'),
     retrieveCohousing: require('./retrieve-cohousing'),
     updateUser: require('./update-user'),
-    updateCohousing: require('./update-cohousing')
+    updateCohousing: require('./update-cohousing'),
+    sendMessage: require('./send-message')
    
   
 }
