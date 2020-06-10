@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const { env: {  MONGODB_URL } } = process
 const { mongoose } = require('cook-wise-data')
-const retrieveFavorite = require('./retrieve-favorite')
+const retrieveFavorite = require('./retrieve-recipe')
 
 mongoose.connect(MONGODB_URL)
     .then(() => {

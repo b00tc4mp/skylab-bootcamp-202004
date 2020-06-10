@@ -9,7 +9,9 @@ const {
     searchRecipe,
     toogleFavorite,
     retrieveFavorite,
-    retrieveUser
+    retrieveUser,
+    toogleMenu,
+    retriveDay
 } = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
@@ -35,6 +37,10 @@ api.patch('/toogle',[parseBody,verifyExtractJwt],toogleFavorite)
 api.get('/retrievefavorites', verifyExtractJwt, retrieveFavorite)
 
 api.get('/users/retrieve', verifyExtractJwt, retrieveUser)
+
+api.patch('/tooglemenu',[parseBody,verifyExtractJwt],toogleMenu)
+
+api.get('/day',parseBody,verifyExtractJwt,retriveDay)
 
 module.exports = {
     api
