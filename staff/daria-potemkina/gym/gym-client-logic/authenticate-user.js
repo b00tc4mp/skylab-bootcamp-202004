@@ -11,13 +11,14 @@
  */
 require('gym-commons/polyfills/string')
 const { utils: { Email, call } } = require('gym-commons')
+const context = require('./context')
 
 module.exports = function (email, password) {
     Email.validate(email)
 
     String.validate.notVoid(password)
 
-    return call('POST', 'http://localhost:8080/api/users/auth',
+    return call('POST', `${this.API_URL}/users/auth`,
         `{ "email": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json' })
         .then(({ status, body }) => {
@@ -31,4 +32,4 @@ module.exports = function (email, password) {
                 throw new Error(error)
             }
         })
-}
+}.bind(context)

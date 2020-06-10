@@ -1,7 +1,8 @@
 require('gym-commons/polyfills/string')
 const { utils: { Email, call } } = require('gym-commons')
+const context = require('./context')
 
-module.exports = (name, surname, email, password) => {
+module.exports = function (name, surname, email, password) {
     String.validate(name)
     String.validate(surname)
 
@@ -9,7 +10,7 @@ module.exports = (name, surname, email, password) => {
 
     String.validate.lengthGreaterEqualThan(password, 8)
 
-    return call('POST', 'http://localhost:8080/api/users',
+    return call('POST', `${this.API_URL}/users`,
         `{ "name": "${name}", "surname": "${surname}", "email": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json' })
         .then(({ status, body }) => {
@@ -19,4 +20,4 @@ module.exports = (name, surname, email, password) => {
             }
             return
         })
-}
+}.bind(context)

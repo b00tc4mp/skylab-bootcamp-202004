@@ -5,7 +5,6 @@ const { env: { MONGODB_URL_TEST } } = process
 const registerUser = require('./register-user')
 const { random } = Math
 const { expect } = require('chai')
-require('gym-commons/polyfills/json')
 const { mongo } = require('gym-data')
 const bcrypt = require('bcryptjs')
 require('gym-commons/ponyfills/xhr')
@@ -18,7 +17,7 @@ describe('logic - register user', () => {
             users = connection.db().collection('users')
         }))
 
-    let name, surname, email, password
+    let name, surname, email, password, _name, _surname, _email, _password
 
     beforeEach(() =>
         users.deleteMany()
@@ -61,6 +60,78 @@ describe('logic - register user', () => {
                 })
         )
     })
+
+    it('should return a type error', () => {
+        _name = undefined
+        expect( () => {
+            registerUser(_name, surname, email, password)
+        }).to.throw(TypeError, `${_name} is not a string`)
+
+        _name = 123
+        expect( () => {
+            registerUser(_name, surname, email, password)
+        }).to.throw(TypeError, `${_name} is not a string`)
+
+        _name = true
+        expect( () => {
+            registerUser(_name, surname, email, password)
+        }).to.throw(TypeError, `${_name} is not a string`)
+
+        _surname = undefined
+        expect( () => {
+            registerUser(name, _surname, email, password)
+        }).to.throw(TypeError, `${_surname} is not a string`)
+
+        _surname = 123
+        expect( () => {
+            registerUser(name, _surname, email, password)
+        }).to.throw(TypeError, `${_surname} is not a string`)
+
+        _surname = false
+        expect( () => {
+            registerUser(name, _surname, email, password)
+        }).to.throw(TypeError, `${_surname} is not a string`)
+
+        _password = undefined
+        expect( () => {
+            registerUser(name, surname, email, _password)
+        }).to.throw(TypeError, `${_password} is not a string`)
+
+        _password= 123
+        expect( () => {
+            registerUser(name, surname, email, _password)
+        }).to.throw(TypeError, `${_password} is not a string`)
+
+        _password = false
+        expect( () => {
+            registerUser(name, surname, email, _password)
+        }).to.throw(TypeError, `${_password} is not a string`)
+    })
+
+    it('should return an error', () => {
+        _email = 'pepito'
+        expect( () => {
+            registerUser(name, surname, _email, password)
+        }).to.throw(Error, `${_email} is not an e-mail`)
+
+        _email= 'peito@mail'
+        expect( () => {
+            registerUser(name, surname, _email, password)
+        }).to.throw(Error, `${_email} is not an e-mail`)
+
+        _email = 'peito.com'
+        expect( () => {
+            registerUser(name, surname, _email, password)
+        }).to.throw(Error, `${_email} is not an e-mail`)
+
+        _password = '123'
+        expect( () => {
+            registerUser(name, surname, email, _password)
+        }).to.throw(Error, `${_password}" length is not greater or equal than 8`)
+
+    })
+
+
 
     afterEach(() => users.deleteMany())
 
