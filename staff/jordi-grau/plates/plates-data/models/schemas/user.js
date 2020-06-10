@@ -20,6 +20,11 @@ module.exports = new Schema({
         validate: [Email.validate, 'invalid email']
     },
 
+    password:{
+        tpye: String,
+        required: true
+    },
+
     following: {
         type: ObjectId, 
         ref: 'Plate'
