@@ -12,7 +12,7 @@ const { errors: { VoidError } } = require('coohappy-commons')
 
 let name, surname, email, password, hash, userId, nameCohousing, street, number, city, accessCode, newNameCohousing
 
-describe.only('logic - udpate-cohousing', () => {
+describe('logic - udpate-cohousing', () => {
 
     before(() => mongoose.connect(MONGODB_URL))
 
@@ -112,7 +112,7 @@ describe.only('logic - udpate-cohousing', () => {
 
     describe('sync errors', () => {
 
-        it('on wrong type ofe data', () => {
+        it('on wrong type of data', () => {
 
             expect(() => updateCohousing(userId, true)).to.throw(TypeError, 'true is not an object')
             expect(() => updateCohousing(true, { name: 'hola' })).to.throw(TypeError, 'true is not a string')
