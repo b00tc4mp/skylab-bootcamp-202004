@@ -1,6 +1,6 @@
 require('dotenv').config()
 const { env: { TEST_MONGOOSE_URL: MONGODB_URL } } = process
-const { mongoose, models: { User } } = require('misc-data')
+const { mongoose, models: { User } } = require('moove-it-data')
 
 const retrieveUser = require('./retrieve-user')
 const { random } = Math

@@ -1,11 +1,11 @@
 require('dotenv').config()
 const { env: { TEST_MONGOOSE_URL: MONGODB_URL } } = process
-const { mongoose, models: { User } } = require('misc-data')
+const { mongoose, models: { User } } = require('moove-it-data')
 
 const authenticateUser = require('./authenticate-user')
 const { random } = Math
 const { expect } = require('chai')
-const { errors:{UnexistenceError, CredentialsError} } = require('../misc-data/node_modules/misc-commons')
+const { errors:{UnexistenceError, CredentialsError} } = require('../moove-it-data/node_modules/moove-it-commons')
 const bcrypt = require('bcryptjs')
 
 describe('logic - authenticate user', () => {

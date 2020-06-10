@@ -1,7 +1,7 @@
-require('misc-commons/polyfills/string')
-require('misc-commons/polyfills/number')
-const { errors: {UnexistenceError}, utils: {Email}} = require('misc-commons')
-const { mongo } = require('misc-data')
+require('moove-it-commons/polyfills/string')
+require('moove-it-commons/polyfills/number')
+const { errors: {UnexistenceError}, utils: {Email}} = require('moove-it-commons')
+const { mongo } = require('moove-it-data')
 const { ObjectId } = mongo
 
 module.exports = (userId, productId, quantity) => {

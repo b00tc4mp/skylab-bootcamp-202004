@@ -1,10 +1,10 @@
-require('../../misc-data/data/node_modules/dotenv/types').config()
+require('../../moove-it-data/data/node_modules/dotenv/types').config()
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
-const { mongo } = require('../../misc-data/data')
+const { mongo } = require('../../moove-it-data/data')
 const updateUser = require('./update-user')
 const { random } = Math
 const { expect } = require('chai')
-const {errors: { UnexistenceError, CredentialsError, ForbiddenError }} = require('../../misc-data/data/node_modules/misc-commons')
+const {errors: { UnexistenceError, CredentialsError, ForbiddenError }} = require('../../moove-it-data/data/node_modules/moove-it-commons')
 
 
 describe.only('logic - update user', () => {

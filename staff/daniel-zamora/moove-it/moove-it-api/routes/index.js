@@ -1,7 +1,7 @@
 const { env: { SECRET } } = process
 
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, updateUser } = require('./handlers')
+const { registerUser, authenticateUser, retrieveUser, updateUser } = require('./user-handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
 const { handleError } = require('../helpers')

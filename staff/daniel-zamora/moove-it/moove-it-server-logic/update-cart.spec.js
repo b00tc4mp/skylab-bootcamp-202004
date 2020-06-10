@@ -1,6 +1,6 @@
-require('../misc-data/node_modules/dotenv/types').config()
+require('../moove-it-data/node_modules/dotenv/types').config()
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
-const { mongo } = require('../../misc-data/data')
+const { mongo } = require('../../moove-it-data/data')
 
 const updateCart = require('./update-cart')
 const { random } = Math

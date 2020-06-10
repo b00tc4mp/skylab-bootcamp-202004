@@ -1,4 +1,4 @@
-const { jwtPromised } = require('../../misc-data/node_modules/misc-commons/utils')
+const { utils: { jwtPromised } } = require('moove-it-commons')
 
 module.exports = (secret, errorHandler) =>
     (req, res, next) => {

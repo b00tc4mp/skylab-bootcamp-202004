@@ -1,5 +1,5 @@
-require('misc-commons/utils/polyfills/string')
-require('misc-commons/utils/polyfills/function')
+require('moove-it-commons/utils/polyfills/string')
+require('moove-it-commons/utils/polyfills/function')
 const { Email } = require('../utils')
 const { users, contacts } = require('../data')
 
