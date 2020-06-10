@@ -57,5 +57,24 @@ describe('logic - retrieve user', () => {
 
     afterEach(() => User.deleteMany())
 
+
+    it('should throw an error if userId its not an string', () => {
+        expect(function () {
+            retrieveUser(undefined)
+        }).to.throw(TypeError, 'undefined is not a string')
+    
+        expect(function () {
+            retrieveUser( 1)
+        }).to.throw(TypeError, '1 is not a string')
+    
+        expect(function () {
+            retrieveUser(null)
+        }).to.throw(TypeError, 'null is not a string')
+    
+        expect(function () {
+            retrieveUser(true)
+        }).to.throw(TypeError, 'true is not a string')
+    })    
+
     after(mongoose.disconnect)
 })

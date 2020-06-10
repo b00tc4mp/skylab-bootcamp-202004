@@ -14,7 +14,7 @@
     "mocha": "^7.2.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "npx mocha *.spec.js"
   },
   "keywords": [],
   "author": "",

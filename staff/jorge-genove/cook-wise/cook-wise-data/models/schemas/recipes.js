@@ -2,6 +2,8 @@ const { Schema } = require('mongoose')
 
 const { SchemaTypes: { ObjectId } } = require('mongoose')
 
+
+
 module.exports = new Schema({
     name: {
         type: String,
@@ -33,5 +35,7 @@ module.exports = new Schema({
     time: {
         type: Number,
         required: true
-    }
+    },
+
+    
 })
