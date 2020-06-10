@@ -1,5 +1,5 @@
 {
-  "name": "gluttony-server-logic",
+  "name": "gluttony-commons",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,11 +9,10 @@
   "author": "crispine",
   "license": "ISC",
   "dependencies": {
-    "gluttony-commons": "file:../gluttony-commons",
-    "gluttony-data": "file:../gluttony-data",
     "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
-    "jest": "^26.0.1"
+    "jest": "^26.0.1",
+    "xhr2": "^0.2.0"
   }
 }
