@@ -34,6 +34,11 @@ module.exports = new Schema({
         required: true
     },
 
+    category: {
+        type: String,
+        enum: ['cowork', 'coffee', 'library', 'shared']
+    },
+
     address: {
         type: {
             street: {

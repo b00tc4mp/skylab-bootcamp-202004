@@ -30,7 +30,8 @@ module.exports = new Schema({
     workspacesVisitedCount: Number,
     workspacesPublishedCount: Number,
     favorites: [{
-        id: ObjectId
+        id: ObjectId,
+        ref: 'Workspace'
     }],
     userWorkspaces: [{
         type: ObjectId,
