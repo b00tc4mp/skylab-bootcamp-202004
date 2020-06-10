@@ -3,7 +3,7 @@ require('dotenv').config()
 const { env: { MONGODB_URL } } = process
 const { mongoose } = require('data')
 
-const retrieveTerms = require('./retrieve-terms-by-HPO_id')
+const retrieveTerms = require('./retrieve-terms-by-id')
 
 console.debug('connecting to database')
 mongoose.connect(MONGODB_URL)

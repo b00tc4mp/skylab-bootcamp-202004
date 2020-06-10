@@ -1,7 +1,6 @@
 {
   "name": "server-logic",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "npx mocha *.spec.js",
@@ -23,5 +22,6 @@
     "data": "file:../data",
     "moca": "^0.4.3",
     "npx": "^10.2.2"
-  }
+  },
+  "description": ""
 }

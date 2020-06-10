@@ -4,7 +4,7 @@ const { expect } = require('chai')
 const { mongoose, models: { Term } } = require('data')
 const { errors: { UnexistenceError, VoidError } } = require('commons')
 
-const retrieveTerms = require('./retrieve-terms-by-HPO_id')
+const retrieveTerms = require('./retrieve-terms-by-id')
 
 describe('logic - retrieve-terms-by-HPO_id', () => {
     let HPO_id = "HP:0000010"
