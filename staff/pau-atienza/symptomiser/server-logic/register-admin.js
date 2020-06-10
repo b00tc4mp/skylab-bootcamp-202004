@@ -1,7 +1,7 @@
 require('commons/polyfills/string')
 require('commons/polyfills/json')
 const { utils: { Email }, errors: { DuplicityError } } = require('commons')
-const { models: { User } } = require('data')
+const { models: { Admin } } = require('data')
 const bcrypt = require('bcryptjs')
 
 module.exports = (username, email, password) => {
@@ -11,12 +11,12 @@ module.exports = (username, email, password) => {
     String.validate.notVoid(password)
 
     return (async () => {
-        const user = await User.findOne({ email })
+        const admin = await Admin.findOne({ email })
 
-        if (user) throw new DuplicityError(`${email} is already in use`)
+        if (admin) throw new DuplicityError(`${email} is already in use`)
 
         const hash = await bcrypt.hash(password, 10)
 
-        await User.create({ name, surname, email, password: hash })
+        await Admin.create({ username, email, password: hash })
     })()
 }
