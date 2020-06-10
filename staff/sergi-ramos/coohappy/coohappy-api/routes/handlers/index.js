@@ -7,7 +7,8 @@ module.exports = {
     updateUser: require('./update-user'),
     updateCohousing: require('./update-cohousing'),
     sendMessage: require('./send-message'),
-    retrieveMessages: require('./retrieve-messages')
+    retrieveMessages: require('./retrieve-messages'),
+    joinToCohousing: require('./join-to-cohousing')
    
   
 }
