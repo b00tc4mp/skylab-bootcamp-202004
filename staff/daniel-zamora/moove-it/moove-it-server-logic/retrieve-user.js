@@ -7,12 +7,15 @@ module.exports = (userId) => {
 
     return (async () => {
 
-        const user = await User.findOne({ _id: ObjectId(userId) })
+        const user = await User.findOne({ _id: ObjectId(userId) }, { __v: 0, planes: 0, password: 0 }).lean()
         
         if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
                 
-        const {name, surname, email} = user
-            
-        return {name, surname, email}
+        user.id = user._id.toString()
+        
+        delete user._id
+
+        return user
+
         })()
 } 

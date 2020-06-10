@@ -6,13 +6,14 @@ module.exports = new Schema({
         required: true
     },
 
-    scale:{
-        type: Number,
-        default: 1
-    },
+    // scale:{
+    //     type: Number,
+    //     default: 1, 
+    //     required: false
+    // },
 
     position: { 
-        type: [{x: Number, y: Number, z:Number}],
+        type: [Number],
         required: true,
         default: 0
     },
