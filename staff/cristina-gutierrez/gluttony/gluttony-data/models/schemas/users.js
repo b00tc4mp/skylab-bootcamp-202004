@@ -1,13 +1,7 @@
-
-
-
-
-
-
-const { Schema } = require('mongoose')
-const { utils: { Email } } = require('misc-commons')
-const productQuantity = require('./product-quantity')
-const order = require('./order')
+const { Schema } = require("mongoose")
+const { utils: { Email } } = require('gluttony-commons')
+const favorites = require('./favorites')
+const comments = require('./comments')
 
 module.exports = new Schema({
     name: {
@@ -32,9 +26,7 @@ module.exports = new Schema({
         required: true
     },
 
-    nickname: String,
+    favorites: [favorites],
 
-    cart: [productQuantity],
-
-    orders: [order]
+    comments: [comments]
 })

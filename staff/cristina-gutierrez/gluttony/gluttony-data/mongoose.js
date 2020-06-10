@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 
 const { Types: { ObjectId }, connect, disconnect } = mongoose
 
