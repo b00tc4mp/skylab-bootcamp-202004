@@ -21,7 +21,7 @@ module.exports = (userId,bookId) => {
     String.validate.notVoid(bookId)
 
     return (async () => {
-        const user = await User.findOne({ _id: userId })
+        const user = await User.findById(userId)
 
         if (!user) throw new UnexistenceError("This user doesn't exists")
    
@@ -29,7 +29,7 @@ module.exports = (userId,bookId) => {
         
         if (!book) throw new UnexistenceError("This book doesn't exists")
         
-        if(book.ownerId.toString() !== userId) throw new CredentialsError("You can`t delete this book because it not yours!")
+        if(book.ownerUserId.toString() !== userId) throw new CredentialsError("You can`t delete this book because it not yours!")
 
         await Book.findByIdAndRemove(bookId)
 

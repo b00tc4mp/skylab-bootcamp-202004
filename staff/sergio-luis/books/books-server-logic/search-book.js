@@ -25,14 +25,10 @@ module.exports = (userId, query) => {
 
         if (!user) throw new UnexistenceError("This user doesn't exists")
 
-        const books = Book.find({ title: { $regex: `${query}`, $options: 'i' } }, { __v: 0, description: 0, ownerId: 0 }).lean().sort({ title: 1 }).limit(10)
-        // const _books = books.map((book)=>{ // problems to eliminated de _id
-        //     book.id = book._id
-        //     delete book._id
-        // })
-       
-        if (typeof [books] === 'undefined') throw new UnexistenceError("This book doesn't exists")//??????
-        debugger
+        const books = await Book.find({ title: { $regex: `${query}`, $options: 'i' } }, { __v: 0, description: 0, ownerUserId: 0 }).lean().sort({ title: 1 }).limit(10)
+
+        if (!books.length) throw new UnexistenceError("This book doesn't exists")
+
         return await books
     })()
 }

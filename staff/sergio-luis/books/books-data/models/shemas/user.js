@@ -33,6 +33,10 @@ module.exports = new Schema({
 
     rating:[rating],
 
+    sendMessages:[{type: ObjectId, ref: 'Message'}],
+
+    receivedMessages:[{type: ObjectId, ref: 'Message'}],
+
     ratingAvg:{
         type: Number
     },

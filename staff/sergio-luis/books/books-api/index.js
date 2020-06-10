@@ -11,7 +11,7 @@ file.level = Logger.WARN
 console.level = Logger.DEBUG
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser,findBook,createBook,deleteBook,searchBook} = require('books-server-logic')
+const { registerUser, authenticateUser, retrieveUser,findBook,createBook,deleteBook,searchBook,searchUser,sendMessage,retrieveMessages,shareBook,listMyBooks,listShareBooks} = require('books-server-logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
@@ -36,7 +36,6 @@ try {
 
             app.use(cors)
 
-            // users
 
             app.post('/register', parseBody, (req, res) => {
                 const { body: { name, surname, email, password } } = req
@@ -121,7 +120,76 @@ try {
                     handleError(error, res)
                 }
             })
+            app.get('/search-user/:query?',parseBody, (req, res) => { 
+                const { params: { query:query}} = req
 
+                try {
+                   searchUser(query)
+                        .then((user) => res.status(201).send(user))
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+
+            app.post('/send-message', verifyExtractJwt ,parseBody, (req, res) => {
+                const { body: { toUserId,bookId,textMessage } ,payload: { sub: userId }} = req
+
+                try {
+                    sendMessage(userId, toUserId, bookId, textMessage)
+                        .then(() => res.status(201).send())
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+            app.get('/retrieve-messages', verifyExtractJwt ,parseBody, (req, res) => {
+                const { payload: { sub: userId }} = req
+
+                try {
+                    retrieveMessages(userId)
+                        .then((messages) => res.status(201).send(messages))
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+            app.path('/share-book', verifyExtractJwt ,parseBody, (req, res) => {
+                const { payload: { sub: userId }, body: { newUserId,bookId} } = req
+
+                try {
+                    shareBook(userId,newUserId,bookId)
+                        .then(() => res.status(201).send('OK'))
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+
+            app.get('/list-my-books', verifyExtractJwt ,(req, res) => {
+                const { payload: { sub: userId } } = req
+
+                try {
+                    listMyBooks(userId)
+                        .then((books) => res.status(201).send(books))
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+
+            app.get('/list-share-books', verifyExtractJwt ,(req, res) => {
+                const { payload: { sub: userId } } = req
+
+                try {
+                    listShareBooks(userId)
+                        .then((books) => res.status(201).send(books))
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+            
 
             app.get('*', (req, res) => {
                 res.status(404).send('Not Found :(')

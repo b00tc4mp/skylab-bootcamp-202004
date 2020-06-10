@@ -1,6 +1,5 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
-const message = require('./message')
 
 module.exports = new Schema({
     title: {
@@ -27,7 +26,7 @@ module.exports = new Schema({
         required: true
     },
 
-    ownerId: {
+    ownerUserId: {
         type: ObjectId,
         ref:'User',
         required: true
@@ -35,10 +34,11 @@ module.exports = new Schema({
 
     actualUserId:{
         type: ObjectId,
-        ref:'User',
+        ref:'User'
     },
 
     requested:{
-        type:Boolean
+        type: ObjectId,
+        ref:'User'
     }
 })

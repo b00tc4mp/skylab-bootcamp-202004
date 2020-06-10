@@ -11,7 +11,7 @@ const { mongoose, models: { User, Book } } = require('books-data')
 const bcrypt = require('bcryptjs')
 const { errors: { VoidError } } = require('books-commons')
 
-describe.only('server-logic-delete-book', () => {
+describe('server-logic-search-book', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let name, surname, email, password, userId, hash, createdBook, bookId,query
@@ -41,10 +41,9 @@ describe.only('server-logic-delete-book', () => {
             image,
             description,
             barCode,
-            ownerId: userId,
+            ownerUserId: userId,
             actualUserId: userId,
-            travelKm: 0,
-            requested: false
+            travelKm:0
         })
 
         bookId = createdBook._id.toString()
@@ -55,7 +54,7 @@ describe.only('server-logic-delete-book', () => {
         query = 'lord'
 
         const [books] = await searchBook(userId,query)
-debugger
+
         expect(books).to.exist
         expect(books.title).to.equal(createdBook.title)
         expect(books.image).to.equal(createdBook.image)
@@ -65,10 +64,13 @@ debugger
 
     it('Sould fail on no find any book', async() => {
         query = 'jkadsfgdsgfhgsajdf'
-
-        const [books] = await searchBook(userId,query)
-
-        expect(books).to.undefined
+        try {
+            await searchBook(userId,query)
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceof(Error)
+            expect(error.message).to.equal("This book doesn't exists")
+        }
     })
 
     it('Sould fail to search a with a unexistent userId', async() => {
@@ -86,7 +88,7 @@ debugger
 
     it('should fail on non-string field', () => {
         expect(() => {
-            searchBook(true, bookId)
+            searchBook(true, 'book')
         }).to.throw(TypeError, 'true is not a string')
         expect(() => {
             searchBook(userId, 123)
@@ -95,7 +97,7 @@ debugger
 
     it('should fail on non-string field', () => {
         expect(() => {
-            searchBook('', bookId)
+            searchBook('', 'book')
         }).to.throw(VoidError, 'string is empty or blank')
         expect(() => {
             searchBook(userId, '')

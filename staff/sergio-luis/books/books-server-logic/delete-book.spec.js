@@ -41,10 +41,9 @@ describe('server-logic-delete-book', () => {
             image,
             description,
             barCode,
-            ownerId: userId,
+            ownerUserId: userId,
             actualUserId: userId,
-            travelKm: 0,
-            requested: false
+            travelKm: 0
         })
 
         bookId = createdBook._id.toString()

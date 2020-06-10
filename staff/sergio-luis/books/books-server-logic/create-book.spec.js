@@ -46,24 +46,20 @@ describe('server-logic-create-book', () => {
             const bookId = await createBook(userId, book.title,book.image,book.description,book.barCode)
 
             const _book = await Book.findById(bookId)
-
+    
             expect(_book.title).to.exist
             expect(_book.title).to.be.a('string')
             expect(_book.image).to.exist
             expect(_book.image).to.be.a('string')
             expect(_book.barCode).to.exist
             expect(_book.barCode).to.be.a('string')
-            expect(_book.ownerId).to.exist
-            expect(_book.ownerId.toString()).to.equal(userId)
+            expect(_book.ownerUserId).to.exist
+            expect(_book.ownerUserId.toString()).to.equal(userId)
             expect(_book.actualUserId).to.exist
             expect(_book.actualUserId.toString()).to.equal(userId)
-            expect(_book.title).to.be.a('string')
-            expect(_book.requested).to.equal(false)
-            
+            expect(_book.title).to.be.a('string')   
         })
-            
-        
-
+                
         it('should fail when to don`t find a user', async() =>{
             userId='5edfa731dc7edc93965e8f68'
 

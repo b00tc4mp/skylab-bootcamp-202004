@@ -38,12 +38,11 @@ module.exports = (userId, title, image, description, barCode) => {
             image,
             description,
             barCode,
-            ownerId: userId,
+            ownerUserId: userId,
             actualUserId: userId,
             travelKm: 0,
-            requested: false
         })
-
+      
         return await  createdBook._id.toString()
     })()
 }
