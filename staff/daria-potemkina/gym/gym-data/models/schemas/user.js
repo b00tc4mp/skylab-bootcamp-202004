@@ -27,7 +27,6 @@ module.exports = new Schema({
     card: {
         number: {
             type: String,
-            unique: true
         },
         holder: {
             type: String,
