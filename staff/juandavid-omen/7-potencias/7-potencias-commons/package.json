@@ -1,0 +1,21 @@
+{
+  "name": "7-potencias-commons",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard && npx mocha *.spec.js"
+  },
+  "author": "anvidmen",
+  "license": "ISC",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.2.0",
+    "snazzy": "^8.0.0",
+    "standard": "^14.3.4",
+    "xhr2": "^0.2.0"
+  }
+}
