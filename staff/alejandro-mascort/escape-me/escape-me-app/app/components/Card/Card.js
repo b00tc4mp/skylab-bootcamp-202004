@@ -1,8 +1,8 @@
 import React from 'react'
-{/* <Card title="Whitechapel" rating="4.9" people='2-6' genre='Terror' price="50-90€" image="../assets/whitechapel.jpg" /> */ }
 import { View, StyleSheet, Image, ImageBackground, Text, TouchableOpacity } from 'react-native'
 import { MaterialCommunityIcons, MaterialIcons, SimpleLineIcons, Entypo } from '@expo/vector-icons'
-import AppLoading, { getAppLoadingLifecycleEmitter } from 'expo/build/launch/AppLoading'
+const styles = require('./style')
+
 function Card({ title, rating, people, genre, price, image }) {
     return (
         <View style={styles.card}>
@@ -30,45 +30,5 @@ function Card({ title, rating, people, genre, price, image }) {
         </View >
     )
 }
-
-const styles = StyleSheet.create({
-    card: {
-        borderRadius: 15,
-        backgroundColor: '#fff',
-        marginBottom: 20
-    },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'flex-end'
-    },
-    image: {
-        width: '100%',
-        height: 200,
-    },
-    icon: {
-        marginHorizontal: 5
-    },
-    info: {
-        flexDirection: 'row',
-        justifyContent: 'space-around'
-    },
-    pair: {
-        flexDirection: 'row',
-        justifyContent: 'center'
-    },
-    rating: {
-        position: "absolute",
-        bottom: 5,
-        left: 5
-    },
-    text: {
-        fontSize: 18
-    },
-    title: {
-        position: "absolute",
-        top: 5,
-        left: 5
-    }
-})
 
 export default Card

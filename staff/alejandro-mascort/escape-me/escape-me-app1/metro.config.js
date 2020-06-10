@@ -7,7 +7,7 @@
 
 module.exports = {
     resolver: {
-        /* resolver options */
+        extraNodeModules: require('node-libs-react-native'),
         sourceExts: ['jsx', 'js', 'ts', 'tsx'],
     },
     maxWorkers: 2,

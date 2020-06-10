@@ -8,7 +8,7 @@ const { expect } = require('chai')
 require('escape-me-commons/polyfills/json')
 const { mongo } = require('escape-me-data')
 require('escape-me-commons/ponyfills/xhr')
-const { utils: { jwtPromised } } = require('escape-me-commons')
+const { utils: { jwtPromised } } = require('escape-me-node-commons')
 const context = require('./context')
 const bcrypt = require('bcryptjs')
 

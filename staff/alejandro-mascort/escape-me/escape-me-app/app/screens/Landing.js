@@ -2,7 +2,7 @@ import React from 'react'
 import { ImageBackground, StyleSheet, View, Image, Text, Platform } from 'react-native'
 import AppButton from '../components/AppButton'
 
-export default function (props) {
+export default function ({ onLogin, onRegister }) {
     return (
         <ImageBackground
             blurRadius={10}
@@ -14,9 +14,8 @@ export default function (props) {
                 <Text style={styles.logoText}>Escape Me</Text>
             </View>
             <View style={styles.buttonsContainer}>
-                <AppButton title='Login' />
-
-                <AppButton title='Register' color='#4ecdc4' />
+                <AppButton title='Login' onPress={onLogin} />
+                <AppButton title='Register' color='#4ecdc4' onPress={onRegister} />
             </View>
 
         </ImageBackground>

@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jsonwebtoken": "^8.5.1"
+    "@babel/runtime": "^7.10.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",

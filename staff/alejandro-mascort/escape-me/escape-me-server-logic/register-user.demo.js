@@ -8,6 +8,6 @@ const registerUser = require('./register-user')
 
 mongoose.connect(MONGODB_URL)
     .then(() => {
-        return registerUser('test', 'alejandro', 'alejandrotest5', 'test5@MediaList.com', '123123123')
+        return registerUser('alejandro', 'mc', 'alejandromc23', 'alejandro@mail.com', '123123123')
             .then(() => console.log('Registered'))
     })

@@ -1,131 +1,61 @@
-// import React, { useState } from "react";
-// import {
-//   StyleSheet,
-//   View
-// } from "react-native";
-// import WelcomeScreen from './app/screens/WelcomeScreen'
-// import Home from './app/screens/Home'
-// import Login from './app/screens/Login'
-// import CardDetails from './app/screens/CardDetails'
-
-// export default function App() {
-//   return (
-//     // <WelcomeScreen />
-//     // <Home />
-//     // <Login />
-//     <CardDetails />
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#fff",
-//     justifyContent: "center",
-//     alignItems: "center",
-//   },
-// })
-
-// In App.js in a new project
-
-// import 'react-native-gesture-handler';
-// import * as React from 'react';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createStackNavigator } from '@react-navigation/stack';
-// import { createCompatNavigatorFactory } from '@react-navigation/compat';
-// import Home from './app/screens/Home'
-// import CardDetails from './app/screens/CardDetails'
-
-
-// const RootStack = createCompatNavigatorFactory(createStackNavigator)(
-//   {
-//     Home: { screen: Home },
-//     CardDetail: { screen: CardDetails },
-//   },
-//   {
-//     initialRouteName: 'Home',
-//   }
-// );
-
-// const Stack = createStackNavigator();
-
-// export default function App() {
-//   return (
-//     <NavigationContainer>
-//       <RootStack />
-//     </NavigationContainer>
-//   );
-// }
-
-// import React from 'react'
-// import { StyleSheet, View } from 'react-native'
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-// import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-// import Home from './app/screens/Home'
-// import CardDetails from './app/screens/CardDetails'
-
-
-// const Tab = createMaterialBottomTabNavigator();
-// const TopTab = createMaterialTopTabNavigator();
-
-// function MyTabs() {
-//   return (
-//     // <View style={styles.container}>
-//     //   <NavigationContainer>
-//     //     <TopTab.Navigator>
-//     //       <TopTab.Screen name="Home" component={Home} />
-//     //       <TopTab.Screen name="Card Details" component={CardDetails} />
-//     //     </TopTab.Navigator>
-//     //   </NavigationContainer>
-
-//     <NavigationContainer>
-//       <Tab.Navigator>
-//         <Tab.Screen name="Home" component={Home} />
-//         <Tab.Screen name="Card Details" component={CardDetails} />
-//       </Tab.Navigator>
-//     </NavigationContainer>
-//     // </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1
-//   }
-// })
-
-// export default function App() {
-//   return <MyTabs />
-// }
-
-import Home from './app/screens/Home'
-import CardDetails from './app/screens/CardDetails'
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { createAppContainer } from 'react-navigation';
-import { createBottomTabNavigator } from 'react-navigation-tabs'
-import Icon from "react-native-vector-icons/FontAwesome";
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Icon } from 'react-native';
+// import { createAppContainer } from 'react-navigation';
+// import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { Entypo } from '@expo/vector-icons';
-import { FontAwesome, AntDesign } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+
+import Landing from './app/screens/Landing'
+import Home from './app/screens/Home'
+import Login from './app/screens/Login'
+import Register from './app/screens/Register'
+import CardDetails from './app/screens/CardDetails'
 import Profile from './app/screens/Profile'
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.appheader}>
-          <Text style={styles.title}>Escape Me</Text>
-          <TouchableOpacity style={styles.logOut}>
-            <AntDesign name="logout" size={24} color="white" />
-          </TouchableOpacity>
-        </View>
-        <AppContainer />
-      </View>
-    );
+export default function () {
+  const [view, setView] = useState('landing')
+  const [token, setToken] = useState()
+
+  const handleGoToLogin = () => {
+    setView('login')
   }
+
+  const handleGoToRegister = () => {
+    setView('register')
+  }
+
+  const handleGoToHome = () => {
+    setView('home')
+  }
+
+  const handleToken = token => {
+    setToken(token)
+  }
+
+  const handleLogOut = () => {
+    setToken()
+    setView('landing')
+  }
+
+  return (
+    <View style={styles.container}>
+      {view === 'landing' && <Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister} />}
+      {view === 'login' && <Login onRegister={handleGoToRegister} onHome={handleGoToHome} handleToken={handleToken} />}
+      {view === 'register' && <Register onLogin={handleGoToLogin} />}
+      {view != 'landing' && view != 'login' && view != 'register' &&
+        <NavigationContainer>
+          <MyTabs />
+        </NavigationContainer>}
+    </View>
+
+  );
+
 }
+
 const styles = StyleSheet.create({
   appheader: {
     width: '100%',
@@ -148,64 +78,57 @@ const styles = StyleSheet.create({
   }
 })
 
-class NotificationsScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' }}>
-        <Text> This is my Notifications screen </Text>
-      </View>
-    );
-  }
+const Tab = createMaterialBottomTabNavigator();
+
+function MyTabs() {
+  return (
+    <Tab.Navigator
+      initialRouteName="Home"
+      activeColor="white"
+      labelStyle={{ fontSize: 12 }}
+      barStyle={{ backgroundColor: "#4ecdc4" }}
+
+    >
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="CardDetails"
+        component={CardDetails}
+        options={{
+          tabBarLabel: 'CardDetails',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="bell" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Card"
+        component={CardDetails}
+        options={{
+          tabBarLabel: 'CardDetails',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="bell" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="account" color={color} size={26} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
 }
-
-const bottomTabNavigator = createBottomTabNavigator(
-  {
-    Home: {
-      screen: Home,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <Icon name="home" size={25} color={tintColor} />
-        )
-      }
-    },
-    Search: {
-      screen: NotificationsScreen,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <AntDesign name="search1" size={24} color={tintColor} />)
-      }
-    },
-    Pending: {
-      screen: CardDetails,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <Entypo name="list" size={24} color={tintColor} />
-        )
-      }
-    },
-    Follow: {
-      screen: CardDetails,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <AntDesign name="adduser" size={24} color={tintColor} />
-        )
-      }
-    },
-    Profile: {
-      screen: Profile,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <Icon name="user" size={25} color={tintColor} />
-        )
-      }
-    },
-  },
-  {
-    initialRouteName: 'Home',
-    tabBarOptions: {
-      activeTintColor: '#4ecdc4'
-    }
-  }
-);
-
-const AppContainer = createAppContainer(bottomTabNavigator);
