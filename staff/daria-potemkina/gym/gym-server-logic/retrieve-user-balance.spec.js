@@ -5,12 +5,12 @@ const { env: { MONGODB_URL_TEST } } = process
 const retrieveUserBalance = require('./retrieve-user-balance')
 const { random, round } = Math
 const { expect } = require('chai')
-const { mongoose, models: { User } } = require('gym-data')
+const { mongoose, models: { User, AccountBalance } } = require('gym-data')
 
-describe('logic - retrieveUserBalance', () => {
+describe.only('logic - retrieveUserBalance', () => {
     before(() => mongoose.connect(MONGODB_URL_TEST))
 
-    let name, surname, email, password, userId, card, balance
+    let name, surname, email, password, userId, card, guarantee, profitAndLoss, accountId
 
     beforeEach(async () => {
         await User.deleteMany()
@@ -25,29 +25,33 @@ describe('logic - retrieveUserBalance', () => {
             holder: `name-${random()} surname-${random()}`,
             expirationDate: new Date(),
             cvv: `${round(random() * 1000)}`,
-
         }
 
-        balance = {
-            guarantee: round(random() * 1000),
-            profitAndLoss: round(random() * 1000)
-        }
+        guarantee = round(random() * 1000)
+        profitAndLoss = round(random() * 1000)
     })
 
     describe('when user already exist', () => {
         beforeEach(async () => {
-            const user = await User.create({ name, surname, email, password, card, balance })
+            const user = await User.create({ name, surname, email, password, card })
             userId = user._id.toString()
+
+            const accountBalance = AccountBalance.create({ user: userId, date: new Date(), guarantee, profitAndLoss })
+            accountId = (await accountBalance)._id.toString()
         })
 
         it('should return the balance data', async () => {
             const result = await retrieveUserBalance(userId)
 
-            const { guarantee, profitAndLoss } = result
+            expect(result).to.be.an('array')
+            expect(result).to.have.lengthOf(1)
 
-            expect(guarantee).to.equal(balance.guarantee)
-            expect(profitAndLoss).to.equal(balance.profitAndLoss)
+            const { user, date, guarantee: _guarantee, profitAndLoss: _profitAndLoss } = result[0]
 
+            expect(user.toString()).to.equal(userId)
+            expect(date).to.be.an.instanceOf(Date)
+            expect(_guarantee).to.equal(guarantee)
+            expect(_profitAndLoss).to.equal(profitAndLoss)
         })
     })
 
@@ -64,7 +68,7 @@ describe('logic - retrieveUserBalance', () => {
         }
 
         it('should fail when the the balace is not exist', async () => {
-            await User.updateOne({ _id: userId }, { $unset: { card } })
+            await AccountBalance.deleteMany()
 
             try {
                 await retrieveUserBalance(userId)

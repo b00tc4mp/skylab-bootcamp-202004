@@ -1,10 +1,10 @@
 module.exports = {
     user: require('./user'),
-    future: require('./future'),
+    product: require('./product'),
     option: require('./option'),
     underlying: require('./underlying'),
-    product: require('./product'),
     price: require('./price'),
-    optionFeatures: require('./option-features'),
-    futureFeatures: require('./future-features')
+    contract: require('./contract'),
+    trade: require('./trade'),
+    accountBalance: require('./account-balance'),
 }

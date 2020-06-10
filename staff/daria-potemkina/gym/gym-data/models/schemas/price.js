@@ -1,6 +1,12 @@
-const { Schema } = require('mongoose')
+const { Types: { ObjectId }, Schema } = require('mongoose')
 
 module.exports = new Schema({
+    product: {
+        type: ObjectId,
+        ref: 'Product',
+        required: true
+    },
+    
     date: {
         type: Date,
         required: true

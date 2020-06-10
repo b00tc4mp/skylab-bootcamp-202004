@@ -1,14 +1,14 @@
-const {model} = require('mongoose')
+const { model } = require('mongoose')
 
-const {user, future, option, underlying, price, product, optionFeatures, futureFeatures} = require('./schemas')
+const { user, option, underlying, price, product, contract, trade, accountBalance } = require('./schemas')
 
 module.exports = {
     User: model('User', user),
-    Future: model ('Future', future),
     Option: model('Option', option),
     Underlying: model('Underlying', underlying),
     Price: model('Price', price),
     Product: model('Product', product),
-    OptionFeatures: model('OptionFeatures', optionFeatures),
-    futureFeatures: model('FutureFeatures', futureFeatures)
+    Contract: model('Contract', contract),
+    Trade: model('Trade', trade),
+    AccountBalance: model('accountBalance', accountBalance)
 }

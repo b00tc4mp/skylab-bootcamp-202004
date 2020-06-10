@@ -1,22 +1,37 @@
-const { Schema, Types: { ObjectId } } = require('mongoose')
+const { Schema } = require('mongoose')
 
 module.exports = new Schema({
-    product: {
-        type: ObjectId,
-        refPath: 'onModel'
-    },
-
-    onModel: {
+    productType: {
         type: String,
-        required: true,
-        enum: ['Future', 'Option']
+        required: true
     },
 
-    quantitySold: {
-        type: Number
+    ticker: {
+        type: String,
+        required: true
     },
 
-    quantityPurchased: {
-        type: Number
+    exchange: {
+        type: String,
+        required: true
+    },
+
+    sector: {
+        type: String,
+        required: true
+    },
+
+    contractSize: {
+        type: Number,
+        required: true
+    },
+
+    settlementDate: {
+        type: Date,
+        required: true
+    },
+
+    type: {
+        type: Object
     }
 })

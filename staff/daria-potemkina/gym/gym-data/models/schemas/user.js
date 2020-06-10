@@ -1,6 +1,5 @@
-const { Schema, Types: { ObjectId } } = require('mongoose')
+const { Schema } = require('mongoose')
 const { utils: { Email } } = require('gym-commons')
-const product = require('./product')
 
 module.exports = new Schema({
     name: {
@@ -28,32 +27,16 @@ module.exports = new Schema({
     card: {
         number: {
             type: String,
-            // required: true,
             unique: true
         },
         holder: {
             type: String,
-            // required: true,
         },
         expirationDate: {
             type: Date,
-            // required: true
         },
         cvv: {
             type: String,
-            // required: true
-        }
-    },
-
-    products: [product],
-
-    balance: {
-        guarantee: {
-            type: Number
-        },
-
-        profitAndLoss: {
-            type: Number
         }
     }
 })
