@@ -7,30 +7,36 @@ import {
 } from "react-native";
 import AppButton from '../components/AppButton'
 import AppTextInput from '../components/AppTextInput'
-import { authenticateUser } from 'escape-me-client-logic'
-// const { authenticateUser } = require('escape-me-client-logic')
+import { registerUser } from 'escape-me-client-logic'
 
-export default function Login({ onRegister, onHome, handleToken }) {
+export default function Register({ onLogin }) {
+    const [name, setName] = useState()
+    const [surname, setSurname] = useState()
+    const [username, setUsername] = useState()
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
+    const [error, setError] = useState()
 
-    function handleLogin() {
+    function handleRegister() {
         try {
-            return authenticateUser(email, password)
-                .then(token => {
-                    handleToken(token)
-                    onHome()
-                })
-                .catch(error => console.error(error.message))
-        } catch (error) {
-            console.error(error.message)
+            return registerUser(name, surname, username, email, password)
+                .then(() => onLogin())
+                .catch(error => setError(error.message))
+        } catch ({ message }) {
+            setError(message)
         }
     }
 
     return (
         <ImageBackground style={styles.container} source={require('../assets/puzzle.jpg')}>
-            <Image style={styles.logo} source={require('../assets/logo.svg')}></Image>
             <View style={styles.buttonsContainer}>
+                <Image style={styles.logo} source={require('../assets/logo.svg')}></Image>
+                <AppTextInput placeholder="Name"
+                    onChangeText={text => setName(text)} />
+                <AppTextInput placeholder="Surname"
+                    onChangeText={text => setSurname(text)} />
+                <AppTextInput placeholder="Username" autoCapitalize="none"
+                    onChangeText={text => setUsername(text)} />
                 <AppTextInput placeholder="Email" icon="email" autoCapitalize="none"
                     keyboardType="email-address" textContentType="emailAddress"
                     onChangeText={text => setEmail(text)} />
@@ -38,8 +44,8 @@ export default function Login({ onRegister, onHome, handleToken }) {
                     autoCapitalize="none"
                     autoCorrect={false} icon="lock" secureTextEntry
                     textContentType="password" onChangeText={text => setPassword(text)} />
-                <AppButton title="Login" onPress={handleLogin}></AppButton>
-                <AppButton style={styles.register} title='Register' color='#4ecdc4' onPress={onRegister} />
+                <AppButton style={styles.register} title='Register' color='#4ecdc4' onPress={handleRegister} />
+                <AppButton title="Login" onPress={onLogin}></AppButton>
             </View>
         </ImageBackground>
     );
@@ -58,7 +64,7 @@ const styles = StyleSheet.create({
         width: 80,
         height: 80,
         alignSelf: 'center',
-        marginTop: 50,
+        marginTop: 30,
         marginBottom: 20
     },
     register: {

@@ -8,15 +8,35 @@ import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import Landing from './app/screens/Landing'
 import Home from './app/screens/Home'
 import Login from './app/screens/Login'
+import Register from './app/screens/Register'
 import CardDetails from './app/screens/CardDetails'
 import Profile from './app/screens/Profile'
 
 export default function () {
   const [view, setView] = useState('landing')
+  const [token, setToken] = useState()
 
   const handleGoToLogin = () => {
     setView('login')
   }
+
+  const handleGoToRegister = () => {
+    setView('register')
+  }
+
+  const handleGoToHome = () => {
+    setView('home')
+  }
+
+  const handleToken = token => {
+    setToken(token)
+  }
+
+  const handleLogOut = () => {
+    setToken()
+    setView('landing')
+  }
+
   return (
     // <View style={styles.container}>
     //   <View style={styles.appheader}>
@@ -28,8 +48,10 @@ export default function () {
     //   <AppContainer />
     // </View>
     <View style={styles.container}>
-      {view === 'landing' && <Landing onLogin={handleGoToLogin} />}
-      {view === 'login' && <Login />}
+      {view === 'landing' && <Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister} />}
+      {view === 'login' && <Login onRegister={handleGoToRegister} onHome={handleGoToHome} handleToken={handleToken} />}
+      {view === 'register' && <Register onLogin={handleGoToLogin} />}
+      {view === 'home' && <Home onLogOut={handleLogOut} />}
     </View>
   );
 

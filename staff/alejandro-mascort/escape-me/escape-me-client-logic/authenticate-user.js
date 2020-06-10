@@ -17,7 +17,6 @@ module.exports = function (email, password) {
     Email.validate(email)
 
     String.validate.notVoid(password)
-
     return call('POST', `${this.API_URL}/users/auth`,
         `{ "email": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json' })
