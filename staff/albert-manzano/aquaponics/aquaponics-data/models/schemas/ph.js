@@ -8,7 +8,7 @@ module.exports = new Schema({
     },
 
     date: {
-        type: date,
+        type: Date,
         required: true
     },
 })

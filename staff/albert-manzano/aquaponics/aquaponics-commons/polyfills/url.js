@@ -1,4 +1,6 @@
-URL.isUrl = function (url) {
+var URL = require('url').URL;
+
+URL.isUrl = function (url) {debugger
     try {
         new URL(url)
 

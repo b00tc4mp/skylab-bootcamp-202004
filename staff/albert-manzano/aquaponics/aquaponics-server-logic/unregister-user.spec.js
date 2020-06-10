@@ -1,43 +1,40 @@
 require('dotenv').config()
 
-const { env: { MONGODB_URL_TEST } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 
 const unregisterUser = require('./unregister-user')
 const { random } = Math
 const { expect } = require('chai')
-const { mongo } = require('aquaponics-data')
+const { mongoose, models: { User } } = require('aquaponics-data')
 
 describe('logic - unregisterUser', () => {
-    let users
+    before(() => mongoose.connect(MONGODB_URL))
 
-    before(() =>
-        mongo.connect(MONGODB_URL_TEST)
-            .then(connection => users = connection.db().collection('users'))
-    )
-
-    let name, surname, email, password, userId
+    let name, surname, email, password, role, phone
 
     beforeEach(() =>
-        users.deleteMany()
+        User.deleteMany()
             .then(() => {
                 name = `name-${random()}`
                 surname = `surname-${random()}`
                 email = `e-${random()}@mail.com`
                 password = `password-${random()}`
+                role = 'admin'
+                phone = random()
             })
     )
 
     describe('when user already exist', () => {
         beforeEach(() => {
-            const user = { name, surname, email, password }
+            const user = { name, surname, email, password ,role,phone}
 
-            return users.insertOne(user)
-                .then(result => userId = result.insertedId.toString())
+            return User.create(user)
+                .then(result => userId = result.id)
         })
 
         it('should remove the registered user from database', () =>{
             return unregisterUser(userId)
-            .then(() => users.find().toArray())
+            .then(() => User.find())
             .then(users => {
                 expect(users).to.have.lengthOf(0)
             })
@@ -78,14 +75,9 @@ describe('logic - unregisterUser', () => {
         expect( () => {
             unregisterUser(userId)
         }).to.throw(Error, `${userId} is empty or blank`)
-
-        userId = '    '
-        expect( () => {
-            unregisterUser(userId)
-        }).to.throw(Error, `${userId} is empty or blank`)
     })
 
-    afterEach(() => users.deleteMany({}))
+    afterEach(() => User.deleteMany())
 
-    after(() => users.deleteMany({}).then(mongo.disconnect))
+    after(() => mongoose.disconnect)
 })

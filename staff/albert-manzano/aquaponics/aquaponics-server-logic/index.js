@@ -1,31 +1,30 @@
 module.exports = {
-    registerUser: require('./register-user'),
+    //users
+
     authenticateUser: require('./authenticate-user'),
-    retrieveUser: require('./retrieve-user'),
-    
-// user
-//register done 
-//retrieve done
-//update done
-//revoke
-//delete done 
-//confirm
-//retrieve all
+    confirmUser:require('./confirm-user'),
+    registerUser: require('./register-user'), 
+    retrieveUser: require('./retrieve-user'),  
+    retrieveAllUsers:require('./retrieve-all-users'), 
+    revokeUnrevokeUser:require('./revoke-unrevoke-user'),
+    unregisterUser:require('./unregister-user'),
+    updateUser:require('./update-user'),
+    //searchUser
+        
+    //arduino
 
+    logPh:require('./log-ph'),
+    logTemperature:require('./log-temperature'),
+    retrieveTemperatures:require('./retrieve-temperatures'),
+    retrievePhs:require('./retrieve-phs'),
+    retrieveLastTemperature:require('./retrieve-last-temperature'),
+    retrieveLastPh:require('./retrieve-last-ph'),
 
-//arduino
-//retrieve tmp
-//retrive ph
-//log temp
-//log ph
-// retrievelasttemp
-// retrieve last ph
+    //event
 
-
-//event
-//create event
-//update event
-//delete event
-//retrive event
-
+    createEvent:require('./create-event'),
+    updateEvent:require('./update-event'),
+    deleteEvent:require('./delete-event'),
+    retrieveAllEvents:require('./retrieve-all-events'),
+    // retrieveEvent:require('./retrieve-event'),
 }

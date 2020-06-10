@@ -27,16 +27,19 @@ module.exports = new Schema({
 
     role:{
         enum:["admin","user"],
-        type: String
+        type: String,
+        default:"user",
     },
 
     confirmed: {
         type:Boolean,
-        default : false
+        default : false,
     },
 
     status:{
-        enum:[enable,disable]
+        enum:["enable","disable"],
+        type:String,
+        default : "enable",
     },
 
     phone: {
@@ -46,3 +49,5 @@ module.exports = new Schema({
 
     events: [event], 
 })
+
+// name,surname,email,password,role,confirmed,status,phone
