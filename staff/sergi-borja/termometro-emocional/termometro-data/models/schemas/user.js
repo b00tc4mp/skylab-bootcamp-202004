@@ -34,10 +34,10 @@ module.exports = new Schema({
         required: true
     },
 
-    members: {
+    members: [{
         type: ObjectId,
         ref: 'users'
-    },
+    }],
 
     administrator: {
         type: ObjectId,

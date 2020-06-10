@@ -22,6 +22,7 @@ module.exports = (userId, data) => {
         let updateData = {}
 
         for (const keys in data) {
+            if(keys==='members') { updateData[keys].push(data[keys])}
             updateData[keys] = data[keys];
         }
 

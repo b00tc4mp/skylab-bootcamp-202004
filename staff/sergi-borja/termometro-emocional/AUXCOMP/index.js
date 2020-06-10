@@ -1,0 +1,1 @@
+export { default as MyFamily } from "./src/screens/MyFamily.js";

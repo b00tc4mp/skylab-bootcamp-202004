@@ -5,8 +5,10 @@ import Container from './Container';
 import Login from './Login';
 import Register from './Register';
 import Home from './Home';
-import MyFamily from './My-Family';
+import MyFamily from './MyFamily';
+import Footer from './Footer'
 import {isAuthenticated} from 'termometro-client-logic'
+import CreateMember from './CreateMember';
 
 
 function App({history}) {
@@ -47,6 +49,8 @@ function App({history}) {
           <Route path="/register" render={()=> token? <Redirect to='/home'/> : <Register onGoToLogin={handleGoToLogin}/>}/>
           <Route path="/home" render={()=> token? <Home/> : <Redirect to='/'/>} />
           <Route path="/my-family" render={()=> token? <MyFamily/> : <Redirect to='/'/>} />
+          <Route path="/create-member" render={()=> token? <CreateMember/> : <Redirect to='/'/>} />
+          <Footer />
         </Container>
       </header>
     </div>
