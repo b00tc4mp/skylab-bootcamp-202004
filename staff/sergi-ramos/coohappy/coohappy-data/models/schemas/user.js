@@ -32,9 +32,8 @@ module.exports = new Schema({
     },
 
     foodList: [{
-        foodItem: {
-            type: ObjectId,
-            ref: 'FoodItem',
+        name: {
+            type: String,
             require: true
         },
         weight: {
