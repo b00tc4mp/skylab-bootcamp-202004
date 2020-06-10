@@ -1,7 +1,6 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
-
 const authenticateUser = require('./authenticate-user')
 const { random } = Math
 const { expect } = require('chai')
@@ -12,7 +11,9 @@ const bcrypt = require('bcryptjs')
 describe('logic - authenticate user', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let name, surname, email, password, userId, hash
+    // let name, surname, email, password, userId, hash, phone
+
+    let  userId, name,surname,email,password,role,confirmed,status,phone,hash
 
     beforeEach(() =>
         User.deleteMany()
@@ -21,6 +22,9 @@ describe('logic - authenticate user', () => {
                 surname = `surname-${random()}`
                 email = `e-${random()}@mail.com`
                 password = `password-${random()}`
+                role = "user"
+                status = "enable"
+                phone = random()
 
                 return bcrypt.hash(password, 10)
             })
@@ -29,7 +33,7 @@ describe('logic - authenticate user', () => {
 
     describe('when user already exists', () => {
         beforeEach(() =>
-            User.create({ name, surname, email, password: hash })
+            User.create({ name,surname,email,password,role,confirmed,status,phone, password: hash })
                 .then(user => userId = user.id)
         )
 
@@ -58,6 +62,44 @@ describe('logic - authenticate user', () => {
                 expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
             })
     )
+
+    describe('wrong inputs',()=>{
+        it('should fail on wrong input', () => {
+            expect( () => {
+                authenticateUser(true, password)
+            }).to.throw(TypeError, `${'true'} is not a string`)
+        })
+
+        it('should fail on wrong input', () => {
+            expect( () => {
+                authenticateUser(undefined, password)
+            }).to.throw(TypeError, `${'undefined'} is not a string`)
+        })
+
+        it('should fail on wrong input', () => {
+            expect( () => {
+                authenticateUser(9, password)
+            }).to.throw(TypeError, `${'9'} is not a string`)
+        })
+
+        it('should fail on wrong input', () => {
+            expect( () => {
+                authenticateUser(email,true)
+            }).to.throw(TypeError, `${'true'} is not a string`)
+        })
+
+        it('should fail on wrong input', () => {
+            expect( () => {
+                authenticateUser(email, undefined)
+            }).to.throw(TypeError, `${'undefined'} is not a string`)
+        })
+
+        it('should fail on wrong input', () => {
+            expect( () => {
+                authenticateUser(email, 9)
+            }).to.throw(TypeError, `${'9'} is not a string`)
+        })
+    })
 
     afterEach(() => User.deleteMany())
 

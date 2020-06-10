@@ -1,63 +1,86 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
-
+require('aquaponics-commons/polyfills/json')
 const retrieveUser = require('./retrieve-user')
-const { random } = Math
 const { expect } = require('chai')
-require('../utils/polyfills/json')
-const { mongo } = require('../data')
+const { random } = Math
+const { mongoose, models: { User } } = require('aquaponics-data')
 
-describe('logic - retrieve user', () => {
-    let users
+describe('logic - retrieveUser', () => {
+    before(() => mongoose.connect(MONGODB_URL))
 
-    before(() => mongo.connect(MONGODB_URL).then(connection => users = connection.db().collection('users')))
-
-    let name, surname, email, password, userId
+    let name, surname, email, password, userId,role,phone
 
     beforeEach(() =>
-        users.deleteMany()
+        User.deleteMany()
             .then(() => {
                 name = `name-${random()}`
                 surname = `surname-${random()}`
                 email = `e-${random()}@mail.com`
                 password = `password-${random()}`
+                role = 'admin'
+                phone = random()
             })
     )
 
-    describe('when user already exists', () => {
+    describe('when user already exist', () => {
         beforeEach(() => {
-            const user = { name, surname, email, password }
+            const user = { name, surname, email, password, role,  phone}
 
-            return users.insertOne(user)
-                .then(result => userId = result.insertedId.toString())
+            return User.create(user)
+                .then(result => userId = result.id)
         })
 
-        it('should succeed on correct user id', () =>
-            retrieveUser(userId)
+        it('should return the user data', () => {
+            return retrieveUser(userId)
                 .then(user => {
+                    expect(user.password).to.be.undefined
                     expect(user.name).to.equal(name)
                     expect(user.surname).to.equal(surname)
                     expect(user.email).to.equal(email)
-                    expect(user.password).to.be.undefined
+                    expect(user.phone).to.equal(phone)
+                    expect(user.role).to.equal(role)
                 })
-        )
+        })
     })
 
-    it('should fail when user does not exist', () => {
-        const userId = '5ed1204ee99ccf6fae798aef'
-
+    it('should fail when user does not exists', () => {
+        userId = '123455678990'
         return retrieveUser(userId)
             .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(Error)
-                expect(error.message).to.equal(`user with id ${userId} does not exist`)
+                expect(error).to.be.exist
+                expect(error).to.be.an.instanceOf(Error)
+                expect(error.message).to.equal(`user with ${userId} does not exist`)
             })
     })
 
-    afterEach(() => users.deleteMany())
+    it('should return a type error', () => {
+        userId = undefined
+        expect(() => {
+            retrieveUser(userId)
+        }).to.throw(TypeError, `${userId} is not a string`)
 
-    after(() => users.deleteMany().then(mongo.disconnect))
+        userId = 9
+        expect(() => {
+            retrieveUser(userId)
+        }).to.throw(TypeError, `${userId} is not a string`)
+
+        userId = true
+        expect(() => {
+            retrieveUser(userId)
+        }).to.throw(TypeError, `${userId} is not a string`)
+    })
+
+    it('should return an error', () => {
+        userId = ''
+        expect(() => {
+            retrieveUser(userId)
+        }).to.throw(Error, `${userId} is empty or blank`)
+    })
+
+    afterEach(() => User.deleteMany())
+
+    after(() => mongoose.disconnect)
 })

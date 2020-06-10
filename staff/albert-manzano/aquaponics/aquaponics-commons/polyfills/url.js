@@ -1,3 +1,5 @@
+var URL = require('url').URL;
+
 URL.isUrl = function (url) {
     try {
         new URL(url)

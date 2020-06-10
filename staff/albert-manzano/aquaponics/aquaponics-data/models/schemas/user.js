@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose')
+const { Schema, SchemaTypes: {ObjectId} } = require('mongoose')
 const { utils: { Email } } = require('aquaponics-commons')
 const event = require('./event')
 
@@ -27,16 +27,19 @@ module.exports = new Schema({
 
     role:{
         enum:["admin","user"],
-        type: String
+        type: String,
+        default:"user",
     },
 
     confirmed: {
         type:Boolean,
-        default : false
+        default : false,
     },
 
     status:{
-        enum:[enable,disable]
+        enum:["enable","disable"],
+        type:String,
+        default : "enable",
     },
 
     phone: {
@@ -44,5 +47,7 @@ module.exports = new Schema({
         required:true
     },
 
-    events: [event], 
+    events: [{type: ObjectId, ref: 'Event'}], 
 })
+
+// name,surname,email,password,role,confirmed,status,phone
