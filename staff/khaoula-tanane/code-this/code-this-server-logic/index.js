@@ -3,6 +3,7 @@ module.exports = {
     authenticateUser: require('./authenticate-user'),
     retrieveUser: require('./retrieve-user'),
     createChallenge: require('./create-challenge'),
+    retrieveChallenges: require('./retrieve-challenges'),
     createCategory: require('./create-category')
 
 }
