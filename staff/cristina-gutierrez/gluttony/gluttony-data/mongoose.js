@@ -1,4 +1,3 @@
-require("dotenv").config()
 const { connect, disconnect } = require("mongoose")
 
 const MONGODB_URL = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@gluttony-stegt.gcp.mongodb.net/${process.env.MONGODB_DATABASE}?retryWrites=true&w=majority`
