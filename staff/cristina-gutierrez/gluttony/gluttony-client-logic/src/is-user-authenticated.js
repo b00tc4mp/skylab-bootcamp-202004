@@ -1,4 +1,5 @@
 require("gluttony-commons/polyfills/string")
+require("gluttony-commons/polyfills/function")
 const { utils: { call } } = require("gluttony-commons")
 
 module.exports = function (token) {
@@ -7,13 +8,7 @@ module.exports = function (token) {
     return call('GET', `${process.env.API_URL}/users`,
         undefined,
         { 'Authorization': `Bearer ${token}` })
-        .then(({ status, body }) => {
-            if (status === 200) {
-                return JSON.parse(body)
-            } else {
-                const { error } = JSON.parse(body)
-
-                throw new Error(error)
-            }
+        .then(({ status }) => {
+            return status === 200
         })
 }
