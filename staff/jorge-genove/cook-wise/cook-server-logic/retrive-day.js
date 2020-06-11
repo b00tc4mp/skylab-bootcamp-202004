@@ -4,10 +4,12 @@ const { models: { Recipes, User } } = require('cook-wise-data')
 
 module.exports = (weekday, userId) => {
     String.validate.notVoid(userId)
+    String.validate.notVoid(weekday)
     
     return (async () => {
-
+       
         const user = await User.findById(userId).populate('user.schedule').lean()
+        if(!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
         let recipeArray = []
         let result = []
 
@@ -37,7 +39,7 @@ module.exports = (weekday, userId) => {
 
 
         }
-
+        
         return result
 
     })()
