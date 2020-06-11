@@ -6,8 +6,8 @@ const {Email} = require('plates-commons/utils')
 module.exports = new Schema({
 
     name:{
-        type: String,
-        required: true
+        type: String
+        
     },
     
     surname:{
