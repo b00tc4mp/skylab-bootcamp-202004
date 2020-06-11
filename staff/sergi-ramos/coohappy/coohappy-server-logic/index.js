@@ -13,5 +13,6 @@ module.exports = {
     addFood: require('./add-food'),
     substractFood: require('./substract-food'),
     retrieveUserFoodList: require('./retrieve-user-food-list'),
-    retrieveAllUsersFoodList: require('./retrieve-allUsers-food-list')
+    retrieveAllUsersFoodList: require('./retrieve-allUsers-food-list'),
+    deleteDateLaundry: require('./delete-date-laundry')
 }

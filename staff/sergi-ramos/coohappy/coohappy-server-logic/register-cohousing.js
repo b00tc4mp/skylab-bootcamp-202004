@@ -5,7 +5,7 @@ const { models: { Cohousing, User } } = require('coohappy-data')
 const { utils: { randomAccessCode } } = require('coohappy-commons')
 
 
-module.exports = (name, address, userId) => {
+module.exports = (name, address, laundryNum, userId) => {
     String.validate.notVoid(name)
     if (typeof address !== 'object') throw new TypeError(`${address} is not an object`)
     String.validate.notVoid(userId)
@@ -24,7 +24,7 @@ module.exports = (name, address, userId) => {
 
         members.push(user)
 
-        const newCohousing = await Cohousing.create({ author: userId, name, address, members, accessCode })
+        const newCohousing = await Cohousing.create({ author: userId, name, address,laundryNum, members, accessCode})
 
         await User.updateOne({ role: 'admin', cohousing: newCohousing._id})
     })()

@@ -40,12 +40,7 @@ module.exports = new Schema({
             type: Number,
             require: true
         }
-    }],
-
-    laundry: {
-         type: Date
-
-    },
+    }],  
 
     cohousing: {
         type: ObjectId,

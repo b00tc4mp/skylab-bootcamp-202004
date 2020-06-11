@@ -1,5 +1,5 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
-const  message  = require('./message')
+const message = require('./message')
 
 
 module.exports = new Schema({
@@ -61,7 +61,28 @@ module.exports = new Schema({
         }
     }],
 
-    messages: [message]
+    messages: [message],
+
+    laundry: [{
+
+        day: {
+
+            type: String
+        },
+
+        hour: {
+            type: String
+        },
+
+        user: {
+            type: ObjectId,
+            ref: 'User'
+        }
+    }],
+    laundryNum: {
+        type: Number,
+        required: true
+    }
 })
 
 

@@ -10,7 +10,7 @@ const { utils: { randomAccessCode } } = require('coohappy-commons')
 const { mongoose, models: { User, Cohousing } } = require('coohappy-data')
 const { errors: { VoidError } } = require('coohappy-commons')
 
-let name, surname, email, password, hash, userId, nameCohousing, street, number, city, accessCode, newNameCohousing
+let name, surname, email, password, hash, userId, nameCohousing, street, number, city, accessCode, newNameCohousing, laundryNum
 
 describe('logic - udpate-cohousing', () => {
 
@@ -30,6 +30,7 @@ describe('logic - udpate-cohousing', () => {
         number = random()
         city = `city-${random()}`
         accessCode = randomAccessCode(name)
+        laundryNum = 4
 
         newNameCohousing = `name-${random()}`
 
@@ -37,7 +38,7 @@ describe('logic - udpate-cohousing', () => {
         const user = await User.create({ name, surname, email, password: hash })
         userId = user.id
         let address = { street, number, city }
-        await Cohousing.create({ name: nameCohousing, address, author: userId, accessCode, members: [userId] })
+        await Cohousing.create({ name: nameCohousing, address, author: userId, accessCode, members: [userId], laundryNum })
     })
 
     describe('when cohousing exist', () => {

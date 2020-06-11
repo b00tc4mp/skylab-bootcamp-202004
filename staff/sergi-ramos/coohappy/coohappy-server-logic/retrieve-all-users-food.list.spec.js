@@ -12,7 +12,7 @@ const { errors: { VoidError } } = require('coohappy-commons')
 const { models: { User, Cohousing }, mongoose: { ObjectId } } = require('coohappy-data')
 
 let name, surname, email, password, hash, userId, nameCohousing, street, number, city, accessCode, message, date, 
-foodItem, foodItem_2, _name, _surname, _email, _password, _hash, _nameCohousing, _street, _number, _city, _accessCode
+foodItem, foodItem_2, _name, _surname, _email, _password, _hash, _nameCohousing, _street, _number, _city, _accessCode, laundryNum
 
 describe('logic - retrieve-all-user-food-list', () => {
 
@@ -38,6 +38,7 @@ describe('logic - retrieve-all-user-food-list', () => {
         number = random()
         city = `city-${random()}`
         accessCode = randomAccessCode(name)
+        laundryNum = 4
         
         _nameCohousing = `name-${random()}`
         _street = `street-${random()}`
@@ -54,7 +55,7 @@ describe('logic - retrieve-all-user-food-list', () => {
         const user = await User.create({ name, surname, email, password: hash })
         userId = user.id
         let address = { street, number, city }
-        const cohousing = await Cohousing.create({ name: nameCohousing, address, author: userId, accessCode, members: [userId] })
+        const cohousing = await Cohousing.create({ name: nameCohousing, address, author: userId, accessCode, members: [userId], laundryNum })
 
         cohousing.foodList.push({ name: foodItem, weight: 2 })
         cohousing.foodList.push({ name: foodItem_2, weight: 1 })
@@ -83,7 +84,7 @@ describe('logic - retrieve-all-user-food-list', () => {
         beforeEach(async () => {
             _user = await User.create({name: _name,surname:  _surname, email: _email, password: _hash })
             _userId = _user.id
-            await Cohousing.create({ name: _nameCohousing, address, author: _userId, accessCode: _accessCode, members: [_userId] })
+            await Cohousing.create({ name: _nameCohousing, address, author: _userId, accessCode: _accessCode, members: [_userId], laundryNum: 4 })
         })
         it('should not show nothing', async () => {
             try {
