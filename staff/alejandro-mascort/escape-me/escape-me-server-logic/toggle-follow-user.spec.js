@@ -85,7 +85,7 @@ describe.only('logic - toggle escape room', () => {
             _userId = __user.id
 
             try {
-                const user = await toggleFollowUser(userId, userId, 'pending')
+                const user = await toggleFollowUser(userId, userId)
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.exist
