@@ -47,13 +47,13 @@ function Home() {
             </ul>
           </div>
           <div className="main_container">
-            <div className="item">
+            <div className="first-item">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit!
             </div>
-            <div className="item">
+            <div className="second-item">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit!
             </div>
-            <div className="item">
+            <div className="second-item">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit!
             </div>
             <div className="item">
