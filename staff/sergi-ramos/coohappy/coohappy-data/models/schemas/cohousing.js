@@ -48,7 +48,7 @@ module.exports = new Schema({
     },
 
     foodList: [{
-        foodItem: {
+        name: {
 
             type: String,
             required: true
