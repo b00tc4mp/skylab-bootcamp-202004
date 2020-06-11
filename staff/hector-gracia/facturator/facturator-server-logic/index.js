@@ -18,6 +18,8 @@ module.exports={
     makeEmptyDelivery: require("./make-empty-delivery"),
     removeProductFromDelivery: require("./remove-product-from-delivery"),
     updateProductInDelivery: require("./update-product-in-delivery"),
+    retrieveDelivery:require("./retrieve-delivery"),
+    retrieveDeliveryList:require("./retrieve-delivery-list"),
 
     //Template
     addDeliveryTemplate: require("./add-delivery-template")

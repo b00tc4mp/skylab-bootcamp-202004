@@ -6,7 +6,7 @@ const { expect } = require('chai')
 const { mongoose, models: { Client,Delivery,Product } } = require('facturator-data')
 const {errors:{UnexistenceError}}= require("facturator-commons")
 
-describe.only("retrieveDelivery",()=>{
+describe("retrieveDelivery",()=>{
     before(()=>{mongoose.connect(MONGODB_URL)})
     //Client
     let clientName, clientEstablishment, clientContactNumber, clientEmail, clientDirection, clientPaymentMethod, clientPaymentInfo, clientId
