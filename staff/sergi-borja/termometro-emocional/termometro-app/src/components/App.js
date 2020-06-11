@@ -49,7 +49,7 @@ function App({history}) {
           <Route path="/register" render={()=> token? <Redirect to='/home'/> : <Register onGoToLogin={handleGoToLogin}/>}/>
           <Route path="/home" render={()=> token? <Home/> : <Redirect to='/'/>} />
           <Route path="/my-family" render={()=> token? <MyFamily/> : <Redirect to='/'/>} />
-          <Route path="/create-member" render={()=> token? <CreateMember/> : <Redirect to='/'/>} />
+          <Route path="/create-member" render={()=> token? <CreateMember token={token}/> : <Redirect to='/'/>} />
           <Footer />
         </Container>
       </header>

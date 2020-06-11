@@ -1,6 +1,7 @@
 import React from 'react'
+import { registerUser } from 'termometro-client-logic'
 
-function CreateMember() {
+function CreateMember({token}) {
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -14,7 +15,14 @@ function CreateMember() {
         email = email.value
         password = password.value
 
-     
+        try {
+            registerUser(name, surname, age, sex, email, password, token)
+              .then(()=>console.log('FIESTA'))
+              .catch(error => console.log(error))
+          } catch (error) {
+            console.log(error)
+          }
+    
     }
 
     return (
