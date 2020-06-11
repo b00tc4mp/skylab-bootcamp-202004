@@ -8,6 +8,7 @@ module.exports = (email, password)=>{
     String.validate.notVoid(email)
     Email.validate(email)
     String.validate.notVoid(password)
+    
     return User.findOne({ email })
 
     
