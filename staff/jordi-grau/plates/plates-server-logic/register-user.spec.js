@@ -9,7 +9,7 @@ const registerUser = require('./register-user')
 
 describe("registerUser", () => {
     let name, surname, email, password, userId;
-    debugger
+    
     before(async() => {
         await mongoose.connect(MONGODB_URL);
         await Promise.all([
