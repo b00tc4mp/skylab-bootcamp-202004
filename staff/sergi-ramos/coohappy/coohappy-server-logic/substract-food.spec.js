@@ -11,7 +11,7 @@ const { mongoose } = require('coohappy-data')
 const { errors: { VoidError } } = require('coohappy-commons')
 const { mongoose: { ObjectId }, models: { User, Cohousing } } = require('coohappy-data')
 
-let name, surname, email, password, hash, userId, nameCohousing, street, number, city, accessCode, message, date, foodItem, foodItem_2
+let name, surname, email, password, hash, userId, nameCohousing, street, number, city, accessCode, message, date, foodItem, foodItem_2, laundryNum
 
 describe('logic - substract-food', () => {
 
@@ -32,6 +32,7 @@ describe('logic - substract-food', () => {
         number = random()
         city = `city-${random()}`
         accessCode = randomAccessCode(name)
+        laundryNum = 4
 
         foodItem = `fruit-${random()}`
         foodItem_2 = `fruit-${random()}`
@@ -41,7 +42,7 @@ describe('logic - substract-food', () => {
         const user = await User.create({ name, surname, email, password: hash })
         userId = user.id
         let address = { street, number, city }
-        await Cohousing.create({ name: nameCohousing, address, author: userId, accessCode, members: [userId] })
+        await Cohousing.create({ name: nameCohousing, address, author: userId, accessCode, members: [userId], laundryNum })
 
         const cohousing = await Cohousing.findOne({ members: userId })
         cohousing.foodList.push({ name: foodItem, weight: 2 })

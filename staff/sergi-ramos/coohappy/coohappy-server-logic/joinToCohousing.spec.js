@@ -11,7 +11,7 @@ const { mongoose } = require('coohappy-data')
 const { mongoose: { ObjectId }, models: { User, Cohousing } } = require('coohappy-data')
 const { errors: { VoidError } } = require('coohappy-commons')
 
-let name, surname, email, password, hash, userId, nameCohousing, cohousingId, street, number, city, accessCode, message, date
+let name, surname, email, password, hash, userId, nameCohousing, cohousingId, street, number, city, accessCode, message, date, laundryNum
 
 describe('logic - send-message', () => {
 
@@ -37,6 +37,7 @@ describe('logic - send-message', () => {
         number = random()
         city = `city-${random()}`
         accessCode = randomAccessCode(name)
+        laundryNum = 4
 
         hash = await bcrypt.hash(password, 10)
         hash_2 = await bcrypt.hash(password_2, 10)
@@ -45,7 +46,7 @@ describe('logic - send-message', () => {
         userId = user.id
         userId_2 = user_2.id
         let address = { street, number, city }
-        const { id } = await Cohousing.create({ name: nameCohousing, address, author: userId, accessCode, members: [userId] })
+        const { id } = await Cohousing.create({ name: nameCohousing, address, author: userId, accessCode, members: [userId], laundryNum })
         cohousingId = id
     })
 

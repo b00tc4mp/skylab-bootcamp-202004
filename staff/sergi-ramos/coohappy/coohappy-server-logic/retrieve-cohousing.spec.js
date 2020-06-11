@@ -14,7 +14,7 @@ const { utils: { randomAccessCode } } = require('coohappy-commons')
 describe('logic - retrieve cohousing', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let name, surname, email, password, userId, hash, street, number, city, cohousingId, accesCode
+    let name, surname, email, password, userId, hash, street, number, city, cohousingId, accesCode, laundryNum
 
     beforeEach(() =>
         Promise.all(
@@ -33,6 +33,7 @@ describe('logic - retrieve cohousing', () => {
                 number = random()
                 city = `city-${random()}`
                 accessCode = randomAccessCode(name)
+                laundryNum = 4
 
                 return bcrypt.hash(password, 10)
             })
@@ -42,7 +43,7 @@ describe('logic - retrieve cohousing', () => {
             .then(user => {
                 userId = user.id
                 let address = { street, number, city }
-                return Cohousing.create({ name: nameCohousing, address, author: userId, accessCode, members: [userId] })
+                return Cohousing.create({ name: nameCohousing, address, author: userId, accessCode, members: [userId], laundryNum})
             })
             .then(cohousing => {
                 cohousingId = cohousing._id.toString()
