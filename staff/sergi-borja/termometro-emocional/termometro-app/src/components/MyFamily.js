@@ -1,19 +1,36 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './MyFamily.sass'
 import { Link } from 'react-router-dom'
+import { createMemberList } from 'termometro-client-logic'
 
-function MyFamily() {
+function MyFamily({ token }) {
 
+    const [memberList, setMemberList] = useState()
+
+    useEffect(() => {
+        try {
+            (async () => {
+                const familyList = await createMemberList(token);
+                await setMemberList(familyList);
+            })()
+
+        } catch (error) {
+            if (error) throw error;
+        }
+    }, [])
+
+
+    console.log(memberList)
     return (
-        <footer className='familyContainer'>
+        <section className='familyContainer'>
             <Link to='/create-member' className='familyContainer__addButton' >Añadir</Link>
-            <div className='familyContainer__ul'>
-                <h2>Marina Tarrés</h2>
-            </div>
-            <div className='familyContainer__ul'>
-                <h2>Marina Tarrés</h2>
-            </div>
-        </footer>
+            {memberList && <h1>{memberList}</h1>}
+            {/* <ul>
+                {memberList.map((member)=>{
+                    <li>{member}</li>
+                })}
+            </ul> */}
+        </section>
     );
 }
 

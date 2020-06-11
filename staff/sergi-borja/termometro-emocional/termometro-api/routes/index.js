@@ -11,11 +11,12 @@ const parseBody = bodyParser.json()
 
 const api = new Router()
 
+
 api.post('/users', verifyExtractJwt, parseBody, registerUser)
 
 api.post('/users/auth', parseBody, authenticateUser)
 
-api.get('/users', verifyExtractJwt, retrieveUser)
+api.get('/users/:userId?', verifyExtractJwt, retrieveUser)
 
 api.patch('/users', verifyExtractJwt, parseBody, updateUser)
 

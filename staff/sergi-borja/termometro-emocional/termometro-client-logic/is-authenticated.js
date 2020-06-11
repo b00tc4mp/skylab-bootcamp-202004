@@ -10,8 +10,10 @@ module.exports = function(token) {
     return call('GET', `${this.API_URL}/users`,
         undefined,
         { 'Authorization': `Bearer ${token}` })
-        .then(user => {
-            return user.body
+        .then(bodyAndState => {
+            let body = JSON.parse(bodyAndState.body)
+            return body.name
+            
         })
 }.bind(context)
 

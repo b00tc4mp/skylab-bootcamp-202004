@@ -14,17 +14,16 @@ import CreateMember from './CreateMember';
 function App({history}) {
 
   const [token, setToken] = useState()
-  const [userAuthenticated, setUserAuthenticated] = useState()
+  const [userName, setUserName] = useState()
 
   useEffect(() => {
     if(sessionStorage.token){
       try {
         isAuthenticated(sessionStorage.token)
-          .then(userAuthenticated => {
-            if (userAuthenticated) {
+          .then(userName => {
+            if (userName) {
               setToken(sessionStorage.token)
-              setUserAuthenticated(userAuthenticated)
-              console.log(userAuthenticated)
+              setUserName(userName)
             }
           })
           .catch(error => { throw error })
@@ -36,8 +35,18 @@ function App({history}) {
 
   const handleGoToHome = (token) => {
     sessionStorage.token = token
-    setToken(token)
-    history.push('/home')
+    try {
+      isAuthenticated(token)
+        .then(userName => {
+          setUserName(userName)
+          setToken(token)
+          history.push('/home')
+        })
+        .catch(error => { throw error })
+    } catch (error) {
+      if (error) throw error
+    }
+    
   }
 
   const handleGoToLogin = () => {
@@ -50,8 +59,8 @@ function App({history}) {
         <Container>
           <Route exact path="/" render={()=> token? <Redirect to='/home'/> :<Login onLogin={handleGoToHome}/>}/>
           <Route path="/register" render={()=> token? <Redirect to='/home'/> : <Register onGoToLogin={handleGoToLogin}/>}/>
-          <Route path="/home" render={()=> token? <Home userAuthenticated={userAuthenticated}/> : <Redirect to='/'/>} />
-          <Route path="/my-family" render={()=> token? <MyFamily/> : <Redirect to='/'/>} />
+          <Route path="/home" render={()=> token? <Home userName={userName}/> : <Redirect to='/'/>} />
+          <Route path="/my-family" render={()=> token? <MyFamily token={token}/> : <Redirect to='/'/>} />
           <Route path="/create-member" render={()=> token? <CreateMember token={token}/> : <Redirect to='/'/>} />
           <Footer />
         </Container>
