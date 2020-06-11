@@ -1,0 +1,24 @@
+{
+  "name": "code-this-client-logic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "bcryptjs": "^2.4.3",
+    "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
+    "code-this-data": "file:../code-this-data",
+    "mocha": "^7.2.0",
+    "nyc": "^15.1.0",
+    "xhr2": "^0.2.0"
+  },
+  "dependencies": {
+    "code-this-commons": "file:../code-this-commons"
+  }
+}

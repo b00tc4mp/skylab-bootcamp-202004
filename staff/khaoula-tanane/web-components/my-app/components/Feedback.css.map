@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC;EACN,KAAK,EAAE,KAAK;CAMO;;AAJlB,AAAD,kBAAU,CAAC;EACP,KAAK,EAAE,MAAM;CAAG;;AAEnB,AAAD,gBAAQ,CAAC;EACL,KAAK,EAAE,GAAG;CAAG",
+    "sources": [
+        "Feedback.sass"
+    ],
+    "names": [],
+    "file": "Feedback.css"
+}

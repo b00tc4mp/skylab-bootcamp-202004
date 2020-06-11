@@ -1,12 +1,17 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import App from './components/App';
 import * as serviceWorker from './serviceWorker';
+// import { HashRouter as Router } from 'react-router-dom'
+
+const { REACT_APP_API_URL: API_URL } = process.env
+
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
+    
   </React.StrictMode>,
   document.getElementById('root')
 );
