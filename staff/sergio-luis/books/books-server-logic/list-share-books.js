@@ -25,7 +25,13 @@ module.exports = (userId) => {
 
         if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`);
 
-        const books = await Book.find({ $and: [{ ownerUserId: userId }, { actualUserId: !userId }] })
+        let books = await Book.find({ ownerUserId: userId  })
+        const book = await Book.find({ toUserId: userId })
+        .populate('fromUserId', 'name')
+        .populate('bookId', 'title image')
+        .lean()
+
+        books = books.filter(book=> book.actualUserId !== userId)
 
         if (!books.length) throw new UnexistenceError("Dont`t have books sharing")
 

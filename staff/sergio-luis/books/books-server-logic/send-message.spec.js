@@ -68,6 +68,7 @@ describe("sendMessage", () => {
 
         try {
             await sendMessage(userId, secondUserId, bookId, textMessage)
+            throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
@@ -80,6 +81,7 @@ describe("sendMessage", () => {
 
         try {
             await sendMessage(userId, secondUserId, bookId, textMessage)
+            throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
@@ -92,6 +94,7 @@ describe("sendMessage", () => {
 
         try {
             await sendMessage(userId, secondUserId, bookId, textMessage)
+            throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)

@@ -49,6 +49,7 @@ describe('server-logic-search-user', () => {
 
         try {
             await searchUser(query)
+            throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
@@ -79,5 +80,7 @@ describe('server-logic-search-user', () => {
         await User.deleteMany()
     })
 
-    after(async () => await mongoose.disconnect)
+    after (async() => {
+        return await mongoose.disconnect();
+    })
 })

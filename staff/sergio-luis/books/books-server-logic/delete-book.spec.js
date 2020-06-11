@@ -131,5 +131,7 @@ describe('server-logic-delete-book', () => {
        await Book.deleteMany()
     })
 
-    after(async()=> await mongoose.disconnect)
+    after (async() => {
+        return await mongoose.disconnect();
+    })
 })

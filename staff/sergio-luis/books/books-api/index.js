@@ -11,7 +11,7 @@ file.level = Logger.WARN
 console.level = Logger.DEBUG
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser,findBook,createBook,deleteBook,searchBook,searchUser,sendMessage,retrieveMessages,shareBook,listMyBooks,listShareBooks} = require('books-server-logic')
+const { registerUser, authenticateUser, retrieveUser,findBook,createBook,deleteBook,searchBook,searchUser,sendMessage,retrieveMessages,shareBook,listMyBooks,listShareBooks,addRequest,retrieveRequestedBooks} = require('books-server-logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
@@ -154,9 +154,10 @@ try {
                     handleError(error, res)
                 }
             })
-            app.path('/share-book', verifyExtractJwt ,parseBody, (req, res) => {
-                const { payload: { sub: userId }, body: { newUserId,bookId} } = req
 
+            app.patch('/share-book', verifyExtractJwt ,parseBody, (req, res) => {
+                const { body: { newUserId, bookId},payload: { sub: userId } } = req
+         
                 try {
                     shareBook(userId,newUserId,bookId)
                         .then(() => res.status(201).send('OK'))
@@ -184,6 +185,29 @@ try {
                 try {
                     listShareBooks(userId)
                         .then((books) => res.status(201).send(books))
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+
+            app.post('/add-requested-books', verifyExtractJwt ,parseBody,(req, res) => {
+                const { payload: { sub: userId } ,body:{bookId}} = req
+
+                try {
+                    addRequest(userId,bookId)
+                        .then(() => res.status(201).send())
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+            app.get('/retrieve-requested-books', verifyExtractJwt ,(req, res) => {
+                const { payload: { sub: userId }} = req
+
+                try {
+                    retrieveRequestedBooks(userId)
+                        .then(() => res.status(201).send())
                         .catch(error => handleError(error, res))
                 } catch (error) {
                     handleError(error, res)

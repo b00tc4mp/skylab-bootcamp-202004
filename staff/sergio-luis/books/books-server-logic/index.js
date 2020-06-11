@@ -11,6 +11,7 @@ module.exports = {
     retrieveMessages: require('./retrieve-received-messages'),
     shareBook: require('./accepted-share-book'),
     listMyBooks: require('./list-my-books'),
-    listShareBooks: require('./list-share-books')
+    listShareBooks: require('./list-share-books'),
+    retrieveRequestedBooks: require('./retrieve-requested-books')
 
 }

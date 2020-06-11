@@ -1,5 +1,5 @@
 /**
- * Create book.
+ * Send-message.
  * 
  * @param {string} fromUserId take by token.  
  * @param {string} toUserId book's Id).  

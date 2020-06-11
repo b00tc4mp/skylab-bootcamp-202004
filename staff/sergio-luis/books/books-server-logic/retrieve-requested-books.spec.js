@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const { env: { MONGODB_URL_TEST: MONGODB_URL } } = process
 const { random } = Math
-const listMyBooks = require('./list-my-books')
+const retrieveRequestedBooks = require('./retrieve-requested-books')
 const { expect } = require('chai')
 
 require('books-commons/polyfills/json')
@@ -11,7 +11,7 @@ const { mongoose, models: { User, Book} } = require('books-data')
 const bcrypt = require('bcryptjs')
 const { errors: { VoidError } } = require('books-commons')
 
-describe("list-my-books", () => {
+describe("retrieve-requested-book", () => {
     let name, surname, email, password, encryptedPassword, userId;
     let title, barCode, travelKm, bookId;
 
@@ -42,19 +42,22 @@ describe("list-my-books", () => {
         title = `title-${random()}`;
         barCode = `${random()}`;
         travelKm = random();
-        const book = await Book.create({ title, barCode, travelKm, ownerUserId: userId ,actualUserId: userId,});
+        const book = await Book.create({ title, barCode, travelKm, ownerUserId: secondUserId ,actualUserId: secondUserId,});
         bookId = book.id;
 
     })
 
     it("should succeed add a accept share book", async() => {
-        const books = await listMyBooks(userId)
+        await User.findByIdAndUpdate(userId, {$push: {requestedBooks : bookId }})
 
+        const books = await retrieveRequestedBooks(userId)
+debugger
         books.forEach(book=>{
             expect(book).to.exist
             expect(book._id.toString()).to.equal(bookId)
-            expect(book.ownerUserId.toString()).to.equal(userId)
-            expect(book.actualUserId.toString()).to.equal(userId)
+            expect(book.ownerUserId.toString()).to.equal(secondUserId)
+            expect(book.actualUserId.toString()).to.equal(secondUserId)
+            expect(book.title.toString()).to.equal(title)
         })
     })
 
@@ -62,7 +65,7 @@ describe("list-my-books", () => {
         userId = '5edf984ec1be038dc909f783'
 
         try {
-            await listMyBooks(userId)
+            await retrieveRequestedBooks(userId)
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
@@ -71,30 +74,29 @@ describe("list-my-books", () => {
     })
 
     it('Sould fail don`t have any book in the library of books', async () => {
-        await Book.deleteOne({_id:bookId})
 
         try {
-            await listMyBooks(userId)
+            await retrieveRequestedBooks(userId)
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
-            expect(error.message).to.equal("Dont`t have books in your library")
+            expect(error.message).to.equal("you don`t have any books requested")
         }
     })
 
 
     it('should fail on non-string field', () => {
         expect(() => {
-            listMyBooks(true)
+            retrieveRequestedBooks(true)
         }).to.throw(TypeError, 'true is not a string')
         expect(() => {
-            listMyBooks(123)
+            retrieveRequestedBooks(123)
         }).to.throw(TypeError, '123 is not a string')
     })
 
     it('should fail on non-string field', () => {
         expect(() => {
-            listMyBooks('')
+            retrieveRequestedBooks('')
         }).to.throw(VoidError, 'string is empty or blank')
 
     })
@@ -105,6 +107,6 @@ describe("list-my-books", () => {
 
     after (async() => {
         await Promise.all([User.deleteMany(), Book.deleteMany()]);
-        await mongoose.disconnect();
+        return await mongoose.disconnect();
     })
 })

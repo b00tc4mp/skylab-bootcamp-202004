@@ -100,7 +100,9 @@ describe('server-logic authenticate user', () => {
         })
     })
 
-    afterEach(() => User.deleteMany())
+    afterEach(async() => await User.deleteMany())
 
-    after(mongoose.disconnect)
+    after (async() => {
+        return await mongoose.disconnect();
+    })
 })

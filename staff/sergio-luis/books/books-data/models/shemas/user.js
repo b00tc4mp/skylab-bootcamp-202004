@@ -1,9 +1,5 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 const { utils: { Email } } = require('books-commons')
-const following = require('./following')
-const rating = require('./rating')
-const book = require('./book')
-const message = require('./message')
 
 module.exports = new Schema({
     name: {
@@ -27,26 +23,45 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-    books:[book],
+        
+    requestedBooks: [{
+        type: ObjectId,
+        ref: 'Book'
+    }],
 
-    following :[following],
+    following :[{
+        type:ObjectId,
+        ref:'User'
+    }],
+    followers :[{
+        type:ObjectId,
+        ref:'User'
+    }],
 
-    rating:[rating],
+    score:[{
+        user: {
+            type: ObjectId,
+            ref:'Users',
+        },
+        points:{
+            type:Number,
+        }
+    }],
 
     sendMessages:[{type: ObjectId, ref: 'Message'}],
 
     receivedMessages:[{type: ObjectId, ref: 'Message'}],
 
-    ratingAvg:{
-        type: Number
+    avgScore:{
+        type:Number
     },
 
-    localizationGps:{
+    gpsCoordinates:{
         lat: {
             type:Number
         },
         lon:{
             type:Number
-        },
+        }
     }
 })

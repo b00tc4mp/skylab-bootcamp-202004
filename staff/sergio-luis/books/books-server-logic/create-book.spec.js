@@ -111,10 +111,12 @@ describe('server-logic-create-book', () => {
 
     })
 
-    afterEach(() => {
-        User.deleteMany()
-        Book.deleteMany()
+    afterEach(async() => {
+        await User.deleteMany()
+        await Book.deleteMany()
     })
 
-    after(mongoose.disconnect)
+    after (async() => {
+        return await mongoose.disconnect();
+    })
 })

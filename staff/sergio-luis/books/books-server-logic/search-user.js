@@ -1,5 +1,5 @@
 /**
- * Create book.
+ * Search User.
  * 
  * @param {string} userId take by token.  
  * @param {string} query query for search user by name.  

@@ -9,7 +9,7 @@
  * @throws {CredentialsError} if you want a share a book and it not yours.
  * @throws {VoidError} if the input fiels ar empty.
  * 
- * @return {Object}  return an array of books.
+ * @return  no return nothing if success.
  *
  */
 
@@ -21,6 +21,7 @@ const { models: { User ,Book} } = require('books-data')
 module.exports = (userId,newUserId,bookId) => {
 
     String.validate.notVoid(userId)
+    String.validate.notVoid(newUserId)
     String.validate.notVoid(bookId)
 
     return (async() => {
@@ -35,11 +36,13 @@ module.exports = (userId,newUserId,bookId) => {
     if (!book) throw new UnexistenceError(`book with id ${bookId} does not exist`);
 
 
-   
       const _book = await Book.findById(bookId)
 
-      if(_book.actualUserId.toString() !== userId) throw new CredentialsError("The user can`t share the book "); 
+      if(_book.actualUserId.toString() !== userId) throw new CredentialsError("The user can`t share the book"); 
 
-      await Book.findByIdAndUpdate(bookId, {$set: {actualUserId : newUserId }});
+      await Promise.all([
+        Book.findByIdAndUpdate(bookId, {$set: {actualUserId : newUserId }}),
+        User.findByIdAndUpdate(newUserId,{$pull : { requestedBooks : bookId }})
+    ])
     })()
 }

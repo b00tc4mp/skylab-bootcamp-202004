@@ -13,27 +13,24 @@
 require('books-commons/polyfills/string')
 
 const { errors: { UnexistenceError } } = require('books-commons')
-const { models: { User, Book } } = require('books-data')
+const { models: { User} } = require('books-data')
 
 module.exports = (userId) => {
     String.validate.notVoid(userId)
 
     return (async() => {
         const user = await User.findById(userId)
-
         if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`);
 
-        const books = await Book.find({ actualUserId: userId })
+        const followingUsers = await User.find({ following: userId }).lean();
 
-        if (!books.length) throw new UnexistenceError("Dont`t have books in your library")
+        followingUsers.forEach(user => {
+            user.id = user._id.toString();
 
-        books.forEach(book => {
-          book.id = book._id.toString();
+        })
 
-          delete book._id;
-          delete book.__v;
-      })
+        if(!user.requestedBooks.length)new UnexistenceError("you don`t have any books requested");
 
-        return books
+        return user.requestedBooks
     })()
 }

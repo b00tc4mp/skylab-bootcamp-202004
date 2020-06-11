@@ -2,17 +2,18 @@ require('dotenv').config()
 
 const { env: { MONGODB_URL_TEST: MONGODB_URL } } = process
 const { random } = Math
-const listMyBooks = require('./list-my-books')
+const requestBook = require('./add-requested-book')
 const { expect } = require('chai')
 
 require('books-commons/polyfills/json')
 
-const { mongoose, models: { User, Book} } = require('books-data')
+const { mongoose, models: { User, Book, Message } } = require('books-data')
 const bcrypt = require('bcryptjs')
 const { errors: { VoidError } } = require('books-commons')
 
-describe("list-my-books", () => {
+describe("add-requested-book", () => {
     let name, surname, email, password, encryptedPassword, userId;
+    let secondName, secondSurname, secondEmail, secondPassword, secondEncryptedPassword, secondUserId;
     let title, barCode, travelKm, bookId;
 
     before (async() => {
@@ -42,27 +43,44 @@ describe("list-my-books", () => {
         title = `title-${random()}`;
         barCode = `${random()}`;
         travelKm = random();
-        const book = await Book.create({ title, barCode, travelKm, ownerUserId: userId ,actualUserId: userId,});
+        const book = await Book.create({ title, barCode, travelKm, ownerUserId: secondUserId ,actualUserId: secondUserId,});
         bookId = book.id;
 
     })
 
-    it("should succeed add a accept share book", async() => {
-        const books = await listMyBooks(userId)
+    it("should succeed add a request book", async() => {
+        await requestBook(userId, bookId)
 
-        books.forEach(book=>{
-            expect(book).to.exist
-            expect(book._id.toString()).to.equal(bookId)
-            expect(book.ownerUserId.toString()).to.equal(userId)
-            expect(book.actualUserId.toString()).to.equal(userId)
+        const user = await User.findById(userId)
+
+        expect(user).to.exist
+
+        user.requestedBooks.forEach(book=>{
+            expect(book.toString()).to.equal(bookId)
         })
+      
+    })
+    it("should fail to can`t request book in my posession", async() => {
+        title = `title-${random()}`;
+        barCode = `${random()}`;
+        travelKm = random();
+        const book = await Book.create({ title, barCode, travelKm, ownerUserId: userId ,actualUserId: userId,});
+        bookId = book.id;
+
+        try {
+            await requestBook(userId, bookId)
+       } catch (error) {
+           expect(error).to.exist
+           expect(error).to.be.an.instanceof(Error)
+           expect(error.message).to.equal(`You can't request the book because you are the actual poseidor`)
+       }
     })
 
-    it('Sould fail dont find userId', async () => {
+    it('Sould fail dont find user', async () => {
         userId = '5edf984ec1be038dc909f783'
 
         try {
-            await listMyBooks(userId)
+             await requestBook(userId, bookId)
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
@@ -70,33 +88,35 @@ describe("list-my-books", () => {
         }
     })
 
-    it('Sould fail don`t have any book in the library of books', async () => {
-        await Book.deleteOne({_id:bookId})
+    it('Sould fail dont find bookId', async () => {
+        bookId = '5edf984ec1be038dc909f783'
 
         try {
-            await listMyBooks(userId)
+            await requestBook(userId, bookId)
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
-            expect(error.message).to.equal("Dont`t have books in your library")
+            expect(error.message).to.equal(`book with id ${bookId} does not exist`)
         }
     })
 
 
     it('should fail on non-string field', () => {
         expect(() => {
-            listMyBooks(true)
+            requestBook(true, bookId)
         }).to.throw(TypeError, 'true is not a string')
         expect(() => {
-            listMyBooks(123)
+            requestBook(userId, 123)
         }).to.throw(TypeError, '123 is not a string')
     })
 
     it('should fail on non-string field', () => {
         expect(() => {
-            listMyBooks('')
+            requestBook('', bookId)
         }).to.throw(VoidError, 'string is empty or blank')
-
+        expect(() => {
+            requestBook(userId, '')
+        }).to.throw(VoidError, 'string is empty or blank')
     })
 
     afterEach(async() => {

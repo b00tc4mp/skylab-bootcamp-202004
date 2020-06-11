@@ -6,7 +6,7 @@ const registerUser = require('./register-user')
 const { random } = Math
 const { expect } = require('chai')
 require('books-commons/polyfills/json')
-const { errors: { VoidError, AssertionError } } = require('books-commons')
+const { errors: { VoidError} } = require('books-commons')
 const { mongoose, models: { User } } = require('books-data')
 const bcrypt = require('bcryptjs')
 
@@ -128,5 +128,7 @@ describe('server-logic register user', () => {
 
     afterEach(() => User.deleteMany())
 
-    after(mongoose.disconnect)
+    after (async() => {
+        return await mongoose.disconnect();
+    })
 })
