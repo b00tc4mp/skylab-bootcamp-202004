@@ -11,5 +11,7 @@ module.exports = {
     retrieveMessages: require('./retrieve-messages'),
     joinToCohousing: require('./joinToCohousing'),
     addFood: require('./add-food'),
-    substractFood: require('./substract-food')
+    substractFood: require('./substract-food'),
+    retrieveUserFoodList: require('./retrieve-user-food-list'),
+    retrieveAllUsersFoodList: require('./retrieve-allUsers-food-list')
 }
