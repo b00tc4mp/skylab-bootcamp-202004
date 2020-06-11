@@ -1,7 +1,7 @@
 require('escape-me-commons/polyfills/string')
 const { errors: { UnexistenceError } } = require('escape-me-commons')
 const { models: { User, EscapeRoom }, mongoose: { ObjectId } } = require('escape-me-data')
-debugger
+
 module.exports = (userId, escapeId, tag) => {
     String.validate.notVoid(userId);
     String.validate.notVoid(escapeId);

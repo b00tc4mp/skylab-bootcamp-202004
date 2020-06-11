@@ -15,7 +15,7 @@ const context = require('./context')
 
 context.API_URL = API_URL
 
-describe.only('logic - toggle escape room', () => {
+describe('logic - toggle escape room', () => {
     let users, escapeRooms
 
     let name, surname, username, email, password, token, hash, userId, escapeId
