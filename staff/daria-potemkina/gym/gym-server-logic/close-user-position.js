@@ -1,6 +1,6 @@
 require('gym-commons/polyfills/string')
 const { mongoose: { ObjectId }, models: { User, Contract, Price, AccountBalance, Product } } = require('gym-data')
-const { errors: { UnexistenceError } } = require('gym-commons')
+const { errors: { UnexistenceError, ValueError } } = require('gym-commons')
 const { round } = Math
 
 module.exports = (userId) => {
@@ -13,7 +13,7 @@ module.exports = (userId) => {
 
         const contracts = await Contract.find({ user: ObjectId(userId) }).populate('trades.price')
 
-        if (!contracts) throw new UnexistenceError('user have no current contracts')
+        if (!contracts.length) throw new UnexistenceError('user have no current contracts')
 
         const balances = await AccountBalance.find({ user: ObjectId(userId) }).sort({ date: -1 })
 
@@ -32,9 +32,7 @@ module.exports = (userId) => {
 
             const { settlementDate } = _product
 
-            if (settlementDate !== dateToday) {
-                throw new Error("should not be executed due to not reaching expiration date")
-            }
+            if (settlementDate !== dateToday) throw new ValueError ("should not be executed due to not reaching expiration date")
 
             const price = await Price.findOne({ product: ObjectId(product), date: dateToday })
 
@@ -53,7 +51,7 @@ module.exports = (userId) => {
                 }
             } else if (productType === 'option') {
                 for (let j in trades) {
-                    const { type: { side, strike } } = product
+                    const { side, strike } = _product.type
                     if (side === 'call' && trades[j].type === 'Buy') {
                         if (_price > strike)
                             profitAndLoss += round((_price - strike) * contractSize * trades[j].quantity * 100) / 100
