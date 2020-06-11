@@ -1,7 +1,8 @@
 const { env: { JWT_SECRET: SECRET } } = process
 
 const { Router } = require('express')
-const { registerUser, authenticate, retrieveUser,registerCohousing, retrieveCohousing, updateUser, updateCohousing, sendMessage, retrieveMessages, joinToCohousing } = require('./handlers')
+const { registerUser, authenticate, retrieveUser,registerCohousing, retrieveCohousing, updateUser, updateCohousing, sendMessage, 
+    retrieveMessages, joinToCohousing, addFood, substractFood } = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
 const { handleError } = require('../helpers')
@@ -30,6 +31,11 @@ api.post('/cohousings/message', [parseBody, verifyExtractJwt], sendMessage )
 api.get('/cohousings/message', verifyExtractJwt, retrieveMessages)
 
 api.post('/cohousings/add', [parseBody, verifyExtractJwt], joinToCohousing)
+
+api.patch('/users/food/add', [parseBody, verifyExtractJwt], addFood)
+
+api.patch('/users/food/substract', [parseBody, verifyExtractJwt], substractFood)
+
 
 
 
