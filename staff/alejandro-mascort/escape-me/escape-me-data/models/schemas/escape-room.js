@@ -3,6 +3,10 @@ require('escape-me-commons/polyfills/url')
 const punctuation = require('./punctuation')
 
 module.exports = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
     description: {
         type: String,
         required: true
@@ -45,7 +49,7 @@ module.exports = new Schema({
     },
 
     city: {
-        type: Number,
+        type: String,
         required: true
     },
 

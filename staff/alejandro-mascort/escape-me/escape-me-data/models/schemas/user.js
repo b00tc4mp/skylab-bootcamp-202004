@@ -1,6 +1,5 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 const { utils: { Email } } = require('escape-me-commons')
-const punctuation = require('./punctuation')
 require('escape-me-commons/polyfills/url')
 
 module.exports = new Schema({
