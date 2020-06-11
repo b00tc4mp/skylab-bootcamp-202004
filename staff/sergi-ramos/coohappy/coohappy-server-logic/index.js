@@ -9,5 +9,7 @@ module.exports = {
     updateCohousing: require('./update-cohousing'),
     sendMessage: require('./send-message'),
     retrieveMessages: require('./retrieve-messages'),
-    joinToCohousing: require('./joinToCohousing')
+    joinToCohousing: require('./joinToCohousing'),
+    addFood: require('./add-food'),
+    subsFood: require('./subs-food')
 }

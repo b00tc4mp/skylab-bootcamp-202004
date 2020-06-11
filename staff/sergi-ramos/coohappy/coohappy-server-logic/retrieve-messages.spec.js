@@ -13,7 +13,7 @@ const { errors: { VoidError } } = require('coohappy-commons')
 
 let name, surname, email, password, hash, userId, nameCohousing, street, number, city, accessCode, message, date
 
-describe('logic - udpate-cohousing', () => {
+describe('logic - retrieve-messages', () => {
 
     before(() => mongoose.connect(MONGODB_URL))
 
@@ -63,7 +63,7 @@ describe('logic - udpate-cohousing', () => {
             const allMessages = await retrieveMessages(userId)
             const { messages } = allMessages
             expect(messages).to.exist
-            expect(messages[0].userId.toString()).to.equal(userId)
+            expect(messages[0].userId._id.toString()).to.equal(userId)
             expect(messages[0].message).to.equal(singleMessage)
             expect(messages[0].date).to.equal(date)
 

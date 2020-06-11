@@ -48,10 +48,9 @@ module.exports = new Schema({
     },
 
     foodList: [{
-        foodItem: {
+        name: {
 
-            type: ObjectId,
-            ref: 'FoodItem',
+            type: String,
             required: true
 
         },
