@@ -1,7 +1,7 @@
 require('termometro-commons/polyfills/string')
 require('termometro-commons/polyfills/json')
 const { errors: { DuplicityError }, utils: { Email } } = require('termometro-commons')
-const { models: { User } } = require('termometro-data')
+const { mongoose: { ObjectId }, models: { User } } = require('termometro-data')
 const bcrypt = require('bcryptjs')
 
 module.exports = (name, surname, age, sex, email, password, userId) => {
@@ -20,6 +20,15 @@ module.exports = (name, surname, age, sex, email, password, userId) => {
 
         if (userId) {
             await User.create({ name, surname, age, sex, email, password: hash, admin: userId })
+
+            const member = await User.findOne({email})
+
+            const adminUser = await User.findOne( {_id: ObjectId(userId)} )
+
+            adminUser.members.push(ObjectId(member._id))
+
+            await adminUser.save()
+
         } else {
             await User.create({ name, surname, age, sex, email, password: hash })
         }

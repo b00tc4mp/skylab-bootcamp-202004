@@ -23,7 +23,7 @@ module.exports = function (name, surname, age, sex, email, password, token) {
         'POST',
         `${this.API_URL}/users`,
         `{ "name": "${name}", "surname": "${surname}", "age": "${age}", "sex": "${sex}","email": "${email}", "password": "${password}" }`,
-        ({ 'Content-type': 'application/json', 'Authorization': `Bearer ${token}` })
+        { 'Content-type': 'application/json', 'Authorization': `Bearer ${token}` }
 
     )
         .then(({ status, body }) => {

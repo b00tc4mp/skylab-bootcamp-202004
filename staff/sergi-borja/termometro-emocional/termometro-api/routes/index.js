@@ -11,7 +11,7 @@ const parseBody = bodyParser.json()
 
 const api = new Router()
 
-api.post('/users', parseBody, registerUser)
+api.post('/users', verifyExtractJwt, parseBody, registerUser)
 
 api.post('/users/auth', parseBody, authenticateUser)
 

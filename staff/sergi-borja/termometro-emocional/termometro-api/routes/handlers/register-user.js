@@ -2,9 +2,11 @@ const  {registerUser}  = require('termometro-server-logic')
 const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
-    const { body: { name, surname, age, sex, email, password } } = req
+    const { payload, body: { name, surname, age, sex, email, password } } = req
 
-    const { payload: { sub: userId } } = req
+    let userId;
+
+    if(typeof payload !== 'undefined') userId = payload.sub
 
     try {
         registerUser(name, surname, age, sex, email, password, userId)

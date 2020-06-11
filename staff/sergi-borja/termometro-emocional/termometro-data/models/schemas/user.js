@@ -19,7 +19,8 @@ module.exports = new Schema({
     
     sex: {
         type: String,
-        required: true
+        // enum: ['M','F'],
+        required: false
     },
 
     email: {
@@ -36,12 +37,12 @@ module.exports = new Schema({
 
     members: [{
         type: ObjectId,
-        ref: 'users'
+        ref: 'User'
     }],
 
-    administrator: {
+    admin: {
         type: ObjectId,
-        ref: 'users'
-    }
+        ref: 'User'
+    },
 })
 
