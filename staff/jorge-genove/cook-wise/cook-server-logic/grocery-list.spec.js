@@ -2,13 +2,13 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 
-const retriveDay = require('./retrive-day')
-const { floor, random } = Math
+const groceryList = require('./grocery-list')
+const {  random } = Math
 const { expect } = require('chai')
 require('cook-wise-commons/polyfills/json')
 const { mongoose, models: { User, Recipes, Ingredients } } = require('cook-wise-data')
 const bcrypt = require('bcryptjs')
-const { DuplicityError, UnexistenceError } = require('cook-wise-commons/errors')
+const {  UnexistenceError } = require('cook-wise-commons/errors')
 
 
 describe("search-recipe", () => {
@@ -53,6 +53,17 @@ describe("search-recipe", () => {
         const recipe = await Recipes.create({ name: recipeName, author: recipeAuthor, description, time, ingredients })
         recipeId = recipe.id
 
+        recipeName = `recipeName-${random()}`;
+        recipeAuthor = `author_${random()}`;
+        description = `description-${random()}`;
+        time = random();
+        ingredients.push(ingredient)
+
+        const recipeTwo = await Recipes.create({ name: recipeName, author: recipeAuthor, description, time, ingredients })
+        recipeIdTwo = recipeTwo.id
+
+        
+
         await User.findByIdAndUpdate(userId, { $addToSet: { recipes: recipe } });
 
         schedule.weekday = 'monday';
@@ -63,6 +74,12 @@ describe("search-recipe", () => {
 
         schedule.weekday = 'monday'
         schedule.timeline = 'dinner'
+        schedule.recipe = recipeIdTwo
+
+        user.schedule.push(schedule)
+
+        schedule.weekday = 'tuesday';
+        schedule.timeline = 'lunch'
         schedule.recipe = recipeId
 
         user.schedule.push(schedule)
@@ -70,84 +87,49 @@ describe("search-recipe", () => {
         await user.save()
 
         weekday = 'monday'
-
-
-
-
     })
+    
     afterEach(async () => {
         await Promise.all([User.deleteMany(), Ingredients.deleteMany(), Recipes.deleteMany(), ingredients.pop()]);
 
     })
 
-    it('should find the recipes of the day that you are searching if the day its full', async () => {
-
-        const result = await retriveDay(weekday, userId)
-
-        expect(result).to.exist
-        expect(result).to.be.an('array')
-        expect(result.length).to.equal(2)
-        result.forEach(meal => {
-            expect(meal.name).to.exist
-            expect(meal.author).to.exist
-            expect(meal.description).to.exist
-            expect(meal.ingredients).to.exist
-            expect(meal.time).to.exist
-
-        })
-
-    })
-
-    it('should find the recipe of the day that you are searching if only have one', async () => {
-        user.schedule[0].weekday = 'tuesday'
-        await user.save()
-        const result = await retriveDay(weekday, userId)
+    it ('should organize the grocery list without repeat any ingredient',async() =>{
+        
+        
+        const result = await groceryList(userId)
 
         expect(result).to.exist
         expect(result).to.be.an('array')
-        expect(result.length).to.equal(1)
-        result.forEach(meal => {
-            expect(meal.name).to.exist
-            expect(meal.author).to.exist
-            expect(meal.description).to.exist
-            expect(meal.ingredients).to.exist
-            expect(meal.time).to.exist
-
-        })
+        expect(result.length).to.be.greaterThan(0)
+      
 
     })
-    it('it must return an empty array if no matches found', async () => {
+
+     it('should return an empty array if not schudle in the user', async() =>{ 
        
         await User.findByIdAndUpdate(userId, {$set : {schedule: []}})
         
-        const result = await retriveDay(weekday, userId)
+        const result = await groceryList(userId)
 
         expect(result).to.exist
         expect(result).to.be.an('array')
         expect(result.length).to.equal(0)
+        /* for (let pos of array) {
+            array.filter(string => string === pos).length > 1 && return true;
+          }
+        
+          return false; */
+        
 
 
     })
-
-    it("shold throw an error if not match a recipe", async () => {
-        await Recipes.deleteMany()
-        let _error;
-        try {
-            await retriveDay(weekday,userId)
-        }catch(error) {
-            _error = error;
-        }
-
-        expect(_error).to.exist;
-        expect(_error).to.be.instanceof(UnexistenceError);
-        expect(_error.message).to.equal(`recipe with id ${recipeId} does not exist`); 
-    })
-
+    
     it("shold throw an error if not match a user", async () => {
         await User.deleteMany()
         let _error;
         try {
-            await retriveDay(weekday, userId)
+            await groceryList(userId)
         }catch(error) {
             _error = error;
         }
@@ -156,38 +138,23 @@ describe("search-recipe", () => {
         expect(_error).to.be.instanceof(UnexistenceError);
         expect(_error.message).to.equal(`user with id ${userId} does not exist`); 
     })
+
     it('should throw an error if userId its not an string', () => {
         expect(function () {
-            retriveDay(weekday, undefined)
+            groceryList( undefined)
         }).to.throw(TypeError, 'undefined is not a string')
     
         expect(function () {
-            retriveDay(weekday,1)
+            groceryList(1)
         }).to.throw(TypeError, '1 is not a string')
     
         expect(function () {
-            retriveDay(weekday, null)
+            groceryList( null)
         }).to.throw(TypeError, 'null is not a string')
     
         expect(function () {
-            retriveDay(weekday, true)
+            groceryList( true)
         }).to.throw(TypeError, 'true is not a string')
-    })    
-    it('should throw an error if weekday its not an string', () => {
-        expect(function () {
-            retriveDay(undefined, userId)
-        }).to.throw(TypeError, 'undefined is not a string')
-    
-        expect(function () {
-            retriveDay(1,userId)
-        }).to.throw(TypeError, '1 is not a string')
-    
-        expect(function () {
-            retriveDay(null, userId)
-        }).to.throw(TypeError, 'null is not a string')
-    
-        expect(function () {
-            retriveDay(true, userId)
-        }).to.throw(TypeError, 'true is not a string')
-    })    
+    })     
+
 })

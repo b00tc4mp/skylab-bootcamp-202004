@@ -8,5 +8,7 @@ module.exports = {
     retrieveFavorite: require('./retrieve-favorite'),
     retrieveUser: require('./retrieve-user'),
     toogleMenu: require('./toogle-menu'),
-    retriveDay: require('./retrive-day')
+    retriveDay: require('./retrive-day'),
+    groceryList: require('./grocery-list'),
+    recipeIdeas: require('./recipe-ideas')
 }
