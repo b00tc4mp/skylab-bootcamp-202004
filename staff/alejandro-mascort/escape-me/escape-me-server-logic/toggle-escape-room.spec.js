@@ -10,7 +10,7 @@ const { mongoose, models: { User, EscapeRoom } } = require('escape-me-data')
 const { errors: { UnexistenceError } } = require('escape-me-commons')
 const bcrypt = require('bcryptjs')
 
-describe.only('logic - toggle escape room', () => {
+describe('logic - toggle escape room', () => {
     before(() => {
         return mongoose.connect(MONGODB_URL)
             .then(async () => {
