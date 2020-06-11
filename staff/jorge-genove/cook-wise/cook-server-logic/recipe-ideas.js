@@ -1,0 +1,43 @@
+require('cook-wise-commons/polyfills/string')
+require('cook-wise-commons/polyfills/number')
+const { errors: { UnexistenceError } } = require('cook-wise-commons')
+const { models: { User } } = require('cook-wise-data')
+
+
+module.exports = (userId, { ingredients }) => {
+    
+    console.log(ingredients)
+    String.validate.notVoid(userId)
+    if(!(ingredients instanceof Array)) throw new TypeError( 'ingredients must be an array')
+    let recipeMatches = []
+    
+
+    return (async () => {
+        debugger
+        const user = await User.findById(userId)
+            .populate({
+                path: 'recipes',
+                populate: {
+                    path: 'ingredients.ingredient',
+                    model: 'Ingredients'
+                }
+            }).lean()
+            console.log(user)
+
+        ingredients.forEach(_ingredient => {
+            user.recipes.forEach((recipe) => {
+                recipe.ingredients.forEach(({ ingredient }) => {
+                    const index = recipeMatches.findIndex(item=> item.name === recipe.name)
+                    if (ingredient.name === _ingredient && index === -1) {
+                        
+                        recipeMatches.push(recipe)
+
+                    }
+                })
+            })
+        })
+        return recipeMatches
+    })()
+}
+
+
