@@ -13,7 +13,7 @@ const bcrypt = require('bcryptjs')
 describe('logic - addProduct', () => {
     before(() => mongoose.connect(MONGODB_URL_TEST))
 
-    let name, surname, email, password, userId, future, option, card, futureId, optionId, sellBuy, quantity, _futureId, _optionId, _balance, _products, _sellBuy, _quantity, _productId, price, priceId, optionPriceId, optionPrice, _trade
+    let name, surname, email, password, userId, future, option, card, futureId, optionId, sellBuy, quantity, _futureId, _optionId, _balance, _products, _sellBuy, _quantity, _productId, price, priceId, optionPriceId, optionPrice, _trade, dateToday
 
     beforeEach(async () => {
         await User.deleteMany()
@@ -29,7 +29,7 @@ describe('logic - addProduct', () => {
         card = {
             number: `${round(random() * 10000)}-${round(random() * 10000)}-${round(random() * 10000)}-${round(random() * 10000)}`,
             holder: `name-${random()} surname-${random()}`,
-            expirationDate: new Date('Janury 23, 2025'),
+            expirationDate: 'Janury 23, 2025',
             cvv: `${round(random() * 1000)}`
         }
 
@@ -39,7 +39,7 @@ describe('logic - addProduct', () => {
             exchange: `exchange-${random()}`,
             sector: `sector-${random()}`,
             contractSize: round(random() * 100),
-            settlementDate: new Date('September 18, 2020 17:45:00'),
+            settlementDate: 'September 18, 2020 17:45:00',
         }
 
         option = {
@@ -48,7 +48,7 @@ describe('logic - addProduct', () => {
             ticker: `ticker-${random()}`,
             sector: `sector-${random()}`,
             contractSize: round(random() * 100),
-            settlementDate: new Date('June 19, 2020 17:45:00'),
+            settlementDate: 'June 19, 2020 17:45:00',
             type: {
                 strike: round(random() * 10),
                 side: `side-${random()}`,
@@ -58,10 +58,14 @@ describe('logic - addProduct', () => {
         quantity = round(random() * 10)
 
         hash = await bcrypt.hash(password, 10)
+
+        dateToday = new Date().toString().split(' ').slice(1, 4).join(' ')
     })
 
     describe('when the user already exists', () => {
         beforeEach(async () => {
+            
+
             const user = await User.create({ name, surname, email, password, card })
             userId = user._id.toString()
 
@@ -71,10 +75,10 @@ describe('logic - addProduct', () => {
             const _option = await Product.create(option)
             optionId = _option._id.toString()
 
-            price = await Price.create({ product: futureId, date: new Date(), price: round(random() * 100) / 100 })
+            price = await Price.create({ product: futureId, date: dateToday, price: round(random() * 100) / 100 })
             priceId = price._id.toString()
 
-            optionPrice = await Price.create({ product: futureId, date: new Date(), price: round(random() * 100) / 100 })
+            optionPrice = await Price.create({ product: optionId, date: dateToday, price: round(random() * 100) / 100 })
             optionPriceId = optionPrice._id.toString()
         })
 
@@ -87,7 +91,7 @@ describe('logic - addProduct', () => {
             const [balance] = accountBalance
 
             expect(balance.user.toString()).to.equal(userId)
-            expect(balance.date).to.be.an.instanceOf(Date)
+            expect(balance.date).to.equal(dateToday)
             expect(balance.guarantee).to.equal(round(future.contractSize * quantity * 0.1 * price.price * 100) / 100)
             expect(balance.profitAndLoss).to.equal(0)
 
@@ -117,7 +121,7 @@ describe('logic - addProduct', () => {
             const [balance] = accountBalance
 
             expect(balance.user.toString()).to.equal(userId)
-            expect(balance.date).to.be.an.instanceOf(Date)
+            expect(balance.date).to.equal(dateToday)
             expect(balance.guarantee).to.equal(round(future.contractSize * quantity * 0.1 * price.price * 100) / 100)
             expect(balance.profitAndLoss).to.equal(0)
 
@@ -148,7 +152,7 @@ describe('logic - addProduct', () => {
             const [balance] = accountBalance
 
             expect(balance.user.toString()).to.equal(userId)
-            expect(balance.date).to.be.an.instanceOf(Date)
+            expect(balance.date).to.equal(dateToday)
             expect(balance.guarantee).to.equal(round(option.contractSize * quantity * 0.1 * option.type.strike * 100) / 100)
             expect(balance.profitAndLoss).to.equal(round(option.contractSize * quantity * optionPrice.price * (-1) * 100) / 100)
 
@@ -179,7 +183,7 @@ describe('logic - addProduct', () => {
             const [balance] = accountBalance
 
             expect(balance.user.toString()).to.equal(userId)
-            expect(balance.date).to.be.an.instanceOf(Date)
+            expect(balance.date).to.equal(dateToday)
             expect(balance.guarantee).to.equal(round(option.contractSize * quantity * 0.1 * option.type.strike * 100) / 100)
             expect(balance.profitAndLoss).to.equal(round(option.contractSize * quantity * optionPrice.price * 100) / 100)
 
@@ -357,10 +361,10 @@ describe('logic - addProduct', () => {
             const options = await Product.create(option)
             optionId = options._id.toString()
 
-            price = await Price.create({ product: futureId, date: new Date(), price: round(random() * 100) / 100 })
+            price = await Price.create({ product: futureId, date: dateToday, price: round(random() * 100) / 100 })
             priceId = price._id.toString()
 
-            optionPrice = await Price.create({ product: futureId, date: new Date(), price: round(random() * 100) / 100 })
+            optionPrice = await Price.create({ product: futureId, date: dateToday, price: round(random() * 100) / 100 })
             optionPriceId = optionPrice._id.toString()
 
             const user = await User.create({ name, surname, email, password, card })
@@ -406,7 +410,7 @@ describe('logic - addProduct', () => {
             const [, balance] = accountBalance
 
             expect(balance.user.toString()).to.equal(userId)
-            expect(balance.date).to.be.an.instanceOf(Date)
+            expect(balance.date).to.equal(dateToday)
             expect(balance.guarantee).to.equal(_balance.guarantee + round(option.contractSize * quantity * 0.1 * option.type.strike * 100) / 100)
             expect(balance.profitAndLoss).to.equal(round(option.contractSize * quantity * optionPrice.price * 100) / 100)
 
@@ -443,7 +447,7 @@ describe('logic - addProduct', () => {
             const [, balance] = accountBalance
 
             expect(balance.user.toString()).to.equal(userId)
-            expect(balance.date).to.be.an.instanceOf(Date)
+            expect(balance.date).to.equal(dateToday)
             expect(balance.guarantee).to.equal(_balance.guarantee + round(future.contractSize * quantity * 0.1 * price.price * 100) / 100)
             expect(balance.profitAndLoss).to.equal(0)
 

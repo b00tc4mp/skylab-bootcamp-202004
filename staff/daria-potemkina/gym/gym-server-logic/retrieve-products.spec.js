@@ -9,7 +9,7 @@ const chai = require('chai')
 chai.use(require('chai-datetime'))
 const { mongoose, models: { Product, Option } } = require('gym-data')
 
-describe.only('logic - retrieveProducts', () => {
+describe('logic - retrieveProducts', () => {
     before(() => mongoose.connect(MONGODB_URL_TEST))
 
     let option, future
@@ -23,7 +23,7 @@ describe.only('logic - retrieveProducts', () => {
             ticker: "ITX",
             sector: 'Consumer',
             contractSize: 100,
-            settlementDate: new Date('September 19, 2020 17:30:00')
+            settlementDate: 'September 19, 2020'
         })
 
         const option2 = new Option({
@@ -41,7 +41,7 @@ describe.only('logic - retrieveProducts', () => {
             exchange: 'MEFF',
             sector: 'Banking',
             contractSize: 100,
-            settlementDate: new Date('June 18, 2020 17:45:00'),
+            settlementDate: 'June 18, 2020',
         })
 
         await future.save()
@@ -60,7 +60,7 @@ describe.only('logic - retrieveProducts', () => {
         expect(_future.exchange).to.equal(future.exchange)
         expect(_future.sector).to.equal(future.sector)
         expect(_future.contractSize).to.equal(future.contractSize)
-        expect(_future.settlementDate).to.be.an.instanceOf(Date)
+        expect(_future.settlementDate).to.equal(future.settlementDate)
         expect(_future._id).to.be.undefined
 
         expect(_option.productType).to.equal(option.productType)
@@ -68,12 +68,10 @@ describe.only('logic - retrieveProducts', () => {
         expect(_option.exchange).to.equal(option.exchange)
         expect(_option.sector).to.equal(option.sector)
         expect(_option.contractSize).to.equal(option.contractSize)
-        expect(_option.settlementDate).to.be.an.instanceOf(Date)
+        expect(_option.settlementDate).to.equal(option.settlementDate)
         expect(_option.type.strike).to.equal(option.type.strike)
         expect(_option.type.side).to.equal(option.type.side)
         expect(_option._id).to.be.undefined
-
-        expect(_future.settlementDate).to.beforeDate(_option.settlementDate)
     })
 
     it('should return an error when there are no products', async() => {

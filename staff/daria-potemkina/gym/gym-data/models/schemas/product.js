@@ -27,7 +27,7 @@ module.exports = new Schema({
     },
 
     settlementDate: {
-        type: Date,
+        type: String,
         required: true
     },
 

@@ -7,5 +7,6 @@ module.exports = {
     retrieveUserBalance: require('./retrieve-user-balance'),
     retrieveUserCard: require('./retrieve-user-card'),
     addProduct: require('./add-product'),
-    retrieveProducts: require('./retrieve-products')
+    retrieveProducts: require('./retrieve-products'),
+    closeUserPosition: require('./close-user-position')
 }

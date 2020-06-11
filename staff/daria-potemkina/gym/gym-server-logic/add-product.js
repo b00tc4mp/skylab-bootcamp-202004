@@ -28,14 +28,17 @@ module.exports = (userId, productId, priceId, side, quantity) => {
 
         const { price } = await Price.findById(priceId)
 
-        const balance = await AccountBalance.find({ user: ObjectId(userId) })
+        const balances = await AccountBalance.find({ user: ObjectId(userId) }).sort({date: -1})
 
-        let guarantee = 0,
-            profitAndLoss = 0
+        let guarantee = 0, profitAndLoss = 0
+        
+        const dateToday = new Date().toString().split(' ').slice(1, 4).join(' ')
 
-        if (balance) {
-            guarantee = balance.reduce((accum, item) => accum + item.guarantee, 0)
-            profitAndLoss = balance.reduce((accum, item) => accum + item.profitAndLoss, 0)
+        if (balances.length){
+            const [balance] = balances
+
+            guarantee += balance.guarantee
+            profitAndLoss += balance.profitAndLoss
         }
 
         if (product.productType === 'future') {
@@ -43,7 +46,7 @@ module.exports = (userId, productId, priceId, side, quantity) => {
 
             guarantee += round(quantity * price * contractSize * 0.1 * 100) / 100
 
-            await AccountBalance.create({ user: userId, date: new Date(), guarantee, profitAndLoss })
+            await AccountBalance.create({ user: userId, date: dateToday, guarantee, profitAndLoss })
         }
 
         if (product.productType === 'option') {
@@ -58,7 +61,7 @@ module.exports = (userId, productId, priceId, side, quantity) => {
                 profitAndLoss += round(quantity * _contractSize * price * 100) / 100
             }
 
-            await AccountBalance.create({ user: userId, date: new Date(), guarantee, profitAndLoss })
+            await AccountBalance.create({ user: userId, date: dateToday, guarantee, profitAndLoss })
         }
 
         let contract = await Contract.findOne({ product: ObjectId(productId) })
