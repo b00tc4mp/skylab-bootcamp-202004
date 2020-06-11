@@ -9,12 +9,14 @@ import MyFamily from './MyFamily';
 import Footer from './Footer'
 import {isAuthenticated} from 'termometro-client-logic'
 import CreateMember from './CreateMember';
+import EditMember from './EditMember';
 
 
 function App({history}) {
 
   const [token, setToken] = useState()
   const [userName, setUserName] = useState()
+  const [memberInfo, setMemberInfo] = useState()
 
   useEffect(() => {
     if(sessionStorage.token){
@@ -53,6 +55,11 @@ function App({history}) {
     history.push('/')
   }
 
+  const handleGoToEdit = (member) => {
+    setMemberInfo(member)
+    history.push('/edit-member')
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -60,8 +67,9 @@ function App({history}) {
           <Route exact path="/" render={()=> token? <Redirect to='/home'/> :<Login onLogin={handleGoToHome}/>}/>
           <Route path="/register" render={()=> token? <Redirect to='/home'/> : <Register onGoToLogin={handleGoToLogin}/>}/>
           <Route path="/home" render={()=> token? <Home userName={userName}/> : <Redirect to='/'/>} />
-          <Route path="/my-family" render={()=> token? <MyFamily token={token}/> : <Redirect to='/'/>} />
+          <Route path="/my-family" render={()=> token? <MyFamily token={token} handleGoToEdit={handleGoToEdit}/> : <Redirect to='/'/>} />
           <Route path="/create-member" render={()=> token? <CreateMember token={token}/> : <Redirect to='/'/>} />
+          <Route path="/edit-member" render={()=> token? <EditMember token={token} memberInfo={memberInfo}/> : <Redirect to='/'/>} />
           <Footer />
         </Container>
       </header>

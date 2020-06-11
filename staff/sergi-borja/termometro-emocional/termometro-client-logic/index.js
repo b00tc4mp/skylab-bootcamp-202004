@@ -4,4 +4,5 @@ module.exports = {
     registerUser: require('./register-user'),
     isAuthenticated: require('./is-authenticated'),
     createMemberList: require('./create-member-list'),
+    editMember: require('./edit-member')
 }

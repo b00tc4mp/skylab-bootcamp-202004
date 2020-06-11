@@ -3,7 +3,7 @@ import './MyFamily.sass'
 import { Link } from 'react-router-dom'
 import { createMemberList } from 'termometro-client-logic'
 
-function MyFamily({ token }) {
+function MyFamily({ token, handleGoToEdit }) {
 
     const [memberList, setMemberList] = useState()
 
@@ -20,16 +20,13 @@ function MyFamily({ token }) {
     }, [])
 
 
-    console.log(memberList)
     return (
         <section className='familyContainer'>
-            <Link to='/create-member' className='familyContainer__addButton' >Añadir</Link>
-            {memberList && <h1>{memberList}</h1>}
-            {/* <ul>
-                {memberList.map((member)=>{
-                    <li>{member}</li>
-                })}
-            </ul> */}
+            <Link to='/create-member' className='familyContainer__addButton'>Añadir</Link>
+            <ul className='familyContainer__ul'>
+                {memberList && memberList.map((member)=><li>{member.name} <button onClick={()=> handleGoToEdit(member) }></button></li>)}
+                
+            </ul>
         </section>
     );
 }

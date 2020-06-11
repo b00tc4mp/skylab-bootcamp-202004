@@ -8,15 +8,15 @@ module.exports = function (token) {
 
     return (async () => {
         const response = await call('GET', `${this.API_URL}/users`, undefined, { 'Authorization': `Bearer ${token}` });
-        debugger
+        
         let { members } = JSON.parse(response.body);
         
         for (let i = 0; i < members.length; i++) {
             const _response = await call('GET', `${this.API_URL}/users/${members[i]}`);
     
-            const { name } = JSON.parse(_response.body);
+            const memberInfo = JSON.parse(_response.body);
     
-            members[i] = name;
+            members[i] = memberInfo;
         }
 
         return members;
