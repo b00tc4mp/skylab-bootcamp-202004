@@ -11,134 +11,129 @@ const { mongoose, models: { User, Event } } = require('aquaponics-data')
 describe('logic - retrieveEvents', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let userId, name, surname, email, password, role, confirmed, status, phone
-    let description1, description2, date1, date2, eventId, eventId1, eventId2
+    let userId, name, surname, email, password, role, confirmed, status, phone, description
+    let descriptionTwo, descriptionThree
+    let date, dateTwo, dateThree
+    let eventId, eventIdTwo, eventIdThree;
 
-    beforeEach(() =>
-        User.deleteMany()
-            .then(() => {
-                name = `name-${random()}`
-                surname = `surname-${random()}`
-                email = `e-${random()}@mail.com`
-                password = `password-${random()}`
-                role = "user"
-                status = "enable"
-                phone = random()
-                date = new Date()
-                date1 = new Date()
-                date2 = new Date()
-                description = "hello world"
-                description1 = "hola mundo"
-                description2 = "hola mon"
+    beforeEach(async () => {
+        await User.deleteMany()
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `e-${random()}@mail.com`
+        password = `password-${random()}`
+        role = "user"
+        status = "enable"
+        phone = random()
+        date = new Date()
+        dateTwo = new Date()
+        dateThree = new Date()
+        description = "hello world"
+        descriptionTwo = "hola mundo"
+        descriptionThree = "hola mon"
+
+        const result = await User.create({ name, surname, email, password, role, confirmed, status, phone, password })
+        userId = result.id
+
+        const event = await Event.create({ createdBy: userId, date, description })
+        eventId = event.id
+
+        const event1  = await Event.create({ createdBy: userId, date: dateTwo, description: descriptionTwo })
+        eventIdTwo = event1.id
+
+        const event2 = await Event.create({ createdBy: userId, date: dateThree, description: descriptionThree })
+        eventIdThree = event2.id
+
+        await User.findByIdAndUpdate(userId,( {$addToSet: {events: eventId}} ))
+
+        await User.findByIdAndUpdate(userId,( {$addToSet: {events: eventIdTwo}} ))
+
+        await User.findByIdAndUpdate(userId,( {$addToSet: {events: eventIdThree}} ))
+
+    })
+    describe('when userId exist', () => {
+            it('should retireve events', async () =>{
+                const result = await retrieveEvents(userId)
+                expect(result).to.be.an.instanceOf(Array)
+                const user = await User.find().populate('events')
+                expect(user[0].name).to.exist
+                expect(user[0].name).to.equal(name)
+                expect(user[0].surname).to.equal(surname)
+                expect(user[0].surname).to.exist
+                expect(user[0].email).to.equal(email)
+                expect(user[0].email).to.exist
+                expect(user[0].role).to.equal(role)
+                expect(user[0].role).to.exist
+                expect(user[0].status).to.equal(status)
+                expect(user[0].status).to.exist
+                expect(user[0].events).to.exist
+                const { events } = user[0]
+                expect(events).to.have.lengthOf(3)
+                expect(events).to.exist
+                expect(events.length).to.equal(3)
+                expect(events[0].date).to.exist
+                expect(events[0].date).to.be.an.instanceOf(Date)
+                expect(events[0].date).to.deep.equal(date)
+                expect(events[0].description).to.exist
+                expect(events[0].description).to.be.a('string')
+                expect(events[0].description).to.equal(description)
+                expect(events[0].id).to.exist
+                expect(events[0].id).to.equal(eventId)
+                expect(events[1].date).to.exist
+                expect(events[1].date).to.be.an.instanceOf(Date)
+                expect(events[1].date).to.deep.equal(date)
+                expect(events[1].description).to.exist
+                expect(events[1].description).to.be.a('string')
+                expect(events[1].description).to.equal(descriptionTwo)
+                expect(events[1].id).to.exist
+                expect(events[1].id).to.equal(eventIdTwo)
+                expect(events[2].date).to.exist
+                expect(events[2].date).to.be.an.instanceOf(Date)
+                expect(events[2].date).to.deep.equal(date)
+                expect(events[2].description).to.exist
+                expect(events[2].description).to.be.a('string')
+                expect(events[2].description).to.equal(descriptionThree)
+                expect(events[2].id).to.exist
+                expect(events[2].id).to.equal(eventIdThree)
             })
-    )
-
-    describe('when user already exists', () => {
-        beforeEach(() => {
-            return User.create({ name, surname, email, password, role, confirmed, status, phone, password })
-                .then(([result]) => userId = result.id)
-                .then(() => {
-                    return Promise.all([
-                        Event.create({ createdBy: userId, date, description }),
-                        Event.create({ createdBy: userId, date: date1, description: description1 }),
-                        Event.create({ createdBy: userId, date: date2, description: description2 }),
-                    ])
-                        .then(([, result]) => eventId = result.id)
-                        .then(([, , result]) => eventId1 = result.id)
-                        .then(([, , , result]) => eventId2 = result.id)
-                })
-        })
-
-        it('should upadate event on proper data', () => {
-            return retrieveEvents(date, description, userId)
-                .then(() => User.find().populate('events'))
-                .then(users => {
-                    expect(users).to.have.lengthOf(1)
-                    const [user] = users
-                    expect(user.name).to.exist
-                    expect(user.name).to.equal(name)
-                    expect(user.surname).to.equal(surname)
-                    expect(user.surname).to.exist
-                    expect(user.email).to.equal(email)
-                    expect(user.email).to.exist
-                    expect(user.role).to.equal(role)
-                    expect(user.role).to.exist
-                    expect(user.status).to.equal(status)
-                    expect(user.status).to.exist
-                    expect(user.events).to.exist
-                    const { events } = user
-                    expect(events).to.exist
-                    expect(events.length).to.equal(3)
-                    expect(events[0].date).to.exist
-                    expect(events[0].date).to.be.an.instanceOf(Date)
-                    expect(events[0].date).to.deep.equal(date)
-                    expect(events[0].description).to.exist
-                    expect(events[0].description).to.be.a('string')
-                    expect(events[0].description).to.equal(description)
-                    expect(events[0]._id).to.exist
-                })
-        })
+    
     })
 
-    describe('wrong inputs', () => {
+    it('should fail on wrong input', () => {
+        expect(() => {
+            retrieveEvents(true)
+        }).to.throw(TypeError, `${'true'} is not a string`)
 
-        it('should fail on wrong input', () => {
-            expect(() => {
-                retrieveEvents(true, description, userId)
-            }).to.throw(TypeError, `true is not a date`)
+        expect(() => {
+            retrieveEvents(undefined)
+        }).to.throw(TypeError, `${'undefined'} is not a string`)
 
-            expect(() => {
-                retrieveEvents(undefined, description, userId)
-            }).to.throw(Error, `date is empty or blank`)
+        expect(() => {
+            retrieveEvents(9)
+        }).to.throw(TypeError, `${'9'} is not a string`)
 
-            expect(() => {
-                retrieveEvents(9, description, userId)
-            }).to.throw(TypeError, `${'9'} is not a date`)
-
-            expect(() => {
-                retrieveEvents(date, true, userId)
-            }).to.throw(TypeError, `${'true'} is not a string`)
-
-            expect(() => {
-                retrieveEvents(date, undefined, userId)
-            }).to.throw(TypeError, `${'undefined'} is not a string`)
-
-            expect(() => {
-                retrieveEvents(date, 9, userId)
-            }).to.throw(TypeError, `${'9'} is not a string`)
-
-            expect(() => {
-                retrieveEvents(date, description, true)
-            }).to.throw(TypeError, `${'true'} is not a string`)
-
-            expect(() => {
-                retrieveEvents(date, description, undefined)
-            }).to.throw(TypeError, `${'undefined'} is not a string`)
-
-            expect(() => {
-                retrieveEvents(date, description, 9)
-            }).to.throw(TypeError, `${'9'} is not a string`)
-
-        })
     })
 
-    describe('when event does not exists', () => {
+    describe('when userId does not exist', () => {
         beforeEach(() => {
-            it('should fail when creating event because user does not exist', () => {
-                return Event.deleteMany()
-                    .then(() => retrieveEvents(date, description, userId))
-                    .then(() => { throw new Error('should not reach this point') })
-                    .catch(error => {
-                        expect(error).to.be.exist
-                        expect(error).to.be.an.instanceOf(Error)
-                        expect(error.message).to.equal(`event user id ${userId} does not exist`)
-                    })
+            it('should fail on trying to retireve', async () => {
 
+                try {
+                    await User.deleteMany()
+                    await retrieveEvents(userId)
+
+                    throw new Error('should not reach this point')
+                } catch (error) {
+                    expect(error).to.be.exist
+                    expect(error).to.be.an.instanceOf(Error)
+                    expect(error.message).to.equal(`user id ${userId} does not exist`)
+                }
             })
         })
+
     })
 
-    afterEach(() => User.deleteMany())
+    afterEach(() => User.deleteMany().then(() => { }))
 
     after(mongoose.disconnect)
 })

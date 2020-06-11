@@ -32,7 +32,6 @@ describe('logic - updateEvent', () => {
 
     describe('when user already exists', () => {
         beforeEach(() => {
-            debugger
             return User.create({ name, surname, email, password, role, confirmed, status, phone, password })
                 .then(result => userId = result.id)
                 .then(()=> Event.create({ createdBy: userId , date, description}))
