@@ -12,12 +12,12 @@ const { models: { Establishment }, mongoose } = require('qrmenu-data')
 describe('logic - register establishment', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let name, nif, email, password
+    let establishment, nif, email, password
 
     beforeEach(() => 
         Establishment.deleteMany()
             .then(() => {
-                name = `name-${random()}`
+                establishment = `name-${random()}`
                 nif =  generateNIF()
                 email = `e-${random()}@mail.com`
                 password = `password${random()}`
@@ -25,7 +25,7 @@ describe('logic - register establishment', () => {
     )
 
     it('should succeed on valid data', async () => {
-        const result = await registerEstablishment(name, nif, email, password)
+        const result = await registerEstablishment(establishment, nif, email, password)
 
         expect(result).to.be.undefined
 
@@ -33,23 +33,23 @@ describe('logic - register establishment', () => {
 
         expect(establishments.length).to.equal(1)
 
-        const [establishment] = establishments
+        const [_establishment] = establishments
 
-        expect(establishment.name).to.equal(name)
-        expect(establishment.nif).to.equal(nif)
-        expect(establishment.email).to.equal(email)
+        expect(_establishment.establishment).to.equal(establishment)
+        expect(_establishment.nif).to.equal(nif)
+        expect(_establishment.email).to.equal(email)
 
-        const match = await bcrypt.compare(password, establishment.password)
+        const match = await bcrypt.compare(password, _establishment.password)
 
         expect(match).to.be.true
     })
 
     describe('when establishment already exists', () => {
-        beforeEach(() => Establishment.create({ name, nif, email, password }))
+        beforeEach(() => Establishment.create({ establishment, nif, email, password }))
 
         it('should fail on trying to register an existing user', async () => {
             try {
-                await registerEstablishment(name, nif, email, password)
+                await registerEstablishment(establishment, nif, email, password)
 
                 throw new Error('should not reach this point')
             } catch (error) {

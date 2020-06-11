@@ -12,7 +12,7 @@ module.exports = (establishmentId, workerId, name, description, price, tags) => 
     Number.validate.positive(price)
     Array.validate(tags)
     Array.validate.notVoid(tags)
-    
+    debugger
     return (async() => {
         const establishment = await Establishment.findById(establishmentId)
         

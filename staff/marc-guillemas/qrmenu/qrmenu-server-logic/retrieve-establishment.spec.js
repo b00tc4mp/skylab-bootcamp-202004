@@ -11,12 +11,12 @@ const {utils: {generateNIF: {generateNIF}}} = require('qrmenu-commons')
 describe('logic - retrieve user', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let name, nif, email, password, establishmentId
+    let establishment, nif, email, password, establishmentId
 
     beforeEach(() =>
         Establishment.deleteMany()
         .then(() => {
-            name = `name-${random()}`
+            establishment = `name-${random()}`
             nif =  generateNIF()
             email = `e-${random()}@mail.com`
             password = `password${random()}`
@@ -25,20 +25,21 @@ describe('logic - retrieve user', () => {
 
     describe('when user already exists', () => {
         beforeEach(() =>
-            Establishment.create({ name, nif, email, password })
+            Establishment.create({ establishment, nif, email, password })
                 .then(establishment => establishmentId = establishment.id)
         )
 
         it('should succeed on correct user id', () =>
             retrieveEstablishment(establishmentId)
-                .then(establishment => {
-                    expect(establishment.name).to.equal(name)
-                    expect(establishment.nif).to.equal(nif)
-                    expect(establishment.email).to.equal(email)
-                    expect(establishment.password).to.be.undefined
-                    expect(establishment.dishes).to.be.undefined
-                    expect(establishment.orders).to.be.undefined
-                    expect(establishment.staff).to.be.undefined
+                .then(_establishment => {
+                    debugger
+                    expect(_establishment.establishment).to.equal(establishment)
+                    expect(_establishment.nif).to.equal(nif)
+                    expect(_establishment.email).to.equal(email)
+                    expect(_establishment.password).to.be.undefined
+                    expect(_establishment.dishes).to.be.undefined
+                    expect(_establishment.orders).to.be.undefined
+                    expect(_establishment.staff).to.be.undefined
                 })
         )
     })

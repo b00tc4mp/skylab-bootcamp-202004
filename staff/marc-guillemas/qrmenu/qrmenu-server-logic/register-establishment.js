@@ -4,8 +4,8 @@ const { utils: { Email, NIF }, errors: { DuplicityError }} = require('qrmenu-com
 const { models: {Establishment} } = require('qrmenu-data')
 const bcrypt = require('bcryptjs')
 
-module.exports = (name, nif, email, password) => {
-    String.validate.notVoid(name)
+module.exports = (establishment, nif, email, password) => {
+    String.validate.notVoid(establishment)
     String.validate.notVoid(nif)
     NIF.validate(nif)
     String.validate.notVoid(email)
@@ -20,6 +20,6 @@ module.exports = (name, nif, email, password) => {
 
         const hash = await bcrypt.hash(password, 10)
 
-        await Establishment.create({ name, nif, email, password: hash })
+        await Establishment.create({ establishment, nif, email, password: hash })
     })()
 }

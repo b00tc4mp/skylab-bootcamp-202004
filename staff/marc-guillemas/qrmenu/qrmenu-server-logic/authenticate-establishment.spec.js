@@ -13,12 +13,12 @@ const {utils: {generateNIF: {generateNIF}}} = require('qrmenu-commons')
 describe('logic - authenticate user', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let name, nif, email, password, establishmentId, hash
+    let establishment, nif, email, password, establishmentId, hash
 
     beforeEach(() =>
         Establishment.deleteMany()
         .then(() => {
-            name = `name-${random()}`
+            establishment = `name-${random()}`
             nif =  generateNIF()
             email = `e-${random()}@mail.com`
             password = `password${random()}`
@@ -31,13 +31,20 @@ describe('logic - authenticate user', () => {
     describe('when user already exists', () => {
         debugger
         beforeEach(() =>
-            Establishment.create({ name, nif, email, password: hash })
-                .then(establishment => establishmentId = establishment.id)
+            Establishment.create({ establishment, nif, email, password: hash })
+                .then(_establishment => establishmentId = _establishment.id)
         )
 
-        it('should succeed on correct credentials', () =>
-            authenticateEstablishment(email, password)
-                .then(_userId => expect(_userId).to.equal(establishmentId))
+        it('should succeed on correct credentials', () => {
+
+            try {
+                authenticateEstablishment(email, password)
+                    .then(_userId => expect(_userId).to.equal(establishmentId))
+                    .catch(error => expect(error).to.be.null)
+            } catch (error) {
+                expect(error).to.be.null
+            }
+        }
         )
 
         it('should fail on wrong password', () => {

@@ -4,6 +4,7 @@ const { errors: { UnexistenceError, CredentialsError } } = require('qrmenu-commo
 const bcrypt = require('bcryptjs')
 
 module.exports = (establishmentId, name, surname, role, password) => {
+    debugger
     String.validate.notVoid(establishmentId)
     String.validate.notVoid(name)
     String.validate.notVoid(surname)
@@ -24,7 +25,8 @@ module.exports = (establishmentId, name, surname, role, password) => {
         debugger
         staff.push(worker)
 
-        const personal =  await Establishment.findByIdAndUpdate(establishmentId, {$set: {staff}})
+        await Establishment.findByIdAndUpdate(establishmentId, {$set: {staff}})
+
         return 
     })()
 }

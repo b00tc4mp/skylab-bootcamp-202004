@@ -3,10 +3,11 @@ const { utils: { Email, NIF } } = require('qrmenu-commons')
 const dish = require('./dish')
 const order = require('./order')
 const staff = require('./staff')
+const table = require('./table')
 
 module.exports = new Schema ({
     
-    name: {
+    establishment: {
         type: String,
         required: true
     },
@@ -35,6 +36,9 @@ module.exports = new Schema ({
     // menus: [menu],
 
     orders: [order],
+
+
+    tables: [table],
 
 
     staff: [staff]
