@@ -4,7 +4,7 @@ const { errors : { UnexistenceError } } = require('coohappy-commons')
 
 module.exports = userId => {
     String.validate.notVoid(userId)
-
+    debugger
     return User.findOne({ _id: ObjectId(userId) }, { __v: 0, role: 0, password: 0, name: 0, surname: 0, email: 0, cohousing: 0 })
     .lean()
        
