@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx mocha *.spec.js",
-    "test:debug": "npx mocha debug *.spec.js"
+    "test:debug": "npx mocha --inspect=7000 --inspect-brk *.spec.js"
   },
   "author": "",
   "license": "ISC",

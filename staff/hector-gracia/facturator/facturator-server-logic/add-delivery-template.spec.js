@@ -59,24 +59,37 @@ describe("addDeliveryTemplate",()=>{
         delete newTemplate.products
         expect(()=>{addDeliveryTemplate(newTemplate)}).to.throw(TypeError,("undefined is not an array"))
         newTemplate.products= tempProducts
-        //newTemplate.products[0].quantity="string"
-        //expect(()=>{addDeliveryTemplate(newTemplate)}).to.throw(TypeError,("string is not a number"))
     })
-    false&&it("should return an error when the product does not exist",()=>{
-        let error
-        const id=mongoose.ObjectId().toString()
+    it("should return an error when the product does not exist",()=>{
+        const id = mongoose.ObjectId().toString()
         newTemplate.products[0].product=id;
-        (async()=>{
-        try {
+        
+        return (async()=>{
+            let error
+            try {
                 const result=await addDeliveryTemplate(newTemplate)
-                console.log(result)
             } catch (_error) {
                 error=_error
             }
+            expect(error).to.exist
+            expect(error).to.be.instanceOf(UnexistenceError)
+            expect(error.message).to.equal(`product with id ${id} does not exist`)
         })()
-        expect(error).to.exist
-        expect(error).to.be.instanceOf(UnexistenceError)
-        expect(error.message).to.equal(`product with id ${id} does not exist`)
+    })
+    it("should return an error if the quantity of a product is not a number",()=>{
+        newTemplate.products[0].quantity="string";
+        
+        return (async()=>{
+            let error
+            try {
+                const result=await addDeliveryTemplate(newTemplate)
+            } catch (_error) {
+                error=_error
+            }
+            expect(error).to.exist
+            expect(error).to.be.instanceOf(TypeError)
+            expect(error.message).to.equal(`string is not a number`)
+        })()
     })
 
 
