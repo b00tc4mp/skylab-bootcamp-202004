@@ -8,7 +8,9 @@ module.exports = {
     updateCohousing: require('./update-cohousing'),
     sendMessage: require('./send-message'),
     retrieveMessages: require('./retrieve-messages'),
-    joinToCohousing: require('./join-to-cohousing')
+    joinToCohousing: require('./join-to-cohousing'),
+    addFood: require('./add-food'),
+    substractFood: require('./substract-food')
    
   
 }

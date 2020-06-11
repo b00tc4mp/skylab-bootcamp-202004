@@ -4,7 +4,7 @@ const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 
 const { expect } = require('chai')
 const { random } = Math
-const subsFood = require('./subs-food')
+const substractFood = require('./substract-food')
 const bcrypt = require('bcryptjs')
 const { utils: { randomAccessCode } } = require('coohappy-commons')
 const { mongoose } = require('coohappy-data')
@@ -13,7 +13,7 @@ const { mongoose: { ObjectId }, models: { User, Cohousing } } = require('coohapp
 
 let name, surname, email, password, hash, userId, nameCohousing, street, number, city, accessCode, message, date, foodItem, foodItem_2
 
-describe('logic - subs-food', () => {
+describe('logic - substract-food', () => {
 
     before(() => mongoose.connect(MONGODB_URL))
 
@@ -55,7 +55,7 @@ describe('logic - subs-food', () => {
 
         it('should success on substract food item', async () => {
 
-            await subsFood(foodItem, userId)
+            await substractFood(foodItem, userId)
             const cohousing = await Cohousing.findOne({ members: userId })
             const user = await User.findById(userId)
             expect(user.foodList).to.exist
@@ -68,7 +68,7 @@ describe('logic - subs-food', () => {
         it('should delete on substract all weight food item', async () => {
 
 
-            await subsFood(foodItem, userId)
+            await substractFood(foodItem, userId)
             let cohousing = await Cohousing.findOne({ members: userId })
             let user = await User.findById(userId)
             expect(user.foodList).to.exist
@@ -78,7 +78,7 @@ describe('logic - subs-food', () => {
             expect(cohousing.foodList[0].name).to.equal(foodItem)
             expect(cohousing.foodList[0].weight).to.equal(1.5)
 
-            await subsFood(foodItem, userId)
+            await substractFood(foodItem, userId)
             cohousing = await Cohousing.findOne({ members: userId })
             user = await User.findById(userId)
             expect(user.foodList).to.exist
@@ -88,7 +88,7 @@ describe('logic - subs-food', () => {
             expect(cohousing.foodList[0].name).to.equal(foodItem)
             expect(cohousing.foodList[0].weight).to.equal(1)
 
-            await subsFood(foodItem, userId)
+            await substractFood(foodItem, userId)
             cohousing = await Cohousing.findOne({ members: userId })
             user = await User.findById(userId)
             expect(user.foodList).to.exist
@@ -98,7 +98,7 @@ describe('logic - subs-food', () => {
             expect(cohousing.foodList[0].name).to.equal(foodItem)
             expect(cohousing.foodList[0].weight).to.equal(0.5)
 
-            await subsFood(foodItem, userId)
+            await substractFood(foodItem, userId)
             cohousing = await Cohousing.findOne({ members: userId })
             user = await User.findById(userId)
             expect(user.foodList.length).to.equal(0)
@@ -114,7 +114,7 @@ describe('logic - subs-food', () => {
         it('should not change anything', async () => {
             try {
 
-                await subsFood(foodItem_2, userId)
+                await substractFood(foodItem_2, userId)
             } catch (error) {
                 expect(error).to.exist
                 expect(error.message).to.equal(`you can not substract ${foodItem_2}, you still don't have it on the list`)
@@ -127,8 +127,8 @@ describe('logic - subs-food', () => {
 
         it('on wrong type of data', () => {
 
-            expect(() => subsFood(true , userId)).to.throw(TypeError, 'true is not a string')
-            expect(() => subsFood(foodItem, 2)).to.throw(TypeError, '2 is not a string')
+            expect(() => substractFood(true , userId)).to.throw(TypeError, 'true is not a string')
+            expect(() => substractFood(foodItem, 2)).to.throw(TypeError, '2 is not a string')
         })
     })
 
