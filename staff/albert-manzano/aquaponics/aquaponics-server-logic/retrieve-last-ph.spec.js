@@ -99,7 +99,9 @@ describe('logic - retrieveLastPh', () => {
     })
 
 
-    afterEach(() => User.deleteMany())
+    afterEach(async() =>{
+        await Ph.deleteMany()
+        await User.deleteMany()})
 
-    after(() => mongoose.disconnect)
+    after(async() => await mongoose.disconnect)
 })

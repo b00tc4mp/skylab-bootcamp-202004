@@ -100,8 +100,7 @@ describe('logic - authenticate user', () => {
             }).to.throw(TypeError, `${'9'} is not a string`)
         })
     })
+    afterEach(async() =>await User.deleteMany())
 
-    afterEach(() => User.deleteMany())
-
-    after(mongoose.disconnect)
+    after(async() => await mongoose.disconnect)
 })

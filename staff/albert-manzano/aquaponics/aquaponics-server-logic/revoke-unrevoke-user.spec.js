@@ -76,8 +76,7 @@ describe('logic - confirm-user', () => {
                 expect(error.message).to.equal(`user with ${userId} does not exist`)
             })
     })
+    afterEach(async() =>await User.deleteMany())
 
-    afterEach(() => User.deleteMany())
-
-    after(() => mongoose.disconnect)
+    after(async() => await mongoose.disconnect)
 })

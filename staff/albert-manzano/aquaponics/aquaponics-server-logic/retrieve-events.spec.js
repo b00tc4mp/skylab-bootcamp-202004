@@ -133,7 +133,7 @@ describe('logic - retrieveEvents', () => {
 
     })
 
-    afterEach(() => User.deleteMany().then(() => { }))
+    afterEach(async() =>await User.deleteMany())
 
-    after(mongoose.disconnect)
+    after(async()=>await mongoose.disconnect)
 })

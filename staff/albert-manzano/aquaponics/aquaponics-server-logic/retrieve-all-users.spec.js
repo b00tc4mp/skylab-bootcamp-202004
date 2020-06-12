@@ -119,9 +119,7 @@ describe('logic - retrieveAllUsers', () => {
                 })
         })
     })
+    afterEach(async() =>await User.deleteMany())
 
-
-    afterEach(() => User.deleteMany())
-
-    after(() => mongoose.disconnect)
+    after(async() => await mongoose.disconnect)
 })

@@ -1,5 +1,5 @@
 const ConsoleLogger = require('./console-logger')
 
-let instance // singleton pattern
+let instance
 
 module.exports = () => instance? instance : instance = new ConsoleLogger()

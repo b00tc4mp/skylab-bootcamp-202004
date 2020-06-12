@@ -156,7 +156,10 @@ describe('logic - updateEvent', () => {
         })
 
     })
-    afterEach(() => User.deleteMany())
+    afterEach(async() =>{
+        await User.deleteMany()
+        await Event.deleteMany()
+    })
 
-    after(mongoose.disconnect)
+    after(async()=> await mongoose.disconnect)
 })
