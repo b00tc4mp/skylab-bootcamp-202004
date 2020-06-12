@@ -14,6 +14,8 @@ module.exports = {
     retrieveUserFoodList: require('./retrieve-user-food-list'),
     retrieveAllUsersFoodList: require('./retrieve-all-users-food-list'),
     addDateLaundry: require('./add-date-laundry'),
-    deleteDateLaundry: require('./delete-date-laundry')   
+    deleteDateLaundry: require('./delete-date-laundry'),
+    retrieveLaundry: require('./retrieve-laundry')
+
   
 }

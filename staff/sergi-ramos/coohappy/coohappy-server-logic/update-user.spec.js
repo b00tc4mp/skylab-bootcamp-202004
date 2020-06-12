@@ -126,7 +126,7 @@ describe('logic - update-user', () => {
         })
     })
 
-    afterEach(() => User.deleteMany())
+    afterEach( async () => await User.deleteMany())
 
     after(mongoose.disconnect)
 })

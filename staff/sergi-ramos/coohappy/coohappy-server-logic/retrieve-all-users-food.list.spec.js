@@ -11,7 +11,7 @@ const { mongoose } = require('coohappy-data')
 const { errors: { VoidError } } = require('coohappy-commons')
 const { models: { User, Cohousing }, mongoose: { ObjectId } } = require('coohappy-data')
 
-let name, surname, email, password, hash, userId, nameCohousing, street, number, city, accessCode, message, date, 
+let name, surname, email, password, hash, userId, nameCohousing, street, number, city, accessCode,
 foodItem, foodItem_2, _name, _surname, _email, _password, _hash, _nameCohousing, _street, _number, _city, _accessCode, laundryNum
 
 describe('logic - retrieve-all-user-food-list', () => {
