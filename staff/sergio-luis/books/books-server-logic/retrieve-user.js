@@ -1,7 +1,8 @@
 /**
- * Authenticate User.
+ * Retrieved User.
  * 
  * @param {string} userId The id of the user normaly we take this value by token. 
+ * 
  * @throws {VoidError} if don`t introduce any userId.
  * @throws {Error} if the userId don`t exist in database.
  * 

@@ -1,12 +1,12 @@
 /**
- * list-my-library.
+ * Retrieve book.
  * 
  * @param {string} bookId book id  
  *
- * @throws {UnexistenceError} if don`t find userId in data base.
+ * @throws {UnexistenceError} if don`t find any book in data base.
  * @throws {VoidError} if the input fiels ar empty.
  * 
- * @return {Object}  return a of book.
+ * @return {Object}  return a book.
  *
  */
 
@@ -16,13 +16,13 @@ const { errors: { UnexistenceError } } = require('books-commons')
 const { models: { Book} } = require('books-data')
 
 module.exports = (bookId) => {
-    String.validate.notVoid(userId)
+    String.validate.notVoid(bookId)
 
     return (async() => {
-        const book = await Book.findById(userId)
+        const book = await Book.findById(bookId)
         if (!book) throw new UnexistenceError(`book with id ${bookId} does not exist`);
 
-            book.id = book._id.toString();
+            book.id = book._id.toString()
             delete book._id;
             delete book.__v;
 

@@ -1,13 +1,12 @@
 /**
  * Search User.
  * 
- * @param {string} userId take by token.  
  * @param {string} query query for search user by name.  
  *
- * @throws {UnexistenceError} if don`t find userId in data base.
+ * @throws {UnexistenceError} if don`t find any user with this name in data base.
  * @throws {VoidError} if the input fiels ar empty.
  * 
- * @return {Object}  return an array of books.
+ * @return {Object}  return an array of users.
  *
  */
 

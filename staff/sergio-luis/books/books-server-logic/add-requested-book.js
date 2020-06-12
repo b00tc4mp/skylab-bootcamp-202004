@@ -8,7 +8,7 @@
  * @throws {CredentialsError} if you want a share a book and it not yours.
  * @throws {VoidError} if the input fiels ar empty.
  * 
- * @return {Object}  return an array of books.
+ * @return  no return nothing if success.
  *
  */
 

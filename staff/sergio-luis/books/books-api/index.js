@@ -11,7 +11,34 @@ file.level = Logger.WARN
 console.level = Logger.DEBUG
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser,findBook,createBook,deleteBook,searchBook,searchUser,sendMessage,retrieveMessages,shareBook,listMyBooks,listShareBooks,addRequest,retrieveRequestedBooks} = require('books-server-logic')
+const { 
+    registerUser, 
+    authenticateUser, 
+    retrieveUser,
+    updateUser,
+    searchUser,
+    findBook,
+    createBook,
+    deleteBook,
+    searchBook,
+    retrieveBook,
+    acceptedShareBook,
+    calculateDistanceBook,
+    sendMessage,
+    retrieveMessages,
+    deleteRecievedMessages,
+    listMyBooks,
+    listShareBooks,
+    addRequestedBook,
+    retrieveRequestedBooks,
+    toggleFollowing,
+    retrieveFollowing,
+    updateCoordinates,
+    retrieveCoordinates,
+    addScore,
+    retrieveAvgScore
+} = require('books-server-logic')
+
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
@@ -27,17 +54,13 @@ try {
     mongoose.connect(MONGODB_URL)
         .then(() => {
             console.info(`connected to database ${MONGODB_URL}`)
-
             const app = express()
-
             const parseBody = bodyParser.json()
-
             const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
-
             app.use(cors)
 
 
-            app.post('/register', parseBody, (req, res) => {
+            app.post('/users/register', parseBody, (req, res) => {
                 const { body: { name, surname, email, password } } = req
 
                 try {
@@ -49,7 +72,7 @@ try {
                 }
             })
 
-            app.post('/authenticate', parseBody, (req, res) => {
+            app.post('/users/authenticate', parseBody, (req, res) => {
                 const { body: { email, password } } = req
 
                 try {
@@ -62,11 +85,11 @@ try {
                 }
             })
 
-            app.get('/retrieve', verifyExtractJwt, (req, res) => {
+            app.get('/users/:query?', verifyExtractJwt,(req, res) => {
                 try {
-                    const { payload: { sub: userId }, params: { userId: otherUserId } } = req
+                    const { params: { query }, payload:{sub:userId} } = req
 
-                    retrieveUser(otherUserId || userId)
+                    retrieveUser(query || userId)
                         .then(user => res.send(user))
                         .catch(error => handleError(error, res))
                 } catch (error) {
@@ -74,53 +97,19 @@ try {
                 }
             })
 
-            app.get('/find-book/:query?', (req, res) => {
-                try {
-                    const { params: { query:query} } = req
-                    findBook(query)
-                        .then(book => res.send(book))
+            app.patch('/users/update',verifyExtractJwt,parseBody,(req,res)=>{
+                const {payload:{sub:userId}, body:{name,surname,email,password}} =req
+
+                try{
+                    updateUser(userId,name,surname,email,password)
+                        .then(()=> res.status(200).send())
                         .catch(error => handleError(error, res))
-                } catch (error) {
+                }catch(error){
                     handleError(error, res)
                 }
             })
 
-            app.post('/create-book', verifyExtractJwt ,parseBody, (req, res) => { 
-                const { body: {title,image,description,barCode} ,payload: { sub: userId },} = req
-
-                try {
-                    createBook(userId,title,image,description,barCode)
-                        .then(() => res.status(201).send())
-                        .catch(error => handleError(error, res))
-                } catch (error) {
-                    handleError(error, res)
-                }
-            })
-
-            app.delete('/remove-book', verifyExtractJwt ,parseBody, (req, res) => { 
-                const { body: {bookId} ,payload: { sub: userId }} = req
-
-                try {
-                    deleteBook(userId,bookId)
-                        .then(() => res.status(201).send())
-                        .catch(error => handleError(error, res))
-                } catch (error) {
-                    handleError(error, res)
-                }
-            })
-
-            app.get('/search-book/:query?', verifyExtractJwt ,parseBody, (req, res) => { 
-                const { params: { query:query} ,payload: { sub: userId }} = req
-
-                try {
-                   searchBook(userId,query)
-                        .then((book) => res.status(201).send(book))
-                        .catch(error => handleError(error, res))
-                } catch (error) {
-                    handleError(error, res)
-                }
-            })
-            app.get('/search-user/:query?',parseBody, (req, res) => { 
+            app.get('/users/search/:query?',parseBody, (req, res) => { 
                 const { params: { query:query}} = req
 
                 try {
@@ -132,7 +121,126 @@ try {
                 }
             })
 
-            app.post('/send-message', verifyExtractJwt ,parseBody, (req, res) => {
+            app.patch('/users/coordinates',verifyExtractJwt,parseBody,(req,res)=>{
+                const { payload: { sub: userId },body:{latitude,longitude}} = req
+                
+                try {
+                    updateCoordinates(userId,latitude,longitude)
+                        .then(() => res.status(200).send())
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+
+            app.get('/users/coordinates/retrieve',verifyExtractJwt,(req,res)=>{
+                const { payload: { sub: userId }} = req
+        
+                try {
+                    retrieveCoordinates(userId)
+                        .then((body) => res.status(201).send(body))
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+
+
+            app.get('/books/find/:query?', (req, res) => {
+                const { params: { query:query} } = req
+                
+                try {
+                    findBook(query)
+                        .then(book => res.status(201).send(book))
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+
+            app.post('/books/create', verifyExtractJwt ,parseBody, (req, res) => { 
+                const { body: {title,image,description,barCode} ,payload: { sub: userId },} = req
+
+                try {
+                    createBook(userId,title,image,description,barCode)
+                        .then(() => res.status(201).send())
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+
+            app.delete('/books/delete/:query?', verifyExtractJwt , (req, res) => { 
+                const { params:{query} ,payload: { sub: userId }} = req
+
+                try {
+                    deleteBook(userId,query)
+                        .then(() => res.status(201).send())
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+
+            app.get('/books/search/:query?', verifyExtractJwt ,parseBody, (req, res) => { 
+                const { params: { query:query} ,payload: { sub: userId }} = req
+
+                try {
+                   searchBook(userId,query)
+                        .then((book) => res.status(201).send(book))
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+            app.get('/books/:bookId?',parseBody, (req, res) => { 
+                const { params: { bookId:query} } = req
+
+                try {
+                   retrieveBook(query)
+                        .then((book) => res.status(201).send(book))
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+
+            app.patch('/books/share/accepted', verifyExtractJwt ,parseBody, (req, res) => {
+                const { body: {newUserId,bookId} ,payload: { sub: userId }} = req
+
+                try {
+                   acceptedShareBook(userId, newUserId, bookId)
+                        .then(() => res.status(201).send())
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+
+            app.get('/books/share/list',verifyExtractJwt,(req,res)=>{
+                const {payload:{sub:userId}} = req
+                try {
+                    listShareBooks(userId)
+                         .then((book) => res.status(200).send(book))
+                         .catch(error => handleError(error, res))
+                 } catch (error) {
+                     handleError(error, res)
+                 }
+            })
+           
+            app.post('/books/add/distance', verifyExtractJwt ,parseBody, (req, res) => {
+                const { body: { newUserId,bookId } ,payload: { sub: userId }} = req
+
+                try {
+                    calculateDistanceBook(userId, newUserId, bookId)
+                        .then(() => res.status(201).send())
+                        .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+       
+            app.post('/books/message/send', verifyExtractJwt ,parseBody, (req, res) => {
                 const { body: { toUserId,bookId,textMessage } ,payload: { sub: userId }} = req
 
                 try {
@@ -143,31 +251,33 @@ try {
                     handleError(error, res)
                 }
             })
-            app.get('/retrieve-messages', verifyExtractJwt ,parseBody, (req, res) => {
+
+            app.get('/books/messages/retrieve', verifyExtractJwt ,parseBody, (req, res) => {
                 const { payload: { sub: userId }} = req
 
                 try {
                     retrieveMessages(userId)
-                        .then((messages) => res.status(201).send(messages))
+                        .then((messages) => res.status(200).send(messages))
                         .catch(error => handleError(error, res))
                 } catch (error) {
                     handleError(error, res)
                 }
             })
 
-            app.patch('/share-book', verifyExtractJwt ,parseBody, (req, res) => {
-                const { body: { newUserId, bookId},payload: { sub: userId } } = req
-         
+            app.delete('/books/messages/delete/:messageId',verifyExtractJwt,(req,res)=>{
+                const { payload: { sub: userId } , params:{messageId}} = req
+
                 try {
-                    shareBook(userId,newUserId,bookId)
-                        .then(() => res.status(201).send('OK'))
+                    debugger
+                    deleteRecievedMessages(userId,messageId)
+                        .then(()=>res.status(200).send())
                         .catch(error => handleError(error, res))
                 } catch (error) {
                     handleError(error, res)
                 }
             })
 
-            app.get('/list-my-books', verifyExtractJwt ,(req, res) => {
+            app.get('/books/list/mybooks', verifyExtractJwt ,(req, res) => {
                 const { payload: { sub: userId } } = req
 
                 try {
@@ -179,41 +289,75 @@ try {
                 }
             })
 
-            app.get('/list-share-books', verifyExtractJwt ,(req, res) => {
-                const { payload: { sub: userId } } = req
+        
+            app.post('/books/requested/add/:bookId?', verifyExtractJwt ,(req, res) => {
+                const { payload: { sub: userId },params:{bookId}} = req
 
                 try {
-                    listShareBooks(userId)
-                        .then((books) => res.status(201).send(books))
-                        .catch(error => handleError(error, res))
-                } catch (error) {
-                    handleError(error, res)
-                }
-            })
-
-            app.post('/add-requested-books', verifyExtractJwt ,parseBody,(req, res) => {
-                const { payload: { sub: userId } ,body:{bookId}} = req
-
-                try {
-                    addRequest(userId,bookId)
+                    addRequestedBook(userId,bookId)
                         .then(() => res.status(201).send())
                         .catch(error => handleError(error, res))
                 } catch (error) {
                     handleError(error, res)
                 }
             })
-            app.get('/retrieve-requested-books', verifyExtractJwt ,(req, res) => {
+            app.get('/books/requested/retrieve', verifyExtractJwt ,(req, res) => {
                 const { payload: { sub: userId }} = req
 
                 try {
                     retrieveRequestedBooks(userId)
-                        .then(() => res.status(201).send())
+                        .then((body) => res.status(201).send())
                         .catch(error => handleError(error, res))
                 } catch (error) {
                     handleError(error, res)
                 }
             })
             
+            app.post('/books/following/toggle',verifyExtractJwt,parseBody,(req,res)=>{
+                
+                const { payload: { sub: userId }, body:{followingUserId}} = req
+                try {
+                    toggleFollowing(userId,followingUserId)
+                    .then(() => res.status(200).send())
+                    .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+            app.get('/books/following/retrieve',verifyExtractJwt,(req,res)=>{
+                
+                const { payload: { sub: userId }} = req
+                try {
+                    retrieveFollowing(userId)
+                    .then((body) => res.status(200).send(body))
+                    .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+
+            app.patch('/books/score/add',verifyExtractJwt,parseBody,(req,res)=>{
+                const { payload: { sub: userId }, body:{recievedPointUserId, points}} = req
+                
+                try {
+                    addScore(userId, recievedPointUserId, points)
+                    .then(() => res.status(200).send())
+                    .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
+            app.get('/books/score/retrieve/:query?',parseBody,(req,res)=>{
+                const { params: { query:query} } = req
+                
+                try {
+                    retrieveAvgScore(query)
+                    .then((body) => res.status(200).send(body.toString()))
+                    .catch(error => handleError(error, res))
+                } catch (error) {
+                    handleError(error, res)
+                }
+            })
 
             app.get('*', (req, res) => {
                 res.status(404).send('Not Found :(')

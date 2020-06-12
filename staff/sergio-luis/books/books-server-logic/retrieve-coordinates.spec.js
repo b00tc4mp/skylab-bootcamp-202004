@@ -2,22 +2,22 @@ require('dotenv').config()
 
 const { env: { MONGODB_URL_TEST: MONGODB_URL } } = process
 const { random } = Math
-const retrieveBook = require('./retrieve-book')
+const retrieveCoodinates = require('./retrieve-coordinates')
 const { expect } = require('chai')
 
 require('books-commons/polyfills/json')
 
-const { mongoose, models: { User, Book } } = require('books-data')
+const { mongoose, models: { User } } = require('books-data')
 const bcrypt = require('bcryptjs')
 const { errors: { VoidError } } = require('books-commons')
 
-describe("retrieve-book", () => {
+describe("retrieve-coordinates", () => {
     let name, surname, email, password, encryptedPassword, userId;
-    let title, barCode, travelKm, bookId;
+    let latitude,longitude,gpsCoordinates
 
     before (async() => {
         await mongoose.connect(MONGODB_URL, {unifiedTopology: true});
-        await Promise.all([User.deleteMany(), Book.deleteMany()]);
+        await User.deleteMany()
     })
 
     beforeEach(async() => {
@@ -30,33 +30,42 @@ describe("retrieve-book", () => {
         const user = await User.create({ name, surname, email, password: encryptedPassword });
         userId = user.id;
 
-        title = `title-${random()}`;
-        barCode = `${random()}`;
-        travelKm = random();
-        const book = await Book.create({ title, barCode, travelKm, ownerUserId: userId ,actualUserId: userId,});
-        bookId = book.id;
+        latitude = random()
+        longitude = random()
+        gpsCoordinates = {latitude,longitude}
     })
 
-    it("should succeed add a retrieve a  book", async() => {
-        const book = await retrieveBook(bookId)
+    it("should succeed retrieve gps coordinates", async() => {
+        await User.findByIdAndUpdate(userId, {$set:{gpsCoordinates}})
 
-        expect(book).to.exist
-        expect(book.title).to.equal(title)
-        expect(book.barCode).to.equal(barCode)
-        expect(book.travelKm).to.equal(travelKm)
-        expect(book.ownerUserId.toString()).to.equal(userId)
-      
+        const coordinates = await retrieveCoodinates(userId)
+debugger
+        expect(coordinates).to.exist
+        expect(coordinates.latitude).to.equal(latitude)
+        expect(coordinates.longitude).to.equal(longitude) 
     })
 
-    it("should fail to no exist a book", async() => {
-        bookId = '5edf984ec1be038dc909f783'
+    it("should fail to no exist a user", async() => {
+        userId = '5edf984ec1be038dc909f783'
         try {
-            await retrieveBook(bookId)
+            await retrieveCoodinates(userId)
             throw new Error('should not reach this point')
        } catch (error) {
            expect(error).to.exist
            expect(error).to.be.an.instanceof(Error)
-           expect(error.message).to.equal(`book with id ${bookId} does not exist`)
+           expect(error.message).to.equal(`user with id ${userId} does not exist`)
+       }
+    })
+
+    it("should fail to no exist coordinates", async() => {
+    
+        try {
+            await retrieveCoodinates(userId)
+            throw new Error('should not reach this point')
+       } catch (error) {
+           expect(error).to.exist
+           expect(error).to.be.an.instanceof(Error)
+           expect(error.message).to.equal("the user don`t have gps coordinates")
        }
     })
 
@@ -64,25 +73,25 @@ describe("retrieve-book", () => {
 
     it('should fail on non-string field', () => {
         expect(() => {
-            retrieveBook(true)
+            retrieveCoodinates(true)
         }).to.throw(TypeError, 'true is not a string')
         expect(() => {
-            retrieveBook(123)
+            retrieveCoodinates(123)
         }).to.throw(TypeError, '123 is not a string')
     })
 
     it('should fail on non-string field', () => {
         expect(() => {
-            retrieveBook('')
+            retrieveCoodinates('')
         }).to.throw(VoidError, 'string is empty or blank')
     })
 
     afterEach(async() => {
-        await Promise.all([User.deleteMany(), Book.deleteMany()]);
+        await User.deleteMany()
     })
 
     after (async() => {
-        await Promise.all([User.deleteMany(), Book.deleteMany()]);
+        await User.deleteMany()
         await mongoose.disconnect();
     })
 })

@@ -1,5 +1,5 @@
 /**
- * list-my-library.
+ * list my books sharing.
  * 
  * @param {string} userId take by token.  
  *
@@ -34,6 +34,13 @@ module.exports = (userId) => {
         books = books.filter(book=> book.actualUserId !== userId)
 
         if (!books.length) throw new UnexistenceError("Dont`t have books sharing")
+
+        books.forEach(book => {
+            book.id = book._id.toString();
+  
+            delete book._id;
+            delete book.__v;
+        })
 
         return books
     })()

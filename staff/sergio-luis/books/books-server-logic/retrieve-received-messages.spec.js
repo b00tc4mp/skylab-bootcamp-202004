@@ -53,7 +53,7 @@ describe("retrieve-received-messages", () => {
         messageId = message.id
     })
 
-    it("should succeed to retrieve a message on recived message box", async() => {
+    it("should succeed to retrieve a message", async() => {
         const [message] = await retriveMessages(secondUserId)
         
         expect(message).to.exist
@@ -68,7 +68,8 @@ describe("retrieve-received-messages", () => {
         userId = '5edf984ec1be038dc909f783'
 
         try {
-            await retriveMessages(secondUserId)
+            await retriveMessages(userId)
+            throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
@@ -77,13 +78,15 @@ describe("retrieve-received-messages", () => {
     })
 
     it('Sould fail dont find any message', async () => {
+
        
         try {
             await retriveMessages(userId)
+            throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
-            expect(error.message).to.equal(`user with id ${secondUserId} does not exist`)
+            expect(error.message).to.equal("the user don`t have recieved messages")
         }
     })
 

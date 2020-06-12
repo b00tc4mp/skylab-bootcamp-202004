@@ -1,7 +1,7 @@
 /**
- * Create book.
+ * Accepted share books.
  * 
- * @param {string} actualUserId take by token.  
+ * @param {string} userId take by token.  
  * @param {string} newUserId new actualUserId.  
  * @param {string} bookId bookId.  
  *
@@ -23,6 +23,8 @@ module.exports = (userId,newUserId,bookId) => {
     String.validate.notVoid(userId)
     String.validate.notVoid(newUserId)
     String.validate.notVoid(bookId)
+
+    if(userId===newUserId) throw new CredentialsError("you can`t share the book with yourself!"); 
 
     return (async() => {
     const [actualUser,newUser, book] =  await Promise.all([

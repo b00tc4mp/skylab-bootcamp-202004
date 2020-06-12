@@ -1,12 +1,12 @@
 /**
- * Add score.
+ * Update Coordinates.
  * 
  * @param {string} userId take by token.  
- * @param {string} recievedPointUserId a userId how recived points.  
- * @param {Number} points points 1-5.  
+ * @param {number} latitude latitude coordinate.  
+ * @param {number} longitude longitude coordinate.  
+
  *
  * @throws {UnexistenceError} if don`t find userId in data base.
- * @throws {CredentialsError} if you want a share a book and it not yours.
  * @throws {VoidError} if the input fiels ar empty.
  * 
  * @return No return nothig if successfully request.

@@ -1,12 +1,12 @@
 /**
- * retrieve-following.
+ * Retrieve following.
  * 
  * @param {string} userId take by token.  
  *
  * @throws {UnexistenceError} if don`t find userId in data base.
  * @throws {VoidError} if the input fiels ar empty.
  * 
- * @return Don`t return nothing if the message is created.
+ * @return {Object} return an array of followings.
  *
  */
 

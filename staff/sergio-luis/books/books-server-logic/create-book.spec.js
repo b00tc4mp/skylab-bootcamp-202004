@@ -31,6 +31,9 @@ describe('server-logic-create-book', () => {
         .then(_hash => hash = _hash)
         .then(()=>User.create({ name, surname, email, password: hash }))
         .then(user => userId = user.id)
+
+
+
     )
 
     describe('Creat a book', () => {
@@ -42,7 +45,6 @@ describe('server-logic-create-book', () => {
           }
 
         it('should succeed to add a book', async() =>{
-            debugger
             const bookId = await createBook(userId, book.title,book.image,book.description,book.barCode)
 
             const _book = await Book.findById(bookId)
@@ -66,7 +68,6 @@ describe('server-logic-create-book', () => {
             try{
                 await createBook(userId, book.title,book.image,book.description,book.barCode)
                 throw new Error('should not reach this point')
-
             } catch (error) {
                 expect(error).to.exist
                 expect(error).to.be.an.instanceof(Error)

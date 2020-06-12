@@ -1,5 +1,5 @@
 /**
- * list-my-library.
+ * Retrieved requested books.
  * 
  * @param {string} userId take by token.  
  *
@@ -19,17 +19,17 @@ module.exports = (userId) => {
     String.validate.notVoid(userId)
 
     return (async() => {
-        const user = await User.findById(userId)
+        const user = await User.findById(userId).populate('requestedBooks')
         if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`);
 
-        const followingUsers = await User.find({ following: userId }).lean();
-
-        followingUsers.forEach(user => {
-            user.id = user._id.toString();
-
-        })
-
         if(!user.requestedBooks.length)new UnexistenceError("you don`t have any books requested");
+
+        user.requestedBooks.forEach(book =>{
+            book.id = book._id.toString();
+
+            delete book._id;
+            delete book.__v;
+        })
 
         return user.requestedBooks
     })()

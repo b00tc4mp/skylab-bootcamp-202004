@@ -81,6 +81,7 @@ describe("add-requested-book", () => {
 
         try {
              await requestBook(userId, bookId)
+             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
@@ -93,6 +94,7 @@ describe("add-requested-book", () => {
 
         try {
             await requestBook(userId, bookId)
+            throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)

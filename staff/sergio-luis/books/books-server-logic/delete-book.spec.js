@@ -65,6 +65,7 @@ describe('server-logic-delete-book', () => {
         userId = '5edf984ec1be038dc909f783'
         try {
             await deleteBook(userId, bookId)
+            throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
@@ -77,6 +78,7 @@ describe('server-logic-delete-book', () => {
         bookId = '5edfa26edf0b6a9235ee2539'
         try {
             await deleteBook(userId, bookId)
+            throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
@@ -99,6 +101,7 @@ describe('server-logic-delete-book', () => {
 
         try {
             await deleteBook(userId, bookId)
+            throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)

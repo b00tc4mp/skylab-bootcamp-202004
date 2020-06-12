@@ -57,10 +57,10 @@ module.exports = new Schema({
     },
 
     gpsCoordinates:{
-        lat: {
+        latitude: {
             type:Number
         },
-        lon:{
+        longitude:{
             type:Number
         }
     }

@@ -1,7 +1,7 @@
 /**
- * Create book.
+ * Search book.
  * 
- * @param {string} userId🤡 take by token.  
+ * @param {string} userId take by token.  
  * @param {string} query query for search books.  
  *
  * @throws {UnexistenceError} if don`t find userId in data base.

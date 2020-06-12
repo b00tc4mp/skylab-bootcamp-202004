@@ -1,5 +1,5 @@
 /**
- * Remove book.
+ * Delete book.
  * 
  * @param {string} userId take by token.  
  * @param {Object} bookId it is a unic id for a book created when we create the book.  
@@ -7,7 +7,7 @@
  * @throws {UnexistenceError} if don`t find userId in data base.
  * @throws {VoidError} if the input fiels ar empty.
  * 
- * @return Don`t return nothing if the book is created.
+ * @return Don`t return nothing if the book is deleted.
  *
  */
 

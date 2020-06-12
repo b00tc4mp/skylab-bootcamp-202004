@@ -25,7 +25,6 @@ describe('server-logic-find-books', () => {
         query = 'jksdghfjkadgsjhadgsafk' 
         try {
             await findBook(query)
-
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
