@@ -19,7 +19,7 @@ module.exports = ( schedule,userId) => {
         if(!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
         schedule.recipe = fullrecipe
-
+        debugger
         const filtered = user.schedule.find(time => time.weekday === weekday && time.timeline === timeline);
 
         if (typeof filtered !== 'undefined')

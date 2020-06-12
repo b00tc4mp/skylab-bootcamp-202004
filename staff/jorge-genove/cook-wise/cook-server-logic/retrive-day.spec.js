@@ -11,7 +11,7 @@ const bcrypt = require('bcryptjs')
 const { DuplicityError, UnexistenceError } = require('cook-wise-commons/errors')
 
 
-describe("search-recipe", () => {
+describe("retrieve day", () => {
     let name, surname, email, password, encryptedPassword, userId
     let recipeName, recipeAuthor, description, time, ingredients = [], recipeId;
     let weekday

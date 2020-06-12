@@ -17,7 +17,7 @@ require('cook-wise-commons/polyfills/number')
 const { errors: {DuplicityError,UnexistenceError } } = require('cook-wise-commons')
 const { models: { Recipes, User} } = require('cook-wise-data')
 
-console
+
 module.exports = ({name, author, time, ingredients, description,userId}) => {debugger
     
     String.validate.notVoid(name)

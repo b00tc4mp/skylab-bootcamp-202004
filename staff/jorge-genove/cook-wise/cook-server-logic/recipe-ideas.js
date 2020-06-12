@@ -5,13 +5,11 @@ const { models: { User } } = require('cook-wise-data')
 
 
 module.exports = (userId, { ingredients }) => {
-    
-    console.log(ingredients)
+   
     String.validate.notVoid(userId)
     if(!(ingredients instanceof Array)) throw new TypeError( 'ingredients must be an array')
     let recipeMatches = []
-    
-
+   
     return (async () => {
         debugger
         const user = await User.findById(userId)
@@ -22,8 +20,8 @@ module.exports = (userId, { ingredients }) => {
                     model: 'Ingredients'
                 }
             }).lean()
-            console.log(user)
-
+          if(!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
+            
         ingredients.forEach(_ingredient => {
             user.recipes.forEach((recipe) => {
                 recipe.ingredients.forEach(({ ingredient }) => {
