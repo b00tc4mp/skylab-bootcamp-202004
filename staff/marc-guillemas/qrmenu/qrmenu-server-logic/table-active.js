@@ -1,7 +1,5 @@
 const {models: {Establishment}} = require('qrmenu-data')
 const {errors: {UnexistenceError}} = require('qrmenu-commons')
-const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, SECRET, MONGODB_URL } } = process
-const PORT = PORT_CLI || PORT_ENV || 8080
 
 module.exports = (establishmentId, workerId, table) => {
 
@@ -27,7 +25,6 @@ module.exports = (establishmentId, workerId, table) => {
 
         await Establishment.findByIdAndUpdate(establishmentId, {$set: {tables}})
         
-
         return 
     })()
 }

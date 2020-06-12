@@ -1,7 +1,8 @@
 module.exports = {
     registerEstablishment: require('./register-establishment'),
-    authenticateEstablishment: require('./authenticate-establishment'),
+    authenticate: require('./authenticate'),
     retrieveEstablishment: require('./retrieve-establishment'),
     registerWorker: require('./register-worker.js'),
-    addDish: require('./add-dish')
+    addDish: require('./add-dish'),
+    retrieveDishes: require('./retrieve-dishes')
 }

@@ -39,7 +39,7 @@ describe('logic - authenticate user', () => {
 
             try {
                 authenticateEstablishment(email, password)
-                    .then(_userId => expect(_userId).to.equal(establishmentId))
+                    .then(_workerId => expect(_workerId).to.equal(establishmentId))
                     .catch(error => expect(error).to.be.null)
             } catch (error) {
                 expect(error).to.be.null

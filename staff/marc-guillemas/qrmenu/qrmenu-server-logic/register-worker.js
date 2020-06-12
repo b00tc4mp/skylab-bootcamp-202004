@@ -1,15 +1,15 @@
 require('qrmenu-commons/polyfills/string')
-const { models: {Establishment, User}, mongoose: {ObjectId} } = require('qrmenu-data')
-const { errors: { UnexistenceError, CredentialsError } } = require('qrmenu-commons')
+const { models: {Establishment}, mongoose: {ObjectId} } = require('qrmenu-data')
+const { errors: { UnexistenceError, CredentialsError, DuplicityError } } = require('qrmenu-commons')
 const bcrypt = require('bcryptjs')
 
-module.exports = (establishmentId, name, surname, role, password) => {
+module.exports = (establishmentId, workerId, email, role, password) => {
     debugger
     String.validate.notVoid(establishmentId)
-    String.validate.notVoid(name)
-    String.validate.notVoid(surname)
-    String.validate.notVoid(password)
+    String.validate.notVoid(workerId)
+    String.validate.notVoid(email)
     String.validate.notVoid(role)
+    String.validate.notVoid(password)
 
     return (async() => {
 
@@ -18,10 +18,18 @@ module.exports = (establishmentId, name, surname, role, password) => {
         if(!establishment) throw new UnexistenceError(`Establishment with id ${establishmentId} does not exist`)
         debugger
         const {staff} = establishment
-    
+        
+        const allowed = staff.find(user => user.id === workerId && user.role === 'owner')
+
+        if(!allowed) throw new CredentialsError(`User with id ${workerId} is not allowed to perform this operation`)
+        
+        const match = staff.find(user => user.email === email)
+
+        if(match) throw new DuplicityError(`Worker with email ${email} already exist`)
+        
         const hash = await bcrypt.hash(password,10)
         
-        const worker = {name, surname, role, password: hash}
+        const worker = {email, role, password: hash}
         debugger
         staff.push(worker)
 

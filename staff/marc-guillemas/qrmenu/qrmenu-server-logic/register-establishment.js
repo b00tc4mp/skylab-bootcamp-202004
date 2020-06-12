@@ -20,6 +20,8 @@ module.exports = (establishment, nif, email, password) => {
 
         const hash = await bcrypt.hash(password, 10)
 
-        await Establishment.create({ establishment, nif, email, password: hash })
+        await Establishment.create({ establishment, nif, staff: [{email, role: 'owner', password: hash}]})
+
+        return
     })()
 }

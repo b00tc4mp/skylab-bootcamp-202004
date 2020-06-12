@@ -6,7 +6,7 @@ const registerEstablishment = require('./register-establishment')
 mongoose.connect(MONGODB_URL)
     .then(() => {
         debugger
-        return registerEstablishment("nona", "43276737F", "nona@mail.com","123123123")
+        return registerEstablishment("newWok1", "13726747F", "wok12@mail.com","123123123")
     })
     .then(console.log)
     .catch(console.error)

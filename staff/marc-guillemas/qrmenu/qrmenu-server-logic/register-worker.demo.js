@@ -6,7 +6,7 @@ const registerWorker = require('./register-worker')
 mongoose.connect(MONGODB_URL)
     .then(() => {
         debugger
-        return registerWorker("5ee0c36131134f2af580ce7e", "sergi", "ramos", "waiter", "pantera123123")
+        return registerWorker("5ee363867b8f175f20e2029d", "5ee363867b8f175f20e2029e", "sergigramos@mail.com", "waiter", "pantera123123")
     })
     .then(console.log)
     .catch(console.error)
