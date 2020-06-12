@@ -5,11 +5,12 @@ const { models: { User } } = require('cook-wise-data')
 
 
 module.exports = (userId, { ingredients }) => {
-    
-    console.log(ingredients)
+   
     String.validate.notVoid(userId)
     if(!(ingredients instanceof Array)) throw new TypeError( 'ingredients must be an array')
     let recipeMatches = []
+   
+    
     
 
     return (async () => {
@@ -22,8 +23,8 @@ module.exports = (userId, { ingredients }) => {
                     model: 'Ingredients'
                 }
             }).lean()
-            console.log(user)
-
+          
+            console.log(user.recipes[2].ingredient.name)
         ingredients.forEach(_ingredient => {
             user.recipes.forEach((recipe) => {
                 recipe.ingredients.forEach(({ ingredient }) => {
