@@ -8,15 +8,22 @@ function EditMember({ token, memberInfo }) {
 
         let { name, surname, age, sex, email } = event.target
 
-        name? name = name.value : name = memberInfo.name
-        surname? surname= surname.value : surname = memberInfo.name
-        age? age = age.value : age = memberInfo.name
-        sex? sex = sex.value : sex = memberInfo.name
-        email? email = email.value : email = memberInfo.name
+        name = name.value
+        surname= surname.value
+        age = age.value
+        sex = sex.value
+        email = email.value 
+
+        if(name === "") name = memberInfo.name
+        if(surname === "") surname = memberInfo.surname
+        if(age === "") age = memberInfo.age
+        if(sex === "")  sex = memberInfo.sex
+        if(email === "") email = memberInfo.email
+        let memberId = memberInfo.id
 
         try {
             (async () => {
-                await editMember(token, name, surname, age, sex, email)
+                await editMember(name, surname, age, sex, email, memberId)
             })()
         } catch (error) {
             if (error) throw error

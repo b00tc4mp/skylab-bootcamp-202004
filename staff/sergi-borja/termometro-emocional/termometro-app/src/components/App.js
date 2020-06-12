@@ -10,6 +10,7 @@ import Footer from './Footer'
 import {isAuthenticated} from 'termometro-client-logic'
 import CreateMember from './CreateMember';
 import EditMember from './EditMember';
+import SetMood from './SetMood';
 
 
 function App({history}) {
@@ -70,6 +71,7 @@ function App({history}) {
           <Route path="/my-family" render={()=> token? <MyFamily token={token} handleGoToEdit={handleGoToEdit}/> : <Redirect to='/'/>} />
           <Route path="/create-member" render={()=> token? <CreateMember token={token}/> : <Redirect to='/'/>} />
           <Route path="/edit-member" render={()=> token? <EditMember token={token} memberInfo={memberInfo}/> : <Redirect to='/'/>} />
+          <Route path="/set-mood" render={()=> token? <SetMood token={token} /> : <Redirect to='/'/>} />
           <Footer />
         </Container>
       </header>

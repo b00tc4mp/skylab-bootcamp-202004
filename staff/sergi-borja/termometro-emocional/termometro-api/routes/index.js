@@ -18,7 +18,7 @@ api.post('/users/auth', parseBody, authenticateUser)
 
 api.get('/users/:userId?', verifyExtractJwt, retrieveUser)
 
-api.patch('/users', verifyExtractJwt, parseBody, updateUser)
+api.patch('/users/:userId?', verifyExtractJwt, parseBody, updateUser)
 
 module.exports = {
     api

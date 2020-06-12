@@ -44,5 +44,20 @@ module.exports = new Schema({
         type: ObjectId,
         ref: 'User'
     },
+
+    plan: {
+        type: String,
+        enum: ['once', 'twice'],
+        require: true
+    },
+
+    mood: [{
+      date: {
+          
+      },
+      score: {
+          type: Number
+      }
+    }]
 })
 

@@ -7,11 +7,11 @@ const {UnexistenceError} = require('termometro-commons/errors')
 
 // module.exports = (userId, name, surname, age, sex, email, password, members) => {
 module.exports = (userId, data) => {
-    for (const keys in data) {
-        keys === 'email' && Email.validate(data[keys]);
+    // for (const keys in data) {
+    //     keys === 'email' && Email.validate(data[keys]);
 
-        keys !== 'members' && String.validate.notVoid(data[keys])
-    }
+    //     keys !== 'members' && String.validate.notVoid(data[keys])
+    // }
 
     String.validate.notVoid(userId)
 

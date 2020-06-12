@@ -4,7 +4,7 @@ const { errors: { DuplicityError }, utils: { Email } } = require('termometro-com
 const { mongoose: { ObjectId }, models: { User } } = require('termometro-data')
 const bcrypt = require('bcryptjs')
 
-module.exports = (name, surname, age, sex, email, password, userId) => {
+module.exports = (userId, name, surname, age, sex, email, password, plan, mood) => {
     String.validate.notVoid(name)
     String.validate.notVoid(surname)
     String.validate.notVoid(email)
@@ -19,7 +19,7 @@ module.exports = (name, surname, age, sex, email, password, userId) => {
         const hash = await bcrypt.hash(password, 10)
 
         if (userId) {
-            await User.create({ name, surname, age, sex, email, password: hash, admin: userId })
+            await User.create({ name, surname, age, sex, email, password: hash, admin: userId, plan, mood })
 
             const member = await User.findOne({email})
 
@@ -30,7 +30,7 @@ module.exports = (name, surname, age, sex, email, password, userId) => {
             await adminUser.save()
 
         } else {
-            await User.create({ name, surname, age, sex, email, password: hash })
+            await User.create({ name, surname, age, sex, email, password: hash, plan, mood })
         }
     })()
 }
