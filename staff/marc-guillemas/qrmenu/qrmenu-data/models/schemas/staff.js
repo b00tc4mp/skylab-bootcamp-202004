@@ -1,14 +1,12 @@
 const { Schema } = require('mongoose')
+const { utils: { Email } } = require('qrmenu-commons')
 
 module.exports = new Schema ({
-    name: {
+    email: {
         type: String,
-        required: true
-    },
-
-    surname: {
-        type: String,
-        required: true
+        required: true,
+        unique: true,
+        validate: [Email.validate,'invalid e-mail']
     },
     
     role: {
