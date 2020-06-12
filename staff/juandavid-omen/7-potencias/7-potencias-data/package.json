@@ -10,6 +10,7 @@
   "author": "anvidmen",
   "license": "ISC",
   "dependencies": {
-    "mongoose": "^5.9.17"
+    "7-potencias-commons": "file:../7-potencias-commons",
+    "mongoose": "^5.9.18"
   }
 }
