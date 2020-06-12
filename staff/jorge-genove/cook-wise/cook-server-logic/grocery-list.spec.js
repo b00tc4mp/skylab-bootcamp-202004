@@ -11,7 +11,7 @@ const bcrypt = require('bcryptjs')
 const {  UnexistenceError } = require('cook-wise-commons/errors')
 
 
-describe("search-recipe", () => {
+describe("grocery list", () => {
     let name, surname, email, password, encryptedPassword, userId
     let recipeName, recipeAuthor, description, time, ingredients = [], recipeId;
     let weekday
@@ -156,5 +156,10 @@ describe("search-recipe", () => {
             groceryList( true)
         }).to.throw(TypeError, 'true is not a string')
     })     
+    
+    after(async() => {
+        await Promise.all([User.deleteMany(), Ingredients.deleteMany(), Recipes.deleteMany(), ]);
+        await mongoose.disconnect();
+    });
 
 })

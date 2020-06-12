@@ -11,12 +11,11 @@ const bcrypt = require('bcryptjs')
 const { UnexistenceError } = require('cook-wise-commons/errors')
 
 
-describe("search-recipe", () => {
+describe("recipe ideas", () => {
     let name, surname, email, password, encryptedPassword, userId
-    let recipeName, recipeAuthor, description, time, _ingredients = [], recipeId;
-    let weekday
-    let ingredients = {}, ingredientOne, ingredientTwo, ingredientThree
-    let quantity, ingredientType;
+    let description, time, _ingredients = []
+    let ingredients = { ingredients: [] }
+    let recipes = {};
 
     let user
 
@@ -35,74 +34,26 @@ describe("search-recipe", () => {
         user = await User.create({ name, surname, email, password, encryptedPassword })
         userId = user.id
 
-        ingredientName = `ingredientName-${random()}`;
-        const newIngredientOne = await Ingredients.create({ name: ingredientName });
-        ingredientOneId = newIngredientOne.id;
+        for (let i = 0; i < 3; i++) {
+            name = `recipeName-${random()}`;
+            author = `author_${random()}`;
+            description = `description-${random()}`;
+            time = random();
 
+            const recipe = await Recipes.create({ name, author, description, time })
+            await User.findByIdAndUpdate(userId, { $addToSet: { recipes: recipe.id } });
 
-        ingredientOne = { ingredient: newIngredientOne }
+            for (let j = 0; j < 3; j++) {
+                const name = `ingredientName-${random()}`;
+                const ingredient = await Ingredients.create({ name });
 
-        recipeName = `recipeName-${random()}`;
-        recipeAuthor = `author_${random()}`;
-        description = `description-${random()}`;
-        time = random();
-        _ingredients.push(newIngredientOne)
+                await Recipes.findByIdAndUpdate(recipe.id, { $addToSet: { ingredients: { ingredient: ingredient.id, quantity: random() } } });
 
-        const recipe = await Recipes.create({ name: recipeName, author: recipeAuthor, description, time, ingredients: _ingredients })
-        recipeId = recipe.id
-        _ingredients.pop()
-        
-        ingredientName = `ingredientName-${random()}`;
-        const newIngredientTwo = await Ingredients.create({ name: ingredientName });
-        ingredientTwoId = newIngredientTwo.id;
+                ingredients.ingredients.push(name);
+            }
 
-
-
-
-        ingredientTwo = { ingredient: newIngredientTwo }
-
-        recipeName = `recipeName-${random()}`;
-        recipeAuthor = `author_${random()}`;
-        description = `description-${random()}`;
-        time = random();
-        _ingredients.push(newIngredientOne, newIngredientTwo)
-
-        const recipeTwo = await Recipes.create({ name: recipeName, author: recipeAuthor, description, time, ingredients: _ingredients })
-        recipeIdTwo = recipeTwo.id
-        _ingredients = []
-        
-
-       
-
-        ingredientName = `ingredientName-${random()}`;
-        const newIngredientThree = await Ingredients.create({ name: ingredientName });
-        ingredientThreeId = newIngredientThree.id;
-
-
-
-        ingredientThree = { ingredient: newIngredientThree }
-    
-
-        recipeName = `recipeName-${random()}`;
-        recipeAuthor = `author_${random()}`;
-        description = `description-${random()}`;
-        time = random();
-        _ingredients.push(ingredientThree)
-
-        const recipeThree = await Recipes.create({ name: recipeName, author: recipeAuthor, description, time, ingredients: _ingredients })
-        recipeIdThree = recipeThree.id
-        _ingredients = []
-
-        
-        console.log(recipe, recipeTwo,recipeThree)
-
-        await User.findByIdAndUpdate(userId, { $set: { recipes: [recipe, recipeTwo, recipeIdThree] } });
-
-        ingredients = { ingredients: [ingredientOne.ingredient.name, ingredientTwo.ingredient.name] }
-        
-
-
-
+            recipes[`${i}`] = recipe.id;
+        }
     })
 
 
@@ -115,9 +66,79 @@ describe("search-recipe", () => {
 
         expect(result).to.exist
         expect(result).to.be.instanceof(Array)
-        expect(result.length).to.be.equal(2)
+        expect(result.length).to.be.equal(3)
     })
 
+    it('should throw an empty arrya if not matches found', async () => {
+       
+        for( let i = 0; i < ingredients.ingredients.length; i++){
+            ingredients.ingredients[i] = random()
+        }
+        
+        result = await recipeIdeas(userId, ingredients)
+        
+        expect(result).to.exist
+        expect(result).to.be.instanceof(Array)
+        expect(result.length).to.be.equal(0)
+       
+    })
+
+    it("should throw an error if not match a user", async () => {
+        await User.deleteMany()
+        let _error;
+        try {
+            await recipeIdeas(userId,ingredients)
+        }catch(error) {
+            _error = error;
+        }
+
+        expect(_error).to.exist;
+        expect(_error).to.be.instanceof(UnexistenceError);
+        expect(_error.message).to.equal(`user with id ${userId} does not exist`); 
+    })
+    
+    it('should throw an error if userId its not an string', () => {
+        expect(function () {
+            recipeIdeas(undefined, ingredients)
+        }).to.throw(TypeError, 'undefined is not a string')
+    
+        expect(function () {
+            recipeIdeas(1, ingredients)
+        }).to.throw(TypeError, '1 is not a string')
+    
+        expect(function () {
+            recipeIdeas(null, ingredients)
+        }).to.throw(TypeError, 'null is not a string')
+    
+        expect(function () {
+            recipeIdeas(true, ingredients)
+        }).to.throw(TypeError, 'true is not a string')
+    })
+
+    it('should throw an error if ingredients its not an array', () =>{
+    
+        expect(function () {
+            recipeIdeas(userId, {ingredients : undefined})
+        }).to.throw(TypeError, 'ingredients must be an array')
+    
+        expect(function () {
+            recipeIdeas(userId, {ingredients : 'hola'})
+        }).to.throw(TypeError, 'ingredients must be an array')
+    
+        expect(function () {
+            recipeIdeas(userId,{ingredients : null})
+        }).to.throw(TypeError, 'ingredients must be an array')
+    
+        expect(function () {
+            recipeIdeas(userId, {ingredients : true})
+        }).to.throw(TypeError, 'ingredients must be an array')
+        
+    })
+
+    after(async() => {
+        await Promise.all([User.deleteMany(), Ingredients.deleteMany(), Recipes.deleteMany(), ]);
+        await mongoose.disconnect();
+    });
 
 
 })

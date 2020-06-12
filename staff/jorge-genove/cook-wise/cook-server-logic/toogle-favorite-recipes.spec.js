@@ -10,7 +10,7 @@ const { mongoose, models: { User, Recipes, Ingredients } } = require('cook-wise-
 const bcrypt = require('bcryptjs')
 const { DuplicityError, UnexistenceError } = require('cook-wise-commons/errors')
 
-describe("search-recipe", () => {
+describe("favorite-recipes", () => {
     let name, surname, email, password, encryptedPassword, userId
     let recipeName, recipeAuthor, description, time, ingredients = [], recipeId;
     let ingridient, ingredientId

@@ -13,11 +13,16 @@ const {
     toogleMenu,
     retriveDay,
     groceryList,
-    recipeIdeas
+    recipeIdeas,
+    deleteRecipe,
+    deleteTimelineMenu,
+    deleteDayMenu
 } = require('./handlers')
+
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
 const { handleError } = require('../helpers')
+
 
 
 const parseBody = bodyParser.json()
@@ -48,6 +53,12 @@ api.get('/day',parseBody,verifyExtractJwt,retriveDay)
 api.get('/grocerylist',verifyExtractJwt,groceryList)
 
 api.get('/ideas',parseBody,verifyExtractJwt,recipeIdeas)
+
+api.delete('/deleterecipe',parseBody,verifyExtractJwt,deleteRecipe)
+
+api.delete('/deletetimelinemenu',parseBody,verifyExtractJwt,deleteTimelineMenu)
+
+api.delete('/deletedaymenu',parseBody,verifyExtractJwt,deleteDayMenu)
 
 module.exports = {
     api
