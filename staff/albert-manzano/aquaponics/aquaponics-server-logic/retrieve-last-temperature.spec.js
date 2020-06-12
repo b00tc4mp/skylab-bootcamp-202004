@@ -34,7 +34,7 @@ describe('logic - retrieveLastTemperature', () => {
                 Temperature.create({ temperature: 20, date }),
                 Temperature.create({ temperature: 26, date })
             ])
-            .then(([result]) => userId = result.id)
+                .then(([result]) => userId = result.id)
         })
 
         it('should return last temperature', () => {
@@ -97,7 +97,10 @@ describe('logic - retrieveLastTemperature', () => {
     })
 
 
-    afterEach(() => User.deleteMany())
+    afterEach(async () => {
+        await User.deleteMany()
+        await Temperature.deleteMany()
+    })
 
-    after(() => mongoose.disconnect)
+    after(async () => await mongoose.disconnect)
 })

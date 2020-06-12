@@ -110,8 +110,7 @@ describe('logic-updateUser', () => {
         }).to.throw(TypeError, `hello is not a number`)
 
     })
+    afterEach(async() =>await User.deleteMany())
 
-    afterEach(() => User.deleteMany())
-
-    after(() => mongoose.disconnect)
+    after(async() => await mongoose.disconnect)
 })

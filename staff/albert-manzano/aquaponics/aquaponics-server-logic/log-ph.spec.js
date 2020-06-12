@@ -53,9 +53,9 @@ describe('logic -log -ph', () => {
         }).to.throw(TypeError, `${'hello'} is not a number`)
     })
 
-    afterEach(() => Ph.deleteMany())
+    afterEach(async() =>await Ph.deleteMany())
     
-    after(mongoose.disconnect)
+    after(async()=>await mongoose.disconnect)
 })
 
 

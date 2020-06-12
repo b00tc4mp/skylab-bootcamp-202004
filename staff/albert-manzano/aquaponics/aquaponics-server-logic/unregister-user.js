@@ -12,6 +12,9 @@ const { errors: { UnexistenceError } } = require('aquaponics-commons')
 module.exports = (userId) => {
     String.validate.notVoid(userId)
 
+
+    //delete events
+
     return User.findById(userId)
         .then(user => {
             if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)

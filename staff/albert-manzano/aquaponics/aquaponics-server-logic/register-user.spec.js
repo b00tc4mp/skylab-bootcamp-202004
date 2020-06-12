@@ -136,8 +136,8 @@ describe('logic - register user', () => {
             }).to.throw(TypeError, `${undefined} is not a number`)
         })
 
-        afterEach(() => User.deleteMany())
+        afterEach(async() =>await User.deleteMany())
 
-        after(() => mongoose.disconnect)
+        after(async() => await mongoose.disconnect)
     })
 })

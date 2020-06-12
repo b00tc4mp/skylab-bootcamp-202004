@@ -107,13 +107,9 @@ describe('logic - retrievePhs', () => {
         })
     })
 
+    afterEach(async() =>{
+        await Ph.deleteMany()
+        await User.deleteMany()})
 
-    afterEach(() => {
-        return Promise.all([
-            User.deleteMany(),
-            Ph.deleteMany()
-        ])
-    })
-
-    after(() => mongoose.disconnect)
+    after(async() => await mongoose.disconnect)
 })

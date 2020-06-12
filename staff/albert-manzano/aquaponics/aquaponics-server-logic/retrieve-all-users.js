@@ -11,7 +11,7 @@ require('aquaponics-commons/polyfills/string')
 const { models: { User } } = require('aquaponics-data')
 const { errors: { CredentialsError, UnexistenceError } } = require('aquaponics-commons')
 
-module.exports = userId => {
+module.exports = (userId) => {
     String.validate.notVoid(userId)
 
     return User.findById(userId)

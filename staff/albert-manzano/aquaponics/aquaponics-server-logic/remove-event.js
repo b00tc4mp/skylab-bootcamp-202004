@@ -16,13 +16,10 @@ require('aquaponics-commons/polyfills/json')
 const { errors: { UnexistenceError } } = require('aquaponics-commons')
 const { models: { User, Event } } = require('aquaponics-data')
 
-module.exports = (date, description, userId, eventId) => {
-    if(!date) throw new Error (`date is empty or blank`)
-    String.validate.notVoid(description)
+module.exports = (userId, eventId) => {
     String.validate.notVoid(userId)
     String.validate.notVoid(eventId)
-    Date.validate(date)
-    String.validate(description)
+   
     String.validate(userId)
     String.validate(eventId)
 

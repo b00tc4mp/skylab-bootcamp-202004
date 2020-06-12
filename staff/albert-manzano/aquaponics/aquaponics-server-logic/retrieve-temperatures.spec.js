@@ -108,7 +108,10 @@ describe('logic - retrieveTemperatures', () => {
     })
 
 
-    afterEach(() => User.deleteMany())
+    afterEach(async () => {
+        await User.deleteMany()
+        await Temperature.deleteMany()
+    })
 
-    after(() => mongoose.disconnect)
+    after(async () => await mongoose.disconnect)
 })

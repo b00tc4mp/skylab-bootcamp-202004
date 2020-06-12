@@ -1,5 +1,5 @@
 const FileLogger = require('./file-logger')
 
-let instance // singleton pattern
+let instance 
 
 module.exports = path => instance? instance : instance = new FileLogger(path)

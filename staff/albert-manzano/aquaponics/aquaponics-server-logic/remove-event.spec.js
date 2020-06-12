@@ -37,7 +37,7 @@ describe('logic - removeEvent', () => {
         })
 
         it('should add event on proper data', () => {
-            return removeEvent(date, description, userId, eventId)
+            return removeEvent(userId, eventId)
                 .then(() => User.find().populate('events'))
                 .then(users => {
                     expect(users).to.have.lengthOf(1)
@@ -63,51 +63,27 @@ describe('logic - removeEvent', () => {
     describe('wrong inputs', () => {
         it('should fail on wrong input', () => {
             expect(() => {
-                removeEvent(true, description, userId,eventId)
-            }).to.throw(TypeError, `${'true'} is not a date`)
-
-            expect(() => {
-                removeEvent(undefined, description, userId,eventId)
-            }).to.throw(Error, `date is empty or blank`)
-
-            expect(() => {
-                removeEvent(9, description, userId,eventId)
-            }).to.throw(TypeError, `${'9'} is not a date`)
-
-            expect(() => {
-                removeEvent(date, true, userId,eventId)
+                removeEvent( true,eventId)
             }).to.throw(TypeError, `${'true'} is not a string`)
 
             expect(() => {
-                removeEvent(date, undefined, userId,eventId)
+                removeEvent( undefined,eventId)
             }).to.throw(TypeError, `${'undefined'} is not a string`)
 
             expect(() => {
-                removeEvent(date, 9, userId,eventId)
+                removeEvent( 9,eventId)
             }).to.throw(TypeError, `${'9'} is not a string`)
 
             expect(() => {
-                removeEvent(date, description, true,eventId)
+                removeEvent( userId,true)
             }).to.throw(TypeError, `${'true'} is not a string`)
 
             expect(() => {
-                removeEvent(date, description, undefined,eventId)
+                removeEvent(userId, undefined)
             }).to.throw(TypeError, `${'undefined'} is not a string`)
 
             expect(() => {
-                removeEvent(date, description, 9,eventId)
-            }).to.throw(TypeError, `${'9'} is not a string`)
-
-            expect(() => {
-                removeEvent(date, description, userId,true)
-            }).to.throw(TypeError, `${'true'} is not a string`)
-
-            expect(() => {
-                removeEvent(date, description,userId, undefined)
-            }).to.throw(TypeError, `${'undefined'} is not a string`)
-
-            expect(() => {
-                removeEvent(date, description,userId, 9)
+                removeEvent(userId, 9)
             }).to.throw(TypeError, `${'9'} is not a string`)
         })
     })
@@ -130,7 +106,7 @@ describe('logic - removeEvent', () => {
     describe('when user does not exists', () => {
         it('should fail when creating event because user does not exist', () => {
             return User.deleteMany()
-            .then(() => removeEvent(date, description, userId,eventId))
+            .then(() => removeEvent(userId,eventId))
             .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
                 expect(error).to.be.exist
@@ -141,7 +117,9 @@ describe('logic - removeEvent', () => {
         })
     })
 
-    afterEach(() => User.deleteMany())
+    afterEach(async() =>{
+        await User.deleteMany()
+    })
 
-    after(mongoose.disconnect)
+    after(async()=> await mongoose.disconnect)
 })

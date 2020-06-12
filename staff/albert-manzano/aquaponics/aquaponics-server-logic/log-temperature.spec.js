@@ -52,9 +52,9 @@ describe('logic -log -temperature', () => {
         }).to.throw(TypeError, `${'hello'} is not a number`)
     })
 
-    afterEach(() => Temperature.deleteMany())
+    afterEach(async() => await Temperature.deleteMany())
     
-    after(mongoose.disconnect)
+    after(async()=> await mongoose.disconnect)
 })
 
 

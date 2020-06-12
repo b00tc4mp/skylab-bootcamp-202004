@@ -80,7 +80,7 @@ describe('logic - retrieveUser', () => {
         }).to.throw(Error, `${userId} is empty or blank`)
     })
 
-    afterEach(() => User.deleteMany())
+    afterEach(async() =>await User.deleteMany())
 
-    after(() => mongoose.disconnect)
+    after(async() => await mongoose.disconnect)
 })
