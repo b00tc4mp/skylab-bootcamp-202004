@@ -48,9 +48,12 @@ describe('logic - retrieveUserBalance', () => {
             expect(result).to.be.an('array')
             expect(result).to.have.lengthOf(1)
 
-            const { user, date, guarantee: _guarantee, profitAndLoss: _profitAndLoss } = result[0]
+            expect(result[0].user).to.be.undefined
+            expect(result[0]._id).to.be.undefined
+            expect(result[0].__v).to.be.undefined
 
-            expect(user.toString()).to.equal(userId)
+            const { date, guarantee: _guarantee, profitAndLoss: _profitAndLoss } = result[0]
+
             expect(date).to.equal(dateToday)
             expect(_guarantee).to.equal(guarantee)
             expect(_profitAndLoss).to.equal(profitAndLoss)

@@ -8,7 +8,7 @@ const { expect } = require('chai')
 const { mongoose, models: { Product, Price } } = require('gym-data')
 const { ObjectId } = mongoose
 
-describe.only('logic - retrievePrices', () => {
+describe('logic - retrievePrices', () => {
     before(() => mongoose.connect(MONGODB_URL_TEST))
 
     let future, futureId, dateToday, dateD_1, dateD_2, futurePrice, _futurePrice, productId, number
