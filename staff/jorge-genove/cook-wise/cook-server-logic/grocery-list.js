@@ -7,7 +7,7 @@ const { errors: { UnexistenceError } } = require('cook-wise-commons')
 const { models: { User } } = require('cook-wise-data')
 
 module.exports = (userId) => {
-console.log(userId)
+
    String.validate.notVoid(userId)
     
    return (async () => {

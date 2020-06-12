@@ -21,7 +21,7 @@ module.exports = (recipeId) => {
 
                 singleIng.ingredient = name
             })
-        console.log(recipe)
+        
         return recipe
     })()
 }

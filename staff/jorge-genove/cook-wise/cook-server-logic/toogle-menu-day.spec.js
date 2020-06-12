@@ -10,7 +10,7 @@ const { mongoose, models: { User, Recipes, Ingredients } } = require('cook-wise-
 const bcrypt = require('bcryptjs')
 const { DuplicityError, UnexistenceError } = require('cook-wise-commons/errors')
 
-describe("search-recipe", () => {
+describe("toogle-menu", () => {
     const WEEKDAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
     const TIMELINE = ["lunch", "dinner"]    
     let name, surname, email, password, encryptedPassword, userId
@@ -58,6 +58,8 @@ describe("search-recipe", () => {
         schedule.weekday = WEEKDAYS[floor(random() * WEEKDAYS.length)];
         schedule.timeline = TIMELINE[floor(random() * TIMELINE.length)];
         schedule.recipe = recipeId
+
+
         
 
     })
@@ -68,14 +70,14 @@ describe("search-recipe", () => {
 
     it('should add day and timeline', async () => {
         await toogleMenu(schedule, userId)
-        console.log(schedule)
+       
         const user = await User.findById(userId)
         
         expect(user).to.exist
         expect(user.schedule).to.exist
         expect(user.schedule).to.be.an('array')
         expect(user.schedule.length).to.be.equal(1)
-        console.log(user.schedule)
+        
         expect(user.schedule[0].weekday).to.equal(schedule.weekday)
         expect(user.schedule[0].timeline).to.equal(schedule.timeline)  
 

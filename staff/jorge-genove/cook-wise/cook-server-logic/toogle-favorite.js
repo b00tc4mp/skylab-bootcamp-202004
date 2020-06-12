@@ -31,7 +31,7 @@ module.exports = (userId, recipeId) => {
         if (!recipe) throw new UnexistenceError(`recipe with id ${recipeId} does not exist`)
         
         const index = user.favoriterecipes.indexOf(recipeId)
-        console.log(index)
+        
         if (index === -1) user.favoriterecipes.push(recipeId)
         else user.favoriterecipes.splice(index, 1)
 

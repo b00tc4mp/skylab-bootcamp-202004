@@ -10,7 +10,7 @@ const { mongoose, models: { User, Recipes, Ingredients } } = require('cook-wise-
 const bcrypt = require('bcryptjs')
 const { DuplicityError, UnexistenceError } = require('cook-wise-commons/errors')
 
-describe("search-recipe", () => {
+describe("retrive recipe", () => {
     let name, surname, email, password, encryptedPassword, userId
     let recipeName, recipeAuthor, description, time, ingredients = [], recipeId;
     let ingridient, ingredientId
@@ -69,7 +69,7 @@ describe("search-recipe", () => {
             expect(recipe.description).to.equal(description)
             expect(recipe.time).to.be.equal(time)
             expect(recipe.ingredients.length).to.be.greaterThan(0)
-            expect(recipe.schudle).to.be.an('array')
+            
         }))
    
         it('should fail when user does not exist', () => {

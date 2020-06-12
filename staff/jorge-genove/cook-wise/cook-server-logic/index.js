@@ -11,5 +11,8 @@ module.exports = {
     toogleMenu: require('./toogle-menu-day'),
     retriveDay: require('./retrive-day'),
     groceryList: require('./grocery-list'),
-    recipeIdeas: require('./recipe-ideas')
+    recipeIdeas: require('./recipe-ideas'),
+    deleteRecipe: require('./delete-recipe'),
+    deleteTimelineMenu: require('./delete-timeline-menu'),
+    deleteDayMenu: require('./delete-day-menu')
 }
