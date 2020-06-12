@@ -1,9 +1,9 @@
 const { Schema } = require('mongoose')
-const lessonQuantity = require('./lesson-quantity')
+const productQuantity = require('./product-quantity')
 
 module.exports = new Schema({
-  lessons: {
-    type: [lessonQuantity],
+  products: {
+    type: [productQuantity],
     required: true
   },
 

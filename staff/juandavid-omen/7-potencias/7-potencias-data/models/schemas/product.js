@@ -1,5 +1,4 @@
 const { Schema } = require('mongoose')
-require('7-potencias-commons/polyfills/url')
 
 module.exports = new Schema({
   name: {
@@ -94,5 +93,4 @@ module.exports = new Schema({
     type: Number,
     required: true
   }
-
 })

@@ -1,9 +1,9 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
 module.exports = new Schema({
-  lesson: {
+  prodcut: {
     type: ObjectId,
-    ref: 'Lesson',
+    ref: 'Product',
     required: true
   },
 

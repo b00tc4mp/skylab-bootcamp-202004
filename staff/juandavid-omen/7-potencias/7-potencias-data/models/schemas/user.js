@@ -1,7 +1,7 @@
 const { Schema, SchemaType: { ObjectId } } = require('mongoose')
 const { utils: { Email } } = require('7-potencias-commons')
 const order = require('./order')
-const productQuantity = require('./lesson-quantity')
+const productQuantity = require('./product-quantity')
 
 module.exports = new Schema({
   _id: {
@@ -33,12 +33,14 @@ module.exports = new Schema({
 
   create: {
     type: Date,
-    required: true
+    required: true,
+    default: Date.now
   },
 
   role: {
     type: String,
     required: true
+    // validate: [Role.validate, 'invalid role']
   },
 
   cart: [productQuantity],
