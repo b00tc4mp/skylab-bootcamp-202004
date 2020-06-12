@@ -108,6 +108,6 @@ describe('logic - send-message', () => {
         })
     })
 
-    // afterEach(() => Promise.all([User.deleteMany(), Cohousing.deleteMany()]))
+    afterEach(async () => await Promise.all([User.deleteMany(), Cohousing.deleteMany()]))
     after(mongoose.disconnect)
 })

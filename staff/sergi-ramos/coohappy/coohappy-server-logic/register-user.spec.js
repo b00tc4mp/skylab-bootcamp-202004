@@ -60,7 +60,7 @@ describe('logic - register user', () => {
         })
     })
 
-    afterEach(() => User.deleteMany())
+    afterEach(async () => await User.deleteMany())
 
     after(mongoose.disconnect)
 })
