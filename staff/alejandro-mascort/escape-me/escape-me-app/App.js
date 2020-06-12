@@ -17,6 +17,8 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function () {
+  console.disableYellowBox = true
+
   const [view, setView] = useState('landing')
   const [token, setToken] = useState()
 
@@ -46,9 +48,9 @@ export default function () {
       {view === 'landing' && <Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister} />}
       {view === 'login' && <Login onRegister={handleGoToRegister} onHome={handleGoToHome} handleToken={handleToken} />}
       {view === 'register' && <Register onLogin={handleGoToLogin} />}
-      {view != 'landing' && view != 'login' && view != 'register' &&
+      {token &&
         <NavigationContainer>
-          <MyTabs />
+          <NavTabs token={token} />
         </NavigationContainer>}
     </View>
 
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
 
 const Tab = createMaterialBottomTabNavigator();
 
-function MyTabs() {
+function NavTabs({ token }) {
   return (
     <Tab.Navigator
       initialRouteName="Home"

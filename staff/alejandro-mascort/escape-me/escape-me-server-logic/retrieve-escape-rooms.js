@@ -1,8 +1,9 @@
 require('escape-me-commons/polyfills/string')
 const { mongoose: { ObjectId }, models: { User } } = require('escape-me-data')
 
-module.exports = userId => {
+module.exports = (userId, tag) => {
     String.validate.notVoid(userId)
+    String.validate.notVoid(tag)
 
     return (async () => {
         const user = await User.findOne({ _id: ObjectId(userId) }, { __v: 0, password: 0 }).lean()
@@ -11,8 +12,6 @@ module.exports = userId => {
         delete user.id
         delete user._id
 
-        const { name, surname, username } = user
-
-        return { name, surname, username }
+        return user[tag]
     })()
 }
