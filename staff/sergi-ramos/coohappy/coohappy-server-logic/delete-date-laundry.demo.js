@@ -8,7 +8,7 @@ mongoose.connect(MONGODB_URL)
 return (async () => {
 
     try {
-        await deleteDateLaundry('5ee27bed750f21051dd6b9b7')
+        await deleteDateLaundry('5ee27cd746a7b20675392aaf')
         
     } catch (error) {
         console.error('KO sync', error.message)
