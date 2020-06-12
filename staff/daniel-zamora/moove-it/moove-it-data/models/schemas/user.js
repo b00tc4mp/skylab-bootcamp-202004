@@ -1,4 +1,3 @@
-
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
 module.exports = new Schema({
@@ -24,10 +23,10 @@ module.exports = new Schema({
         required: true
     },
 
-    planes: {
-        type: [ObjectId], 
+    blueprints: [{
+        type: ObjectId,
         ref: 'Blueprint'
-    },
+    }],
 
     // favPlanes: {
     //     type: [ObjectId], 

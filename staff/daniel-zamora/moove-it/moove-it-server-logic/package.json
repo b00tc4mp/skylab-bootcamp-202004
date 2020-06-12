@@ -1,19 +1,25 @@
 {
-  "name": "moove-it-server-logic",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "dotenv": "^8.2.0",
-    "moove-it-commons": "file:../moove-it-commons",
-    "moove-it-data": "file:../moove-it-data"
-  },
-  "devDependencies": {},
-  "description": ""
+    "name": "moove-it-server-logic",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "test": "npx mocha *.spec.js",
+        "test:debug": "npx mocha debug *.spec.js",
+        "test:coverage": "npx nyc --reporter=text --reporter=lcov npm test"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "dotenv": "^8.2.0",
+        "moove-it-commons": "file:../moove-it-commons",
+        "moove-it-data": "file:../moove-it-data",
+        "nyc": "^15.1.0"
+    },
+    "devDependencies": {
+        "chai": "^4.2.0",
+        "mocha": "^8.0.1"
+    },
+    "description": ""
 }
