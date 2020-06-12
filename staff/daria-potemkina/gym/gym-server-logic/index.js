@@ -10,5 +10,6 @@ module.exports = {
     retrieveProducts: require('./retrieve-products'),
     closeUserPosition: require('./close-user-position'),
     profitAndLoss: require('./profit-and-loss'),
-    retrieveUserTrades: require('./retrieve-user-trades')
+    retrieveUserTrades: require('./retrieve-user-trades'),
+    retrievePrices: require('./retrieve-prices')
 }

@@ -48,7 +48,7 @@ describe('logic - addProduct', () => {
             ticker: `ticker-${random()}`,
             sector: `sector-${random()}`,
             contractSize: round(random() * 100),
-            settlementDate: 'June 19 2020',
+            settlementDate: 'Jun 19 2020',
             type: {
                 strike: round(random() * 10),
                 side: `side-${random()}`
@@ -64,8 +64,6 @@ describe('logic - addProduct', () => {
 
     describe('when the user already exists', () => {
         beforeEach(async () => {
-            
-
             const user = await User.create({ name, surname, email, password, card })
             userId = user._id.toString()
 

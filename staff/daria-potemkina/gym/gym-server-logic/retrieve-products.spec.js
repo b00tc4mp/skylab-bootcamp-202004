@@ -6,7 +6,6 @@ const retrieveProducts = require('./retrieve-products')
 const { random } = Math
 const { expect } = require('chai')
 const chai = require('chai')
-chai.use(require('chai-datetime'))
 const { mongoose, models: { Product, Option } } = require('gym-data')
 
 describe('logic - retrieveProducts', () => {
