@@ -78,7 +78,7 @@ describe('server logic: create restaurant', () => {
 
         })
 
-        it('should fail and throw', async () => {
+        it('should fail and throw error on restaurant duplicity', async () => {
             try {
 
                 const result = await createRestaurant(userId, restaurantName, restaurantEmail, cif, address, phone)
@@ -91,6 +91,5 @@ describe('server logic: create restaurant', () => {
             }
         })
     })
-
 
 })
