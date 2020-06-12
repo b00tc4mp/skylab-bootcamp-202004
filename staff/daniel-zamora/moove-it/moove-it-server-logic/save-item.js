@@ -29,12 +29,13 @@ module.exports = (itemId, userId, blueprintId, name, x, y, z, orientation, width
 
         const blueprint = await Blueprint.findById(blueprintId)
 
-        const newItem = new Item({ name, position, orientation, width, height })
+        const newItem = new Item({ name, x, y, z, orientation, width, height })
 
         const index = blueprint.items.findIndex(item => item.id === itemId)
 
         if (index !== -1) {
-            await blueprint.items.splice(index, 1, newItem)
+            blueprint.items.splice(index, 1, newItem)
+            await blueprint.save()
 
             return
         }

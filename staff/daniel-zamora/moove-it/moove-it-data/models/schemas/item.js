@@ -6,9 +6,20 @@ module.exports = new Schema({
         required: true
     },
 
+    x: {
+        type: Number,
+        required: true,
+        default: 0
+    },
 
-    position: {
-        type: [Number],
+    y: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+
+    z: {
+        type: Number,
         required: true,
         default: 0
     },
