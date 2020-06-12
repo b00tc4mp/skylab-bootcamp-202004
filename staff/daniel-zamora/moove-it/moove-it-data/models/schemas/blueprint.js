@@ -1,15 +1,19 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
+const item = require('./item')
 
 module.exports = new Schema({
+    user: {
+        type: ObjectId,
+        ref: 'User'
+    },
+
     name: {
         type: String,
         required: true
     },
 
-    items: {
-        type: [ObjectId],
-        ref: 'Item',
-    },
+    items: [item],
+
 
     date: {
         type: Date,
@@ -17,16 +21,17 @@ module.exports = new Schema({
         default: Date.now()
     },
 
-   width: {
-       type: Number,
-       required: true,
-       default: 80
-   },
+    width: {
+        type: Number,
+        required: true,
+        default: 80
+    },
 
-   height: {
-    type: Number,
-    required: true,
-    default: 80
-   }
-   
+    height: {
+        type: Number,
+        required: true,
+        default: 80
+    }
+
+
 })

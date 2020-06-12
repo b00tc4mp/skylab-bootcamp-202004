@@ -6,7 +6,7 @@ function validateEmail(email) {
     return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
 }
 
-URL.isUrl = function (url) {
+URL.isUrl = function(url) {
     try {
         new URL(url)
 
@@ -16,7 +16,7 @@ URL.isUrl = function (url) {
     }
 }
 
-URL.validate = function (url) {
+URL.validate = function(url) {
     if (!this.isUrl(url)) throw new Error(`${url} is not a url`)
 }.bind(URL)
 
@@ -161,14 +161,14 @@ mongoose.connect('mongodb://localhost:27017/skylab', { useUnifiedTopology: true,
             // .then(() => {
             //     const userId = user.id
 
-            //     return User.findById(userId)
-            // })
-            // .then(user => {
-            //     user.name = 'Fula'
+        //     return User.findById(userId)
+        // })
+        // .then(user => {
+        //     user.name = 'Fula'
 
-            //     return user.save()
-            // })
-            .then(() => {
+        //     return user.save()
+        // })
+        .then(() => {
                 return User.findById(user.id).populate('cart.product')
             })
             .then(user => {

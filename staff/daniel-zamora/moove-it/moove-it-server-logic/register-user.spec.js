@@ -1,107 +1,117 @@
 require('dotenv').config()
-const { env: { TEST_MONGOOSE_URL: MONGODB_URL } } = process
-const { mongoose, models: {User} } = require('moove-it-data')
+const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { mongoose, models: { User } } = require('moove-it-data')
 
 const registerUser = require('./register-user')
 const { random } = Math
 const { expect } = require('chai')
-const { errors: { DuplicityError }} = require('moove-it-commons')
+const { errors: { DuplicityError, CredentialsError } } = require('moove-it-commons')
 
 describe('logic - register user', () => {
     before(() =>
-        mongoose.connect(MONGODB_URL)
+        mongoose.connect(MONGODB_URL).then(() => User.deleteMany())
     )
-    
-    let name, surname, email, password
-    
-    beforeEach( async () => {
-    
-            await User.deleteMany()
 
-            name = `name-${random()}`
-            surname = `surname-${random()}`
-            email = `e-${random()}@mail.com`
-            password = `password-${random()}`
-            })
-        
+    let name, surname, email, password, validatePassword
 
-    it('should succeed on valid data', async () => {
-        const result = await registerUser(name, surname, email, password)
+    beforeEach(() => {
+
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `e-${random()}@mail.com`
+        password = `password-${random()}`
+        validatePassword = password
+    })
+
+
+    it('should succeed on valid data', async() => {
+
+        const result = await registerUser(name, surname, email, password, validatePassword)
         const user = await User.findOne({ email })
-                expect(user.name).to.equal(name)
-                expect(user.surname).to.equal(surname)
-                expect(user.email).to.equal(email)
-            })               
-    
+        expect(user.name).to.equal(name)
+        expect(user.surname).to.equal(surname)
+        expect(user.email).to.equal(email)
+    })
+
+    it('should fail when passwords does not match', () => {
+        validatePassword = '123123'
+        return registerUser(name, surname, email, password, validatePassword)
+            .then(() => { throw new Error("Should throw error") })
+            .catch(error => {
+                expect(error).to.be.an.instanceof(CredentialsError)
+                expect(error.message).to.equal('Passwords does not match')
+            })
+    })
+
 
     describe('when user already exists', () => {
         beforeEach(() => {
-            return User.create({name, surname, email, password})
+            return User.create({ name, surname, email, password, validatePassword })
         })
 
-        it('should fail on trying to register an existing user', () => 
-            registerUser(name, surname, email, password) 
-                .then(()=> {throw new Error( "Should throw error")})
-                .catch(error=>{
-                    expect(error).to.be.an.instanceof(DuplicityError)
-                    expect(error.message).to.equal(`${email} already exist`)
-                })         
+        it('should fail on trying to register an existing user', () =>
+            registerUser(name, surname, email, password, validatePassword)
+            .then(() => { throw new Error("Should throw error") })
+            .catch(error => {
+                expect(error).to.be.an.instanceof(DuplicityError)
+                expect(error.message).to.equal(`${email} already exist`)
+            })
         )
     })
 
     it('should fail when incorrect inputs are introduced', () => {
-        try{
-            registerUser(1, surname, email, password)          
-        }catch(error){
+        try {
+            registerUser(1, surname, email, password)
+        } catch (error) {
             expect(error).to.be.an.instanceof(TypeError)
             expect(error.message).to.equal(`1 is not a string`)
         }
 
-        try{
-            registerUser( '', surname, email, password)          
-        }catch(error){
+        try {
+            registerUser('', surname, email, password)
+        } catch (error) {
             expect(error).to.be.an.instanceof(Error)
             expect(error.message).to.equal(` is empty or blank`)
         }
 
-        try{
-            registerUser(name, 1, email, password)          
-        }catch(error){
+        try {
+            registerUser(name, 1, email, password)
+        } catch (error) {
             expect(error).to.be.an.instanceof(TypeError)
             expect(error.message).to.equal(`1 is not a string`)
         }
 
-        try{
-            registerUser( name, '', email, password)          
-        }catch(error){
+        try {
+            registerUser(name, '', email, password)
+        } catch (error) {
             expect(error).to.be.an.instanceof(Error)
             expect(error.message).to.equal(` is empty or blank`)
         }
 
-        try{
-            registerUser(name, surname, 1, password)          
-        }catch(error){
+        try {
+            registerUser(name, surname, 1, password)
+        } catch (error) {
             expect(error).to.be.an.instanceof(TypeError)
             expect(error.message).to.equal(`1 is not a string`)
         }
 
-        try{
-            registerUser( name, surname, '', password)          
-        }catch(error){
+        try {
+            registerUser(name, surname, '', password)
+        } catch (error) {
             expect(error).to.be.an.instanceof(Error)
             expect(error.message).to.equal(` is empty or blank`)
         }
 
-        try{
-            registerUser(name, surname, email, 1)          
-        }catch(error){
+        try {
+            registerUser(name, surname, email, 1)
+        } catch (error) {
             expect(error).to.be.an.instanceof(TypeError)
             expect(error.message).to.equal(`1 is not a string`)
         }
 
-        try{
-            registerUser( name, surname, email, '')          
-        }catch(error){
+        try {
+            registerUser(name, surname, email, '')
+        } catch (error) {
             expect(error).to.be.an.instanceof(Error)
             expect(error.message).to.equal(` is empty or blank`)
         }
@@ -109,5 +119,5 @@ describe('logic - register user', () => {
 
     afterEach(() => User.deleteMany())
     after(mongoose.disconnect)
-        
+
 })

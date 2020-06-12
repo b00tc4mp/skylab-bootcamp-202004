@@ -2,14 +2,14 @@ require('dotenv').config()
 const { env: { MONGODB_URL } } = process
 
 const { mongoose } = require('moove-it-data')
-const retrieveUser = require('./retrieve-user')
+const createBluePrint = require('../save-blueprint')
 
 mongoose.connect(MONGODB_URL)
     .then(() => {
-        try{
-        
-            return retrieveUser('5edfbc9cd4292d5036cd25e2')
-                .then(({name, surname, email}) => console.log(name, surname, email))
+        try {
+
+            return createBluePrint('5ee2550b9ccc676b30b4bd4c', undefined, 'room', 12, 15)
+                .then((id) => console.log(`Blueprint created! ${id}`))
                 .catch(error => console.error('KO async', error))
         } catch (error) {
             console.error('KO sync', error)

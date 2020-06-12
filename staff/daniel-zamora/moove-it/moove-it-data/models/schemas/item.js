@@ -6,35 +6,34 @@ module.exports = new Schema({
         required: true
     },
 
-    // scale:{
-    //     type: Number,
-    //     default: 1, 
-    //     required: false
-    // },
 
-    position: { 
+    position: {
         type: [Number],
         required: true,
         default: 0
     },
 
-    orientation: { 
+    orientation: {
         type: Number,
         required: true,
         default: 0
     },
 
-    width: { 
+    width: {
         type: Number,
         required: true,
         default: 1
     },
 
-    height: { 
+    height: {
         type: Number,
         required: true,
         default: 1
     },
 
-    // img: String 
+    // scale: {
+    //     type: Number,
+    //     default: 1,
+    //     required: false
+    // },
 })
