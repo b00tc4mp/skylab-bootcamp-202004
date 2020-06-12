@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
     StyleSheet,
     SafeAreaView,
@@ -7,28 +7,52 @@ import {
     View,
     Text
 } from "react-native";
-
+import { useRoute } from '@react-navigation/native'
 import UserItem from '../components/UserItem'
 import Card from '../components/Card'
+import { retrieveEscapeRooms, retrieveUser } from 'escape-me-client-logic'
 
 import { Entypo, FontAwesome, MaterialIcons, Ionicons } from '@expo/vector-icons';
 
-
 export default function Profile() {
+    const route = useRoute()
+    const token = route.params['token']
+    const [escapeRooms, setEscapeRooms] = useState([])
+    const [tag, setTag] = useState('favorites')
+    const [name, setName] = useState('')
+    const [surname, setSurname] = useState('')
+    const [username, setUsername] = useState('')
+
+    let escapeList
+    useEffect(() => {
+        (async () => {
+            if (!username) {
+                const { name: _name, surname: _surname, username: _username } = await retrieveUser(token)
+
+                _name && setName(_name)
+                _surname && setSurname(_surname)
+                _username && setUsername(_username)
+            }
+            escapeList = await retrieveEscapeRooms(token, tag)
+
+            setEscapeRooms(escapeList)
+        })()
+    }, [tag])
+
     return (
         <SafeAreaView style={styles.container} >
             <ScrollView >
-                <UserItem name={'Tyler'} surname={'Durden'} email={'fightclub@mail.com'} image={require('../assets/tyler.jpg')} />
+                <UserItem name={name ? name : ''} surname={surname ? surname : ''} email={`@${username}`} image={require('../assets/tyler.jpg')} />
                 <TouchableOpacity style={styles.edit}>
                     <Entypo name="pencil" size={30} color="white" />
                     <Text style={styles.text}>Edit profile</Text>
                 </TouchableOpacity>
                 <View style={styles.details}>
-                    <TouchableOpacity style={[styles.pair, styles.selected]}>
+                    <TouchableOpacity style={tag === 'favorites' ? [styles.pair, styles.selected] : styles.pair} onPress={() => setTag('favorites')}>
                         <FontAwesome name="heart" size={24} color={'#fc5c65'} />
                         <Text>Favorite</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.pair}>
+                    <TouchableOpacity style={tag === 'participated' ? [styles.pair, styles.selected] : styles.pair} onPress={() => setTag('participated')}>
                         <MaterialIcons name="done-all" size={24} color="black" />
                         <Text>Done</Text>
                     </TouchableOpacity>
@@ -37,9 +61,13 @@ export default function Profile() {
                         <Text>Following</Text>
                     </TouchableOpacity>
                 </View>
-                <Card title="Whitechapel" rating="4.9" people='2-6' genre='Terror' price="50-90€" image={require('../assets/whitechapel.jpg')} />
-                <Card title="Whitechapel" rating="4.9" people='2-6' genre='Terror' price="50-90€" image={require('../assets/whitechapel.jpg')} />
-                <Card title="Whitechapel" rating="4.9" people='2-6' genre='Terror' price="50-90€" image={require('../assets/whitechapel.jpg')} />
+                {escapeRooms.length ?
+                    escapeRooms.map(({ city, id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin }) => {
+                        return (<Card key={id} title={name} rating='4.9' people={`${playersMin}-${playersMax}`} genre={genre} price={`${priceMin}-${priceMax}€`} image={{ uri: _image }} />)
+                    })
+                    :
+                    <Text>Nothing to suggest</Text>
+                }
             </ScrollView>
         </SafeAreaView>
     );

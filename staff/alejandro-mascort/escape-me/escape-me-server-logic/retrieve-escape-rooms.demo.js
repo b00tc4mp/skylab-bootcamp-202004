@@ -7,7 +7,7 @@ const retrieveEscapeRooms = require('./retrieve-escape-rooms')
 
 mongoose.connect(MONGODB_URL)
     .then(async () => {
-        const user = await retrieveEscapeRooms('5ee335f37309b71b1ecd65a2', 'favorites')
+        const user = await retrieveEscapeRooms('5ee3856f48590e563271360d', 'pending')
 
         console.log(user)
     })

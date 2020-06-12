@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Icon } from 'react-native';
-// import { createAppContainer } from 'react-navigation';
-// import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -94,6 +92,7 @@ function NavTabs({ token }) {
       <Tab.Screen
         name="Home"
         component={Home}
+        initialParams={{ 'token': token }}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color }) => (
@@ -124,6 +123,7 @@ function NavTabs({ token }) {
       <Tab.Screen
         name="Profile"
         component={Profile}
+        initialParams={{ 'token': token }}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color }) => (

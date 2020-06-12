@@ -9,7 +9,7 @@ require('escape-me-commons/polyfills/json')
 const { mongoose, models: { User } } = require('escape-me-data')
 const bcrypt = require('bcryptjs')
 
-describe.only('logic - retrieve following', () => {
+describe('logic - retrieve following', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let name, surname, email, password, userId, username

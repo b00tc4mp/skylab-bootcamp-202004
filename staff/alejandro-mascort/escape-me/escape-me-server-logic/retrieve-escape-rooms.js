@@ -6,12 +6,12 @@ module.exports = (userId, tag) => {
     String.validate.notVoid(tag)
 
     return (async () => {
-        const user = await User.findOne({ _id: ObjectId(userId) }, { __v: 0, password: 0 }).lean()
+        const user = await User.findById(userId).populate(tag).lean()
+
         if (!user) throw new Error(`user with id ${userId} does not exist`)
 
-        delete user.id
-        delete user._id
+        const escapeRoomList = user[tag].map(({ _id, name, priceMin, priceMax, playersMin, playersMax, genre, city, image }) => ({ id: _id, name, priceMin, priceMax, playersMin, playersMax, genre, city, image }))
 
-        return user[tag]
+        return escapeRoomList
     })()
 }
