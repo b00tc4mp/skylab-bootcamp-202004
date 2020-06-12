@@ -1,12 +1,12 @@
 require('dotenv').config()
 const {env: {TEST_MONGODB_URL: MONGODB_URL}} = process
 const {mongoose} = require('qrmenu-data')
-const addDish = require('./add-dish')
+const retrieveDishes = require('./retrieve-dishes')
 
 mongoose.connect(MONGODB_URL)
     .then(() => {
         debugger
-        return addDish("5ee250262efaee3a31235a02", "5ee250272efaee3a31235a03", "ensalada mixta", "deliciosa ensalada mixta, muy refrescante", 5, ['healthy', 'fit','fresh'])
+        return retrieveDishes("5ee250262efaee3a31235a02")
     })
     .then(console.log)
     .catch(console.error)
