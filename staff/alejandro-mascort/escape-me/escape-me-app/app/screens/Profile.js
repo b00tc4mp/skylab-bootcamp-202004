@@ -22,6 +22,7 @@ export default function Profile() {
     const [name, setName] = useState('')
     const [surname, setSurname] = useState('')
     const [username, setUsername] = useState('')
+    const [escapes, setEscapes] = useState()
 
     let escapeList
     useEffect(() => {
@@ -33,8 +34,11 @@ export default function Profile() {
                 _surname && setSurname(_surname)
                 _username && setUsername(_username)
             }
-            escapeList = await retrieveEscapeRooms(token, tag)
 
+            const { participated = [], pending = [], favorites = [] } = await retrieveUser(token)
+            setEscapes({ participated, pending, favorites })
+
+            escapeList = await retrieveEscapeRooms(token, tag)
             setEscapeRooms(escapeList)
         })()
     }, [tag])
@@ -63,10 +67,15 @@ export default function Profile() {
                 </View>
                 {escapeRooms.length ?
                     escapeRooms.map(({ city, id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin }) => {
-                        return (<Card key={id} title={name} rating='4.9' people={`${playersMin}-${playersMax}`} genre={genre} price={`${priceMin}-${priceMax}€`} image={{ uri: _image }} />)
+                        return (<Card key={id} title={name} rating='4.9' people={`${playersMin}-${playersMax}`}
+                            genre={genre} price={`${priceMin}-${priceMax}€`} image={{ uri: _image }}
+                            participated={escapes.participated.includes(id)}
+                            pending={escapes.pending.includes(id)}
+                            favorites={escapes.favorites.includes(id)}
+                        />)
                     })
                     :
-                    <Text>Nothing to suggest</Text>
+                    <Text>No escape rooms added yet.</Text>
                 }
             </ScrollView>
         </SafeAreaView>

@@ -1,16 +1,22 @@
 import React from 'react'
 import { View, StyleSheet, Image, ImageBackground, Text, TouchableOpacity } from 'react-native'
-import { MaterialCommunityIcons, MaterialIcons, SimpleLineIcons, Entypo } from '@expo/vector-icons'
+import { MaterialCommunityIcons, MaterialIcons, SimpleLineIcons, Entypo, AntDesign, Feather, Foundation } from '@expo/vector-icons'
 const styles = require('./style')
 
-function Card({ title, rating, people, genre, price, image }) {
+function Card({ title, rating, people, genre, price, image, participated, pending, favorites }) {
     return (
         <View style={styles.card}>
             <View style={styles.header}>
                 <Text style={[styles.text, styles.title]}>{title}</Text>
-                <SimpleLineIcons name="heart" size={24} color="tomato" style={styles.icon} />
-                <MaterialIcons name="check-box-outline-blank" size={24} color="black" style={styles.icon} />
-                <Entypo name="add-to-list" size={24} color="black" style={styles.icon} />
+                {favorites ? <AntDesign name="heart" size={24} color="tomato" style={styles.icon} />
+                    :
+                    <SimpleLineIcons name="heart" size={24} color="tomato" style={styles.icon} />}
+                {participated ? <Feather name="check-square" size={24} color="black" style={styles.icon} />
+                    :
+                    <MaterialIcons name="check-box-outline-blank" size={24} color="black" style={styles.icon} />}
+                {pending ? <MaterialIcons name="playlist-add-check" size={24} color="black" style={styles.icon} />
+                    :
+                    <MaterialIcons name="playlist-add" size={24} color="black" style={styles.icon} />}
             </View>
             <TouchableOpacity activeOpacity={0.8}>
                 <ImageBackground style={styles.image} source={image} resizeMode={'contain'} />

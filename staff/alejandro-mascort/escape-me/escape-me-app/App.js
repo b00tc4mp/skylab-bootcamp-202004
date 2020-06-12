@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Icon } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import Landing from './app/screens/Landing'
 import Home from './app/screens/Home'
