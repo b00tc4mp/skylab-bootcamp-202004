@@ -9,5 +9,6 @@ module.exports = {
     addProduct: require('./add-product'),
     retrieveProducts: require('./retrieve-products'),
     closeUserPosition: require('./close-user-position'),
-    profitAndLoss: require('./profit-and-loss')
+    profitAndLoss: require('./profit-and-loss'),
+    retrieveUserTrades: require('./retrieve-user-trades')
 }

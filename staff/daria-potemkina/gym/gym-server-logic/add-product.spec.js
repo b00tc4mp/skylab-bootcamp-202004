@@ -39,7 +39,7 @@ describe('logic - addProduct', () => {
             exchange: `exchange-${random()}`,
             sector: `sector-${random()}`,
             contractSize: round(random() * 100),
-            settlementDate: 'September 18, 2020 17:45:00',
+            settlementDate: 'September 18 2020'
         }
 
         option = {
@@ -48,10 +48,10 @@ describe('logic - addProduct', () => {
             ticker: `ticker-${random()}`,
             sector: `sector-${random()}`,
             contractSize: round(random() * 100),
-            settlementDate: 'June 19, 2020 17:45:00',
+            settlementDate: 'June 19 2020',
             type: {
                 strike: round(random() * 10),
-                side: `side-${random()}`,
+                side: `side-${random()}`
             }
         }
 
