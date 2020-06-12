@@ -10,10 +10,10 @@ module.exports = function (token, moodScore) {
             let body = JSON.parse(bodyAndState.body)
             let dateNow = new Date
 
-            let { mood: moodList } = body
+            let { mood } = body
 
-            for(let i=0; i<moodList.length; i++){
-                delete moodList[i]._id
+            for(let i=0; i<mood.length; i++){
+                delete mood[i]._id
             }
 
             const newMood = {
@@ -21,13 +21,12 @@ module.exports = function (token, moodScore) {
                 score: moodScore
             }
 
-            moodList.push(newMood)
+            mood.push(newMood)
 
-            const finalObject = JSON.stringify(moodList)
 
             call('PATCH',
                 `${this.API_URL}/users/`,
-                `{ "mood": "${finalObject}" }`,
+                JSON.stringify({mood}),
                 { 'Content-type': 'application/json', 'Authorization': `Bearer ${token}` })
                 .then(({ status, body }) => {
                     if (status === 201) return

@@ -11,7 +11,8 @@ import {isAuthenticated} from 'termometro-client-logic'
 import CreateMember from './CreateMember';
 import EditMember from './EditMember';
 import SetMood from './SetMood';
-
+import Settings from './Settings';
+import EditPlan from './EditPlan';
 
 function App({history}) {
 
@@ -23,10 +24,10 @@ function App({history}) {
     if(sessionStorage.token){
       try {
         isAuthenticated(sessionStorage.token)
-          .then(userName => {
-            if (userName) {
+          .then(user => {
+            if (user) {
               setToken(sessionStorage.token)
-              setUserName(userName)
+              setUserName(user.name)
             }
           })
           .catch(error => { throw error })
@@ -40,8 +41,8 @@ function App({history}) {
     sessionStorage.token = token
     try {
       isAuthenticated(token)
-        .then(userName => {
-          setUserName(userName)
+        .then(user => {
+          setUserName(user.name)
           setToken(token)
           history.push('/home')
         })
@@ -72,6 +73,8 @@ function App({history}) {
           <Route path="/create-member" render={()=> token? <CreateMember token={token}/> : <Redirect to='/'/>} />
           <Route path="/edit-member" render={()=> token? <EditMember token={token} memberInfo={memberInfo}/> : <Redirect to='/'/>} />
           <Route path="/set-mood" render={()=> token? <SetMood token={token} /> : <Redirect to='/'/>} />
+          <Route path="/settings" render={()=> token? <Settings token={token} /> : <Redirect to='/'/>} />
+          <Route path="/edit-plan" render={()=> token? <EditPlan token={token} /> : <Redirect to='/'/>} />
           <Footer />
         </Container>
       </header>

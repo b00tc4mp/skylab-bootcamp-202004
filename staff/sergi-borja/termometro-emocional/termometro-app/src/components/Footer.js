@@ -14,7 +14,7 @@ function Footer() {
             <Link className="footerContainer__element" to="/users">
                 Estadisticas
       </Link>
-            <Link className="footerContainer__element" to="/contact">
+            <Link className="footerContainer__element" to="/settings">
                 Ajustes
       </Link>
         </section>

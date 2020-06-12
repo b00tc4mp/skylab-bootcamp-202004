@@ -12,7 +12,7 @@ module.exports = function(token) {
         { 'Authorization': `Bearer ${token}` })
         .then(bodyAndState => {
             let body = JSON.parse(bodyAndState.body)
-            return body.name
+            return body
             
         })
 }.bind(context)
