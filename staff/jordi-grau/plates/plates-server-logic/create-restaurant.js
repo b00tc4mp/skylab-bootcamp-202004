@@ -34,9 +34,5 @@ module.exports = (userId, name, email,cif, address, phone)=>{
     }) ()
 
 
-    
-
-
-
 }
 
