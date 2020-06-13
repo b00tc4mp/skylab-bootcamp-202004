@@ -1,4 +1,4 @@
-const { Schema, SchemaType: { ObjectId } } = require('mongoose')
+const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 const { utils: { Email } } = require('7-potencias-commons')
 const order = require('./order')
 const productQuantity = require('./product-quantity')
