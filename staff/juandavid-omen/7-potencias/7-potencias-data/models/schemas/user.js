@@ -4,11 +4,6 @@ const order = require('./order')
 const productQuantity = require('./product-quantity')
 
 module.exports = new Schema({
-  _id: {
-    type: ObjectId,
-    required: true
-  },
-
   name: {
     type: String,
     required: true
