@@ -3,8 +3,8 @@ module.exports = {
   authenticateUser: require('./authenticate-user'),
   retrieveUser: require('./retrieve-user'),
   deleteUser: require('./delete-user'),
-  createClass: require('./create-class'),
-  searchClass: require('./search-class'),
+  createProduct: require('./create-product'),
+  searchProducts: require('./search-products'),
   updateCart: require('./update-cart'),
   deleteCart: require('./delete-cart'),
   placeOrder: require('./place-order')

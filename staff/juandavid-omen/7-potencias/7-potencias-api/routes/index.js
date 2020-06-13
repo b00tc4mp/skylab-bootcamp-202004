@@ -1,7 +1,7 @@
 const { env: { SECRET } } = process
 
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, deleteUser, createClass, searchClass, updateCart, deleteCart, placeOrder } = require('./handlers')
+const { registerUser, authenticateUser, retrieveUser, deleteUser, createProduct, searchProducts, updateCart, deleteCart, placeOrder } = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
 const { handleError } = require('../helpers')
@@ -19,9 +19,9 @@ api.get('/users/:userId?', verifyExtractJwt, retrieveUser)
 
 api.delete('/users/:userId', verifyExtractJwt, deleteUser)
 
-api.post('/class', verifyExtractJwt, parseBody, createClass)
+api.post('/product', verifyExtractJwt, parseBody, createProduct)
 
-api.get('/class/search?query=q', searchClass)
+api.get('/product/search?query=q', searchProducts)
 
 api.put('/cart', verifyExtractJwt, parseBody, updateCart)
 
