@@ -12,7 +12,7 @@ const { ObjectId } = mongoose
 describe('logic - ProfitAndLoss', () => {
     before(() => mongoose.connect(MONGODB_URL_TEST))
 
-    let user, userId, future, option, futureId, optionId, futurePrice, futureBuyContract, optionPrice, ___futurePrice, ___optionPrice, contract, futurePriceId, optionPriceId, dateToday, _profitAndLoss
+    let user, userId, future, option, futureId, optionId, futurePrice, futureBuyContract, ___futurePrice, futurePriceId, optionPriceId, dateToday, _profitAndLoss
 
     beforeEach(async () => {
         await User.deleteMany()
@@ -40,7 +40,7 @@ describe('logic - ProfitAndLoss', () => {
             exchange: `exchange-${random()}`,
             sector: `sector-${random()}`,
             contractSize: round(random() * 100),
-            settlementDate: 'Jun 30 2020',
+            settlementDate: new Date('Jun 30 2020'),
         }
 
         option = {
@@ -49,14 +49,14 @@ describe('logic - ProfitAndLoss', () => {
             ticker: `ticker-${random()}`,
             sector: `sector-${random()}`,
             contractSize: round(random() * 100),
-            settlementDate: 'Jun 30 2020',
+            settlementDate: new Date('Jun 30 2020'),
             type: {
                 strike: 9,
                 side: 'call',
             }
         }
 
-        dateToday = new Date().toString().split(' ').slice(1, 4).join(' ')
+        dateToday = new Date()
 
         guarantee = round(random() * 1000)
         _profitAndLoss = round(random() * 1000)
@@ -74,11 +74,11 @@ describe('logic - ProfitAndLoss', () => {
             const _option = await Product.create(option)
             optionId = _option._id.toString()
 
-            const _futurePrice = await Price.create({ product: futureId, date: 'Jun 07 2020', price: 10 })
+            const _futurePrice = await Price.create({ product: futureId, date: new Date('Jun 07 2020'), price: 10 })
             futurePrice = _futurePrice.price
             futurePriceId = _futurePrice._id.toString()
 
-            const _optionPrice = await Price.create({ product: optionId, date: 'Jun 07 2020', price: 10 })
+            const _optionPrice = await Price.create({ product: optionId, date: new Date('Jun 07 2020'), price: 10 })
             optionPrice = _optionPrice.price
             optionPriceId = _optionPrice._id.toString()
 
@@ -112,7 +112,7 @@ describe('logic - ProfitAndLoss', () => {
                 }]
             }
 
-            await AccountBalance.create({ user: userId, date: 'Jun 10 2020', guarantee, profitAndLoss: _profitAndLoss })
+            await AccountBalance.create({ user: userId, date: new Date('Jun 10 2020'), guarantee, profitAndLoss: _profitAndLoss })
 
             const __futurePrice = await Price.create({ product: futureId, date: dateToday, price: 8 })
             ___futurePrice = __futurePrice.price
@@ -136,7 +136,7 @@ describe('logic - ProfitAndLoss', () => {
 
             expect(_balance).to.be.an.instanceOf(Object)
             expect(_balance.user.toString()).to.equal(userId)
-            expect(_balance.date).to.equal(dateToday)
+            expect(_balance.date).to.be.an.instanceOf(Date)
             expect(_balance.guarantee).to.equal(guarantee)
             expect(_balance.profitAndLoss).to.equal(round((_profitAndLoss + (futurePrice - ___futurePrice) * future.contractSize * futureBuyContract.trades[0].quantity)))
         })
@@ -155,7 +155,7 @@ describe('logic - ProfitAndLoss', () => {
 
             expect(_balance).to.be.an.instanceOf(Object)
             expect(_balance.user.toString()).to.equal(userId)
-            expect(_balance.date).to.equal(dateToday)
+            expect(_balance.date).to.be.an.instanceOf(Date)
             expect(_balance.guarantee).to.equal(guarantee)
             expect(_balance.profitAndLoss).to.equal(round(_profitAndLoss - (futurePrice - ___futurePrice) * future.contractSize * futureSellContract.trades[0].quantity))
         })
@@ -174,7 +174,7 @@ describe('logic - ProfitAndLoss', () => {
 
             expect(_balance).to.be.an.instanceOf(Object)
             expect(_balance.user.toString()).to.equal(userId)
-            expect(_balance.date).to.equal('Jun 10 2020')
+            expect(_balance.date).to.be.an.instanceOf(Date)
             expect(_balance.guarantee).to.equal(guarantee)
             expect(_balance.profitAndLoss).to.equal(_profitAndLoss)
         })
@@ -194,7 +194,7 @@ describe('logic - ProfitAndLoss', () => {
 
             expect(_balance).to.be.an.instanceOf(Object)
             expect(_balance.user.toString()).to.equal(userId)
-            expect(_balance.date).to.equal(dateToday)
+            expect(_balance.date).to.be.an.instanceOf(Date)
             expect(_balance.guarantee).to.equal(guarantee)
 
             const __profitAndLoss = ((futurePrice - ___futurePrice) * future.contractSize * (futureBuyContract.trades[0].quantity - futureSellContract.trades[0].quantity))
@@ -257,7 +257,7 @@ describe('logic - ProfitAndLoss', () => {
             const product = await Product.create(future)
             futureId = product._id.toString()
 
-            const _futurePrice = await Price.create({ product: futureId, date: 'Jun 07 2020', price: 10 })
+            const _futurePrice = await Price.create({ product: futureId, date: new Date('Jun 07 2020'), price: 10 })
             futurePrice = _futurePrice.price
             futurePriceId = _futurePrice._id.toString()
 

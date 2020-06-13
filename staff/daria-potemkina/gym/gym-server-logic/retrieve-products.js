@@ -10,7 +10,6 @@ module.exports = () => {
         if (!products.length) throw new UnexistenceError('there are no products to show')
 
         products.forEach(item => {
-            delete item._id
             delete item.__v
         })
 

@@ -21,7 +21,7 @@ describe('logic - searchProducts', () => {
             exchange: `exchange-${random()}`,
             sector: `sector-${random()}`,
             contractSize: round(random() * 100),
-            settlementDate: 'September 18 2020'
+            settlementDate: new Date('September 18 2020')
         }
 
         await Product.create(future)
@@ -39,7 +39,7 @@ describe('logic - searchProducts', () => {
         expect(results[0].exchange).to.equal(future.exchange)
         expect(results[0].sector).to.equal(future.sector)
         expect(results[0].contractSize).to.equal(future.contractSize)
-        expect(results[0].settlementDate).to.equal(future.settlementDate)
+        expect(results[0].settlementDate).to.be.an.instanceOf(Date)
         expect(results[0]._id).to.be.undefined
         expect(results[0].__v).to.be.undefined
     })
@@ -56,7 +56,7 @@ describe('logic - searchProducts', () => {
         expect(results[0].exchange).to.equal(future.exchange)
         expect(results[0].sector).to.equal(future.sector)
         expect(results[0].contractSize).to.equal(future.contractSize)
-        expect(results[0].settlementDate).to.equal(future.settlementDate)
+        expect(results[0].settlementDate).to.be.an.instanceOf(Date)
         expect(results[0]._id).to.be.undefined
         expect(results[0].__v).to.be.undefined
     })
@@ -74,7 +74,7 @@ describe('logic - searchProducts', () => {
         expect(results[0].exchange).to.equal(future.exchange)
         expect(results[0].sector).to.equal(future.sector)
         expect(results[0].contractSize).to.equal(future.contractSize)
-        expect(results[0].settlementDate).to.equal(future.settlementDate)
+        expect(results[0].settlementDate).to.be.an.instanceOf(Date)
         expect(results[0]._id).to.be.undefined
         expect(results[0].__v).to.be.undefined
     })

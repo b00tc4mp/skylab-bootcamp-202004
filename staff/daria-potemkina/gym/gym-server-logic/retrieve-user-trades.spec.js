@@ -11,7 +11,7 @@ const { ObjectId } = mongoose
 describe('logic - retrieveUserTrades', () => {
     before(() => mongoose.connect(MONGODB_URL_TEST))
 
-    let user, future, option, quantity, userId, futureId, optionId, priceId, optionPriceId, dateToday
+    let user, future, option, userId, futureId, optionId, priceId, optionPriceId, dateToday
 
     beforeEach(async () => {
         await User.deleteMany()
@@ -54,7 +54,7 @@ describe('logic - retrieveUserTrades', () => {
             }
         }
 
-        dateToday = new Date().toString().split(' ').slice(1, 4).join(' ')
+        dateToday = new Date()
 
         quantity = quantity = round(random() * 10)
     })
@@ -129,7 +129,7 @@ describe('logic - retrieveUserTrades', () => {
             expect(trades[0].price._id).to.be.undefined
             expect(trades[0].price.product).to.be.undefined
             expect(trades[0].price.__v).to.be.undefined
-            expect(trades[0].price.date).to.equal(price.date)
+            expect(trades[0].price.date).to.be.an.instanceOf(Date)
             expect(trades[0].price.price).to.equal(price.price)
 
             expect(_option.product.productType).to.equal('option')
@@ -153,7 +153,7 @@ describe('logic - retrieveUserTrades', () => {
             expect(_trade[0].price._id).to.be.undefined
             expect(_trade[0].price.product).to.be.undefined
             expect(_trade[0].price.__v).to.be.undefined
-            expect(_trade[0].price.date).to.equal(optionPrice.date)
+            expect(_trade[0].price.date).to.be.an.instanceOf(Date)
             expect(_trade[0].price.price).to.equal(optionPrice.price)
         })
 
