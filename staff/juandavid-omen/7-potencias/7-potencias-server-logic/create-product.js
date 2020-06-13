@@ -1,7 +1,7 @@
 require('7-potencias-commons/polyfills/string')
 require('7-potencias-commons/polyfills/number')
 const { models: { Product } } = require('7-potencias-data')
-const { erros: { DuplicityError } } = require('7-potencias-commons')
+const { errors: { DuplicityError } } = require('7-potencias-commons')
 
 module.exports = (name, price, danceStyle) => {
   String.validate.notVoid(name)
