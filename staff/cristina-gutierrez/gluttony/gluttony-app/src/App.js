@@ -1,5 +1,11 @@
 import React, { Component } from "react"
 import { Text, View, StyleSheet } from "react-native"
+import Home from "./Home";
+import Modal from "./Modal";
+
+
+
+
 
 class Gluttony extends Component {
   render() {
