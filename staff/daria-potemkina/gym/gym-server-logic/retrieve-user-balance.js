@@ -7,17 +7,19 @@ module.exports = userId => {
     String.validate.notVoid(userId)
 
     return (async () => {
-        const user = await User.findById(userId)
+        const user = await User.findById(userId).sort({ date: -1 })
 
         if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
-        const balance = await AccountBalance.find({ user: ObjectId(userId) }).lean()
-        
-        if(!balance) throw new UnexistenceError('the balance is empty, there are no operations yet')
+        let balance = await AccountBalance.find({ user: ObjectId(userId) }).lean()
 
-        balance.sort( (a, b) => {
-            return (b.date - a.date)
-        })
+        if (!balance.length) throw new UnexistenceError('the balance is empty, there are no operations yet')
+
+        for (let i in balance){
+            delete balance[i]._id
+            delete balance[i].user
+            delete balance[i].__v
+        }
 
         return balance
 

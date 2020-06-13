@@ -22,36 +22,46 @@ module.exports = (userId, productId, priceId, side, quantity) => {
 
         if (!number && !holder && !expirationDate && !cvv) throw new UnexistenceError('user does not have a card added')
 
-        let guarantee = 0,
-            profitAndLoss = 0
-
         const product = await Product.findById(productId)
 
         if (!product) throw new UnexistenceError(`product with id ${productId} is not exist`)
 
         const { price } = await Price.findById(priceId)
 
+        const balances = await AccountBalance.find({ user: ObjectId(userId) }).sort({date: -1})
+
+        let guarantee = 0, profitAndLoss = 0
+        
+        const dateToday = new Date().toString().split(' ').slice(1, 4).join(' ')
+
+        if (balances.length){
+            const [balance] = balances
+
+            guarantee += balance.guarantee
+            profitAndLoss += balance.profitAndLoss
+        }
+
         if (product.productType === 'future') {
             const { contractSize } = product
 
-            guarantee = round(quantity * price * contractSize * 0.1 * 100) / 100
+            guarantee += round(quantity * price * contractSize * 0.1 * 100) / 100
 
-            await AccountBalance.create({ user: userId, date: new Date(), guarantee, profitAndLoss })
+            await AccountBalance.create({ user: userId, date: dateToday, guarantee, profitAndLoss })
         }
 
         if (product.productType === 'option') {
             const { contractSize: _contractSize, type: { strike } } = product
 
-            guarantee = round(_contractSize * strike * quantity * 0.1 * 100) / 100
+            guarantee += round(_contractSize * strike * quantity * 0.1 * 100) / 100
 
             if (side === 'Buy') {
-                profitAndLoss = round(quantity * _contractSize * price * 100 * (-1)) / 100
+                profitAndLoss -= round(quantity * _contractSize * price * 100) / 100
 
             } else {
-                profitAndLoss = round(quantity * _contractSize * price * 100) / 100
+                profitAndLoss += round(quantity * _contractSize * price * 100) / 100
             }
 
-            await AccountBalance.create({ user: userId, date: new Date(), guarantee, profitAndLoss }) 
+            await AccountBalance.create({ user: userId, date: dateToday, guarantee, profitAndLoss })
         }
 
         let contract = await Contract.findOne({ product: ObjectId(productId) })

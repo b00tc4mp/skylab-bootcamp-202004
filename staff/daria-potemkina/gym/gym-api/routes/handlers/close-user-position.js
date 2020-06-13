@@ -1,11 +1,12 @@
-const { retrieveUser } = require('gym-server-logic')
+const { closeUserPosition } = require('gym-server-logic')
 const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
+    const { payload: { sub: userId } } = req
+
     try {
-        const { payload: { sub: userId } } = req
-        retrieveUser(userId)
-            .then(user => res.send(user))
+        closeUserPosition(userId)
+            .then(() => res.status(200).send())
             .catch(error => handleError(error, res))
     } catch (error) {
         handleError(error, res)

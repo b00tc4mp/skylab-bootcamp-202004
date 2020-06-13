@@ -6,5 +6,12 @@ module.exports = {
     addProduct: require('./add-product'),
     retrieveUserBalance: require('./retrieve-user-balance'),
     retrieveUserCard: require('./retrieve-user-card'),
-    addProduct: require('./add-product')
+    addProduct: require('./add-product'),
+    retrieveProducts: require('./retrieve-products'),
+    closeUserPosition: require('./close-user-position'),
+    profitAndLoss: require('./profit-and-loss'),
+    retrieveUserTrades: require('./retrieve-user-trades'),
+    retrievePrices: require('./retrieve-prices'),
+    searchProducts: require('./search-products'),
+    retrieveUnderlyings: require('./retrieve-underlyings')
 }

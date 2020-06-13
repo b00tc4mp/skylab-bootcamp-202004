@@ -17,8 +17,6 @@ module.exports = userId => {
         delete user.surname
         delete user.email
         delete user.password
-        delete user.products
-        delete user.guarantee
         delete user.__v
 
         return user.card
