@@ -15,13 +15,13 @@ api.post('/users', parseBody, registerUser)
 
 api.post('/users/auth', parseBody, authenticateUser)
 
-api.get('/users/:userId?', verifyExtractJwt, retrieveUser)
+api.get('/users/:userId', verifyExtractJwt, retrieveUser)
 
 api.delete('/users/:userId', verifyExtractJwt, deleteUser)
 
 api.post('/products', verifyExtractJwt, parseBody, createProduct)
 
-api.get('/products/search?query=q', searchProducts)
+api.get('/products/search', searchProducts)
 
 api.put('/carts', verifyExtractJwt, parseBody, updateCart)
 
