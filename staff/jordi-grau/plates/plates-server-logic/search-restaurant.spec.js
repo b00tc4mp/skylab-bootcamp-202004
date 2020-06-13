@@ -1,7 +1,6 @@
 require('dotenv').config()
 const {  env: {TEST_MONGODB_URL: MONGODB_URL} } = process
 const { errors: { UnexistanceError }} = require('plates-commons')
-debugger
 const  { mongoose , models:{ User, Restaurant, Dish }}  = require('plates-data')
 const {floor, random } = Math
 const { expect } = require('chai')
@@ -50,7 +49,7 @@ describe('search ', () =>{
         await Restaurant.create({ owner: userId, name: restaurantName, email: restaurantEmail, cif, address, phone, dishes: dishesIds})
     
     })
- debugger
+ 
     it('should succeed on correct data', async() =>{
         query = restaurantName
         let restaurant = await searchRestaurant(query)

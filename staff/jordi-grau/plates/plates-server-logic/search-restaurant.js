@@ -12,12 +12,10 @@ module.exports = (query) => {
 
         const dishesIds = dishes.map(dish => dish._id)
     
-
         const restaurant = await Restaurant.find({
           $or: [
             {name: {$regex: query, $options: 'i'}},
             {email: {$regex:query, $options: 'i'}},
-           // {phone: {$regex:query, $options: 'i'}},
             {cif: {$regex:query, $options: 'i'}},
             {address: {$regex:query, $options: 'i'}},
             {dish: {$in:dishesIds }}

@@ -1,6 +1,6 @@
 
 require('dotenv').config()
-const { mongoose, models: { User, Restaurant, Menu, Plate}} = require('plates-data')
+const { mongoose, models: { User, Restaurant, Dish}} = require('plates-data')
 const { env: {TEST_MONGODB_URL: MONGODB_URL } } = process
 const {floor, random} = Math
 const  bcrypt  = require('bcryptjs')
@@ -10,18 +10,17 @@ const createMenu  = require('./create-menu')
 
 
 describe('server logic: create menu', ()=>{
-    let restaurantName, restaurantEmail, cif, address, phone
+    let restaurantName, restaurantEmail, cif, address, phone, restauranId
     let userEmail, password, userId
-    let plateIds =[]
-    let _plates = []
+    let dishesIds =[]
+    let _dish = []
     
     before( async () =>{
         await mongoose.connect(MONGODB_URL)
         await Promise.all([
             User.deleteMany(),
             Restaurant.deleteMany(),
-            Menu.deleteMany(),
-            Plate.deleteMany()
+            Dish.deleteMany()
             
         ])
         
@@ -37,33 +36,39 @@ describe('server logic: create menu', ()=>{
         userEmail = `useremail-${random()}@email.com`
         password = `password-${random()}`
         const hash = await bcrypt.hash(password, 10)
-
+        const dish = Dish.create({name: 'Tortilla de patatas'})
+        let dishId = dish.id
         const { id } = await User.create({ email: userEmail, password: hash })
         userId = id
-        await Restaurant.create({ owner: userId, name: restaurantName, email: restaurantEmail, cif, address, phone })
-         
+        const restaurant = await Restaurant.create({ owner: userId, name: restaurantName, email: restaurantEmail, cif, address, phone, dishes: dishId })
+         restaurantId = restaurant.id
         for(let i = 0; i < 5; i++){ 
-            const plate = new Plate({name: `name-${i}`})
+            const dish = new Dish({name: `name-${i}`})
 
-            plateIds.push(plate.id)
-            _plates.push(plate)
+            dishesIds.push(dish.id)
+            _dish.push(dish)
         }
 
     })
+    
     it('when menu not exists, should create a menu on correct data', async() => {
         
-        const restaurant=await Restaurant.find()
-        const restaurantId=restaurant[0]._id.toString()
-        const result = await createMenu(userId, restaurantId, plateIds)     
+        const _dish =  await Dish.create({name: 'Arroz'})
+        let _dishId = _dish.id
+      //  const restaurant=await Restaurant.find()
+      //  const restaurantId=restaurant[0]._id.toString()
+        const result = await createMenu(userId, restaurantId, _dishId)  
+        const restaurant = await Restaurant.findById(restaurantId)   
+        
         expect(result).to.be.undefined
-        expect(plateIds.length).to.equal(5)
+        expect(restaurant.dishes[0].toString()).to.equal(_dishId)
         
     })
 
     it('should fail on wrong data', async () =>{
         try{
         restaurantId = '5ee328fad4e15914a3946a68'
-        await createMenu(userId, restaurantId, plateIds)
+        await createMenu(userId, restaurantId, dishesIds)
         throw new Error ('should not arrive here')
 
         } catch(error){ 
@@ -74,6 +79,10 @@ describe('server logic: create menu', ()=>{
         }
     
     })
+
+
+
+
 /* TODO IN NEXT APROACH
     describe('when menu exists', ()=>{
 

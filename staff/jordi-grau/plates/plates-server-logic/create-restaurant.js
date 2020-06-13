@@ -2,7 +2,7 @@ require('plates-commons/polyfills/string')
 require('plates-commons/polyfills/json')
 require('plates-commons/polyfills/number')
 const {utils: {Email }, errors:{DuplicityError, VoidError, UnexsistenceError} } = require('plates-commons')
-const {models: { User, Restaurant, Menu, Plate}} = require('plates-data')
+const {models: { User, Restaurant}} = require('plates-data')
 
 
 module.exports = (userId, name, email,cif, address, phone)=>{
