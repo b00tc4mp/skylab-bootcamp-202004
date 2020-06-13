@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 
 import Landing from './app/screens/Landing'
 import Home from './app/screens/Home'
@@ -10,7 +10,7 @@ import Profile from './app/screens/Profile'
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 
 export default function () {
   console.disableYellowBox = true
@@ -45,9 +45,15 @@ export default function () {
       {view === 'login' && <Login onRegister={handleGoToRegister} onHome={handleGoToHome} handleToken={handleToken} />}
       {view === 'register' && <Register onLogin={handleGoToLogin} />}
       {token &&
-        <NavigationContainer>
-          <NavTabs token={token} />
-        </NavigationContainer>}
+        <View style={styles.appheader}>
+          <Text style={styles.title}>Escape Me</Text>
+          <TouchableOpacity style={styles.logOut} onPress={handleLogOut}>
+            <AntDesign name="logout" size={24} color="white" />
+          </TouchableOpacity>
+        </View>}
+      {token && <NavigationContainer>
+        <NavTabs token={token} />
+      </NavigationContainer>}
     </View>
 
   );

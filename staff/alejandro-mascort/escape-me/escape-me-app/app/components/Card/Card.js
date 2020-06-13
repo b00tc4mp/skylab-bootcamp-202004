@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Image, ImageBackground, Text, TouchableOpacity } from 'react-native'
 import { MaterialCommunityIcons, MaterialIcons, SimpleLineIcons, Entypo, AntDesign, Feather, Foundation } from '@expo/vector-icons'
 import { toggleEscapeRoom } from 'escape-me-client-logic'
+import CardDetails from '../../screens/CardDetails'
+
 const styles = require('./style')
 
 function Card({ title, rating, people, genre, price, image, participated, pending, favorites, token, escapeId }) {
@@ -29,7 +31,7 @@ function Card({ title, rating, people, genre, price, image, participated, pendin
                     <MaterialIcons name="playlist-add" size={24}
                         color="black" style={styles.icon} onPress={() => handleToggle('pending')} />}
             </View>
-            <TouchableOpacity activeOpacity={0.8}>
+            <TouchableOpacity activeOpacity={0.8} >
                 <ImageBackground style={styles.image} source={image} resizeMode={'contain'} />
             </TouchableOpacity>
             <View style={styles.info}>

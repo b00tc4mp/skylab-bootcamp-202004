@@ -44,7 +44,7 @@ export default function (props) {
                         />)
                     })
                     :
-                    <Text>No escape rooms added yet.</Text>
+                    <Text></Text>
                 }
             </ScrollView>
 
