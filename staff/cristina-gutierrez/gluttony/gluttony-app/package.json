@@ -12,10 +12,14 @@
     "expo-splash-screen": "^0.2.3",
     "expo-updates": "~0.2.0",
     "gluttony-client-logic": "file:../gluttony-client-logic",
+    "https-browserify": "0.0.1",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "~0.61.5",
+    "react-native-crypto": "^2.2.0",
     "react-native-gesture-handler": "~1.6.0",
+    "react-native-level-fs": "^3.0.1",
+    "react-native-randombytes": "^3.5.3",
     "react-native-reanimated": "~1.7.0",
     "react-native-screens": "~2.2.0",
     "react-native-unimodules": "~0.9.0",
@@ -30,5 +34,15 @@
   "jest": {
     "preset": "react-native"
   },
-  "private": true
+  "private": true,
+  "react-native": {
+    "crypto": "react-native-crypto",
+    "https": "https-browserify",
+    "fs": "react-native-level-fs"
+  },
+  "browser": {
+    "crypto": "react-native-crypto",
+    "https": "https-browserify",
+    "fs": "react-native-level-fs"
+  }
 }

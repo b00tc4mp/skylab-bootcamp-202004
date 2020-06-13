@@ -6,6 +6,7 @@ module.exports = function (email, password) {
     Email.validate(email)
 
     String.validate.notVoid(password)
+    alert(email, password)
 
     axios.post(`${process.env.API_URL}/users/auth`, {
         email: "email",
