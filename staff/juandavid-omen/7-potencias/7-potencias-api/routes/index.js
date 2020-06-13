@@ -1,4 +1,4 @@
-const { env: { SECRET } } = process
+const { env: { JWT_SECRET: SECRET } } = process
 
 const { Router } = require('express')
 const { registerUser, authenticateUser, retrieveUser, deleteUser, createProduct, searchProducts, updateCart, deleteCart, placeOrder } = require('./handlers')
@@ -19,13 +19,13 @@ api.get('/users/:userId?', verifyExtractJwt, retrieveUser)
 
 api.delete('/users/:userId', verifyExtractJwt, deleteUser)
 
-api.post('/product', verifyExtractJwt, parseBody, createProduct)
+api.post('/products', verifyExtractJwt, parseBody, createProduct)
 
-api.get('/product/search?query=q', searchProducts)
+api.get('/products/search?query=q', searchProducts)
 
-api.put('/cart', verifyExtractJwt, parseBody, updateCart)
+api.put('/carts', verifyExtractJwt, parseBody, updateCart)
 
-api.delete('/cart', verifyExtractJwt, deleteCart)
+api.delete('/carts', verifyExtractJwt, deleteCart)
 
 api.post('/orders', verifyExtractJwt, placeOrder)
 
