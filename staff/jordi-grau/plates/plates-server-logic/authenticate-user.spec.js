@@ -4,7 +4,7 @@ const {DuplitcityError, UnexistenceError, VoidError } = require('plates-commons/
 const bcrypt = require('bcryptjs')
 const { floor, random } = Math
 const {expect} = require('chai')
-const {mongoose, models: {Menu, User, Restaurant, Plate }} = require('plates-data')
+const {mongoose, models: { User, Restaurant, Dish }} = require('plates-data')
 const authenticateUser = require('./authenticate-user')
 
 
@@ -16,8 +16,8 @@ describe('authenticateUser', () => {
         await Promise.all([
             User.deleteMany(),
             Restaurant.deleteMany(),
-            Plate.deleteMany(),
-            Menu.deleteMany()
+            Dish.deleteMany(),
+            
         ])
     })
 
@@ -98,8 +98,8 @@ describe('authenticateUser', () => {
         await Promise.all([
             User.deleteMany(),
             Restaurant.deleteMany(),
-            Plate.deleteMany(),
-            Menu.deleteMany()
+            Dish.deleteMany(),
+            
         ])
         await mongoose.disconnect()        
     })

@@ -4,7 +4,7 @@ const { UnexistenceError, DuplicityError, VoidError } = require('plates-commons/
 const bcrypt = require('bcryptjs')
 const { floor, random } = Math
 const { expect } = require('chai')
-const { mongoose, models: { User, Restaurant, Menu, Plate } } = require('plates-data')
+const { mongoose, models: { User, Restaurant, Menu, Dish } } = require('plates-data')
 const createRestaurant = require('./create-restaurant')
 
 
@@ -18,7 +18,7 @@ describe('server logic: create restaurant', () => {
             User.deleteMany(),
             Restaurant.deleteMany(),
             Menu.deleteMany(),
-            Plate.deleteMany()
+            Dish.deleteMany()
         ])
 
     })

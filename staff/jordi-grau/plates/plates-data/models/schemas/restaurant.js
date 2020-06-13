@@ -33,5 +33,8 @@ module.exports = new Schema({
 
     // TODO mapLocation
 
-    menu: {type: ObjectId, ref: 'Menu'}
+    dishes: [{
+        type: ObjectId,
+        ref: 'Dish'
+    } ]
 })
