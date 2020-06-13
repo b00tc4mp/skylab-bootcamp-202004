@@ -1,4 +1,4 @@
-const { env: { SECRET } } = process
+const { env: { JWT_SECRET: SECRET } } = process
 
 const { authenticateUser } = require('7-potencias-server-logic')
 const { handleError } = require('../../helpers')
