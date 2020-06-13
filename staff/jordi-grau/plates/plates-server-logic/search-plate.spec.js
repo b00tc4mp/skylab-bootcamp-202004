@@ -1,14 +1,14 @@
 require('dotenv').config()
 const { env: { TEST_MONGODB_URL: MONGODB_URL }} = process
 const { errors: { DuplicityError, VoidError, UnexsistenceError }} = require('plates-commons')
-const {models: { User, Restaurant, Dish }} = require('plates-data')
+const {mongoose, models: { User, Restaurant, Dish }} = require('plates-data')
 const { random } = Math
 const { expect } = require('chai')
-const bcrypt = require('brcyptjs')
+const bcrypt = require('bcryptjs')
 const searchPlate = require('./search-plate')
-
+debugger
 describe('server logic: search plate', () =>{
-    let restaurantName, restaurantEmail, cif, address, phone, userEmail, password, query
+    let restaurantName, restaurantEmail, cif, address, phone, userEmail, password, query 
     let dishesIds =[]
     let dishes = []
 
@@ -36,7 +36,8 @@ describe('server logic: search plate', () =>{
         userId = id
         
         for(let i = 0; i < 5; i++){ 
-            const dish = new Dish({name: `name-${i}`})
+            dish = new Dish({name: `name-${i}`})
+            await dish.save()
             
             dishesIds.push(dish.id)
             dishes.push(dish)      
@@ -46,15 +47,24 @@ describe('server logic: search plate', () =>{
     })
 
     it('should succeed on correct data', async () =>{
-        query = dishes[0]
+        debugger
+        query = dishes[0].name
 
-        _dish = await searchPlate(query)
-
-
-
+        const _dish = await searchPlate(query)
+        debugger
+        
+        expect(_dish).to.exist
+        expect(_dish[0].name).to.be.equal('name-0')
+        expect(_dish[0].restaurant).to.exist
     })
 
 
+    it('should fail on wrong data', async() =>{
+      query = dishes[0].name + "wrongSearch"
 
-    it('should fail on wrong data')
+      const result = await searchPlate(query)
+
+      expect(result.length).to.equal(0)
+      
+    })
 })
