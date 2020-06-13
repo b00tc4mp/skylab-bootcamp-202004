@@ -17,7 +17,7 @@ const express = require('express')
 
 const { name, version } = require('./package.json')
 const { cors } = require('./middlewares')
-const { mongoose } = require('misc-data')
+const { mongoose } = require('7-potencias-data')
 
 console.debug('starting server')
 
@@ -67,9 +67,7 @@ try {
               }, 500)
             })
         }
-      })
-
-        .catch(error => {
+      }).catch(error => {
           file.error('could not connect to mongo', error)
         })
     })
