@@ -1,6 +1,6 @@
 require('7-potencias-commons/polyfills/string')
 const { errors: { UnexistenceError } } = require('7-potencias-commons')
-const { model: { User, Order } } = require('7-potencias-data')
+const { models: { User, Order } } = require('7-potencias-data')
 
 module.exports = userId => {
   String.validate.notVoid(userId)
