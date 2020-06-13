@@ -13,6 +13,7 @@ import EditMember from './EditMember';
 import SetMood from './SetMood';
 import Settings from './Settings';
 import EditPlan from './EditPlan';
+import EditMyInfo from './EditMyInfo';
 
 function App({history}) {
 
@@ -75,6 +76,7 @@ function App({history}) {
           <Route path="/set-mood" render={()=> token? <SetMood token={token} /> : <Redirect to='/'/>} />
           <Route path="/settings" render={()=> token? <Settings token={token} /> : <Redirect to='/'/>} />
           <Route path="/edit-plan" render={()=> token? <EditPlan token={token} /> : <Redirect to='/'/>} />
+          <Route path="/edit-my-info" render={()=> token? <EditMyInfo token={token} /> : <Redirect to='/'/>} />
           <Footer />
         </Container>
       </header>

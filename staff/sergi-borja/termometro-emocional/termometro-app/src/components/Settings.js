@@ -1,29 +1,27 @@
 import React, {useState} from 'react'
-import isAuthenticated from 'termometro-client-logic/is-authenticated'
+// import isAuthenticated from 'termometro-client-logic/is-authenticated'
 import { Link } from 'react-router-dom'
+import './Settings.sass'
 
 
 
-function Settings ({token}) {
-
-    const [user, setUser] = useState()
-
-    try {
-        isAuthenticated(token)
-            .then(user => {
-                setUser(user)
-            })
-    } catch(error) {
-        if(error) throw error
+function Settings () {
+    
+    const handleLogOut = () => {
+        delete sessionStorage.token
+        window.location.reload()
     }
 
     return (
-        <section>
+        <section className='settingsContainer'>
             <h1>Settings</h1>
-            <Link>Plan</Link>
-            <Link>Mis Datos</Link>
-            <Link>Cambiar Contraseña</Link>
-            <Link>LogOut</Link>
+            <Link className='settingsContainer__option' to='/edit-plan'>Plan</Link>
+            <br/>
+            <Link className='settingsContainer__option' to='/edit-my-info'>Mis Datos</Link>
+            <br/>
+            <Link className='settingsContainer__option' >Cambiar Contraseña</Link>
+            <br/>
+            <button className='settingsContainer__logOut' onClick={handleLogOut}>Log out</button>
         </section>
     )
 }

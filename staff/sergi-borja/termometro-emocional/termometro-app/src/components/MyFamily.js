@@ -22,10 +22,10 @@ function MyFamily({ token, handleGoToEdit }) {
 
     return (
         <section className='familyContainer'>
-            <Link to='/create-member' className='familyContainer__addButton'>Añadir</Link>
+            <h1>My Family</h1>
+            <Link to='/create-member' className='familyContainer__addButton'></Link>
             <ul className='familyContainer__ul'>
-                {memberList && memberList.map((member)=><li>{member.name} <button onClick={()=> handleGoToEdit(member) }></button></li>)}
-                
+                {memberList && memberList.map((member)=><li className='familyContainer__li'>{member.name} <button className='familyContainer__editMemberButton' onClick={()=> handleGoToEdit(member) }></button></li>)}
             </ul>
         </section>
     );
