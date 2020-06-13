@@ -8,10 +8,10 @@ module.exports = (name, price, danceStyle, hour, minute) => {
   Number.validate(price)
   String.validate.notVoid(danceStyle)
 
-  return Product.findOne({ name })
-    .then(product => {
-      if (product) throw new DuplicityError(`Product with name ${name} already exits`)
-
-      return Product.create({ name, price, danceStyle, hour, minute })
-    })
+  return (async () =>{
+    const product = await Product.findOne({ name })
+    if (product) throw new DuplicityError(`Product with name ${name} already exits`)
+  
+    return Product.create({ name, price, danceStyle, hour, minute })
+  })()
 }

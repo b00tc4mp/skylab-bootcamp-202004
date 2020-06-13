@@ -1,46 +1,25 @@
-const fs = require('fs')
-const path = require('path')
+require('7-potencias-commons/polyfills/string')
+require('7-potencias-commons/polyfills/json')
+require('7-potencias-commons/polyfills/number')
+const { models: { User } } = require('7-potencias-data')
+const user = require('7-potencias-data/models/schemas/user')
 
-const searchUsers = (userId, query, callback) => {
-  fs.readdir(path.join(__dirname, '..', 'data', 'users'), (error, files) => {
-    if (error) return callback(error)
+module.exports = query => {
+  String.validate.notVoid(query)
 
-    files = files.filter(file => path.extname(file) === '.json')
-    let wasError = false
+  return (async () => {
+    let users = await User.find({
+      $or: [{ name: new RegExp(query, 'i') }]
+    }).lean()
 
-    const users = []
-    let count = 0
+    users = users.map(user => {
+      user.id = user._id.toString()
+      delete user._id
+      delete user.__v
 
-    files.forEach(file => {
-      fs.readFile(path.join(__dirname, '..', 'data', 'users', file), 'utf8', (error, json) => {
-        if (error) {
-          if (!wasError) {
-            callback(error)
-
-            wasError = true
-          }
-
-          return
-        }
-
-        if (!wasError) {
-          const user = JSON.parse(json)
-
-          const values = Object.values(user)
-
-          const matches = values.some(value => value.includes(query))
-
-          if (matches) {
-            user.id = file.substring(0, file.indexOf('.json'))
-            if (user.id !== userId) {
-              users.push(user)
-            }
-          }
-
-          if (++count === files.length) callback(null, users)
-        }
-      })
+      return user
     })
-  })
+
+    return users
+  })()
 }
-module.exports = searchUsers

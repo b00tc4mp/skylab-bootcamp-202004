@@ -1,21 +1,16 @@
 require('7-potencias-commons/polyfills/string')
 require('7-potencias-commons/polyfills/json')
 const { errors: { UnexistenceError } } = require('7-potencias-commons')
-const { mongo } = require('7-potencias-data')
-const { ObjectId } = mongo
+const { models: { User } } = require('7-potencias-data')
 
-module.exports = (userId) => {
+module.exports = userId => {
   String.validate.notVoid(userId)
 
-  return mongo.connect()
-    .then(connection => {
-      const users = connection.db().collection('users')
+  return (async () => {
+    const user = await User.findById(userId).lean()
 
-      return users.findOne({ _id: ObjectId(userId) })
-        .then(user => {
-          if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
+    if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
-          return user.cart
-        })
-    })
+    return user.cart
+  })()
 }
