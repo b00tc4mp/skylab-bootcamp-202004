@@ -79,18 +79,9 @@ module.exports = new Schema({
     required: true
   },
 
-  day: {
-    type: Number,
-    required: true
-  },
+  day:  Number,
 
-  month: {
-    type: Number,
-    required: true
-  },
+  month: Number,
 
-  year: {
-    type: Number,
-    required: true
-  }
+  year: Number
 })
