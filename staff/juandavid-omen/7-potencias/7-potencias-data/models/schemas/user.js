@@ -26,7 +26,7 @@ module.exports = new Schema({
     required: true
   },
 
-  create: {
+  created: {
     type: Date,
     required: true,
     default: Date.now

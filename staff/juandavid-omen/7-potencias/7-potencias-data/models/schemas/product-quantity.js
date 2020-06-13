@@ -1,7 +1,7 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
 module.exports = new Schema({
-  prodcut: {
+  product: {
     type: ObjectId,
     ref: 'Product',
     required: true
