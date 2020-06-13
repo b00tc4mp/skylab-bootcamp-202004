@@ -14,9 +14,11 @@ module.exports = query => {
 
     .then(products => {
       products = products.map(product => {
-        product.id = product._id
-
+        product.id = product._id.toString()
         delete product._id
+        delete product.__v
+        
+        return product
       })
 
       return products
