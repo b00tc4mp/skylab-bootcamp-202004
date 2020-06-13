@@ -1,13 +1,11 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, Input } from 'react-native'
 import { Landing, Login, Register } from "./app/components"
-// import Navigator from "./routes/home-stack"
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 const Stack = createStackNavigator()
 
-export default function App() {
+export default () => {
 
   return (<>
 
@@ -21,6 +19,4 @@ export default function App() {
   </>
   )
 }
-
-
 
