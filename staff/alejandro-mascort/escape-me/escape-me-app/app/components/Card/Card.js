@@ -1,22 +1,33 @@
 import React from 'react'
-import { View, StyleSheet, Image, ImageBackground, Text, TouchableOpacity } from 'react-native'
+import { View, Image, ImageBackground, Text, TouchableOpacity } from 'react-native'
 import { MaterialCommunityIcons, MaterialIcons, SimpleLineIcons, Entypo, AntDesign, Feather, Foundation } from '@expo/vector-icons'
+import { toggleEscapeRoom } from 'escape-me-client-logic'
 const styles = require('./style')
 
-function Card({ title, rating, people, genre, price, image, participated, pending, favorites }) {
+function Card({ title, rating, people, genre, price, image, participated, pending, favorites, token, escapeId }) {
+    function handleToggle(tag) {
+        (async () => toggleEscapeRoom(token, escapeId, tag))()
+    }
+
     return (
         <View style={styles.card}>
             <View style={styles.header}>
                 <Text style={[styles.text, styles.title]}>{title}</Text>
-                {favorites ? <AntDesign name="heart" size={24} color="tomato" style={styles.icon} />
+                {favorites ? <AntDesign name="heart" size={24}
+                    color="tomato" style={styles.icon} onPress={() => handleToggle('favorites')} />
                     :
-                    <SimpleLineIcons name="heart" size={24} color="tomato" style={styles.icon} />}
-                {participated ? <Feather name="check-square" size={24} color="black" style={styles.icon} />
+                    <SimpleLineIcons name="heart" size={24}
+                        color="tomato" style={styles.icon} onPress={() => handleToggle('favorites')} />}
+                {participated ? <Feather name="check-square" size={24}
+                    color="black" style={styles.icon} onPress={() => handleToggle('participated')} />
                     :
-                    <MaterialIcons name="check-box-outline-blank" size={24} color="black" style={styles.icon} />}
-                {pending ? <MaterialIcons name="playlist-add-check" size={24} color="black" style={styles.icon} />
+                    <MaterialIcons name="check-box-outline-blank" size={24}
+                        color="black" style={styles.icon} onPress={() => handleToggle('participated')} />}
+                {pending ? <MaterialIcons name="playlist-add-check" size={24}
+                    color="black" style={styles.icon} onPress={() => handleToggle('pending')} />
                     :
-                    <MaterialIcons name="playlist-add" size={24} color="black" style={styles.icon} />}
+                    <MaterialIcons name="playlist-add" size={24}
+                        color="black" style={styles.icon} onPress={() => handleToggle('pending')} />}
             </View>
             <TouchableOpacity activeOpacity={0.8}>
                 <ImageBackground style={styles.image} source={image} resizeMode={'contain'} />

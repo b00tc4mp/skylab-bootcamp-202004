@@ -19,7 +19,7 @@ export default function (props) {
             escapeList = await retrieveEscapeRooms(token, 'pending')
             setEscapeRooms(escapeList)
         })()
-    }, [])
+    }, [escapes])
 
     return (
         <SafeAreaView style={{
@@ -30,7 +30,13 @@ export default function (props) {
             <ScrollView>
                 {escapeRooms.length ?
                     escapeRooms.map(({ city, id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin }) => {
-                        return (<Card key={id} title={name} rating='4.9' people={`${playersMin}-${playersMax}`}
+                        return (<Card
+                            key={id}
+                            title={name}
+                            rating='4.9'
+                            escapeId={id}
+                            token={token}
+                            people={`${playersMin}-${playersMax}`}
                             genre={genre} price={`${priceMin}-${priceMax}€`} image={{ uri: _image }}
                             participated={escapes.participated.includes(id)}
                             pending={escapes.pending.includes(id)}
