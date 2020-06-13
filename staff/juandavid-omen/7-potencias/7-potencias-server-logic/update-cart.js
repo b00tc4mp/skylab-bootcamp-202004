@@ -2,53 +2,42 @@ require('7-potencias-commons/polyfills/string')
 require('7-potencias-commons/polyfills/json')
 require('7-potencias-commons/polyfills/number')
 const { errors: { UnexistenceError } } = require('7-potencias-commons')
-const { mongo } = require('7-potencias-data')
-const { ObjectId } = mongo
+const { models: { User, Product } } = require('7-potencias-data')
 
-module.exports = (userId, lessonId, quantity) => {
+module.exports = (userId, productId, quantity) => {
   String.validate.notVoid(userId)
-  String.validate.notVoid(lessonId)
+  String.validate.notVoid(productId)
   Number.validate.positive(quantity)
 
-  return mongo.connect()
-    .then(connection => {
-      const db = connection.db()
+  return (async () => {
+    const user = await User.findById(userId)
+    
+    if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
-      const users = db.collection('users')
+    const product = await Product.findById(productId)
 
-      return users.findOne({ _id: ObjectId(userId) })
-        .then(user => {
-          if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
+    if (!product) throw new UnexistenceError(`product with id ${productId} does not exist`)
 
-          const products = db.collection('products')
+    const { cart = [] } = user
 
-          return products.findOne({ _id: ObjectId(lessonId) })
-            .then(product => {
-              if (!product) throw new UnexistenceError(`product with id ${lessonId} does not exist`)
+    const index = cart.findIndex(item => item.product.toString() === productId)
 
-              const { cart = [] } = user
+    if (quantity === 0) {
+      if (index < 0) throw new UnexistenceError(`product with id ${productId} does not exist in cart for user with id ${userId}`)
 
-              const index = cart.findIndex(item => item.product.toString() === lessonId)
+      cart.splice(index, 1)
+    } else {
+      let productQuantity
 
-              if (quantity === 0) {
-                if (index < 0) throw new UnexistenceError(`product with id ${lessonId} does not exist in cart for user with id ${userId}`)
+      if (index < 0) {
+        productQuantity = { product: productId }
 
-                cart.splice(index, 1)
-              } else {
-                let product
+        cart.push(productQuantity)
+      } else productQuantity = cart[index]
 
-                if (index < 0) {
-                  product = { product: ObjectId(lessonId) }
+      productQuantity.quantity = quantity
+    }
 
-                  cart.push(product)
-                } else product = cart[index]
-
-                product.quantity = quantity
-              }
-
-              return users.updateOne({ _id: ObjectId(userId) }, { $set: { cart } })
-            })
-        })
-        .then(() => { })
-    })
+    return user.save({ userId, $set: { cart } })
+  })()
 }
