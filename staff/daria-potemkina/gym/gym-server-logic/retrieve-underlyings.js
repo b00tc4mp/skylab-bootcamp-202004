@@ -15,15 +15,20 @@ module.exports = (ticker) => {
 
         const { _id } = product
 
-        const prices = await Price.find({ product: _id }).sort({ date: -1 }).lean()
+        const prices = await Price.find({ product: _id }).lean()
 
         if (!prices.length) throw new UnexistenceError('price not found')
 
         for (let i in prices) {
+            prices[i].date = new Date (prices[i].date)
             delete prices[i].product
             delete prices[i]._id
             delete prices[i].__v
         }
+
+        prices.sort( (a, b) => {
+            return (b.date - a.date)
+        })
 
         return prices
     })()

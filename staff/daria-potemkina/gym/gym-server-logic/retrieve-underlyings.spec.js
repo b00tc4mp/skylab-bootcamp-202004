@@ -6,9 +6,8 @@ const retrieveUnderlyings = require('./retrieve-underlyings')
 const { random, round } = Math
 const { expect } = require('chai')
 const { mongoose, models: { Underlying, Price } } = require('gym-data')
-const { ObjectId } = mongoose
 
-describe.only('logic - retrieveUnderlyings', () => {
+describe('logic - retrieveUnderlyings', () => {
     before(() => mongoose.connect(MONGODB_URL_TEST))
 
     let underlying, productId, underlyingPrice, _underlyingPrice, _ticker
@@ -43,9 +42,9 @@ describe.only('logic - retrieveUnderlyings', () => {
         expect(result).to.be.an('array')
         expect(result).to.have.lengthOf(2)
         expect(result[0].price).to.equal(underlyingPrice)
-        expect(result[0].date).to.equal(dateToday)
+        expect(result[0].date.toString().split(' ').slice(1, 4).join(' ')).to.equal(dateToday)
         expect(result[1].price).to.equal(_underlyingPrice)
-        expect(result[1].date).to.equal(dateD_1)
+        expect(result[1].date.toString().split(' ').slice(1, 4).join(' ')).to.equal(dateD_1)
 
         expect(result[0]._id).to.be.undefined
         expect(result[0].__v).to.be.undefined

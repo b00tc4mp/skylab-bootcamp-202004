@@ -12,6 +12,6 @@ module.exports = {
     profitAndLoss: require('./profit-and-loss'),
     retrieveUserTrades: require('./retrieve-user-trades'),
     retrievePrices: require('./retrieve-prices'),
-    searchProducts: require('/search-products'),
+    searchProducts: require('./search-products'),
     retrieveUnderlyings: require('./retrieve-underlyings')
 }

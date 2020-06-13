@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const { env: { MONGODB_URL } } = process
-const { mongoose, models: { Product, Option } } = require('gym-data')
+const { mongoose, models: { Product, Option, Underlying } } = require('gym-data')
 
 mongoose.connect(MONGODB_URL)
 const future1 = new Product({
@@ -10,7 +10,7 @@ const future1 = new Product({
     exchange: 'MEFF',
     sector: 'Banking',
     contractSize: 100,
-    settlementDate: new Date('Juny 19, 2020 17:45:00'),
+    settlementDate: new Date('June 19, 2020 17:45:00').toString().split(' ').slice(1, 4).join(' ')
 })
 
 future1.save()
@@ -21,7 +21,7 @@ const future2 = new Product({
     exchange: "MEFF",
     sector: 'Utilities',
     contractSize: 100,
-    settlementDate: new Date('June 19, 2020 17:30:00'),
+    settlementDate: new Date('June 19, 2020 17:30:00').toString().split(' ').slice(1, 4).join(' ')
 })
 
 future2.save()
@@ -32,7 +32,7 @@ const product1 = new Product({
     ticker: "ITX",
     sector: 'Consumer',
     contractSize: 100,
-    settlementDate: new Date('June 19, 2020 17:30:00')
+    settlementDate: new Date('June 19, 2020 17:30:00').toString().split(' ').slice(1, 4).join(' ')
 })
 
 const option1 = new Option({
@@ -50,7 +50,7 @@ const product2 = new Product({
     ticker: "ITX",
     sector: 'Consumer',
     contractSize: 100,
-    settlementDate: new Date('June 19, 2020 17:30:00')
+    settlementDate: new Date('June 19, 2020 17:30:00').toString().split(' ').slice(1, 4).join(' ')
 })
 
 const option2 = new Option({
@@ -61,6 +61,26 @@ const option2 = new Option({
 product2.type = option2
 
 product2.save()
+
+const bbvaUnderlying = new Underlying({
+    ticker: 'BBVA'
+})
+
+bbvaUnderlying.save()
+
+const ibeUnderlying = new Underlying({
+    ticker: 'IBE'
+})
+
+ibeUnderlying.save()
+
+const itxUnderlying = new Underlying({
+    ticker: 'ITX'
+})
+
+itxUnderlying.save()
+
+
 
 .then(mongoose.disconnect)
 

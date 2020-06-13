@@ -1,11 +1,12 @@
-const { retrieveUser } = require('gym-server-logic')
+const { retrievePrices } = require('gym-server-logic')
 const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
+    const { query: { productId, size } } = req
+
     try {
-        const { payload: { sub: userId } } = req
-        retrieveUser(userId)
-            .then(user => res.send(user))
+        retrievePrices(productId, size)
+            .then(prices => res.status(200).send(prices))
             .catch(error => handleError(error, res))
     } catch (error) {
         handleError(error, res)
