@@ -1,9 +1,8 @@
 const { model } = require('mongoose')
-const { menu, plate, restaurant, user } = require ('./schemas')
+const {  dish, restaurant, user } = require ('./schemas')
 
 module.exports = {
-    Menu: model('Menu', menu),
-    Plate: model('Plate', plate),
+    Dish: model('Dish', dish),
     Restaurant: model('Restaurant', restaurant),
     User: model('User', user)
 }
