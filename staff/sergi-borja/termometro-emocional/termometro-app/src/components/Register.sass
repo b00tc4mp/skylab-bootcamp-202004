@@ -1,4 +1,4 @@
-.loginContainer
+.registerContainer
     display: flex
     justify-content: center
     align-items: center
@@ -8,26 +8,23 @@
     width: 100%
     background-image: url('../images/tree-background.jpg')
     background-size: cover
-    
+    &__form
+        display: flex
+        justify-content: center
+        align-items: center
+        flex-direction: column
     &__title
-        font-family: Alata
         font-weight: 400
         color: rgba(0,0,0,1)
-        height: 122px
-        width: 312px
+        width: 100%
         font-size: 43px
-        margin-top: 10vh
-        margin-left: 58px   
-    &__loginText
-        font-family: Helvetica
-        font-style: normal
-        font-weight: 400
-        color: #121212
-        height: 48px
-        width: 263px
-        font-size: 16px
         text-align: center
-        margin-top: 21px 
+    &__textDiv
+        margin-top: 0
+        &--text
+            color: #121212
+            font-size: 20px
+            text-align: center
     &__emailInput
         width: 263px
         height: 42px
@@ -42,9 +39,9 @@
         background-color: #E6E6E6
         border-width: 1px
         border-color: #000000
-        margin-top: 21px
+        margin-top: 15px
         border-style: solid 
-    &__loginButton
+    &__registerButton
         width: 154px
         height: 52px
         background-color: #E6E6E6
@@ -56,7 +53,6 @@
         margin-top: 28px
         border-style: solid 
         &--text
-            font-family: Helvetica
             color: #121212
             height: 25px
             width: 73px
@@ -66,9 +62,6 @@
             margin-top: 13px
             margin-left: 31px
     &__registerText
-        font-family: Helvetica
-        font-style: normal
-        font-weight: 400
         color: #121212
         height: 24px
         width: 263px
@@ -76,6 +69,26 @@
         text-align: center
         margin-top: 51px 
     &__registerButton
+        width: 154px
+        height: 52px
+        background-color: #E6E6E6
+        border-radius: 12px
+        border-width: 1px
+        border-color: #000000
+        flex-direction: column
+        display: flex
+        margin-top: 28px
+        border-style: solid 
+        &--text
+            color: #121212
+            height: 25px
+            width: 73px
+            font-style: normal
+            font-weight: 400
+            font-size: 22px
+            margin-top: 13px
+            margin-left: 31px
+    &__toLoginButton
         width: 312px
         height: 55px
         background-color: #E6E6E6
@@ -84,13 +97,11 @@
         border-color: #000000
         flex-direction: column
         display: flex
-        margin-top: 11px
-        border-style: solid 
+        margin-top: 30px
+        border-style: solid
         &--text
-            font-family: Helvetica
             color: #121212
             height: 25px
-            width: 175px
             font-style: normal
             font-weight: 400
             font-size: 22px
@@ -99,13 +110,7 @@
     &__logo
         width: 50vw
         margin-top: 5vh
-    // &__grayBackground
-    // width: 400px
-    // height: 812px
-    // background-color: rgba(230,230,230,0.63)
-    // flex-direction: column
-    // display: flex
-    // margin-left: 23px
+
 
 
 

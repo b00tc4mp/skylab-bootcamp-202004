@@ -77,7 +77,7 @@ function App({history}) {
           <Route path="/settings" render={()=> token? <Settings token={token} /> : <Redirect to='/'/>} />
           <Route path="/edit-plan" render={()=> token? <EditPlan token={token} /> : <Redirect to='/'/>} />
           <Route path="/edit-my-info" render={()=> token? <EditMyInfo token={token} /> : <Redirect to='/'/>} />
-          <Footer />
+          {token && <Footer/>}
         </Container>
       </header>
     </div>
