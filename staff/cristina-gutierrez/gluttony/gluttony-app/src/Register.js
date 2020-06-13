@@ -7,45 +7,50 @@ import {
   View,
   TextInput
 } from "react-native";
+import { registerUser } from "gluttony-client-logic"
 
 const Register = props => {
-        const [name, setName] = useState();
-        const [surname, setSurname] = useState();
-        const [email, setEmail] = useState();
-        const [password, setPassword] = useState();
+    const [name, setName] = useState();
+    const [surname, setSurname] = useState();
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
 
-        return (
-            <View style={styles.modalView}>
-                <Image source={ require('../assets/images/logo-without-color-version.png')} style={styles.logo}/>
-                <TextInput
-                    placeholder="name"
-                    value={name}
-                    style={styles.input}
-                />
-                <TextInput
-                    placeholder="surname"
-                    value={surname}
-                    style={styles.input}
-                />
-                <TextInput
-                    placeholder="email"
-                    value={email}
-                    style={styles.input}
-                />
-                <TextInput
-                    placeholder="password"
-                    value={password}
-                    style={styles.input}
-                />
-                <TouchableHighlight style={styles.openButton} onPress={props.onCloseModal}>
-                    <Text style={styles.textStyle}>Registrarse</Text>
-                </TouchableHighlight>
-                <Text style={{ ...styles.modalText, marginBottom: 8 }}>o</Text>
-                <Text style={{ ...styles.textStyle, textDecorationLine: "underline" }} onPress={props.onGoToLogin}>
-                    ¿Ya tienes una cuenta? Inicia sesión
-                </Text>
-            </View>
-        )
+    return (
+        <View style={styles.modalView}>
+            <Image source={ require('../assets/images/logo-without-color-version.png')} style={styles.logo}/>
+            <TextInput
+                placeholder="name"
+                value={name}
+                style={styles.input}
+                onChangeText={setName}
+            />
+            <TextInput
+                placeholder="surname"
+                value={surname}
+                style={styles.input}
+                onChangeText={setSurname}
+            />
+            <TextInput
+                placeholder="email"
+                value={email}
+                style={styles.input}
+                onChangeText={setEmail}
+            />
+            <TextInput
+                placeholder="password"
+                value={password}
+                style={styles.input}
+                onChangeText={setPassword}
+            />
+            <TouchableHighlight style={styles.openButton} onPress={() => registerUser(name, surname, email, password)} >
+                <Text style={styles.textStyle}>Registrarse</Text>
+            </TouchableHighlight>
+            <Text style={{ ...styles.modalText, marginBottom: 8 }}>o</Text>
+            <Text style={{ ...styles.textStyle, textDecorationLine: "underline" }} onPress={props.onGoToLogin}>
+                ¿Ya tienes una cuenta? Inicia sesión
+            </Text>
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
@@ -93,7 +98,8 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         marginBottom: 11,
         paddingLeft: 10,
-        paddingRight: 10
+        paddingRight: 10,
+        borderRadius: 20
     }
 })
 
