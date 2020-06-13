@@ -12,7 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "gym-commons": "file:../gym-commons"
+    "gym-commons": "file:../gym-commons",
+    "moment": "^2.26.0"
   },
   "devDependencies": {
     "bcryptjs": "^2.4.3",
