@@ -4,7 +4,6 @@ const { mongoose, models: { User, Contract, Product, Price, AccountBalance } } =
 const { ObjectId } = mongoose
 
 const { errors: { UnexistenceError } } = require('gym-commons')
-const { round } = Math
 
 module.exports = (userId, productId, priceId, side, quantity) => {
     String.validate.notVoid(priceId)
@@ -28,48 +27,56 @@ module.exports = (userId, productId, priceId, side, quantity) => {
 
         const { price } = await Price.findById(priceId)
 
-        const balances = await AccountBalance.find({ user: ObjectId(userId) }).sort({date: -1})
+        const balances = await AccountBalance.find({ user: ObjectId(userId) }).sort({ date: -1 })
 
-        let guarantee = 0, profitAndLoss = 0
-        
-        const dateToday = new Date().toString().split(' ').slice(1, 4).join(' ')
+        let guarantee = 0
+        let profitAndLoss = 0
 
-        if (balances.length){
+        if (balances.length) {
             const [balance] = balances
 
-            guarantee += balance.guarantee
             profitAndLoss += balance.profitAndLoss
-        }
-
-        if (product.productType === 'future') {
-            const { contractSize } = product
-
-            guarantee += round(quantity * price * contractSize * 0.1 * 100) / 100
-
-            await AccountBalance.create({ user: userId, date: dateToday, guarantee, profitAndLoss })
         }
 
         if (product.productType === 'option') {
             const { contractSize: _contractSize, type: { strike } } = product
 
-            guarantee += round(_contractSize * strike * quantity * 0.1 * 100) / 100
-
             if (side === 'Buy') {
-                profitAndLoss -= round(quantity * _contractSize * price * 100) / 100
+                profitAndLoss -= (quantity * _contractSize * price).toFixed(2) * 1
 
             } else {
-                profitAndLoss += round(quantity * _contractSize * price * 100) / 100
+                profitAndLoss += (quantity * _contractSize * price).toFixed(2) * 1
             }
 
-            await AccountBalance.create({ user: userId, date: dateToday, guarantee, profitAndLoss })
+            await AccountBalance.create({ user: userId, date: new Date(), guarantee, profitAndLoss })
         }
 
         let contract = await Contract.findOne({ product: ObjectId(productId) })
 
-        if (!contract)
+        if (!contract) {
             contract = await Contract.create({ user: ObjectId(userId), product: ObjectId(productId) })
-
-        contract.trades.push({ price: ObjectId(priceId), type: side, quantity })
+            contract.trades.push({ price: ObjectId(priceId), type: side, quantity })
+        } else {
+            const index = contract.trades.map(item => item.price.toString()).indexOf(priceId)
+            if (index === -1)
+                contract.trades.push({ price: ObjectId(priceId), type: side, quantity })
+            else {
+                let { type, quantity: _quantity } = contract.trades[index]
+                if (type === side) _quantity += quantity
+                else {
+                    if (_quantity < quantity) {
+                        _quantity = (_quantity - quantity) * (-1)
+                        type = side
+                    } else if (_quantity > quantity) _quantity -= quantity
+                    else {
+                        await Contract.findByIdAndDelete(contract._id)
+                        return
+                    }
+                }
+                contract.trades.splice(index, 1)
+                contract.trades.push({ price: ObjectId(priceId), type, quantity: _quantity })
+            }
+        }
 
         await contract.save()
     })()

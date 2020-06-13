@@ -11,7 +11,7 @@ const { ObjectId } = mongoose
 describe('logic - retrievePrices', () => {
     before(() => mongoose.connect(MONGODB_URL_TEST))
 
-    let future, futureId, dateToday, dateD_1, dateD_2, futurePrice, _futurePrice, productId, number
+    let future, futureId, date, dateD_1, dateD_2, futurePrice, _futurePrice, productId, number
 
     beforeEach(async () => {
         await Product.deleteMany()
@@ -29,13 +29,12 @@ describe('logic - retrievePrices', () => {
         const product = await Product.create(future)
         futureId = product._id.toString()
 
-        const date = new Date()
+        const date = new Date ()
 
-        dateToday = date.toString().split(' ').slice(1, 4).join(' ')
-        dateD_1 = (new Date(date.setDate(date.getDate() - 1))).toString().split(' ').slice(1, 4).join(' ')
-        dateD_2 = (new Date(date.setDate(date.getDate() - 2))).toString().split(' ').slice(1, 4).join(' ')
+        dateD_1 = new Date().setDate(new Date().getDate() - 1)
+        dateD_2 = new Date().setDate(new Date().getDate() - 2)
 
-        const price = await Price.create({ product: futureId, date: dateToday, price: round(random() * 100) / 100 })
+        const price = await Price.create({ product: futureId, date, price: round(random() * 100) / 100 })
         futurePrice = price.price
         const _price = await Price.create({ product: futureId, date: dateD_1, price: round(random() * 100) / 100 })
         _futurePrice = _price.price
@@ -47,9 +46,9 @@ describe('logic - retrievePrices', () => {
         expect(prices).to.be.an('array')
         expect(prices).to.have.lengthOf(2)
         expect(prices[0].price).to.equal(futurePrice)
-        expect(prices[0].date).to.equal(dateToday)
+        expect(prices[0].date).to.be.an.instanceOf(Date)
         expect(prices[1].price).to.equal(_futurePrice)
-        expect(prices[1].date).to.equal(dateD_1)
+        expect(prices[1].date).to.be.an.instanceOf(Date)
 
     })
 
@@ -60,7 +59,7 @@ describe('logic - retrievePrices', () => {
         expect(prices).to.be.an('array')
         expect(prices).to.have.lengthOf(1)
         expect(prices[0].price).to.equal(futurePrice)
-        expect(prices[0].date).to.equal(dateToday)
+        expect(prices[0].date).to.be.an.instanceof(Date)
     })
 
     it('it should fail when the product is not exists', async() => {

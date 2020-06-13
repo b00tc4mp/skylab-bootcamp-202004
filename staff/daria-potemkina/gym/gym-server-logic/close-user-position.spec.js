@@ -5,14 +5,14 @@ const { env: { MONGODB_URL_TEST } } = process
 const closeUserPosition = require('./close-user-position')
 const { round, random } = Math
 const { expect } = require('chai')
-const { mongoose, models: { User, Product, Price, Contract, AccountBalance } } = require('gym-data')
+const { mongoose, models: { User, Product, Price, Contract, AccountBalance, Underlying } } = require('gym-data')
 const { errors: { UnexistenceError } } = require('gym-commons')
 const { ObjectId } = mongoose
 
 describe('logic - closeUserPosition', () => {
     before(() => mongoose.connect(MONGODB_URL_TEST))
 
-    let user, userId, future, option, _option, futureId, optionId, _future, futurePrice, ____optionPrice, ___optionPrice, _optionPriceId, ___futurePrice, futurePriceId, optionPriceId, dateToday, futureBuyContract, futureSellContract, optionBuyPutContract, optionSellCallContract
+    let optionUnderlying, user, userId, future, option, _option, futureId, optionId, _future, futurePrice, ____optionPrice, ___optionPrice, _optionPriceId, ___futurePrice, futurePriceId, optionPriceId, dateToday, futureBuyContract, futureSellContract, optionBuyPutContract, optionSellCallContract
 
     beforeEach(async () => {
         await User.deleteMany()
@@ -20,6 +20,7 @@ describe('logic - closeUserPosition', () => {
         await Contract.deleteMany()
         await AccountBalance.deleteMany()
         await Price.deleteMany()
+        await Underlying.deleteMany()
 
         user = {
             name: `name-${random()}`,
@@ -40,7 +41,7 @@ describe('logic - closeUserPosition', () => {
             exchange: `exchange-${random()}`,
             sector: `sector-${random()}`,
             contractSize: round(random() * 100),
-            settlementDate: new Date().toString().split(' ').slice(1, 4).join(' ')
+            settlementDate: new Date()
         }
 
         _future = {
@@ -49,7 +50,7 @@ describe('logic - closeUserPosition', () => {
             exchange: `exchange-${random()}`,
             sector: `sector-${random()}`,
             contractSize: round(random() * 100),
-            settlementDate: 'Jun 30 2020'
+            settlementDate: new Date('Jun 30 2020')
         }
 
         option = {
@@ -58,7 +59,7 @@ describe('logic - closeUserPosition', () => {
             ticker: `ticker-${random()}`,
             sector: `sector-${random()}`,
             contractSize: round(random() * 100),
-            settlementDate: new Date().toString().split(' ').slice(1, 4).join(' '),
+            settlementDate: new Date(),
             type: {
                 strike: 9,
                 side: 'call',
@@ -71,14 +72,14 @@ describe('logic - closeUserPosition', () => {
             ticker: `ticker-${random()}`,
             sector: `sector-${random()}`,
             contractSize: round(random() * 100),
-            settlementDate: new Date().toString().split(' ').slice(1, 4).join(' '),
+            settlementDate: new Date(),
             type: {
                 strike: 11,
                 side: 'put',
             }
         }
 
-        dateToday = new Date().toString().split(' ').slice(1, 4).join(' ')
+        dateToday = new Date()
 
         guarantee = round(random() * 1000)
         profitAndLoss = round(random() * 1000)
@@ -99,15 +100,15 @@ describe('logic - closeUserPosition', () => {
             const putOption = await Product.create(_option)
             _optionId = putOption._id.toString()
 
-            const _futurePrice = await Price.create({ product: futureId, date: 'Jun 10 2020', price: 10 })
+            const _futurePrice = await Price.create({ product: futureId, date: new Date('Jun 10 2020'), price: 10 })
             futurePrice = _futurePrice.price
             futurePriceId = _futurePrice._id.toString()
 
-            const _optionPrice = await Price.create({ product: optionId, date: 'Jun 07 2020', price: 10 })
+            const _optionPrice = await Price.create({ product: optionId, date: new Date('Jun 07 2020'), price: 10 })
             optionPrice = _optionPrice.price
             optionPriceId = _optionPrice._id.toString()
 
-            const __optionPrice = await Price.create({ product: _optionId, date: 'Jun 08 2020', price: 22 })
+            const __optionPrice = await Price.create({ product: _optionId, date: new Date('Jun 08 2020'), price: 22 })
             ___optionPrice = __optionPrice.price
             _optionPriceId = __optionPrice._id.toString()
 
@@ -151,16 +152,21 @@ describe('logic - closeUserPosition', () => {
                 }]
             }
 
+            dateToday = new Date().toString().split(' ').slice(1, 4).join(' ')
 
-            await AccountBalance.create({ user: userId, date: 'Jun 10 2020', guarantee, profitAndLoss })
+            await AccountBalance.create({ user: userId, date: new Date('Jun 10 2020'), guarantee, profitAndLoss })
 
-            const __futurePrice = await Price.create({ product: futureId, date: dateToday, price: 8 })
+            const __futurePrice = await Price.create({ product: futureId, date: new Date(dateToday), price: 8 })
             ___futurePrice = __futurePrice.price
 
-            const optionCallPrice = await Price.create({ product: optionId, date: dateToday, price: 14 })
+            optionUnderlying = await Underlying.create({ticker: option.ticker})
+
+            const optionCallPrice = await Price.create({ product: optionUnderlying._id, date: new Date(dateToday), price: 14 })
             ___optionPrice = optionCallPrice.price
 
-            const optionPutPrice = await Price.create({ product: _optionId, date: dateToday, price: 10 })
+            _optionUnderlying = await Underlying.create({ticker: _option.ticker})
+
+            const optionPutPrice = await Price.create({ product: _optionUnderlying._id, date: new Date(dateToday), price: 10 })
             ____optionPrice = optionPutPrice.price
         })
 
@@ -178,7 +184,7 @@ describe('logic - closeUserPosition', () => {
 
             expect(_balance).to.be.an.instanceOf(Object)
             expect(_balance.user.toString()).to.equal(userId)
-            expect(_balance.date).to.equal(dateToday)
+            expect(_balance.date).to.be.an.instanceOf(Date)
             expect(_balance.guarantee).to.equal(guarantee)
             expect(_balance.profitAndLoss).to.equal(round((profitAndLoss + (___futurePrice - futurePrice) * future.contractSize * futureBuyContract.trades[0].quantity) * 100) / 100)
 
@@ -201,7 +207,7 @@ describe('logic - closeUserPosition', () => {
 
             expect(_balance).to.be.an.instanceOf(Object)
             expect(_balance.user.toString()).to.equal(userId)
-            expect(_balance.date).to.equal(dateToday)
+            expect(_balance.date).to.be.an.instanceOf(Date)
             expect(_balance.guarantee).to.equal(guarantee)
             expect(_balance.profitAndLoss).to.equal(round((profitAndLoss + (futurePrice - ___futurePrice) * future.contractSize * futureSellContract.trades[0].quantity) * 100) / 100)
 
@@ -225,7 +231,7 @@ describe('logic - closeUserPosition', () => {
 
             expect(_balance).to.be.an.instanceOf(Object)
             expect(_balance.user.toString()).to.equal(userId)
-            expect(_balance.date).to.equal(dateToday)
+            expect(_balance.date).to.be.an.instanceOf(Date)
             expect(_balance.guarantee).to.equal(guarantee)
             expect(_balance.profitAndLoss).to.equal(round((profitAndLoss - (___optionPrice - option.type.strike) * option.contractSize * optionSellCallContract.trades[0].quantity) * 100) / 100)
 
@@ -248,7 +254,7 @@ describe('logic - closeUserPosition', () => {
 
             expect(_balance).to.be.an.instanceOf(Object)
             expect(_balance.user.toString()).to.equal(userId)
-            expect(_balance.date).to.equal(dateToday)
+            expect(_balance.date).to.be.an.instanceOf(Date)
             expect(_balance.guarantee).to.equal(guarantee)
             expect(_balance.profitAndLoss).to.equal(round((profitAndLoss + (_option.type.strike - ____optionPrice) * _option.contractSize * optionBuyPutContract.trades[0].quantity) * 100) / 100)
 
@@ -328,7 +334,7 @@ describe('logic - closeUserPosition', () => {
             const product = await Product.create(future)
             futureId = product._id.toString()
 
-            const _futurePrice = await Price.create({ product: futureId, date: 'Jun 07 2020', price: 10 })
+            const _futurePrice = await Price.create({ product: futureId, date: new Date('Jun 07 2020'), price: 10 })
             futurePrice = _futurePrice.price
             futurePriceId = _futurePrice._id.toString()
 
@@ -367,7 +373,7 @@ describe('logic - closeUserPosition', () => {
             const product = await Product.create(_future)
             futureId = product._id.toString()
 
-            const _futurePrice = await Price.create({ product: futureId, date: 'Jun 07 2020', price: 10 })
+            const _futurePrice = await Price.create({ product: futureId, date: new Date('Jun 07 2020'), price: 10 })
             futurePrice = _futurePrice.price
             futurePriceId = _futurePrice._id.toString()
 
@@ -382,10 +388,10 @@ describe('logic - closeUserPosition', () => {
             }
 
             await Contract.create(futureBuyContract)
-            await AccountBalance.create({ user: userId, date: 'Jun 10 2020', guarantee, profitAndLoss })
+            await AccountBalance.create({ user: userId, date: new Date('Jun 10 2020'), guarantee, profitAndLoss })
 
         })
-        it('should fails in date not today', async() =>{
+        it('should fails in date not today', async () => {
             try {
                 await closeUserPosition(userId)
 
@@ -405,6 +411,7 @@ describe('logic - closeUserPosition', () => {
         await Contract.deleteMany()
         await AccountBalance.deleteMany()
         await Price.deleteMany()
+        await Underlying.deleteMany()
     })
 
     after(mongoose.disconnect)

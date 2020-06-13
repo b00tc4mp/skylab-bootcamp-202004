@@ -1,5 +1,5 @@
 require('gym-commons/polyfills/string')
-const { mongoose: { ObjectId }, models: { User, Contract, Price, AccountBalance, Product } } = require('gym-data')
+const { mongoose: { ObjectId }, models: { User, Contract, Price, AccountBalance, Product, Underlying } } = require('gym-data')
 const { errors: { UnexistenceError, ValueError } } = require('gym-commons')
 const { round } = Math
 
@@ -30,47 +30,54 @@ module.exports = (userId) => {
 
             const _product = await Product.findById(product)
 
-            const { settlementDate } = _product
+            let { ticker, settlementDate } = _product
 
-            if (settlementDate !== dateToday) throw new ValueError ("should not be executed due to not reaching expiration date")
+            settlementDate = settlementDate.toString().split(' ').slice(1, 4).join(' ')
 
-            const price = await Price.findOne({ product: ObjectId(product), date: dateToday })
-
-            const { price: _price } = price
+            if (settlementDate !== dateToday) throw new ValueError("should not be executed due to not reaching expiration date")
 
             const { productType, contractSize } = _product
 
             if (productType === 'future') {
+                const price = await Price.findOne({ product: ObjectId(product), date: new Date(dateToday) })
+
+                const { price: _price } = price
+
                 for (let j in trades) {
                     if (trades[j].type === "Sell")
-                        profitAndLoss += round((trades[j].price.price - _price) * contractSize * trades[j].quantity * 100) / 100
+                        profitAndLoss += ((trades[j].price.price - _price) * contractSize * trades[j].quantity).toFixed(2) * 1
 
                     else
-                        profitAndLoss += round((_price - trades[j].price.price) * contractSize * trades[j].quantity * 100) / 100
-
+                        profitAndLoss += ((_price - trades[j].price.price) * contractSize * trades[j].quantity).toFixed(2) * 1
                 }
             } else if (productType === 'option') {
+                const optionUnderlying = await Underlying.findOne({ ticker: ticker })
+
+                const optionUnderlyingPrice = await Price.findOne({ product: optionUnderlying._id, date: new Date(dateToday) })
+
+                const { price: __price } = optionUnderlyingPrice
+
                 for (let j in trades) {
                     const { side, strike } = _product.type
                     if (side === 'call' && trades[j].type === 'Buy') {
-                        if (_price > strike)
-                            profitAndLoss += round((_price - strike) * contractSize * trades[j].quantity * 100) / 100
+                        if (__price > strike)
+                            profitAndLoss += ((__price - strike) * contractSize * trades[j].quantity).toFixed(2) * 1
 
                     } else if (side === 'call' && trades[j].type === 'Sell') {
-                        if (_price > strike)
-                            profitAndLoss -= round((_price - strike) * contractSize * trades[j].quantity * 100) / 100
+                        if (__price > strike)
+                            profitAndLoss -= ((__price - strike) * contractSize * trades[j].quantity).toFixed(2) * 1
                     } else if (side === 'put' && trades[j].type === 'Buy') {
-                        if (strike > _price)
-                            profitAndLoss += round((strike - _price) * contractSize * trades[j].quantity * 100) / 100
+                        if (strike > __price)
+                            profitAndLoss += ((strike - __price) * contractSize * trades[j].quantity).toFixed(2) * 1
                     } else if (side === 'put' && trades[j].type === 'Sell') {
-                        if (strike > _price)
-                            profitAndLoss -= round((strike - _price) * contractSize * trades[j].quantity * 100) / 100
+                        if (strike > __price)
+                            profitAndLoss -= ((strike - __price) * contractSize * trades[j].quantity).toFixed(2) * 1
                     }
                 }
             }
 
             await Contract.findByIdAndDelete(_id)
         }
-        await AccountBalance.create({ user: userId, date: dateToday, guarantee, profitAndLoss })
+        await AccountBalance.create({ user: userId, date: new Date(dateToday), guarantee, profitAndLoss })
     })()
 }

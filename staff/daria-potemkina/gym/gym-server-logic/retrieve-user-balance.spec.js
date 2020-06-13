@@ -30,7 +30,7 @@ describe('logic - retrieveUserBalance', () => {
         guarantee = round(random() * 1000)
         profitAndLoss = round(random() * 1000)
 
-        dateToday = new Date().toString().split(' ').slice(1, 4).join(' ')
+        dateToday = new Date()
     })
 
     describe('when user already exist', () => {
@@ -54,7 +54,7 @@ describe('logic - retrieveUserBalance', () => {
 
             const { date, guarantee: _guarantee, profitAndLoss: _profitAndLoss } = result[0]
 
-            expect(date).to.equal(dateToday)
+            expect(date).to.be.an.instanceOf(Date)
             expect(_guarantee).to.equal(guarantee)
             expect(_profitAndLoss).to.equal(profitAndLoss)
         })
