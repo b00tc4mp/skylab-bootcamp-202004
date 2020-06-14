@@ -11,7 +11,7 @@ module.exports = (userId, blueprintId) => {
         const user = await User.findOne(userId)
         if (!user) throw new UnexistenceError(`User with id ${userId} does not exist`)
 
-        const blueprint = await Blueprint.findOne({ _id: ObjectId(blueprintId) }, { __v: 0 }).lean()
+        const blueprint = await Blueprint.findOne({ _id: blueprintId }, { __v: 0 }).lean()
 
         if (!blueprint) throw new UnexistenceError(`blueprint with id ${blueprintId} does not exist`)
 

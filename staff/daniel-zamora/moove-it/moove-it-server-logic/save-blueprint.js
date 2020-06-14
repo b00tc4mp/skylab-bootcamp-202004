@@ -12,7 +12,7 @@ module.exports = (userId, blueprintId, name, width, height) => {
     Number.validate(height)
 
     return (async() => {
-        let user = await User.findById(userId, { __v: 0, planes: 0, password: 0 }).lean()
+        let user = await User.findById(userId)
         if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
         if (blueprintId !== undefined) {
