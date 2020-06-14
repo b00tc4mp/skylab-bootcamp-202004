@@ -1,0 +1,17 @@
+{
+  "name": "gluttony",
+  "displayName": "gluttony",
+  "expo": {
+    "name": "gluttony",
+    "slug": "gluttony",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}

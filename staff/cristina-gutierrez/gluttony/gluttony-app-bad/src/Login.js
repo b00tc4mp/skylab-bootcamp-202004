@@ -3,15 +3,15 @@ import {
   StyleSheet,
   Text,
   Image,
-  TouchableOpacity,
+  TouchableHighlight,
   View,
   TextInput
 } from "react-native";
-import { authenticateUser } from "../gluttony-client-logic"
+import { authenticateUser } from "gluttony-client-logic"
 
 const Login = props => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
 
     return (
         <View style={styles.modalView}>
@@ -21,22 +21,22 @@ const Login = props => {
                 placeholder="email"
                 value={email}
                 style={styles.input}
-                onChangeText={(text) => setEmail(text)}
+                onChangeText={setEmail}
             />
             <TextInput
                 placeholder="password"
                 value={password}
                 style={styles.input}
-                onChangeText={(text) => setPassword(text)}
+                onChangeText={setPassword}
             />
 
-            <TouchableOpacity style={styles.openButton} onPress={() => authenticateUser(email, password)}>
+            <TouchableHighlight style={styles.openButton} onPress={() => authenticateUser(email, password)}>
                 <Text style={styles.textStyle}>Iniciar sesión</Text>
-            </TouchableOpacity>
+            </TouchableHighlight>
             <Text style={{ ...styles.modalText, marginBottom: 8 }}>o</Text>
-            <TouchableOpacity style={styles.openButton} onPress={props.onGoToRegister}>
+            <TouchableHighlight style={styles.openButton} onPress={props.onGoToRegister}>
                 <Text style={styles.textStyle}>Regístrate</Text>
-            </TouchableOpacity>
+            </TouchableHighlight>
 
             <Text 
                 style={{ ...styles.modalText, marginTop: 20, textDecorationLine: "underline", fontWeight: "300" }} 

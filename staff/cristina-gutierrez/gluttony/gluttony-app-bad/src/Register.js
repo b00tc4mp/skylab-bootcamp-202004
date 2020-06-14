@@ -3,45 +3,51 @@ import {
   StyleSheet,
   Text,
   Image,
-  TouchableOpacity,
+  TouchableHighlight,
   View,
   TextInput
 } from "react-native";
-import { authenticateUser } from "../gluttony-client-logic"
+import { registerUser } from "gluttony-client-logic"
 
-const Login = props => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+const Register = props => {
+    const [name, setName] = useState();
+    const [surname, setSurname] = useState();
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
 
     return (
         <View style={styles.modalView}>
-            <Text style={styles.modalText}>Inicia sesión para ver más</Text>
             <Image source={ require('../assets/images/logo-without-color-version.png')} style={styles.logo}/>
+            <TextInput
+                placeholder="name"
+                value={name}
+                style={styles.input}
+                onChangeText={setName}
+            />
+            <TextInput
+                placeholder="surname"
+                value={surname}
+                style={styles.input}
+                onChangeText={setSurname}
+            />
             <TextInput
                 placeholder="email"
                 value={email}
                 style={styles.input}
-                onChangeText={(text) => setEmail(text)}
+                onChangeText={setEmail}
             />
             <TextInput
                 placeholder="password"
                 value={password}
                 style={styles.input}
-                onChangeText={(text) => setPassword(text)}
+                onChangeText={setPassword}
             />
-
-            <TouchableOpacity style={styles.openButton} onPress={() => authenticateUser(email, password)}>
-                <Text style={styles.textStyle}>Iniciar sesión</Text>
-            </TouchableOpacity>
+            <TouchableHighlight style={styles.openButton} onPress={() => registerUser(name, surname, email, password)} >
+                <Text style={styles.textStyle}>Registrarse</Text>
+            </TouchableHighlight>
             <Text style={{ ...styles.modalText, marginBottom: 8 }}>o</Text>
-            <TouchableOpacity style={styles.openButton} onPress={props.onGoToRegister}>
-                <Text style={styles.textStyle}>Regístrate</Text>
-            </TouchableOpacity>
-
-            <Text 
-                style={{ ...styles.modalText, marginTop: 20, textDecorationLine: "underline", fontWeight: "300" }} 
-                onPress={props.onCloseModal}>
-                Mejor en otro momento
+            <Text style={{ ...styles.textStyle, textDecorationLine: "underline" }} onPress={props.onGoToLogin}>
+                ¿Ya tienes una cuenta? Inicia sesión
             </Text>
         </View>
     )
@@ -97,4 +103,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Login
+export default Register

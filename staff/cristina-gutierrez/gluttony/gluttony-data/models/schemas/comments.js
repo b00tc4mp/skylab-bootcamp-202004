@@ -16,13 +16,13 @@ module.exports = new Schema({
         required: true
     },
 
-    userId: {
+    user: {
         type: String,
         ref: "Users",
         require: true
     },
 
-    storeId: {
+    store: {
         type: String,
         ref: "Stores",
         required: true
