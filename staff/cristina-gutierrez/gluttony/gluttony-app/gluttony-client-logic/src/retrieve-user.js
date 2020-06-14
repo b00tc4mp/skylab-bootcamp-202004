@@ -1,10 +1,11 @@
+const { API_URL } = require("../config")
 require("gluttony-commons/polyfills/string")
 const axios = require("axios")
 
 module.exports = function (token) {
     String.validate.notVoid(token)
 
-    axios.get(`${process.env.API_URL}/users`, {
+    axios.get(`${API_URL}/users`, {
         headers: { 'Authorization': `Bearer ${token}` }
     })
         .then(({ status, body }) => {

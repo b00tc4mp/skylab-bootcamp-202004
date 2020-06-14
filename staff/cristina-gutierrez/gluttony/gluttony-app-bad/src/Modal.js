@@ -4,7 +4,7 @@ import {
   Modal,
   StyleSheet,
   Text,
-  TouchableOpacity,
+  TouchableHighlight,
   View,
 } from "react-native";
 import Login from "./Login";
@@ -36,14 +36,14 @@ const ModalAuthentication = () => {
                     </View>
                 </Modal>
 
-                <TouchableOpacity
+                <TouchableHighlight
                     style={styles.openButton}
                     onPress={() => {
                     setModalVisible(true);
                     }}
                 >
                     <Text style={styles.textStyle}>Accede a Gluttony</Text>
-                </TouchableOpacity>
+                </TouchableHighlight>
             </View>
         )
 }

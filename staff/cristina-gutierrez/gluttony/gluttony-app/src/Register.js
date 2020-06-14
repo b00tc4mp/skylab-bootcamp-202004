@@ -3,17 +3,17 @@ import {
   StyleSheet,
   Text,
   Image,
-  TouchableHighlight,
+  TouchableOpacity,
   View,
   TextInput
 } from "react-native";
-import { registerUser } from "gluttony-client-logic"
+import { registerUser } from "../gluttony-client-logic"
 
 const Register = props => {
-    const [name, setName] = useState();
-    const [surname, setSurname] = useState();
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [name, setName] = useState("");
+    const [surname, setSurname] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     return (
         <View style={styles.modalView}>
@@ -22,29 +22,29 @@ const Register = props => {
                 placeholder="name"
                 value={name}
                 style={styles.input}
-                onChangeText={setName}
+                onChangeText={(text) => setName(text)}
             />
             <TextInput
                 placeholder="surname"
                 value={surname}
                 style={styles.input}
-                onChangeText={setSurname}
+                onChangeText={(text) => setSurname(text)}
             />
             <TextInput
                 placeholder="email"
                 value={email}
                 style={styles.input}
-                onChangeText={setEmail}
+                onChangeText={(text) => setEmail(text)}
             />
             <TextInput
                 placeholder="password"
                 value={password}
                 style={styles.input}
-                onChangeText={setPassword}
+                onChangeText={(text) => setPassword(text)}
             />
-            <TouchableHighlight style={styles.openButton} onPress={() => registerUser(name, surname, email, password)} >
+            <TouchableOpacity style={styles.openButton} onPress={() => registerUser(name, surname, email, password)} >
                 <Text style={styles.textStyle}>Registrarse</Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
             <Text style={{ ...styles.modalText, marginBottom: 8 }}>o</Text>
             <Text style={{ ...styles.textStyle, textDecorationLine: "underline" }} onPress={props.onGoToLogin}>
                 ¿Ya tienes una cuenta? Inicia sesión
