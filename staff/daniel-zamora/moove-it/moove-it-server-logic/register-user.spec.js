@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { TEST_MONGO_URL: MONGODB_URL } } = process
 const { mongoose, models: { User } } = require('moove-it-data')
 
 const registerUser = require('./register-user')
@@ -12,7 +12,7 @@ describe('logic - register user', () => {
         mongoose.connect(MONGODB_URL).then(() => User.deleteMany())
     )
 
-    let name, surname, email, password, validatePassword
+    let name, surname, email, password
 
     beforeEach(() => {
 
@@ -20,13 +20,12 @@ describe('logic - register user', () => {
         surname = `surname-${random()}`
         email = `e-${random()}@mail.com`
         password = `password-${random()}`
-        validatePassword = password
     })
 
 
     it('should succeed on valid data', async() => {
 
-        const result = await registerUser(name, surname, email, password, validatePassword)
+        const result = await registerUser(name, surname, email, password)
         const user = await User.findOne({ email })
         expect(user.name).to.equal(name)
         expect(user.surname).to.equal(surname)
@@ -34,8 +33,8 @@ describe('logic - register user', () => {
     })
 
     it('should fail when passwords does not match', () => {
-        validatePassword = '123123'
-        return registerUser(name, surname, email, password, validatePassword)
+
+        return registerUser(name, surname, email, password)
             .then(() => { throw new Error("Should throw error") })
             .catch(error => {
                 expect(error).to.be.an.instanceof(CredentialsError)
@@ -46,11 +45,11 @@ describe('logic - register user', () => {
 
     describe('when user already exists', () => {
         beforeEach(() => {
-            return User.create({ name, surname, email, password, validatePassword })
+            return User.create({ name, surname, email, password })
         })
 
         it('should fail on trying to register an existing user', () =>
-            registerUser(name, surname, email, password, validatePassword)
+            registerUser(name, surname, email, password)
             .then(() => { throw new Error("Should throw error") })
             .catch(error => {
                 expect(error).to.be.an.instanceof(DuplicityError)

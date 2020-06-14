@@ -5,5 +5,7 @@ module.exports = {
     VoidError: buildError('VoidError'),
     UnexistenceError: buildError('UnexistenceError'),
     CredentialsError: buildError('CredentialsError'),
-    ForbiddenError: buildError('ForbiddenError')
+    ForbiddenError: buildError('ForbiddenError'),
+    JsonWebTokenError: buildError('JsonWebTokenError')
+
 }

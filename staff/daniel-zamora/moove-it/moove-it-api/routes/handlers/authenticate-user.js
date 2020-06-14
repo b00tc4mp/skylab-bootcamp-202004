@@ -1,16 +1,17 @@
-const { env: { SECRET } } = process
+const { env: { JWT_SECRET: SECRET } } = process
 
 const { authenticateUser } = require('moove-it-server-logic')
 const { handleError } = require('../../helpers')
 const { utils: { jwtPromised } } = require('moove-it-commons')
 
-module.exports = (req, res) => { 
+module.exports = (req, res) => {
     const { body: { email, password } } = req
 
     try {
+        debugger
         authenticateUser(email, password)
-            .then(userId => jwtPromised.sign({ sub: userId }, SECRET, {expiresIn: '1d'}))
+            .then(userId => jwtPromised.sign({ sub: userId }, SECRET, { expiresIn: '1d' }))
             .then(token => res.send({ token }))
             .catch(error => handleError(error, res))
-    } catch(error){handleError(error, res)}
+    } catch (error) { handleError(error, res) }
 }
