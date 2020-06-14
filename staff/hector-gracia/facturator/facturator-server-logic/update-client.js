@@ -3,7 +3,7 @@ const { utils: { Email }} = require('facturator-commons')
 const { mongoose:{ObjectId},models: { Client } } = require('facturator-data')
 const {  errors: { UnexistenceError } } = require('facturator-commons')
 
-module.exports=(clientId,updatedClient)=>{
+module.exports=(clientId,updatedClient)=>{ //TODO empty a field
     if(typeof updatedClient!=="object") throw new TypeError(updatedClient+" is not an object")
     const{name, establishment, contactNumber, email, direction, paymentMethod, paymentInfo}= updatedClient
     String.validate.notVoid(clientId)

@@ -4,7 +4,7 @@ const {handleError}= require("../../helpers")
 module.exports=async (req,res)=>{
     try{
         const clients=await retrieveAllClients()
-        return res.status(201).send(clients)
+        return res.status(200).send(clients)
     }catch(error){
         handleError(error,res)
     }
