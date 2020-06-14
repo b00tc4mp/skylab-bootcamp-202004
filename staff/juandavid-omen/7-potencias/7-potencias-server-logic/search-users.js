@@ -1,6 +1,4 @@
 require('7-potencias-commons/polyfills/string')
-require('7-potencias-commons/polyfills/json')
-require('7-potencias-commons/polyfills/number')
 const { models: { User } } = require('7-potencias-data')
 const user = require('7-potencias-data/models/schemas/user')
 
