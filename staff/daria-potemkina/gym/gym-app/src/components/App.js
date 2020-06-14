@@ -4,6 +4,7 @@ import './App.sass'
 import Register from './Register'
 import Login from './Login'
 import Home from './Home'
+import Landing from './Landing'
 import { isUserAuthenticated } from 'gym-client-logic'
 
 function App({ history }) {
@@ -48,6 +49,7 @@ function App({ history }) {
   return (
     <div className="App">
       <header className="App-header">
+      <Route exact path="/" render={() => token ? <Redirect to="/home" /> : <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin}/>} />
         <Route path="/register" render={() => 
         token ? <Redirect to="/home" /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>} />
 

@@ -34,16 +34,18 @@ export default function ({ onRegister, onGoToLogin }) {
     }
 
     return <section className='register'>
-        <h1>Register</h1>
-        <form onSubmit={handleSubmit}>
+        <img className="register__logo" alt="logo" src="../Logo.png"></img>
+        <h1 className="register__title" >Register</h1>
+        <form className="register__form" onSubmit={handleSubmit}>
             <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}" ></input>
             <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}" />
             <input type="email" name="email" placeholder="e-mail" required />
             <input type="password" name="password" placeholder="password" required minLength="8" />
-            <button>Submit</button>
-            <a href="/" onClick={handleGoToLogin}>Login</a>
-
-            {error && <Feedback message={error} level="error"/>}
+            <section className="register__link">
+                <button>Submit</button>
+                <a href="/" onClick={handleGoToLogin}>Login</a>
+            </section>
+            {error && <Feedback message={error} level="error" />}
         </form>
     </section>
 }
