@@ -10,6 +10,7 @@ module.exports = (name, surname, email, password) => {
   String.validate.notVoid(email)
   Email.validate(email)
   String.validate.notVoid(password)
+  String.validate.lengthGreaterEqualThan(password, 8)
 
   return (async () => {
     const user = await User.findOne({ email })
