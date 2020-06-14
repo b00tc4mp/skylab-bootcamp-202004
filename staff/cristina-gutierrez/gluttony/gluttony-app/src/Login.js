@@ -21,9 +21,11 @@ const Login = props => {
                 placeholder="email"
                 value={email}
                 style={styles.input}
+                autoCapitalize='none'
                 onChangeText={(text) => setEmail(text)}
             />
             <TextInput
+                secureTextEntry={true}
                 placeholder="password"
                 value={password}
                 style={styles.input}
