@@ -1,0 +1,92 @@
+import React from 'react';
+import { View, StyleSheet, Text, TextInput } from 'react-native'
+import SvgUri from "expo-svg-uri"
+import { ButtonForm } from '../components'
+
+module.exports = () => {
+
+    return (
+
+        <>
+            <View style={styles.container}>
+                <View style={styles.header}>
+                    <Text style={styles.titleText}>Join a community</Text>
+                    <SvgUri style={styles.userIcon} source={require('../assets/ic-user.svg')} />
+                </View>
+
+                <View style={{ width: '90%' }}>
+                    <Text style={[styles.title, { textAlign: 'left' }]}>COMMUNITY PASSWORD</Text>
+                    <Text style={styles.text}>Enter the password that your neighbor gave you to join in your commuinty</Text>
+                    <TextInput style={styles.input} placeholder="password" placeholderTextColor="#81868e" />
+                </View>
+
+                <View style={{ width: '90%' }}>
+                    <ButtonForm text="JOIN A COMMUNITY" bgColor="#009965" />
+                </View>
+
+                <View>
+                    <View style={styles.bar}></View>
+                </View>
+
+                <View style={{ width: '90%', marginTop: 30 }} >
+                    <Text style={styles.title}>DO YOU WANT TO CREATE A NEW COMMUNITY?</Text>
+                    <ButtonForm text='CREATE A COMMUNITY' onPress={() => navigation.navigate('Register')} bgColor="#003725" />
+                </View>
+
+            </View>
+        </>
+
+    )
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        width: '100%',
+    },
+    header: {
+        backgroundColor: '#069b69',
+        height: '17%',
+        width: '100%',
+        alignItems: 'flex-end',
+        justifyContent: 'space-between',
+        flexDirection: "row",
+        marginBottom: 30
+    },
+    input: {
+        backgroundColor: '#e4e4e4',
+        height: 55,
+        marginBottom: 20,
+        paddingLeft: 10,
+        color: 'black'
+    },
+    bar: {
+        width: 240,
+        height: 1,
+        backgroundColor: '#003725',
+        marginTop: 45,
+        marginBottom: 10
+    },
+    titleText: {
+        color: 'white',
+        fontWeight: '700',
+        fontSize: 28,
+        marginBottom: 20,
+        marginLeft: 20,
+        width: 300
+    },
+    userIcon: {
+        marginBottom: 20,
+        marginRight: 20
+    },
+    title: {
+        textAlign: 'center',
+        fontWeight: "bold",
+        marginBottom: 20
+    },
+    text: {
+        color: '#81868e',
+        marginBottom: 20
+    }
+})
