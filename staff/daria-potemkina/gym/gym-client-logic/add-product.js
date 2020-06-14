@@ -4,10 +4,11 @@ const { utils: { call } } = require('gym-commons')
 const context = require('./context')
 
 module.exports = function (token, productId, priceId, side, quantity) {
-    String.validate.notVoid(token)
-    String.validate.notVoid(productId)
-    String.validate.notVoid(priceId)
-    String.validate.notVoid(side)
+    String.validate(token)
+    String.validate(productId)
+    String.validate(priceId)
+    String.validate(side)
+    
     Number.validate.integer(quantity)
     
     return call('POST', `${this.API_URL}/users/product`,

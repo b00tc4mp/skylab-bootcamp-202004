@@ -10,7 +10,7 @@ const { ObjectId } = mongo
 require('gym-commons/polyfills/json')
 const { utils: { jwtPromised } } = require('gym-commons')
 
-describe.only('logic - add-product', () => {
+describe('logic - add-product', () => {
     let users, products, contracts, prices
 
     before(() => mongo.connect(MONGODB_URL_TEST)
@@ -41,17 +41,9 @@ describe.only('logic - add-product', () => {
                     settlementDate: new Date('September 18 2020')
                 }
 
-                products.insertOne(product)
-                    .then(_product => productId = _product.insertedId.toString())
+                side = ['Buy', 'Sell']
 
-                price = {
-                    product: productId,
-                    date: new Date(),
-                    price: random().toFixed(2) * 1
-                }
-
-                prices.insertOne(price)
-                    .then(_price => priceId = _price.insertedId.toString())
+                quantity = round(random() * 10)
 
                 user = {
                     name: `name-${random()}`,
@@ -65,12 +57,20 @@ describe.only('logic - add-product', () => {
                         cvv: `${round(random() * 1000)}`
                     }
                 }
-
-                side = ['Buy', 'Sell']
-
-                quantity = round(random() * 10)
+                
+                return Promise.all([products.insertOne(product).then(_product => productId = _product.insertedId.toString())
+                    .then(() => {
+                        price = {
+                            product: productId,
+                            date: new Date(),
+                            price: random().toFixed(2) * 1
+                        }
+                    }),
+                prices.insertOne(price).then(_price => priceId = _price.insertedId.toString())
+                ])
             })
     )
+
     describe('when user already exists', () => {
         beforeEach(() =>
             users.insertOne(user)
