@@ -10,7 +10,7 @@ const future1 = new Product({
     exchange: 'MEFF',
     sector: 'Banking',
     contractSize: 100,
-    settlementDate: new Date('June 19, 2020 17:45:00').toString().split(' ').slice(1, 4).join(' ')
+    settlementDate: new Date('June 19, 2020 17:45:00')
 })
 
 future1.save()
@@ -21,7 +21,7 @@ const future2 = new Product({
     exchange: "MEFF",
     sector: 'Utilities',
     contractSize: 100,
-    settlementDate: new Date('June 19, 2020 17:30:00').toString().split(' ').slice(1, 4).join(' ')
+    settlementDate: new Date('June 19, 2020 17:30:00')
 })
 
 future2.save()
@@ -32,7 +32,7 @@ const product1 = new Product({
     ticker: "ITX",
     sector: 'Consumer',
     contractSize: 100,
-    settlementDate: new Date('June 19, 2020 17:30:00').toString().split(' ').slice(1, 4).join(' ')
+    settlementDate: new Date('June 19, 2020 17:30:00')
 })
 
 const option1 = new Option({
@@ -50,7 +50,7 @@ const product2 = new Product({
     ticker: "ITX",
     sector: 'Consumer',
     contractSize: 100,
-    settlementDate: new Date('June 19, 2020 17:30:00').toString().split(' ').slice(1, 4).join(' ')
+    settlementDate: new Date('June 19, 2020 17:30:00')
 })
 
 const option2 = new Option({
