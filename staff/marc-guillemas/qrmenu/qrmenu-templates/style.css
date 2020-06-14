@@ -1,0 +1,217 @@
+.register {
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(8px);
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+}
+.register__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 0.5rem;
+  align-items: center;
+  height: 70vh;
+  width: 100vw;
+}
+.register__header {
+  color: #4b2200;
+  font-size: 2rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 20%;
+  box-shadow: 2px 2px 10px 4px #f8bf75;
+  background-color: #FF9100;
+  border-bottom-left-radius: 60px;
+  border-bottom-right-radius: 60px;
+}
+.register label {
+  display: flex;
+  align-self: center;
+  color: #00000088;
+  margin: 0.5rem;
+  content-shadow: 0 0 10px dodgerBlue;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.register__input {
+  margin: 0.5rem;
+  width: 85%;
+  height: 3rem;
+  padding-left: 1rem;
+  border-radius: 20px;
+  border: 0;
+  background-color: #ffffff;
+}
+.register__input:valid {
+  box-shadow: 1px 1px 8px 1px #c7c7c7;
+  background-color: #f1f1f1be;
+}
+.register__input:focus {
+  transition: all 1s ease;
+  box-shadow: 0 0 10px dodgerBlue;
+}
+.register--mail:hover + label[for=email] {
+  color: red;
+}
+.register__button {
+  justify-content: center;
+  border-radius: 30px;
+  border: 0;
+  color: #ffffff;
+  margin: 2rem 1rem 1rem 1rem;
+  background-color: #1E1B33;
+  height: 3rem;
+  width: 35%;
+}
+.register__button:hover {
+  transition: 0.4s ease all;
+  width: 40%;
+}
+.register a {
+  cursor: pointer;
+  height: 2rem;
+  margin: 0.5rem 0 0 0;
+  color: black;
+  font-size: 1em;
+  text-decoration: none;
+}
+.register a:active {
+  transition: 0.35s ease;
+  color: blue;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(8px);
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+}
+.login__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  width: 100vw;
+}
+.login__header {
+  color: #4b2200;
+  font-size: 2rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 20%;
+  box-shadow: 2px 2px 10px 4px #f8bf75;
+  background-color: #FF9100;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+.login label {
+  display: flex;
+  align-self: center;
+  color: #00000088;
+  margin: 0.5rem;
+  content-shadow: 0 0 10px dodgerBlue;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.login__input {
+  margin: 0.5rem;
+  width: 85%;
+  height: 3rem;
+  padding-left: 1rem;
+  border-radius: 20px;
+  border: 0;
+  background-color: #ffffff;
+}
+.login__input:valid {
+  box-shadow: 1px 1px 8px 1px #c7c7c7;
+  background-color: #f1f1f1be;
+}
+.login__input:focus {
+  transition: all 1s ease;
+  box-shadow: 0 0 10px dodgerBlue;
+}
+.login--mail:hover + label[for=email] {
+  color: red;
+}
+.login__button {
+  justify-content: center;
+  border-radius: 30px;
+  border: 0;
+  color: #ffffff;
+  margin: 2rem 1rem 1rem 1rem;
+  background-color: #1E1B33;
+  height: 3rem;
+  width: 35%;
+}
+.login__button:hover {
+  transition: 0.4s ease all;
+  width: 40%;
+}
+.login a {
+  cursor: pointer;
+  height: 2rem;
+  margin: 0.5rem 0 0 0;
+  color: black;
+  font-size: 1em;
+  text-decoration: none;
+}
+.login a:active {
+  transition: 0.35s ease;
+  color: blue;
+}
+
+.landing {
+  border: 1px solid red;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.landing__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid red;
+  height: 80%;
+}
+.landing__intro {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.landing__views {
+  display: flex;
+  height: 5rem;
+  justify-content: space-around;
+  align-items: center;
+}
+.landing a {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background-color: #FF9100;
+  box-shadow: 2px 2px 10px 4px #f8bf75;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/*# sourceMappingURL=style.css.map */
