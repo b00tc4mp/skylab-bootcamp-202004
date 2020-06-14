@@ -22,8 +22,6 @@ module.exports = (productId, num) => {
         }
 
         for (let i in prices) {
-            delete prices[i].product
-            delete prices[i]._id
             delete prices[i].__v
         }
 

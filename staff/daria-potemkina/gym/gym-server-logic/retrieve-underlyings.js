@@ -21,7 +21,6 @@ module.exports = (ticker) => {
 
         for (let i in prices) {
             prices[i].date = new Date (prices[i].date)
-            delete prices[i].product
             delete prices[i]._id
             delete prices[i].__v
         }

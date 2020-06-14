@@ -26,7 +26,6 @@ module.exports = (type, sector, ticker, market) => {
         if(!results.length) throw new UnexistenceError('no results')
 
         for (let i in results) {
-            delete results[i]._id
             delete results[i].__v
         }
 

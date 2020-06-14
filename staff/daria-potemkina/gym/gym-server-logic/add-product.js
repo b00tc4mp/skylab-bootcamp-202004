@@ -6,9 +6,9 @@ const { ObjectId } = mongoose
 const { errors: { UnexistenceError } } = require('gym-commons')
 
 module.exports = (userId, productId, priceId, side, quantity) => {
-    String.validate.notVoid(priceId)
     String.validate.notVoid(userId)
     String.validate.notVoid(productId)
+    String.validate.notVoid(priceId)
     String.validate.notVoid(side)
     Number.validate.integer(quantity)
 

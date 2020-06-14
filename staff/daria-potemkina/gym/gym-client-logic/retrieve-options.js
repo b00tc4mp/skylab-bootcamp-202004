@@ -20,11 +20,11 @@ module.exports = function () {
                         .then(({ status, body }) => {
                             if (status === 200) {
                                 const prices = JSON.parse(body)
-                                const [{ price }] = prices
+                                const [{ price, _id: priceId }] = prices
 
                                 settlementDate = moment(settlementDate).format('MMMM YY')
 
-                                return { ticker, settlementDate, side, strike, price }
+                                return { _id, ticker, settlementDate, side, strike, priceId, price }
 
                             } else {
                                 const { error } = JSON.parse(body)
