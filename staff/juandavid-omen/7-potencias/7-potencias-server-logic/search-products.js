@@ -8,14 +8,14 @@ module.exports = query => {
 
   return (async () => {
     let products = await Product.find({
-       $or: [ { name: new RegExp(query, 'i') } ] 
+      $or: [{ name: new RegExp(query, 'i') }]
     }).lean()
-    
+
     products = products.map(product => {
       product.id = product._id.toString()
       delete product._id
       delete product.__v
-       
+
       return product
     })
 

@@ -6,10 +6,8 @@ module.exports = (req, res) => {
     const { payload: { sub: userId }, body } = req
 
     updateUser(userId, body)
-      .then(() => {
-        res.status(200).send()})
-      .catch(error => {
-        handleError(error, res)})
+      .then(() => res.status(200).send())
+      .catch(error => handleError(error, res))
   } catch (error) {
     handleError(error, res)
   }

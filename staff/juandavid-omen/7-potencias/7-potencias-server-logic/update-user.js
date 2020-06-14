@@ -13,13 +13,13 @@ module.exports = (userId, data) => {
 
   return (async () => {
     const user = await User.findById(userId)
-    
+
     if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
     if (name) user.name = name
     if (surname) user.surname = surname
     if (password) user.password = await bcrypt.hash(password, 8)
 
-    return user.save({ userId, $set: { data }})
+    return user.save({ userId, $set: { data } })
   })()
 }

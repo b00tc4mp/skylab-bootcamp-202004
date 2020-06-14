@@ -79,7 +79,7 @@ module.exports = new Schema({
     required: true
   },
 
-  day:  Number,
+  day: Number,
 
   month: Number,
 

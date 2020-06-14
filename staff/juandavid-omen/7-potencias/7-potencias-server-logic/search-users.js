@@ -1,6 +1,5 @@
 require('7-potencias-commons/polyfills/string')
 const { models: { User } } = require('7-potencias-data')
-const user = require('7-potencias-data/models/schemas/user')
 
 module.exports = query => {
   String.validate.notVoid(query)

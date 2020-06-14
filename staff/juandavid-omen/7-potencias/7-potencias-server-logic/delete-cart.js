@@ -6,13 +6,13 @@ const { models: { User } } = require('7-potencias-data')
 module.exports = (userId) => {
   String.validate.notVoid(userId)
 
-      return (async () => {
-        const user = await User.findById(userId)
-    
-        if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
- 
-        const cart = []
+  return (async () => {
+    const user = await User.findById(userId)
 
-        return user.save({ userId, $set: {cart} } )
-      })()
+    if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
+
+    const cart = []
+
+    return user.save({ userId, $set: { cart } })
+  })()
 }

@@ -68,8 +68,8 @@ try {
             })
         }
       }).catch(error => {
-          file.error('could not connect to mongo', error)
-        })
+        file.error('could not connect to mongo', error)
+      })
     })
 } catch (error) {
   file.error(error)

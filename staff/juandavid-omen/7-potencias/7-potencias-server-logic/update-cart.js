@@ -11,7 +11,7 @@ module.exports = (userId, productId, quantity) => {
 
   return (async () => {
     const user = await User.findById(userId)
-    
+
     if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
     const product = await Product.findById(productId).lean()
