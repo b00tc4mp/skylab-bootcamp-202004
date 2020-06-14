@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .plane {
+            width: 50vh;
+            height: 50vh;
+            background-color: lightgray;
+            position: absolute;
+            left: 5vh;
+            top: 5vh;
+        }
+
+        .axis-x {
+            width: 100%;
+            height: 1px;
+            background-color: red;
+            transform-origin: center;
+            position: absolute;
+            top: 50%;
+        }
+
+        .axis-y {
+            width: 1px;
+            height: 100%;
+            background-color: blue;
+            transform-origin: center;
+            position: absolute;
+            left: 50%;
+        }
+
+        .bed {
+            width: 10%;
+            height: 20%;
+            background-color: skyblue;
+            transform-origin: center;
+            position: absolute;
+            /* WARN You can use percentage values: the percentage is relative to the element itself, and not the parent. https://cssreference.io/property/transform/#:~:text=You%20can%20use%20percentage%20values,itself%2C%20and%20not%20the%20parent.&text=transform%3A%20translate(20px%2C%20%2D,is%20for%20the%20horizontal%20axis */
+            /* transform: translate(200%, 200%) rotate(45deg) scale(1); */
+            transform: translate(200%, 200%) rotate(45deg) scale(1);
+        }
+
+        .round-table {
+            width: 10%;
+            height: 15%;
+            border-radius: 50%;
+            background-color: plum;
+            transform-origin: center;
+            position: absolute;
+            transform: translate(5%, 7%) rotate(23deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="plane">
+        <div class="axis-x"></div>
+        <div class="axis-y"></div>
+        <div class="bed"></div>
+        <div class="round-table"></div>
+    </div>
+</body>
+
+</html>
