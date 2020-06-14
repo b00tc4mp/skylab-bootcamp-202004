@@ -27,10 +27,7 @@ describe('logic - retrieve challenges', () => {
         expect(challenges.length).to.equal(1)
         expect(challenges).to.be.an('array')
   
-
     })
-
-
 
     afterEach(() => Challenge.deleteMany())
 

@@ -1,7 +1,11 @@
 import React from 'react'
 import './Home.sass'
+import Challenges from './Challenges'
+import { Route } from 'react-router-dom'
+import Categories from './Categories'
+import Challenge from './Challenge'
 
-function Home() {
+function Home(props) {
     return (
 
         <div className="wrapper">
@@ -56,24 +60,15 @@ function Home() {
             <div className="second-item">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit!
             </div>
-            <div className="item">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit!
-            </div>
-            <div className="item">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit!
-            </div>
-            <div className="item">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit!
-            </div>
-            <div className="item">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit!
-            </div>
-                        <div className="item">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit!
-            </div>
+            {/* <Challenges className='item'/> */}
+            {/* <Categories/> */}
+            <Route path={`${props.match.path}/categories`} component={Categories} />
+            <Route path={`${props.match.path}/categories/:category`} component={Challenges} />
+            
+
           </div>
         </div>
+        
       );
 }
-
 export default Home

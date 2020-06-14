@@ -4,7 +4,7 @@ const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, JWT_SECRET, MONGODB_URL } }
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, createCategory, createChallenge, retrieveChallenges} = require('code-this-server-logic')
+const { registerUser, authenticateUser, retrieveUser, createCategory, createChallenge, retrieveChallenges, retrieveCategories, retrieveCategory } = require('code-this-server-logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
@@ -84,6 +84,32 @@ mongoose.connect(MONGODB_URL)
                 handleError(error, res)
             }
  
+        })
+
+
+        app.get('/categories', (req, res) => {
+
+            try {
+                retrieveCategories()
+                    .then((categories) => res.send(categories))
+                    .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+ 
+        })
+
+        app.get('/category/:categoryName', (req, res) => {
+            console.log('holaaa')
+            const { params: {categoryName}} = req
+
+            try {
+                retrieveCategory(categoryName)
+                    .then((category) => res.send(category))
+                    .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
         })
 
         app.get('/users/:userId?', verifyExtractJwt, (req, res) => {
