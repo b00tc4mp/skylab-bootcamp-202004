@@ -6,7 +6,7 @@ module.exports = (req, res) => {
     const { payload: { sub: userId } } = req
 
     deleteUser(userId)
-      .then(() => res.status(200).send())
+      .then(() => res.status(204).send())
       .catch(error => handleError(error, res))
   } catch (error) {
     handleError(error, res)
