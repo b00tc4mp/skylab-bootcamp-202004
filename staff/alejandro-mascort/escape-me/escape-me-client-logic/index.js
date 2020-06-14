@@ -7,5 +7,7 @@ module.exports = {
     toggleEscapeRoom: require('./toggle-escape-room'),
     toggleFollowUser: require('./toggle-follow-user'),
     retrieveEscapeRooms: require('./retrieve-escape-rooms'),
-    retrieveFollowing: require('./retrieve-following')
+    retrieveFollowing: require('./retrieve-following'),
+    searchEscapeRoom: require('./search-escape-room'),
+    searchUsers: require('./search-users')
 }

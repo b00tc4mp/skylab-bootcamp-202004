@@ -9,5 +9,7 @@ module.exports = {
     retrieveEscapeRoomsFavorites: require('./retrieve-escape-rooms-favorites'),
     retrieveEscapeRoomsParticipated: require('./retrieve-escape-rooms-participated'),
     retrieveEscapeRoomsPending: require('./retrieve-escape-rooms-pending'),
-    retrieveFollowing: require('./retrieve-following')
+    retrieveFollowing: require('./retrieve-following'),
+    searchEscapeRoom: require('./search-escape-room'),
+    searchUsers: require('./search-users')
 }

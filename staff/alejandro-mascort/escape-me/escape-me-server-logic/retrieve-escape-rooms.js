@@ -10,7 +10,7 @@ module.exports = (userId, tag) => {
 
         if (!user) throw new Error(`user with id ${userId} does not exist`)
 
-        const escapeRoomList = user[tag].map(({ _id, name, priceMin, priceMax, playersMin, playersMax, genre, city, image }) => ({ id: _id, name, priceMin, priceMax, playersMin, playersMax, genre, city, image }))
+        const escapeRoomList = user[tag].map(({ _id, name, priceMin, priceMax, playersMin, playersMax, genre, city, image, rating }) => ({ id: _id, name, priceMin, priceMax, playersMin, playersMax, genre, city, image, rating }))
 
         return escapeRoomList
     })()

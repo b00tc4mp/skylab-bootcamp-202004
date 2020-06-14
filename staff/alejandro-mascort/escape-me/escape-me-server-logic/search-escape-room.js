@@ -1,7 +1,6 @@
 require('escape-me-commons/polyfills/string')
 require('escape-me-commons/polyfills/number')
 require('escape-me-commons/polyfills/json')
-const { utils: { Email }, errors: { UnexistenceError } } = require('escape-me-commons')
 const { models: { EscapeRoom } } = require('escape-me-data')
 
 module.exports = (query = '', { moreThanPriceMin, lessThanPriceMin, moreThanPriceMax, lessThanPriceMax, moreThanPlayersMin, lessThanPlayersMin, moreThanPlayersMax, lessThanPlayersMax, genre, difficulty, moreThanRating, lessThanRating }) => {
@@ -66,11 +65,11 @@ module.exports = (query = '', { moreThanPriceMin, lessThanPriceMin, moreThanPric
         Number.validate.positive(lessThanRating)
         filter.push({ rating: { $lte: (lessThanRating) } })
     }
-    debugger
+
     return (async () => {
         let escapeRooms = await EscapeRoom.find({ $and: filter })
 
-        escapeRooms = escapeRooms.map(({ _id, name, priceMin, priceMax, playersMin, playersMax, genre, city, image }) => ({ id: _id, name, priceMin, priceMax, playersMin, playersMax, genre, city, image }))
+        escapeRooms = escapeRooms.map(({ _id, name, priceMin, priceMax, playersMin, playersMax, genre, city, image, rating }) => ({ id: _id, name, priceMin, priceMax, playersMin, playersMax, genre, city, image, rating }))
 
         return escapeRooms
     })()
