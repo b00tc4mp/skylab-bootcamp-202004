@@ -2,18 +2,14 @@
  * 
  * must found recipes by query
  * 
- * @param query must search by this param
+ * @param {String} query must search by this param
  * 
- * @param userId it must find the user owner of the recipes
+ * @param {String} userId it must find the user owner of the recipes
  * 
- * @throws UnexistanceError if user doesn't exist
+ * @throws {Unexistance Error} if user doesn't exist
  * 
- * @throws UnexistanceError if recipe doesn't match
+ * @throws {Unexistance Error} if recipe doesn't match
  */
-
-
-
-
 require('cook-wise-commons/polyfills/string')
 const { errors: { UnexistenceError } } = require('cook-wise-commons')
 const { models: { User } } = require('cook-wise-data')

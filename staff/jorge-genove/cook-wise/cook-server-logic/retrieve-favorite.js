@@ -1,3 +1,12 @@
+/**
+ * @param {String} userId it will fin a user
+ * 
+ * @throws {Unexistence Error} an error if don't match a user
+ * 
+ * @returns favorite recipes
+ */
+
+
 require('cook-wise-commons/polyfills/string')
 const { errors: { UnexistenceError } } = require('cook-wise-commons')
 const { models: { User} } = require('cook-wise-data')

@@ -1,3 +1,16 @@
+/**
+ * it will register a user
+ * 
+ * @param {name} name name of the new user
+ * 
+ * @param {surname} surname surname of the new user
+ * 
+ * @param {String} email  will be used as username
+ * 
+ * @param {String} password will be used as a pass key
+ * 
+ * 
+ */
 require('cook-wise-commons/polyfills/string')
 require('cook-wise-commons/polyfills/json')
 const { utils: { Email }, errors: { DuplicityError } } = require('cook-wise-commons')

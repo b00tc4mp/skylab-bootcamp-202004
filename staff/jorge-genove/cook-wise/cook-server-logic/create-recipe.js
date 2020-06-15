@@ -1,13 +1,13 @@
 /**
  * It must create a new recipe
  * 
- * @param Object with the data for create the recipe
+ * @param {Object} with the data for create the recipe
  * 
- * @throws Unexistance error if user doesn't exist
+ * @throws {Unexistance Error} if user doesn't exist
  * 
- * @throws DuplicityError if the recipe already exist
+ * @throws {Duplicity Error} if the recipe already exist
  * 
- * @throws if the ingredients quantity is 0 or less
+ * @throws {Duplicity Error} if the ingredients quantity is 0 or less
  * 
  * @returns a recipe
  */

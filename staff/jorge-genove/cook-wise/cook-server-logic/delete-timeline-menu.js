@@ -1,3 +1,18 @@
+/**
+ * 
+ * I will delete a timeline menu
+ * 
+ * @param {String} weekday that mark the day that will delete
+ * 
+ * @param {String} timeline that mark the timeline that will delete
+ * 
+ * @param {String} userId  that will find a userId in the databas
+ * 
+ * @throws {Unexistence Error} if don't match a user
+ * 
+ */
+
+
 
 
 require('cook-wise-commons/polyfills/string')

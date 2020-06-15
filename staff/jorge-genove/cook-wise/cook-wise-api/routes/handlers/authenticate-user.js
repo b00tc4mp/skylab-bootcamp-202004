@@ -2,7 +2,7 @@ const { env: { SECRET } } = process
 
 const { authenticateUser } = require('cook-server-logic')
 const { handleError } = require('../../helpers')
-const { utils: { jwtPromised } } = require('cook-wise-commons')
+const jwtPromised = require('cook-wise-node-commons')
 
 module.exports = (req, res) => {
     const { body: { email, password } } = req

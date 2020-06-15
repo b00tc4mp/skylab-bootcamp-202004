@@ -1,3 +1,17 @@
+/**
+ 
+It will add or sliced a recipe in the weekly menu
+
+*@param {object} schedule with data for create the menu 
+ 
+ @param {String} userId that will find the user in the database
+
+ @throws {UnexistenceError}  if user didnt match
+
+ @throws {UnexistenceError} if recipe didn't match
+ * 
+ * 
+ */
 require('cook-wise-commons/polyfills/string')
 const { errors: { UnexistenceError, ValueError } } = require('cook-wise-commons')
 const { mongoose: { ObjectId }, models: { User, Recipes} } = require('cook-wise-data')

@@ -1,7 +1,7 @@
 const { registerUser } = require('cook-server-logic')
 const { handleError } = require('../../helpers')
 
-module.exports = (req, res) => {
+module.exports = (req, res) => {debugger
     const { body: { name, surname, email, password } } = req
 
     try {

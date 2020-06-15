@@ -1,3 +1,20 @@
+
+/**
+ * 
+ * It will return ideas for next week recipes
+ * 
+ * @param {String} UserId that will find a user in the database
+ * 
+ * @param {Object} with data that will find of
+ * 
+ * @throws {TypeError} if ingredient haven't an array
+ * 
+ * @throws {Unexistence Error} if user doesn't exist
+ * 
+ * @returns a recipes based on the ingredients passed
+ */
+
+
 require('cook-wise-commons/polyfills/string')
 require('cook-wise-commons/polyfills/number')
 const { errors: { UnexistenceError } } = require('cook-wise-commons')

@@ -1,4 +1,4 @@
-const { utils: { jwtPromised } } = require('cook-wise-commons')
+const  jwtPromised  = require('cook-wise-node-commons')
 
 module.exports = (secret, errorHandler) =>
     (req, res, next) => {

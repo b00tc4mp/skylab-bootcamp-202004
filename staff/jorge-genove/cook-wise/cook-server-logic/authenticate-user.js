@@ -1,13 +1,13 @@
 /**
  * It must authentincate an existing user
  * 
- * @param email the username email
+ * @param {String} email the username email
  * 
- * @param password the username secret key
+ * @param {String} password the username secret key
  * 
- * @throws Unexistance error if user dosen't exist
+ * @throws {Unexistance Error} if user dosen't exist
  * 
- * @throws Credentials error if username and password dosen't match
+ * @throws {Credentials Error} if username and password dosen't match
  * 
  * @returns a username token
  * 

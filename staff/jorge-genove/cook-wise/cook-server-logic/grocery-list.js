@@ -1,4 +1,14 @@
+/**
 
+It will create a grocery list by menu recipes
+
+* @param {String} userId will find a userId in the database
+ * 
+ * @throws {Unexistence Error} if user doesn't match
+ * 
+ * @returns a grocery list
+ * 
+ */
 
 
 require('cook-wise-commons/polyfills/string')

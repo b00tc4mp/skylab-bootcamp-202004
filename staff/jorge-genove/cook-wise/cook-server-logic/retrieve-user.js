@@ -1,3 +1,13 @@
+/**
+ * it will return a user
+ * 
+ * @param {String} userId it will find a user by his Id
+ * 
+ * @throws {Unexistance Error} if user doesn't match  in the database
+ * 
+ * @returns a user
+ */
+
 require('cook-wise-commons/polyfills/string')
 const { mongoose: { ObjectId }, models: { User } } = require('cook-wise-data')
 
