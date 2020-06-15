@@ -25,7 +25,7 @@ try {
             const app = express()
 
             app.use(cors)
-
+            
             app.use('/api', api)
 
             // other
@@ -50,7 +50,8 @@ try {
                         .then(() => console.info('disconnected database'))
                         .catch(error => console.error('could not disconnect from mongo', error))
                         .finally(() => {
-                            return console.info(`server ${name} ${version} stopped`)
+                            console.info(`server ${name} ${version} stopped`)
+                            return process.exit()
                         })
                 }
             })

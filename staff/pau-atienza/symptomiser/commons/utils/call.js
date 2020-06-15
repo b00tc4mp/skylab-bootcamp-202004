@@ -9,29 +9,42 @@ module.exports = function (method, url, body, headers, callback) {
     if (arguments.length > 4)
         Function.validate(callback)
 
-    const promise = new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest()
-
-        xhr.open(method, url)
-
-        if (headers)
-            for (const key in headers)
-                xhr.setRequestHeader(key, headers[key])
-
-        xhr.onload = function () {
-            resolve({ status: this.status, body: this.responseText })
-        }
-
-        xhr.onerror = function () {
-            reject(new Error('network error'))
-        }
-
-        xhr.send(body ? body : undefined)
+    return fetch(url, { method, headers, body })
+    .then(res=> {
+        return res.text()
+        .then(body=>{
+            return {
+                status: res.status,
+                body
+            }
+        })
+    
     })
+    
 
-    if (arguments.length < 5) return promise
+    // const promise = new Promise((resolve, reject) => {
+    //     const xhr = new XMLHttpRequest()
 
-    promise
-        .then(({ status, body }) => callback(null, status, body))
-        .catch(callback)
+    //     xhr.open(method, url)
+
+    //     if (headers)
+    //         for (const key in headers)
+    //             xhr.setRequestHeader(key, headers[key])
+
+    //     xhr.onload = function () {
+    //         resolve({ status: this.status, body: this.responseText })
+    //     }
+
+    //     xhr.onerror = function () {
+    //         reject(new Error('network error'))
+    //     }
+
+    //     xhr.send(body ? body : undefined)
+    // })
+
+    // if (arguments.length < 5) return promise
+
+    // promise
+    //     .then(({ status, body }) => callback(null, status, body))
+    //     .catch(callback)
 }
