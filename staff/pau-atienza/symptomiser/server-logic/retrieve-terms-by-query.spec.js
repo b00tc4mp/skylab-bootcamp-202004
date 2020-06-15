@@ -24,22 +24,12 @@ describe('logic - retrieve-terms-by-query', () => {
         it('should succeed on correct inputs', () =>
             retrieveTermsByQuery(query)
                 .then(result => {
-                    expect(result.term).to.exist
+                    expect(result).to.exist
 
-                    expect(result.term.HPO_id).to.exist
-                    expect(result.term._id).to.not.exist
-                    expect(result.term.__v).to.not.exist
-                    expect(result.term.xref).to.not.exist
-                    expect(result.lower).to.be.an.instanceof(Array)
-                    expect(result.higher).to.be.an.instanceof(Array)
-
-                    expect(result.higher[0]._id).to.not.exist
-                    expect(result.higher[0].__v).to.not.exist
-                    expect(result.higher[0].xref).to.not.exist
-
-                    expect(result.lower[0]._id).to.not.exist
-                    expect(result.lower[0].__v).to.not.exist
-                    expect(result.lower[0].xref).to.not.exist
+                    expect(result.prediction).to.be.an.instanceof(Array)
+                    expect(result.prediction[0]["prediction-name"]).to.exist
+                    expect(result.prediction[0]["prediction-code"]).to.exist
+                   
                     return
                 })
                 .catch(error => {throw error})
