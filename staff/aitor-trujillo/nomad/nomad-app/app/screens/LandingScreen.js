@@ -11,7 +11,7 @@ import colors from '../styles/colors'
 
 const bgImage = require('../assets/background.jpg')
 
-export default () => {
+export default ({ navigation }) => {
   return (
     <ImageBackground source={bgImage} style={[styles.background, { paddingBottom: 30 }]}>
       <View style={styles.textContainer}>
@@ -23,8 +23,8 @@ export default () => {
           Find your next workspace, share your{"\n"} work with people like you, go beyond{"\n"} geographical limits.
           </Text>
       </View>
-      <AppButton title='Sign up!' bgColor={'primary'} txtColor='dark' onPress={() => console.log('rg')} />
-      <AppButton title='Sign in' bgColor={'secondary'} txtColor='light' onPress={() => console.log('ln')} />
+      <AppButton title="Sign up, it's free!" bgColor={'primary'} txtColor='dark' onPress={() => navigation.navigate('Register')} />
+      <AppButton title='Sign in' bgColor={'secondary'} txtColor='light' onPress={() => navigation.navigate('Login')} />
     </ImageBackground>
 
   );

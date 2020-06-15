@@ -1,4 +1,4 @@
-const { utils: { jwtPromised } } = require('nomad-commons')
+const jwtPromised = require('../helpers/jwt-promised')
 
 module.exports = (secret, errorHandler) =>
     (req, res, next) => {

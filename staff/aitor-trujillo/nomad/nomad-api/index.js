@@ -19,7 +19,7 @@ const {
 const { mongoose } = require('nomad-data')
 const { jwtVerifierExtractor, cors } = require('./middlewares')
 const { handleError } = require('./helpers')
-const { utils: { jwtPromised } } = require('nomad-commons')
+const jwtPromised = require('./helpers/jwt-promised')
 
 const express = require('express')
 

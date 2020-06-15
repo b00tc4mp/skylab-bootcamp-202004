@@ -11,17 +11,35 @@ import AppTextInput from '../components/AppTextInput'
 import { Formik } from 'formik'
 import * as Yup from "yup";
 
+const { registerUser } = require('nomad-client-logic')
 import colors from '../styles/colors'
 import ErrorMessage from '../components/ErrorMessage'
 
 const bgImage = require('../assets/background.jpg')
 
 const validationSchema = Yup.object().shape({
+    name: Yup.string().required().label('Name'),
+    surname: Yup.string().required().label('Surname'),
     email: Yup.string().required().email().label('Email'),
     password: Yup.string().required().min(4).label('Password')
 })
 
-export default ({ handleRegister, navigation }) => {
+export default ({ navigation }) => {
+    const [error, setError] = useState()
+
+    const handleRegister = ({ name, surname, email, password }) => {
+        console.log(name);
+        (async () => {
+            try {
+
+                await registerUser(name, surname, email, password)
+                navigation.navigate('Login')
+            } catch (error) {
+                // console.log(error)
+                setError(error)
+            }
+        })()
+    }
 
     return (
         <ImageBackground source={bgImage} style={[styles.background, { paddingBottom: 30 }]}>
@@ -32,18 +50,39 @@ export default ({ handleRegister, navigation }) => {
                 behavior={Platform.OS == "ios" ? "padding" : "height"}
                 style={styles.formContainer}
             >
+
+
+                {/* <View style={styles.formContainer}> */}
                 <Text style={styles.claimText} >
-                    Sign in
+                    Sign up
                 </Text>
                 <Text style={styles.descriptionText} >
-                    Hi again nomad! 🤗
+                    Welcome to nomad family 👋
                 </Text>
-                <Formik initialValues={{ email: '', password: '' }}
-                    onSubmit={values => { console.log(values); navigation.navigate('Home') }}
+                <Formik initialValues={{ name: '', surname: '', email: '', password: '' }}
+                    onSubmit={values => handleRegister(values)}
                     validationSchema={validationSchema}
                 >
                     {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
                         <>
+                            <AppTextInput
+                                icon='account'
+                                placeholder='Name'
+                                autoCorrect={false}
+                                textContentType='name'
+                                onChangeText={handleChange('name')}
+                                onBlur={() => setFieldTouched('name')}
+                            />
+                            <ErrorMessage error={errors.name} visible={touched.name} />
+                            <AppTextInput
+                                icon='account-badge-horizontal'
+                                placeholder='Surname'
+                                autoCorrect={false}
+                                textContentType='name'
+                                onChangeText={handleChange('surname')}
+                                onBlur={() => setFieldTouched('surname')}
+                            />
+                            <ErrorMessage error={errors.surname} visible={touched.surname} />
                             <AppTextInput
                                 icon='email'
                                 placeholder='Email'
@@ -66,7 +105,7 @@ export default ({ handleRegister, navigation }) => {
                                 onBlur={() => setFieldTouched('password')}
                             />
                             <ErrorMessage error={errors.password} visible={touched.password} />
-                            <AppButton title='Sign in!' bgColor='secondary' txtColor='light' onPress={handleSubmit} />
+                            <AppButton title='Sign up!' bgColor='secondary' txtColor='light' onPress={handleSubmit} />
                         </>
                     )}
                 </Formik>
@@ -98,6 +137,7 @@ const styles = StyleSheet.create({
         marginTop: 100,
         alignItems: 'center',
         padding: 30,
+        paddingBottom: 30,
         borderRadius: 25,
         backgroundColor: colors.light
     },

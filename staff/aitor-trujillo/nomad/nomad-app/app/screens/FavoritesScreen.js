@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Text, SafeAreaView, StyleSheet, FlatList, Platform, ScrollView } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, FlatList, ScrollView } from 'react-native'
 import * as Permissions from 'expo-permissions'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
@@ -7,21 +7,19 @@ import { NavigationContainer } from '@react-navigation/native'
 import NomadHeader from '../components/NomadHeader'
 import Card from '../components/Card'
 import WorkspacePage from './WorkspacePage'
-import AppTextInput from '../components/AppTextInput'
-import NomadTitle from '../components/NomadTitle'
 
 
 
 
-export default function Home({ navigation }) {
-    const getPermissions = async () => {
-        const result = await Permissions.askAsync(Permissions.LOCATION)
-        if (!result.granted) alert('I need to access location to perform well :(')
-    }
+export default function Favorites({ navigation }) {
+    // const getPermissions = async () => {
+    //     const result = await Permissions.askAsync(Permissions.LOCATION)
+    //     if (!result.granted) alert('I need to access location to perform well :(')
+    // }
 
-    useEffect(() => {
-        getPermissions()
-    }, [])
+    // useEffect(() => {
+    //     getPermissions()
+    // }, [])
 
 
     const workspaces = [
@@ -45,28 +43,14 @@ export default function Home({ navigation }) {
     return (
 
         <SafeAreaView style={styles.container}>
-            <View style={styles.containerHeader}>
-                <NomadHeader
-                    title="Hi, Aitor!"
-                    subTitle="Find your next workspace 🌴"
-                    imageSource={require('../assets/aitor.jpg')}
-                    onPress={() => navigation.navigate('Profile')}
-                />
-            </View>
+            <View style={styles.containerHeader}></View>
+            <NomadHeader
+                title="Favorites"
+                subTitle="Come back to loved workspaces ❤️"
+                imageSource={require('../assets/aitor.jpg')}
+                onPress={() => navigation.navigate('Profile')}
+            />
             <ScrollView>
-                <View style={styles.containerSearch}>
-                    <AppTextInput
-                        icon='magnify'
-                        placeholder='Search workspace'
-                        maxLength={100}
-                        autoCorrect={false}
-                        keyboardType={Platform.OS === 'ios' ? 'web-search' : 'default'}
-                        textContentType='organizationName'
-                        onChangeText={(value) => console.log(value)}
-                    // onBlur={() => setFieldTouched('workspaceName')}
-                    />
-                    <NomadTitle title='Popular near you' />
-                </View>
                 <View style={styles.containerCards}>
                     <FlatList data={workspaces} keyExtractor={(workspace) => workspace.title}
                         renderItem={({ item }) =>
@@ -89,18 +73,14 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
         height: '100%',
-        flex: 1,
-        overflow: 'hidden'
+        flex: 1
     },
     containerHeader: {
-        paddingTop: 40,
-    },
-    containerSearch: {
-        paddingHorizontal: 20
+        padding: 20,
     },
     containerCards: {
         height: '100%',
         padding: 20,
-        shadowOpacity: 0.6
+        shadowOpacity: 0.5
     },
 })
