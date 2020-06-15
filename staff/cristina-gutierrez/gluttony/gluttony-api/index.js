@@ -1,27 +1,53 @@
 require("dotenv").config()
+const { handleError, jwtPromised } = require("./helpers")
+const { jwtVerifierExtractor } = require("./middlewares")
 const express = require("express")
 const app = express()
 const router = express.Router()
-const { argv: [, , port = process.env.PORT || 8080] } = process
+const { env: { port = PORT || 8080, SECRET } } = process
 app.use(express.json())
 const { 
   authenticateUser,
   registerUser,
   retrieveUser 
 } = require("gluttony-server-logic")
+const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
 
 router.get("/users/auth", (req, res) => {
-  authenticateUser()
+  const { query: { email, password } } = req
 
-  return res.json({ status: 200 })
+  try {
+    authenticateUser(email, password)
+      .then(userId => jwtPromised.sign({ sub: userId }, SECRET, { expiresIn: "1d" }))
+      .then(token => res.send({ token }))
+      .catch(error => handleError(error, res))
+  } catch (error) {
+    handleError(error, res)
+  }
 });
 
 router.post("/users", (req, res) => {
-  res.send(registerUser())
+  const { body: { name, surname, email, password } } = req
+  
+  try {
+    registerUser(name, surname, email, password)
+      .then(() => res.status(201).send())
+      .catch(error => handleError(error, res))
+  } catch (error) {
+    handleError(error, res)
+  }  
 });
 
-router.get("/users", (req, res) => {
-  res.send(retrieveUser())
+router.get("/users", verifyExtractJwt, (req, res) => {
+  try {
+    const { payload: { sub: userId } } = req
+
+    retrieveUser(userId)
+      .then(user => res.send(user))
+      .catch(error => handleError(error, res))
+  } catch (error) {
+    handleError(error, res)
+  }
 });
 
 app.use("/api", router)
