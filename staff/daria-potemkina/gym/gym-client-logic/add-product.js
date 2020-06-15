@@ -12,8 +12,8 @@ module.exports = function (token, productId, priceId, side, quantity) {
     Number.validate.integer(quantity)
     
     return call('POST', `${this.API_URL}/users/product`,
-    `{ "productId": "${productId}", "priceId": "${priceId}", "side": "${side}", "quantity": "${quantity}" }`,
-        { 'Authorization': `Bearer ${token}` })
+    `{ "productId": "${productId}", "priceId": "${priceId}", "side": "${side}", "quantity": ${quantity} }`,
+        { 'Content-Type': 'application/json','Authorization': `Bearer ${token}` })
         .then(({ status, body }) => {
             if (status === 200) return
             else {

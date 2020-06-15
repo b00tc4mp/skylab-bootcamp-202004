@@ -12,8 +12,11 @@ module.exports = function (ticker) {
             if (status === 200) {
                 const results = JSON.parse(body)
 
-                results.sort((a, b) => {
-                    return (a.date - b.date)
+                return results.sort((a, b) => {
+                    a.date = a.date.split('T')[0];
+                    b.date = b.date.split('T')[0];
+                
+                    return (new Date(a.date) - new Date(b.date))
                 })
             } else {
                 const { error } = JSON.parse(body)
