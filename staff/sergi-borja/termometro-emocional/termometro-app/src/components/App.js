@@ -14,6 +14,7 @@ import SetMood from './SetMood';
 import Settings from './Settings';
 import EditPlan from './EditPlan';
 import EditMyInfo from './EditMyInfo';
+import MainStats from './MainStats';
 
 function App({history}) {
 
@@ -77,6 +78,7 @@ function App({history}) {
           <Route path="/settings" render={()=> token? <Settings token={token} /> : <Redirect to='/'/>} />
           <Route path="/edit-plan" render={()=> token? <EditPlan token={token} /> : <Redirect to='/'/>} />
           <Route path="/edit-my-info" render={()=> token? <EditMyInfo token={token} /> : <Redirect to='/'/>} />
+          <Route path="/main-stats" render={()=> token? <MainStats token={token} /> : <Redirect to='/'/>} />
           {token && <Footer/>}
         </Container>
       </header>

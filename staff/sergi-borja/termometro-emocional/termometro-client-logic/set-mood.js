@@ -1,5 +1,6 @@
 const { utils: { call } } = require('termometro-commons')
 const context = require('./context')
+const moment = require('moment')
 
 module.exports = function (token, moodScore) {
 
@@ -8,7 +9,7 @@ module.exports = function (token, moodScore) {
         { 'Authorization': `Bearer ${token}` })
         .then(bodyAndState => {
             let body = JSON.parse(bodyAndState.body)
-            let dateNow = new Date
+            const dateNow = moment().format("MMMM Do YYYY, HH")
 
             let { mood } = body
 

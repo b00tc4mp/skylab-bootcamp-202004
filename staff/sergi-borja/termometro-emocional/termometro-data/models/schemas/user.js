@@ -53,7 +53,7 @@ module.exports = new Schema({
 
     mood: [{
       date: {
-          
+          type: String
       },
       score: {
           type: Number
