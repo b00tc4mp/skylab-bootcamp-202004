@@ -1,18 +1,19 @@
 const { expect } = require('chai')
 const call = require('./call')
-require('../polyfills/xhr')
+global.fetch = require('node-fetch')
+
+
 
 describe('call', () => {
-    it('should suceed on correct parameters in Google', done => {
-        call('GET', 'https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com', undefined, undefined, (error, status, body) => {
-            if (error) return done(new Error(error))
+    it('should suceed on correct parameters in Google', async () => {
+        const res = await call('GET', 'https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com', undefined, undefined)
+        const { status, body } = res
+        // if (error) return done(new Error(error))
+        debugger
+        //console.log(status, body)
+        expect(status).to.equal(200)
+        expect(body).to.exist
 
-            //console.log(status, body)
-            expect(status).to.equal(200)
-            expect(body).to.exist
-
-            done()
-        })
     })
 
     it('should succeed on correct parameteres in User API', done => {

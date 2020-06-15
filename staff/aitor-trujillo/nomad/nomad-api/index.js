@@ -4,13 +4,25 @@ const { PORT, MONGODB_URL, SECRET } = process.env
 
 const path = require('path')
 const bodyParser = require('body-parser')
-const { registerUser, authenticateUser, createWorkspace, retrieveWorkspaceById } = require('nomad-server-logic')
+const {
+    registerUser,
+    authenticateUser,
+    retrieveUser,
+    createWorkspace,
+    retrieveWorkspaceById,
+    retrieveByLocation,
+    searchWorkspaces,
+    addToFavorites,
+    searchFavorites,
+    retrieveFavorites
+} = require('nomad-server-logic')
 const { mongoose } = require('nomad-data')
 const { jwtVerifierExtractor, cors } = require('./middlewares')
 const { handleError } = require('./helpers')
-const { utils: { jwtPromised } } = require('nomad-commons')
+const jwtPromised = require('./helpers/jwt-promised')
 
 const express = require('express')
+
 
 
 mongoose.connect(MONGODB_URL)
@@ -52,6 +64,18 @@ mongoose.connect(MONGODB_URL)
             }
         })
 
+        app.get('/users', verifyExtractJwt, (req, res) => {
+            try {
+                const { payload: { sub: userId } } = req
+
+                retrieveUser(userId)
+                    .then(result => res.send(result))
+                    .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
         // WORKSPACES =======================
 
         app.post('/workspaces', parseBody, verifyExtractJwt, (req, res) => {
@@ -79,11 +103,62 @@ mongoose.connect(MONGODB_URL)
             }
         })
 
-        app.get('/workspaces/search?q=:query', verifyExtractJwt, (req, res) => {
+        app.get('/workspaces/location/:lat/:lon', verifyExtractJwt, (req, res) => {
+            try {
+                const { payload: { sub: userId }, params: { lat, lon } } = req
+
+                retrieveByLocation(userId, [Number(lat), Number(lon)])
+                    .then(result => res.send(result))
+                    .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        app.get('/workspaces/search/:query', verifyExtractJwt, (req, res) => {
             try {
                 const { payload: { sub: userId }, params: { query } } = req
 
                 searchWorkspaces(query)
+                    .then(result => res.send(result))
+                    .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        // FAVORITES ========================
+
+        app.post('/favorites/add/:workspaceId', verifyExtractJwt, (req, res) => {
+            try {
+                const { payload: { sub: userId }, params: { workspaceId } } = req
+
+                addToFavorites(userId, workspaceId)
+                    .then(() => res.status(201).send())
+                    .catch(error => handleError(error, res))
+
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        app.get('/favorites/', verifyExtractJwt, (req, res) => {
+            try {
+                const { payload: { sub: userId } } = req
+
+                retrieveFavorites(userId)
+                    .then(result => res.send(result))
+                    .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        app.get('/favorites/search/:query', verifyExtractJwt, (req, res) => {
+            try {
+                const { payload: { sub: userId }, params: { query } } = req
+
+                searchFavorites(userId, query)
                     .then(result => res.send(result))
                     .catch(error => handleError(error, res))
             } catch (error) {

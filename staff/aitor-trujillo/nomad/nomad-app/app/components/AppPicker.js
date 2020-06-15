@@ -5,7 +5,7 @@ import PickerItem from './PickerItem'
 
 import colors from '../styles/colors'
 
-export default function AppPicker({ icon, placeholder, items, selectedItem }) {
+export default function AppPicker({ icon, placeholder, items, onSelectItem, selectedItem }) {
     const [modalView, setModalView] = useState(false)
 
     return (
@@ -13,7 +13,11 @@ export default function AppPicker({ icon, placeholder, items, selectedItem }) {
             <TouchableWithoutFeedback onPress={() => setModalView(true)}>
                 <View style={styles.container}>
                     <MaterialCommunityIcons name={icon} size={24} color={colors.secondary} />
-                    <Text style={styles.text}>{selectedItem ? selectedItem.label : placeholder}</Text>
+                    {selectedItem ? (
+                        <Text style={styles.text}>{selectedItem.label}</Text>
+                    ) : (
+                            <Text style={styles.placeholder} >{placeholder}</Text>
+                        )}
                     <MaterialCommunityIcons name='chevron-down' size={24} color={colors.secondary} />
                 </View>
             </TouchableWithoutFeedback>
@@ -28,7 +32,7 @@ export default function AppPicker({ icon, placeholder, items, selectedItem }) {
                                 label={item.label}
                                 onPress={() => {
                                     setModalView(false);
-                                    setSelectedItem(item)
+                                    onSelectItem(item)
                                 }} />}
                     />
                 </SafeAreaView>
@@ -51,7 +55,14 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Avenir',
         flex: 1
-    }
+    },
+    placeholder: {
+        marginLeft: 10,
+        fontSize: 18,
+        fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Avenir',
+        color: 'lightgrey',
+        flex: 1,
+    },
 })
 
 // const categories = [

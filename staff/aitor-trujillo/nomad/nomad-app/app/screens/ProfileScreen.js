@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, SafeAreaView, StyleSheet, Image } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, Image, TouchableHighlight } from 'react-native'
 import { Entypo, AntDesign } from '@expo/vector-icons'
 
 import colors from '../styles/colors'
@@ -7,7 +7,7 @@ import colors from '../styles/colors'
 
 const image = require('../assets/aitor.jpg')
 
-export default function Profile() {
+export default function Profile({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.profile}>
@@ -17,14 +17,17 @@ export default function Profile() {
                     <Text style={styles.review}>Junior Full-Stack Developer</Text>
                 </View>
             </View>
-            <View style={styles.optionsContainer}>
-                <View style={styles.iconCircle}>
-                    <Entypo name="location-pin" size={30} color={colors.primary} />
+            <TouchableHighlight onPress={() => navigation.navigate('WorkspaceEditor')} >
+
+                <View style={styles.optionsContainer}>
+                    <View style={styles.iconCircle}>
+                        <Entypo name="location-pin" size={30} color={colors.primary} />
+                    </View>
+                    <View >
+                        <Text style={styles.name}>Manage Workspaces</Text>
+                    </View>
                 </View>
-                <View >
-                    <Text style={styles.name}>Manage Workspaces</Text>
-                </View>
-            </View>
+            </TouchableHighlight>
             <View style={styles.optionsContainer}>
                 <View style={styles.iconCircle}>
                     < AntDesign name="star" size={30} color={colors.primary} />

@@ -1,24 +1,25 @@
 import React from 'react'
-import { Text, View, StyleSheet, Image } from 'react-native'
+import { Text, View, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 
 import colors from '../styles/colors'
 
-export default ({ title, address, image, price, rating }) => {
+export default ({ title, address, image, price, rating, onPress }) => {
     return (
+        <TouchableWithoutFeedback onPress={onPress}>
+            <View style={styles.cardContainer}>
+                <Image source={image} style={styles.image} />
+                <View style={styles.txtContainer} >
+                    <View style={styles.ratingSeparator}>
+                        <Text style={styles.title}>{title}</Text>
+                        <Text style={styles.rating}>{rating}< AntDesign name="star" size={24} color="gold" /></Text>
+                    </View>
+                    <Text style={styles.address}>{address}</Text>
+                    <Text style={styles.price}>{price}</Text>
 
-        <View style={styles.cardContainer}>
-            <Image source={image} style={styles.image} />
-            <View style={styles.txtContainer} >
-                <View style={styles.ratingSeparator}>
-                    <Text style={styles.title}>{title}</Text>
-                    <Text style={styles.rating}>{rating}< AntDesign name="star" size={24} color="gold" /></Text>
                 </View>
-                <Text style={styles.address}>{address}</Text>
-                <Text style={styles.price}>{price}</Text>
-
             </View>
-        </View>
+        </TouchableWithoutFeedback>
     )
 }
 
@@ -29,8 +30,7 @@ const styles = StyleSheet.create({
         width: '100%',
         marginBottom: 20,
         overflow: 'hidden',
-        shadowColor: '#1c1c1c',
-        shadowRadius: 0.5
+
     },
     image: {
         width: '100%',

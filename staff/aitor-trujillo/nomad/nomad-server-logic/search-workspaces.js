@@ -10,7 +10,7 @@ module.exports = async (query) => {
         $or: [
             { 'address.city': { $regex: `.*${query}.*` } },
             { 'address.country': { $regex: `.*${query}.*` } },
-            { name: { $regex: `.*${query}.*` } }, { phone: { $regex: `.*${query}.*` } }
+            { name: { $regex: `.*${query}.*` } }
         ]
     }).lean();
     // const workspaces = await Workspace.find({ name: { $regex: `.*${query}.*` } }).lean();
