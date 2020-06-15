@@ -1,3 +1,12 @@
+/**
+ * it will return a recipe
+ * 
+ * @param {String}  RecipeId will find a recipe in the database
+ * 
+ * @throws {Unexistence Error} if the recipe doesn't exist
+ */
+
+
 require('cook-wise-commons/polyfills/string')
 const { errors: { UnexistenceError } } = require('cook-wise-commons')
 const { models: { Recipes} } = require('cook-wise-data')

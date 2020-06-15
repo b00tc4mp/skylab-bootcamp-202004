@@ -1,4 +1,15 @@
-
+/**
+ * 
+ * It will delete a recipe
+ * 
+ * @param {String} userId it will find the user by this string
+ * 
+ * @param {String} recipeId it will recipe by his id
+ * 
+ * @throws {Unexistence Error} if don't match a user
+ * 
+ * @throws {Unexistence Error} if don't match recipe
+ */
 
 require('cook-wise-commons/polyfills/string')
 require('cook-wise-commons/polyfills/number')

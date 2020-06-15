@@ -2,15 +2,13 @@
  * 
  * it must put favorite recipe on an array or sliced if already exist
  * 
- * @param UserId it find the  user by this param
+ * @param {String} UserId it find the  user by this param
  * 
- * @param recipeId it will find that recipe in the favoriteArray
+ * @param {String} recipeId it will find that recipe in the favoriteArray
  * 
- * @throws an UnexistanceError if the user doesn't exist
+ * @throws {Unexistance Error} if the user doesn't exist
  * 
  */
-
-
 require('cook-wise-commons/polyfills/string')
 const { errors: { UnexistenceError } } = require('cook-wise-commons')
 const { models: { User,Recipes } } = require('cook-wise-data')

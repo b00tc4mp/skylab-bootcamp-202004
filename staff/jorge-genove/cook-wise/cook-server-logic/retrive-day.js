@@ -1,3 +1,15 @@
+/**
+ 
+it will show all day recipes 
+
+*@param {String} weekday that will mark the day that will search for
+ 
+ @param {String} userId  it will find a user in the database
+
+ @throws {UnexistenceError} if the user doesn't exist
+ * 
+ */
+
 require('cook-wise-commons/polyfills/string')
 const { errors: { UnexistenceError } } = require('cook-wise-commons')
 const { models: { Recipes, User } } = require('cook-wise-data')

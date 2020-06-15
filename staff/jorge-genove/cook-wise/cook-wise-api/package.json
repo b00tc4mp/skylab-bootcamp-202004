@@ -9,6 +9,7 @@
     "cook-server-logic": "file:../cook-server-logic",
     "cook-wise-commons": "file:../cook-wise-commons",
     "cook-wise-data": "file:../cook-wise-data",
+    "cook-wise-node-commons": "file:../cook-wise-node-commons",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1"
   },

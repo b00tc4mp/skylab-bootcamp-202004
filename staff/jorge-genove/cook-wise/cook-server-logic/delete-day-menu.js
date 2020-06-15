@@ -1,6 +1,16 @@
+/**
+ * 
+ * It will delete a full day menu
+ * 
+ * @param {String} weekday  that mark the day that the  function will delete
+ * 
+ * @param {String} userId that will search for the user
+ * 
+ * @throws {Unexistence Error} if the user doesn't exist
+ * 
+ */
 
-
-require('cook-wise-commons/polyfills/string')
+ require('cook-wise-commons/polyfills/string')
 require('cook-wise-commons/polyfills/number')
 const { errors: {UnexistenceError } } = require('cook-wise-commons')
 const { models: { User} } = require('cook-wise-data')
