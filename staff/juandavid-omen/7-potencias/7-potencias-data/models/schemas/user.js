@@ -34,7 +34,8 @@ module.exports = new Schema({
 
   role: {
     type: String,
-    required: true
+    required: true,
+    default: 'regular'
     // validate: [Role.validate, 'invalid role']
   },
 
