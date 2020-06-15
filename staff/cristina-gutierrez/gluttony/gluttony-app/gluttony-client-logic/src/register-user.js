@@ -12,16 +12,17 @@ module.exports = function (name, surname, email, password) {
     String.validate.lengthGreaterEqualThan(password, 8)
 
     axios.post(`${API_URL}/users`, {
-        name: "name",
-        surname: "surname",
-        email: "email",
-        password: "password"
-    })
-    .then(({ status, body }) => {
-        if (status === 201) return
+            name: "name",
+            surname: "surname",
+            email: "email",
+            password: "password"
+        })
+        .then(({ status, body }) => {
+            if (status === 201) return
 
-            const { error } = JSON.parse(body)
+                const { error } = JSON.parse(body)
 
-            throw new Error(error)
-    })
+                throw new Error(error)
+        })
+        .catch(console.log)
 }
