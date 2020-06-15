@@ -1,31 +1,22 @@
-function registerUser(name, surname, email, password, callback) {
-    if (typeof name !== 'string') throw new TypeError(name + ' is not a string')
-    if (!TEXT_REGEX.test(name)) throw new Error(name + ' is not alphabetic')
+require('misc-commons/polyfills/string')
 
-    if (typeof surname !== 'string') throw new TypeError(surname + ' is not a string')
-    if (!TEXT_REGEX.test(surname)) throw new Error(surname + ' is not alphabetic')
+const { utils: { Email, call }} = require('takemytask-commons')
 
-    if (typeof email !== 'string') throw new TypeError(email + ' is not a string')
-    if (!EMAIL_REGEX.test(email)) throw new Error(email + ' is not an e-mail')
+module.exports = (name, surname, email, password) =>{
+    String.validate.notVoid(name)
+    String.validate.notVoid(surname)
+    String.validate.notVoid(email)
+    Email.validate(email)
+    String.validate.notVoid(password)
 
-    if (typeof password !== 'string') throw new TypeError(password + ' is not a string')
-    if (password.length < 8) throw new Error('password does not have the min length')
-
-    if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
-
-    call('POST',
-        'https://skylabcoders.herokuapp.com/api/v2/users',
-        `{ "thElement": "true", "name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}" }`,
-        { 'Content-type': 'application/json' },
-        (error, status, body) => {
-            if (error) return callback(error)
-
-            if (status === 201)
-                callback()
-            else {
+       return call('POST', 'http://localhost:8080/users', 
+            `{"name":"${name}", "surname":"${surname}", "email":"${email}", "password":"${password}"}`,
+            {'Content-Type':'application/json'}) 
+            .then/( ({status, body}) => {
+                const {status, body}  = respons
+                if (status === 201) return 
+               
                 const { error } = JSON.parse(body)
-
-                callback(new Error(error))
-            }
-        })
+                throw new Error (error)
+            })
 }

@@ -11,5 +11,14 @@
   "license": "ISC",
   "dependencies": {
     "takemytask-commons": "file:../takemytask-commons"
+  },
+  "devDependencies": {
+    "bcryptjs": "^2.4.3",
+    "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
+    "mocha": "^8.0.1",
+    "nyc": "^15.1.0",
+    "takemytask-data": "file:../takemytask-data",
+    "xhr2": "^0.2.0"
   }
 }
