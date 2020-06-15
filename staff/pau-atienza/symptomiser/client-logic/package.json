@@ -1,7 +1,6 @@
 {
-  "name": "misc-client-logic",
+  "name": "client-logic",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "npx mocha *.spec.js",
@@ -21,6 +20,7 @@
     "xhr2": "^0.2.0"
   },
   "dependencies": {
-    "misc-commons": "file:../misc-commons"
-  }
+    "commons": "file:../commons"
+  },
+  "description": ""
 }
