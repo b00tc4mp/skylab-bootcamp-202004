@@ -3,21 +3,27 @@ import {
     StyleSheet,
     View,
     ImageBackground,
-    Image
+    Alert,
 } from "react-native";
+import { Formik } from 'formik'
+import * as Yup from 'yup'
+
 import AppButton from '../components/AppButton'
 import AppTextInput from '../components/AppTextInput'
+import Feedback from '../components/Feedback'
 import { registerUser } from 'escape-me-client-logic'
 
+const validationSchema = Yup.object().shape({
+    username: Yup.string().required().label('Username'),
+    email: Yup.string().required().email().label("Email"),
+    password: Yup.string().required().min(8).label('Password')
+})
+
 export default function Register({ onLogin }) {
-    const [name, setName] = useState()
-    const [surname, setSurname] = useState()
-    const [username, setUsername] = useState()
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
     const [error, setError] = useState()
 
-    function handleRegister() {
+    function handleRegister(values) {
+        const { name, surname, username, email, password } = values
         try {
             return registerUser(name, surname, username, email, password)
                 .then(() => onLogin())
@@ -30,21 +36,37 @@ export default function Register({ onLogin }) {
     return (
         <ImageBackground style={styles.container} source={require('../assets/puzzle.jpg')}>
             <View style={styles.buttonsContainer}>
-                <Image style={styles.logo} source={require('../assets/logo.svg')}></Image>
-                <AppTextInput placeholder="Name"
-                    onChangeText={text => setName(text)} />
-                <AppTextInput placeholder="Surname"
-                    onChangeText={text => setSurname(text)} />
-                <AppTextInput placeholder="Username" autoCapitalize="none"
-                    onChangeText={text => setUsername(text)} />
-                <AppTextInput placeholder="Email" icon="email" autoCapitalize="none"
-                    keyboardType="email-address" textContentType="emailAddress"
-                    onChangeText={text => setEmail(text)} />
-                <AppTextInput placeholder="Password"
-                    autoCapitalize="none"
-                    autoCorrect={false} icon="lock" secureTextEntry
-                    textContentType="password" onChangeText={text => setPassword(text)} />
-                <AppButton style={styles.register} title='Register' color='#4ecdc4' onPress={handleRegister} />
+                <Formik
+                    initialValues={{ name: '', surname: '', username: '', email: '', password: '' }}
+                    onSubmit={(values) => handleRegister(values)}
+                    validationSchema={validationSchema}>
+                    {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
+                        <>
+                            <AppTextInput placeholder="Name"
+                                onChangeText={handleChange('name')} />
+                            <AppTextInput placeholder="Surname"
+                                onChangeText={handleChange('surname')} />
+                            <AppTextInput placeholder="Username" autoCapitalize="none"
+                                onChangeText={handleChange('username')}
+                            />
+                            {touched.username && <Feedback error={errors.username} />}
+                            <AppTextInput placeholder="Email" icon="email" autoCapitalize="none"
+                                keyboardType="email-address" textContentType="emailAddress"
+                                onChangeText={handleChange('email')}
+                                onBlur={() => setFieldTouched('email')} />
+                            {touched.email && <Feedback error={errors.email} />}
+                            <AppTextInput placeholder="Password"
+                                autoCapitalize="none"
+                                autoCorrect={false} icon="lock" secureTextEntry
+                                textContentType="password"
+                                onChangeText={handleChange('password')}
+                                onBlur={() => setFieldTouched('password')} />
+                            {touched.password && <Feedback error={errors.password} />}
+                            <AppButton style={styles.register} title='Register'
+                                color='#4ecdc4' onPress={handleSubmit} />
+                        </>
+                    )}
+                </Formik>
                 <AppButton title="Login" onPress={onLogin}></AppButton>
             </View>
         </ImageBackground>

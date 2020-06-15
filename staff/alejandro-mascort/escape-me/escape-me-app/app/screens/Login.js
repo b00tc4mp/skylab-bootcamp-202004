@@ -3,18 +3,25 @@ import {
     StyleSheet,
     View,
     ImageBackground,
-    Image
+    Image,
+    Text
 } from "react-native";
+import { Formik } from 'formik'
+import * as Yup from 'yup'
+
 import AppButton from '../components/AppButton'
 import AppTextInput from '../components/AppTextInput'
+import Feedback from '../components/Feedback'
 import { authenticateUser } from 'escape-me-client-logic'
-// const { authenticateUser } = require('escape-me-client-logic')
+
+const validationSchema = Yup.object().shape({
+    email: Yup.string().required().email().label("Email"),
+    password: Yup.string().required().min(8).label('Password')
+})
 
 export default function Login({ onRegister, onHome, handleToken }) {
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
-
-    function handleLogin() {
+    function handleLogin(values) {
+        const { email, password } = values
         try {
             return authenticateUser(email, password)
                 .then(token => {
@@ -30,18 +37,33 @@ export default function Login({ onRegister, onHome, handleToken }) {
     return (
         <ImageBackground style={styles.container} source={require('../assets/puzzle.jpg')}>
             <Image style={styles.logo} source={require('../assets/logo.svg')}></Image>
-            <View style={styles.buttonsContainer}>
-                <AppTextInput placeholder="Email" icon="email" autoCapitalize="none"
-                    keyboardType="email-address" textContentType="emailAddress"
-                    onChangeText={text => setEmail(text)} />
-                <AppTextInput placeholder="Password"
-                    autoCapitalize="none"
-                    autoCorrect={false} icon="lock" secureTextEntry
-                    textContentType="password" onChangeText={text => setPassword(text)} />
-                <AppButton title="Login" onPress={handleLogin}></AppButton>
-                <AppButton style={styles.register} title='Register' color='#4ecdc4' onPress={onRegister} />
-            </View>
-        </ImageBackground>
+            <Formik initialValues={{ email: '', password: '' }}
+                onSubmit={(values) => handleLogin(values)}
+                validationSchema={validationSchema}>
+                {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
+                    <>
+                        <View style={styles.buttonsContainer}>
+                            <AppTextInput placeholder="Email" icon="email" autoCapitalize="none"
+                                keyboardType="email-address" textContentType="emailAddress"
+                                onChangeText={handleChange('email')}
+                                onBlur={() => setFieldTouched('email')} />
+                            {touched.email && <Feedback error={errors.email} />}
+                            <AppTextInput placeholder="Password"
+                                autoCapitalize="none"
+                                autoCorrect={false} icon="lock" secureTextEntry
+                                textContentType="password"
+                                onChangeText={handleChange('password')}
+                                onBlur={() => setFieldTouched('password')} />
+                            {touched.password && <Feedback error={errors.password} />}
+
+                            <AppButton title="Login" onPress={handleSubmit} />
+
+                            <AppButton style={styles.register} title='Register' color='#4ecdc4' onPress={onRegister} />
+                        </View>
+                    </>
+                )}
+            </Formik>
+        </ImageBackground >
     );
 }
 

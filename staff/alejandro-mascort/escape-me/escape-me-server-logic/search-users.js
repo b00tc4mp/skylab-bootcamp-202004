@@ -8,12 +8,14 @@ module.exports = (userId, query) => {
     String.validate.notVoid(userId)
     String.validate.notVoid(query)
 
+    query = query.toLowerCase()
+
     return (async () => {
         const _user = await User.findOne({ _id: ObjectId(userId) }, { __v: 0, password: 0 }).lean()
 
         if (!_user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
-        const user = await User.find({
+        let user = await User.find({
             $and: [
                 {
                     $or: [
@@ -24,8 +26,11 @@ module.exports = (userId, query) => {
                 },
                 { _id: { $ne: userId } }
             ]
-        }, { __v: 0, password: 0, _id: 0, pending: 0, participated: 0, favorites: 0, following: 0, email: 0 }).lean()
+        }, { __v: 0, password: 0, pending: 0, participated: 0, favorites: 0, following: 0, email: 0 }).lean()
 
+        user = user.map(({ _id, name, surname, username }) => ({ id: _id, name, surname, username }))
+
+        console.log(user)
         return user
     })()
 }

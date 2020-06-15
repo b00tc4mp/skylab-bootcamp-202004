@@ -7,10 +7,13 @@ import Login from './app/screens/Login'
 import Register from './app/screens/Register'
 import CardDetails from './app/screens/CardDetails'
 import Profile from './app/screens/Profile'
+import Search from './app/screens/Search'
+import AddUsers from './app/screens/AddUsers'
+import SearchFilter from './app/screens/SearchFilter'
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
+import { MaterialCommunityIcons, AntDesign, Entypo, Feather } from '@expo/vector-icons';
 
 export default function () {
   console.disableYellowBox = true
@@ -41,7 +44,7 @@ export default function () {
 
   return (
     <View style={styles.container}>
-      {view === 'landing' && <Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister} />}
+      {/* {view === 'landing' && <Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister} />}
       {view === 'login' && <Login onRegister={handleGoToRegister} onHome={handleGoToHome} handleToken={handleToken} />}
       {view === 'register' && <Register onLogin={handleGoToLogin} />}
       {token &&
@@ -53,7 +56,8 @@ export default function () {
         </View>}
       {token && <NavigationContainer>
         <NavTabs token={token} />
-      </NavigationContainer>}
+      </NavigationContainer>} */}
+      <SearchFilter />
     </View>
 
   );
@@ -105,23 +109,33 @@ function NavTabs({ token }) {
         }}
       />
       <Tab.Screen
-        name="CardDetails"
+        name="Search"
+        component={Search}
+        initialParams={{ 'token': token }}
+        options={{
+          tabBarLabel: 'Search',
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="search1" size={26} color={color} />),
+        }}
+      />
+      <Tab.Screen
+        name="Pending"
         component={CardDetails}
         options={{
-          tabBarLabel: 'CardDetails',
+          tabBarLabel: 'Pending',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="bell" color={color} size={26} />
+            <Entypo name="list" size={26} color={color} />
           ),
         }}
       />
       <Tab.Screen
-        name="Card"
-        component={CardDetails}
+        name="Follow"
+        component={AddUsers}
+        initialParams={{ 'token': token }}
         options={{
-          tabBarLabel: 'CardDetails',
+          tabBarLabel: 'Follow',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="bell" color={color} size={26} />
-          ),
+            <Feather name="user-plus" size={24} color={color} />),
         }}
       />
       <Tab.Screen

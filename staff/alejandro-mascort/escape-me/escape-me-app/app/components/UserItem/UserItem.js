@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Image, Text } from 'react-native'
-import { SimpleLineIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { toggleFollowUser } from 'escape-me-client-logic'
 
 const styles = require('./style')
@@ -19,9 +19,9 @@ function UserItem({ name, surname, email, image, main = false, following, userId
                 <Text style={main ? styles.name : styles.littleName}>{name} {surname}</Text>
             </View>
             {!main && (following ?
-                <SimpleLineIcons style={styles.follow} name="user-unfollow" size={24} color="black" onPress={() => handleFollowUser(userId)} />
+                <Feather style={styles.follow} name="user-x" size={24} color="black" onPress={() => handleFollowUser(userId)} />
                 :
-                <SimpleLineIcons style={styles.follow} name="user-following" size={24} color="black" onPress={() => handleFollowUser(userId)} />)
+                <Feather style={styles.follow} name="user-plus" size={24} color="black" onPress={() => handleFollowUser(userId)} />)
             }
         </View>
     )
