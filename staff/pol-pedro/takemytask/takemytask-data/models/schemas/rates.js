@@ -5,7 +5,6 @@ module.exports = new Schema({
     userId: {
         type: ObjectId,
         required: true,
-        // unique: true
     },
 
     stars: {

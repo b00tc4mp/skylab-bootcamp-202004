@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "debug": "node --inspect=7000 .",
     "test": "npx mocha *.spec.js",
     "test:debug": "npx mocha --inspect-brk *.spec.js"
   },

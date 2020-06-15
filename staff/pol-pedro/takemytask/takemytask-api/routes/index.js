@@ -1,7 +1,7 @@
 const { env: { SECRET } } = process
 
 const { Router } = require('express')
-const { registerUser, authenticate, retrieveUser, updateUser, registerWorker } = require('./handlers')
+const { registerUser, authenticateUser, retrieveUser, updateUser, registerWorker, addRates, addComments, creatChat, addMessage, retrieveChat } = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
 const { handleError } = require('../helpers')
@@ -15,11 +15,21 @@ api.post('/users', parseBody, registerUser)
 
 api.post('/worker', parseBody, registerWorker)
 
-api.post('/users/auth', parseBody, authenticate)
+api.post('/users/auth', parseBody, authenticateUser)
 
 api.get('/users/', verifyExtractJwt, retrieveUser)
 
-api.post('/users/update', verifyExtractJwt, parseBody, updateUser)
+api.post('/update', verifyExtractJwt, parseBody, updateUser)
+
+api.post('/rates', verifyExtractJwt, parseBody, addRates)
+
+api.post('/comments', verifyExtractJwt, parseBody, addComments)
+
+api.post('/chat/create', verifyExtractJwt, parseBody, creatChat)
+
+api.post('/chat/message', verifyExtractJwt, parseBody, addMessage)
+
+api.post('/chat', verifyExtractJwt, parseBody, retrieveChat)
 
 module.exports = {
     api

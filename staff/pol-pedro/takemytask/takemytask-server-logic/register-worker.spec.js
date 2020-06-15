@@ -2,34 +2,39 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 
-const registerUser = require('./register-user')
+const registerWorker = require('./register-worker')
 const { random } = Math
 const { expect } = require('chai')
 require('takemytask-commons/polyfills/json')
-const { mongoose, models: { User } } = require('takemytask-data')
+const { mongoose, models: { Worker } } = require('takemytask-data')
 const bcrypt = require('bcryptjs')
 
-describe('logic - register user', () => {
+describe('logic - register worker', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let name, surname, email, password, adress
+    let name, surname, email, password, adress, bankAcount, description, pricingHour, jobCategories, workingDistance
 
     beforeEach(async () => {
-        await User.deleteMany()
+        await Worker.deleteMany()
 
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `e-${random()}@mail.com`
         password = `password-${random()}`
         adress = `street-${random()}`
+        bankAcount = `bankAcount-${random()}`
+        description = `description-${random()}`
+        pricingHour = parseInt(random()*100)
+        jobCategories = `jobCategories-${random()}`
+        workingDistance = parseInt(random()*100)
     })
 
     it('should succeed on valid data', async () => {
-        const result = await registerUser(name, surname, email, password, adress)
+        const result = await registerWorker(name, surname, email, password, adress, bankAcount, description, pricingHour, jobCategories, workingDistance)
 
         expect(result).to.be.undefined
 
-        const users = await User.find()
+        const users = await Worker.find()
 
         expect(users.length).to.equal(1)
 
@@ -39,6 +44,11 @@ describe('logic - register user', () => {
         expect(user.surname).to.equal(surname)
         expect(user.email).to.equal(email)
         expect(user.adress).to.equal(adress)
+        expect(user.bankAcount).to.equal(bankAcount)
+        expect(user.description).to.equal(description)
+        expect(user.pricingHour).to.equal(pricingHour)
+        expect(user.jobCategories).to.equal(jobCategories)
+        expect(user.workingDistance).to.equal(workingDistance)
 
         const match = await bcrypt.compare(password, user.password)
 
@@ -48,7 +58,7 @@ describe('logic - register user', () => {
     it('should fail on invalid argument', async () => {
         try{
 
-            const result = await registerUser(undefined, surname, email, password, adress)
+            const result = await registerWorker(undefined, surname, email, password, adress)
             expect(result).to.exist
         }catch(error){
             expect(error).to.exist
@@ -59,11 +69,11 @@ describe('logic - register user', () => {
 
 
     describe('when user already exists', () => {
-        beforeEach(() => User.create({ name, surname, email, password, adress }))
+        beforeEach(() => Worker.create({ name, surname, email, password, adress, bankAcount, description, pricingHour, jobCategories, workingDistance }))
 
         it('should fail on trying to register an existing user', async () => {
             try {
-                await registerUser(name, surname, email, password, adress)
+                await registerWorker(name, surname, email, password, adress, bankAcount, description, pricingHour, jobCategories, workingDistance)
 
                 throw new Error('should not reach this point')
             } catch (error) {
@@ -75,7 +85,7 @@ describe('logic - register user', () => {
         })
     })
 
-    afterEach(() => User.deleteMany())
+    afterEach(() => Worker.deleteMany())
 
     after(mongoose.disconnect)
 })

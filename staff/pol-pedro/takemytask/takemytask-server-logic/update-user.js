@@ -1,7 +1,7 @@
 require('takemytask-commons/polyfills/string')
 require('takemytask-commons/polyfills/json')
 const { errors: { UnexistenceError } } = require('takemytask-commons')
-const { models: { User }, mongoose: {ObjectId} } = require('takemytask-data')
+const { models: { User, Worker }, mongoose: {ObjectId} } = require('takemytask-data')
 
 
 module.exports = (userId, body) => {
@@ -11,9 +11,13 @@ module.exports = (userId, body) => {
     let valParam = false
 
     return (async () => {
-        const user = await User.findOne({ _id: ObjectId(userId) }, {password: 0 })
+        let user
+        
+        user = await User.findOne({ _id: ObjectId(userId) }, {password: 0 })
 
-        if (!user) throw new UnexistenceError(`user with id ${userId} dont exists`)
+        if (!user) user = await Worker.findOne({ _id: ObjectId(userId) }, {password: 0 })
+
+        if (!user) throw new UnexistenceError(`user or worker with id ${userId} dont exists`)
 
         // await User.deleteOne({_id: ObjectId(userId)})
 

@@ -5,7 +5,7 @@ const { utils: { Email }, errors: { DuplicityError } } = require('takemytask-com
 const { models: { Worker } } = require('takemytask-data')
 const bcrypt = require('bcryptjs')
 
-module.exports = (name, surname, email, password, adress, bankAcount, description, pricingHour, jobCategories, workingDistance,) => {
+module.exports = (name, surname, email, password, adress, bankAcount, description, pricingHour, jobCategories, workingDistance) => {
     String.validate.notVoid(name)
     String.validate.notVoid(surname)
     String.validate.notVoid(email)
