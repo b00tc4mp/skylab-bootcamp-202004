@@ -17,6 +17,8 @@ module.exports = (userId, productId, priceId, side, quantity) => {
 
         if (!user) throw new UnexistenceError(`user with id ${userId} is not exist`)
 
+        if(!user.card) throw new UnexistenceError('user does not have a card added')
+
         const { card: { number, holder, expirationDate, cvv } } = user
 
         if (!number && !holder && !expirationDate && !cvv) throw new UnexistenceError('user does not have a card added')

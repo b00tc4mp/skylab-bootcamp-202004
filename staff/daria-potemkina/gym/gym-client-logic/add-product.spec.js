@@ -8,6 +8,7 @@ const { expect } = require('chai')
 const { mongo } = require('gym-data')
 const { ObjectId } = mongo
 require('gym-commons/polyfills/json')
+require('gym-commons/ponyfills/xhr')
 const { utils: { jwtPromised } } = require('gym-commons')
 
 describe('logic - add-product', () => {
@@ -23,8 +24,8 @@ describe('logic - add-product', () => {
 
     let user, product, price, userId, token, productId, priceId, side, _side, quantity
 
-    beforeEach(() =>
-        Promise.all([
+    beforeEach(() => {
+        return Promise.all([
             users.deleteMany(),
             products.deleteMany(),
             contracts.deleteMany(),
@@ -57,28 +58,30 @@ describe('logic - add-product', () => {
                         cvv: `${round(random() * 1000)}`
                     }
                 }
-                
+
                 return Promise.all([products.insertOne(product).then(_product => productId = _product.insertedId.toString())
                     .then(() => {
                         price = {
-                            product: productId,
+                            product: ObjectId(productId),
                             date: new Date(),
                             price: random().toFixed(2) * 1
                         }
+                        return prices.insertOne(price).then(_price => priceId = _price.insertedId.toString())
                     }),
-                prices.insertOne(price).then(_price => priceId = _price.insertedId.toString())
                 ])
             })
+    }
     )
 
     describe('when user already exists', () => {
-        beforeEach(() =>
-            users.insertOne(user)
+        beforeEach(() => {
+            return users.insertOne(user)
                 .then(_user => {
                     userId = _user.insertedId.toString()
                     return jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET)
+                        .then(_token => token = _token)
                 })
-                .then(_token => token = _token)
+        }
         )
 
         it('should create a contact with trade details', () => {
@@ -86,12 +89,12 @@ describe('logic - add-product', () => {
 
             return addProduct(token, productId, priceId, _side, quantity)
                 .then(() => contracts.find().toArray())
-                .then(contract => {
-
+                .then(([contract]) => {
+                    debugger
                     expect(contract.user.toString()).to.equal(userId)
                     expect(contract.product.toString()).to.equal(productId)
                     expect(contract.trades).to.be.an('array')
-                    expect(trades).to.have.lengthOf(1)
+                    expect(contract.trades).to.have.lengthOf(1)
 
                     const [trade] = contract.trades
 
@@ -100,6 +103,107 @@ describe('logic - add-product', () => {
                     expect(trade.type).to.equal(_side)
                     expect(trade.quantity).to.equal(quantity)
                 })
+        })
+
+        it('should fail when the user does not have a card added', () => {
+            return users.update({ _id: ObjectId(userId) }, { $unset: { card: 1 } })
+                .then(() => {
+                    return addProduct(token, productId, priceId, _side, quantity)
+                        .then(() => { throw new Error('should not reach this point') })
+                        .catch(error => {
+                            expect(error).to.exist
+
+                            expect(error).to.be.an.instanceof(Error)
+                            expect(error.message).to.equal('user does not have a card added')
+                        })
+                })
+
+        })
+
+        it('should fail when product does not exist', () => {
+            return products.deleteMany()
+                .then(() => {
+                    return addProduct(token, productId, priceId, _side, quantity)
+                        .then(() => { throw new Error('should not reach this point') })
+                        .catch(error => {
+                            expect(error).to.exist
+
+                            expect(error).to.be.an.instanceof(Error)
+                            expect(error.message).to.equal(`product with id ${productId} is not exist`)
+                        })
+                })
+        })
+
+        it('should return an type error when synchronous error exists', () => {
+            _side = side[round(random())]
+            const productId = ObjectId().toString()
+
+            _userId = undefined
+            expect(() => {
+                addProduct(_userId, productId, priceId, _side, quantity)
+            }).to.throw(TypeError, `${_userId} is not a string`)
+
+            _userId = 123
+            expect(() => {
+                addProduct(_userId, productId, priceId, _side, quantity)
+            }).to.throw(TypeError, `${_userId} is not a string`)
+
+            _userId = true
+            expect(() => {
+                addProduct(_userId, productId, priceId, _side, quantity)
+            }).to.throw(TypeError, `${_userId} is not a string`)
+
+            _productId = undefined
+            expect(() => {
+                addProduct(userId, _productId, priceId, _side, quantity)
+            }).to.throw(TypeError, `${_productId} is not a string`)
+
+            _productId = 123
+            expect(() => {
+                addProduct(userId, _productId, priceId, _side, quantity)
+            }).to.throw(TypeError, `${_productId} is not a string`)
+
+            _productId = true
+            expect(() => {
+                addProduct(userId, _productId, priceId, _side, quantity)
+            }).to.throw(TypeError, `${_productId} is not a string`)
+
+            _side = undefined
+            expect(() => {
+                addProduct(userId, productId, priceId, _side, quantity)
+            }).to.throw(TypeError, `${_side} is not a string`)
+
+            _side = 123
+            expect(() => {
+                addProduct(userId, productId, priceId, _side, quantity)
+            }).to.throw(TypeError, `${_side} is not a string`)
+
+            _side = true
+            expect(() => {
+                addProduct(userId, productId, priceId, _side, quantity)
+            }).to.throw(TypeError, `${_side} is not a string`)
+
+            _quantity = undefined
+            expect(() => {
+                addProduct(userId, productId, priceId, 'Buy', _quantity)
+            }).to.throw(TypeError, `${_quantity} is not a number`)
+
+            _quantity = true
+            expect(() => {
+                addProduct(userId, productId, priceId, 'Sell', _quantity)
+            }).to.throw(TypeError, `${_quantity} is not a number`)
+
+        })
+
+        it('should return an error when synchronous error exists', () => {
+            const productId = ObjectId().toString()
+            _side = side[round(random())]
+
+            _quantity = 33.33
+            expect(() => {
+                addProduct(userId, productId, priceId, _side, _quantity)
+            }).to.throw(Error, `${_quantity} is not an integer`)
+
         })
     })
 
@@ -116,10 +220,11 @@ describe('logic - add-product', () => {
                         expect(error).to.exist
 
                         expect(error).to.be.an.instanceof(Error)
-                        expect(error.message).to.equal(`user with id ${_userId} does not exist`)
+                        expect(error.message).to.equal(`user with id ${_userId} is not exist`)
                     })
             )
     })
+
 
     afterEach(() =>
         Promise.all([

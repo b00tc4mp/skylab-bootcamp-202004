@@ -3,7 +3,7 @@ const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
     const { payload: { sub: userId }, body: { productId, priceId, side, quantity } } = req
-
+    
     try {
         addProduct(userId, productId, priceId, side, quantity)
             .then(() => res.status(200).send())

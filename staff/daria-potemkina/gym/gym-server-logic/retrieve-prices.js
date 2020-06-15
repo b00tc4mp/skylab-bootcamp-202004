@@ -13,6 +13,7 @@ module.exports = (productId, num) => {
     }
 
     return (async () => {
+   
         let prices = await Price.find({ product: ObjectId(productId) }).sort({ date: -1 }).lean()
 
         if (!prices.length) throw new UnexistenceError('price not found')
