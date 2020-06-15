@@ -3,6 +3,7 @@ require('../polyfills/url')
 require('../polyfills/function')
 
 module.exports = function (method, url, body, headers, callback) {
+    
     Http.validateMethod(method)
     URL.validate(url)
 

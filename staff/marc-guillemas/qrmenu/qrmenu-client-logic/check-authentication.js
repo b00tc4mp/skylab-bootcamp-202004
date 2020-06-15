@@ -1,6 +1,6 @@
-require('misc-commons/polyfills/string')
-require('misc-commons/polyfills/function')
-const { utils: { call } } = require('misc-commons')
+require('qrmenu-commons/polyfills/string')
+// require('qrmenu-commons/polyfills/function')
+const { utils: { call } } = require('qrmenu-commons')
 const context = require('./context')
 
 module.exports = function (token) {

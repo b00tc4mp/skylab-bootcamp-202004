@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import Register from './RegisterEstablishment'
 import './App.css';
-import { Route, withRouter, Redirect } from 'react-router-dom'
-import checkAuthentication from 'qrmenu-client-logic';
+import { Route, /* BrowserRouter, */ withRouter, Redirect } from 'react-router-dom'
+import {checkAuthentication} from 'qrmenu-client-logic';
+import RegisterEstablishment from './RegisterEstablishment';
+import Login from './Login'
 
-function App() {
+function App({history}) {
   const [token, setToken] = useState()
 
   useEffect(() => {
@@ -25,17 +26,32 @@ function App() {
 
   const handleGoToLogin = () => history.push('/login')
   const handleRegister = () => history.push('/login')
+  const handleGoToRegister = () => history.push('/register')
+  const handleLogin = token => {
+    setToken(token)  
+    history.push('/')
+  }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <Container>
+    <section className="App">
+        {/* <Container> */}
           <Route path="/register" render={() => 
-            token? <Redirect to="/home"/> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>
+            token? <Redirect to="/home"/> : <RegisterEstablishment onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>
           } />
-        </Container>
-      </header>
-    </div>
+          <Route path="/login" render={() => 
+            token? <Redirect to="/home"/> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister}/>
+          } />
+
+          {/* <BrowserRouter> */}
+                {/* <Route path='/' exact component={RegisterEstablishment} /> */}
+                {/* <Route path='/login' component={Login} />
+                <Route path='/register' exact component={RegisterEstablishment} /> */}
+              
+                {/* <Route path='/challenge' component={Challenge} /> */}
+
+            {/* </BrowserRouter> */}
+        {/* </Container> */}
+    </section>
   );
 }
 
