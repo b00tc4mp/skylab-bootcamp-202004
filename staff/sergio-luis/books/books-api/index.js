@@ -87,6 +87,7 @@ try {
 
             app.get('/users/:query?', verifyExtractJwt,(req, res) => {
                 try {
+                    debugger
                     const { params: { query }, payload:{sub:userId} } = req
 
                     retrieveUser(query || userId)
