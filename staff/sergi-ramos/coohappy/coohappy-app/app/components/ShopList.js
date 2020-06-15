@@ -1,9 +1,9 @@
 import React from 'react';
 import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView } from 'react-native'
 import SvgUri from "expo-svg-uri"
-import { HeaderHome } from '.'
+import HeaderHome  from './HeaderHome'
 
-module.exports = ({ navigation }) => {
+const ShopList = function({ navigation }) {
 
     return (
 
@@ -16,6 +16,8 @@ module.exports = ({ navigation }) => {
         </View>
     )
 }
+
+export default ShopList
 
 const styles = StyleSheet.create({
     container: {

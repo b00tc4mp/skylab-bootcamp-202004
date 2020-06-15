@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ScrollView } from 'react-native'
 import SvgUri from "expo-svg-uri"
 
-module.exports = ({navigation}) => {
+const Landing = function({navigation}) {
     return (
   
       <SafeAreaView style={styles.container}>
@@ -29,6 +29,8 @@ module.exports = ({navigation}) => {
       </SafeAreaView>
     )
   }
+
+  export default Landing
 
   const styles = StyleSheet.create({
     container: {

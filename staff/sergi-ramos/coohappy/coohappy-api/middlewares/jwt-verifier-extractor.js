@@ -1,4 +1,4 @@
-const { utils: { jwtPromised } } = require('coohappy-commons')
+const { jwtPromised  } = require('../helpers/')
 
 module.exports = (secret, errorHandler) =>
     (req, res, next) => {

@@ -1,9 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView } from 'react-native'
 import SvgUri from "expo-svg-uri"
-import { ButtonForm } from '../components'
+import ButtonForm from '../components/ButtonForm'
+import { authenticateUser } from 'coohappy-client-logic'
 
-module.exports = ({ navigation }) => {
+const Login = function ({ navigation }) {
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [token, setToken] = useState()
+
+    const handleOnSubmitLogin = async () => {
+
+        try {
+
+            let resToken = await authenticateUser(email, password)
+            setToken(resToken)
+
+            navigation.navigate('Home')
+
+        } catch (error) {
+        }
+    }
+
 
     return (
 
@@ -18,9 +37,9 @@ module.exports = ({ navigation }) => {
 
                     <View style={styles.form}>
                         <Text style={styles.loginTitle}>Log in</Text>
-                        <TextInput style={styles.input} placeholder="email" placeholderTextColor="#81868e"/>
-                        <TextInput style={styles.input} placeholder="password" placeholderTextColor="#81868e"/>
-                        <ButtonForm text="LOG IN" bgColor="#009965" />
+                        <TextInput style={styles.input} onChangeText={value => setEmail(value)} placeholder="email" placeholderTextColor="#81868e" />
+                        <TextInput style={styles.input} onChangeText={value => setPassword(value)} secureTextEntry={true} placeholder="password" placeholderTextColor="#81868e" />
+                        <ButtonForm text="LOG IN" bgColor="#009965" buttonAction={handleOnSubmitLogin} />
                     </View>
 
                     <View>
@@ -41,6 +60,8 @@ module.exports = ({ navigation }) => {
     )
 }
 
+export default Login
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -51,7 +72,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         marginBottom: 28,
         fontWeight: "bold",
-        width:'100%'
+        width: '100%'
     },
     input: {
         backgroundColor: '#e4e4e4',
@@ -63,7 +84,7 @@ const styles = StyleSheet.create({
     form: {
         width: '90%'
     },
-   
+
     line: {
         marginBottom: 40
     },
@@ -73,7 +94,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#003725',
         marginTop: 45,
         marginBottom: 45
-       
+
     },
     closeItem: {
         alignSelf: 'flex-end',
@@ -81,7 +102,7 @@ const styles = StyleSheet.create({
         marginRight: 22
     },
     textAskMember: {
-        marginBottom:20,
+        marginBottom: 20,
         fontWeight: "bold",
         width: 120
     }

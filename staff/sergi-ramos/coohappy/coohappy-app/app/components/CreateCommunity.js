@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Text, TextInput } from 'react-native'
 import SvgUri from "expo-svg-uri"
-import { ButtonForm } from '../components'
+import ButtonForm from '../components/ButtonForm'
 
-module.exports = () => {
+const CreateCommunity = function() {
 
     return (
 
@@ -40,6 +40,8 @@ module.exports = () => {
         </>
     )
 }
+
+export default CreateCommunity
 
 const styles = StyleSheet.create({
     container: {

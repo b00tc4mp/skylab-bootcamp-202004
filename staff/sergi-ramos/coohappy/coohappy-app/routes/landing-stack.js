@@ -1,5 +1,7 @@
 import React from 'react';
-import { Landing, Login, Register } from "./app/components"
+import Landing from "./app/components/Landing"
+import Login from "./app/components/Login"
+import Register from "./app/components/Register"
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 

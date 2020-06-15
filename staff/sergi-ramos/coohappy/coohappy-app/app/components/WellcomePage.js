@@ -1,9 +1,9 @@
 import React from 'react';
 import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView } from 'react-native'
 import SvgUri from "expo-svg-uri"
-import { ButtonForm } from '../components'
+import ButtonForm from './ButtonForm'
 
-module.exports = ({ navigation }) => {
+const WellcomePage = function({ navigation }) {
 
     return (
 
@@ -30,6 +30,8 @@ module.exports = ({ navigation }) => {
 
     )
 }
+
+export default WellcomePage
 
 const styles = StyleSheet.create({
     container: {

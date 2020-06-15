@@ -1,23 +1,21 @@
 require('dotenv').config()
 
-
 const { env: { PORT: PORT_ENV, MONGODB_URL } } = process
 const PORT = PORT_ENV || 8080
 
 const path = require('path')
 const { Logger, singletonFileLogger, singletonConsoleLogger } = require('./logger')
+const file = singletonFileLogger(path.join(__dirname, 'server.log'))
+
+file.level = Logger.WARN
+const console = singletonConsoleLogger()
+console.level = Logger.DEBUG
 
 
 const express = require('express')
 const { name, version } = require('./package.json')
 const { cors } = require('./middlewares')
 const { mongoose } = require('coohappy-data')
-
-
-const file = singletonFileLogger(path.join(__dirname, 'server.log'))
-const console = singletonConsoleLogger()
-file.level = Logger.WARN
-console.level = Logger.DEBUG
 
 const { api } = require('./routes')
 
@@ -40,7 +38,7 @@ try {
             res.status(404).send('Not Found :(')
         })
         
-        app.listen(PORT, () => console.info(`server ${name} ${version} running on port ${PORT}`))
+        app.listen(PORT, () =>  console.info(`server ${name} ${version} running on port ${PORT}`))
 
         let interrupted = false
         
@@ -50,11 +48,11 @@ try {
                 
                 console.debug('stopping server')
                 
-                console.debug('disconnecting database')             
+                console.debug('disconnecting database')            
                 
                 mongoose.disconnect()
-                .then(() => console.info('disconnected database'))
-                .catch(error => file.error('could not disconnect from mongo', error))
+                .then(() =>console.info('disconnected database'))
+                .catch(error =>  file.error('could not disconnect from mongo', error))
                 .finally(() => {
                     console.info(`server ${name} ${version} stopped`)
                     
@@ -75,5 +73,5 @@ try {
         file.error('could not connect to mongo', error)
     })
 } catch (error) {
-    file.error(error)
+   file.error(error)
 }

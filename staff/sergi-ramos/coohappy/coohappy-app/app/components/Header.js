@@ -4,7 +4,7 @@ import { StyleSheet, Text } from 'react-native'
 
 
 
-module.exports = ({ text, onPress, bgColor }) => {
+const Header = function({ text, onPress, bgColor }) {
 
     return (
         <View style={styles.header}>
@@ -13,6 +13,8 @@ module.exports = ({ text, onPress, bgColor }) => {
 
     )
 }
+
+export default Header
 
 const styles = StyleSheet.create({
     buttonForm: {

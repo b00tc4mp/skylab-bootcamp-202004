@@ -1,7 +1,8 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import SvgUri from 'expo-svg-uri'
-module.exports = () => {
+
+const HeaderHome = function() {
 
     return (
 
@@ -13,9 +14,11 @@ module.exports = () => {
     )
 }
 
+export default HeaderHome
+
 const styles = StyleSheet.create({
     header: {
-        flex: 0.20,
+        height: 135,
         flexDirection: "row",
         alignItems:'flex-end',
         justifyContent:'space-around',

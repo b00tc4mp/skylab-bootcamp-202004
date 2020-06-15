@@ -1,37 +1,22 @@
 const Http = require('./http')
 require('../polyfills/url')
-require('../polyfills/function')
 
-module.exports = function (method, url, body, headers, callback) {
+
+module.exports = (method, url, body, headers) => {
     Http.validateMethod(method)
     URL.validate(url)
 
-    if (arguments.length > 4)
-        Function.validate(callback)
+    return (async()=>{
+        try{
+            
+            const resp = await fetch(url,{method,headers,body})
+            const _body = await resp.text()
+    
+            return await {status: resp.status,body:_body}
+        }catch(error){
 
-    const promise = new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest()
-
-        xhr.open(method, url)
-
-        if (headers)
-            for (const key in headers)
-                xhr.setRequestHeader(key, headers[key])
-
-        xhr.onload = function () {
-            resolve({ status: this.status, body: this.responseText })
+            throw new Error('network error')
         }
-
-        xhr.onerror = function () {
-            reject(new Error('network error'))
-        }
-
-        xhr.send(body ? body : undefined)
-    })
-
-    if (arguments.length < 5) return promise
-
-    promise
-        .then(({ status, body }) => callback(null, status, body))
-        .catch(callback)
+     
+    })()
 }

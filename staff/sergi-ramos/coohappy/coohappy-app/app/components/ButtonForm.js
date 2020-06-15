@@ -4,7 +4,7 @@ import { TouchableOpacity, StyleSheet, Text } from 'react-native'
 
 
 
-module.exports = ({text, buttonAction, bgColor}) => {
+const ButtonForm = function({text, buttonAction, bgColor})  {
 
     return (
 
@@ -13,6 +13,8 @@ module.exports = ({text, buttonAction, bgColor}) => {
         </TouchableOpacity>
     )
 }
+
+export default ButtonForm
 
 const styles = StyleSheet.create({
     buttonForm: {
