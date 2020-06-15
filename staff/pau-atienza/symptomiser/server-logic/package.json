@@ -21,6 +21,7 @@
     "commons": "file:../commons",
     "data": "file:../data",
     "moca": "^0.4.3",
+    "node-fetch": "^2.6.0",
     "npx": "^10.2.2"
   },
   "description": ""

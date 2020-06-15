@@ -1,3 +1,4 @@
 module.exports = {
-    retrieveTermsById: require('./retrieve-terms-by-id')
+    retrieveTermsById: require('./retrieve-terms-by-id'),
+    retrieveTermsByQuery: require('./retrieve-terms-by-query')
 }

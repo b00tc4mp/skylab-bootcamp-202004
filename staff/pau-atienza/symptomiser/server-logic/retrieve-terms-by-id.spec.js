@@ -4,7 +4,7 @@ const { expect } = require('chai')
 const { mongoose, models: { Term } } = require('data')
 const { errors: { UnexistenceError, VoidError } } = require('commons')
 
-const retrieveTerms = require('./retrieve-terms-by-id')
+const retrieveTermsById = require('./retrieve-terms-by-id')
 
 describe('logic - retrieve-terms-by-HPO_id', () => {
     let HPO_id = "HP:0000010"
@@ -22,7 +22,7 @@ describe('logic - retrieve-terms-by-HPO_id', () => {
     describe('when the term exists', () => {
 
         it('should succeed on correct HPO_id', () =>
-            retrieveTerms(HPO_id)
+            retrieveTermsById(HPO_id)
                 .then(result => {
                     expect(result.term).to.exist
 
@@ -51,7 +51,7 @@ describe('logic - retrieve-terms-by-HPO_id', () => {
     it('should fail when term does not exist', () => {
         const newHPO_id = "HP:1000010"
 
-        return retrieveTerms(newHPO_id)
+        return retrieveTermsById(newHPO_id)
             .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
                 expect(error).to.exist
@@ -63,14 +63,14 @@ describe('logic - retrieve-terms-by-HPO_id', () => {
 
     it('should fail when input does not fit the format', () => {
         try{
-            retrieveTerms("")
+            retrieveTermsById("")
         }catch(error){
             expect(error).to.be.an.instanceof(VoidError)
             expect(error.message).to.equal(`string is empty or blank`)
         }
 
         try{
-            retrieveTerms([])
+            retrieveTermsById([])
         }catch(error){
             expect(error).to.be.an.instanceof(TypeError)
             expect(error.message).to.equal(` is not a string`)
