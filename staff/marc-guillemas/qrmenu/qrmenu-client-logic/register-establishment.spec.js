@@ -14,7 +14,7 @@ require('qrmenu-commons/ponyfills/xhr')
 
 context.API_URL = API_URL
 
-describe.only('logic - register establishment', () => {
+describe('logic - register establishment', () => {
     let establishments
     before(() => mongo.connect(MONGODB_URL)
         .then(connection => establishments = connection.db().collection('establishments'))
