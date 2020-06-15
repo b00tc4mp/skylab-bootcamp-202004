@@ -1,47 +1,46 @@
-import React, { Component } from 'react'
-import { Route, withRouther, Redirect } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Route, withRouter, Redirect } from 'react-router-dom'
 import { retrieveUser, retrieveFutures, retrieveOptions } from 'gym-client-logic'
 import Futures from './Futures'
 import Options from './Options'
 import './NavBar.sass'
 import './Home.sass'
 
-export default class extends Component {
-    constructor() {
-        super()
+function Home ({handleGoToDetails, handleShowUnderlyingPrices, onLogout, token}) {
+    const [options, setOptions] = useState();
+    const [futures, setFutures] = useState();
+    const [name, setName] = useState();
+    const [error, setError] = useState();
 
-        this.state = {
-            name: undefined,
-            error: undefined,
-            futures: undefined,
-            options: undefined
-        }
-    }
 
-    componentDidMount() {
+    useEffect(() => {
         try {
-            retrieveUser(this.props.token)
-                .then(user => this.setState({ name: user.name }))
-        } catch (error) {
-            this.setState({ error: error.message })
+            retrieveUser(token)
+                .then(({name}) => setName(name))
+        } catch ({message}) {
+            setError(message)
         }
-
+        
+    }, [])
+    useEffect(() => {
         try {
             retrieveFutures()
-                .then(futures => this.setState({ futures }))
-        } catch (error) {
-            this.setState({ error: error.message })
-        }
+                .then(futures => setFutures(futures))
+            } catch ({message}) {
+                setError(message)
+            }
 
+    }, [])
+    useEffect(() => {
         try {
             retrieveOptions()
-                .then(options => this.setState({ options }))
-        } catch (error) {
-            this.setState({ error: error.message })
-        }
-    }
+                .then(options => setOptions(options))
+            } catch ({message}) {
+                setError(message)
+            }
 
-    render() {
+    }, [])
+
         return <section className="home">
             <nav className="nav-bar">
                 <input alt="button" type="image" src="/logo-mini.png" className="nav-bar__button"></input>
@@ -51,16 +50,18 @@ export default class extends Component {
                     <li><a href="/">Notifications</a></li>
                     <li><a href="/">Account</a></li>
                     <li><a href="/">Settings</a></li>
-                    <li><a href="/" onClick={this.props.onLogout}>Logout</a> </li>
+                    <li><a href="/" onClick={onLogout}>Logout</a> </li>
                 </ul>
                 <button className="nav-bar__button">|||</button>
             </nav>
 
-            <h1>Welcome, {this.state.name}!</h1>
+            <h1>Welcome, {name}!</h1>
             <h1>Futures</h1>
-            {this.state.futures && <Futures futures={this.state.futures} />}
+            {futures && <Futures futures={futures} handleGoToDetails = {handleGoToDetails} handleShowUnderlyingPrices={handleShowUnderlyingPrices}/>}
             <h1>Options</h1>
-            {this.state.options && <Options options={this.state.options} />}
+            {options && <Options options={options} />}
         </section>
-    }
+    
 }
+
+export default Home

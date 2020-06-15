@@ -1,10 +1,11 @@
 require('gym-commons/polyfills/string')
 const { utils: { call } } = require('gym-commons')
 const context = require('./context')
+const moment = require('moment')
 
 module.exports = function (ticker) {
     String.validate.notVoid(ticker)
-    
+    debugger
     return call('GET', `${this.API_URL}/underlyings/${ticker}`,
         undefined,
         undefined)
@@ -13,8 +14,8 @@ module.exports = function (ticker) {
                 const results = JSON.parse(body)
 
                 return results.sort((a, b) => {
-                    a.date = a.date.split('T')[0];
-                    b.date = b.date.split('T')[0];
+                    a.date = moment(a.date.split('T')[0]).format('DD-MMMM-YY');
+                    b.date = moment(b.date.split('T')[0]).format('DD-MMMM-YY');
                 
                     return (new Date(a.date) - new Date(b.date))
                 })

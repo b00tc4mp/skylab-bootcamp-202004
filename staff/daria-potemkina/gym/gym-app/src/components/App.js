@@ -5,14 +5,17 @@ import Register from './Register'
 import Login from './Login'
 import Home from './Home'
 import Landing from './Landing'
-import { isUserAuthenticated } from 'gym-client-logic'
+import ProductDetails from './ProductDetails'
+import { isUserAuthenticated, retrieveFuturePrices, retrieveUnderlyingPrice } from 'gym-client-logic'
 
 function App({ history }) {
   const [token, setToken] = useState()
   const [error, setError] = useState()
+  const [prices, setPrices] = useState()
+  const [underlying, setUnderlying] = useState()
 
   useEffect(() => {
-    if (sessionStorage.token){
+    if (sessionStorage.token) {
       try {
         isUserAuthenticated(sessionStorage.token)
           .then(isAuthenticated => {
@@ -24,7 +27,7 @@ function App({ history }) {
       } catch (error) {
         setError(error)
       }
-    }else history.push('/')
+    } else history.push('/')
   }, [history])
 
   const handleGoToRegister = () => history.push('/register')
@@ -46,18 +49,34 @@ function App({ history }) {
 
     history.push('/')
   }
+
+  const handleGoToDetails = (_id, ticker) => {
+    try {
+      retrieveFuturePrices(_id)
+        .then(prices => setPrices(prices))
+        .then(() => retrieveUnderlyingPrice(ticker))
+        .then(underlying => setUnderlying(underlying))
+        .then(() => history.push("/product-details"))
+    } catch (error) {
+      setError(error.message)
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-      <Route exact path="/" render={() => token ? <Redirect to="/home" /> : <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin}/>} />
-        <Route path="/register" render={() => 
-        token ? <Redirect to="/home" /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>} />
+        <Route exact path="/" render={() => token ? <Redirect to="/home" /> : <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />} />
+        <Route path="/register" render={() =>
+          token ? <Redirect to="/home" /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />} />
 
         <Route path="/login" render={() =>
-          token ? <Redirect to="/home"/> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />}/>
+          token ? <Redirect to="/home" /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />} />
 
         <Route path="/home" render={() =>
-          token ? <Home onLogout={handleLogout} token={token} /> : <Redirect to="/login" />}/>
+          token ? <Home onLogout={handleLogout} token={token} handleGoToDetails={handleGoToDetails} /> : <Redirect to="/login" />} />
+          
+
+        <Route path="/product-details" render={() => prices && <ProductDetails prices={prices} underlyings={underlying} />} />
       </header>
     </div>
   );
