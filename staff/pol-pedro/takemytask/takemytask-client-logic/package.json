@@ -1,0 +1,15 @@
+{
+  "name": "takemytask-client-logic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "authenticate-user.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "takemytask-commons": "file:../takemytask-commons"
+  }
+}

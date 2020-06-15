@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } } = process
 
 const authenticateUser = require('./authenticate-user')
 const { random } = Math
@@ -10,6 +10,9 @@ const { mongoose, models: { User } } = require('misc-data')
 const bcrypt = require('bcryptjs')
 require('misc-commons/ponyfills/xhr')
 require('misc-commons/ponyfills/atob')
+const context = require('./context')
+
+context.API_URL = API_URL
 
 describe('logic - authenticate user', () => {
     before(() => mongoose.connect(MONGODB_URL))

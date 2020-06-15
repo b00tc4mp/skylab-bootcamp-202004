@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npx mocha *.spec.js",
-    "test:debug": "npx mocha debug *.spec.js"
+    "test:debug": "npx mocha debug *.spec.js",
+    "test:coverage": "npx nyc --reporter=text --reporter=lcov npm test"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "dotenv": "^8.2.0",
     "misc-data": "file:../misc-data",
     "mocha": "^7.2.0",
+    "nyc": "^15.1.0",
     "xhr2": "^0.2.0"
   },
   "dependencies": {
