@@ -11,7 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "commons": "file:../commons",
     "http": "0.0.1-security",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "server-logic": "file:../server-logic"
   }
 }
