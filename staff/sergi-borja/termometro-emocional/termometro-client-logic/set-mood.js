@@ -9,7 +9,8 @@ module.exports = function (token, moodScore) {
         { 'Authorization': `Bearer ${token}` })
         .then(bodyAndState => {
             let body = JSON.parse(bodyAndState.body)
-            const dateNow = moment().format("MMMM Do YYYY, HH")
+            const dateNow = moment().format("LLLL")
+            // const dateNow = moment().format("MMMM Do YYYY, HH")
 
             let { mood } = body
 
