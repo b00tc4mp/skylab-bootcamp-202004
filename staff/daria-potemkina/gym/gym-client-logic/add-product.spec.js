@@ -34,7 +34,6 @@ describe('logic - add-product', () => {
             .then(() => {
                 product = {
                     productType: 'future',
-                    productType: 'future',
                     ticker: `ticker-${random()}`,
                     exchange: `exchange-${random()}`,
                     sector: `sector-${random()}`,

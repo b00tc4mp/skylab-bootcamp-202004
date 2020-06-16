@@ -1,6 +1,7 @@
 require('gym-commons/polyfills/string')
 const { utils: { call } } = require('gym-commons')
 const context = require('./context')
+const moment = require('moment')
 
 module.exports = function (token) {
     String.validate.notVoid(token)
@@ -10,7 +11,11 @@ module.exports = function (token) {
         { 'Authorization': `Bearer ${token}` })
         .then(({ status, body }) => {
             if (status === 200) {
-                return JSON.parse(body)
+                let card =  JSON.parse(body)
+
+                card.expirationDate = moment(card.expirationDate).format('MM-YY')
+
+                return card
 
             } else {
                 const { error } = JSON.parse(body)
