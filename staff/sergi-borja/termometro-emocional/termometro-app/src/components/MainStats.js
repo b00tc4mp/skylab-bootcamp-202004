@@ -80,13 +80,22 @@ function MainStats({ token }) {
     }, [])
 
 
+    const handleGoToFilterDays = () => {
+        console.log('days')
+        
+    }
 
     return (
         <section className='mainStatsContainer'>
-            <button onClick={adminChart}>MY STATS</button>
             <ul className='familyContainer__ul'>
-                {memberList && memberList.map((member) => <li className='familyContainer__li'>{member.name} {member && <button onClick={() => handleSeeMemberStats(member)}>SEE STATS</button>}</li>)}
+                <li className='familyContainer__li'>Mis stats<button onClick={adminChart}>VIEW STATS</button></li>
+                {memberList && memberList.map((member) => <li className='familyContainer__li'>{member.name} {member && <button onClick={() => handleSeeMemberStats(member)}>VIEW STATS</button>}</li>)}
             </ul>
+            <select className='registerContainer__emailInput' onChange={handleGoToFilterDays()} required>
+                <option value='fiveDays'>5 días</option>
+                <option value='fiveTeenDays'>15 días</option>
+                <option value='OneDay'>1 día</option>
+            </select>
             <div>
                 <Line data={chartData} />
             </div>
