@@ -2,9 +2,7 @@ require('plates-commons/polyfills/string')
 const {models: { User }} = require('plates-data')
 const {utils: {Email}, errors: { UnexistenceError, CredentialsError}} = require('plates-commons')
 const bcrypt = require('bcryptjs')
-/**
- * @function 
- */
+
 
 module.exports = (email, password)=>{
     String.validate.notVoid(email)

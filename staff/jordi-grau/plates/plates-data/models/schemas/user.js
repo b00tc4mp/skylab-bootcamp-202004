@@ -1,12 +1,13 @@
-const { Schema } = require('mongoose')
+const { Schema, SchemaTypes: {ObjectId} } = require('mongoose')
 const Restaurant = require('./restaurant')
+const {Email} = require('plates-commons/utils')
 
 
 module.exports = new Schema({
 
     name:{
-        type: String,
-        required: true
+        type: String
+        
     },
     
     surname:{
@@ -20,11 +21,16 @@ module.exports = new Schema({
         validate: [Email.validate, 'invalid email']
     },
 
+    password:{
+        type: String,
+        required: true
+    },
+
     following: {
         type: ObjectId, 
         ref: 'Plate'
     },
 
-    restaurant: Restaurant
+    restaurant: {type: ObjectId, ref: 'Restaurant'}
     
 })
