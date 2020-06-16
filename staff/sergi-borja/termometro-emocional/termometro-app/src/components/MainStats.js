@@ -3,6 +3,7 @@ import { HorizontalBar } from 'react-chartjs-2'
 import createMemberList from 'termometro-client-logic/create-member-list'
 import isAuthenticated from 'termometro-client-logic/is-authenticated'
 import './MainStats.sass'
+import Calendar from 'react-calendar'
 const moment = require('moment')
 
 
@@ -13,7 +14,7 @@ function MainStats({ token }) {
     const [days, setDays] = useState(5)
     const [rolChart, setRolChart] = useState()
     const [memberSelected, setMemberSelected] = useState({})
-    
+
     const chartOptions = {
         options: {
             scales: {
@@ -65,7 +66,7 @@ function MainStats({ token }) {
                         ],
                         borderWidth: 4
                     }]
-                })  
+                })
             })
     }
 
@@ -119,18 +120,25 @@ function MainStats({ token }) {
 
     return (
         <section className='mainStatsContainer'>
-            <select onChange={(event) => handleChangeChart(event)} className='registerContainer__emailInput'>
-                <option value='my_stats' className='familyContainer__li'>Mis stats</option>
-                {memberList && memberList.map(({ id, name }) => <option value={id} className='familyContainer__li'>{name}</option>)}
-            </select>
-            <div className='mainStatsContainer__chartContainer'>
-                <HorizontalBar data={chartData} options={chartOptions.options} />
+            <div className='mainStatsContainer__selectContainer'>
+                <select className='mainStatsContainer__selectContainer--select' onChange={(event) => handleChangeChart(event)}>
+                    <option value='my_stats' className='mainStatsContainer__selectContainer--adminOption'>Mis stats</option>
+                    {memberList && memberList.map(({ id, name }) => <option value={id} className='mainStatsContainer__selectContainer--memberOption'>{name}</option>)}
+                </select>
             </div>
             <div className='mainStatsContainer__buttonDaysContainer'>
-                <button className='mainStatsContainer__buttonDaysContainer--yesterday' onClick={() => daysSetter(1)}>Yesterday</button>
                 <button className='mainStatsContainer__buttonDaysContainer--fiveDays' onClick={() => daysSetter(5)}>5 DAYS</button>
                 <button className='mainStatsContainer__buttonDaysContainer--fiveTeenDays' onClick={() => daysSetter(15)}>15 DAYS</button>
+                <button className='mainStatsContainer__buttonDaysContainer--yesterday' onClick={() => daysSetter(1)}>Yesterday</button>
             </div>
+            <div className='mainStatsContainer__chartContainer'>
+                <HorizontalBar data={chartData} options={chartOptions.options} height={500} />
+            </div>
+
+            <div className='mainStatsContainer__chartContainer'>
+                <Calendar />
+            </div>
+
         </section>
     );
 
