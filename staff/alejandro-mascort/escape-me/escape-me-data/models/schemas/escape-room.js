@@ -48,15 +48,9 @@ module.exports = new Schema({
         required: true
     },
 
-    city: {
-        type: String,
-        required: true
-    },
+    city: String,
 
-    province: {
-        type: String,
-        required: true
-    },
+    province: String,
 
     reviews: [punctuation],
 
