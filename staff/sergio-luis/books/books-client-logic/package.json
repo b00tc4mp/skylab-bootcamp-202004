@@ -21,6 +21,8 @@
     "xhr2": "^0.2.0"
   },
   "dependencies": {
-    "books-commons": "file:../books-commons"
+    "@babel/runtime": "^7.10.2",
+    "books-commons": "file:../books-commons",
+    "books-node-commons": "file:../books-node-commons"
   }
 }

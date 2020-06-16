@@ -32,7 +32,7 @@ module.exports = function (email, password) {
             `{"email": "${email}", "password": "${password}"}`,
             { 'Content-type': 'application/json' }
         )
-
+debugger
         const {status,body} = resp
 
         if(status===200){

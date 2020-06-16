@@ -9,12 +9,13 @@ require('books-commons/polyfills/json')
 
 const { mongoose, models: { User } } = require('books-data')
 const bcrypt = require('bcryptjs')
-const { errors: { VoidError } , utils:{jwtPromised}} = require('books-commons')
+const {jwtPromised} = require('books-node-commons')
+const { errors: { VoidError }} = require('books-commons')
 global.fetch = require('node-fetch')
 const context = require('./context')
 context.API_URL = API_URL
 
-describe.only("client-logic-update-coordinates", () => {
+describe("client-logic-update-coordinates", () => {
     let name, surname, email, password, encryptedPassword, userId,token;
     let latitude,longitude,gpsCoordinates;
 

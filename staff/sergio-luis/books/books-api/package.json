@@ -15,6 +15,7 @@
   "dependencies": {
     "books-commons": "file:../books-commons",
     "books-data": "file:../books-data",
+    "books-node-commons": "file:../books-node-commons",
     "books-server-logic": "file:../books-server-logic",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

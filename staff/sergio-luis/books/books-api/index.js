@@ -42,7 +42,7 @@ const {
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
-const { utils: { jwtPromised } } = require('books-commons')
+const { jwtPromised } = require('books-node-commons')
 const { jwtVerifierExtractor, cors } = require('./middleware')
 const { mongoose } = require('books-data')
 
