@@ -20,7 +20,10 @@
     "xhr2": "^0.2.0"
   },
   "dependencies": {
-    "commons": "file:../commons"
+    "commons": "file:../commons",
+    "data": "file:../data",
+    "moca": "^0.4.3",
+    "node-fetch": "^2.6.0"
   },
   "description": ""
 }
