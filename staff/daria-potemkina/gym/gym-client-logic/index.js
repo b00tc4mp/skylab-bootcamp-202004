@@ -7,6 +7,7 @@ module.exports = {
     retrieveFutures: require('./retrieve-futures'),
     retrieveOptions: require('./retrieve-options'),
     retrieveUserBalance: require('./retrieve-user-balance'),
+    retrieveUserCard: require('./retrieve-user-card'),
     retrieveFuturePrices: require('./retrieve-future-prices'),
     retrieveUnderlyingPrice: require('./retrieve-underlying-price'),
     serachProducts: require('./search-products'),

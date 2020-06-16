@@ -5,7 +5,7 @@ const moment = require('moment')
 
 module.exports = function (ticker) {
     String.validate.notVoid(ticker)
-    debugger
+
     return call('GET', `${this.API_URL}/underlyings/${ticker}`,
         undefined,
         undefined)

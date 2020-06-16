@@ -12,7 +12,7 @@ module.exports = function (type, sector, ticker, market) {
         String.validate.notVoid(ticker)
     if (market !== undefined)
         String.validate.notVoid(market)
-
+    debugger
     return call('GET', `${this.API_URL}/products?${type && `type=${type}`}&${sector && `sector=${sector}`}&${ticker && `ticker=${ticker}`}&${market && `market=${market}`}`,
         undefined,
         undefined)
