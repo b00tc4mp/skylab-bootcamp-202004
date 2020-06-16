@@ -1,4 +1,4 @@
-const { API_URL } = require("../config")
+const { API_URL } = require("../../config")
 require("gluttony-commons/polyfills/string")
 const axios = require("axios")
 

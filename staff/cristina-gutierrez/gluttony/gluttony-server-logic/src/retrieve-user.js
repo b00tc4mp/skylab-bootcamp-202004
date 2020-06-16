@@ -1,28 +1,16 @@
 require("gluttony-commons/polyfills/string")
-const { mongoose: { ObjectId }, models: { Users } } = require("gluttony-data")
+const { models: { Users } } = require("gluttony-data")
 
-module.exports = function (token) {
-    String.validate.notVoid(token)
-}
-
-
-require('misc-commons/polyfills/string')
-const { mongoose: { ObjectId }, models: { User } } = require('misc-data')
-
-module.exports = userId => {
+module.exports = (userId) => {
     String.validate.notVoid(userId)
 
-    return User.findOne({ _id: ObjectId(userId) }, { __v: 0, cart: 0, orders: 0, password: 0 }).lean()
+    return Users.findById(userId, "name surname").lean()
         .then(user => {
             if (!user) throw new Error(`user with id ${userId} does not exist`)
 
-            user.id = user._id.toString()
+            user.id = user._id
 
             delete user._id
-            // delete user.password
-            // delete user.cart
-            // delete user.orders
-            // delete user.__v
 
             return user
         })

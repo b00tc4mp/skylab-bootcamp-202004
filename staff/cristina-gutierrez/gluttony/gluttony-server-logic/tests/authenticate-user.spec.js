@@ -1,21 +1,20 @@
-require('dotenv').config()
+require("dotenv").config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 
-const authenticateUser = require('./authenticate-user')
+const authenticateUser = require("../src/authenticate-user")
 const { random } = Math
-const { expect } = require('chai')
-require('misc-commons/polyfills/json')
-const { mongoose, models: { User } } = require('misc-data')
-const bcrypt = require('bcryptjs')
+require("gluttony-commons/polyfills/json")
+const { mongoose, models: { Users } } = require("gluttony-data")
+const bcrypt = require("bcryptjs")
 
-describe('logic - authenticate user', () => {
+describe("logic - authenticate user", () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let name, surname, email, password, userId, hash
 
     beforeEach(() =>
-        User.deleteMany()
+        Users.deleteMany()
             .then(() => {
                 name = `name-${random()}`
                 surname = `surname-${random()}`
@@ -27,39 +26,39 @@ describe('logic - authenticate user', () => {
             .then(_hash => hash = _hash)
     )
 
-    describe('when user already exists', () => {
+    describe("when user already exists", () => {
         beforeEach(() =>
-            User.create({ name, surname, email, password: hash })
+            Users.create({ name, surname, email, password: hash })
                 .then(user => userId = user.id)
         )
 
-        it('should succeed on correct credentials', () =>
+        it("should succeed on correct credentials", () =>
             authenticateUser(email, password)
-                .then(_userId => expect(_userId).to.equal(userId))
+                .then(_userId => expect(_userId).toBe(userId))
         )
 
-        it('should fail on wrong password', () => {
-            password += 'wrong-'
+        it("should fail on wrong password", () => {
+            password += "wrong-"
 
             return authenticateUser(email, password)
-                .then(() => { throw new Error('should not reach this point') })
+                .then(() => { throw new Error("should not reach this point") })
                 .catch(error => {
-                    expect(error).to.be.an.instanceof(Error)
-                    expect(error.message).to.equal(`wrong password`)
+                    expect(error).toBeInstanceOf(Error)
+                    expect(error.message).toBe("wrong password")
                 })
         })
     })
 
-    it('should fail when user does not exist', () =>
+    it("should fail when user does not exist", () =>
         authenticateUser(email, password)
-            .then(() => { throw new Error('should not reach this point') })
+            .then(() => { throw new Error("should not reach this point") })
             .catch(error => {
-                expect(error).to.be.an.instanceof(Error)
-                expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe(`user with e-mail ${email} does not exist`)
             })
     )
 
-    afterEach(() => User.deleteMany())
+    afterEach(() => Users.deleteMany())
 
     after(mongoose.disconnect)
 })
