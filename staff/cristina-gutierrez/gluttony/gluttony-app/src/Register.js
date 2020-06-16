@@ -5,7 +5,6 @@ import {
   Image,
   TouchableOpacity,
   View,
-  TouchableWithoutFeedback,
   TextInput
 } from "react-native";
 import { registerUser } from "../gluttony-client-logic"
@@ -17,45 +16,43 @@ const Register = props => {
     const [password, setPassword] = useState("");
 
     return (
-        <TouchableWithoutFeedback>
-            <View style={styles.modalView}>
-                <Image source={ require('../assets/images/logo-without-color-version.png')} style={styles.logo}/>
-                <TextInput
-                    placeholder="name"
-                    value={name}
-                    style={styles.input}
-                    onChangeText={(text) => setName(text)}
-                />
-                <TextInput
-                    placeholder="surname"
-                    value={surname}
-                    style={styles.input}
-                    onChangeText={(text) => setSurname(text)}
-                />
-                <TextInput
-                    placeholder="email"
-                    value={email}
-                    style={styles.input}
-                    autoCapitalize='none'
-                    onChangeText={(text) => setEmail(text)}
-                />
-                <TextInput
-                    secureTextEntry={true}
-                    placeholder="password"
-                    value={password}
-                    style={styles.input}
-                    autoCapitalize='none'
-                    onChangeText={(text) => setPassword(text)}
-                />
-                <TouchableOpacity style={styles.openButton} onPress={() => registerUser(name, surname, email, password)} >
-                    <Text style={styles.textStyle}>Registrarse</Text>
-                </TouchableOpacity>
-                <Text style={{ ...styles.modalText, marginBottom: 8 }}>o</Text>
-                <Text style={{ ...styles.textStyle, textDecorationLine: "underline" }} onPress={props.onGoToLogin}>
-                    ¿Ya tienes una cuenta? Inicia sesión
-                </Text>
-            </View>
-        </TouchableWithoutFeedback>
+        <View style={styles.modalView}>
+            <Image source={ require('../assets/images/logo-without-color-version.png')} style={styles.logo}/>
+            <TextInput
+                placeholder="name"
+                value={name}
+                style={styles.input}
+                onChangeText={(text) => setName(text)}
+            />
+            <TextInput
+                placeholder="surname"
+                value={surname}
+                style={styles.input}
+                onChangeText={(text) => setSurname(text)}
+            />
+            <TextInput
+                placeholder="email"
+                value={email}
+                style={styles.input}
+                autoCapitalize='none'
+                onChangeText={(text) => setEmail(text)}
+            />
+            <TextInput
+                secureTextEntry={true}
+                placeholder="password"
+                value={password}
+                style={styles.input}
+                autoCapitalize='none'
+                onChangeText={(text) => setPassword(text)}
+            />
+            <TouchableOpacity style={styles.openButton} onPress={() => registerUser(name, surname, email, password)} >
+                <Text style={styles.textStyle}>Registrarse</Text>
+            </TouchableOpacity>
+            <Text style={{ ...styles.modalText, marginBottom: 8 }}>o</Text>
+            <Text style={{ ...styles.textStyle, textDecorationLine: "underline" }} onPress={props.onGoToLogin}>
+                ¿Ya tienes una cuenta? Inicia sesión
+            </Text>
+        </View>
     )
 }
 
