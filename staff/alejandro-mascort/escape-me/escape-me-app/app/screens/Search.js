@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, ScrollView } from 'react-native'
+import { StyleSheet, View, Text, ScrollView, TouchableOpacity, SafeAreaView, Modal, Button } from 'react-native'
+import { Formik } from 'formik'
+
 import { useRoute } from '@react-navigation/native'
 import { AntDesign } from '@expo/vector-icons';
-
 import { SearchBar } from 'react-native-elements';
+
+import AppPicker from '../components/AppPicker'
+import AppTextInput from '../components/AppTextInput'
+
 import { searchEscapeRoom, retrieveUser } from 'escape-me-client-logic'
 
 import Card from '../components/Card'
@@ -12,11 +17,19 @@ export default function () {
     const route = useRoute()
     const token = route.params['token']
 
+    const [modalVisible, setModalVisible] = useState(false)
     const [query, setQuery] = useState('')
     const [userLists, setUserLists] = useState()
     const [searched, setSearched] = useState(false)
     const [escapeRooms, setEscapeRooms] = useState([])
-    const [filter, setFilter] = useState({})
+
+    const [difficulty, setDifficulty] = useState()
+    const [genre, setGenre] = useState()
+    const [ratio, setRatio] = useState()
+    const [lessThanPlayersMax, setLessThanPlayersMax] = useState()
+    const [lessThanPriceMax, setLessThanPriceMax] = useState()
+    const [moreThanPlayersMin, setMoreThanPlayersMin] = useState()
+    const [moreThanPriceMin, setMoreThanPriceMin] = useState()
 
     let escapeList
     useEffect(() => {
@@ -40,16 +53,106 @@ export default function () {
                     value={query}
                     platform="ios"
                 />
+
                 <AntDesign name="search1" size={26} color={'black'}
                     onPress={async () => {
+                        let filter = {}
+
+                        if (ratio) filter['moreThanRating'] = ratio.value
+                        if (difficulty) filter['difficulty'] = [difficulty.value]
+                        if (genre) filter['genre'] = [genre.value]
+                        if (moreThanPriceMin) filter['moreThanPriceMin'] = moreThanPriceMin
+                        if (lessThanPriceMax) filter['lessThanPriceMax'] = lessThanPriceMax
+                        if (moreThanPlayersMin) filter['moreThanPlayersMin'] = moreThanPlayersMin
+                        if (lessThanPlayersMax) filter['lessThanPlayersMax'] = lessThanPlayersMax
+                        console.log(filter)
                         escapeList = await searchEscapeRoom(query, filter)
                         setEscapeRooms(escapeList)
                         setSearched(true)
                     }} />
             </View>
             <View style={styles.buttonContainer}>
-                <View style={styles.button}>
-                    <Text style={styles.buttonText}>Add filters.</Text>
+                <Modal visible={modalVisible} animationType='slide'>
+                    <SafeAreaView>
+                        <Button title="Close" onPress={() => setModalVisible(false)} />
+                        <View style={styles.modalContainer} >
+                            <AppPicker icon="city" placeholder="Difficulty" items={[
+                                { label: "Easy", value: 1 },
+                                { label: "Medium", value: 2 },
+                                { label: "Hard", value: 3 }
+                            ]}
+                                selectedItem={difficulty} onSelectItem={item => setDifficulty(item)} />
+                            <AppPicker style={{ width: '60%', heightt: 30 }} icon="city" placeholder="Genre" items={[
+                                { label: "Terror", value: 'terror' },
+                                { label: "Adventures", value: 'aventuras' },
+                                { label: "Historical", value: 'historico' }
+                            ]}
+                                selectedItem={genre} onSelectItem={item => setGenre(item)} />
+                            <AppPicker style={{ width: '60%', heightt: 30 }} icon="city" placeholder="Ratio" items={[
+                                { label: "0 points or above", value: 0 },
+                                { label: "1 point or above", value: 1 },
+                                { label: "2 points or above", value: 2 },
+                                { label: "3 points or above", value: 3 },
+                                { label: "4 points or above", value: 4 },
+                                { label: "4.5 points or above", value: 4.5 }
+
+                            ]}
+                                selectedItem={ratio} onSelectItem={item => setRatio(item)} />
+
+
+                            <View style={styles.text} >
+                                <View style={styles.input}>
+                                    <AppTextInput placeholder="Price Max."
+                                        autoCapitalize="none"
+                                        keyboardType='numeric'
+                                        value={lessThanPriceMax ? lessThanPriceMax.toString() : ''}
+                                        onChangeText={text => setLessThanPriceMax(Number(text.replace(',', '.')))}
+                                    />
+                                </View>
+                                <View style={styles.input}>
+                                    <AppTextInput placeholder="Price Min."
+                                        autoCapitalize="none"
+                                        keyboardType='numeric'
+                                        value={moreThanPriceMin ? moreThanPriceMin.toString() : ''}
+                                        onChangeText={text => setMoreThanPriceMin(Number(text.replace(',', '.')))}
+                                    />
+                                </View>
+                                <View style={styles.input}>
+                                    <AppTextInput placeholder="Players Min."
+                                        autoCapitalize="none"
+                                        keyboardType='numeric'
+                                        value={moreThanPlayersMin ? moreThanPlayersMin.toString() : ''}
+                                        onChangeText={text => setMoreThanPlayersMin(Number(text.replace(',', '.')))}
+                                    />
+                                </View>
+                                <View style={styles.input}>
+                                    <AppTextInput placeholder="Players Max."
+                                        autoCapitalize="none"
+                                        keyboardType='numeric'
+                                        value={lessThanPlayersMax ? lessThanPriceMax.toString() : ''}
+                                        onChangeText={text => setLessThanPlayersMax(Number(text.replace(',', '.')))}
+                                    />
+                                </View>
+
+                            </View>
+                        </View>
+                    </SafeAreaView>
+                </Modal>
+                <View style={styles.filterButtons} >
+                    <TouchableOpacity style={styles.button} onPress={() => setModalVisible(true)}>
+                        <Text style={styles.buttonText}>Add Filters.</Text>
+                    </TouchableOpacity>
+                    {<TouchableOpacity style={styles.button} onPress={() => {
+                        setDifficulty()
+                        setGenre()
+                        setRatio()
+                        setLessThanPlayersMax()
+                        setLessThanPriceMax()
+                        setMoreThanPlayersMin()
+                        setMoreThanPriceMin()
+                    }}>
+                        <Text style={styles.buttonText}>Clear Filters.</Text>
+                    </TouchableOpacity>}
                 </View>
             </View>
             <ScrollView >
@@ -71,7 +174,7 @@ export default function () {
                                 />)
                             })
                             :
-                            <Text>No escape rooms added yet.</Text>
+                            <Text>No results found.</Text>
                         :
                         <View />
                 }
@@ -92,7 +195,8 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         height: 20,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginHorizontal: 10
     },
     buttonContainer: {
         alignItems: 'center',
@@ -104,6 +208,10 @@ const styles = StyleSheet.create({
         height: 20,
         borderRadius: 50,
     },
+    filterButtons: {
+        flexDirection: 'row',
+        marginBottom: 5
+    },
     search: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -111,5 +219,18 @@ const styles = StyleSheet.create({
     },
     container: {
         padding: 20
+    },
+    modalContainer: {
+        padding: 30,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    text: {
+        flexDirection: 'row',
+        flexWrap: 'wrap'
+    },
+    input: {
+        width: '45%',
+        marginHorizontal: 5
     }
 })

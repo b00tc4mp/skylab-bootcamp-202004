@@ -44,7 +44,7 @@ export default function () {
 
   return (
     <View style={styles.container}>
-      {/* {view === 'landing' && <Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister} />}
+      {view === 'landing' && <Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister} />}
       {view === 'login' && <Login onRegister={handleGoToRegister} onHome={handleGoToHome} handleToken={handleToken} />}
       {view === 'register' && <Register onLogin={handleGoToLogin} />}
       {token &&
@@ -56,8 +56,8 @@ export default function () {
         </View>}
       {token && <NavigationContainer>
         <NavTabs token={token} />
-      </NavigationContainer>} */}
-      <SearchFilter />
+      </NavigationContainer>}
+      {/* <SearchFilter /> */}
     </View>
 
   );
