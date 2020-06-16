@@ -1,0 +1,28 @@
+/* .item {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 1vw;
+    width: 4vw;
+    height: 3vh;
+} */
+
+.placed {
+    position: absolute;
+}
+
+.double-bed {
+    background-color: blueviolet;
+    width: 3vw;
+    height: 5vh;
+    transform-origin: center center;
+}
+
+.single-bed {
+    /* background: url(../images/single-bed.png); */
+    background-color: brown;
+    width: 2vw;
+    height: 5vh;
+    transform-origin: center center;
+}
