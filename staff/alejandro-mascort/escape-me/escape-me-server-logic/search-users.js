@@ -30,7 +30,6 @@ module.exports = (userId, query) => {
 
         user = user.map(({ _id, name, surname, username }) => ({ id: _id, name, surname, username }))
 
-        console.log(user)
         return user
     })()
 }

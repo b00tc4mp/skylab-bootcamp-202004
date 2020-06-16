@@ -11,8 +11,8 @@ module.exports = userId => {
         delete user.id
         delete user._id
 
-        const { name, surname, username } = user
+        const { participated, pending, favorites } = user
 
-        return { name, surname, username }
+        return { participated, pending, favorites }
     })()
 }
