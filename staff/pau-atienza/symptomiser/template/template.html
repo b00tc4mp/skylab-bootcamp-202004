@@ -61,33 +61,32 @@
 
     <section class='symptom'>
         <header class='symptom__top'>
-            <a href = '' class = 'symptom__term'>Abnormal nervous system physiology</a>
+            <ul class ='symptom__bottom--terms'>
+                <li>
+                    <button href = '' class = 'symptom__term'>Abnormal nervous system physiology</button>
+                </li>
+            </ul>
             <img class ='symptom__top--arrow' src = './images/up-arrow.svg'>
             <p>Less specific term</p>
         </header>
         <main class='symptom__main'>
             <div class='symptom__main--identifiers'>
                 <div class='symptom__main--name'>Headache</div>
-                <div class='symptom__main--code'>HP:0002315</div>
             </div>
             <div class='symptom__main--description'> Cephalgia, or pain sensed in various parts of the head, not confined to the area of distribution of any nerve.</div>
             <div class='symptom__main--links'>
-                <a href = '' class = 'symptom__term'>That's it</a>
+                <button href = '' class = 'symptom__term'>That's it</button>
             </div>
             
         </main>
         <footer class='symptom__bottom'>
             <p>More specific terms: check if any of these fit with your symptom</p>
             <img class ='symptom__bottom--arrow' src = './images/up-arrow.svg'>
-            <div class ='symptom__bottom--terms'>
-                <a href = '' class = 'symptom__term'  title="Migraine is a chronic neurological disorder characterized by episodic attacks of headache and associated symptoms." >Migrane</a>
-                <a href = '' class = 'symptom__term' title = 'Repeated episodes of headache with rapid onset, reaching a peak within minutes and of short duration (less than one hour) with pain that is throbbing, pulsating, or bursting in quality.'>Recurrent paroxysmal headache</a>
-                <a href = '' class = 'symptom__term' title = 'A headache disorder that occurs exclusively at night, waking the affected individual from sleep.'>Hypnic headache</a>
-                <a href = '' class = 'symptom__term' title = 'Severe head pain with sudden onset, reaching its maximum intensity in less than one minute and lasting from one hour to ten days.'>Thunderclap headache</a>
-                <a href = '' class = 'symptom__term' title = 'A type of headache characterized by repeated attacks of unilateral pain lasting 15 to 180 minutes and associated with local autonomic signs.'>Cluster headache</a>
-                <a href = '' class = 'symptom__term' title = 'A distinct type of headache characterized by piercing, throbbing, or electric-shock-like chronic pain in the upper neck, back of the head, and behind the ears, usually on one side.'>Occipital neuralgia</a>
-                <a href = '' class = 'symptom__term' title = 'A type of headache that last hours with continuous pain of mild or moderate intensity, bilateral location, a pressing/tightening (non-pulsating) quality and that is not aggravated by routine physical activity such as walking or climbing stairs.'>Tension-type headache</a>
-            </div>
+            <ul class ='symptom__bottom--terms'>
+                <li>
+                    <button href = '' class = 'symptom__term'>Abnormal nervous system physiology</button>
+                </li>
+            </ul>
             
         </footer>
     </section>
@@ -122,34 +121,15 @@
     <section class='list'>
         <h1 class = 'list__title'>Submitted symptoms</h1>
         <ul class = 'list__list'>
-            <form class = 'list__symptom'>
-                <input  class = 'list__symptom--text' name = 'symptom' class = 'list__symptom--name' value = 'Name and code of the symptom'>
-                <div class = 'list__symptom--buttons'>
-                    <a href = "" class = 'list__symptom--item'>Copy</a>
-                    <a href = "" class = 'list__symptom--item'>Add details</a>
-                </div>
-            </form>
-            <form class = 'list__symptom'>
-                <input  class = 'list__symptom--text' name = 'symptom' class = 'list__symptom--name' value = 'Name and code of the symptom'>
-                <div class = 'list__symptom--buttons'>
-                    <a href = "" class = 'list__symptom--item'>Copy</a>
-                    <a href = "" class = 'list__symptom--item'>Add details</a>
-                </div>
-            </form>
-            <form class = 'list__symptom'>
-                <input  class = 'list__symptom--text' name = 'symptom' class = 'list__symptom--name' value = 'Name and code of the symptom'>
-                <div class = 'list__symptom--buttons'>
-                    <a href = "" class = 'list__symptom--item'>Copy</a>
-                    <a href = "" class = 'list__symptom--item'>Add details</a>
-                </div>
-            </form>
-            <form class = 'list__symptom'>
-                <input  class = 'list__symptom--text' name = 'symptom' class = 'list__symptom--name' value = 'Name and code of the symptom'>
-                <div class = 'list__symptom--buttons'>
-                    <a href = "" class = 'list__symptom--item'>Copy</a>
-                    <a href = "" class = 'list__symptom--item'>Add details</a>
-                </div>
-            </form>
+            <li>
+                <form class = 'list__symptom'>
+                    <input  class = 'list__symptom--text' name = 'symptom' class = 'list__symptom--name' value = 'Name and code of the symptom'>
+                    <div class = 'list__symptom--buttons'>
+                        <button class = 'list__symptom--item'>Copy</button>
+                        <button class = 'list__symptom--item'>Add details</button>
+                    </div>
+                </form>
+            </li>
         </ul>
     </section>
 

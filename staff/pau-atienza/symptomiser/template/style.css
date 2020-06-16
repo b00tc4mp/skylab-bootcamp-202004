@@ -85,6 +85,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border: none;
 }
 .symptom__term:hover {
   background-color: #5c728f;
@@ -94,6 +95,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 .symptom__top--arrow {
   width: 5rem;
@@ -119,6 +121,7 @@
   justify-content: center;
   align-items: center;
   font-weight: bold;
+  text-align: center;
 }
 .symptom__main--description {
   flex-grow: 1;
@@ -150,14 +153,21 @@
   display: flex;
   flex-flow: wrap row;
   justify-content: center;
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
+  padding-inline-start: 0px;
+}
+.symptom__bottom--terms li {
+  list-style-type: none;
 }
 .symptom__bottom .symptom__term {
   margin-left: 0.2rem;
-  margin-bottom: 0.1rem;
+  margin-bottom: 0.2rem;
 }
 .symptom__bottom--arrow {
   width: 5rem;
   transform: scaleY(-1);
+  z-index: -1;
 }
 .symptom__bottom p {
   margin-block-start: 0px;
@@ -194,14 +204,22 @@
   align-items: center;
   width: 100%;
   padding-inline-start: 0px;
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
+}
+.list__list li {
+  list-style-type: none;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 .list__symptom {
   width: 95%;
-  margin: 0.2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-block-end: 0em;
 }
 .list__symptom--buttons {
   display: flex;
@@ -223,6 +241,7 @@
   align-items: center;
   justify-content: center;
   margin-left: 0.2rem;
+  border: none;
 }
 
 @media only screen and (min-width: 768px) {
@@ -352,10 +371,10 @@
   flex-flow: wrap row;
   justify-content: center;
   align-items: center;
-  padding-inline-start: 0px;
   width: 80%;
   margin-block-start: 0.5em;
   margin-block-end: 0.5em;
+  padding-inline-start: 0px;
 }
 .results__list li {
   list-style-type: none;
@@ -402,12 +421,16 @@ body {
   font-family: "Lato", "Helvetica Neue", Arial, Helvetica, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+#root {
+  width: 100vw;
+}
+
 @media only screen and (min-width: 968px) {
   body {
-    width: 100%;
+    width: 100vw;
     display: flex;
     flex-direction: column;
-    justify-content: centr;
+    justify-content: center;
     align-items: center;
   }
 }

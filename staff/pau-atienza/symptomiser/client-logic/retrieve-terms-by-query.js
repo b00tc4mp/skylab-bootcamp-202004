@@ -1,6 +1,7 @@
 require('commons/polyfills/string')
 const { errors: { UnexistenceError }, utils: { call } } = require('commons')
 const context = require('./context')
+global.fetch = require('node-fetch')
 
 module.exports = function (query) {
     String.validate.notVoid(query)
@@ -8,10 +9,10 @@ module.exports = function (query) {
     return (async ()=>{
         const {status, body} = await call('GET', `${this.API_URL}/terms/query/${query}`, undefined, undefined)
         if (status !== 200) {
-            const {error} = JSON.stringify(body)
+            const {error} = JSON.parse(body)
 
-            return {error}
+            throw new Error(error)
         }
-        return JSON.stringify(body)
+        return JSON.parse(body)
     })()
 }.bind(context)

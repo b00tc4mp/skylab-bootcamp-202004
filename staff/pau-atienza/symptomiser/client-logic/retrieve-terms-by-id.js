@@ -1,6 +1,7 @@
 require('commons/polyfills/string')
 const { utils: { call } } = require('commons')
 const context = require('./context')
+global.fetch = require('node-fetch')
 
 module.exports = function (HPO_id) {
     String.validate.notVoid(HPO_id)
@@ -8,10 +9,10 @@ module.exports = function (HPO_id) {
     return (async ()=>{
         const {status, body} = await call('GET', `${this.API_URL}/terms/${HPO_id}`, undefined, undefined)
         if (status !== 200) {
-            const {error} = JSON.stringify(body)
+            const {error} = JSON.parse(body)
 
-            return {error}
+            throw new Error(error)
         }
-        return JSON.stringify(body)
+        return JSON.parse(body)
     })()
 }.bind(context)

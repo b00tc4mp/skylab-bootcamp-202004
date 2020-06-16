@@ -1,5 +1,7 @@
 require('dotenv').config()
-const { env: { MONGODB_URL, TRANSLATOR_URL } } = process
+const { env: { MONGODB_URL, API_URL } } = process
+const context = require('./context')
+context.API_URL = API_URL
 const { expect } = require('chai')
 const { mongoose, models: { Term } } = require('data')
 const { errors: { UnexistenceError, VoidError } } = require('commons')
@@ -8,16 +10,6 @@ const retrieveTerms = require('./retrieve-terms-by-id')
 
 describe('logic - retrieve-terms-by-HPO_id', () => {
     let HPO_id = "HP:0000010"
-
-    before(() => {
-        console.debug('connecting to database')
-        return mongoose.connect(MONGODB_URL)
-            .then(()=>{
-                console.info(`connected to database ${MONGODB_URL}`)
-
-                return
-            })
-    })
 
     describe('when the term exists', () => {
 
@@ -56,7 +48,6 @@ describe('logic - retrieve-terms-by-HPO_id', () => {
             .catch(error => {
                 expect(error).to.exist
 
-                expect(error).to.be.an.instanceof(UnexistenceError)
                 expect(error.message).to.equal(`Term with HPO id ${newHPO_id} does not exist`)
             })
     })
@@ -77,6 +68,4 @@ describe('logic - retrieve-terms-by-HPO_id', () => {
         }
     
     })
-
-    after(mongoose.disconnect)
 })
