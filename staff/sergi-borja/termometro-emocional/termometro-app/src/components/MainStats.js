@@ -116,6 +116,10 @@ function MainStats({ token }) {
         }
     }
 
+    const handleDayClicked = (dayClicked) => {
+        console.log(dayClicked)
+    }
+
 
 
     return (
@@ -129,15 +133,15 @@ function MainStats({ token }) {
             <div className='mainStatsContainer__buttonDaysContainer'>
                 <button className='mainStatsContainer__buttonDaysContainer--fiveDays' onClick={() => daysSetter(5)}>5 DAYS</button>
                 <button className='mainStatsContainer__buttonDaysContainer--fiveTeenDays' onClick={() => daysSetter(15)}>15 DAYS</button>
-                <button className='mainStatsContainer__buttonDaysContainer--yesterday' onClick={() => daysSetter(1)}>Yesterday</button>
+                <button className='mainStatsContainer__buttonDaysContainer--yesterday' onClick={() => daysSetter(1)}>Calendario</button>
             </div>
-            <div className='mainStatsContainer__chartContainer'>
-                <HorizontalBar data={chartData} options={chartOptions.options} height={500} />
-            </div>
+            {days!==1 &&<div className='mainStatsContainer__chartContainer'>
+                 <HorizontalBar data={chartData} options={chartOptions.options} height={500} />
+            </div>}
 
-            <div className='mainStatsContainer__chartContainer'>
-                <Calendar />
-            </div>
+            {days===1 && <div className='mainStatsContainer__chartContainer'>
+                <Calendar onClickDay={(dayClicked)=>handleDayClicked(dayClicked)}/>
+            </div>}
 
         </section>
     );

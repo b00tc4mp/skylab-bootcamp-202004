@@ -15,7 +15,6 @@ import Settings from './Settings';
 import EditPlan from './EditPlan';
 import EditMyInfo from './EditMyInfo';
 import MainStats from './MainStats';
-import CalendarAux from './CalendarAux';
 
 function App({history}) {
 
@@ -80,7 +79,6 @@ function App({history}) {
           <Route path="/edit-plan" render={()=> token? <EditPlan token={token} /> : <Redirect to='/'/>} />
           <Route path="/edit-my-info" render={()=> token? <EditMyInfo token={token} /> : <Redirect to='/'/>} />
           <Route path="/main-stats" render={()=> token? <MainStats token={token} /> : <Redirect to='/'/>} />
-          <Route path="/calendar-aux" render={()=> <CalendarAux  /> } />
           {token && <Footer/>}
         </Container>
       </header>
