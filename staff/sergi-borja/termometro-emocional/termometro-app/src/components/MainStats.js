@@ -1,19 +1,41 @@
 import React, { useEffect, useState } from 'react'
-import { Line } from 'react-chartjs-2'
-// import isAuthenticated from 'termometro-client-logic/is-authenticated'
+import { HorizontalBar } from 'react-chartjs-2'
 import createMemberList from 'termometro-client-logic/create-member-list'
 import isAuthenticated from 'termometro-client-logic/is-authenticated'
+import './MainStats.sass'
 const moment = require('moment')
+
 
 function MainStats({ token }) {
 
     const [chartData, setChartData] = useState({})
     const [memberList, setMemberList] = useState()
-    const [adminInfo, setAdminInfo] = useState()
+    const [days, setDays] = useState(5)
+    const [rolChart, setRolChart] = useState()
+    const [memberSelected, setMemberSelected] = useState({})
+    
+    const chartOptions = {
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        max: 10
+                    }
+                }]
+            },
+        }
+    }
+
+    const daysSetter = (days) => {
+        setDays(days)
+        if (rolChart === 'admin') adminChart()
+        if (rolChart === 'member') handleSeeMemberStats(memberSelected)
+    }
 
     const fiveDaysDateArray = (userInfo) => {
         let dateArray = []
-        for (let i = 5; i > 0; i--) {
+        for (let i = days; i > 0; i--) {
             dateArray.push(moment(userInfo.mood[userInfo.mood.length - i].date).format('dddd'))
         }
         return dateArray;
@@ -21,7 +43,7 @@ function MainStats({ token }) {
 
     const fiveDayScoreArray = (userInfo) => {
         let scoreArray = []
-        for (let i = 5; i > 0; i--) {
+        for (let i = days; i > 0; i--) {
             scoreArray.push(userInfo.mood[userInfo.mood.length - i].score)
         }
         return scoreArray;
@@ -30,6 +52,7 @@ function MainStats({ token }) {
     const adminChart = () => {
         isAuthenticated(token)
             .then(adminInfo => {
+                setRolChart('admin')
                 const dateArray = fiveDaysDateArray(adminInfo);
                 const scoreArray = fiveDayScoreArray(adminInfo);
                 setChartData({
@@ -42,12 +65,13 @@ function MainStats({ token }) {
                         ],
                         borderWidth: 4
                     }]
-                })
+                })  
             })
-
     }
 
     const handleSeeMemberStats = (member) => {
+
+        setRolChart('member')
         const dateArray = fiveDaysDateArray(member);
         const scoreArray = fiveDayScoreArray(member);
 
@@ -60,14 +84,12 @@ function MainStats({ token }) {
                     'rgba(76,192,192,0.6)'
                 ],
                 borderWidth: 4
-            }]
+            }],
         })
     }
 
     useEffect(() => {
         try {
-            isAuthenticated(token)
-                .then(adminInfo => setAdminInfo(adminInfo))
             createMemberList(token)
                 .then(familyList => setMemberList(familyList))
         } catch (error) {
@@ -77,27 +99,37 @@ function MainStats({ token }) {
 
     useEffect(() => {
         adminChart()
-    }, [])
+        daysSetter(days)
+    }, [days])
 
+    const handleChangeChart = ({ target: { value } }) => {
+        if (value === 'my_stats') adminChart()
+        else {
 
-    const handleGoToFilterDays = () => {
-        console.log('days')
-        
+            memberList.map(member => {
+                if (member.id === value) {
+                    setMemberSelected(member)
+                    handleSeeMemberStats(member)
+                }
+            })
+        }
     }
+
+
 
     return (
         <section className='mainStatsContainer'>
-            <ul className='familyContainer__ul'>
-                <li className='familyContainer__li'>Mis stats<button onClick={adminChart}>VIEW STATS</button></li>
-                {memberList && memberList.map((member) => <li className='familyContainer__li'>{member.name} {member && <button onClick={() => handleSeeMemberStats(member)}>VIEW STATS</button>}</li>)}
-            </ul>
-            <select className='registerContainer__emailInput' onChange={handleGoToFilterDays()} required>
-                <option value='fiveDays'>5 días</option>
-                <option value='fiveTeenDays'>15 días</option>
-                <option value='OneDay'>1 día</option>
+            <select onChange={(event) => handleChangeChart(event)} className='registerContainer__emailInput'>
+                <option value='my_stats' className='familyContainer__li'>Mis stats</option>
+                {memberList && memberList.map(({ id, name }) => <option value={id} className='familyContainer__li'>{name}</option>)}
             </select>
-            <div>
-                <Line data={chartData} />
+            <div className='mainStatsContainer__chartContainer'>
+                <HorizontalBar data={chartData} options={chartOptions.options} />
+            </div>
+            <div className='mainStatsContainer__buttonDaysContainer'>
+                <button className='mainStatsContainer__buttonDaysContainer--yesterday' onClick={() => daysSetter(1)}>Yesterday</button>
+                <button className='mainStatsContainer__buttonDaysContainer--fiveDays' onClick={() => daysSetter(5)}>5 DAYS</button>
+                <button className='mainStatsContainer__buttonDaysContainer--fiveTeenDays' onClick={() => daysSetter(15)}>15 DAYS</button>
             </div>
         </section>
     );
@@ -105,3 +137,8 @@ function MainStats({ token }) {
 }
 
 export default MainStats;
+
+{/* <ul className='familyContainer__ul'>
+    <li className='familyContainer__li'>Mis stats<button onClick={adminChart}>VIEW STATS</button></li>
+    {memberList && memberList.map((member) => <li className='familyContainer__li'>{member.name} {member && <button onClick={() => handleSeeMemberStats(member)}>VIEW STATS</button>}</li>)}
+</ul> */}

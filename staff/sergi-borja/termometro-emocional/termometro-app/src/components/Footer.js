@@ -1,22 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import './Footer.sass'
+import homeIcon from '../images/home.png'
+import myFamilyIcon from '../images/familia.png'
+import heartIcon from '../images/heart.png'
+import settingsIcon from '../images/ajustes.png'
 
 function Footer() {
     return (
         <section className='footerContainer'>
-            <Link className="footerContainer__element" to="/home">
-                Home
-      </Link>
-            <Link className="footerContainer__element" to="/my-family">
-                MyFamily
-      </Link>
-            <Link className="footerContainer__element" to="/main-stats">
-                Estadisticas
-      </Link>
-            <Link className="footerContainer__element" to="/settings">
-                Ajustes
-      </Link>
+            <div className="footerContainer__home">
+                <Link  to="/home"><img className='footerContainer__home--homeIcon' src={homeIcon}></img></Link>
+            </div>
+            <div className="footerContainer__myFamily">
+                <Link  to="/my-family"><img className='footerContainer__home--homeIcon' src={myFamilyIcon}></img></Link>
+            </div>
+            <div className="footerContainer__stats">
+                <Link  to="/main-stats"><img className='footerContainer__home--homeIcon' src={heartIcon}></img></Link>
+            </div>
+            <div className="footerContainer__settings">
+                <Link  to="/settings"><img className='footerContainer__home--homeIcon' src={settingsIcon}></img></Link>
+            </div>
         </section>
     );
 }

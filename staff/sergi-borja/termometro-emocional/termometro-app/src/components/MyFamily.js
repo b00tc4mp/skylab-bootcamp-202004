@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import './MyFamily.sass'
 import { Link } from 'react-router-dom'
 import { createMemberList } from 'termometro-client-logic'
+// import editMemberIcon from '../images/editar.png'
+
 
 function MyFamily({ token, handleGoToEdit }) {
 
