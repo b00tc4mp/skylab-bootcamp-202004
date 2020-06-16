@@ -1,4 +1,4 @@
-
+node_modules
 # Created by https://www.gitignore.io/api/windows
 # Edit at https://www.gitignore.io/?templates=windows
 
@@ -116,6 +116,7 @@ Temporary Items
 *.tgz
 
 # End of https://www.gitignore.io/api/compressed
+<<<<<<< Updated upstream
 
 
 # Created by https://www.gitignore.io/api/node
@@ -235,3 +236,6 @@ package-lock.json
 yarn.lock
 
 # End Other
+=======
+node_modules
+>>>>>>> Stashed changes
