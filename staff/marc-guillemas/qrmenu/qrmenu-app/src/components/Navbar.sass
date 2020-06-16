@@ -1,0 +1,55 @@
+.navbar
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    z-index: 20
+
+    // &__logo
+    &__list
+        // border: 1px solid black
+        width: 105%
+        height: 80vh
+        position: fixed
+        bottom: -595px
+        border-top-left-radius: 50px
+        border-top-right-radius: 50px
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        font-size: 1.3rem
+        background-color: #000000
+        box-shadow: 0px 0px 60px #adadadd3
+        transition: 300ms ease all
+
+        &--active
+            bottom: 0px
+            display: flex
+        li
+            display: flex
+            justify-content: center
+            align-items: center
+            // border: 1px solid black
+            width: 80%
+            border-radius: 20px
+            height: 15%
+            margin: .5rem
+            background-color: #ffffff10
+        li:hover
+            background-color: #0000004b
+        
+        a
+            text-decoration: none
+            font-size: 1.7rem
+            letter-spacing: .4rem
+            color: #ffffff
+
+        // hr
+        //     background-color: #ffd0005b
+        //     border: 0
+        //     width: 70%
+        //     height: .1rem
+        //     box-shadow: 0px 0px 10px #ffd000
+
+            

@@ -4,6 +4,7 @@ const { utils: { call } } = require('qrmenu-commons')
 const context = require('./context')
 
 module.exports = function (token) {
+
     String.validate.notVoid(token)
 
     return call('GET', `${this.API_URL}/worker`,

@@ -4,14 +4,16 @@ import { Route, /* BrowserRouter, */ withRouter, Redirect } from 'react-router-d
 import {checkAuthentication} from 'qrmenu-client-logic';
 import RegisterEstablishment from './RegisterEstablishment';
 import Login from './Login'
+import Home from './Home'
 
 function App({history}) {
   const [token, setToken] = useState()
+  const [view, setView] = useState()
 
   useEffect(() => {
     if(sessionStorage.token)
       try {
-        checkAuthentication(token)
+        checkAuthentication(sessionStorage.token)
           .then(isAuthenticated => {
             if(isAuthenticated) {
               setToken(sessionStorage.token)
@@ -21,36 +23,39 @@ function App({history}) {
       } catch (error) {
         if(error) throw error
       }
-    else history.push('/register')
+    else history.push('/login')
   }, [])
 
   const handleGoToLogin = () => history.push('/login')
   const handleRegister = () => history.push('/login')
   const handleGoToRegister = () => history.push('/register')
   const handleLogin = token => {
-    setToken(token)  
+    setToken(token)
+    sessionStorage.token = token  
     history.push('/')
+  }
+
+  const handleOnLogout = () => {
+    delete sessionStorage.token
+
+    history.push('/login')
   }
 
   return (
     <section className="App">
         {/* <Container> */}
           <Route path="/register" render={() => 
-            token? <Redirect to="/home"/> : <RegisterEstablishment onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>
+            token? <Redirect to="/"/> : <RegisterEstablishment onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>
           } />
+
           <Route path="/login" render={() => 
-            token? <Redirect to="/home"/> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister}/>
+            token? <Redirect to="/"/> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister}/>
           } />
 
-          {/* <BrowserRouter> */}
-                {/* <Route path='/' exact component={RegisterEstablishment} /> */}
-                {/* <Route path='/login' component={Login} />
-                <Route path='/register' exact component={RegisterEstablishment} /> */}
-              
-                {/* <Route path='/challenge' component={Challenge} /> */}
+          <Route path="/" render={() => 
+            token? <Home onLogout={handleOnLogout}/> : <Redirect to="/login"/> 
+          } />
 
-            {/* </BrowserRouter> */}
-        {/* </Container> */}
     </section>
   );
 }

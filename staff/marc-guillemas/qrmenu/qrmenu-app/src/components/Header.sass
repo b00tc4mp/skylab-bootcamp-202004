@@ -1,0 +1,51 @@
+.header
+    display: flex
+    justify-content: space-between
+    padding: 0 .8rem 0 .8rem
+    align-items: center
+    height: 6vh
+    width: 100vw
+    border: 1px solid red
+
+
+    &__line
+        display: flex
+        justify-content: center
+        align-items: center
+        background-color: black
+        width: 100%
+        height: .3rem
+        border-radius: 100px
+        &:nth-child(2)
+            width: 80%
+            right: 0
+            
+        
+    &__burger
+        width: 2.5rem
+        height: 2.5rem
+        display: flex
+        flex-direction: column
+        justify-content: space-around
+        align-items: flex-end
+        div
+            transition: all .3s ease
+            background-color: #000000e8
+            // box-shadow: 5px 2px 1px #1616167a
+        &--active
+            
+            div:nth-child(1)
+                transform-origin: .1rem
+                transition: all 0.3s ease
+                transform: rotate(45deg)
+                background-color: #222222 
+            div:nth-child(2)
+                transition: all 0.3s ease
+                transform: translateX(100%)
+                opacity: 0
+            div:nth-child(3)
+                transform-origin: .1rem
+                transition: all 0.3s ease
+                transform: rotate(-45deg)
+                background-color: #222222 
+    

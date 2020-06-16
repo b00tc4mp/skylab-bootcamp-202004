@@ -15,7 +15,6 @@ module.exports = function(nif, email, password) {
         {'Content-type' : 'application/json'}
     )
     .then(({status, body}) => {
-        debugger
         if(status === 200) {
             const {token} = JSON.parse(body)
             return token

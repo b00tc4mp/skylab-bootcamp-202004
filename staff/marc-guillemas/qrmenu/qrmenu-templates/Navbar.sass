@@ -1,0 +1,44 @@
+.navbar
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    z-index: 20
+   
+    // &__logo
+    &__list
+        // border: 1px solid black
+        width: 100%
+        height: 80vh
+        position: fixed
+        bottom: -580px
+        border-top-left-radius: 60px
+        border-top-right-radius: 60px
+        display: flex
+        flex-direction: column
+        justify-content: space-around
+        align-items: center
+        font-size: 1.3rem
+        background-color: #dddddd36
+        box-shadow: 0px 0px 60px #bebebe86
+        transition: 300ms ease all
+
+        &--active
+            bottom: 0px
+        li
+            display: flex
+            justify-content: center
+            align-items: center
+            // border: 1px solid black
+            width: 100%
+            height: 20%
+        li:hover
+            background-color: #0000004b
+        
+        a
+            text-decoration: none
+            font-size: 1.7rem
+            letter-spacing: .4rem
+            color: #000000
+
+            
