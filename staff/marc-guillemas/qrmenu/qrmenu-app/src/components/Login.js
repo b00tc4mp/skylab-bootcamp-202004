@@ -41,7 +41,7 @@ export default function ({onLogin, onGoToRegister}) {
             <input className="login__input" type="email" name="email" placeholder="john@doe.com" />
             <label htmlFor="password">Password</label>
             <input className="login__input" type="password" name="password" placeholder="********" />
-            <a href="" className="login__toregister"onClick={handleGoToRegister}>Already not a member? Register now!</a>     
+            <a href="" className="login__toregister"onClick={handleGoToRegister}>Not a member yet? Register now!</a>     
             <button className="login__button">Login</button>
         </form>
     </section> 

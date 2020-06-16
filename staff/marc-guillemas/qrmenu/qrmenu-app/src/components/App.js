@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
 import { Route, /* BrowserRouter, */ withRouter, Redirect } from 'react-router-dom'
-import {checkAuthentication} from 'qrmenu-client-logic';
+import {isUserAuthenticated} from 'qrmenu-client-logic';
 import RegisterEstablishment from './RegisterEstablishment';
 import Login from './Login'
 import Home from './Home'
@@ -13,7 +13,7 @@ function App({history}) {
   useEffect(() => {
     if(sessionStorage.token)
       try {
-        checkAuthentication(sessionStorage.token)
+        isUserAuthenticated(sessionStorage.token)
           .then(isAuthenticated => {
             if(isAuthenticated) {
               setToken(sessionStorage.token)
@@ -37,7 +37,7 @@ function App({history}) {
 
   const handleOnLogout = () => {
     delete sessionStorage.token
-
+    setToken(null)
     history.push('/login')
   }
 
@@ -53,7 +53,7 @@ function App({history}) {
           } />
 
           <Route path="/" render={() => 
-            token? <Home onLogout={handleOnLogout}/> : <Redirect to="/login"/> 
+            token? <Home onLogout={handleOnLogout} history={history}/> : <Redirect to="/login"/> 
           } />
 
     </section>

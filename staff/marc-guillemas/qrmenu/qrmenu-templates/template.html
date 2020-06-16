@@ -118,6 +118,48 @@
             </li>
         </ul>
     </nav>
+
+
+
+    <nav className="navbar">
+        <div className="navbar__logo">
+            Logo 
+        </div>
+        <button onClick={event => {
+        event.preventDefault()
+
+        onLogout()
+        }}>Log out</button> 
+
+        <ul>
+            <li><a href="" onClick={event => {
+                    event.preventDefault()
+
+                    onChangeView('users')
+                }}>Users</a> 
+            </li>
+            <li><a href="" onClick={event => {
+                    event.preventDefault()
+
+                    onChangeView('feed')
+                }}>Feed</a> 
+            </li>
+
+            <li><a href="" onClick={event => {
+                    event.preventDefault()
+
+                    onChangeView('google')
+                }}>Google</a> 
+            </li>
+
+            <li><a href="" onClick={event => {
+                    event.preventDefault()
+
+                    onChangeView('wired')
+                }}>Wired</a> 
+            </li>
+        </ul>
+    </nav>
     
 </body>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">

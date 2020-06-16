@@ -1,40 +1,39 @@
 import React from 'react'
 import './Navbar.sass'
 
-export default function({onChangeView, onLogout, active}) {
-    
+export default function({onChangeRoute, onLogout, active, onBurgerActive}) {
     return <nav className="navbar">
 
         <ul className={active ? "navbar__list" : "navbar__list navbar__list--active" }>
             <li>
                 <a href="" onClick={event => {
                     event.preventDefault()
-
-                    onChangeView('/orders')
+                    onBurgerActive(!active)
+                    onChangeRoute('/orders')
                 }}>Orders</a> 
             </li>
             <hr/>
             <li>
                 <a href="" onClick={event => {
                     event.preventDefault()
-
-                    onChangeView('/tables')
+                    onBurgerActive(!active)
+                    onChangeRoute('/tables')
                 }}>Tables</a> 
             </li>
             <hr/>
             <li>
                 <a href="" onClick={event => {
                     event.preventDefault()
-
-                    onChangeView('/qrcodes')
+                    onBurgerActive(!active)
+                    onChangeRoute('/qrcodes')
                 }}>QR Codes</a> 
             </li>
             <hr/>
             <li>
                 <a href="" onClick={event => {
                     event.preventDefault()
-
-                    onChangeView('/admin')
+                    onBurgerActive(!active)
+                    onChangeRoute('/admin')
                 }}>Admin</a> 
             </li>
             <hr/>

@@ -1,6 +1,6 @@
 module.exports = {
     context: require('./context'),
-    checkAuthentication: require('./check-authentication'),
+    isUserAuthenticated: require('./is-user-authenticated'),
     registerEstablishment: require('./register-establishment'),
     authenticate: require('./authenticate')
 }
