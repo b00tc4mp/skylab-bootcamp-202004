@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
     StyleSheet,
     SafeAreaView,
@@ -7,39 +7,110 @@ import {
     View,
     Text
 } from "react-native";
-
+import { useRoute } from '@react-navigation/native'
 import UserItem from '../components/UserItem'
 import Card from '../components/Card'
+import { retrieveEscapeRooms, retrieveUser, retrieveFollowing, retrieveEscapeIds, retrieveFollowingIds } from 'escape-me-client-logic'
 
 import { Entypo, FontAwesome, MaterialIcons, Ionicons } from '@expo/vector-icons';
 
-
 export default function Profile() {
+    const route = useRoute()
+    const token = route.params['token']
+
+    const [userLists, setUserLists] = useState()
+    const [followingIds, setFollowingIds] = useState()
+    const [tag, setTag] = useState('favorites')
+    const [user, setUser] = useState({})
+    const [following, setFollowing] = useState([])
+    const [escapeRooms, setEscapeRooms] = useState([])
+
+    let escapeList, follow
+    useEffect(() => {
+        (async () => {
+            if (!user.username) {
+                const { name = '', surname = '', username = '' } = await retrieveUser(token)
+
+                setUser({ name, surname, username })
+            }
+
+            const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds(token)
+            setUserLists({ participated, pending, favorites })
+
+            const { followingIds = [] } = await retrieveFollowingIds(token)
+            setFollowingIds(followingIds)
+
+            if (tag !== '') {
+
+                escapeList = await retrieveEscapeRooms(token, tag)
+                setEscapeRooms(escapeList)
+            }
+            else {
+                follow = await retrieveFollowing(token)
+                setFollowing(follow)
+            }
+        })()
+    }, [userLists])
+
     return (
         <SafeAreaView style={styles.container} >
             <ScrollView >
-                <UserItem name={'Tyler'} surname={'Durden'} email={'fightclub@mail.com'} image={require('../assets/tyler.jpg')} />
+                <UserItem name={user.name ? user.name : ''} surname={user.surname ? user.surname : ''} email={`@${user.username}`} image={require('../assets/tyler.jpg')} main={true} />
                 <TouchableOpacity style={styles.edit}>
                     <Entypo name="pencil" size={30} color="white" />
                     <Text style={styles.text}>Edit profile</Text>
                 </TouchableOpacity>
                 <View style={styles.details}>
-                    <TouchableOpacity style={[styles.pair, styles.selected]}>
+                    <TouchableOpacity style={tag === 'favorites' ? [styles.pair, styles.selected] : styles.pair} onPress={() => setTag('favorites')}>
                         <FontAwesome name="heart" size={24} color={'#fc5c65'} />
                         <Text>Favorite</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.pair}>
+                    <TouchableOpacity style={tag === 'participated' ? [styles.pair, styles.selected] : styles.pair} onPress={() => setTag('participated')}>
                         <MaterialIcons name="done-all" size={24} color="black" />
                         <Text>Done</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.pair}>
+                    <TouchableOpacity style={tag === '' ? [styles.pair, styles.selected] : styles.pair} onPress={() => setTag('')}>
                         <Ionicons name="md-contacts" size={24} color="black" />
                         <Text>Following</Text>
                     </TouchableOpacity>
                 </View>
-                <Card title="Whitechapel" rating="4.9" people='2-6' genre='Terror' price="50-90€" image={require('../assets/whitechapel.jpg')} />
-                <Card title="Whitechapel" rating="4.9" people='2-6' genre='Terror' price="50-90€" image={require('../assets/whitechapel.jpg')} />
-                <Card title="Whitechapel" rating="4.9" people='2-6' genre='Terror' price="50-90€" image={require('../assets/whitechapel.jpg')} />
+                {
+                    tag !== '' ?
+
+                        escapeRooms.length ?
+                            escapeRooms.map(({ city, id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin }) => {
+                                return (<Card
+                                    key={id}
+                                    title={name}
+                                    rating='4.9'
+                                    escapeId={id}
+                                    token={token}
+                                    people={`${playersMin}-${playersMax}`}
+                                    genre={genre} price={`${priceMin}-${priceMax}€`} image={{ uri: _image }}
+                                    participated={userLists.participated.includes(id)}
+                                    pending={userLists.pending.includes(id)}
+                                    favorites={userLists.favorites.includes(id)}
+                                />)
+                            })
+                            :
+                            <Text>No escape rooms added yet.</Text>
+
+                        :
+                        following.length ?
+                            following.map(({ name, surname, username, id }) => {
+                                return (<UserItem key={id}
+                                    name={name ? name : ''}
+                                    surname={surname ? surname : ''}
+                                    email={`@${username}`}
+                                    image={require('../assets/tyler.jpg')}
+                                    following={followingIds.includes(id)}
+                                    userId={id}
+                                    token={token}
+                                />)
+                            })
+                            :
+                            <Text>You're not following people yet.</Text>
+                }
             </ScrollView>
         </SafeAreaView>
     );

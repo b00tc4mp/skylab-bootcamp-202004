@@ -5,8 +5,8 @@ const context = require('./context')
 module.exports = function (token, userId) {
     String.validate.notVoid(token)
     if (userId) String.validate.notVoid(userId)
-    debugger
-    return call('GET', `${this.API_URL}/users/${userId ? userId : ''}`,
+
+    return call('GET', `${this.API_URL}/ids/escapes/${userId ? userId : ''}`,
         undefined,
         { 'Authorization': `Bearer ${token}` })
         .then(({ status, body }) => {

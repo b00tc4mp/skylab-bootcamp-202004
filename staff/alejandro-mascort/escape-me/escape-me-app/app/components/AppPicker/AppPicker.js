@@ -17,17 +17,19 @@ export default function ({ icon, items, placeholder, onSelectItem, selectedItem 
             </TouchableOpacity>
             <SafeAreaView>
                 <Modal visible={modalVisible} animationType="slide">
-                    <Button title="Close" onPress={() => setModalVisible(false)} />
-                    <FlatList
-                        data={items}
-                        keyExtractor={item => item.value.toString()}
-                        renderItem={({ item }) => <PickerItem label={item.label}
-                            onPress={() => {
-                                setModalVisible(false)
-                                onSelectItem(item)
-                            }
-                            }
-                        />} />
+                    <SafeAreaView>
+                        <Button title="Close" onPress={() => setModalVisible(false)} />
+                        <FlatList
+                            data={items}
+                            keyExtractor={item => item.value.toString()}
+                            renderItem={({ item }) => <PickerItem label={item.label}
+                                onPress={() => {
+                                    setModalVisible(false)
+                                    onSelectItem(item)
+                                }
+                                }
+                            />} />
+                    </SafeAreaView>
                 </Modal>
             </SafeAreaView>
         </React.Fragment>

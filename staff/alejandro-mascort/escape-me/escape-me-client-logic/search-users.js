@@ -1,12 +1,13 @@
 require('escape-me-commons/polyfills/string')
-const { utils: { call } } = require('escape-me-commons')
+const { utils: { call }, errors: { UnexistenceError } } = require('escape-me-commons')
+
 const context = require('./context')
 
-module.exports = function (token, userId) {
+module.exports = function (token, query) {
     String.validate.notVoid(token)
-    if (userId) String.validate.notVoid(userId)
-    debugger
-    return call('GET', `${this.API_URL}/users/${userId ? userId : ''}`,
+    String.validate.notVoid(query)
+
+    return call('GET', `${this.API_URL}/users/search/${query ? query : ''}`,
         undefined,
         { 'Authorization': `Bearer ${token}` })
         .then(({ status, body }) => {
@@ -15,7 +16,7 @@ module.exports = function (token, userId) {
             } else {
                 const { error } = JSON.parse(body)
 
-                throw new Error(error)
+                throw new UnexistenceError(error)
             }
         })
 }.bind(context)

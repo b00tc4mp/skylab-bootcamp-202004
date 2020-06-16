@@ -1,9 +1,21 @@
-const { models: { EscapeRoom } } = require('.')
+require('dotenv').config()
 
-const { mongoose } = require('.')
+const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 
-mongoose.connect('mongodb://localhost:27017/escape-me-api-test')
-    .then(async () => {
+const searchEscapeRoom = require('./search-escape-room')
+const { expect } = require('chai')
+require('escape-me-commons/polyfills/json')
+const { mongoose, models: { EscapeRoom } } = require('escape-me-data')
+const { errors: { ValueError } } = require('escape-me-commons')
+
+
+describe('logic - search escape room', () => {
+    before(() => mongoose.connect(MONGODB_URL))
+
+    let result
+
+    beforeEach(async () => {
+        await EscapeRoom.deleteMany()
         await EscapeRoom.create({
             name: 'whitechappel',
             description: 'En 1888, en un famoso barrio londinense llamado Whitechapel, ocurrieron una serie de asesinatos cometidos por Jack el Destripador. Ahora, 130 años después, un asesino le está haciendo tributo y causando el caos siguiendo los pasos del mismísimo Jack. En nuestro Room escape os retaremos a descifrar una serie de enigmas que desafiarán vuestra inteligencia, imaginación y cooperación además de poner a prueba vuestros miedos. Ingenio, colaboración, perspectiva... Todos los sentidos deben estar alerta, cualquier pequeño detalle puede ser primordial para superar el desafío.',
@@ -65,7 +77,78 @@ mongoose.connect('mongodb://localhost:27017/escape-me-api-test')
             image: 'https://unrealroomescape.es/gava/wp-content/uploads/2014/06/joc-vikingos.jpg',
             rating: 4.9
         })
+    }
+    )
 
-        await mongoose.disconnect()
+    describe('when values introduced are correct', () => {
+        it('should succeed on retrieving data', async () => {
+            result = await searchEscapeRoom(undefined, { genre: ['terror', 'aventuras'], difficulty: [2, 3], moreThanPlayersMax: 6, moreThanPriceMax: 95 })
+            expect(result).to.exist
+            expect(result).to.be.an.instanceOf(Array)
+            expect(result).to.have.lengthOf(2)
+
+            result = await searchEscapeRoom('vik', { moreThanPlayersMax: 7 })
+            expect(result).to.exist
+            expect(result).to.be.an.instanceOf(Array)
+            expect(result).to.have.lengthOf(1)
+
+            result = await searchEscapeRoom('vik', { moreThanPriceMax: 70, lessThanPriceMax: 140 })
+            expect(result).to.exist
+            expect(result).to.be.an.instanceOf(Array)
+            expect(result).to.have.lengthOf(1)
+
+            result = await searchEscapeRoom('vik', { moreThanPriceMax: 70, lessThanPriceMax: 140 })
+            expect(result).to.exist
+            expect(result).to.be.an.instanceOf(Array)
+            expect(result).to.have.lengthOf(1)
+
+            result = await searchEscapeRoom(undefined, { moreThanPriceMax: 70, lessThanPriceMax: 140, moreThanPlayersMax: 5, lessThanPlayersMin: 3 })
+            expect(result).to.exist
+            expect(result).to.be.an.instanceOf(Array)
+            expect(result).to.have.lengthOf(4)
+
+            result = await searchEscapeRoom(undefined, { moreThanRating: 3, lessThanRating: 5, moreThanPlayersMax: 5, lessThanPlayersMin: 6 })
+            expect(result).to.exist
+            expect(result).to.be.an.instanceOf(Array)
+            expect(result).to.have.lengthOf(4)
+        }
+        )
+        it('should retrieve an empty array if the match does not exist', async () => {
+            result = await searchEscapeRoom(undefined, { genre: ['terror', 'aventuras'], difficulty: [2, 3], moreThanPlayersMax: 6, moreThanPriceMax: 95, lessThanPriceMin: 20 })
+            expect(result).to.exist
+            expect(result).to.be.an.instanceOf(Array)
+            expect(result).to.have.lengthOf(0)
+
+            result = await searchEscapeRoom(undefined, { moreThanPlayersMax: 9 })
+            expect(result).to.exist
+            expect(result).to.be.an.instanceOf(Array)
+            expect(result).to.have.lengthOf(0)
+        })
     })
-    .catch(console.log)
+
+    it('should fail if inputs introduced are wrong ', () => {
+        expect(() => {
+            searchEscapeRoom(1, {})
+        }).to.throw(TypeError, '1 is not a string')
+
+        expect(() => {
+            searchEscapeRoom(undefined, { genre: [1] })
+        }).to.throw(TypeError, '1 is not a string')
+
+        expect(() => {
+            searchEscapeRoom(undefined, { moreThanPlayersMax: true })
+        }).to.throw(TypeError, 'true is not a number')
+
+        expect(() => {
+            searchEscapeRoom(undefined, { lessThanPlayersMax: -5 })
+        }).to.throw(ValueError, '-5 is not a positive number')
+
+        expect(() => {
+            searchEscapeRoom(undefined, { moreThanPlayersMin: true })
+        }).to.throw(TypeError, 'true is not a number')
+    })
+
+    afterEach(() => EscapeRoom.deleteMany())
+
+    after(mongoose.disconnect)
+})

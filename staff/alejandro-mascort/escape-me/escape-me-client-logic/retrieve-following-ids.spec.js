@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_SECRET: SECRET, TEST_API_URL: API_URL } } = process
 
-const retrieveUser = require('./retrieve-user')
+const retrieveFollowingIds = require('./retrieve-following-ids')
 const { random } = Math
 const { expect } = require('chai')
 require('escape-me-commons/polyfills/json')
@@ -14,7 +14,7 @@ const bcrypt = require('bcryptjs')
 
 context.API_URL = API_URL
 
-describe('logic - retrieve user', () => {
+describe('logic - retrieve following ids', () => {
     let users
 
     before(() =>
@@ -22,7 +22,7 @@ describe('logic - retrieve user', () => {
             .then(connection => users = connection.db().collection('users'))
     )
 
-    let name, surname, email, password, token
+    let name, surname, email, password, token, following
 
     beforeEach(() =>
         users.deleteMany()
@@ -32,6 +32,7 @@ describe('logic - retrieve user', () => {
                 username = `${name}${surname}`
                 email = `e-${random()}@mail.com`
                 password = `password-${random()}`
+                following = []
 
                 return bcrypt.hash(password, 10)
             })
@@ -40,18 +41,16 @@ describe('logic - retrieve user', () => {
 
     describe('when user already exists', () => {
         beforeEach(() =>
-            users.insertOne({ name, surname, email, username, password: hash })
+            users.insertOne({ name, surname, email, username, password: hash, following })
                 .then(_user => jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET))
                 .then(_token => token = _token)
         )
 
         it('should succeed on correct user id', () =>
-            retrieveUser(token)
-                .then(user => {
-                    expect(user.name).to.equal(name)
-                    expect(user.surname).to.equal(surname)
-                    expect(user.username).to.equal(username)
-                    expect(user.password).to.be.undefined
+            retrieveFollowingIds(token)
+                .then(_following => {
+                    expect(_following).to.be.an.instanceOf(Array)
+                    expect(_following).to.have.lengthOf(0)
                 })
         )
 
@@ -61,17 +60,16 @@ describe('logic - retrieve user', () => {
             username = `${name}${surname}`
             email = `e-${random()}@mail.com`
             password = `password-${random()}`
+            following = ['a']
 
             return bcrypt.hash(password, 10)
                 .then(_hash => hash = _hash)
-                .then(() => users.insertOne({ name, surname, email, username, password: hash }))
+                .then(() => users.insertOne({ name, surname, email, username, password: hash, following }))
                 .then(_user => userId = _user.insertedId.toString())
-                .then(() => retrieveUser(token, userId))
-                .then(user => {
-                    expect(user.name).to.equal(name)
-                    expect(user.surname).to.equal(surname)
-                    expect(user.username).to.equal(username)
-                    expect(user.password).to.be.undefined
+                .then(() => retrieveFollowingIds(token, userId))
+                .then(_following => {
+                    expect(_following).to.be.an.instanceOf(Array)
+                    expect(_following).to.have.lengthOf(1)
                 })
         })
     })
@@ -87,7 +85,7 @@ describe('logic - retrieve user', () => {
         })
 
         it('should fail when user does not exist', () =>
-            retrieveUser(token)
+            retrieveFollowingIds(token)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.exist
@@ -99,11 +97,11 @@ describe('logic - retrieve user', () => {
 
     it('should fail if token is not a string', () => {
         expect(() => {
-            retrieveUser(1)
+            retrieveFollowingIds(1)
         }).to.throw(TypeError, '1 is not a string')
 
         expect(() => {
-            retrieveUser(true)
+            retrieveFollowingIds(true)
         }).to.throw(TypeError, 'true is not a string')
 
     })

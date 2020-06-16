@@ -15,7 +15,7 @@ const context = require('./context')
 
 context.API_URL = API_URL
 
-describe.only('logic - toggle follow user', () => {
+describe('logic - toggle follow user', () => {
     let users, escapeRooms
 
     let name, surname, username, email, password, token, hash, userId
@@ -121,23 +121,21 @@ describe.only('logic - toggle follow user', () => {
         })
     })
 
-    describe('if userId is wrong', async () => {
+    describe('if userId is wrong', () => {
         it('should fail with invalid id', async () => {
             const __user = await users.insertOne({ name, surname, username, email, password: hash })
-
-            userId = __user.insertedId.toString()
 
             token = await jwtPromised.sign({ sub: __user.insertedId.toString() }, SECRET)
 
             const _escapeId = '5ee1fa2be1ef46672229f028'
 
             try {
-                await toggleFollowUser(token, userId)
+                await toggleFollowUser(token, '5ee1fa2be1ef46672229f028')
             } catch (error) {
                 expect(error).to.exist
 
                 expect(error).to.be.an.instanceof(UnexistenceError)
-                expect(error.message).to.equal(`escape room with id ${_escapeId} does not exist`)
+                expect(error.message).to.equal(`user with id 5ee1fa2be1ef46672229f028 does not exist`)
 
             }
         })

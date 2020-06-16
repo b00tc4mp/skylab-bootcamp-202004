@@ -2,14 +2,14 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 
-const retrieveUser = require('./retrieve-user')
+const retrieveEscapeIds = require('./retrieve-escape-ids')
 const { random } = Math
 const { expect } = require('chai')
 require('escape-me-commons/polyfills/json')
 const { mongoose, models: { User } } = require('escape-me-data')
 const bcrypt = require('bcryptjs')
 
-describe('logic - retrieve user', () => {
+describe('logic - retrieve escape ids', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let name, surname, email, password, userId, username
@@ -35,13 +35,13 @@ describe('logic - retrieve user', () => {
         )
 
         it('should succeed on correct user id', async () => {
-            const user = await retrieveUser(userId)
-            expect(user.name).to.equal(name)
-            expect(user.surname).to.equal(surname)
-            expect(user.username).to.equal(username)
-            expect(user.email).to.be.undefined
-            expect(user.password).to.be.undefined
-            expect(user.order).to.be.undefined
+            const user = await retrieveEscapeIds(userId)
+            expect(user['participated']).to.be.an.instanceOf(Array)
+            expect(user['participated']).to.have.lengthOf(0)
+            expect(user['favorites']).to.be.an.instanceOf(Array)
+            expect(user['favorites']).to.have.lengthOf(0)
+            expect(user['pending']).to.be.an.instanceOf(Array)
+            expect(user['pending']).to.have.lengthOf(0)
         }
         )
     })
@@ -50,7 +50,7 @@ describe('logic - retrieve user', () => {
         const userId = '5ed1204ee99ccf6fae798aef'
 
         try {
-            const user = await retrieveUser(userId)
+            const user = await retrieveEscapeIds(userId)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -65,7 +65,7 @@ describe('logic - retrieve user', () => {
         const userId = 1
 
         expect(() => {
-            retrieveUser(userId)
+            retrieveEscapeIds(userId)
         }).to.throw(TypeError, '1 is not a string')
     })
 

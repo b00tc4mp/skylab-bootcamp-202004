@@ -1,9 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Icon } from 'react-native';
-// import { createAppContainer } from 'react-navigation';
-// import { createBottomTabNavigator } from 'react-navigation-tabs'
-import { Entypo } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 
 import Landing from './app/screens/Landing'
 import Home from './app/screens/Home'
@@ -11,12 +7,17 @@ import Login from './app/screens/Login'
 import Register from './app/screens/Register'
 import CardDetails from './app/screens/CardDetails'
 import Profile from './app/screens/Profile'
+import Search from './app/screens/Search'
+import AddUsers from './app/screens/AddUsers'
+import Pending from './app/screens/Pending'
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, AntDesign, Entypo, Feather } from '@expo/vector-icons';
 
 export default function () {
+  console.disableYellowBox = true
+
   const [view, setView] = useState('landing')
   const [token, setToken] = useState()
 
@@ -46,10 +47,16 @@ export default function () {
       {view === 'landing' && <Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister} />}
       {view === 'login' && <Login onRegister={handleGoToRegister} onHome={handleGoToHome} handleToken={handleToken} />}
       {view === 'register' && <Register onLogin={handleGoToLogin} />}
-      {view != 'landing' && view != 'login' && view != 'register' &&
-        <NavigationContainer>
-          <MyTabs />
-        </NavigationContainer>}
+      {token &&
+        <View style={styles.appheader}>
+          <Text style={styles.title}>Escape Me</Text>
+          <TouchableOpacity style={styles.logOut} onPress={handleLogOut}>
+            <AntDesign name="logout" size={24} color="white" />
+          </TouchableOpacity>
+        </View>}
+      {token && <NavigationContainer>
+        <NavTabs token={token} />
+      </NavigationContainer>}
     </View>
 
   );
@@ -80,7 +87,7 @@ const styles = StyleSheet.create({
 
 const Tab = createMaterialBottomTabNavigator();
 
-function MyTabs() {
+function NavTabs({ token }) {
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -92,6 +99,7 @@ function MyTabs() {
       <Tab.Screen
         name="Home"
         component={Home}
+        initialParams={{ 'token': token }}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color }) => (
@@ -100,28 +108,40 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="CardDetails"
-        component={CardDetails}
+        name="Search"
+        component={Search}
+        initialParams={{ 'token': token }}
         options={{
-          tabBarLabel: 'CardDetails',
+          tabBarLabel: 'Search',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="bell" color={color} size={26} />
+            <AntDesign name="search1" size={26} color={color} />),
+        }}
+      />
+      <Tab.Screen
+        name="Pending"
+        component={Pending}
+        initialParams={{ 'token': token }}
+        options={{
+          tabBarLabel: 'Pending',
+          tabBarIcon: ({ color }) => (
+            <Entypo name="list" size={26} color={color} />
           ),
         }}
       />
       <Tab.Screen
-        name="Card"
-        component={CardDetails}
+        name="Follow"
+        component={AddUsers}
+        initialParams={{ 'token': token }}
         options={{
-          tabBarLabel: 'CardDetails',
+          tabBarLabel: 'Follow',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="bell" color={color} size={26} />
-          ),
+            <Feather name="user-plus" size={24} color={color} />),
         }}
       />
       <Tab.Screen
         name="Profile"
         component={Profile}
+        initialParams={{ 'token': token }}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color }) => (

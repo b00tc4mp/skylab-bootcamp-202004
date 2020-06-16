@@ -2,14 +2,14 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 
-const retrieveUser = require('./retrieve-user')
+const retrieveEscapeRooms = require('./retrieve-escape-rooms')
 const { random } = Math
 const { expect } = require('chai')
 require('escape-me-commons/polyfills/json')
 const { mongoose, models: { User } } = require('escape-me-data')
 const bcrypt = require('bcryptjs')
 
-describe('logic - retrieve user', () => {
+describe('logic - retrieve escape rooms', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let name, surname, email, password, userId, username
@@ -29,19 +29,29 @@ describe('logic - retrieve user', () => {
 
     describe('when user already exists', () => {
         beforeEach(async () => {
-            const _user = await User.create({ name, surname, username, email, password: hash })
-            userId = _user.id
+            const user_ = await User.create({ name, surname, username, email, password: hash })
+            userId = user_.id
         }
         )
 
         it('should succeed on correct user id', async () => {
-            const user = await retrieveUser(userId)
-            expect(user.name).to.equal(name)
-            expect(user.surname).to.equal(surname)
-            expect(user.username).to.equal(username)
-            expect(user.email).to.be.undefined
-            expect(user.password).to.be.undefined
-            expect(user.order).to.be.undefined
+            const escapeRooms = await retrieveEscapeRooms(userId, 'favorites')
+
+            expect(escapeRooms).to.exist
+            expect(escapeRooms).to.be.an.instanceof(Array)
+            expect(escapeRooms).to.have.lengthOf(0)
+
+            const _user = await retrieveEscapeRooms(userId, 'pending')
+
+            expect(escapeRooms).to.exist
+            expect(escapeRooms).to.be.an.instanceof(Array)
+            expect(escapeRooms).to.have.lengthOf(0)
+
+            const __user = await retrieveEscapeRooms(userId, 'participated')
+
+            expect(escapeRooms).to.exist
+            expect(escapeRooms).to.be.an.instanceof(Array)
+            expect(escapeRooms).to.have.lengthOf(0)
         }
         )
     })
@@ -50,7 +60,7 @@ describe('logic - retrieve user', () => {
         const userId = '5ed1204ee99ccf6fae798aef'
 
         try {
-            const user = await retrieveUser(userId)
+            const escapeRooms = await retrieveEscapeRooms(userId, 'pending')
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -62,10 +72,15 @@ describe('logic - retrieve user', () => {
     })
 
     it('should fail if id is not a string', async () => {
-        const userId = 1
+        const user_ = await User.create({ name, surname, username, email, password: hash })
+        userId = user_.id
 
         expect(() => {
-            retrieveUser(userId)
+            retrieveEscapeRooms(1, 'pending')
+        }).to.throw(TypeError, '1 is not a string')
+
+        expect(() => {
+            retrieveEscapeRooms(userId, 1)
         }).to.throw(TypeError, '1 is not a string')
     })
 

@@ -1,7 +1,7 @@
 const { env: { SECRET } } = process
 
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, toggleEscapeRoomPending, toggleEscapeRoomParticipated, toggleEscapeRoomFavorites, toggleFollowUser } = require('./handlers')
+const { registerUser, authenticateUser, retrieveUser, toggleEscapeRoomPending, toggleEscapeRoomParticipated, toggleEscapeRoomFavorites, toggleFollowUser, retrieveEscapeRoomsFavorites, retrieveEscapeRoomsParticipated, retrieveEscapeRoomsPending, retrieveFollowing, searchUsers, searchEscapeRoom, retrieveFollowingIds, retrieveEscapeIds } = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
 const { handleError } = require('../helpers')
@@ -15,7 +15,23 @@ api.post('/users', parseBody, registerUser)
 
 api.post('/users/auth', parseBody, authenticateUser)
 
+api.post('/escape/search/:query?', parseBody, searchEscapeRoom)
+
 api.get('/users/:userId?', verifyExtractJwt, retrieveUser)
+
+api.get('/ids/following/:userId?', verifyExtractJwt, retrieveFollowingIds)
+
+api.get('/ids/escapes/:userId?', verifyExtractJwt, retrieveEscapeIds)
+
+api.get('/users/escape/favorites/:userId?', verifyExtractJwt, retrieveEscapeRoomsFavorites)
+
+api.get('/users/escape/participated/:userId?', verifyExtractJwt, retrieveEscapeRoomsParticipated)
+
+api.get('/users/escape/pending/:userId?', verifyExtractJwt, retrieveEscapeRoomsPending)
+
+api.get('/users/search/:query?', verifyExtractJwt, searchUsers)
+
+api.get('/following/:userId?', verifyExtractJwt, retrieveFollowing)
 
 api.patch('/users/pending', parseBody, verifyExtractJwt, toggleEscapeRoomPending)
 

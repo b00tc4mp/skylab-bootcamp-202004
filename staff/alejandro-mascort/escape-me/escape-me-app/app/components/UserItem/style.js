@@ -6,8 +6,9 @@ module.exports = StyleSheet.create({
         alignItems: 'center',
         marginVertical: 5
     },
-    email: {
-        fontSize: 18
+    follow: {
+        position: 'absolute',
+        right: 20
     },
     image: {
         width: 100,
@@ -15,8 +16,24 @@ module.exports = StyleSheet.create({
         borderRadius: 50,
         marginRight: 10
     },
+    littleImage: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        marginRight: 10
+    },
+    littleName: {
+        fontSize: 16
+    },
+    littleUsername: {
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
     name: {
-        fontSize: 26,
+        fontSize: 16
+    },
+    username: {
+        fontSize: 22,
         fontWeight: 'bold'
     }
 })
