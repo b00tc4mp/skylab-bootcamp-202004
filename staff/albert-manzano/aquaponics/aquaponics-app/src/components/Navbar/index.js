@@ -16,6 +16,7 @@ function Navbar({ onDisplaySide }) {
         </Image>
       </SafeAreaView>
       <SafeAreaView >
+        {/* {name &&<Image source={require('../../../assets/images/registered.png')} style={styles.user}/>} */}
         <TouchableOpacity onPress={() => handleOnPress()}>
           <Image source={require('../../../assets/images/hamburger.png')} style={styles.hamburguer} />
         </TouchableOpacity>

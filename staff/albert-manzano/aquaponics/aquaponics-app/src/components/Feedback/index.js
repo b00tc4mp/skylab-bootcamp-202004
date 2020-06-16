@@ -16,9 +16,12 @@ export default Feedback
 
 const styles = StyleSheet.create({
     success: {
+        
         color: '#66cc00'
     },
     error: {
+        fontWeight:"bold",
+        
         color: 'red'
     }
 });

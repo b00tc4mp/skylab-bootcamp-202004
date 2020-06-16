@@ -1,5 +1,5 @@
 {
-  "name": "aquaponics-commons",
+  "name": "aquaponics-client-logic",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,15 +11,17 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@babel/runtime": "^7.10.2",
-    "jsonwebtoken": "^8.5.1",
-    "moment": "^2.26.0"
-  },
   "devDependencies": {
+    "bcryptjs": "^2.4.3",
     "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
+    "aquaponics-data": "file:../aquaponics-data",
     "mocha": "^7.2.0",
-    "node-fetch": "^2.6.0",
-    "xhr2": "^0.2.0"
+    "nyc": "^15.1.0",
+    "xhr2": "^0.2.0",
+    "aquaponics-node-commons": "file:../aquaponics-node-commons"
+  },
+  "dependencies": {
+    "aquaponics-commons": "file:../aquaponics-commons"
   }
 }

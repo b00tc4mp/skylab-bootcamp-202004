@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+
 import {
     View,
     Text,
     TextInput,
     TouchableOpacity,
-    SafeAreaView
+    SafeAreaView,
 } from "react-native";
 
 import styles from './styles'
@@ -16,11 +17,11 @@ function Register({ error, onRegister }) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [_password, setConfirmation] = useState('')
-
+    const [phone, setPhone] = useState('')
 
     const handleRegister = (event) => {
         event.preventDefault()
-        onRegister(name, surname, email, password, _password)
+        onRegister(name, surname, email, password, _password, phone)
     }
 
     return (<>
@@ -62,6 +63,7 @@ function Register({ error, onRegister }) {
                         <TextInput
                             onChangeText={(password) => setPassword(password)}
                             placeholder="Password"
+                            secureTextEntry={true}
                             style={styles.placeholder}
                         ></TextInput>
                     </SafeAreaView>
@@ -70,23 +72,39 @@ function Register({ error, onRegister }) {
                 <View >
                     <SafeAreaView style={styles.input}>
                         <TextInput
-                        required={ /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\d)(?=.*[#$^+=!*()@%&:]).{8,}/}
+
                             onChangeText={(_password) => setConfirmation(_password)}
-                            placeholder="password confirmation"
+                            placeholder="password "
+                            secureTextEntry={true}
+                            style={styles.placeholder}
+                        ></TextInput>
+                    </SafeAreaView>
+                </View>
+                <Text style={styles.text}>Phone number</Text>
+                <View >
+                    <SafeAreaView style={styles.input}>
+                        <TextInput
+                            // keyboardType={Device.isAndroid ? "numeric" : "number-pad"}
+                            keyboardType={"numeric"}
+                            onChangeText={(phone) => setPhone(phone)}
+                            placeholder="phone number "
                             style={styles.placeholder}
                         ></TextInput>
                     </SafeAreaView>
                 </View>
                 <TouchableOpacity
-                    onPress={handleRegister}
+
+                    onPress={
+                        // error=undefined,
+                        handleRegister
+                    }
                     style={styles.button}>
                     <Text style={styles.submit}>Submit</Text>
                 </TouchableOpacity>
-                {error && <Feedback message={error} level={"error"}/>}
             </View>
+            {error && <Feedback message={error.message} level={"error"} />}
         </View>
     </>);
 }
 
 export default Register
-

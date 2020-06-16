@@ -17,6 +17,7 @@ require('aquaponics-commons/polyfills/number')
 const { utils: { Email }, errors: { DuplicityError } } = require('aquaponics-commons')
 const { models: {User} } = require('aquaponics-data')
 const bcrypt = require('bcryptjs')
+global.fetch = require('node-fetch')
 
 module.exports = (name, surname, email, password, role, phone) => {
     String.validate.notVoid(name)
@@ -31,6 +32,7 @@ module.exports = (name, surname, email, password, role, phone) => {
     
     return User.findOne({ email })
         .then(user => {
+            debugger
             if (user) throw new DuplicityError(`user with e-mail ${email} already exists`)
 
             return bcrypt.hash(password, 10)

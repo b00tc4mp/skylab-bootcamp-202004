@@ -9,14 +9,14 @@ import {
 } from "react-native";
 
 import styles from "./styles"
-import { Navbar } from '../index';
-
+import Navbar from '../Navbar';
 
 
 
 // import { MaterialCommunityIcons } from '@expo/vector-icons';
 // import PropTypes from 'prop-types';
 // import { weatherConditions } from '../utils/WeatherConditions';
+
 
 
 function Forecast() {

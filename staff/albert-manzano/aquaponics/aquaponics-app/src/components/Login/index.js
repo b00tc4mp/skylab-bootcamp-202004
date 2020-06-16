@@ -8,26 +8,28 @@ import {
     TouchableOpacity,
 } from 'react-native';
 
+import Feedback from "../Feedback";
+
 import styles from './styles';
 
-function Login({onLogin}) {
-    const [username, setUsername] = useState('')
+function Login({error,onLogin}) {
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const handleLogin = (event) => {
         event.preventDefault()
-        onLogin(username,password)
+        onLogin(email,password)
     }
 
     return (<>
         <SafeAreaView style={styles.container}>
             <View>
-                <Text style={styles.text}>Username</Text>
+                <Text style={styles.text}>email</Text>
                 <View >
                     <SafeAreaView style={styles.input}>
                         <TextInput
-                            onChangeText={(username) => setUsername( username)}
-                            placeholder="Username"
+                            onChangeText={(email) => setEmail( email)}
+                            placeholder="E-mail"
                             style={styles.placeholder}
                         ></TextInput>
                     </SafeAreaView>
@@ -47,10 +49,11 @@ function Login({onLogin}) {
                 </View>
             </View>
             <TouchableOpacity
-                onPress={(event) => handleLogin(event)}
+                onPress={handleLogin}
                 style={styles.button}>
                 <Text style={styles.submit}>Submit</Text>
             </TouchableOpacity>
+            {error && <Feedback message={error.message} level={"error"} />}
         </SafeAreaView>
     </>)
 }

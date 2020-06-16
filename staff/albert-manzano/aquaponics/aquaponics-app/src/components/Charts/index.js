@@ -9,8 +9,8 @@ import {
     Text,
 } from "react-native";
 
-import { Navbar, SideBar } from '../index';
-
+import Navbar from '../Navbar';
+import SideBar from '../SideBar'
 import styles from './styles';
 
 function Charts() {
@@ -24,7 +24,7 @@ function Charts() {
         <View style={styles.container}>
             <ImageBackground
                 source={require("../../../assets/images/lettuce3.jpg")} style={styles.background}>
-                <Navbar onDisplaySide={handleSide} />
+                <Navbar name={name} onDisplaySide={handleSide} />
                 {displayed && <SideBar />}
                 <View >
                     <View style={styles.canvas}>
@@ -41,7 +41,7 @@ function Charts() {
                     {view === "ph" && (<Image
                         source={require("../../../assets/images/temp.png")}
                         style={styles.iconTemp}
-                        
+
                     ></Image>)}
                     <TouchableHighlight onPress={() => handleOnDaily()}>
                         <Text style={styles.daily}>daily</Text>

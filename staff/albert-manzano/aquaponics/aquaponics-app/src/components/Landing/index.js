@@ -1,44 +1,81 @@
 import React, { useState } from 'react';
 import {
     ImageBackground,
-    SafeAreaView
+    SafeAreaView,
+    Text
 } from 'react-native';
+
+import { authenticateUser, registerUser } from 'aquaponics-client-logic'
 
 import styles from './styles';
 
-import { SideIntro, Login, Navbar, Register } from '../index';
+import SideIntro from '../SideIntro'
+import Login from '../Login'
+import Navbar from '../Navbar'
+import Register from '../Register'
 
-function Landing({error, onLogin,onRegister}) {
+
+function Landing({ onAuthorized }) {
     const [view, setView] = useState('landing')
     const [displayed, setSide] = useState(false);
+    const [error, setError] = useState('')
+
 
     const handleSide = () => setSide(!displayed);
 
     const handleGoToRegister = () => {
         setSide(false)
         setView("register")
+        setError(null)
     }
 
     const handleGoToLogin = () => {
         setView("login")
         setSide(false)
+        setError(null)
+    }
+
+    const handleLogin = async (email, password) => {
+        try {
+            setError(null)
+            const token = await authenticateUser(email, password)
+            if(token!==null) return onAuthorized(token)
+            else throw new Error('authorization problem, please retry')
+ 
+        } catch (error) {
+            if (error) setError(error)
+        }
+    }
+
+    const handleRegister = async (name, surname, email, password, _password, phone) => {
+       
+        try {
+            setError(null)
+            const result = await registerUser(name, surname, email, password, _password, phone)
+            if (!result) setView('login')
+        } catch (error) {
+            console.log(error)
+            if (error) setError(error)
+        }
+
     }
 
     return (<>
         <SafeAreaView style={styles.container}>
-            <Navbar onDisplaySide={handleSide} />
+            <Navbar   onDisplaySide={handleSide} />
             <ImageBackground source={require('../../../assets/images/lettuce1.jpg')} style={styles.image}>
+                {view === 'landing' && <Text style={styles.title} >Welcome to Red Rock Aquaponics</Text>}
                 {view === 'landing' && (<>
                     {displayed && < SideIntro onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
                 </>)}
                 {view === 'login' && (<>
                     {/* <Navbar onDisplaySide={handleSide} /> */}
-                    <Login onLogin={onLogin}/>
+                    <Login error={error} onLogin={handleLogin} />
                     {displayed && <SideIntro onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
                 </>)}
                 {view === 'register' && (<>
                     {/* <Navbar onDisplaySide={handleSide} /> */}
-                    <Register error={error} onRegister={onRegister}/>
+                    <Register error={error} onRegister={handleRegister} />
                     {displayed && <SideIntro onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
                 </>)}
             </ImageBackground>

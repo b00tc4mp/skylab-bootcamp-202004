@@ -26,7 +26,7 @@ module.exports = new Schema({
     },
 
     role:{
-        enum:["admin","user", "arduino"],
+        enum:["admin","user"],
         type: String,
         default:"user",
     },

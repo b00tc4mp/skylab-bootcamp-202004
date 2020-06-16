@@ -1,4 +1,4 @@
-const { utils: { jwtPromised } } = require('aquaponics-commons')
+const  {jwtPromised}  = require('aquaponics-node-commons')
 
 module.exports = (secret, errorHandler) =>
     (req, res, next) => {

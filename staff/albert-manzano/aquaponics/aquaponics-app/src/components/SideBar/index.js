@@ -9,69 +9,47 @@ import {
 
 import styles from './styles'
 
-function SideBar({ onGoToCharts, onGoToRegister,onGoToGreenhouse,onGoToForescast,onGoToCalendar,onGoToLogout }) {
-
-    const handleGoToCharts = () => {
-        onGoToCharts()
-    }
-
-    const handleGoToRegister = () => {
-        onGoToRegister()
-    }
-
-    const handleGoToGreenhouse = () => {
-        onGoToGreenhouse()
-    }
-
-    const handleGoToForecast = () => {
-        onGoToForescast()
-    }
-    
-    const handleGoToCalendar = () => {
-        onGoToCalendar()
-    }
-
-    const handleGoToLogout = () => {
-        onGoToLogout()
-    }
-
+function SideBar({ onGoToCharts, onGoToRegister, onGoToGreenhouse, onGoToForecast, onGoToCalendar, onGoToLogout, role }) {
 
     return (<>
         <View style={styles.container}>
             <View>
-                <Text style={styles.textCharts}> Charts</Text>
-                <TouchableOpacity onPress={() => handleGoToCharts()}>
-                    <Image source={require('../../../assets/images/charts.png')} style={styles.iconCharts} />
+                <Text style={styles.text}> Charts</Text>
+                <TouchableOpacity onPress={onGoToCharts}>
+                    <Image source={require('../../../assets/images/charts.png')} style={styles.icon} />
+                </TouchableOpacity>
+            </View>
+            {role === 'admin' && (<>
+                <View>
+                    <Text style={styles.text}> Manager </Text>
+                    <TouchableOpacity onPress={onGoToRegister}>
+                        <Image source={require('../../../assets/images/register.png')} style={styles.icon} />
+                    </TouchableOpacity>
+                </View>
+            </>)
+            }
+            <View>
+                <Text style={styles.text}> Greenhouse </Text>
+                <TouchableOpacity onPress={onGoToGreenhouse}>
+                    <Image source={require('../../../assets/images/greenhouse.png')} style={styles.icon} />
                 </TouchableOpacity>
             </View>
             <View>
-                <Text style={styles.textRegister}> Register </Text>
-                <TouchableOpacity onPress={() => handleGoToRegister()}>
-                    <Image source={require('../../../assets/images/register.png')} style={styles.iconRegister} />
+                <Text style={styles.text}> Forecast </Text>
+                <TouchableOpacity onPress={onGoToForecast}>
+                    <Image source={require('../../../assets/images/forecast.png')} style={styles.icon} />
                 </TouchableOpacity>
             </View>
             <View>
-                <Text style={styles.textGreenhouse}> Greenhouse </Text>
-                <TouchableOpacity onPress={() => handleGoToGreenhouse()}>
-                    <Image source={require('../../../assets/images/greenhouse.png')} style={styles.iconGreenhouse} />
+                <Text style={styles.text}> Calendar </Text>
+                <TouchableOpacity onPress={onGoToCalendar}>
+                    <Image source={require('../../../assets/images/calendar.png')} style={styles.icon} />
                 </TouchableOpacity>
             </View>
             <View>
-                <Text style={styles.textForecast}> Forecast </Text>
-                <TouchableOpacity onPress={() => handleGoToForecast()}>
-                    <Image source={require('../../../assets/images/forecast.png')} style={styles.iconForecast} />
-                </TouchableOpacity>
-            </View>
-            <View>
-                <Text style={styles.textCalendar}> Calendar </Text>
-                <TouchableOpacity onPress={() => handleGoToCalendar()}>
-                    <Image source={require('../../../assets/images/calendar.png')} style={styles.iconCalendar} />
-                </TouchableOpacity>
-            </View>
-            <View>
-                <Text style={styles.textLogout}> Logout </Text>
-                <TouchableOpacity onPress={() => handleGoToLogout()}>
-                    <Image source={require('../../../assets/images/logout.png')} style={styles.iconLogout} />
+                <Text style={styles.text}> Logout </Text>
+                <TouchableOpacity onPress={onGoToLogout}>
+                    <Image source={require('../../../assets/images/logout.png')} style={styles.icon} />
                 </TouchableOpacity>
             </View>
         </View>
