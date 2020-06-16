@@ -35,7 +35,7 @@ api.get('/products-all', retrieveProducts)
 
 api.get('/underlyings/:ticker', retrieveUnderlyings)
 
-api.get('/user/trades', verifyExtractJwt, retrieveUserTrades)
+api.get('/users/trades', verifyExtractJwt, retrieveUserTrades)
 
 api.get('/products?', searchProducts)
 
