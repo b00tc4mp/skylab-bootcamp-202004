@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, SafeAreaView, Modal, Button } from 'react-native'
-import { Formik } from 'formik'
 
 import { useRoute } from '@react-navigation/native'
 import { AntDesign } from '@expo/vector-icons';
@@ -9,7 +8,7 @@ import { SearchBar } from 'react-native-elements';
 import AppPicker from '../components/AppPicker'
 import AppTextInput from '../components/AppTextInput'
 
-import { searchEscapeRoom, retrieveUser } from 'escape-me-client-logic'
+import { searchEscapeRoom, retrieveEscapeIds } from 'escape-me-client-logic'
 
 import Card from '../components/Card'
 
@@ -34,7 +33,7 @@ export default function () {
     let escapeList
     useEffect(() => {
         (async () => {
-            const { participated = [], pending = [], favorites = [] } = await retrieveUser(token)
+            const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds(token)
             setUserLists({ participated, pending, favorites })
         })()
     }, [userLists, escapeRooms])
@@ -65,7 +64,7 @@ export default function () {
                         if (lessThanPriceMax) filter['lessThanPriceMax'] = lessThanPriceMax
                         if (moreThanPlayersMin) filter['moreThanPlayersMin'] = moreThanPlayersMin
                         if (lessThanPlayersMax) filter['lessThanPlayersMax'] = lessThanPlayersMax
-                        console.log(filter)
+
                         escapeList = await searchEscapeRoom(query, filter)
                         setEscapeRooms(escapeList)
                         setSearched(true)

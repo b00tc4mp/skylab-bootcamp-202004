@@ -9,7 +9,7 @@ import CardDetails from './app/screens/CardDetails'
 import Profile from './app/screens/Profile'
 import Search from './app/screens/Search'
 import AddUsers from './app/screens/AddUsers'
-import SearchFilter from './app/screens/SearchFilter'
+import Pending from './app/screens/Pending'
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
@@ -57,7 +57,6 @@ export default function () {
       {token && <NavigationContainer>
         <NavTabs token={token} />
       </NavigationContainer>}
-      {/* <SearchFilter /> */}
     </View>
 
   );
@@ -120,7 +119,8 @@ function NavTabs({ token }) {
       />
       <Tab.Screen
         name="Pending"
-        component={CardDetails}
+        component={Pending}
+        initialParams={{ 'token': token }}
         options={{
           tabBarLabel: 'Pending',
           tabBarIcon: ({ color }) => (

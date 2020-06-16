@@ -10,7 +10,7 @@ import {
 import { useRoute } from '@react-navigation/native'
 import UserItem from '../components/UserItem'
 import Card from '../components/Card'
-import { retrieveEscapeRooms, retrieveUser, retrieveFollowing } from 'escape-me-client-logic'
+import { retrieveEscapeRooms, retrieveUser, retrieveFollowing, retrieveEscapeIds, retrieveFollowingIds } from 'escape-me-client-logic'
 
 import { Entypo, FontAwesome, MaterialIcons, Ionicons } from '@expo/vector-icons';
 
@@ -19,6 +19,7 @@ export default function Profile() {
     const token = route.params['token']
 
     const [userLists, setUserLists] = useState()
+    const [followingIds, setFollowingIds] = useState()
     const [tag, setTag] = useState('favorites')
     const [user, setUser] = useState({})
     const [following, setFollowing] = useState([])
@@ -33,8 +34,11 @@ export default function Profile() {
                 setUser({ name, surname, username })
             }
 
-            const { participated = [], pending = [], favorites = [], following = [] } = await retrieveUser(token)
-            setUserLists({ participated, pending, favorites, following })
+            const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds(token)
+            setUserLists({ participated, pending, favorites })
+
+            const { followingIds = [] } = await retrieveFollowingIds(token)
+            setFollowingIds(followingIds)
 
             if (tag !== '') {
 
@@ -99,7 +103,7 @@ export default function Profile() {
                                     surname={surname ? surname : ''}
                                     email={`@${username}`}
                                     image={require('../assets/tyler.jpg')}
-                                    following={userLists.following.includes(id)}
+                                    following={followingIds.includes(id)}
                                     userId={id}
                                     token={token}
                                 />)

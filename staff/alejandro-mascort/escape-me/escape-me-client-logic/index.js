@@ -9,5 +9,7 @@ module.exports = {
     retrieveEscapeRooms: require('./retrieve-escape-rooms'),
     retrieveFollowing: require('./retrieve-following'),
     searchEscapeRoom: require('./search-escape-room'),
-    searchUsers: require('./search-users')
+    searchUsers: require('./search-users'),
+    retrieveFollowingIds: require('./retrieve-following-ids'),
+    retrieveEscapeIds: require('./retrieve-escape-ids')
 }

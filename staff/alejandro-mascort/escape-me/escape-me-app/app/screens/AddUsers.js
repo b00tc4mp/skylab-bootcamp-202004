@@ -4,7 +4,7 @@ import { useRoute } from '@react-navigation/native'
 import { AntDesign } from '@expo/vector-icons';
 
 import { SearchBar } from 'react-native-elements';
-import { searchUsers, retrieveUser } from 'escape-me-client-logic'
+import { searchUsers, retrieveFollowingIds } from 'escape-me-client-logic'
 
 import UserItem from '../components/UserItem'
 
@@ -20,7 +20,7 @@ export default function () {
     let _users
     useEffect(() => {
         (async () => {
-            const { following = [] } = await retrieveUser(token)
+            const { following = [] } = await retrieveFollowingIds(token)
             setFollowing(following)
         })()
     }, [users, following])
