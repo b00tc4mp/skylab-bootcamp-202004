@@ -1,4 +1,3 @@
-
 URL.isUrl = function (url) {
     try {
         new URL(url)

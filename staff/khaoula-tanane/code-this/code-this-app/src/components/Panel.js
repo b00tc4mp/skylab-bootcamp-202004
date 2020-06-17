@@ -1,11 +1,11 @@
 import React from 'react'
-import './Home.sass'
+import './Panel.sass'
 import Challenges from './Challenges'
 import { Route } from 'react-router-dom'
 import Categories from './Categories'
 import Challenge from './Challenge'
 
-function Home(props) {
+function Panel(props) {
     return (
 
         <div className="wrapper">
@@ -65,10 +65,9 @@ function Home(props) {
             <Route path={`${props.match.path}/categories`} component={Categories} />
             <Route path={`${props.match.path}/categories/:category`} component={Challenges} />
             
-
           </div>
         </div>
         
       );
 }
-export default Home
+export default Panel

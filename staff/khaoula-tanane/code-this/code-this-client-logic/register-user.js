@@ -7,7 +7,7 @@ module.exports = function (name, email, password) {
     Email.validate(email)
 
     String.validate.lengthGreaterEqualThan(password, 8)
-
+    debugger
     return call(
         'POST',
         `${this.API_URL}/users`,
@@ -16,7 +16,6 @@ module.exports = function (name, email, password) {
     )
         .then(({ status, body }) => {
             if (status === 201) return
-            console.log('yes')
             const { error } = JSON.parse(body)
 
             throw new Error(error)

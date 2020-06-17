@@ -64,7 +64,6 @@ mongoose.connect(MONGODB_URL)
         app.post('/category', parseBody, (req, res) => {
             const { body: { name, challenges } } = req
             try {
-                console.log('hii')
                 createCategory(name, challenges)
                     .then(() => res.status(201).send())
                     .catch(error => handleError(error, res))
@@ -100,7 +99,6 @@ mongoose.connect(MONGODB_URL)
         })
 
         app.get('/category/:categoryName', (req, res) => {
-            console.log('holaaa')
             const { params: {categoryName}} = req
 
             try {
