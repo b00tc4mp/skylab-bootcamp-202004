@@ -8,9 +8,9 @@ function Challenge({description, solution, difficulty, tests }) {
     //         <p className="item_info">{tests}</p>
     //     </div>
       
-   return <div class="container">
-   <div class="section-wrapper">
-     <div class="section">
+   return <div className="container">
+   <div className="section-wrapper">
+     <div className="section">
        <h4>{description}</h4>
        <p>{difficulty}</p>
        <p>{tests}</p>

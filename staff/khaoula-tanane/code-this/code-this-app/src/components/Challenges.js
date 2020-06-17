@@ -3,9 +3,9 @@ import { retrieveChallenges} from 'code-this-client-logic'
 import Challenge from './Challenge'
 import retrieveCategory from 'code-this-client-logic/retrieve-category'
 
-function Challenges(props){
+function Challenges({match: {params: {category: categoryName}}}){
     const [category, setCategory] = useState(null)
-    const {match: {params: {category: categoryName}}} = props
+    
     useEffect(()=>{
         
         handleRetrieveCategory()

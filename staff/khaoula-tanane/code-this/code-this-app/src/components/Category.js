@@ -10,9 +10,9 @@ function Category({ name, match }) {
     //         <p className="item_info">{tests}</p>
     //     </div>
       
-   return <div class="container">
-   <div class="section-wrapper">
-     <div class="section">
+   return <div className="container">
+   <div className="section-wrapper">
+     <div className="section">
      <Link to={`${match.path}/${name}`}>{name}</Link>
        <div>
        </div>

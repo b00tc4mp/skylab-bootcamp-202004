@@ -21,13 +21,13 @@ function Panel(props) {
               </div>
               <ul>
                 <li><a href="#">
-                <span class="material-icons">search</span>
+                <span className="material-icons">search</span>
                   </a></li>
                 <li><a href="#">
-                <span class="material-icons">notifications</span>
+                <span className="material-icons">notifications</span>
                   </a></li>
                 <li><a href="#">
-                <span class="material-icons">person</span>
+                <span className="material-icons">person</span>
                   </a></li>
               </ul>
             </div>
@@ -41,7 +41,7 @@ function Panel(props) {
                   <span className="title">Challenges</span>
                 </a></li>
               <li><a href="#">
-              <span class="material-icons">people</span>
+              <span className="material-icons">people</span>
                   <span className="title">Face to Face</span>
                 </a></li>
               <li><a href="#">
