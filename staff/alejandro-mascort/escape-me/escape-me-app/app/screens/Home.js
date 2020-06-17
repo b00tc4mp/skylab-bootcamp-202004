@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { SafeAreaView, ScrollView, Text } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import Card from '../components/Card'
-import { retrieveEscapeRooms, retrieveEscapeIds } from 'escape-me-client-logic'
+import { suggestEscapeRooms, retrieveEscapeIds } from 'escape-me-client-logic'
 
 export default function (props) {
     const route = useRoute()
@@ -16,8 +16,10 @@ export default function (props) {
             const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds(token)
             setEscapes({ participated, pending, favorites })
 
-            escapeList = await retrieveEscapeRooms(token, 'pending')
-            setEscapeRooms(escapeList)
+            if (!escapeRooms.length) {
+                escapeList = await suggestEscapeRooms(token)
+                setEscapeRooms(escapeList)
+            }
         })()
     }, [escapes])
 

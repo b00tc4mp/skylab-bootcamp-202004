@@ -16,8 +16,10 @@ export default function (props) {
             const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds(token)
             setEscapes({ participated, pending, favorites })
 
-            escapeList = await retrieveEscapeRooms(token, 'pending')
-            setEscapeRooms(escapeList)
+            if (!escapeRooms.length) {
+                escapeList = await retrieveEscapeRooms(token, 'pending')
+                setEscapeRooms(escapeList)
+            }
         })()
     }, [escapes])
 

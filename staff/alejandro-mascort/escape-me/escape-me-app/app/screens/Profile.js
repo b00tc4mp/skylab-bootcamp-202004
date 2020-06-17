@@ -41,7 +41,6 @@ export default function Profile() {
             setFollowingIds(followingIds)
 
             if (tag !== '') {
-
                 escapeList = await retrieveEscapeRooms(token, tag)
                 setEscapeRooms(escapeList)
             }
@@ -76,7 +75,6 @@ export default function Profile() {
                 </View>
                 {
                     tag !== '' ?
-
                         escapeRooms.length ?
                             escapeRooms.map(({ city, id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin }) => {
                                 return (<Card

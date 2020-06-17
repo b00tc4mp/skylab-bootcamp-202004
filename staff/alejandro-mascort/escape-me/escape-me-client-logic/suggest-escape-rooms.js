@@ -2,13 +2,12 @@ require('escape-me-commons/polyfills/string')
 const { utils: { call } } = require('escape-me-commons')
 const context = require('./context')
 
-module.exports = function (token, userId) {
-    String.validate.notVoid(token)
-    if (userId) String.validate.notVoid(userId)
-
-    return call('GET', `${this.API_URL}/users/${userId ? userId : ''}`,
+module.exports = function (token) {
+    if (token) String.validate.notVoid(token)
+    debugger
+    return call('GET', `${this.API_URL}/suggest/`,
         undefined,
-        { 'Authorization': `Bearer ${token}` })
+        token ? { 'Authorization': `Bearer ${token}` } : { 'Content-type': 'application/json' })
         .then(({ status, body }) => {
             if (status === 200) {
                 return JSON.parse(body)
