@@ -10,45 +10,49 @@ import {
 
 import styles from "./styles"
 import Navbar from '../Navbar';
+import SideBar from '../SideBar'
 
+import { forecast } from 'aquaponics-client-logic'
 
-
-// import { MaterialCommunityIcons } from '@expo/vector-icons';
-// import PropTypes from 'prop-types';
-// import { weatherConditions } from '../utils/WeatherConditions';
-
-
-
-function Forecast() {
+function Forecast({ onGoToManager, onGoToCalendar, onGoToCharts, onGoToForecast, onGoToGreenhouse, onGoToLogout }) {
     const [view, setView] = useState('today')
 
     const [displayed, setSide] = useState(false);
 
     const handleSide = () => setSide(!displayed);
-    // useEffect
 
-    const handleOnToday = () => {
-        setView('future')
-    }
+        useEffect(async () => {
+        let  temp, temp_max, temp_min, main, wind  = await forecast(0)
 
-    const handleOnFuture = () => {
-        setView('today')
-    }
+    }, [])
 
     return (
-        <View >
-            <View >
-                <ImageBackground source={require("../../../assets/images/greenhouse4.jpg")} style={styles.image}>
-                    {view === "today" && (<><Navbar onDisplaySide={handleSide} />
-                        <View>
-                            <View style={styles.canvas}>
+        <View style={styles.container}>
+            <Navbar onDisplaySide={handleSide} />
+            {displayed && <SideBar onGoToCalendar={onGoToCalendar} onGoToManager={onGoToManager} onGoToCharts={onGoToCharts} onGoToGreenhouse={onGoToGreenhouse} onGoToForecast={onGoToForecast} onGoToLogout={onGoToLogout} />}
+            <ImageBackground source={require("../../../assets/images/greenhouse4.jpg")} style={styles.image}>
+                {view === "today" && (<>
 
+                    <View style={styles.canvas}>
+
+                        <View style={styles.weatherContainer}>
+                            <View style={styles.headerContainer}>
+                                <MaterialCommunityIcons size={48} name={weather-{main}} />
+                                <Text style={styles.temp}> {temp}C˚</Text>
                             </View>
-                            <TouchableHighlight onPress={() => handleOnFuture()}>
-                                <Text style={styles.text}>Next 3 days</Text>
-                            </TouchableHighlight>
-                        </View></>)}
-                    {view === "future" && (<>
+                            <View style={styles.bodyContainer}>
+
+                                <Text style={styles.temp_min}>{temp_min}</Text>
+                                <Text style={styles.temp_max}>{temp_max}</Text>
+                            </View>
+                        </View>
+
+                    </View>
+                    <TouchableHighlight style={styles.buttons} onPress={() => handle3daysForecast()}>
+                        <Text style={styles.text}>Next 3 days</Text>
+                    </TouchableHighlight>
+                </>)}
+                {/* {view === "future" && (<>
                         <Navbar onDisplaySide={handleSide} />
                         <View style={styles.wrap}>
                             <View>
@@ -66,9 +70,8 @@ function Forecast() {
                             <TouchableHighlight onPress={() => handleOnToday()}>
                                 <Text style={styles.text}>Today</Text>
                             </TouchableHighlight>
-                        </View></>)}
-                </ImageBackground>
-            </View>
+                        </View></>)} */}
+            </ImageBackground>
         </View>
     );
 }

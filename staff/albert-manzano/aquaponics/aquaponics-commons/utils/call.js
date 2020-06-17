@@ -5,7 +5,7 @@ require('../polyfills/function')
 module.exports = function (method, url, body, headers) {
     Http.validateMethod(method)
     URL.validate(url)
-    debugger
+   
     return fetch(url, {
         method: method || 'GET',
         headers: headers,

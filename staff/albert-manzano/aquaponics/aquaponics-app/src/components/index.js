@@ -10,6 +10,8 @@ import Forecast from './Forecast'
 import Manager from './Manager'
 import Register from './Register'
 import Feedback from './Feedback'
+import Add from './Add'
+import Users from './Users'
 
 export {
     Login,
@@ -23,5 +25,7 @@ export {
     Forecast,
     Manager,
     Register,
-    Feedback
+    Feedback,
+    Add,
+    Users
 }

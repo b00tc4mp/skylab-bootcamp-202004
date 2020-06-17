@@ -1,51 +1,50 @@
 import React, { useState } from "react";
 import {
-  View,
   Text,
-  SafeAreaView
+  TouchableOpacity,
+  SafeAreaView,
+  Image
+
 } from "react-native";
 
-import EntypoIcon from "react-native-vector-icons/Entypo";
-
 import Navbar from "../Navbar";
-
+import SideBar from "../SideBar"
 import styles from './styles'
+import Add from '../Add'
+import Users from "../Users";
 
-function Manager() {
-  const [view, setView] = useState('manager')
-
-
+function Manager({ onGoToManager, onGoToCalendar, onGoToCharts, onGoToForecast, onGoToGreenhouse, onGoToLogout }) {
   const [displayed, setSide] = useState(false);
+  const [view, setView] = useState('manager')
+  const [error, setError] = useState('')
 
   const handleSide = () => setSide(!displayed);
 
-  const handleGoToAdd = () => {
-    setSide(false)
-    setView("register")
-    setError(null)
+  const onBack=()=>{
+    setView('manager')
   }
 
-  const handleGoToUsers = () => {
-    setView("login")
-    setSide(false)
-    setError(null)
-  }
-
-  return (<>
+  return (
     <SafeAreaView style={styles.container}>
       <Navbar onDisplaySide={handleSide} />
+
+      {displayed && <SideBar onGoToCalendar={onGoToCalendar} onGoToManager={onGoToManager} onGoToCharts={onGoToCharts} onGoToGreenhouse={onGoToGreenhouse} onGoToForecast={onGoToForecast} onGoToLogout={onGoToLogout} />}
       {view === 'manager' && (<>
-        <View style={styles.rect}>
-          <EntypoIcon name="users" style={styles.icon}></EntypoIcon>
-          <Text style={styles.usersList}>Users List</Text>
-          <EntypoIcon name="add-user" style={styles.icon2}></EntypoIcon>
-          <Text style={styles.register}>register</Text>
-        </View>
-      </>)}
-      {view === 'users'}
-      {view === 'add'}
+        <TouchableOpacity onPress={() => setView('add')}>
+          <Image source={require('../../../assets/images/admin.png')} style={styles.icon} />
+        </TouchableOpacity>
+        <Text style={styles.text}>Add user</Text>
+        <TouchableOpacity onPress={() => setView('users')}>
+          <Image source={require('../../../assets/images/user.png')} style={styles.icon} />
+        </TouchableOpacity>
+        <Text style={styles.text}>Users</Text>
+      </>
+      )}
+      {view === 'add' && <Add handleGoToBack={onBack}/>}
+      {view === 'users' && <Users handleGoToBack={onBack}/>}
+
     </SafeAreaView>
-  </>);
+  );
 }
 
 

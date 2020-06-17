@@ -2,8 +2,7 @@ import {StyleSheet,Dimensions} from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      
+      flex: 1
     },
     
     image: {
@@ -12,14 +11,9 @@ const styles = StyleSheet.create({
       // resizeMode:"cover"
     },
 
-    error:{
-      alignSelf:"center",
-      marginTop:100,
-    },
-
-    greet:{
-      fontSize:50,
-      color: '#FFFFFF',
+    name:{
+      fontSize:40,
+      color:'#F0FFFF',
     }
   });
 

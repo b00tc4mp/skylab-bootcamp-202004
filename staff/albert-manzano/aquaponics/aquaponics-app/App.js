@@ -11,54 +11,39 @@ import {
 
 import { Landing, Home, Charts, Navbar, Forecast, Manager } from './src/components';
 
-import { retrieveUser } from 'aquaponics-client-logic'
+import logic, { retrieveUser } from 'aquaponics-client-logic'
+
+logic.__context__.storage = AsyncStorage;
 
 export default function App() {
-  const [view, setView] = useState('landing')
+  const [view, setView] = useState('forecast')
   const [error, setError] = useState()
   const [name, setName] = useState('')
-  const [role,setRole] = useState('')
-  
+  const [role, setRole] = useState('')
 
   const handleAuthorized = async (token) => {
-    try {
-      debugger
-      const result = await AsyncStorage.setItem("token", token)
-      if (result === null) {
-        const { name, confirmed, role, status } = await retrieveUser(token)
-        if (confirmed && status==='enable') {
-          setName(name)
-          setRole(role)
-          setView('home')
-          console.log(name,role,status)
-        } else {
-          setView('home')
-          throw new Error('Contact your provider to confirm your registration')
-        }
-      }
-    } catch (error) {
-      if (error) setError(error)
+    const { name, confirmed, role, status } = await retrieveUser(token)
+    if (confirmed && status === 'enable') {
+      setName(name)
+      setRole(role)
+      setView('home')
+    } else {
+      setView('home')
+      throw new Error('Contact your provider to confirm your registration')
     }
   }
 
-  useEffect(() => {
-    try {
-      (async () => {
-        const result = await AsyncStorage.getItem("token")
-        if (!result === null) setView('home')
-        else setView('landing')
-      })()
-    } catch (error) {
-      if (error) throw new Error('bleeeeee')
-    }
-  }, [])
+  logic.__context__.storage = AsyncStorage;
+
+
+  const handleGoToManager = () => {
+    setView('manager')
+  }
 
   const handleGoToCharts = () => {
     setView('charts')
   }
-  const handleGoToRegister = () => {
-    setView('manager')
-  }
+
   const handleGoToGreenhouse = () => {
     setView('greenhouse')
   }
@@ -68,23 +53,24 @@ export default function App() {
   const handleGoToCalendar = () => {
     setView('calendar')
   }
+  
   const handleGoToLogout = async (event) => {
-    console.log('jaaaaa')
+
     preventDefault(event)
     const result = await AsyncStorage.removeItem("token")
-  
+    console.log(result)
     if (result === null) setView('landing')
   }
 
   return (<>
     <SafeAreaView style={styles.container}>
-      {view === 'landing' && <Landing error={error} onAuthorized={handleAuthorized} />}
-      {view === 'home' && <Home role={role} name={name} error={error} onGoToCharts={handleGoToCharts} onGoToRegister={handleGoToRegister} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
-      {view === 'charts' && <Charts />}
-      {view === 'manager' && <Manager />}
-      {view === 'greenhouse' && <Greenhouse />}
-      {view === 'forecast' && <Forecast />}
-      {view === 'calendar' && <Calendar />}
+      {view === 'landing' && <Landing view={'landing'} error={error} onAuthorized={handleAuthorized} />}
+      {view === 'home' && <Home role={role} name={name} error={error} onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
+      {view === 'charts' && <Charts onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
+      {view === 'manager' && <Manager onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
+      {view === 'greenhouse' && <Greenhouse onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
+      {view === 'forecast' && <Forecast onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
+      {view === 'calendar' && <Calendar onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
     </SafeAreaView>
   </>);
 }

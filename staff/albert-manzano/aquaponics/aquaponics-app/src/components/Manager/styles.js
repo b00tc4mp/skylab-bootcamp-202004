@@ -1,48 +1,26 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1
-    },
-    navbar: {
-      height: 100,
-      width: 494,
-      marginLeft: -41
-    },
-    rect: {
-      width: 400,
-      height: 800,
-      backgroundColor: "rgba(196,196,196,1)"
-    },
-  
-    icon: {
-      color: "rgba(0,0,0,1)",
-      fontSize: 40,
-      height: 44,
-      width: 40,
-      marginTop: 118,
-      marginLeft: 178
-    },
-    usersList: {
-     
-      color: "#121212",
-      marginTop: 34,
-      marginLeft: 157
-    },
-    icon2: {
-      color: "rgba(0,0,0,1)",
-      fontSize: 40,
-      height: 44,
-      width: 40,
-      marginTop: 122,
-      marginLeft: 186
-    },
-    register: {
-     
-      color: "#121212",
-      marginTop: 17,
-      marginLeft: 164
-    }
-  });
+  container: {
+    flex: 1,
+    // alignItems: "center",
+    // flexDirection: "column",
+    backgroundColor: "#A9A9A9",
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
+  },
 
-export default styles
+  icon: {
+    alignSelf: "center",
+    height: 100,
+    width: 100,
+    marginTop: 100
+  },
+
+  text: {
+    fontWeight: 'bold',
+    alignSelf: 'center',
+  }
+});
+
+export default styles;

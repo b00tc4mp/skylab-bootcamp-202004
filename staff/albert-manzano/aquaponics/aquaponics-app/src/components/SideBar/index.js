@@ -9,8 +9,7 @@ import {
 
 import styles from './styles'
 
-function SideBar({ onGoToCharts, onGoToRegister, onGoToGreenhouse, onGoToForecast, onGoToCalendar, onGoToLogout, role }) {
-
+function SideBar({ onGoToCharts, onGoToManager,onGoToGreenhouse,onGoToForecast,onGoToCalendar,onGoToLogout ,role}) {
     return (<>
         <View style={styles.container}>
             <View>
@@ -19,15 +18,14 @@ function SideBar({ onGoToCharts, onGoToRegister, onGoToGreenhouse, onGoToForecas
                     <Image source={require('../../../assets/images/charts.png')} style={styles.icon} />
                 </TouchableOpacity>
             </View>
-            {role === 'admin' && (<>
-                <View>
-                    <Text style={styles.text}> Manager </Text>
-                    <TouchableOpacity onPress={onGoToRegister}>
-                        <Image source={require('../../../assets/images/register.png')} style={styles.icon} />
-                    </TouchableOpacity>
-                </View>
-            </>)
-            }
+            {role==="admin" && (<>
+            <View>
+                <Text style={styles.text}> Manager </Text>
+                <TouchableOpacity onPress={onGoToManager}>
+                    <Image source={require('../../../assets/images/register.png')} style={styles.icon} />
+                </TouchableOpacity>
+            </View>
+            </>)}
             <View>
                 <Text style={styles.text}> Greenhouse </Text>
                 <TouchableOpacity onPress={onGoToGreenhouse}>

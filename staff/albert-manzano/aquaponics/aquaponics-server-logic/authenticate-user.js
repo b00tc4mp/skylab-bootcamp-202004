@@ -13,7 +13,6 @@ module.exports = (email, password) => {
     String.validate.notVoid(email)
     Email.validate(email)
     String.validate.notVoid(password)
-    console.log(email,password)
     return User.findOne({ email })
         .then(user => {
             if (!user) throw new UnexistenceError(`user with e-mail ${email} does not exist`)

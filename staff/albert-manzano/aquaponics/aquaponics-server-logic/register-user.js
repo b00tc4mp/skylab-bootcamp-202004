@@ -32,7 +32,7 @@ module.exports = (name, surname, email, password, role, phone) => {
     
     return User.findOne({ email })
         .then(user => {
-            debugger
+           
             if (user) throw new DuplicityError(`user with e-mail ${email} already exists`)
 
             return bcrypt.hash(password, 10)

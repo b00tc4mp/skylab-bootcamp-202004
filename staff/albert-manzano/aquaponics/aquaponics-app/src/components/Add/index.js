@@ -6,22 +6,36 @@ import {
     TextInput,
     TouchableOpacity,
     SafeAreaView,
+    Image
 } from "react-native";
 
 import styles from './styles'
 import Feedback from "../Feedback";
 
-function Register({ error, onRegister }) {
+import registerUser from 'aquaponics-client-logic'
+
+
+function Add({ handleGoToBack }) {
     const [name, setName] = useState('')
     const [surname, setSurname] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [_password, setConfirmation] = useState('')
     const [phone, setPhone] = useState('')
+    const [role, setRole] = useState('')
+    const [success, setSuccess] = useState('')
+    const [error, setError] = useState('')
 
-    const handleRegister = (event) => {
-        event.preventDefault()
-        onRegister(name, surname, email, password, _password, phone)
+    const handleRegister = async (event) => {
+        try {
+            event.preventDefault()
+            setError('')
+            setSuccess('')
+            const result = registerUser(name, surname, email, password, _password, phone, role)
+            if (result === null) setSuccess('User was correctly registered')
+        } catch (error) {
+            if (error) setError(error.message)
+        }
     }
 
     return (<>
@@ -57,6 +71,16 @@ function Register({ error, onRegister }) {
                         ></TextInput>
                     </SafeAreaView>
                 </View>
+                <Text style={styles.text}>Role</Text>
+                <View>
+                    <SafeAreaView style={styles.input}>
+                        <TextInput
+                            onChangeText={(role) => setRole(role)}
+                            placeholder="user or admin"
+                            style={styles.placeholder}
+                        ></TextInput>
+                    </SafeAreaView>
+                </View>
                 <Text style={styles.text}>Password</Text>
                 <View >
                     <SafeAreaView style={styles.input}>
@@ -72,7 +96,6 @@ function Register({ error, onRegister }) {
                 <View >
                     <SafeAreaView style={styles.input}>
                         <TextInput
-
                             onChangeText={(_password) => setConfirmation(_password)}
                             placeholder="password "
                             secureTextEntry={true}
@@ -84,7 +107,7 @@ function Register({ error, onRegister }) {
                 <View >
                     <SafeAreaView style={styles.input}>
                         <TextInput
-                            // keyboardType={Device.isAndroid ? "numeric" : "number-pad"}
+
                             keyboardType={"numeric"}
                             onChangeText={(phone) => setPhone(phone)}
                             placeholder="phone number "
@@ -93,19 +116,20 @@ function Register({ error, onRegister }) {
                     </SafeAreaView>
                 </View>
                 <TouchableOpacity
-
-                    onPress={
-                        // error=undefined,
-                        handleRegister
-                    }
+                    onPress={handleRegister}
                     style={styles.button}>
                     <Text style={styles.submit}>Submit</Text>
                 </TouchableOpacity>
             </View>
-            {error && <Feedback message={error.message} level={"error"} />}
+            {error ? <Feedback message={error.message} level={"error"} /> : null}
+            {success ? <Feedback message={error.message} level={"success"} /> : null}
+            <TouchableOpacity
+                onPress={handleGoToBack}>
+                <Image source={require('../../../assets/images/arrow.png')} style={styles.arrow} />
+            </TouchableOpacity>
         </View>
     </>);
 }
 
-export default Register
+export default Add
 

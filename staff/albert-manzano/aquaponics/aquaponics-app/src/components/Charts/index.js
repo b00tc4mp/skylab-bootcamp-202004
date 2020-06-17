@@ -24,7 +24,7 @@ function Charts() {
         <View style={styles.container}>
             <ImageBackground
                 source={require("../../../assets/images/lettuce3.jpg")} style={styles.background}>
-                <Navbar name={name} onDisplaySide={handleSide} />
+                <Navbar onDisplaySide={handleSide} />
                 {displayed && <SideBar />}
                 <View >
                     <View style={styles.canvas}>
