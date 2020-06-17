@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process // TODO add JWT SECRET
 
 const retrieveUser = require('./retrieve-user')
 const { random } = Math

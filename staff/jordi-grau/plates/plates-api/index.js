@@ -1,19 +1,16 @@
 require('dotenv').config()
-
-const { argv: [ , , PORT_CLI], env: {PORT: PORT_ENV, SECRET, MONGODB_URL} } = process
+debugger
+const { argv: [ , , PORT_CLI], env: {PORT: PORT_ENV, JWT_SECRET, MONGODB_URL} } = process
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require ('express')
-const { registerUser } = require('plates-server-logic')
+const { registerUser, authenticateUser, createRestaurant, createMenu, searchPlate, searchRestaurant } = require('plates-server-logic')
 const bodyParser = require('body-parser')
 const { handleError } = require('./helpers')
-const { utils: { cors, jwtPromised }} = require('plates-commons')
-const { jwtVerifierExtractor } = require('./middlewares')
-const jwtVerifierExtractor = require('./middlewares/jwt-verifier-extractor')
-const mongoose  = require('plates-data')
-const createRestaurant = require('../plates-server-logic/create-restaurant')
-const createMenu = require('../plates-server-logic/create-menu')
-const searchRestaurant = require('../plates-server-logic/search-restaurant')
+const { utils: {  jwtPromised }} = require('plates-commons')
+const { jwtVerifierExtractor, cors } = require('./middlewares')
+const { name, version } = require('./package.json')
+const { mongoose }  = require('plates-data')
 
 mongoose.connect(MONGODB_URL)
     .then(()=>{
@@ -23,16 +20,19 @@ mongoose.connect(MONGODB_URL)
 
         const parseBody = bodyParser()
 
-        const verifyExtractJwt =  jwtVerifierExtractor(SECRET, handleError)
+        const verifyExtractJwt =  jwtVerifierExtractor(JWT_SECRET, handleError)
 
         app.use(cors) 
 
 
         app.post('/users', parseBody, (req, res) =>{
+            debugger
             const { body: { name, surname, email, password }} = req
 
             try {
                 registerUser(name, surname, email, password)
+                .then(() => res.status(201).send())
+                .catch(error => handleError(error, res))
             } catch (error) {
                 handleError(error, res)               
             }
@@ -40,10 +40,10 @@ mongoose.connect(MONGODB_URL)
 
         app.post('/users/auth', parseBody, (req, res) => {
             const { body: { email, password } } = req
-
+            
             try {
                 authenticateUser(email, password)
-                    .then(userId => jwtPromised.sign({ sub: userId }, SECRET, { expiresIn: '1d' }))
+                    .then(userId => jwtPromised.sign({ sub: userId }, JWT_SECRET, { expiresIn: '1d' }))
                     .then(token => res.send({ token }))
                     .catch(error => handleError(error, res))
             } catch (error) {
@@ -51,44 +51,66 @@ mongoose.connect(MONGODB_URL)
             }
         })
 
-        app.post('/users/restaurant', parseBody, (req, res) => {
+        app.post('/users/restaurant', verifyExtractJwt, parseBody, (req, res) => {
+
             const {payload: { sub: userId}, body: { name, email, cif, address, phone } } = req
             
             try {
-                createRestaurant(userId, name, email, cif, address, phone)                  
+                createRestaurant(userId, name, email, cif, address, phone)    
+                .then(()=> res.status(201).end()) 
+                .catch(error => handleError(error, res))             
             } catch (error) {
                 handleError(error, res)
             }
         })
 
-        app.post('/restaurant/menu', parseBody, (req, res) => {
+        app.post('/restaurant/menu', verifyExtractJwt, parseBody, (req, res) => {
             const { payload: { sub: userId }, body: { restaurantId, dishesIds }}   = req
 
             try {
-                createMenu(userId, restaurantId, dishesIds)                    
+                createMenu(userId, restaurantId, dishesIds)  
+                    .then(() => res.status(201).end())
+                    .catch(error => handleError(error, res))                  
             } catch (error) {
                 handleError(error, res)
             }
         })
 
         app.get('/:dishes?', (req, res) => {
-            const { query }  = req
+            const { params: {dishes} }   = req
             
             try {
-                searchPlate(query)
+                searchPlate(dishes)
+                    .then((dish) => res.status(200).json(dish))
+                    .catch(error => handleError(error, res))
             } catch (error) {
                 handleError(error, res)               
             }
         })
-
-        app.get('/:restaurant?', (req, res) => {
-            const { query } = req
-
+debugger
+        app.get('/search/:restaurant?', (req, res) => {
+            const { params: { restaurant } } = req
+debugger
             try {
-                searchRestaurant(query)
+                searchRestaurant(restaurant)
+                    .then((restaurants) => res.status(200).json(restaurants))
+                    .catch(error => handleError(error, res))
             } catch (error) {
                 handleError(error, res)
             }
+        })
+
+        app.listen(PORT, () => console.log(`${name} ${version} running on port ${PORT}`))
+
+        process.on('SIGINT', () => {
+            mongoose.disconnect()
+                .then(() => console.log('\ndisconnected mongo'))
+                .catch(error => console.error('could not disconnect from mongo', error))
+                .finally(() => {
+                    console.log(`${name} ${version} stopped`)
+
+                    process.exit()
+                })
         })
 
     })
