@@ -1,51 +1,45 @@
 import React, {useState, useEffect} from 'react'
 // import './register.sass'
 import Feedback from './Feedback'
-import {registerUser} from 'takemytask-client-logic'
+import {authenticate} from 'takemytask-client-logic'
 
-export default function Register({onRegister, onGoToLogin}) {
+export default function Register({onLogin, onGoToRegister}) {
 
     const [error, setError] = useState('')
 
     const handleSubmit = (event) => {
         console.log('onsumbmit')
         event.preventDefault()
-        let { name, surname, email, password, adress } = event.target
+        let { password, email} = event.target
 
-        name = name.value
-        surname = surname.value
         email = email.value
         password = password.value
-        adress = adress.value
 
         try {
             setError('')
-            registerUser(name, surname, email, password, adress)
-                .then(onRegister) 
+            authenticate(email, password)
+                .then(onLogin) 
                 .catch(error => setError(error.message))
         }catch({message}){
             setError(message)
         }
     }
 
-    const handleGoToLogin= (event) => {
+    const handleGoToRegister= (event) => {
         event.preventDefault()
-        onGoToLogin()
+        onGoToRegister()
     }
 
-    return <section className="register">
+    return <section className="Login">
             <form onSubmit = {handleSubmit}>
-                <h1>Register</h1>
+                <h1>Login</h1>
                 <br/>
-                <input type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}" />
-                <input type="text" name="surname" placeholder="surname" required pattern="[A-Za-z]{1,20}" />
                 <input type="email" name="email" placeholder="e-mail" required />
                 <input type="password" name="password" placeholder="password" required minLength="8" />
-                <input type="text" name="adress" placeholder="adress" />
                 <br/>
                 <button>Submit</button>
                 <br/>
-                or <a href="" onClick={handleGoToLogin}>Login</a>
+                or <a href="" onClick={handleGoToRegister}>Register</a>
                 {error && <Feedback message={error} level="error" />}
             </form>
         </section>

@@ -2,7 +2,7 @@
   "name": "takemytask-client-logic",
   "version": "1.0.0",
   "description": "",
-  "main": "authenticate-user.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

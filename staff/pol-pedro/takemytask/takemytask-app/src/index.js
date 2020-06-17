@@ -2,7 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import { HashRouter as Router } from 'react-router-dom'
-import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from './serviceWorker'
+import { context } from 'takemytask-client-logic'
+
+const { REACT_APP_API_URL: API_URL } = process.env
+
+context.API_URL = API_URL
 
 ReactDOM.render(
   <React.StrictMode>
