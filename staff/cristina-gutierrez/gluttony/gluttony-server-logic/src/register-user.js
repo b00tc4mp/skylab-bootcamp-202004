@@ -3,8 +3,10 @@ require("gluttony-commons/polyfills/json")
 const { utils: { Email }, errors: { DuplicityError } } = require("gluttony-commons")
 const { models: { Users } } = require("gluttony-data")
 const bcrypt = require("bcryptjs")
+const { v4: uuidv4 } = require("uuid")
 
 module.exports = (id, name, surname, email, password) => {
+    id = id || uuidv4()
     String.validate.notVoid(id)
     String.validate.notVoid(name)
     String.validate.notVoid(surname)
