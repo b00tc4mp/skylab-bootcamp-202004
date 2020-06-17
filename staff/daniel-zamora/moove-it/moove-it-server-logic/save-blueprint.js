@@ -30,7 +30,9 @@ module.exports = (userId, blueprintId, name, width, height) => {
 
         await User.findByIdAndUpdate(userId, { $addToSet: { blueprints: blueprint } })
 
-        return
+        blueprint.id = blueprint._id.toString()
+
+        return blueprint.id
 
     })()
 }

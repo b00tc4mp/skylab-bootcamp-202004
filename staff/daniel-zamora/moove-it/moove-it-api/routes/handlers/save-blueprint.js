@@ -3,7 +3,7 @@ const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
 
-    const { body: { userId, blueprintId, name, width, height } } = req
+    const { body: { blueprintId, name, width, height }, payload: { sub: userId } } = req
 
     try {
         saveBlueprint(userId, blueprintId, name, width, height)

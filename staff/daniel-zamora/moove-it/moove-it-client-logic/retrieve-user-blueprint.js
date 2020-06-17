@@ -2,19 +2,23 @@ require('moove-it-commons/polyfills/string')
 const { utils: { call } } = require('moove-it-commons')
 const context = require('./context')
 
-module.exports = function(userId) {
-    String.validate.notVoid(userId)
+module.exports = function(token) {
+    String.validate.notVoid(token)
 
-    return call('GET', `${this.API_URL}/users/blueprints`, undefined, { Authorization: `Bearer ${token}` })
+    return call('GET', `${this.API_URL}/user/blueprints`, undefined, { Authorization: `Bearer ${token}` })
 
     .then(({ status, body }) => {
+        debugger
         if (status === 200) {
-            debugger
-            const { name, surname, email } = JSON.parse(body)
 
-            return { name, surname, email }
+            const blueprints = JSON.parse(body)
+
+            return blueprints
+
         } else if (status === 404) {
-            throw new Error('User not found')
+
+            throw new Error('You dont have any blueprint yet')
+
         } else {
             const { error } = JSON.parse(body)
 
