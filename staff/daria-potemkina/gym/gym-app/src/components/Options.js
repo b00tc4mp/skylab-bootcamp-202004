@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { addProduct } from 'gym-client-logic'
+import Feedback from './Feedback'
 
-export default function ({ options, handleGoToDetails}) {
+export default function ({ token, options, handleGoToDetails }) {
+    const [error, setError] = useState()
+    const [success, setSuccess] = useState()
 
     return <section className='products'>
         <ul>{
             options.map(option =>
-                <li className = "products__option">
+                <li className="products__option">
                     <p>{option.ticker}</p>
                     <p>{option.settlementDate}</p>
                     <p>{option.side}</p>
@@ -16,7 +20,22 @@ export default function ({ options, handleGoToDetails}) {
 
                         handleGoToDetails(option)
                     }}>Details</button>
-                    <form >
+                    <form onSubmit={event => {
+                        event.preventDefault()
+
+                        let { quantity, side } = event.target
+
+                        quantity = Number(quantity.value)
+                        side = side.value
+                        debugger
+                        try {
+                            addProduct(token, option._id, option.priceId, side, quantity)
+                                .then(() => setSuccess('product added to the portfolio'))
+                                .catch(({ message }) => setError(message))
+                        } catch ({ message }) {
+                            setError(message)
+                        }
+                    }}>
                         <select name="quantity">
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -34,6 +53,8 @@ export default function ({ options, handleGoToDetails}) {
                             <option value='Sell'>Sell</option>
                         </select>
                         <button>Trade</button>
+                        {error && <Feedback message={error} level="error" />}
+                        {success && <Feedback message={success} level="" />}
                     </form>
                 </li>
             )}

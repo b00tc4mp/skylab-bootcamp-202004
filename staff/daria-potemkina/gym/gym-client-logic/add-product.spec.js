@@ -22,7 +22,7 @@ describe('logic - add-product', () => {
             prices = connection.db().collection('prices')
         }))
 
-    let user, product, price, userId, token, productId, priceId, side, _side, quantity
+    let user, product, price, userId, token, _token, productId, priceId, side, _side, quantity
 
     beforeEach(() => {
         return Promise.all([
@@ -66,7 +66,7 @@ describe('logic - add-product', () => {
                             price: random().toFixed(2) * 1
                         }
                         return prices.insertOne(price).then(_price => priceId = _price.insertedId.toString())
-                    }),
+                    })
                 ])
             })
     }
@@ -137,59 +137,59 @@ describe('logic - add-product', () => {
             _side = side[round(random())]
             const productId = ObjectId().toString()
 
-            _userId = undefined
+            _token = undefined
             expect(() => {
-                addProduct(_userId, productId, priceId, _side, quantity)
-            }).to.throw(TypeError, `${_userId} is not a string`)
+                addProduct(_token, productId, priceId, _side, quantity)
+            }).to.throw(TypeError, `${_token} is not a string`)
 
-            _userId = 123
+            _token = 123
             expect(() => {
-                addProduct(_userId, productId, priceId, _side, quantity)
-            }).to.throw(TypeError, `${_userId} is not a string`)
+                addProduct(_token, productId, priceId, _side, quantity)
+            }).to.throw(TypeError, `${_token} is not a string`)
 
-            _userId = true
+            _token = true
             expect(() => {
-                addProduct(_userId, productId, priceId, _side, quantity)
-            }).to.throw(TypeError, `${_userId} is not a string`)
+                addProduct(_token, productId, priceId, _side, quantity)
+            }).to.throw(TypeError, `${_token} is not a string`)
 
             _productId = undefined
             expect(() => {
-                addProduct(userId, _productId, priceId, _side, quantity)
+                addProduct(token, _productId, priceId, _side, quantity)
             }).to.throw(TypeError, `${_productId} is not a string`)
 
             _productId = 123
             expect(() => {
-                addProduct(userId, _productId, priceId, _side, quantity)
+                addProduct(token, _productId, priceId, _side, quantity)
             }).to.throw(TypeError, `${_productId} is not a string`)
 
             _productId = true
             expect(() => {
-                addProduct(userId, _productId, priceId, _side, quantity)
+                addProduct(token, _productId, priceId, _side, quantity)
             }).to.throw(TypeError, `${_productId} is not a string`)
 
             _side = undefined
             expect(() => {
-                addProduct(userId, productId, priceId, _side, quantity)
+                addProduct(token, productId, priceId, _side, quantity)
             }).to.throw(TypeError, `${_side} is not a string`)
 
             _side = 123
             expect(() => {
-                addProduct(userId, productId, priceId, _side, quantity)
+                addProduct(token, productId, priceId, _side, quantity)
             }).to.throw(TypeError, `${_side} is not a string`)
 
             _side = true
             expect(() => {
-                addProduct(userId, productId, priceId, _side, quantity)
+                addProduct(token, productId, priceId, _side, quantity)
             }).to.throw(TypeError, `${_side} is not a string`)
 
             _quantity = undefined
             expect(() => {
-                addProduct(userId, productId, priceId, 'Buy', _quantity)
+                addProduct(token, productId, priceId, 'Buy', _quantity)
             }).to.throw(TypeError, `${_quantity} is not a number`)
 
             _quantity = true
             expect(() => {
-                addProduct(userId, productId, priceId, 'Sell', _quantity)
+                addProduct(token, productId, priceId, 'Sell', _quantity)
             }).to.throw(TypeError, `${_quantity} is not a number`)
 
         })
@@ -200,7 +200,7 @@ describe('logic - add-product', () => {
 
             _quantity = 33.33
             expect(() => {
-                addProduct(userId, productId, priceId, _side, _quantity)
+                addProduct(token, productId, priceId, _side, _quantity)
             }).to.throw(Error, `${_quantity} is not an integer`)
 
         })

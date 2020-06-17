@@ -40,11 +40,10 @@ function Home ({handleGoToDetails, handleShowUnderlyingPrices, token}) {
     }, [])
 
         return <section className="home">
-            <Search handleGoToDetails={handleGoToDetails}/>
             <h1>Futures</h1>
-            {futures && <Futures futures={futures} handleGoToDetails = {handleGoToDetails} handleShowUnderlyingPrices={handleShowUnderlyingPrices}/>}
+            {futures && <Futures token={token} futures={futures} handleGoToDetails = {handleGoToDetails} handleShowUnderlyingPrices={handleShowUnderlyingPrices}/>}
             <h1>Options</h1>
-            {options && <Options options={options} handleGoToDetails = {handleGoToDetails} handleShowUnderlyingPrices={handleShowUnderlyingPrices}/>}
+            {options && <Options token={token} options={options} handleGoToDetails = {handleGoToDetails} handleShowUnderlyingPrices={handleShowUnderlyingPrices}/>}
         </section>
 }
 

@@ -10,6 +10,9 @@ module.exports = {
     retrieveUserCard: require('./retrieve-user-card'),
     retrieveFuturePrices: require('./retrieve-future-prices'),
     retrieveUnderlyingPrice: require('./retrieve-underlying-price'),
-    serachProducts: require('./search-products'),
-    addProduct: require('./add-product')
+    retrieveUserAssetAllocation: require('./retrieve-user-asset-allocation'),
+    searchProducts: require('./search-products'),
+    addProduct: require('./add-product'),
+    addUserCard: require('./add-user-card'),
+    retrieveUserPortfolio: require('./retrieve-user-portfolio')
 }

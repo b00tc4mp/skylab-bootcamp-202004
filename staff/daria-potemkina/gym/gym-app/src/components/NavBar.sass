@@ -4,47 +4,75 @@
     margin: 0
     padding: 0
     font-family: 'Lato', sans-serif
+
+// .nav-bar
+//     width: 100vw
+//     display: flex
+//     justify-content: space-between
+//     height: 50px
+//     background-color: rgb(47, 47, 48)
+//     color: white
+//     align-items: center
+//     box-shadow: 0 4px 4px 0 rgba(0,0,0,.2)
+
+
+//     &__list
+//         list-style-type: none
+//         width: 100vw
+//         display: flex
+//         justify-content: space-around
+//         text-transform: uppercase
+       
+
+//         >li>a
+//             text-decoration: none
+//             padding: 0 15px
+//             transition: .45
+//             font-size: 90%
+
+//             &:visited
+//                 color: white
+            
+//             &:hover
+//                 color: rgb(84, 192, 176)
+        
+//         &--close
+
+//             >ul
+//                 display: none
+    
+//     &__button
+//         width: 50px
+//         height: 50px
+//         margin-left: 10px
+//         background-color: rgb(47, 47, 48)
+//         border: none
+    
+li
+    padding: 10px 0
     
 .nav-bar
-    width: 100vw
-    display: flex
-    justify-content: space-between
-    height: 50px
+    width: 100%
     background-color: rgb(47, 47, 48)
     color: white
-    align-items: center
-    box-shadow: 0 4px 4px 0 rgba(0,0,0,.2)
+    padding: 10px
 
+    &__menu
+        font-size: 30px
+        margin-right: 30px
+        color: white
+        background: transparent
+        border: none
+        cursor: pointer
+        outline: none
+        float: right
+    
 
     &__list
+        height: 0
+        overflow: hidden
         list-style-type: none
-        width: 100vw
-        display: flex
-        justify-content: space-around
-        text-transform: uppercase
+        font-whright: bold
 
-        >li>a
-            text-decoration: none
-            padding: 0 15px
-            transition: .45
-            font-size: 90%
-
-            &:visited
-                color: white
-            
-            &:hover
-                color: rgb(84, 192, 176)
-        
-        &--close
-
-            >ul
-                display: none
-    
-    &__button
-        width: 50px
-        height: 50px
-        margin-left: 10px
-        background-color: rgb(47, 47, 48)
-        border: none
-    
-
+        &--expanded
+            height: 100vh
