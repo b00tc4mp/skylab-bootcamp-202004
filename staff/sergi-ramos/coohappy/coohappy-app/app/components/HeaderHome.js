@@ -1,15 +1,21 @@
-import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import React, { useState } from 'react'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import SvgUri from 'expo-svg-uri'
 
-const HeaderHome = function() {
+const HeaderHome = function ({user, surname}) {
+    //const [name, setName] = useState
+    //const [surname, setSurname] = useState
 
+    //setName(user)
+    //setSurname(user.surname)
     return (
 
         <View style={styles.header}>
             <SvgUri style={styles.houseIcon} source={require('../assets/ic-house.svg')} />
-            <Text style={styles.titleText}>TODO TODO</Text>
-            <SvgUri style={styles.userIcon} source={require('../assets/ic-user.svg')} />
+            <Text style={styles.titleText}>{user} {surname} </Text>
+            <TouchableOpacity activeOpacity={0.8}>
+            <SvgUri onPr style={styles.userIcon} source={require('../assets/ic-user.svg') } />
+            </TouchableOpacity>
         </View>
     )
 }
@@ -20,8 +26,8 @@ const styles = StyleSheet.create({
     header: {
         height: 135,
         flexDirection: "row",
-        alignItems:'flex-end',
-        justifyContent:'space-around',
+        alignItems: 'flex-end',
+        justifyContent: 'space-around',
         backgroundColor: '#069b69',
     },
     titleText: {
@@ -29,8 +35,8 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 28,
         marginBottom: 20,
-        marginRight:50,
-        width:200    
+        marginRight: 50,
+        width: 200
     },
     houseIcon: {
         marginBottom: 15,
@@ -39,7 +45,7 @@ const styles = StyleSheet.create({
 
     userIcon: {
         marginBottom: 20,
-        marginRight:20
+        marginRight: 20
     }
 
 

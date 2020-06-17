@@ -1,28 +1,53 @@
-import React from 'react';
-import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView } from 'react-native'
+import React, { useEffect, useState } from 'react';
+import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView, AsyncStorage } from 'react-native'
 import SvgUri from "expo-svg-uri"
 import ButtonForm from './ButtonForm'
+import { retrieveUser } from 'coohappy-client-logic'
 
-const WellcomePage = function({ navigation }) {
+const WellcomePage = function ({ name: _name, navigation }) {
+    const [name, setName] = useState()
+
+    useEffect(() => {
+
+        try {
+            (async () => {
+                if(!_name){
+                    const token = await AsyncStorage.getItem('TOKEN')
+                    const {name} =  await retrieveUser(token)
+                    debugger
+                    setName(name)
+                    return 
+                }
+                   
+                setName(_name)
+               
+    
+            })()
+
+        } catch (error) {
+            console.log(error)
+        }
+    }, [_name])
 
     return (
 
         <>
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <Text style={styles.titleText}>Wellcome TODO!</Text>
+                    <Text style={styles.titleText}>Wellcome {name}!</Text>
+                    <TouchableOpacity onPress={ () => navigation.navigate('UpdateUser')} activeOpacity={0.8}>
                     <SvgUri style={styles.userIcon} source={require('../assets/ic-user.svg')} />
-                </View>
+                    </TouchableOpacity>
 
+
+                </View>
 
                 <View style={{ width: '90%' }}>
-                    <ButtonForm text="CREATE A COMMUNITY" bgColor="#009965" />
+                    <ButtonForm text="CREATE A COMMUNITY" bgColor="#009965" buttonAction={() => navigation.navigate('CreateCommunity')} />
                 </View>
 
-
-
                 <View style={{ width: '90%', marginTop: 30 }} >
-                    <ButtonForm text='JOIN A COMMUNITY' onPress={() => navigation.navigate('Register')} bgColor="#003725" />
+                    <ButtonForm text='JOIN A COMMUNITY' buttonAction={() => navigation.navigate('JoinCommunity')} bgColor="#003725" />
                 </View>
 
             </View>
@@ -47,7 +72,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         color: '#ffd545',
         flexDirection: "row",
-        marginBottom:30
+        marginBottom: 30
     },
     titleText: {
         color: '#ffd545',

@@ -1,9 +1,39 @@
-import React from 'react';
-import { View, StyleSheet, Text, TextInput } from 'react-native'
+import React, { useState } from 'react';
+import { View, StyleSheet, Text, TextInput, AsyncStorage,TouchableOpacity } from 'react-native'
 import SvgUri from "expo-svg-uri"
 import ButtonForm from '../components/ButtonForm'
+import { registerCohousing } from 'coohappy-client-logic'
 
-const CreateCommunity = function() {
+
+
+
+const CreateCommunity = function ({ route, navigation }) {
+
+    const [name, setName] = useState('')
+    const [street, setStreet] = useState('')
+    const [number, setNumber] = useState('')
+    const [city, setCity] = useState('')
+    const [country, setCountry] = useState('')
+
+   
+// console.log(userId)
+    const handleOnCommunityRegister = async () => {
+        try {
+            const token = await AsyncStorage.getItem('TOKEN')
+            // console.log(token)
+            // console.log(name, street, number, city, country)
+            await registerCohousing(name, { street, number, city, country }, 4, token)
+            navigation.navigate('Home')
+
+        } catch (error) {
+
+            console.log(error)
+
+        }
+
+    }
+
+
 
     return (
 
@@ -11,20 +41,22 @@ const CreateCommunity = function() {
             <View style={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.titleText}>Create a community</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('UpdateUser')}>
                     <SvgUri style={styles.userIcon} source={require('../assets/ic-user.svg')} />
+                    </TouchableOpacity>
                 </View>
 
                 <View style={{ width: '90%' }}>
-                    
-                    <TextInput style={styles.input} placeholder="community name" placeholderTextColor="#81868e" />
-                    <TextInput style={styles.input} placeholder="street" placeholderTextColor="#81868e" />
-                    <TextInput style={styles.input} placeholder="number" placeholderTextColor="#81868e" />
-                    <TextInput style={styles.input} placeholder="city" placeholderTextColor="#81868e" />
-                    <TextInput style={styles.input} placeholder="country" placeholderTextColor="#81868e" />
+
+                    <TextInput style={styles.input} onChangeText={value => setName(value)} placeholder="community name" placeholderTextColor="#81868e" />
+                    <TextInput style={styles.input} onChangeText={value => setStreet(value)} placeholder="street" placeholderTextColor="#81868e" />
+                    <TextInput style={styles.input} onChangeText={value => setNumber(value)} placeholder="number" placeholderTextColor="#81868e" />
+                    <TextInput style={styles.input} onChangeText={value => setCity(value)} placeholder="city" placeholderTextColor="#81868e" />
+                    <TextInput style={styles.input} onChangeText={value => setCountry(value)} placeholder="country" placeholderTextColor="#81868e" />
                 </View>
 
                 <View style={{ width: '90%' }}>
-                    <ButtonForm text="CREATE A COMMUNITY" bgColor="#009965" />
+                    <ButtonForm text="CREATE A COMMUNITY" bgColor="#009965" buttonAction={handleOnCommunityRegister} />
                 </View>
 
                 <View>
@@ -33,7 +65,7 @@ const CreateCommunity = function() {
 
                 <View style={{ width: '90%', marginTop: 30 }} >
                     <Text style={styles.title}>DO YOU WANT TO JOIN AN EXISTING COMMUNITY?</Text>
-                    <ButtonForm text='JOIN A COMMUNITY' onPress={() => navigation.navigate('Register')} bgColor="#003725" />
+                    <ButtonForm text='JOIN A COMMUNITY' buttonAction={() => navigation.navigate('JoinCommunity')} bgColor="#003725" />
                 </View>
 
             </View>

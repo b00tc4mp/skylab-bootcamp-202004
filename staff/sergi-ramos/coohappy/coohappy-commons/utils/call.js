@@ -5,7 +5,6 @@ require('../polyfills/url')
 module.exports = (method, url, body, headers) => {
     Http.validateMethod(method)
     URL.validate(url)
-
     return (async()=>{
         try{
             

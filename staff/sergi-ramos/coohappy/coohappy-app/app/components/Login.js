@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView } from 'react-native'
+import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView, AsyncStorage } from 'react-native'
 import SvgUri from "expo-svg-uri"
 import ButtonForm from '../components/ButtonForm'
 import { authenticateUser } from 'coohappy-client-logic'
@@ -8,18 +8,26 @@ const Login = function ({ navigation }) {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [token, setToken] = useState()
+    
 
     const handleOnSubmitLogin = async () => {
 
         try {
 
             let resToken = await authenticateUser(email, password)
-            setToken(resToken)
 
-            navigation.navigate('Home')
-
+            await AsyncStorage.setItem('TOKEN', resToken)
+            
+            navigation.navigate('WellcomePage')
+            // const { name } = await retrieveUser(token)
+            // await setName(name)
+            // navigation.navigate('Home',{
+                //     screen: 'Chat',
+                //     params: {name, surname}
+                // })
+                
         } catch (error) {
+            console.log(error)
         }
     }
 

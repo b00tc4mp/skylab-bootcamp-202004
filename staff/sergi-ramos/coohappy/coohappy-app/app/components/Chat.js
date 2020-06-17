@@ -3,13 +3,17 @@ import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAr
 import SvgUri from "expo-svg-uri"
 import HeaderHome from './HeaderHome'
 
-const Chat = function({ navigation }) {
+const Chat = function ({ route, navigation }) {
+
+
+    
+
 
     return (
 
         <View style={styles.container}>
 
-<HeaderHome />
+            <HeaderHome   />
 
             <View style={styles.messages}>
                 <ScrollView>

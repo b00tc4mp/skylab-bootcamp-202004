@@ -11,5 +11,6 @@ module.exports = {
     Chat: require('./Chat'),
     HeaderHome: require('./HeaderHome'),
     Laundry: require('./Laundry'),
-    ShopList: require('./ShopList')
+    ShopList: require('./ShopList'),
+    WeekDays: require('./WeekDays')
 }

@@ -16,7 +16,6 @@ module.exports = (email, password) => {
 
         if (res.status === 200) {
             const { token } = JSON.parse(res.body)
-
             return token
         } else {
 

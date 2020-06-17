@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, StyleSheet, Text, TextInput } from 'react-native'
+import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native'
 import SvgUri from "expo-svg-uri"
 import ButtonForm from '../components/ButtonForm'
 
-const JoinCommunity = function() {
+const JoinCommunity = function({ navigation }) {
 
     return (
 
@@ -11,7 +11,9 @@ const JoinCommunity = function() {
             <View style={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.titleText}>Join a community</Text>
+                    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('UpdateUser')}>
                     <SvgUri style={styles.userIcon} source={require('../assets/ic-user.svg')} />
+                    </TouchableOpacity>
                 </View>
 
                 <View style={{ width: '90%' }}>
@@ -30,7 +32,7 @@ const JoinCommunity = function() {
 
                 <View style={{ width: '90%', marginTop: 30 }} >
                     <Text style={styles.title}>DO YOU WANT TO CREATE A NEW COMMUNITY?</Text>
-                    <ButtonForm text='CREATE A COMMUNITY' onPress={() => navigation.navigate('Register')} bgColor="#003725" />
+                    <ButtonForm text='CREATE A COMMUNITY' buttonAction={() => navigation.navigate('CreateCommunity')} bgColor="#003725" />
                 </View>
 
             </View>

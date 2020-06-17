@@ -14,7 +14,6 @@ const Register = function({ navigation })  {
     const [confirmPassword, setConfirmPassword] = useState('')
 
     const handleOnSubmit = async() => {
-        console.log(name)
         try {
             await registerUser(name, surname, email, password, confirmPassword)
             navigation.navigate('Login')
