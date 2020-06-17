@@ -1,14 +1,22 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { 
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView
+} from "react-native";
 import Modal from "./src/Modal";
 
-export default function App() {
-  return (
+const App = () => (
+  <KeyboardAvoidingView
+    behavior={Platform.OS == "ios" ? "padding" : "height"}
+    style={styles.container}
+  >
     <View style={styles.container}>
       <Modal />
     </View>
-  )
-}
+  </KeyboardAvoidingView>
+)
 
 const styles = StyleSheet.create({
   container: {
@@ -18,3 +26,5 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
+
+export default App;
