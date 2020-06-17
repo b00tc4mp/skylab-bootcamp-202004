@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { env: { TEST_MONGO_URL: MONGODB_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 const { mongoose, models: { User } } = require('moove-it-data')
 
 const registerUser = require('./register-user')
@@ -31,17 +31,6 @@ describe('logic - register user', () => {
         expect(user.surname).to.equal(surname)
         expect(user.email).to.equal(email)
     })
-
-    it('should fail when passwords does not match', () => {
-
-        return registerUser(name, surname, email, password)
-            .then(() => { throw new Error("Should throw error") })
-            .catch(error => {
-                expect(error).to.be.an.instanceof(CredentialsError)
-                expect(error.message).to.equal('Passwords does not match')
-            })
-    })
-
 
     describe('when user already exists', () => {
         beforeEach(() => {

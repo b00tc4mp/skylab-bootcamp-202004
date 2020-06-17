@@ -8,7 +8,6 @@ module.exports = (req, res) => {
         retrieveUser(userId || id)
             .then(user => res.status(200).send(user))
             .catch(error => handleError(error, res))
-
     } catch (error) {
         handleError(error, res)
     }
