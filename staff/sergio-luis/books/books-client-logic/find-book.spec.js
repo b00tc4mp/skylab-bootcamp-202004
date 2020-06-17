@@ -10,7 +10,7 @@ global.fetch = require('node-fetch')
 const context = require('./context')
 context.API_URL = API_URL
 
-describe.only('client-logic-find-books', () => {
+describe('client-logic-find-books', () => {
 
     let query
 

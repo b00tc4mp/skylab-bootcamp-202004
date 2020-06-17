@@ -32,11 +32,13 @@ module.exports = function (token,latitude,longitude){
         )
     
         const {status,body} = resp
-debugger
+
         if(status===200) return 
+        else{
+            const { error } = JSON.parse(body)
 
-        const { error } = JSON.parse(body)
+            throw new Error(error)
+        }
 
-        throw new Error(error)
     })()
 }.bind(context)

@@ -15,7 +15,7 @@ global.fetch = require('node-fetch')
 const context = require('./context')
 context.API_URL = API_URL
 
-describe('client-logic- retrieve user', () => {
+describe('client-logic-retrieve user', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let name, surname, email, password, userId,token
@@ -52,10 +52,10 @@ describe('client-logic- retrieve user', () => {
 
     it('should fail when user does not exist', async() => {
         userId = '5ed1204ee99ccf6fae798aef'
-        token = await jwtPromised.sign({ sub: userId }, SECRET)
-    
+
+        const _token = await jwtPromised.sign({ sub: userId }, SECRET)
         try{
-           await retrieveUser(token)
+           await retrieveUser(_token)
            throw new Error('should not reach this point')
         }catch(error){
             expect(error).to.exist

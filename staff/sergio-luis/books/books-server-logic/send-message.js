@@ -18,9 +18,8 @@ require('books-commons/polyfills/json')
 const { errors: { UnexistenceError } } = require('books-commons')
 const { models: { User, Book, Message } } = require('books-data')
 
-
-
 module.exports = (fromUserId, toUserId, bookId, textMessage) => {
+ 
     String.validate.notVoid(fromUserId)
     String.validate.notVoid(toUserId)
     String.validate.notVoid(bookId)
@@ -44,6 +43,6 @@ module.exports = (fromUserId, toUserId, bookId, textMessage) => {
             User.findByIdAndUpdate(toUserId, {$addToSet: {receivedMessages: message.id}})
         ])
 
-        return message
+        return message.id
     })()
 }

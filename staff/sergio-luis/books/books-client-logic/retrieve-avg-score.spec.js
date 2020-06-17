@@ -2,24 +2,24 @@ require('dotenv').config()
 
 const { env: { MONGODB_URL_TEST: MONGODB_URL, TEST_API_URL: API_URL } } = process
 
-const retrieveBook = require('./retrieve-book')
+const retrieveAvgScore = require('./retrieve-avg-score')
 const { random } = Math
 const { expect } = require('chai')
 require('books-commons/polyfills/json')
 const { errors: { VoidError} } = require('books-commons')
-const { mongoose, models: { User,Book } } = require('books-data')
+const { mongoose, models: { User } } = require('books-data')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
 const context = require('./context')
 context.API_URL = API_URL
 
-describe("client-logic-retrieve-book", () => {
+describe("client-logic-retrieve-avg-score", () => {
     let name, surname, email, password, encryptedPassword, userId;
-    let title, barCode, travelKm, bookId;
+    let avgScore;
 
     before (async() => {
         await mongoose.connect(MONGODB_URL, {unifiedTopology: true});
-        await Promise.all([User.deleteMany(), Book.deleteMany()]);
+        await Promise.all([User.deleteMany()]);
     })
 
     beforeEach(async() => {
@@ -32,59 +32,67 @@ describe("client-logic-retrieve-book", () => {
         const user = await User.create({ name, surname, email, password: encryptedPassword });
         userId = user.id;
 
-        title = `title-${random()}`;
-        barCode = `${random()}`;
-        travelKm = random();
-        const book = await Book.create({ title, barCode, travelKm, ownerUserId: userId ,actualUserId: userId,});
-        bookId = book.id;
-    })
-
-    it("should succeed add a retrieve a  book", async() => {
-        const book = await retrieveBook(bookId)
+        avgScore =Math.floor(Math.random() * 6)
     
-        expect(book).to.exist
-        expect(book.title).to.equal(title)
-        expect(book.barCode).to.equal(barCode)
-        expect(book.travelKm).to.equal(travelKm)
-        expect(book.ownerUserId.toString()).to.equal(userId)
-      
     })
 
-    it("should fail to no exist a book", async() => {
-        bookId = '5edf984ec1be038dc909f783'
+    it("should succeed retrieve avg score user", async() => {
+        await User.findByIdAndUpdate(userId, {$set: { avgScore }})
+
+        const avg = await retrieveAvgScore(userId)
+   
+        expect(avg).to.exist
+        expect(avg).to.equal(avgScore)
+    })
+
+
+    it('Sould fail dont find user', async () => {
+        userId = '5edf984ec1be038dc909f783'
+
         try {
-            await retrieveBook(bookId)
+            await retrieveAvgScore(userId)
             throw new Error('should not reach this point')
-       } catch (error) {
-           expect(error).to.exist
-           expect(error).to.be.an.instanceof(Error)
-           expect(error.message).to.equal(`book with id ${bookId} does not exist`)
-       }
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceof(Error)
+            expect(error.message).to.equal(`user with id ${userId} does not exist`)
+        }
     })
+ 
+    it('Sould fail dont have score', async () => {
 
+        try {
+            await retrieveAvgScore(userId)
+            throw new Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceof(Error)
+            expect(error.message).to.equal('no score')
+        }
+    })
 
 
     it('should fail on non-string field', () => {
         expect(() => {
-            retrieveBook(true)
+            retrieveAvgScore(true)
         }).to.throw(TypeError, 'true is not a string')
         expect(() => {
-            retrieveBook(123)
+            retrieveAvgScore(123)
         }).to.throw(TypeError, '123 is not a string')
     })
 
     it('should fail on non-string field', () => {
         expect(() => {
-            retrieveBook('')
+            retrieveAvgScore('')
         }).to.throw(VoidError, 'string is empty or blank')
     })
 
     afterEach(async() => {
-        await Promise.all([User.deleteMany(), Book.deleteMany()]);
+        await User.deleteMany();
     })
 
     after (async() => {
-        await Promise.all([User.deleteMany(), Book.deleteMany()]);
+        await User.deleteMany();
         await mongoose.disconnect();
     })
 })

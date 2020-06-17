@@ -85,13 +85,13 @@ try {
                 }
             })
 
-            app.get('/users/:query?', verifyExtractJwt,(req, res) => {
+            app.get('/users/:idUser?', verifyExtractJwt,(req, res) => {
                 try {
-                    debugger
-                    const { params: { query }, payload:{sub:userId} } = req
-
-                    retrieveUser(query || userId)
-                        .then(user => res.send(user))
+            
+                    const { params: { idUser }, payload:{sub:userId} } = req
+          
+                    retrieveUser(idUser || userId)
+                        .then(user => res.status(201).send(user))
                         .catch(error => handleError(error, res))
                 } catch (error) {
                     handleError(error, res)
@@ -196,7 +196,7 @@ try {
             })
             app.get('/books/:bookId?',parseBody, (req, res) => { 
                 const { params: { bookId:query} } = req
-
+              
                 try {
                    retrieveBook(query)
                         .then((book) => res.status(201).send(book))
@@ -221,7 +221,7 @@ try {
                 const {payload:{sub:userId}} = req
                 try {
                     listShareBooks(userId)
-                         .then((book) => res.status(200).send(book))
+                         .then((book) => res.status(201).send(book))
                          .catch(error => handleError(error, res))
                  } catch (error) {
                      handleError(error, res)
@@ -242,10 +242,10 @@ try {
        
             app.post('/books/message/send', verifyExtractJwt ,parseBody, (req, res) => {
                 const { body: { toUserId,bookId,textMessage } ,payload: { sub: userId }} = req
-
+               debugger
                 try {
                     sendMessage(userId, toUserId, bookId, textMessage)
-                        .then(() => res.status(201).send())
+                        .then(() => res.status(200).send())
                         .catch(error => handleError(error, res))
                 } catch (error) {
                     handleError(error, res)
@@ -257,7 +257,7 @@ try {
 
                 try {
                     retrieveMessages(userId)
-                        .then((messages) => res.status(200).send(messages))
+                        .then((messages) => res.status(201).send(messages))
                         .catch(error => handleError(error, res))
                 } catch (error) {
                     handleError(error, res)
@@ -306,7 +306,7 @@ try {
 
                 try {
                     retrieveRequestedBooks(userId)
-                        .then((body) => res.status(201).send())
+                        .then((body) => res.status(201).send(body))
                         .catch(error => handleError(error, res))
                 } catch (error) {
                     handleError(error, res)
@@ -329,7 +329,7 @@ try {
                 const { payload: { sub: userId }} = req
                 try {
                     retrieveFollowing(userId)
-                    .then((body) => res.status(200).send(body))
+                    .then((body) => res.status(201).send(body))
                     .catch(error => handleError(error, res))
                 } catch (error) {
                     handleError(error, res)

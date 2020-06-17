@@ -35,7 +35,7 @@ describe('server-logic register user', () => {
         expect(result).to.be.undefined
 
         const users = await User.find()
-debugger
+
         expect(users.length).to.equal(1)
 
         const [user] = users

@@ -18,10 +18,11 @@ const { models: { Book} } = require('books-data')
 module.exports = (bookId) => {
     String.validate.notVoid(bookId)
 
+
     return (async() => {
         const book = await Book.findById(bookId)
-        if (!book) throw new UnexistenceError(`book with id ${bookId} does not exist`);
 
+        if (!book) throw new UnexistenceError(`book with id ${bookId} does not exist`);
             book.id = book._id.toString()
             delete book._id;
             delete book.__v;
