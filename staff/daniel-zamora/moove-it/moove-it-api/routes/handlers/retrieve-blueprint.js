@@ -2,8 +2,9 @@ const { retrieveBlueprint } = require('moove-it-server-logic')
 const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
+    debugger
 
-    const { body: { userId, blueprintId } } = req
+    const { params: { blueprintId }, payload: { sub: userId } } = req
 
     try {
         retrieveBlueprint(userId, blueprintId)
