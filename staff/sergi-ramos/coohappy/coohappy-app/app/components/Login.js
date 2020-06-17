@@ -1,32 +1,53 @@
-import React from 'react';
-import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView } from 'react-native'
+import React, { useState } from 'react';
+import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView, AsyncStorage } from 'react-native'
 import SvgUri from "expo-svg-uri"
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
+import ButtonForm from '../components/ButtonForm'
+import { authenticateUser } from 'coohappy-client-logic'
 
-const Stack = createStackNavigator()
+const Login = function ({ navigation }) {
 
-module.exports = ({ navigation }) => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    
+
+    const handleOnSubmitLogin = async () => {
+
+        try {
+
+            let resToken = await authenticateUser(email, password)
+
+            await AsyncStorage.setItem('TOKEN', resToken)
+            
+            navigation.navigate('WellcomePage')
+            // const { name } = await retrieveUser(token)
+            // await setName(name)
+            // navigation.navigate('Home',{
+                //     screen: 'Chat',
+                //     params: {name, surname}
+                // })
+                
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     return (
 
         <SafeAreaView>
 
+            <TouchableOpacity style={styles.closeItem} onPress={() => navigation.navigate('Landing')}>
+
+                <SvgUri source={require('../assets/ic-close.svg')} />
+            </TouchableOpacity>
             <ScrollView>
                 <View style={styles.container}>
-                    <TouchableOpacity style={{alignSelf: 'flex-end', marginRight: 20 }} onPress={() => navigation.navigate('Landing')}>
-
-                        <SvgUri source={require('../assets/ic-close.svg')} />
-                    </TouchableOpacity>
 
                     <View style={styles.form}>
                         <Text style={styles.loginTitle}>Log in</Text>
-                        <TextInput style={styles.input} placeholder="email" />
-                        <TextInput style={styles.input} placeholder="password" />
-
-                        <TouchableOpacity activeOpacity={0.9} style={styles.buttonLogin}>
-                            <Text style={{ color: 'white', fontWeight: '700', width: 47 }}>LOG IN</Text>
-                        </TouchableOpacity>
+                        <TextInput style={styles.input} onChangeText={value => setEmail(value)} placeholder="email" placeholderTextColor="#81868e" />
+                        <TextInput style={styles.input} onChangeText={value => setPassword(value)} secureTextEntry={true} placeholder="password" placeholderTextColor="#81868e" />
+                        <ButtonForm text="LOG IN" bgColor="#009965" buttonAction={handleOnSubmitLogin} />
                     </View>
 
                     <View>
@@ -34,13 +55,11 @@ module.exports = ({ navigation }) => {
                     </View>
 
                     <View>
-                        <Text>NOT A MEMBER?</Text>
+                        <Text style={styles.textAskMember} >NOT A MEMBER?</Text>
                     </View>
 
                     <View style={{ width: '90%' }} >
-                        <TouchableOpacity onPress={() => navigation.navigate('Register')} activeOpacity={0.9} style={styles.buttonGoToRegister} >
-                            <Text style={{ color: 'white', fontWeight: '700', width: 70 }}>REGISTER</Text>
-                        </TouchableOpacity>
+                        <ButtonForm text='REGISTER' buttonAction={() => navigation.navigate('Register')} bgColor="#003725" />
                     </View>
 
                 </View>
@@ -49,49 +68,31 @@ module.exports = ({ navigation }) => {
     )
 }
 
+export default Login
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        marginTop: 50
+        alignItems: 'center'
     },
     loginTitle: {
         fontSize: 40,
         alignSelf: 'flex-start',
-        marginBottom: 28
+        marginBottom: 28,
+        fontWeight: "bold",
+        width: '100%'
     },
     input: {
         backgroundColor: '#e4e4e4',
-        height: 60,
+        height: 55,
         marginBottom: 20,
         paddingLeft: 10,
-        color: '#81868e'
+        color: 'black'
     },
     form: {
         width: '90%'
     },
-    buttonLogin: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#009965',
-        alignSelf: 'center',
-        width: '100%',
-        height: 60,
-        borderRadius: 5,
-        marginTop: 30,
-        marginBottom: 30
-    },
-    buttonGoToRegister: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#003725',
-        alignSelf: 'center',
-        width: '100%',
-        height: 60,
-        borderRadius: 5,
-        marginTop: 20,
-        marginBottom: 30
-    },
+
     line: {
         marginBottom: 40
     },
@@ -99,7 +100,19 @@ const styles = StyleSheet.create({
         width: 240,
         height: 1,
         backgroundColor: '#003725',
-        marginBottom: 40
+        marginTop: 45,
+        marginBottom: 45
+
+    },
+    closeItem: {
+        alignSelf: 'flex-end',
+        marginTop: 50,
+        marginRight: 22
+    },
+    textAskMember: {
+        marginBottom: 20,
+        fontWeight: "bold",
+        width: 120
     }
-   
+
 })

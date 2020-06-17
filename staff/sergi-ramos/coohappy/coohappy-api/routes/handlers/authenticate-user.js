@@ -2,7 +2,7 @@ const { env: { JWT_SECRET : SECRET } } = process
 
 const { authenticateUser } = require('coohappy-server-logic')
 const { handleError } = require('../../helpers')
-const { utils: { jwtPromised } } = require('coohappy-commons')
+const { jwtPromised } = require('../../helpers')
 
 module.exports = (req, res) => {
     const { body: { email, password } } = req

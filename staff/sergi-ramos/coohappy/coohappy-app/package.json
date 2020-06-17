@@ -8,9 +8,13 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@babel/runtime": "^7.10.2",
     "@react-native-community/masked-view": "0.1.6",
+    "@react-navigation/bottom-tabs": "^5.5.2",
     "@react-navigation/native": "^5.5.1",
     "@react-navigation/stack": "^5.5.1",
+    "coohappy-client-logic": "file:../coohappy-client-logic",
+    "coohappy-commons": "file:../coohappy-commons",
     "expo": "~37.0.3",
     "expo-svg-uri": "^1.1.0",
     "react": "~16.9.0",
@@ -20,6 +24,7 @@
     "react-native-reanimated": "~1.7.0",
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "~2.2.0",
+    "react-native-vector-icons": "^6.6.0",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.3.9",
     "react-navigation-stack": "^2.7.0"

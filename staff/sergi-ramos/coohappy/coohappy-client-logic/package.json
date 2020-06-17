@@ -1,22 +1,17 @@
 {
-  "name": "coohappy-commons",
+  "name": "coohappy-client-logic",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx mocha utils/*.spec.js",
-    "test:debug": "npx mocha debug utils/*.spec.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@babel/runtime": "^7.10.2",
-    "jsonwebtoken": "^8.5.1"
-  },
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "mocha": "^8.0.1",
+    "coohappy-commons": "file:../coohappy-commons",
     "node-fetch": "^2.6.0"
   }
 }

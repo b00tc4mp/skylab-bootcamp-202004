@@ -1,3 +1,4 @@
 module.exports = {
-    handleError: require('./handle-error')
+    handleError: require('./handle-error'),
+    jwtPromised: require('./jwt-promised')
 }
