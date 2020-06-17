@@ -9,32 +9,25 @@ const { mongoose, models: { Users } } = require("gluttony-data")
 const bcrypt = require("bcryptjs")
 
 describe("logic - authenticate user", () => {
-    before(() => mongoose.connect(MONGODB_URL))
+    beforeAll(() => mongoose.connect(MONGODB_URL))
 
-    let name, surname, email, password, userId, hash
+    let id, name, surname, email, password
 
-    beforeEach(() =>
-        Users.deleteMany()
-            .then(() => {
-                name = `name-${random()}`
-                surname = `surname-${random()}`
-                email = `e-${random()}@mail.com`
-                password = `password-${random()}`
-
-                return bcrypt.hash(password, 10)
-            })
-            .then(_hash => hash = _hash)
-    )
+    beforeEach(() => {
+        id = `id-${random()}`
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `e-${random()}@mail.com`
+        password = `password-${random()}`
+        
+        bcrypt.hash(password, 10)
+            .then(hash => Users.create({ id, name, surname, email, password: hash }))
+    })
 
     describe("when user already exists", () => {
-        beforeEach(() =>
-            Users.create({ name, surname, email, password: hash })
-                .then(user => userId = user.id)
-        )
-
         it("should succeed on correct credentials", () =>
             authenticateUser(email, password)
-                .then(_userId => expect(_userId).toBe(userId))
+                .then(_id => expect(_id).toBe(id))
         )
 
         it("should fail on wrong password", () => {
@@ -60,5 +53,5 @@ describe("logic - authenticate user", () => {
 
     afterEach(() => Users.deleteMany())
 
-    after(mongoose.disconnect)
+    afterAll(mongoose.disconnect)
 })

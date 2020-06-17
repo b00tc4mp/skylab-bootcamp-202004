@@ -9,57 +9,67 @@ const { mongoose, models: { Users } } = require("gluttony-data")
 const bcrypt = require("bcryptjs")
 
 describe("logic - register user", () => {
-    before(() => mongoose.connect(MONGODB_URL))
+    beforeAll(() => mongoose.connect(MONGODB_URL))
 
-    let name, surname, email, password
+    let id, name, surname, email, password
 
-    beforeEach(async () => {
-        await Users.deleteMany()
-
+    beforeEach(() => {
+        id = `id-${random()}`
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `e-${random()}@mail.com`
         password = `password-${random()}`
+
+        Users.deleteMany()
     })
 
-    it("should succeed on valid data", async () => {
-        const result = await registerUser(name, surname, email, password)
+    it("should succeed on valid data", done => {
+        Users.find()
+            .then(users => {
+                expect(users).toHaveLength(0)
+                
+                return registerUser(id, name, surname, email, password)
+            })
+            .then(result => {
+                expect(result).toBeUndefined()
 
-        expect(result).toBeUndefined()
+                return Users.find()
+            })
+            .then(users => {
+                expect(users).toHaveLength(1)
 
-        const users = await Users.find()
+                return Users.findById(id)
+            })
+            .then(async user => {
+                expect(user.id).toBe(id)
+                expect(user.name).toBe(name)
+                expect(user.surname).toBe(surname)
+                expect(user.email).toBe(email)
 
-        expect(users.length).toBe(1)
-
-        const [user] = users
-
-        expect(user.name).toBe(name)
-        expect(user.surname).toBe(surname)
-        expect(user.email).toBe(email)
-
-        const match = await bcrypt.compare(password, user.password)
-
-        expect(match).toBe(true)
+                const match = await bcrypt.compare(password, user.password)
+                expect(match).toBe(true)
+                done()
+            })
     })
 
     describe("when user already exists", () => {
-        beforeEach(() => Users.create({ name, surname, email, password }))
-
-        it("should fail on trying to register an existing user", async () => {
+        it("should fail on trying to register an existing user", done => {
             try {
-                await registerUser(name, surname, email, password)
-
-                throw new Error("should not reach this point")
+                Users.create({ id, name, surname, email, password })
+                    .then(() => registerUser(id, name, surname, email, password))
+                    .then(() => { throw new Error("should not reach this point") })
+                    .catch(error => { throw error })
             } catch (error) {
-                expect(error).to.exist
+                expect(error).toBeDefined()
 
                 expect(error).toBeInstanceOf(Error)
                 expect(error.message).toBe(`user with e-mail ${email} already exists`)
+                done()
             }
         })
     })
 
     afterEach(() => Users.deleteMany())
 
-    after(mongoose.disconnect)
+    afterAll(mongoose.disconnect)
 })

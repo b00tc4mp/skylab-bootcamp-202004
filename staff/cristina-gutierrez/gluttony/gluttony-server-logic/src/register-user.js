@@ -4,7 +4,8 @@ const { utils: { Email }, errors: { DuplicityError } } = require("gluttony-commo
 const { models: { Users } } = require("gluttony-data")
 const bcrypt = require("bcryptjs")
 
-module.exports = function (name, surname, email, password) {
+module.exports = (id, name, surname, email, password) => {
+    String.validate.notVoid(id)
     String.validate.notVoid(name)
     String.validate.notVoid(surname)
     String.validate.notVoid(email)
@@ -18,6 +19,6 @@ module.exports = function (name, surname, email, password) {
 
         const hash = await bcrypt.hash(password, 10)
 
-        await Users.create({ name, surname, email, password: hash })
+        await Users.create({ id, name, surname, email, password: hash })
     })()
 }
