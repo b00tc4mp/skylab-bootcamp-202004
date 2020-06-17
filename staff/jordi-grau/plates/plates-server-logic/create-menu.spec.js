@@ -55,8 +55,6 @@ describe('server logic: create menu', ()=>{
         
         const _dish =  await Dish.create({name: 'Arroz'})
         let _dishId = _dish.id
-      //  const restaurant=await Restaurant.find()
-      //  const restaurantId=restaurant[0]._id.toString()
         const result = await createMenu(userId, restaurantId, _dishId)  
         const restaurant = await Restaurant.findById(restaurantId)   
         
