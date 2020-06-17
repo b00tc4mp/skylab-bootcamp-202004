@@ -6,7 +6,6 @@
   "author": "crispine",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^8.2.0",
     "gluttony-commons": "file:../gluttony-commons",
     "mongoose": "^5.9.18"
   }
