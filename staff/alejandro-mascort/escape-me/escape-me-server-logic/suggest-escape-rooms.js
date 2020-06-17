@@ -10,7 +10,8 @@ module.exports = (userId) => {
     return (async () => {
         let sorteable = []
         let index = 0
-        const escapesSuggested = []
+        let escapesSuggested = []
+        let escapeRooms
 
         if (userId) {
             const genres = {}
@@ -21,6 +22,15 @@ module.exports = (userId) => {
             }).populate('participated').populate('pending').populate('favorites').lean()
 
             if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
+
+            const _user = await User.findOne({ _id: ObjectId(userId) }, {
+                __v: 0, password: 0, following: 0, name: 0,
+                surname: 0, email: 0, username: 0, _id: 0
+            }).lean()
+
+            let __user = {}
+
+            Object.keys(_user).forEach(item => __user[item] = _user[item].map(_item => _item.toString()))
 
             Object.keys(user).forEach(item => {
                 user[item].forEach(({ genre }) => {
@@ -34,14 +44,16 @@ module.exports = (userId) => {
             })
 
             sorteable.sort((a, b) => b[1] - a[1])
+            if (sorteable.length > 3) sorteable = sorteable.slice(0, 3)
 
-            if (sorteable.lenght > 3) sorteable = sorteable.slice(0, 3)
-
-            let escapeRooms
-            while (index != sorteable.length) {
+            while (index !== sorteable.length) {
                 escapeRooms = await EscapeRoom.find({ genre: sorteable[index][0] }).lean()
 
-                if (escapeRooms) escapeRooms.forEach(escape => escapesSuggested.push(escape))
+                escapeRooms.forEach(escape => {
+                    if ((!__user['participated'].includes(escape._id.toString())) && (!__user['pending'].includes(escape._id.toString())) && (!__user['favorites'].includes(escape._id.toString()))) {
+                        escapesSuggested.push(escape)
+                    }
+                })
 
                 index++
             }
@@ -49,12 +61,21 @@ module.exports = (userId) => {
 
         if (escapesSuggested.length === 0) {
             escapeRooms = await EscapeRoom.find({}).lean()
+            escapeRooms.sort(() => 0.5 - Math.random())
 
-            while (escapesSuggested.length < 10) {
-                if (escapeRooms) escapeRooms.forEach(escape => escapesSuggested.push(escape))
+            while (escapesSuggested.length < 10 && escapesSuggested < escapeRooms.length) {
+                escapeRooms.forEach(escape => {
+                    if (escapesSuggested.length < 10) escapesSuggested.push(escape)
+                })
             }
 
         }
+
+        escapesSuggested = escapesSuggested.map(({ _id, name, priceMin, priceMax, playersMin, playersMax, genre, city, image, rating }) => ({ id: _id, name, priceMin, priceMax, playersMin, playersMax, genre, city, image, rating }))
+
+        escapesSuggested.sort(() => 0.5 - Math.random())
+
+        escapesSuggested = escapesSuggested.slice(0, 10)
 
         return escapesSuggested
     })()
