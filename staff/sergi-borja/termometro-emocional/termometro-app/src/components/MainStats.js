@@ -18,6 +18,7 @@ function MainStats({ token }) {
     const [displayCalendar, setDisplayCalendar] = useState()
     const [chartOfCalendar, setChartOfCalendar] = useState()
     const [_dayClicked, setDayClicked] = useState()
+    // const [_dayClicked, setDayClicked] = useState()
 
     const chartOptions = {
         options: {
@@ -39,13 +40,17 @@ function MainStats({ token }) {
     }
 
     const daysSetter = (days) => {
+        console.log('SETTING THINGS')
         setDays(days)
         setChartOfCalendar(false)
         setDisplayCalendar(false)
-        setDayClicked()
-        if (rolChart === 'admin') adminChart()
-        if (rolChart === 'member') handleSeeMemberStats(memberSelected)
+        setDayClicked(false)
     }
+
+    useEffect(() => {
+        if (rolChart === 'admin') adminChart()
+        if (rolChart === 'member') handleSeeMemberStats(memberSelected, _dayClicked)
+    }, [_dayClicked])
 
     const settingDateArray = (userInfo) => {
         let dateArray = []
@@ -67,17 +72,17 @@ function MainStats({ token }) {
         return scoreArray;
     }
 
-    const adminChart = (dayClicked) => {
+    const adminChart = () => {
         isAuthenticated(token)
             .then(adminInfo => {
                 setRolChart('admin')
                 let dateArray;
                 let scoreArray;
-                if (dayClicked) {
-                    let clickDayInfo = adminInfo.mood.filter((element) => moment(element.date).format('LL') === moment(dayClicked).format('LL'))
+                if (_dayClicked) {
+                    let clickDayInfo = adminInfo.mood.filter((element) => moment(element.date).format('LL') === moment(_dayClicked).format('LL')) 
                     dateArray = [clickDayInfo[0].date, clickDayInfo[1].date]
                     scoreArray = [clickDayInfo[0].score, clickDayInfo[1].score]
-                } else if (!dayClicked) {
+                } else if (!_dayClicked) {
                     setChartOfCalendar(false)
                     dateArray = settingDateArray(adminInfo);
                     scoreArray = settingScoreArray(adminInfo);
@@ -96,16 +101,18 @@ function MainStats({ token }) {
             })
     }
 
-    const handleSeeMemberStats = (member, dayClicked) => {
+    const handleSeeMemberStats = (member) => {
         setRolChart('member')
         let dateArray;
         let scoreArray;
 
-        if (dayClicked) {
-                let clickDayInfo = member.mood.filter((element) => moment(element.date).format('LL') === moment(dayClicked).format('LL'))
-                dateArray = [clickDayInfo[0].date, clickDayInfo[1].date]
-                scoreArray = [clickDayInfo[0].score, clickDayInfo[1].score]
-        } else if (!dayClicked) {
+        if (_dayClicked) {
+            // let clickDayInfo;
+            // dayClicked ? clickDayInfo = member.mood.filter((element) => moment(element.date).format('LL') === moment(dayClicked).format('LL')) : clickDayInfo = member.mood.filter((element) => moment(element.date).format('LL') === moment(_dayClicked).format('LL'))
+            let clickDayInfo = member.mood.filter((element) => moment(element.date).format('LL') === moment(_dayClicked).format('LL'))
+            dateArray = [clickDayInfo[0].date, clickDayInfo[1].date]
+            scoreArray = [clickDayInfo[0].score, clickDayInfo[1].score]
+        } else if (!_dayClicked) {
             setChartOfCalendar(false)
             dateArray = settingDateArray(member);
             scoreArray = settingScoreArray(member);
@@ -152,10 +159,11 @@ function MainStats({ token }) {
     }
 
     const handleDayClicked = (dayClicked) => {
+
         setChartOfCalendar(true)
         setDayClicked(dayClicked)
-        if (rolChart === 'admin') adminChart(dayClicked)
-        if (rolChart === 'member') handleSeeMemberStats(memberSelected, dayClicked)
+        // if (rolChart === 'admin') adminChart(dayClicked)
+        // if (rolChart === 'member') handleSeeMemberStats(memberSelected, dayClicked)
         setDisplayCalendar(false)
     }
 
@@ -197,4 +205,9 @@ function MainStats({ token }) {
 }
 
 export default MainStats;
+
+
+
+
+
 
