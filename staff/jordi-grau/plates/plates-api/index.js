@@ -1,5 +1,4 @@
 require('dotenv').config()
-debugger
 const { argv: [ , , PORT_CLI], env: {PORT: PORT_ENV, JWT_SECRET, MONGODB_URL} } = process
 const PORT = PORT_CLI || PORT_ENV || 8080
 
@@ -26,7 +25,7 @@ mongoose.connect(MONGODB_URL)
 
 
         app.post('/users', parseBody, (req, res) =>{
-            debugger
+            
             const { body: { name, surname, email, password }} = req
 
             try {
@@ -87,10 +86,10 @@ mongoose.connect(MONGODB_URL)
                 handleError(error, res)               
             }
         })
-debugger
+
         app.get('/search/:restaurant?', (req, res) => {
             const { params: { restaurant } } = req
-debugger
+
             try {
                 searchRestaurant(restaurant)
                     .then((restaurants) => res.status(200).json(restaurants))
