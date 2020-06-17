@@ -12,7 +12,10 @@ const {jwtPromised} = require('books-node-commons')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
 const context = require('./context')
+const AsyncStorage = require('not-async-storage')
+
 context.API_URL = API_URL
+context.storage = AsyncStorage
 
 describe("client-logic-add-requested-book", () => {
     let name, surname, email, password, encryptedPassword, userId;
@@ -50,11 +53,11 @@ describe("client-logic-add-requested-book", () => {
         bookId = book.id;
 
         token = await jwtPromised.sign({ sub: userId }, SECRET)
-
+        await context.storage.setItem('token',token)
     })
 
     it("should succeed add a request book", async() => {
-        await requestBook(token, bookId)
+        await requestBook(bookId)
 
         const user = await User.findById(userId)
 
@@ -73,7 +76,7 @@ describe("client-logic-add-requested-book", () => {
         bookId = book.id;
 
         try {
-            await requestBook(token, bookId)
+            await requestBook(bookId)
        } catch (error) {
            expect(error).to.exist
            expect(error).to.be.an.instanceof(Error)
@@ -84,9 +87,10 @@ describe("client-logic-add-requested-book", () => {
     it('Sould fail dont find user', async () => {
         userId = '5edf984ec1be038dc909f783'
         const _token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',_token)
 
         try {
-             await requestBook(_token, bookId)
+             await requestBook( bookId)
              throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -99,7 +103,7 @@ describe("client-logic-add-requested-book", () => {
         bookId = '5edf984ec1be038dc909f783'
 
         try {
-            await requestBook(token, bookId)
+            await requestBook(bookId)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -111,19 +115,16 @@ describe("client-logic-add-requested-book", () => {
 
     it('should fail on non-string field', () => {
         expect(() => {
-            requestBook(true, bookId)
+            requestBook(true)
         }).to.throw(TypeError, 'true is not a string')
         expect(() => {
-            requestBook(token, 123)
+            requestBook(123)
         }).to.throw(TypeError, '123 is not a string')
     })
 
     it('should fail on non-string field', () => {
         expect(() => {
             requestBook('', bookId)
-        }).to.throw(VoidError, 'string is empty or blank')
-        expect(() => {
-            requestBook(token, '')
         }).to.throw(VoidError, 'string is empty or blank')
     })
 

@@ -12,8 +12,10 @@ const {jwtPromised} = require('books-node-commons')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
 const context = require('./context')
-context.API_URL = API_URL
+const AsyncStorage = require('not-async-storage')
 
+context.API_URL = API_URL
+context.storage = AsyncStorage
 
 describe('client-logic-search-book', () => {
     before(() => mongoose.connect(MONGODB_URL))
@@ -41,12 +43,13 @@ describe('client-logic-search-book', () => {
         bookId = book.id;
        
         token = await jwtPromised.sign({ sub: userId}, SECRET)
+        await context.storage.setItem('token',token)
     })
 
     it('Sould success to find a book', async() => {
         query = 'title'
 
-        const [books] = await searchBook(token,query)
+        const [books] = await searchBook(query)
 
         expect(books).to.exist
         expect(books.title).to.equal(title)
@@ -58,7 +61,7 @@ describe('client-logic-search-book', () => {
     it('Sould fail on no find any book', async() => {
         query = 'jkadsfgdsgfhgsajdf'
         try {
-            await searchBook(token,query)
+            await searchBook(query)
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
@@ -69,11 +72,12 @@ describe('client-logic-search-book', () => {
     it('Sould fail to search a with a unexistent userId', async() => {
 
         userId = '5edf984ec1be038dc909f783'
-
+        query = 'title'
         const _token = await jwtPromised.sign({ sub: userId}, SECRET)
+        await context.storage.setItem('token',_token)
 
         try {
-            await searchBook(_token, bookId)
+            await searchBook(query)
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
@@ -84,19 +88,16 @@ describe('client-logic-search-book', () => {
 
     it('should fail on non-string field', () => {
         expect(() => {
-            searchBook(true, 'book')
+            searchBook(true)
         }).to.throw(TypeError, 'true is not a string')
         expect(() => {
-            searchBook(userId, 123)
+            searchBook(123)
         }).to.throw(TypeError, '123 is not a string')
     })
 
     it('should fail on non-string field', () => {
         expect(() => {
-            searchBook('', 'book')
-        }).to.throw(VoidError, 'string is empty or blank')
-        expect(() => {
-            searchBook(userId, '')
+            searchBook('')
         }).to.throw(VoidError, 'string is empty or blank')
     })
 

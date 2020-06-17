@@ -1,7 +1,6 @@
 /**
  * Send-message.
  * 
- * @param {string} fromUserId take by token.  
  * @param {string} toUserId book's Id).  
  * @param {string} bookId book's Id).  
  * @param {string} textMessage text messade url image.  
@@ -17,13 +16,14 @@ require('books-commons/polyfills/string')
 const {utils:{call}} = require('books-commons');
 const context = require('./context')
 
-module.exports = function (token, toUserId, bookId, textMessage) {
-    String.validate.notVoid(token)
+module.exports = function (toUserId, bookId, textMessage) {
     String.validate.notVoid(toUserId)
     String.validate.notVoid(bookId)
     String.validate.notVoid(textMessage)
-debugger
+
+
     return (async () => {
+     const token = await this.storage.getItem('token')
      const resp = await call(
          'POST',
          `${this.API_URL}/books/message/send`,

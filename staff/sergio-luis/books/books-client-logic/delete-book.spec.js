@@ -12,7 +12,10 @@ const {jwtPromised} = require('books-node-commons')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
 const context = require('./context')
+const AsyncStorage = require('not-async-storage')
+
 context.API_URL = API_URL
+context.storage = AsyncStorage
 
 
 describe('client-logic-delete-book', () => {
@@ -42,11 +45,12 @@ describe('client-logic-delete-book', () => {
         bookId = book.id;
 
         token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',token)
 
     })
 
     it('Sould success to delete a book', async() => {
-        deletedBook = await deleteBook(token, bookId)
+        deletedBook = await deleteBook(bookId)
 
         expect(deletedBook).to.be.undefined
 
@@ -59,9 +63,10 @@ describe('client-logic-delete-book', () => {
 
         userId = '5edf984ec1be038dc909f783'
         const _token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',_token)
 
         try {
-            await deleteBook(_token, bookId)
+            await deleteBook(bookId)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -74,7 +79,7 @@ describe('client-logic-delete-book', () => {
         bookId = '5edfa26edf0b6a9235ee2539'
 
         try {
-            await deleteBook(token, bookId)
+            await deleteBook(bookId)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -97,9 +102,9 @@ describe('client-logic-delete-book', () => {
         userId = user.id
 
         const _token = await jwtPromised.sign({ sub: userId }, SECRET)
-
+        await context.storage.setItem('token',_token)
         try {
-            await deleteBook(_token, bookId)
+            await deleteBook(bookId)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -111,19 +116,13 @@ describe('client-logic-delete-book', () => {
 
     it('should fail on non-string field', () => {
         expect(() => {
-            deleteBook(true, bookId)
-        }).to.throw(TypeError, 'true is not a string')
-        expect(() => {
-            deleteBook(token, 123)
+            deleteBook(123)
         }).to.throw(TypeError, '123 is not a string')
     })
 
     it('should fail on non-string field', () => {
         expect(() => {
-            deleteBook('', bookId)
-        }).to.throw(VoidError, 'string is empty or blank')
-        expect(() => {
-            deleteBook(token, '')
+            deleteBook('')
         }).to.throw(VoidError, 'string is empty or blank')
     })
 

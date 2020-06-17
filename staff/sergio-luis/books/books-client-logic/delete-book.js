@@ -16,11 +16,11 @@ const { utils: {call} } = require('books-commons')
 const context = require('./context')
 
 
-module.exports = function (token,bookId) {
-    String.validate.notVoid(token)
+module.exports = function (bookId) {
     String.validate.notVoid(bookId)
 
     return (async () => {
+        const token = await this.storage.getItem('token')
         const resp =  await call(
             'DELETE',
             `${this.API_URL}/books/delete/${bookId}`,undefined,

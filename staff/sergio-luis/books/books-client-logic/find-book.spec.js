@@ -8,7 +8,9 @@ require('books-commons/polyfills/json')
 const { errors: { VoidError } } = require('books-commons')
 global.fetch = require('node-fetch')
 const context = require('./context')
+
 context.API_URL = API_URL
+
 
 describe('client-logic-find-books', () => {
 

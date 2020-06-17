@@ -1,7 +1,6 @@
 /**
- * Create book.
- * 
- * @param {string} userId take by token.  
+ * Add book to requested box.
+ *  
  * @param {string} bookId bookId.  
  *
  * @throws {UnexistenceError} if don`t find userId in data base.
@@ -19,11 +18,11 @@ const { utils:{call} } = require('books-commons')
 const context = require('./context')
 
 
-module.exports = function (token,bookId) {
-    String.validate.notVoid(token)    
+module.exports = function (bookId) {
     String.validate.notVoid(bookId)
 
     return (async() => {
+        const token = await this.storage.getItem('token')
         const resp = await call(
             'POST',
             `${this.API_URL}/books/requested/add/${bookId}`,

@@ -12,7 +12,10 @@ const {jwtPromised} = require('books-node-commons')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
 const context = require('./context')
+const AsyncStorage = require('not-async-storage')
+
 context.API_URL = API_URL
+context.storage = AsyncStorage
 
 
 describe("client-logic-calculate-distance-book", () => {
@@ -62,10 +65,11 @@ describe("client-logic-calculate-distance-book", () => {
         await User.findByIdAndUpdate(secondUserId,{$set: {gpsCoordinates:{latitude:secondUserLatitude,longitude:secondUserLongitude}}})
 
         token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',token)
     })
 
     it("should succeed travel book", async() => {
-        await calculateDistanceBook(token,secondUserId,bookId)
+        await calculateDistanceBook(secondUserId,bookId)
 
         const book = await Book.findById(bookId)
 
@@ -73,14 +77,14 @@ describe("client-logic-calculate-distance-book", () => {
         expect(book.travelKm).to.greaterThan(0) 
     })
     it("should succeed travel add more km to a book", async() => {
-        await calculateDistanceBook(token,secondUserId,bookId)
+        await calculateDistanceBook(secondUserId,bookId)
     
         const book = await Book.findById(bookId)
 
         expect(book).to.exist
         expect(book.travelKm).to.greaterThan(0) 
 
-        await calculateDistanceBook(token,secondUserId,bookId)
+        await calculateDistanceBook(secondUserId,bookId)
         const _book = await Book.findById(bookId)
  
         expect(_book).to.exist
@@ -91,8 +95,9 @@ describe("client-logic-calculate-distance-book", () => {
     it("should fail don`texist userId", async() => {
         userId = '5edf984ec1be038dc909f783'
         const _token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',_token)
         try {
-            await calculateDistanceBook(_token,secondUserId,bookId)
+            await calculateDistanceBook(secondUserId,bookId)
             throw new Error('should not reach this point')
        } catch (error) {
            expect(error).to.exist
@@ -105,7 +110,7 @@ describe("client-logic-calculate-distance-book", () => {
         secondUserId = '5edf984ec1be038dc909f783'
 
         try {
-            await calculateDistanceBook(token,secondUserId,bookId)
+            await calculateDistanceBook(secondUserId,bookId)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -117,7 +122,7 @@ describe("client-logic-calculate-distance-book", () => {
         bookId = '5edf984ec1be038dc909f783'
 
         try {
-            await calculateDistanceBook(token,secondUserId,bookId)
+            await calculateDistanceBook(secondUserId,bookId)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -129,7 +134,7 @@ describe("client-logic-calculate-distance-book", () => {
         await User.findByIdAndUpdate(userId,{$set: {gpsCoordinates:{latitude:undefined,longitude:undefined}}})
    
         try {
-            await calculateDistanceBook(token,secondUserId,bookId)
+            await calculateDistanceBook(secondUserId,bookId)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -141,7 +146,7 @@ describe("client-logic-calculate-distance-book", () => {
         await User.findByIdAndUpdate(secondUserId,{$set: {gpsCoordinates:{latitude:undefined,longitude:undefined}}})
 
         try {
-            await calculateDistanceBook(token,secondUserId,bookId)
+            await calculateDistanceBook(secondUserId,bookId)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -152,26 +157,20 @@ describe("client-logic-calculate-distance-book", () => {
 
 
     it('should fail on non-string field', () => {
-        expect(() => {
-            calculateDistanceBook(true,secondUserId,bookId)
-        }).to.throw(TypeError, 'true is not a string')
-        expect(() => {
-            calculateDistanceBook(token,123,bookId)
+     expect(() => {
+            calculateDistanceBook(123,bookId)
         }).to.throw(TypeError, '123 is not a string')
         expect(() => {
-            calculateDistanceBook(token,secondUserId,false)
+            calculateDistanceBook(secondUserId,false)
         }).to.throw(TypeError, 'false is not a string')
     })
 
     it('should fail on non-string field', () => {
         expect(() => {
-            calculateDistanceBook('',secondUserId,bookId)
+            calculateDistanceBook('',bookId)
         }).to.throw(VoidError, 'string is empty or blank')
         expect(() => {
-            calculateDistanceBook(token,'',bookId)
-        }).to.throw(VoidError, 'string is empty or blank')
-        expect(() => {
-            calculateDistanceBook(token,secondUserId,'')
+            calculateDistanceBook(secondUserId,'')
         }).to.throw(VoidError, 'string is empty or blank')
     })
 

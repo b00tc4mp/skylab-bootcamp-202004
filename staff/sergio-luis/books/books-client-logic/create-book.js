@@ -1,7 +1,6 @@
 /**
  * Create book.
  * 
- * @param {string} userId take by token.  
  * @param {string} title book's title.  
  * @param {string} image book's url image.  
  * @param {string} description book's description.  
@@ -19,14 +18,13 @@ const { utils: {call} } = require('books-commons')
 const context = require('./context')
 
 
-module.exports = function (token, title, image, description, barCode) {
-
-    String.validate.notVoid(token)
+module.exports = function (title, image, description, barCode) {
     String.validate.notVoid(title)
     String.validate.notVoid(image)
     String.validate.notVoid(barCode)
 
     return (async () => {
+        const token = await this.storage.getItem('token')
         const resp =  await call(
             'POST',
             `${this.API_URL}/books/create`,

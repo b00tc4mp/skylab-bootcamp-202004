@@ -1,7 +1,6 @@
 /**
  * Update Coordinates.
  * 
- * @param {string} userId take by token.  
  * @param {number} latitude latitude coordinate.  
  * @param {number} longitude longitude coordinate.  
 
@@ -13,17 +12,16 @@
  *
  */
 
-require('books-commons/polyfills/string')
 require('books-commons/polyfills/number')
 const { utils: {call} } = require('books-commons')
 const context = require('./context');
 
-module.exports = function (token,latitude,longitude){
-    String.validate.notVoid(token)
+module.exports = function (latitude,longitude){
     Number.validate(latitude)
     Number.validate(longitude)
     
     return (async() => {
+        const token = await this.storage.getItem('token')
         const resp = await call(
             'PATCH',
             `${this.API_URL}/users/coordinates`,

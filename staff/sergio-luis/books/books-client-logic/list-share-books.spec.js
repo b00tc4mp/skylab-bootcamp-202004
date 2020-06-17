@@ -12,7 +12,10 @@ const {jwtPromised} = require('books-node-commons')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
 const context = require('./context')
+const AsyncStorage = require('not-async-storage')
+
 context.API_URL = API_URL
+context.storage = AsyncStorage
 
 
 describe("client-logic-list-share-books", () => {
@@ -52,12 +55,11 @@ describe("client-logic-list-share-books", () => {
         bookId = book.id;
 
         token = await jwtPromised.sign({ sub: userId }, SECRET)
-
+        await context.storage.setItem('token',token)
     })
 
     it("should succeed add a accept share book", async() => {
         await Book.findByIdAndUpdate(bookId, {$set: {actualUserId : secondUserId }})
-
 
         const books = await listShareBooks(token)
 
@@ -78,6 +80,7 @@ describe("client-logic-list-share-books", () => {
         userId = '5edf984ec1be038dc909f783'
 
         const _token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',_token)
         try {
             await listShareBooks(_token)
         } catch (error) {
@@ -96,23 +99,6 @@ describe("client-logic-list-share-books", () => {
             expect(error).to.be.an.instanceof(Error)
             expect(error.message).to.equal("Dont`t have books in your library")
         }
-    })
-
-
-    it('should fail on non-string field', () => {
-        expect(() => {
-            listShareBooks(true)
-        }).to.throw(TypeError, 'true is not a string')
-        expect(() => {
-            listShareBooks(123)
-        }).to.throw(TypeError, '123 is not a string')
-    })
-
-    it('should fail on non-string field', () => {
-        expect(() => {
-            listShareBooks('')
-        }).to.throw(VoidError, 'string is empty or blank')
-
     })
 
     afterEach(async() => {

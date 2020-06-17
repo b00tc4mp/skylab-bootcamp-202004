@@ -12,7 +12,10 @@ const {jwtPromised} = require('books-node-commons')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
 const context = require('./context')
+const AsyncStorage = require('not-async-storage')
+
 context.API_URL = API_URL
+context.storage = AsyncStorage
 
 describe("client-logic-add-score", () => {
     let name, surname, email, password, encryptedPassword, userId;
@@ -56,12 +59,14 @@ describe("client-logic-add-score", () => {
 
         points =Math.floor(Math.random() * 6)
         token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',token)
+
     })
 
     it("should succeed add score to a user", async() => {
         const _points =Math.floor(Math.random() * 6)
 
-        await addScore(token, secondUserId, _points)
+        await addScore(secondUserId, _points)
 
         const secondUser = await User.findById(secondUserId)
         
@@ -76,10 +81,12 @@ describe("client-logic-add-score", () => {
     it("should succeed add more than one vote", async() => {
         const _points =Math.floor(Math.random() * 6)
 
-        await addScore(token, secondUserId, _points)
+        await addScore(secondUserId, _points)
 
         const _token = await jwtPromised.sign({ sub: thirdUserId }, SECRET)
-        await addScore(_token, secondUserId, _points)
+        await context.storage.setItem('token',_token)
+
+        await addScore(secondUserId, _points)
 
         const secondUser = await User.findById(secondUserId)
 
@@ -91,8 +98,8 @@ describe("client-logic-add-score", () => {
         const _points =Math.floor(Math.random() * 6)
     
         try {
-            await addScore(token, secondUserId, _points)
-            await addScore(token, secondUserId, _points)
+            await addScore(secondUserId, _points)
+            await addScore(secondUserId, _points)
 
             throw new Error('should not reach this point')
         } catch (error) {
@@ -107,8 +114,9 @@ describe("client-logic-add-score", () => {
     it('Sould fail dont find user', async () => {
         userId = '5edf984ec1be038dc909f783'
         const _token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',_token)
         try {
-            await addScore(_token, secondUserId, points)
+            await addScore(secondUserId, points)
              throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -119,7 +127,7 @@ describe("client-logic-add-score", () => {
     it('Sould fail to vote yourself', async () => {
 
         try {
-            await addScore(token, userId, points)
+            await addScore(userId, points)
              throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -132,7 +140,7 @@ describe("client-logic-add-score", () => {
         secondUserId = '5edf984ec1be038dc909f783'
 
         try {
-            await addScore(token, secondUserId, points)
+            await addScore(secondUserId, points)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -145,7 +153,7 @@ describe("client-logic-add-score", () => {
         points = 6
 
         try {
-            await addScore(token, secondUserId, points)
+            await addScore(secondUserId, points)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -157,28 +165,21 @@ describe("client-logic-add-score", () => {
 
     it('should fail on non-string field', () => {
         expect(() => {
-            addScore(true, secondUserId, points)
-        }).to.throw(TypeError, 'true is not a string')
-        expect(() => {
-            addScore(token, 123, points)
+            addScore(123, points)
         }).to.throw(TypeError, '123 is not a string')
         expect(() => {
-            addScore(token, secondUserId, 'points')
+            addScore(secondUserId, 'points')
         }).to.throw(Error, 'points is not a number')
     })
 
     it('should fail on non-string field', () => {
         expect(() => {
-            addScore('', secondUserId, points)
-        }).to.throw(VoidError, 'string is empty or blank')
-
-        expect(() => {
-            addScore(token, '', points)
+            addScore('', points)
         }).to.throw(VoidError, 'string is empty or blank')
 
        points = undefined
         expect(() => {
-            addScore(token, secondUserId, points)
+            addScore(secondUserId, points)
         }).to.throw(Error, 'undefined is not a number')
     })
 

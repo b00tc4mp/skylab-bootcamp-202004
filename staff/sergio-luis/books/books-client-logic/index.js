@@ -1,7 +1,12 @@
+const context = require('./context')
+
 module.exports = {
+    get __context__(){
+        return context
+    },
     //-----------------------------
     registerUser: require('./register-user'),
-    authenticateUser: require('./authenticate-user'),
+    loginUser: require('./login-user'),
     retrieveUser: require('./retrieve-user'),
     searchUser: require('./search-user'),
     updateUser:require('./update-user'),

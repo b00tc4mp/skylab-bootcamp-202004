@@ -1,7 +1,6 @@
 /**
  *  Delete recieved messages.
- * 
- * @param {string} userId take by token.  
+ *  
  * @param {Object} messageId it is a unic id for a message created when we create a message.  
 
  * @throws {UnexistenceError} if don`t find userId in data base.
@@ -16,11 +15,11 @@ require('books-commons/polyfills/string')
 const { utils: {call} } = require('books-commons')
 const context = require('./context')
 
-module.exports = function (token, messageId){
-    String.validate.notVoid(token)
+module.exports = function ( messageId){
     String.validate.notVoid(messageId)
 
     return (async () => {
+        const token = await this.storage.getItem('token')
         const resp =  await call(
             'DELETE',
             `${this.API_URL}/books/messages/delete/${messageId}`,undefined,

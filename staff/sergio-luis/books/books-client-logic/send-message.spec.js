@@ -12,14 +12,16 @@ const {jwtPromised} = require('books-node-commons')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
 const context = require('./context')
+const AsyncStorage = require('not-async-storage')
+
 context.API_URL = API_URL
+context.storage = AsyncStorage
 
 describe("client-logic-sendMessage", () => {
     let name, surname, email, password, encryptedPassword, userId;
     let secondName, secondSurname, secondEmail, secondPassword, secondEncryptedPassword, secondUserId;
     let title, barCode, travelKm, bookId;
     let textMessage;
-    let token;
 
     before (async() => {
         await mongoose.connect(MONGODB_URL, {unifiedTopology: true});
@@ -53,10 +55,12 @@ describe("client-logic-sendMessage", () => {
 
         textMessage = `textMessage-${random()}`;
         token = await jwtPromised.sign({ sub: userId}, SECRET);
+        await context.storage.setItem('token',token);
+
     })
 
     it("should succeed on sending a message", async() => {
-        await sendMessage(token, secondUserId, bookId, textMessage)
+        await sendMessage(secondUserId, bookId, textMessage)
         
         const [message] = await Message.find({ toUserId: secondUserId})
 
@@ -70,8 +74,9 @@ describe("client-logic-sendMessage", () => {
     it('Sould fail dont find user', async () => {
         userId = '5edf984ec1be038dc909f783'
         const _token = await jwtPromised.sign({ sub: userId}, SECRET);
+        await context.storage.setItem('token',_token)
         try {
-            await sendMessage(_token, secondUserId, bookId, textMessage)
+            await sendMessage(secondUserId, bookId, textMessage)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -84,7 +89,7 @@ describe("client-logic-sendMessage", () => {
         secondUserId = '5edf984ec1be038dc909f783'
 
         try {
-            await sendMessage(token, secondUserId, bookId, textMessage)
+            await sendMessage(secondUserId, bookId, textMessage)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -97,7 +102,7 @@ describe("client-logic-sendMessage", () => {
         bookId = '5edf984ec1be038dc909f783'
 
         try {
-            await sendMessage(token, secondUserId, bookId, textMessage)
+            await sendMessage(secondUserId, bookId, textMessage)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -108,32 +113,25 @@ describe("client-logic-sendMessage", () => {
 
     it('should fail on non-string field', () => {
         expect(() => {
-            sendMessage(true, secondUserId, bookId, textMessage)
-        }).to.throw(TypeError, 'true is not a string')
-        expect(() => {
-            sendMessage(userId, 123, bookId, textMessage)
+            sendMessage(123, bookId, textMessage)
         }).to.throw(TypeError, '123 is not a string')
         expect(() => {
-            sendMessage(userId, secondUserId, 123, textMessage)
+            sendMessage(secondUserId, 123, textMessage)
         }).to.throw(TypeError, '123 is not a string')
         expect(() => {
-            sendMessage(userId, secondUserId, bookId, false)
+            sendMessage(secondUserId, bookId, false)
         }).to.throw(TypeError, 'false is not a string')
     })
 
     it('should fail on non-string field', () => {
-      
         expect(() => {
-            sendMessage('', secondUserId, bookId, textMessage)
+            sendMessage('', bookId, textMessage)
         }).to.throw(VoidError, 'string is empty or blank')
         expect(() => {
-            sendMessage(userId, '', bookId, textMessage)
+            sendMessage(secondUserId, '', textMessage)
         }).to.throw(VoidError, 'string is empty or blank')
         expect(() => {
-            sendMessage(userId, secondUserId, '', textMessage)
-        }).to.throw(VoidError, 'string is empty or blank')
-        expect(() => {
-            sendMessage(userId, secondUserId, bookId, '')
+            sendMessage(secondUserId, bookId, '')
         }).to.throw(VoidError, 'string is empty or blank')
 
     })

@@ -1,7 +1,6 @@
 /**
  * Accepted share books.
  * 
- * @param {string} userId take by token.  
  * @param {string} newUserId new actualUserId.  
  * @param {string} bookId bookId.  
  *
@@ -17,12 +16,12 @@ require('books-commons/polyfills/string')
 const { utils:{call} } = require('books-commons')
 const context = require('./context')
 
-module.exports = function (token,newUserId,bookId){
-    String.validate.notVoid(token)
+module.exports = function (newUserId,bookId){
     String.validate.notVoid(newUserId)
     String.validate.notVoid(bookId)
     
     return (async()=>{
+        const token = await this.storage.getItem('token')
         const resp = await call(
             'PATCH',
             `${this.API_URL}/books/share/accepted`,

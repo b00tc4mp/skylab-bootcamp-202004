@@ -13,7 +13,10 @@ const {jwtPromised} = require('books-node-commons')
 const { errors: { VoidError }} = require('books-commons')
 global.fetch = require('node-fetch')
 const context = require('./context')
+const AsyncStorage = require('not-async-storage')
+
 context.API_URL = API_URL
+context.storage = AsyncStorage
 
 describe("client-logic-update-coordinates", () => {
     let name, surname, email, password, encryptedPassword, userId,token;
@@ -41,9 +44,9 @@ describe("client-logic-update-coordinates", () => {
     it("should succeed add gps coordinates", async() => {
        
         token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',token)
 
-
-        await updateCoordinates(token,latitude,longitude)
+        await updateCoordinates(latitude,longitude)
 
         const user = await User.findById(userId)
 
@@ -60,7 +63,9 @@ describe("client-logic-update-coordinates", () => {
         const _longitude = random();
 
         token = await jwtPromised.sign({ sub: userId }, SECRET)
-        await updateCoordinates(token,_latitude,_longitude)
+        await context.storage.setItem('token',token)
+
+        await updateCoordinates(_latitude,_longitude)
 
         const user = await User.findById(userId)
 
@@ -70,9 +75,10 @@ describe("client-logic-update-coordinates", () => {
     })
     it("should fail to no exist a user", async() => {
         userId = '5edf984ec1be038dc909f783'
-        token = await jwtPromised.sign({ sub: userId }, SECRET)
+        const _token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',_token)
         try {
-            await updateCoordinates(token,latitude,longitude)
+            await updateCoordinates(latitude,longitude)
             throw new Error('should not reach this point')
        } catch (error) {
            expect(error).to.exist
@@ -84,25 +90,19 @@ describe("client-logic-update-coordinates", () => {
 
     it('should fail on non-string field', () => {
         expect(() => {
-            updateCoordinates(true,latitude,longitude)
-        }).to.throw(TypeError, 'true is not a string')
-        expect(() => {
-            updateCoordinates(userId,'latitude',longitude)
+            updateCoordinates('latitude',longitude)
         }).to.throw(TypeError, 'latitude is not a number')
         expect(() => {
-            updateCoordinates(userId,latitude,'longitude')
+            updateCoordinates(latitude,'longitude')
         }).to.throw(TypeError, 'longitude is not a number')
     })
 
     it('should fail on non-string field', () => {
         expect(() => {
-            updateCoordinates('',latitude,longitude)
-        }).to.throw(VoidError, 'string is empty or blank')
-        expect(() => {
-            updateCoordinates(userId,undefined,longitude)
+            updateCoordinates(undefined,longitude)
         }).to.throw(Error, 'undefined is not a number')
         expect(() => {
-            updateCoordinates(userId,latitude,undefined)
+            updateCoordinates(latitude,undefined)
         }).to.throw(Error, 'undefined is not a number')
     })
 

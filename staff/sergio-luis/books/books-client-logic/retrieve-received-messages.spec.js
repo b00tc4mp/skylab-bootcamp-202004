@@ -12,7 +12,10 @@ const { mongoose, models: { User,Book,Message } } = require('books-data')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
 const context = require('./context')
+const AsyncStorage = require('not-async-storage')
+
 context.API_URL = API_URL
+context.storage = AsyncStorage
 
 
 describe("client-logic-retrieve-received-messages", () => {
@@ -58,11 +61,12 @@ describe("client-logic-retrieve-received-messages", () => {
         messageId = message.id
 
         token = await jwtPromised.sign({ sub: secondUserId}, SECRET)
+        await context.storage.setItem('token',token)
     })
 
     it("should succeed to retrieve a message", async() => {
         
-        const [message] = await retriveMessages(token)
+        const [message] = await retriveMessages()
         
         expect(message).to.exist
         expect(message.fromUserId.name).to.equal(name)
@@ -75,8 +79,9 @@ describe("client-logic-retrieve-received-messages", () => {
     it('Sould fail dont find user', async () => {
         userId = '5edf984ec1be038dc909f783'
         const _token = await jwtPromised.sign({ sub: userId}, SECRET)
+        await context.storage.setItem('token',_token)
         try {
-            await retriveMessages(_token)
+            await retriveMessages()
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -87,33 +92,15 @@ describe("client-logic-retrieve-received-messages", () => {
 
     it('Sould fail dont find any message', async () => {
         const _token = await jwtPromised.sign({ sub: userId}, SECRET)
-
+        await context.storage.setItem('token',_token)
         try {
-            await retriveMessages(_token)
+            await retriveMessages()
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
             expect(error.message).to.equal("the user don`t have recieved messages")
         }
-    })
-
-
-
-    it('should fail on non-string field', () => {
-        expect(() => {
-            retriveMessages(true)
-        }).to.throw(TypeError, 'true is not a string')
-        expect(() => {
-            retriveMessages( 123)
-        }).to.throw(TypeError, '123 is not a string')
-    })
-
-    it('should fail on non-string field', () => {
-      
-        expect(() => {
-            retriveMessages('')
-        }).to.throw(VoidError, 'string is empty or blank')
     })
 
     afterEach(async() => {

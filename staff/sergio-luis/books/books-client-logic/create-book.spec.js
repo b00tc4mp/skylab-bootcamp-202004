@@ -12,7 +12,10 @@ const {jwtPromised} = require('books-node-commons')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
 const context = require('./context')
+const AsyncStorage = require('not-async-storage')
+
 context.API_URL = API_URL
+context.storage = AsyncStorage
 
 
 describe('client-logic-create-book', () => {
@@ -40,11 +43,12 @@ describe('client-logic-create-book', () => {
         barCode = `${random()}`;
 
         token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',token)
     })
 
     describe('Creat a book', () => {
         it('should succeed to add a book', async() =>{
-            bookId = await createBook(token, title,image,description,barCode)
+            bookId = await createBook(title,image,description,barCode)
             
             const _book = await Book.findById(bookId)
        
@@ -65,8 +69,9 @@ describe('client-logic-create-book', () => {
         it('should fail when to don`t find a user', async() =>{
             userId='5edfa731dc7edc93965e8f68'
             const _token = token = await jwtPromised.sign({ sub: userId }, SECRET)
+            await context.storage.setItem('token',_token)
             try{
-                await createBook(token, title,image,description,barCode)
+                await createBook(title,image,description,barCode)
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.exist
@@ -81,31 +86,25 @@ describe('client-logic-create-book', () => {
 
             it('should fail on non-string field', () => {
                 expect(() => {
-                    createBook(true, title,image,description,barCode)
-                }).to.throw(TypeError, 'true is not a string')
-                expect(() => {
-                    createBook(token, 123,image,description,barCode)
+                    createBook(123,image,description,barCode)
                 }).to.throw(TypeError, '123 is not a string')
                 expect(() => {
-                    createBook(token, title,image,description,false)
+                    createBook(title,image,description,false)
                 }).to.throw(TypeError, 'false is not a string')
                 expect(() => {
-                    createBook(token, title,123,description,barCode)
+                    createBook(title,123,description,barCode)
                 }).to.throw(TypeError, '123 is not a string')
             })
 
             it('should fail on empty field', () => {
                 expect(() => {
-                    createBook('', title,image,description,barCode)
+                    createBook('',image,description,barCode)
                 }).to.throw(VoidError, 'string is empty or blank')
                 expect(() => {
-                    createBook(token, '',image,description,barCode)
+                    createBook(title,image,description,'')
                 }).to.throw(VoidError, 'string is empty or blank')
                 expect(() => {
-                    createBook(token, title,image,description,'')
-                }).to.throw(VoidError, 'string is empty or blank')
-                expect(() => {
-                    createBook(token, title,'',description,barCode)
+                    createBook(title,'',description,barCode)
                 }).to.throw(VoidError, 'string is empty or blank')
             })
     

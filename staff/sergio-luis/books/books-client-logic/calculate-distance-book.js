@@ -1,7 +1,6 @@
 /**
  * Calculate Distance Book.
  * 
- * @param {string} actualUserId take by token.  
  * @param {string} newUserId new actualUserId.  
  * @param {string} bookId bookId.  
  *
@@ -17,13 +16,12 @@ require('books-commons/polyfills/string')
 const { utils: {call} } = require('books-commons')
 const context = require('./context')
 
-module.exports = function(token, secondUserId, bookId) {
-
-    String.validate.notVoid(token)
+module.exports = function(secondUserId, bookId) {
     String.validate.notVoid(secondUserId)
     String.validate.notVoid(bookId)
 
     return (async() => {
+        const token = await this.storage.getItem('token')
         const resp = await call(
             'POST',
             `${this.API_URL}/books/add/distance`,

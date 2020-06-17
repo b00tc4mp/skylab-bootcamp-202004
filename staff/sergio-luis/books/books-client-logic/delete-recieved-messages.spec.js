@@ -12,8 +12,10 @@ const {jwtPromised} = require('books-node-commons')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
 const context = require('./context')
-context.API_URL = API_URL
+const AsyncStorage = require('not-async-storage')
 
+context.API_URL = API_URL
+context.storage = AsyncStorage
 
 describe("client-logic-delete-recieved-messages", () => {
     let name, surname, email, password, encryptedPassword, userId;
@@ -58,10 +60,11 @@ describe("client-logic-delete-recieved-messages", () => {
         messageId = message.id
 
         token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',token)
     })
 
     it("should succeed on delete a message", async() => {
-        await deleteReceivedMessages(token,messageId)
+        await deleteReceivedMessages(messageId)
 
         const message = await Message.findById(messageId)
        
@@ -74,7 +77,7 @@ describe("client-logic-delete-recieved-messages", () => {
 
 
         try {
-            await deleteReceivedMessages(token,messageId)
+            await deleteReceivedMessages(messageId)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -87,9 +90,9 @@ describe("client-logic-delete-recieved-messages", () => {
         userId = '5edf984ec1be038dc909f783'
 
         const _token = await jwtPromised.sign({ sub: userId }, SECRET)
-
+        await context.storage.setItem('token',_token)
         try {
-            await deleteReceivedMessages(_token,messageId)
+            await deleteReceivedMessages(messageId)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -102,7 +105,7 @@ describe("client-logic-delete-recieved-messages", () => {
         messageId = '5edf984ec1be038dc909f783'
 
         try {
-            await deleteReceivedMessages(token,messageId)
+            await deleteReceivedMessages(messageId)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -113,22 +116,17 @@ describe("client-logic-delete-recieved-messages", () => {
 
     it('should fail on non-string field', () => {
         expect(() => {
-            deleteReceivedMessages(true,messageId)
+            deleteReceivedMessages(true)
         }).to.throw(TypeError, 'true is not a string')
         expect(() => {
-            deleteReceivedMessages(token,123)
+            deleteReceivedMessages(123)
         }).to.throw(TypeError, '123 is not a string')
     })
 
     it('should fail on non-string field', () => {
-      
         expect(() => {
-            deleteReceivedMessages('',messageId)
+            deleteReceivedMessages('')
         }).to.throw(VoidError, 'string is empty or blank')
-        expect(() => {
-            deleteReceivedMessages(token,'')
-        }).to.throw(VoidError, 'string is empty or blank')
-
     })
 
     afterEach(async() => {

@@ -12,7 +12,10 @@ const {jwtPromised} = require('books-node-commons')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
 const context = require('./context')
+const AsyncStorage = require('not-async-storage')
+
 context.API_URL = API_URL
+context.storage = AsyncStorage
 
 describe("client-logic-accept-share-book", () => {
     let name, surname, email, password, encryptedPassword, userId;
@@ -50,10 +53,11 @@ describe("client-logic-accept-share-book", () => {
         bookId = book.id;
 
         token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',token);
     })
 
     it("should succeed add a accept share book", async() => {
-        await shareBook(token,secondUserId,bookId)
+        await shareBook(secondUserId,bookId)
 
         const book = await Book.findById(bookId)
 
@@ -64,8 +68,9 @@ describe("client-logic-accept-share-book", () => {
 
     it("should fail to can`t share a book when you don`t are the actualUser", async() => {
         const _token = await jwtPromised.sign({ sub: secondUserId }, SECRET)
+        await context.storage.setItem('token',_token);
         try {
-            await shareBook(_token,userId,bookId)
+            await shareBook(userId,bookId)
             throw new Error('should not reach this point')
        } catch (error) {
            expect(error).to.exist
@@ -79,8 +84,9 @@ describe("client-logic-accept-share-book", () => {
     it('Sould fail dont find userId', async () => {
         userId = '5edf984ec1be038dc909f783'
         const _token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',_token);
         try {
-            await shareBook(_token,secondUserId,bookId)
+            await shareBook(secondUserId,bookId)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -93,7 +99,7 @@ describe("client-logic-accept-share-book", () => {
         secondUserId = '5edf984ec1be038dc909f783'
 
         try {
-            await shareBook(token,secondUserId,bookId)
+            await shareBook(secondUserId,bookId)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -105,7 +111,7 @@ describe("client-logic-accept-share-book", () => {
         bookId = '5edf984ec1be038dc909f783'
 
         try {
-            await shareBook(token,secondUserId,bookId)
+            await shareBook(secondUserId,bookId)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -117,25 +123,20 @@ describe("client-logic-accept-share-book", () => {
 
     it('should fail on non-string field', () => {
         expect(() => {
-            shareBook(true,secondUserId,bookId)
-        }).to.throw(TypeError, 'true is not a string')
-        expect(() => {
-            shareBook(token,123,bookId)
+            shareBook(123,bookId)
         }).to.throw(TypeError, '123 is not a string')
         expect(() => {
-            shareBook(token,secondUserId,false)
+            shareBook(secondUserId,false)
         }).to.throw(TypeError, 'false is not a string')
     })
 
     it('should fail on non-string field', () => {
+   
         expect(() => {
-            shareBook('',secondUserId,bookId)
+            shareBook('',bookId)
         }).to.throw(VoidError, 'string is empty or blank')
         expect(() => {
-            shareBook(token,'',bookId)
-        }).to.throw(VoidError, 'string is empty or blank')
-        expect(() => {
-            shareBook(token,secondUserId,'')
+            shareBook(secondUserId,'')
         }).to.throw(VoidError, 'string is empty or blank')
     })
 

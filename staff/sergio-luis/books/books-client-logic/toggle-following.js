@@ -1,7 +1,6 @@
 /**
  * toggle-following.
  * 
- * @param {string} userId take by token.  
  * @param {string} followingUserId following Id).  
  *
  * @throws {UnexistenceError} if don`t find userId in data base.
@@ -15,11 +14,11 @@ require('books-commons/polyfills/string')
 const {utils:{call}} = require('books-commons');
 const context = require('./context')
 
-module.exports = function (token, followingUserId) {
-    String.validate.notVoid(token)
+module.exports = function (followingUserId) {
     String.validate.notVoid(followingUserId)
    
     return (async () => {
+        const token = await this.storage.getItem('token')
         const resp = await call(
             'POST',
             `${this.API_URL}/books/following/toggle`,

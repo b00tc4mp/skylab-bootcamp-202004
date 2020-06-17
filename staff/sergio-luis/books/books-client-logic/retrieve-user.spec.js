@@ -7,13 +7,14 @@ const retrieveUser = require('./retrieve-user')
 const { random } = Math
 const { expect } = require('chai')
 require('books-commons/polyfills/json')
-require('books-commons/ponyfills/xhr')
 const { mongoose, models: { User } } = require('books-data')
 const {jwtPromised} = require('books-node-commons')
-const {errors:{VoidError}} = require('books-commons')
 global.fetch = require('node-fetch')
 const context = require('./context')
+const AsyncStorage = require('not-async-storage')
+
 context.API_URL = API_URL
+context.storage = AsyncStorage
 
 describe('client-logic-retrieve user', () => {
     before(() => mongoose.connect(MONGODB_URL))
@@ -34,10 +35,12 @@ describe('client-logic-retrieve user', () => {
             const user = await User.create({ name, surname, email, password })
             userId = user.id
             token = await jwtPromised.sign({ sub: userId }, SECRET)
+
+            await context.storage.setItem('token',token)
         })
 
         it('should succeed on correct user id', async() =>{
-            const user = await retrieveUser(token);
+            const user = await retrieveUser();
 
             expect(user.name).to.equal(name)
             expect(user.surname).to.equal(surname)
@@ -54,20 +57,16 @@ describe('client-logic-retrieve user', () => {
         userId = '5ed1204ee99ccf6fae798aef'
 
         const _token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',_token)
+
         try{
-           await retrieveUser(_token)
+           await retrieveUser()
            throw new Error('should not reach this point')
         }catch(error){
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
             expect(error.message).to.equal(`user with id ${userId} does not exist`)
         }
-    })
-
-    it('should fail when for a empty userId', () => {
-        expect(() => {
-            retrieveUser('')
-        }).to.throw(VoidError, 'string is empty or blank')  
     })
 
     afterEach(async() => await User.deleteMany())

@@ -12,7 +12,10 @@ const {jwtPromised} = require('books-node-commons')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
 const context = require('./context')
+const AsyncStorage = require('not-async-storage')
+
 context.API_URL = API_URL
+context.storage = AsyncStorage
 
 describe('toogle-following', ()=>{
     let name,surname,email,password,encryptedPassword,userId;
@@ -47,10 +50,11 @@ describe('toogle-following', ()=>{
         secondUserId = secondUser.id;
 
         token = await jwtPromised.sign({ sub: userId}, SECRET);
+        await context.storage.setItem('token',token)
     })
 
     it("should successfully to add following user",async()=>{
-        await toggleFollowing(token,secondUserId)
+        await toggleFollowing(secondUserId)
 
         const user = await User.findById(userId)
         expect(user).to.exist
@@ -71,8 +75,8 @@ describe('toogle-following', ()=>{
     })
 
     it("should successfully to remove following user",async()=>{
-        await toggleFollowing(token,secondUserId)
-        await toggleFollowing(token,secondUserId)
+        await toggleFollowing(secondUserId)
+        await toggleFollowing(secondUserId)
     
 
         const user = await User.findById(userId)
@@ -88,7 +92,7 @@ describe('toogle-following', ()=>{
     it('Sould fail to try toogle yourself', async () => {
       
         try {
-            await toggleFollowing(token,userId)
+            await toggleFollowing(userId)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -100,8 +104,9 @@ describe('toogle-following', ()=>{
         userId = '5edf984ec1be038dc909f783'
 
         const _token = await jwtPromised.sign({ sub: userId}, SECRET);
+        await context.storage.setItem('token',_token)
         try {
-            await toggleFollowing(_token,secondUserId)
+            await toggleFollowing(secondUserId)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -114,7 +119,7 @@ describe('toogle-following', ()=>{
         secondUserId = '5edf984ec1be038dc909f783'
 
         try {
-            await toggleFollowing(token,secondUserId)
+            await toggleFollowing(secondUserId)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -125,20 +130,16 @@ describe('toogle-following', ()=>{
 
     it('should fail on non-string field', () => {
         expect(() => {
-            toggleFollowing(true,secondUserId)
+            toggleFollowing(true)
         }).to.throw(TypeError, 'true is not a string')
         expect(() => {
-            toggleFollowing(token,123)
+            toggleFollowing(123)
         }).to.throw(TypeError, '123 is not a string')
     })
 
     it('should fail on non-string field', () => {
-      
         expect(() => {
             toggleFollowing('',secondUserId)
-        }).to.throw(VoidError, 'string is empty or blank')
-        expect(() => {
-            toggleFollowing(token,'')
         }).to.throw(VoidError, 'string is empty or blank')
     })
 

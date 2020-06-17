@@ -14,11 +14,13 @@ require('books-commons/polyfills/string')
 const { utils: {call} } = require('books-commons')
 const context = require('./context')
 
-module.exports = function (token,query) {
-    String.validate.notVoid(token)
+module.exports = function (query) {
+    
     if(query)String.validate.notVoid(query)
 
     return (async()=>{
+        const token = await this.storage.getItem('token')
+
         const resp = await call('GET',`${this.API_URL}/users/${query || ''}`,undefined,{ 'Authorization': `Bearer ${token}` });
         const {status,body} = resp
 

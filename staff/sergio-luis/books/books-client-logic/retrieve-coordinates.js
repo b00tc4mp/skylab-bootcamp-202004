@@ -1,7 +1,5 @@
 /**
- * Retrieve coordinates.
- * 
- * @param {string} UserId take by token.  
+ * Retrieve coordinates. 
  *
  * @throws {UnexistenceError} if don`t find userId in data base and if dont have latitude or longitude.
  * @throws {VoidError} if the input fiels ar empty.
@@ -10,14 +8,14 @@
  *
  */
 
-require('books-commons/polyfills/string')
+
 const { utils: { call } } = require('books-commons')
 const context = require('./context')
 
-module.exports = function(token) {
-    String.validate.notVoid(token)
+module.exports = function() {
     
     return (async () => {
+        const token = await this.storage.getItem('token')
         const resp = await call(
             'GET',
             `${this.API_URL}/users/coordinates/retrieve`,undefined,

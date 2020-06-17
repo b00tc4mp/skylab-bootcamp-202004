@@ -12,7 +12,10 @@ const { mongoose, models: { User,Book,Message } } = require('books-data')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
 const context = require('./context')
+const AsyncStorage = require('not-async-storage')
+
 context.API_URL = API_URL
+context.storage = AsyncStorage
 
 describe("client-logic-retrieve-requested-book", () => {
     let name, surname, email, password, encryptedPassword, userId;
@@ -51,12 +54,13 @@ describe("client-logic-retrieve-requested-book", () => {
         bookId = book.id;
 
         token = await jwtPromised.sign({ sub: secondUserId}, SECRET)
+        await context.storage.setItem('token',token)
     })
 
     it("should succeed add a accept share book", async() => {
         await User.findByIdAndUpdate(userId, {$push: {requestedBooks : bookId }})
 
-        const books = await retrieveRequestedBooks(token)
+        const books = await retrieveRequestedBooks()
 
         books.forEach(book=>{
             expect(book).to.exist
@@ -71,8 +75,9 @@ describe("client-logic-retrieve-requested-book", () => {
         userId = '5edf984ec1be038dc909f783'
 
         const _token = await jwtPromised.sign({ sub: secondUserId}, SECRET)
+        await context.storage.setItem('token',_token)
         try {
-            await retrieveRequestedBooks(_token)
+            await retrieveRequestedBooks()
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
@@ -83,29 +88,12 @@ describe("client-logic-retrieve-requested-book", () => {
     it('Sould fail don`t have any book in the library of books', async () => {
 
         try {
-            await retrieveRequestedBooks(token)
+            await retrieveRequestedBooks()
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
             expect(error.message).to.equal("you don`t have any books requested")
         }
-    })
-
-
-    it('should fail on non-string field', () => {
-        expect(() => {
-            retrieveRequestedBooks(true)
-        }).to.throw(TypeError, 'true is not a string')
-        expect(() => {
-            retrieveRequestedBooks(123)
-        }).to.throw(TypeError, '123 is not a string')
-    })
-
-    it('should fail on non-string field', () => {
-        expect(() => {
-            retrieveRequestedBooks('')
-        }).to.throw(VoidError, 'string is empty or blank')
-
     })
 
     afterEach(async() => {

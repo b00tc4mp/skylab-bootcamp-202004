@@ -1,7 +1,7 @@
 /**
  * Add score.
  * 
- * @param {string} userId take by token.  
+
  * @param {string} recievedPointUserId a userId how recived points.  
  * @param {Number} points points 0-5.  
  *
@@ -18,13 +18,12 @@ require('books-commons/polyfills/string')
 const { utils:{call} } = require('books-commons')
 const context = require('./context')
 
-module.exports = function (token, recievedPointUserId, points){
-
-    String.validate.notVoid(token)
+module.exports = function (recievedPointUserId, points){
     String.validate.notVoid(recievedPointUserId)
     Number.validate.positive(points)
     
     return (async()=>{
+        const token = await this.storage.getItem('token')
         const resp = await call(
             'PATCH',
             `${this.API_URL}/books/score/add`,

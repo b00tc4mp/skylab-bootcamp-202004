@@ -2,11 +2,9 @@ require('dotenv').config()
 
 const { env: { MONGODB_URL_TEST: MONGODB_URL , TEST_API_URL: API_URL} } = process
 
-const authenticateUser = require('./authenticate-user')
+const loginUser = require('./login-user')
 const { random } = Math
 const { expect } = require('chai')
-require('books-commons/polyfills/json')
-require('books-commons/ponyfills/xhr')
 require('books-commons/ponyfills/atob')
 const { mongoose, models: { User } } = require('books-data')
 const bcrypt = require('bcryptjs')
@@ -15,8 +13,10 @@ global.fetch = require('node-fetch')
 const context = require('./context')
 context.API_URL = API_URL
 
+const AsyncStorage = require('not-async-storage')
+context.storage = AsyncStorage
 
-describe('client-logic-authenticate user', () => {
+describe('client-logic-login-user', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let name, surname, email, password, userId, hash
@@ -38,7 +38,10 @@ describe('client-logic-authenticate user', () => {
         })
 
         it('should succeed on correct credentials', async() =>{
-            const token = await authenticateUser(email, password)
+            await loginUser(email, password)
+
+            const token = await context.storage.getItem('token')
+
             const [, payloadBase64] = token.split('.')
 
             const payloadJson = atob(payloadBase64)
@@ -54,7 +57,7 @@ describe('client-logic-authenticate user', () => {
         it('should fail on wrong password', async() => {
             password += 'wrong-'
             try{
-                await authenticateUser(email, password);
+                await loginUser(email, password);
                 throw new Error('should not reach this point')
             }catch(error){
                 expect(error).to.be.an.instanceof(Error)
@@ -67,7 +70,7 @@ describe('client-logic-authenticate user', () => {
     it('should fail when user does not exist', async() =>{
         email = 'pepigri@mail.com'
         try{
-            await authenticateUser(email, password);
+            await loginUser(email, password);
             throw new Error('should not reach this point')
         }catch(error){
             expect(error).to.be.an.instanceof(Error)
@@ -78,21 +81,21 @@ describe('client-logic-authenticate user', () => {
     describe('Validate fiels sync tests', () => {
         it('should fail on non-string field', () => {
             expect(() => {
-                authenticateUser(true, password)
+                loginUser(true, password)
             }).to.throw(TypeError, 'true is not a string')
 
             expect(() => {
-                authenticateUser(email, 12313)
+                loginUser(email, 12313)
             }).to.throw(TypeError, '12313 is not a string')
         })
 
         it('should fail on void field', () => {
             expect(() => {
-                authenticateUser('', password)
+                loginUser('', password)
             }).to.throw(VoidError, 'string is empty or blank')
 
             expect(() => {
-                authenticateUser(email, '')
+                loginUser(email, '')
             }).to.throw(VoidError, 'string is empty or blank')
 
         })
@@ -101,7 +104,7 @@ describe('client-logic-authenticate user', () => {
             email = `${name.toLowerCase().split(' ').join('')}${surname.toLowerCase().split(' ').join('').concat('-').concat(Math.random())}`
 
             expect(() => {
-                authenticateUser(email, password)
+                loginUser(email, password)
             }).to.throw(Error, `${email} is not an e-mail`)
         })
 
@@ -109,7 +112,7 @@ describe('client-logic-authenticate user', () => {
             password = `123123`
 
             expect(() => {
-                authenticateUser(email, password)
+                loginUser(email, password)
             }).to.throw(Error, `"${password}" length is not greater or equal than 8`)
 
         })

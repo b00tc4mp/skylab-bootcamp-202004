@@ -13,7 +13,10 @@ const {jwtPromised} = require('books-node-commons')
 const { errors: { VoidError }} = require('books-commons')
 global.fetch = require('node-fetch')
 const context = require('./context')
+const AsyncStorage = require('not-async-storage')
+
 context.API_URL = API_URL
+context.storage = AsyncStorage
 
 describe("update-user", () => {
     let name, surname, email, password, encryptedPassword, userId,token;
@@ -35,6 +38,7 @@ describe("update-user", () => {
         const user = await User.create({ name, surname, email, password: encryptedPassword });
         userId = user.id;
         token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',token)
 
          _name = `name-${random()}`;
          _surname = `surname-${random()}`;
@@ -47,8 +51,7 @@ describe("update-user", () => {
         const _surname = `surname-${random()}`;
         const _email = `email-${random()}@gmail.com`;
 
-
-        await updateUser(token,_name,_surname,_email,password)
+        await updateUser(_name,_surname,_email,password)
 
         const user = await User.findById(userId)
   
@@ -61,7 +64,7 @@ describe("update-user", () => {
     it('Sould fail to update with wrong password', async () => {
       const _password = '123123123'
         try {
-            await updateUser(token,_name,_surname,_email,_password)
+            await updateUser(_name,_surname,_email,_password)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -72,7 +75,7 @@ describe("update-user", () => {
     it('Sould fail to update with same email', async () => {
       
         try {
-            await updateUser(token,_name,_surname,email,password)
+            await updateUser(_name,_surname,email,password)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -84,8 +87,9 @@ describe("update-user", () => {
     it('Sould fail dont find second User', async () => {
         userId = '5edf984ec1be038dc909f783'
         const _token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',_token)
         try {
-            await updateUser(_token,_name,_surname,_email,password)
+            await updateUser(_name,_surname,_email,password)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -97,29 +101,22 @@ describe("update-user", () => {
 
     it('should fail on non-string field', () => {
         expect(() => {
-            updateUser(true,_name,_surname,_email,password)
-        }).to.throw(TypeError, 'true is not a string')
-        expect(() => {
-            updateUser(token,123,_surname,_email,password)
+            updateUser(123,_surname,_email,password)
         }).to.throw(TypeError, '123 is not a string')
         expect(() => {
-            updateUser(token,_name,123,_email,password)
+            updateUser(_name,123,_email,password)
         }).to.throw(TypeError, '123 is not a string')
         expect(() => {
-            updateUser(token,_name,_surname,123,password)
+            updateUser(_name,_surname,123,password)
         }).to.throw(Error, '123 is not an e-mail')
         expect(() => {
-            updateUser(token,_name,_surname,_email,true)
+            updateUser(_name,_surname,_email,true)
         }).to.throw(TypeError, 'true is not a string')
     })
 
     it('should fail on void-string field', () => {
-      
         expect(() => {
-            updateUser('',_name,_surname,_email,password)
-        }).to.throw(VoidError, 'string is empty or blank')
-        expect(() => {
-            updateUser(token,_name,_surname,_email,'')
+            updateUser(_name,_surname,_email,'')
         }).to.throw(VoidError, 'string is empty or blank')
 
     })

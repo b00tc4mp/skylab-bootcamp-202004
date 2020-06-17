@@ -18,7 +18,6 @@ require('books-commons/polyfills/string')
 const { utils: { Email, call } } = require('books-commons')
 const context = require('./context')
 
-
 module.exports = function (email, password) {
     String.validate.notVoid(email)
     String.validate.notVoid(password)
@@ -37,10 +36,11 @@ module.exports = function (email, password) {
             { 'Content-type': 'application/json' })
 
         const {status,body} = resp
-        debugger
+
         if(status===200){
             const {token} = JSON.parse(body)
-            return token
+
+            await this.storage.setItem('token', token)
         }else{
             const { error } = JSON.parse(body)
             throw new Error(error)

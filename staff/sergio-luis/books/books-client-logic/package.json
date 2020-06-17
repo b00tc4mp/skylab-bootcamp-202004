@@ -17,8 +17,10 @@
     "dotenv": "^8.2.0",
     "mocha": "^8.0.1",
     "node-fetch": "^2.6.0",
+    "not-async-storage": "^1.0.1",
     "nyc": "^15.1.0",
     "xhr2": "^0.2.0"
+
   },
   "dependencies": {
     "@babel/runtime": "^7.10.2",

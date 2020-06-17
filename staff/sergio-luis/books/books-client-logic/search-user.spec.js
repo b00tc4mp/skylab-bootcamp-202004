@@ -12,8 +12,10 @@ const {jwtPromised} = require('books-node-commons')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
 const context = require('./context')
-context.API_URL = API_URL
+const AsyncStorage = require('not-async-storage')
 
+context.API_URL = API_URL
+context.storage = AsyncStorage
 
 describe('client-logic-search-user', () => {
     before(() => mongoose.connect(MONGODB_URL))
@@ -34,12 +36,13 @@ describe('client-logic-search-user', () => {
         userId = user.id
 
         token = await jwtPromised.sign({ sub: userId}, SECRET)
+        await context.storage.setItem('token',token)
     })
 
     it('Sould success to find a owner user', async () => {
         query = 'name'
 
-        const [user] = await searchUser(token, query)
+        const [user] = await searchUser(query)
 
         expect(user).to.exist
         expect(user.name).to.equal(name)
@@ -52,7 +55,7 @@ describe('client-logic-search-user', () => {
         query = 'hgdhsagjhagsdasjh'
 
         try {
-            await searchUser(token, query)
+            await searchUser(query)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -60,8 +63,6 @@ describe('client-logic-search-user', () => {
             expect(error.message).to.equal("This user search don`t find any results")
         }
     })
-
-
 
     it('should fail on non-string field', () => {
         expect(() => {
@@ -71,14 +72,6 @@ describe('client-logic-search-user', () => {
             searchUser(123)
         }).to.throw(TypeError, '123 is not a string')
     })
-
-    it('should fail on non-string field', () => {
-        expect(() => {
-            searchUser('')
-        }).to.throw(VoidError, 'string is empty or blank')
-
-    })
-
 
     afterEach(async () => {
         await User.deleteMany()

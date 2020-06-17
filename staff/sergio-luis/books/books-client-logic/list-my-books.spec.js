@@ -12,7 +12,10 @@ const {jwtPromised} = require('books-node-commons')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
 const context = require('./context')
+const AsyncStorage = require('not-async-storage')
+
 context.API_URL = API_URL
+context.storage = AsyncStorage
 
 
 describe("client-logic-list-my-books", () => {
@@ -51,11 +54,11 @@ describe("client-logic-list-my-books", () => {
         bookId = book.id;
 
         token = await jwtPromised.sign({ sub: userId }, SECRET)
-
+        await context.storage.setItem('token',token)
     })
 
     it("should succeed add a accept share book", async() => {
-        const books = await listMyBooks(token)
+        const books = await listMyBooks()
 
         books.forEach(book=>{
             expect(book).to.exist
@@ -68,9 +71,9 @@ describe("client-logic-list-my-books", () => {
     it('Sould fail dont find userId', async () => {
         userId = '5edf984ec1be038dc909f783'
         const _token = await jwtPromised.sign({ sub: userId }, SECRET)
-
+        await context.storage.setItem('token',_token)
         try {
-            await listMyBooks(_token)
+            await listMyBooks()
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -83,30 +86,13 @@ describe("client-logic-list-my-books", () => {
         await Book.deleteOne({_id:bookId})
 
         try {
-            await listMyBooks(token)
+            await listMyBooks()
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
             expect(error.message).to.equal("Dont`t have books in your library")
         }
-    })
-
-
-    it('should fail on non-string field', () => {
-        expect(() => {
-            listMyBooks(true)
-        }).to.throw(TypeError, 'true is not a string')
-        expect(() => {
-            listMyBooks(123)
-        }).to.throw(TypeError, '123 is not a string')
-    })
-
-    it('should fail on non-string field', () => {
-        expect(() => {
-            listMyBooks('')
-        }).to.throw(VoidError, 'string is empty or blank')
-
     })
 
     afterEach(async() => {

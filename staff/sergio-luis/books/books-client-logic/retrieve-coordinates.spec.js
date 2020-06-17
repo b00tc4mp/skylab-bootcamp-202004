@@ -12,7 +12,10 @@ const { mongoose, models: { User } } = require('books-data')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
 const context = require('./context')
+const AsyncStorage = require('not-async-storage')
+
 context.API_URL = API_URL
+context.storage = AsyncStorage
 
 describe("client-logic-retrieve-coordinates", () => {
     let name, surname, email, password, encryptedPassword, userId;
@@ -38,12 +41,13 @@ describe("client-logic-retrieve-coordinates", () => {
         gpsCoordinates = {latitude,longitude}
 
         token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',token)
     })
 
     it("should succeed retrieve gps coordinates", async() => {
         await User.findByIdAndUpdate(userId, {$set:{gpsCoordinates}})
 
-        const coordinates = await retrieveCoodinates(token)
+        const coordinates = await retrieveCoodinates()
 
         expect(coordinates).to.exist
         expect(coordinates.latitude).to.equal(latitude)
@@ -54,8 +58,9 @@ describe("client-logic-retrieve-coordinates", () => {
         userId = '5edf984ec1be038dc909f783'
 
         const _token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token',_token)
         try {
-            await retrieveCoodinates(_token)
+            await retrieveCoodinates()
             throw new Error('should not reach this point')
        } catch (error) {
            expect(error).to.exist
@@ -67,30 +72,13 @@ describe("client-logic-retrieve-coordinates", () => {
     it("should fail to no exist coordinates", async() => {
     
         try {
-            await retrieveCoodinates(token)
+            await retrieveCoodinates()
             throw new Error('should not reach this point')
        } catch (error) {
            expect(error).to.exist
            expect(error).to.be.an.instanceof(Error)
            expect(error.message).to.equal("the user don`t have gps coordinates")
        }
-    })
-
-
-
-    it('should fail on non-string field', () => {
-        expect(() => {
-            retrieveCoodinates(true)
-        }).to.throw(TypeError, 'true is not a string')
-        expect(() => {
-            retrieveCoodinates(123)
-        }).to.throw(TypeError, '123 is not a string')
-    })
-
-    it('should fail on non-string field', () => {
-        expect(() => {
-            retrieveCoodinates('')
-        }).to.throw(VoidError, 'string is empty or blank')
     })
 
     afterEach(async() => {
