@@ -1,3 +1,8 @@
 module.exports = {
-    registerUser: require('./register-user')
+    registerUser: require('./register-user'),
+    authenticateUser: require('./authenticate-user'),
+    createRestaurant: require('./create-restaurant'),
+    createMenu: require('./create-menu'),
+    searchPlate: require('./search-plate'),
+    searchRestaurant: require('./search-restaurant')
 }
