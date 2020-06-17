@@ -1,0 +1,78 @@
+require('dotenv').config()
+const {env: {TEST_MONGODB_URL: MONGODB_URL, API_URL}} = process
+debugger
+const { DuplicityError, UnexistenceError, VoidError } = require('plates-commons/errors')
+const {floor, random} = Math
+const { expect } = require('chai')
+global.fetch  = require('node-fetch')
+const {mongoose, models:{ User, Restaurant}} = require('plates-data')
+const registerUser = require('./register-user')
+// const bcrypt = require('bcryptjs')
+require('plates-commons/polyfills/json')
+require('plates-commons/polyfills/xhr')
+
+context.API_URL = API_URL
+
+
+
+describe('client logic: register user', () =>{
+    before(async () => await mongoose.connect(MONGODB_URL))
+    let name, surname, email,  password
+
+    beforeEach(async() => {
+
+        await User.deleteMany();
+        await Restaurant.deleteMany();
+             name = `name-${random()}`,
+             surname = `surname-${random()}`,
+             email = `email-${random()}@gmail.com`,
+             password = `password-${random()}`
+        
+    })
+
+    describe('when user does not exist', () => {
+        
+        it('should register a user on correct data', async () =>{
+           await registerUser(name, surname, email, password)
+
+           const user = await User.findOne({name, surname, email});
+           expect(user).to.exist
+           expect(user.name).to.equal(name)
+           expect(user.surname).to.equal(surname)
+           expect(user.email).to.equal(email)  
+        })
+
+        it('should not register a user on wrong data', async () =>{
+            email = ""
+            
+            try {
+                await registerUser(name, surname, email, password)
+                user = await User.findOne({name, surname, email})
+                
+            } catch (error) {
+                expect(error).to.exist
+                expect(error.message).to.equal(`${email} is not an e-mail`)
+            }
+        })
+    })
+
+
+    // describe('when user already exist', () => {
+
+    //     it('should not register a user on correct data')
+    // })
+
+    afterEach(async() => await Promise.all([
+        User.deleteMany(),
+        Restaurant.deleteMany()
+    ]))
+
+    after(async () => {
+        await Promise.all([
+            User.deleteMany(),
+            Restaurant.deleteMany()
+        ]),
+        await mongoose.disconnect();
+    })
+})
+
