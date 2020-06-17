@@ -4,11 +4,11 @@ const { handleError } = require('../../helpers')
 module.exports = (req, res) => {
     debugger
 
-    const { params: { blueprintId }, payload: { sub: userId } } = req
+    const { payload: { sub: userId }, params: { blueprintId } } = req
 
     try {
         retrieveBlueprint(userId, blueprintId)
-            .then(() => res.status(200).send())
+            .then((blueprint) => res.status(200).send(blueprint))
             .catch(error => handleError(error, res))
 
     } catch (error) {
