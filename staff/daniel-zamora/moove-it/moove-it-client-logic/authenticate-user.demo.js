@@ -1,5 +1,5 @@
 global.XMLHttpRequest = require('xhr2')
-const login = require('./login')
+const authenticateUser = require('./authenticate-user')
 
-return login("daru@amail.com","123123123")
-        .then(console.log)
+return authenticateUser("test1@mail.com", "123123123")
+    .then(console.log)

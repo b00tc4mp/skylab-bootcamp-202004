@@ -1,6 +1,6 @@
 global.XMLHttpRequest = require('xhr2')
-const register = require('./register')
+const registerUser = require('./register-user')
 
-return register('a ver', 'conyo', "conyo@amail.com", "123123123")
+return registerUser('daniel', 'zamora', "test2@mail.com", "123123123")
     .then(console.log)
     .catch(console.log)

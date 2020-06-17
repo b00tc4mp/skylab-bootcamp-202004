@@ -15,7 +15,8 @@ api.post('/users', parseBody, registerUser)
 
 api.post('/users/auth', parseBody, authenticateUser)
 
-api.get('/users', verifyExtractJwt, retrieveUser) //busqueda de usuarios para favPlanes(opcional)
+api.get('/users/:userId?', verifyExtractJwt, retrieveUser) //TODO busqueda de usuarios para favPlanes(opcional)
+
 
 api.get('/users/update', parseBody, verifyExtractJwt, updateUser)
 
