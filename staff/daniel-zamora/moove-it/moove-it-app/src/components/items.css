@@ -12,6 +12,9 @@
     position: absolute;
 }
 
+
+/*como conservar el tamaño y los atributos anteriores al cambiarlo a placed*/
+
 .double-bed {
     background-color: blueviolet;
     width: 3vw;
@@ -19,7 +22,7 @@
     transform-origin: center center;
 }
 
-.double-bed:active {
+.double-bed:hover {
     box-shadow: darkorange;
 }
 

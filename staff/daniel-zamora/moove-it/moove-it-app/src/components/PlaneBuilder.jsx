@@ -16,22 +16,23 @@ export default function PlaneBuilder () { debugger
     }
     
     let item
-    const handleDrop = (e) => {
+    const handleDrop = (e) => { debugger
         e.preventDefault()
-        item = e.dataTransfer.getData("text").split("_")[0]
+        item = e.dataTransfer.getData("text").split('_')[0]
         if(!e.target.dataset.placed) {
             placeItem(item, e.clientX, e.clientY)
         } else {
             updateItem(item, e.clientX, e.clientY)
         }
     }
-
-    const updateItem = (item, x, y) => {
-        
-        setPlacedItems([{item, x, y}])
+    // TODO hacer una copia del objeto y sacar el anterior y meter el nuevo con las nuevas cordenadas
+    const updateItem = (item, x, y) => { debugger
+        const foundItem = placedItems.find(item)
+        if(foundItem === item)
+        setPlacedItems([x, y])
     }
     
-    const placeItem = (item, x, y)=> {
+    const placeItem = (item, x, y)=> { debugger
         setPlacedItems(prevPlacedItems =>  ([...prevPlacedItems, {item, x, y}])
         )}
 
@@ -41,15 +42,16 @@ export default function PlaneBuilder () { debugger
             onDragOver={e => e.preventDefault()}
             onDrop={handleDrop}
             >
-            {placedItems.map((placed, i) => {
-                if(placed.item !== item)
+            {placedItems.map((placed, i) => { debugger
+                
                 return <div
                     data-placed = {true}
                     className={`placed ${placed.item}`} 
-                    style={{left: placed.x, top:placed.y}}
+                    style={{left: placed.x, top: placed.y}}
                     draggable={true}
                     onDragStart={handleDrag}
-                    id={`${placed.item}_${i}`}>
+                    id={`${placed.item}`}>
+                    {/* TODO ver como mantener el ID sin cambiar la clase  */}
 
             </div>})}
         </div>
