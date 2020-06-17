@@ -3,34 +3,32 @@ import {
     View,
     Text,
     StyleSheet,
-    ImageBackground,
-    TouchableOpacity,
     KeyboardAvoidingView,
     ScrollView,
     SafeAreaView,
-    ScrollViewComponent,
     Switch,
     Alert,
 } from 'react-native';
 import AppButton from '../components/Button'
-import AppTextInput from '../components/AppTextInput'
+import AppTextInput from '../components/NomadTextInput'
 import { Formik } from 'formik'
 import * as Yup from "yup";
 import * as Permissions from "expo-permissions";
 import * as Location from "expo-location";
+import AsyncStorage from '@react-native-community/async-storage';
 
 import colors from '../styles/colors'
 import ErrorMessage from '../components/ErrorMessage'
-import AppPicker from '../components/AppPicker'
+import AppPicker from '../components/Picker'
 import ImageInput from '../components/ImageInput';
 
-const bgImage = require('../assets/background.jpg')
+const { createWorkspace } = require('nomad-client-logic')
 
 const validationSchema = Yup.object().shape({
-    image1: Yup.object().required().nullable().label('At least one Image'),
-    image2: Yup.object().nullable().label('Image'),
-    image3: Yup.object().nullable().label('Image'),
-    workspaceName: Yup.string().min(1).required().label('Workspace Name'),
+    // image1: Yup.object().required().nullable().label('At least one Image'),
+    // image2: Yup.object().nullable().label('Image'),
+    // image3: Yup.object().nullable().label('Image'),
+    name: Yup.string().min(1).required().label('Workspace Name'),
     price: Yup.number().required().min(1).max(10000).label('Price'),
     term: Yup.object().required().nullable().label('Term'),
     category: Yup.object().required().nullable().label('Category'),
@@ -55,7 +53,7 @@ const term = [
     { label: 'Month', value: 'month' },
 ]
 
-export default ({ handleRegister, navigation }) => {
+export default ({ navigation }) => {
     const [location, setLocation] = useState()
 
     const [image1, setImage1] = useState()
@@ -82,6 +80,21 @@ export default ({ handleRegister, navigation }) => {
         getPermissions()
     }, [])
 
+
+    const handleSubmit = async values => {
+        try {
+            const token = await AsyncStorage.getItem('token')
+            if (token !== null) {
+                const result = await createWorkspace(token, values)
+                navigation.navigate('UploadImage', { id: result.id })
+            } else {
+                console.log('error, token not found in editworkspacescreen')
+            }
+        } catch (e) {
+            console.log(e) // TODO HANDLE THIS
+        }
+    }
+
     return (
         <SafeAreaView style={styles.background}>
             <ScrollView style={styles.scrollView}>
@@ -90,10 +103,10 @@ export default ({ handleRegister, navigation }) => {
                     style={styles.formContainer}
                 >
                     <Formik initialValues={{
-                        image1: null,
-                        image2: null,
-                        image3: null,
-                        workspaceName: '',
+                        // image1: null,
+                        // image2: null,
+                        // image3: null,
+                        name: '',
                         price: '',
                         term: null,
                         category: null,
@@ -105,16 +118,16 @@ export default ({ handleRegister, navigation }) => {
                         capacity: '',
                         location: location
                     }}
-                        onSubmit={values => { values.location = location; console.log(values) }}
+                        onSubmit={values => { values.location = location; handleSubmit(values) }}
                         validationSchema={validationSchema}
                     >
                         {({ handleChange, handleSubmit, errors, setFieldTouched, touched, setFieldValue, values }) => (
                             <>
-                                <View style={styles.imageContainer}>
+                                {/* <View style={styles.imageContainer}>
                                     <ImageInput imageUri={image1} handleImage={img => { setImage1(img); setFieldValue('image1', img) }} />
                                     <ImageInput imageUri={image2} handleImage={img => { setImage2(img); setFieldValue('image2', img) }} />
                                     <ImageInput imageUri={image3} handleImage={img => { setImage3(img); setFieldValue('image3', img) }} />
-                                </View>
+                                </View> */}
                                 <ErrorMessage error={errors.image1} visible={touched.image1} />
                                 <AppTextInput
                                     icon='home-map-marker'
@@ -122,8 +135,8 @@ export default ({ handleRegister, navigation }) => {
                                     maxLength={100}
                                     autoCorrect={false}
                                     textContentType='organizationName'
-                                    onChangeText={handleChange('workspaceName')}
-                                    onBlur={() => setFieldTouched('workspaceName')}
+                                    onChangeText={handleChange('name')}
+                                    onBlur={() => setFieldTouched('name')}
                                 />
                                 <ErrorMessage error={errors.workspaceName} visible={touched.workspaceName} />
                                 <View style={styles.pricing}>

@@ -3,11 +3,12 @@ import { View, Text, SafeAreaView, StyleSheet, Image, TouchableHighlight } from 
 import { Entypo, AntDesign } from '@expo/vector-icons'
 
 import colors from '../styles/colors'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 
 
 const image = require('../assets/aitor.jpg')
 
-export default function Profile({ navigation }) {
+export default function Profile({ handleLogout, navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.profile}>
@@ -40,9 +41,11 @@ export default function Profile({ navigation }) {
                 <View style={styles.iconCircle}>
                     <AntDesign name="logout" size={30} color={colors.primary} />
                 </View>
-                <View >
-                    <Text style={styles.name}>Sign Out</Text>
-                </View>
+                <TouchableWithoutFeedback onPress={() => handleLogout()}>
+                    <View >
+                        <Text style={styles.name}>Sign Out</Text>
+                    </View>
+                </TouchableWithoutFeedback>
             </View>
         </SafeAreaView>
     )

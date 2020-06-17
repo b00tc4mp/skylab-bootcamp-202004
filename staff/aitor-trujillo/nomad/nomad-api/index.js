@@ -14,12 +14,15 @@ const {
     searchWorkspaces,
     addToFavorites,
     searchFavorites,
-    retrieveFavorites
+    retrieveFavorites,
+    retrieveUserWorkspaces,
+    uploadImage
 } = require('nomad-server-logic')
 const { mongoose } = require('nomad-data')
 const { jwtVerifierExtractor, cors } = require('./middlewares')
 const { handleError } = require('./helpers')
 const jwtPromised = require('./helpers/jwt-promised')
+const Busboy = require('busboy')
 
 const express = require('express')
 
@@ -83,8 +86,37 @@ mongoose.connect(MONGODB_URL)
                 const { payload: { sub: userId }, body: workspace } = req
 
                 createWorkspace(userId, workspace)
-                    .then(() => res.status(201).send())
+                    .then(({ id }) => res.status(201).send({ id }))
                     .catch(error => handleError(error, res))
+
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        app.post('/upload/:workspaceId', verifyExtractJwt, (req, res) => {
+
+            try {
+                debugger
+                const { payload: { sub: userId }, params: { workspaceId } } = req
+                const busboy = new Busboy({ headers: req.headers })
+
+                console.log('im here', workspaceId)
+
+                busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+
+                    filename = 'ws1'
+                    uploadImage(userId, workspaceId, file, filename)
+                        .then(() => res.status(200).send())
+                    // .catch(error => handleError(error, res))
+                })
+
+                busboy.on('finish', () => {
+                    res.send('uploaded');
+                })
+
+                req.pipe(busboy)
+
 
             } catch (error) {
                 handleError(error, res)
@@ -96,6 +128,17 @@ mongoose.connect(MONGODB_URL)
                 const { payload: { sub: userId }, params: { workspaceId } } = req
 
                 retrieveWorkspaceById(workspaceId)
+                    .then(result => res.status(201).send(result))
+                    .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+        app.get('/workspaces/user/get', verifyExtractJwt, (req, res) => {
+            try {
+                const { payload: { sub: userId } } = req
+                console.log('right path')
+                retrieveUserWorkspaces(userId)
                     .then(result => res.send(result))
                     .catch(error => handleError(error, res))
             } catch (error) {
@@ -107,7 +150,7 @@ mongoose.connect(MONGODB_URL)
             try {
                 const { payload: { sub: userId }, params: { lat, lon } } = req
 
-                retrieveByLocation(userId, [Number(lat), Number(lon)])
+                retrieveByLocation(userId, [Number(lon), Number(lat)])
                     .then(result => res.send(result))
                     .catch(error => handleError(error, res))
             } catch (error) {

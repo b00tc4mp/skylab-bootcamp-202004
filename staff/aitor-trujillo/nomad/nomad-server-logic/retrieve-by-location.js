@@ -23,6 +23,6 @@ module.exports = async (userId, location) => { // location = [lat-lon]
 
     if (!geoWorkspaces.length) throw new Error("No workspaces near you")
 
-    return geoWorkspaces
+    return geoWorkspaces.slice(0, 20)
 }
 

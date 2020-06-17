@@ -7,10 +7,12 @@ import {
     KeyboardAvoidingView,
 } from 'react-native';
 import AppButton from '../components/Button'
-import AppTextInput from '../components/AppTextInput'
+import AppTextInput from '../components/NomadTextInput'
 import { Formik } from 'formik'
 import * as Yup from "yup";
+import AsyncStorage from '@react-native-community/async-storage';
 
+const { authenticateUser } = require('nomad-client-logic')
 import colors from '../styles/colors'
 import ErrorMessage from '../components/ErrorMessage'
 
@@ -21,7 +23,20 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required().min(4).label('Password')
 })
 
-export default ({ handleRegister, navigation }) => {
+export default ({ handleAuth, navigation }) => {
+
+    const handleLogin = ({ email, password }) => {
+        (async () => {
+            try {
+                const token = await authenticateUser(email, password)
+                console.log(token)
+                await AsyncStorage.setItem('token', token)
+                handleAuth()
+            } catch (error) {
+                console.log(error) // TODO handle this
+            }
+        })()
+    }
 
     return (
         <ImageBackground source={bgImage} style={[styles.background, { paddingBottom: 30 }]}>
@@ -39,7 +54,7 @@ export default ({ handleRegister, navigation }) => {
                     Hi again nomad! 🤗
                 </Text>
                 <Formik initialValues={{ email: '', password: '' }}
-                    onSubmit={values => { console.log(values); navigation.navigate('Home') }}
+                    onSubmit={values => handleLogin(values)}
                     validationSchema={validationSchema}
                 >
                     {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (

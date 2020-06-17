@@ -46,9 +46,13 @@ export default function Review({ image, name, stars, review }) {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        marginTop: 100,
+        // backgroundColor: 'white',
+        marginTop: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 5,
+        borderRadius: 10,
         alignSelf: "center",
-        width: '90%'
+        width: '100%'
     },
     image: {
         width: 70,

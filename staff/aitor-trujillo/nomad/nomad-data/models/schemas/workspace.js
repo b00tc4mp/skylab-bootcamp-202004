@@ -77,7 +77,7 @@ module.exports = new Schema({
     // },
     photos: [{
         type: String,
-        required: true
+        // required: true
     }],
     phone: {
         type: String,
@@ -86,19 +86,19 @@ module.exports = new Schema({
     features: {
         wifi: {
             type: String,
-            required: true
+            // required: true
         },
         parking: {
             type: String,
-            required: true
+            // required: true
         },
         coffee: {
             type: Boolean,
-            required: true
+            // required: true
         },
         meetingRooms: {
             type: Number,
-            required: true
+            // required: true
         }
     },
     description: {

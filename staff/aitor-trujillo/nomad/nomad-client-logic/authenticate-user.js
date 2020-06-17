@@ -18,18 +18,21 @@ module.exports = function (email, password) {
 
     String.validate.notVoid(password)
 
-    return call('POST', `${this.API_URL}/users/auth`,
-        `{ "email": "${email}", "password": "${password}" }`,
-        { 'Content-type': 'application/json' })
-        .then(({ status, body }) => {
-            if (status === 200) {
-                const { token } = JSON.parse(body)
+    return (async () => {
+        const result = await call('POST', `${this.API_URL}/users/auth`,
+            `{ "email": "${email}", "password": "${password}" }`,
+            { 'Content-type': 'application/json' })
+        const { status, body } = result
+        if (status === 200) {
+            console.log(status, body)
+            const { token } = JSON.parse(body)
 
-                return token
-            } else {
-                const { error } = JSON.parse(body)
+            return token
+        } else {
+            const { error } = JSON.parse(body)
 
-                throw new Error(error)
-            }
-        })
+            throw new Error(error)
+        }
+
+    })()
 }.bind(context)

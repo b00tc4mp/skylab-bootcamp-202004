@@ -7,7 +7,7 @@ import {
     KeyboardAvoidingView,
 } from 'react-native';
 import AppButton from '../components/Button'
-import AppTextInput from '../components/AppTextInput'
+import AppTextInput from '../components/NomadTextInput'
 import { Formik } from 'formik'
 import * as Yup from "yup";
 
@@ -28,14 +28,13 @@ export default ({ navigation }) => {
     const [error, setError] = useState()
 
     const handleRegister = ({ name, surname, email, password }) => {
-        console.log(name);
         (async () => {
             try {
 
                 await registerUser(name, surname, email, password)
                 navigation.navigate('Login')
             } catch (error) {
-                // console.log(error)
+                console.log(error)
                 setError(error)
             }
         })()
