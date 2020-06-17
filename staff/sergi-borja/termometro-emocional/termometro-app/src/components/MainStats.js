@@ -49,19 +49,19 @@ function MainStats({ token }) {
 
     const settingDateArray = (userInfo) => {
         let dateArray = []
-        let _days = days*2
+        let _days = days * 2
         for (let i = _days; i > 0; i--) {
-            if(i%2 === 0) dateArray.push(moment(userInfo.mood[userInfo.mood.length - i].date).format('dddd'))
+            if (i % 2 === 0) dateArray.push(moment(userInfo.mood[userInfo.mood.length - i].date).format('dddd'))
         }
         return dateArray;
     }
 
     const settingScoreArray = (userInfo) => {
         let scoreArray = []
-        let _days = days*2
+        let _days = days * 2
         for (let i = _days; i > 0; i--) {
-            if(i%2===0) {
-                scoreArray.push((userInfo.mood[userInfo.mood.length - i].score + userInfo.mood[userInfo.mood.length - (i-1)].score)/2)
+            if (i % 2 === 0) {
+                scoreArray.push((userInfo.mood[userInfo.mood.length - i].score + userInfo.mood[userInfo.mood.length - (i - 1)].score) / 2)
             }
         }
         return scoreArray;
@@ -77,9 +77,7 @@ function MainStats({ token }) {
                     let clickDayInfo = adminInfo.mood.filter((element) => moment(element.date).format('LL') === moment(dayClicked).format('LL'))
                     dateArray = [clickDayInfo[0].date, clickDayInfo[1].date]
                     scoreArray = [clickDayInfo[0].score, clickDayInfo[1].score]
-                    // setDayClicked(false)
-                }
-                if(!dayClicked){ 
+                } else if (!dayClicked) {
                     setChartOfCalendar(false)
                     dateArray = settingDateArray(adminInfo);
                     scoreArray = settingScoreArray(adminInfo);
@@ -99,21 +97,20 @@ function MainStats({ token }) {
     }
 
     const handleSeeMemberStats = (member, dayClicked) => {
-        console.log(days)
         setRolChart('member')
         let dateArray;
         let scoreArray;
+
         if (dayClicked) {
-            let clickDayInfo = member.mood.filter((element) => moment(element.date).format('LL') === moment(dayClicked).format('LL'))
-            dateArray = [clickDayInfo[0].date, clickDayInfo[1].date]
-            scoreArray = [clickDayInfo[0].score, clickDayInfo[1].score]
-        }
-        if(!dayClicked){
+                let clickDayInfo = member.mood.filter((element) => moment(element.date).format('LL') === moment(dayClicked).format('LL'))
+                dateArray = [clickDayInfo[0].date, clickDayInfo[1].date]
+                scoreArray = [clickDayInfo[0].score, clickDayInfo[1].score]
+        } else if (!dayClicked) {
             setChartOfCalendar(false)
             dateArray = settingDateArray(member);
             scoreArray = settingScoreArray(member);
         }
-//IF DAYS = 1 TENIR EN COMPTE EL SET _DAYCLICKED
+
         setChartData({
             labels: dateArray,
             datasets: [{
@@ -142,7 +139,7 @@ function MainStats({ token }) {
     }, [days])
 
     const handleChangeChart = ({ target: { value } }) => {
-        
+
         if (value === 'my_stats') adminChart()
         else {
             memberList.map(member => {
@@ -162,7 +159,7 @@ function MainStats({ token }) {
         setDisplayCalendar(false)
     }
 
-    const handleTileBackground = ({date, view}) => {
+    const handleTileBackground = ({ date, view }) => {
         // console.log(date)
         // console.log(view)
     }
@@ -180,19 +177,18 @@ function MainStats({ token }) {
                 <button className='mainStatsContainer__buttonDaysContainer--fiveDays' onClick={() => daysSetter(5)}>5 DAYS</button>
                 <button className='mainStatsContainer__buttonDaysContainer--fiveTeenDays' onClick={() => daysSetter(15)}>15 DAYS</button>
                 <button className='mainStatsContainer__buttonDaysContainer--yesterday' onClick={() => setDisplayCalendar(true)}>Calendario</button>
-                {/* <button className='mainStatsContainer__buttonDaysContainer--yesterday' onClick={() => daysSetter(1)}>Calendario</button> */}
             </div>
             {!displayCalendar && !chartOfCalendar && !_dayClicked && <div className='mainStatsContainer__chartContainer'>
                 <HorizontalBar data={chartData} options={chartOptions.options} height={570} />
             </div>}
 
             {!displayCalendar && chartOfCalendar && _dayClicked && <div className='mainStatsContainer__chartContainer'>
-                <h1>{moment(_dayClicked).format('l')}</h1>
+                <h1>{moment(_dayClicked).format('ll')}</h1>
                 <Line data={chartData} options={chartOptions.options} height={570} />
             </div>}
 
             {displayCalendar && <div className='mainStatsContainer__calendarContainer'>
-                <Calendar className='mainStatsContainer__calendarContainer--calendar' tileClassName ={handleTileBackground} onClickDay={(dayClicked) => handleDayClicked(dayClicked)} />
+                <Calendar className='mainStatsContainer__calendarContainer--calendar' tileClassName={handleTileBackground} onClickDay={(dayClicked) => handleDayClicked(dayClicked)} />
             </div>}
 
         </section>
@@ -201,9 +197,4 @@ function MainStats({ token }) {
 }
 
 export default MainStats;
-
-{/* <ul className='familyContainer__ul'>
-    <li className='familyContainer__li'>Mis stats<button onClick={adminChart}>VIEW STATS</button></li>
-    {memberList && memberList.map((member) => <li className='familyContainer__li'>{member.name} {member && <button onClick={() => handleSeeMemberStats(member)}>VIEW STATS</button>}</li>)}
-</ul> */}
 
