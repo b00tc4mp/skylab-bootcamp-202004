@@ -1,24 +1,25 @@
-require('misc-commons/polyfills/string')
-const { utils: { Email, call } } = require('misc-commons') 
+require('moove-it-commons/polyfills/string')
+const { utils: { Email, call } } = require('moove-it-commons')
+const context = require('./context')
 
-module.exports = (email, password) => {
+module.exports = function(email, password) {
+    String.validate.notVoid(password)
     Email.validate(email)
 
-    return call('POST', 'http://localhost:8080/users/auth',
-        `{ "email": "${email}", "password": "${password}" }`,
-        { 'Content-type': 'application/json' })
+    return call('POST', `${this.API_URL}/users/auth`,
+        `{ "email": "${email}", "password": "${password}" }`, { 'Content-type': 'application/json' })
 
-     
-            .then(({status, body}) => {
-                if (status === 200) {
-                    const { token } = JSON.parse(body)                
-                    
-                    return token
-                
-                } else {
-                    const { error } = JSON.parse(body)
-        
-                    if (error) throw new Error(error)
-                }
-            })   
-}
+
+    .then(({ status, body }) => {
+        if (status === 200) {
+            const { token } = JSON.parse(body)
+
+            return token
+
+        } else {
+            const { error } = JSON.parse(body)
+
+            if (error) throw new Error(error)
+        }
+    })
+}.bind(context)

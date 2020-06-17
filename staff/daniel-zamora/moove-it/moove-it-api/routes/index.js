@@ -1,4 +1,4 @@
-const { env: { SECRET } } = process
+const { env: { JWT_SECRET: SECRET } } = process
 
 const { Router } = require('express')
 const { registerUser, authenticateUser, retrieveUser, updateUser, retrieveUserBlueprints, retrieveBlueprint, saveBlueprint } = require('./handlers')
@@ -15,7 +15,7 @@ api.post('/users', parseBody, registerUser)
 
 api.post('/users/auth', parseBody, authenticateUser)
 
-//api.get('/users/:userId?', verifyExtractJwt, retrieveUser) //busqueda de usuarios para favPlanes(opcional)
+api.get('/users/:userId?', verifyExtractJwt, retrieveUser) //TODO busqueda de usuarios para favPlanes(opcional)
 
 api.get('/users/update', parseBody, verifyExtractJwt, updateUser)
 
@@ -23,7 +23,7 @@ api.get('/users/blueprints', verifyExtractJwt, retrieveUserBlueprints)
 
 api.get('/blueprint/:blueprintId?', verifyExtractJwt, retrieveBlueprint)
 
-api.post('/blueprint', verifyExtractJwt, saveBlueprint) //PATCH o POST? la logica si no existe lo crea y si existe actualiza... ??
+api.post('/blueprint', verifyExtractJwt, saveBlueprint)
 
 module.exports = {
     api
