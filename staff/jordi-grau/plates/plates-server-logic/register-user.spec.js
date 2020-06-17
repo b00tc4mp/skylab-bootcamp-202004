@@ -4,8 +4,9 @@ const { DuplicityError, UnexistenceError, VoidError } = require('plates-commons/
 const bcrypt = require('bcryptjs');
 const { floor, random } = Math;
 const {expect} = require('chai');
-const { mongoose, models: {Menu, User, Restaurant, Plate} } = require('plates-data');
+const { mongoose, models: {User, Restaurant } } = require('plates-data');
 const registerUser = require('./register-user')
+require('plates-commons/utils/call')
 
 describe("registerUser", () => {
     let name, surname, email, password, userId;

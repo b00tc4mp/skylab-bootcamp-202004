@@ -25,7 +25,7 @@ mongoose.connect(MONGODB_URL)
 
 
         app.post('/users', parseBody, (req, res) =>{
-            
+            debugger
             const { body: { name, surname, email, password }} = req
 
             try {
