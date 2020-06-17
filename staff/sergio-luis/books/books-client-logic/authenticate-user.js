@@ -15,26 +15,29 @@
  */
 
 require('books-commons/polyfills/string')
-const { utils: { Email,call } } = require('books-commons')
+const { utils: { Email, call } } = require('books-commons')
 const context = require('./context')
 
 
 module.exports = function (email, password) {
     String.validate.notVoid(email)
     String.validate.notVoid(password)
-    Email.validate(email)
-    String.validate.lengthGreaterEqualThan(password,8);
+
+    const _email = email.trim().toLowerCase()
+    const _password = password.trim().toLowerCase()
+
+    Email.validate(_email)
+    String.validate.lengthGreaterEqualThan(_password,8);
 
     return (async()=>{
         const resp = await call(
             'POST',
             `${this.API_URL}/users/authenticate`,
-            `{"email": "${email}", "password": "${password}"}`,
-            { 'Content-type': 'application/json' }
-        )
-debugger
-        const {status,body} = resp
+            `{"email": "${_email}", "password": "${_password}"}`,
+            { 'Content-type': 'application/json' })
 
+        const {status,body} = resp
+        debugger
         if(status===200){
             const {token} = JSON.parse(body)
             return token

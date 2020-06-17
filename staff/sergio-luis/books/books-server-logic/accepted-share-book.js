@@ -19,7 +19,6 @@ const { errors: { UnexistenceError,CredentialsError } } = require('books-commons
 const { models: { User ,Book} } = require('books-data')
 
 module.exports = (userId,newUserId,bookId) => {
-
     String.validate.notVoid(userId)
     String.validate.notVoid(newUserId)
     String.validate.notVoid(bookId)

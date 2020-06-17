@@ -1,4 +1,4 @@
-const { utils: { jwtPromised } } = require('books-commons')
+const { jwtPromised } = require('books-node-commons')
 
 module.exports = (secret, errorHandler) =>
     (req, res, next) => {

@@ -14,7 +14,6 @@
  */
 
 
-
 require('books-commons/polyfills/string')
 const { utils: { Email, call } } = require('books-commons')
 const context = require('./context')
@@ -24,15 +23,21 @@ module.exports = function (name, surname, email, password) {
     String.validate.notVoid(surname)
     String.validate.notVoid(email)
     String.validate.notVoid(password)
-    
-    Email.validate(email)
-    String.validate.lengthGreaterEqualThan(password, 8)
+
+    const _name = name.trim().toLowerCase()
+    const _surname = surname.trim().toLowerCase()
+    const _email = email.trim().toLowerCase()
+    const _password = password.trim().toLowerCase()
+
+    Email.validate(_email)
+    String.validate.lengthGreaterEqualThan(_password, 8)
 
     return (async()=>{
+      
         const resp = await call(
             'POST',
             `${this.API_URL}/users/register`,
-            `{ "name": "${name}", "surname": "${surname}", "email": "${email}", "password": "${password}" }`,
+            `{ "name": "${_name}", "surname": "${_surname}", "email": "${_email}", "password": "${_password}" }`,
             { 'Content-type': 'application/json' }
         )
 

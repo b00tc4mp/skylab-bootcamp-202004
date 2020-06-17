@@ -161,10 +161,10 @@ try {
 
             app.post('/books/create', verifyExtractJwt ,parseBody, (req, res) => { 
                 const { body: {title,image,description,barCode} ,payload: { sub: userId },} = req
-
+            
                 try {
                     createBook(userId,title,image,description,barCode)
-                        .then(() => res.status(201).send())
+                        .then((body) => res.status(201).send(body))
                         .catch(error => handleError(error, res))
                 } catch (error) {
                     handleError(error, res)
@@ -176,7 +176,7 @@ try {
 
                 try {
                     deleteBook(userId,query)
-                        .then(() => res.status(201).send())
+                        .then(() => res.status(204).send())
                         .catch(error => handleError(error, res))
                 } catch (error) {
                     handleError(error, res)
@@ -208,10 +208,9 @@ try {
 
             app.patch('/books/share/accepted', verifyExtractJwt ,parseBody, (req, res) => {
                 const { body: {newUserId,bookId} ,payload: { sub: userId }} = req
-
                 try {
                    acceptedShareBook(userId, newUserId, bookId)
-                        .then(() => res.status(201).send())
+                        .then(() => res.status(200).send())
                         .catch(error => handleError(error, res))
                 } catch (error) {
                     handleError(error, res)
@@ -230,10 +229,10 @@ try {
             })
            
             app.post('/books/add/distance', verifyExtractJwt ,parseBody, (req, res) => {
-                const { body: { newUserId,bookId } ,payload: { sub: userId }} = req
+                const { body: { secondUserId,bookId } ,payload: { sub: userId }} = req
 
                 try {
-                    calculateDistanceBook(userId, newUserId, bookId)
+                    calculateDistanceBook(userId, secondUserId, bookId)
                         .then(() => res.status(201).send())
                         .catch(error => handleError(error, res))
                 } catch (error) {
@@ -271,7 +270,7 @@ try {
                 try {
                     debugger
                     deleteRecievedMessages(userId,messageId)
-                        .then(()=>res.status(200).send())
+                        .then(()=>res.status(204).send())
                         .catch(error => handleError(error, res))
                 } catch (error) {
                     handleError(error, res)

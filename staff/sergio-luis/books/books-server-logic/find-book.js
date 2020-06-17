@@ -20,26 +20,39 @@ module.exports = (query) => {
     String.validate.notVoid(query)
 
     return (async () => {
-        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`)
+        try{
+            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`)
 
-        const {items} = await response.json()
-
-        if(typeof items === 'undefined') throw new UnexistenceError('Can`t find any book')
-
-        const books = items.map(item=> {
-            const { volumeInfo} = item
-
-            const {title,description,industryIdentifiers,imageLinks} =volumeInfo
-
-            const [{identifier}] =industryIdentifiers
+            const {items} = await response.json()
     
-            const {thumbnail} = imageLinks
+            if(typeof items === 'undefined') throw new UnexistenceError('Can`t find any book')
+   
+            const books = items.map(item=> {
+        
+                let { volumeInfo} = item
+                let {title,description,industryIdentifiers,imageLinks} =volumeInfo
+             
+                let identifier;
+                if(!description) description = 'not available';
 
-            return {title, image:thumbnail,description,barCode:identifier}
+                if(!industryIdentifiers) {
+                    industryIdentifiers = 'not available'
+                    identifier = 'not available'
+                }else{
+                    [{identifier}] =industryIdentifiers
+                }
 
-        })
-         
-       return  await books
+                let {thumbnail} = imageLinks
+                if(!thumbnail) thumbnail = 'not available'
+
+                return {title, image:thumbnail,description,barCode:identifier}
+            })
+             
+           return  await books
+        }catch (error){
+            throw new Error('Not find any book with this description')
+        }
+  
     })()
 }
 

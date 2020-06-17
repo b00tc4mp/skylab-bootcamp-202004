@@ -1,8 +1,16 @@
-const findBook = require('./find-book')
-const { expect } = require('chai')
-const {errors: {VoidError}} = require('books-commons')
+require('dotenv').config()
 
-describe('server-logic-find-books', () => {
+const { env: { TEST_API_URL: API_URL} } = process
+const findBook= require('./find-book')
+const { expect } = require('chai')
+require('books-commons/polyfills/json')
+
+const { errors: { VoidError } } = require('books-commons')
+global.fetch = require('node-fetch')
+const context = require('./context')
+context.API_URL = API_URL
+
+describe.only('client-logic-find-books', () => {
 
     let query
 
@@ -10,12 +18,14 @@ describe('server-logic-find-books', () => {
         query = 'lord' 
 
         const books = await findBook(query)
-       
-        books.forEach(({title, image,barCode}) => {
+     
+        books.forEach(({title, description,image,barCode}) => {
             expect(title).to.exist
             expect(title).to.be.a('string')
             expect(image).to.exist
             expect(image).to.be.a('string')
+            expect(description).to.exist
+            expect(description).to.be.a('string')
             expect(barCode).to.exist
             expect(barCode).to.be.a('string')
         });
@@ -23,6 +33,7 @@ describe('server-logic-find-books', () => {
 
     it('should fail on incorrect search', async() =>{
         query = 'jksdghfjkadgsjhadgsafk' 
+
         try {
             await findBook(query)
             throw new Error('should not reach this point')

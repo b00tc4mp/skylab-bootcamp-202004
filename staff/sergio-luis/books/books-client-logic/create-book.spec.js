@@ -1,19 +1,23 @@
 require('dotenv').config()
 
-const { env: { MONGODB_URL_TEST: MONGODB_URL } } = process
-const {random} = Math
-const createBook = require('./create-book')
+const { env: { MONGODB_URL_TEST: MONGODB_URL, TEST_API_URL: API_URL ,SECRET} } = process
+const { random } = Math
+const createBook= require('./create-book')
 const { expect } = require('chai')
-
 require('books-commons/polyfills/json')
 
-const { mongoose, models: { User ,Book} } = require('books-data')
+const { mongoose, models: { User, Book} } = require('books-data')
+const { errors: { VoidError } } = require('books-commons')
+const {jwtPromised} = require('books-node-commons')
 const bcrypt = require('bcryptjs')
-const { errors: { VoidError} } = require('books-commons')
+global.fetch = require('node-fetch')
+const context = require('./context')
+context.API_URL = API_URL
 
-describe('server-logic-create-book', () => {
+
+describe('client-logic-create-book', () => {
     let name, surname, email, password, encryptedPassword, userId;
-    let title, image,description,barCode, bookId;
+    let title, image,description,barCode, bookId,token;
 
     before (async() => {
         await mongoose.connect(MONGODB_URL, {unifiedTopology: true});
@@ -34,32 +38,35 @@ describe('server-logic-create-book', () => {
         image = `http://books.google.com/books/content?id=z--HMbPXdD0C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api`;
         description=`description-${random()}`
         barCode = `${random()}`;
+
+        token = await jwtPromised.sign({ sub: userId }, SECRET)
     })
 
     describe('Creat a book', () => {
         it('should succeed to add a book', async() =>{
-            bookId = await createBook(userId, title,image,description,barCode)
-
+            bookId = await createBook(token, title,image,description,barCode)
+            
             const _book = await Book.findById(bookId)
-    
+       
             expect(_book.title).to.exist
-            expect(_book.title).to.be.a('string')
+            expect(_book.title).to.equal(title)
             expect(_book.image).to.exist
-            expect(_book.image).to.be.a('string')
+            expect(_book.image).to.equal(image)
+            expect(_book.description).to.exist
+            expect(_book.description).to.equal(description)
             expect(_book.barCode).to.exist
-            expect(_book.barCode).to.be.a('string')
+            expect(_book.barCode).to.equal(barCode)
             expect(_book.ownerUserId).to.exist
             expect(_book.ownerUserId.toString()).to.equal(userId)
             expect(_book.actualUserId).to.exist
             expect(_book.actualUserId.toString()).to.equal(userId)
-            expect(_book.title).to.be.a('string')   
         })
                 
         it('should fail when to don`t find a user', async() =>{
             userId='5edfa731dc7edc93965e8f68'
-
+            const _token = token = await jwtPromised.sign({ sub: userId }, SECRET)
             try{
-                await createBook(userId, book.title,book.image,book.description,book.barCode)
+                await createBook(token, title,image,description,barCode)
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.exist
@@ -74,31 +81,31 @@ describe('server-logic-create-book', () => {
 
             it('should fail on non-string field', () => {
                 expect(() => {
-                    createBook(true, book.title,book.image,book.description,book.barCode)
+                    createBook(true, title,image,description,barCode)
                 }).to.throw(TypeError, 'true is not a string')
                 expect(() => {
-                    createBook(userId, 123,book.image,book.description,book.barCode)
+                    createBook(token, 123,image,description,barCode)
                 }).to.throw(TypeError, '123 is not a string')
                 expect(() => {
-                    createBook(userId, book.title,book.image,book.description,false)
+                    createBook(token, title,image,description,false)
                 }).to.throw(TypeError, 'false is not a string')
                 expect(() => {
-                    createBook(userId, book.title,123,book.description,book.barCode)
+                    createBook(token, title,123,description,barCode)
                 }).to.throw(TypeError, '123 is not a string')
             })
 
             it('should fail on empty field', () => {
                 expect(() => {
-                    createBook('', book.title,book.image,book.description,book.barCode)
+                    createBook('', title,image,description,barCode)
                 }).to.throw(VoidError, 'string is empty or blank')
                 expect(() => {
-                    createBook(userId, '',book.image,book.description,book.barCode)
+                    createBook(token, '',image,description,barCode)
                 }).to.throw(VoidError, 'string is empty or blank')
                 expect(() => {
-                    createBook(userId, book.title,book.image,book.description,'')
+                    createBook(token, title,image,description,'')
                 }).to.throw(VoidError, 'string is empty or blank')
                 expect(() => {
-                    createBook(userId, book.title,'',book.description,book.barCode)
+                    createBook(token, title,'',description,barCode)
                 }).to.throw(VoidError, 'string is empty or blank')
             })
     
