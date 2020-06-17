@@ -4,13 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon .",
     "test": "jest"
   },
   "author": "crispine",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "gluttony-commons": "file:../gluttony-commons",
+    "gluttony-data": "file:../gluttony-data",
     "gluttony-server-logic": "file:../gluttony-server-logic",
     "jsonwebtoken": "^8.5.1"
   },
