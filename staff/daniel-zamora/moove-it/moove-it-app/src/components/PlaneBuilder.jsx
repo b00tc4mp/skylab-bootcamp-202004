@@ -7,29 +7,33 @@ const items = [
     'double-bed',
     'single-bed'
 ]
-export default function PlaneBuilder () { debugger
+export default function PlaneBuilder () { 
 
     const [placedItems, setPlacedItems] = useState([])
 
     const handleDrag = (e) => {
-        e.dataTransfer.setData("text", e.target.id); 
+        e.dataTransfer.setData("text", e.target.id)
     }
     
-    let item
+    //let item
     const handleDrop = (e) => { debugger
         e.preventDefault()
-        item = e.dataTransfer.getData("text").split('_')[0]
-        if(!e.target.dataset.placed) {
+        let item = e.dataTransfer.getData("text")
+        if(placedItems.find(element => element.item === item)){
+        updateItem(item, e.clientX, e.clientY)
+        } else {    
             placeItem(item, e.clientX, e.clientY)
-        } else {
-            updateItem(item, e.clientX, e.clientY)
         }
+     }
+    
+    const updateItem = (item, x, y) => {
+        const updated = placedItems.filter(element=>element.item !== item)
+        debugger
+        setPlacedItems([...updated, {item, x, y}])
     }
-    // TODO hacer una copia del objeto y sacar el anterior y meter el nuevo con las nuevas cordenadas
-    const updateItem = (item, x, y) => { debugger
-        const foundItem = placedItems.find(item)
-        if(foundItem === item)
-        setPlacedItems([x, y])
+ 
+    const handleDragOver = (e) => {
+        e.preventDefault()
     }
     
     const placeItem = (item, x, y)=> { debugger
@@ -39,22 +43,23 @@ export default function PlaneBuilder () { debugger
     return (
         <div className="map-builder">
             <div className="map" 
-            onDragOver={e => e.preventDefault()}
+            onDragOver={handleDragOver}
             onDrop={handleDrop}
             >
             {placedItems.map((placed, i) => { debugger
                 
                 return <div
                     data-placed = {true}
-                    className={`placed ${placed.item}`} 
+                    className={`placed ${placed.item.split('_')[0]}`} 
                     style={{left: placed.x, top: placed.y}}
                     draggable={true}
                     onDragStart={handleDrag}
                     id={`${placed.item}`}>
-                    {/* TODO ver como mantener el ID sin cambiar la clase  */}
+                    
 
             </div>})}
         </div>
+        {/* <CatalogView props={catalogue}/>  separar el catalogo */}
             <div className="items">{
                 items.map((item, i) => (
                     <div className={item} 

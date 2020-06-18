@@ -42,9 +42,5 @@ module.exports = new Schema({
         default: 1
     },
 
-    // scale: {
-    //     type: Number,
-    //     default: 1,
-    //     required: false
-    // },
+    // image: String
 })

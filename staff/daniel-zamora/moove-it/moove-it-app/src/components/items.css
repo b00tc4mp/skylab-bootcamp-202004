@@ -22,10 +22,6 @@
     transform-origin: center center;
 }
 
-.double-bed:hover {
-    box-shadow: darkorange;
-}
-
 .single-bed {
     /* background: url(../images/single-bed.png); */
     background-color: brown;

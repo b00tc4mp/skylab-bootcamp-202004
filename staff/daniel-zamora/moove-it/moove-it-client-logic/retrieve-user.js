@@ -1,18 +1,25 @@
-// require('misc-commons/polyfills/string')
-const { utils: { Email, call } } = require('misc-commons') 
+require('moove-it-commons/polyfills/string')
+const { utils: { call } } = require('moove-it-commons')
+const context = require('./context')
 
-module.exports = (token) => {
-    // String.validate.notVoid(token)
+module.exports = function(token) {
+    debugger
+    String.validate.notVoid(token)
 
-    return call('GET', 'http://localhost:8080/users/retrieve',undefined,
-        { Authorization: `Bearer ${token}`})
-     
-            .then(({status, body}) => {
-                if (status === 200) {
-                    const { name, surname, email } = JSON.parse(body)                
-                    
-                    return { name, surname, email }
-                }
-                else throw new Error('something has happeneed')
-            })   
-}
+    return call('GET', `${this.API_URL}/users`, undefined, { Authorization: `Bearer ${token}` })
+
+    .then(({ status, body }) => {
+        if (status === 200) {
+            debugger
+            const { name, surname, email } = JSON.parse(body)
+
+            return { name, surname, email }
+        } else if (status === 404) {
+            throw new Error('User not found')
+        } else {
+            const { error } = JSON.parse(body)
+
+            throw new Error(error)
+        }
+    })
+}.bind(context)
