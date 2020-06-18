@@ -4,6 +4,7 @@ module.exports = {
     get __context__(){
         return context
     },
+    logoutUser: require('./logout-user'),
     //-----------------------------
     registerUser: require('./register-user'),
     loginUser: require('./login-user'),
@@ -21,7 +22,7 @@ module.exports = {
     //------------------------------
     sendMessage: require('./send-message'),
     retrieveMessages: require('./retrieve-received-messages'),
-    deleteRecievedMessages: require('./delete-received-messages'),
+    deleteRecievedMessages: require('./delete-recieved-messages'),
     //--------------------------------------------
     listMyBooks: require('./list-my-books'),
     listShareBooks: require('./list-share-books'),

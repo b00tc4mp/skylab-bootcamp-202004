@@ -242,7 +242,7 @@ try {
        
             app.post('/books/message/send', verifyExtractJwt ,parseBody, (req, res) => {
                 const { body: { toUserId,bookId,textMessage } ,payload: { sub: userId }} = req
-               debugger
+             
                 try {
                     sendMessage(userId, toUserId, bookId, textMessage)
                         .then(() => res.status(200).send())
