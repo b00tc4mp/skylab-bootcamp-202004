@@ -1,6 +1,6 @@
 module.exports = {
   user: require('./user'),
-  product: require('./product'),
-  productQuantity: require('./product-quantity'),
+  lesson: require('./lesson'),
+  productSelection: require('./product-selection'),
   order: require('./order')
 }

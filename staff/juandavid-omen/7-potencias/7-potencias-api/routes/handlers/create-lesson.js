@@ -1,11 +1,11 @@
-const { placeOrder } = require('7-potencias-server-logic')
+const { createLesson } = require('7-potencias-server-logic')
 const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
-  try {
-    const { payload: { sub: userId } } = req
+  const { body: { name, price, style, hour, minute, day, month, year } } = req
 
-    placeOrder(userId)
+  try {
+    createLesson(name, price, style, hour, minute, day, month, year)
       .then(() => res.status(201).send())
       .catch(error => handleError(error, res))
   } catch (error) {

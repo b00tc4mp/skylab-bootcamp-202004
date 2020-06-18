@@ -1,7 +1,7 @@
 const { env: { JWT_SECRET: SECRET } } = process
 
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, searchUsers, updateUser, deleteUser, createProduct, searchProducts, updateCart, retrieveCart, deleteCart, placeOrder } = require('./handlers')
+const { registerUser, authenticateUser, retrieveUser, searchUsers, updateUser, deleteUser, createLesson, searchLessons, createProductSelection, searchProductSelections, updateCart, retrieveCart, deleteCart, placeOrder } = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
 const { handleError } = require('../helpers')
@@ -23,9 +23,13 @@ api.get('/users/:userId', verifyExtractJwt, retrieveUser)
 
 api.delete('/users/:userId', verifyExtractJwt, deleteUser)
 
-api.post('/products', verifyExtractJwt, parseBody, createProduct)
+api.post('/lessons', verifyExtractJwt, parseBody, createLesson)
 
-api.get('/products/search', searchProducts)
+api.get('/lessons/search', searchLessons)
+
+api.post('/products', verifyExtractJwt, parseBody, createProductSelection)
+
+api.get('/products/search', searchProductSelections)
 
 api.put('/carts', verifyExtractJwt, parseBody, updateCart)
 

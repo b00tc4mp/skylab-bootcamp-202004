@@ -1,5 +1,4 @@
 require('7-potencias-commons/polyfills/string')
-require('7-potencias-commons/polyfills/json')
 const { utils: { Email }, errors: { DuplicityError } } = require('7-potencias-commons')
 const { models: { User } } = require('7-potencias-data')
 const bcrypt = require('bcryptjs')
@@ -15,7 +14,7 @@ module.exports = (name, surname, email, password) => {
   return (async () => {
     const user = await User.findOne({ email })
 
-    if (user) throw new DuplicityError(`user with e-mail ${email} already exists `)
+    if (user) throw new DuplicityError(`user with e-mail ${email} already exists`)
 
     const hash = await bcrypt.hash(password, 8)
 

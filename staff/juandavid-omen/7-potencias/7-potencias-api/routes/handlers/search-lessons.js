@@ -1,12 +1,12 @@
-const { placeOrder } = require('7-potencias-server-logic')
+const { searchLessons } = require('7-potencias-server-logic')
 const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
   try {
-    const { payload: { sub: userId } } = req
+    const query = req.query.q
 
-    placeOrder(userId)
-      .then(() => res.status(201).send())
+    searchLessons(query)
+      .then(results => res.status(200).send(results))
       .catch(error => handleError(error, res))
   } catch (error) {
     handleError(error, res)

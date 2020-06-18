@@ -1,7 +1,7 @@
 const { Schema } = require('mongoose')
 const { utils: { Email } } = require('7-potencias-commons')
 const order = require('./order')
-const productQuantity = require('./product-quantity')
+const productSelection = require('./product-selection')
 
 module.exports = new Schema({
   name: {
@@ -39,7 +39,7 @@ module.exports = new Schema({
     // validate: [Role.validate, 'invalid role']
   },
 
-  cart: [productQuantity],
+  cart: [productSelection],
 
   orders: [order]
 })
