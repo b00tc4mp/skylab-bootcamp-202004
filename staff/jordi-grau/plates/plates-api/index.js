@@ -10,6 +10,7 @@ const { utils: {  jwtPromised }} = require('plates-commons')
 const { jwtVerifierExtractor, cors } = require('./middlewares')
 const { name, version } = require('./package.json')
 const { mongoose }  = require('plates-data')
+const retrieveUser = require('plates-server-logic/retrieve-user')
 
 mongoose.connect(MONGODB_URL)
     .then(()=>{
@@ -75,11 +76,11 @@ mongoose.connect(MONGODB_URL)
             }
         })
 
-        app.get('/:dishes?', (req, res) => {
-            const { params: {dishes} }   = req
+        app.get('/search/dishes?', (req, res) => {
+            const { query:{query} }   = req
             
             try {
-                searchPlate(dishes)
+                searchPlate(query)
                     .then((dish) => res.status(200).json(dish))
                     .catch(error => handleError(error, res))
             } catch (error) {
@@ -87,13 +88,25 @@ mongoose.connect(MONGODB_URL)
             }
         })
 
-        app.get('/search/:restaurant?', (req, res) => {
-            const { params: { restaurant } } = req
-
+        app.get('/search/restaurant?', (req, res) => {
+            const { query:{query} }   = req
+            
             try {
-                searchRestaurant(restaurant)
+                searchRestaurant(query)
                     .then((restaurants) => res.status(200).json(restaurants))
                     .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        app.get('/users', verifyExtractJwt, (req, res) => {
+            const { payload: {sub: userId} } = req
+            debugger
+            try {
+                retrieveUser(userId)
+                    .then(user => res.status(200).json(user))
+                    .catch(error => handleError(error,res))
             } catch (error) {
                 handleError(error, res)
             }
