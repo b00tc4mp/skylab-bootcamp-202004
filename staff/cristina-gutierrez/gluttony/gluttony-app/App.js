@@ -5,14 +5,17 @@ import {
   StatusBar
 } from "react-native";
 import Modal from "./src/Modal";
+import Map from './src/Map';
 
-const App = () => (
-  
-  <View style={styles.container}>
-  <StatusBar barStyle="dark-content"/>
-      <Modal />
-  </View>
-)
+const App = () => {
+  return (
+    <View style={styles.container}>
+    <StatusBar barStyle="dark-content"/>
+        {/*<Modal />*/}
+        <Map />
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
