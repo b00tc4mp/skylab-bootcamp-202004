@@ -5,7 +5,7 @@ module.exports=async (req,res)=>{
     try{
         const {params: { clientId} } = req
         const client=await retrieveClient(clientId)
-        return res.status(201).send(client)
+        return res.status(200).send(client)
     }catch(error){
         handleError(error,res)
     }

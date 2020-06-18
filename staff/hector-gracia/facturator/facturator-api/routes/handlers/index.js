@@ -18,6 +18,8 @@ module.exports={
     removeProductFromDelivery: require("./remove-product-from-delivery"),
     updateProductInDelivery: require("./update-product-in-delivery"),
     retrieveDelivery: require("./retrieve-delivery"),
-    retrieveDeliveryList: require("./retrieve-delivery-list")
+    retrieveDeliveryList: require("./retrieve-delivery-list"),
     //Template
+    addDeliveryTemplate: require("./add-delivery-template"),
+    retrieveDeliveryTemplate: require("./retrieve-delivery-template")
 }

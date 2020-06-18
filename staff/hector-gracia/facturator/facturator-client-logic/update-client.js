@@ -1,11 +1,10 @@
-require('facturator-commons/polyfills/string')
+const {utils:{call}} = require("facturator-commons")
 const { utils: { Email }} = require('facturator-commons')
-const { mongoose:{ObjectId},models: { Client } } = require('facturator-data')
-const {  errors: { UnexistenceError } } = require('facturator-commons')
-
-module.exports=(clientId,updatedClient)=>{ //TODO empty a field
+require('facturator-commons/polyfills/string')
+const context = require('./context')
+module.exports=function(updatedClient){
     if(typeof updatedClient!=="object") throw new TypeError(updatedClient+" is not an object")
-    const{name, establishment, contactNumber, email, direction, paymentMethod, paymentInfo}= updatedClient
+    const{name, establishment, contactNumber, email, direction, paymentMethod, paymentInfo,clientId}= updatedClient
     String.validate.notVoid(clientId)
     if(name)
         String.validate.notVoid(name)
@@ -22,11 +21,10 @@ module.exports=(clientId,updatedClient)=>{ //TODO empty a field
     if(paymentInfo)
         String.validate.notVoid(paymentInfo)
 
-    return(async ()=>{
-        oldClient= await Client.findOne({ _id:ObjectId(clientId)})
-        if(!oldClient) throw new UnexistenceError(`client with id ${clientId} does not exist`)
-        await Client.updateOne({_id:ObjectId(clientId)},updatedClient)
-        return undefined
-    })()
-
-}
+    return call("POST",`${this.API_URL}/clients/update`,JSON.stringify(updatedClient),{ 'Content-type': 'application/json' })
+        .then(({status,body})=>{
+            if(status ===201) return 
+            const {error}= JSON.parse(body)
+            throw new Error(error)
+        })
+}.bind(context)

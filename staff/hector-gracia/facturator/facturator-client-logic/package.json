@@ -4,8 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx mocha *.spec.js",
+    "test:debug": "npx mocha --inspect=7000 --inspect-brk *.spec.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "facturator-commons": "file:../facturator-commons"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "facturator-data": "file:../facturator-data",
+    "mocha": "^8.0.1",
+    "xhr2": "^0.2.0"
+  }
 }
