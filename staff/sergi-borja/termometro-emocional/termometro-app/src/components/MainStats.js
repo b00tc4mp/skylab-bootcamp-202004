@@ -27,12 +27,19 @@ function MainStats({ token }) {
             },
             scales: {
                 xAxes: [{
+                    gridLines: {
+                        display: false
+                    },
                     ticks: {
                         beginAtZero: true,
-                        max: 10
+                        max: 10,
+                        fontSize: 20
                     }
                 }],
                 yAxes: [{
+                    gridLines: {
+                        display: false
+                    },
                     ticks: {
                         mirror: true,
                         beginAtZero: true,
@@ -82,7 +89,7 @@ function MainStats({ token }) {
                 let dateArray;
                 let scoreArray;
                 if (_dayClicked) {
-                    let clickDayInfo = adminInfo.mood.filter((element) => moment(element.date).format('LL') === moment(_dayClicked).format('LL')) 
+                    let clickDayInfo = adminInfo.mood.filter((element) => moment(element.date).format('LL') === moment(_dayClicked).format('LL'))
                     dateArray = [moment(clickDayInfo[0].date).format('HH:mm'), moment(clickDayInfo[1].date).format('HH:mm')]
                     scoreArray = [clickDayInfo[0].score, clickDayInfo[1].score]
                 } else if (!_dayClicked) {
@@ -185,9 +192,9 @@ function MainStats({ token }) {
                 </select>
             </div>
             <div className='mainStatsContainer__buttonDaysContainer'>
-                <button className={`mainStatsContainer__buttonDaysContainer--fiveDays ${days === 5 && !chartOfCalendar && !displayCalendar? 'white' : ''}`} onClick={() => daysSetter(5)}>5 DAYS</button>
-                <button className={`mainStatsContainer__buttonDaysContainer--fiveTeenDays ${days === 15 && !chartOfCalendar && !displayCalendar? 'white' : ''}`} onClick={() => daysSetter(15)}>15 DAYS</button>
-                <button className={`mainStatsContainer__buttonDaysContainer--fiveTeenDays ${displayCalendar || chartOfCalendar? 'white' : ''}`} onClick={() => setDisplayCalendar(true)}>Calendario</button>
+                <button className={`mainStatsContainer__buttonDaysContainer--fiveDays ${days === 5 && !chartOfCalendar && !displayCalendar ? 'white' : ''}`} onClick={() => daysSetter(5)}>5 DAYS</button>
+                <button className={`mainStatsContainer__buttonDaysContainer--fiveTeenDays ${days === 15 && !chartOfCalendar && !displayCalendar ? 'white' : ''}`} onClick={() => daysSetter(15)}>15 DAYS</button>
+                <button className={`mainStatsContainer__buttonDaysContainer--fiveTeenDays ${displayCalendar || chartOfCalendar ? 'white' : ''}`} onClick={() => setDisplayCalendar(true)}>Calendario</button>
             </div>
             {!displayCalendar && !chartOfCalendar && !_dayClicked && <div className='mainStatsContainer__chartContainer'>
                 <HorizontalBar data={chartData} options={chartOptions.options} height={500} />

@@ -1,30 +1,40 @@
-import React from 'react'
-const  { setMood } = require('termometro-client-logic')
+import React, { useState } from 'react'
+import './SetMood.sass'
+import thermometer from '../images/thermometer_1.png'
+const { setMood } = require('termometro-client-logic')
 
-function SetMood({token}) {
+
+function SetMood({ token }) {
+
+    const [value, setValue] = useState(7)
 
     const handleSetMood = (event) => {
 
         event.preventDefault()
 
-        let { moodScore } = event.target
-
-        moodScore = moodScore.value
+        let moodScore = Number(value)
 
         try {
             setMood(token, moodScore)
-        } catch(error) {
-            if(error) throw error
+        } catch (error) {
+            if (error) throw error
         }
     }
 
+    const handleOnChange = (event) => {
+        setValue(event.target.value)
+    }
+
     return (
-        <section>
-        <h1>SET MOOD HERE</h1>
-        <form onSubmit={handleSetMood}>
-        <input name='moodScore' placeholder='Cómo te sientes 1-10'></input>
-        <button>SUBMIT</button>
-        </form>
+        <section className="sliderContainer">
+                <div className='sliderContainer__thermoContainer'>
+                <img src={thermometer} className='sliderContainer__thermoContainer--thermoImg'></img>
+                <input type="range" min="0" max="10" className="sliderContainer__thermoContainer--slider" value={value} onChange={handleOnChange}></input>
+                </div>
+                {/* <div>{value}</div>
+            <form onSubmit={handleSetMood}>
+                <button>SUBMIT</button>
+            </form> */}
         </section>
     )
 }
