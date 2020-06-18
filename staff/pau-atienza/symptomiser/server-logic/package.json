@@ -21,6 +21,8 @@
     "commons": "file:../commons",
     "data": "file:../data",
     "moca": "^0.4.3",
+    "mongo": "^0.1.0",
+    "mongodb": "^3.5.9",
     "node-fetch": "^2.6.0",
     "npx": "^10.2.2"
   },

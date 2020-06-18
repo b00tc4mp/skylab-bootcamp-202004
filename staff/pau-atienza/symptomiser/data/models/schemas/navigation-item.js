@@ -1,13 +1,12 @@
 const { Schema } = require('mongoose')
 
 module.exports = new Schema({
-    "prediction-code": {
+    HPO_id: {
         type: String,
         required: true,
     },
-    "prediction-name": {
-        type: String,
+    date: {
+        type: Date,
         required: true,
-    },
-
+    }
 })

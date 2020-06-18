@@ -2,7 +2,6 @@ const { retrieveTermsByQuery } = require('../../../server-logic')
 const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
-    debugger
     try {
         const { params: { query } } = req
         

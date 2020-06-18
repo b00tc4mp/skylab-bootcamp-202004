@@ -1,12 +1,12 @@
-const { retrieveTermsById } = require('../../../server-logic')
+const { registerSymptomList } = require('server-logic')
 const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
     try {
-        const { params: { id } } = req
+        const { body: { symptomList } } = req
 
-        retrieveTermsById( id )
-            .then(result => res.send(result))
+        registerSymptomList( symptomList )
+            .then(symptomList => res.status(200).send(symptomList))
             .catch(error => handleError(error, res))
     } catch (error) {
         handleError(error, res)

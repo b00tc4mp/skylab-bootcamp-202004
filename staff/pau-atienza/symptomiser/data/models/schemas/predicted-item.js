@@ -1,13 +1,12 @@
 const { Schema } = require('mongoose')
-const predictedItem = require('./predicted-item')
 
 module.exports = new Schema({
-    prediction: {
-        type: [predictedItem],
+    predictionCode: {
+        type: String,
         required: true,
     },
-    date: {
-        type: Date,
+    predictionName: {
+        type: String,
         required: true,
     }
 })
