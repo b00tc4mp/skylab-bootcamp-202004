@@ -2,11 +2,12 @@ require('escape-me-commons/polyfills/string')
 const { utils: { call } } = require('escape-me-commons')
 const context = require('./context')
 
-module.exports = function (token, tag, userId) {
-    String.validate.notVoid(token)
+module.exports = function (tag, userId) {
     String.validate.notVoid(tag)
 
     if (userId) String.validate.notVoid(userId)
+
+    const { token } = context.storage
 
     return call('GET', `${this.API_URL}/users/escape/${tag}/${userId ? userId : ''}`,
         undefined,

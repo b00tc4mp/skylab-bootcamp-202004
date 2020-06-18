@@ -3,9 +3,10 @@ const { utils: { call }, errors: { UnexistenceError } } = require('escape-me-com
 
 const context = require('./context')
 
-module.exports = function (token, query) {
-    String.validate.notVoid(token)
+module.exports = function (query) {
     String.validate.notVoid(query)
+
+    const { token } = context.storage
 
     return call('GET', `${this.API_URL}/users/search/${query ? query : ''}`,
         undefined,

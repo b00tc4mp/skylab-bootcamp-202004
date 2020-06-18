@@ -7,7 +7,6 @@ import {
     View,
     Text
 } from "react-native";
-import { useRoute } from '@react-navigation/native'
 import UserItem from '../components/UserItem'
 import Card from '../components/Card'
 import { retrieveEscapeRooms, retrieveUser, retrieveFollowing, retrieveEscapeIds, retrieveFollowingIds } from 'escape-me-client-logic'
@@ -15,9 +14,6 @@ import { retrieveEscapeRooms, retrieveUser, retrieveFollowing, retrieveEscapeIds
 import { Entypo, FontAwesome, MaterialIcons, Ionicons } from '@expo/vector-icons';
 
 export default function Profile() {
-    const route = useRoute()
-    const token = route.params['token']
-
     const [userLists, setUserLists] = useState()
     const [followingIds, setFollowingIds] = useState()
     const [tag, setTag] = useState('favorites')
@@ -29,23 +25,23 @@ export default function Profile() {
     useEffect(() => {
         (async () => {
             if (!user.username) {
-                const { name = '', surname = '', username = '' } = await retrieveUser(token)
+                const { name = '', surname = '', username = '' } = await retrieveUser()
 
                 setUser({ name, surname, username })
             }
 
-            const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds(token)
+            const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
             setUserLists({ participated, pending, favorites })
 
-            const { followingIds = [] } = await retrieveFollowingIds(token)
+            const { followingIds = [] } = await retrieveFollowingIds()
             setFollowingIds(followingIds)
 
             if (tag !== '') {
-                escapeList = await retrieveEscapeRooms(token, tag)
+                escapeList = await retrieveEscapeRooms(tag)
                 setEscapeRooms(escapeList)
             }
             else {
-                follow = await retrieveFollowing(token)
+                follow = await retrieveFollowing()
                 setFollowing(follow)
             }
         })()
@@ -82,7 +78,6 @@ export default function Profile() {
                                     title={name}
                                     rating='4.9'
                                     escapeId={id}
-                                    token={token}
                                     people={`${playersMin}-${playersMax}`}
                                     genre={genre} price={`${priceMin}-${priceMax}€`} image={{ uri: _image }}
                                     participated={userLists.participated.includes(id)}
@@ -103,7 +98,6 @@ export default function Profile() {
                                     image={require('../assets/tyler.jpg')}
                                     following={followingIds.includes(id)}
                                     userId={id}
-                                    token={token}
                                 />)
                             })
                             :

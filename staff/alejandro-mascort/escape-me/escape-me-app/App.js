@@ -33,28 +33,24 @@ export default function () {
     setView('home')
   }
 
-  const handleToken = token => {
-    setToken(token)
-  }
-
   const handleLogOut = () => {
-    setToken()
-    setView('landing')
+    //   setToken()
+    //   setView('landing')
   }
 
   return (
     <View style={styles.container}>
       {view === 'landing' && <Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister} />}
-      {view === 'login' && <Login onRegister={handleGoToRegister} onHome={handleGoToHome} handleToken={handleToken} />}
+      {view === 'login' && <Login onRegister={handleGoToRegister} onHome={handleGoToHome} />}
       {view === 'register' && <Register onLogin={handleGoToLogin} />}
-      {token &&
+      {view === 'home' &&
         <View style={styles.appheader}>
           <Text style={styles.title}>Escape Me</Text>
           <TouchableOpacity style={styles.logOut} onPress={handleLogOut}>
             <AntDesign name="logout" size={24} color="white" />
           </TouchableOpacity>
         </View>}
-      {token && <NavigationContainer>
+      {view === 'home' && <NavigationContainer>
         <NavTabs token={token} />
       </NavigationContainer>}
     </View>
@@ -87,7 +83,7 @@ const styles = StyleSheet.create({
 
 const Tab = createMaterialBottomTabNavigator();
 
-function NavTabs({ token }) {
+function NavTabs() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -99,7 +95,6 @@ function NavTabs({ token }) {
       <Tab.Screen
         name="Home"
         component={Home}
-        initialParams={{ 'token': token }}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color }) => (
@@ -110,7 +105,6 @@ function NavTabs({ token }) {
       <Tab.Screen
         name="Search"
         component={Search}
-        initialParams={{ 'token': token }}
         options={{
           tabBarLabel: 'Search',
           tabBarIcon: ({ color }) => (
@@ -120,7 +114,6 @@ function NavTabs({ token }) {
       <Tab.Screen
         name="Pending"
         component={Pending}
-        initialParams={{ 'token': token }}
         options={{
           tabBarLabel: 'Pending',
           tabBarIcon: ({ color }) => (
@@ -131,7 +124,6 @@ function NavTabs({ token }) {
       <Tab.Screen
         name="Follow"
         component={AddUsers}
-        initialParams={{ 'token': token }}
         options={{
           tabBarLabel: 'Follow',
           tabBarIcon: ({ color }) => (
@@ -141,7 +133,6 @@ function NavTabs({ token }) {
       <Tab.Screen
         name="Profile"
         component={Profile}
-        initialParams={{ 'token': token }}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color }) => (

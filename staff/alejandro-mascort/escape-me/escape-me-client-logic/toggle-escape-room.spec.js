@@ -14,6 +14,7 @@ const bcrypt = require('bcryptjs')
 const context = require('./context')
 
 context.API_URL = API_URL
+context.storage = {}
 
 describe('logic - toggle escape room', () => {
     let users, escapeRooms
@@ -70,9 +71,9 @@ describe('logic - toggle escape room', () => {
                     userId = _user.insertedId.toString()
                     return jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET)
                 })
-                .then(_token => token = _token)
+                .then(_token => context.storage.token = _token)
                 .then(() => {
-                    return toggleEscapeRoom(token, escapeId, 'pending')
+                    return toggleEscapeRoom(escapeId, 'pending')
                 })
                 .then(() => {
                     return users.findOne({ _id: mongo.ObjectId(userId) })
@@ -85,7 +86,7 @@ describe('logic - toggle escape room', () => {
                     expect(pending).to.have.lengthOf(1)
                     expect(pending[0].toString()).to.equal(escapeId)
 
-                    return toggleEscapeRoom(token, escapeId, 'participated')
+                    return toggleEscapeRoom(escapeId, 'participated')
                 })
                 .then(() => {
                     return users.findOne({ _id: mongo.ObjectId(userId) })
@@ -98,7 +99,7 @@ describe('logic - toggle escape room', () => {
                     expect(participated).to.have.lengthOf(1)
                     expect(participated[0].toString()).to.equal(escapeId)
 
-                    return toggleEscapeRoom(token, escapeId, 'favorites')
+                    return toggleEscapeRoom(escapeId, 'favorites')
                 })
                 .then(() => {
                     return users.findOne({ _id: mongo.ObjectId(userId) })
@@ -121,9 +122,9 @@ describe('logic - toggle escape room', () => {
                     userId = _user.insertedId.toString()
                     return jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET)
                 })
-                .then(_token => token = _token)
+                .then(_token => context.storage.token = _token)
                 .then(() => {
-                    return toggleEscapeRoom(token, escapeId, 'pending')
+                    return toggleEscapeRoom(escapeId, 'pending')
                 })
                 .then(() => {
                     return users.findOne({ _id: mongo.ObjectId(userId) })
@@ -135,7 +136,7 @@ describe('logic - toggle escape room', () => {
                     expect(pending).to.be.an.instanceof(Array)
                     expect(pending).to.have.lengthOf(0)
 
-                    return toggleEscapeRoom(token, escapeId, 'participated')
+                    return toggleEscapeRoom(escapeId, 'participated')
                 })
                 .then(() => {
                     return users.findOne({ _id: mongo.ObjectId(userId) })
@@ -147,7 +148,7 @@ describe('logic - toggle escape room', () => {
                     expect(participated).to.be.an.instanceof(Array)
                     expect(participated).to.have.lengthOf(0)
 
-                    return toggleEscapeRoom(token, escapeId, 'favorites')
+                    return toggleEscapeRoom(escapeId, 'favorites')
                 })
                 .then(() => {
                     return users.findOne({ _id: mongo.ObjectId(userId) })
@@ -171,12 +172,12 @@ describe('logic - toggle escape room', () => {
 
             userId = _user.insertedId.toString()
 
-            token = await jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET)
+            context.storage.token = await jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET)
 
             const _escapeId = '5ee1fa2be1ef46672229f028'
 
             try {
-                const user = await toggleEscapeRoom(token, _escapeId, 'pending')
+                const user = await toggleEscapeRoom(_escapeId, 'pending')
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.exist
@@ -189,22 +190,18 @@ describe('logic - toggle escape room', () => {
     })
 
     it('should fail when data inputs are wrong', async () => {
-        expect(() => {
-            toggleEscapeRoom(1, escapeId, 'pending')
-        }).to.throw(TypeError, '1 is not a string')
-
         const _user = await users.insertOne({ name, surname, username, email, password: hash })
 
         userId = _user.insertedId.toString()
 
-        token = await jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET)
+        context.storage.token = await jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET)
 
         expect(() => {
-            toggleEscapeRoom(token, 1, 'pending')
+            toggleEscapeRoom(1, 'pending')
         }).to.throw(TypeError, '1 is not a string')
 
         expect(() => {
-            toggleEscapeRoom(token, escapeId, 1)
+            toggleEscapeRoom(escapeId, 1)
         }).to.throw(TypeError, '1 is not a string')
 
     })

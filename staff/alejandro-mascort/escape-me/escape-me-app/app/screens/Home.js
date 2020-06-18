@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { SafeAreaView, ScrollView, Text } from 'react-native'
-import { useRoute } from '@react-navigation/native'
 import Card from '../components/Card'
 import { suggestEscapeRooms, retrieveEscapeIds } from 'escape-me-client-logic'
 
 export default function (props) {
-    const route = useRoute()
-    const token = route.params['token']
     const [escapeRooms, setEscapeRooms] = useState([])
     const [escapes, setEscapes] = useState()
 
     let escapeList
     useEffect(() => {
         (async () => {
-            const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds(token)
+            const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
             setEscapes({ participated, pending, favorites })
 
             if (!escapeRooms.length) {
-                escapeList = await suggestEscapeRooms(token)
+                escapeList = await suggestEscapeRooms()
                 setEscapeRooms(escapeList)
             }
         })()
@@ -37,7 +34,6 @@ export default function (props) {
                             title={name}
                             rating='4.9'
                             escapeId={id}
-                            token={token}
                             people={`${playersMin}-${playersMax}`}
                             genre={genre} price={`${priceMin}-${priceMax}€`} image={{ uri: _image }}
                             participated={escapes.participated.includes(id)}

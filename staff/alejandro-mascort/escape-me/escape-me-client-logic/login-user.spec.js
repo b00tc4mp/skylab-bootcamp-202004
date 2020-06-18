@@ -13,6 +13,7 @@ require('escape-me-commons/ponyfills/atob')
 const context = require('./context')
 
 context.API_URL = API_URL
+context.storage = {}
 
 describe('logic - authenticate user', () => {
     let users
@@ -50,7 +51,9 @@ describe('logic - authenticate user', () => {
 
         it('should succeed on correct credentials', () =>
             authenticateUser(email, password)
-                .then(token => {
+                .then(() => {
+                    const { token } = context.storage
+
                     const [, payloadBase64] = token.split('.')
 
                     const payloadJson = atob(payloadBase64)
@@ -65,7 +68,7 @@ describe('logic - authenticate user', () => {
 
         it('should fail on wrong password', () => {
             password += 'wrong-'
-            debugger
+
             return authenticateUser(email, password)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {

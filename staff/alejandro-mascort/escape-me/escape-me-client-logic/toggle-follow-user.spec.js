@@ -14,6 +14,7 @@ const bcrypt = require('bcryptjs')
 const context = require('./context')
 
 context.API_URL = API_URL
+context.storage = {}
 
 describe('logic - toggle follow user', () => {
     let users, escapeRooms
@@ -63,7 +64,7 @@ describe('logic - toggle follow user', () => {
                     userId = _user.insertedId.toString()
                     return jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET)
                 })
-                .then(_token => token = _token)
+                .then(_token => context.storage.token = _token)
                 .then(() => {
                     return users.insertOne({ _name, _surname, _username, _email, password: _hash })
                 })
@@ -72,7 +73,7 @@ describe('logic - toggle follow user', () => {
                     return jwtPromised.sign({ sub: __user.insertedId.toString() }, SECRET)
                 })
                 .then(() => {
-                    return toggleFollowUser(token, _userId)
+                    return toggleFollowUser(_userId)
                 })
                 .then(() => {
                     return users.findOne({ _id: mongo.ObjectId(userId) })
@@ -102,9 +103,9 @@ describe('logic - toggle follow user', () => {
                     userId = _user.insertedId.toString()
                     return jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET)
                 })
-                .then(_token => token = _token)
+                .then(_token => context.storage.token = _token)
                 .then(() => {
-                    return toggleFollowUser(token, _userId)
+                    return toggleFollowUser(_userId)
                 })
                 .then(() => {
                     return users.findOne({ _id: mongo.ObjectId(userId) })
@@ -125,12 +126,12 @@ describe('logic - toggle follow user', () => {
         it('should fail with invalid id', async () => {
             const __user = await users.insertOne({ name, surname, username, email, password: hash })
 
-            token = await jwtPromised.sign({ sub: __user.insertedId.toString() }, SECRET)
+            context.storage.token = await jwtPromised.sign({ sub: __user.insertedId.toString() }, SECRET)
 
             const _escapeId = '5ee1fa2be1ef46672229f028'
 
             try {
-                await toggleFollowUser(token, '5ee1fa2be1ef46672229f028')
+                await toggleFollowUser('5ee1fa2be1ef46672229f028')
             } catch (error) {
                 expect(error).to.exist
 
@@ -146,14 +147,10 @@ describe('logic - toggle follow user', () => {
 
         userId = __user.insertedId.toString()
 
-        token = await jwtPromised.sign({ sub: __user.insertedId.toString() }, SECRET)
+        context.storage.token = await jwtPromised.sign({ sub: __user.insertedId.toString() }, SECRET)
 
         expect(() => {
-            toggleFollowUser(1, _userId)
-        }).to.throw(TypeError, '1 is not a string')
-
-        expect(() => {
-            toggleFollowUser(token, 1)
+            toggleFollowUser(1)
         }).to.throw(TypeError, '1 is not a string')
     })
 

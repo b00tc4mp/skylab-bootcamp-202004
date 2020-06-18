@@ -13,6 +13,7 @@ const context = require('./context')
 const bcrypt = require('bcryptjs')
 
 context.API_URL = API_URL
+context.storage = {}
 
 describe('logic - retrieve escape rooms', () => {
     let users
@@ -22,7 +23,7 @@ describe('logic - retrieve escape rooms', () => {
             .then(connection => users = connection.db().collection('users'))
     )
 
-    let name, surname, email, password, token
+    let name, surname, email, password
 
     beforeEach(() =>
         users.deleteMany()
@@ -45,22 +46,22 @@ describe('logic - retrieve escape rooms', () => {
         beforeEach(() =>
             users.insertOne({ name, surname, email, username, password: hash, participated, pending, favorites })
                 .then(_user => jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET))
-                .then(_token => token = _token)
+                .then(_token => context.storage.token = _token)
         )
 
         it('should succeed on correct user id', () =>
-            retrieveEscapeRooms(token, 'pending')
+            retrieveEscapeRooms('pending')
                 .then(escapeRooms => {
                     expect(escapeRooms).to.be.an.instanceOf(Array)
                     expect(escapeRooms).to.have.lengthOf(0)
 
-                    return retrieveEscapeRooms(token, 'participated')
+                    return retrieveEscapeRooms('participated')
                 })
                 .then(escapeRooms => {
                     expect(escapeRooms).to.be.an.instanceOf(Array)
                     expect(escapeRooms).to.have.lengthOf(0)
 
-                    return retrieveEscapeRooms(token, 'favorites')
+                    return retrieveEscapeRooms('favorites')
                 })
                 .then(escapeRooms => {
                     expect(escapeRooms).to.be.an.instanceOf(Array)
@@ -84,18 +85,18 @@ describe('logic - retrieve escape rooms', () => {
                 .then(() => users.insertOne({ name, surname, email, username, password: hash }))
                 .then(_user => userId = _user.insertedId.toString())
                 .then(() => {
-                    return retrieveEscapeRooms(token, 'pending')
+                    return retrieveEscapeRooms('pending')
                         .then(escapeRooms => {
                             expect(escapeRooms).to.be.an.instanceOf(Array)
                             expect(escapeRooms).to.have.lengthOf(0)
 
-                            return retrieveEscapeRooms(token, 'participated')
+                            return retrieveEscapeRooms('participated')
                         })
                         .then(escapeRooms => {
                             expect(escapeRooms).to.be.an.instanceOf(Array)
                             expect(escapeRooms).to.have.lengthOf(0)
 
-                            return retrieveEscapeRooms(token, 'favorites')
+                            return retrieveEscapeRooms('favorites')
                         })
                         .then(escapeRooms => {
                             expect(escapeRooms).to.be.an.instanceOf(Array)
@@ -112,11 +113,11 @@ describe('logic - retrieve escape rooms', () => {
             userId = '5ed1204ee99ccf6fae798aef'
 
             return jwtPromised.sign({ sub: userId }, SECRET)
-                .then(_token => token = _token)
+                .then(_token => context.storage.token = _token)
         })
 
         it('should fail when user does not exist', () =>
-            retrieveEscapeRooms(token, 'pending')
+            retrieveEscapeRooms('pending')
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.exist
@@ -129,14 +130,14 @@ describe('logic - retrieve escape rooms', () => {
     it('should fail if token is not a string', () => {
         users.insertOne({ name, surname, email, username, password: hash, participated, pending, favorites })
             .then(_user => jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET))
-            .then(_token => token = _token)
+            .then(_token => context.storage.token = _token)
             .then(() => {
                 expect(() => {
                     retrieveEscapeRooms(1, 'pending')
                 }).to.throw(TypeError, '1 is not a string')
 
                 expect(() => {
-                    retrieveEscapeRooms(token, true)
+                    retrieveEscapeRooms(true)
                 }).to.throw(TypeError, 'true is not a string')
 
                 expect(() => {
@@ -144,7 +145,7 @@ describe('logic - retrieve escape rooms', () => {
                 }).to.throw(TypeError, '1 is not a string')
 
                 expect(() => {
-                    retrieveEscapeRooms(token, 'pending', true)
+                    retrieveEscapeRooms('pending', true)
                 }).to.throw(TypeError, 'true is not a string')
             })
 

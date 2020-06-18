@@ -24,7 +24,7 @@ module.exports = function (email, password) {
             if (status === 200) {
                 const { token } = JSON.parse(body)
 
-                return token
+                this.storage.token = token
             } else {
                 const { error } = JSON.parse(body)
 

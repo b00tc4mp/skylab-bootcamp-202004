@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_SECRET: SECRET } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_SECRET: SECRET, TEST_API_URL: API_URL } } = process
 
 const searchUsers = require('./search-users')
 const { expect } = require('chai')
@@ -10,11 +10,15 @@ const { mongoose, models: { User } } = require('escape-me-data')
 const { errors: { UnexistenceError } } = require('escape-me-commons')
 const { utils: { jwtPromised } } = require('escape-me-node-commons')
 const bcrypt = require('bcryptjs')
+const context = require('./context')
+
+context.API_URL = API_URL
+context.storage = {}
 
 describe('logic - search users', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let name, surname, username, email, password, hash, result, userId, token
+    let name, surname, username, email, password, hash, result, userId
     let _name, _surname, _username, _email, _password, _hash
 
     beforeEach(async () => {
@@ -41,11 +45,11 @@ describe('logic - search users', () => {
             await User.create({ name: _name, surname: _surname, username: _username, email: _email, password: _hash })
             const user_ = await User.create({ name, surname, username, email, password: hash })
             userId = user_.id
-            token = await jwtPromised.sign({ sub: userId }, SECRET)
+            context.storage.token = await jwtPromised.sign({ sub: userId }, SECRET)
         }
         )
         it('should succeed on retrieving data', async () => {
-            result = await searchUsers(token, _name)
+            result = await searchUsers(_name)
 
             expect(result).to.exist
             expect(result).to.be.an.instanceOf(Array)
@@ -55,7 +59,7 @@ describe('logic - search users', () => {
             expect(result[0].username).to.equal(_username)
             expect(result[0].password).to.be.undefined
 
-            result = await searchUsers(token, _surname)
+            result = await searchUsers(_surname)
 
             expect(result).to.exist
             expect(result).to.be.an.instanceOf(Array)
@@ -65,7 +69,7 @@ describe('logic - search users', () => {
             expect(result[0].username).to.equal(_username)
             expect(result[0].password).to.be.undefined
 
-            result = await searchUsers(token, _username)
+            result = await searchUsers(_username)
 
             expect(result).to.exist
             expect(result).to.be.an.instanceOf(Array)
@@ -77,7 +81,7 @@ describe('logic - search users', () => {
         }
         )
         it('should retrieve an empty array if the match does not exist', async () => {
-            result = await searchUsers(token, 'fdsdfssdf')
+            result = await searchUsers('fdsdfssdf')
 
             expect(result).to.exist
             expect(result).to.be.an.instanceOf(Array)
@@ -86,10 +90,10 @@ describe('logic - search users', () => {
     })
 
     it('should fail when user does not exist', async () => {
-        token = await jwtPromised.sign({ sub: '5ed1204ee99ccf6fae798aef' }, SECRET)
+        context.storage.token = await jwtPromised.sign({ sub: '5ed1204ee99ccf6fae798aef' }, SECRET)
 
         try {
-            const result = await searchUsers(token, 'x')
+            const result = await searchUsers('x')
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -106,12 +110,9 @@ describe('logic - search users', () => {
         userId = user_.id
 
         expect(() => {
-            searchUsers(userId, 1)
+            searchUsers(1)
         }).to.throw(TypeError, '1 is not a string')
 
-        expect(() => {
-            searchUsers(1, 'name')
-        }).to.throw(TypeError, '1 is not a string')
     })
 
     afterEach(() => User.deleteMany())

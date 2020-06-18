@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
-import { useRoute } from '@react-navigation/native'
 import { AntDesign } from '@expo/vector-icons';
 
 import { SearchBar } from 'react-native-elements';
@@ -9,9 +8,6 @@ import { searchUsers, retrieveFollowingIds } from 'escape-me-client-logic'
 import UserItem from '../components/UserItem'
 
 export default function () {
-    const route = useRoute()
-    const token = route.params['token']
-
     const [query, setQuery] = useState('')
     const [users, setUsers] = useState([])
     const [following, setFollowing] = useState()
@@ -20,7 +16,7 @@ export default function () {
     let _users
     useEffect(() => {
         (async () => {
-            const { following = [] } = await retrieveFollowingIds(token)
+            const { following = [] } = await retrieveFollowingIds()
             setFollowing(following)
         })()
     }, [users, following])
@@ -41,7 +37,7 @@ export default function () {
                 />
                 <AntDesign name="search1" size={26} color={'black'}
                     onPress={async () => {
-                        _users = await searchUsers(token, query)
+                        _users = await searchUsers(query)
                         setUsers(_users)
                         setSearched(true)
                     }} />

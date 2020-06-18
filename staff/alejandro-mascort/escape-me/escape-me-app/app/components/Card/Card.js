@@ -6,9 +6,9 @@ import CardDetails from '../../screens/CardDetails'
 
 const styles = require('./style')
 
-function Card({ title, rating, people, genre, price, image, participated, pending, favorites, token, escapeId }) {
+function Card({ title, rating, people, genre, price, image, participated, pending, favorites, escapeId }) {
     function handleToggle(tag) {
-        (async () => toggleEscapeRoom(token, escapeId, tag))()
+        (async () => toggleEscapeRoom(escapeId, tag))()
     }
 
     return (

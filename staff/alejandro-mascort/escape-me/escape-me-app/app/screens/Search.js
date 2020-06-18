@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, SafeAreaView, Modal, Button } from 'react-native'
 
-import { useRoute } from '@react-navigation/native'
 import { AntDesign } from '@expo/vector-icons';
 import { SearchBar } from 'react-native-elements';
 
@@ -13,9 +12,6 @@ import { searchEscapeRoom, retrieveEscapeIds } from 'escape-me-client-logic'
 import Card from '../components/Card'
 
 export default function () {
-    const route = useRoute()
-    const token = route.params['token']
-
     const [modalVisible, setModalVisible] = useState(false)
     const [query, setQuery] = useState('')
     const [userLists, setUserLists] = useState()
@@ -33,7 +29,7 @@ export default function () {
     let escapeList
     useEffect(() => {
         (async () => {
-            const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds(token)
+            const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
             setUserLists({ participated, pending, favorites })
         })()
     }, [userLists, escapeRooms])
@@ -164,7 +160,6 @@ export default function () {
                                     title={name}
                                     rating='4.9'
                                     escapeId={id}
-                                    token={token}
                                     people={`${playersMin}-${playersMax}`}
                                     genre={genre} price={`${priceMin}-${priceMax}€`} image={{ uri: _image }}
                                     participated={userLists.participated.includes(id)}

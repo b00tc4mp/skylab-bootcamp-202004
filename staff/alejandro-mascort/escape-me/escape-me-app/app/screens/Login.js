@@ -12,22 +12,19 @@ import * as Yup from 'yup'
 import AppButton from '../components/AppButton'
 import AppTextInput from '../components/AppTextInput'
 import Feedback from '../components/Feedback'
-import { authenticateUser } from 'escape-me-client-logic'
+import { loginUser } from 'escape-me-client-logic'
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
     password: Yup.string().required().min(8).label('Password')
 })
 
-export default function Login({ onRegister, onHome, handleToken }) {
+export default function Login({ onRegister, onHome }) {
     function handleLogin(values) {
         const { email, password } = values
         try {
-            return authenticateUser(email, password)
-                .then(token => {
-                    handleToken(token)
-                    onHome()
-                })
+            return loginUser(email, password)
+                .then(() => onHome())
                 .catch(error => console.error(error.message))
         } catch (error) {
             console.error(error.message)

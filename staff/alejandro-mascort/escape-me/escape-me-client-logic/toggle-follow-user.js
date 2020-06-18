@@ -3,9 +3,10 @@ const { utils: { call } } = require('escape-me-commons')
 const context = require('./context')
 const { errors: { UnexistenceError } } = require('escape-me-commons')
 
-module.exports = function (token, userId) {
-    String.validate(token)
+module.exports = function (userId) {
     String.validate(userId)
+
+    const { token } = context.storage
 
     return call(
         'PATCH',

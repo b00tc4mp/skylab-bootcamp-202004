@@ -5,10 +5,10 @@ import { toggleFollowUser } from 'escape-me-client-logic'
 
 const styles = require('./style')
 
-function UserItem({ name, surname, email, image, main = false, following, userId, token }) {
+function UserItem({ name, surname, email, image, main = false, following, userId }) {
 
     function handleFollowUser(userId) {
-        (async () => toggleFollowUser(token, userId))()
+        (async () => toggleFollowUser(userId))()
     }
 
     return (

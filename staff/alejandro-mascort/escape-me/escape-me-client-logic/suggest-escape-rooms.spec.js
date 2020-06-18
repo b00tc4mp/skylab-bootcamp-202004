@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_SECRET: SECRET } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_SECRET: SECRET, TEST_API_URL: API_URL } } = process
 
 const suggestEscapeRooms = require('./suggest-escape-rooms')
 const { random } = Math
@@ -9,6 +9,10 @@ require('escape-me-commons/polyfills/json')
 const { mongoose, models: { User, EscapeRoom } } = require('escape-me-data')
 const { utils: { jwtPromised } } = require('escape-me-node-commons')
 const bcrypt = require('bcryptjs')
+const context = require('./context')
+
+context.API_URL = API_URL
+context.storage = {}
 
 describe('logic - suggest escape rooms', () => {
     let escapes = []
@@ -255,14 +259,12 @@ describe('logic - suggest escape rooms', () => {
     })
 
     describe('suggest when user already exists or  when no user id is introduced', () => {
-        beforeEach(async () => {
-            const user_ = await User.create({ name, surname, username, email, password: hash, participated })
-            userId = user_.id
-            token = await jwtPromised.sign({ sub: userId }, SECRET)
-        })
 
         it('should succeed on correct user id', async () => {
-            const escapeRooms = await suggestEscapeRooms(token)
+            const user_ = await User.create({ name, surname, username, email, password: hash, participated })
+            userId = user_.id
+            context.storage.token = await jwtPromised.sign({ sub: userId }, SECRET)
+            const escapeRooms = await suggestEscapeRooms()
 
             expect(escapeRooms).to.exist
             expect(escapeRooms).to.be.an.instanceof(Array)
@@ -271,6 +273,8 @@ describe('logic - suggest escape rooms', () => {
         )
 
         it('should succeed on suggesting escape rooms if no user id is introduced', async () => {
+            delete context.storage.token
+
             const escapeRooms = await suggestEscapeRooms()
 
             expect(escapeRooms).to.exist
@@ -281,10 +285,10 @@ describe('logic - suggest escape rooms', () => {
 
     it('should fail if user id is introduced but incorrect', async () => {
         const userId = '5ed1204ee99ccf6fae798aef'
-        token = await jwtPromised.sign({ sub: userId }, SECRET)
+        context.storage.token = await jwtPromised.sign({ sub: userId }, SECRET)
 
         try {
-            const user = await suggestEscapeRooms(token)
+            const user = await suggestEscapeRooms()
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
@@ -293,12 +297,6 @@ describe('logic - suggest escape rooms', () => {
             expect(error.message).to.equal(`user with id ${userId} does not exist`)
 
         }
-    })
-
-    it('should fail if id is not a string', async () => {
-        expect(() => {
-            suggestEscapeRooms(1)
-        }).to.throw(TypeError, '1 is not a string')
     })
 
     afterEach(() => User.deleteMany({}))

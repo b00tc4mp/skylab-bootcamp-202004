@@ -13,6 +13,7 @@ const context = require('./context')
 const bcrypt = require('bcryptjs')
 
 context.API_URL = API_URL
+context.storage = {}
 
 describe('logic - retrieve user', () => {
     let users
@@ -22,7 +23,7 @@ describe('logic - retrieve user', () => {
             .then(connection => users = connection.db().collection('users'))
     )
 
-    let name, surname, email, password, token
+    let name, surname, email, password
 
     beforeEach(() =>
         users.deleteMany()
@@ -42,11 +43,11 @@ describe('logic - retrieve user', () => {
         beforeEach(() =>
             users.insertOne({ name, surname, email, username, password: hash })
                 .then(_user => jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET))
-                .then(_token => token = _token)
+                .then(_token => context.storage.token = _token)
         )
 
         it('should succeed on correct user id', () =>
-            retrieveUser(token)
+            retrieveUser()
                 .then(user => {
                     expect(user.name).to.equal(name)
                     expect(user.surname).to.equal(surname)
@@ -66,7 +67,7 @@ describe('logic - retrieve user', () => {
                 .then(_hash => hash = _hash)
                 .then(() => users.insertOne({ name, surname, email, username, password: hash }))
                 .then(_user => userId = _user.insertedId.toString())
-                .then(() => retrieveUser(token, userId))
+                .then(() => retrieveUser(userId))
                 .then(user => {
                     expect(user.name).to.equal(name)
                     expect(user.surname).to.equal(surname)
@@ -83,11 +84,11 @@ describe('logic - retrieve user', () => {
             userId = '5ed1204ee99ccf6fae798aef'
 
             return jwtPromised.sign({ sub: userId }, SECRET)
-                .then(_token => token = _token)
+                .then(_token => context.storage.token = _token)
         })
 
         it('should fail when user does not exist', () =>
-            retrieveUser(token)
+            retrieveUser()
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.exist
@@ -95,17 +96,6 @@ describe('logic - retrieve user', () => {
                     expect(error.message).to.equal(`user with id ${userId} does not exist`)
                 })
         )
-    })
-
-    it('should fail if token is not a string', () => {
-        expect(() => {
-            retrieveUser(1)
-        }).to.throw(TypeError, '1 is not a string')
-
-        expect(() => {
-            retrieveUser(true)
-        }).to.throw(TypeError, 'true is not a string')
-
     })
 
     afterEach(() => users.deleteMany())
