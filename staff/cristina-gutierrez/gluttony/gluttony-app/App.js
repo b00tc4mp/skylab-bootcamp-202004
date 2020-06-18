@@ -2,20 +2,16 @@ import React from "react";
 import { 
   StyleSheet,
   View,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView
+  StatusBar
 } from "react-native";
 import Modal from "./src/Modal";
 
 const App = () => (
-  <KeyboardAvoidingView
-    behavior={Platform.OS == "ios" ? "padding" : "height"}
-    style={styles.container}
-  >
-    <View style={styles.container}>
+  
+  <View style={styles.container}>
+  <StatusBar barStyle="dark-content"/>
       <Modal />
-    </View>
-  </KeyboardAvoidingView>
+  </View>
 )
 
 const styles = StyleSheet.create({
