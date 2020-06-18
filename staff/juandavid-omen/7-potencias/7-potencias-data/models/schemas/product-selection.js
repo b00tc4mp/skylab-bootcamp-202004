@@ -4,7 +4,7 @@ module.exports = new Schema({
   product: {
     type: ObjectId,
     required: true,
-    ref: 'Product'
+    ref: 'Lesson'
   },
 
   isOnline: {

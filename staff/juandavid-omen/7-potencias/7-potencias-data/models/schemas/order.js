@@ -1,9 +1,15 @@
-const { Schema } = require('mongoose')
-const productQuantity = require('./product-quantity')
+const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
+const productSelection = require('./product-selection')
 
 module.exports = new Schema({
-  products: {
-    type: [productQuantity],
+  user: {
+    type: ObjectId,
+    required: true,
+    ref: 'User'
+  },
+
+  productSelections: {
+    type: [productSelection],
     required: true
   },
 
