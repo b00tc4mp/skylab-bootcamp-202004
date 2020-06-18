@@ -27,7 +27,7 @@ module.exports = ( schedule,userId) => {
 
     return (async () => {
         const fullrecipe = await Recipes.findById(recipe)
-        if (!fullrecipe) throw new UnexistenceError(`recipe with id ${recipe} does not exist`)
+        if (!fullrecipe) throw new UnexistenceError(`recipe with id ${recipe} does not exist`) 
         
         const user = await User.findById(userId)
         if(!user) throw new UnexistenceError(`user with id ${userId} does not exist`)

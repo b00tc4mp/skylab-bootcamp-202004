@@ -10,7 +10,7 @@ module.exports = function (name, surname, email, password) {debugger
 
     return call(
         'POST',
-        `http://192.168.0.19:8080/api/users`,
+        `http://192.168.0.17:8080/api/users`,
         `{ "name": "${name}", "surname": "${surname}", "email": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json' }
     )

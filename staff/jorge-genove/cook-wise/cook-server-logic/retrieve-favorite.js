@@ -9,13 +9,13 @@
 
 require('cook-wise-commons/polyfills/string')
 const { errors: { UnexistenceError } } = require('cook-wise-commons')
-const { models: { User} } = require('cook-wise-data')
+const { models: { User } } = require('cook-wise-data')
 
 module.exports = (userId) => {
     String.validate.notVoid(userId)
 
     return (async () => {
-        let favoriterecipes 
+        let favoriterecipes
         const user = await User.findById(userId).populate({
             path: 'favoriterecipes',
             populate: {
@@ -29,6 +29,8 @@ module.exports = (userId) => {
         if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
         user.favoriterecipes.forEach(recipeFind => {
+            recipeFind.id = recipeFind._id.toString()
+
             delete recipeFind._id
             delete recipeFind.__v
 
@@ -41,7 +43,7 @@ module.exports = (userId) => {
             })
 
             favoriterecipes = user.favoriterecipes
-            
+
 
 
         })
