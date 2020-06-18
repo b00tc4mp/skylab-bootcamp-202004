@@ -3,11 +3,11 @@ const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
   try {
-    const { body: { productSelectionId, amount } } = req
+    const { body: { productSelectionId, quantity } } = req
 
     const { payload: { sub: userId } } = req
 
-    updateCart(userId, productSelectionId, parseInt(amount))
+    updateCart(userId, productSelectionId, parseInt(quantity))
       .then(() => res.status(200).send())
       .catch(error => handleError(error, res))
   } catch (error) {
