@@ -1,6 +1,6 @@
 require('7-potencias-commons/polyfills/string')
 require('7-potencias-commons/polyfills/number')
-const { models: { ProductSelection, Lesson} } = require('7-potencias-data')
+const { models: { ProductSelection, Lesson } } = require('7-potencias-data')
 const { errors: { DuplicityError, UnexistenceError } } = require('7-potencias-commons')
 
 module.exports = (product, isOnline, isGroup) => {
