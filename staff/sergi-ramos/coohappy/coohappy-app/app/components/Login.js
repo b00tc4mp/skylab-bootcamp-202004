@@ -17,8 +17,9 @@ const Login = function ({ navigation }) {
             let resToken = await authenticateUser(email, password)
 
             await AsyncStorage.setItem('TOKEN', resToken)
-            
-            navigation.navigate('WellcomePage')
+            const token = await AsyncStorage.getItem('TOKEN')
+            if(!token)  navigation.navigate('WellcomePage')
+            else navigation.navigate('Home')
             // const { name } = await retrieveUser(token)
             // await setName(name)
             // navigation.navigate('Home',{

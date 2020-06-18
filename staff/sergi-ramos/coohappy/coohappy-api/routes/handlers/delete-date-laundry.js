@@ -4,7 +4,7 @@ const { handleError } = require('../../helpers')
 module.exports = (req, res) => {
     try {
         const { payload: { sub: userId } } = req
-
+debugger
         deleteDateLaundry(userId)
             .then(() => res.status(204).end())
             .catch(error => handleError(error, res))

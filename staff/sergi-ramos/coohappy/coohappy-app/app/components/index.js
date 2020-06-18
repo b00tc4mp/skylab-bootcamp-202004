@@ -12,5 +12,7 @@ module.exports = {
     HeaderHome: require('./HeaderHome'),
     Laundry: require('./Laundry'),
     ShopList: require('./ShopList'),
-    WeekDays: require('./WeekDays')
+    WeekDays: require('./WeekDays'),
+    TimeLaundry: require('./TimeLaundry')
+
 }

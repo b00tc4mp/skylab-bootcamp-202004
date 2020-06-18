@@ -1,19 +1,41 @@
-import React from 'react';
-import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView } from 'react-native'
+import React, { useState, useEffect } from 'react';
+import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView, AsyncStorage } from 'react-native'
 import SvgUri from "expo-svg-uri"
 import HeaderHome from './HeaderHome'
+import moment from 'moment'
+import { sendMessage } from 'coohappy-client-logic'
+import getNow from 'coohappy-client-logic/helpers/getNow'
 
 const Chat = function ({ route, navigation }) {
 
+    const [message, setMessage] = useState()
+    const [date, setDate] = useState()
 
-    
 
+
+    useEffect(() => {
+
+        const now = getNow()
+        setDate(now)
+
+    }, [])
+
+    const handleOnSubmitSendMessage = async () => {
+        try {
+console.log('hola')
+            const token = await AsyncStorage.getItem('TOKEN')
+            sendMessage(token, message, date)
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
 
     return (
 
         <View style={styles.container}>
 
-            <HeaderHome   />
+            <HeaderHome />
 
             <View style={styles.messages}>
                 <ScrollView>
@@ -69,9 +91,13 @@ const Chat = function ({ route, navigation }) {
             </View>
             <View style={styles.chat}>
 
-                <TextInput style={styles.input} placeholder="Say something to your neighbors" placeholderTextColor="#81868e" />
-            </View>
+                <TextInput onChangeText={(value => setMessage(value))} style={styles.input} placeholder="Say something to your neighbors" placeholderTextColor="#81868e" />
+               <TouchableOpacity onPress={() => handleOnSubmitSendMessage()}>
 
+                <SvgUri  source={require('../assets/ic-house.svg')} />
+               </TouchableOpacity>
+
+            </View>
 
         </View>
     )
@@ -109,7 +135,7 @@ const styles = StyleSheet.create({
         marginRight: 20
     },
     chat: {
-        flex: 0.15,
+        height: 80,
         width: '100%',
         backgroundColor: '#c4c4c4',
         justifyContent: 'center'

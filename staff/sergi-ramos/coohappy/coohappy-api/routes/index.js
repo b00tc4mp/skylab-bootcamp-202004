@@ -2,10 +2,11 @@ const { env: { JWT_SECRET: SECRET } } = process
 
 const { Router } = require('express')
 const { registerUser, authenticate, retrieveUser,registerCohousing, retrieveCohousing, updateUser, updateCohousing, sendMessage, 
-    retrieveMessages, joinToCohousing, addFood, substractFood, retrieveUserFoodList, retrieveAllUsersFoodList, addDateLaundry, deleteDateLaundry, retrieveLaundry } = require('./handlers')
+    retrieveMessages, joinToCohousing, addFood, substractFood, retrieveUserFoodList, retrieveAllUsersFoodList, addDateLaundry, deleteDateLaundry, retrieveLaundry, retrieveLaundryAmount } = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
 const { handleError } = require('../helpers')
+
 
 const parseBody = bodyParser.json()
 const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
@@ -44,7 +45,7 @@ api.post('/cohousings/laundry', [parseBody, verifyExtractJwt], addDateLaundry)
 
 api.patch('/cohousings/laundry', [parseBody, verifyExtractJwt], deleteDateLaundry)
 
-api.get('/cohousings/laundry', [parseBody, verifyExtractJwt], retrieveLaundry )
+api.get('/cohousings/laundry/:day', [parseBody, verifyExtractJwt], retrieveLaundryAmount )
 
 
 
