@@ -1,3 +1,5 @@
+/* eslint-env mocha */
+
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
@@ -7,11 +9,9 @@ const { random } = Math
 const { expect } = require('chai')
 require('7-potencias-commons/polyfills/json')
 const { mongoose, models: { User } } = require('7-potencias-data')
-const { errors: { UnexistenceError} } = require('7-potencias-commons')
+const { errors: { UnexistenceError } } = require('7-potencias-commons')
 
 describe('logic - retrieve user', () => {
-  let users
-
   before(() => mongoose.connect(MONGODB_URL))
 
   let name, surname, email, password, userId
@@ -23,7 +23,6 @@ describe('logic - retrieve user', () => {
     surname = `surname-${random()}`
     email = `e-${random()}@mail.com`
     password = `password-${random()}`
-
   })
 
   describe('when user already exists', () => {
@@ -43,25 +42,24 @@ describe('logic - retrieve user', () => {
     })
 
     it('should fail when user does not exist', async () => {
-    const userId = '5ed1204ee99ccf6fae798aef'
-    let error
-    try {
-      await retrieveUser(userId)
-    } catch (err) {
-      error = err
-    }
+      const userId = '5ed1204ee99ccf6fae798aef'
+      let error
+      try {
+        await retrieveUser(userId)
+      } catch (err) {
+        error = err
+      }
 
-    expect(error).to.exist
-    expect(error).to.be.an.instanceof(UnexistenceError)
-    expect(error.message).to.equal(`user with id ${userId} does not exist`)
-
+      expect(error).to.exist
+      expect(error).to.be.an.instanceof(UnexistenceError)
+      expect(error.message).to.equal(`user with id ${userId} does not exist`)
     })
 
     afterEach(() => User.deleteMany())
 
-    after(async() => {
-    await User.deleteMany()
-    mongoose.disconnect
+    after(async () => {
+      await User.deleteMany()
+      mongoose.disconnect
     })
   })
 })
