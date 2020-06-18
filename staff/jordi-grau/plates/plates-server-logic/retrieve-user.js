@@ -12,7 +12,7 @@ module.exports = userId => {
 
             delete user._id
            
-
+            debugger
             return user
         })
 }
