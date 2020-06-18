@@ -15,12 +15,11 @@ export default function PlaneBuilder () {
         e.dataTransfer.setData("text", e.target.id)
     }
     
-    //let item
-    const handleDrop = (e) => { debugger
+    const handleDrop = (e) => { 
         e.preventDefault()
         let item = e.dataTransfer.getData("text")
         if(placedItems.find(element => element.item === item)){
-        updateItem(item, e.clientX, e.clientY)
+            updateItem(item, e.clientX, e.clientY)
         } else {    
             placeItem(item, e.clientX, e.clientY)
         }
@@ -50,7 +49,7 @@ export default function PlaneBuilder () {
                 
                 return <div
                     data-placed = {true}
-                    className={`placed ${placed.item.split('_')[0]}`} 
+                    className={`placed ${(placed.item).split('_')[0]}`} 
                     style={{left: placed.x, top: placed.y}}
                     draggable={true}
                     onDragStart={handleDrag}
@@ -65,7 +64,7 @@ export default function PlaneBuilder () {
                     <div className={item} 
                     draggable={true}
                     onDragStart={handleDrag}
-                    id={`${item}_${i}`}/>))}
+                    id={`${item}`}/>))}
             </div>
         </div>
     )
