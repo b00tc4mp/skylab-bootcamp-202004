@@ -14,7 +14,7 @@ require('cook-wise-commons/polyfills/string')
 const { errors: { UnexistenceError } } = require('cook-wise-commons')
 const { models: { Recipes, User } } = require('cook-wise-data')
 
-module.exports = (weekday, userId) => {
+module.exports = (weekday, userId) => {debugger
     String.validate.notVoid(userId)
     String.validate.notVoid(weekday)
     
@@ -36,6 +36,7 @@ module.exports = (weekday, userId) => {
 
             if (!recipe) throw new UnexistenceError(`recipe with id ${recipeArray[j]} does not exist`)
 
+            recipe.id = recipe._id.toString()
 
             delete recipe._id
             delete recipe.__v

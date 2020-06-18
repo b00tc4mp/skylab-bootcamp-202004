@@ -33,7 +33,8 @@ String.validate.notVoid(recipeId)
 
         await Promise.all([
             User.findByIdAndUpdate(userId, { 
-                $pull: { recipes: recipeId, favoriterecipes: recipeId }
+                $pull: { recipes: recipeId, favoriterecipes: recipeId, schedule:{recipe: recipeId} }
+            
             }),
             Recipes.findByIdAndRemove(recipeId)
         ])

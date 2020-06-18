@@ -15,7 +15,7 @@ const { cors } = require('./middlewares')
 const { mongoose } = require('cook-wise-data')
 
 console.debug('starting server')
-
+debugger
 try {
     console.debug('connecting to database')
 
