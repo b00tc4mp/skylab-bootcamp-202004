@@ -3,5 +3,9 @@ module.exports = {
     admin: require('./admin'),
     predictorInput: require('./predictor-input'),
     predictorOutput: require('./predictor-output'),
-    predictorItem: require('./predictor-item')
+    predictedItem: require('./predicted-item'),
+    navigationItem: require('./navigation-item'),
+    submittedTerm: require('./submitted-term'),
+    symptom: require('./symptom'),
+    symptomList: require('./symptom-list')
 }

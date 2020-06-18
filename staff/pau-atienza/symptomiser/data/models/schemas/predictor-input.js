@@ -10,5 +10,9 @@ module.exports = new Schema({
         type: Number,
         required: true,
         min: 1
+    },
+    date: {
+        type: Date,
+        required: true,
     }
 })
