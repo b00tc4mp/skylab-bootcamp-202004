@@ -15,7 +15,6 @@ module.exports = userId => {
         if (!results.length) throw new UnexistenceError('user do not have trades yet')
 
         for(let j in results)  {
-            delete results[j]._id
             delete results[j].user
             delete results[j].__v
             delete results[j].product._id

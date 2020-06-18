@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Line } from 'react-chartjs-2'
 import { addProduct } from 'gym-client-logic'
+import './ProductDatails.sass'
+import Feedback from './Feedback'
 
-function ProductDetails({ token, prices, underlyings, item }) {
+function ProductDetails({ token, prices, underlyings, item, expanded }) {
     const [futureChartData, setFutureChartData] = useState()
     const [underlyingChartData, setUnderlyingChartData] = useState()
     const [error, setError] = useState()
-    const [success, setSuccess] =  useState()
+    const [success, setSuccess] = useState()
 
     const Chart = () => {
         const futurePrice = prices.map(({ price }) => price)
@@ -24,14 +26,7 @@ function ProductDetails({ token, prices, underlyings, item }) {
                     backgroundColor: "rgba(75,192,192,0.2)",
                     borderColor: "rgba(75,192,192,1)",
                     data: futurePrice,
-                }],
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        stepSize: 0.1
-                    }
                 }]
-            }
         })
 
         setUnderlyingChartData({
@@ -43,14 +38,7 @@ function ProductDetails({ token, prices, underlyings, item }) {
                     backgroundColor: "rgba(75,192,192,0.2)",
                     borderColor: "rgba(75,192,192,1)",
                     data: underlyingPrice
-                }],
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        stepSize: 0.1
-                    }
                 }]
-            }
         })
 
     }
@@ -67,29 +55,33 @@ function ProductDetails({ token, prices, underlyings, item }) {
         quantity = Number(quantity.value)
         side = side.value
 
-        try{
+        try {
             addProduct(token, item._id, item.priceId, side, quantity)
-            .then(() => setSuccess('product added to the portfolio'))
-            .catch(({message}) => setError(message))
-        }catch({message}){
+                .then(() => setSuccess('product added to the portfolio'))
+                .catch(({ message }) => setError(message))
+        } catch ({ message }) {
             setError(message)
         }
     }
 
-    return <section>
-        {item.productType === 'future' &&
+    return <section className='details'>
+        {!expanded && item.productType === 'future' &&
             <section>
-                <section>
-                    <h1>{item.ticker}</h1>
-                    <p>{item.productType}</p>
-                    <h2>{item.price}</h2>
-                    <p>{item.settlementDate}</p>
-                    <p>{item.contractSize}</p>
-                    <p>{item.exchange}</p>
-                    <p>{item.sector}</p>
+                <section className='details__data'>
+                    <section className='details__price'>
+                        <p>{item.productType}</p>
+                        <h1 className='details__ticker'>{item.ticker}</h1>
+                        <h2>{`${item.price}€`}</h2>
+                    </section>
+                    <section className="details__item">
+                        <p>{item.settlementDate}</p>
+                        <p>{`Contract size: ${item.contractSize}`}</p>
+                        <p>{item.exchange}</p>
+                        <p>{item.sector}</p>
+                    </section>
                 </section>
                 <section>
-                    <form onSubmit = {onTrade}>
+                    <form className="details__form" onSubmit={onTrade}>
                         <select name="quantity">
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -106,37 +98,63 @@ function ProductDetails({ token, prices, underlyings, item }) {
                             <option value='Buy'>Buy</option>
                             <option value='Sell'>Sell</option>
                         </select>
-                        <button>Trade</button>
+                        <button className="details__button">Trade</button>
                     </form>
                 </section>
-                <section className="historic-prices">
+                {error && <Feedback message={error} level="error" />}
+                {success && <Feedback message={success} level="" />}
+                <section className="details__historics">
                     <Line
                         data={futureChartData}
                         options={{
                             title: {
                                 display: true,
                                 text: 'Historic future prices',
-                                fontSize: 20,
+                                fontSize: 15,
                                 position: 'top'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    type: "time",
+                                    time: {
+                                        unit: 'day',
+                                        round: 'day',
+                                        displayFormats: {
+                                            day: 'MMM D'
+                                        }
+                                    }
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        stepSize: 0.05
+                                    }
+                                }]
                             }
-                        }
-                        }
+                        }}
+                        height={200}
                     />
                 </section>
             </section>
         }
-        {item.productType === 'option' &&
+        {!expanded && item.productType === 'option' &&
             <section>
-                <h1>{item.ticker}</h1>
-                <h2>{item.price}</h2>
-                <p>{item.type.side}</p>
-                <p>{item.type.strike}</p>
-                <p>{item.settlementDate}</p>
-                <p>{item.contractSize}</p>
-                <p>{item.exchange}</p>
-                <p>{item.sector}</p>
+                <section className='details__data'>
+                    <section className='details__price'>
+                        <p>{item.productType}</p>
+                        <h1 className='details__ticker'> {item.ticker}</h1>
+                        <h2>{`${item.price}€`}</h2>
+                    </section>
+                    <section className="details__item">
+                        <p>{item.type.side}</p>
+                        <p>{`${item.type.strike}€`}</p>
+                        <p>{item.settlementDate}</p>
+                        <p>{`Contract size: ${item.contractSize}`}</p>
+                        <p>{item.exchange}</p>
+                        <p>{item.sector}</p>
+                    </section>
+                </section>
                 <section>
-                    <form onSubmit = {onTrade}>
+                    <form className="details__form" onSubmit={onTrade}>
                         <select name="quantity">
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -153,23 +171,42 @@ function ProductDetails({ token, prices, underlyings, item }) {
                             <option value='Buy'>Buy</option>
                             <option value='Sell'>Sell</option>
                         </select>
-                        <button>Trade</button>
+                        <button className="details__button">Trade</button>
                     </form>
                 </section>
             </section>
         }
-        <section className="historic-underlyings-prices">
+        {error && <Feedback message={error} level="error" />}
+        {success && <Feedback message={success} level="" />}
+        <section className="details__underlying">
             <Line
                 data={underlyingChartData}
                 options={{
                     title: {
                         display: true,
                         text: 'Underlying historic prices',
-                        fontSize: 20,
+                        fontSize: 15,
                         position: 'top'
+                    },
+                    scales: {
+                        xAxes: [{
+                            type: "time",
+                            time: {
+                                unit: 'day',
+                                round: 'day',
+                                displayFormats: {
+                                    day: 'MMM D'
+                                }
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                stepSize: 0.1
+                            }
+                        }]
                     }
-                }
-                }
+                }}
+                height={200}
             />
         </section>
 

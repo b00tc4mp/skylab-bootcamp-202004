@@ -3,7 +3,6 @@ const { utils: { call } } = require('gym-commons')
 const context = require('./context')
 
 module.exports = function (token) {
-    debugger
     String.validate.notVoid(token)
     return call('GET', `${this.API_URL}/users/trades`,
         undefined,
@@ -22,7 +21,7 @@ module.exports = function (token) {
                     const { product, trades } = item
 
                     for (let key in product) {
-                        if (key === 'exchange' || key === 'productType' || key === 'sector') {
+                        if (key === 'exchange') {
                             allocation.exchange[product[key]] ?
                                 allocation.exchange[product[key]] += trades.map(({ quantity }) => quantity).reduce((acc, currentValue) => acc += currentValue, 0) * product.contractSize
                                 :

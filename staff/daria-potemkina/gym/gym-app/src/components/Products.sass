@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap')
+    
+*
+    margin: 0
+    padding: 0
+    font-family: 'Lato', sans-serif
+
+.products
+    display: flex
+    flex-direction: column
+    margin-left: 5%
+
+    &__title
+        font-size: 20px
+        padding-left: 10%
+        padding-right: 10%
+        margin-top: 5%
+
+    
+    &__item
+        list-style: none
+        display: flex
+        justify-content: space-around
+    
+    &__details
+        margin-top: 2%
+        background-color: rgb(84, 192, 176)
+        box-shadow: 2px 2px 2px black
+        padding: 5%
+        width: 100px
+        color: white
+        text-align: center
+        border-radius: 10px
+
+    &__button
+        background-color: white
+        box-shadow: 2px 2px 2px black
+        border: none
+        margin-top: 5%
+        border-radius: 5px
+        padding: 5%
+
+        &--border
+            background-color: rgb(84, 192, 176)
+            color: white
+            display: flex
+            align-self: center
+    
+    &__form
+        width: 150px
+        margin-top: 2%
+        margin-right: 5%
+    
+    &__select
+        display: flex
+        flex-direction: row
+
+select
+    border-radius: 5px
+    width: 60px
+    height: 25px
+    box-shadow: 2px 2px 2px black

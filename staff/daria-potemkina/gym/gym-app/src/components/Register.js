@@ -24,7 +24,6 @@ export default function ({ onRegister, onGoToLogin }) {
         } catch ({ message }) {
             setError(message)
         }
-
     }
 
     const handleGoToLogin = event => {

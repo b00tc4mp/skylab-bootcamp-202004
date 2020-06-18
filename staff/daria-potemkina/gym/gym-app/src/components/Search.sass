@@ -1,9 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap')
+    
+*
+    margin: 0
+    padding: 0
+    font-family: 'Lato', sans-serif
+    
 .search
-    border: 1px solid black
+    border: 3px groove rgb(84, 192, 176)
+    display: flex
+    align-items: center
+    flex-direction: column
+    border-radius: 10px
     padding: 10px
-    width: 100vw
+    width: 80%
+    margin: 5%
+    min-height: 150px
+    font-size: 12px
     
 
     &__title
         margin-bottom: 2%
         text-align: center
+        font-size: 18px
+        margin-bottom: 5%
+    
+    &__input
+        display: grid
+        grid-template-columns: repeat(4, 1fr)
+        grid-template-rows: repeat(2, 1fr)
+        margin: 2%
+    
+    &__select
+        height: 90%
+        width: 90%
+        margin: 5%
+    
+    &__label
+        font-size: 14px
+        align-self: center
+    
+    &__button
+        align-self: center
+        margin-top: 2%
+        width: 70px
+        height: 30px
+        background-color: rgb(84, 192, 176)
+        box-shadow: 2px 2px 2px black
+        border: none
+        border-radius: 10px
+        color: white
+        
+    
+
+
+
+
+

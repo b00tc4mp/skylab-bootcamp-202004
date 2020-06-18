@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { retrieveUserBalance, retrieveUserCard } from 'gym-client-logic'
+import Feedback from './Feedback'
 
 export default function ({ token }) {
     const [card, setCard] = useState()
@@ -16,7 +17,7 @@ export default function ({ token }) {
         } catch ({ message }) {
             setError(message)
         }
-    }, [])
+    }, [token])
 
     useEffect(() => {
         try {
@@ -26,7 +27,7 @@ export default function ({ token }) {
         } catch ({ message }) {
             setError(message)
         }
-    }, [])
+    }, [token])
 
 
     return <section>
@@ -50,6 +51,6 @@ export default function ({ token }) {
                 </ul>
             </section>
         }
-
+        {error && <Feedback message={error} level='error'/>}
     </section>
 }

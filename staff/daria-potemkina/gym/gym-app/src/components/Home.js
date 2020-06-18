@@ -19,7 +19,8 @@ function Home ({handleGoToDetails, handleShowUnderlyingPrices, token}) {
             setError(message)
         }
         
-    }, [])
+    }, [token])
+
     useEffect(() => {
         try {
             retrieveFutures()
@@ -40,9 +41,8 @@ function Home ({handleGoToDetails, handleShowUnderlyingPrices, token}) {
     }, [])
 
         return <section className="home">
-            <h1>Futures</h1>
+            <Search />
             {futures && <Futures token={token} futures={futures} handleGoToDetails = {handleGoToDetails} handleShowUnderlyingPrices={handleShowUnderlyingPrices}/>}
-            <h1>Options</h1>
             {options && <Options token={token} options={options} handleGoToDetails = {handleGoToDetails} handleShowUnderlyingPrices={handleShowUnderlyingPrices}/>}
         </section>
 }

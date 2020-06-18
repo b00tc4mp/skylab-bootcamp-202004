@@ -10,7 +10,6 @@ import ProductDetails from './ProductDetails'
 import Account from './Account'
 import Portfolio from './Portfolio'
 import Notifications from './Notifications'
-import Search from './Search'
 import Settings from './Settings'
 import { faHome, faBars } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -94,6 +93,15 @@ function App({ history }) {
     history.push('/notifications')
   }
 
+  const handleGoToSettings = event => {
+    event.preventDefault()
+
+    if (expanded) setExpanded(false)
+    else setExpanded(true)
+
+    history.push('/settings')
+  }
+
   const handleGoToDetails = item => {
     setItem(item)
     try {
@@ -111,7 +119,7 @@ function App({ history }) {
     <div className="App">
       <header className="App-header">
         <Route exact path="/" render={() => token ? <Redirect to="/home" /> : <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />} />
-        
+
         <Route path="/register" render={() =>
           token ? <Redirect to="/home" /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />} />
 
@@ -120,32 +128,31 @@ function App({ history }) {
 
         {token && <section >
           <nav className="nav-bar">
-            <a href="/">  <FontAwesomeIcon icon={faHome} /></a>
+            <a className="nav-bar__home" href="/">  <FontAwesomeIcon icon={faHome} /></a>
             <button className="nav-bar__menu" href="/"> <FontAwesomeIcon icon={faBars} onClick={handleToggle} /></button>
             <ul className={`nav-bar__list${expanded ? '--expanded' : ''}`}>
               <li><a href="/" onClick={handleGoToPortfolio}>Portfolio</a></li>
               <li><a href="/" onClick={handleGoToNotifications}>Notifications</a></li>
               <li><a href="/" onClick={handleGoToAccount}>Account</a></li>
-              <li><a href="/">Settings</a></li>
+              <li><a href="/" onClick={handleGoToSettings}>Settings</a></li>
               <li><a href="/" onClick={handleLogout}>Logout</a> </li>
             </ul>
           </nav>
         </section>}
-        {!expanded && <Search path="/search" handleGoToDetails={handleGoToDetails} />}
 
         {!expanded && <Route path="/home" render={() =>
           token ? <Home expanded={expanded} token={token} handleGoToDetails={handleGoToDetails} /> : <Redirect to="/login" />} />}
-        
-        <Route path="/product-details" render={() => 
-        token && prices && <ProductDetails token={token} prices={prices} underlyings={underlying} item={item} />} />
 
-        <Route path="/account" render={() => <Account token={token} />} />
+        {!expanded && <Route path="/product-details" render={() =>
+          token && prices && <ProductDetails expanded={expanded} token={token} prices={prices} underlyings={underlying} item={item} />} />}
 
-        <Route path="/portfolio" render={() => <Portfolio token={token} />} />
+        {!expanded && <Route path="/account" render={() => <Account token={token} />} />}
 
-        <Route path="/notifications" render={() => <Notifications />} />
-       
-        <Route path="/settings" render={() => <Settings />} />
+        {!expanded && <Route path="/portfolio" render={() => <Portfolio token={token} />} />}
+
+        {!expanded && <Route path="/notifications" render={() => <Notifications />} />}
+
+        {!expanded && <Route path="/settings" render={() => <Settings token={token} />} />}
       </header>
     </div>
   );
