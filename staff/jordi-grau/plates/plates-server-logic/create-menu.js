@@ -8,16 +8,15 @@ module.exports = (userId, restaurantId, dishesIds) =>{
     // dishesIds.forEach(element => String.validate.notVoid(element))
 
     return (async ()=>{
-        
         const user = await User.findById(userId)
-            if(!user) throw new UnexistenceError(`user with id ${userId} doesn't exist`)
+        if(!user) throw new UnexistenceError(`user with id ${userId} doesn't exist`)
 
         const restaurant = await Restaurant.findById(restaurantId)
-            if(!restaurant) throw new UnexistenceError(`restaurant with id ${restaurantId} doesn't exist`)
+        if(!restaurant) throw new UnexistenceError(`restaurant with id ${restaurantId} doesn't exist`)
         
        //const _dishes = //await Dish.find().where('_id').in(dishesIds).exec();
         const _dishes = await Dish.findById(dishesIds)
-            if(!_dishes) throw new UnexistenceError(`dish with id ${_dishes} doesn't exist`)
+        if(!_dishes) throw new UnexistenceError(`dish with id ${_dishes} doesn't exist`)
 
         const newMenu = await  Restaurant.findByIdAndUpdate(restaurantId, {$push: {dishes: dishesIds} }) //Menu.create({dishes})
 
@@ -25,7 +24,7 @@ module.exports = (userId, restaurantId, dishesIds) =>{
     
            // await restaurant.save()
             
-            return 
-}) ()
+        return 
+    })()
 }
 

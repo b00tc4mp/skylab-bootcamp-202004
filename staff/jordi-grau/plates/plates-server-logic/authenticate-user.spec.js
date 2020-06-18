@@ -1,6 +1,7 @@
 require('dotenv').config()
 const {env: { TEST_MONGODB_URL: MONGODB_URL }} = process
-const {DuplitcityError, UnexistenceError, VoidError } = require('plates-commons/errors')
+global.fetch  = require('node-fetch')
+const {UnexistenceError, VoidError } = require('plates-commons/errors')
 const bcrypt = require('bcryptjs')
 const { floor, random } = Math
 const {expect} = require('chai')
@@ -23,6 +24,7 @@ describe('authenticateUser', () => {
 
     beforeEach(async() =>
         User.deleteMany()
+        
             .then(() =>{
                 name = `name-${random()}`
                 surname = `surname-${random()}`

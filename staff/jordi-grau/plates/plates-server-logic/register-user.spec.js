@@ -29,7 +29,7 @@ describe("registerUser", () => {
     })
 
     it("should succeed to register a new user on correct data", async() => {
-        debugger
+       
         const result = await registerUser(name, surname, email, password);
 
         expect(result).to.be.undefined;
