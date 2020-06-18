@@ -12,12 +12,11 @@ const { utils: { jwtPromised } } = require('misc-commons')
 const context = require('./context')
 
 context.API_URL = API_URL
-context.storage = {}
 
 describe('logic - retrieve user', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let name, surname, email, password
+    let name, surname, email, password, token
 
     beforeEach(() =>
         User.deleteMany()
@@ -33,11 +32,11 @@ describe('logic - retrieve user', () => {
         beforeEach(() =>
             User.create({ name, surname, email, password })
                 .then(user => jwtPromised.sign({ sub: user.id }, SECRET))
-                .then(token => context.storage.token = token)
+                .then(_token => token = _token)
         )
 
         it('should succeed on correct user id', () =>
-            retrieveUser()
+            retrieveUser(token)
                 .then(user => {
                     expect(user.name).to.equal(name)
                     expect(user.surname).to.equal(surname)
@@ -54,11 +53,11 @@ describe('logic - retrieve user', () => {
             userId = '5ed1204ee99ccf6fae798aef'
 
             return jwtPromised.sign({ sub: userId }, SECRET)
-                .then(token => context.storage.token = token)
+                .then(_token => token = _token)
         })
 
         it('should fail when user does not exist', () =>
-            retrieveUser()
+            retrieveUser(token)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.exist
