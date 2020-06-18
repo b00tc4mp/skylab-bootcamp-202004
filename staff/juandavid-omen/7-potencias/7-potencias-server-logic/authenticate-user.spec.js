@@ -1,3 +1,5 @@
+/* eslint-env mocha */
+
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
@@ -62,7 +64,6 @@ describe('logic - authenticate user', () => {
 
       expect(error).to.be.an.instanceof(UnexistenceError)
       expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
-
     })
 
     afterEach(() => User.deleteMany())
