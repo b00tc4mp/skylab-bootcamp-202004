@@ -12,7 +12,7 @@ function UserItem({ name, surname, email, image, main = false, following, userId
     }
 
     return (
-        <View style={styles.container}>
+        <View style={main ? styles.container : [styles.container, styles.containerItem]}>
             <Image style={main ? styles.image : styles.littleImage} source={image} />
             <View>
                 <Text style={main ? styles.username : styles.littleUsername}>{email}</Text>

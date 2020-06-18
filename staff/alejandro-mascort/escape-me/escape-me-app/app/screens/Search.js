@@ -26,13 +26,18 @@ export default function () {
     const [moreThanPlayersMin, setMoreThanPlayersMin] = useState()
     const [moreThanPriceMin, setMoreThanPriceMin] = useState()
 
+    const handleEscapeLists = async () => {
+        const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
+        setUserLists({ participated, pending, favorites })
+    }
+
     let escapeList
     useEffect(() => {
         (async () => {
             const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
             setUserLists({ participated, pending, favorites })
         })()
-    }, [userLists, escapeRooms])
+    }, [])
 
     return (
         <View style={styles.container}>
@@ -165,6 +170,7 @@ export default function () {
                                     participated={userLists.participated.includes(id)}
                                     pending={userLists.pending.includes(id)}
                                     favorites={userLists.favorites.includes(id)}
+                                    onEscapes={handleEscapeLists}
                                 />)
                             })
                             :

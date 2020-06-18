@@ -16,7 +16,7 @@ export default function () {
     let _users
     useEffect(() => {
         (async () => {
-            const { following = [] } = await retrieveFollowingIds()
+            const following = await retrieveFollowingIds()
             setFollowing(following)
         })()
     }, [users, following])
@@ -54,7 +54,6 @@ export default function () {
                                     image={require('../assets/tyler.jpg')}
                                     following={following.includes(id)}
                                     userId={id}
-                                    token={token}
                                 />)
                             })
                             :

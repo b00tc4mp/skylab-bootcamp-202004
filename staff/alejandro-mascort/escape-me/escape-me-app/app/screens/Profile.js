@@ -15,37 +15,34 @@ import { Entypo, FontAwesome, MaterialIcons, Ionicons } from '@expo/vector-icons
 
 export default function Profile() {
     const [userLists, setUserLists] = useState()
-    const [followingIds, setFollowingIds] = useState()
+    const [followingIds, setFollowingIds] = useState([])
     const [tag, setTag] = useState('favorites')
     const [user, setUser] = useState({})
     const [following, setFollowing] = useState([])
     const [escapeRooms, setEscapeRooms] = useState([])
 
+    const handleEscapeLists = async () => {
+        const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
+        setUserLists({ participated, pending, favorites })
+    }
+
     let escapeList, follow
     useEffect(() => {
         (async () => {
-            if (!user.username) {
-                const { name = '', surname = '', username = '' } = await retrieveUser()
-
-                setUser({ name, surname, username })
-            }
+            const { name = '', surname = '', username = '' } = await retrieveUser()
+            setUser({ name, surname, username })
 
             const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
             setUserLists({ participated, pending, favorites })
 
-            const { followingIds = [] } = await retrieveFollowingIds()
+            const followingIds = await retrieveFollowingIds()
             setFollowingIds(followingIds)
 
-            if (tag !== '') {
-                escapeList = await retrieveEscapeRooms(tag)
-                setEscapeRooms(escapeList)
-            }
-            else {
-                follow = await retrieveFollowing()
-                setFollowing(follow)
-            }
+            escapeList = await retrieveEscapeRooms(tag)
+            setEscapeRooms(escapeList)
+
         })()
-    }, [userLists])
+    }, [])
 
     return (
         <SafeAreaView style={styles.container} >
@@ -56,15 +53,27 @@ export default function Profile() {
                     <Text style={styles.text}>Edit profile</Text>
                 </TouchableOpacity>
                 <View style={styles.details}>
-                    <TouchableOpacity style={tag === 'favorites' ? [styles.pair, styles.selected] : styles.pair} onPress={() => setTag('favorites')}>
+                    <TouchableOpacity style={tag === 'favorites' ? [styles.pair, styles.selected] : styles.pair} onPress={async () => {
+                        escapeList = await retrieveEscapeRooms('favorites')
+                        setEscapeRooms(escapeList)
+                        setTag('favorites')
+                    }}>
                         <FontAwesome name="heart" size={24} color={'#fc5c65'} />
                         <Text>Favorite</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={tag === 'participated' ? [styles.pair, styles.selected] : styles.pair} onPress={() => setTag('participated')}>
+                    <TouchableOpacity style={tag === 'participated' ? [styles.pair, styles.selected] : styles.pair} onPress={async () => {
+                        escapeList = await retrieveEscapeRooms('participated')
+                        setEscapeRooms(escapeList)
+                        setTag('participated')
+                    }}>
                         <MaterialIcons name="done-all" size={24} color="black" />
                         <Text>Done</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={tag === '' ? [styles.pair, styles.selected] : styles.pair} onPress={() => setTag('')}>
+                    <TouchableOpacity style={tag === '' ? [styles.pair, styles.selected] : styles.pair} onPress={async () => {
+                        follow = await retrieveFollowing()
+                        setFollowing(follow)
+                        setTag('')
+                    }}>
                         <Ionicons name="md-contacts" size={24} color="black" />
                         <Text>Following</Text>
                     </TouchableOpacity>
@@ -72,7 +81,7 @@ export default function Profile() {
                 {
                     tag !== '' ?
                         escapeRooms.length ?
-                            escapeRooms.map(({ city, id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin }) => {
+                            escapeRooms.map(({ id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin }) => {
                                 return (<Card
                                     key={id}
                                     title={name}
@@ -83,6 +92,7 @@ export default function Profile() {
                                     participated={userLists.participated.includes(id)}
                                     pending={userLists.pending.includes(id)}
                                     favorites={userLists.favorites.includes(id)}
+                                    onEscapes={handleEscapeLists}
                                 />)
                             })
                             :

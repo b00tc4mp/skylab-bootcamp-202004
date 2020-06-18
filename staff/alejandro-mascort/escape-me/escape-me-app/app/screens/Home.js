@@ -7,18 +7,21 @@ export default function (props) {
     const [escapeRooms, setEscapeRooms] = useState([])
     const [escapes, setEscapes] = useState()
 
+    const handleEscapeLists = async () => {
+        const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
+        setEscapes({ participated, pending, favorites })
+    }
+
     let escapeList
     useEffect(() => {
         (async () => {
             const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
             setEscapes({ participated, pending, favorites })
 
-            if (!escapeRooms.length) {
-                escapeList = await suggestEscapeRooms()
-                setEscapeRooms(escapeList)
-            }
+            escapeList = await suggestEscapeRooms('pending')
+            setEscapeRooms(escapeList)
         })()
-    }, [escapes])
+    }, [])
 
     return (
         <SafeAreaView style={{
@@ -39,6 +42,7 @@ export default function (props) {
                             participated={escapes.participated.includes(id)}
                             pending={escapes.pending.includes(id)}
                             favorites={escapes.favorites.includes(id)}
+                            onEscapes={handleEscapeLists}
                         />)
                     })
                     :
