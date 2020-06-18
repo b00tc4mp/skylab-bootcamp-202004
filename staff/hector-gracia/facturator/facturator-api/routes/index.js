@@ -4,7 +4,7 @@ const {
     addclient,retrieveClient,updateClient,removeClient,retrieveAllClients, addClientDiscount,retrieveClientDiscountList,
     addProduct,retrieveProduct,retrieveAllProducts,
     addProductToDelivery,makeDeliveryFromTemplate, makeEmptyDelivery, removeProductFromDelivery, updateProductInDelivery, retrieveDelivery, retrieveDeliveryList,
-    addDeliveryTemplate}= require("./handlers")
+    addDeliveryTemplate, retrieveDeliveryTemplate}= require("./handlers")
 const bodyParser= require("body-parser")
 const {jwtVerifierExtractor}= require("../middlewares")
 const {hanleError}= require("../helpers")
@@ -34,6 +34,7 @@ api.get("/deliveries/id/:deliveryId",parseBody,retrieveDelivery)
 api.get("/deliveries",parseBody,retrieveDeliveryList)
 //Templates
 api.post("/templates",parseBody,addDeliveryTemplate)
+api.get("/templates/:templateId",parseBody,retrieveDeliveryTemplate)
 
 module.exports={
     api
