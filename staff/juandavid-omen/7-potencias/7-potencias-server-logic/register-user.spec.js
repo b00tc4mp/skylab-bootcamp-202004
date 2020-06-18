@@ -1,3 +1,5 @@
+/* eslint-env mocha */
+
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process

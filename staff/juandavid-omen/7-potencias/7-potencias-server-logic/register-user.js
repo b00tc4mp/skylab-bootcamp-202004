@@ -1,5 +1,4 @@
 require('7-potencias-commons/polyfills/string')
-require('7-potencias-commons/polyfills/json')
 const { utils: { Email }, errors: { DuplicityError } } = require('7-potencias-commons')
 const { models: { User } } = require('7-potencias-data')
 const bcrypt = require('bcryptjs')
