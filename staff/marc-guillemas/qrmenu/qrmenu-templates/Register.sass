@@ -1,0 +1,202 @@
+// @import url('https://fonts.googleapis.com/css2?family=Trade+Winds&display=swap')
+// input -internal-autofill-selected
+//     background-color: none !important
+// .register 
+//     display: flex
+//     background-color: #ffffff
+//     height: 100vh
+//     justify-content: center
+//     align-items: center
+//     &__container
+//         display: flex
+//         flex-direction: column
+//         justify-content: space-around
+//         align-items: center
+//         background-color: #fca211
+//         border-radius: 20px
+//         height: 70vh
+//         width: 20% 
+//         // border: 1px solid black
+//     &__header
+//         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+//         color: #0000008f
+//         border: 1px solid black
+//         display: flex
+//         justify-content:  left
+//         margin-top: .5rem
+//     &__divider
+//         width: 80%
+//         height: .1rem
+//         background-color: #0000008f
+//         border: 0
+//     &__form
+//         display: flex
+//         flex-direction: column
+//         justify-content: center
+//         align-items: center
+//     label
+//         display: flex
+//         align-self: self-start
+//         margin-left: 1rem
+//         color: #00000088
+//         content-shadow: 0 0 10px dodgerBlue
+//         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+//     &__input
+//         margin: .5rem
+//         width: 15rem
+//         height: 2.5rem
+//         padding-left: 1rem 
+//         border-radius: 20px 0 20px 0
+//         border: 0
+//         background-color: #ffffff5b
+//         transition: 1s 
+//     &__input:valid 
+//         background-color:  #ffffff5b
+//     &__input:focus
+//         transition: all 1s ease  
+//         border-radius: 0   
+//         box-shadow: 0 0 10px dodgerBlue
+//     &--mail:hover + label[for=email]
+//         color: red
+//     &__button
+//         justify-content: center
+//         border-radius: 30px
+//         border: 0
+//         margin: 2rem 1rem 1rem 1rem
+//         background-color: #ffffff3f
+//         height: 2rem
+//         width: 35%
+//     &__button:hover
+//         transition: .4s ease all
+//         // background-color: 
+//         width: 40%
+
+//     a 
+//         cursor: pointer
+//         position: absolute
+//         height: 2rem
+//         margin: 7.8rem 0 0 2rem 
+//         color: black
+//         font-size: .7rem
+//         text-decoration: none
+//     a:active
+//         transition: .35s ease
+//         color: blue
+        
+//   background-image:  linear-gradient(to bottom, #7F00FF ,#E100FF)
+    // .box 
+    // border-radius: 35px 0px 35px 0px
+    // -moz-border-radius: 35px 0px 35px 0px
+    // -webkit-border-radius: 35px 0px 35px 0px
+    // font-family: 'Ubuntu', sans-serif
+    // text-align: center
+    // color: rgb(0, 0, 0) 
+    // background: black
+    // padding: 20px 20px 20px 20px
+    // margin: 0 0 25px
+    // overflow: hidden
+
+*
+    overflow: hidden
+    box-sizing: border-box
+    margin: 0
+    padding: 0
+
+.register
+    display: flex
+    // background-image:  linear-gradient(to bottom, #1E1B33,#393458)
+    flex-direction: column
+    backdrop-filter: blur(8px)
+    height: 100vh
+    width: 100vw
+    // justify-content: space-between
+    align-items: center
+    
+    &__header
+        color: #4b2200
+        font-size: 2rem
+        z-index: -1
+
+        // border: 1px solid black
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+        display: flex
+        justify-content:  center
+        align-items: center
+        width: 100vw
+        height: 25%
+        position: fixed
+        // box-shadow: 2px 2px 10px 4px #f8bf75
+        // box-shadow: 0px 0px 0px 0px #c7c7c7 inset
+
+        // background-image:  linear-gradient(to bottom, #13264eec,#2e467aec)
+        background-color: #fca311
+        // background-color: #fca211f8
+        // border-bottom-left-radius: 50px
+        // border-bottom-right-radius: 50px
+
+   
+    &__form
+        display: flex
+        flex-direction: column
+        justify-content: center
+        margin-top: 10rem
+        align-items: center
+        z-index: 1
+        background-color: #ffffff
+        border-top-left-radius: 50px
+        border-top-right-radius: 50px
+        height: 80vh
+        width: 100vw
+        box-shadow: 0px -10px 10px  #3838382f
+    
+        
+    label
+        display: flex
+        align-self: center
+        color: #00000088
+        margin: .5rem
+        content-shadow: 0 0 10px dodgerBlue
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+    &__input
+        margin: .5rem
+        width: 85%
+        height: 3rem
+        padding-left: 1rem 
+        border-radius: 10px
+        // border: 1px solid red
+        border: 0
+        background-color: #ffffff
+        // transition: 1s 
+    &__input:valid 
+        box-shadow: 1px 1px 8px 1px #c7c7c7
+        background-color:  #f1f1f1be
+    &__input:focus
+        transition: all 1s ease  
+        box-shadow: 0 0 8px dodgerBlue
+    &--mail:hover + label[for=email]
+        color: red
+    &__button
+        justify-content: center
+        border-radius: 10px
+        border: 0
+        color: #ffffff
+        margin: 2rem 1rem 1rem 1rem
+        background-color: #1E1B33
+        height: 3rem
+        width: 35%
+    &__button:hover
+        transition: .4s ease all
+        width: 40%
+
+    a 
+        cursor: pointer
+        height: 2rem
+        margin: .5rem 0 0 0
+        color: black
+        font-size: 1em
+        text-decoration: none
+    a:active
+        transition: .35s ease
+        color: blue
+
+    
