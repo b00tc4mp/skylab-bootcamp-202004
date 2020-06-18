@@ -2,10 +2,11 @@ const {utils:{call}} = require("facturator-commons")
 require('facturator-commons/polyfills/string')
 const context = require('./context')
 
-module.exports=function(){
-    return call("GET",`${this.API_URL}/products`,undefined,{ 'Content-type': 'application/json' })
+module.exports=function(clientId){
+    String.validate.notVoid(clientId)
+    return call("POST",`${this.API_URL}/deliveries`,JSON.stringify({clientId}),{ 'Content-type': 'application/json' })
         .then(({status,body})=>{
-            if(status ===200) return JSON.parse(body)
+            if(status ===201) return 
             const {error}= JSON.parse(body)
             throw new Error(error)
         })
