@@ -37,7 +37,7 @@ describe('client logic. authenticate user',() => {
         })
 
         .then(_hash => hashedPassword = _hash)
-)
+    )
 
 
     describe('when user already exists',() =>{
