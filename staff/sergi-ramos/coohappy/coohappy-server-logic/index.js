@@ -17,5 +17,6 @@ module.exports = {
     deleteDateLaundry: require('./delete-date-laundry'),
     addDateLaundry: require('./add-date-laundry'),
     deleteDateLaundry: require('./delete-date-laundry'),
-    retrieveLaundry: require('./retrieve-laundry')
+    retrieveLaundry: require('./retrieve-laundry'),
+    retrieveLaundryAmount: require('./retrieve-laundry-amount')
 }

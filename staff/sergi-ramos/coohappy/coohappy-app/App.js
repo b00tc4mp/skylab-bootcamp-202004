@@ -12,6 +12,7 @@ import HeaderHome from "./app/components/HeaderHome"
 import Laundry from "./app/components/Laundry"
 import ShopList from "./app/components/ShopList"
 import WeekDays from "./app/components/WeekDays"
+import TimeLaundry from "./app/components/TimeLaundry"
 
 
 // import Navigator from "./routes/home-stack"
@@ -24,7 +25,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 import SvgUri from 'expo-svg-uri';
 import { StyleSheet } from 'react-native';
-
+console.disableYellowBox = true
 
 
 
@@ -40,8 +41,9 @@ export default function App() {
     {/* <UpdateUser /> */}
     {/* <WellcomePage /> */}
     {/* <WeekDays /> */}
-    <Laundry />
-    {/* <NavigationContainer>
+    {/* <Laundry /> */}
+    {/* <TimeLaundry /> */}
+    <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Landing">
         <Stack.Screen name="Landing" component={Landing} />
         <Stack.Screen name="Login" component={Login} />
@@ -56,7 +58,7 @@ export default function App() {
           {props => <UpdateUser {...props} setName={setName}/>}
         </Stack.Screen>  
       </Stack.Navigator>
-    </NavigationContainer>  */}
+    </NavigationContainer> 
 
 
   </>

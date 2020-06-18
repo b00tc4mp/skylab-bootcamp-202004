@@ -91,7 +91,7 @@ describe('logic - send-message', () => {
             try {
                 await joinToCohousing(userId, accessCode)
             } catch (error) {
-                console.log(userId)
+                
                 expect(error).to.exist
                 expect(error.message).to.equal(`User with id ${userId} already belongs to a cohousing`)
             }

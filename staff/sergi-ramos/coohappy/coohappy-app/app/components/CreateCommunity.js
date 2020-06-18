@@ -16,7 +16,7 @@ const CreateCommunity = function ({ route, navigation }) {
     const [country, setCountry] = useState('')
 
    
-// console.log(userId)
+
     const handleOnCommunityRegister = async () => {
         try {
             const token = await AsyncStorage.getItem('TOKEN')

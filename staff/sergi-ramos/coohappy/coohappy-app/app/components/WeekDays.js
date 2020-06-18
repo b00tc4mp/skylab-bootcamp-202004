@@ -1,23 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, FlatList, SafeAreaView, TouchableHighlight } from 'react-native'
-import weekDays from 'coohappy-client-logic/helpers/week-days'
+import { TouchableOpacity, View, StyleSheet, Text, ScrollView } from 'react-native'
 
 
 
-const WeekDays = function () {
+const WeekDays = function ({ currentWeek, onSelectedDay, daySelected }) {
 
-    const [week, setWeek] = useState()
-    useEffect(() => {
 
-        try {
-            const updateWeek = weekDays()
-            debugger
-            setWeek(weekDays)
 
-        } catch (error) {
-            console.log(error)
-        }
-    }, [])
+
     return (
 
         <View style={styles.container}>
@@ -43,14 +33,25 @@ const WeekDays = function () {
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} bouncesZoom={true}>
 
                 {
-                    week && week.map(day =>
+                    currentWeek && currentWeek.map(day =>
 
-                        <TouchableOpacity activeOpacity={0.7} >
-                        
-                            <View style={styles.dayContainer}>
-                                <Text style={styles.day}>{day.day}</Text>
-                                <Text style={styles.dayName}>{day.dayName}</Text>
-                            </View>
+                        <TouchableOpacity key={day.day}
+                            onPress={() => onSelectedDay(day)}
+                            activeOpacity={0.7} >
+
+                            {day.day === daySelected ?
+                                <View style={styles.dayContainerSelected}>
+                                    <Text style={styles.daySelected}>{day.day}</Text>
+                                    <Text style={styles.dayNameSelected}>{day.dayString}</Text>
+                                </View> :
+
+                                <View style={styles.dayContainer}>
+                                    <Text style={styles.day}>{day.day}</Text>
+                                    <Text style={styles.dayName}>{day.dayString}</Text>
+                                </View>
+                            }
+
+
                         </TouchableOpacity>
                     )
                 }
@@ -66,13 +67,11 @@ export default WeekDays
 
 const styles = StyleSheet.create({
 
-    
     dayContainer: {
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: '#e4e4e4',
-        marginLeft: 10,
-        marginRight: 10,
+        margin: (15, 10, 15, 10),
         width: 60,
         height: 60,
         borderRadius: 30
@@ -86,17 +85,30 @@ const styles = StyleSheet.create({
     dayName: {
         color: '#797979',
         marginBottom: 5
-
+    },
+    dayContainerSelected: {
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: '#069b69',
+        margin: (15, 10, 15, 10),
+        width: 60,
+        height: 60,
+        borderRadius: 30
+    },
+    daySelected: {
+        fontSize: 25,
+        color: 'white',
+        fontWeight: '700',
+        width: 32
+    },
+    dayNameSelected: {
+        color: 'white',
+        marginBottom: 5
     },
     bar: {
         width: '100%',
         height: 0.7,
-        backgroundColor: '#003725',
-        marginTop: 15,
-        marginBottom: 15
-
+        backgroundColor: '#003725'
     }
-
-
 
 })
