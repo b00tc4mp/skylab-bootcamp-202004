@@ -34,6 +34,7 @@ function MainStats({ token }) {
                 }],
                 yAxes: [{
                     ticks: {
+                        mirror: true,
                         beginAtZero: true,
                         max: 10
                     }
@@ -58,7 +59,7 @@ function MainStats({ token }) {
         let dateArray = []
         let _days = days * 2
         for (let i = _days; i > 0; i--) {
-            if (i % 2 === 0) dateArray.push(moment(userInfo.mood[userInfo.mood.length - i].date).format('dddd'))
+            if (i % 2 === 0) dateArray.push(moment(userInfo.mood[userInfo.mood.length - i].date).format('MMM Do'))
         }
         return dateArray;
     }
@@ -82,7 +83,7 @@ function MainStats({ token }) {
                 let scoreArray;
                 if (_dayClicked) {
                     let clickDayInfo = adminInfo.mood.filter((element) => moment(element.date).format('LL') === moment(_dayClicked).format('LL')) 
-                    dateArray = [moment(clickDayInfo[0].date).format('HH'), moment(clickDayInfo[1].date).format('HH')]
+                    dateArray = [moment(clickDayInfo[0].date).format('HH:mm'), moment(clickDayInfo[1].date).format('HH:mm')]
                     scoreArray = [clickDayInfo[0].score, clickDayInfo[1].score]
                 } else if (!_dayClicked) {
                     setChartOfCalendar(false)
@@ -112,7 +113,7 @@ function MainStats({ token }) {
             // let clickDayInfo;
             // dayClicked ? clickDayInfo = member.mood.filter((element) => moment(element.date).format('LL') === moment(dayClicked).format('LL')) : clickDayInfo = member.mood.filter((element) => moment(element.date).format('LL') === moment(_dayClicked).format('LL'))
             let clickDayInfo = member.mood.filter((element) => moment(element.date).format('LL') === moment(_dayClicked).format('LL'))
-            dateArray = [moment(clickDayInfo[0].date).format('HH'), moment(clickDayInfo[1].date).format('HH')]
+            dateArray = [moment(clickDayInfo[0].date).format('HH:mm'), moment(clickDayInfo[1].date).format('HH:mm')]
             scoreArray = [clickDayInfo[0].score, clickDayInfo[1].score]
         } else if (!_dayClicked) {
             setChartOfCalendar(false)
@@ -164,7 +165,6 @@ function MainStats({ token }) {
     }
 
     const handleDayClicked = (dayClicked) => {
-
         setChartOfCalendar(true)
         setDayClicked(dayClicked)
         setDisplayCalendar(false)
@@ -185,9 +185,9 @@ function MainStats({ token }) {
                 </select>
             </div>
             <div className='mainStatsContainer__buttonDaysContainer'>
-                <button className='mainStatsContainer__buttonDaysContainer--fiveDays' onClick={() => daysSetter(5)}>5 DAYS</button>
-                <button className='mainStatsContainer__buttonDaysContainer--fiveTeenDays' onClick={() => daysSetter(15)}>15 DAYS</button>
-                <button className='mainStatsContainer__buttonDaysContainer--yesterday' onClick={() => setDisplayCalendar(true)}>Calendario</button>
+                <button className={`mainStatsContainer__buttonDaysContainer--fiveDays ${days === 5 && !chartOfCalendar && !displayCalendar? 'white' : ''}`} onClick={() => daysSetter(5)}>5 DAYS</button>
+                <button className={`mainStatsContainer__buttonDaysContainer--fiveTeenDays ${days === 15 && !chartOfCalendar && !displayCalendar? 'white' : ''}`} onClick={() => daysSetter(15)}>15 DAYS</button>
+                <button className={`mainStatsContainer__buttonDaysContainer--fiveTeenDays ${displayCalendar || chartOfCalendar? 'white' : ''}`} onClick={() => setDisplayCalendar(true)}>Calendario</button>
             </div>
             {!displayCalendar && !chartOfCalendar && !_dayClicked && <div className='mainStatsContainer__chartContainer'>
                 <HorizontalBar data={chartData} options={chartOptions.options} height={500} />
