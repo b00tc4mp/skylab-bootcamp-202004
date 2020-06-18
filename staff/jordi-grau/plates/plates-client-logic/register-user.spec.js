@@ -4,12 +4,11 @@ debugger
 const { DuplicityError, UnexistenceError, VoidError } = require('plates-commons/errors')
 const {floor, random} = Math
 const { expect } = require('chai')
+const {mongoose, models:{ User}} = require('plates-data')
 global.fetch  = require('node-fetch')
-const {mongoose, models:{ User, Restaurant}} = require('plates-data')
-const registerUser = require('./register-user')
-// const bcrypt = require('bcryptjs')
 require('plates-commons/polyfills/json')
 require('plates-commons/polyfills/xhr')
+const registerUser = require('./register-user')
 
 context.API_URL = API_URL
 
@@ -22,7 +21,6 @@ describe('client logic: register user', () =>{
     beforeEach(async() => {
 
         await User.deleteMany();
-        await Restaurant.deleteMany();
              name = `name-${random()}`,
              surname = `surname-${random()}`,
              email = `email-${random()}@gmail.com`,
@@ -57,10 +55,6 @@ describe('client logic: register user', () =>{
     })
 
 
-    // describe('when user already exist', () => {
-
-    //     it('should not register a user on correct data')
-    // })
 
     afterEach(async() => await Promise.all([
         User.deleteMany(),
