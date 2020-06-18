@@ -35,8 +35,8 @@ export default function Profile() {
             const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
             setUserLists({ participated, pending, favorites })
 
-            const followingIds = await retrieveFollowingIds()
-            setFollowingIds(followingIds)
+            const followingUsers = await retrieveFollowingIds()
+            setFollowingIds(followingUsers)
 
             escapeList = await retrieveEscapeRooms(tag)
             setEscapeRooms(escapeList)
@@ -108,6 +108,7 @@ export default function Profile() {
                                     image={require('../assets/tyler.jpg')}
                                     following={followingIds.includes(id)}
                                     userId={id}
+                                    onEscapes={handleEscapeLists}
                                 />)
                             })
                             :

@@ -19,7 +19,6 @@ export default function () {
   console.disableYellowBox = true
 
   const [view, setView] = useState('landing')
-  const [token, setToken] = useState()
 
   const handleGoToLogin = () => {
     setView('login')
@@ -51,7 +50,7 @@ export default function () {
           </TouchableOpacity>
         </View>}
       {view === 'home' && <NavigationContainer>
-        <NavTabs token={token} />
+        <NavTabs />
       </NavigationContainer>}
     </View>
 

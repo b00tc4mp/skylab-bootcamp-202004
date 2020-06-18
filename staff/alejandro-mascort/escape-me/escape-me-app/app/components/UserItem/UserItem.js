@@ -1,19 +1,30 @@
-import React from 'react'
-import { View, Image, Text } from 'react-native'
+import React, { useState } from 'react'
+import { View, Image, Text, Modal, SafeAreaView, Button } from 'react-native'
 import { Feather } from '@expo/vector-icons';
 import { toggleFollowUser } from 'escape-me-client-logic'
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import OthersProfile from '../../screens/OthersProfile'
 
 const styles = require('./style')
 
-function UserItem({ name, surname, email, image, main = false, following, userId }) {
+function UserItem({ name, surname, email, image, main = false, following, userId, onEscapes }) {
+    const [modalVisible, setModalVisible] = useState(false)
 
     function handleFollowUser(userId) {
-        (async () => toggleFollowUser(userId))()
+        (async () => await toggleFollowUser(userId))()
     }
 
     return (
         <View style={main ? styles.container : [styles.container, styles.containerItem]}>
-            <Image style={main ? styles.image : styles.littleImage} source={image} />
+            <TouchableOpacity onPress={() => setModalVisible(true)} >
+                <Image style={main ? styles.image : styles.littleImage} source={image} />
+            </TouchableOpacity>
+            <Modal visible={modalVisible} animationType="slide">
+                <SafeAreaView>
+                    <Button title="Close" onPress={() => setModalVisible(false)} />
+                    <OthersProfile _userId={userId} onEscapes={onEscapes} />
+                </SafeAreaView>
+            </Modal>
             <View>
                 <Text style={main ? styles.username : styles.littleUsername}>{email}</Text>
                 <Text style={main ? styles.name : styles.littleName}>{name} {surname}</Text>

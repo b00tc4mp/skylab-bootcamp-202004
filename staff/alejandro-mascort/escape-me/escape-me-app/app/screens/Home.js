@@ -7,6 +7,7 @@ export default function (props) {
     const [escapeRooms, setEscapeRooms] = useState([])
     const [escapes, setEscapes] = useState()
 
+    console.log('state: ', props.navigation.state)
     const handleEscapeLists = async () => {
         const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
         setEscapes({ participated, pending, favorites })
@@ -14,6 +15,7 @@ export default function (props) {
 
     let escapeList
     useEffect(() => {
+        console.log('state: ', props.navigation.state);
         (async () => {
             const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
             setEscapes({ participated, pending, favorites })
