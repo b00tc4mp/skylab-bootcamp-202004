@@ -7,8 +7,6 @@ import {
     Dimensions
 } from "react-native";
 
-// src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9Et1xSpfcSPVAwuq33Elk8l5I6wf7dp4&callback=initMap"
-
 const Map = () => {
     const [latitude, setLatitude] = useState();
     const [longitude, setLongitude] = useState();
