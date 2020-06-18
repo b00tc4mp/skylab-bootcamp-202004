@@ -5,5 +5,7 @@ module.exports = {
     retrieveChallenges: require('./retrieve-challenges'),
     retrieveCategories: require('./retrieve-categories'),
     retrieveCategory: require('./retrieve-category'),
-    retrieveUser: require('./retrieve-user')
+    retrieveUser: require('./retrieve-user'),
+    checkTest: require('./check-test')
+
 }

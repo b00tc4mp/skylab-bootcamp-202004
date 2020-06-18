@@ -1,21 +1,20 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
+import { ControlledEditor } from "@monaco-editor/react"
 
-import CodeEditor from "@monaco-editor/react";
+function Editor({onChange, initialCode}) {
 
-function Editor() {
-
-  const code = `
-  function toggleLanguage() {
-    setLanguage(language === "javascript" ? "python" : "javascript");
-  }
-  `
   return (
-      <CodeEditor
-        height="90vh" 
+      <ControlledEditor
+        onChange={onChange}
         theme='light'
         language='javascript'
-        value={code}
+        value={initialCode}
         loading={"Loading..."}
+        options={{
+          minimap: {
+            enabled: false,
+          },
+    }}
       />
   );
 }

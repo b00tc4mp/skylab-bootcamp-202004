@@ -20,7 +20,6 @@ function App() {
                 <Route path='/editor' component={Editor} />
                 <Route path='/profile' component={Profile} />
 
-
                 {/* <Route path='/challenge' component={Challenge} /> */}
 
             </BrowserRouter>

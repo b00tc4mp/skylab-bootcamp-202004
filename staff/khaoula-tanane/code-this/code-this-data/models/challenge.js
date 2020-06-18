@@ -1,5 +1,6 @@
 const { Schema } = require('mongoose')
 const mongoose = require('mongoose')
+const { ObjectId } = require('../mongoose')
 
 const Challenge = new Schema({
     description: {
@@ -7,8 +8,8 @@ const Challenge = new Schema({
         required: true
     },
     solution: {
-        type: [String], //push users solucion to our's so it turns into an arr of multilple answers
-        required: true
+        type: [Object],
+        default: []
     },
     difficulty: {
         type: String,
@@ -18,6 +19,10 @@ const Challenge = new Schema({
     tests: {
         type: String, 
         required: true
+    },
+    initialCode: {
+        type: String,
+        default: ''
     },
     score: {
         type: Number,

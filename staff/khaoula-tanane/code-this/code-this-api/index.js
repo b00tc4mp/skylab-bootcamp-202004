@@ -31,7 +31,6 @@ mongoose.connect(MONGODB_URL)
                     .then(() => res.status(201).send())
                     .catch(error => handleError(error, res))
             } catch (error) {
-                console.log(error)
                 handleError(error, res)
             }
         })
@@ -50,14 +49,15 @@ mongoose.connect(MONGODB_URL)
         })
 
         app.post('/challenge', parseBody, (req, res) => {
-            const { body: { description, solution, difficulty, tests } } = req
+            const { body: { description, difficulty, initialCode, tests } } = req
 
             try {
-                createChallenge(description, solution, difficulty, tests)
+                createChallenge(description, difficulty, tests, initialCode)
                     .then(() => res.status(201).send())
                     .catch(error => handleError(error, res))
             } catch (error) {
                 handleError(error, res)
+                console.log(error)
             }
         })
 
@@ -68,7 +68,6 @@ mongoose.connect(MONGODB_URL)
                     .then(() => res.status(201).send())
                     .catch(error => handleError(error, res))
             } catch (error) {
-                console.log(error)
                 handleError(error, res)
             }
         })

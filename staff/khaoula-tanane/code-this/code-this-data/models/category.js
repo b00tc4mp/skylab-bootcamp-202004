@@ -7,7 +7,7 @@ const Category = new Schema({
         required: true,
         unique: true
     },
-    challenges: [{type: [ObjectId], ref: 'Challenge'}]
+    challenges: [{type: ObjectId, ref: 'Challenge'}]
     
 })
 module.exports = mongoose.model('Category', Category)
