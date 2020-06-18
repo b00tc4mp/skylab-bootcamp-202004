@@ -11,14 +11,14 @@
  */
 require('cook-wise-commons/polyfills/string')
 const { utils: { Email, call } } = require('cook-wise-commons')
-const context = require('./context')
 
-module.exports = function (email, password) {
+
+module.exports = function (email, password) {debugger
     Email.validate(email)
 
     String.validate.notVoid(password)
 
-    return call('POST', `${this.API_URL}/users/auth`,
+    return call('POST', `http://192.168.0.19:8080/api/users/auth`,
         `{ "email": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json' })
         .then(({ status, body }) => {
@@ -32,4 +32,4 @@ module.exports = function (email, password) {
                 throw new Error(error)
             }
         })
-}.bind(context)
+}

@@ -1,12 +1,12 @@
-const { retriveDay } = require('cook-server-logic')
+const { retrieveRecipe } = require('cook-server-logic')
 const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {debugger
     try {
-        const { params : {weekday}, payload: { sub: userId } } = req
+        const { params : {recipeId} } = req
         
-        retriveDay(weekday,userId)
-            .then(result => res.send(result))
+        retrieveRecipe(recipeId)
+            .then(recipe => res.send(recipe))
             .catch(error => handleError(error, res))
     } catch (error) {
         handleError(error, res)
