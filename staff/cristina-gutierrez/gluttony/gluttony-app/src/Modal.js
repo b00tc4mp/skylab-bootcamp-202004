@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  KeyboardAvoidingView,
   View,
 } from "react-native";
 import Login from "./Login";
@@ -24,7 +25,10 @@ const ModalAuthentication = () => {
                     Alert.alert("Modal has been closed.");
                     }}
                 >
-                    <View style={styles.centeredView}>
+                    <KeyboardAvoidingView
+                        behavior='padding' 
+                        style={styles.centeredView}
+                        >
                         { view === "login" ? <Login 
                             onGoToRegister={ () => setView("register") } 
                             onCloseModal={() => setModalVisible(false) }
@@ -33,7 +37,7 @@ const ModalAuthentication = () => {
                             onGoToLogin={ () => setView("login") } 
                             onCloseModal={() => setModalVisible(false) }
                         /> : <Text /> }
-                    </View>
+                    </KeyboardAvoidingView>
                 </Modal>
 
                 <TouchableOpacity

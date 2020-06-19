@@ -1,11 +1,28 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { 
+  StyleSheet,
+  View,
+  StatusBar,
+  Text
+} from "react-native";
 import Modal from "./src/Modal";
+import MapBar from "./src/MapBar";
+import MapRestaurant from "./src/MapRestaurant";
+import Home from "./src/Home"
 
-export default function App() {
+const App = () => {
+  const [view, setView] = useState("home");
+
   return (
     <View style={styles.container}>
-      <Modal />
+      <StatusBar barStyle="dark-content" />
+      { view === "home" && <Home 
+        onGoToMapBar={ () => setView("mapBar") } 
+        onGoToMapRestaurant={ () => setView("mapRestaurant") } 
+      /> }
+      { view === "mapBar" && <MapBar/> }
+      { view === "mapRestaurant" && <MapRestaurant /> }
+      {/*<Modal />*/}
     </View>
   )
 }
@@ -18,3 +35,5 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
+
+export default App;
