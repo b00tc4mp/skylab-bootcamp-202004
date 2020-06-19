@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -7,15 +7,13 @@ import {
 } from "react-native";
 
 const Home = props => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
 
     return (
         <ImageBackground source={require("../assets/images/final-food-and-drink-pattern-vector-1.png")} style={styles.image}>
-            <TouchableOpacity style={styles.openButton} onPress={props.onGoToRegister}>
+            <TouchableOpacity style={styles.openButton} onPress={props.onGoToMapBar}>
                 <Text style={styles.textStyle}>I'm thirsty</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.openButton} onPress={props.onGoToRegister}>
+            <TouchableOpacity style={styles.openButton} onPress={props.onGoToMapRestaurant}>
                 <Text style={styles.textStyle}>I'm hungry</Text>
             </TouchableOpacity>
         </ImageBackground>

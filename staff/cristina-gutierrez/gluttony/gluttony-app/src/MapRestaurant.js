@@ -7,7 +7,7 @@ import {
     Dimensions
 } from "react-native";
 
-const Map = () => {
+const MapRestaurant = () => {
     const [latitude, setLatitude] = useState();
     const [longitude, setLongitude] = useState();
 
@@ -30,7 +30,7 @@ const Map = () => {
                     longitudeDelta: 0.00021
                 })}>
                 <Marker
-                    title="Cris!"
+                    title="You are here"
                     coordinate={{
                         latitude,
                         longitude,
@@ -58,4 +58,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Map
+export default MapRestaurant
