@@ -6,7 +6,7 @@ const { UnexistenceError } = require('moove-it-commons')
 
 module.exports = (itemId, userId, blueprintId, name, x, y, z, orientation, width, height) => {
 
-    if (itemId !== undefined) String.validate.notVoid(itemId)
+    if (typeof itemId !== 'undefined') String.validate.notVoid(itemId)
     String.validate.notVoid(userId)
     String.validate.notVoid(blueprintId)
     String.validate.notVoid(name)

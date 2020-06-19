@@ -24,10 +24,5 @@ module.exports = (userId, data) => {
 
         } else await User.findByIdAndUpdate(userId, data)
 
-        // const result = await 
-        // .then(({ result: { nModied } }) => {
-        //     if (nModied === 0) return "No changes"
-        //     return 'User updated'
-        // })
     })()
 }

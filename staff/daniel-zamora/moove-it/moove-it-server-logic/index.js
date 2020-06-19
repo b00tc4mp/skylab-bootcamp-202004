@@ -5,7 +5,6 @@ module.exports = {
     updateUser: require('./update-user'),
     retrieveUserBlueprints: require('./retrieve-user-blueprints'),
     retrieveBlueprint: require('./retrieve-blueprint'),
-    saveBlueprint: require('./save-blueprint'),
-    saveItem: require('./save-item')
+    saveBlueprint: require('./save-blueprint')
 
 }

@@ -15,16 +15,15 @@ api.post('/users', parseBody, registerUser)
 
 api.post('/users/auth', parseBody, authenticateUser)
 
-api.get('/users/:userId?', verifyExtractJwt, retrieveUser) //TODO busqueda de usuarios para favPlanes(opcional)
-
+api.get('/users/:userId?', verifyExtractJwt, retrieveUser)
 
 api.get('/users/update', parseBody, verifyExtractJwt, updateUser)
 
-api.get('/users/blueprints', verifyExtractJwt, retrieveUserBlueprints)
+api.get('/user/blueprints', verifyExtractJwt, retrieveUserBlueprints)
 
-api.get('/blueprint/:blueprintId?', verifyExtractJwt, retrieveBlueprint)
+api.get('/blueprint/:blueprintId?', verifyExtractJwt, retrieveBlueprint) //TODO busqueda de usuarios para favPlanes(opcional)
 
-api.post('/blueprint', parseBody, saveBlueprint) //PATCH o POST? la logica si no existe lo crea y si existe actualiza... ??
+api.post('/blueprint', parseBody, verifyExtractJwt, saveBlueprint) //PATCH o POST? la logica si no existe lo crea y si existe actualiza... ??
 
 module.exports = {
     api

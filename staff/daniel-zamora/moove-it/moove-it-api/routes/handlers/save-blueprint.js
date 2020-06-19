@@ -3,11 +3,11 @@ const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
 
-    const { body: { userId, blueprintId, name, width, height } } = req
+    const { body: { blueprintId, name, width, height }, payload: { sub: userId } } = req
 
     try {
         saveBlueprint(userId, blueprintId, name, width, height)
-            .then(() => res.status(201).send())
+            .then(id => res.status(201).json({ id }))
             .catch(error => handleError(error, res))
 
     } catch (error) {

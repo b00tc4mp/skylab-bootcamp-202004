@@ -20,6 +20,8 @@ describe('logic - retrieve blueprint', () => {
         email = `e-${random()}@mail.com`
         password = `password-${random()}`
         planeName = `plane-${random()}`
+        width = random()
+        height = random()
 
 
     })

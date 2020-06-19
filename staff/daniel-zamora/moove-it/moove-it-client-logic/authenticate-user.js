@@ -3,6 +3,7 @@ const { utils: { Email, call } } = require('moove-it-commons')
 const context = require('./context')
 
 module.exports = function(email, password) {
+    debugger
     String.validate.notVoid(password)
     Email.validate(email)
 
