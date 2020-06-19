@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { registerUser} from 'plates-client-logic'
 
-export default function ({ onRegister, onToLogin}) {
+export default function ({ onRegister, onGoToLogin}) {
 
     const [error, setError] = useState()
 
@@ -12,7 +12,7 @@ export default function ({ onRegister, onToLogin}) {
         
         name = name.value
         surname = surname.value
-        email = emial.value
+        email = email.value
         password = password.value
 
         try {
