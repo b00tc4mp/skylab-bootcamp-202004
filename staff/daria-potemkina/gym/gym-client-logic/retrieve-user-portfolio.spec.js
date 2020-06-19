@@ -73,6 +73,7 @@ describe('logic - retrieveUserPortfolio', () => {
                                             contract = {
                                                 user: ObjectId(userId),
                                                 product: ObjectId(productId),
+                                                isValid: true,
                                                 trades: [{
                                                     price: ObjectId(priceId),
                                                     type: side[round(random())],

@@ -1,3 +1,18 @@
+/**
+ * Return the product list due search parameters
+ * 
+ * @param {string} type The type of product.
+ * @param {string} sector The sector of the product issuer.
+ * @param {string} ticker The product ticker.
+ * @param {string} market The market of the product.
+ * 
+ * @returns {Promise<Array>} The list of products if it resolves, an error if it rejects.
+ * 
+ * @throws {TypeError} If any of the parameters if exists does not match the required format.
+ * @throws {Error} If any of the parameters if exists is empty or blank.
+ * 
+ */
+
 require('gym-commons/polyfills/string')
 const { utils: { call } } = require('gym-commons')
 const context = require('./context')

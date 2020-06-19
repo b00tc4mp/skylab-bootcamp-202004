@@ -1,3 +1,15 @@
+/**
+ * Retrieve user portfolio
+ * 
+ * @param {string} token The user token.
+ * 
+ * @returns {Promise<Array>} The users trades with products details if it resolves, an error if it rejects.
+ * 
+ * @throws {TypeError} If parameter does not match the format.
+ * @throws {Error} If the token is empty.
+ * 
+ */
+
 require('gym-commons/polyfills/string')
 const {utils: {call}} = require('gym-commons')
 const context = require('./context')

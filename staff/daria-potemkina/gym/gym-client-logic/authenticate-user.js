@@ -7,8 +7,9 @@
  * @returns {Promise<String>} The authorization token if it resolves, an error if it rejects.
  * 
  * @throws {TypeError} If any of the parameters does not match the corresponding type.
- * @throws {Error} If e-mail does not match the expected format.
+ * @throws {Error} If the password is empty.
  */
+
 require('gym-commons/polyfills/string')
 const { utils: { Email, call } } = require('gym-commons')
 const context = require('./context')

@@ -1,3 +1,14 @@
+/**
+ * Retrieve user credit card
+ * 
+ * @param {string} token The user token.
+ * 
+ * @return {Promise<Object>} The user card without cvv number if it resolves, an error if it rejects.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {Error} If the token is empty.
+ */
+
 require('gym-commons/polyfills/string')
 const { utils: { call } } = require('gym-commons')
 const context = require('./context')

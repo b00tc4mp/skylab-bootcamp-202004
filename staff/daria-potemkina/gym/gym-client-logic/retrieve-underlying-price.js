@@ -1,3 +1,15 @@
+/**
+ * Retrieve underlying prices
+ * 
+ * @param {string} ticker The ticker of underlying of the derivative.
+ * 
+ * @returns {Promise<Array>} The array with the underlying prices if it resolves, an error if it rejects.
+ * 
+ * @throws {TypeError} If the parameters does not match the corresponding type.
+ * @throws {Error} if the underlying or derivative do not exist.
+ * 
+ */
+
 require('gym-commons/polyfills/string')
 const { utils: { call } } = require('gym-commons')
 const context = require('./context')

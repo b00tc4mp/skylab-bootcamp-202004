@@ -75,7 +75,7 @@ describe('logic - retrieve-underlying-price', () => {
             })
     })
 
-    it('should return an error when the product does not exist', () => {
+    it('should return an error when the underlying does not exist', () => {
         return underlyings.deleteMany()
             .then(() => retrieveUnderlyingPrice(ticker))
             .then(() => { throw new Error('should not reach this point') })

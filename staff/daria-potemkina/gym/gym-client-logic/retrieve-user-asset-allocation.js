@@ -1,3 +1,14 @@
+/**
+ * Retrieve the asset allocation of the user portfolio
+ * 
+ * @param {string} token The user token.
+ * 
+ * @returns {Promise<Object>} The asset allocation by sector, market and product type if it resolves, an error if it rejects.
+ * 
+ * @throws {TypeError} If the parameter does not match the corresponding type.
+ * @throws {Error} If the token is empty.
+ */
+
 require('gym-commons/polyfills/string')
 const { utils: { call } } = require('gym-commons')
 const context = require('./context')

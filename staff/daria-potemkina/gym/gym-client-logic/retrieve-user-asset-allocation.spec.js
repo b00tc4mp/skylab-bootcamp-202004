@@ -97,6 +97,7 @@ describe('logic - retrieveUserAssetAllocation', () => {
                                             futureContract = {
                                                 user: ObjectId(userId),
                                                 product: ObjectId(futureId),
+                                                isValid: true,
                                                 trades: [{
                                                     price: ObjectId(futurePriceId),
                                                     type: side[round(random())],
@@ -106,6 +107,7 @@ describe('logic - retrieveUserAssetAllocation', () => {
                                             optionContract = {
                                                 user: ObjectId(userId),
                                                 product: ObjectId(optionId),
+                                                isValid: true,
                                                 trades: [{
                                                     price: ObjectId(optionPriceId),
                                                     type: side[round(random())],

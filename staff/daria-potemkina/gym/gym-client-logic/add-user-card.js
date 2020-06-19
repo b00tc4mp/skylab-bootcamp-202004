@@ -1,3 +1,17 @@
+/**
+ * Add user credit card
+ * 
+ * @param {string} token The user token.
+ * @param {string} number The number of the user credit card.
+ * @param {string} holder The name and surname of the holder of the credit card.
+ * @param {date} expirationDate The expiration date of the credir card.
+ * @param {string} cvv The cvv of the user credit card.
+ * 
+ * @returns {Promise} Undefined if it resolves, an error if it rejects.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ */
+
 require('gym-commons/polyfills/string')
 const { utils: { call } } = require('gym-commons')
 const context = require('./context')

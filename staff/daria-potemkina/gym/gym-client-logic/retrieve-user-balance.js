@@ -1,3 +1,15 @@
+/**
+ * Retrieve user balance
+ * 
+ * @param {string} token The user token
+ * 
+ * @returns {Promise<Array>} The array with user account balance with historic movements if it resolves, an erroor if it rejects.
+ * 
+ * @throws {TypeError} If the parameter does not match the format.
+ * @throws {Error} If the the token is empty.
+ */
+
+
 require('gym-commons/polyfills/string')
 const { utils: { call } } = require('gym-commons')
 const context = require('./context')

@@ -40,7 +40,7 @@ describe('logic - searchProducts', () => {
         expect(results[0].sector).to.equal(future.sector)
         expect(results[0].contractSize).to.equal(future.contractSize)
         expect(results[0].settlementDate).to.be.an.instanceOf(Date)
-        expect(results[0]._id).to.be.undefined
+        expect(results[0]._id).to.exist
         expect(results[0].__v).to.be.undefined
     })
 
@@ -57,7 +57,7 @@ describe('logic - searchProducts', () => {
         expect(results[0].sector).to.equal(future.sector)
         expect(results[0].contractSize).to.equal(future.contractSize)
         expect(results[0].settlementDate).to.be.an.instanceOf(Date)
-        expect(results[0]._id).to.be.undefined
+        expect(results[0]._id).to.exist
         expect(results[0].__v).to.be.undefined
     })
 
@@ -75,7 +75,7 @@ describe('logic - searchProducts', () => {
         expect(results[0].sector).to.equal(future.sector)
         expect(results[0].contractSize).to.equal(future.contractSize)
         expect(results[0].settlementDate).to.be.an.instanceOf(Date)
-        expect(results[0]._id).to.be.undefined
+        expect(results[0]._id).to.exist
         expect(results[0].__v).to.be.undefined
     })
 

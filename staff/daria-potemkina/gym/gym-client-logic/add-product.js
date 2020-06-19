@@ -1,3 +1,17 @@
+/**
+ * Add the product in the user portfolio
+ * 
+ * @param {string} token The user token
+ * @param {string} productId The product id to add in the portfolio
+ * @param {string} priceId The priceId of the product added
+ * @param {string} side Buy or Sell the product
+ * @param {string} quantity The quantity of the product added
+ * 
+ * @returns {Promise} Undefinded if it resolves, an error if it rejects
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ */
+
 require('gym-commons/polyfills/string')
 require('gym-commons/polyfills/number')
 const { utils: { call } } = require('gym-commons')

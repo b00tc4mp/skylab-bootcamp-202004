@@ -1,3 +1,12 @@
+/**
+ * Retrive futures
+ * 
+ * @returns {Promise<Array>} The array of futures if it resolves, an error if it rejects.
+ * 
+ * @throws {Error} If the product or price do not exist.
+ * 
+ */
+
 require('gym-commons/polyfills/string')
 const { utils: { call } } = require('gym-commons')
 const context = require('./context')

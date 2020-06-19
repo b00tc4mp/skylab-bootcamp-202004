@@ -1,3 +1,12 @@
+/**
+ * Retrive options
+ * 
+ * @returns {Promise<Array>} The array of options if it resolves, an error if it rejects.
+ * 
+ * @throws {Error} If the product or price does not exist.
+ * 
+ */
+
 require('gym-commons/polyfills/string')
 const { utils: { call } } = require('gym-commons')
 const context = require('./context')

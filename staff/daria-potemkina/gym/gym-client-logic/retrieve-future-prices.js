@@ -1,3 +1,15 @@
+/**
+ * Retrive prices of the futures
+ * 
+ * @param {string} futureId The id of the future
+ * 
+ * @returns {Promise<Array>} The array of prices of the future if it resolves, an error if it rejects
+ * 
+ * @throws {TypeError} If the parameter does not match the corresponding type.
+ * @throws {Error} If the parameter is empty.
+ * 
+ */
+
 require('gym-commons/polyfills/string')
 const { utils: { call } } = require('gym-commons')
 const context = require('./context')
