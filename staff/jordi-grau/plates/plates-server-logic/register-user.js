@@ -3,7 +3,16 @@ require('plates-commons/polyfills/json')
 const { utils: { Email }, errors:{ DuplicityError } } = require('plates-commons')
 const { models: { User } } = require('plates-data')
 const bcrypt = require('bcryptjs')
-
+/**
+ * register user sends data do api, to register a user
+ * @param {string} name -data info to register a user, not required
+ * @param {string} surname -data info to register a user, not required
+ * @param {string} email -data required to register a user
+ * @param {string} password -data required to register a user
+ * 
+ * @throws DuplicityError if user's already resgistered
+ * 
+ */
 
 module.exports = (name, surname, email, password) => {
     String.validate.notVoid(name)
