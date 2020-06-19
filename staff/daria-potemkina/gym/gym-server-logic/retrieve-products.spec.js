@@ -48,16 +48,16 @@ describe('logic - retrieveProducts', () => {
         const results = await retrieveProducts()
 
         expect(results).to.be.an('array')
-        expect(results).to.have.lengthOf(2)
+        expect(results).to.have.lengthOf(1)
 
-        const [_future, _option] = results
+        const [_option] = results
 
-        expect(_future.productType).to.equal(future.productType)
-        expect(_future.ticker).to.equal(future.ticker)
-        expect(_future.exchange).to.equal(future.exchange)
-        expect(_future.sector).to.equal(future.sector)
-        expect(_future.contractSize).to.equal(future.contractSize)
-        expect(_future.settlementDate).to.be.an.instanceOf(Date)
+        // expect(_future.productType).to.equal(future.productType)
+        // expect(_future.ticker).to.equal(future.ticker)
+        // expect(_future.exchange).to.equal(future.exchange)
+        // expect(_future.sector).to.equal(future.sector)
+        // expect(_future.contractSize).to.equal(future.contractSize)
+        // expect(_future.settlementDate).to.be.an.instanceOf(Date)
 
         expect(_option.productType).to.equal(option.productType)
         expect(_option.ticker).to.equal(option.ticker)

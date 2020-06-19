@@ -43,7 +43,7 @@ describe('logic - retrieveUserCard', () => {
             expect(number).to.equal(card.number)
             expect(holder).to.equal(card.holder)
             expect(expirationDate).to.be.an.instanceOf(Date)
-            expect(cvv).to.be.equal(card.cvv)
+            expect(cvv).to.be.equal(undefined)
         })
     })
 

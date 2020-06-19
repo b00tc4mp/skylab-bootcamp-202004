@@ -2,6 +2,7 @@ require('gym-commons/polyfills/string')
 const { mongoose: { ObjectId }, models: { User, Contract, Price, AccountBalance, Product } } = require('gym-data')
 const { errors: { UnexistenceError } } = require('gym-commons')
 const { round } = Math
+const addGuarantee = require('./add-guarantee')
 
 module.exports = (userId) => {
     String.validate.notVoid(userId)
@@ -11,9 +12,9 @@ module.exports = (userId) => {
 
         if (!user) throw new UnexistenceError(`user with id ${userId} is not exist`)
 
-        const contracts = await Contract.find({ user: ObjectId(userId) })
+        const contracts = await Contract.find({ user: ObjectId(userId), isValid: true })
 
-        if (!contracts.length) throw new UnexistenceError('user have no current contracts')
+        if (!contracts.length) throw new UnexistenceError(`user with id ${userId} have no current contracts`)
 
         const balances = await AccountBalance.find({ user: ObjectId(userId) }).sort({ date: -1 })
 
@@ -23,7 +24,7 @@ module.exports = (userId) => {
 
         let { guarantee = 0, profitAndLoss = 0 } = balance
 
-        const dateToday = new Date().toString().split(' ').slice(1, 4).join(' ')
+        let dateToday = new Date().toString().split(' ').slice(1, 4).join(' ')
 
         let isAtLeastOneFuture = false
 
@@ -56,7 +57,10 @@ module.exports = (userId) => {
             }
         }
 
-        if (isAtLeastOneFuture)
-            await AccountBalance.create({ user: userId, date: dateToday, guarantee, profitAndLoss })
+        if (isAtLeastOneFuture) {
+            guarantee = await addGuarantee(userId)
+
+            await AccountBalance.create({ user: userId, date: new Date(), guarantee, profitAndLoss })
+        }
     })()
 }

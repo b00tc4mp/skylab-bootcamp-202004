@@ -79,6 +79,7 @@ describe('logic - retrieveUserTrades', () => {
             futureContract = {
                 user: userId,
                 product: futureId,
+                isValid: true,
                 trades: [{
                     price: priceId,
                     type: 'Buy',
@@ -89,6 +90,7 @@ describe('logic - retrieveUserTrades', () => {
             optionContract = {
                 user: userId,
                 product: optionId,
+                isValid: true,
                 trades: [{
                     price: optionPriceId,
                     type: 'Sell',
