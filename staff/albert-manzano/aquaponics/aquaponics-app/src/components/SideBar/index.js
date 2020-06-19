@@ -12,7 +12,7 @@ import styles from './styles'
 function SideBar({ onGoToCharts, onGoToManager, onGoToGreenhouse, onGoToForecast, onGoToCalendar, onGoToLogout, role }) {
     return (<>
         <View style={styles.container}>
-            <View>
+            <View style={styles.item}>
                 <Text style={styles.text}> Charts</Text>
                 <TouchableOpacity onPress={onGoToCharts}>
                     <Image source={require('../../../assets/images/charts.png')} style={styles.icon} />
@@ -38,12 +38,12 @@ function SideBar({ onGoToCharts, onGoToManager, onGoToGreenhouse, onGoToForecast
                     <Image source={require('../../../assets/images/forecast.png')} style={styles.icon} />
                 </TouchableOpacity>
             </View>
-            <View>
+            {/* <View>
                 <Text style={styles.text}> Calendar </Text>
                 <TouchableOpacity onPress={onGoToCalendar}>
                     <Image source={require('../../../assets/images/calendar.png')} style={styles.icon} />
                 </TouchableOpacity>
-            </View>
+            </View> */}
             <View>
                 <TouchableOpacity onPress={onGoToLogout}>
                 <Text style={styles.text}> Logout </Text>

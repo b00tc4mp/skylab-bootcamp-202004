@@ -9,10 +9,8 @@ const styles = StyleSheet.create({
     
   },
 
-  image: {
-    // height: Dimensions.get('window').height,
-    // width: Dimensions.get('window').width,
-    // resizeMode:"cover"
+  wrap: {
+    marginTop:'20%',
   },
 
 
@@ -56,6 +54,7 @@ button: {
   
 
 arrow:{
+  marginTop:20,
   width: 30,
   height: 30,
 }

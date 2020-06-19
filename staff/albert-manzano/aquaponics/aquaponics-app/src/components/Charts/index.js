@@ -13,7 +13,7 @@ import Navbar from '../Navbar';
 import SideBar from '../SideBar'
 import styles from './styles';
 
-function Charts() {
+function Charts({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToForecast, onGoToGreenhouse, onGoToLogout }) {
     const [view, setView] = useState('temperature')
 
     const [displayed, setSide] = useState(false);
@@ -25,7 +25,7 @@ function Charts() {
             <ImageBackground
                 source={require("../../../assets/images/lettuce3.jpg")} style={styles.background}>
                 <Navbar onDisplaySide={handleSide} />
-                {displayed && <SideBar />}
+                {displayed && <SideBar role={role} onGoToCalendar={onGoToCalendar} onGoToManager={onGoToManager} onGoToCharts={onGoToCharts} onGoToGreenhouse={onGoToGreenhouse} onGoToForecast={onGoToForecast} onGoToLogout={onGoToLogout} />}
                 <View >
                     <View style={styles.canvas}>
                         {!view && <ActivityIndicator

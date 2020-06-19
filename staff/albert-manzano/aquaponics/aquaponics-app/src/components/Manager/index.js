@@ -13,19 +13,14 @@ import styles from './styles'
 import Add from '../Add'
 import Users from "../Users";
 
-function Manager({ onGoToManager, onGoToCalendar, onGoToCharts, onGoToForecast, onGoToGreenhouse, onGoToLogout }) {
+function Manager({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToForecast, onGoToGreenhouse, onGoToLogout }) {
   const [displayed, setSide] = useState(false);
   const [view, setView] = useState('manager')
-  const [role,setRole]= useState('')
   const [error, setError] = useState('')
 
   const handleSide = () => setSide(!displayed);
 
-  // useEffect(()=>{
-  //   role && setRole(role)
-  // },[])
-
-  const onBack=()=>{
+  const onBack = () => {
     setView('manager')
   }
 
@@ -45,8 +40,8 @@ function Manager({ onGoToManager, onGoToCalendar, onGoToCharts, onGoToForecast, 
         <Text style={styles.text}>Users</Text>
       </>
       )}
-      {view === 'add' && <Add handleGoToBack={onBack}/>}
-      {view === 'users' && <Users handleGoToBack={onBack}/>}
+      {view === 'add' && <Add handleGoToBack={onBack} />}
+      {view === 'users' && <Users handleGoToBack={onBack} />}
 
     </SafeAreaView>
   );

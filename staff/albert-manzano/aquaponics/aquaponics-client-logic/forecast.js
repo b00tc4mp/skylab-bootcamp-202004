@@ -14,14 +14,14 @@ module.exports = async function (index) {
         undefined,
         {
         "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
-         "x-rapidapi-key": "4901ceb585msh6d2329b8180aec8p1c273bjsnad62098b1210"})
+        "x-rapidapi-key": "4901ceb585msh6d2329b8180aec8p1c273bjsnad62098b1210"})
 
     if (status === 200) {
         const {list}= JSON.parse(body)
         const {temp,temp_min,temp_max}= list[index].main 
         const {main}= list[index].weather[0] 
         const {speed:wind} = list[index].wind
-        
+        console.log(temp,temp_max,temp_min,main,wind)
         return {temp,temp_max,temp_min,main,wind}
     } else {
         const { error } = JSON.parse(body)

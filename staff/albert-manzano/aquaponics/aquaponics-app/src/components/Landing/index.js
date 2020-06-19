@@ -5,7 +5,7 @@ import {
     Text
 } from 'react-native';
 
-import { authenticateUser, registerUser,loginUser } from 'aquaponics-client-logic'
+import { registerUser, loginUser } from 'aquaponics-client-logic'
 
 import styles from './styles';
 
@@ -36,9 +36,8 @@ function Landing({ onAuthorized }) {
     const handleLogin = async (email, password) => {
         try {
             setError(null)
-            const result= await loginUser(email, password)
-            console.log(result)
-            if (result===undefined) onAuthorized()
+            const result = await loginUser(email, password)
+            if (result === undefined) onAuthorized()
             else throw new Error('authorization problem, please retry')
         } catch (error) {
             if (error) setError(error)

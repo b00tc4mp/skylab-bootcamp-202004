@@ -11,11 +11,9 @@ const context = require('./context')
 
 module.exports = async function () {
     const token = await this.storage.getItem("token")
-    console.log(token)
     const { status, body } = await call('GET', `${this.API_URL}/temperature`,
         undefined,
         { 'Authorization': `Bearer ${token}` })
-        console.log(body)
     if (status === 200) {
     
         return JSON.parse(body)

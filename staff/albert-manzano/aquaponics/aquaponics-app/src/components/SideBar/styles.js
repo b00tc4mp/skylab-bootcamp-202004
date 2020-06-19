@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "space-evenly",
         alignItems: "center",
-        zIndex:3
+        zIndex:3,
+        
     },
 
     text:{
@@ -31,6 +32,10 @@ const styles = StyleSheet.create({
         width: 40,
         
     },
+
+    item:{
+        marginTop:-20,
+    }
 })
 
 
