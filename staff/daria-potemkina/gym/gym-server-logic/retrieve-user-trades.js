@@ -10,12 +10,11 @@ module.exports = userId => {
 
         if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
-        const results = await Contract.find({ user: userId }).populate('product').populate('trades.price').lean()
+        const results = await Contract.find({ user: userId, isValid: true }).populate('product').populate('trades.price').lean()
 
         if (!results.length) throw new UnexistenceError('user do not have trades yet')
 
         for(let j in results)  {
-            delete results[j]._id
             delete results[j].user
             delete results[j].__v
             delete results[j].product._id

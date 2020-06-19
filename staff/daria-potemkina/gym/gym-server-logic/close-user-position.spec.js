@@ -115,6 +115,7 @@ describe('logic - closeUserPosition', () => {
             futureBuyContract = {
                 user: userId,
                 product: futureId,
+                isValid: true,
                 trades: [{
                     price: futurePriceId,
                     type: 'Buy',
@@ -125,6 +126,7 @@ describe('logic - closeUserPosition', () => {
             futureSellContract = {
                 user: userId,
                 product: futureId,
+                isValid: true,
                 trades: [{
                     price: futurePriceId,
                     type: 'Sell',
@@ -135,6 +137,7 @@ describe('logic - closeUserPosition', () => {
             optionSellCallContract = {
                 user: userId,
                 product: optionId,
+                isValid: true,
                 trades: [{
                     price: optionPriceId,
                     type: 'Sell',
@@ -145,6 +148,7 @@ describe('logic - closeUserPosition', () => {
             optionBuyPutContract = {
                 user: userId,
                 product: _optionId,
+                isValid: true,
                 trades: [{
                     price: _optionPriceId,
                     type: 'Buy',
@@ -185,12 +189,13 @@ describe('logic - closeUserPosition', () => {
             expect(_balance).to.be.an.instanceOf(Object)
             expect(_balance.user.toString()).to.equal(userId)
             expect(_balance.date).to.be.an.instanceOf(Date)
-            expect(_balance.guarantee).to.equal(guarantee)
+            expect(_balance.guarantee).to.equal(0)
             expect(_balance.profitAndLoss).to.equal(round((profitAndLoss + (___futurePrice - futurePrice) * future.contractSize * futureBuyContract.trades[0].quantity) * 100) / 100)
 
             const _contract = await Contract.find({ user: ObjectId(userId) })
 
-            expect(_contract).to.have.lengthOf(0)
+            expect(_contract).to.have.lengthOf(1)
+            expect(_contract[0].isValid).to.equal(false)
         })
 
         it('should modify the user profits and losses in nd delete the trades setteled in short futures', async () => {
@@ -208,12 +213,13 @@ describe('logic - closeUserPosition', () => {
             expect(_balance).to.be.an.instanceOf(Object)
             expect(_balance.user.toString()).to.equal(userId)
             expect(_balance.date).to.be.an.instanceOf(Date)
-            expect(_balance.guarantee).to.equal(guarantee)
+            expect(_balance.guarantee).to.equal(0)
             expect(_balance.profitAndLoss).to.equal(round((profitAndLoss + (futurePrice - ___futurePrice) * future.contractSize * futureSellContract.trades[0].quantity) * 100) / 100)
 
             const _contract = await Contract.find({ user: ObjectId(userId) })
 
-            expect(_contract).to.have.lengthOf(0)
+            expect(_contract).to.have.lengthOf(1)
+            expect(_contract[0].isValid).to.equal(false)
 
         })
 
@@ -232,12 +238,13 @@ describe('logic - closeUserPosition', () => {
             expect(_balance).to.be.an.instanceOf(Object)
             expect(_balance.user.toString()).to.equal(userId)
             expect(_balance.date).to.be.an.instanceOf(Date)
-            expect(_balance.guarantee).to.equal(guarantee)
+            expect(_balance.guarantee).to.equal(0)
             expect(_balance.profitAndLoss).to.equal(round((profitAndLoss - (___optionPrice - option.type.strike) * option.contractSize * optionSellCallContract.trades[0].quantity) * 100) / 100)
 
             const _contract = await Contract.find({ user: ObjectId(userId) })
 
-            expect(_contract).to.have.lengthOf(0)
+            expect(_contract).to.have.lengthOf(1)
+            expect(_contract[0].isValid).to.equal(false)
         })
 
         it('should modify the user profits and losses and delete the trades setteled in short options position', async () => {
@@ -255,12 +262,13 @@ describe('logic - closeUserPosition', () => {
             expect(_balance).to.be.an.instanceOf(Object)
             expect(_balance.user.toString()).to.equal(userId)
             expect(_balance.date).to.be.an.instanceOf(Date)
-            expect(_balance.guarantee).to.equal(guarantee)
+            expect(_balance.guarantee).to.equal(0)
             expect(_balance.profitAndLoss).to.equal(round((profitAndLoss + (_option.type.strike - ____optionPrice) * _option.contractSize * optionBuyPutContract.trades[0].quantity) * 100) / 100)
 
             const _contract = await Contract.find({ user: ObjectId(userId) })
 
-            expect(_contract).to.have.lengthOf(0)
+            expect(_contract).to.have.lengthOf(1)
+            expect(_contract[0].isValid).to.equal(false)
         })
 
         it('should return a type error', () => {
@@ -341,6 +349,7 @@ describe('logic - closeUserPosition', () => {
             futureBuyContract = {
                 user: userId,
                 product: futureId,
+                isValid: true,
                 trades: [{
                     price: futurePriceId,
                     type: 'Buy',
@@ -380,6 +389,7 @@ describe('logic - closeUserPosition', () => {
             futureBuyContract = {
                 user: userId,
                 product: futureId,
+                isValid: true,
                 trades: [{
                     price: futurePriceId,
                     type: 'Buy',

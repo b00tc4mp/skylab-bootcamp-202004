@@ -82,13 +82,15 @@ describe('logic - addProduct', () => {
 
         it('should add the purchase of future', async () => {
             sellBuy = 'Buy'
+            
             await addProduct(userId, futureId, priceId, sellBuy, quantity)
 
             const accountBalance = await AccountBalance.find()
 
             const [balance] = accountBalance
 
-            expect(balance).to.be.undefined
+            expect(balance.profitAndLoss).to.equal(0)
+            expect(balance.guarantee).to.equal((future.contractSize * quantity * 0.1).toFixed(2) * 1)
 
             const contract = await Contract.find()
 
@@ -115,7 +117,8 @@ describe('logic - addProduct', () => {
 
             const [balance] = accountBalance
 
-            expect(balance).to.be.undefined
+            expect(balance.profitAndLoss).to.equal(0)
+            expect(balance.guarantee).to.equal((future.contractSize * quantity * 0.1).toFixed(2) * 1)
 
             const contract = await Contract.find()
 
@@ -145,7 +148,7 @@ describe('logic - addProduct', () => {
 
             expect(balance.user.toString()).to.equal(userId)
             expect(balance.date).to.be.an.instanceOf(Date)
-            expect(balance.guarantee).to.equal(0)
+            expect(balance.guarantee).to.equal((option.contractSize * quantity * 0.1).toFixed(2) * 1)
             expect(balance.profitAndLoss).to.equal((option.contractSize * quantity * optionPrice.price * (-1)).toFixed(2) * 1)
 
             const contract = await Contract.find()
@@ -176,7 +179,7 @@ describe('logic - addProduct', () => {
 
             expect(balance.user.toString()).to.equal(userId)
             expect(balance.date).to.be.an.instanceOf(Date)
-            expect(balance.guarantee).to.equal(0)
+            expect(balance.guarantee).to.equal((option.contractSize * quantity * 0.1).toFixed(2) * 1)
             expect(balance.profitAndLoss).to.equal((option.contractSize * quantity * optionPrice.price).toFixed(2) * 1)
 
             const contract = await Contract.find()
@@ -365,6 +368,7 @@ describe('logic - addProduct', () => {
             _contract = {
                 user: userId,
                 product: futureId,
+                isValid: true
             }
 
             _trade = {
@@ -394,7 +398,7 @@ describe('logic - addProduct', () => {
 
             expect(balance.user.toString()).to.equal(userId)
             expect(balance.date).to.be.an.instanceOf(Date)
-            expect(balance.guarantee).to.equal(0)
+            expect(balance.guarantee).to.equal(((future.contractSize * _trade.quantity + quantity * option.contractSize) * 0.1).toFixed(2) * 1)
             expect(balance.profitAndLoss).to.equal((option.contractSize * quantity * optionPrice.price).toFixed(2) * 1)
 
             const contract = await Contract.find()
@@ -426,11 +430,12 @@ describe('logic - addProduct', () => {
             const accountBalance = await AccountBalance.find()
 
             expect(accountBalance).to.be.an('array')
-            expect(accountBalance).to.have.lengthOf(0)
+            expect(accountBalance).to.have.lengthOf(1)
 
             const [balance] = accountBalance
 
-            expect(balance).to.be.undefined
+            expect(balance.guarantee).to.equal((future.contractSize * (_trade.quantity + quantity) * 0.1).toFixed(2) * 1)
+            expect(balance.profitAndLoss).to.equal(0)
 
             const contract = await Contract.find()
 
@@ -461,11 +466,12 @@ describe('logic - addProduct', () => {
             const accountBalance = await AccountBalance.find()
 
             expect(accountBalance).to.be.an('array')
-            expect(accountBalance).to.have.lengthOf(0)
+            expect(accountBalance).to.have.lengthOf(1)
 
             const [balance] = accountBalance
 
-            expect(balance).to.be.undefined
+            expect(balance.guarantee).to.equal((future.contractSize * (_trade.quantity * (-1) + quantity) * 0.1).toFixed(2) * 1)
+            expect(balance.profitAndLoss).to.equal(0)
 
             const contract = await Contract.find()
 
@@ -496,11 +502,12 @@ describe('logic - addProduct', () => {
             const accountBalance = await AccountBalance.find()
 
             expect(accountBalance).to.be.an('array')
-            expect(accountBalance).to.have.lengthOf(0)
+            expect(accountBalance).to.have.lengthOf(1)
 
             const [balance] = accountBalance
 
-            expect(balance).to.be.undefined
+            expect(balance.guarantee).to.equal((future.contractSize * (_trade.quantity  - quantity) * 0.1).toFixed(2) * 1)
+            expect(balance.profitAndLoss).to.equal(0)
 
             const contract = await Contract.find()
 
@@ -540,7 +547,8 @@ describe('logic - addProduct', () => {
             const contract = await Contract.find()
 
             expect(contract).to.be.an('array')
-            expect(contract).to.have.lengthOf(0)
+            expect(contract).to.have.lengthOf(1)
+            expect(contract[0].isValid).to.equal(false)
         })
     })
 

@@ -59,6 +59,7 @@ describe('logic - ProfitAndLoss', () => {
         dateToday = new Date()
 
         guarantee = round(random() * 1000)
+
         _profitAndLoss = round(random() * 1000)
 
     })
@@ -85,6 +86,7 @@ describe('logic - ProfitAndLoss', () => {
             futureBuyContract = {
                 user: userId,
                 product: futureId,
+                isValid: true,
                 trades: [{
                     price: futurePriceId,
                     type: 'Buy',
@@ -95,6 +97,7 @@ describe('logic - ProfitAndLoss', () => {
             futureSellContract = {
                 user: userId,
                 product: futureId,
+                isValid: true,
                 trades: [{
                     price: futurePriceId,
                     type: 'Sell',
@@ -105,6 +108,7 @@ describe('logic - ProfitAndLoss', () => {
             optionsBuyContract = {
                 user: userId,
                 product: optionId,
+                isValid: true,
                 trades: [{
                     price: optionPriceId,
                     type: 'Buy',
@@ -137,7 +141,7 @@ describe('logic - ProfitAndLoss', () => {
             expect(_balance).to.be.an.instanceOf(Object)
             expect(_balance.user.toString()).to.equal(userId)
             expect(_balance.date).to.be.an.instanceOf(Date)
-            expect(_balance.guarantee).to.equal(guarantee)
+            expect(_balance.guarantee).to.equal((future.contractSize * futureBuyContract.trades[0].quantity * 0.1).toFixed(2) * 1)
             expect(_balance.profitAndLoss).to.equal(round((_profitAndLoss + (futurePrice - ___futurePrice) * future.contractSize * futureBuyContract.trades[0].quantity)))
         })
 
@@ -156,7 +160,7 @@ describe('logic - ProfitAndLoss', () => {
             expect(_balance).to.be.an.instanceOf(Object)
             expect(_balance.user.toString()).to.equal(userId)
             expect(_balance.date).to.be.an.instanceOf(Date)
-            expect(_balance.guarantee).to.equal(guarantee)
+            expect(_balance.guarantee).to.equal((future.contractSize * futureSellContract.trades[0].quantity * 0.1).toFixed(2) * 1)
             expect(_balance.profitAndLoss).to.equal(round(_profitAndLoss - (futurePrice - ___futurePrice) * future.contractSize * futureSellContract.trades[0].quantity))
         })
 
@@ -195,7 +199,7 @@ describe('logic - ProfitAndLoss', () => {
             expect(_balance).to.be.an.instanceOf(Object)
             expect(_balance.user.toString()).to.equal(userId)
             expect(_balance.date).to.be.an.instanceOf(Date)
-            expect(_balance.guarantee).to.equal(guarantee)
+            expect(_balance.guarantee).to.equal((future.contractSize * (futureSellContract.trades[0].quantity+futureBuyContract.trades[0].quantity) * 0.1).toFixed(2) * 1)
 
             const __profitAndLoss = ((futurePrice - ___futurePrice) * future.contractSize * (futureBuyContract.trades[0].quantity - futureSellContract.trades[0].quantity))
             expect(_balance.profitAndLoss).to.equal(round(_profitAndLoss + __profitAndLoss))
@@ -244,7 +248,7 @@ describe('logic - ProfitAndLoss', () => {
             expect(error).to.exist
 
             expect(error).to.be.an.instanceOf(UnexistenceError)
-            expect(error.message).to.equal('user have no current contracts')
+            expect(error.message).to.equal(`user with id ${userId} have no current contracts`)
         }
 
     })
@@ -264,6 +268,7 @@ describe('logic - ProfitAndLoss', () => {
             futureBuyContract = {
                 user: userId,
                 product: futureId,
+                isValid: true,
                 trades: [{
                     price: futurePriceId,
                     type: 'Buy',

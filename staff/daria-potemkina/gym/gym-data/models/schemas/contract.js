@@ -14,5 +14,9 @@ module.exports = new Schema({
         required: true
     },
 
+    isValid: {
+        type: Boolean
+    },
+
     trades: [trade]
 })

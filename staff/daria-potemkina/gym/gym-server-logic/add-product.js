@@ -2,8 +2,11 @@ require('gym-commons/polyfills/string')
 require('gym-commons/polyfills/number')
 const { mongoose, models: { User, Contract, Product, Price, AccountBalance } } = require('gym-data')
 const { ObjectId } = mongoose
+const moment = require('moment')
 
 const { errors: { UnexistenceError } } = require('gym-commons')
+
+const addGuarantee = require('./add-guarantee')
 
 module.exports = (userId, productId, priceId, side, quantity) => {
     String.validate.notVoid(priceId)
@@ -48,13 +51,12 @@ module.exports = (userId, productId, priceId, side, quantity) => {
                 profitAndLoss += (quantity * _contractSize * price).toFixed(2) * 1
             }
 
-            await AccountBalance.create({ user: userId, date: new Date(), guarantee, profitAndLoss })
         }
 
-        let contract = await Contract.findOne({ product: ObjectId(productId) })
+        let contract = await Contract.findOne({ product: ObjectId(productId), isValid: true })
 
         if (!contract) {
-            contract = await Contract.create({ user: ObjectId(userId), product: ObjectId(productId) })
+            contract = await Contract.create({ user: ObjectId(userId), product: ObjectId(productId), isValid: true })
             contract.trades.push({ price: ObjectId(priceId), type: side, quantity })
         } else {
             const index = contract.trades.map(item => item.price.toString()).indexOf(priceId)
@@ -69,7 +71,7 @@ module.exports = (userId, productId, priceId, side, quantity) => {
                         type = side
                     } else if (_quantity > quantity) _quantity -= quantity
                     else {
-                        await Contract.findByIdAndDelete(contract._id)
+                        await Contract.findByIdAndUpdate(contract._id, { isValid: false })
                         return
                     }
                 }
@@ -79,5 +81,9 @@ module.exports = (userId, productId, priceId, side, quantity) => {
         }
 
         await contract.save()
+
+        guarantee = await addGuarantee(userId)
+
+        await AccountBalance.create({ user: userId, date: new Date(), guarantee, profitAndLoss })
     })()
 }
