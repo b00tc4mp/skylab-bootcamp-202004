@@ -17,7 +17,7 @@ const Register = props => {
 
     return (
         <View style={styles.modalView}>
-            <Image source={ require('../assets/images/logo-without-color-version.png')} style={styles.logo}/>
+            <Image source={ require("../assets/images/logo-without-color-version.png")} style={styles.logo}/>
             <TextInput
                 placeholder="name"
                 value={name}
