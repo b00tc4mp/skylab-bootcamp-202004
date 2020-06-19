@@ -16,24 +16,24 @@ Price.create(
     //     date: new Date(),
     //     price: randomPrice(0, 1)
     // },
-    // {
-    //     product: ObjectId('5eec768822a397c69b34b809'),
-    //     date: new Date(dateToday),
-    //     price: randomPrice(6, 12)
-    // },
-    // {
-    //     product: ObjectId('5eec768822a397c69b34b80a'),
-    //     date: new Date(dateToday),
-    //     price: randomPrice(6, 12)
-    // }
-    // ,
     {
-        product: ObjectId('5eec88e1fd34b4eda1367e90'),
+        product: ObjectId('5eecb290eff38047d2251154'),
+        date: new Date(dateToday),
+        price: randomPrice(6, 12)
+    },
+    {
+        product: ObjectId('5eecb290eff38047d2251155'),
+        date: new Date(dateToday),
+        price: randomPrice(6, 12)
+    }
+    ,
+    {
+        product: ObjectId('5eecb290eff38047d2251156'),
         date: new Date(dateToday),
         price: randomPrice(2, 6)
     },
     {
-        product: ObjectId('5eec88e1fd34b4eda1367e91'),
+        product: ObjectId('5eecb290eff38047d2251157'),
         date: new Date(dateToday),
         price: randomPrice(2, 6)
     },

@@ -6,23 +6,23 @@ const { ObjectId } = mongoose
 mongoose.connect('mongodb://localhost:27017/gym-api-test')
 
 Price.create(
-    // {
-    //     product: ObjectId('5eec768822a397c69b34b809'),
-    //     date: new Date('June 18 2020'),
-    //     price: 7
-    // },
-    // {
-    //     product: ObjectId('5eec768822a397c69b34b80a'),
-    //     date: new Date('June 18 2020'),
-    //     price: 9
-    // },
     {
-        product: ObjectId('5eec88e1fd34b4eda1367e90'),
+        product: ObjectId('5eecb290eff38047d2251154'),
+        date: new Date('June 18 2020'),
+        price: 7
+    },
+    {
+        product: ObjectId('5eecb290eff38047d2251155'),
+        date: new Date('June 18 2020'),
+        price: 9
+    },
+    {
+        product: ObjectId('5eecb290eff38047d2251156'),
         date: new Date('June 18 2020'),
         price: 9.85
     },
     {
-        product: ObjectId('5eec88e1fd34b4eda1367e91'),
+        product: ObjectId('5eecb290eff38047d2251157'),
         date: new Date('June 18 2020'),
         price: 3.60
     },

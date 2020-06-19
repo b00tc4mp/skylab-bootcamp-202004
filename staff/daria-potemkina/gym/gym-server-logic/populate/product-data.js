@@ -4,16 +4,16 @@ const { env: { MONGODB_URL } } = process
 const { mongoose, models: { Product, Option, Underlying } } = require('gym-data')
 
 mongoose.connect('mongodb://localhost:27017/gym-api-test')
-// const future1 = new Product({
-//     productType: 'future',
-//     ticker: "BBVA",
-//     exchange: 'MEFF',
-//     sector: 'Banking',
-//     contractSize: 100,
-//     settlementDate: new Date('June 19, 2020 17:45:00')
-// })
+const future1 = new Product({
+    productType: 'future',
+    ticker: "BBVA",
+    exchange: 'MEFF',
+    sector: 'Banking',
+    contractSize: 100,
+    settlementDate: new Date('June 19, 2020 17:45:00')
+})
 
-// future1.save()
+future1.save()
 
 const future2 = new Product({
     productType: 'future',
@@ -62,11 +62,11 @@ future2.save()
 
 // product2.save()
 
-// const bbvaUnderlying = new Underlying({
-//     ticker: 'BBVA'
-// })
+const bbvaUnderlying = new Underlying({
+    ticker: 'BBVA'
+})
 
-// bbvaUnderlying.save()
+bbvaUnderlying.save()
 
 const ibeUnderlying = new Underlying({
     ticker: 'IBE'
