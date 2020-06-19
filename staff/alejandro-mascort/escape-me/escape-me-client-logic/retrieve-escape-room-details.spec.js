@@ -7,7 +7,7 @@ const { expect } = require('chai')
 require('escape-me-commons/polyfills/json')
 const { mongoose, models: { EscapeRoom } } = require('escape-me-data')
 
-describe.only('logic - retrieve escape room details', () => {
+describe('logic - retrieve escape room details', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let escape, escapeId, name, description, priceMin, priceMax, playersMin, playersMax, genre, difficulty, province, url, city, image, rating

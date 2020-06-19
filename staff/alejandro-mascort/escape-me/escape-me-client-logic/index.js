@@ -13,5 +13,7 @@ module.exports = {
     retrieveFollowingIds: require('./retrieve-following-ids'),
     retrieveEscapeIds: require('./retrieve-escape-ids'),
     suggestEscapeRooms: require('./suggest-escape-rooms'),
-    retrieveEscapeRoomDetails: require('./retrieve-escape-room-details')
+    retrieveEscapeRoomDetails: require('./retrieve-escape-room-details'),
+    rateEscapeRoom: require('./rate-escape-room'),
+    commentEscapeRoom: require('./comment-escape-room')
 }
