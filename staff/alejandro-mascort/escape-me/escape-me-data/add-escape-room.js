@@ -16,7 +16,6 @@ mongoose.connect('mongodb://localhost:27017/escape-me-api-test')
             url: 'http://www.roomwhitechapel.com/',
             city: 'barcelona',
             image: 'https://storage.googleapis.com/absolute-enigmatiumroom/images/v01/whitechapel.jpg',
-            rating: 4.8
         })
 
         await EscapeRoom.create({
@@ -31,7 +30,6 @@ mongoose.connect('mongodb://localhost:27017/escape-me-api-test')
             url: 'https://www.abduction.es/badalona/abduction1.html',
             city: 'badalona',
             image: 'https://www.blogbadalona.com/images/ocio/room-escape-abduction-badalona.jpg',
-            rating: 4.9
         })
         await EscapeRoom.create({
             name: 'la juguetería maldita',
@@ -45,7 +43,6 @@ mongoose.connect('mongodb://localhost:27017/escape-me-api-test')
             url: 'https://thewitchinghour.es/la-jugueteria-maldita/',
             city: 'barcelona',
             image: 'https://escapeowosbcn.files.wordpress.com/2018/11/11.jpg',
-            rating: 4.8
         })
         await EscapeRoom.create({
             name: 'vikingos',
@@ -59,7 +56,6 @@ mongoose.connect('mongodb://localhost:27017/escape-me-api-test')
             url: 'https://unrealroomescape.es/gava/#reservas',
             city: 'gavà',
             image: 'https://unrealroomescape.es/gava/wp-content/uploads/2014/06/joc-vikingos.jpg',
-            rating: 4.9
         })
         await EscapeRoom.create({
             name: 'el cóctel del doctor',
@@ -73,7 +69,6 @@ mongoose.connect('mongodb://localhost:27017/escape-me-api-test')
             url: 'https://www.insomniacorp.com/el-coctel-del-doctor/',
             city: 'berga',
             image: 'https://www.insomniacorp.com/wp-content/uploads/coctel-del-doctor.jpg',
-            rating: 4.9
         })
         await EscapeRoom.create({
             name: 'misión s.w.a.t.',
@@ -87,7 +82,6 @@ mongoose.connect('mongodb://localhost:27017/escape-me-api-test')
             url: 'https://openmindroomescape.es/#juegos',
             city: 'berga',
             image: 'https://openmindroomescape.es/wp-content/uploads/2014/05/room-escape-mision-swat.jpg',
-            rating: 4.9
         })
         await EscapeRoom.create({
             name: 'doppler',
@@ -101,7 +95,6 @@ mongoose.connect('mongodb://localhost:27017/escape-me-api-test')
             url: 'https://www.dopplerexperiences.com/',
             city: 'berga',
             image: 'https://storage.googleapis.com/absolute-escaperoominfinity/images/v01/acto-1-vientos-de-polvora-escape-room-barcelona.jpg',
-            rating: 4.9
         })
         await EscapeRoom.create({
             name: 'mafia',
@@ -115,7 +108,6 @@ mongoose.connect('mongodb://localhost:27017/escape-me-api-test')
             url: 'https://www.chickenbanana.com/es',
             city: 'berga',
             image: 'https://www.fcbarcelona.com/fcbarcelona/photo/2018/06/26/b27237de-0483-4cb2-89f6-8431724f8160/67212502.jpg',
-            rating: 4.9
         })
         await EscapeRoom.create({
             name: 'kidnapped in bcn',
@@ -129,7 +121,6 @@ mongoose.connect('mongodb://localhost:27017/escape-me-api-test')
             url: 'https://kidnappedinbcn.com/',
             city: 'berga',
             image: 'https://media-cdn.tripadvisor.com/media/photo-s/11/2e/1e/45/ready-for-a-tarantino.jpg',
-            rating: 4.9
         })
         await EscapeRoom.create({
             name: 'petit piaf hotel',
@@ -143,7 +134,6 @@ mongoose.connect('mongodb://localhost:27017/escape-me-api-test')
             url: 'http://www.intringulisbcn.com/reserves.php',
             city: 'barcelona',
             image: 'https://media-cdn.tripadvisor.com/media/photo-s/10/0e/6b/04/petit-piaf-hotel-el-primer.jpg',
-            rating: 4.9
         })
         await EscapeRoom.create({
             name: 'the house of whispers',
@@ -157,7 +147,6 @@ mongoose.connect('mongodb://localhost:27017/escape-me-api-test')
             url: 'http://thehouseofwhispers.com/',
             city: 'barcelona',
             image: 'data:image/png;base64,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',
-            rating: 4.9
         })
         await EscapeRoom.create({
             name: 'rebelión de las máquinas',
@@ -171,7 +160,6 @@ mongoose.connect('mongodb://localhost:27017/escape-me-api-test')
             url: 'https://questeros.es/quests/rebelion',
             city: 'berga',
             image: 'https://clarovideocdn5.clarovideo.net/CRACKLE/PELICULAS/100002022/EXPORTACION_WEB/SS/100002022WHORIZONTAL.jpg?size=675x380',
-            rating: 4.9
         })
         await EscapeRoom.create({
             name: 'cronologic',
@@ -185,7 +173,6 @@ mongoose.connect('mongodb://localhost:27017/escape-me-api-test')
             url: 'https://www.cronologic.es/',
             city: 'berga',
             image: 'https://storage.googleapis.com/absolute-enigmatiumroom/images/v01/cronologic-barcelona.jpg',
-            rating: 4.9
         })
         await EscapeRoom.create({
             name: 'génesis',
@@ -199,7 +186,6 @@ mongoose.connect('mongodb://localhost:27017/escape-me-api-test')
             url: 'http://totemescaperoom.com/es/',
             city: 'berga',
             image: 'https://static.wixstatic.com/media/2f731d_ada28e50aee14ed5b846225e3b55a78d~mv2.jpg/v1/fill/w_1000,h_625,al_c,q_90,usm_0.66_1.00_0.01/2f731d_ada28e50aee14ed5b846225e3b55a78d~mv2.jpg',
-            rating: 4.9
         })
         await EscapeRoom.create({
             name: 'catacumbas',
@@ -213,7 +199,6 @@ mongoose.connect('mongodb://localhost:27017/escape-me-api-test')
             url: 'http://goldenpop.es/catacumbas/',
             city: 'berga',
             image: 'https://societytoescape.org/wp-content/uploads/2020/02/Sin-t%C3%ADtulo-2asdf.png',
-            rating: 4.9
         })
 
         await mongoose.disconnect()
