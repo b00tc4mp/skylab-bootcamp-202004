@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, AsyncStorage } from 'react-native'
 import HeaderHome from './HeaderHome'
 import WeekDays from './WeekDays'
-import TimeLaundry from './TimeLaundry'
+import TimeLaundry from './timeLaundry'
 import { retrieveLaundry, addDateLaundry, retrieveUser, deleteDateLaundry } from 'coohappy-client-logic'
 import getDayMonthWeek from 'coohappy-client-logic/helpers/week-month-days'
 import moment from 'moment'
@@ -34,6 +34,9 @@ const Laundry = function ({ navigation }) {
         })()
 
     }, [day])
+
+
+//TODO delete all laundries when time pass
 
     const __handleUpdate__ = async () => {
         const token = await AsyncStorage.getItem('TOKEN')
