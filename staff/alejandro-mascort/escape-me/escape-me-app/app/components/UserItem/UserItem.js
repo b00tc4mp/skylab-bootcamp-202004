@@ -16,15 +16,15 @@ function UserItem({ name, surname, email, image, main = false, following, userId
 
     return (
         <View style={main ? styles.container : [styles.container, styles.containerItem]}>
-            <TouchableOpacity onPress={() => setModalVisible(true)} >
+            <TouchableOpacity onPress={!main ? () => setModalVisible(true) : () => { }} >
                 <Image style={main ? styles.image : styles.littleImage} source={image} />
             </TouchableOpacity>
-            <Modal visible={modalVisible} animationType="slide">
-                <SafeAreaView>
+            {!main && <Modal visible={modalVisible} animationType="slide">
+                <SafeAreaView style={{ marginBottom: 20 }}>
                     <Button title="Close" onPress={() => setModalVisible(false)} />
                     <OthersProfile _userId={userId} onEscapes={onEscapes} />
                 </SafeAreaView>
-            </Modal>
+            </Modal>}
             <View>
                 <Text style={main ? styles.username : styles.littleUsername}>{email}</Text>
                 <Text style={main ? styles.name : styles.littleName}>{name} {surname}</Text>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Image, ImageBackground, Text, TouchableOpacity } from 'react-native'
+import { View, Image, ImageBackground, Text, TouchableOpacity, Modal, SafeAreaView, Button } from 'react-native'
 import { MaterialCommunityIcons, MaterialIcons, SimpleLineIcons, Entypo, AntDesign, Feather, Foundation } from '@expo/vector-icons'
 import { toggleEscapeRoom } from 'escape-me-client-logic'
 import CardDetails from '../../screens/CardDetails'
@@ -7,6 +7,8 @@ import CardDetails from '../../screens/CardDetails'
 const styles = require('./style')
 
 function Card({ title, rating, people, genre, price, image, participated, pending, favorites, escapeId, onEscapes }) {
+    const [modalVisible, setModalVisible] = useState(false)
+
     function handleToggle(tag) {
         (async () => {
             await toggleEscapeRoom(escapeId, tag)
@@ -34,9 +36,13 @@ function Card({ title, rating, people, genre, price, image, participated, pendin
                     <MaterialIcons name="playlist-add" size={24}
                         color="black" style={styles.icon} onPress={() => handleToggle('pending')} />}
             </View>
-            <TouchableOpacity activeOpacity={0.8} >
+            <TouchableOpacity activeOpacity={0.8} onPress={() => setModalVisible(true)} >
                 <ImageBackground style={styles.image} source={image} resizeMode={'contain'} />
             </TouchableOpacity>
+            <Modal visible={modalVisible} animationType="slide">
+                <Button title="Close" onPress={() => setModalVisible(false)} />
+                <CardDetails escapeId={escapeId} onEscapes={onEscapes} pending={pending} favorites={favorites} participated={participated} />
+            </Modal>
             <View style={styles.info}>
                 <View style={styles.pair}>
                     <Text style={styles.text}>{rating}</Text>

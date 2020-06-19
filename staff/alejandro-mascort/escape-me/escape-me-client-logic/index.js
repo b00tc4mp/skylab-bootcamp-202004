@@ -12,5 +12,6 @@ module.exports = {
     searchUsers: require('./search-users'),
     retrieveFollowingIds: require('./retrieve-following-ids'),
     retrieveEscapeIds: require('./retrieve-escape-ids'),
-    suggestEscapeRooms: require('./suggest-escape-rooms')
+    suggestEscapeRooms: require('./suggest-escape-rooms'),
+    retrieveEscapeRoomDetails: require('./retrieve-escape-room-details')
 }

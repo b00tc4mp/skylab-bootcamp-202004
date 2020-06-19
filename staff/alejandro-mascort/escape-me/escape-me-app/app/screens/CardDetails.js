@@ -1,83 +1,127 @@
-import React, { useCallback } from 'react'
+import React, { Component } from 'react'
 import { ImageBackground, StyleSheet, SafeAreaView, View, Text, Linking, Button, TouchableOpacity, ScrollView, Platform } from 'react-native'
-import { FontAwesome, MaterialIcons, Entypo, SimpleLineIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons, AntDesign, SimpleLineIcons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating'
 import Review from '../components/Review/'
 
-export default function () {
-    const url = 'http://www.roomwhitechapel.com/index.php'
+import { retrieveEscapeRoomDetails, toggleEscapeRoom, retrieveEscapeIds } from 'escape-me-client-logic'
 
-    const handlePress = useCallback(async () => {
-        await Linking.openURL(url)
-    }, [url])
+class CardDetails extends Component {
+    constructor(props) {
+        super(props)
 
-    return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView>
-                <ImageBackground style={styles.image} source={require('../assets/whitechapel.jpg')} >
-                    <View style={styles.personal}>
-                        <SimpleLineIcons style={styles.profile} name="heart" size={24} color="tomato" />
-                        <MaterialIcons style={styles.profile} name="check-box-outline-blank" size={24} color="black" />
-                        <Entypo style={styles.profile} name="add-to-list" size={24} color="black" />
-                    </View>
-                    <View style={styles.punctuation}>
-                        <Text style={{ fontSize: 18 }}>4.9</Text>
-                        <MaterialCommunityIcons name="star" size={30} color="#FFD300" />
-                    </View>
-                </ImageBackground>
-                <View style={styles.description}>
-                    <View style={styles.interaction}>
-                        <View style={styles.visit}>
-                            <TouchableOpacity activeOpacity={0.8} style={styles.button}>
-                                <Button title='Visit Website' onPress={handlePress} />
-                            </TouchableOpacity>
+        this.state = {
+            escapeRoom: {},
+            userLists: {}
+        }
+
+    }
+
+    handleToggle(tag) {
+        (async () => {
+            await toggleEscapeRoom(this.props.escapeId, tag)
+            await this.props.onEscapes()
+        })()
+    }
+
+    componentDidMount() {
+        console.log('hellow')
+        let escape, lists
+        (async () => {
+            lists = await retrieveEscapeIds()
+            this.setState({ userLists: lists })
+            escape = await retrieveEscapeRoomDetails(this.props.escapeId)
+            this.setState({ escapeRoom: escape })
+        })()
+    }
+
+    render() {
+        return (
+            <SafeAreaView style={styles.container}>
+                <ScrollView>
+                    <ImageBackground style={styles.image} source={{ uri: this.state.escapeRoom.image }} >
+                        <View style={styles.personal}>
+                            {this.props.favorites ? <AntDesign name="heart" size={24}
+                                color="tomato" style={styles.profile} onPress={() => this.handleToggle('favorites')} />
+                                :
+                                <SimpleLineIcons name="heart" size={24}
+                                    color="tomato" style={styles.profile} onPress={() => this.handleToggle('favorites')} />}
+                            {this.props.participated ? <Feather name="check-square" size={24}
+                                color="black" style={styles.profile} onPress={() => this.handleToggle('participated')} />
+                                :
+                                <MaterialIcons name="check-box-outline-blank" size={24}
+                                    color="black" style={styles.profile} onPress={() => this.handleToggle('participated')} />}
+                            {this.props.pending ? <MaterialIcons name="playlist-add-check" size={24}
+                                color="black" style={styles.profile} onPress={() => this.handleToggle('pending')} />
+                                :
+                                <MaterialIcons name="playlist-add" size={24}
+                                    color="black" style={styles.profile} onPress={() => this.handleToggle('pending')} />}
+                        </View>
+                        <View style={styles.punctuation}>
+                            <Text style={{ fontSize: 18 }}>{this.state.escapeRoom.rating}</Text>
+                            <MaterialCommunityIcons name="star" size={30} color="#FFD300" />
+                        </View>
+                    </ImageBackground>
+                    <View style={styles.description}>
+                        <View style={styles.interaction}>
+                            <View style={styles.visit}>
+                                <TouchableOpacity activeOpacity={0.8} style={styles.button}>
+                                    <Button title='Visit Website' onPress={() => {
+                                        (async () => {
+                                            await Linking.openURL(this.state.escapeRoom.url)
+                                        })()
+                                    }} />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        <View style={styles.header}>
+                            <Text style={styles.title}>{this.state.escapeRoom.name}</Text>
+                        </View>
+                        <Text style={styles.introduction}>
+                            {this.state.escapeRoom.description}
+                        </Text>
+                        <View style={styles.details}>
+                            <View style={styles.pair}>
+                                <Text style={styles.tag}>Difficulty:</Text>
+                                <FontAwesome style={styles.icon} name="lock" size={24} color="white" />
+                                {this.state.escapeRoom.difficulty > 1 && <FontAwesome style={styles.icon} name="lock" size={24} color="white" />}
+                                {this.state.escapeRoom.difficulty > 2 && <FontAwesome style={styles.icon} name="lock" size={24} color="white" />}
+                            </View>
+                            <View style={styles.pair}>
+                                <Text style={styles.tag}>Genre:</Text>
+                                <Text style={styles.tag}>{this.state.escapeRoom.genre}</Text>
+                            </View>
+                            <View style={styles.pair}>
+                                <Text style={styles.tag}>Price:</Text>
+                                <Text style={styles.tag}>{`${this.state.escapeRoom.priceMin}-${this.state.escapeRoom.priceMax}€`}</Text>
+                            </View>
+                            <View style={styles.pair}>
+                                <Text style={styles.tag}>{`${this.state.escapeRoom.playersMin}-${this.state.escapeRoom.playersMax}`}</Text>
+                                <MaterialIcons style={styles.icon} name="people" size={24} color="white" />
+                            </View>
+                        </View>
+                        <View style={styles.rateHeader}>
+                            <View style={styles.rate}>
+                                <StarRating style={styles.star} starSize={25} maxStars={5} rating={3} fullStarColor={'yellow'} halfStarColor={'yellow'} emptyStarColor={'yellow'} />
+                            </View>
+                            <View style={styles.comment}>
+                                <Text style={styles.tag}>+ ADD A COMMENT</Text>
+                            </View>
+                        </View>
+                        <View style={styles.review}>
+                            <Review username={'Tyler Durden'} comment={'Was a nice expirience, but it was not me.'} rating={4} />
+                            <Review username={'Tyler Durden'} comment={'Was a nice expirience, but it was not me.'} rating={4} />
+                            <Review username={'Tyler Durden'} comment={'Was a nice expirience, but it was not me.'} rating={4} />
+                            <Review username={'Tyler Durden'} comment={'Was a nice expirience, but it was not me, or yes, maybe was marla I am not sure.'} rating={4} />
                         </View>
                     </View>
-                    <View style={styles.header}>
-                        <Text style={styles.title}>Whitechapel</Text>
-                    </View>
-                    <Text style={styles.introduction}>
-                        En 1888, en un famoso barrio londinense llamado Whitechapel, ocurrieron una serie de asesinatos cometidos por Jack el Destripador. Ahora, 130 años después, un asesino le está haciendo tributo y causando el caos siguiendo los pasos del mismísimo Jack. En nuestro Room escape os retaremos a descifrar una serie de enigmas que desafiarán vuestra inteligencia, imaginación y cooperación además de poner a prueba vuestros miedos. Ingenio, colaboración, perspectiva... Todos los sentidos deben estar alerta, cualquier pequeño detalle puede ser primordial para superar el desafío.
-                </Text>
-                    <View style={styles.details}>
-                        <View style={styles.pair}>
-                            <Text style={styles.tag}>Difficulty:</Text>
-                            <FontAwesome style={styles.icon} name="lock" size={24} color="white" />
-                            <FontAwesome style={styles.icon} name="lock" size={24} color="white" />
-                            <FontAwesome style={styles.icon} name="lock" size={24} color="white" />
-                        </View>
-                        <View style={styles.pair}>
-                            <Text style={styles.tag}>Genre:</Text>
-                            <Text style={styles.tag}>TERROR</Text>
-                        </View>
-                        <View style={styles.pair}>
-                            <Text style={styles.tag}>Price:</Text>
-                            <Text style={styles.tag}>50-90€</Text>
-                        </View>
-                        <View style={styles.pair}>
-                            <Text style={styles.tag}>2-6</Text>
-                            <MaterialIcons style={styles.icon} name="people" size={24} color="white" />
-                        </View>
-                    </View>
-                    <View style={styles.rateHeader}>
-                        <View style={styles.rate}>
-                            <StarRating style={styles.star} starSize={25} maxStars={5} rating={3} fullStarColor={'yellow'} halfStarColor={'yellow'} emptyStarColor={'yellow'} />
-                        </View>
-                        <View style={styles.comment}>
-                            <Text style={styles.tag}>+ ADD A COMMENT</Text>
-                        </View>
-                    </View>
-                    <View style={styles.review}>
-                        <Review username={'Tyler Durden'} comment={'Was a nice expirience, but it was not me.'} rating={4} />
-                        <Review username={'Tyler Durden'} comment={'Was a nice expirience, but it was not me.'} rating={4} />
-                        <Review username={'Tyler Durden'} comment={'Was a nice expirience, but it was not me.'} rating={4} />
-                        <Review username={'Tyler Durden'} comment={'Was a nice expirience, but it was not me, or yes, maybe was marla I am not sure.'} rating={4} />
-                    </View>
-                </View>
-            </ScrollView>
-        </SafeAreaView>
-    );
+                </ScrollView>
+            </SafeAreaView>
+        );
+    }
 }
+
+export default CardDetails
 
 const styles = StyleSheet.create({
     button: {
@@ -95,7 +139,6 @@ const styles = StyleSheet.create({
         padding: 5
     },
     container: {
-        flex: 1,
         backgroundColor: '#f8f4f4'
     },
     description: {
@@ -178,6 +221,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fc5c65',
         padding: 5,
         borderRadius: 20,
+        marginBottom: 20
     },
     star: {
         color: 'yellow',
