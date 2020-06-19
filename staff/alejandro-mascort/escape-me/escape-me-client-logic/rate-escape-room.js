@@ -14,7 +14,7 @@ module.exports = function (escapeId, rating) {
     return call(
         'POST',
         `${this.API_URL}/escape/rate/`,
-        `{ "escapeId": "${escapeId}", "rating": "${rating}" }`,
+        `{ "escapeId": "${escapeId}", "rating": ${rating} }`,
         {
             'Content-type': 'application/json',
             'Authorization': `Bearer ${token}`

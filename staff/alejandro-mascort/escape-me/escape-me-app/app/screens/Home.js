@@ -20,7 +20,7 @@ export default function (props) {
             const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
             setEscapes({ participated, pending, favorites })
 
-            escapeList = await suggestEscapeRooms('pending')
+            escapeList = await suggestEscapeRooms()
             setEscapeRooms(escapeList)
         })()
     }, [])

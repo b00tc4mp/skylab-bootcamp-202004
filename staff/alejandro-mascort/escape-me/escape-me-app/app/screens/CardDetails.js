@@ -4,15 +4,16 @@ import { FontAwesome, MaterialIcons, AntDesign, SimpleLineIcons, MaterialCommuni
 import StarRating from 'react-native-star-rating'
 import Review from '../components/Review/'
 
-import { retrieveEscapeRoomDetails, toggleEscapeRoom, retrieveEscapeIds } from 'escape-me-client-logic'
+import { retrieveEscapeRoomDetails, toggleEscapeRoom, retrieveEscapeIds, rateEscapeRoom, retrieveUser } from 'escape-me-client-logic'
 
 class CardDetails extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            escapeRoom: {},
-            userLists: {}
+            escapeRoom: { reviews: [] },
+            userLists: {},
+            starCount: 0
         }
 
     }
@@ -32,6 +33,14 @@ class CardDetails extends Component {
             this.setState({ userLists: lists })
             escape = await retrieveEscapeRoomDetails(this.props.escapeId)
             this.setState({ escapeRoom: escape })
+
+            const { reviews } = escape
+
+            const { username = '' } = await retrieveUser()
+
+            reviews.forEach(({ user, rating }) => {
+                if (user.username === username) this.setState({ starCount: rating })
+            })
         })()
     }
 
@@ -102,17 +111,29 @@ class CardDetails extends Component {
                         </View>
                         <View style={styles.rateHeader}>
                             <View style={styles.rate}>
-                                <StarRating style={styles.star} starSize={25} maxStars={5} rating={3} fullStarColor={'yellow'} halfStarColor={'yellow'} emptyStarColor={'yellow'} />
+                                <StarRating style={styles.star} starSize={25} maxStars={5}
+                                    rating={this.state.starCount} fullStarColor={'yellow'} halfStarColor={'yellow'} emptyStarColor={'yellow'}
+                                    selectedStar={rating =>
+                                        (async () => {
+                                            this.setState({ starCount: rating })
+                                            await rateEscapeRoom(this.props.escapeId, Number(rating))
+                                        })()} />
                             </View>
                             <View style={styles.comment}>
                                 <Text style={styles.tag}>+ ADD A COMMENT</Text>
                             </View>
                         </View>
                         <View style={styles.review}>
+                            {
+                                this.state.escapeRoom.reviews.map(({ rating, comment, user }) => {
+                                    if (comment) {
+                                        return <Review username={`${user['name'] ? user['name'] : ''} ${user['surname'] ? user['surname'] : ''} (@${user['username']})`} comment={comment.message} rating={rating} />
+                                    }
+                                })}
+                            {/* <Review username={'Tyler Durden'} comment={'Was a nice expirience, but it was not me'} rating={4} />
                             <Review username={'Tyler Durden'} comment={'Was a nice expirience, but it was not me.'} rating={4} />
                             <Review username={'Tyler Durden'} comment={'Was a nice expirience, but it was not me.'} rating={4} />
-                            <Review username={'Tyler Durden'} comment={'Was a nice expirience, but it was not me.'} rating={4} />
-                            <Review username={'Tyler Durden'} comment={'Was a nice expirience, but it was not me, or yes, maybe was marla I am not sure.'} rating={4} />
+                            <Review username={'Tyler Durden'} comment={'Was a nice expirience, but it was not me, or yes, maybe was marla I am not sure.'} rating={4} /> */}
                         </View>
                     </View>
                 </ScrollView>
@@ -215,7 +236,8 @@ const styles = StyleSheet.create({
     rateHeader: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginBottom: 10
     },
     review: {
         backgroundColor: '#fc5c65',

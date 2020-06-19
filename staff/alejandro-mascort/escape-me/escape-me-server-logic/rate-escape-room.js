@@ -30,6 +30,6 @@ module.exports = (userId, escapeId, userRating) => {
 
         const totalRating = sum / _reviews.length
 
-        await EscapeRoom.findByIdAndUpdate({ _id: escapeId }, { reviews: _reviews, rating: totalRating })
+        await EscapeRoom.findByIdAndUpdate({ _id: escapeId }, { reviews: _reviews, rating: totalRating.toFixed(1) })
     })()
 }
