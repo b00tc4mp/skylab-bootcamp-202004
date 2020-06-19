@@ -11,7 +11,15 @@ module.exports = (email, password)=>{
     
     return User.findOne({ email })
 
-    
+    /**
+     * Promise funcition, sends info needed to api for authentication.
+     * @param {string} email required data for authentication.
+     * @param {string} password required data for authentication, encrypted with bcrypt.
+     * 
+     * @throws UnexistenceError when user is not registered.
+     * @throws CredentialsError when a wrong password is passed.
+     * 
+     */
     .then(user => {
         if (!user) throw new UnexistenceError(`user with e-mail ${email} does not exist`)
 debugger
