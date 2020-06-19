@@ -2,47 +2,108 @@
     margin: 0
     padding: 0
     height: 100vh
-    // background: #D7EFFA
-    &__thermoContainer
+    display: flex
+    position: relative
+    &__whiteContainer
+        top: 0
+        left: 0
+        margin: auto
+        display: flex
+        justify-content: center
+        flex-direction: column
+        flex: 1 1 0%
+        height: 70vh
+        width: 90vw
+        background: rgba(255, 255, 255, 0.5)
         position: relative
-        height: 390px
+    &__formContainer
+        height: 15vh
+        position: absolute
+        top: 0
+        margin: 10px
+    &__slider
+        position: absolute
+        top: 77%
+        left: 13px
+    &__buttonContainer
+        width: 154px
+        height: 52px
+        background-color: #E6E6E6
+        border-radius: 12px
+        border-width: 1px
+        border-color: #000000
+        flex-direction: column
+        display: flex
+        margin-top: 28px
+        border-style: solid 
+        margin-left: 30%
+    &__button
+        color: #121212
+        height: 25px
+        width: 73px
+        font-family: 'Raleway', sans-serif
+        font-weight: 700
+        font-size: 22px
+        margin-top: 13px
+        margin-left: 31px
+        border: none
+        background: none
+    &__value
+        position: absolute
+        height: 50px
+        width: 50px
+        left: 29px
+        bottom: -55px
+        z-index: 1
+        font-weight: 600
+        font-size: 35px
+        text-align: center
+        font-family: Arial, Helvetica, sans-serif
+    &__thermoContainer
+        margin: 10px
+        position: relative
+        height: 250px
+        top: 0
+        left: -11%
+        margin: auto
         &--progress
-            // height: 35px
-            width: 45px
+            width: 25px
             background: #EF3636
             position: absolute
             bottom: 0
-            left: 72px
+            left: 42px
+            border-top-left-radius: 15px
+            border-top-right-radius: 15px
         &--slider
             position: absolute
-            transform: rotate(-90deg) translate(-50%, -50%)
+            // transform: rotate(-90deg) translate(-50%, -50%)
             width: 345px
             margin-top: 4.5vh
             z-index: 2
         &--thermoImg
             position: absolute
-            height: 520px
-            width: 190px
+            height: 320px
+            width: 110px
             margin-top: 10px
             left: 0
             z-index: 1
 .height1
-    height: 35px
+    height: 22px
 .height2
-    height: 70px
+    height: 44px
 .height3
-    height: 105px
+    height: 66px
 .height4
-    height: 140px
+    height: 88px
 .height5
-    height: 175px
+    height: 110px
 .height6
-    height: 210px
+    height: 132px
 .height7
-    height: 245px
+    height: 154px
 .height8
-    height: 285px
+    height: 176px
 .height9
-    height: 310px
+    height: 198px
 .height10
-    height: 345px
+    height: 220px
