@@ -1,5 +1,4 @@
 const { Schema } = require("mongoose")
-require("gluttony-commons/polyfills/URL")
 
 module.exports = new Schema({
     _id: {
@@ -26,11 +25,6 @@ module.exports = new Schema({
         type: {latitude: Number, longitude: Number},
         unique: true,
         required: true
-    },
-
-    url: {
-        type: String,
-        validate: [URL.validate, "invalid url"]
     },
 
     thumbnail: {
