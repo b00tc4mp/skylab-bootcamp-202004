@@ -46,8 +46,8 @@ const Login = function ({ navigation }) {
 
                     <View style={styles.form}>
                         <Text style={styles.loginTitle}>Log in</Text>
-                        <TextInput style={styles.input} onChangeText={value => setEmail(value)} placeholder="email" placeholderTextColor="#81868e" />
-                        <TextInput style={styles.input} onChangeText={value => setPassword(value)} secureTextEntry={true} placeholder="password" placeholderTextColor="#81868e" />
+                        <TextInput style={styles.input}  onChangeText={value => setEmail(value)} placeholder="email" placeholderTextColor="#81868e" />
+                        <TextInput style={styles.input}  onChangeText={value => setPassword(value)} secureTextEntry={true} placeholder="password" placeholderTextColor="#81868e" />
                         <ButtonForm text="LOG IN" bgColor="#009965" buttonAction={handleOnSubmitLogin} />
                     </View>
 

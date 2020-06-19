@@ -16,8 +16,22 @@ module.exports = new Schema({
     },
 
     date: {
-        type: String,
-        required: true
+        stringDay:{
+            type: String,
+            require:true
+        },
+        day:{
+            type: Number,
+            require: true
+        },
+        month: {
+            type: String,
+            require: true
+        },
+        hour: {
+            type: String,
+            require: true
+        }
     }
 
 })

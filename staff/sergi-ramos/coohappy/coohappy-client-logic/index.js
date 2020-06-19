@@ -7,5 +7,6 @@ module.exports = {
     retrieveLaundry: require('./retrieve-laundry'),
     addDateLaundry: require('./add-date-laundry'),
     deleteDateLaundry: require('./delete-date-laundry'),
-    sendMessage: require('./send-message')
+    sendMessage: require('./send-message'),
+    retrieveMessage: require('./retrieve-messages')
 }
