@@ -1,7 +1,8 @@
 /**
- * Return all info related to the user previously registered.
- * id and password not returned for safety
+ * retrieve the last temperature in the collection of temperatures listed in the app,
  * 
+ * @param {string} userId user's id
+ * @throws {TypeError} if user's id is not a string nor empty
  */
 
 require('aquaponics-commons/polyfills/string')
@@ -10,12 +11,13 @@ const context = require('./context')
 
 module.exports = async function () {
     const token = await this.storage.getItem("token")
-   
-    const { status, body } = await call('GET', `${this.API_URL}/users`,
+    console.log(token)
+    const { status, body } = await call('GET', `${this.API_URL}/temperature`,
         undefined,
         { 'Authorization': `Bearer ${token}` })
-    
+        console.log(body)
     if (status === 200) {
+    
         return JSON.parse(body)
     } else {
         const { error } = JSON.parse(body)
@@ -26,8 +28,9 @@ module.exports = async function () {
 }.bind(context)
 
 /**
- * @promise returns:
+ * @async returns:
  * @return {UnexistenceError} if user can not be found with Id provided.
- * @return {object} user's info is returned
+ * @return {CredentialsError} if user is not admin.
+ * @return {object} with last temperature and date.
  *
  */

@@ -6,7 +6,8 @@ import {
     TextInput,
     TouchableOpacity,
     SafeAreaView,
-    Image
+    Image,
+    ScrollView
 } from "react-native";
 
 import styles from './styles'
@@ -39,95 +40,96 @@ function Add({ handleGoToBack }) {
     }
 
     return (<>
-        <View style={styles.container}>
-            <View>
-                <Text style={styles.text}>Name</Text>
-                <View >
-                    <SafeAreaView style={styles.input}>
-                        <TextInput
-                            onChangeText={(name) => setName(name)}
-                            placeholder="Name"
-                            style={styles.placeholder}
-                        ></TextInput>
-                    </SafeAreaView>
-                </View>
-                <Text style={styles.text}>Surname</Text>
+        <SafeAreaView style={styles.container}>
+            <ScrollView>
                 <View>
-                    <SafeAreaView style={styles.input}>
-                        <TextInput
-                            onChangeText={(surname) => setSurname(surname)}
-                            placeholder="Surname"
-                            style={styles.placeholder}
-                        ></TextInput>
-                    </SafeAreaView>
+                    <Text style={styles.text}>Name</Text>
+                    <View >
+                        <SafeAreaView style={styles.input}>
+                            <TextInput
+                                onChangeText={(name) => setName(name)}
+                                placeholder="Name"
+                                style={styles.placeholder}
+                            ></TextInput>
+                        </SafeAreaView>
+                    </View>
+                    <Text style={styles.text}>Surname</Text>
+                    <View>
+                        <SafeAreaView style={styles.input}>
+                            <TextInput
+                                onChangeText={(surname) => setSurname(surname)}
+                                placeholder="Surname"
+                                style={styles.placeholder}
+                            ></TextInput>
+                        </SafeAreaView>
+                    </View>
+                    <Text style={styles.text}>E-mail</Text>
+                    <View>
+                        <SafeAreaView style={styles.input}>
+                            <TextInput
+                                onChangeText={(email) => setEmail(email)}
+                                placeholder="E-mail"
+                                style={styles.placeholder}
+                            ></TextInput>
+                        </SafeAreaView>
+                    </View>
+                    <Text style={styles.text}>Role</Text>
+                    <View>
+                        <SafeAreaView style={styles.input}>
+                            <TextInput
+                                onChangeText={(role) => setRole(role)}
+                                placeholder="user or admin"
+                                style={styles.placeholder}
+                            ></TextInput>
+                        </SafeAreaView>
+                    </View>
+                    <Text style={styles.text}>Password</Text>
+                    <View >
+                        <SafeAreaView style={styles.input}>
+                            <TextInput
+                                onChangeText={(password) => setPassword(password)}
+                                placeholder="Password"
+                                secureTextEntry={true}
+                                style={styles.placeholder}
+                            ></TextInput>
+                        </SafeAreaView>
+                    </View>
+                    <Text style={styles.text}>Password confirmation</Text>
+                    <View >
+                        <SafeAreaView style={styles.input}>
+                            <TextInput
+                                onChangeText={(_password) => setConfirmation(_password)}
+                                placeholder="password "
+                                secureTextEntry={true}
+                                style={styles.placeholder}
+                            ></TextInput>
+                        </SafeAreaView>
+                    </View>
+                    <Text style={styles.text}>Phone number</Text>
+                    <View >
+                        <SafeAreaView style={styles.input}>
+                            <TextInput
+                                keyboardType={"numeric"}
+                                onChangeText={(phone) => setPhone(phone)}
+                                placeholder="phone number "
+                                style={styles.placeholder}
+                            ></TextInput>
+                        </SafeAreaView>
+                    </View>
+                    <TouchableOpacity
+                        onPress={handleRegister}
+                        style={styles.button}>
+                        <Text style={styles.submit}>Submit</Text>
+                    </TouchableOpacity>
                 </View>
-                <Text style={styles.text}>E-mail</Text>
-                <View>
-                    <SafeAreaView style={styles.input}>
-                        <TextInput
-                            onChangeText={(email) => setEmail(email)}
-                            placeholder="E-mail"
-                            style={styles.placeholder}
-                        ></TextInput>
-                    </SafeAreaView>
-                </View>
-                <Text style={styles.text}>Role</Text>
-                <View>
-                    <SafeAreaView style={styles.input}>
-                        <TextInput
-                            onChangeText={(role) => setRole(role)}
-                            placeholder="user or admin"
-                            style={styles.placeholder}
-                        ></TextInput>
-                    </SafeAreaView>
-                </View>
-                <Text style={styles.text}>Password</Text>
-                <View >
-                    <SafeAreaView style={styles.input}>
-                        <TextInput
-                            onChangeText={(password) => setPassword(password)}
-                            placeholder="Password"
-                            secureTextEntry={true}
-                            style={styles.placeholder}
-                        ></TextInput>
-                    </SafeAreaView>
-                </View>
-                <Text style={styles.text}>Password confirmation</Text>
-                <View >
-                    <SafeAreaView style={styles.input}>
-                        <TextInput
-                            onChangeText={(_password) => setConfirmation(_password)}
-                            placeholder="password "
-                            secureTextEntry={true}
-                            style={styles.placeholder}
-                        ></TextInput>
-                    </SafeAreaView>
-                </View>
-                <Text style={styles.text}>Phone number</Text>
-                <View >
-                    <SafeAreaView style={styles.input}>
-                        <TextInput
-
-                            keyboardType={"numeric"}
-                            onChangeText={(phone) => setPhone(phone)}
-                            placeholder="phone number "
-                            style={styles.placeholder}
-                        ></TextInput>
-                    </SafeAreaView>
-                </View>
+                {error ? <Feedback message={error.message} level={"error"} /> : null}
+                {success ? <Feedback message={error.message} level={"success"} /> : null}
                 <TouchableOpacity
-                    onPress={handleRegister}
-                    style={styles.button}>
-                    <Text style={styles.submit}>Submit</Text>
+                    onPress={handleGoToBack}>
+                    <Image source={require('../../../assets/images/arrow.png')} style={styles.arrow} />
                 </TouchableOpacity>
-            </View>
-            {error ? <Feedback message={error.message} level={"error"} /> : null}
-            {success ? <Feedback message={error.message} level={"success"} /> : null}
-            <TouchableOpacity
-                onPress={handleGoToBack}>
-                <Image source={require('../../../assets/images/arrow.png')} style={styles.arrow} />
-            </TouchableOpacity>
-        </View>
+            </ScrollView>
+        </SafeAreaView>
     </>);
 }
 

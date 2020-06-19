@@ -1,3 +1,7 @@
+/**
+ * checks if user is logged
+ */
+
 const context = require('./context')
 
 module.exports = function () {

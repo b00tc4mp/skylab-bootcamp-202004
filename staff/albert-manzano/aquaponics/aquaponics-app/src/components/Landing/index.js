@@ -37,6 +37,7 @@ function Landing({ onAuthorized }) {
         try {
             setError(null)
             const result= await loginUser(email, password)
+            console.log(result)
             if (result===undefined) onAuthorized()
             else throw new Error('authorization problem, please retry')
         } catch (error) {
@@ -45,7 +46,6 @@ function Landing({ onAuthorized }) {
     }
 
     const handleRegister = async (name, surname, email, password, _password, phone) => {
-        console.log(name, surname, email, password, _password, phone)
         try {
             setError(null)
             const result = await registerUser(name, surname, email, password, _password, phone)
@@ -53,7 +53,6 @@ function Landing({ onAuthorized }) {
         } catch (error) {
             if (error) setError(error)
         }
-
     }
 
     return (<>

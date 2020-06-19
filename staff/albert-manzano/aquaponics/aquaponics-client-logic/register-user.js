@@ -9,11 +9,11 @@
  * @throws {TypeError} if users input are/is not matching the type needed.
  * @throws {Error} if users email does not attend the regex provided/or password matching
  */
+
 require('aquaponics-commons/polyfills/string')
 const { utils: { Email, call, Password } } = require('aquaponics-commons')
 const context = require('./context')
 require('aquaponics-commons/polyfills/number')
-
 
 module.exports = async function (name, surname, email, password, _password, phone) {
     String.validate(name)
@@ -28,21 +28,19 @@ module.exports = async function (name, surname, email, password, _password, phon
     Number(phone)
     Number.validate(phone)
     const role = "user"
-
-    const status = await call(
+    const {status,body} = await call(
         'POST',
         `${this.API_URL}/users`,
         { name, surname, email, password, role, phone },
         { 'Content-type': 'application/json' })
-
-    if (status === 201) return
+        
+    if (status === 201) return body
 
     const { error } = JSON.parse(body)
-
+    
     throw new Error(error)
 
 }.bind(context)
-
 
 /**
  * @promise returns :

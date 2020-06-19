@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   TouchableOpacity,
@@ -16,9 +16,14 @@ import Users from "../Users";
 function Manager({ onGoToManager, onGoToCalendar, onGoToCharts, onGoToForecast, onGoToGreenhouse, onGoToLogout }) {
   const [displayed, setSide] = useState(false);
   const [view, setView] = useState('manager')
+  const [role,setRole]= useState('')
   const [error, setError] = useState('')
 
   const handleSide = () => setSide(!displayed);
+
+  // useEffect(()=>{
+  //   role && setRole(role)
+  // },[])
 
   const onBack=()=>{
     setView('manager')
@@ -28,7 +33,7 @@ function Manager({ onGoToManager, onGoToCalendar, onGoToCharts, onGoToForecast, 
     <SafeAreaView style={styles.container}>
       <Navbar onDisplaySide={handleSide} />
 
-      {displayed && <SideBar onGoToCalendar={onGoToCalendar} onGoToManager={onGoToManager} onGoToCharts={onGoToCharts} onGoToGreenhouse={onGoToGreenhouse} onGoToForecast={onGoToForecast} onGoToLogout={onGoToLogout} />}
+      {displayed && <SideBar role={role} onGoToCalendar={onGoToCalendar} onGoToManager={onGoToManager} onGoToCharts={onGoToCharts} onGoToGreenhouse={onGoToGreenhouse} onGoToForecast={onGoToForecast} onGoToLogout={onGoToLogout} />}
       {view === 'manager' && (<>
         <TouchableOpacity onPress={() => setView('add')}>
           <Image source={require('../../../assets/images/admin.png')} style={styles.icon} />

@@ -9,5 +9,8 @@ module.exports = {
     retrieveUser: require('./retrieve-user'),
     loginUser:require('./login-user'),
     isUserLoggedIn:require('./is-user-logged-in'),
-    forecast:require('./forecast')
+    forecast:require('./forecast'),
+    logout:require('./logout'),
+    retrieveLastTemperature : require('./retrieve-last-temperature'),
+    isUserSessionValid : require ('./is-usersession-valid'),
 }

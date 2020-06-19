@@ -5,7 +5,7 @@ import SideIntro from './SideIntro'
 import Home from './Home'
 import SideBar from './SideBar'
 import Charts from './Charts'
-// import Greenhouse from './Greenhouse'
+import Greenhouse from './Greenhouse'
 import Forecast from './Forecast'
 import Manager from './Manager'
 import Register from './Register'
@@ -21,7 +21,7 @@ export {
     Home,
     SideBar,
     Charts,
-    // Greenhouse,
+    Greenhouse,
     Forecast,
     Manager,
     Register,
