@@ -16,4 +16,4 @@ ReactDom.render(
     </React.StrictMode>
 )
 
-serviceWorker.uregister()
+serviceWorker.unregister()
