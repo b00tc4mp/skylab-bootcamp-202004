@@ -1,5 +1,5 @@
 const { Schema } = require('mongoose')
-const {ObjectID} = require('mongodb')
+const { ObjectID } = require('mongodb')
 
 module.exports = new Schema({
     symptomList: {

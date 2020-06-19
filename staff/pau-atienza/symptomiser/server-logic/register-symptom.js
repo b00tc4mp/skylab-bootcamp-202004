@@ -3,34 +3,44 @@ require('commons/polyfills/string')
 require('commons/polyfills/number')
 require('commons/polyfills/date')
 const { models: { Symptom } } = require('data')
+const navigation = require('data/models/schemas/navigation')
 
 module.exports = (symptom) => {
+    
     JSON.validateNotArray(symptom)
 
-    const {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}} = symptom
-
-    const {submittedTerm: {HPO_id, name, confidenceLevel, date: date3}} = symptom
+    let {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}} = symptom
+    
+    let {submittedTerm: {HPO_id, name, confidenceLevel, date: date3}} = symptom
     
     prediction.forEach(({predictionCode, predictionName})=>{
-        String.validate(predictionCode)
-        String.validate(predictionName)
+        String.validate.notVoid(predictionCode)
+        String.validate.notVoid(predictionName)
     })
 
-    clicks.forEach(({HPO_id, date})=>{
-        String.validate(HPO_id)
-        Date.validate(date)
+    clicks.forEach(({HPO_id, date}, i, clicks)=>{
+        String.validate.notVoid(HPO_id)
+        Date.validate(new Date(date))
+        clicks[i].date = new Date(date)
     })
 
     Number.validate.greaterEqualThan(limit, 1)
 
-    String.validate(content)
-    String.validate(HPO_id)
-    String.validate(name)
-    String.validate(confidenceLevel)
+    String.validate.notVoid(content)
+    String.validate.notVoid(HPO_id)
+    String.validate.notVoid(name)
+    String.validate.notVoid(confidenceLevel)
+    String.validate.isISODate(date)
+    String.validate.isISODate(date2)
+    String.validate.isISODate(date3)
 
-    Date.validate(date)
-    Date.validate(date2)
-    Date.validate(date3)
+    date = new Date(date)
+    date2 = new Date(date2)
+    date3 = new Date(date3)
+
+    symptom.navigation.serverResponseTime = date - date2
+
+    symptom.navigation.userNavigationTime = clicks[clicks.length-1].date - date2
 
     return Symptom.create(symptom)
         .then(({id})=>id)
