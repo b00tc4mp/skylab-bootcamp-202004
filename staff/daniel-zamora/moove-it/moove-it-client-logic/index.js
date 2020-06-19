@@ -3,5 +3,7 @@ module.exports = {
     authenticateUser: require('./authenticate-user'),
     retrieveUser: require('./retrieve-user'),
     context: require('./context'),
-    retrieveUserBlueprints: require('./retrieve-user-blueprint')
+    retrieveUserBlueprints: require('./retrieve-user-blueprint'),
+    saveBlueprint: require('./save-blueprint'),
+    retrieveBlueprint: require('./retrieve-blueprint')
 }

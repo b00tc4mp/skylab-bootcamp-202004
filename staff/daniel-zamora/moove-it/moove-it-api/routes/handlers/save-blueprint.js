@@ -7,7 +7,7 @@ module.exports = (req, res) => {
 
     try {
         saveBlueprint(userId, blueprintId, name, width, height)
-            .then(() => res.status(201).send())
+            .then(id => res.status(201).json({ id }))
             .catch(error => handleError(error, res))
 
     } catch (error) {
