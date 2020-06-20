@@ -19,7 +19,7 @@ api.post('/symptoms', parseBody, registerSymptom)
 
 api.post('/symptoms/update', parseBody, updateSymptom)
 
-api.post('/symptomLists', parseBody, registerSymptomList)
+api.post('/symptomlists', parseBody, registerSymptomList)
 
 // api.post('/users/auth', parseBody, authenticateUser)
 

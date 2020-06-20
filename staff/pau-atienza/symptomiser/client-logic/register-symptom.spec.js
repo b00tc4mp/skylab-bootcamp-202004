@@ -1,6 +1,8 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL , API_URL } } = process
+const context = require('./context')
+context.API_URL = API_URL
 
 const registerSymptom = require('./register-symptom')
 const { random } = Math
@@ -10,9 +12,9 @@ const { mongoose, models: { Symptom } } = require('data')
 
 const { errors: { VoidError, ValueError } } = require('commons')
 
-describe('server logic - register symptom', () => {
+describe('client logic - register symptom', () => {
     before(() => mongoose.connect(MONGODB_URL))
-    before(() => Symptom.deleteMany())
+    before(done => {Symptom.deleteMany(); done()})
     let content, limit, date, prediction, date2, clicks, HPO_id, name, confidenceLevel, date3, predictionCode, predictionName, HPO_id2, date4, symptom
 
     beforeEach(async () => {
@@ -41,12 +43,12 @@ describe('server logic - register symptom', () => {
     })
 
     it('should succeed on valid data', async () => {
-        const result = await registerSymptom(symptom)
+        const {id} = await registerSymptom(symptom)
 
-        expect(typeof result).to.equal('string')
+        expect(typeof id).to.equal('string')
 
         const symptoms = await Symptom.find()
-
+        debugger
         expect(symptoms.length).to.equal(1)
 
         const [retrievedSymptom] = symptoms
@@ -55,12 +57,12 @@ describe('server logic - register symptom', () => {
 
         const {submittedTerm: {HPO_id: _HPO_id, name: _name, confidenceLevel: _confidenceLevel, date: _date3}} = retrievedSymptom
 
-        expect(retrievedSymptom.id).to.equal(result)
+        expect(retrievedSymptom.id).to.equal(id)
         
         expect(_date.toISOString()).to.equal(date)
         expect(_date2.toISOString()).to.equal(date2)
-        expect(_date3.toISOString()).to.equal(date3)
-        expect(_clicks[0].date.toISOString()).to.equal(clicks[0].date.toISOString())
+        expect(_clicks[0].date.toISOString()).to.equal((clicks[0].date))
+        expect(_date3).to.be.an.instanceof(Date)
 
         expect(_content).to.equal(content)
         expect(_limit).to.equal(limit)
@@ -85,9 +87,9 @@ describe('server logic - register symptom', () => {
 
         symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
 
-        const result = await registerSymptom(symptom)
-
-        expect(typeof result).to.equal('string')
+        const {id} = await registerSymptom(symptom)
+        debugger
+        expect(typeof id).to.equal('string')
 
         const symptoms = await Symptom.find()
 
@@ -96,7 +98,7 @@ describe('server logic - register symptom', () => {
         const [retrievedSymptom] = symptoms
 
         const {navigation: { serverResponseTime, userNavigationTime}} = retrievedSymptom
-
+        debugger
         expect(typeof userNavigationTime).to.equal('number')
         expect(typeof serverResponseTime).to.equal('number')
     })

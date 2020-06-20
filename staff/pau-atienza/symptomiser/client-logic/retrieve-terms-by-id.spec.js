@@ -4,17 +4,16 @@ const context = require('./context')
 context.API_URL = API_URL
 
 const { expect } = require('chai')
-const { mongoose, models: { Term } } = require('data')
-const { errors: { UnexistenceError, VoidError } } = require('commons')
+const { errors: { VoidError } } = require('commons')
 
 const retrieveTermsById = require('./retrieve-terms-by-id')
 
-describe('logic - retrieve-terms-by-HPO_id', () => {
+describe('client logic - retrieve-terms-by-id', () => {
     let HPO_id = "HP:0000010"
 
     describe('when the term exists', () => {
 
-        it('should succeed on correct HPO_id', () =>
+        it('should succeed on correct id', () =>
             retrieveTermsById(HPO_id)
                 .then(result => {
                     expect(result.term).to.exist

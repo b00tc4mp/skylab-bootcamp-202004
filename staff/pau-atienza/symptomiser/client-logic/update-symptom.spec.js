@@ -1,6 +1,8 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, API_URL } } = process
+const context = require('./context')
+context.API_URL = API_URL
 
 const { random } = Math
 const { expect } = require('chai')
@@ -10,10 +12,12 @@ const { mongoose, models: { Symptom } } = require('data')
 const { errors: { VoidError, ValueError } } = require('commons')
 const updateSymptom = require('./update-symptom')
 
-describe('server logic - update symptom', () => {
+describe('client logic - update symptom', () => {
     before(() => mongoose.connect(MONGODB_URL))
     before(() => Symptom.deleteMany())
-    let content, limit, date, prediction, date2, clicks, HPO_id, name, confidenceLevel, date3, predictionCode, predictionName, HPO_id2, date4, symptom, HPO_id3, name2, confidenceLevel2, date5, comments, modifiers, id
+    let content, limit, date, prediction, date2, clicks, HPO_id, name, confidenceLevel, date3, predictionCode, 
+    predictionName, HPO_id2, date4, symptom, HPO_id3, name2, confidenceLevel2, date5, comments, modifiers, id, 
+    userNavigationTime, serverResponseTime, navigation
 
     beforeEach(async () => {
         await Symptom.deleteMany()
@@ -41,14 +45,26 @@ describe('server logic - update symptom', () => {
         predictionName = `predName-${random()}`
         comments = `comment-${random()}`
 
+        userNavigationTime = 1
+        serverResponseTime = 1
+
         clicks = [{HPO_id: HPO_id2, date: date4}]
         prediction = [{predictionCode, predictionName}]
         modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
+        navigation = {
+            predictorInput: {content, limit, date}, 
+            predictorOutput: {prediction, date: date2}, 
+            clicks, 
+            userNavigationTime, 
+            serverResponseTime
+        }
+        
 
-        symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
+        symptom = {navigation, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
 
         const result = await Symptom.create(symptom)
         id = result.id
+        debugger
     })
 
     it('should succeed on valid data', async () => {
@@ -56,15 +72,15 @@ describe('server logic - update symptom', () => {
         symptom.modifiers = modifiers
         symptom.comments = comments
 
-        const _id = await updateSymptom(id, symptom)
+        const {id: _id} = await updateSymptom(id, symptom)
 
         expect(_id).to.equal(id)
 
-        const updatedSymptoms = await Symptom.find()
+        const updatedSymptomList = await Symptom.find()
 
-        expect(updatedSymptoms.length).to.equal(1)
+        expect(updatedSymptomList.length).to.equal(1)
 
-        const [updatedSymptom] = updatedSymptoms
+        const [updatedSymptom] = updatedSymptomList
 
         const {navigation: {predictorInput: {content: _content, limit: _limit, date: _date}, predictorOutput: {prediction: _prediction, date: _date2}, clicks: _clicks}} = updatedSymptom
 
@@ -83,7 +99,7 @@ describe('server logic - update symptom', () => {
         expect(_date.toISOString()).to.equal(date)
         expect(_date2.toISOString()).to.equal(date2)
         expect(_date3.toISOString()).to.equal(date3)
-        expect(_clicks[0].date.toISOString()).to.equal(clicks[0].date.toISOString())
+        expect(_clicks[0].date.toISOString()).to.equal(clicks[0].date)
         expect(_date5.toISOString()).to.equal(date5)
         
         expect(_clicks[0].HPO_id).to.equal(clicks[0].HPO_id)

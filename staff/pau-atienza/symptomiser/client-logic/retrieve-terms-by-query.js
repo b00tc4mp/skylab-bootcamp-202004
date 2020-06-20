@@ -1,5 +1,5 @@
 require('commons/polyfills/string')
-const { errors: { UnexistenceError }, utils: { call } } = require('commons')
+const { utils: { call } } = require('commons')
 const context = require('./context')
 global.fetch = require('node-fetch')
 

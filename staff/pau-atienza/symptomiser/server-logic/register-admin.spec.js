@@ -11,7 +11,7 @@ const bcrypt = require('bcryptjs')
 
 const { errors: { DuplicityError, VoidError } } = require('commons')
 
-describe('logic - register admin', () => {
+describe('server logic - register admin', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let username, email, password

@@ -10,7 +10,7 @@ const { mongoose, models: { Admin } } = require('data')
 const bcrypt = require('bcryptjs')
 const { errors: { UnexistenceError, VoidError, CredentialsError } } = require('commons')
 
-describe('logic - unregister admin', () => {
+describe('server logic - unregister admin', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let username, email, password, adminId, hash

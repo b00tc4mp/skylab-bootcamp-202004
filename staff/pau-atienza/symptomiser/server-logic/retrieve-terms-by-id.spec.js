@@ -6,7 +6,7 @@ const { errors: { UnexistenceError, VoidError } } = require('commons')
 
 const retrieveTermsById = require('./retrieve-terms-by-id')
 
-describe('logic - retrieve-terms-by-HPO_id', () => {
+describe('server logic - retrieve-terms-by-HPO_id', () => {
     let HPO_id = "HP:0000010"
 
     before(() => {
