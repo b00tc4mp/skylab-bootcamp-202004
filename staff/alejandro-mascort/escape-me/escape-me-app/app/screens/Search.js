@@ -66,7 +66,7 @@ export default function () {
                         if (moreThanPlayersMin) filter['moreThanPlayersMin'] = moreThanPlayersMin
                         if (lessThanPlayersMax) filter['lessThanPlayersMax'] = lessThanPlayersMax
 
-                        escapeList = await searchEscapeRoom(query, filter)
+                        escapeList = await searchEscapeRoom(query.toLowerCase(), filter)
                         setEscapeRooms(escapeList)
                         setSearched(true)
                     }} />
@@ -159,11 +159,11 @@ export default function () {
                 {
                     searched ?
                         escapeRooms.length ?
-                            escapeRooms.map(({ city, id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin }) => {
+                            escapeRooms.map(({ city, id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin, rating }) => {
                                 return (<Card
                                     key={id}
                                     title={name}
-                                    rating='4.9'
+                                    rating={rating}
                                     escapeId={id}
                                     people={`${playersMin}-${playersMax}`}
                                     genre={genre} price={`${priceMin}-${priceMax}€`} image={{ uri: _image }}

@@ -31,11 +31,11 @@ export default function (props) {
         }}>
             <ScrollView>
                 {escapeRooms.length ?
-                    escapeRooms.map(({ id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin }) => {
+                    escapeRooms.map(({ id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin, rating }) => {
                         return (<Card
                             key={id}
                             title={name}
-                            rating='4.9'
+                            rating={rating}
                             escapeId={id}
                             people={`${playersMin}-${playersMax}`}
                             genre={genre} price={`${priceMin}-${priceMax}€`} image={{ uri: _image }}

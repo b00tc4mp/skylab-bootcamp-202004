@@ -8,12 +8,17 @@ const styles = require('./style')
 
 function Card({ title, rating, people, genre, price, image, participated, pending, favorites, escapeId, onEscapes }) {
     const [modalVisible, setModalVisible] = useState(false)
+    const [rate, setRate] = useState(rating)
 
     function handleToggle(tag) {
         (async () => {
             await toggleEscapeRoom(escapeId, tag)
             await onEscapes()
         })()
+    }
+
+    function handleRate(rating) {
+        setRate(rating)
     }
 
     return (
@@ -41,11 +46,11 @@ function Card({ title, rating, people, genre, price, image, participated, pendin
             </TouchableOpacity>
             <Modal visible={modalVisible} animationType="slide">
                 <Button title="Close" onPress={() => setModalVisible(false)} />
-                <CardDetails escapeId={escapeId} onEscapes={onEscapes} pending={pending} favorites={favorites} participated={participated} />
+                <CardDetails escapeId={escapeId} onEscapes={onEscapes} pending={pending} favorites={favorites} participated={participated} handleRate={handleRate} rate={rate} />
             </Modal>
             <View style={styles.info}>
                 <View style={styles.pair}>
-                    <Text style={styles.text}>{rating}</Text>
+                    <Text style={styles.text}>{rate}</Text>
                     <MaterialCommunityIcons name="star" size={24} color="yellow" />
                 </View>
                 <View style={styles.pair}>

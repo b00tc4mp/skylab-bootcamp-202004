@@ -1,19 +1,22 @@
 import React, { Component } from 'react'
-import { ImageBackground, StyleSheet, SafeAreaView, View, Text, Linking, Button, TouchableOpacity, ScrollView, Platform } from 'react-native'
+import { ImageBackground, StyleSheet, SafeAreaView, View, Text, Linking, Button, TouchableOpacity, ScrollView, Platform, TextInput, KeyboardAvoidingView } from 'react-native'
 import { FontAwesome, MaterialIcons, AntDesign, SimpleLineIcons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating'
 import Review from '../components/Review/'
-
-import { retrieveEscapeRoomDetails, toggleEscapeRoom, retrieveEscapeIds, rateEscapeRoom, retrieveUser } from 'escape-me-client-logic'
+import { retrieveEscapeRoomDetails, toggleEscapeRoom, retrieveEscapeIds, rateEscapeRoom, retrieveUser, commentEscapeRoom } from 'escape-me-client-logic'
 
 class CardDetails extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            escapeRoom: { reviews: [] },
+            escapeRoom: {},
             userLists: {},
-            starCount: 0
+            starCount: 0,
+            rating: this.props.rate,
+            modalVisible: false,
+            comment: '',
+            reviews: []
         }
 
     }
@@ -26,7 +29,6 @@ class CardDetails extends Component {
     }
 
     componentDidMount() {
-        console.log('hellow')
         let escape, lists
         (async () => {
             lists = await retrieveEscapeIds()
@@ -36,17 +38,21 @@ class CardDetails extends Component {
 
             const { reviews } = escape
 
+            this.setState({ reviews })
+
             const { username = '' } = await retrieveUser()
 
             reviews.forEach(({ user, rating }) => {
-                if (user.username === username) this.setState({ starCount: rating })
+                if (user.username === username) {
+                    this.setState({ starCount: rating })
+                }
             })
         })()
     }
 
     render() {
         return (
-            <SafeAreaView style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior='padding'>
                 <ScrollView>
                     <ImageBackground style={styles.image} source={{ uri: this.state.escapeRoom.image }} >
                         <View style={styles.personal}>
@@ -67,7 +73,7 @@ class CardDetails extends Component {
                                     color="black" style={styles.profile} onPress={() => this.handleToggle('pending')} />}
                         </View>
                         <View style={styles.punctuation}>
-                            <Text style={{ fontSize: 18 }}>{this.state.escapeRoom.rating}</Text>
+                            <Text style={{ fontSize: 18 }}>{this.state.rating}</Text>
                             <MaterialCommunityIcons name="star" size={30} color="#FFD300" />
                         </View>
                     </ImageBackground>
@@ -117,27 +123,40 @@ class CardDetails extends Component {
                                         (async () => {
                                             this.setState({ starCount: rating })
                                             await rateEscapeRoom(this.props.escapeId, Number(rating))
+                                            escape = await retrieveEscapeRoomDetails(this.props.escapeId)
+                                            this.setState({ rating: escape.rating })
+                                            this.props.handleRate(escape.rating)
                                         })()} />
-                            </View>
-                            <View style={styles.comment}>
-                                <Text style={styles.tag}>+ ADD A COMMENT</Text>
                             </View>
                         </View>
                         <View style={styles.review}>
                             {
-                                this.state.escapeRoom.reviews.map(({ rating, comment, user }) => {
+                                this.state.reviews.map(({ rating, comment, user }) => {
                                     if (comment) {
-                                        return <Review username={`${user['name'] ? user['name'] : ''} ${user['surname'] ? user['surname'] : ''} (@${user['username']})`} comment={comment.message} rating={rating} />
+                                        return <Review username={` @${user['username']}`} comment={comment.message} rating={rating} date={comment.date} />
                                     }
                                 })}
-                            {/* <Review username={'Tyler Durden'} comment={'Was a nice expirience, but it was not me'} rating={4} />
-                            <Review username={'Tyler Durden'} comment={'Was a nice expirience, but it was not me.'} rating={4} />
-                            <Review username={'Tyler Durden'} comment={'Was a nice expirience, but it was not me.'} rating={4} />
-                            <Review username={'Tyler Durden'} comment={'Was a nice expirience, but it was not me, or yes, maybe was marla I am not sure.'} rating={4} /> */}
+                            <View style={styles.commentSection}>
+                                <TextInput style={styles.commentInput}
+                                    onChangeText={text => this.setState({ comment: text })}
+                                    placeholder='Add a comment...'
+                                    value={this.state.comment} />
+                                <TouchableOpacity style={styles.commentIcon} onPress={() => {
+                                    return (async () => {
+                                        await commentEscapeRoom(this.props.escapeId, this.state.comment)
+                                        escape = await retrieveEscapeRoomDetails(this.props.escapeId)
+                                        const { reviews } = escape
+                                        this.setState({ reviews })
+                                        this.setState({ comment: '' })
+                                    })()
+                                }}>
+                                    <FontAwesome name="send" size={24} color="white" />
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                 </ScrollView>
-            </SafeAreaView>
+            </KeyboardAvoidingView>
         );
     }
 }
@@ -158,6 +177,22 @@ const styles = StyleSheet.create({
         backgroundColor: '#4ecdc4',
         borderRadius: 20,
         padding: 5
+    },
+    commentSection: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    commentInput: {
+        backgroundColor: 'white',
+        width: '80%',
+        height: 40,
+        borderRadius: 20,
+        paddingHorizontal: 10,
+        justifyContent: 'center'
+    },
+    commentIcon: {
+        marginRight: 20
     },
     container: {
         backgroundColor: '#f8f4f4'
@@ -236,7 +271,7 @@ const styles = StyleSheet.create({
     rateHeader: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         marginBottom: 10
     },
     review: {

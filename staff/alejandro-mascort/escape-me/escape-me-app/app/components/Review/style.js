@@ -8,6 +8,23 @@ module.exports = StyleSheet.create({
         padding: 5,
         marginVertical: 5
     },
+    comment: {
+        marginTop: 5,
+        fontSize: 16,
+        marginLeft: 10
+    },
+    date: {
+        position: "absolute",
+        right: 20,
+        bottom: 5,
+        color: 'white',
+        backgroundColor: '#4ecdc4',
+        borderRadius: 10,
+    },
+    dateText: {
+        color: 'white',
+        padding: 3
+    },
     header: {
         flexDirection: 'row',
         alignItems: 'center'
@@ -16,5 +33,5 @@ module.exports = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginRight: 10
-    }
+    },
 })
