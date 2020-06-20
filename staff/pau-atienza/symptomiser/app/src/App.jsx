@@ -21,9 +21,13 @@ function App({ history }) {
       event.preventDefault()
 
       const query = event.target.query.value
+      storeQuery(query)
       const results = await retrieveTermsByQuery(query)
+      storeResults(results)
+
       setResults(results)
       setHighlightedSymptom(null)
+
       history.push('/results')
     })()
   }
