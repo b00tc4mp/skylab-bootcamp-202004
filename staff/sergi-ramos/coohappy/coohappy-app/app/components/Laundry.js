@@ -77,7 +77,7 @@ const Laundry = function ({ navigation }) {
 
         <View style={styles.container}>
 
-            <HeaderHome user={'La Floca'} />
+            <HeaderHome user={'La Floca'} navigation={navigation} />
             <View>
 
 

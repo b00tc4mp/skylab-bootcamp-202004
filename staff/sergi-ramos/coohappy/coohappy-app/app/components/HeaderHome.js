@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import SvgUri from 'expo-svg-uri'
 
-const HeaderHome = function ({user, surname}) {
+const HeaderHome = function ({user, surname, navigation}) {
     //const [name, setName] = useState
     //const [surname, setSurname] = useState
 
@@ -13,8 +13,8 @@ const HeaderHome = function ({user, surname}) {
         <View style={styles.header}>
             <SvgUri style={styles.houseIcon} source={require('../assets/ic-house.svg')} />
             <Text style={styles.titleText}>{user} {surname} </Text>
-            <TouchableOpacity activeOpacity={0.8}>
-            <SvgUri onPr style={styles.userIcon} source={require('../assets/ic-user.svg') } />
+            <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('UpdateUser')}>
+            <SvgUri  style={styles.userIcon} source={require('../assets/ic-user.svg') } />
             </TouchableOpacity>
         </View>
     )

@@ -3,26 +3,24 @@ import { TextInput, TouchableOpacity, View, StyleSheet, Text, AsyncStorage } fro
 import { useFocusEffect } from '@react-navigation/native'
 import SvgUri from "expo-svg-uri"
 import HeaderHome from './HeaderHome'
-import { sendMessage, retrieveMessage } from 'coohappy-client-logic'
+import { sendMessage, retrieveMessage, retrieveUser } from 'coohappy-client-logic'
 import getNow from 'coohappy-client-logic/helpers/getNow'
 import { FlatList } from 'react-native-gesture-handler';
 
-const Chat = function () {
+const Chat = function ({ navigation }) {
 
     const [messages, setMessages] = useState([])
     const [singleMessage, setSingleMessage] = useState()
+    const [userId, setUserId] = useState()
 
     let interval
     useFocusEffect(
         React.useCallback(() => {
-
-
             interval = setInterval(async () => {
                 const token = await AsyncStorage.getItem('TOKEN')
                 const _messages = await retrieveMessage(token)
                 setMessages(_messages.messages.reverse())
             }, 2000)
-
 
             return () => {
                 clearInterval(interval)
@@ -34,12 +32,12 @@ const Chat = function () {
 
     }, [messages.length])
 
-
-
     useEffect(() => {
         (async () => {
 
             const token = await AsyncStorage.getItem('TOKEN')
+            const user = await retrieveUser(token)
+            setUserId(user.id)
             const _messages = await retrieveMessage(token)
             setMessages(_messages.messages.reverse())
         })()
@@ -68,36 +66,39 @@ const Chat = function () {
 
         <View style={styles.container}>
 
-            <HeaderHome />
+            <HeaderHome navigation={navigation} />
 
             <View style={styles.messages}>
 
                 <FlatList
-
                     data={messages}
                     inverted={true}
                     renderItem={({ item }) =>
-                    <>
-                    <View style={styles.messageContainer}>
-                                <Text style={styles.name}>{item.userId.name + ' ' + item.userId.surname}</Text>
-                                <Text style={styles.hour}><Text numberOfLines={3} style={styles.message}>{item.message + '  '}</Text>{item.date.hour}</Text>
-                            </View>
-                        </>
+                        <>
+                            {userId === item.userId._id ?
 
-                    }/>
+                                <View style={styles.messageContainerCurrentUser}>
+                                    <Text style={styles.hourCurrentUser}><Text numberOfLines={3} style={styles.messageCurrentUser}>{item.message + '  '}</Text>{item.date.hour}</Text>
+                                </View> :
+
+                                <View style={styles.messageContainer}>
+                                    <Text style={styles.name}>{item.userId.name + ' ' + item.userId.surname}</Text>
+                                    <Text style={styles.hour}><Text numberOfLines={3} style={styles.message}>{item.message + '  '}</Text>{item.date.hour}</Text>
+                                </View>
+                            }
+                        </>
+                    } />
 
             </View>
             <View style={styles.chat}>
 
                 <TextInput onChangeText={(value) => setSingleMessage(value)} style={styles.input} placeholder="Say something to your neighbors" placeholderTextColor="#81868e" />
 
-
                 <TouchableOpacity activeOpacity={0.2} style={styles.send} onPress={() => handleOnSubmitSendMessage()}>
                     <SvgUri width='50' height='50' source={require('../assets/btn-send.svg')} />
                 </TouchableOpacity>
 
             </View>
-
         </View>
     )
 }
@@ -127,7 +128,6 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         marginLeft: 20
     },
-
     userIcon: {
         marginBottom: 20,
         marginRight: 20
@@ -143,9 +143,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         height: 55,
         width: '80%',
-        marginTop: 10,
-        marginLeft: 15,
-
+        marginTop: 12,
+        marginLeft: 12,
         borderRadius: 25,
         paddingLeft: 20,
         color: 'black'
@@ -153,16 +152,14 @@ const styles = StyleSheet.create({
     messages: {
         flex: 1,
         backgroundColor: 'white'
-
     },
     messageContainer: {
-        alignSelf:'flex-start',
+        alignSelf: 'flex-start',
         marginBottom: 15,
         marginTop: 5,
         marginLeft: 20,
         marginRight: 40,
         backgroundColor: '#f1f1f1',
-        
         alignItems: 'flex-start',
         padding: (10, 10, 10, 10),
         borderRadius: 15,
@@ -183,7 +180,30 @@ const styles = StyleSheet.create({
     send: {
         justifyContent: 'center',
         marginRight: 10
-    }
+    },
+    messageContainerCurrentUser: {
+        alignSelf: 'flex-end',
+        marginBottom: 15,
+        marginTop: 5,
+        marginLeft: 40,
+        marginRight: 20,
+        backgroundColor: '#ffedad',
 
-
+        alignItems: 'flex-start',
+        padding: (10, 10, 10, 10),
+        borderRadius: 15,
+    },
+    hourCurrentUser: {
+        color: '#c4c4c4',
+        fontSize: 10
+    },
+    messageCurrentUser: {
+        color: 'black',
+        fontSize: 15
+    },
+    nameCurrentUser: {
+        fontSize: 15,
+        fontWeight: '700',
+        width: 150
+    },
 })

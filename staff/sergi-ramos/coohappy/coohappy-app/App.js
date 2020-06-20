@@ -13,6 +13,7 @@ import Laundry from "./app/components/Laundry"
 import ShopList from "./app/components/ShopList"
 import WeekDays from "./app/components/WeekDays"
 import TimeLaundry from "./app/components/timeLaundry"
+import SingleFruit from "./app/components/SingleFruit"
 
 
 // import Navigator from "./routes/home-stack"
@@ -44,6 +45,9 @@ export default function App() {
     {/* <Laundry /> */}
     {/* <TimeLaundry /> */}
     {/* <Chat /> */}
+    {/* <SingleFruit /> */}
+    {/* <ShopList /> */}
+
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Landing">
         <Stack.Screen name="Landing" component={Landing} />

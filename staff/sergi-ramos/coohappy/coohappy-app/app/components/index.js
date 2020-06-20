@@ -13,6 +13,7 @@ module.exports = {
     Laundry: require('./Laundry'),
     ShopList: require('./ShopList'),
     WeekDays: require('./WeekDays'),
-    TimeLaundry: require('./TimeLaundry')
+    TimeLaundry: require('./TimeLaundry'),
+    SingleFruit: require('./SingleFruit')
 
 }
