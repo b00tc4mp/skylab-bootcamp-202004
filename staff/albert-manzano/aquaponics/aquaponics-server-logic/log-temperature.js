@@ -9,7 +9,8 @@ require('aquaponics-commons/polyfills/number')
 module.exports = (temperature) => {
 
     Number.validate(temperature)
-    const date = new Date
+    const date = new Date 
+debugger
     return Temperature.create({ temperature, date })
         .then(() => { })
 }

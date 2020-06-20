@@ -25,7 +25,13 @@ const styles = StyleSheet.create({
 
     bgcolorgGreen:{
         backgroundColor:'green',
-        marginTop:'20%',
+        marginTop:30,
+        width:'100%',
+        textAlign:"center",
+        height:100,
+        color:'white',
+        textAlignVertical:'center',
+        fontSize:30
     },
 
     ph:{
@@ -34,7 +40,13 @@ const styles = StyleSheet.create({
 
     bgcolorRed:{
         backgroundColor:'red',
-        marginTop:'20%'
+        marginTop:30,
+        width:'100%',
+        textAlign:"center",
+        height:100,
+        color:'white',
+        textAlignVertical:'center',
+        fontSize:30
     },
 
     icon:{

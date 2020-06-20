@@ -42,6 +42,7 @@ function Forecast({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToFor
             try {
                 let { temp, temp_max, temp_min, main, wind } = await forecast(0)
                 if (main === 'Rain') main = "rainy"
+                if (main === 'Clouds') main = 'cloudy'
                 setWind(wind)
                 setMain(main)
                 setTemp(temp)

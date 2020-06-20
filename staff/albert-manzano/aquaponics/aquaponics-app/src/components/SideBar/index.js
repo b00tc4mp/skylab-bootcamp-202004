@@ -38,13 +38,13 @@ function SideBar({ onGoToCharts, onGoToManager, onGoToGreenhouse, onGoToForecast
                     <Image source={require('../../../assets/images/forecast.png')} style={styles.icon} />
                 </TouchableOpacity>
             </View>
-            {/* <View>
+            <View>
                 <Text style={styles.text}> Calendar </Text>
                 <TouchableOpacity onPress={onGoToCalendar}>
                     <Image source={require('../../../assets/images/calendar.png')} style={styles.icon} />
                 </TouchableOpacity>
-            </View> */}
-            <View>
+            </View>
+            <View style={styles.last}>
                 <TouchableOpacity onPress={onGoToLogout}>
                 <Text style={styles.text}> Logout </Text>
                     <Image source={require('../../../assets/images/logout.png')} style={styles.icon} />

@@ -11,6 +11,9 @@ module.exports = {
     forecast:require('./forecast'),
     logout:require('./logout'),
     retrieveLastTemperature : require('./retrieve-last-temperature'),
+    retrieveLastPh : require('./retrieve-last-ph'),
     isUserSessionValid : require ('./is-usersession-valid'),
-    forcast3Days: require('./forecast-3days')
+    forcast3Days: require('./forecast-3days'),
+    retrieveTemperature:require('./retrieve-temperature'),
+    retrievePh:require('./retrieve-ph'),
 }

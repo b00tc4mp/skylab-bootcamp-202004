@@ -16,35 +16,35 @@ const styles = StyleSheet.create({
     canvas: {
         // alignItems: "center",
         backgroundColor: "#c4c4c4",
-        height: 531,
-        width: 279,
+        height: '90%',
+        width: '90%',
         marginTop:'5%',
         alignSelf: 'center',
         // marginTop:"5%",
     },
    
-    activityIndicator: {
-        flexDirection:"column",
-        alignContent:'center',
-    },
-
-
-    iconTemp: {
-        height: 45,
-        width: 45,
-    },
-
-    iconPh: {
-        height: 45,
-        width: 45,
-    },
-
-    wrap:{
-        marginTop:'5%',
-        flexDirection: "row",
-        justifyContent:"space-evenly",
-        alignItems:"center",
+    title:{
+        alignSelf:"center",
+        fontSize:25,
+        marginTop:15
     }
+
+    // iconTemp: {
+    //     height: 45,
+    //     width: 45,
+    // },
+
+    // iconPh: {
+    //     height: 45,
+    //     width: 45,
+    // },
+
+    // wrap:{
+    //     marginTop:'5%',
+    //     flexDirection: "row",
+    //     justifyContent:"space-evenly",
+    //     alignItems:"center",
+    // }
 });
 
 export default styles;

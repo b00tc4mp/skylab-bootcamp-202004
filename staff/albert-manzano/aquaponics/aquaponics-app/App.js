@@ -11,16 +11,17 @@ import {
 
 import { Landing, Home, Charts, Navbar, Forecast, Manager, Greenhouse } from './src/components';
 
-import logic, { retrieveUser, logout, retrieveLastTemperature, isUserLoggedIn, isUserSessionValid } from 'aquaponics-client-logic'
+import logic, { retrieveUser, logout, retrieveLastTemperature, retrieveLastPh, isUserLoggedIn, isUserSessionValid } from 'aquaponics-client-logic'
 
 logic.__context__.storage = AsyncStorage;
 
 export default function App() {
-  const [view, setView] = useState('home')
+  const [view, setView] = useState('calendar')
   const [error, setError] = useState()
   const [name, setName] = useState('')
   const [role, setRole] = useState('')
   const [lastTemp, setLastTemp] = useState('')
+  const [lastPh, setLastPh] = useState('')
 
   useEffect(() => {
     if (isUserLoggedIn())
@@ -44,8 +45,11 @@ export default function App() {
       (async () => {
         try {
           const lastTemp = await retrieveLastTemperature()
+          const lastPh = await retrieveLastPh()
           console.log(lastTemp)
-          return setLastTemp(lastTemp)
+          console.log(lastPh)
+          setLastTemp(lastTemp)
+          setLastPh(lastPh)
         } catch (error) {
           throw new Error('something wrong happened')
         }
@@ -99,7 +103,7 @@ export default function App() {
       {view === 'home' && <Home role={role} name={name} error={error} onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
       {view === 'charts' && <Charts role={role} onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
       {view === 'manager' && <Manager role={role} onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
-      {view === 'greenhouse' && <Greenhouse role={role} lastTemp={lastTemp} onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
+      {view === 'greenhouse' && <Greenhouse role={role} lastPh={lastPh} lastTemp={lastTemp} onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
       {view === 'forecast' && <Forecast role={role} onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
       {/* {view === 'calendar' && <Calendar onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />} */}
     </SafeAreaView>
