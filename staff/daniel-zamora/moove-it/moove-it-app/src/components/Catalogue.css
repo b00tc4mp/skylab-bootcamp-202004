@@ -1,19 +1,10 @@
-/* .item {
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    padding: 0;
-    margin: 1vw;
-    width: 4vw;
-    height: 3vh;
-} */
 
 .placed {
     position: absolute;
 }
 
 
-/*como conservar el tamaño y los atributos anteriores al cambiarlo a placed*/
+/* TODO como conservar el tamaño y los atributos anteriores al cambiarlo a placed*/
 
 .double-bed {
     background-color: blueviolet;

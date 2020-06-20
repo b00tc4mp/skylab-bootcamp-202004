@@ -3,14 +3,16 @@ require('moove-it-commons/polyfills/string')
 const context = require('./context')
 
 
-module.exports = function(name, surname, email, password) {
+module.exports = function(name, surname, email, password, passwordConfirmation) {
     debugger
     String.validate.alphabetic(name)
     String.validate.alphabetic(surname)
     Email.validate(email)
 
     String.validate.lengthGreaterEqualThan(password, 8)
+    String.validate.lengthGreaterEqualThan(passwordConfirmation, 8)
 
+    if(password !== passwordConfirmation) throw new Error('both passwords has to be the same')
 
     return call('POST', `${this.API_URL}/users`,
             `{"name": "${name}", "surname": "${surname}", "email": "${email}", "password": "${password}"}`, { 'Content-type': 'application/json' })

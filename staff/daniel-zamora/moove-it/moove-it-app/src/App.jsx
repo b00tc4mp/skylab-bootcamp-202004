@@ -1,12 +1,11 @@
 import React from 'react';
-import './App.sass';
 import { useState } from 'react';
 import Register from './components/Register';
 import Login from './components/Login';
 import Home from './components/Home';
 
 
-function App() {
+export default function App() {
   const [view, setView] = useState('register')
   const [token, setToken] = useState()
 
@@ -30,5 +29,4 @@ function App() {
   </>
 }
 
-export default App;
 

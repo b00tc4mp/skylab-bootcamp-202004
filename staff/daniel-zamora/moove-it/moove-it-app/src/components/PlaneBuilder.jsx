@@ -1,71 +1,59 @@
 import React, { useState } from 'react'
 import './PlaneBuilder.css'
 import './items.css'
-// const background = require('../images/blueprint-background.jpg')
+import Catalogue from './Catalogue'
 
-const items = [
-    'double-bed',
-    'single-bed'
-]
-export default function PlaneBuilder () { 
+export default function PlaneBuilder({itemId}) {
 
     const [placedItems, setPlacedItems] = useState([])
 
-    const handleDrag = (e) => {
-        e.dataTransfer.setData("text", e.target.id)
+    const handleCatalogueDrag = (e) => {
+        const catalogueItemId = e.dataTransfer.getData("text", e.target.id)
     }
-    
-    const handleDrop = (e) => { 
+
+    const handlePlaneDrag = (e) => {
+        const planeItemId = e.dataTransfer.getData("text", e.target.id)
+    }
+
+    const handleDrop = (e) => {
         e.preventDefault()
         let item = e.dataTransfer.getData("text")
-        if(placedItems.find(element => element.item === item)){
+        if (placedItems.find(element => element.item === item)) {
             updateItem(item, e.clientX, e.clientY)
-        } else {    
+        } else {
             placeItem(item, e.clientX, e.clientY)
         }
-     }
-    
-    const updateItem = (item, x, y) => {
-        const updated = placedItems.filter(element=>element.item !== item)
-        debugger
-        setPlacedItems([...updated, {item, x, y}])
     }
- 
+
+    const updateItem = (item, x, y) => {
+        const updated = placedItems.filter(element => element.item !== item)
+        setPlacedItems([...updated, { item, x, y }])
+    }
+
     const handleDragOver = (e) => {
         e.preventDefault()
     }
-    
-    const placeItem = (item, x, y)=> { debugger
-        setPlacedItems(prevPlacedItems =>  ([...prevPlacedItems, {item, x, y}])
-        )}
 
-    return (
-        <div className="map-builder">
-            <div className="map" 
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-            >
-            {placedItems.map((placed, i) => { debugger
-                
-                return <div
-                    data-placed = {true}
-                    className={`placed ${(placed.item).split('_')[0]}`} 
-                    style={{left: placed.x, top: placed.y}}
-                    draggable={true}
-                    onDragStart={handleDrag}
-                    id={`${placed.item}`}>
-                    
+    const placeItem = (item, x, y) => {
+        debugger
+        setPlacedItems(prevPlacedItems => ([...prevPlacedItems, { item, x, y }]))
+    }
 
-            </div>})}
+    return ( <>
+        <div className = "map-builder" >
+            <div className = "map"
+            onDragOver = { handleDragOver }
+            onDrop = { handleDrop } > {
+                placedItems.map((placed, i) => {
+                    return <div data-placed = { true }
+                    className = {`placed ${(placed.item).split('_')[0]}` }
+                    style = {{ left: placed.x, top: placed.y }}
+                    draggable = { true }
+                    onDragStart = { handlePlaneDrag }
+                    id = { `${placed.item}` } >
+                    </div>})} 
         </div>
-        {/* <CatalogView props={catalogue}/>  separar el catalogo */}
-            <div className="items">{
-                items.map((item, i) => (
-                    <div className={item} 
-                    draggable={true}
-                    onDragStart={handleDrag}
-                    id={`${item}`}/>))}
-            </div>
-        </div>
-    )
+      </div> 
+      <Catalogue onDragStart={handleCatalogueDrag}/>  
+    </>)
 }
