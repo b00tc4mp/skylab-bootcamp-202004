@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .plane {
+            width: 50vh;
+            height: 50vh;
+            background-color: lightgray;
+            position: absolute;
+            left: 5vh;
+            top: 5vh;
+        }
+
+        .axis-x {
+            width: 50vh;
+            height: 1px;
+            background-color: red;
+            transform-origin: center;
+            position: absolute;
+            top: 25vh;
+        }
+
+        .axis-y {
+            width: 1px;
+            height: 50vh;
+            background-color: blue;
+            transform-origin: center;
+            position: absolute;
+            left: 25vh;
+        }
+
+        .bed {
+            width: 10vh;
+            height: 15vh;
+            background-color: skyblue;
+            transform-origin: center;
+            position: absolute;
+            transform: translate(20vh, 17.5vh) rotate(45deg) scale(2);
+            z-index: 0;
+        }
+
+        .round-table {
+            width: 10vh;
+            height: 15vh;
+            border-radius: 50%;
+            background-color: plum;
+            transform-origin: center;
+            position: absolute;
+            transform: translate(20vh, 17.5vh) rotate(23deg);
+            /* final position calculus => fx = x - w/2, fy = y - h/2 */
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="plane">
+        <div class="axis-x"></div>
+        <div class="axis-y"></div>
+        <div class="bed"></div>
+        <div class="round-table"></div>
+    </div>
+</body>
+
+</html>
