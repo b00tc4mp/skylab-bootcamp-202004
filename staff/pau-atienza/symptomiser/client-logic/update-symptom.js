@@ -1,10 +1,13 @@
 require('commons/polyfills/json')
 require('commons/polyfills/string')
-const { models: { Symptom } } = require('data')
+require('commons/polyfills/number')
+const { utils: { call } } = require('commons')
+const context = require('./context')
+global.fetch = require('node-fetch')
 
-module.exports = (id, symptom) => {
+module.exports = function(id, symptom){
     String.validate(id)
-    
+
     JSON.validateNotArray(symptom)
 
     let {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}} = symptom
@@ -16,10 +19,9 @@ module.exports = (id, symptom) => {
         String.validate.notVoid(predictionName)
     })
 
-    clicks.forEach(({HPO_id, date}, i, clicks)=>{
+    clicks.forEach(({HPO_id, date})=>{
         String.validate.notVoid(HPO_id)
-        Date.validate(new Date(date))
-        clicks[i].date = new Date(date)
+        String.validate.isISODate(date)
     })
 
     Number.validate.greaterEqualThan(limit, 1)
@@ -36,20 +38,24 @@ module.exports = (id, symptom) => {
     const {modifiers, comments} = symptom
 
     comments && String.validate(comments)
-    modifiers && modifiers.forEach(({HPO_id, name, confidenceLevel, date}, i, modifiers)=>{
+    modifiers && modifiers.forEach(({HPO_id, name, confidenceLevel, date})=>{
         String.validate(HPO_id)
         String.validate(name)
         String.validate(confidenceLevel)
         String.validate.isISODate(date)
-        modifiers[i].date = new Date(date)
     })
 
     date = new Date(date)
     date2 = new Date(date2)
     date3 = new Date(date3)
-    
-    if (modifiers || comments){
-        return Symptom.findByIdAndUpdate(id, {$set: {modifiers, comments}})
-            .then(({id})=>id)
-    }
-}
+
+    return (async ()=>{
+        const {status, body} = await call('POST', `${this.API_URL}/symptoms/update`, JSON.stringify({id, symptom}), {"Content-type": "application/json"})
+        if (status !== 200) {
+            const {error} = JSON.parse(body)
+
+            throw new Error(error)
+        }
+        return JSON.parse(body)
+    })()
+}.bind(context)

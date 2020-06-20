@@ -1,6 +1,8 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL , API_URL } } = process
+const context = require('./context')
+context.API_URL = API_URL
 const { mongoose } = require('data')
 const registerSymptomList = require('./register-symptom-list')
 
@@ -10,8 +12,7 @@ mongoose.connect(MONGODB_URL)
         console.info(`connected to database ${MONGODB_URL}`)
 
         const symptomList = {
-            symptomList: ["5eeb8e92cebb32062f46cafa"],
-            date: new Date().toISOString()
+            symptomList: ["5eeb8e92cebb32062f46cafa"]
         }
 
         return registerSymptomList(symptomList)

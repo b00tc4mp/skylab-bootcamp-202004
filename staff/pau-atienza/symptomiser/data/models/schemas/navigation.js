@@ -17,5 +17,13 @@ module.exports = new Schema({
     clicks: {
         type: [navigationItem],
         required: true
+    },
+    serverResponseTime: {
+        type: Number,
+        required: true
+    },
+    userNavigationTime: {
+        type: Number,
+        required: true
     }
 })

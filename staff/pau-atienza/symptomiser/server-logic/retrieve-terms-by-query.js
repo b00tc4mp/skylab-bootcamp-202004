@@ -7,7 +7,6 @@ global.fetch = require('node-fetch')
 
 module.exports = query => {
     String.validate.notVoid(query)
-    let result = {lower: [], higher: []}
     return (async ()=>{
         const { status, body } = await call('GET', `${PREDICTOR_URL}?content=${query}&limit=6`,null, null)
         if (status !== 200){

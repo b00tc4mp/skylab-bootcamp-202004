@@ -10,7 +10,7 @@ const { mongoose, models: { Admin } } = require('data')
 const bcrypt = require('bcryptjs')
 const { errors: { UnexistenceError, VoidError, CredentialsError } } = require('commons')
 
-describe('logic - authenticate admin', () => {
+describe('server logic - authenticate admin', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let username, email, password, adminId, hash

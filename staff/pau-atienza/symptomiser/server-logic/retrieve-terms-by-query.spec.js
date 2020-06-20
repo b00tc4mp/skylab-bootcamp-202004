@@ -6,7 +6,7 @@ const { errors: { UnexistenceError, VoidError } } = require('commons')
 
 const retrieveTermsByQuery = require('./retrieve-terms-by-query')
 
-describe('logic - retrieve-terms-by-query', () => {
+describe('server logic - retrieve-terms-by-query', () => {
     let query = "sore throat"
 
     before(() => {
@@ -29,10 +29,7 @@ describe('logic - retrieve-terms-by-query', () => {
                     expect(result.prediction).to.be.an.instanceof(Array)
                     expect(result.prediction[0]["prediction-name"]).to.exist
                     expect(result.prediction[0]["prediction-code"]).to.exist
-                   
-                    return
                 })
-                .catch(error => {throw error})
         ).timeout(8000)
     })
 

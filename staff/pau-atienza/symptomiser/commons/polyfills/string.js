@@ -24,6 +24,12 @@ String.isLengthGreaterEqualThan = function (string, length) {
     return string.length >= length
 }
 
+String.isISOString = function (string) {
+    if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(string)) return false;
+    var d = new Date(string); 
+    return d.toISOString()===string;
+}
+
 String.validate = function (string) {
     if (!this.isString(string)) throw new TypeError(`${string} is not a string`)
 }
@@ -38,4 +44,10 @@ String.validate.alphabetic = function (string) {
 
 String.validate.lengthGreaterEqualThan = function (string, length) {
     if (!this.isLengthGreaterEqualThan(string, length)) throw new Error(`"${string}" length is not greater or equal than ${length}`)
+}.bind(String)
+
+String.validate.isISODate = function (string){
+    this.validate.notVoid(string)
+    
+    if (!String.isISOString(string)) throw new TypeError(`${string} is not a valid ISO Date`)
 }.bind(String)
