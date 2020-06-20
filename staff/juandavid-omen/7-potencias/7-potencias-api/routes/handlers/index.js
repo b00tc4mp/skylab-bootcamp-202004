@@ -7,8 +7,6 @@ module.exports = {
   deleteUser: require('./delete-user'),
   createLesson: require('./create-lesson'),
   searchLessons: require('./search-lessons'),
-  createProductSelection: require('./create-product-selection'),
-  searchProductSelections: require('./search-product-selections.js'),
   updateCart: require('./update-cart'),
   retrieveCart: require('./retrieve-cart'),
   deleteCart: require('./delete-cart'),
