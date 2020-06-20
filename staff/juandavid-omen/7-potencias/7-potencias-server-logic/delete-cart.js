@@ -9,8 +9,8 @@ module.exports = (userId) => {
 
     if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
-    const cart = []
+    user.cart = []
 
-    return user.save({ userId, $set: { cart } })
+    return user.save()
   })()
 }

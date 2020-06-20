@@ -14,9 +14,9 @@ module.exports = userId => {
 
     if (!cart.length) throw new UnexistenceError('Cart is empty')
 
-    const amount = user.cart.reduce((accumulator, item) => accumulator + item.product.price, 0)
+    const amount = user.cart.reduce((accumulator, item) => accumulator + item.product.price * item.quantity, 0)
 
-    orders.push(new Order({ products: user.cart, amount, date: new Date() }))
+    orders.push(new Order({ productSelections: user.cart, amount, date: new Date() }))
 
     await User.findByIdAndUpdate(userId, { $set: { cart: [], orders } })
   })()
