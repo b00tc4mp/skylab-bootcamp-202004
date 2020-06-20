@@ -54,7 +54,7 @@ mongoose.connect(MONGODB_URL)
         app.post('/users/restaurant', verifyExtractJwt, parseBody, (req, res) => {
 
             const {payload: { sub: userId}, body: { name, email, cif, address, phone } } = req
-            
+           debugger 
             try {
                 createRestaurant(userId, name, email, cif, address, phone)    
                 .then(()=> res.status(201).end()) 

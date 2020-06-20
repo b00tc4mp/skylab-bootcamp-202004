@@ -1,6 +1,6 @@
 require('plates-commons/polyfills/string')
 const { utils: { Email, call }} = require('plates-commons')
-const { context } = require('./context')
+const context  = require('./context')
 
 module.exports = function (name, surname, email, password){
     String.validate(name)
@@ -9,7 +9,7 @@ module.exports = function (name, surname, email, password){
     
     return call(
         'POST',
-        `${this.context.API_URL}/users`,
+        `${this.API_URL}/users`,
         `{"name": "${name}", "surname": "${surname}", "email": "${email}", "password": "${password}" }`,
         {'Content-type': 'application/json'}
     )

@@ -32,7 +32,7 @@ describe('client logic: retrieve user', () =>{
 
         .then(_hash => hashedPassword = _hash)
     )
-debugger
+ 
     describe('when user already exists', () => {
         beforeEach( async() => {
             const user = await User.create({email, password: hashedPassword})
