@@ -10,7 +10,6 @@ require('plates-commons/polyfills/json')
 require('plates-commons/polyfills/xhr')
 const registerUser = require('./register-user')
 const context = require('./context')
-debugger
 context.API_URL = API_URL
 
 
