@@ -2,7 +2,7 @@ require('termometro-commons/polyfills/string')
 const { utils: { Email, call } } = require('termometro-commons')
 const context = require('./context')
 
-module.exports = function (name, surname, age, sex, email, password, token) {
+module.exports = function (name, surname, age, sex, location, email, password, token) {
     String.validate(name)
     String.validate(surname)
 
@@ -15,14 +15,14 @@ module.exports = function (name, surname, age, sex, email, password, token) {
     call(
         'POST',
         `${this.API_URL}/users`,
-        `{ "name": "${name}", "surname": "${surname}", "age": "${age}", "sex": "${sex}","email": "${email}", "password": "${password}" }`,
+        `{ "name": "${name}", "surname": "${surname}", "age": "${age}", "sex": "${sex}",  "location": "${location}", "email": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json' }
     )
     :
     call(
         'POST',
         `${this.API_URL}/users`,
-        `{ "name": "${name}", "surname": "${surname}", "age": "${age}", "sex": "${sex}","email": "${email}", "password": "${password}" }`,
+        `{ "name": "${name}", "surname": "${surname}", "age": "${age}", "sex": "${sex}", "location": "${location}", "email": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json', 'Authorization': `Bearer ${token}` }
 
     )

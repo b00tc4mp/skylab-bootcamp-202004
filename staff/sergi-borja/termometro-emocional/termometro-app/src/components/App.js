@@ -73,7 +73,7 @@ function App({history}) {
           <Route path="/register" render={()=> token? <Redirect to='/home'/> : <Register onGoToLogin={handleGoToLogin}/>}/>
           <Route path="/home" render={()=> token? <Home userName={userName}/> : <Redirect to='/'/>} />
           <Route path="/my-family" render={()=> token? <MyFamily token={token} handleGoToEdit={handleGoToEdit}/> : <Redirect to='/'/>} />
-          <Route path="/create-member" render={()=> token? <CreateMember token={token}/> : <Redirect to='/'/>} />
+          <Route path="/create-member" render={()=> token? <CreateMember token={token} history={history} /> : <Redirect to='/'/>} />
           <Route path="/edit-member" render={()=> token? <EditMember token={token} memberInfo={memberInfo} history={history}/> : <Redirect to='/'/>} />
           <Route path="/set-mood" render={()=> token? <SetMood token={token} /> : <Redirect to='/'/>} />
           <Route path="/settings" render={()=> token? <Settings token={token} /> : <Redirect to='/'/>} />

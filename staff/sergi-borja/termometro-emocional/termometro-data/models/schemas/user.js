@@ -23,6 +23,12 @@ module.exports = new Schema({
         required: false
     },
 
+    location: {
+        type: String,
+        // enum: ['M','F'],
+        required: true
+    },
+
     email: {
         type: String,
         required: true,
@@ -43,12 +49,6 @@ module.exports = new Schema({
     admin: {
         type: ObjectId,
         ref: 'User'
-    },
-
-    plan: {
-        type: String,
-        enum: ['once', 'twice'],
-        require: true
     },
 
     mood: [{

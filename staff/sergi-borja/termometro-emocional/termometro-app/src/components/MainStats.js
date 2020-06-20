@@ -43,7 +43,8 @@ function MainStats({ token }) {
                     ticks: {
                         mirror: true,
                         beginAtZero: true,
-                        max: 10
+                        max: 10,
+                        fontSize: 15
                     }
                 }]
             },
@@ -102,17 +103,14 @@ function MainStats({ token }) {
                     datasets: [{
                         // label: 'level of mood',
                         data: scoreArray,
-                        backgroundColor: [
-                            'rgba(76,192,192,0.6)'
-                        ],
                         borderWidth: 4
                     }]
                 })
+                 
             })
     }
 
     const handleSeeMemberStats = (member) => {
-        // setRolChart('member')
         let dateArray;
         let scoreArray;
 
@@ -133,7 +131,7 @@ function MainStats({ token }) {
             datasets: [{
                 // label: 'level of mood',
                 data: scoreArray,
-                backgroundColor: [
+                fillColor: [
                     'rgba(76,192,192,0.6)'
                 ],
                 borderWidth: 4
@@ -187,7 +185,7 @@ function MainStats({ token }) {
         <section className='mainStatsContainer'>
             <div className='mainStatsContainer__selectContainer'>
                 <select className='mainStatsContainer__selectContainer--select' onChange={(event) => handleChangeChart(event)}>
-                    <option value='my_stats' className='mainStatsContainer__selectContainer--adminOption'>Mis stats</option>
+                    <option value='my_stats' className='mainStatsContainer__selectContainer--adminOption'>Mis estadísticas</option>
                     {memberList && memberList.map(({ id, name }) => <option value={id} className='mainStatsContainer__selectContainer--memberOption'>{name}</option>)}
                 </select>
             </div>
