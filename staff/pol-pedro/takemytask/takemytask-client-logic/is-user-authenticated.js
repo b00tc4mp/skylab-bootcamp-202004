@@ -3,10 +3,11 @@ require('takemytask-commons/polyfills/function')
 const { utils: { call } } = require('takemytask-commons')
 const context = require('./context')
 
-module.exports = function (token) {
-    String.validate.notVoid(token)
+module.exports = function () {
 
-    return call('GET', `${this.API_URL}/users`,
+    const { token } = this.storage
+
+    return call('POST', `${this.API_URL}/users/retrive`,
         undefined,
         { 'Authorization': `Bearer ${token}` })
         .then(({ body }) => {

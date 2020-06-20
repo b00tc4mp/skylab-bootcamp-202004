@@ -1,7 +1,7 @@
 const { env: { SECRET } } = process
 
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, updateUser, registerWorker, addRates, addComments, creatChat, addMessage, retrieveChat } = require('./handlers')
+const { registerUser, authenticateUser, retrieveUser, updateUser, registerWorker, addRates, addComments, creatChat, addMessage, retrieveChat, searchWorker } = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
 const { handleError } = require('../helpers')
@@ -15,9 +15,11 @@ api.post('/users', parseBody, registerUser)
 
 api.post('/worker', parseBody, registerWorker)
 
+api.post('/worker/search', parseBody, searchWorker)
+
 api.post('/users/auth', parseBody, authenticateUser)
 
-api.get('/users/', verifyExtractJwt, retrieveUser)
+api.post('/users/retrive', verifyExtractJwt, parseBody, retrieveUser)
 
 api.post('/update', verifyExtractJwt, parseBody, updateUser)
 

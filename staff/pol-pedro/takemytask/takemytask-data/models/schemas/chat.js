@@ -5,12 +5,14 @@ module.exports = new Schema ({
 
     user: {
         type: ObjectId,
-        require: true
+        require: true,
+        ref: 'User'
     },
 
     worker: {
         type: ObjectId,
-        require: true
+        require: true,
+        ref: 'Worker'
     },
 
     messages : [coments],

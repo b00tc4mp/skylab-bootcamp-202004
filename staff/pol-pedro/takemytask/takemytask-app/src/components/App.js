@@ -4,13 +4,17 @@ import Container from './Container'
 import Register from './Register'
 import Login from './Login'
 import Home from './Home'
-import {isUserAuthenticated} from 'takemytask-client-logic'
+import Search from './Search'
+import Worker from './Worker'
+import {isUserAuthenticated, isUserLogin} from 'takemytask-client-logic'
 import { Route, withRouter, Redirect } from 'react-router-dom'
+import { userTransition, animated} from 'react-spring'
 
 function App({history}) {
 
-  const [token, setToken] = useState()
   const [userName, setUserName] = useState()
+  const [searchQuerry, setSearchQuerry] = useState()
+  const [workerId, setWorkerId] = useState ()
 
   // const handleLogout = () => {
   //   setToken()
@@ -19,14 +23,17 @@ function App({history}) {
   //   history.push('/')
   // }
 
+  //  || anime ||
+
+  
+
   useEffect ( () => {
-    if(sessionStorage.token){
+    if(isUserLogin){
       try{
 
-        isUserAuthenticated(sessionStorage.token)
+        isUserAuthenticated()
           .then( name => {
             if(name){
-              setToken(sessionStorage.token)
               setUserName(name)
             }
           })
@@ -42,14 +49,23 @@ function App({history}) {
 
   const handleRegister = () => history.push('/login')
 
-  const handleGoToRegister = () => history.push('./register')
+  const handleGoToRegister = () => {
+    history.push('./register')
+  }
 
   const handleGoToLogin = () => history.push('/login')
 
+  const handelGoToHome = () => history.push('/home')
+
+  const handelGoToSearch = () => history.push('/search')
+
+  const handelGoToWorker = (id) => { 
+    setWorkerId(id)
+    history.push('/worker-profile')
+  }
+
   const handleLogin = token => {
 
-    sessionStorage.token = token
-    setToken(token)
     history.push('/home')
 
     try{
@@ -68,19 +84,33 @@ function App({history}) {
 
   }
 
+  const handelSearcher = (query) => {
+    setSearchQuerry(query)
+    history.push('/search')
+  }
+
+
   return (
     <div className="App">
-        <Container>
+        <Container onGoToHome={handelGoToHome} onGoToSearch={handelGoToSearch}>
 
-        <Route exact path="/home" render={() => <Home onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} token={token} userName={userName}/>} />
+          <Route exact path="/home" render={() => <Home onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} userName={userName} onRegister={handleRegister} onSearcher={handelSearcher}/>} />
 
-        <Route path="/register" render={() =>
-          token ? <Redirect to="/home" /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />
-        } />
+          <Route path="/register" render={() =>
+            isUserLogin() ? <Redirect to="/home" /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} onGoToHome={handelGoToHome}/>
+          } />
 
-        <Route path="/login" render={() =>
-          token ? <Redirect to="/home" /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />
-        } />
+          <Route path="/login" render={() =>
+            isUserLogin() ? <Redirect to="/home" /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} onGoToHome={handelGoToHome}/>
+          } />
+
+          <Route path="/search" render={() =>
+            <Search query={searchQuerry} userName={userName} onGoToLogin={handleGoToLogin} onSearcher={handelSearcher} onGoToWorker={handelGoToWorker}/>
+          } />
+
+          <Route path="/worker-profile" render={() =>
+            <Worker workerId={workerId}/>
+          } />
 
         </Container>
     </div>

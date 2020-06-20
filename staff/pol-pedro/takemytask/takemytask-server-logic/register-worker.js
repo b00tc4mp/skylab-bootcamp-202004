@@ -1,11 +1,12 @@
 require('takemytask-commons/polyfills/string')
 require('takemytask-commons/polyfills/json')
 require('takemytask-commons/polyfills/number')
+require('takemytask-commons/polyfills/object')
 const { utils: { Email }, errors: { DuplicityError } } = require('takemytask-commons')
-const { models: { Worker } } = require('takemytask-data')
+const { models: { Worker, User } } = require('takemytask-data')
 const bcrypt = require('bcryptjs')
 
-module.exports = (name, surname, email, password, adress, bankAcount, description, pricingHour, jobCategories, workingDistance) => {
+module.exports = (name, surname, email, password, adress, bankAcount, description, presentation, pricingHour, jobCategories, workingDistance) => {
     String.validate.notVoid(name)
     String.validate.notVoid(surname)
     String.validate.notVoid(email)
@@ -13,17 +14,22 @@ module.exports = (name, surname, email, password, adress, bankAcount, descriptio
     String.validate.notVoid(password)
     String.validate.notVoid(bankAcount)
     String.validate.notVoid(description)
+    String.validate.notVoid(presentation)
     Number.validate.integer(pricingHour)
-    String.validate.notVoid(jobCategories)
+    Object.validate(jobCategories)
     Number.validate.integer(workingDistance)
 
     return (async () => {
+        const user = await User.findOne( {email} )
+
+        if (user) throw new DuplicityError(`user with e-mail ${email} already exists`)
+
         const worker = await Worker.findOne({ email })
 
-        if (worker) throw new DuplicityError(`user with e-mail ${email} already exists`)
+        if (worker) throw new DuplicityError(`worker with e-mail ${email} already exists`)
 
         const hash = await bcrypt.hash(password, 10)
 
-        await Worker.create({ name, surname, email, password: hash, adress, bankAcount, description, pricingHour, jobCategories, workingDistance })
+        await Worker.create({ name, surname, email, password: hash, adress, bankAcount, description, presentation, pricingHour, jobCategories, workingDistance })
     })()
 }

@@ -2,6 +2,12 @@ const { utils: { Email } } = require('takemytask-commons')
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
 module.exports = new Schema({
+
+    role: {
+        type: String,
+        default: 'user'
+    },
+
     name: {
         type: String,
         required: true
