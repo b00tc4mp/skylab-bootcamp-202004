@@ -2,19 +2,27 @@ import React, { useState, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
 import {
     StyleSheet,
-    Text,
     View,
     Dimensions
 } from "react-native";
+import { findNearbyRestaurants } from "../gluttony-client-logic"
 
 const MapRestaurant = () => {
-    const [latitude, setLatitude] = useState();
-    const [longitude, setLongitude] = useState();
+    const [userLatitude, setUserLatitude] = useState();
+    const [userLongitude, setUserLongitude] = useState();
+    const [restaurantLatitude, setRestaurantLatitude] = useState();
+    const [restaurantLongitude, setRestaurantLongitude] = useState();
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(pos => {
-            setLatitude(pos.coords.latitude);
-            setLongitude(pos.coords.longitude)
+            setUserLatitude(pos.coords.latitude)
+            setUserLongitude(pos.coords.longitude)
+
+            findNearbyRestaurants(userLatitude, userLongitude)
+                .then(coordinates => {
+                    setRestaurantLatitude(coordinates.latitude)
+                    setRestaurantLongitude(coordinates.longitude)
+                })
         })
     }, [])
 
@@ -23,23 +31,30 @@ const MapRestaurant = () => {
             <MapView
                 style={styles.mapStyle}
                 
-                initialRegion={latitude && longitude && ({
-                    latitude,
-                    longitude,
+                initialRegion={userLatitude && userLongitude && ({
+                    userLatitude,
+                    userLongitude,
                     latitudeDelta: 0.0022,
                     longitudeDelta: 0.00021
                 })}>
                 <Marker
                     title="You are here"
                     coordinate={{
-                        latitude,
-                        longitude,
+                        userLatitude,
+                        userLongitude,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421
-                    }}
-                    
+                    }}  
                 />
-                
+                <Marker
+                    title="Nearest restaurant"
+                    coordinate={{
+                        restaurantLatitude,
+                        restaurantLongitude,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421
+                    }}  
+                />
             </MapView>
         </View>
     )

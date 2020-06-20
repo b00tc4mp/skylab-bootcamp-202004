@@ -3,15 +3,15 @@ require("gluttony-commons/polyfills/string")
 const { utils: { Email } } = require("gluttony-commons")
 const axios = require("axios")
 
-module.exports = function (email, password) {
+module.exports = (email, password) => {
     Email.validate(email)
 
     String.validate.notVoid(password)
 
     axios.get(`${API_URL}/users/auth`, {
             params: {
-                email: "email",
-                password: "password"
+                email,
+                password
             }
         })
         .then(({ status, body }) => {
