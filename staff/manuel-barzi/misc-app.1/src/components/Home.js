@@ -10,7 +10,7 @@ export default class extends Component {
 
     componentDidMount() {
         try {
-            retrieveUser()
+            retrieveUser(this.props.token)
                 .then(user => this.setState({ name: user.name }))
         } catch (error) {
             throw error
