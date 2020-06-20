@@ -10,11 +10,11 @@ module.exports = (email, password) => {
 
     return User.findOne({ email })
         .then(user => {
-            if (!user) throw new UnexistenceError(`user with e-mail ${email} does not exist`)
+            if (!user) throw new UnexistenceError(`Este email no existe`)
 
             return bcrypt.compare(password, user.password)
                 .then(match => {
-                    if (!match) throw new CredentialsError('wrong password')
+                    if (!match) throw new CredentialsError('Contraseña incorrecta')
 
                     return user.id
                 })

@@ -64,6 +64,7 @@ function App({history}) {
     history.push('/edit-member')
   }
 
+
   return (
     <div className="App">
       <header className="App-header">
@@ -73,7 +74,7 @@ function App({history}) {
           <Route path="/home" render={()=> token? <Home userName={userName}/> : <Redirect to='/'/>} />
           <Route path="/my-family" render={()=> token? <MyFamily token={token} handleGoToEdit={handleGoToEdit}/> : <Redirect to='/'/>} />
           <Route path="/create-member" render={()=> token? <CreateMember token={token}/> : <Redirect to='/'/>} />
-          <Route path="/edit-member" render={()=> token? <EditMember token={token} memberInfo={memberInfo}/> : <Redirect to='/'/>} />
+          <Route path="/edit-member" render={()=> token? <EditMember token={token} memberInfo={memberInfo} history={history}/> : <Redirect to='/'/>} />
           <Route path="/set-mood" render={()=> token? <SetMood token={token} /> : <Redirect to='/'/>} />
           <Route path="/settings" render={()=> token? <Settings token={token} /> : <Redirect to='/'/>} />
           <Route path="/edit-plan" render={()=> token? <EditPlan token={token} /> : <Redirect to='/'/>} />

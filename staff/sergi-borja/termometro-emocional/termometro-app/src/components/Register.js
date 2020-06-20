@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import './Register.sass'
 import { Link } from 'react-router-dom'
 import { registerUser } from 'termometro-client-logic'
+import Feedback from './Feedback'
 
 function Register({ onGoToLogin }) {
+
+  const [error, setError] = useState()
 
   const handleSubmit = event => {
     event.preventDefault()
@@ -20,9 +23,9 @@ function Register({ onGoToLogin }) {
     try {
       registerUser(name, surname, age, sex, email, password)
         .then(() => onGoToLogin())
-        .catch(error => console.log(error))
+        .catch(error => setError(error.message))
     } catch (error) {
-      console.log(error)
+      if(error) throw error
     }
   }
 
@@ -48,6 +51,7 @@ function Register({ onGoToLogin }) {
         <button className='registerContainer__registerButton'>
           <span className='registerContainer__registerButton--text'>¡Crear!</span>
         </button>
+        {error && <Feedback message={error} level="error" />}
       </form>
 
       <Link to={'/'} className='registerContainer__toLoginButton'>

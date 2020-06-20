@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import './Login.sass'
 import { Link } from 'react-router-dom'
 import logo from '../images/logo-lagranja.png'
 import { authenticateUser } from 'termometro-client-logic'
+import Feedback from './Feedback'
 // import treeBackground from '../images/tree-background.jpg'
 
 function Login({onLogin}) {
+
+  const [error, setError] = useState()
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -18,9 +21,9 @@ function Login({onLogin}) {
     try {
       authenticateUser(email, password)
         .then((token)=> onLogin(token))
-        .catch(error => console.log(error))
+        .catch(error => setError(error.message))
     } catch (error) {
-      
+      if(error) throw error
     }
 
   }
@@ -37,6 +40,7 @@ function Login({onLogin}) {
         <button className='loginContainer__loginButton'>
           <span className='loginContainer__loginButton--text'>¡Entra!</span>
         </button>
+        {error && <Feedback message={error} level="error" />}
       </form>
       <span className='loginContainer__registerText'>Quiero crear mi propia familia:</span>
       <Link to={'/register'} className='loginContainer__registerButton'>
