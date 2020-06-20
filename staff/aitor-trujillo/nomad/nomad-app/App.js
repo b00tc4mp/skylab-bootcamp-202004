@@ -10,6 +10,7 @@ import Landing from './app/screens/LandingScreen'
 import Login from './app/screens/LoginScreen'
 import Register from './app/screens/RegisterScreen'
 import ManageWorkspaceScreen from './app/screens/ManageWorkspaceScreen'
+import ManageReviewsScreen from './app/screens/ManageReviewsScreen'
 import EditWorkspaceScreen from './app/screens/EditWorkspaceScreen'
 import Home from './app/screens/HomeScreen'
 import Profile from './app/screens/ProfileScreen'
@@ -24,20 +25,23 @@ import WorkspacePage from './app/screens/WorkspacePage';
 import Favorites from './app/screens/FavoritesScreen';
 import colors from './app/styles/colors'
 import UploadImageScreen from './app/screens/UploadImageScreen';
+import PostReviewScreen from './app/screens/PostReviewScreen';
+import MapScreen from './app/screens/MapScreen';
+import UploadProfileScreen from './app/screens/UploadProfileScreen';
 
 const { isUserAuthenticated } = require('nomad-client-logic')
 
 
 
 const Stack = createStackNavigator();
-const StackNavigator = ({ handleAuth }) => (
+const StackNavigator = ({ onLoggedIn }) => (
   <Stack.Navigator screenOptions={{
     headerShown: false
   }} >
     <Stack.Screen name="Landing" component={Landing} />
     <Stack.Screen name="Register" component={Register} />
     <Stack.Screen name="Login" >
-      {(props) => <Login  {...props} handleAuth={() => handleAuth()} />}
+      {(props) => <Login  {...props} onLoggedIn={onLoggedIn} />}
     </Stack.Screen>
   </Stack.Navigator>
 )
@@ -56,13 +60,18 @@ const TabNavigator = ({ handleLogout }) => (
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
       backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    },
-
-  }}>
+    }
+  }} initialRouteName='Home'>
     <Tab.Screen name="Home" component={MainNavigator}
       options={{
         tabBarIcon: ({ color }) =>
           (< MaterialCommunityIcons name="earth" size={30} color={color} />)
+      }} />
+    <Tab.Screen name="Map" component={MapScreen}
+      options={{
+        tabBarVisible: false,
+        tabBarIcon: ({ color }) =>
+          (< MaterialCommunityIcons name="map" size={30} color={color} />)
       }} />
     <Tab.Screen name="Favorites" component={Favorites}
       options={{
@@ -71,12 +80,14 @@ const TabNavigator = ({ handleLogout }) => (
       }} />
     <Tab.Screen name="Profile"
       options={{
+        // tabBarVisible: false,
         tabBarIcon: ({ color }) =>
           (< MaterialCommunityIcons name="account" size={30} color={color} />),
       }}
     >
       {(props) => <ProfileNavigator  {...props} handleLogout={() => handleLogout()} />}
     </Tab.Screen>
+
   </Tab.Navigator>
 )
 
@@ -86,6 +97,7 @@ const MainNavigator = () => (
   }} mode='modal'>
     <Stack.Screen name="Home" component={Home} />
     <Stack.Screen name="WorkspacePage" component={WorkspacePage} />
+    <Stack.Screen name="ReviewPage" component={PostReviewScreen} />
   </Stack.Navigator>
 )
 const ProfileNavigator = ({ handleLogout }) => (
@@ -95,7 +107,9 @@ const ProfileNavigator = ({ handleLogout }) => (
     <Stack.Screen name="Profile" >
       {(props) => <Profile  {...props} handleLogout={() => handleLogout()} />}
     </Stack.Screen>
+    <Stack.Screen name="UploadProfile" component={UploadProfileScreen} />
     <Stack.Screen name="WorkspaceEditor" component={EditorNavigator} />
+    <Stack.Screen name="ManageReviews" component={ManageReviewsScreen} />
   </Stack.Navigator>
 )
 const EditorNavigator = () => (
@@ -120,7 +134,7 @@ export default function App() {
   const getAuthentication = async () => {
     try {
       const token = await AsyncStorage.getItem('token')
-      if (token !== null) {
+      if (token) {
         const auth = await isUserAuthenticated(token)
         return setIsAuthenticated(auth)
       }
@@ -141,7 +155,7 @@ export default function App() {
 
   return (
     <NavigationContainer >
-      {isAuthenticated === false && <StackNavigator handleAuth={() => getAuthentication()} />}
+      {isAuthenticated === false && <StackNavigator onLoggedIn={getAuthentication} />}
       {isAuthenticated && <TabNavigator handleLogout={() => handleLogout()} />}
     </NavigationContainer>
   );

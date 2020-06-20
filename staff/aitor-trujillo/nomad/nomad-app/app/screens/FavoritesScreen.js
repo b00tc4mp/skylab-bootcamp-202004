@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { View, Text, SafeAreaView, StyleSheet, FlatList, ScrollView } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, SafeAreaView, StyleSheet, FlatList, ScrollView, RefreshControl } from 'react-native'
 import * as Permissions from 'expo-permissions'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
@@ -7,19 +7,41 @@ import { NavigationContainer } from '@react-navigation/native'
 import NomadHeader from '../components/NomadHeader'
 import Card from '../components/Card'
 import WorkspacePage from './WorkspacePage'
-
+import retrieveFavorites from 'nomad-client-logic/retrieve-favorites'
+import { set } from 'react-native-reanimated'
+import AsyncStorage from '@react-native-community/async-storage'
+import retrieveUser from 'nomad-client-logic/retrieve-user'
+import AppTextInput from '../components/NomadTextInput'
+import { API_URL } from 'nomad-client-logic/context'
 
 
 
 export default function Favorites({ navigation }) {
-    // const getPermissions = async () => {
-    //     const result = await Permissions.askAsync(Permissions.LOCATION)
-    //     if (!result.granted) alert('I need to access location to perform well :(')
-    // }
+    const [favorites, setFavorites] = useState([])
+    const [user, setUser] = useState()
+    const [image, setImage] = useState()
+    const [refresh, setRefresh] = useState(false)
 
-    // useEffect(() => {
-    //     getPermissions()
-    // }, [])
+    const getFavorites = async () => {
+        try {
+            const token = await AsyncStorage.getItem('token')
+            if (token !== null) {
+                const user = await retrieveUser(token)
+                setUser(user)
+                setImage({ uri: `${API_URL}/users/${user.id}.jpg` })
+                const result = await retrieveFavorites(token)
+                if (result) setFavorites(result)
+            } else {
+                console.log('error, token not found in homescreen') // TODO
+            }
+        } catch (e) {
+            console.log(e) // TODO HANDLE THIS
+        }
+    }
+
+    useEffect(() => {
+        getFavorites()
+    }, [favorites.length])
 
 
     const workspaces = [
@@ -41,28 +63,43 @@ export default function Favorites({ navigation }) {
 
 
     return (
-
         <SafeAreaView style={styles.container}>
             <View style={styles.containerHeader}></View>
             <NomadHeader
                 title="Favorites"
+                imageSource={image}
+                onError={() => setImage(require('../assets/profile.png'))}
                 subTitle="Come back to loved workspaces ❤️"
-                imageSource={require('../assets/aitor.jpg')}
                 onPress={() => navigation.navigate('Profile')}
             />
-            <ScrollView>
+            <ScrollView refreshControl={
+                <RefreshControl
+                    refreshing={refresh}
+                    onRefresh={() => getFavorites()} />}>
+                <View style={styles.containerSearch}>
+                    <AppTextInput
+                        icon='magnify'
+                        placeholder='Search favorites'
+                        maxLength={100}
+                        autoCorrect={false}
+                        keyboardType={Platform.OS === 'ios' ? 'web-search' : 'default'}
+                        textContentType='organizationName'
+                        onChangeText={(value) => console.log(value)}
+                    // onBlur={() => setFieldTouched('workspaceName')}
+                    />
+                </View>
                 <View style={styles.containerCards}>
-                    <FlatList data={workspaces} keyExtractor={(workspace) => workspace.title}
+                    {favorites && <FlatList data={favorites} keyExtractor={(workspace) => workspace.name + Math.random().toString()}
                         renderItem={({ item }) =>
                             <Card
-                                title={item.title}
-                                address={item.address}
-                                rating={item.rating}
-                                price={item.price}
-                                image={item.image}
-                                onPress={() => navigation.navigate('WorkspacePage', item)}
+                                title={item.name}
+                                address={`${item.address.street}, ${item.address.city}`}
+                                rating={item.score}
+                                price={`${item.price.amount}€ / ${item.price.term}`}
+                                image={item.photos[0] || require('../assets/default.jpg')}
+                                onPress={() => navigation.navigate('WorkspacePage', { workspace: item, user })}
                             />
-                        } />
+                        } />}
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -77,6 +114,9 @@ const styles = StyleSheet.create({
     },
     containerHeader: {
         padding: 20,
+    },
+    containerSearch: {
+        paddingHorizontal: 20
     },
     containerCards: {
         height: '100%',

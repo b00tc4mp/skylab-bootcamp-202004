@@ -1,21 +1,68 @@
-import React from 'react'
-import { Text, View, Image, StyleSheet } from 'react-native'
+import React, { useState } from 'react'
+import { Text, View, Image, StyleSheet, ScrollView, RefreshControl, FlatList, TouchableOpacity } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 import NomadTitle from '../components/NomadTitle'
-import { ScrollView, FlatList } from 'react-native-gesture-handler'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
+import { API_URL } from 'nomad-client-logic/context'
+import AppButton from '../components/Button'
 import Review from '../components/Review'
+import colors from '../styles/colors'
+import toggleFavorites from 'nomad-client-logic/toggle-favorites'
+import AsyncStorage from '@react-native-community/async-storage'
+import { retrieveWorkspaceById } from 'nomad-client-logic'
 
-export default ({ route }) => {
-    const ws = route.params
+export default ({ route, navigation }) => {
+    const { workspace, user } = route.params
+    const [isFav, setIsFav] = useState(user.favorites.indexOf(workspace._id) === -1)
+    const [refresh, setRefresh] = useState(false)
+    const [ws, setWs] = useState(workspace)
+
+    const refreshWorkspace = async ({ _id }) => {
+        try {
+            const token = await AsyncStorage.getItem('token')
+            if (token !== null) {
+                const result = await retrieveWorkspaceById(token, _id)
+                setWs(result)
+            } else {
+                console.log('error, token not found in homescreen') // TODO
+            }
+        } catch (e) {
+            console.log(e) // TODO HANDLE THIS
+        }
+
+    }
+
+    const handleFavoritePress = async () => {
+        try {
+            const token = await AsyncStorage.getItem('token')
+            if (token !== null) {
+                await toggleFavorites(token, ws._id)
+                isFav ? setIsFav(false) : setIsFav(true)
+            } else {
+                console.log('error, token not found in workspacescreen') // TODO
+            }
+        } catch (e) {
+            console.log(e) // TODO HANDLE THIS
+        }
+    }
 
     return (
         <View style={styles.container}>
-            <ScrollView>
+            <ScrollView refreshControl={
+                <RefreshControl
+                    refreshing={refresh}
+                    onRefresh={() => refreshWorkspace(ws)} />}>
 
-                <Image source={ws.photos[0] || require('../assets/default.jpg')} style={styles.image} />
+                <Image source={{ uri: `${API_URL}/workspaces/${workspace._id}.jpg` }} style={styles.image} />
                 <View style={styles.detailsContainer}>
-                    <NomadTitle title={ws.name} />
+                    <View style={styles.topWrapper}>
+                        <NomadTitle title={ws.name} fontSize={32} />
+                        <TouchableOpacity style={styles.iconCircle} onPress={() => handleFavoritePress()}>
+                            < MaterialCommunityIcons name="bookmark" size={30} color={isFav ? colors.primary : 'tomato'} />
+                        </TouchableOpacity>
+
+                    </View>
                     <Text style={styles.address}>{ws.address.street}, {ws.address.city}, {ws.address.country}</Text>
                     <Text style={styles.price} >{ws.price.amount}€ / {ws.price.term}</Text>
                     <NomadTitle title='Description' />
@@ -43,14 +90,15 @@ export default ({ route }) => {
                     <Text style={styles.description}>Capacity: {ws.capacity}</Text>
                     <Text style={styles.description}>Avaliable: 1</Text>
                     <NomadTitle title='Reviews' />
-                    <View>
-                        <FlatList data={reviews} keyExtractor={(review) => review.name}
+                    <View style={styles.center} >
+                        <AppButton title='Post Review' bgColor='secondary' txtColor='light' onPress={() => navigation.navigate('ReviewPage', ws._id)} />
+                        <FlatList data={ws.reviews} keyExtractor={(review) => review.name}
                             renderItem={({ item }) =>
                                 <Review
-                                    image={item.image}
+                                    image={require('../assets/aitor.jpg')}
                                     name={item.name}
                                     stars={item.stars}
-                                    review={item.review}
+                                    review={item.text}
                                 />
                             } />
                     </View>
@@ -96,6 +144,23 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 350
     },
+    center: {
+        alignItems: 'center',
+        marginTop: 15
+    },
+    topWrapper: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    iconCircle: {
+        width: 50,
+        height: 50,
+        borderRadius: 50,
+        marginRight: 10,
+        backgroundColor: colors.secondary,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     detailsContainer: {
         padding: 20,
     },
@@ -123,7 +188,7 @@ const styles = StyleSheet.create({
         textAlign: 'left',
         fontWeight: 'bold',
         width: '100%',
-        paddingBottom: 15,
+        paddingBottom: 30,
     },
     mapContainer: {
         width: '100%',

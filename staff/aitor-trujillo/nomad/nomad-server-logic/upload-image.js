@@ -16,7 +16,7 @@ module.exports = (userId, workspaceId, file, filename) => {
     console.log(userId, workspaceId, file, filename)
 
     return (async () => {
-        let saveTo = path.join(__dirname, `../nomad-api/uploads/${filename}.jpg`) //`../nomad-api/uploads/${workspaceId}/${filename}.jpg
+        let saveTo = path.join(__dirname, `../nomad-api/public/workspaces/${filename}.jpg`) //`../nomad-api/uploads/${workspaceId}/${filename}.jpg
         await file.pipe(fs.createWriteStream(saveTo))
     })()
 }

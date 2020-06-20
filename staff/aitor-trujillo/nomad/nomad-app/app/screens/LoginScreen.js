@@ -23,7 +23,7 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required().min(4).label('Password')
 })
 
-export default ({ handleAuth, navigation }) => {
+export default ({ onLoggedIn, navigation }) => {
 
     const handleLogin = ({ email, password }) => {
         (async () => {
@@ -31,7 +31,7 @@ export default ({ handleAuth, navigation }) => {
                 const token = await authenticateUser(email, password)
                 console.log(token)
                 await AsyncStorage.setItem('token', token)
-                handleAuth()
+                onLoggedIn()
             } catch (error) {
                 console.log(error) // TODO handle this
             }

@@ -24,7 +24,6 @@ module.exports = function (email, password) {
             { 'Content-type': 'application/json' })
         const { status, body } = result
         if (status === 200) {
-            console.log(status, body)
             const { token } = JSON.parse(body)
 
             return token

@@ -28,6 +28,8 @@ module.exports = function (token, workspace) {
 
     const headers = { Authorization: `Bearer ${token}`, 'Content-type': 'application/json' }
 
+    console.log(workspaceSchemized)
+
     return (async () => {
         try {
             const result = await call(
@@ -36,7 +38,9 @@ module.exports = function (token, workspace) {
                 JSON.stringify(workspaceSchemized),
                 headers
             )
+
             const { status, body } = result
+            console.log(body)
 
             if (status === 201) return JSON.parse(body)
             else throw new Error('could not create workspace')

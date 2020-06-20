@@ -2,7 +2,7 @@ require('nomad-commons/polyfills/string')
 const { errors: { UnexistenceError } } = require('nomad-commons')
 const { models: { User, Workspace } } = require('nomad-data')
 
-module.exports = async (userId, location) => { // location = [lat-lon]
+module.exports = async (userId, location, filter) => { // location = [lat-lon]
 
     String.validate.notVoid(userId)
 
@@ -10,7 +10,7 @@ module.exports = async (userId, location) => { // location = [lat-lon]
 
     if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
-    const geoWorkspaces = await Workspace.find({
+    let geoWorkspaces = await Workspace.find({
         geoLocation: {
             $near: {
                 $geometry: {
@@ -20,8 +20,10 @@ module.exports = async (userId, location) => { // location = [lat-lon]
             },
         },
     })
-
     if (!geoWorkspaces.length) throw new Error("No workspaces near you")
+
+    if (filter) geoWorkspaces = geoWorkspaces.filter(({ category }) => category === filter)
+    console.log(geoWorkspaces)
 
     return geoWorkspaces.slice(0, 20)
 }

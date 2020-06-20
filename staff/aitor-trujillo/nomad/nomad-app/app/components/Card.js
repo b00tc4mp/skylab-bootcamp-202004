@@ -4,11 +4,11 @@ import { AntDesign } from '@expo/vector-icons'
 
 import colors from '../styles/colors'
 
-export default ({ title, address, image, price, rating, onPress }) => {
+export default ({ title, address, image, price, rating, onPress, width = '100%', marginRight, imgHeight = 200 }) => {
     return (
-        <TouchableWithoutFeedback onPress={onPress}>
-            <View style={styles.cardContainer}>
-                <Image source={image} style={styles.image} />
+        <TouchableWithoutFeedback onPress={onPress} >
+            <View style={[styles.cardContainer, { width, marginRight }]}>
+                <Image source={image} style={[styles.image, { height: imgHeight }]} />
                 <View style={styles.txtContainer} >
                     <View style={styles.ratingSeparator}>
                         <Text style={styles.title}>{title}</Text>

@@ -2,10 +2,17 @@ module.exports = {
     context: require('./context'),
     registerUser: require('./register-user'),
     authenticateUser: require('./authenticate-user'),
+    retrieveUser: require('./retrieve-user'),
     isUserAuthenticated: require('./is-user-authenticated'),
     createWorkspace: require('./create-workspace'),
     uploadImage: require('./upload-image'),
+    uploadUserImage: require('./upload-user-image'),
     retrieveUserWorkspaces: require('./retrieve-user-workspaces'),
+    retrieveUserReviews: require('./retrieve-user-reviews'),
     retrieveWorkspaces: require('./retrieve-workspaces'),
-    // retrieveUser: require('./retrieve-user')
+    retrieveWorkspaceById: require('./retrieve-workspace-by-id'),
+    deleteWorkspace: require('./delete-workspace'),
+    postReview: require('./post-review'),
+    toggleFavorites: require('./toggle-favorites'),
+    retrieveFavorites: require('./retrieve-favorites'),
 }

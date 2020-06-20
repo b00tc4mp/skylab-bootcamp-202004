@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, SafeAreaView, StyleSheet, Image, TouchableHighlight } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, Image, TouchableHighlight, RefreshControl } from 'react-native'
 import { Entypo, AntDesign } from '@expo/vector-icons'
 
 import colors from '../styles/colors'
@@ -8,20 +8,43 @@ import NomadTitle from '../components/NomadTitle'
 import retrieveUserWorkspaces from 'nomad-client-logic/retrieve-user-workspaces'
 import AppButton from '../components/Button'
 import AsyncStorage from '@react-native-community/async-storage'
+import Swipeable from 'react-native-gesture-handler/Swipeable'
+import DeleteSwipe from '../components/DeleteSwipe'
+import deleteWorkspace from 'nomad-client-logic/delete-workspace'
 
 
 const image = require('../assets/aitor.jpg')
 
 export default function Profile({ navigation }) {
-    const [userWorkspaces, setUserWorkspaces] = useState(null)
+    const [userWorkspaces, setUserWorkspaces] = useState([])
+    const [refresh, setRefresh] = useState(false)
 
+    useEffect(() => {
+        debugger
+        retrieveMyWorkspaces()
+    }, [userWorkspaces.length])
 
     const retrieveMyWorkspaces = async () => {
         try {
             const token = await AsyncStorage.getItem('token')
             if (token !== null) {
                 const result = await retrieveUserWorkspaces(token)
-                setUserWorkspaces(result)
+                debugger
+                if (result) setUserWorkspaces(result)
+            } else {
+                console.log('error, token not found in editworkspacescreen')
+            }
+        } catch (e) {
+            console.log(e) // TODO HANDLE THIS
+        }
+    }
+    const deleteWs = async (wsId) => {
+        try {
+            const token = await AsyncStorage.getItem('token')
+            if (token !== null) {
+                const result = await deleteWorkspace(token, wsId.toString())
+                return retrieveMyWorkspaces()
+                // setRefresh(true)
             } else {
                 console.log('error, token not found in editworkspacescreen')
             }
@@ -32,9 +55,6 @@ export default function Profile({ navigation }) {
 
 
 
-    useEffect(() => {
-        retrieveMyWorkspaces()
-    }, [])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -43,24 +63,26 @@ export default function Profile({ navigation }) {
                 <View style={styles.buttonContainer}>
                     <AppButton title='Create Workspace' bgColor='secondary' txtColor='light' onPress={() => navigation.navigate('CreateWs')} />
                 </View>
-                <NomadTitle title='My Workspaces' />
+                <NomadTitle title='My Workspaces' fontSize={26} />
             </View>
             <View>
-                <FlatList data={userWorkspaces} keyExtractor={(userWorkspaces) => userWorkspaces.id}
+                {userWorkspaces && <FlatList data={userWorkspaces} keyExtractor={(userWorkspaces) => userWorkspaces._id} refreshControl={
+                    <RefreshControl
+                        refreshing={refresh}
+                        onRefresh={() => retrieveMyWorkspaces()} />}
                     renderItem={({ item }) =>
-                        <TouchableHighlight onPress={() => console.log('manageworkspace clicked')} >
-
+                        <Swipeable renderRightActions={() => <DeleteSwipe onPress={() => deleteWs(item._id)} />} >
                             <View style={styles.optionsContainer}>
                                 <View style={styles.iconCircle}>
                                     <Entypo name="location-pin" size={30} color={colors.primary} />
                                 </View>
                                 <View >
                                     <Text style={styles.name}>{item.name}</Text>
-                                    <Text style={styles.name}>{item.address.street}, {item.address.city}</Text>
+                                    <Text style={styles.review}>{item.address.street}, {item.address.city}</Text>
                                 </View>
                             </View>
-                        </TouchableHighlight>
-                    } />
+                        </Swipeable>
+                    } />}
             </View>
         </SafeAreaView>
     )

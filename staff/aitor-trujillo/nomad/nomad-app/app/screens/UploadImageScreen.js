@@ -43,7 +43,10 @@ export default ({ navigation, route }) => {
             const token = await AsyncStorage.getItem('token')
             if (token !== null) {
                 const result = await uploadImage(token, workspaceId, values)
-                if (result) Alert.alert('Success', 'Image delivered successfuly to the warehouse gnome.')
+                if (result) {
+                    Alert.alert('Success', 'Image delivered successfuly to the warehouse gnome.')
+                    navigation.navigate('Profile')
+                }
 
             } else {
                 console.log('error, in uploadimagescreen') //TODO
@@ -73,8 +76,8 @@ export default ({ navigation, route }) => {
 
                                 <View style={styles.imageContainer}>
                                     <ImageInput imageUri={image1} handleImage={img => { setImage1(img); setFieldValue('image1', img) }} />
-                                    <ImageInput imageUri={image2} handleImage={img => { setImage2(img); setFieldValue('image2', img) }} />
-                                    <ImageInput imageUri={image3} handleImage={img => { setImage3(img); setFieldValue('image3', img) }} />
+                                    {/* <ImageInput imageUri={image2} handleImage={img => { setImage2(img); setFieldValue('image2', img) }} />
+                                    <ImageInput imageUri={image3} handleImage={img => { setImage3(img); setFieldValue('image3', img) }} /> */}
                                 </View>
                                 <ErrorMessage error={errors.image1} visible={touched.image1} />
                                 <AppButton title='Post Image' bgColor='secondary' txtColor='light' onPress={handleSubmit} />
@@ -103,7 +106,7 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         width: '100%',
         flex: 1
     },

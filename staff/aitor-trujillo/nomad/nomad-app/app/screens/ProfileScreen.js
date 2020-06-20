@@ -1,23 +1,54 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, SafeAreaView, StyleSheet, Image, TouchableHighlight } from 'react-native'
 import { Entypo, AntDesign } from '@expo/vector-icons'
+import { API_URL } from 'nomad-client-logic/context'
 
 import colors from '../styles/colors'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import { TouchableWithoutFeedback, TouchableOpacity } from 'react-native-gesture-handler'
+import retrieveUser from 'nomad-client-logic/retrieve-user'
+import AsyncStorage from '@react-native-community/async-storage'
 
 
-const image = require('../assets/aitor.jpg')
 
 export default function Profile({ handleLogout, navigation }) {
+    const [user, setUser] = useState()
+    const [image, setImage] = useState()
+
+
+    const getUser = async () => {
+        try {
+            const token = await AsyncStorage.getItem('token')
+            if (token !== null) {
+                const user = await retrieveUser(token)
+                setUser(user)
+                setImage({ uri: `${API_URL}/users/${user.id}.jpg` })
+            } else {
+                console.log('error, token not found in homescreen') // TODO
+            }
+        } catch (e) {
+            console.log(e) // TODO HANDLE THIS
+        }
+    }
+
+    useEffect(() => {
+        (async () => {
+            await getUser()
+        })()
+    }, [])
+
+
+
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.profile}>
-                <Image source={image} style={styles.image} />
+            {user && <View style={styles.profile}>
+                <TouchableOpacity onPress={() => navigation.navigate('UploadProfile')}>
+                    <Image source={image} onError={() => setImage(require('../assets/profile.png'))} style={styles.image} />
+                </TouchableOpacity>
                 <View >
-                    <Text style={styles.name}>Aitor Trujillo</Text>
-                    <Text style={styles.review}>Junior Full-Stack Developer</Text>
+                    <Text style={styles.name}>{user.name}</Text>
+                    {/* <Text style={styles.review}>Junior Full-Stack Developer</Text> */}
                 </View>
-            </View>
+            </View>}
             <TouchableHighlight onPress={() => navigation.navigate('WorkspaceEditor')} >
 
                 <View style={styles.optionsContainer}>
@@ -29,14 +60,17 @@ export default function Profile({ handleLogout, navigation }) {
                     </View>
                 </View>
             </TouchableHighlight>
-            <View style={styles.optionsContainer}>
-                <View style={styles.iconCircle}>
-                    < AntDesign name="star" size={30} color={colors.primary} />
+            <TouchableHighlight onPress={() => navigation.navigate('ManageReviews')} >
+
+                <View style={styles.optionsContainer}>
+                    <View style={styles.iconCircle}>
+                        < AntDesign name="star" size={30} color={colors.primary} />
+                    </View>
+                    <View >
+                        <Text style={styles.name}>My Reviews</Text>
+                    </View>
                 </View>
-                <View >
-                    <Text style={styles.name}>My Reviews</Text>
-                </View>
-            </View>
+            </TouchableHighlight>
             <View style={styles.logout}>
                 <View style={styles.iconCircle}>
                     <AntDesign name="logout" size={30} color={colors.primary} />
@@ -98,7 +132,7 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
         borderRadius: 50,
-        marginRight: 10
+        marginRight: 10,
     },
     iconCircle: {
         width: 50,

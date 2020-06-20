@@ -12,11 +12,12 @@ const {
     retrieveWorkspaceById,
     retrieveByLocation,
     searchWorkspaces,
-    addToFavorites,
+    toggleFavorites,
     searchFavorites,
     retrieveFavorites,
     retrieveUserWorkspaces,
-    uploadImage
+    uploadImage,
+    uploadUserImage
 } = require('nomad-server-logic')
 const { mongoose } = require('nomad-data')
 const { jwtVerifierExtractor, cors } = require('./middlewares')
@@ -25,6 +26,9 @@ const jwtPromised = require('./helpers/jwt-promised')
 const Busboy = require('busboy')
 
 const express = require('express')
+const placeReview = require('nomad-server-logic/place-review')
+const deleteWorkspaceById = require('nomad-server-logic/delete-workspace-by-id')
+const retrieveUserReviews = require('nomad-server-logic/retrieve-user-reviews')
 
 
 
@@ -38,13 +42,17 @@ mongoose.connect(MONGODB_URL)
 
         const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
 
-        app.use(cors)
+        //app.use(cors)
+        app.use(express.static('public'))
+
+
 
         // USERS ============================
 
         app.post('/users', parseBody, (req, res) => {
+            debugger
             const { body: { name, surname, email, password } } = req
-
+            console.log('body', name)
             try {
                 registerUser(name, surname, email, password)
                     .then(() => res.status(201).send())
@@ -55,6 +63,8 @@ mongoose.connect(MONGODB_URL)
         })
 
         app.post('/users/auth', parseBody, (req, res) => {
+            debugger
+
             const { body: { email, password } } = req
 
             try {
@@ -68,9 +78,10 @@ mongoose.connect(MONGODB_URL)
         })
 
         app.get('/users', verifyExtractJwt, (req, res) => {
+            debugger
             try {
                 const { payload: { sub: userId } } = req
-
+                console.log(userId)
                 retrieveUser(userId)
                     .then(result => res.send(result))
                     .catch(error => handleError(error, res))
@@ -79,9 +90,36 @@ mongoose.connect(MONGODB_URL)
             }
         })
 
+        app.post('/users/upload/', verifyExtractJwt, (req, res) => {
+
+            try {
+                const { payload: { sub: userId } } = req
+                const busboy = new Busboy({ headers: req.headers })
+
+                busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+
+                    filename = `${userId}`
+                    uploadUserImage(userId, file, filename)
+                    // .then(() => res.status(200).send())
+                    // .catch(error => handleError(error, res))
+                })
+
+                busboy.on('finish', () => {
+                    res.send('uploaded');
+                })
+
+                req.pipe(busboy)
+
+
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
         // WORKSPACES =======================
 
         app.post('/workspaces', parseBody, verifyExtractJwt, (req, res) => {
+            debugger
             try {
                 const { payload: { sub: userId }, body: workspace } = req
 
@@ -101,13 +139,11 @@ mongoose.connect(MONGODB_URL)
                 const { payload: { sub: userId }, params: { workspaceId } } = req
                 const busboy = new Busboy({ headers: req.headers })
 
-                console.log('im here', workspaceId)
-
                 busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
 
-                    filename = 'ws1'
+                    filename = `${workspaceId}`
                     uploadImage(userId, workspaceId, file, filename)
-                        .then(() => res.status(200).send())
+                    // .then(() => res.status(200).send())
                     // .catch(error => handleError(error, res))
                 })
 
@@ -134,10 +170,22 @@ mongoose.connect(MONGODB_URL)
                 handleError(error, res)
             }
         })
+
+        app.delete('/workspaces/:workspaceId', verifyExtractJwt, (req, res) => {
+            try {
+                const { payload: { sub: userId }, params: { workspaceId } } = req
+
+                deleteWorkspaceById(userId, workspaceId)
+                    .then(() => res.status(200).send())
+                    .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
         app.get('/workspaces/user/get', verifyExtractJwt, (req, res) => {
             try {
                 const { payload: { sub: userId } } = req
-                console.log('right path')
+
                 retrieveUserWorkspaces(userId)
                     .then(result => res.send(result))
                     .catch(error => handleError(error, res))
@@ -146,11 +194,11 @@ mongoose.connect(MONGODB_URL)
             }
         })
 
-        app.get('/workspaces/location/:lat/:lon', verifyExtractJwt, (req, res) => {
+        app.get('/workspaces/location/:lat/:lon', verifyExtractJwt, parseBody, (req, res) => {
             try {
-                const { payload: { sub: userId }, params: { lat, lon } } = req
+                const { payload: { sub: userId }, params: { lat, lon }, body: filter } = req
 
-                retrieveByLocation(userId, [Number(lon), Number(lat)])
+                retrieveByLocation(userId, [Number(lon), Number(lat)], filter)
                     .then(result => res.send(result))
                     .catch(error => handleError(error, res))
             } catch (error) {
@@ -176,7 +224,7 @@ mongoose.connect(MONGODB_URL)
             try {
                 const { payload: { sub: userId }, params: { workspaceId } } = req
 
-                addToFavorites(userId, workspaceId)
+                toggleFavorites(userId, workspaceId)
                     .then(() => res.status(201).send())
                     .catch(error => handleError(error, res))
 
@@ -209,12 +257,39 @@ mongoose.connect(MONGODB_URL)
             }
         })
 
+        // REVIEWS ==========================
+
+        app.post('/reviews', parseBody, verifyExtractJwt, (req, res) => {
+            try {
+                const { payload: { sub: userId }, body: { workspaceId, stars, text } } = req
+
+                placeReview(userId, workspaceId, stars, text)
+                    .then(() => res.status(201).send())
+                    .catch(error => handleError(error, res))
+
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        app.get('/reviews/user/get', verifyExtractJwt, (req, res) => {
+
+            try {
+                const { payload: { sub: userId } } = req
+                retrieveUserReviews(userId)
+                    .then(result => res.send(result))
+                    .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
 
         // OTHERS =========================
 
-        app.get('*', (req, res) => {
-            res.status(404).send('Not Found :(')
-        })
+        // app.get('*', (req, res) => {
+        //     res.status(404).send('Not Found :(')
+        // })
 
         app.listen(PORT, () => console.log(`server running on port ${PORT}`))
 

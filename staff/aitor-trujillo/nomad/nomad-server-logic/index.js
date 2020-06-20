@@ -7,8 +7,10 @@ module.exports = {
     retrieveWorkspaceById: require('./retrieve-workspace-by-id'),
     retrieveByLocation: require('./retrieve-by-location'),
     searchWorkspaces: require('./search-workspaces'),
-    addToFavorites: require('./add-to-favorites'),
+    toggleFavorites: require('./toggle-favorites'),
     retrieveFavorites: require('./retrieve-favorites'),
+    deleteWorkspaceById: require('./delete-workspace-by-id'),
     searchFavorites: require('./search-favorites'),
     uploadImage: require('./upload-image'),
+    uploadUserImage: require('./upload-user-image'),
 }

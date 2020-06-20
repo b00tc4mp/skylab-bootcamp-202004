@@ -25,9 +25,6 @@ import ImageInput from '../components/ImageInput';
 const { createWorkspace } = require('nomad-client-logic')
 
 const validationSchema = Yup.object().shape({
-    // image1: Yup.object().required().nullable().label('At least one Image'),
-    // image2: Yup.object().nullable().label('Image'),
-    // image3: Yup.object().nullable().label('Image'),
     name: Yup.string().min(1).required().label('Workspace Name'),
     price: Yup.number().required().min(1).max(10000).label('Price'),
     term: Yup.object().required().nullable().label('Term'),
@@ -56,14 +53,9 @@ const term = [
 export default ({ navigation }) => {
     const [location, setLocation] = useState()
 
-    const [image1, setImage1] = useState()
-    const [image2, setImage2] = useState()
-    const [image3, setImage3] = useState()
-
     const getPermissions = async () => {
         const result = await Permissions.askAsync(Permissions.LOCATION)
         if (!result.granted) return Alert.alert('Alert', 'I need to access location to post this listing :(', [{ text: 'Ok', onPress: () => navigation.goBack() }])
-        // RETURN TO OTHER SCREEN
 
         Alert.alert(
             'Important',
@@ -103,9 +95,6 @@ export default ({ navigation }) => {
                     style={styles.formContainer}
                 >
                     <Formik initialValues={{
-                        // image1: null,
-                        // image2: null,
-                        // image3: null,
                         name: '',
                         price: '',
                         term: null,
@@ -123,12 +112,6 @@ export default ({ navigation }) => {
                     >
                         {({ handleChange, handleSubmit, errors, setFieldTouched, touched, setFieldValue, values }) => (
                             <>
-                                {/* <View style={styles.imageContainer}>
-                                    <ImageInput imageUri={image1} handleImage={img => { setImage1(img); setFieldValue('image1', img) }} />
-                                    <ImageInput imageUri={image2} handleImage={img => { setImage2(img); setFieldValue('image2', img) }} />
-                                    <ImageInput imageUri={image3} handleImage={img => { setImage3(img); setFieldValue('image3', img) }} />
-                                </View> */}
-                                <ErrorMessage error={errors.image1} visible={touched.image1} />
                                 <AppTextInput
                                     icon='home-map-marker'
                                     placeholder='Workspace Name'

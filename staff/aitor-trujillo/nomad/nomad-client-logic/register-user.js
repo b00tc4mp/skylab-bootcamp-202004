@@ -13,7 +13,7 @@ module.exports = function (name, surname, email, password) {
     return (async () => {
         const result = await call(
             'POST',
-            `${this.API_URL}/users`,
+            `${this.API_URL}/users/`,
             `{ "name": "${name}", "surname": "${surname}", "email": "${email}", "password": "${password}" }`,
             { 'Content-type': 'application/json' }
         )
