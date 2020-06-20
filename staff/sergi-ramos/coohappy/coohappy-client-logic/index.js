@@ -8,5 +8,8 @@ module.exports = {
     addDateLaundry: require('./add-date-laundry'),
     deleteDateLaundry: require('./delete-date-laundry'),
     sendMessage: require('./send-message'),
-    retrieveMessage: require('./retrieve-messages')
+    retrieveMessage: require('./retrieve-messages'),
+    addFood: require('./add-food'),
+    substractFood: require('./substract-food'),
+    retrieveUserFoodList: require('./retrieve-user-food-list')
 }

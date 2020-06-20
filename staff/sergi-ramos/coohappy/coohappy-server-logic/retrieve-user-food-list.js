@@ -18,7 +18,7 @@ module.exports = userId => {
             
 
             delete user._id
-            if(user.foodList.length === 0) throw new UnexistenceError('no list yet')
+            if(user.foodList.length === 0) {[]}
             return user
         })
 }
