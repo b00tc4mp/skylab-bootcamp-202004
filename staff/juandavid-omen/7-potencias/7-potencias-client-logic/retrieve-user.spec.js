@@ -14,8 +14,9 @@ const { utils: { jwtPromised } } = require('7-potencias-commons')
 const context = require('./context')
 
 context.API_URL = API_URL
+context.storage = {}
 
-describe('logic - retrieve user', () => {
+describe(' retrieve user', () => {
   before(() => mongoose.connect(MONGODB_URL))
 
   let name, surname, email, password, token
@@ -59,7 +60,7 @@ describe('logic - retrieve user', () => {
         .then(_token => token = _token)
     })
 
-    it('should fail when user does not exist', done =>
+    it('should fail when user does not exist', () =>
       retrieveUser(token)
         .then(() => { throw new Error('should not reach this point') })
         .catch(error => {
@@ -67,7 +68,6 @@ describe('logic - retrieve user', () => {
           expect(error).to.be.an.instanceof(Error)
           expect(error.message).to.equal(`user with id ${userId} does not exist`)
         })
-        .then(done())
     )
   })
 
