@@ -19,13 +19,12 @@ module.exports = new Schema({
     
     sex: {
         type: String,
-        // enum: ['M','F'],
-        required: false
+        enum: ['M','F'],
+        required: true
     },
 
     location: {
         type: String,
-        // enum: ['M','F'],
         required: true
     },
 
@@ -38,7 +37,8 @@ module.exports = new Schema({
 
     password: {
         type: String,
-        required: true
+        required: true,
+        min: 8
     },
 
     members: [{
