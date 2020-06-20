@@ -15,7 +15,7 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" translucent={true} />
       { view === "home" && <Home 
         onGoToMapBar={ () => setView("mapBar") } 
         onGoToMapRestaurant={ () => setView("mapRestaurant") } 
