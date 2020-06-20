@@ -11,6 +11,7 @@ const { jwtVerifierExtractor, cors } = require('./middlewares')
 const { name, version } = require('./package.json')
 const { mongoose }  = require('plates-data')
 const retrieveUser = require('plates-server-logic/retrieve-user')
+const retrieveRestaurant = require('plates-server-logic/retrieve-restaurant')
 
 mongoose.connect(MONGODB_URL)
     .then(()=>{
@@ -111,6 +112,21 @@ mongoose.connect(MONGODB_URL)
                 handleError(error, res)
             }
         })
+
+
+
+        app.get('/restaurant/:restaurantId',(req, res) => {
+            const { params: {restaurantId} } = req
+            debugger
+            try {
+                retrieveRestaurant(restaurantId)
+                    .then(restaurants => res.status(200).json(restaurants))
+                    .catch(error => handleError(error,res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
 
         app.listen(PORT, () => console.log(`${name} ${version} running on port ${PORT}`))
 
