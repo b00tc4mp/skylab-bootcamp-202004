@@ -3,7 +3,9 @@ import Register from './register'
 import logo from './logo.svg';
 import './App.css';
 import {Route, withRoute, Redirect, withRouter } from 'react-router-dom'
-import { isUserAuthenticated } from 'plates-client-logic'
+import { isUserAuthenticated, context } from 'plates-client-logic'
+
+context.storage = sessionStorage
 
 function App ({history}) {
     const [ token, setToken ] = useState

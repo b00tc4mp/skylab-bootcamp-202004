@@ -17,7 +17,6 @@ describe('server logic: create restaurant', () => {
         await Promise.all([
             User.deleteMany(),
             Restaurant.deleteMany(),
-            Menu.deleteMany(),
             Dish.deleteMany()
         ])
 
@@ -86,7 +85,7 @@ describe('server logic: create restaurant', () => {
             } catch (error) {
                 expect(error).to.exist
                 expect(error).to.be.instanceof(DuplicityError)
-                expect(error.message).to.equal(`restaurant cif with ${cif} already exist`)
+                expect(error.message).to.equal(`restaurant cif with ${cif} already exists`)
 
             }
         })

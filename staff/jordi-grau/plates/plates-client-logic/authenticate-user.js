@@ -18,10 +18,15 @@ debugger
     )
         
     .then(({status, body}) => {
-        if(status === 200) return
-    
+        if(status === 200) {
+            const {token} = JSON.parse(body)
+            this.storage.token = token
+
+            return 
+        }
+
+
         const { error } = JSON.parse(body)
-    
         throw new Error(error)
     })
 
