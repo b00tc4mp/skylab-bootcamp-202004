@@ -21,9 +21,9 @@ Number.validate.integer = function (number) {
     if (!this.isInteger(number)) throw new ValueError(`${number} is not an integer number`)
 }.bind(Number)
 
-Number.validate.greaterEqualThan = function (number, other) {
+Number.validate.greaterEqualThan = function (number, other, hidePassword) {
     this.validate(number)
     this.validate(other)
 
-    if (number < other) throw new ValueError(`${number} is not greater or equal than ${other}`)
+    if (number < other) throw new ValueError(`${hidePassword ? 'password' : number} is not greater or equal than ${other}`)
 }.bind(Number)

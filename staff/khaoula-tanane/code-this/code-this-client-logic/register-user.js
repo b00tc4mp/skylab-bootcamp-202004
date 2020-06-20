@@ -5,9 +5,8 @@ const context = require('./context')
 module.exports = function (name, email, password) {
     String.validate(name)
     Email.validate(email)
+    String.validate.lengthGreaterEqualThan(password, 8, true)
 
-    String.validate.lengthGreaterEqualThan(password, 8)
-    debugger
     return call(
         'POST',
         `${this.API_URL}/users`,

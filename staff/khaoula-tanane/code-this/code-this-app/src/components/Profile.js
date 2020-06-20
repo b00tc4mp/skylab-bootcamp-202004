@@ -1,17 +1,37 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import  './Profile.sass'
+import { retrieveUser } from 'code-this-client-logic'
 
-export default function() {
+function Profile() {
+    const [user, setUser] = useState(null)
+    useEffect(() => {
+        handleRetrieveUser()
+    }, [])
+    
+    const handleRetrieveUser = async ()=> {
+        const _user = await retrieveUser()
+        setUser(_user)
+    }
+
+    console.log(user)
     return <div class="layout">
     <div class="profile">
-        <div class="profile__picture"><img src="https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="ananddavis" /></div>
+        <div class="profile__picture">
+            <img src={`https://api.adorable.io/avatars/${user?.name}@adorable.png`} alt={user?.name} />
+        </div>
         <div class="profile__header">
             <div class="profile__account">
-                <h4 class="profile__username">Kaulaa</h4>
+                <h4 class="profile__username">{user?.name}</h4>
             </div>
             <div class="profile__edit"><a class="profile__button" href="#">Edit Profile</a></div>
         </div>
         <div class="profile__stats">
+        <div class="profile__stat">
+            <div class="profile__icon profile__icon--blue"><i class="fas fa-signal"></i></div>
+            <div class="profile__value">2
+                <div class="profile__key">Votes</div>
+            </div>
+            </div>
             <div class="profile__stat">
                 <div class="profile__icon profile__icon--blue"><i class="fas fa-signal"></i></div>
                 <div class="profile__value">2
@@ -28,3 +48,4 @@ export default function() {
     </div>
 </div>
 }
+export default Profile

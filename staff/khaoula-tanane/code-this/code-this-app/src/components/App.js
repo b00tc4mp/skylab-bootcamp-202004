@@ -4,7 +4,6 @@ import Register from './Register';
 import Login from './Login';
 import Editor from './Editor';
 import Panel from './Panel';
-import Profile from './Profile'
 // import Challenge from './Challenge';
 
 function App() {
@@ -14,14 +13,12 @@ function App() {
      <>
             <BrowserRouter>
                 <Route path='/' exact component={Panel} />
-                <Route path='/login' component={Login} />
+                <Route path='/signin' component={Login} />
                 <Route path='/signup' component={Register} />
                 <Route path='/panel' component={Panel} />
                 <Route path='/editor' component={Editor} />
-                <Route path='/profile' component={Profile} />
 
                 {/* <Route path='/challenge' component={Challenge} /> */}
-
             </BrowserRouter>
      </>
 )

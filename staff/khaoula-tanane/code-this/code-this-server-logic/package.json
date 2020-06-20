@@ -9,7 +9,8 @@
     "code-this-commons": "^1.0.0",
     "code-this-data": "file:../code-this-data",
     "dotenv": "^8.2.0",
-    "mocha": "^7.2.0"
+    "mocha": "^7.2.0",
+    "nyc": "^15.1.0"
   },
   "devDependencies": {},
   "scripts": {

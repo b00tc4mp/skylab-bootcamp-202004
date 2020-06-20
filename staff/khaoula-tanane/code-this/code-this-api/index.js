@@ -4,13 +4,15 @@ const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, JWT_SECRET, MONGODB_URL } }
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, createCategory, createChallenge, retrieveChallenges, retrieveCategories, retrieveCategory } = require('code-this-server-logic')
+const { registerUser, authenticateUser, retrieveUser, createCategory, createChallenge, retrieveChallenges, retrieveCategories, retrieveCategory, savePossibleSolution } = require('code-this-server-logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
 const { utils : {jwtPromised} } = require('code-this-commons')
 const { jwtVerifierExtractor, cors } = require('./middlewares')
 const { mongoose } = require('code-this-data')
+const e = require('express')
+const challenge = require('code-this-data/models/challenge')
 
 mongoose.connect(MONGODB_URL)
     .then(()=> {
@@ -57,7 +59,6 @@ mongoose.connect(MONGODB_URL)
                     .catch(error => handleError(error, res))
             } catch (error) {
                 handleError(error, res)
-                console.log(error)
             }
         })
 
@@ -69,6 +70,7 @@ mongoose.connect(MONGODB_URL)
                     .catch(error => handleError(error, res))
             } catch (error) {
                 handleError(error, res)
+                console.log(error)
             }
         })
 
@@ -114,6 +116,17 @@ mongoose.connect(MONGODB_URL)
                 const { payload: { sub: userId }, params: { userId: otherUserId } } = req
                 retrieveUser(otherUserId || userId)
                     .then(user => res.send(user))
+                    .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        app.patch('/challenge', parseBody, (req, res) => {
+            try {
+                const { body: { challengeId, solution, userId } } = req
+                savePossibleSolution(userId, challengeId, solution)
+                    .then( challenge=> res.send(challenge))
                     .catch(error => handleError(error, res))
             } catch (error) {
                 handleError(error, res)

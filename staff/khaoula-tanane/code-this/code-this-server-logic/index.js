@@ -6,5 +6,6 @@ module.exports = {
     retrieveChallenges: require('./retrieve-challenges'),
     createCategory: require('./create-category'),
     retrieveCategories: require('./retrieve-categories'),
-    retrieveCategory: require('./retrieve-category')
+    retrieveCategory: require('./retrieve-category'),
+    savePossibleSolution: require('./save-possible-solution')
 }

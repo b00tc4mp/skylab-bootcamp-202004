@@ -1,15 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import { retrieveChallenges} from 'code-this-client-logic'
 import Challenge from './Challenge'
-import retrieveCategory from 'code-this-client-logic/retrieve-category'
+import { retrieveCategory, retrieveUser } from 'code-this-client-logic'
+
 
 function Challenges({match: {params: {category: categoryName}}}){
     const [category, setCategory] = useState(null)
+    const [user, setUser] = useState(null)
     
     useEffect(()=>{
         
         handleRetrieveCategory()
+
     }, [categoryName])
+
+    useEffect(()=>{
+        handleRetrieveUser()
+    },[])
+
+    const handleRetrieveUser = async () => {
+        const _user = await retrieveUser()
+        setUser(_user)
+    }
     
     const handleRetrieveCategory = async ()=> {
         const _category = await retrieveCategory(categoryName)
@@ -18,10 +29,10 @@ function Challenges({match: {params: {category: categoryName}}}){
 
     return (
         <>
-            {category ? (
+            {category && user ? (
                 <div>
                     <h1>{category.name}</h1>
-                    {category.challenges.map(challenge => <Challenge {...challenge}/>)}
+                    {category.challenges.map(challenge => <Challenge {...challenge} user={user}/>)}
                 </div>
             ) : <p>loading challenges..</p>}
         </>

@@ -36,6 +36,6 @@ String.validate.alphabetic = function (string) {
     if (!this.isAlphabetic(string)) throw new Error(`${string} is not alphabetic`)
 }.bind(String)
 
-String.validate.lengthGreaterEqualThan = function (string, length) {
-    if (!this.isLengthGreaterEqualThan(string, length)) throw new Error(`"${string}" length is not greater or equal than ${length}`)
+String.validate.lengthGreaterEqualThan = function (string, length, hidePassword) {
+    if (!this.isLengthGreaterEqualThan(string, length, hidePassword)) throw new Error(`"${hidePassword ? 'password' : number}" length is not greater or equal than ${length}`)
 }.bind(String)

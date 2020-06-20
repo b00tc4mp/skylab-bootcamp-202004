@@ -4,6 +4,11 @@ const { utils: { Email } } = require('code-this-commons')
 
 
 const User = new Schema({
+    role: {
+        type: String,
+        enum: ['admin', 'user'],
+        default: 'user'
+    },
     name: {
         type: String,
         required: true

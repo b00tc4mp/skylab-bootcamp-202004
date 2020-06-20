@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import './Login.sass'
 import { authenticateUser } from 'code-this-client-logic'
+import Feedback from './Feedback'
 
 function Login (props) {
-    const [error, setError] = useState()
+    const [error, setError] = useState(null)
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -14,8 +15,8 @@ function Login (props) {
 
         try{
           authenticateUser(email, password)
-            .then(()=> props.history.push('/Home'))
-            .catch(error=> setError(error))
+            .then(()=> props.history.push('/Panel'))
+            .catch(error=> setError(error.message))
         } catch ({message}){
             setError(message)
         }
@@ -39,6 +40,7 @@ function Login (props) {
               </div>
               <div className="container-button">
                 <button name="submit_btn" className="btn">SIGN IN</button>
+                {error && <Feedback message={error} level="error" />}
               </div>
             </form>
           </div>

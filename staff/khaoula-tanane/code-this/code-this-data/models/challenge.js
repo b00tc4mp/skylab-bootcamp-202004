@@ -7,14 +7,14 @@ const Challenge = new Schema({
         type: String,
         required: true
     },
-    solution: {
+    solutions: {
         type: [Object],
         default: []
     },
     difficulty: {
         type: String,
         enum: ['Easy', 'Medium', 'Advanced'],
-        required: true
+        default: 'Easy'
     },
     tests: {
         type: String, 

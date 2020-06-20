@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import './Register.sass'
 import { registerUser } from 'code-this-client-logic'
+import Feedback from './Feedback'
 
-function Register ({ handleGoToLogin }) {
+function Register (props) {
     const [error, setError] = useState()
 
     const handleSubmit = event => {
@@ -15,7 +16,7 @@ function Register ({ handleGoToLogin }) {
 
         try {
             registerUser(name, email, password)
-                .then(handleGoToLogin)
+                .then(()=> props.history.push('/Signin'))
                 .catch(error => setError(error.message))
         } catch ({message}) {
             setError(message)
@@ -43,6 +44,7 @@ function Register ({ handleGoToLogin }) {
               </div>
               <div className="container-button">
                 <button name="submit_btn" className="btn">SIGN UP </button>
+                {error && <Feedback message={error} level="error" />}
               </div>
             </form>
           </div>
