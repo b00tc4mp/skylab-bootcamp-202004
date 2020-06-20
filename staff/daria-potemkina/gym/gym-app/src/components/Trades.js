@@ -1,4 +1,5 @@
 import React from 'react'
+import './Trades.sass'
 
 export default function ({ trades }) {
     return <section>
@@ -8,7 +9,7 @@ export default function ({ trades }) {
                 <li>
                     <p>{type}</p>
                     <p>{quantity}</p>
-                    <p>{price}</p>
+                    <p>{`${price}€`}</p>
                 </li>
             )}
         </ul>

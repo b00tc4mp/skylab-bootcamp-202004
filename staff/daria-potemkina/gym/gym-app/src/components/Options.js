@@ -14,16 +14,16 @@ export default function ({ token, options, handleGoToDetails }) {
 
         quantity = Number(quantity.value)
         side = side.value
-    
+
         try {
             addProduct(token, id, priceId, side, quantity)
                 .then(() => {
-                    setSuccess({ id, message: 'product is added to the portfolio' })
+                    setSuccess({ id, message: 'trade has been added to the portfolio' })
                     return
                 })
-                .catch(({ message }) => setError(message))
+                .catch(({ message }) => setError([id, message]))
         } catch ({ message }) {
-            setError(message)
+            setError([id, message])
         }
     }
 
@@ -32,38 +32,39 @@ export default function ({ token, options, handleGoToDetails }) {
         <ul>{
             options.map(option =>
                 <li className="products__item">
-                    <section className="products__details">
+                    <button className="products__details" onClick={event => {
+                        event.preventDefault()
+
+                        handleGoToDetails(option)
+                    }}>
                         <p>{option.ticker}</p>
                         <p>{option.settlementDate}</p>
                         <p>{option.side}</p>
                         <p>{`${option.type.strike}€`}</p>
                         <p>{`${option.price}€`}</p>
-                        <button className="products__button" onClick={event => {
-                            event.preventDefault()
-
-                            handleGoToDetails(option)
-                        }}>Details</button>
-                    </section>
+                    </button>
                     <section className="products__form">
                         <form onSubmit={event => handleSubmit(event, option._id, option.priceId)}>
-                            <select name="quantity">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </select>
-                            <select name='side'>
-                                <option value='Buy'>Buy</option>
-                                <option value='Sell'>Sell</option>
-                            </select>
-                            <button className="products__button products__button--border">Trade</button>
-                            {error && <Feedback message={error} level="error" />}
+                            <section className="products__select">
+                                <select className="products__input" name="quantity">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                                <select className="products__input" name='side'>
+                                    <option value='Buy'>Buy</option>
+                                    <option value='Sell'>Sell</option>
+                                </select>
+                            </section>
+                            <button className="products__button">Trade</button>
+                            {error && error[0] === option._id && <Feedback message={error[1]} level="error" />}
                             {success && success.id === option._id && <Feedback message={success.message} level="" />}
                         </form>
                     </section>

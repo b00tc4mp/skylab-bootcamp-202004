@@ -8,23 +8,36 @@
 .products
     display: flex
     flex-direction: column
-    margin-left: 5%
+    justify-content: center
+    width: 100%
 
     &__title
-        font-size: 20px
-        padding-left: 10%
-        padding-right: 10%
+        font-size: 80%
+        padding: 2%
+        margin-left: 2%
+        width: 20%
         margin-top: 5%
+        margin-bottom: 5%
+        text-transform: uppercase
 
     
     &__item
         list-style: none
         display: flex
+        align-self: center
+        text-align: center
         justify-content: space-around
+        background-color: rgba(84, 192, 176, 0.1)
+        border: 1px solid rgb(84, 192, 176)
+        maring-top: 2%
+        margin-bottom: 2%
+        margin-left: 2%
+        border-radius: 10px
+        width: 95%
     
     &__details
-        margin-top: 2%
         background-color: rgb(84, 192, 176)
+        border: none
         box-shadow: 2px 2px 2px black
         padding: 5%
         width: 100px
@@ -33,30 +46,28 @@
         border-radius: 10px
 
     &__button
-        background-color: white
+        background-color: rgb(84, 192, 176)
         box-shadow: 2px 2px 2px black
+        color: white
+        text-align: center
+        margin-top: 8%
+        width: 40%
+        height: 25px
         border: none
-        margin-top: 5%
         border-radius: 5px
-        padding: 5%
 
-        &--border
-            background-color: rgb(84, 192, 176)
-            color: white
-            display: flex
-            align-self: center
-    
     &__form
-        width: 150px
+        width: 40%
         margin-top: 2%
-        margin-right: 5%
     
     &__select
         display: flex
         flex-direction: row
+        justify-content: space-around
 
-select
-    border-radius: 5px
-    width: 60px
-    height: 25px
-    box-shadow: 2px 2px 2px black
+    &__input
+        border-radius: 5px
+        border: 1px solid rgb(84, 192, 176)
+        width: 40%
+        height: 30%
+

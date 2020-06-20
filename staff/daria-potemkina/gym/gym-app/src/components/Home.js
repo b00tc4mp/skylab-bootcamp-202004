@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { retrieveUser, retrieveFutures, retrieveOptions } from 'gym-client-logic'
 import Futures from './Futures'
 import Options from './Options'
-import Search from './Search'
 import './Home.sass'
 
 function Home ({handleGoToDetails, handleShowUnderlyingPrices, token}) {
@@ -41,7 +40,6 @@ function Home ({handleGoToDetails, handleShowUnderlyingPrices, token}) {
     }, [])
 
         return <section className="home">
-            <Search />
             {futures && <Futures token={token} futures={futures} handleGoToDetails = {handleGoToDetails} handleShowUnderlyingPrices={handleShowUnderlyingPrices}/>}
             {options && <Options token={token} options={options} handleGoToDetails = {handleGoToDetails} handleShowUnderlyingPrices={handleShowUnderlyingPrices}/>}
         </section>

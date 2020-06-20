@@ -17,7 +17,7 @@ require('gym-commons/polyfills/string')
 const { utils: { call } } = require('gym-commons')
 const context = require('./context')
 const moment = require('moment')
-
+debugger
 module.exports = function (type, sector, ticker, market) {
     if (type !== undefined)
         String.validate.notVoid(type)
@@ -27,7 +27,7 @@ module.exports = function (type, sector, ticker, market) {
         String.validate.notVoid(ticker)
     if (market !== undefined)
         String.validate.notVoid(market)
-    debugger
+    
     return call('GET', `${this.API_URL}/products?${type && `type=${type}`}&${sector && `sector=${sector}`}&${ticker && `ticker=${ticker}`}&${market && `market=${market}`}`,
         undefined,
         undefined)

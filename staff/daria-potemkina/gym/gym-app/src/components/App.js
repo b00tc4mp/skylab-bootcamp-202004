@@ -11,9 +11,13 @@ import Account from './Account'
 import Portfolio from './Portfolio'
 import Notifications from './Notifications'
 import Settings from './Settings'
+import Search from './Search'
+import Spinner from './Spinner'
 import { faHome, faBars } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { isUserAuthenticated, retrieveFuturePrices, retrieveUnderlyingPrice } from 'gym-client-logic'
+
+
 
 function App({ history }) {
   const [token, setToken] = useState()
@@ -22,6 +26,7 @@ function App({ history }) {
   const [underlying, setUnderlying] = useState()
   const [item, setItem] = useState()
   const [expanded, setExpanded] = useState()
+  const [loading, setLoading] = useState(true) 
 
   useEffect(() => {
     if (sessionStorage.token) {
@@ -48,6 +53,8 @@ function App({ history }) {
     setToken(token)
 
     history.push('/home')
+
+    setLoading(false)
   }
 
   const handleGoToLogin = () => history.push('/login')
@@ -102,6 +109,15 @@ function App({ history }) {
     history.push('/settings')
   }
 
+  const handleGoToSearch = event => {
+    event.preventDefault()
+
+    if (expanded) setExpanded(false)
+    else setExpanded(true)
+
+    history.push('/search')
+  }
+
   const handleGoToDetails = item => {
     setItem(item)
     try {
@@ -132,6 +148,7 @@ function App({ history }) {
             <button className="nav-bar__menu" href="/"> <FontAwesomeIcon icon={faBars} onClick={handleToggle} /></button>
             <ul className={`nav-bar__list${expanded ? '--expanded' : ''}`}>
               <li><a href="/" onClick={handleGoToPortfolio}>Portfolio</a></li>
+              <li><a href="/" onClick={handleGoToSearch}>Search</a></li>
               <li><a href="/" onClick={handleGoToNotifications}>Notifications</a></li>
               <li><a href="/" onClick={handleGoToAccount}>Account</a></li>
               <li><a href="/" onClick={handleGoToSettings}>Settings</a></li>
@@ -140,11 +157,15 @@ function App({ history }) {
           </nav>
         </section>}
 
+       {/* <Spinner /> */}
+
         {!expanded && <Route path="/home" render={() =>
           token ? <Home expanded={expanded} token={token} handleGoToDetails={handleGoToDetails} /> : <Redirect to="/login" />} />}
 
         {!expanded && <Route path="/product-details" render={() =>
           token && prices && <ProductDetails expanded={expanded} token={token} prices={prices} underlyings={underlying} item={item} />} />}
+
+        {!expanded && <Route path="/search" render={() => <Search handleGoToDetails={handleGoToDetails} token={token} />} />}
 
         {!expanded && <Route path="/account" render={() => <Account token={token} />} />}
 

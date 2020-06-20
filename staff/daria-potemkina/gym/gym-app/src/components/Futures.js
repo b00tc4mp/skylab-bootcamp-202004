@@ -14,16 +14,18 @@ export default function ({ futures, handleGoToDetails, token }) {
 
         quantity = Number(quantity.value)
         side = side.value
-    
+
         try {
             addProduct(token, id, priceId, side, quantity)
                 .then(() => {
-                    setSuccess({ id, message: 'product is added to the portfolio' })
+                    setSuccess({ id, message: 'trade has been added to your portfolio' })
                     return
                 })
-                .catch(({ message }) => setError(message))
+                .catch(({message}) => {
+                    setError([id, message])}
+                    )
         } catch ({ message }) {
-            setError(message)
+            setError([id, message])
         }
     }
 
@@ -32,20 +34,19 @@ export default function ({ futures, handleGoToDetails, token }) {
         <ul>{
             futures.map(item =>
                 <li className='products__item'>
-                    <section className="products__details">
+                    <button className="products__details" onClick={event => {
+                        event.preventDefault()
+
+                        handleGoToDetails(item)
+                    }}>
                         <p>{item.ticker}</p>
                         <p>{item.settlementDate}</p>
                         <p>{`${item.price}€`}</p>
-                        <button className="products__button" onClick={event => {
-                            event.preventDefault()
-
-                            handleGoToDetails(item)
-                        }}>Details</button>
-                    </section>
+                    </button>
                     <section className="products__form">
                         <form onSubmit={event => handleSubmit(event, item._id, item.priceId)}>
                             <section className="products__select">
-                                <select name="quantity">
+                                <select className="products__input" name="quantity">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -57,14 +58,14 @@ export default function ({ futures, handleGoToDetails, token }) {
                                     <option value="9">9</option>
                                     <option value="10">10</option>
                                 </select>
-                                <select name='side'>
+                                <select className="products__input" name='side'>
                                     <option value='Buy'>Buy</option>
                                     <option value='Sell'>Sell</option>
                                 </select>
                             </section>
-                            <button className="products__button products__button--border">Trade</button>
-                            {error && <Feedback message={error} level="error" />}
-                            {success && success.id === item._id && <Feedback message={success.message} level="" />}
+                            <button className="products__button">Trade</button>
+                            {error && error[0] === item._id && <Feedback message={error[1]} />}
+                            {success && success.id === item._id && <Feedback message={success.message} />}
                         </form>
                     </section>
                 </li>

@@ -1,54 +1,49 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap')
     
-*
-    margin: 0
-    padding: 0
-    font-family: 'Lato', sans-serif
-    
-.search
+.settings
     display: flex
-    align-items: center
     flex-direction: column
-    border-radius: 10px
-    width: 100%
-    font-size: 12px
-    
-    &__title
+    align-self: center
+    align-items: center
+    font-family: 'Lato', sans-serif
+
+    &__name
         text-align: center
+        margin-top: 5%
         margin-bottom: 5%
         font-size: 14px
         padding-bottom: 5%
         padding-top: 5%
         width: 80%
+        border-bottom: 1px solid rgb(84, 192, 176)
+        border-top: 1px solid rgb(84, 192, 176)
         text-transform: uppercase
     
     &__form
         display: flex
-        justify-content: center
-        align-items: center
         flex-direction: column
-        width: 100%
+        width: 60%
+        align-self: center
     
+    &__card
+        display: flex
+
+    
+    &__card-num
+        width: 22%
+        margin-right: 3%
+
     &__input
-        display: grid
-        grid-template-columns: repeat(2, 1fr)
-        grid-template-rows: repeat(2, 1fr)
-        margin: 2%
-        width: 80%
-    
-    &__select
-        height: 90%
-        margin: 5%
-        border: 1px solid rgb(84, 192, 176)
+        margin-bottom: 5%
+        height: 25px
         border-radius: 5px
+        border: 1px solid rgb(84, 192, 176)
+        font-size: 80%
         text-indent: 10px
-        
     
     &__button
         width: 70px
         background-color: rgb(84, 192, 176)
-        margin-top: 2%
-        margin-bottom: 3%
         box-shadow: 2px 2px 2px black
         color: white
         border: none
@@ -58,10 +53,6 @@
         align-self: center
         align-items: center
         justify-content: center
-        
-    
-
-
 
 
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Line } from 'react-chartjs-2'
 import { addProduct } from 'gym-client-logic'
 import './ProductDatails.sass'
@@ -10,37 +10,38 @@ function ProductDetails({ token, prices, underlyings, item, expanded }) {
     const [error, setError] = useState()
     const [success, setSuccess] = useState()
 
-    const Chart = () => {
-        const futurePrice = prices.map(({ price }) => price)
-        const futureDate = prices.map(({ date }) => date)
+    const futurePrice = prices.map(({ price }) => price)
+    const futureDate = prices.map(({ date }) => date)
 
-        const underlyingPrice = underlyings.map(({ price }) => price)
-        const underlyingDate = underlyings.map(({ date }) => date)
+    const underlyingPrice = underlyings.map(({ price }) => price)
+    const underlyingDate = underlyings.map(({ date }) => date)
+
+    const Chart = () => {
 
         setFutureChartData({
             labels: futureDate,
             datasets: [
                 {
-                    label: "Futures price",
+                    label: `${item.ticker}`,
                     lineTension: 0.5,
-                    backgroundColor: "rgba(75,192,192,0.2)",
-                    borderColor: "rgba(75,192,192,1)",
+                    backgroundColor: "rgba(84,192,176,0.2)",
+                    borderColor: "rgba(84,192,176,1)",
                     data: futurePrice,
-                }]
+                },
+            ],
         })
 
         setUnderlyingChartData({
             labels: underlyingDate,
             datasets: [
                 {
-                    label: "Underlying price",
+                    label: `${item.ticker}`,
                     lineTension: 0.5,
-                    backgroundColor: "rgba(75,192,192,0.2)",
-                    borderColor: "rgba(75,192,192,1)",
+                    backgroundColor: "rgba(241,120,113,0.2)",
+                    borderColor: "rgba(241,120,113,1)",
                     data: underlyingPrice
                 }]
         })
-
     }
 
     useEffect(() => {
@@ -57,7 +58,7 @@ function ProductDetails({ token, prices, underlyings, item, expanded }) {
 
         try {
             addProduct(token, item._id, item.priceId, side, quantity)
-                .then(() => setSuccess('product added to the portfolio'))
+                .then(() => setSuccess('trade has been added to the portfolio'))
                 .catch(({ message }) => setError(message))
         } catch ({ message }) {
             setError(message)
@@ -107,6 +108,14 @@ function ProductDetails({ token, prices, underlyings, item, expanded }) {
                     <Line
                         data={futureChartData}
                         options={{
+                            layout: {
+                                padding: {
+                                    left: 20,
+                                    right: 20,
+                                    top: 30,
+                                    button: 30
+                                }
+                            },
                             title: {
                                 display: true,
                                 text: 'Historic future prices',
@@ -115,6 +124,9 @@ function ProductDetails({ token, prices, underlyings, item, expanded }) {
                             },
                             scales: {
                                 xAxes: [{
+                                    gridLines: {
+                                        display: false
+                                    },
                                     type: "time",
                                     time: {
                                         unit: 'day',
@@ -122,16 +134,28 @@ function ProductDetails({ token, prices, underlyings, item, expanded }) {
                                         displayFormats: {
                                             day: 'MMM D'
                                         }
+                                    },
+                                    ticks: {
+                                        fontSize: 10,
                                     }
                                 }],
                                 yAxes: [{
+                                    gridLines: {
+                                        display: false
+                                    },
                                     ticks: {
-                                        stepSize: 0.05
+                                        stepSize: 0.5,
+                                        suggestedMin: Math.min(...futurePrice),
+                                        suggestedMax: Math.max(...futurePrice),
+                                        fontSize: 10,
+                                        callback: function (value) {
+                                            return value + '€'
+                                        }
                                     }
                                 }]
                             }
                         }}
-                        height={200}
+                        height={250}
                     />
                 </section>
             </section>
@@ -176,12 +200,24 @@ function ProductDetails({ token, prices, underlyings, item, expanded }) {
                 </section>
             </section>
         }
-        {error && <Feedback message={error} level="error" />}
-        {success && <Feedback message={success} level="" />}
         <section className="details__underlying">
             <Line
                 data={underlyingChartData}
                 options={{
+                    layout: {
+                        padding: {
+                            left: 20,
+                            right: 20,
+                            top: 30,
+                            button: 30
+                        }
+                    },
+                    legend: {
+                        display: true,
+                        boxWidth: 10,
+                        padding: 15,
+
+                    },
                     title: {
                         display: true,
                         text: 'Underlying historic prices',
@@ -190,6 +226,9 @@ function ProductDetails({ token, prices, underlyings, item, expanded }) {
                     },
                     scales: {
                         xAxes: [{
+                            gridLines: {
+                                display: false
+                            },
                             type: "time",
                             time: {
                                 unit: 'day',
@@ -197,16 +236,28 @@ function ProductDetails({ token, prices, underlyings, item, expanded }) {
                                 displayFormats: {
                                     day: 'MMM D'
                                 }
+                            },
+                            ticks: {
+                                fontSize: 10,
                             }
                         }],
                         yAxes: [{
+                            gridLines: {
+                                display: false
+                            },
                             ticks: {
-                                stepSize: 0.1
-                            }
+                                fontSize: 10,
+                                stepSize: 0.5,
+                                suggestedMin: Math.min(...futurePrice),
+                                suggestedMax: Math.max(...futurePrice),
+                                callback: function (value) {
+                                    return value + '€'
+                                }
+                            },
                         }]
                     }
                 }}
-                height={200}
+                height={250}
             />
         </section>
 
