@@ -36,7 +36,6 @@ describe('client logic - retrieve-terms-by-id', () => {
                     expect(result.lower[0].xref).to.not.exist
                     return
                 })
-                .catch(error => {throw error})
         )
     })
 

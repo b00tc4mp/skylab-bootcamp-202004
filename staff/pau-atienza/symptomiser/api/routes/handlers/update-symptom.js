@@ -3,9 +3,9 @@ const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
     try {
-        const { body: { symptom, id } } = req
+        const { body: { id, modifiers, comments } } = req
         
-        updateSymptom( id, symptom )
+        updateSymptom( id, modifiers, comments )
             .then(id => res.status(200).send({id}))
             .catch(error => handleError(error, res))
     } catch (error) {

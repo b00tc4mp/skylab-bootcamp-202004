@@ -13,7 +13,8 @@ const updateSymptom = require('./update-symptom')
 describe('server logic - update symptom', () => {
     before(() => mongoose.connect(MONGODB_URL))
     before(() => Symptom.deleteMany())
-    let content, limit, date, prediction, date2, clicks, HPO_id, name, confidenceLevel, date3, predictionCode, predictionName, HPO_id2, date4, symptom, HPO_id3, name2, confidenceLevel2, date5, comments, modifiers, id
+    let content, limit, date, prediction, date2, clicks, HPO_id, name, confidenceLevel, date3, predictionCode, predictionName, HPO_id2, date4, 
+    symptom, HPO_id3, name2, confidenceLevel2, date5, comments, modifiers, id, userNavigationTime, serverResponseTime
 
     beforeEach(async () => {
         await Symptom.deleteMany()
@@ -41,22 +42,25 @@ describe('server logic - update symptom', () => {
         predictionName = `predName-${random()}`
         comments = `comment-${random()}`
 
+        userNavigationTime = 0
+        serverResponseTime = 0
+
         clicks = [{HPO_id: HPO_id2, date: date4}]
         prediction = [{predictionCode, predictionName}]
         modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
 
-        symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
+        symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks, userNavigationTime, serverResponseTime}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
 
         const result = await Symptom.create(symptom)
         id = result.id
     })
 
-    it('should succeed on valid data', async () => {
+    it('should succeed to update modifiers and comments without altering previous data of the symptom', async () => {
 
         symptom.modifiers = modifiers
         symptom.comments = comments
 
-        const _id = await updateSymptom(id, symptom)
+        const _id = await updateSymptom(id, modifiers, comments)
 
         expect(_id).to.equal(id)
 
@@ -73,7 +77,6 @@ describe('server logic - update symptom', () => {
 
         expect(updatedSymptom.id).to.equal(id)
 
-
         expect(_content).to.equal(content)
         expect(_limit).to.equal(limit)
         expect(_comments).to.equal(comments)
@@ -83,7 +86,7 @@ describe('server logic - update symptom', () => {
         expect(_date.toISOString()).to.equal(date)
         expect(_date2.toISOString()).to.equal(date2)
         expect(_date3.toISOString()).to.equal(date3)
-        expect(_clicks[0].date.toISOString()).to.equal(clicks[0].date.toISOString())
+        expect(_clicks[0].date.toISOString()).to.equal(clicks[0].date)
         expect(_date5.toISOString()).to.equal(date5)
         
         expect(_clicks[0].HPO_id).to.equal(clicks[0].HPO_id)
@@ -101,136 +104,13 @@ describe('server logic - update symptom', () => {
     describe('when inputs with incorrect format are introduced', async () => {
         
         it('should fail when empty strings are introduced', async () => {
-            try {
-                predictionCode = ""
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
-
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(VoidError)
-                expect(error.message).to.equal(`string is empty or blank`)
-            }
-
-            try {
-                predictionName = ""
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
-
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
-
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(VoidError)
-                expect(error.message).to.equal(`string is empty or blank`)
-            }
-
-            try {
-                HPO_id2 = ""
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
-
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
-
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(VoidError)
-                expect(error.message).to.equal(`string is empty or blank`)
-            }
-            try {
-                content = ""
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
-
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
-
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(VoidError)
-                expect(error.message).to.equal(`string is empty or blank`)
-            }
-
-            try {
-                HPO_id = ""
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
-
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
-
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(VoidError)
-                expect(error.message).to.equal(`string is empty or blank`)
-            }
-
-            try {
-                name = ""
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
-
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
-
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(VoidError)
-                expect(error.message).to.equal(`string is empty or blank`)
-            }
-
-            try {
-                confidenceLevel = ""
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
-
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(VoidError)
-                expect(error.message).to.equal(`string is empty or blank`)
-            }
-
+            
             try {
                 confidenceLevel2 = ""
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
                 modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
 
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
+                updateSymptom(id, modifiers, comments)
                     .then(()=>{throw Error('should not reach this point')})
             } catch (error) {
                 expect(error).to.exist
@@ -241,12 +121,10 @@ describe('server logic - update symptom', () => {
 
             try {
                 name2 = ""
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
                 modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
 
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
+                updateSymptom(id, modifiers, comments)
                     .then(()=>{throw Error('should not reach this point')})
             } catch (error) {
                 expect(error).to.exist
@@ -257,12 +135,10 @@ describe('server logic - update symptom', () => {
 
             try {
                 HPO_id3 = ""
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
                 modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
 
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
+                updateSymptom(id, modifiers, comments)
                     .then(()=>{throw Error('should not reach this point')})
             } catch (error) {
                 expect(error).to.exist
@@ -270,140 +146,28 @@ describe('server logic - update symptom', () => {
                 expect(error).to.be.an.instanceof(VoidError)
                 expect(error.message).to.equal(`string is empty or blank`)
             }
+
+            try {
+                modifiers = "hi"
+
+                updateSymptom(id, modifiers, comments)
+                    .then(()=>{throw Error('should not reach this point')})
+            } catch (error) {
+                expect(error).to.exist
+
+                expect(error).to.be.an.instanceof(TypeError)
+                expect(error.message).to.equal(`hi is not a valid JSON`)
+            }
         })
 
         it('should fail when non-string inputs are introduced', async () => {
-            try {
-                predictionCode = []
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
-
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(TypeError)
-                expect(error.message).to.equal(` is not a string`)
-            }
-
-            try {
-                predictionName = []
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
-
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
-
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(TypeError)
-                expect(error.message).to.equal(` is not a string`)
-            }
-
-            try {
-                HPO_id2 = []
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
-
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
-
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(TypeError)
-                expect(error.message).to.equal(` is not a string`)
-            }
-            try {
-                content = []
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
-
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
-
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(TypeError)
-                expect(error.message).to.equal(` is not a string`)
-            }
-
-            try {
-                HPO_id = []
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
-
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
-
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(TypeError)
-                expect(error.message).to.equal(` is not a string`)
-            }
-
-            try {
-                name = []
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
-
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
-
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(TypeError)
-                expect(error.message).to.equal(` is not a string`)
-            }
-
-            try {
-                confidenceLevel = []
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
-
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(TypeError)
-                expect(error.message).to.equal(` is not a string`)
-            }
 
             try {
                 confidenceLevel2 = []
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
                 modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
 
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
+                updateSymptom(id, modifiers, comments)
                     .then(()=>{throw Error('should not reach this point')})
             } catch (error) {
                 expect(error).to.exist
@@ -414,12 +178,10 @@ describe('server logic - update symptom', () => {
 
             try {
                 name2 = []
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
                 modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
 
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
+                updateSymptom(id, modifiers, comments)
                     .then(()=>{throw Error('should not reach this point')})
             } catch (error) {
                 expect(error).to.exist
@@ -430,117 +192,27 @@ describe('server logic - update symptom', () => {
 
             try {
                 HPO_id3 = []
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
                 modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
 
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
+                updateSymptom(id, modifiers, comments)
                     .then(()=>{throw Error('should not reach this point')})
             } catch (error) {
                 expect(error).to.exist
 
                 expect(error).to.be.an.instanceof(TypeError)
                 expect(error.message).to.equal(` is not a string`)
-            }
-        })
-
-        it('should fail when non-number inputs are introduced', async () => {
-            try {
-                limit = []
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
-
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(ValueError)
-                expect(error.message).to.equal(` is not greater or equal than 1`)
             }
         })
 
         it('should fail when non-ISODate inputs are introduced', async () => {
-            try {
-                date = []
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
 
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(TypeError)
-                expect(error.message).to.equal(` is not a string`)
-            }
-
-            try {
-                date2 = []
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
-
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(TypeError)
-                expect(error.message).to.equal(` is not a string`)
-            }
-
-            try {
-                date3 = []
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
-
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(TypeError)
-                expect(error.message).to.equal(` is not a string`)
-            }
-
-            try {
-                date4 = []
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
-                modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
-
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(TypeError)
-                expect(error.message).to.equal(` is not a string`)
-            }
-
-            try {
+            try{
                 date5 = []
-                clicks = [{HPO_id: HPO_id2, date: date4}]
-                prediction = [{predictionCode, predictionName}]
                 modifiers = [{HPO_id: HPO_id3, date: date5, name: name2, confidenceLevel: confidenceLevel2}]
 
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
-                updateSymptom(id, symptom)
+                updateSymptom(id, modifiers, comments)
                     .then(()=>{throw Error('should not reach this point')})
 
             } catch (error) {

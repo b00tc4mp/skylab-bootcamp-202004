@@ -5,17 +5,21 @@ const context = require('./context')
 global.fetch = require('node-fetch')
 
 
-module.exports = function(symptomList){
-    JSON.validateNotArray(symptomList)
-    
-    let {symptomList: symptoms} = symptomList
+module.exports = function(){
+    debugger
+    const symptomList = JSON.parse(this.storage.submittedSymptoms).map(({term:{symptomId}})=>{
+        debugger
 
-    symptoms.forEach(symptom=>String.validate.notVoid(symptom))
+        String.validate.notVoid(symptomId)
+        return symptomId
+    })
 
-    symptomList.date = new Date().toISOString()
+    JSON.validate(symptomList)
+
+    const date = new Date().toISOString()
 
     return (async ()=>{
-        const {status, body} = await call('POST', `${this.API_URL}/symptomlists`, JSON.stringify(symptomList), {"Content-type": "application/json"})
+        const {status, body} = await call('POST', `${this.API_URL}/symptomlists`, JSON.stringify({symptomList, date}), {"Content-type": "application/json"})
         if (status !== 200) {
             const {error} = JSON.parse(body)
 

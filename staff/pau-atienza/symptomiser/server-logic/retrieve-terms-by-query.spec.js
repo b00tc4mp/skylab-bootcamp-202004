@@ -27,8 +27,10 @@ describe('server logic - retrieve-terms-by-query', () => {
                     expect(result).to.exist
 
                     expect(result.prediction).to.be.an.instanceof(Array)
-                    expect(result.prediction[0]["prediction-name"]).to.exist
-                    expect(result.prediction[0]["prediction-code"]).to.exist
+                    expect(result.prediction[0].predictionName).to.exist
+                    expect(result.prediction[0].predictionCode).to.exist
+                    expect(typeof result.prediction[0].predictionName).to.equal("string")
+                    expect(typeof result.prediction[0].predictionCode).to.equal("string")
                 })
         ).timeout(8000)
     })

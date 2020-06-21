@@ -6,8 +6,8 @@ export default function( { results, onClick, clickedSymptom, goToSymptom } ) {
     return <section className="results">
     <p className = 'results__list--title'>Proposed terms</p>
     <ul className="results__list">
-      {results?results.prediction.map(symptom => <li key={symptom["prediction-code"]}>
-        <button className='results__list--item' onClick = {()=>{onClick(symptom["prediction-code"])}}>{symptom["prediction-name"]}</button>
+      {results?results.prediction.map(symptom => <li key={symptom.predictionCode}>
+        <button className='results__list--item' onClick = {()=>{onClick(symptom.predictionCode)}}>{symptom.predictionName}</button>
       </li>): <li className="results__list--title">The search yielded no results, there was likely a problem.</li>}
     </ul>
     {clickedSymptom && 

@@ -34,8 +34,7 @@ mongoose.connect(MONGODB_URL)
             submittedTerm: {
                 HPO_id: "heya",
                 name: "sis",
-                confidenceLevel: "good",
-                date: new Date().toISOString()
+                confidenceLevel: "good"
             }
         }
 

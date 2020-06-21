@@ -7,13 +7,15 @@ const context = require('./context')
 global.fetch = require('node-fetch')
 
 
-module.exports = function(symptom){
-    
-    JSON.validateNotArray(symptom)
+module.exports = function(HPO_id, name, confidenceLevel){
 
-    let {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}} = symptom
-    
-    let {submittedTerm: {HPO_id, name, confidenceLevel}} = symptom
+    String.validate.notVoid(HPO_id)
+    String.validate.notVoid(name)
+    String.validate.notVoid(confidenceLevel)
+
+    const navigation = JSON.parse(this.storage.navigation)
+
+    let {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks} = navigation
     
     prediction.forEach(({predictionCode, predictionName})=>{
         String.validate.notVoid(predictionCode)
@@ -28,13 +30,13 @@ module.exports = function(symptom){
     Number.validate.greaterEqualThan(limit, 1)
 
     String.validate.notVoid(content)
-    String.validate.notVoid(HPO_id)
-    String.validate.notVoid(name)
-    String.validate.notVoid(confidenceLevel)
     String.validate.isISODate(date)
     String.validate.isISODate(date2)
 
-    symptom.submittedTerm.date = new Date().toISOString()
+    
+    const date3 = new Date().toISOString()
+
+    const symptom = {navigation, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
     
     return (async ()=>{
         const {status, body} = await call('POST', `${this.API_URL}/symptoms/`, JSON.stringify(symptom), {"Content-type": "application/json"})

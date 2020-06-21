@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Feedback from './Feedback'
 import './Login.sass'
-import { authenticateUser } from 'misc-client-logic'
+import { loginUser } from 'misc-client-logic'
 
 export default class extends Component {
     constructor(props) {
@@ -19,7 +19,7 @@ export default class extends Component {
         password = password.value
 
         try {
-            authenticateUser(email, password)
+            loginUser(email, password)
                 .then(this.props.onLogin)
                 .catch(error => this.setState({ error: error.message }))
         } catch ({ message }) {

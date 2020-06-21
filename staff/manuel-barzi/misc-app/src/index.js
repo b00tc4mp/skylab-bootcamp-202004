@@ -8,6 +8,7 @@ import { context } from 'misc-client-logic'
 const { REACT_APP_API_URL: API_URL } = process.env
 
 context.API_URL = API_URL
+context.storage = sessionStorage
 
 ReactDOM.render(
   <React.StrictMode>
