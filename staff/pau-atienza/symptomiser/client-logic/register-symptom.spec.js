@@ -48,7 +48,7 @@ describe('client logic - register symptom', () => {
         expect(typeof id).to.equal('string')
 
         const symptoms = await Symptom.find()
-        debugger
+        
         expect(symptoms.length).to.equal(1)
 
         const [retrievedSymptom] = symptoms
@@ -88,7 +88,7 @@ describe('client logic - register symptom', () => {
         symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
 
         const {id} = await registerSymptom(symptom)
-        debugger
+        
         expect(typeof id).to.equal('string')
 
         const symptoms = await Symptom.find()
@@ -98,7 +98,7 @@ describe('client logic - register symptom', () => {
         const [retrievedSymptom] = symptoms
 
         const {navigation: { serverResponseTime, userNavigationTime}} = retrievedSymptom
-        debugger
+        
         expect(typeof userNavigationTime).to.equal('number')
         expect(typeof serverResponseTime).to.equal('number')
     })
