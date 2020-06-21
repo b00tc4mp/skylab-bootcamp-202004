@@ -4,15 +4,15 @@ const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, JWT_SECRET, MONGODB_URL } }
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, createCategory, createChallenge, retrieveChallenges, retrieveCategories, retrieveCategory, savePossibleSolution } = require('code-this-server-logic')
+const { registerUser, authenticateUser, retrieveUser, createCategory, createChallenge, retrieveChallenges, retrieveCategories, retrieveCategory, savePossibleSolution, deleteCategory, deleteChallenge } = require('code-this-server-logic')
 const bodyParser = require('body-parser')
 const { name, version } = require('./package.json')
 const { handleError } = require('./helpers')
 const { utils : {jwtPromised} } = require('code-this-commons')
 const { jwtVerifierExtractor, cors } = require('./middlewares')
 const { mongoose } = require('code-this-data')
-const e = require('express')
-const challenge = require('code-this-data/models/challenge')
+// const challenge = require('code-this-data/models/challenge')
+// const category = require('code-this-data/models/category')
 
 mongoose.connect(MONGODB_URL)
     .then(()=> {
@@ -74,6 +74,32 @@ mongoose.connect(MONGODB_URL)
             }
         })
 
+        app.delete('/deletecategory/:categoryId', parseBody, (req, res)=>{
+            try {
+                const { params: {categoryId}} = req
+                deleteCategory(categoryId)
+                .then((response) => res.send(response))
+                .catch(error => handleError(error, res))
+
+            } catch (error) {
+                handleError(error, res)
+                console.log(error)
+            }
+          })
+
+          app.delete('/deletechallenge/:challengeId', parseBody, (req, res)=>{
+            try {
+                const { params: {challengeId}} = req
+                deleteChallenge(challengeId)
+                .then((response) => res.send(response))
+                .catch(error => handleError(error, res))
+
+            } catch (error) {
+                handleError(error, res)
+                console.log(error)
+            }
+          })
+
         app.get('/challenges', (req, res) => {
 
             try {
@@ -85,7 +111,6 @@ mongoose.connect(MONGODB_URL)
             }
  
         })
-
 
         app.get('/categories', (req, res) => {
 
