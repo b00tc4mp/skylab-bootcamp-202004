@@ -1,5 +1,5 @@
 import React from 'react'
-import items from './items.css'
+import './Catalogue.sass'
 
 let itemsCatalogue = ['double-bed', 'single-bed']
 
@@ -12,7 +12,7 @@ export default function Catalogue({onDragStart}) {
   return (
     <div className='items'>
       {itemsCatalogue.map((item, i) => (
-        <div
+        <div 
           className={item}
           draggable={true}
           onDragStart={handleCatalogueDrag}

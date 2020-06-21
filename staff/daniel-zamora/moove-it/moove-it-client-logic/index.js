@@ -6,5 +6,7 @@ module.exports = {
     retrieveUserBlueprints: require('./retrieve-user-blueprint'),
     saveBlueprint: require('./save-blueprint'),
     retrieveBlueprint: require('./retrieve-blueprint'), 
-    isUserAuthenticated: require('./is-user-authenticated')
+    isSessionValid: require('./is-session-valid'), 
+    isSessionActive: require('./is-session-active'),
+    logoutUser: require('./logout-user')
 }

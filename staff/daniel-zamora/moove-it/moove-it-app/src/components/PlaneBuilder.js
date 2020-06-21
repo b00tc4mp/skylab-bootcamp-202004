@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import './PlaneBuilder.css'
-import './items.css'
+import './PlaneBuilder.sass'
 import Catalogue from './Catalogue'
+import  './Catalogue.sass'
 
 export default function PlaneBuilder({itemId}) {
 
@@ -39,9 +39,9 @@ export default function PlaneBuilder({itemId}) {
         setPlacedItems(prevPlacedItems => ([...prevPlacedItems, { item, x, y }]))
     }
 
-    return ( <>
-        <div className = "map-builder" >
-            <div className = "map"
+    return ( <secction className="plane">
+        <div className = "plane__container" >
+            <div className = "plane__grid"
             onDragOver = { handleDragOver }
             onDrop = { handleDrop } > {
                 placedItems.map((placed, i) => {
@@ -54,6 +54,6 @@ export default function PlaneBuilder({itemId}) {
                     </div>})} 
         </div>
       </div> 
-      <Catalogue onDragStart={handleCatalogueDrag}/>  
-    </>)
+      <Catalogue className='catalogue' onDragStart={handleCatalogueDrag}/>  
+    </secction>)
 }
