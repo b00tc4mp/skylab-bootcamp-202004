@@ -1,5 +1,5 @@
 require('7-potencias-commons/polyfills/string')
-const { errors: UnexistenceError } = require('7-potencias-commons')
+const { errors: { UnexistenceError } } = require('7-potencias-commons')
 const { models: { User } } = require('7-potencias-data')
 module.exports = (userId) => {
   String.validate.notVoid(userId)
@@ -9,8 +9,8 @@ module.exports = (userId) => {
 
     if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
-    const cart = []
+    user.cart = []
 
-    return user.save({ userId, $set: { cart } })
+    return user.save()
   })()
 }

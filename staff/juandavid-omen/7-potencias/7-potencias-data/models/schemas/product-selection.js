@@ -9,13 +9,18 @@ module.exports = new Schema({
 
   isOnline: {
     type: Boolean,
-    required: true,
+    required: false,
     default: false
   },
 
   isGroup: {
     type: Boolean,
-    required: true,
+    required: false,
     default: false
+  },
+
+  quantity: {
+    type: Number,
+    require: true
   }
 })

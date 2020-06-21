@@ -1,11 +1,11 @@
 require('7-potencias-commons/polyfills/string')
 require('7-potencias-commons/polyfills/number')
 const { errors: { UnexistenceError } } = require('7-potencias-commons')
-const { models: { User, ProductSelection } } = require('7-potencias-data')
+const { models: { User, Lesson, ProductSelection } } = require('7-potencias-data')
 
-module.exports = (userId, productSelectionId, quantity) => {
+module.exports = (userId, productId, quantity) => {
   String.validate.notVoid(userId)
-  String.validate.notVoid(productSelectionId)
+  String.validate.notVoid(productId)
   Number.validate.positive(quantity)
 
   return (async () => {
@@ -13,22 +13,25 @@ module.exports = (userId, productSelectionId, quantity) => {
 
     if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
-    const productSelection = await ProductSelection.findById(productSelectionId).lean()
+    const lesson = await Lesson.findById(productId).lean()
 
-    if (!productSelection) throw new UnexistenceError(`product selection with id ${productSelectionId} does not exist`)
+    if (!lesson) throw new UnexistenceError(`product with id ${productId} does not exist`)
 
-    const { cart = [] } = user
+    const { cart } = user
 
-    const index = cart.findIndex(item => item._id.toString() === productSelectionId)
+    const index = cart.findIndex(item => item.product._id.toString() === productId)
 
     if (quantity === 0) {
-      if (index < 0) throw new UnexistenceError(`product selection with id ${productSelectionId} does not exist in cart for user with id ${userId}`)
+      if (index < 0) throw new UnexistenceError(`product selection with id ${productId} does not exist in cart for user with id ${userId}`)
 
       cart.splice(index, 1)
     } else {
-      cart.push(productSelection)
-    }
+      if (index < 0) {
+        const productSelection = new ProductSelection({ product: productId, quantity })
 
-    return user.save({ userId, $set: { cart } })
+        cart.push(productSelection)
+      } else cart[index].quantity = quantity
+    }
+    return user.save()
   })()
 }

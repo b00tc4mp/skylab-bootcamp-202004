@@ -1,7 +1,7 @@
-const { env: { JWT_SECRET: SECRET } } = process
+const { env: { SECRET } } = process
 
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, searchUsers, updateUser, deleteUser, createLesson, searchLessons, createProductSelection, searchProductSelections, updateCart, retrieveCart, deleteCart, placeOrder } = require('./handlers')
+const { registerUser, authenticateUser, retrieveUser, searchUsers, updateUser, deleteUser, createLesson, searchLessons, updateCart, retrieveCart, deleteCart, placeOrder } = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
 const { handleError } = require('../helpers')
@@ -19,17 +19,13 @@ api.patch('/users', verifyExtractJwt, parseBody, updateUser)
 
 api.get('/users/search', verifyExtractJwt, searchUsers)
 
-api.get('/users/:userId', verifyExtractJwt, retrieveUser)
+api.get('/users', verifyExtractJwt, retrieveUser)
 
-api.delete('/users/:userId', verifyExtractJwt, deleteUser)
+api.delete('/users', verifyExtractJwt, deleteUser)
 
 api.post('/lessons', verifyExtractJwt, parseBody, createLesson)
 
 api.get('/lessons/search', searchLessons)
-
-api.post('/products', verifyExtractJwt, parseBody, createProductSelection)
-
-api.get('/products/search', searchProductSelections)
 
 api.put('/carts', verifyExtractJwt, parseBody, updateCart)
 
