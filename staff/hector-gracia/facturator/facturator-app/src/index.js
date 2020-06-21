@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
+import {context} from "facturator-client-logic"
+const { REACT_APP_API_URL: API_URL } = process.env
+context.API_URL = "http://localhost:8080/api"
 
 ReactDOM.render(
   <React.StrictMode>

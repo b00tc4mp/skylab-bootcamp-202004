@@ -11,7 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "facturator-commons": "file:../facturator-commons"
+    "facturator-commons": "file:../facturator-commons",
+    "pdfmake": "^0.1.65"
   },
   "devDependencies": {
     "chai": "^4.2.0",
