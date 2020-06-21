@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import retrieveUser from 'nomad-client-logic/retrieve-user'
 import AppTextInput from '../components/NomadTextInput'
 import { API_URL } from 'nomad-client-logic/context'
+import searchFavorites from 'nomad-client-logic/search-favorites'
 
 
 
@@ -21,6 +22,7 @@ export default function Favorites({ navigation }) {
     const [user, setUser] = useState()
     const [image, setImage] = useState()
     const [refresh, setRefresh] = useState(false)
+
 
     const getFavorites = async () => {
         try {
@@ -39,9 +41,23 @@ export default function Favorites({ navigation }) {
         }
     }
 
+    const handleSearch = async (query) => {
+        try {
+            const token = await AsyncStorage.getItem('token')
+            if (token !== null) {
+                const result = await searchFavorites(token, query)
+                setFavorites(result || [])
+            } else {
+                console.log('error, token not found in homescreen') // TODO
+            }
+        } catch (e) {
+            console.log(e) // TODO HANDLE THIS
+        }
+    }
     useEffect(() => {
         getFavorites()
-    }, [favorites.length])
+    }, [])
+
 
 
     const workspaces = [
@@ -84,7 +100,7 @@ export default function Favorites({ navigation }) {
                         autoCorrect={false}
                         keyboardType={Platform.OS === 'ios' ? 'web-search' : 'default'}
                         textContentType='organizationName'
-                        onChangeText={(value) => console.log(value)}
+                        onEndEditing={({ nativeEvent: { text } }) => handleSearch(text)}
                     // onBlur={() => setFieldTouched('workspaceName')}
                     />
                 </View>
@@ -96,7 +112,7 @@ export default function Favorites({ navigation }) {
                                 address={`${item.address.street}, ${item.address.city}`}
                                 rating={item.score}
                                 price={`${item.price.amount}€ / ${item.price.term}`}
-                                image={item.photos[0] || require('../assets/default.jpg')}
+                                image={{ uri: `${API_URL}/workspaces/${item._id}.jpg` }}
                                 onPress={() => navigation.navigate('WorkspacePage', { workspace: item, user })}
                             />
                         } />}

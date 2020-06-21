@@ -50,9 +50,7 @@ mongoose.connect(MONGODB_URL)
         // USERS ============================
 
         app.post('/users', parseBody, (req, res) => {
-            debugger
             const { body: { name, surname, email, password } } = req
-            console.log('body', name)
             try {
                 registerUser(name, surname, email, password)
                     .then(() => res.status(201).send())
@@ -63,7 +61,6 @@ mongoose.connect(MONGODB_URL)
         })
 
         app.post('/users/auth', parseBody, (req, res) => {
-            debugger
 
             const { body: { email, password } } = req
 
@@ -78,10 +75,9 @@ mongoose.connect(MONGODB_URL)
         })
 
         app.get('/users', verifyExtractJwt, (req, res) => {
-            debugger
             try {
                 const { payload: { sub: userId } } = req
-                console.log(userId)
+
                 retrieveUser(userId)
                     .then(result => res.send(result))
                     .catch(error => handleError(error, res))
@@ -100,8 +96,6 @@ mongoose.connect(MONGODB_URL)
 
                     filename = `${userId}`
                     uploadUserImage(userId, file, filename)
-                    // .then(() => res.status(200).send())
-                    // .catch(error => handleError(error, res))
                 })
 
                 busboy.on('finish', () => {
@@ -119,7 +113,7 @@ mongoose.connect(MONGODB_URL)
         // WORKSPACES =======================
 
         app.post('/workspaces', parseBody, verifyExtractJwt, (req, res) => {
-            debugger
+
             try {
                 const { payload: { sub: userId }, body: workspace } = req
 
@@ -135,7 +129,7 @@ mongoose.connect(MONGODB_URL)
         app.post('/upload/:workspaceId', verifyExtractJwt, (req, res) => {
 
             try {
-                debugger
+
                 const { payload: { sub: userId }, params: { workspaceId } } = req
                 const busboy = new Busboy({ headers: req.headers })
 
@@ -143,8 +137,6 @@ mongoose.connect(MONGODB_URL)
 
                     filename = `${workspaceId}`
                     uploadImage(userId, workspaceId, file, filename)
-                    // .then(() => res.status(200).send())
-                    // .catch(error => handleError(error, res))
                 })
 
                 busboy.on('finish', () => {
@@ -194,9 +186,20 @@ mongoose.connect(MONGODB_URL)
             }
         })
 
-        app.get('/workspaces/location/:lat/:lon', verifyExtractJwt, parseBody, (req, res) => {
+        app.get('/workspaces/location/:lat/:lon/', verifyExtractJwt, (req, res) => {
             try {
-                const { payload: { sub: userId }, params: { lat, lon }, body: filter } = req
+                const { payload: { sub: userId }, params: { lat, lon } } = req
+
+                retrieveByLocation(userId, [Number(lon), Number(lat)])
+                    .then(result => res.send(result))
+                    .catch(error => handleError(error, res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+        app.get('/workspaces/location/:lat/:lon/:filter', verifyExtractJwt, (req, res) => {
+            try {
+                const { payload: { sub: userId }, params: { lat, lon, filter } } = req
 
                 retrieveByLocation(userId, [Number(lon), Number(lat)], filter)
                     .then(result => res.send(result))
@@ -227,7 +230,6 @@ mongoose.connect(MONGODB_URL)
                 toggleFavorites(userId, workspaceId)
                     .then(() => res.status(201).send())
                     .catch(error => handleError(error, res))
-
             } catch (error) {
                 handleError(error, res)
             }
@@ -287,9 +289,9 @@ mongoose.connect(MONGODB_URL)
 
         // OTHERS =========================
 
-        // app.get('*', (req, res) => {
-        //     res.status(404).send('Not Found :(')
-        // })
+        app.get('*', (req, res) => {
+            res.status(404).send('Not Found :(')
+        })
 
         app.listen(PORT, () => console.log(`server running on port ${PORT}`))
 

@@ -1,8 +1,6 @@
 import React from 'react'
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
-import colors from '../styles/colors'
+import { View, StyleSheet } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 
 export default ({ onPress }) => {
 

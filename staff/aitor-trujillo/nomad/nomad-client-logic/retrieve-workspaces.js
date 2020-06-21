@@ -11,25 +11,15 @@ module.exports = function (token, { latitude, longitude }, filter) {
     Number.validate(longitude)
 
     const headers = { Authorization: `Bearer ${token}` }
-    let body = undefined
-
-    if (filter) {
-        const _filter =
-            body = JSON.stringify(_filter)
-
-        console.log(body)
-    }
-
     return (async () => {
         try {
             const result = await call(
                 'GET',
-                `${this.API_URL}/workspaces/location/${latitude}/${longitude}`,
-                body,
+                filter ? `${this.API_URL}/workspaces/location/${latitude}/${longitude}/${filter}` : `${this.API_URL}/workspaces/location/${latitude}/${longitude}/`,
+                undefined,
                 headers
             )
             const { status, body } = result
-            console.log('category result: ', body)
             if (status === 200) return JSON.parse(body)
             else throw new Error('could not retrieve workspaces')
         } catch (error) {

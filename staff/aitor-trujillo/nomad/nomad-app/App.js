@@ -21,6 +21,7 @@ import AppButton from './app/components/Button'
 import ListingPage from './app/screens/WorkspacePage'
 import Review from './app/components/Review'
 import ImageInput from './app/components/ImageInput';
+import SearchScreen from './app/screens/SearchScreen';
 import WorkspacePage from './app/screens/WorkspacePage';
 import Favorites from './app/screens/FavoritesScreen';
 import colors from './app/styles/colors'
@@ -97,6 +98,7 @@ const MainNavigator = () => (
   }} mode='modal'>
     <Stack.Screen name="Home" component={Home} />
     <Stack.Screen name="WorkspacePage" component={WorkspacePage} />
+    <Stack.Screen name="SearchScreen" component={SearchScreen} mode='card' options={{ tabBarVisible: false }} />
     <Stack.Screen name="ReviewPage" component={PostReviewScreen} />
   </Stack.Navigator>
 )

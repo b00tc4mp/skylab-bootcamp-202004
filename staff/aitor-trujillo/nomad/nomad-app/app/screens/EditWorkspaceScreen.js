@@ -21,12 +21,14 @@ import colors from '../styles/colors'
 import ErrorMessage from '../components/ErrorMessage'
 import AppPicker from '../components/Picker'
 import ImageInput from '../components/ImageInput';
+import MapView, { Marker } from 'react-native-maps';
+import NomadTitle from '../components/NomadTitle';
 
 const { createWorkspace } = require('nomad-client-logic')
 
 const validationSchema = Yup.object().shape({
     name: Yup.string().min(1).required().label('Workspace Name'),
-    price: Yup.number().required().min(1).max(10000).label('Price'),
+    price: Yup.number().required().min(0).max(10000).label('Price'),
     term: Yup.object().required().nullable().label('Term'),
     category: Yup.object().required().nullable().label('Category'),
     street: Yup.string().required().label('Street'),
@@ -36,6 +38,10 @@ const validationSchema = Yup.object().shape({
     description: Yup.string().required().max(200).label('Description'),
     capacity: Yup.number().required().label('Capacity'),
     location: Yup.object().label('Location'),
+    wifi: Yup.boolean().label('Wifi'),
+    parking: Yup.boolean().label('Parking'),
+    coffee: Yup.boolean().label('Coffee'),
+    meetingRooms: Yup.boolean().label('Meeting Rooms'),
 })
 
 const categories = [
@@ -52,18 +58,15 @@ const term = [
 
 export default ({ navigation }) => {
     const [location, setLocation] = useState()
+    const [featureWifi, setFeatureWifi] = useState(false)
+    const [featureParking, setFeatureParking] = useState(false)
+    const [featureCoffee, setFeatureCoffee] = useState(false)
+    const [featureMeetingRooms, setFeatureMeetingRooms] = useState(false)
 
     const getPermissions = async () => {
         const result = await Permissions.askAsync(Permissions.LOCATION)
         if (!result.granted) return Alert.alert('Alert', 'I need to access location to post this listing :(', [{ text: 'Ok', onPress: () => navigation.goBack() }])
 
-        Alert.alert(
-            'Important',
-            'Make sure you are in the workspace location when you make this new listing.',
-            [
-                { text: 'I am.' },
-                { text: "I'll try later.", onPress: () => navigation.goBack() }
-            ])
         const { coords: { latitude, longitude } } = await Location.getLastKnownPositionAsync()
         setLocation({ latitude, longitude })
     }
@@ -105,13 +108,41 @@ export default ({ navigation }) => {
                         phone: '',
                         description: '',
                         capacity: '',
-                        location: location
+                        location: location,
+                        wifi: featureWifi,
+                        parking: featureParking,
+                        coffee: featureCoffee,
+                        meetingRooms: featureMeetingRooms
                     }}
-                        onSubmit={values => { values.location = location; handleSubmit(values) }}
+                        onSubmit={values => {
+                            values.location = location;
+                            values.wifi = featureWifi;
+                            values.parking = featureParking;
+                            values.coffee = featureCoffee;
+                            values.meetingRooms = featureMeetingRooms;
+                            handleSubmit(values)
+                        }}
                         validationSchema={validationSchema}
                     >
                         {({ handleChange, handleSubmit, errors, setFieldTouched, touched, setFieldValue, values }) => (
                             <>
+                                <NomadTitle
+                                    title='Drag the marker to workspace location'
+                                    fontSize={18}
+                                />
+                                {location && <View style={styles.mapContainer}>
+                                    <MapView style={styles.map} region={{ // provider={PROVIDER_GOOGLE}
+                                        latitude: location.latitude,
+                                        longitude: location.longitude,
+                                        latitudeDelta: 0.06,
+                                        longitudeDelta: 0.06,
+                                    }} >
+                                        <Marker draggable coordinate={{
+                                            latitude: location.latitude,
+                                            longitude: location.longitude
+                                        }} onDragEnd={({ nativeEvent: { coordinate } }) => setLocation(coordinate)} />
+                                    </MapView>
+                                </View>}
                                 <AppTextInput
                                     icon='home-map-marker'
                                     placeholder='Workspace Name'
@@ -219,10 +250,34 @@ export default ({ navigation }) => {
 
                                 <Text style={styles.descriptionText} >Features</Text>
                                 <View style={styles.features}>
-                                    <Text >Wifi <Switch trackColor={{ false: "#767577", true: "#81b0ff" }}></Switch></Text>
-                                    <Text >Parking <Switch></Switch></Text>
-                                    <Text >Coffee <Switch></Switch></Text>
-                                    <Text >Meeting Rooms <Switch></Switch></Text>
+                                    <Text >Wifi
+                                        <Switch
+                                            trackColor={{ false: "#767577", true: "#81b0ff" }}
+                                            onValueChange={() => { setFeatureWifi(featureWifi ? false : true) }}
+                                            value={featureWifi}
+                                        />
+                                    </Text>
+                                    <Text >Parking
+                                        <Switch
+                                            trackColor={{ false: "#767577", true: "#81b0ff" }}
+                                            onValueChange={() => { setFeatureParking(featureParking ? false : true) }}
+                                            value={featureParking}
+                                        />
+                                    </Text>
+                                    <Text >Coffee
+                                        <Switch
+                                            trackColor={{ false: "#767577", true: "#81b0ff" }}
+                                            onValueChange={() => { setFeatureCoffee(featureCoffee ? false : true) }}
+                                            value={featureCoffee}
+                                        />
+                                    </Text>
+                                    <Text >Meeting Rooms
+                                        <Switch
+                                            trackColor={{ false: "#767577", true: "#81b0ff" }}
+                                            onValueChange={() => { setFeatureMeetingRooms(featureMeetingRooms ? false : true) }}
+                                            value={featureMeetingRooms}
+                                        />
+                                    </Text>
                                 </View>
 
                                 <AppButton title='Post' bgColor='secondary' txtColor='light' onPress={handleSubmit} />
@@ -264,6 +319,19 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         width: '100%',
+    },
+    map: {
+        marginTop: 10,
+        width: '100%',
+        height: 250,
+        borderRadius: 25,
+    },
+    mapContainer: {
+        width: '100%',
+        height: 250,
+        borderRadius: 25,
+        marginBottom: 15,
+        // flex: 1
     },
     formContainer: {
         flex: 1,

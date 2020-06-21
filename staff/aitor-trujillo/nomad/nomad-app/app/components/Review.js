@@ -4,7 +4,7 @@ import { AntDesign } from '@expo/vector-icons'
 
 import colors from '../styles/colors'
 
-export default function Review({ image, name, stars, review }) {
+export default function Review({ image, name, surname, stars, review }) {
 
     const convertNumToStars = (num) => {
         switch (num) {
@@ -36,7 +36,7 @@ export default function Review({ image, name, stars, review }) {
         <View style={styles.container}>
             <Image source={image} style={styles.image} />
             <View >
-                <Text style={styles.name}>{name} - {convertNumToStars(stars)}</Text>
+                <Text style={styles.name}>{name} {surname} - {convertNumToStars(stars)}</Text>
                 <Text style={styles.review}>{review}</Text>
             </View>
         </View>

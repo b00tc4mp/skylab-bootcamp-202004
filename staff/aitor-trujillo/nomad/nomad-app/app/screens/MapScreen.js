@@ -6,6 +6,7 @@ import { ScrollView, FlatList, TouchableOpacity } from 'react-native-gesture-han
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import * as Permissions from 'expo-permissions'
 import * as Location from "expo-location";
+import { API_URL } from 'nomad-client-logic/context'
 
 import AppButton from '../components/Button'
 import Review from '../components/Review'
@@ -69,10 +70,16 @@ export default ({ route, navigation }) => {
                         latitudeDelta: 0.06,
                         longitudeDelta: 0.06,
                     }} >
-                        {latitude && longitude && <Marker coordinate={{
-                            latitude: latitude,
-                            longitude: longitude
-                        }} image={require('../assets/locateuser.png')} onPress={() => console.log('clicked')} />}
+                        {latitude && longitude && <Marker
+                            draggable
+                            coordinate={{
+                                latitude: latitude,
+                                longitude: longitude
+                            }}
+                            image={require('../assets/locateuser.png')}
+                            onDragEnd={({ nativeEvent: { coordinate } }) => { setLatitude(coordinate.latitude); setLongitude(coordinate.longitude); getLocationWorkspaces(coordinate) }}
+                            onPress={() => console.log('clicked')}
+                        />}
                         {workspaces && workspaces.map(ws =>
                             (<Marker coordinate={{
                                 latitude: ws.geoLocation.coordinates[1],
@@ -94,7 +101,7 @@ export default ({ route, navigation }) => {
                                 address={`${item.address.street}, ${item.address.city}`}
                                 rating={item.score}
                                 price={`${item.price.amount}€ / ${item.price.term}`}
-                                image={item.photos[0] || require('../assets/default.jpg')}
+                                image={{ uri: `${API_URL}/workspaces/${item._id}.jpg` } || require('../assets/default.jpg')}
                                 onPress={() => navigation.navigate('WorkspacePage', { workspace: item, user })}
                                 width={320}
                                 marginRight={10}

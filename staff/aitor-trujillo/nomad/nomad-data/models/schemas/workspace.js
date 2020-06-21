@@ -85,7 +85,7 @@ module.exports = new Schema({
     },
     features: {
         wifi: {
-            type: String,
+            type: Boolean,
             // required: true
         },
         parking: {

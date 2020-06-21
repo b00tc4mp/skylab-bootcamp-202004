@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { Text, View, Image, StyleSheet, ScrollView, RefreshControl, FlatList, TouchableOpacity } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 import NomadTitle from '../components/NomadTitle'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons'
+import Communications from 'react-native-communications'
 
 import { API_URL } from 'nomad-client-logic/context'
 import AppButton from '../components/Button'
@@ -24,6 +25,7 @@ export default ({ route, navigation }) => {
             if (token !== null) {
                 const result = await retrieveWorkspaceById(token, _id)
                 setWs(result)
+                console.log(result)
             } else {
                 console.log('error, token not found in homescreen') // TODO
             }
@@ -53,8 +55,10 @@ export default ({ route, navigation }) => {
                 <RefreshControl
                     refreshing={refresh}
                     onRefresh={() => refreshWorkspace(ws)} />}>
-
                 <Image source={{ uri: `${API_URL}/workspaces/${workspace._id}.jpg` }} style={styles.image} />
+                <TouchableOpacity style={styles.phoneCircle} onPress={() => Communications.phonecall(ws.phone, true)}>
+                    < FontAwesome5 name="phone" size={36} color='forestgreen' />
+                </TouchableOpacity>
                 <View style={styles.detailsContainer}>
                     <View style={styles.topWrapper}>
                         <NomadTitle title={ws.name} fontSize={32} />
@@ -68,10 +72,10 @@ export default ({ route, navigation }) => {
                     <NomadTitle title='Description' />
                     <Text style={styles.description}>{ws.description}</Text>
                     <NomadTitle title='Features' />
-                    <Text style={styles.description}>Wifi: 100mb</Text>
-                    <Text style={styles.description}>Parking: 0.3km</Text>
-                    <Text style={styles.description}>Coffee Included: Yes</Text>
-                    <Text style={styles.description}>Meeting Rooms: 4</Text>
+                    <Text style={styles.description}>Wifi: {ws.features.wifi === true ? '✅' : '❌'}</Text>
+                    <Text style={styles.description}>Parking: {ws.features.parking === true ? '✅' : '❌'}</Text>
+                    <Text style={styles.description}>Coffee Included: {ws.features.coffee === true ? '✅' : '❌'}</Text>
+                    <Text style={styles.description}>Meeting Rooms: {ws.features.meetingRooms === true ? '✅' : '❌'}</Text>
                     <NomadTitle title='Location' />
                     <View style={styles.mapContainer}>
                         <MapView style={styles.map} region={{ // provider={PROVIDER_GOOGLE}
@@ -92,15 +96,18 @@ export default ({ route, navigation }) => {
                     <NomadTitle title='Reviews' />
                     <View style={styles.center} >
                         <AppButton title='Post Review' bgColor='secondary' txtColor='light' onPress={() => navigation.navigate('ReviewPage', ws._id)} />
-                        <FlatList data={ws.reviews} keyExtractor={(review) => review.name}
-                            renderItem={({ item }) =>
-                                <Review
-                                    image={require('../assets/aitor.jpg')}
-                                    name={item.name}
+                        {ws.reviews && <FlatList data={ws.reviews} keyExtractor={(review) => review.name + Math.random().toString()}
+                            renderItem={({ item }) => {
+                                console.log(item)
+                                return <Review
+                                    image={{ uri: `${API_URL}/users/${item.user._id}.jpg` }}
+                                    name={item.user.name}
+                                    surname={item.user.surname}
                                     stars={item.stars}
                                     review={item.text}
                                 />
-                            } />
+                            }} />}
+
                     </View>
                 </View>
             </ScrollView>
@@ -160,6 +167,18 @@ const styles = StyleSheet.create({
         backgroundColor: colors.secondary,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    phoneCircle: {
+        width: 60,
+        height: 60,
+        borderRadius: 50,
+        backgroundColor: colors.secondary,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        right: 20,
+        top: 270,
+        zIndex: 10
     },
     detailsContainer: {
         padding: 20,

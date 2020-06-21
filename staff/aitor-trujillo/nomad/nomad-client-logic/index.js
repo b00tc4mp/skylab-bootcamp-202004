@@ -10,6 +10,8 @@ module.exports = {
     retrieveUserWorkspaces: require('./retrieve-user-workspaces'),
     retrieveUserReviews: require('./retrieve-user-reviews'),
     retrieveWorkspaces: require('./retrieve-workspaces'),
+    searchWorkspaces: require('./search-workspaces'),
+    searchFavorites: require('./search-favorites'),
     retrieveWorkspaceById: require('./retrieve-workspace-by-id'),
     deleteWorkspace: require('./delete-workspace'),
     postReview: require('./post-review'),

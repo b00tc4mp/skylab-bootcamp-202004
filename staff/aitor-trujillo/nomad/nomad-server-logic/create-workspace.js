@@ -18,12 +18,12 @@ module.exports = (userId, workspace) => {
     }
     if (features) {
         const { wifi, parking, coffee, meetingRooms } = features
-        String.validate.notVoid(phone)
-        String.validate.notVoid(wifi)
-        String.validate.notVoid(parking)
-        Number.validate(meetingRooms)
+        if (typeof wifi !== 'boolean') throw new TypeError(`${wifi} is not boolean`)
+        if (typeof parking !== 'boolean') throw new TypeError(`${parking} is not boolean`)
         if (typeof coffee !== 'boolean') throw new TypeError(`${coffee} is not boolean`)
+        if (typeof meetingRooms !== 'boolean') throw new TypeError(`${meetingRooms} is not boolean`)
     }
+    String.validate.notVoid(phone)
     String.validate.notVoid(userId)
     String.validate.notVoid(name)
     String.validate.notVoid(category)

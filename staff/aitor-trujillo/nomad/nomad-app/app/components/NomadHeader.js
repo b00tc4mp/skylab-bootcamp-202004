@@ -12,16 +12,8 @@ export default (props) => {
     return (
         <View style={styles.container}>
             <View>
-                <Text
-                    style={styles.titleStyle}
-                >
-                    {title}
-                </Text>
-                <Text
-                    style={styles.subTitle}
-                >
-                    {subTitle}
-                </Text>
+                <Text style={styles.titleStyle}>{title}</Text>
+                <Text style={styles.subTitle}>{subTitle}</Text>
             </View>
             <TouchableOpacity style={styles.avatarContainerStyle} onPress={onPress}>
                 <Image style={styles.avatar} source={imageSource} {...props} />

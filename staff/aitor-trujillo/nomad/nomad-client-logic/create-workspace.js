@@ -23,7 +23,13 @@ module.exports = function (token, workspace) {
             country: workspace.country
         },
         description: workspace.description,
-        capacity: Number(workspace.capacity)
+        capacity: Number(workspace.capacity),
+        features: {
+            wifi: workspace.wifi,
+            parking: workspace.parking,
+            coffee: workspace.coffee,
+            meetingRooms: workspace.meetingRooms
+        }
     }
 
     const headers = { Authorization: `Bearer ${token}`, 'Content-type': 'application/json' }

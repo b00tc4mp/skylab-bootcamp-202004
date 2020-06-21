@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, Image, Alert, TouchableWithoutFeedback } from 'react-native'
+import React, { useEffect } from 'react'
+import { View, StyleSheet, Image, Alert, TouchableWithoutFeedback } from 'react-native'
 import colors from '../styles/colors'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import * as ImagePicker from 'expo-image-picker'
 import * as Permissions from 'expo-permissions'
 
 export default function ImageInput({ imageUri, handleImage }) {
-
-    // const [imageUri, setImageUri] = useState()
 
     const getPermissions = async () => {
         const result = await Permissions.askAsync(Permissions.CAMERA_ROLL)
@@ -61,6 +59,5 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: '100%',
-
     }
 })

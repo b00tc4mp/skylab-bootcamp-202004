@@ -23,6 +23,7 @@ import { TouchableHighlight } from 'react-native-gesture-handler'
 export default function Home({ navigation }) {
     const [workspaces, setWorkspaces] = useState([])
     const [user, setUser] = useState()
+    const [query, setQuery] = useState()
     const [image, setImage] = useState()
     const [refresh, setRefresh] = useState(false)
     const [categoryPressed, setCategoryPressed] = useState('')
@@ -53,35 +54,9 @@ export default function Home({ navigation }) {
     useEffect(() => {
         (async () => {
             await getPermissions()
-            await getLocationWorkspaces()
-        })()
-    }, [workspaces.length])
-
-    useEffect(() => {
-        (async () => {
             await getLocationWorkspaces(categoryPressed)
         })()
     }, [categoryPressed])
-
-
-    const _workspaces = [
-        {
-            title: 'WeWork Barcelona',
-            address: '23 st, Barcelona',
-            rating: '5',
-            price: '99€ / month',
-            description: 'This is the best known cowork out there. Remember that. When you think in procrastinate come here.',
-            image: require('../assets/cowork.jpg'),
-        },
-        {
-            title: 'Happy Coders',
-            address: 'Rambla 12, Barcelona',
-            rating: '4',
-            price: '10€ / day',
-            image: require('../assets/happycoders.jpg'),
-        }
-    ]
-
 
     return (
 
@@ -98,7 +73,7 @@ export default function Home({ navigation }) {
             <ScrollView refreshControl={
                 <RefreshControl
                     refreshing={refresh}
-                    onRefresh={() => getLocationWorkspaces()} />}>
+                    onRefresh={() => getLocationWorkspaces(categoryPressed)} />}>
                 <View style={styles.containerSearch}>
                     <AppTextInput
                         icon='magnify'
@@ -107,8 +82,8 @@ export default function Home({ navigation }) {
                         autoCorrect={false}
                         keyboardType={Platform.OS === 'ios' ? 'web-search' : 'default'}
                         textContentType='organizationName'
-                        onChangeText={(value) => console.log(value)}
-                    // onBlur={() => setFieldTouched('workspaceName')}
+                        onFocus={() => navigation.navigate('SearchScreen')}
+                    // onEndEditing={({ nativeEvent: { text } }) => console.log('AND THE RESULT IS: ', text)}
                     />
                     <NomadTitle title='Categories' />
                     <View style={styles.categoryContainer} >

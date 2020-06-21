@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
         width: '100%',
         marginBottom: 20,
         overflow: 'hidden',
-
     },
     image: {
         width: '100%',
@@ -48,33 +47,19 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 5
-
     },
     price: {
         color: 'grey',
-        // fontWeight: 'bold',
         textAlign: 'left',
         fontWeight: 'bold',
         width: '100%',
-
-
     },
     rating: {
         color: colors.dark,
         fontSize: 24,
-        // fontWeight: 'bold',
-
     },
     ratingSeparator: {
         flexDirection: 'row',
         justifyContent: 'space-between'
     }
 })
-
-{/* <Card
-title='WeWork Barcelona'
-address='23 st, Barcelona'
-rating='5'
-price='99€ / month'
-image={require('./app/assets/background.jpg')}
-/> */}

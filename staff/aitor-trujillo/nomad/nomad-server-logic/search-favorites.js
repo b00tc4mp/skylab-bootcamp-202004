@@ -6,7 +6,7 @@ module.exports = async (userId, query) => {
 
     String.validate.notVoid(userId)
     String.validate.notVoid(query)
-
+    debugger
     const userPopulated = await User.findOne({ _id: userId }).populate({ path: 'favorites' })
 
     if (!userPopulated) throw new UnexistenceError(`user with id ${userId} does not exist`)
