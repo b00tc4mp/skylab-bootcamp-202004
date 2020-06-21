@@ -1,3 +1,15 @@
+/**
+ * Retrieve user
+ * 
+ * @param {string} userId the userId
+ * 
+ * @returns {Promise <Object>} the user if it resolves, an error if it rejects
+ * 
+ * @throws {UnexistanceError} if the user does not exist
+ * @throws {TypeError} if the parameter does not match the corresponding type
+ * @throws {Error} if the parameter is empty or blank
+ */
+
 require('gym-commons/polyfills/string')
 const { models: { User } } = require('gym-data')
 const { errors: { UnexistenceError } } = require('gym-commons')

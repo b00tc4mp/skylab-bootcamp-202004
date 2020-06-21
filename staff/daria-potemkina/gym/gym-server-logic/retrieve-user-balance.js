@@ -1,3 +1,16 @@
+/**
+ * Retrieve user balance
+ * 
+ * @param {string} userId the user id
+ * 
+ * @returns {Promise <Array>} the balance of all transactions if it resolves, an error if it rejects
+ * 
+ * @throws {UnexistanceError} if the user or balance do not exist
+ * @throws {TypeError} if the parameter does not match the corresponding type
+ * @throws {Error} if the parameter is empty or blank
+ */
+
+
 require('gym-commons/polyfills/string')
 const { mongoose, models: { User, AccountBalance } } = require('gym-data')
 const { errors: { UnexistenceError } } = require('gym-commons')

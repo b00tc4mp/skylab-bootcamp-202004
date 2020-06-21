@@ -1,3 +1,19 @@
+/**
+ * Add user card
+ * 
+ * @param {string} userId the user id
+ * @param {string} number the card number
+ * @param {string} holder the card holder
+ * @param {date} expirationDate the card expiration date
+ * @param {string} cvv the card cvv
+ * 
+ * @returns {Promise} if it resolves, an error if it rejects
+ * 
+ * @throws {UnexistanceError} if user does not exist
+ * @throws {TypeError} if any of the parameters does not match the corresponding type.
+ * @throws {Error} if any of the parametera is empty or blank
+ */
+
 require('gym-commons/polyfills/string')
 const { models: { User } } = require('gym-data')
 const { errors: { UnexistenceError } } = require('gym-commons')

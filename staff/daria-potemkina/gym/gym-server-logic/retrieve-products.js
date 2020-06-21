@@ -1,3 +1,12 @@
+/**
+ * Retrieve products
+ * 
+ * @returns {Promise <Array>} the products available if it resolves, an error if it rejects
+ * 
+ * @throws {UnexistanceError} if the product does not exist
+ */
+
+
 require('gym-commons/polyfills/string')
 const { models: { Product } } = require('gym-data')
 const { errors: { UnexistenceError } } = require('gym-commons')

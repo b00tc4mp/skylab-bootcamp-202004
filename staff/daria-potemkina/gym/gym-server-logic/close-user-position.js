@@ -1,3 +1,15 @@
+/**
+ * Close the user position
+ * 
+ * @param {string} userId the user id
+ * 
+ * @returns {Promise} if it resolves, an error if it rejects
+ * 
+ * @throws {UnexistanceError} if the user, contract, or balance do not exist
+ * @throws {TypeError} if the parameter does not match the corresponding type
+ * @throws {Error} if the parameter is empty or blank
+ */
+
 require('gym-commons/polyfills/string')
 const { mongoose: { ObjectId }, models: { User, Contract, Price, AccountBalance, Product, Underlying } } = require('gym-data')
 const { errors: { UnexistenceError, ValueError } } = require('gym-commons')
