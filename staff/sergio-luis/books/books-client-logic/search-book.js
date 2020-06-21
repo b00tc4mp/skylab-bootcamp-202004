@@ -15,6 +15,7 @@ const context = require('./context')
 
 module.exports = function(query){
     String.validate.notVoid(query)
+    debugger
 
     return (async () => {
         const token = await this.storage.getItem('token')

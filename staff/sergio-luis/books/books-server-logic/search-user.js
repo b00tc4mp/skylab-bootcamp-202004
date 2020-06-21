@@ -21,7 +21,7 @@ module.exports = (query) => {
     let user
 
     return (async() => {
-        user = await User.find({ name: { $regex: `${query}`, $options: 'i' } }).lean().sort({ email: 1 }).limit(10)
+        user = await User.find({ email: { $regex: `${query}`, $options: 'i' } }).lean().sort({ email: 1 }).limit(10)
         if (!user.length) throw new UnexistenceError("This user search don`t find any results")
     
         user.forEach(user=>{

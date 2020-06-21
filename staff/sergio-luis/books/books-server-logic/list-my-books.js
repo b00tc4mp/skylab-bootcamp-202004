@@ -16,6 +16,7 @@ const { errors: { UnexistenceError } } = require('books-commons')
 const { models: { User, Book } } = require('books-data')
 
 module.exports = (userId) => {
+    debugger
     String.validate.notVoid(userId)
 
     return (async() => {
@@ -23,17 +24,17 @@ module.exports = (userId) => {
 
         if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`);
 
-        const books = await Book.find({ actualUserId: userId })
+        const books = await Book.find({ actualUserId: userId }).lean()
 
         if (!books.length) throw new UnexistenceError("Dont`t have books in your library")
 
-        books.forEach(book => {
+       const _books = books.map(book => {
           book.id = book._id.toString();
-
           delete book._id;
           delete book.__v;
+          return book
       })
 
-        return books
+        return await _books
     })()
 }

@@ -20,7 +20,7 @@ module.exports = (bookId) => {
 
 
     return (async() => {
-        const book = await Book.findById(bookId)
+        const book = await Book.findById(bookId).populate('ownerUserId').populate('actualUserId').lean()
 
         if (!book) throw new UnexistenceError(`book with id ${bookId} does not exist`);
             book.id = book._id.toString()
