@@ -10,25 +10,18 @@ require('7-potencias-commons/polyfills/json')
 require('7-potencias-commons/polyfills/math')
 const { random, randomIntegerBetween } = Math
 const { mongoose, models: { User, Lesson } } = require('7-potencias-data')
-const { errors: { UnexistenceError } } = require('7-potencias-commons')
+const { errors: { UnexistenceError, ValueError } } = require('7-potencias-commons')
+const { ObjectId } = require('7-potencias-data/mongo')
+const { VoidError } = require('7-potencias-commons/errors')
 
-describe('logic - update cart', () => {
+describe('Update cart', () => {
   before(() => mongoose.connect(MONGODB_URL))
 
-  let userId, productSelectionId, quantity
+  let userId, productId, quantity
 
   beforeEach(async () => {
     await User.deleteMany()
     await Lesson.deleteMany()
-
-    const user = {
-      name: `name-${random()}`,
-      surname: `surname-${random()}`,
-      email: `e-${random()}@mail.com`,
-      password: `password-${random()}`,
-      cart: [`cart-${random()}`],
-      orders: [`orders-${random()}`]
-    }
 
     const lesson = {
       name: `name-${random()}`,
@@ -41,15 +34,31 @@ describe('logic - update cart', () => {
       year: random() * 2000
     }
 
+    const newLesson = await Lesson.create(lesson)
+    productId = newLesson._id.toString()
+
+    const productSelection = {
+      product: productId,
+      quantity: randomIntegerBetween(1, 100)
+    }
+
+    const user = {
+      name: `name-${random()}`,
+      surname: `surname-${random()}`,
+      email: `e-${random()}@mail.com`,
+      password: `password-${random()}`,
+      cart: [productSelection],
+      orders: []
+    }
+
     quantity = randomIntegerBetween(1, 100)
 
-    userId = await User.create(user)
-    lessonId = await Lesson.create(lesson)
+    const newUser = await User.create(user)
+    userId = newUser._id.toString()
   })
 
-  it('should succeed on existing user and lesson', async () => {
-    const result = await updateCart(userId, productSelectionId, quantity)
-    expect(result).to.be.undefined
+  it('should modify product when quantity is higher than zero and is in the card', async () => {
+    await updateCart(userId, productId, quantity)
 
     const user = await User.findById(userId)
     expect(user).to.exist
@@ -59,92 +68,231 @@ describe('logic - update cart', () => {
     expect(cart).to.exist
     expect(cart).to.have.lengthOf(1)
 
-    const [_lesson] = cart
+    const [_productSelection] = cart
 
-    expect(_lesson).to.exist
+    expect(_productSelection).to.exist
 
-    const { lesson, quantity: _quantity } = _lesson
+    const { quantity: _quantity } = _productSelection
 
-    expect (lesson.toString()).to.equal(productSelectionId)
+    expect(_productSelection.product._id.toString()).to.equal(productId)
     expect(_quantity).to.equal(quantity)
   })
 
-  it('should fail on trying to remove a whole lesson that is not already in cart', async () => {
+  it('should delete product from the card when quantity is zero and product is in the card', async () => {
+    quantity = 0
+    await updateCart(userId, productId, quantity)
+
+    const user = await User.findById(userId)
+    expect(user).to.exist
+
+    const { cart } = user
+
+    expect(cart).to.exist
+    expect(cart).to.be.an('array').that.is.empty
+  })
+
+  it('should add product when quantity is higher than zero and is not in the card', async () => {
+    const newLesson = {
+      name: `name-${random()}`,
+      price: random() * 1000,
+      style: `style-${random()}`,
+      hour: random() * 24,
+      minute: random() * 60,
+      day: random() * 7,
+      month: random() * 12,
+      year: random() * 2000
+    }
+
+    const _lesson = await Lesson.create(newLesson)
+    productId = _lesson._id.toString()
+    quantity = 3
+
+    const _user = await updateCart(userId, productId, quantity)
+    expect(_user).to.exist
+
+    const { cart } = _user
+
+    expect(cart).to.exist
+    expect(cart).to.have.lengthOf(2)
+
+    const newProductSelection = cart[1]
+
+    expect(newProductSelection).to.have.property('quantity', 3)
+    expect(newProductSelection.product._id.toString()).to.be.equal(_lesson._id.toString())
+  })
+
+  it('should fail on trying to remove a product that is not already in cart', async () => {
     let error
+
+    const newLesson = {
+      name: `name-${random()}`,
+      price: random() * 1000,
+      style: `style-${random()}`,
+      hour: random() * 24,
+      minute: random() * 60,
+      day: random() * 7,
+      month: random() * 12,
+      year: random() * 2000
+    }
+
+    const _lesson = await Lesson.create(newLesson)
+    productId = _lesson._id.toString()
+    quantity = 0
+
     try {
-      await updateCart(userId, productSelectionId, quantity = 0)
+      await updateCart(userId, productId, quantity)
     } catch (err) {
       error = err
     }
-    expect(error).to.exist
 
     expect(error).to.be.instanceOf(UnexistenceError)
-    expect(error.message).to.equal(`lesson with id ${productSelectionId} does not exist in cart for user with id ${userId}`)
+    expect(error.message).to.equal(`product selection with id ${productId} does not exist in cart for user with id ${userId}`)
+  })
+
+  it('should fail when product with productId does not exist', async () => {
+    let error
+    productId = new ObjectId().toString()
+    quantity = 0
+
+    try {
+      await updateCart(userId, productId, quantity)
+    } catch (err) {
+      error = err
+    }
+
+    expect(error).to.be.instanceOf(UnexistenceError)
+    expect(error.message).to.equal(`product with id ${productId} does not exist`)
+  })
+
+  it('should fail when product id is not string', async () => {
+    let error
+
+    try {
+      await updateCart(userId, true, quantity)
+    } catch (err) {
+      error = err
+    }
+
+    expect(error).to.be.instanceOf(TypeError)
+    expect(error.message).to.equal('true is not a string')
+
+    try {
+      await updateCart(userId, 1, quantity)
+    } catch (err) {
+      error = err
+    }
+
+    expect(error).to.be.instanceOf(TypeError)
+    expect(error.message).to.equal('1 is not a string')
+  })
+
+  it('should fail when product id is empty', async () => {
+    let error
+
+    try {
+      await updateCart(userId, '', quantity)
+    } catch (err) {
+      error = err
+    }
+
+    expect(error).to.be.instanceOf(VoidError)
+    expect(error.message).to.equal('string is empty or blank')
+  })
+
+  it('should fail when user does not exist', async () => {
+    let error
+    userId = new ObjectId().toString()
+    quantity = 0
+
+    try {
+      await updateCart(userId, productId, quantity)
+    } catch (err) {
+      error = err
+    }
+
+    expect(error).to.be.instanceOf(UnexistenceError)
+    expect(error.message).to.equal(`user with id ${userId} does not exist`)
+  })
+
+  it('should fail when user id is not string', async () => {
+    let error
+
+    try {
+      await updateCart(true, productId, quantity)
+    } catch (err) {
+      error = err
+    }
+
+    expect(error).to.be.instanceOf(TypeError)
+    expect(error.message).to.equal('true is not a string')
+
+    try {
+      await updateCart(1, productId, quantity)
+    } catch (err) {
+      error = err
+    }
+
+    expect(error).to.be.instanceOf(TypeError)
+    expect(error.message).to.equal('1 is not a string')
+  })
+
+  it('should fail when user id is empty', async () => {
+    let error
+
+    try {
+      await updateCart('', productId, quantity)
+    } catch (err) {
+      error = err
+    }
+
+    expect(error).to.be.instanceOf(VoidError)
+    expect(error.message).to.equal('string is empty or blank')
   })
 
   it('should fail on negative quantity', async () => {
+    let error
     quantity = -1
 
-    expect(async () => {
-      await updateCart(userId, productSelectionId, quantity)
-    }).to.throw(TypeError, `${quantity} is not a positive number`)
+    try {
+      await updateCart(userId, productId, quantity)
+    } catch (err) {
+      error = err
+    }
+
+    expect(error).to.be.instanceOf(ValueError)
+    expect(error.message).to.equal(`${quantity} is not a positive number`)
   })
 
-  it('should fail on non-string user id', () => {
-    expect(async () => {
-      await updateCart(true, productSelectionId, quantity)
-    }).to.throw(TypeError, 'true is not a string')
+  it('should fail when quantity is not numeric', async () => {
+    let error
 
-    expect(async () => {
-      await updateCart(1, productSelectionId, quantity)
-    }).to.throw(TypeError, '1 is not a string')
+    try {
+      await updateCart(userId, productId, true)
+    } catch (err) {
+      error = err
+    }
+
+    expect(error).to.be.instanceOf(TypeError)
+    expect(error.message).to.equal('true is not a number')
+
+    try {
+      await await updateCart(userId, productId, 'abc')
+    } catch (err) {
+      error = err
+    }
+
+    expect(error).to.be.instanceOf(TypeError)
+    expect(error.message).to.equal('abc is not a number')
+
+    try {
+      await updateCart(userId, productId, NaN)
+    } catch (err) {
+      error = err
+    }
+
+    expect(error).to.be.instanceOf(TypeError)
+    expect(error.message).to.equal('NaN is not a number')
   })
-
-  it('should fail on non-string lesson id', () => {
-    expect(async () => {
-      await updateCart(userId, true, quantity)
-    }).to.throw(TypeError, 'true is not a string')
-
-    expect(async () => {
-      await updateCart(userId, 1, quantity)
-    }).to.throw(TypeError, '1 is not a string')
-  })
-
-  it('should fail on non-numeric quantity', () => {
-    expect(async () => {
-      await updateCart(userId, productSelectionId, true)
-    }).to.throw(TypeError, 'true is not a number')
-
-    expect(async () => {
-      await updateCart(userId, productSelectionId, 'abc')
-    }).to.throw(TypeError, 'abc is not a number')
-
-    expect(async () => {
-      await updateCart(userId, productSelectionId, NaN)
-    }).to.throw(TypeError, 'NaN is not a number')
-  })
-
-  it('should fail when user does not exist', () =>
-    updateCart(userId = ObjectId().toString(), productSelectionId, 1)
-      .then(() => { throw new Error('it should not reach this point') })
-      .catch(error => {
-        expect(error).to.exist
-
-        expect(error).to.be.instanceOf(UnexistenceError)
-        expect(error.message).to.equal(`user with id ${userId} does not exist`)
-      })
-  )
-
-  it('should fail when lesson does not exist', () =>
-    updateCart(userId, productSelectionId = ObjectId().toString(), 1)
-      .then(() => { throw new Error('it should not reach this point') })
-      .catch(error => {
-        expect(error).to.exist
-
-        expect(error).to.be.instanceOf(UnexistenceError)
-        expect(error.message).to.equal(`lesson with id ${productSelectionId} does not exist`)
-      })
-  )
 
   afterEach(async () => {
     await User.deleteMany()

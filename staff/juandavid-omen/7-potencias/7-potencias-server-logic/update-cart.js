@@ -5,7 +5,7 @@ const { models: { User, Lesson, ProductSelection } } = require('7-potencias-data
 
 module.exports = (userId, productId, quantity) => {
   String.validate.notVoid(userId)
-  String.validate.notVoid(productId) // productId
+  String.validate.notVoid(productId)
   Number.validate.positive(quantity)
 
   return (async () => {
@@ -19,19 +19,16 @@ module.exports = (userId, productId, quantity) => {
 
     const { cart } = user
 
-    const index = cart.findIndex(item =>
-      item.product._id.toString() === productId
-    )
-    // -1
+    const index = cart.findIndex(item => item.product._id.toString() === productId)
+
     if (quantity === 0) {
       if (index < 0) throw new UnexistenceError(`product selection with id ${productId} does not exist in cart for user with id ${userId}`)
 
-      // remove from the card
       cart.splice(index, 1)
     } else {
-      // when product cannot be foud on the card
       if (index < 0) {
         const productSelection = new ProductSelection({ product: productId, quantity })
+
         cart.push(productSelection)
       } else cart[index].quantity = quantity
     }
