@@ -1,9 +1,9 @@
 import React from "react";
 import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  ImageBackground
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    ImageBackground
 } from "react-native";
 
 const Home = props => {

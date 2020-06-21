@@ -9,6 +9,7 @@ import Modal from "./src/Modal";
 import MapBar from "./src/MapBar";
 import MapRestaurant from "./src/MapRestaurant";
 import Home from "./src/Home"
+import Menu from "./src/Menu"
 
 const App = () => {
   const [view, setView] = useState("home");
@@ -23,6 +24,7 @@ const App = () => {
       { view === "mapBar" && <MapBar/> }
       { view === "mapRestaurant" && <MapRestaurant /> }
       {/*<Modal />*/}
+      {/*<Menu />*/}
     </View>
   )
 }
