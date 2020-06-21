@@ -15,23 +15,23 @@ const context = require('./context')
 
 module.exports = function (email, password) {
     Email.validate(email)
-
     String.validate.notVoid(password)
 
     return (async () => {
-        const result = await call('POST', `${this.API_URL}/users/auth`,
+        const result = await call(
+            'POST',
+            `${this.API_URL}/users/auth`,
             `{ "email": "${email}", "password": "${password}" }`,
-            { 'Content-type': 'application/json' })
+            { 'Content-type': 'application/json' }
+        )
+
         const { status, body } = result
         if (status === 200) {
             const { token } = JSON.parse(body)
-
             return token
         } else {
             const { error } = JSON.parse(body)
-
             throw new Error(error)
         }
-
     })()
 }.bind(context)

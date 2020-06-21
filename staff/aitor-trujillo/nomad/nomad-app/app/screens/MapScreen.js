@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, Image, StyleSheet, SafeAreaView } from 'react-native'
+import { View, StyleSheet, SafeAreaView } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 import NomadTitle from '../components/NomadTitle'
-import { ScrollView, FlatList, TouchableOpacity } from 'react-native-gesture-handler'
+import { FlatList } from 'react-native-gesture-handler'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import * as Permissions from 'expo-permissions'
 import * as Location from "expo-location";
-import { API_URL } from 'nomad-client-logic/context'
-
-import AppButton from '../components/Button'
-import Review from '../components/Review'
-import colors from '../styles/colors'
-import toggleFavorites from 'nomad-client-logic/toggle-favorites'
 import AsyncStorage from '@react-native-community/async-storage'
+
+import { API_URL } from 'nomad-client-logic/context'
 import retrieveUser from 'nomad-client-logic/retrieve-user'
 import retrieveWorkspaces from 'nomad-client-logic/retrieve-workspaces'
 import Card from '../components/Card'
 
-export default ({ route, navigation }) => {
+export default ({ navigation }) => {
 
     const [latitude, setLatitude] = useState(41.47566020027821)
     const [longitude, setLongitude] = useState(2.197265625)
@@ -58,13 +54,11 @@ export default ({ route, navigation }) => {
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
-                {/* <TouchableOpacity style={styles.buttonWrapper}> */}
                 <View style={[styles.iconCircle, styles.buttonWrapper]}>
                     <MaterialCommunityIcons name="chevron-left" size={30} color='white' onPress={() => navigation.goBack()} />
                 </View>
-                {/* </TouchableOpacity> */}
                 <View style={styles.mapContainer}>
-                    <MapView style={styles.map} region={{ // provider={PROVIDER_GOOGLE}
+                    <MapView style={styles.map} region={{
                         latitude: latitude,
                         longitude: longitude,
                         latitudeDelta: 0.06,
@@ -89,9 +83,6 @@ export default ({ route, navigation }) => {
                         )}
                     </MapView>
                 </View>
-                {/* <NomadTitle title='Capacity' />
-            <Text style={styles.description}>Capacity: {ws.capacity}</Text>
-            <Text style={styles.description}>Avaliable: 1</Text> */}
                 <View style={styles.listContainer}>
                     <NomadTitle title='Workspaces near you' color='white' />
                     <FlatList horizontal data={workspaces} keyExtractor={(workspace) => workspace._id + Math.random().toString()}
@@ -111,8 +102,6 @@ export default ({ route, navigation }) => {
                 </View>
             </View>
         </SafeAreaView>
-        // {/* </ScrollView> */ }
-        // </View >
     )
 }
 
@@ -124,20 +113,6 @@ const styles = StyleSheet.create({
     container: {
         marginHorizontal: 0,
         backgroundColor: '#1c1c1c',
-        // marginBottom: '7%'
-        // marginBottom: 70
-    },
-    image: {
-        width: '100%',
-        height: 350
-    },
-    center: {
-        alignItems: 'center',
-        marginTop: 15
-    },
-    topWrapper: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
     },
     iconCircle: {
         width: 50,
@@ -154,51 +129,16 @@ const styles = StyleSheet.create({
         top: 22,
         zIndex: 10,
     },
-    detailsContainer: {
-        padding: 20,
-    },
-    title: {
-        fontWeight: 'bold',
-        fontSize: 24,
-        marginVertical: 5
-    },
-    address: {
-        color: 'grey',
-        fontSize: 18,
-        marginVertical: 5,
-
-    },
-    description: {
-        paddingBottom: 15,
-        color: 'grey',
-        fontSize: 18,
-        textAlign: 'justify'
-    },
-    price: {
-        color: 'grey',
-        fontSize: 18,
-        // fontWeight: 'bold',
-        textAlign: 'left',
-        fontWeight: 'bold',
-        width: '100%',
-        paddingBottom: 30,
-    },
     mapContainer: {
         marginHorizontal: 20,
-        // width: '100%',
         height: 530,
         borderRadius: 25,
-        // marginBottom: 15,
-        // flex: 1
     },
     listContainer: {
         marginTop: 20,
         marginLeft: 20,
-        // width: '100%',
         height: 280,
         borderRadius: 25,
-        // marginBottom: 15,
-        // flex: 1
     },
     map: {
         marginTop: 10,
@@ -207,5 +147,4 @@ const styles = StyleSheet.create({
         height: 250,
         borderRadius: 25,
     }
-
 })

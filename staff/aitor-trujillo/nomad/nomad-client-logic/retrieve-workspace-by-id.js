@@ -26,6 +26,5 @@ module.exports = function (token, workspaceId) {
         } catch (error) {
             console.log(error) // TODO
         }
-
     })()
 }.bind(context)

@@ -2,11 +2,9 @@ require('nomad-commons/polyfills/string')
 require('nomad-commons/polyfills/number')
 require('nomad-commons/polyfills/json')
 const { errors: { UnexistenceError } } = require('nomad-commons')
-
 const { models: { Workspace, User } } = require('nomad-data')
 
 module.exports = async (userId, workspaceId) => {
-
     String.validate.notVoid(userId)
     String.validate.notVoid(workspaceId)
 

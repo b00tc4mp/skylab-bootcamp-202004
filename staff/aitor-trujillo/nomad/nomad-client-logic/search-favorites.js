@@ -5,7 +5,6 @@ const { utils: { call } } = require('nomad-commons')
 const context = require('./context')
 
 module.exports = function (token, query) {
-
     String.validate.notVoid(token)
     String.validate.notVoid(query)
 
@@ -19,11 +18,11 @@ module.exports = function (token, query) {
                 headers
             )
             const { status, body } = result
+
             if (status === 200) return JSON.parse(body)
-            else throw new Error('could not retrieve workspaces')
+            else throw new Error('could not search favorites')
         } catch (error) {
             console.log(error) // TODO
         }
-
     })()
 }.bind(context)

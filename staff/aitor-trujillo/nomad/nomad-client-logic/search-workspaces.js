@@ -19,11 +19,11 @@ module.exports = function (token, query) {
                 headers
             )
             const { status, body } = result
+
             if (status === 200) return JSON.parse(body)
-            else throw new Error('could not retrieve workspaces')
+            else throw new Error('could not search workspaces')
         } catch (error) {
             console.log(error) // TODO
         }
-
     })()
 }.bind(context)

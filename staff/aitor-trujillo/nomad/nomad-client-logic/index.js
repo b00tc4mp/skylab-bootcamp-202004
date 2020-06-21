@@ -8,7 +8,6 @@ module.exports = {
     uploadImage: require('./upload-image'),
     uploadUserImage: require('./upload-user-image'),
     retrieveUserWorkspaces: require('./retrieve-user-workspaces'),
-    retrieveUserReviews: require('./retrieve-user-reviews'),
     retrieveWorkspaces: require('./retrieve-workspaces'),
     searchWorkspaces: require('./search-workspaces'),
     searchFavorites: require('./search-favorites'),

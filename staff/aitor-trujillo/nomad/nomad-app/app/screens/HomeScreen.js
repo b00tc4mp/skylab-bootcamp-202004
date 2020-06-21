@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, SafeAreaView, StyleSheet, FlatList, Platform, ScrollView, RefreshControl, Image, ImageBackground, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, FlatList, Platform, ScrollView, RefreshControl, Image, TouchableOpacity } from 'react-native'
 import * as Permissions from 'expo-permissions'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { NavigationContainer } from '@react-navigation/native'
 import * as Location from "expo-location";
-import { API_URL } from 'nomad-client-logic/context'
+import AsyncStorage from '@react-native-community/async-storage'
 
+import { API_URL } from 'nomad-client-logic/context'
 import NomadHeader from '../components/NomadHeader'
 import Card from '../components/Card'
-import WorkspacePage from './WorkspacePage'
 import AppTextInput from '../components/NomadTextInput'
 import NomadTitle from '../components/NomadTitle'
-import colors from '../styles/colors'
 import retrieveWorkspaces from 'nomad-client-logic/retrieve-workspaces'
-import AsyncStorage from '@react-native-community/async-storage'
 import retrieveUser from 'nomad-client-logic/retrieve-user'
-import { TouchableHighlight } from 'react-native-gesture-handler'
 
 
 
@@ -23,7 +18,6 @@ import { TouchableHighlight } from 'react-native-gesture-handler'
 export default function Home({ navigation }) {
     const [workspaces, setWorkspaces] = useState([])
     const [user, setUser] = useState()
-    const [query, setQuery] = useState()
     const [image, setImage] = useState()
     const [refresh, setRefresh] = useState(false)
     const [categoryPressed, setCategoryPressed] = useState('')
@@ -83,7 +77,6 @@ export default function Home({ navigation }) {
                         keyboardType={Platform.OS === 'ios' ? 'web-search' : 'default'}
                         textContentType='organizationName'
                         onFocus={() => navigation.navigate('SearchScreen')}
-                    // onEndEditing={({ nativeEvent: { text } }) => console.log('AND THE RESULT IS: ', text)}
                     />
                     <NomadTitle title='Categories' />
                     <View style={styles.categoryContainer} >
@@ -146,7 +139,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
         marginTop: 10
-
     },
     category: {
         width: 160,
@@ -159,15 +151,9 @@ const styles = StyleSheet.create({
         width: 160,
         borderRadius: 25,
         height: 80,
-
     },
     categoryButton: {
         width: '50%'
-    },
-    categoryText: {
-        paddingHorizontal: '50%',
-        fontSize: 24,
-        color: colors.light
     },
     containerCards: {
         height: '100%',

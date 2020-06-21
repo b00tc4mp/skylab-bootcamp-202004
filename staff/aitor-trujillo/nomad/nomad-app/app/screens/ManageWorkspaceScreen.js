@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, SafeAreaView, StyleSheet, Image, TouchableHighlight, RefreshControl } from 'react-native'
-import { Entypo, AntDesign } from '@expo/vector-icons'
+import { View, Text, SafeAreaView, StyleSheet, RefreshControl } from 'react-native'
+import { Entypo } from '@expo/vector-icons'
 
 import colors from '../styles/colors'
-import { TouchableWithoutFeedback, FlatList } from 'react-native-gesture-handler'
+import { FlatList } from 'react-native-gesture-handler'
 import NomadTitle from '../components/NomadTitle'
 import retrieveUserWorkspaces from 'nomad-client-logic/retrieve-user-workspaces'
 import AppButton from '../components/Button'
@@ -12,15 +12,11 @@ import Swipeable from 'react-native-gesture-handler/Swipeable'
 import DeleteSwipe from '../components/DeleteSwipe'
 import deleteWorkspace from 'nomad-client-logic/delete-workspace'
 
-
-const image = require('../assets/aitor.jpg')
-
 export default function Profile({ navigation }) {
     const [userWorkspaces, setUserWorkspaces] = useState([])
     const [refresh, setRefresh] = useState(false)
 
     useEffect(() => {
-        debugger
         retrieveMyWorkspaces()
     }, [userWorkspaces.length])
 
@@ -38,6 +34,7 @@ export default function Profile({ navigation }) {
             console.log(e) // TODO HANDLE THIS
         }
     }
+
     const deleteWs = async (wsId) => {
         try {
             const token = await AsyncStorage.getItem('token')
@@ -52,9 +49,6 @@ export default function Profile({ navigation }) {
             console.log(e) // TODO HANDLE THIS
         }
     }
-
-
-
 
     return (
         <SafeAreaView style={styles.container}>
@@ -96,33 +90,10 @@ const styles = StyleSheet.create({
     headerContainer: {
         marginTop: 15,
         paddingHorizontal: 20,
-        // alignItems: 'center'
     },
     buttonContainer: {
-        // paddingHorizontal: 20,
         alignItems: 'center',
         marginVertical: 20,
-    },
-    profile: {
-        flexDirection: 'row',
-        marginTop: 10,
-        marginBottom: 30,
-        alignSelf: "center",
-        width: '100%',
-        padding: 10,
-        paddingHorizontal: 20,
-        backgroundColor: colors.light,
-        alignItems: 'center',
-    },
-    logout: {
-        flexDirection: 'row',
-        marginTop: 30,
-        alignSelf: "center",
-        width: '100%',
-        padding: 10,
-        paddingHorizontal: 20,
-        backgroundColor: colors.light,
-        alignItems: 'center',
     },
     optionsContainer: {
         flexDirection: 'row',
@@ -133,19 +104,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         backgroundColor: colors.light,
         alignItems: 'center',
-    },
-    containerHeader: {
-        padding: 20,
-    },
-    containerCards: {
-        height: '100%',
-        padding: 20,
-    },
-    image: {
-        width: 70,
-        height: 70,
-        borderRadius: 50,
-        marginRight: 10
     },
     iconCircle: {
         width: 50,

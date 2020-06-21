@@ -3,7 +3,6 @@ const { errors: { UnexistenceError } } = require('nomad-commons')
 const { models: { User } } = require('nomad-data')
 
 module.exports = async (userId) => {
-
     String.validate.notVoid(userId)
 
     const userPopulated = await User.findOne({ _id: userId }).populate({

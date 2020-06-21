@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, SafeAreaView, StyleSheet, Image, TouchableHighlight } from 'react-native'
 import { Entypo, AntDesign } from '@expo/vector-icons'
-import { API_URL } from 'nomad-client-logic/context'
+import AsyncStorage from '@react-native-community/async-storage'
 
+import { API_URL } from 'nomad-client-logic/context'
 import colors from '../styles/colors'
 import { TouchableWithoutFeedback, TouchableOpacity } from 'react-native-gesture-handler'
 import retrieveUser from 'nomad-client-logic/retrieve-user'
-import AsyncStorage from '@react-native-community/async-storage'
-
-
 
 export default function Profile({ handleLogout, navigation }) {
     const [user, setUser] = useState()
     const [image, setImage] = useState()
-
 
     const getUser = async () => {
         try {
@@ -36,8 +33,6 @@ export default function Profile({ handleLogout, navigation }) {
         })()
     }, [])
 
-
-
     return (
         <SafeAreaView style={styles.container}>
             {user && <View style={styles.profile}>
@@ -46,7 +41,6 @@ export default function Profile({ handleLogout, navigation }) {
                 </TouchableOpacity>
                 <View >
                     <Text style={styles.name}>{user.name}</Text>
-                    {/* <Text style={styles.review}>Junior Full-Stack Developer</Text> */}
                 </View>
             </View>}
             <TouchableHighlight onPress={() => navigation.navigate('WorkspaceEditor')} >
@@ -121,13 +115,6 @@ const styles = StyleSheet.create({
         backgroundColor: colors.light,
         alignItems: 'center',
     },
-    containerHeader: {
-        padding: 20,
-    },
-    containerCards: {
-        height: '100%',
-        padding: 20,
-    },
     image: {
         width: 70,
         height: 70,
@@ -149,8 +136,4 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginVertical: 5
     },
-    review: {
-        color: 'grey',
-        fontWeight: 'bold',
-    }
 })

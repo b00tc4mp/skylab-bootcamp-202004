@@ -2,7 +2,6 @@ require('dotenv').config()
 
 const { PORT, MONGODB_URL, SECRET } = process.env
 
-const path = require('path')
 const bodyParser = require('body-parser')
 const {
     registerUser,
@@ -28,9 +27,6 @@ const Busboy = require('busboy')
 const express = require('express')
 const placeReview = require('nomad-server-logic/place-review')
 const deleteWorkspaceById = require('nomad-server-logic/delete-workspace-by-id')
-const retrieveUserReviews = require('nomad-server-logic/retrieve-user-reviews')
-
-
 
 mongoose.connect(MONGODB_URL)
     .then(() => {
@@ -42,10 +38,8 @@ mongoose.connect(MONGODB_URL)
 
         const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
 
-        //app.use(cors)
+        app.use(cors)
         app.use(express.static('public'))
-
-
 
         // USERS ============================
 
@@ -273,19 +267,6 @@ mongoose.connect(MONGODB_URL)
                 handleError(error, res)
             }
         })
-
-        app.get('/reviews/user/get', verifyExtractJwt, (req, res) => {
-
-            try {
-                const { payload: { sub: userId } } = req
-                retrieveUserReviews(userId)
-                    .then(result => res.send(result))
-                    .catch(error => handleError(error, res))
-            } catch (error) {
-                handleError(error, res)
-            }
-        })
-
 
         // OTHERS =========================
 

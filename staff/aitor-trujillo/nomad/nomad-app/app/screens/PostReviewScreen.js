@@ -1,30 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     View,
-    Text,
     StyleSheet,
     KeyboardAvoidingView,
     ScrollView,
     SafeAreaView,
-    Switch,
     Alert,
 } from 'react-native';
-import AppButton from '../components/Button'
-import AppTextInput from '../components/NomadTextInput'
 import { Formik } from 'formik'
 import * as Yup from "yup";
-import * as Permissions from "expo-permissions";
-import * as Location from "expo-location";
 import AsyncStorage from '@react-native-community/async-storage';
 import { AntDesign } from '@expo/vector-icons'
 
+import AppButton from '../components/Button'
+import AppTextInput from '../components/NomadTextInput'
 import colors from '../styles/colors'
 import ErrorMessage from '../components/ErrorMessage'
-import AppPicker from '../components/Picker'
-import ImageInput from '../components/ImageInput';
 import postReview from 'nomad-client-logic/post-review';
-
-const { uploadImage } = require('nomad-client-logic')
 
 const validationSchema = Yup.object().shape({
     stars: Yup.number().required().min(1).label('Stars'),
@@ -42,7 +34,7 @@ export default ({ navigation, route }) => {
             const { stars, reviewText } = values
             const token = await AsyncStorage.getItem('token')
             if (token !== null) {
-                const result = await postReview(token, workspaceId, stars, reviewText)
+                await postReview(token, workspaceId, stars, reviewText)
                 Alert.alert('Success', 'Review posted in workspace 🤩.')
                 navigation.goBack()
 
@@ -108,9 +100,7 @@ const styles = StyleSheet.create({
     background: {
         flex: 1,
         backgroundColor: colors.light,
-        // resizeMode: 'cover',
         width: '100%',
-
         justifyContent: 'center',
         alignItems: "center",
         shadowOpacity: 0.3,
@@ -120,13 +110,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: '100%',
         flex: 1
-    },
-    features: {
-        flexWrap: 'wrap',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
-
     },
     scrollView: {
         width: '100%',
@@ -141,34 +124,4 @@ const styles = StyleSheet.create({
         paddingBottom: 30,
         backgroundColor: colors.light
     },
-    claimText: {
-        fontWeight: "bold",
-        fontSize: 36,
-        textAlign: "center",
-        color: "black",
-    },
-    descriptionText: {
-        marginTop: 10,
-        marginBottom: 30,
-        fontSize: 18,
-        color: "#1c1c1c",
-    },
-    pricing: {
-        justifyContent: 'center',
-        flexDirection: 'row',
-        width: '50%',
-        flexWrap: 'nowrap',
-    },
-    // pricingItem: {
-    //     flex: 1
-    // },
-
 })
-
-
-//     < Review
-// image = { require('./app/assets/aitor.jpg') }
-// name = 'Aitor Truji'
-// stars = { 3}
-// review = "The best place i've ever procrastinated. Nothing more to tell."
-//     />

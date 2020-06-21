@@ -10,7 +10,6 @@ module.exports = function (token, workspaceId) {
 
     const headers = { Authorization: `Bearer ${token}` }
 
-
     return (async () => {
         try {
             const result = await call(
@@ -20,14 +19,12 @@ module.exports = function (token, workspaceId) {
                 headers
             )
 
-            const { status, body } = result
-            console.log(body)
+            const { status } = result
 
             if (status === 201) return
             else throw new Error('could not create workspace')
         } catch (error) {
             console.log(error) // TODO
         }
-
     })()
 }.bind(context)

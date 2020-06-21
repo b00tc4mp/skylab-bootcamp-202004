@@ -30,11 +30,9 @@ export default ({ navigation }) => {
     const handleRegister = ({ name, surname, email, password }) => {
         (async () => {
             try {
-
                 await registerUser(name, surname, email, password)
                 navigation.navigate('Login')
             } catch (error) {
-                console.log(error)
                 setError(error)
             }
         })()
@@ -49,9 +47,6 @@ export default ({ navigation }) => {
                 behavior={Platform.OS == "ios" ? "padding" : "height"}
                 style={styles.formContainer}
             >
-
-
-                {/* <View style={styles.formContainer}> */}
                 <Text style={styles.claimText} >
                     Sign up
                 </Text>
@@ -110,15 +105,12 @@ export default ({ navigation }) => {
                 </Formik>
             </KeyboardAvoidingView>
         </ImageBackground>
-
     );
-
 };
 
 const styles = StyleSheet.create({
     background: {
         flex: 1,
-        // resizeMode: 'cover',
         width: '100%',
         justifyContent: 'center',
         alignItems: "center",
@@ -130,7 +122,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     formContainer: {
-
         alignSelf: 'center',
         width: '90%',
         marginTop: 100,
@@ -162,18 +153,4 @@ const styles = StyleSheet.create({
         color: "#1c1c1c",
         textAlign: "center",
     },
-    registerBtn: {
-        width: '85%',
-        height: 70,
-        backgroundColor: colors.primary,
-        borderRadius: 40,
-    },
-    loginBtn: {
-        marginTop: 20,
-        marginBottom: 40,
-        width: '85%',
-        height: 70,
-        backgroundColor: colors.secondary,
-        borderRadius: 40,
-    }
 })

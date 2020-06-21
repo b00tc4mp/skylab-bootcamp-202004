@@ -5,7 +5,6 @@ const { utils: { call } } = require('nomad-commons')
 const context = require('./context')
 
 module.exports = function (token, workspaceId) {
-
     String.validate.notVoid(token)
     String.validate.notVoid(workspaceId)
 
@@ -20,13 +19,10 @@ module.exports = function (token, workspaceId) {
                 headers
             )
             const { status } = result
-            console.log(status)
-            console.log('youp i arrive correctly')
             if (status === 200) return
             else throw new Error('could not retrieve workspaces')
         } catch (error) {
             console.log(error) // TODO
         }
-
     })()
 }.bind(context)

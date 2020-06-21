@@ -14,8 +14,6 @@ module.exports = function (token, workspaceId, stars, text) {
 
     const headers = { Authorization: `Bearer ${token}`, 'Content-type': 'application/json' }
 
-    console.log(review)
-
     return (async () => {
         try {
             const result = await call(
@@ -26,13 +24,11 @@ module.exports = function (token, workspaceId, stars, text) {
             )
 
             const { status, body } = result
-            console.log(body)
 
             if (status === 201) return
-            else throw new Error('could not create workspace')
+            else throw new Error('could not create review')
         } catch (error) {
             console.log(error) // TODO
         }
-
     })()
 }.bind(context)

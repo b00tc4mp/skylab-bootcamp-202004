@@ -20,7 +20,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 import colors from '../styles/colors'
 import ErrorMessage from '../components/ErrorMessage'
 import AppPicker from '../components/Picker'
-import ImageInput from '../components/ImageInput';
 import MapView, { Marker } from 'react-native-maps';
 import NomadTitle from '../components/NomadTitle';
 
@@ -131,7 +130,7 @@ export default ({ navigation }) => {
                                     fontSize={18}
                                 />
                                 {location && <View style={styles.mapContainer}>
-                                    <MapView style={styles.map} region={{ // provider={PROVIDER_GOOGLE}
+                                    <MapView style={styles.map} region={{
                                         latitude: location.latitude,
                                         longitude: location.longitude,
                                         latitudeDelta: 0.06,
@@ -170,7 +169,6 @@ export default ({ navigation }) => {
                                         items={term}
                                         onSelectItem={item => setFieldValue('term', item)}
                                         selectedItem={values['term']}
-                                    // style={styles.pricingItem}
                                     />
                                 </View>
                                 <ErrorMessage error={errors.price} visible={touched.price} />
@@ -297,18 +295,10 @@ const styles = StyleSheet.create({
     background: {
         flex: 1,
         backgroundColor: colors.light,
-        // resizeMode: 'cover',
         width: '100%',
-
         justifyContent: 'center',
         alignItems: "center",
         shadowOpacity: 0.3,
-    },
-    imageContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
-        flex: 1
     },
     features: {
         flexWrap: 'wrap',
@@ -331,7 +321,6 @@ const styles = StyleSheet.create({
         height: 250,
         borderRadius: 25,
         marginBottom: 15,
-        // flex: 1
     },
     formContainer: {
         flex: 1,
@@ -342,12 +331,6 @@ const styles = StyleSheet.create({
         padding: 30,
         paddingBottom: 30,
         backgroundColor: colors.light
-    },
-    claimText: {
-        fontWeight: "bold",
-        fontSize: 36,
-        textAlign: "center",
-        color: "black",
     },
     descriptionText: {
         marginTop: 10,
@@ -361,8 +344,4 @@ const styles = StyleSheet.create({
         width: '50%',
         flexWrap: 'nowrap',
     },
-    // pricingItem: {
-    //     flex: 1
-    // },
-
 })

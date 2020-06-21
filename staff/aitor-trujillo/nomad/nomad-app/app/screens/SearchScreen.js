@@ -1,27 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text, SafeAreaView, StyleSheet, FlatList, ScrollView, RefreshControl } from 'react-native'
-import * as Permissions from 'expo-permissions'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { NavigationContainer } from '@react-navigation/native'
+import React, { useState } from 'react'
+import { View, SafeAreaView, StyleSheet, FlatList, ScrollView, RefreshControl } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 
 import NomadHeader from '../components/NomadHeader'
 import Card from '../components/Card'
-import WorkspacePage from './WorkspacePage'
-import retrieveFavorites from 'nomad-client-logic/retrieve-favorites'
-import { set } from 'react-native-reanimated'
-import AsyncStorage from '@react-native-community/async-storage'
 import retrieveUser from 'nomad-client-logic/retrieve-user'
 import AppTextInput from '../components/NomadTextInput'
 import { API_URL } from 'nomad-client-logic/context'
 import searchWorkspaces from 'nomad-client-logic/search-workspaces'
 
-
-
 export default function Search({ navigation }) {
     const [workspaces, setWorkspaces] = useState([])
     const [user, setUser] = useState()
-    // const [query, setQuery] = useState()
-    const [image, setImage] = useState()
     const [refresh, setRefresh] = useState(false)
 
     const handleSearch = async (query) => {
@@ -40,18 +30,11 @@ export default function Search({ navigation }) {
         }
     }
 
-    // useEffect(() => {
-    //     getFavorites()
-    // }, [favorites.length])
-
-
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.containerHeader}></View>
             <NomadHeader
                 title="Search"
-                // imageSource={image}
-                onError={() => setImage(require('../assets/profile.png'))}
                 subTitle="Search by name, city, country... 🧐"
                 onPress={() => navigation.navigate('Profile')}
             />
@@ -66,7 +49,6 @@ export default function Search({ navigation }) {
                         maxLength={100}
                         autoCorrect={false}
                         keyboardType={Platform.OS === 'ios' ? 'web-search' : 'default'}
-                        // textContentType='organizationName'
                         autoFocus
                         onEndEditing={({ nativeEvent: { text } }) => handleSearch(text)}
                     />

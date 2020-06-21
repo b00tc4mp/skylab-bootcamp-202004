@@ -25,7 +25,6 @@ export default ({ route, navigation }) => {
             if (token !== null) {
                 const result = await retrieveWorkspaceById(token, _id)
                 setWs(result)
-                console.log(result)
             } else {
                 console.log('error, token not found in homescreen') // TODO
             }
@@ -76,9 +75,11 @@ export default ({ route, navigation }) => {
                     <Text style={styles.description}>Parking: {ws.features.parking === true ? '✅' : '❌'}</Text>
                     <Text style={styles.description}>Coffee Included: {ws.features.coffee === true ? '✅' : '❌'}</Text>
                     <Text style={styles.description}>Meeting Rooms: {ws.features.meetingRooms === true ? '✅' : '❌'}</Text>
+                    <NomadTitle title='Capacity' />
+                    <Text style={styles.description}>Capacity: {ws.capacity}</Text>
                     <NomadTitle title='Location' />
                     <View style={styles.mapContainer}>
-                        <MapView style={styles.map} region={{ // provider={PROVIDER_GOOGLE}
+                        <MapView style={styles.map} region={{
                             latitude: ws.geoLocation.coordinates[1],
                             longitude: ws.geoLocation.coordinates[0],
                             latitudeDelta: 0.06,
@@ -90,9 +91,6 @@ export default ({ route, navigation }) => {
                             }} onPress={() => console.log('clicked')} />
                         </MapView>
                     </View>
-                    <NomadTitle title='Capacity' />
-                    <Text style={styles.description}>Capacity: {ws.capacity}</Text>
-                    <Text style={styles.description}>Avaliable: 1</Text>
                     <NomadTitle title='Reviews' />
                     <View style={styles.center} >
                         <AppButton title='Post Review' bgColor='secondary' txtColor='light' onPress={() => navigation.navigate('ReviewPage', ws._id)} />
@@ -114,34 +112,6 @@ export default ({ route, navigation }) => {
         </View>
     )
 }
-
-const reviews = [
-    {
-        name: 'Aitor Truji',
-        stars: 4,
-        review: 'This is the best known cowork out there.',
-        image: require('../assets/aitor.jpg'),
-    },
-    {
-        name: 'Llorch',
-        stars: 3,
-        review: 'Too much bugs here.',
-        image: require('../assets/aitor.jpg'),
-    },
-    {
-        name: 'Serginho',
-        stars: 5,
-        review: 'Awesome place to make callbacks.',
-        image: require('../assets/aitor.jpg'),
-    },
-    {
-        name: 'Dani',
-        stars: 1,
-        review: 'They do not open at night.',
-        image: require('../assets/aitor.jpg'),
-    },
-
-]
 
 const styles = StyleSheet.create({
     container: {
@@ -183,16 +153,10 @@ const styles = StyleSheet.create({
     detailsContainer: {
         padding: 20,
     },
-    title: {
-        fontWeight: 'bold',
-        fontSize: 24,
-        marginVertical: 5
-    },
     address: {
         color: 'grey',
         fontSize: 18,
         marginVertical: 5,
-
     },
     description: {
         paddingBottom: 15,
@@ -203,7 +167,6 @@ const styles = StyleSheet.create({
     price: {
         color: 'grey',
         fontSize: 18,
-        // fontWeight: 'bold',
         textAlign: 'left',
         fontWeight: 'bold',
         width: '100%',
@@ -214,7 +177,6 @@ const styles = StyleSheet.create({
         height: 250,
         borderRadius: 25,
         marginBottom: 15,
-        // flex: 1
     },
     map: {
         marginTop: 10,
@@ -222,5 +184,4 @@ const styles = StyleSheet.create({
         height: 250,
         borderRadius: 25,
     }
-
 })

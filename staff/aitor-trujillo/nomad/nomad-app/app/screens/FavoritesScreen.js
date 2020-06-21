@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, SafeAreaView, StyleSheet, FlatList, ScrollView, RefreshControl } from 'react-native'
-import * as Permissions from 'expo-permissions'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { NavigationContainer } from '@react-navigation/native'
+import { View, SafeAreaView, StyleSheet, FlatList, ScrollView, RefreshControl } from 'react-native'
 
 import NomadHeader from '../components/NomadHeader'
 import Card from '../components/Card'
-import WorkspacePage from './WorkspacePage'
 import retrieveFavorites from 'nomad-client-logic/retrieve-favorites'
-import { set } from 'react-native-reanimated'
 import AsyncStorage from '@react-native-community/async-storage'
 import retrieveUser from 'nomad-client-logic/retrieve-user'
 import AppTextInput from '../components/NomadTextInput'
@@ -58,26 +53,6 @@ export default function Favorites({ navigation }) {
         getFavorites()
     }, [])
 
-
-
-    const workspaces = [
-        {
-            title: 'WeWork Barcelona',
-            address: '23 st, Barcelona',
-            rating: '5',
-            price: '99€ / month',
-            image: require('../assets/cowork.jpg'),
-        },
-        {
-            title: 'Happy Coders',
-            address: 'Rambla 12, Barcelona',
-            rating: '4',
-            price: '10€ / day',
-            image: require('../assets/happycoders.jpg'),
-        }
-    ]
-
-
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.containerHeader}></View>
@@ -101,7 +76,6 @@ export default function Favorites({ navigation }) {
                         keyboardType={Platform.OS === 'ios' ? 'web-search' : 'default'}
                         textContentType='organizationName'
                         onEndEditing={({ nativeEvent: { text } }) => handleSearch(text)}
-                    // onBlur={() => setFieldTouched('workspaceName')}
                     />
                 </View>
                 <View style={styles.containerCards}>

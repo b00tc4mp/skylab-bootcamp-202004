@@ -9,7 +9,7 @@ module.exports = async (userId) => {
     const userPopulated = await User.findOne({ _id: userId }).populate({ path: 'userWorkspaces' })
 
     if (!userPopulated) throw new UnexistenceError(`user with id ${userId} does not exist`)
-    // return userPopulated
+
     const userWorkspaces = userPopulated.userWorkspaces
 
     if (!userWorkspaces.length) throw new Error("You don't have any workspaces :(")

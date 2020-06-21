@@ -20,11 +20,11 @@ module.exports = function (token, { latitude, longitude }, filter) {
                 headers
             )
             const { status, body } = result
+
             if (status === 200) return JSON.parse(body)
             else throw new Error('could not retrieve workspaces')
         } catch (error) {
             console.log(error) // TODO
         }
-
     })()
 }.bind(context)

@@ -12,17 +12,16 @@ module.exports = function (token) {
         try {
             const result = await call(
                 'GET',
-                `${this.API_URL}/workspaces/user/get`,
+                `${this.API_URL}/workspaces/user/get/`,
                 undefined,
                 headers
             )
             const { status, body } = result
 
             if (status === 200) return JSON.parse(body)
-            else throw new Error('could not retrieve workspace')
+            else throw new Error('could not retrieve user workspaces')
         } catch (error) {
             console.log(error) // TODO
         }
-
     })()
 }.bind(context)

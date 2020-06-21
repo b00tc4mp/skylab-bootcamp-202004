@@ -46,7 +46,6 @@ export default function Review({ image, name, surname, stars, review }) {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        // backgroundColor: 'white',
         marginTop: 10,
         paddingVertical: 10,
         paddingHorizontal: 5,
@@ -71,10 +70,3 @@ const styles = StyleSheet.create({
         color: colors.dark,
     }
 })
-
-//     < Review
-// image = { require('./app/assets/aitor.jpg') }
-// name = 'Aitor Truji'
-// stars = { 3}
-// review = "The best place i've ever procrastinated. Nothing more to tell."
-//     />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     View,
     Text,
@@ -23,7 +23,7 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required().min(4).label('Password')
 })
 
-export default ({ onLoggedIn, navigation }) => {
+export default ({ onLoggedIn }) => {
 
     const handleLogin = ({ email, password }) => {
         (async () => {
@@ -95,7 +95,6 @@ export default ({ onLoggedIn, navigation }) => {
 const styles = StyleSheet.create({
     background: {
         flex: 1,
-        // resizeMode: 'cover',
         width: '100%',
         justifyContent: 'center',
         alignItems: "center",
@@ -107,7 +106,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     formContainer: {
-
         alignSelf: 'center',
         width: '90%',
         marginTop: 100,
@@ -138,18 +136,4 @@ const styles = StyleSheet.create({
         color: "#1c1c1c",
         textAlign: "center",
     },
-    registerBtn: {
-        width: '85%',
-        height: 70,
-        backgroundColor: colors.primary,
-        borderRadius: 40,
-    },
-    loginBtn: {
-        marginTop: 20,
-        marginBottom: 40,
-        width: '85%',
-        height: 70,
-        backgroundColor: colors.secondary,
-        borderRadius: 40,
-    }
 })

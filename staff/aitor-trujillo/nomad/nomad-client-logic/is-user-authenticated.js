@@ -5,6 +5,7 @@ const context = require('./context')
 
 module.exports = function (token) {
     String.validate.notVoid(token)
+
     return (async () => {
         try {
             const result = await call(
@@ -14,13 +15,10 @@ module.exports = function (token) {
                 { Authorization: `Bearer ${token}` }
             )
 
-            const { status, body } = result
-
+            const { status } = result
             return status === 200
-
         } catch (error) {
-
+            console.log(error)
         }
-
     })()
 }.bind(context)

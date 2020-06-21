@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TextInput, StyleSheet, Platform } from 'react-native'
+import { View, TextInput, StyleSheet } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import colors from '../styles/colors'
@@ -26,6 +26,5 @@ const styles = StyleSheet.create({
         width: '100%',
         marginLeft: 10,
         fontSize: 18,
-        // fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Avenir'
     }
 })

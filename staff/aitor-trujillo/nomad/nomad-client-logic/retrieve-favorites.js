@@ -19,10 +19,10 @@ module.exports = function (token) {
             const { status, body } = result
 
             if (status === 200) return JSON.parse(body)
-            else throw new Error('could not retrieve workspaces')
+
+            else throw new Error('could not retrieve favorites')
         } catch (error) {
             console.log(error) // TODO
         }
-
     })()
 }.bind(context)

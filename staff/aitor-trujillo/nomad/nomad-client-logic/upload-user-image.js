@@ -5,7 +5,7 @@ const context = require('./context')
 
 module.exports = function (token, photo) {
     String.validate.notVoid(token)
-    console.log(photo.image1)
+
     let data = new FormData()
     data.append("image", {
         name: "image1",
@@ -23,7 +23,7 @@ module.exports = function (token, photo) {
                 data,
                 headers
             )
-            const { status, body } = result
+            const { status } = result
 
             if (status === 200) {
                 return true
@@ -32,6 +32,5 @@ module.exports = function (token, photo) {
         } catch (error) {
             console.log(error) // TODO
         }
-
     })()
 }.bind(context)

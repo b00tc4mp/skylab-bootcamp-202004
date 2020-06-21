@@ -1,38 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
-import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-community/async-storage';
 
 import Landing from './app/screens/LandingScreen'
 import Login from './app/screens/LoginScreen'
 import Register from './app/screens/RegisterScreen'
 import ManageWorkspaceScreen from './app/screens/ManageWorkspaceScreen'
-import ManageReviewsScreen from './app/screens/ManageReviewsScreen'
 import EditWorkspaceScreen from './app/screens/EditWorkspaceScreen'
 import Home from './app/screens/HomeScreen'
 import Profile from './app/screens/ProfileScreen'
-import Card from './app/components/Card'
-import AppTextInput from './app/components/NomadTextInput'
-import AppPicker from './app/components/Picker'
-import AppButton from './app/components/Button'
-import ListingPage from './app/screens/WorkspacePage'
-import Review from './app/components/Review'
-import ImageInput from './app/components/ImageInput';
 import SearchScreen from './app/screens/SearchScreen';
 import WorkspacePage from './app/screens/WorkspacePage';
 import Favorites from './app/screens/FavoritesScreen';
-import colors from './app/styles/colors'
 import UploadImageScreen from './app/screens/UploadImageScreen';
 import PostReviewScreen from './app/screens/PostReviewScreen';
 import MapScreen from './app/screens/MapScreen';
 import UploadProfileScreen from './app/screens/UploadProfileScreen';
 
 const { isUserAuthenticated } = require('nomad-client-logic')
-
-
 
 const Stack = createStackNavigator();
 const StackNavigator = ({ onLoggedIn }) => (
@@ -81,14 +69,11 @@ const TabNavigator = ({ handleLogout }) => (
       }} />
     <Tab.Screen name="Profile"
       options={{
-        // tabBarVisible: false,
         tabBarIcon: ({ color }) =>
           (< MaterialCommunityIcons name="account" size={30} color={color} />),
-      }}
-    >
+      }}>
       {(props) => <ProfileNavigator  {...props} handleLogout={() => handleLogout()} />}
     </Tab.Screen>
-
   </Tab.Navigator>
 )
 
@@ -102,6 +87,7 @@ const MainNavigator = () => (
     <Stack.Screen name="ReviewPage" component={PostReviewScreen} />
   </Stack.Navigator>
 )
+
 const ProfileNavigator = ({ handleLogout }) => (
   <Stack.Navigator screenOptions={{
     headerShown: false
@@ -111,9 +97,9 @@ const ProfileNavigator = ({ handleLogout }) => (
     </Stack.Screen>
     <Stack.Screen name="UploadProfile" component={UploadProfileScreen} />
     <Stack.Screen name="WorkspaceEditor" component={EditorNavigator} />
-    <Stack.Screen name="ManageReviews" component={ManageReviewsScreen} />
   </Stack.Navigator>
 )
+
 const EditorNavigator = () => (
   <Stack.Navigator screenOptions={{
     headerShown: false
@@ -124,10 +110,8 @@ const EditorNavigator = () => (
   </Stack.Navigator>
 )
 
-
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(null)
-  const [imageUri, setImageUri] = useState()
 
   useEffect(() => {
     getAuthentication()
@@ -144,16 +128,15 @@ export default function App() {
       console.log(e) // TODO HANDLE THIS
     }
   }
+
   const handleLogout = async () => {
     try {
-      const removeToken = await AsyncStorage.removeItem('token')
+      await AsyncStorage.removeItem('token')
       return setIsAuthenticated(false)
-
     } catch (e) {
       console.log(e) // TODO HANDLE THIS
     }
   }
-
 
   return (
     <NavigationContainer >
@@ -162,18 +145,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'grey',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  // container: {
-  //   backgroundColor: 'white',
-  //   height: '100%',
-  //   padding: 20,
-  //   paddingTop: 100,
-  // },
-});
