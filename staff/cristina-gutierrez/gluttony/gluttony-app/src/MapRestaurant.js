@@ -32,16 +32,16 @@ const MapRestaurant = () => {
                 style={styles.mapStyle}
                 
                 initialRegion={userLatitude && userLongitude && ({
-                    userLatitude,
-                    userLongitude,
+                    latitude: userLatitude,
+                    longitude: userLongitude,
                     latitudeDelta: 0.0022,
                     longitudeDelta: 0.00021
                 })}>
                 <Marker
                     title="You are here"
                     coordinate={{
-                        userLatitude,
-                        userLongitude,
+                        latitude: userLatitude,
+                        longitude: userLongitude,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421
                     }}  
@@ -49,8 +49,8 @@ const MapRestaurant = () => {
                 <Marker
                     title="Nearest restaurant"
                     coordinate={{
-                        restaurantLatitude,
-                        restaurantLongitude,
+                        latitude: restaurantLatitude,
+                        longitude: restaurantLongitude,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421
                     }}  

@@ -18,7 +18,7 @@ const MapBar = () => {
             setUserLatitude(pos.coords.latitude)
             setUserLongitude(pos.coords.longitude)
 
-            findNearbyBars(userLatitude, userLongitude)
+            findNearbyBars(pos.coords.latitude, pos.coords.longitude)
                 .then(coordinates => {
                     setBarLatitude(coordinates.latitude)
                     setBarLongitude(coordinates.longitude)
@@ -32,16 +32,16 @@ const MapBar = () => {
                 style={styles.mapStyle}
                 
                 initialRegion={userLatitude && userLongitude && ({
-                    userLatitude,
-                    userLongitude,
+                    latitude: userLatitude,
+                    longitude: userLongitude,
                     latitudeDelta: 0.0022,
                     longitudeDelta: 0.00021
                 })}>
                 <Marker
                     title="You are here"
                     coordinate={{
-                        userLatitude,
-                        userLongitude,
+                        latitude: userLatitude,
+                        longitude: userLongitude,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421
                     }}  
@@ -49,8 +49,8 @@ const MapBar = () => {
                 <Marker
                     title="Nearest bar"
                     coordinate={{
-                        barLatitude,
-                        barLongitude,
+                        latitude: barLatitude,
+                        longitude: barLongitude,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421
                     }}  
