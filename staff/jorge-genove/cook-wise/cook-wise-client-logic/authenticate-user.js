@@ -18,7 +18,7 @@ module.exports = function (email, password) {debugger
 
     String.validate.notVoid(password)
 
-    return call('POST', `http://192.168.0.19:8080/api/users/auth`,
+    return call('POST', `http://192.168.0.17:8080/api/users/auth`,
         `{ "email": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json' })
         .then(({ status, body }) => {

@@ -1,16 +1,15 @@
 require('cook-wise-commons/polyfills/string')
-const {getDate} = require('./helpers')
 const { utils: {  call } } = require('cook-wise-commons')
 
-module.exports = function(token,recipeId) {debugger
+module.exports = function(weekday,token) {debugger
     
 String.validate.notVoid(token)
-String.validate.notVoid(recipeId)
+String.validate.notVoid(weekday)
+console.log(weekday,token)
 
-const day = getDate()
 
-    return call('DELETE', `http://192.168.0.17:8080/api/deleterecipe`,
-    `{ "recipeId": "${recipeId}"}`,{ 'Content-type': 'application/json', 'Authorization': `Bearer ${token}` }
+    return call('DELETE', `http://192.168.0.17:8080/api/deletedaymenu`,
+    `{ "weekday": "${weekday}"}`,{ 'Content-type': 'application/json', 'Authorization': `Bearer ${token}` }
         )
         .then(({ status, body }) => {
             if (status === 202) {

@@ -21,7 +21,7 @@ const { errors: { UnexistenceError } } = require('cook-wise-commons')
 const { models: { User } } = require('cook-wise-data')
 
 
-module.exports = (userId, { ingredients }) => {
+module.exports = (userId, ingredients) => {
    
     String.validate.notVoid(userId)
     if(!(ingredients instanceof Array)) throw new TypeError( 'ingredients must be an array')

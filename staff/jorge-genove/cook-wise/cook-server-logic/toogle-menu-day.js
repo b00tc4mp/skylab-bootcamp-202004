@@ -13,10 +13,10 @@ It will add or sliced a recipe in the weekly menu
  * 
  */
 require('cook-wise-commons/polyfills/string')
-const { errors: { UnexistenceError, ValueError } } = require('cook-wise-commons')
-const { mongoose: { ObjectId }, models: { User, Recipes} } = require('cook-wise-data')
+const { errors: { UnexistenceError } } = require('cook-wise-commons')
+const {  models: { User, Recipes} } = require('cook-wise-data')
 
-module.exports = ( schedule,userId) => {
+module.exports = ( schedule,userId) => {debugger
     if(schedule === null || typeof schedule === 'undefined' || !(schedule.constructor.name === 'Object')) throw new TypeError(`${schedule} must be an object`)
     const {weekday, timeline, recipe} = schedule;
     String.validate.notVoid(recipe)
