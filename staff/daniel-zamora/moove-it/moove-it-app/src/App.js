@@ -1,26 +1,62 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { Route, withRouter, Redirect} from 'react-router-dom';
+import { isSessionActive, isSessionValid, logoutUser } from 'moove-it-client-logic'
+import Container from './components/Container'
+import Register from './components/Register';
+import Login from './components/Login'
+import Home from './components/Home';
 
-function App() {
+function App({ history }) {
+
+  useEffect(()=>{
+    if(isSessionActive())
+    try{
+      isSessionValid()
+        .then(authenticated => {
+          if(authenticated) {
+            // setToken(sessionStorage.token)
+          }
+        })
+        .catch(error => {throw error})
+    } catch (error) {
+      if(error) throw error
+    }
+    else history.push('/')
+  },[])
+
+  const handleGoToRegister = () => history.push('/register')
+
+  const handleRegister = () => history.push('./login')
+
+  const handleLogin = () => history.push('/home')
+
+  const handleGoToLogin = () => history.push('/login')
+
+  const handleLogout = () => {
+    logoutUser()
+
+    history.push('/')
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="app">
+      <header className="app-header">
+        <Container>
+          <Route exact path='/' render={() => 
+            isSessionActive()? <Redirect to="home" /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>}/>
+
+          <Route path="/register" render={() => 
+          isSessionActive()? <Redirect to="home" /> : <Register onRegister={handleRegister}/>}/>
+          
+          <Route path="/login" render={() => 
+          isSessionActive()? <Redirect to="home" /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister}/>}/>
+          
+          <Route path="/home" render={() => 
+          isSessionActive()? <Home onLogout={handleLogout}/> : <Redirect to="/"/> }/>
+        </Container>
       </header>
     </div>
-  );
+  )
+
 }
 
-export default App;
+export default withRouter(App)

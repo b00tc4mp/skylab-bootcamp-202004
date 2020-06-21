@@ -1,11 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import PlaneBuilder from './components/PlaneBuilder';
+import './index.sass';
 import * as serviceWorker from './serviceWorker';
+import App from './App';
+import { HashRouter as Router } from 'react-router-dom'
+import { context } from 'moove-it-client-logic'
+import Home from './components/Home'
 
-ReactDOM.render(<PlaneBuilder/>, document.getElementById('root')
-);
+const { REACT_APP_API_URL: API_URL } = process.env
+
+context.API_URL = API_URL
+context.storage = sessionStorage
+
+
+ReactDOM.render( 
+<Router><Home/></Router> , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
