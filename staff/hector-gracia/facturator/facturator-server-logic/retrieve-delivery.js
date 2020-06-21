@@ -19,6 +19,7 @@ module.exports=(deliveryId)=>{//TODO get the date of the delivery
     })()
 }
 const sanitize=(delivery)=>{
+    console.log(delivery)
     const result={}
     result.id= delivery._id.toString()
     result.client=delivery.client
@@ -33,6 +34,8 @@ const sanitize=(delivery)=>{
         let product={}
         product.id=delivery.products[i].product._id.toString()
         product.name=delivery.products[i].product.name
+        product.price=delivery.products[i].product.price//TODO Test should expect price and description
+        product.description= delivery.products[i].product.description
         productQuantity.product=product
         result.products.push(productQuantity)
     }

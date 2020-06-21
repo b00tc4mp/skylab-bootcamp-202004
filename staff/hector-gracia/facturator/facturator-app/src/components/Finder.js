@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import './SearchPanel.sass'
 import "./Commons.sass"
 
-const {retrieveAllClients,retrieveAllProducts}= require("facturator-client-logic")
+const {retrieveAllClients,retrieveAllProducts,makeDeliveryNote}= require("facturator-client-logic")
 
 
 export default function ({goToEdition, type }) {
@@ -91,8 +91,8 @@ export default function ({goToEdition, type }) {
                     <button className="search-button" disabled={!selectedId} onClick={handleGoToClientEdition} >
                         Editar cliente
                     </button>
-                    <button className="search-button">
-                        Volver
+                    <button className="search-button" onClick={()=>{makeDeliveryNote("Cosa que he escrito to loca")}}>
+                        Imprimir
                     </button>
                 </div>
             </div>
