@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Register from './register'
 import logo from './logo.svg';
 import './App.css';
+
 import {Route, withRoute, Redirect, withRouter, BrowserRouter } from 'react-router-dom'
 import { isUserAuthenticated } from 'plates-client-logic'
 

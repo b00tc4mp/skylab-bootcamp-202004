@@ -13,10 +13,11 @@
     "bcrypt": "^5.0.0",
     "chai": "^4.2.0",
     "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
     "mocha": "^8.0.1",
+    "node-fetch": "^2.6.0",
     "nyc": "^15.1.0",
     "plates-data": "file:../plates-data",
-    "node-fetch": "^2.6.0",
     "xhr2": "^0.2.0"
   },
   "dependencies": {
