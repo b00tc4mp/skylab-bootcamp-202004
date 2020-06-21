@@ -8,7 +8,7 @@ module.exports = (latitude, longitude) => {
                 longitude
             }
         })
-        .then(({ data, status }) => {
+        .then(({ status, data }) => {
             if (status === 200) {
                 return data.coordinates
             } else {

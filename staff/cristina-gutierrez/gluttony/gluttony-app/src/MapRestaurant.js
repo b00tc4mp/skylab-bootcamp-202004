@@ -18,7 +18,7 @@ const MapRestaurant = () => {
             setUserLatitude(pos.coords.latitude)
             setUserLongitude(pos.coords.longitude)
 
-            findNearbyRestaurants(userLatitude, userLongitude)
+            findNearbyRestaurants(pos.coords.latitude, pos.coords.longitude)
                 .then(coordinates => {
                     setRestaurantLatitude(coordinates.latitude)
                     setRestaurantLongitude(coordinates.longitude)

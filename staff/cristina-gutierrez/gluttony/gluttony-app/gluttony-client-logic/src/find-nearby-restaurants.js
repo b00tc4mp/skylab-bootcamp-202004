@@ -2,19 +2,17 @@ const { API_URL } = require("../../config")
 const axios = require("axios")
 
 module.exports = (latitude, longitude) => {
-    axios.get(`${API_URL}/restaurants`, {
+    return axios.get(`${API_URL}/restaurants`, {
             params: {
                 latitude,
                 longitude
             }
         })
-        .then(({ status, body }) => {
+        .then(({ status, data }) => {
             if (status === 200) {
-                const { coordinates } = JSON.parse(body)
-
-                return coordinates
+                return data.coordinates
             } else {
-                const { error } = JSON.parse(body)
+                const { error } = JSON.parse(data)
 
                 throw new Error(error)
             }

@@ -5,14 +5,14 @@ const axios = require("axios")
 module.exports = (token) => {
     String.validate.notVoid(token)
 
-    axios.get(`${API_URL}/users`, {
+    return axios.get(`${API_URL}/users`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
-        .then(({ status, body }) => {
+        .then(({ status, data }) => {
             if (status === 200) {
                 return JSON.parse(body)
             } else {
-                const { error } = JSON.parse(body)
+                const { error } = JSON.parse(data)
 
                 throw new Error(error)
             }

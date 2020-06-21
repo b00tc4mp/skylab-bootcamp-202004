@@ -8,19 +8,19 @@ module.exports = (email, password) => {
 
     String.validate.notVoid(password)
 
-    axios.get(`${API_URL}/users/auth`, {
+    return axios.get(`${API_URL}/users/auth`, {
             params: {
                 email,
                 password
             }
         })
-        .then(({ status, body }) => {
+        .then(({ status, data }) => {
             if (status === 200) {
-                const { token } = JSON.parse(body)
+                const { token } = JSON.parse(data)
 
                 return token
             } else {
-                const { error } = JSON.parse(body)
+                const { error } = JSON.parse(data)
 
                 throw new Error(error)
             }

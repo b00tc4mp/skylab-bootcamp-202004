@@ -2,17 +2,15 @@ const { models: { Stores } } = require("gluttony-data")
 const axios = require("axios")
 
 module.exports = (latitude, longitude) => {
-    axios.get("maps.googleapis.com/maps/api/place/nearbysearch/json", {
+    return axios.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json", {
             params: {
                 key: process.env.PLACES_API_KEY,
                 location: `${latitude},${longitude}`,
-                radius: 1000,
-                type: "restaurant"
+                type: "restaurant",
+                rankby: "distance"
             }
         })
-        .then(({ status, results }) => {
-            JSON.parse(results)
-
+        .then(({ data: { results }, status }) => {
             if (status === 200 && results.length) {
                 return results[0]
             } else {
@@ -33,7 +31,10 @@ module.exports = (latitude, longitude) => {
             }
         })
         .then(store => {
-            Stores.create(store)
+            Stores.findById(store.id, (error, persistedStore) => {
+                if (error) throw error
+                if (!persistedStore) Stores.create(store)
+            })
 
             return store.coordinates
         })

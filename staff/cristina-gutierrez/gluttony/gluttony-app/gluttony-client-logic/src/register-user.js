@@ -9,16 +9,16 @@ module.exports = (name, surname, email, password) => {
     Email.validate(email)
     String.validate.lengthGreaterEqualThan(password, 8)
 
-    axios.post(`${API_URL}/users`, {
+    return axios.post(`${API_URL}/users`, {
             name,
             surname,
             email,
             password
         })
-        .then(({ status, body }) => {
+        .then(({ status, data }) => {
             if (status === 201) return
 
-                const { error } = JSON.parse(body)
+                const { error } = JSON.parse(data)
 
                 throw new Error(error)
         })
