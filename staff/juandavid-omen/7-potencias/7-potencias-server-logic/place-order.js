@@ -8,7 +8,7 @@ module.exports = userId => {
   return (async () => {
     const user = await User.findById(userId).populate('cart.product')
 
-    if (!user) throw new UnexistenceError('user not exists')
+    if (!user) throw new UnexistenceError('user does not exists')
 
     const { cart = [], orders = [] } = user
 

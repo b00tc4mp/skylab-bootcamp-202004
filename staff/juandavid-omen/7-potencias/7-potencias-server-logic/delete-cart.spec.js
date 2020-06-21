@@ -96,7 +96,6 @@ describe('Delete cart', () => {
     expect(error).to.be.instanceOf(VoidError)
     expect(error.message).to.equal('string is empty or blank')
   })
-  //   when void
 
   afterEach(async () => {
     await User.deleteMany()
