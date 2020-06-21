@@ -1,22 +1,20 @@
 require('cook-wise-commons/polyfills/string')
-const {getDate} = require('./helpers')
 const { utils: {  call } } = require('cook-wise-commons')
 
 module.exports = function(token) {debugger
     
 String.validate.notVoid(token)
 
-const day = getDate()
 
-    return call('GET', `http://192.168.0.17:8080/api/day/${day}`,
-       undefined,{ 'Content-type': 'application/json', 'Authorization': `Bearer ${token}` }
+    return call('GET', `http://192.168.0.17:8080/api/grocerylist`,
+       undefined,{ 'Authorization': `Bearer ${token}` }
         )
         .then(({ status, body }) => {
             if (status === 200) {
-                console.log(JSON.parse(body))
-                const  result  = JSON.parse(body)
+                if (!body) return [];
+                const  groceryList  = JSON.parse(body)
 
-                return {result, day}
+                return groceryList
             } else {
                 const { error } = JSON.parse(body)
 
@@ -24,5 +22,3 @@ const day = getDate()
             }
         })
 }
-
-   

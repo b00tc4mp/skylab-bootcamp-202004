@@ -1,12 +1,12 @@
-const { recipeIdeas } = require('cook-server-logic')
+const { retrieveMenu } = require('cook-server-logic')
 const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {debugger
     try {
-        const { query : {ingredients}, payload: { sub: userId } } = req
+        const { payload: { sub: userId } } = req
         
-        recipeIdeas(userId, ingredients.split(','))
-            .then(result => res.send(result))
+        retrieveMenu(userId)
+            .then(menu => res.send(menu))
             .catch(error => handleError(error, res))
     } catch (error) {
         handleError(error, res)

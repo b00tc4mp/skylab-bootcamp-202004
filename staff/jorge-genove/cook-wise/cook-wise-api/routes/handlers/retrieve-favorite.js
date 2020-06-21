@@ -6,7 +6,7 @@ module.exports = (req, res) => {debugger
         const { payload: { sub: userId } } = req
         
         retrieveFavorite(userId)
-            .then(recipes => res.send(recipes))
+            .then(recipes => res.json(recipes))
             .catch(error => handleError(error, res))
     } catch (error) {
         handleError(error, res)
