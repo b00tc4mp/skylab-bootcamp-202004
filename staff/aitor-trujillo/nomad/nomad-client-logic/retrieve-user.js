@@ -5,16 +5,22 @@ const context = require('./context')
 module.exports = function (token) {
     String.validate.notVoid(token)
 
-    return call('GET', 'http://localhost:8080/users', // ${this.API_URL}
-        undefined,
-        { 'Authorization': `Bearer ${token}` })
-        .then(({ status, body }) => {
-            if (status === 200) {
-                return JSON.parse(body)
-            } else {
-                const { error } = JSON.parse(body)
+    const headers = { Authorization: `Bearer ${token}` }
 
-                throw new Error(error)
-            }
-        })
+    return (async () => {
+        try {
+            const result = await call(
+                'GET',
+                `${this.API_URL}/users/`,
+                undefined,
+                headers
+            )
+            const { status, body } = result
+
+            if (status === 200) return JSON.parse(body)
+            else throw new Error('could not retrieve user')
+        } catch (error) {
+            console.log(error) // TODO
+        }
+    })()
 }.bind(context)

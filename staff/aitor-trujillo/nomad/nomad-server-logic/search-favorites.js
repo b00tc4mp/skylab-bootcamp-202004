@@ -3,7 +3,6 @@ require('nomad-commons/polyfills/string')
 const { models: { User } } = require('nomad-data')
 
 module.exports = async (userId, query) => {
-
     String.validate.notVoid(userId)
     String.validate.notVoid(query)
 

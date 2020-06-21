@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { Text } from 'react-native'
 
 import defaults from '../styles/default'
 
@@ -9,7 +9,3 @@ export default function ErrorMessage({ error, visible }) {
 
     return <Text style={[defaults.text, { color: 'red' }]} >{error}</Text>
 }
-
-const styles = StyleSheet.create({
-
-})

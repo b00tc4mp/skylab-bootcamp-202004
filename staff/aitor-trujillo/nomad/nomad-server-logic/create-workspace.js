@@ -3,17 +3,27 @@ require('nomad-commons/polyfills/number')
 require('nomad-commons/polyfills/json')
 const { errors: { DuplicityError } } = require('nomad-commons')
 
-const { models: { Workspace } } = require('nomad-data')
+const { models: { Workspace, User } } = require('nomad-data')
 
 module.exports = (userId, workspace) => {
-
-    const { name, price, category, address, geoLocation, photos, phone, features, description, capacity, reviews } = workspace
+    console.log(workspace)
+    const { name, price, category, address, geoLocation, photos, phone, features, description, capacity } = workspace
     const { amount, term } = price
     const { street, city, country } = address
     const { coordinates } = geoLocation
     const [lat, lon] = coordinates
-    const [photo] = photos
-    const { wifi, parking, coffee, meetingRooms } = features
+    if (photos) {
+        const [photo] = photos
+        String.validate.notVoid(photo)
+    }
+    if (features) {
+        const { wifi, parking, coffee, meetingRooms } = features
+        if (typeof wifi !== 'boolean') throw new TypeError(`${wifi} is not boolean`)
+        if (typeof parking !== 'boolean') throw new TypeError(`${parking} is not boolean`)
+        if (typeof coffee !== 'boolean') throw new TypeError(`${coffee} is not boolean`)
+        if (typeof meetingRooms !== 'boolean') throw new TypeError(`${meetingRooms} is not boolean`)
+    }
+    String.validate.notVoid(phone)
     String.validate.notVoid(userId)
     String.validate.notVoid(name)
     String.validate.notVoid(category)
@@ -22,14 +32,8 @@ module.exports = (userId, workspace) => {
     String.validate.notVoid(street)
     String.validate.notVoid(city)
     String.validate.notVoid(country)
-    if (typeof coffee !== 'boolean') throw new TypeError(`${coffee} is not boolean`)
     Number.validate(lat)
     Number.validate(lon)
-    String.validate.notVoid(photo)
-    String.validate.notVoid(phone)
-    String.validate.notVoid(wifi)
-    String.validate.notVoid(parking)
-    Number.validate(meetingRooms)
     String.validate.notVoid(description)
     Number.validate(capacity)
 
@@ -40,7 +44,15 @@ module.exports = (userId, workspace) => {
 
         if (workspaceFound) throw new DuplicityError(`workspace with phone ${phone} already exists`)
 
-        await Workspace.create(workspace)
-            .then(() => { })
+        return await Workspace.create(workspace)
+            .then(async (ws) => {
+                const user = await User.findById(userId)
+
+                user.userWorkspaces.push(ws.id)
+
+                await user.save()
+
+                return ws
+            })
     })()
 }

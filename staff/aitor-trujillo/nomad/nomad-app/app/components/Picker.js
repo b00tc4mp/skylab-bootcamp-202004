@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, StyleSheet, Platform, TouchableWithoutFeedback, Modal, Button, SafeAreaView, FlatList } from 'react-native'
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Modal, Button, SafeAreaView, FlatList } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import PickerItem from './PickerItem'
 
@@ -53,26 +53,12 @@ const styles = StyleSheet.create({
     text: {
         marginLeft: 10,
         fontSize: 18,
-        fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Avenir',
         flex: 1
     },
     placeholder: {
         marginLeft: 10,
         fontSize: 18,
-        fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Avenir',
         color: 'lightgrey',
         flex: 1,
     },
 })
-
-// const categories = [
-//     { label: 'Coffee' },
-//     { label: 'Cowork' },
-//     { label: 'Library' },
-//     { label: 'Shared Space' },
-//   ]
-
-// <AppPicker icon='dots-horizontal'
-//           placeholder='Category'
-//           items={categories}
-//         />

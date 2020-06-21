@@ -37,7 +37,7 @@ module.exports = new Schema({
 
     category: {
         type: String,
-        enum: ['cowork', 'coffee', 'library', 'shared'],
+        enum: ['cowork', 'coffee', 'library', 'shared space'],
         required: true
     },
 
@@ -77,7 +77,7 @@ module.exports = new Schema({
     // },
     photos: [{
         type: String,
-        required: true
+        // required: true
     }],
     phone: {
         type: String,
@@ -85,20 +85,20 @@ module.exports = new Schema({
     },
     features: {
         wifi: {
-            type: String,
-            required: true
+            type: Boolean,
+            // required: true
         },
         parking: {
             type: String,
-            required: true
+            // required: true
         },
         coffee: {
             type: Boolean,
-            required: true
+            // required: true
         },
         meetingRooms: {
             type: Number,
-            required: true
+            // required: true
         }
     },
     description: {

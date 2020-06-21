@@ -3,35 +3,31 @@ import {
     View,
     Text,
     StyleSheet,
-    ImageBackground,
-    TouchableOpacity,
     KeyboardAvoidingView,
     ScrollView,
     SafeAreaView,
-    ScrollViewComponent,
     Switch,
     Alert,
 } from 'react-native';
 import AppButton from '../components/Button'
-import AppTextInput from '../components/AppTextInput'
+import AppTextInput from '../components/NomadTextInput'
 import { Formik } from 'formik'
 import * as Yup from "yup";
 import * as Permissions from "expo-permissions";
 import * as Location from "expo-location";
+import AsyncStorage from '@react-native-community/async-storage';
 
 import colors from '../styles/colors'
 import ErrorMessage from '../components/ErrorMessage'
-import AppPicker from '../components/AppPicker'
-import ImageInput from '../components/ImageInput';
+import AppPicker from '../components/Picker'
+import MapView, { Marker } from 'react-native-maps';
+import NomadTitle from '../components/NomadTitle';
 
-const bgImage = require('../assets/background.jpg')
+const { createWorkspace } = require('nomad-client-logic')
 
 const validationSchema = Yup.object().shape({
-    image1: Yup.object().required().nullable().label('At least one Image'),
-    image2: Yup.object().nullable().label('Image'),
-    image3: Yup.object().nullable().label('Image'),
-    workspaceName: Yup.string().min(1).required().label('Workspace Name'),
-    price: Yup.number().required().min(1).max(10000).label('Price'),
+    name: Yup.string().min(1).required().label('Workspace Name'),
+    price: Yup.number().required().min(0).max(10000).label('Price'),
     term: Yup.object().required().nullable().label('Term'),
     category: Yup.object().required().nullable().label('Category'),
     street: Yup.string().required().label('Street'),
@@ -41,6 +37,10 @@ const validationSchema = Yup.object().shape({
     description: Yup.string().required().max(200).label('Description'),
     capacity: Yup.number().required().label('Capacity'),
     location: Yup.object().label('Location'),
+    wifi: Yup.boolean().label('Wifi'),
+    parking: Yup.boolean().label('Parking'),
+    coffee: Yup.boolean().label('Coffee'),
+    meetingRooms: Yup.boolean().label('Meeting Rooms'),
 })
 
 const categories = [
@@ -55,25 +55,17 @@ const term = [
     { label: 'Month', value: 'month' },
 ]
 
-export default ({ handleRegister, navigation }) => {
+export default ({ navigation }) => {
     const [location, setLocation] = useState()
-
-    const [image1, setImage1] = useState()
-    const [image2, setImage2] = useState()
-    const [image3, setImage3] = useState()
+    const [featureWifi, setFeatureWifi] = useState(false)
+    const [featureParking, setFeatureParking] = useState(false)
+    const [featureCoffee, setFeatureCoffee] = useState(false)
+    const [featureMeetingRooms, setFeatureMeetingRooms] = useState(false)
 
     const getPermissions = async () => {
         const result = await Permissions.askAsync(Permissions.LOCATION)
         if (!result.granted) return Alert.alert('Alert', 'I need to access location to post this listing :(', [{ text: 'Ok', onPress: () => navigation.goBack() }])
-        // RETURN TO OTHER SCREEN
 
-        Alert.alert(
-            'Important',
-            'Make sure you are in the workspace location when you make this new listing.',
-            [
-                { text: 'I am.' },
-                { text: "I'll try later.", onPress: () => navigation.goBack() }
-            ])
         const { coords: { latitude, longitude } } = await Location.getLastKnownPositionAsync()
         setLocation({ latitude, longitude })
     }
@@ -81,6 +73,21 @@ export default ({ handleRegister, navigation }) => {
     useEffect(() => {
         getPermissions()
     }, [])
+
+
+    const handleSubmit = async values => {
+        try {
+            const token = await AsyncStorage.getItem('token')
+            if (token !== null) {
+                const result = await createWorkspace(token, values)
+                navigation.navigate('UploadImage', { id: result.id })
+            } else {
+                console.log('error, token not found in editworkspacescreen')
+            }
+        } catch (e) {
+            console.log(e) // TODO HANDLE THIS
+        }
+    }
 
     return (
         <SafeAreaView style={styles.background}>
@@ -90,10 +97,7 @@ export default ({ handleRegister, navigation }) => {
                     style={styles.formContainer}
                 >
                     <Formik initialValues={{
-                        image1: null,
-                        image2: null,
-                        image3: null,
-                        workspaceName: '',
+                        name: '',
                         price: '',
                         term: null,
                         category: null,
@@ -103,27 +107,49 @@ export default ({ handleRegister, navigation }) => {
                         phone: '',
                         description: '',
                         capacity: '',
-                        location: location
+                        location: location,
+                        wifi: featureWifi,
+                        parking: featureParking,
+                        coffee: featureCoffee,
+                        meetingRooms: featureMeetingRooms
                     }}
-                        onSubmit={values => { values.location = location; console.log(values) }}
+                        onSubmit={values => {
+                            values.location = location;
+                            values.wifi = featureWifi;
+                            values.parking = featureParking;
+                            values.coffee = featureCoffee;
+                            values.meetingRooms = featureMeetingRooms;
+                            handleSubmit(values)
+                        }}
                         validationSchema={validationSchema}
                     >
                         {({ handleChange, handleSubmit, errors, setFieldTouched, touched, setFieldValue, values }) => (
                             <>
-                                <View style={styles.imageContainer}>
-                                    <ImageInput imageUri={image1} handleImage={img => { setImage1(img); setFieldValue('image1', img) }} />
-                                    <ImageInput imageUri={image2} handleImage={img => { setImage2(img); setFieldValue('image2', img) }} />
-                                    <ImageInput imageUri={image3} handleImage={img => { setImage3(img); setFieldValue('image3', img) }} />
-                                </View>
-                                <ErrorMessage error={errors.image1} visible={touched.image1} />
+                                <NomadTitle
+                                    title='Drag the marker to workspace location'
+                                    fontSize={18}
+                                />
+                                {location && <View style={styles.mapContainer}>
+                                    <MapView style={styles.map} region={{
+                                        latitude: location.latitude,
+                                        longitude: location.longitude,
+                                        latitudeDelta: 0.06,
+                                        longitudeDelta: 0.06,
+                                    }} >
+                                        <Marker draggable coordinate={{
+                                            latitude: location.latitude,
+                                            longitude: location.longitude
+                                        }} onDragEnd={({ nativeEvent: { coordinate } }) => setLocation(coordinate)} />
+                                    </MapView>
+                                </View>}
                                 <AppTextInput
                                     icon='home-map-marker'
                                     placeholder='Workspace Name'
                                     maxLength={100}
                                     autoCorrect={false}
                                     textContentType='organizationName'
-                                    onChangeText={handleChange('workspaceName')}
-                                    onBlur={() => setFieldTouched('workspaceName')}
+                                    onChangeText={handleChange('name')}
+                                    onBlur={() => setFieldTouched('name')}
                                 />
                                 <ErrorMessage error={errors.workspaceName} visible={touched.workspaceName} />
                                 <View style={styles.pricing}>
@@ -143,7 +169,6 @@ export default ({ handleRegister, navigation }) => {
                                         items={term}
                                         onSelectItem={item => setFieldValue('term', item)}
                                         selectedItem={values['term']}
-                                    // style={styles.pricingItem}
                                     />
                                 </View>
                                 <ErrorMessage error={errors.price} visible={touched.price} />
@@ -223,10 +248,34 @@ export default ({ handleRegister, navigation }) => {
 
                                 <Text style={styles.descriptionText} >Features</Text>
                                 <View style={styles.features}>
-                                    <Text >Wifi <Switch trackColor={{ false: "#767577", true: "#81b0ff" }}></Switch></Text>
-                                    <Text >Parking <Switch></Switch></Text>
-                                    <Text >Coffee <Switch></Switch></Text>
-                                    <Text >Meeting Rooms <Switch></Switch></Text>
+                                    <Text >Wifi
+                                        <Switch
+                                            trackColor={{ false: "#767577", true: "#81b0ff" }}
+                                            onValueChange={() => { setFeatureWifi(featureWifi ? false : true) }}
+                                            value={featureWifi}
+                                        />
+                                    </Text>
+                                    <Text >Parking
+                                        <Switch
+                                            trackColor={{ false: "#767577", true: "#81b0ff" }}
+                                            onValueChange={() => { setFeatureParking(featureParking ? false : true) }}
+                                            value={featureParking}
+                                        />
+                                    </Text>
+                                    <Text >Coffee
+                                        <Switch
+                                            trackColor={{ false: "#767577", true: "#81b0ff" }}
+                                            onValueChange={() => { setFeatureCoffee(featureCoffee ? false : true) }}
+                                            value={featureCoffee}
+                                        />
+                                    </Text>
+                                    <Text >Meeting Rooms
+                                        <Switch
+                                            trackColor={{ false: "#767577", true: "#81b0ff" }}
+                                            onValueChange={() => { setFeatureMeetingRooms(featureMeetingRooms ? false : true) }}
+                                            value={featureMeetingRooms}
+                                        />
+                                    </Text>
                                 </View>
 
                                 <AppButton title='Post' bgColor='secondary' txtColor='light' onPress={handleSubmit} />
@@ -246,18 +295,10 @@ const styles = StyleSheet.create({
     background: {
         flex: 1,
         backgroundColor: colors.light,
-        // resizeMode: 'cover',
         width: '100%',
-
         justifyContent: 'center',
         alignItems: "center",
         shadowOpacity: 0.3,
-    },
-    imageContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
-        flex: 1
     },
     features: {
         flexWrap: 'wrap',
@@ -269,6 +310,18 @@ const styles = StyleSheet.create({
     scrollView: {
         width: '100%',
     },
+    map: {
+        marginTop: 10,
+        width: '100%',
+        height: 250,
+        borderRadius: 25,
+    },
+    mapContainer: {
+        width: '100%',
+        height: 250,
+        borderRadius: 25,
+        marginBottom: 15,
+    },
     formContainer: {
         flex: 1,
         alignSelf: 'center',
@@ -278,12 +331,6 @@ const styles = StyleSheet.create({
         padding: 30,
         paddingBottom: 30,
         backgroundColor: colors.light
-    },
-    claimText: {
-        fontWeight: "bold",
-        fontSize: 36,
-        textAlign: "center",
-        color: "black",
     },
     descriptionText: {
         marginTop: 10,
@@ -297,8 +344,4 @@ const styles = StyleSheet.create({
         width: '50%',
         flexWrap: 'nowrap',
     },
-    // pricingItem: {
-    //     flex: 1
-    // },
-
 })

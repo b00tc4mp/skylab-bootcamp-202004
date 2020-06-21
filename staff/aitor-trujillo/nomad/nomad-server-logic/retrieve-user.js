@@ -12,8 +12,6 @@ module.exports = userId => {
 
             delete user._id
             delete user.password
-            // delete user.cart
-            // delete user.orders
             delete user.__v
 
             return user

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     View,
     Text,
@@ -7,10 +7,12 @@ import {
     KeyboardAvoidingView,
 } from 'react-native';
 import AppButton from '../components/Button'
-import AppTextInput from '../components/AppTextInput'
+import AppTextInput from '../components/NomadTextInput'
 import { Formik } from 'formik'
 import * as Yup from "yup";
+import AsyncStorage from '@react-native-community/async-storage';
 
+const { authenticateUser } = require('nomad-client-logic')
 import colors from '../styles/colors'
 import ErrorMessage from '../components/ErrorMessage'
 
@@ -21,7 +23,20 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required().min(4).label('Password')
 })
 
-export default ({ handleRegister, navigation }) => {
+export default ({ onLoggedIn }) => {
+
+    const handleLogin = ({ email, password }) => {
+        (async () => {
+            try {
+                const token = await authenticateUser(email, password)
+                console.log(token)
+                await AsyncStorage.setItem('token', token)
+                onLoggedIn()
+            } catch (error) {
+                console.log(error) // TODO handle this
+            }
+        })()
+    }
 
     return (
         <ImageBackground source={bgImage} style={[styles.background, { paddingBottom: 30 }]}>
@@ -39,7 +54,7 @@ export default ({ handleRegister, navigation }) => {
                     Hi again nomad! 🤗
                 </Text>
                 <Formik initialValues={{ email: '', password: '' }}
-                    onSubmit={values => { console.log(values); navigation.navigate('Home') }}
+                    onSubmit={values => handleLogin(values)}
                     validationSchema={validationSchema}
                 >
                     {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
@@ -80,7 +95,6 @@ export default ({ handleRegister, navigation }) => {
 const styles = StyleSheet.create({
     background: {
         flex: 1,
-        // resizeMode: 'cover',
         width: '100%',
         justifyContent: 'center',
         alignItems: "center",
@@ -92,7 +106,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     formContainer: {
-
         alignSelf: 'center',
         width: '90%',
         marginTop: 100,
@@ -123,18 +136,4 @@ const styles = StyleSheet.create({
         color: "#1c1c1c",
         textAlign: "center",
     },
-    registerBtn: {
-        width: '85%',
-        height: 70,
-        backgroundColor: colors.primary,
-        borderRadius: 40,
-    },
-    loginBtn: {
-        marginTop: 20,
-        marginBottom: 40,
-        width: '85%',
-        height: 70,
-        backgroundColor: colors.secondary,
-        borderRadius: 40,
-    }
 })

@@ -7,8 +7,6 @@ import {
 } from 'react-native';
 import AppButton from '../components/Button'
 
-import colors from '../styles/colors'
-
 const bgImage = require('../assets/background.jpg')
 
 export default ({ navigation }) => {
@@ -34,7 +32,6 @@ export default ({ navigation }) => {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    // resizeMode: 'cover',
     width: '100%',
     justifyContent: 'flex-end',
     alignItems: "center",
@@ -68,18 +65,4 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
   },
-  registerBtn: {
-    width: '85%',
-    height: 70,
-    backgroundColor: colors.primary,
-    borderRadius: 40,
-  },
-  loginBtn: {
-    marginTop: 20,
-    marginBottom: 40,
-    width: '85%',
-    height: 70,
-    backgroundColor: colors.secondary,
-    borderRadius: 40,
-  }
 })

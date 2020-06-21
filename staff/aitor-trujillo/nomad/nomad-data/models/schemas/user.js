@@ -46,6 +46,10 @@ module.exports = new Schema({
         type: ObjectId,
         ref: 'Workspace'
     }],
+    reviews: [{
+        type: ObjectId,
+        ref: 'Workspace'
+    }],
     bookings: [{ // TODO Review this
         id: {
             type: ObjectId,

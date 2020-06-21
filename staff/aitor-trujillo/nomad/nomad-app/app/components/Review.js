@@ -4,7 +4,7 @@ import { AntDesign } from '@expo/vector-icons'
 
 import colors from '../styles/colors'
 
-export default function Review({ image, name, stars, review }) {
+export default function Review({ image, name, surname, stars, review }) {
 
     const convertNumToStars = (num) => {
         switch (num) {
@@ -36,7 +36,7 @@ export default function Review({ image, name, stars, review }) {
         <View style={styles.container}>
             <Image source={image} style={styles.image} />
             <View >
-                <Text style={styles.name}>{name} - {convertNumToStars(stars)}</Text>
+                <Text style={styles.name}>{name} {surname} - {convertNumToStars(stars)}</Text>
                 <Text style={styles.review}>{review}</Text>
             </View>
         </View>
@@ -46,9 +46,12 @@ export default function Review({ image, name, stars, review }) {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        marginTop: 100,
+        marginTop: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 5,
+        borderRadius: 10,
         alignSelf: "center",
-        width: '90%'
+        width: '100%'
     },
     image: {
         width: 70,
@@ -67,10 +70,3 @@ const styles = StyleSheet.create({
         color: colors.dark,
     }
 })
-
-//     < Review
-// image = { require('./app/assets/aitor.jpg') }
-// name = 'Aitor Truji'
-// stars = { 3}
-// review = "The best place i've ever procrastinated. Nothing more to tell."
-//     />
