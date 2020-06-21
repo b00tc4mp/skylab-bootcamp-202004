@@ -28,6 +28,8 @@ module.exports = (userId) => {
 
         if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
+        if (!user.favoriterecipes) return [];
+
         user.favoriterecipes.forEach(recipeFind => {
             recipeFind.id = recipeFind._id.toString()
 

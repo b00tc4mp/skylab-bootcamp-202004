@@ -17,12 +17,14 @@ const {
     deleteRecipe,
     deleteTimelineMenu,
     deleteDayMenu,
-    retrieveRecipe
+    retrieveRecipe,
+    retrieveMenu
 } = require('./handlers')
 
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
 const { handleError } = require('../helpers')
+
 
 
 
@@ -42,7 +44,7 @@ api.post('/recipes', parseBody, verifyExtractJwt, createRecipe)
 
 api.get('/searchrecipes', verifyExtractJwt, searchRecipe)
 
-api.patch('/toogle',[parseBody,verifyExtractJwt],toogleFavorite)
+api.patch('/toogle/:recipeId',[verifyExtractJwt],toogleFavorite)
 
 api.get('/retrievefavorites', verifyExtractJwt, retrieveFavorite)
 
@@ -54,9 +56,11 @@ api.get('/day/:weekday',verifyExtractJwt,retriveDay)
 
 api.get('/grocerylist',verifyExtractJwt,groceryList)
 
-api.get('/ideas',parseBody,verifyExtractJwt,recipeIdeas)
+api.get('/ideas',verifyExtractJwt,recipeIdeas)
 
 api.get('/:recipeId',verifyExtractJwt,retrieveRecipe)
+
+api.get('/retrieve/menu', verifyExtractJwt, retrieveMenu)
 
 api.delete('/deleterecipe',parseBody,verifyExtractJwt,deleteRecipe)
 

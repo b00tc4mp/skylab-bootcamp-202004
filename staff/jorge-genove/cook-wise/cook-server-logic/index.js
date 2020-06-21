@@ -1,3 +1,5 @@
+const { VoidError } = require('cook-wise-commons/errors')
+
 module.exports = {
     registerUser: require('./register-user'),
     authenticateUser: require('./authenticate-user'),
@@ -14,5 +16,11 @@ module.exports = {
     recipeIdeas: require('./recipe-ideas'),
     deleteRecipe: require('./delete-recipe'),
     deleteTimelineMenu: require('./delete-timeline-menu'),
-    deleteDayMenu: require('./delete-day-menu')
+    deleteDayMenu: require('./delete-day-menu'),
+    retrieveMenu: require('./retrieve-menu')
 }
+
+
+
+
+

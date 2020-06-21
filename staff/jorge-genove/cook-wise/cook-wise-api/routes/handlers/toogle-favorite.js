@@ -4,7 +4,7 @@ const { handleError } = require('../../helpers')
 module.exports = (req, res) => {debugger
     try {
         const { payload: { sub: userId } }= req
-        const { body: { recipeId } } = req
+        const { params: { recipeId } } = req
         
         
         toogleFavorite(userId, recipeId)

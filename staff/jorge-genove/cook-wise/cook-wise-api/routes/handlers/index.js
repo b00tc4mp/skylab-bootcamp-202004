@@ -14,5 +14,6 @@ module.exports = {
     deleteRecipe: require('./delete-recipe'),
     deleteTimelineMenu: require('./delete-timeline-menu'),
     deleteDayMenu: require('./delete-day-menu'),
-    retrieveRecipe: require('./retrieve-recipe')
+    retrieveRecipe: require('./retrieve-recipe'),
+    retrieveMenu: require('./retrieve-menu')
 }

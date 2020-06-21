@@ -36,6 +36,8 @@ module.exports = (query, userId) => {
         if (recipesFind.length === 0) throw new UnexistenceError(`${query} is not found like recipe or author`)
 
         recipesFind.forEach(recipeFind => {
+            recipeFind.id = recipeFind._id.toString()
+           
             delete recipeFind._id
             delete recipeFind.__v
 
