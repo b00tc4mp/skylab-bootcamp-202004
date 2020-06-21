@@ -36,7 +36,6 @@ module.exports = new Schema({
     type: String,
     required: true,
     default: 'regular'
-    // validate: [Role.validate, 'invalid role']
   },
 
   cart: [productSelection],
