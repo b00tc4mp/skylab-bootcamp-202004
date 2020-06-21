@@ -1,3 +1,19 @@
+/**
+ * Search products
+ * 
+ * @param {string} type the type of product
+ * @param {string} sector the sector of product
+ * @param {string} ticker the ticker of product
+ * @param {string} market the market of product
+ * 
+ * @returns {Promise <Array>} the search results if it resolves, an error if it rejects
+ * 
+ * @throws {UnexistanceError} if the product does not exist
+ * @throws {TypeError} if any of the parameters if exist does not match the corresponding type
+ * @throws {Error} if any of the parameters if exist is empty or blank
+ */
+
+
 require('gym-commons/polyfills/string')
 require('gym-commons/polyfills/number')
 const { models: { Product } } = require('gym-data')

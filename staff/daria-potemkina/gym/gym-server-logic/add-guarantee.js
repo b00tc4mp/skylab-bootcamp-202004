@@ -1,3 +1,15 @@
+/**
+ * Guarantee calculation
+ * 
+ * @param {string} userId the user id
+ * 
+ * @returns {Promise<Number>} the guaratee amount if it resolves, an error if it rejects
+ * 
+ * @throws {UnexistanceError} if user does not exist
+ * @throws {TypeError} if the parameter does not match the corresponding type.
+ * @throws {Error} if the parameter is empty or blank
+ */
+
 require('gym-commons/polyfills/string')
 const { models: { User, Contract } } = require('gym-data')
 

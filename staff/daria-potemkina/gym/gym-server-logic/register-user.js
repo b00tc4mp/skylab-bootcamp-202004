@@ -1,3 +1,18 @@
+/**
+ * Register user
+ * 
+ * @param {string} name the user name
+ * @param {string} surname the user surname
+ * @param {string} email the user email
+ * @param {string} password the user password
+ * 
+ * @returns {Promise} if it resolves, an error if it rejects
+ * 
+ * @throws {DuplicityError} if the user with the same e-mail already exists
+ * @throws {TypeError} if any of the parameters does not match the corresponding type
+ * @throws {Error} if any of the parameters is empty or blank
+ */
+
 require('gym-commons/polyfills/string')
 const { utils: { Email } } = require('gym-commons')
 const { errors: { DuplicityError } } = require('gym-commons')

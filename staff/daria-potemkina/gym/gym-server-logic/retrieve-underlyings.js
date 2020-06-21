@@ -1,9 +1,19 @@
+/**
+ * Retrieve underlying prices
+ * 
+ * @param {string} ticker the product ticker
+ * 
+ * @returns {Promise <Array>} the underlying prices if it resolves, an error if it rejects
+ * 
+ * @throws {UnexistanceError} if the product does not exist
+ * @throws {TypeError} if the parameter does not match the corresponding type
+ * @throws {Error} if the parameter is empty or blank
+ */
+
 require('gym-commons/polyfills/string')
 require('gym-commons/polyfills/number')
-const { mongoose, models: { Underlying, Price } } = require('gym-data')
+const { models: { Underlying, Price } } = require('gym-data')
 const { errors: { UnexistenceError } } = require('gym-commons')
-const { ObjectId } = mongoose
-
 
 module.exports = (ticker) => {
     String.validate.notVoid(ticker)

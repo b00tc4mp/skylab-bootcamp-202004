@@ -1,8 +1,21 @@
+/**
+ * Add products to the user portfolio
+ * 
+ * @param {string} userId the user id
+ * @param {string} productId the product id to add
+ * @param {string} priceId the price id of the product to add
+ * @param {string} side the buy or sell of the product
+ * @param {number} quantity the quantity of the product to add 
+ * 
+ * @returns {Promise} if it resolves, an error if it rejects
+ * 
+ * @throws {UnexistanceError} if user, card, product or balance do not exist
+ */
+
 require('gym-commons/polyfills/string')
 require('gym-commons/polyfills/number')
 const { mongoose, models: { User, Contract, Product, Price, AccountBalance } } = require('gym-data')
 const { ObjectId } = mongoose
-const moment = require('moment')
 
 const { errors: { UnexistenceError } } = require('gym-commons')
 
@@ -42,7 +55,7 @@ module.exports = (userId, productId, priceId, side, quantity) => {
         }
 
         if (product.productType === 'option') {
-            const { contractSize: _contractSize, type: { strike } } = product
+            const { contractSize: _contractSize } = product
 
             if (side === 'Buy') {
                 profitAndLoss -= (quantity * _contractSize * price).toFixed(2) * 1
