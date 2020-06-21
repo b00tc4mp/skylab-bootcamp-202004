@@ -1,12 +1,12 @@
 import React from 'react'
-import './Trades.sass'
+import './Portfolio.sass'
 
 export default function ({ trades }) {
     return <section>
-        <ul>
+        <ul className="portfolio__trdaes">
             {
                 trades.trades.map(({ price: { price }, type, quantity })=> 
-                <li>
+                <li className="portfolio__item">
                     <p>{type}</p>
                     <p>{quantity}</p>
                     <p>{`${price}€`}</p>

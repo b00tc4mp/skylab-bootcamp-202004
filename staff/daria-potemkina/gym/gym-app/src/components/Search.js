@@ -57,10 +57,13 @@ function Search({ token, handleGoToDetails }) {
                 </select>
                 <select className="search__select" name="ticker">
                     <option value="ticker">Ticker</option>
-                    <option value="ITX">ITX</option>
+                    <option value="ADSG">ADSG</option>
                     <option value="AENA">AENA</option>
                     <option value="BBVA">BBVA</option>
+                    <option value="DBKI">DBKI</option>
                     <option value="IBE">IBE</option>
+                    <option value="ITX">ITX</option>
+                    <option value="HNK">HNK</option>
                     <option value="miniIBEX">miniIBEX</option>
                 </select>
                 <select className="search__select" name="market">

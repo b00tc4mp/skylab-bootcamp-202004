@@ -17,7 +17,7 @@ require('gym-commons/polyfills/string')
 const { utils: { call } } = require('gym-commons')
 const context = require('./context')
 const moment = require('moment')
-debugger
+
 module.exports = function (type, sector, ticker, market) {
     if (type !== undefined)
         String.validate.notVoid(type)

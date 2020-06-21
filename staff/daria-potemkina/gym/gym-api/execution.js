@@ -5,14 +5,15 @@ const cron = require('node-cron')
 
 const { mongoose, models: { User } } = require('gym-data')
 
-cron.schedule("22 15 * * *", async () => {
+cron.schedule("50 13 * * *", async () => {
     try {
-        await mongoose.connect('mongodb://localhost:27017/gym-api-test')
+        await mongoose.connect('mongodb://localhost:27017/gym-api')
         console.log('connected')
 
         const users = await User.find()
 
         for (let i in users) {
+            console.log(users[i]._id.toString())
             try {
                 console.log('check close position')
                 await closeUserPosition(users[i]._id.toString())
@@ -23,6 +24,7 @@ cron.schedule("22 15 * * *", async () => {
         }
 
         for (let i in users) {
+            console.log(users[i]._id.toString())
             try {
                 console.log('check profit and loss')
                 await profitAndLoss(users[i]._id.toString())

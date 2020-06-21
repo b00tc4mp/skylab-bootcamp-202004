@@ -24,8 +24,8 @@ function ProductDetails({ token, prices, underlyings, item, expanded }) {
                 {
                     label: `${item.ticker}`,
                     lineTension: 0.5,
-                    backgroundColor: "rgba(84,192,176,0.2)",
-                    borderColor: "rgba(84,192,176,1)",
+                    backgroundColor: "rgba(84,114,125,0.1)",
+                    borderColor: "rgba(84,114,125,1)",
                     data: futurePrice,
                 },
             ],
@@ -37,8 +37,8 @@ function ProductDetails({ token, prices, underlyings, item, expanded }) {
                 {
                     label: `${item.ticker}`,
                     lineTension: 0.5,
-                    backgroundColor: "rgba(241,120,113,0.2)",
-                    borderColor: "rgba(241,120,113,1)",
+                    backgroundColor: "rgba(211,147,145,0.1)",
+                    borderColor: "rgba(211,147,145,1)",
                     data: underlyingPrice
                 }]
         })
@@ -144,7 +144,7 @@ function ProductDetails({ token, prices, underlyings, item, expanded }) {
                                         display: false
                                     },
                                     ticks: {
-                                        stepSize: 0.5,
+                                        presition: 0,
                                         suggestedMin: Math.min(...futurePrice),
                                         suggestedMax: Math.max(...futurePrice),
                                         fontSize: 10,
@@ -169,7 +169,7 @@ function ProductDetails({ token, prices, underlyings, item, expanded }) {
                         <h2>{`${item.price}€`}</h2>
                     </section>
                     <section className="details__item">
-                        <p>{item.type.side}</p>
+                        <p className="details__side">{item.type.side}</p>
                         <p>{`${item.type.strike}€`}</p>
                         <p>{item.settlementDate}</p>
                         <p>{`Contract size: ${item.contractSize}`}</p>
@@ -247,9 +247,9 @@ function ProductDetails({ token, prices, underlyings, item, expanded }) {
                             },
                             ticks: {
                                 fontSize: 10,
-                                stepSize: 0.5,
-                                suggestedMin: Math.min(...futurePrice),
-                                suggestedMax: Math.max(...futurePrice),
+                                presition: 0,
+                                suggestedMin: Math.min(...underlyingPrice),
+                                suggestedMax: Math.max(...underlyingPrice),
                                 callback: function (value) {
                                     return value + '€'
                                 }

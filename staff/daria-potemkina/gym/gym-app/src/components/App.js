@@ -13,6 +13,8 @@ import Notifications from './Notifications'
 import Settings from './Settings'
 import Search from './Search'
 import Spinner from './Spinner'
+import Trades from './Trades'
+import './Footer.sass'
 import { faHome, faBars } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { isUserAuthenticated, retrieveFuturePrices, retrieveUnderlyingPrice } from 'gym-client-logic'
@@ -91,14 +93,14 @@ function App({ history }) {
     history.push('/portfolio')
   }
 
-  const handleGoToNotifications = (event) => {
-    event.preventDefault()
+  // const handleGoToNotifications = (event) => {
+  //   event.preventDefault()
 
-    if (expanded) setExpanded(false)
-    else setExpanded(true)
+  //   if (expanded) setExpanded(false)
+  //   else setExpanded(true)
 
-    history.push('/notifications')
-  }
+  //   history.push('/notifications')
+  // }
 
   const handleGoToSettings = event => {
     event.preventDefault()
@@ -144,12 +146,12 @@ function App({ history }) {
 
         {token && <section >
           <nav className="nav-bar">
-            <a className="nav-bar__home" href="/">  <FontAwesomeIcon icon={faHome} /></a>
-            <button className="nav-bar__menu" href="/"> <FontAwesomeIcon icon={faBars} onClick={handleToggle} /></button>
+            <a className="nav-bar__home" href="/">  <FontAwesomeIcon transform="down-6 grow-7" icon={faHome} /></a>
+            <button className="nav-bar__menu" href="/"> <FontAwesomeIcon size="sm" icon={faBars} onClick={handleToggle} /></button>
             <ul className={`nav-bar__list${expanded ? '--expanded' : ''}`}>
-              <li><a href="/" onClick={handleGoToPortfolio}>Portfolio</a></li>
               <li><a href="/" onClick={handleGoToSearch}>Search</a></li>
-              <li><a href="/" onClick={handleGoToNotifications}>Notifications</a></li>
+              <li><a href="/" onClick={handleGoToPortfolio}>Portfolio</a></li>
+              {/* <li><a href="/" onClick={handleGoToNotifications}>Notifications</a></li> */}
               <li><a href="/" onClick={handleGoToAccount}>Account</a></li>
               <li><a href="/" onClick={handleGoToSettings}>Settings</a></li>
               <li><a href="/" onClick={handleLogout}>Logout</a> </li>
@@ -171,10 +173,16 @@ function App({ history }) {
 
         {!expanded && <Route path="/portfolio" render={() => <Portfolio token={token} />} />}
 
-        {!expanded && <Route path="/notifications" render={() => <Notifications />} />}
+        {/* {!expanded && <Route path="/notifications" render={() => <Notifications />} />} */}
 
         {!expanded && <Route path="/settings" render={() => <Settings token={token} />} />}
+
       </header>
+      {/* {token && <section>
+          <footer className="footer">
+            <p className="footer__text">Skylab Coder Academy</p>
+          </footer>
+        </section>} */}
     </div>
   );
 }

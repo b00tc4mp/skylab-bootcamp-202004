@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { retrieveUserBalance, retrieveUserCard } from 'gym-client-logic'
 import Feedback from './Feedback'
+import './Account.sass'
 
 export default function ({ token }) {
     const [card, setCard] = useState()
@@ -23,6 +24,7 @@ export default function ({ token }) {
         try {
             retrieveUserBalance(token)
                 .then(balance => setBalance(balance))
+                .then(() => setError(undefined))
                 .catch(({ message }) => setError(message))
         } catch ({ message }) {
             setError(message)
@@ -30,27 +32,36 @@ export default function ({ token }) {
     }, [token])
 
 
-    return <section>
+    return <section className="account">
         {card &&
-            <section>
-                <h1>Card</h1>
-                <p>{card.number}</p>
-                <p>{card.holder}</p>
+            <section className="account__card">
+                <h1 className="account__title">Card</h1>
+                <section className="account__card-details">
+                    <p>Number</p>
+                    <p>{card.number}</p>
+                    <p>Holder</p>
+                    <p>{card.holder}</p>
+                </section>
             </section>}
         {balance &&
             <section>
-                <h1>Details</h1>
+                <h1 className="account__title">Details</h1>
+                <ul className="account__header">
+                    <li>Date</li>
+                    <li>Guarantee</li>
+                    <li>Balance</li>
+                </ul>
                 <ul>
                     {balance.map(({ date, guarantee, profitAndLoss }) =>
-                        <li className='balance-item'>
+                        <li className='account__balance-item'>
                             <p>{date}</p>
-                            <p>{guarantee}</p>
-                            <p>{profitAndLoss}</p>
+                            <p>{`${guarantee}€`}</p>
+                            <p>{`${profitAndLoss}€`}</p>
                         </li>
                     )}
                 </ul>
             </section>
         }
-        {error && <Feedback message={error} level='error'/>}
+        {error && <Feedback message={error} level='error' />}
     </section>
 }

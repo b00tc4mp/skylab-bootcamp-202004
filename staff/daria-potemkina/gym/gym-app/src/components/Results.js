@@ -28,7 +28,7 @@ export default function ({ token, results, handleGoToDetails }) {
     }
 
     return <section className='products'>
-        <ul>{
+        <ul className="products__items">{
             results.map(item =>
                 <li className='products__item'>
                     <button className="products__details" onClick={event => {
@@ -36,7 +36,7 @@ export default function ({ token, results, handleGoToDetails }) {
 
                         handleGoToDetails(item)
                     }}>
-                        <p>{item.productType}</p>
+                        <p className="products__type">{item.productType}</p>
                         <p>{item.ticker}</p>
                         <p>{item.settlementDate}</p>
                         <p>{`${item.price}€`}</p>

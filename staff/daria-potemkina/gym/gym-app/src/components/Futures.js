@@ -31,7 +31,7 @@ export default function ({ futures, handleGoToDetails, token }) {
 
     return <section className='products'>
         <h1 className="products__title">Futures</h1>
-        <ul>{
+        <ul className="products__items">{
             futures.map(item =>
                 <li className='products__item'>
                     <button className="products__details" onClick={event => {

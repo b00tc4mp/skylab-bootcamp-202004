@@ -5,8 +5,9 @@ import Feedback from './Feedback'
 import Trades from './Trades'
 import './Feedback.sass'
 import './Portfolio.sass'
+import { Link } from 'react-router-dom'
 
-export default function ({ token }) {
+export default function ({ token, history }) {
     const [error, setError] = useState()
     const [allocation, setAllocation] = useState({})
     const [typeData, setTypeData] = useState({})
@@ -37,7 +38,7 @@ export default function ({ token }) {
                             {
                                 label: 'Allocation for type',
                                 data: Object.values(allocation.type),
-                                backgroundColor: ['#54c0b0', '#f45c66']
+                                backgroundColor: ['#54727D', '#D39391']
                             }
                         ]
                     })
@@ -48,7 +49,7 @@ export default function ({ token }) {
                         datasets: [{
                             label: 'Allocation for exchange',
                             data: Object.values(allocation.exchange),
-                            backgroundColor: ['#54c0b0', '#f45c66']
+                            backgroundColor: ['#54727D', '#D39391']
                         }
                         ]
                     })
@@ -59,11 +60,12 @@ export default function ({ token }) {
                         datasets: [{
                             label: 'Allocation for exchange',
                             data: Object.values(allocation.sector),
-                            backgroundColor: ['#54c0b0', '#f45c66', '#54a7da', "#E94F8F"]
+                            backgroundColor: ['#54727D', '#D39391', '#30727D', "#A56072"]
                         }
                         ]
                     })
                 })
+                .then(() => setError(undefined))
                 .catch(error => setError(error.message))
         } catch (error) {
             setError(error.message)
@@ -83,12 +85,6 @@ export default function ({ token }) {
             <section>
                 <h1 className="portfolio__title">Portfolio</h1>
                 <section className="portfolio__data">
-                    {/* <ul className="portfolio__header">
-                        <li className="item1">ticker</li>
-                        <li className="item2">type</li>
-                        <li className="item3">Expiry</li>
-                        <li className="item4">    </li>
-                    </ul> */}
                     <section>
                         <ul className="portfolio__trades">
                             {contracts.map(({ _id, product: { ticker, productType, settlementDate }, trades }) =>
@@ -116,7 +112,6 @@ export default function ({ token }) {
                                 fontSize: 15
                             }
                         }}
-                        height={180}
                     />
                     <Pie
                         data={marketData}
@@ -131,7 +126,6 @@ export default function ({ token }) {
                                 fontSize: 15
                             }
                         }}
-                        height={180}
                     />
                     <Pie
                         data={sectorData}
@@ -146,7 +140,6 @@ export default function ({ token }) {
                                 fontSize: 15
                             }
                         }}
-                        height={180}
                     />
                 </section>
             </section>

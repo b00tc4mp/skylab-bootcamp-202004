@@ -16,14 +16,15 @@ module.exports = (type, sector, ticker, market) => {
     return (async () => {
         const conditions = {}
 
-        if(type) conditions.productType = type
-        if(sector) conditions.sector = sector
-        if(ticker) conditions.ticker = ticker
-        if(market) conditions.exchange = market
+        if (type) conditions.productType = type
+        if (sector) conditions.sector = sector
+        if (ticker) conditions.ticker = ticker
+        if (market) conditions.exchange = market
 
-        const results = await Product.find(conditions).lean()
 
-        if(!results.length) throw new UnexistenceError('no results')
+        const results =  await Product.find(conditions).where('settlementDate').gt(new Date()).lean()
+
+        if (!results.length) throw new UnexistenceError('no results')
 
         for (let i in results) {
             delete results[i].__v

@@ -29,7 +29,7 @@ export default function ({ token, options, handleGoToDetails }) {
 
     return <section className='products'>
         <h1 className="products__title">Options</h1>
-        <ul>{
+        <ul className="products__items">{
             options.map(option =>
                 <li className="products__item">
                     <button className="products__details" onClick={event => {
@@ -39,7 +39,7 @@ export default function ({ token, options, handleGoToDetails }) {
                     }}>
                         <p>{option.ticker}</p>
                         <p>{option.settlementDate}</p>
-                        <p>{option.side}</p>
+                        <p>{option.type.side}</p>
                         <p>{`${option.type.strike}€`}</p>
                         <p>{`${option.price}€`}</p>
                     </button>

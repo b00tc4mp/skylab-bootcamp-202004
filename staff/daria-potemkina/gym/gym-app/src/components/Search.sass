@@ -34,19 +34,19 @@
         grid-template-columns: repeat(2, 1fr)
         grid-template-rows: repeat(2, 1fr)
         margin: 2%
-        width: 80%
+        width: 70%
     
     &__select
         height: 90%
         margin: 5%
-        border: 1px solid rgb(84, 192, 176)
+        border: 1px solid rgb(48, 74, 101)
         border-radius: 5px
         text-indent: 10px
         
     
     &__button
         width: 70px
-        background-color: rgb(84, 192, 176)
+        background-color: rgb(165, 96, 114)
         margin-top: 2%
         margin-bottom: 3%
         box-shadow: 2px 2px 2px black
@@ -58,6 +58,20 @@
         align-self: center
         align-items: center
         justify-content: center
+
+@media only screen and (min-width: 768px)
+    .search
+        &__title
+            margin-bottom: 2%
+            padding: 2%
+
+        &__input
+            grid-template-columns: repeat(4, 1fr)
+            margin-bottom: 0
+
+        &__button
+            margin-top: 0
+        
         
     
 
