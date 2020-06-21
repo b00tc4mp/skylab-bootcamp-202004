@@ -15,6 +15,7 @@ import Settings from './Settings';
 import EditPlan from './EditPlan';
 import EditMyInfo from './EditMyInfo';
 import MainStats from './MainStats';
+import HandleAccounts from './HandleAccounts';
 
 function App({history}) {
 
@@ -80,6 +81,7 @@ function App({history}) {
           <Route path="/edit-plan" render={()=> token? <EditPlan token={token} /> : <Redirect to='/'/>} />
           <Route path="/edit-my-info" render={()=> token? <EditMyInfo token={token} /> : <Redirect to='/'/>} />
           <Route path="/main-stats" render={()=> token? <MainStats token={token} /> : <Redirect to='/'/>} />
+          <Route path="/handle-accounts" render={()=> token? <HandleAccounts token={token} /> : <Redirect to='/'/>} />
           {token && <Footer/>}
         </Container>
       </header>

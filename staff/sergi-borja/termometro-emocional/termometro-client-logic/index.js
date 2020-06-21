@@ -5,5 +5,6 @@ module.exports = {
     isAuthenticated: require('./is-authenticated'),
     createMemberList: require('./create-member-list'),
     editMember: require('./edit-member'),
-    setMood: require('./set-mood')
+    setMood: require('./set-mood'),
+    unRegisterUser: require('./un-register-user')
 }

@@ -25,7 +25,7 @@ module.exports = new Schema({
 
     location: {
         type: String,
-        required: true
+        required: false
     },
 
     email: {

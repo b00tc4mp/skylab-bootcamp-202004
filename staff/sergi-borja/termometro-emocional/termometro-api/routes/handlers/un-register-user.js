@@ -11,7 +11,7 @@ module.exports = (req, res) => {
     if(typeof payload !== 'undefined') userId = payload.sub
 
     try {
-        unRegisterUser(userId)
+        unRegisterUser(userId || paramsUserId)
             .then(()=> res.status(201).send())
             .catch(error => handleError(error, res))
     } catch (error) {

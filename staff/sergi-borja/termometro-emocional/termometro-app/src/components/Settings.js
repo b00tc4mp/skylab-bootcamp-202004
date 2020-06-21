@@ -5,15 +5,11 @@ import './Settings.sass'
 
 
 
-function Settings () {
+function Settings ({token}) {
     
     const handleLogOut = () => {
         delete sessionStorage.token
         window.location.reload()
-    }
-
-    const handleDeleteAccount = () => {
-        
     }
 
     return (
@@ -25,7 +21,7 @@ function Settings () {
             <br/>
             <Link className='settingsContainer__option' >Cambiar Contraseña</Link>
             <br/>
-            <button onClick={handleDeleteAccount}>Eliminar mi cuenta</button>
+            <Link to='handle-accounts'>Gestionar cuentas</Link>
             <br/>
             <button className='settingsContainer__logOut' onClick={handleLogOut}>Log out</button>
         </section>
