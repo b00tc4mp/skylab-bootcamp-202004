@@ -89,7 +89,7 @@ module.exports = new Schema({
             // required: true
         },
         parking: {
-            type: String,
+            type: Boolean,
             // required: true
         },
         coffee: {
@@ -97,7 +97,7 @@ module.exports = new Schema({
             // required: true
         },
         meetingRooms: {
-            type: Number,
+            type: Boolean,
             // required: true
         }
     },

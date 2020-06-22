@@ -3,8 +3,7 @@ require('nomad-commons/polyfills/function')
 const { utils: { call } } = require('nomad-commons')
 const context = require('./context')
 
-module.exports = function (token, workspaceId, workspace) {
-    String.validate.notVoid(token)
+module.exports = function (workspaceId, workspace) {
 
     let data = new FormData()
     data.append("image", {
@@ -13,10 +12,11 @@ module.exports = function (token, workspaceId, workspace) {
         uri: workspace.image1.uri,
     })
 
-    const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
 
     return (async () => {
         try {
+            const token = await this.storage.getItem('token')
+            const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
             const result = await call(
                 'POST',
                 `${this.API_URL}/upload/${workspaceId}`,

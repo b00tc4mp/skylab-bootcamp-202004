@@ -3,12 +3,12 @@ import { View, SafeAreaView, StyleSheet, FlatList, ScrollView, RefreshControl } 
 
 import NomadHeader from '../components/NomadHeader'
 import Card from '../components/Card'
-import retrieveFavorites from 'nomad-client-logic/retrieve-favorites'
-import AsyncStorage from '@react-native-community/async-storage'
-import retrieveUser from 'nomad-client-logic/retrieve-user'
 import AppTextInput from '../components/NomadTextInput'
+
 import { API_URL } from 'nomad-client-logic/context'
 import searchFavorites from 'nomad-client-logic/search-favorites'
+import retrieveFavorites from 'nomad-client-logic/retrieve-favorites'
+import retrieveUser from 'nomad-client-logic/retrieve-user'
 
 
 
@@ -21,16 +21,11 @@ export default function Favorites({ navigation }) {
 
     const getFavorites = async () => {
         try {
-            const token = await AsyncStorage.getItem('token')
-            if (token !== null) {
-                const user = await retrieveUser(token)
-                setUser(user)
-                setImage({ uri: `${API_URL}/users/${user.id}.jpg` })
-                const result = await retrieveFavorites(token)
-                if (result) setFavorites(result)
-            } else {
-                console.log('error, token not found in homescreen') // TODO
-            }
+            const user = await retrieveUser()
+            setUser(user)
+            setImage({ uri: `${API_URL}/users/${user.id}.jpg` })
+            const result = await retrieveFavorites()
+            if (result) setFavorites(result)
         } catch (e) {
             console.log(e) // TODO HANDLE THIS
         }
@@ -38,13 +33,8 @@ export default function Favorites({ navigation }) {
 
     const handleSearch = async (query) => {
         try {
-            const token = await AsyncStorage.getItem('token')
-            if (token !== null) {
-                const result = await searchFavorites(token, query)
-                setFavorites(result || [])
-            } else {
-                console.log('error, token not found in homescreen') // TODO
-            }
+            const result = await searchFavorites(query)
+            setFavorites(result || [])
         } catch (e) {
             console.log(e) // TODO HANDLE THIS
         }

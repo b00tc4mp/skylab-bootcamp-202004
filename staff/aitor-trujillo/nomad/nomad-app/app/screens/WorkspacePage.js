@@ -21,13 +21,8 @@ export default ({ route, navigation }) => {
 
     const refreshWorkspace = async ({ _id }) => {
         try {
-            const token = await AsyncStorage.getItem('token')
-            if (token !== null) {
-                const result = await retrieveWorkspaceById(token, _id)
-                setWs(result)
-            } else {
-                console.log('error, token not found in homescreen') // TODO
-            }
+            const result = await retrieveWorkspaceById(_id)
+            setWs(result)
         } catch (e) {
             console.log(e) // TODO HANDLE THIS
         }
@@ -36,13 +31,8 @@ export default ({ route, navigation }) => {
 
     const handleFavoritePress = async () => {
         try {
-            const token = await AsyncStorage.getItem('token')
-            if (token !== null) {
-                await toggleFavorites(token, ws._id)
-                isFav ? setIsFav(false) : setIsFav(true)
-            } else {
-                console.log('error, token not found in workspacescreen') // TODO
-            }
+            await toggleFavorites(ws._id)
+            isFav ? setIsFav(false) : setIsFav(true)
         } catch (e) {
             console.log(e) // TODO HANDLE THIS
         }

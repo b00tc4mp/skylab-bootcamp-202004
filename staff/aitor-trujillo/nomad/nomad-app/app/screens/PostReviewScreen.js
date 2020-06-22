@@ -32,15 +32,9 @@ export default ({ navigation, route }) => {
     const handleSubmit = async values => {
         try {
             const { stars, reviewText } = values
-            const token = await AsyncStorage.getItem('token')
-            if (token !== null) {
-                await postReview(token, workspaceId, stars, reviewText)
-                Alert.alert('Success', 'Review posted in workspace 🤩.')
-                navigation.goBack()
-
-            } else {
-                console.log('error, in postreviewscreen') //TODO
-            }
+            await postReview(workspaceId, stars, reviewText)
+            Alert.alert('Success', 'Review posted in workspace 🤩.')
+            navigation.goBack()
         } catch (e) {
             console.log(e) // TODO HANDLE THIS
         }

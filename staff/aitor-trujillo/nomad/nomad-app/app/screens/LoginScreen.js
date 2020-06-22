@@ -10,7 +10,6 @@ import AppButton from '../components/Button'
 import AppTextInput from '../components/NomadTextInput'
 import { Formik } from 'formik'
 import * as Yup from "yup";
-import AsyncStorage from '@react-native-community/async-storage';
 
 const { authenticateUser } = require('nomad-client-logic')
 import colors from '../styles/colors'
@@ -28,9 +27,7 @@ export default ({ onLoggedIn }) => {
     const handleLogin = ({ email, password }) => {
         (async () => {
             try {
-                const token = await authenticateUser(email, password)
-                console.log(token)
-                await AsyncStorage.setItem('token', token)
+                await authenticateUser(email, password)
                 onLoggedIn()
             } catch (error) {
                 console.log(error) // TODO handle this

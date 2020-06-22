@@ -29,16 +29,10 @@ export default ({ navigation }) => {
     const handleSubmit = async values => {
         console.log(values)
         try {
-            const token = await AsyncStorage.getItem('token')
-            if (token !== null) {
-                const result = await uploadUserImage(token, values)
-                if (result) {
-                    Alert.alert('Success', 'Profile image delivered successfuly to the warehouse gnome.')
-                    navigation.navigate('Profile')
-                }
-
-            } else {
-                console.log('error, in uploadimagescreen') //TODO
+            const result = await uploadUserImage(values)
+            if (result) {
+                Alert.alert('Success', 'Profile image delivered successfuly to the warehouse gnome.')
+                navigation.navigate('Profile')
             }
         } catch (e) {
             console.log(e) // TODO HANDLE THIS

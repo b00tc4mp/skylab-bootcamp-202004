@@ -38,7 +38,7 @@ mongoose.connect(MONGODB_URL)
 
         const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
 
-        app.use(cors)
+        // app.use(cors)
         app.use(express.static('public'))
 
         // USERS ============================

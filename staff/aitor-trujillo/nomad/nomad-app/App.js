@@ -20,7 +20,9 @@ import PostReviewScreen from './app/screens/PostReviewScreen';
 import MapScreen from './app/screens/MapScreen';
 import UploadProfileScreen from './app/screens/UploadProfileScreen';
 
-const { isUserAuthenticated } = require('nomad-client-logic')
+import logic, { isUserAuthenticated } from 'nomad-client-logic'
+
+logic.__context__.storage = AsyncStorage
 
 const Stack = createStackNavigator();
 const StackNavigator = ({ onLoggedIn }) => (
@@ -119,11 +121,9 @@ export default function App() {
 
   const getAuthentication = async () => {
     try {
-      const token = await AsyncStorage.getItem('token')
-      if (token) {
-        const auth = await isUserAuthenticated(token)
-        return setIsAuthenticated(auth)
-      }
+      const auth = await isUserAuthenticated()
+      return setIsAuthenticated(auth)
+
     } catch (e) {
       console.log(e) // TODO HANDLE THIS
     }

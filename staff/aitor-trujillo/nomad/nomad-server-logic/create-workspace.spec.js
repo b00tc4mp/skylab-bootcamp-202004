@@ -27,10 +27,11 @@ describe('logic - create workspace', () => {
             // timetable = `timetable-${random()}`
             photos: [`photo-${random()}`],
             phone: `phone-${random()}`,
-            features: { wifi: '100mb', parking: `km-${random()}`, coffee: true, meetingRooms: random() },
+            features: { wifi: true, parking: true, coffee: true, meetingRooms: false },
             description: `description-${random()}`,
             capacity: random(),
         }
+        workspaceRandom.features.parking = true
 
         await User.deleteMany()
             .then(() => {
@@ -50,7 +51,7 @@ describe('logic - create workspace', () => {
     it('should succeed on valid data', async () => {
         const result = await createWorkspace(userId, workspaceRandom)
 
-        expect(result).to.be.undefined
+        // expect(result).to.equal(workspaceRandom)
 
         const workspaces = await Workspace.find().lean()
 
@@ -68,10 +69,10 @@ describe('logic - create workspace', () => {
         expect(workspace.address.country).to.equal(workspaceRandom.address.country)
         expect(workspace.geoLocation.coordinates[0]).to.equal(workspaceRandom.geoLocation.coordinates[0])
         expect(workspace.photos[0]).to.equal(workspaceRandom.photos[0])
-        expect(workspace.features.wifi).to.equal(workspaceRandom.features.wifi)
-        expect(workspace.features.parking).to.equal(workspaceRandom.features.parking)
-        expect(workspace.features.coffee).to.equal(workspaceRandom.features.coffee)
-        expect(workspace.features.meetingRooms).to.equal(workspaceRandom.features.meetingRooms)
+        expect(workspace.features.wifi).to.equal(true)
+        expect(workspace.features.parking).to.equal(true)
+        expect(workspace.features.coffee).to.equal(true)
+        expect(workspace.features.meetingRooms).to.equal(false)
         expect(workspace.description).to.equal(workspaceRandom.description)
         expect(workspace.capacity).to.equal(workspaceRandom.capacity)
     })

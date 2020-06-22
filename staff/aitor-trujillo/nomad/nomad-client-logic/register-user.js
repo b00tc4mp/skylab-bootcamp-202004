@@ -3,8 +3,8 @@ const { utils: { Email, call } } = require('nomad-commons')
 const context = require('./context')
 
 module.exports = function (name, surname, email, password) {
-    String.validate(name)
-    String.validate(surname)
+    String.validate.notVoid(name)
+    String.validate.notVoid(surname)
     Email.validate(email)
     String.validate.lengthGreaterEqualThan(password, 8)
 

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { View, StyleSheet, FlatList, Platform, ScrollView, RefreshControl, Image, TouchableOpacity } from 'react-native'
 import * as Permissions from 'expo-permissions'
 import * as Location from "expo-location";
-import AsyncStorage from '@react-native-community/async-storage'
 
 import { API_URL } from 'nomad-client-logic/context'
 import NomadHeader from '../components/NomadHeader'
@@ -29,17 +28,13 @@ export default function Home({ navigation }) {
 
     const getLocationWorkspaces = async (filter) => {
         try {
-            const token = await AsyncStorage.getItem('token')
-            if (token !== null) {
-                const user = await retrieveUser(token)
-                setUser(user)
-                setImage({ uri: `${API_URL}/users/${user.id}.jpg` })
-                const { coords: { latitude, longitude } } = await Location.getLastKnownPositionAsync()
-                const result = await retrieveWorkspaces(token, { latitude, longitude }, filter)
-                if (result) setWorkspaces(result)
-            } else {
-                console.log('error, token not found in homescreen') // TODO
-            }
+            const user = await retrieveUser()
+            setUser(user)
+            setImage({ uri: `${API_URL}/users/${user.id}.jpg` })
+            const { coords: { latitude, longitude } } = await Location.getLastKnownPositionAsync()
+            const result = await retrieveWorkspaces({ latitude, longitude }, filter)
+            if (result) setWorkspaces(result)
+
         } catch (e) {
             console.log(e) // TODO HANDLE THIS
         }

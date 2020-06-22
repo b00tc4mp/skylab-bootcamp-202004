@@ -27,7 +27,9 @@ module.exports = function (email, password) {
 
         const { status, body } = result
         if (status === 200) {
+
             const { token } = JSON.parse(body)
+            token = await this.storage.setItem('token', token)
             return token
         } else {
             const { error } = JSON.parse(body)

@@ -43,7 +43,7 @@ describe('logic - retrieve user favorites', () => {
             // timetable = `timetable-${random()}`
             photos: [`photo-${random()}`],
             phone: `phone-${random()}`,
-            features: { wifi: '100mb', parking: `km-${random()}`, coffee: true, meetingRooms: random() },
+            features: { wifi: false, parking: true, coffee: true, meetingRooms: false },
             description: `description-${random()}`,
             capacity: random(),
         }
@@ -55,7 +55,7 @@ describe('logic - retrieve user favorites', () => {
         const user = await User.findById(userId)
         user.favorites.push(workspaceId)
         await user.save()
-        debugger
+
         return
 
 
@@ -65,10 +65,8 @@ describe('logic - retrieve user favorites', () => {
         const favorites = await retrieveFavorites(userId, workspaceId)
 
         expect(favorites).to.exist
-        debugger
 
         const [workspace] = favorites
-        debugger
 
         expect(workspace.name).to.equal(workspaceRandom.name)
         expect(workspace.price.amount).to.equal(workspaceRandom.price.amount)

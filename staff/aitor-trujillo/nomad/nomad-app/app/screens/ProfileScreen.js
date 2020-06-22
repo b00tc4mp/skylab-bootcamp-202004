@@ -14,14 +14,9 @@ export default function Profile({ handleLogout, navigation }) {
 
     const getUser = async () => {
         try {
-            const token = await AsyncStorage.getItem('token')
-            if (token !== null) {
-                const user = await retrieveUser(token)
-                setUser(user)
-                setImage({ uri: `${API_URL}/users/${user.id}.jpg` })
-            } else {
-                console.log('error, token not found in homescreen') // TODO
-            }
+            const user = await retrieveUser()
+            setUser(user)
+            setImage({ uri: `${API_URL}/users/${user.id}.jpg` })
         } catch (e) {
             console.log(e) // TODO HANDLE THIS
         }
@@ -31,7 +26,7 @@ export default function Profile({ handleLogout, navigation }) {
         (async () => {
             await getUser()
         })()
-    }, [])
+    }, [image])
 
     return (
         <SafeAreaView style={styles.container}>

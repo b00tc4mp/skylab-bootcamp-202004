@@ -4,15 +4,15 @@ require('nomad-commons/polyfills/function')
 const { utils: { call } } = require('nomad-commons')
 const context = require('./context')
 
-module.exports = function (token, { latitude, longitude }, filter) {
-
-    String.validate.notVoid(token)
+module.exports = function ({ latitude, longitude }, filter) {
     Number.validate(latitude)
     Number.validate(longitude)
 
-    const headers = { Authorization: `Bearer ${token}` }
     return (async () => {
         try {
+            const token = await this.storage.getItem('token')
+            const headers = { Authorization: `Bearer ${token}` }
+
             const result = await call(
                 'GET',
                 filter ? `${this.API_URL}/workspaces/location/${latitude}/${longitude}/${filter}` : `${this.API_URL}/workspaces/location/${latitude}/${longitude}/`,

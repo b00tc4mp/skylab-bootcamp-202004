@@ -5,12 +5,13 @@ import { Entypo } from '@expo/vector-icons'
 import colors from '../styles/colors'
 import { FlatList } from 'react-native-gesture-handler'
 import NomadTitle from '../components/NomadTitle'
-import retrieveUserWorkspaces from 'nomad-client-logic/retrieve-user-workspaces'
 import AppButton from '../components/Button'
 import AsyncStorage from '@react-native-community/async-storage'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import DeleteSwipe from '../components/DeleteSwipe'
+
 import deleteWorkspace from 'nomad-client-logic/delete-workspace'
+import retrieveUserWorkspaces from 'nomad-client-logic/retrieve-user-workspaces'
 
 export default function Profile({ navigation }) {
     const [userWorkspaces, setUserWorkspaces] = useState([])
@@ -22,14 +23,8 @@ export default function Profile({ navigation }) {
 
     const retrieveMyWorkspaces = async () => {
         try {
-            const token = await AsyncStorage.getItem('token')
-            if (token !== null) {
-                const result = await retrieveUserWorkspaces(token)
-                debugger
-                if (result) setUserWorkspaces(result)
-            } else {
-                console.log('error, token not found in editworkspacescreen')
-            }
+            const result = await retrieveUserWorkspaces()
+            if (result) setUserWorkspaces(result)
         } catch (e) {
             console.log(e) // TODO HANDLE THIS
         }
@@ -37,14 +32,8 @@ export default function Profile({ navigation }) {
 
     const deleteWs = async (wsId) => {
         try {
-            const token = await AsyncStorage.getItem('token')
-            if (token !== null) {
-                const result = await deleteWorkspace(token, wsId.toString())
-                return retrieveMyWorkspaces()
-                // setRefresh(true)
-            } else {
-                console.log('error, token not found in editworkspacescreen')
-            }
+            await deleteWorkspace(wsId.toString())
+            return retrieveMyWorkspaces()
         } catch (e) {
             console.log(e) // TODO HANDLE THIS
         }

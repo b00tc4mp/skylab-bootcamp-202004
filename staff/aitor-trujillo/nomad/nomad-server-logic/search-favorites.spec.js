@@ -43,7 +43,7 @@ describe('logic - search in user favorites', () => {
             // timetable = `timetable-${random()}`
             photos: [`photo-${random()}`],
             phone: `phone-${random()}`,
-            features: { wifi: '100mb', parking: `km-${random()}`, coffee: true, meetingRooms: random() },
+            features: { wifi: false, parking: false, coffee: true, meetingRooms: false },
             description: `description-${random()}`,
             capacity: random(),
         }

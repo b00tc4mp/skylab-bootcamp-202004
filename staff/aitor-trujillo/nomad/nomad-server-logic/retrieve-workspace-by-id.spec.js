@@ -8,7 +8,7 @@ const { expect } = require('chai')
 require('nomad-commons/polyfills/json')
 const { mongoose, models: { Workspace, User } } = require('nomad-data')
 
-describe('logic - create workspace', () => {
+describe('logic - retrieve workspace by id', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let workspaceRandom = {}
@@ -42,7 +42,7 @@ describe('logic - create workspace', () => {
             // timetable = `timetable-${random()}`
             photos: [`photo-${random()}`],
             phone: `phone-${random()}`,
-            features: { wifi: '100mb', parking: `km-${random()}`, coffee: true, meetingRooms: random() },
+            features: { wifi: false, parking: false, coffee: true, meetingRooms: true },
             description: `description-${random()}`,
             capacity: random(),
         }

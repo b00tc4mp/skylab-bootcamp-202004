@@ -27,15 +27,10 @@ export default ({ navigation }) => {
 
     const getLocationWorkspaces = async (location) => {
         try {
-            const token = await AsyncStorage.getItem('token')
-            if (token !== null) {
-                const user = await retrieveUser(token)
-                setUser(user)
-                const result = await retrieveWorkspaces(token, location)
-                setWorkspaces(result)
-            } else {
-                console.log('error, token not found in homescreen') // TODO
-            }
+            const user = await retrieveUser()
+            setUser(user)
+            const result = await retrieveWorkspaces(location)
+            setWorkspaces(result)
         } catch (e) {
             console.log(e) // TODO HANDLE THIS
         }

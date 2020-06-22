@@ -41,9 +41,9 @@ describe('logic - place review in workspace', () => {
             address: { street: `${random()} st`, city: `${random()} city`, country: `${random()} country` },
             geoLocation: { coordinates: [random(), random()] },
             // timetable = `timetable-${random()}`
-            photos: [`photo-${random()}`],
+            // photos: [`photo-${random()}`],
             phone: `phone-${random()}`,
-            features: { wifi: '100mb', parking: `km-${random()}`, coffee: true, meetingRooms: random() },
+            features: { wifi: true, parking: false, coffee: true, meetingRooms: false },
             description: `description-${random()}`,
             capacity: random(),
         }
@@ -64,7 +64,7 @@ describe('logic - place review in workspace', () => {
         const [review] = reviews
 
         expect(review.user.toString()).to.equal(userId)
-        expect(review.stars).to.equal(stars)
+        expect(review.stars.toFixed(1)).to.equal(stars.toFixed(1))
         expect(review.text).to.equal(text)
     })
 

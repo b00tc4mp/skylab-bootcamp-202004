@@ -2,13 +2,11 @@ require('nomad-commons/polyfills/string')
 const { utils: { call } } = require('nomad-commons')
 const context = require('./context')
 
-module.exports = function (token) {
-    String.validate.notVoid(token)
-
-    const headers = { Authorization: `Bearer ${token}` }
-
+module.exports = function () {
     return (async () => {
         try {
+            const token = await this.storage.getItem('token')
+            const headers = { Authorization: `Bearer ${token}` }
             const result = await call(
                 'GET',
                 `${this.API_URL}/users/`,

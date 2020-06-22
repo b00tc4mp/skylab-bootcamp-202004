@@ -77,13 +77,8 @@ export default ({ navigation }) => {
 
     const handleSubmit = async values => {
         try {
-            const token = await AsyncStorage.getItem('token')
-            if (token !== null) {
-                const result = await createWorkspace(token, values)
-                navigation.navigate('UploadImage', { id: result.id })
-            } else {
-                console.log('error, token not found in editworkspacescreen')
-            }
+            const result = await createWorkspace(values)
+            navigation.navigate('UploadImage', { id: result.id })
         } catch (e) {
             console.log(e) // TODO HANDLE THIS
         }

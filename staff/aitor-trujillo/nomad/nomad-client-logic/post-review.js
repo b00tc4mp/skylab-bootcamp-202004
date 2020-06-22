@@ -4,18 +4,18 @@ require('nomad-commons/polyfills/number')
 const { utils: { call } } = require('nomad-commons')
 const context = require('./context')
 
-module.exports = function (token, workspaceId, stars, text) {
-    String.validate.notVoid(token)
+module.exports = function (workspaceId, stars, text) {
     String.validate.notVoid(workspaceId)
     Number.validate(stars)
     String.validate.notVoid(text)
 
     const review = { workspaceId, stars, text }
 
-    const headers = { Authorization: `Bearer ${token}`, 'Content-type': 'application/json' }
 
     return (async () => {
         try {
+            const token = await this.storage.getItem('token')
+            const headers = { Authorization: `Bearer ${token}`, 'Content-type': 'application/json' }
             const result = await call(
                 'POST',
                 `${this.API_URL}/reviews`,

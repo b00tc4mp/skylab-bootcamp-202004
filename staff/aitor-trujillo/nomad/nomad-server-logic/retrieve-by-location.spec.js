@@ -29,7 +29,7 @@ describe('logic - retrieve ws by location', () => {
             // timetable = `timetable-${random()}`
             photos: [`photo-${random()}`],
             phone: `phone-${random()}`,
-            features: { wifi: '100mb', parking: `km-${random()}`, coffee: true, meetingRooms: random() },
+            features: { wifi: false, parking: false, coffee: true, meetingRooms: false },
             description: `description-${random()}`,
             capacity: random(),
         }
@@ -55,8 +55,6 @@ describe('logic - retrieve ws by location', () => {
 
         workspace1 = generateWorkspace(userId)
         workspace2 = generateWorkspace(userId)
-        debugger
-
 
         ws1 = await Workspace.create(workspace1)
         ws2 = await Workspace.create(workspace2)
@@ -75,22 +73,43 @@ describe('logic - retrieve ws by location', () => {
 
         expect(results).to.exist
 
-        const [workspace] = results
+        let _ws1, _ws2
 
-        expect(workspace.name).to.equal(workspaceRandom.name)
-        expect(workspace.price.amount).to.equal(workspaceRandom.price.amount)
-        expect(workspace.price.term).to.equal(workspaceRandom.price.term)
-        expect(workspace.address.street).to.equal(workspaceRandom.address.street)
-        expect(workspace.address.city).to.equal(workspaceRandom.address.city)
-        expect(workspace.address.country).to.equal(workspaceRandom.address.country)
-        expect(workspace.geoLocation.coordinates[0]).to.equal(workspaceRandom.geoLocation.coordinates[0])
-        expect(workspace.photos[0]).to.equal(workspaceRandom.photos[0])
-        expect(workspace.features.wifi).to.equal(workspaceRandom.features.wifi)
-        expect(workspace.features.parking).to.equal(workspaceRandom.features.parking)
-        expect(workspace.features.coffee).to.equal(workspaceRandom.features.coffee)
-        expect(workspace.features.meetingRooms).to.equal(workspaceRandom.features.meetingRooms)
-        expect(workspace.description).to.equal(workspaceRandom.description)
-        expect(workspace.capacity).to.equal(workspaceRandom.capacity)
+        const [workspace1, workspace2] = results
+        if (ws1.name === workspace1.name) {
+            _ws1 = ws1
+            _ws2 = ws2
+        } else {
+            _ws1 = ws2
+            _ws2 = ws1
+        }
+
+        expect(workspace1.name).to.equal(_ws1.name)
+        expect(workspace2.name).to.equal(_ws2.name)
+        expect(workspace1.price.amount).to.equal(_ws1.price.amount)
+        expect(workspace2.price.amount).to.equal(_ws2.price.amount)
+        expect(workspace1.price.term).to.equal(_ws1.price.term)
+        expect(workspace2.price.term).to.equal(_ws2.price.term)
+        expect(workspace1.address.street).to.equal(_ws1.address.street)
+        expect(workspace2.address.street).to.equal(_ws2.address.street)
+        expect(workspace1.address.city).to.equal(_ws1.address.city)
+        expect(workspace2.address.city).to.equal(_ws2.address.city)
+        expect(workspace1.address.country).to.equal(_ws1.address.country)
+        expect(workspace2.address.country).to.equal(_ws2.address.country)
+        expect(workspace1.geoLocation.coordinates[0]).to.equal(_ws1.geoLocation.coordinates[0])
+        expect(workspace2.geoLocation.coordinates[0]).to.equal(_ws2.geoLocation.coordinates[0])
+        expect(workspace1.features.wifi).to.equal(_ws1.features.wifi)
+        expect(workspace2.features.wifi).to.equal(_ws2.features.wifi)
+        expect(workspace1.features.parking).to.equal(_ws1.features.parking)
+        expect(workspace2.features.parking).to.equal(_ws2.features.parking)
+        expect(workspace1.features.coffee).to.equal(_ws1.features.coffee)
+        expect(workspace2.features.coffee).to.equal(_ws2.features.coffee)
+        expect(workspace1.features.meetingRooms).to.equal(_ws1.features.meetingRooms)
+        expect(workspace2.features.meetingRooms).to.equal(_ws2.features.meetingRooms)
+        expect(workspace1.description).to.equal(_ws1.description)
+        expect(workspace2.description).to.equal(_ws2.description)
+        expect(workspace1.capacity).to.equal(_ws1.capacity)
+        expect(workspace2.capacity).to.equal(_ws2.capacity)
     })
 
     afterEach(() => User.deleteMany().then(() => Workspace.deleteMany()))

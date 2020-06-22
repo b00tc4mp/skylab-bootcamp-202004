@@ -6,7 +6,6 @@ const { errors: { DuplicityError } } = require('nomad-commons')
 const { models: { Workspace, User } } = require('nomad-data')
 
 module.exports = (userId, workspace) => {
-    console.log(workspace)
     const { name, price, category, address, geoLocation, photos, phone, features, description, capacity } = workspace
     const { amount, term } = price
     const { street, city, country } = address

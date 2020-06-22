@@ -16,15 +16,10 @@ export default function Search({ navigation }) {
 
     const handleSearch = async (query) => {
         try {
-            const token = await AsyncStorage.getItem('token')
-            if (token !== null) {
-                const user = await retrieveUser(token)
-                setUser(user)
-                const result = await searchWorkspaces(token, query)
-                setWorkspaces(result)
-            } else {
-                console.log('error, token not found in homescreen') // TODO
-            }
+            const user = await retrieveUser()
+            setUser(user)
+            const result = await searchWorkspaces(query)
+            setWorkspaces(result)
         } catch (e) {
             console.log(e) // TODO HANDLE THIS
         }
