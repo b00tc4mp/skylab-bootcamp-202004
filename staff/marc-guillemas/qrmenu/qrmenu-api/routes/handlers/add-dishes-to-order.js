@@ -6,7 +6,7 @@ module.exports = (req,res) => {
     debugger
     try {
         debugger
-        addDishesToOrder(establishmentId,tableId,dishes)
+        addDishesToOrder(establishmentId,tableId,dishes.split(','))
             .then(() => res.send())
             .catch(error => handleError(error,res))
     } catch (error) {

@@ -9,33 +9,51 @@ import QrCodes from './QrCodes'
 import Dishes from './Dishes'
 import Admin from './Admin'
 import { Route, withRouter, Redirect } from 'react-router-dom'
+import isGuestUser from 'qrmenu-client-logic/is-guest-user'
 
 
-export default function({onLogout, history}) {
+export default function({onLogout, history, onScan }) {
 
     const [burgerActive, setBurgerActive] = useState(true)
-
-    // useEffect(() => {
-    //     setBurguerActive(false)
-    // },[])
+    const [qrcode, setQrCode] = useState()
+    
+    useEffect(() => {
+        // setBurguerActive(false)
+       if (!isGuestUser(history.location.pathname)) history.push('/login')
+    },[])
 
     const handleChangeRoute = _route => {
         history.push(_route)
     }
 
-    // const handleToggleBurger = () => {
-    //     setBurguerActive(false)
-    // }
+    const handleToggleTable = _qrcode => {
+        console.log(_qrcode)
+        setQrCode(_qrcode)
+        onScan(_qrcode)
+        history.push('/qrcode')
+    }
 
     return <section className="home">
-        <Navbar onChangeRoute={handleChangeRoute}  onLogout={onLogout}  active={burgerActive} onBurgerActive={setBurgerActive}/>
-        <Header onBurgerActive={setBurgerActive} active={burgerActive}/>
-        {/* {history.location.pathname === '/orders' && <Orders/>} */}
+      
+        {sessionStorage.token &&
+        <div>
+            <Navbar onChangeRoute={handleChangeRoute}  onLogout={onLogout}  active={burgerActive} onBurgerActive={setBurgerActive}/>
+            <Header onBurgerActive={setBurgerActive} active={burgerActive}/>
+      
  
-        <Route path="/orders" render={() => <Orders /> } />
-        <Route path="/tables" render={() => <Tables /> } />
-        <Route path="/dishes" render={() => <Dishes /> } />
-        {/* <Route path="/qrcodes" render={() => <QrCodes /> } /> */}
+            <Route path="/orders" render={() => <Orders /> } />
+            <Route path="/tables" render={() => <Tables onToggleTable={handleToggleTable}/> } />
+        {/* <Route path="/dishes" render={() => <Dishes /> } /> */}
+            <Route path="/qrcode" render={() => <QrCodes qrcode={qrcode}/> } />
         <Route path="/admin" render={() => <Admin /> } />
+
+        </div>
+        }
+
+      
+        <Route path="/establishment/:establishmentId/table/:tableId" render={() => 
+           <Dishes history={history}/>
+          } />
+
     </section>
 }

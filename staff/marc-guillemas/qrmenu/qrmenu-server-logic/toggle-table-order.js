@@ -27,11 +27,11 @@ module.exports = (establishmentId, workerId, tableId) => {
         if(!match.active) {
             match.active = true
             debugger
-            orders.push(new Order({table: tableId}))
+            orders.push(new Order({tableId, table: match.table}))
         }else{
             match.active = false
             debugger
-            const order = orders.find(_order => _order.table === tableId && _order.payed === false)
+            const order = orders.find(_order => _order.tableId === tableId && _order.payed === false)
             
             if(!order) throw new UnexistenceError(`Order assigned at the table with id ${tableId} does not exist`)
             

@@ -10,6 +10,7 @@ module.exports = {
     assignNumOfTables: require('./assign-num-of-tables'),
     toggleTableOrder: require('./toggle-table-order'),
     addDishesToOrder: require('./add-dishes-to-order'),
-    retrieveTables: require('./retrieve-tables')
+    retrieveTables: require('./retrieve-tables'),
+    retrieveOrders: require('./retrieve-orders')
 
 }

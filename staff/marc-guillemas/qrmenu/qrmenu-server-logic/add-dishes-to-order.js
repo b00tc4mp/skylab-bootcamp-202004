@@ -2,9 +2,13 @@ const {models: {Establishment, Dish, DishStatus}} = require('qrmenu-data')
 const {errors: {UnexistenceError, CredentialsError}} = require('qrmenu-commons')
 
 module.exports = (establishmentId, tableId, userDishes) => {
-
+    console.log(establishmentId)
+    console.log(tableId)
+    console.log(userDishes)
+    debugger
     return (async() => {
         debugger
+     
         const establishment = await Establishment.findById(establishmentId)
 
         if(!establishment) throw new UnexistenceError(`Establishment with id ${establishmentId} does not exist`)
@@ -17,7 +21,7 @@ module.exports = (establishmentId, tableId, userDishes) => {
 
         if(!table.active) throw new CredentialsError("Permission denied" )
 
-        const order = orders.find(_order => _order.table === tableId && _order.payed === false)
+        const order = orders.find(_order => _order.tableId === tableId && _order.payed === false)
 
         if(!order) throw new UnexistenceError(`No order open with this orderId `)
 
@@ -35,7 +39,9 @@ module.exports = (establishmentId, tableId, userDishes) => {
                 dish
             }))
         }));
+        debugger
 
         await establishment.save()
+        
     })()
 }

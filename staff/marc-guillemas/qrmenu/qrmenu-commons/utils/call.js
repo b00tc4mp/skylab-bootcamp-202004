@@ -23,8 +23,8 @@ module.exports = function (method, url, body, headers, callback) {
             resolve({ status: this.status, body: this.responseText })
         }
 
-        xhr.onerror = function () {
-            reject(new Error('network error'))
+        xhr.onerror = function (error) {
+            reject(new Error(error))
         }
 
         xhr.send(body ? body : undefined)

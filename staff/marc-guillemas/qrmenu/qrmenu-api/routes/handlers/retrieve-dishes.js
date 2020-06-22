@@ -3,10 +3,10 @@ const {handleError} = require('../../helpers')
 
 module.exports = (req, res) => {
 
-    const {payload: {establishmentId}} = req
+    const {params: {establishmentId, tableId}} = req
 
     try {
-        retrieveDishes(establishmentId)
+        retrieveDishes(establishmentId, tableId)
         .then(dishes => res.send({dishes}))
         .catch(error => handleError(error,res))
     } catch (error) {

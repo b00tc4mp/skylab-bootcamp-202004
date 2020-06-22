@@ -6,14 +6,15 @@
     height: 6vh
     width: 100vw
     // border: 1px solid red
-    background-color: #000000
-    color: #ffffff
+    background-color: #ffffff00
+    font-size: 1rem
+    color: #0000008a
 
     &__line
         display: flex
         justify-content: center
         align-items: center
-        background-color: #ffffff
+        background-color: #f0f0f0
         width: 100%
         height: .3rem
         border-radius: 100px
@@ -30,11 +31,12 @@
         flex-direction: column
         justify-content: space-around
         align-items: flex-end
+        z-index: 10
         div
             transition: all .3s ease
-            background-color: #ffffff
-            height: .15rem
-            // box-shadow: 5px 2px 1px #1616167a
+            background-color: #00000063
+            height: .2rem
+
         &--active
             
             div:nth-child(1)

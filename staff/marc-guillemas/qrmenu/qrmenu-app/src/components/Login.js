@@ -24,6 +24,7 @@ export default function ({onLogin, onGoToRegister}) {
         password = password.value
 
         try {
+            debugger
             authenticate(nif, email, password)
                 .then(token => onLogin(token))
                 

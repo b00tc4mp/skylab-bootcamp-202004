@@ -18,7 +18,6 @@ module.exports = (establishmentId, workerId) => {
         
         const {email, role} = worker
         
-        //TODO review sanitize can't delete id and pass
         return {email, role}
     })()
 }

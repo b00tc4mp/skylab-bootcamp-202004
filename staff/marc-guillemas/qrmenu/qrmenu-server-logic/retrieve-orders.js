@@ -18,6 +18,13 @@ module.exports = (establishmentId, workerId) => {
 
         if(!orders.length) throw new UnexistenceError('there are no orders yet')
 
-        return orders
+        let _orders = []
+
+        orders.forEach((order) => {
+            if(!order.payed)
+                _orders.push(order)
+        })
+
+        return _orders
     })()
 }

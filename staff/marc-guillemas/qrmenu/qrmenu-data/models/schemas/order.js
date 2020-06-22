@@ -2,8 +2,13 @@ const { Schema } = require("mongoose");
 const dishStatus = require('./dishStatus')
 
 module.exports = new Schema ({
-    table: {
+    tableId: {
         type: String,
+        required: true
+    },
+
+    table: {
+        type: Number,
         required: true
     },
 

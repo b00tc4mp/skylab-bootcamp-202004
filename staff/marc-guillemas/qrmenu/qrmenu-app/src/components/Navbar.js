@@ -21,14 +21,14 @@ export default function({onChangeRoute, onLogout, active, onBurgerActive}) {
                 }}>Tables</a> 
             </li>
             <hr/>
-            <li>
+            {/* <li>
                 <a href="" onClick={event => {
                     event.preventDefault()
                     onBurgerActive(!active)
                     onChangeRoute('/dishes')
                 }}>Dishes</a> 
             </li>
-            <hr/>
+            <hr/> */}
             {/* <li>
                 <a href="" onClick={event => {
                     event.preventDefault()
@@ -37,14 +37,14 @@ export default function({onChangeRoute, onLogout, active, onBurgerActive}) {
                 }}>QR Codes</a> 
             </li>
             <hr/> */}
-            <li>
+            {/* <li>
                 <a href="" onClick={event => {
                     event.preventDefault()
                     onBurgerActive(!active)
                     onChangeRoute('/admin')
                 }}>Admin</a> 
             </li>
-            <hr/>
+            <hr/> */}
             <li>
                 <a href="" onClick={event => {
                     event.preventDefault()
