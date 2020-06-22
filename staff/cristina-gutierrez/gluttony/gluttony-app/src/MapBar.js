@@ -37,7 +37,7 @@ const MapBar = () => {
                     latitudeDelta: 0.0022,
                     longitudeDelta: 0.00021
                 })}>
-                <Marker
+                { userLatitude && userLongitude && <Marker
                     title="You are here"
                     coordinate={{
                         latitude: userLatitude,
@@ -45,8 +45,8 @@ const MapBar = () => {
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421
                     }}  
-                />
-                <Marker
+                /> }
+                { barLatitude && barLongitude && <Marker
                     title="Nearest bar"
                     coordinate={{
                         latitude: barLatitude,
@@ -54,7 +54,7 @@ const MapBar = () => {
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421
                     }}  
-                />
+                /> }
             </MapView>
         </View>
     )
