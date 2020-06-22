@@ -48,7 +48,7 @@ mongoose.connect(MONGODB_URL)
     });
     
     router.get("/users", verifyExtractJwt, (req, res) => {
-      try {
+      try {        
         const { payload: { sub: userId } } = req
     
         retrieveUser(userId)

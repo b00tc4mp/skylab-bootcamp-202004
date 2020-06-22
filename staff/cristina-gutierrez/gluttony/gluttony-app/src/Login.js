@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { authenticateUser } from "../gluttony-client-logic"
 
-const Login = props => {
+const Login = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -32,7 +32,11 @@ const Login = props => {
                 onChangeText={(text) => setPassword(text)}
             />
 
-            <TouchableOpacity style={styles.openButton} onPress={() => authenticateUser(email, password)}>
+            <TouchableOpacity style={styles.openButton} onPress={() => {
+                authenticateUser(email, password)
+                    .then(() => props.onCloseModal())
+                    .catch(console.log)
+            }}>
                 <Text style={styles.textStyle}>Iniciar sesión</Text>
             </TouchableOpacity>
             <Text style={{ ...styles.modalText, marginBottom: 8 }}>o</Text>

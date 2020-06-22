@@ -1,21 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     StyleSheet,
     Text,
-    TouchableOpacity
+    TouchableOpacity,
+    ImageBackground
 } from "react-native";
 import Comments from "./Comments";
-import { logout } from "../gluttony-client-logic";
+import { retrieveUser, logout } from "../gluttony-client-logic";
 
-const ProfilePage = () => {
-    const [showComments, setShowComments] = useState("");
+const ProfilePage = (props) => {
+    const [showComments, setShowComments] = useState(false);
+    const [user, setUser] = useState();
+
+    useEffect(() => {
+        retrieveUser()
+            .then(user => setUser(user))
+            .catch(() => props.onShowModal())
+    }, [])
 
     return (
         <ImageBackground source={require("../assets/images/final-food-and-drink-pattern-vector-1.png")} style={styles.image}>
+            { user && <Text style={styles.textStyle}>Welcome {user.name} {user.surname}</Text> }
             <TouchableOpacity style={styles.openButton} onPress={ () => setShowComments(!showComments) }>
                 <Text style={styles.textStyle}>Comments</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.openButton} onPress={ () => logout() }>
+            <TouchableOpacity style={styles.openButton} onPress={() => {
+                logout().then(() => props.onGoToHome())
+            }}>
                 <Text style={styles.textStyle}>Logout</Text>
             </TouchableOpacity>
             { showComments === "comments" && <Comments /> }
