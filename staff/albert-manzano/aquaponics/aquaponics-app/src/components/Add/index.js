@@ -32,9 +32,7 @@ function Add({ handleGoToBack }) {
             try {
                 setError(null)
                 setSuccess(null)
-                console.log(name, surname, email, password, _password, phone, role)
                 const result = await registerUser(name, surname, email, password, _password, phone, role)
-                console.log(result)
                 if (!result) setSuccess('User was correctly registered')
             } catch ({message}) {
                 setError(message)
@@ -127,7 +125,7 @@ function Add({ handleGoToBack }) {
                         <Text style={styles.submit}>Submit</Text>
                     </TouchableOpacity>
                     {error ? <Feedback message={error}  level={"error"} />: null}
-                    {success ? <Feedback message={error} level={"success"} /> : null}
+                    {success ? <Feedback message={success} level={"success"} /> : null}
                 </View>
                 <TouchableOpacity
                     onPress={handleGoToBack}>

@@ -22,9 +22,9 @@ module.exports = (userId) => {
             return User.find().lean()
                 .then(allUsers =>
                     allUsers = allUsers.map(user => {
-                        delete user._id
                         delete user.password
-                        
+                        user.id=user._id
+                        delete user._id
                         return user
                     })
                 )

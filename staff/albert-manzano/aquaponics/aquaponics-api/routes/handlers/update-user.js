@@ -1,11 +1,11 @@
-const {updateUser}= require('aquaponics-server-logic')
+const { updateUser } = require('aquaponics-server-logic')
 const { handleError } = require('../../helpers')
 
-module.exports= (req, res) => {
+module.exports = (req, res) => {
     try {
         const { payload: { sub: userId } } = req
-        const { body: { name, surname, email, password, phone } } = req
-        const userUpdate = { name, surname, email, password, phone }
+        const { body: { name, surname, email, password, phone, role, status, confirmed } } = req
+        const userUpdate = { name, surname, email, password, phone, role, status, confirmed }
 
         updateUser(userId, userUpdate)
             .then(() => res.status(204).send())

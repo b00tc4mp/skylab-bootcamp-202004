@@ -15,15 +15,15 @@ module.exports = async function () {
         {
         "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
          "x-rapidapi-key": "4901ceb585msh6d2329b8180aec8p1c273bjsnad62098b1210"})
-
+           
     if (status === 200) {
         const {list}= JSON.parse(body)
-        const {temp1}= list[8].main 
-        const {main1}= list[8].weather[0] 
-        const {temp2}= list[16].main 
-        const {main2}= list[16].weather[0] 
-        const {temp3}= list[24].main 
-        const {main3}= list[24].weather[0] 
+        const {temp:temp1}= list[8].main 
+        const {main:main1}= list[8].weather[0] 
+        const {temp:temp2}= list[16].main 
+        const {main:main2}= list[16].weather[0]  
+        const {temp:temp3}= list[24].main 
+        const {main:main3}= list[24].weather[0]
         
         return {temp1,main1,temp2,main2,temp3,main3}
     } else {

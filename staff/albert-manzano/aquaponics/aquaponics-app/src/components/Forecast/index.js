@@ -13,7 +13,7 @@ import Navbar from '../Navbar';
 import SideBar from '../SideBar'
 import Feedback from '../Feedback'
 
-import { forecast, forecast3Days } from 'aquaponics-client-logic'
+import { forecast, forecastDays } from 'aquaponics-client-logic'
 // import PropTypes from 'prop-types';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -41,8 +41,9 @@ function Forecast({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToFor
         (async () => {
             try {
                 let { temp, temp_max, temp_min, main, wind } = await forecast(0)
-                if (main === 'Rain') main = "rainy"
-                if (main === 'Clouds') main = 'cloudy'
+                console.log(main)
+                if(main==="Clouds") main='cloudy'
+                if(main==="Rain") main="rainy"
                 setWind(wind)
                 setMain(main)
                 setTemp(temp)
@@ -54,10 +55,12 @@ function Forecast({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToFor
         })()
     }, [])
 
-    const handle3daysForecast = () => {
+    const days = () => {
         (async () => {
             try {
-                let { main1, main2, main3, temp1, temp2, temp3 } = await forecast3Days()
+                console.log('days')
+                setView('days')
+                let { main1, main2, main3, temp1, temp2, temp3 } = await forecastDays()
                 if (main1 === 'Rain') main1 = "rainy"
                 if (main2 === 'Rain') main2 = "rainy"
                 if (main2 === 'Rain') main3 = "rainy"
@@ -67,7 +70,7 @@ function Forecast({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToFor
                 setTemp2(temp2)
                 setMain3(main3)
                 setTemp3(temp3)
-                setView('3days')
+
             } catch (error) {
                 if (error) setError(error.message)
             }
@@ -77,14 +80,16 @@ function Forecast({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToFor
     const handleOnToday = () => {
         (async () => {
             try {
+                setView('today')
                 let { temp, temp_max, temp_min, main, wind } = await forecast(0)
                 if (main === 'Rain') main = "rainy"
+                if (main === 'Clouds') main = 'cloudy'
                 setWind(wind)
                 setMain(main)
                 setTemp(temp)
                 setTemp_min(temp_min)
                 setTemp_max(temp_max)
-                setView('today')
+
             } catch (error) {
                 if (error) setError(error.message)
             }
@@ -110,11 +115,11 @@ function Forecast({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToFor
                         </View>
 
                     </View>
-                    <TouchableHighlight style={styles.button} onPress={() => handle3daysForecast()}>
+                    <TouchableHighlight style={styles.button} onPress={() => days()}>
                         <Text style={styles.text}>Next 3 days</Text>
                     </TouchableHighlight>
                 </>)}
-                {view === "3days" && (<>
+                {view === "days" && (<>
                     <View style={styles.weatherContainer}>
                         <View style={styles.day}>
                             <MaterialCommunityIcons style={styles.icon} size={50} name={`weather-${main1}`} />

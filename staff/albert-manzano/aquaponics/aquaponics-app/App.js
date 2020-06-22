@@ -9,14 +9,14 @@ import {
   AsyncStorage,
 } from 'react-native';
 
-import { Landing, Home, Charts, Navbar, Forecast, Manager, Greenhouse } from './src/components';
+import { Landing, Home, Charts, Forecast, Manager, Greenhouse } from './src/components';
 
 import logic, { retrieveUser, logout, retrieveLastTemperature, retrieveLastPh, isUserLoggedIn, isUserSessionValid } from 'aquaponics-client-logic'
 
 logic.__context__.storage = AsyncStorage;
 
 export default function App() {
-  const [view, setView] = useState('calendar')
+  const [view, setView] = useState('landing')
   const [error, setError] = useState()
   const [name, setName] = useState('')
   const [role, setRole] = useState('')
@@ -46,8 +46,6 @@ export default function App() {
         try {
           const lastTemp = await retrieveLastTemperature()
           const lastPh = await retrieveLastPh()
-          console.log(lastTemp)
-          console.log(lastPh)
           setLastTemp(lastTemp)
           setLastPh(lastPh)
         } catch (error) {
@@ -65,12 +63,10 @@ export default function App() {
       setRole(role)
       setView('home')
     } else {
-      setView('home')
-      throw new Error('Contact your provider to confirm your registration')
+      setView('landing')
+      setError('Contact your provider to confirm your registration')
     }
   }
-
-  logic.__context__.storage = AsyncStorage;
 
   const handleGoToManager = () => {
     setView('manager')
@@ -87,7 +83,7 @@ export default function App() {
     setView('forecast')
   }
   const handleGoToCalendar = () => {
-    setView('calendar')
+    setView('calendary')
   }
 
   const handleGoToLogout = async (event) => {
@@ -99,13 +95,13 @@ export default function App() {
 
   return (<>
     <SafeAreaView style={styles.container}>
-      {view === 'landing' && <Landing view={'landing'} error={error} onAuthorized={handleAuthorized} />}
+      {view === 'landing' && <Landing  error={error} onAuthorized={handleAuthorized} />}
       {view === 'home' && <Home role={role} name={name} error={error} onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
       {view === 'charts' && <Charts role={role} onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
       {view === 'manager' && <Manager role={role} onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
       {view === 'greenhouse' && <Greenhouse role={role} lastPh={lastPh} lastTemp={lastTemp} onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
       {view === 'forecast' && <Forecast role={role} onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
-      {/* {view === 'calendar' && <Calendar onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />} */}
+      {view === 'calendary' && <Calendar onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
     </SafeAreaView>
   </>);
 }

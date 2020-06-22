@@ -13,6 +13,7 @@ import SideIntro from '../SideIntro'
 import Login from '../Login'
 import Navbar from '../Navbar'
 import Register from '../Register'
+import Feedback from '../Feedback';
 
 function Landing({ onAuthorized }) {
     const [view, setView] = useState('landing')
@@ -59,6 +60,7 @@ function Landing({ onAuthorized }) {
             <Navbar onDisplaySide={handleSide} />
             <ImageBackground source={require('../../../assets/images/lettuce1.jpg')} style={styles.image}>
                 {view === 'landing' && <Text style={styles.title} >Welcome to Red Rock Aquaponics</Text>}
+                {error ? <Feedback message={error.message} level={"error"} />:null}
                 {view === 'landing' && (<>
                     {displayed && < SideIntro onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
                 </>)}

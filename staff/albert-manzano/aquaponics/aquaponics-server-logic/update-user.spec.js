@@ -59,7 +59,7 @@ describe('logic-updateUser', () => {
             .catch(error => {
                 expect(error).to.exist
                 expect(error).to.be.an.instanceof(Error)
-                expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
+                expect(error.message).to.equal(`user with userId ${userId} does not exist`)
             })
     })
 

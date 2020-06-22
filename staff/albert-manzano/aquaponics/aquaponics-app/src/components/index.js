@@ -12,7 +12,7 @@ import Register from './Register'
 import Feedback from './Feedback'
 import Add from './Add'
 import Users from './Users'
-import Calendary from './'
+
 
 export {
     Login,
@@ -29,5 +29,5 @@ export {
     Feedback,
     Add,
     Users,
-    Calendary
+   
 }

@@ -16,6 +16,7 @@ const context = require('./context')
 require('aquaponics-commons/polyfills/number')
 
 module.exports = async function (name, surname, email, password, _password, phone) {
+    debugger
     String.validate(name)
     String.validate.notVoid(name)
     String.validate(surname)
@@ -24,7 +25,7 @@ module.exports = async function (name, surname, email, password, _password, phon
     Email.validate(email)
     if (password !== _password) throw new Error('password and confirmation do not match')
     Password.validate(password)
-    String.validate.lengthGreaterEqualThan(password, 8)
+    
     Number(phone)
     Number.validate(phone)
     const role = "user"
@@ -34,7 +35,7 @@ module.exports = async function (name, surname, email, password, _password, phon
         { name, surname, email, password, role, phone },
         { 'Content-type': 'application/json' })
         
-    if (status === 201) return body
+    if (status === 201) return 
 
     const { error } = JSON.parse(body)
     

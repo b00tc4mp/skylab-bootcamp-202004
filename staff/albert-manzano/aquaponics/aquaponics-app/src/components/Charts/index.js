@@ -30,7 +30,7 @@ function Charts({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToForec
     const handleSide = () => setSide(!displayed);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
+        // const timer = setTimeout(() => {
             (async () => {
                 try {
                     let tempResult = await retrieveTemperature()
@@ -43,8 +43,8 @@ function Charts({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToForec
                     throw new Error('something wrong happened')
                 }
             })()
-        }, 10000);
-        return () => clearTimeout(timer);
+        // }, 10000);
+        // return () => clearTimeout(timer);
     }, []);
 
     return (
@@ -72,9 +72,9 @@ function Charts({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToForec
                                 yAxisSuffix=" C˚"
                                 yAxisInterval={1} // optional, defaults to 1
                                 chartConfig={{
-                                    backgroundColor: "#e6e6e6",
-                                    backgroundGradientFrom: "#B2BEB5",
-                                    backgroundGradientTo: "#cccccc",
+                                    backgroundColor: "#ff9999",
+                                    backgroundGradientFrom: "#ff4d4d",
+                                    backgroundGradientTo: "#ff4d4d",
                                     decimalPlaces: 2, // optional, defaults to 2dp
                                     color: (opacity = 0.8) => `rgba(255, 255, 255, ${opacity})`,
                                     labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
@@ -95,7 +95,7 @@ function Charts({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToForec
                                     borderRadius: 16
                                 }}
                             /></ScrollView>
-                    </View></>) : <Text>Loading...</Text>}
+                    </View></>) : <Text textAlign={'center'}>Loading...</Text>}
 
                 <Text style={styles.title}>Ph</Text>
                 {phs ? (<>

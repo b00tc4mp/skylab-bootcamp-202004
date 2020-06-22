@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
 
     container: {
         width: '90%',
-        height: '20%',
+        
         backgroundColor: 'white',
         borderRadius: 20,
         margin: 20,
@@ -12,14 +12,32 @@ const styles = StyleSheet.create({
 
     data: {
         alignSelf: "center",
+        flexDirection: 'column'
     },
 
     wrap: {
-        marginTop:50,
-        flexDirection:'row',
-        justifyContent: "space-evenly", 
-        alignItems: 'baseline'
+        marginTop: 20,
+        flexDirection: 'row',
+        justifyContent:'space-around',
+        alignItems: 'baseline',
+        width:'90%',
+    },
+
+    arrow: {
+        marginTop: 20,
+        width: 30,
+        height: 30,
+    },
+
+    name:{
+        alignItems:'center'
+    },
+
+    item: {
+        textAlign: "center",
+        alignItems:"center"
     }
+
 
 })
 

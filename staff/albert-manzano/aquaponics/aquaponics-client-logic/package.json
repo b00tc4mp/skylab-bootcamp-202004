@@ -22,7 +22,8 @@
     "aquaponics-node-commons": "file:../aquaponics-node-commons"
   },
   "dependencies": {
+    "@babel/runtime": "^7.10.2",
     "aquaponics-commons": "file:../aquaponics-commons",
-    "@babel/runtime": "^7.10.2"
+    "not-async-storage": "^1.0.1"
   }
 }
