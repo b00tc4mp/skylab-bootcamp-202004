@@ -1,0 +1,55 @@
+import React, { useState } from "react";
+import {
+    StyleSheet,
+    Text,
+    TouchableOpacity
+} from "react-native";
+import Comments from "./Comments";
+import { logout } from "../gluttony-client-logic";
+
+const ProfilePage = () => {
+    const [showComments, setShowComments] = useState("");
+
+    return (
+        <ImageBackground source={require("../assets/images/final-food-and-drink-pattern-vector-1.png")} style={styles.image}>
+            <TouchableOpacity style={styles.openButton} onPress={ () => setShowComments(!showComments) }>
+                <Text style={styles.textStyle}>Comments</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.openButton} onPress={ () => logout() }>
+                <Text style={styles.textStyle}>Logout</Text>
+            </TouchableOpacity>
+            { showComments === "comments" && <Comments /> }
+        </ImageBackground>
+    )
+}
+
+const styles = StyleSheet.create({
+    image: {
+        flex: 1,
+        resizeMode: "cover",
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    openButton: {
+        padding: 2,
+        height: 65,
+        width: 100,
+        borderRadius: 200,
+        backgroundColor: "#FFFC87",
+        alignItems: "center",
+        justifyContent: "center",
+        borderColor: "black",
+        borderWidth: 3
+    },
+    textStyle: {
+        color: "black",
+        fontWeight: "800",
+        textAlign: "center",
+        fontSize: 30
+    }
+})
+
+export default ProfilePage

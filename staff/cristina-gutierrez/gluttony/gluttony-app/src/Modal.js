@@ -12,44 +12,44 @@ import Login from "./Login";
 import Register from "./Register";
 
 const ModalAuthentication = () => {
-        const [modalVisible, setModalVisible] = useState(false);
-        const [view, setView] = useState("login");
+    const [modalVisible, setModalVisible] = useState(false);
+    const [view, setView] = useState("login");
 
-        return (
-            <View style={styles.centeredView}>
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => {
+    return (
+        <View style={styles.centeredView}>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
                     Alert.alert("Modal has been closed.");
-                    }}
-                >
-                    <KeyboardAvoidingView
-                        behavior='padding' 
-                        style={styles.centeredView}
-                        >
-                        { view === "login" ? <Login 
-                            onGoToRegister={ () => setView("register") } 
-                            onCloseModal={() => setModalVisible(false) }
-                        /> : <Text /> }
-                        { view === "register" ? <Register 
-                            onGoToLogin={ () => setView("login") } 
-                            onCloseModal={() => setModalVisible(false) }
-                        /> : <Text /> }
-                    </KeyboardAvoidingView>
-                </Modal>
+                }}
+            >
+                <KeyboardAvoidingView
+                    behavior='padding' 
+                    style={styles.centeredView}
+                    >
+                    { view === "login" ? <Login 
+                        onGoToRegister={ () => setView("register") } 
+                        onCloseModal={() => setModalVisible(false) }
+                    /> : <Text /> }
+                    { view === "register" ? <Register 
+                        onGoToLogin={ () => setView("login") } 
+                        onCloseModal={() => setModalVisible(false) }
+                    /> : <Text /> }
+                </KeyboardAvoidingView>
+            </Modal>
 
-                <TouchableOpacity
-                    style={styles.openButton}
-                    onPress={() => {
-                    setModalVisible(true);
-                    }}
-                >
-                    <Text style={styles.textStyle}>Accede a Gluttony</Text>
-                </TouchableOpacity>
-            </View>
-        )
+            <TouchableOpacity
+                style={styles.openButton}
+                onPress={() => {
+                setModalVisible(true);
+                }}
+            >
+                <Text style={styles.textStyle}>Accede a Gluttony</Text>
+            </TouchableOpacity>
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({

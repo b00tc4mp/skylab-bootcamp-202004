@@ -7,7 +7,6 @@ import {
 } from "react-native";
 
 const Home = props => {
-
     return (
         <ImageBackground source={require("../assets/images/final-food-and-drink-pattern-vector-1.png")} style={styles.image}>
             <TouchableOpacity style={styles.openButton} onPress={props.onGoToMapBar}>
@@ -21,6 +20,15 @@ const Home = props => {
 }
 
 const styles = StyleSheet.create({
+    image: {
+        flex: 1,
+        resizeMode: "cover",
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center"
+    },
     openButton: {
         padding: 2,
         height: 150,
@@ -38,15 +46,6 @@ const styles = StyleSheet.create({
         fontWeight: "800",
         textAlign: "center",
         fontSize: 30
-    },
-    image: {
-        flex: 1,
-        resizeMode: "cover",
-        position: "absolute",
-        width: "100%",
-        height: "100%",
-        justifyContent: "center",
-        alignItems: "center"
     }
 })
 

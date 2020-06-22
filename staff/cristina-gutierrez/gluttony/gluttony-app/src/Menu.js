@@ -8,45 +8,45 @@ import {
 } from "react-native";
 
 let { width } = Dimensions.get("window");
-let button_count = 3;
+const BUTTON_COUNT = 3;
 
-const Menu = (props) => {
+const Menu = props => {
     return (
-        <View style={styles.container}>
-            <TouchableOpacity style={styles.openButton} onPress={props.onGoToHome}>
-                <Text style={styles.textStyle}>I'm thirsty</Text>
+        <View style={styles.menu} visible={true}>
+            <TouchableOpacity style={styles.openButton} onPress={ () => props.onGoTo("home") }>
+                <Text style={styles.textStyle}>Home</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.openButton} onPress={props.onGoToProfile}>
-                <Text style={styles.textStyle}>I'm hungry</Text>
+            <TouchableOpacity style={styles.openButton} onPress={ () => props.onGoTo("profilePage") }>
+                <Text style={styles.textStyle}>Profile page</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.openButton} onPress={props.onGoToFavourites}>
-                <Text style={styles.textStyle}>I'm hungry</Text>
+            <TouchableOpacity style={styles.openButton} onPress={ () => props.onGoTo("favourites") }>
+                <Text style={styles.textStyle}>Favourites</Text>
             </TouchableOpacity>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
+    menu: {
+        position: "absolute",
+        bottom: 0,
         flex: 1,
         flexDirection: "row"
-      },
+    },
     openButton: {
         padding: 2,
-        height: 65,
-        width: width / button_count,
+        height: 60,
+        width: width / BUTTON_COUNT,
         backgroundColor: "#FFFC87",
-        alignItems: "flex-end",
-        justifyContent: "flex-end",
+        alignItems: "center",
+        justifyContent: "center",
         alignSelf: "flex-end",
-        borderColor: "black",
-        borderWidth: 3
+        borderColor: "black"
     },
     textStyle: {
         color: "black",
-        fontWeight: "800",
-        textAlign: "center",
-        fontSize: 30
+        fontWeight: "500",
+        fontSize: 20
     }
 })
 
