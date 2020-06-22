@@ -3,15 +3,24 @@ import { View, StyleSheet, Text, FlatList, Dimensions, AsyncStorage } from 'reac
 import HeaderHome from './HeaderHome'
 import SingleFruit from './SingleFruit'
 import { foodItems } from '../constants/food-items'
-import { retrieveUserFoodList } from 'coohappy-client-logic'
+import { retrieveUserFoodList, retrieveCohousing } from 'coohappy-client-logic'
 
 
 const ShopList = function ({ navigation }) {
 
 
     const [userFoodList, setUserFoodList] = useState([])
+    const [cohousing, setCohousing] = useState()
 
+    useEffect(() => {
+        (async ()=> {
+            const token = await AsyncStorage.getItem('TOKEN')
+            const _cohousing = await retrieveCohousing(token)
+            setCohousing(_cohousing)
 
+        })()
+
+    }, [])
 
     const handleOnUpdateList = () => {
 
@@ -23,9 +32,9 @@ const ShopList = function ({ navigation }) {
             setUserFoodList(foodList.foodList)
         })()
     }
-useEffect(() =>{
+    useEffect(() => {
 
-},[userFoodList])
+    }, [userFoodList])
 
 
 
@@ -33,7 +42,7 @@ useEffect(() =>{
 
 
         <View style={styles.container}>
-            <HeaderHome navigation={navigation} />
+            <HeaderHome navigation={navigation} cohousingInfo={cohousing}/>
 
             {userFoodList.length ?
 
@@ -48,16 +57,16 @@ useEffect(() =>{
             </View>
 
             {userFoodList.length === 0 ?
-            <Text style={styles.shoppingParagraph}>Every Monday at 10:00 the community shopping list closes to send it to the supplier. You have until then to select your products.</Text>:
-            userFoodList.map(item =>
-                
-                <Text style={styles.weight}>{item.weight+'Kg '}<Text style={styles.name}>{item.name}</Text></Text>
-           
-              
-               
-            )
-            
-        }
+                <Text style={styles.shoppingParagraph}>Every Monday at 10:00 the community shopping list closes to send it to the supplier. You have until then to select your products.</Text> :
+                userFoodList.map(item =>
+
+                    <Text style={styles.weight}>{item.weight + 'Kg '}<Text style={styles.name}>{item.name}</Text></Text>
+
+
+
+                )
+
+            }
 
             <View>
                 <View style={styles.bar}></View>
@@ -92,7 +101,7 @@ const styles = StyleSheet.create({
         height: 0.8,
         backgroundColor: '#003725',
         marginBottom: 10,
-        marginTop:10
+        marginTop: 10
     },
     shoppingTitle: {
         fontWeight: '700',
@@ -111,14 +120,14 @@ const styles = StyleSheet.create({
     foodList: {
         marginTop: 40
     },
-    weight:{
-        
-        
+    weight: {
+
+
         marginLeft: 25,
         fontWeight: '700',
-        fontSize:17
+        fontSize: 17
     },
-    name:{
-        fontWeight:'500'
+    name: {
+        fontWeight: '500'
     }
 })

@@ -14,7 +14,7 @@ module.exports = (name, surname, email, password) => {
     return (async () => {
         const user = await User.findOne({ email })
 
-        if (user) throw new DuplicityError(`user with e-mail ${email} already exists`)
+        if (user) throw new DuplicityError(`User with e-mail ${email} already exists`)
 
         const hash = await bcrypt.hash(password, 10)
 

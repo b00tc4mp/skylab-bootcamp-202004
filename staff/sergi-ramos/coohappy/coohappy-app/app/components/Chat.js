@@ -3,7 +3,7 @@ import { TextInput, TouchableOpacity, View, StyleSheet, Text, AsyncStorage } fro
 import { useFocusEffect } from '@react-navigation/native'
 import SvgUri from "expo-svg-uri"
 import HeaderHome from './HeaderHome'
-import { sendMessage, retrieveMessage, retrieveUser } from 'coohappy-client-logic'
+import { sendMessage, retrieveMessage, retrieveUser, retrieveCohousing } from 'coohappy-client-logic'
 import getNow from 'coohappy-client-logic/helpers/getNow'
 import { FlatList } from 'react-native-gesture-handler';
 
@@ -12,12 +12,13 @@ const Chat = function ({ navigation }) {
     const [messages, setMessages] = useState([])
     const [singleMessage, setSingleMessage] = useState()
     const [userId, setUserId] = useState()
-
+    const [cohousing, setCohousing] = useState()
+    
     let interval
     useFocusEffect(
         React.useCallback(() => {
             interval = setInterval(async () => {
-                const token = await AsyncStorage.getItem('TOKEN')
+                const token = await AsyncStorage.getItem('TOKEN')                
                 const _messages = await retrieveMessage(token)
                 setMessages(_messages.messages.reverse())
             }, 2000)
@@ -28,16 +29,20 @@ const Chat = function ({ navigation }) {
         }, [])
     )
 
-    useEffect(() => {
 
+    useEffect(() => {
+    
     }, [messages.length])
 
     useEffect(() => {
         (async () => {
-
+debugger
             const token = await AsyncStorage.getItem('TOKEN')
             const user = await retrieveUser(token)
             setUserId(user.id)
+            const cohousing = await retrieveCohousing(token)
+            setCohousing(cohousing)
+            console.log('hola')
             const _messages = await retrieveMessage(token)
             setMessages(_messages.messages.reverse())
         })()
@@ -66,7 +71,7 @@ const Chat = function ({ navigation }) {
 
         <View style={styles.container}>
 
-            <HeaderHome navigation={navigation} />
+            <HeaderHome navigation={navigation} cohousingInfo={cohousing}/>
 
             <View style={styles.messages}>
 

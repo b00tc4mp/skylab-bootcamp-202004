@@ -31,6 +31,10 @@ module.exports = new Schema({
             city: {
                 type: String,
                 required: true
+            },
+            country: {
+                type: String,
+                required: true
             }
         },
         require: true

@@ -1,21 +1,67 @@
-import React, { useState } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { StyleSheet, View, Text, TouchableOpacity,AsyncStorage } from 'react-native'
 import SvgUri from 'expo-svg-uri'
+import { retrieveCohousing, retrieveUser } from 'coohappy-client-logic'
 
-const HeaderHome = function ({user, surname, navigation}) {
-    //const [name, setName] = useState
-    //const [surname, setSurname] = useState
+const HeaderHome = function ({ user, surname, navigation, cohousingInfo }) {
 
-    //setName(user)
-    //setSurname(user.surname)
+    const [ cohousing, setCohousing ] = useState()
+    const [ userRole, setUserRole ] = useState()
+
+    useEffect(() => {
+
+      
+
+    }, [cohousingInfo])
+
+    useEffect(() => {
+
+        (async () => {
+            const token = await AsyncStorage.getItem('TOKEN')
+
+            const user = await retrieveUser(token)
+            const { role } = user
+            setUserRole(role)
+        })()
+
+    },[])
+
+
+
     return (
 
+
         <View style={styles.header}>
-            <SvgUri style={styles.houseIcon} source={require('../assets/ic-house.svg')} />
-            <Text style={styles.titleText}>{user} {surname} </Text>
-            <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('UpdateUser')}>
-            <SvgUri  style={styles.userIcon} source={require('../assets/ic-user.svg') } />
-            </TouchableOpacity>
+
+            {userRole !== 'admin' ?
+                <>
+                    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('InfoCommunity')}>
+                        <SvgUri style={styles.houseIcon} source={require('../assets/ic-house.svg')} />
+                    </TouchableOpacity>
+                    {cohousingInfo && <Text style={styles.titleText}>{cohousingInfo.name} </Text>}
+
+                    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('UpdateUser')}>
+                        <SvgUri style={styles.userIcon} source={require('../assets/ic-user.svg')} />
+                    </TouchableOpacity>
+                </> :
+
+                <>
+                    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('InfoCommunityAdmin')}>
+                        <SvgUri style={styles.houseIcon} source={require('../assets/ic-house.svg')} />
+                    </TouchableOpacity>
+                    {cohousingInfo && <Text style={styles.titleText}>{cohousingInfo.name} </Text>}
+
+                    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('UpdateUser')}>
+                        <SvgUri style={styles.userIcon} source={require('../assets/ic-user.svg')} />
+                    </TouchableOpacity>
+                </>
+
+
+            }
+
+
+
+
         </View>
     )
 }

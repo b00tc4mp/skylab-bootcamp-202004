@@ -1,15 +1,15 @@
 require('coohappy-commons/polyfills/string')
 const { utils: { Email, call } } = require('coohappy-commons')
-const { API_URL } = require('./context')
+const context = require('./context')
 
-module.exports = (token) => {
-
-  String.validate.notVoid(token)
+module.exports = function() {
 
 
   return (async () => {
 
-    const res = await call('GET', `${API_URL}user/food`, undefined, { 'Authorization': `Bearer ${token}` })
+    const token = await this.storage.getItem('TOKEN')
+
+    const res = await call('GET', `${this.API_URL}/user/food`, undefined, { 'Authorization': `Bearer ${token}` })
 
     if (res.status === 200) return JSON.parse(res.body)
 
@@ -18,4 +18,4 @@ module.exports = (token) => {
 
     throw new Error(error)
   })()
-}
+}.bind(context)
