@@ -34,6 +34,7 @@ const handleGoToLogin = event => {
 
 
     return <section className="register">
+        <div className="register__container">
         <div className="register__logo">
             <img src={logo}></img>
         </div>
@@ -50,5 +51,6 @@ const handleGoToLogin = event => {
 
             {error && <Feedback message={error} level="error" />}
         </form>
+        </div>
     </section>
 }

@@ -4,6 +4,7 @@ import './Login.sass'
 import logo from '../images/animated-plane-v4-name&shadow.png';
 import { authenticateUser } from 'moove-it-client-logic';
 
+
 export default function Login({onLogin, onGoToRegister}){
     const [error, setError] = useState()
 
@@ -17,7 +18,7 @@ export default function Login({onLogin, onGoToRegister}){
 
         try {
             authenticateUser(email, password)
-                .then(onLogin)
+                .then(onLogin()) 
                 .catch(error => setError(error.message))
         } catch ({message}) {
             setError(message)
@@ -29,6 +30,7 @@ export default function Login({onLogin, onGoToRegister}){
         onGoToRegister()
     }
     return <section className="login">
+        <div className="login__container">
     <div className="login__logo">
             <img src={logo}></img>
         </div>
@@ -41,5 +43,6 @@ export default function Login({onLogin, onGoToRegister}){
 
         {error && <Feedback message={error} level="error" />}
     </form>
+    </div>
 </section>
 }
