@@ -7,6 +7,7 @@ import { HashRouter as Router } from 'react-router-dom'
 import { context } from 'moove-it-client-logic'
 import Home from './components/Home'
 
+
 const { REACT_APP_API_URL: API_URL } = process.env
 
 context.API_URL = API_URL

@@ -30,6 +30,7 @@ export default function Login({onLogin, onGoToRegister}){
         onGoToRegister()
     }
     return <section className="login">
+        <div className="login__container">
     <div className="login__logo">
             <img src={logo}></img>
         </div>
@@ -42,5 +43,6 @@ export default function Login({onLogin, onGoToRegister}){
 
         {error && <Feedback message={error} level="error" />}
     </form>
+    </div>
 </section>
 }
