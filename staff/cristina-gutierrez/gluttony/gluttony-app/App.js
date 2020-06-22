@@ -29,7 +29,9 @@ const App = () => {
         onShowModal={ () => setModalVisible(true) }
         onGoToHome={ () => setView("home") }
       /> }
-      { view === "favourites" && <Favourites /> }
+      { view === "favourites" && <Favourites
+        onShowModal={ () => setModalVisible(true) }
+      /> } 
       <Modal 
         isVisible={ modalVisible } 
         onGoToHome={ () => setView("home") }

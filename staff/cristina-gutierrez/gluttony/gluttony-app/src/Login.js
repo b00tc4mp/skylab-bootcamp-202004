@@ -34,7 +34,7 @@ const Login = (props) => {
 
             <TouchableOpacity style={styles.openButton} onPress={() => {
                 authenticateUser(email, password)
-                    .then(() => props.onSuccess())
+                    .then(() => props.onCloseModal())
                     .catch(console.log)
             }}>
                 <Text style={styles.textStyle}>Iniciar sesión</Text>

@@ -2,24 +2,22 @@ import React, { useState, useEffect } from "react";
 import {
     StyleSheet,
     Text,
-    TouchableOpacity,
     ImageBackground
 } from "react-native";
+import { retrieveUser } from "../gluttony-client-logic";
 
-const ProfilePage = (props) => {
-    const [showComments, setShowComments] = useState("");
+const Favourites = (props) => {
+    const [user, setUser] = useState();
+
+    useEffect(() => {
+        retrieveUser()
+            .then(user => setUser(user))
+            .catch(() => props.onShowModal())
+    }, [])
 
     return (
         <ImageBackground source={require("../assets/images/final-food-and-drink-pattern-vector-1.png")} style={styles.image}>
-            <TouchableOpacity style={styles.openButton} onPress={ () => setShowComments(!showComments) }>
-                <Text style={styles.textStyle}>Comments</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.openButton} onPress={() => {
-                logout().then(() => props.onGoToHome())
-            }}>
-                <Text style={styles.textStyle}>Logout</Text>
-            </TouchableOpacity>
-            { showComments === "comments" && <Comments /> }
+            <Text style={styles.textStyle}>Favourites</Text>
         </ImageBackground>
     )
 }
@@ -53,4 +51,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ProfilePage
+export default Favourites

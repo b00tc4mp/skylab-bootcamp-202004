@@ -25,16 +25,14 @@ const ModalAuthentication = (props) => {
                 style={styles.centeredView}
                 >
                 { view === "login" && <Login 
-                    onSuccess={() => {
-                        props.onHideModal() 
-                        props.onGoToHome()
-                    }}
                     onGoToRegister={ () => setView("register") } 
-                    onCloseModal={() => props.onHideModal() }
+                    onCloseModal={() => {
+                        props.onHideModal()
+                        props.onGoToHome() 
+                    }}
                 /> }
                 { view === "register" && <Register 
                     onGoToLogin={ () => setView("login") } 
-                    onCloseModal={() => props.onHideModal() }
                 /> }
             </KeyboardAvoidingView>
         </Modal>
