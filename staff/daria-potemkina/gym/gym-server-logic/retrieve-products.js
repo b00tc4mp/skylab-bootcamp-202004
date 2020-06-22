@@ -5,7 +5,7 @@ const { errors: { UnexistenceError } } = require('gym-commons')
 module.exports = () => {
 
     return (async () => {
-        debugger
+
         const products = await Product.find({settlementDate: {$gte: new Date() }}).sort({ settlementDate: 1 }).lean()
 
         if (!products.length) throw new UnexistenceError('there are no products to show')

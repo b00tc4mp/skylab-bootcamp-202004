@@ -57,6 +57,7 @@ function ProductDetails({ token, prices, underlyings, item, expanded }) {
         side = side.value
 
         try {
+            debugger
             addProduct(token, item._id, item.priceId, side, quantity)
                 .then(() => setSuccess('trade has been added to the portfolio'))
                 .catch(({ message }) => setError(message))

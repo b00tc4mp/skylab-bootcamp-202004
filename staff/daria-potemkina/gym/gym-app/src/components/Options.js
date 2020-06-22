@@ -31,7 +31,7 @@ export default function ({ token, options, handleGoToDetails }) {
         <h1 className="products__title">Options</h1>
         <ul className="products__items">{
             options.map(option =>
-                <li className="products__item">
+                <li key={option._id} className="products__item">
                     <button className="products__details" onClick={event => {
                         event.preventDefault()
 

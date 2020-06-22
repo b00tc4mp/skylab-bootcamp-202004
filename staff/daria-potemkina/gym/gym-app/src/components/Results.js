@@ -30,7 +30,7 @@ export default function ({ token, results, handleGoToDetails }) {
     return <section className='products'>
         <ul className="products__items">{
             results.map(item =>
-                <li className='products__item'>
+                <li key={item._id} className='products__item'>
                     <button className="products__details" onClick={event => {
                         event.preventDefault()
 

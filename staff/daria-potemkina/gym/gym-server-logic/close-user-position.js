@@ -34,49 +34,61 @@ module.exports = (userId) => {
 
             settlementDate = settlementDate.toString().split(' ').slice(1, 4).join(' ')
 
-            if (settlementDate !== dateToday) throw new ValueError("should not be executed due to not reaching expiration date")
+            if (settlementDate == dateToday) {
+                const { productType, contractSize } = _product
+                
+                dateToday = new Date().toString().split(' ').slice(1, 4)
 
-            const { productType, contractSize } = _product
+                dateToday.push('UTC')
 
-            if (productType === 'future') {
-                const price = await Price.findOne({ product: ObjectId(product), date: new Date(dateToday) })
+                dateToday = dateToday.join(' ')
 
-                const { price: _price } = price
+                if (productType === 'future') {
+                    dateToday = new Date().toString().split(' ').slice(1, 4)
 
-                for (let j in trades) {
-                    if (trades[j].type === "Sell")
-                        profitAndLoss += ((trades[j].price.price - _price) * contractSize * trades[j].quantity).toFixed(2) * 1
+                    dateToday.push('UTC')
 
-                    else
-                        profitAndLoss += ((_price - trades[j].price.price) * contractSize * trades[j].quantity).toFixed(2) * 1
-                }
-            } else if (productType === 'option') {
-                const optionUnderlying = await Underlying.findOne({ ticker: ticker })
+                    dateToday = dateToday.join(' ')
 
-                const optionUnderlyingPrice = await Price.findOne({ product: optionUnderlying._id, date: new Date(dateToday) })
+                    const price = await Price.findOne({ product: ObjectId(product), date: new Date(dateToday) })
 
-                const { price: __price } = optionUnderlyingPrice
+                    const { price: _price } = price
 
-                for (let j in trades) {
-                    const { side, strike } = _product.type
-                    if (side === 'call' && trades[j].type === 'Buy') {
-                        if (__price > strike)
-                            profitAndLoss += ((__price - strike) * contractSize * trades[j].quantity).toFixed(2) * 1
+                    for (let j in trades) {
+                        if (trades[j].type === "Sell")
+                            profitAndLoss += ((trades[j].price.price - _price) * contractSize * trades[j].quantity).toFixed(2) * 1
 
-                    } else if (side === 'call' && trades[j].type === 'Sell') {
-                        if (__price > strike)
-                            profitAndLoss -= ((__price - strike) * contractSize * trades[j].quantity).toFixed(2) * 1
-                    } else if (side === 'put' && trades[j].type === 'Buy') {
-                        if (strike > __price)
-                            profitAndLoss += ((strike - __price) * contractSize * trades[j].quantity).toFixed(2) * 1
-                    } else if (side === 'put' && trades[j].type === 'Sell') {
-                        if (strike > __price)
-                            profitAndLoss -= ((strike - __price) * contractSize * trades[j].quantity).toFixed(2) * 1
+                        else
+                            profitAndLoss += ((_price - trades[j].price.price) * contractSize * trades[j].quantity).toFixed(2) * 1
+                    }
+                } else if (productType === 'option') {
+                    const optionUnderlying = await Underlying.findOne({ ticker: ticker })
+
+                    const optionUnderlyingPrice = await Price.findOne({ product: optionUnderlying._id, date: new Date(dateToday) })
+
+                    const { price: __price } = optionUnderlyingPrice
+
+                    for (let j in trades) {
+                        const { side, strike } = _product.type
+                        if (side === 'call' && trades[j].type === 'Buy') {
+                            if (__price > strike)
+                                profitAndLoss += ((__price - strike) * contractSize * trades[j].quantity).toFixed(2) * 1
+
+                        } else if (side === 'call' && trades[j].type === 'Sell') {
+                            if (__price > strike)
+                                profitAndLoss -= ((__price - strike) * contractSize * trades[j].quantity).toFixed(2) * 1
+                        } else if (side === 'put' && trades[j].type === 'Buy') {
+                            if (strike > __price)
+                                profitAndLoss += ((strike - __price) * contractSize * trades[j].quantity).toFixed(2) * 1
+                        } else if (side === 'put' && trades[j].type === 'Sell') {
+                            if (strike > __price)
+                                profitAndLoss -= ((strike - __price) * contractSize * trades[j].quantity).toFixed(2) * 1
+                        }
                     }
                 }
-            }
 
-            await Contract.findByIdAndUpdate(_id, { isValid: false })
+                await Contract.findByIdAndUpdate(_id, { isValid: false })
+            }
         }
 
         guarantee = await addGuarantee(userId)

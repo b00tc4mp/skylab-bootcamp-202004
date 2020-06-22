@@ -5,7 +5,7 @@ const cron = require('node-cron')
 
 const { mongoose, models: { User } } = require('gym-data')
 
-cron.schedule("50 13 * * *", async () => {
+cron.schedule("14 23 * * *", async () => {
     try {
         await mongoose.connect('mongodb://localhost:27017/gym-api')
         console.log('connected')
