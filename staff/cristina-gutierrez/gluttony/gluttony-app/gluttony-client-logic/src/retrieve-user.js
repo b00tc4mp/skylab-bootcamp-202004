@@ -4,14 +4,16 @@ const axios = require("axios")
 const { AsyncStorage } = require("react-native")
 
 module.exports = async () => {
+    let token
+
     try {
-        const token = await AsyncStorage.getItem("token");
+        token = await AsyncStorage.getItem("token");
         String.validate.notVoid(token);
     } catch (error) {
         throw new Error("Error retrieving data")
     }
 
-    return axios.get(`${API_URL}/users`, {
+    return await axios.get(`${API_URL}/users`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
         .then(({ status, data }) => {
