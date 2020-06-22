@@ -1,7 +1,7 @@
 const { env: { SECRET } } = process
 
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, addUserCard, retrieveUserCard, retrieveUserBalance, addProduct, closeUserPosition, profitAndLoss, retrievePrices, retrieveProducts, retrieveUnderlyings, retrieveUserTrades, searchProducts } = require('./handlers')
+const { registerUser, authenticateUser, retrieveUser, addUserCard, retrieveUserCard, retrieveUserBalance, addProduct, closeUserPosition, profitAndLoss, retrievePrices, retrieveProducts, retrieveUnderlyings, retrieveUserTrades, searchProducts, retrieveProduct } = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
 const { handleError } = require('../helpers')
@@ -38,6 +38,8 @@ api.get('/underlyings/:ticker', retrieveUnderlyings)
 api.get('/users/trades', verifyExtractJwt, retrieveUserTrades)
 
 api.get('/products?', searchProducts)
+
+api.get('/product/:productId', retrieveProduct)
 
 module.exports = {
     api

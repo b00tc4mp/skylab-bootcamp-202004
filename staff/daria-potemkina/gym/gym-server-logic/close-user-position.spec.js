@@ -9,7 +9,7 @@ const { mongoose, models: { User, Product, Price, Contract, AccountBalance, Unde
 const { errors: { UnexistenceError } } = require('gym-commons')
 const { ObjectId } = mongoose
 
-describe.('logic - closeUserPosition', () => {
+describe('logic - closeUserPosition', () => {
     before(() => mongoose.connect(MONGODB_URL_TEST))
 
     let optionUnderlying, user, userId, future, option, _option, futureId, optionId, _future, futurePrice, ____optionPrice, ___optionPrice, _optionPriceId, ___futurePrice, futurePriceId, optionPriceId, dateToday, futureBuyContract, futureSellContract, optionBuyPutContract, optionSellCallContract

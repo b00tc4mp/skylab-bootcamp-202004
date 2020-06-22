@@ -17,23 +17,28 @@ mongoose.connect('mongodb://localhost:27017/gym-api')
 
 Price.create(
     {
-        product: ObjectId('5eefac14161adcf9aa76b3fb'),
+        product: ObjectId('5ef118713211394184e93ee8'),
         date: new Date(dateToday),
         price: randomPrice(3, 4)
     },
     {
-        product: ObjectId('5eefac14161adcf9aa76b3fb'),
+        product: ObjectId('5ef118713211394184e93ee8'),
         date: new Date('June 20, 2020'),
         price: randomPrice(3, 4)
     },
     {
-        product: ObjectId('5eefac14161adcf9aa76b3fb'),
+        product: ObjectId('5ef118713211394184e93ee8'),
         date: new Date('June 21, 2020'),
         price: randomPrice(3, 4)
     },
     {
-        product: ObjectId('5eefac14161adcf9aa76b3fb'),
+        product: ObjectId('5ef118713211394184e93ee8'),
         date: new Date('June 18, 2020'),
+        price: randomPrice(3, 4)
+    },
+    {
+        product: ObjectId('5ef118713211394184e93ee8'),
+        date: new Date('June 22, 2020'),
         price: randomPrice(3, 4)
     }
 )

@@ -6,7 +6,7 @@ import Spinner from './Spinner'
 import './Home.sass'
 import Feedback from './Feedback'
 
-function Home ({handleGoToDetails, handleShowUnderlyingPrices, token}) {
+function Home ({handleGoToDetails, handleShowUnderlyingPrices}) {
     const [options, setOptions] = useState();
     const [futures, setFutures] = useState();
     const [name, setName] = useState();
@@ -15,14 +15,14 @@ function Home ({handleGoToDetails, handleShowUnderlyingPrices, token}) {
 
     useEffect(() => {
         setLoading(true)
-        try {
-            retrieveUser(token)
-                .then(({name}) => setName(name))
-        } catch ({message}) {
-            setError(message)
-        }
+        // try {
+        //     retrieveUser()
+        //         .then(({name}) => setName(name))
+        // } catch ({message}) {
+        //     setError(message)
+        // }
         
-    }, [token])
+    }, [])
 
     useEffect(() => {
         try {
@@ -47,8 +47,8 @@ function Home ({handleGoToDetails, handleShowUnderlyingPrices, token}) {
 
         return <section className="home">
             {loading && <Spinner /> }
-            {futures && <Futures token={token} futures={futures} handleGoToDetails = {handleGoToDetails} handleShowUnderlyingPrices={handleShowUnderlyingPrices}/>}
-            {options && <Options token={token} options={options} handleGoToDetails = {handleGoToDetails} handleShowUnderlyingPrices={handleShowUnderlyingPrices}/>}
+            {futures && <Futures futures={futures} handleGoToDetails = {handleGoToDetails} handleShowUnderlyingPrices={handleShowUnderlyingPrices}/>}
+            {options && <Options options={options} handleGoToDetails = {handleGoToDetails} handleShowUnderlyingPrices={handleShowUnderlyingPrices}/>}
             {error && !loading && <Feedback message={error} level="error" />}
         </section>
 }

@@ -10,6 +10,9 @@ require('gym-commons/ponyfills/xhr')
 const { ObjectId } = mongo
 const { utils: { jwtPromised } } = require('gym-commons')
 const moment = require('moment')
+const context = require('./context')
+
+context.storage = {}
 
 describe('logic - retrieveUserPortfolio', () => {
     let users, products, prices, contracts
@@ -22,7 +25,7 @@ describe('logic - retrieveUserPortfolio', () => {
             prices = connection.db().collection('prices')
         }))
 
-    let user, product, price, userId, token, _token, productId, priceId
+    let user, product, price, userId, productId, priceId
 
     beforeEach(() => {
         return Promise.all([
@@ -68,7 +71,7 @@ describe('logic - retrieveUserPortfolio', () => {
                                 .then(_user => {
                                     userId = _user.insertedId.toString()
                                     return jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET)
-                                        .then(_token => token = _token)
+                                        .then(_token => context.storage.token = _token)
                                         .then(() => {
                                             contract = {
                                                 user: ObjectId(userId),
@@ -88,7 +91,7 @@ describe('logic - retrieveUserPortfolio', () => {
     })
 
     it('should return a users trades', () => {
-        return retrieveUserPortfolio(token)
+        return retrieveUserPortfolio()
             .then(results => {
                 expect(results).to.be.an('array')
                 expect(results).have.lengthOf(1)
@@ -125,9 +128,9 @@ describe('logic - retrieveUserPortfolio', () => {
         const _userId = ObjectId().toString()
 
         return jwtPromised.sign({ sub: _userId }, SECRET)
-            .then(_token => token = _token)
+            .then(_token => context.storage.token = _token)
             .then(() =>
-                retrieveUserPortfolio(token)
+                retrieveUserPortfolio()
                     .then(() => { throw new Error('should not reach this point') })
                     .catch(error => {
                         expect(error).to.exist
@@ -141,7 +144,7 @@ describe('logic - retrieveUserPortfolio', () => {
     it('should return an error when the user do not have any trade added', () => {
         return contracts.deleteMany()
             .then(() => {
-                return retrieveUserPortfolio(token)
+                return retrieveUserPortfolio()
                     .then(() => { throw new Error('should not reach this point') })
                     .catch(error => {
                         expect(error).to.exist
@@ -151,36 +154,6 @@ describe('logic - retrieveUserPortfolio', () => {
                     })
             })
     })
-
-    it('should return a type error', () => {
-        token = undefined
-        expect( () => {
-            retrieveUserPortfolio(token)
-        }).to.throw(TypeError, `${token} is not a string`)
-
-        token= 123
-        expect( () => {
-            retrieveUserPortfolio(token)
-        }).to.throw(TypeError, `${token} is not a string`)
-
-        token = false
-        expect( () => {
-            retrieveUserPortfolio(token)
-        }).to.throw(TypeError, `${token} is not a string`)
-    })
-
-    it('should return an error', () => {
-        token = ''
-        expect( () => {
-            retrieveUserPortfolio(token)
-        }).to.throw(Error, 'string is empty or blank')
-
-        token= '  '
-        expect( () => {
-            retrieveUserPortfolio(token)
-        }).to.throw(Error, 'string is empty or blank')
-    })
-
 
     afterEach(() =>
         Promise.all([

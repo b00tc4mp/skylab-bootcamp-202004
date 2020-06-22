@@ -1,16 +1,20 @@
 require('dotenv').config()
 
-const { env: { MONGODB_URL_TEST } } = process
+const { env: { MONGODB_URL_TEST, TEST_API_URL: API_URL } } = process
 
-const authenticateUser = require('./authenticate-user')
+const loginUser = require('./login-user')
 const { random } = Math
 const { expect } = require('chai')
 const { mongo } = require('gym-data')
 const bcrypt = require('bcryptjs')
 require('gym-commons/ponyfills/xhr')
 require('gym-commons/ponyfills/atob')
+const context = require('./context')
 
-describe('logic - authenticate user', () => {
+context.API_URL = API_URL
+context.storage = {}
+
+describe('logic - login user', () => {
     let users
 
     before(() => mongo.connect(MONGODB_URL_TEST)
@@ -40,8 +44,10 @@ describe('logic - authenticate user', () => {
         )
 
         it('should succeed on correct credentials', () =>
-            authenticateUser(email, password)
-                .then(token => {
+            loginUser(email, password)
+                .then(() => {
+                    const {token} = context.storage
+
                     const [, payloadBase64] = token.split('.')
 
                     const payloadJson = atob(payloadBase64)
@@ -57,7 +63,7 @@ describe('logic - authenticate user', () => {
         it('should fail on wrong password', () => {
             password += 'wrong-'
 
-            return authenticateUser(email, password)
+            return loginUser(email, password)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.be.an.instanceof(Error)
@@ -67,7 +73,7 @@ describe('logic - authenticate user', () => {
     })
 
     it('should fail when user does not exist', () =>
-        authenticateUser(email, password)
+        loginUser(email, password)
             .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
                 expect(error).to.be.an.instanceof(Error)
@@ -78,44 +84,44 @@ describe('logic - authenticate user', () => {
     it('should return a type error', () => {
         _password = undefined
         expect( () => {
-            authenticateUser(email, _password)
+            loginUser(email, _password)
         }).to.throw(TypeError, `${_password} is not a string`)
 
         _password= 123
         expect( () => {
-            authenticateUser(email, _password)
+            loginUser(email, _password)
         }).to.throw(TypeError, `${_password} is not a string`)
 
         _password = false
         expect( () => {
-            authenticateUser(email, _password)
+            loginUser(email, _password)
         }).to.throw(TypeError, `${_password} is not a string`)
     })
 
     it('should return an error', () => {
         _email = 'pepito'
         expect( () => {
-            authenticateUser(_email, password)
+            loginUser(_email, password)
         }).to.throw(Error, `${_email} is not an e-mail`)
 
         _email= 'peito@mail'
         expect( () => {
-            authenticateUser(_email, password)
+            loginUser(_email, password)
         }).to.throw(Error, `${_email} is not an e-mail`)
 
         _email = 'peito.com'
         expect( () => {
-            authenticateUser(_email, password)
+            loginUser(_email, password)
         }).to.throw(Error, `${_email} is not an e-mail`)
 
         _password = ' '
         expect( () => {
-            authenticateUser(email, _password)
+            loginUser(email, _password)
         }).to.throw(Error, 'string is empty or blank')
 
         _password = ''
         expect( () => {
-            authenticateUser(email, _password)
+            loginUser(email, _password)
         }).to.throw(Error, 'string is empty or blank')
         
     })

@@ -6,10 +6,10 @@ export default function ({ trades }) {
         <ul className="portfolio__trades">
             {
                 trades.trades.map(({ price: { price }, type, quantity })=> 
-                <li className="portfolio__item">
-                    <p>{type}</p>
-                    <p>{quantity}</p>
-                    <p>{`${price}€`}</p>
+                <li key={`${price}-${quantity}`} className="trades__items">
+                    <p className="trades__trade-type">{type}</p>
+                    <p className="trades__quantity">{quantity}</p>
+                    <p className="trades__price">{`${price}€`}</p>
                 </li>
             )}
         </ul>

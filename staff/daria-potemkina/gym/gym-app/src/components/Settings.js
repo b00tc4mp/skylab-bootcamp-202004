@@ -3,7 +3,7 @@ import { addUserCard } from 'gym-client-logic'
 import Feedback from './Feedback'
 import './Settings.sass'
 
-export default function ({ token }) {
+export default function () {
     const [error, setError] = useState()
     const [success, setSuccess] = useState()
 
@@ -23,7 +23,7 @@ export default function ({ token }) {
         const number = number1+number2+number3+number4
 
         try {
-            addUserCard(token, number, holder, expirationDate, cvv)
+            addUserCard(number, holder, expirationDate, cvv)
                 .then(() => {
                     setSuccess('the card is added')
                     setError(undefined)

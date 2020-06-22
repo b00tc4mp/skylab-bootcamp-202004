@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const { env: { MONGODB_URL_TEST, SECRET_TEST: SECRET } } = process
 
-const isUserAuthenticated = require('./is-user-authenticated')
+const isUserSessionValid = require('./is-user-session-valid')
 const { random } = Math
 const { expect } = require('chai')
 const { mongo } = require('gym-data')
@@ -10,8 +10,11 @@ require('gym-commons/ponyfills/xhr')
 require('gym-commons/ponyfills/atob')
 const { utils: { jwtPromised } } = require('gym-commons')
 const { ObjectId } = mongo
+const context = require('./context')
 
-describe('logic - isUserAuthenticate', () => {
+context.storage = {}
+
+describe('logic - isUserSessionValid', () => {
     let users
 
     before(() => mongo.connect(MONGODB_URL_TEST)
@@ -19,7 +22,7 @@ describe('logic - isUserAuthenticate', () => {
             users = connection.db().collection('users')
         }))
 
-    let name, surname, email, password, token
+    let name, surname, email, password
 
     beforeEach(() =>
         users.deleteMany()
@@ -31,12 +34,12 @@ describe('logic - isUserAuthenticate', () => {
 
                 return users.insertOne({ name, surname, email, password })
                     .then(user => jwtPromised.sign({ sub: user.insertedId.toString() }, SECRET))
-                    .then(_token => token = _token)
+                    .then(_token => context.storage.token = _token )
             })
     )
 
     it('should succeed when the user is authenticated and token is not expired', () =>
-        isUserAuthenticated(token)
+        isUserSessionValid()
             .then(result => expect(result).to.equal(true))
     )
 
@@ -44,37 +47,9 @@ describe('logic - isUserAuthenticate', () => {
         const _userId = ObjectId().toString()
 
         return jwtPromised.sign({ sub: _userId }, SECRET)
-            .then(_token => token = _token)
-            .then(() => isUserAuthenticated(token)
+            .then(_token => context.storage.token = _token)
+            .then(() => isUserSessionValid()
                 .then(result => expect(result).to.equal(false)))
     })
 
-    it('should return a type error', () => {
-        token = undefined
-        expect( () => {
-            isUserAuthenticated(token)
-        }).to.throw(TypeError, `${token} is not a string`)
-
-        token= 123
-        expect( () => {
-            isUserAuthenticated(token)
-        }).to.throw(TypeError, `${token} is not a string`)
-
-        token = false
-        expect( () => {
-            isUserAuthenticated(token)
-        }).to.throw(TypeError, `${token} is not a string`)
-    })
-
-    it('should return an error', () => {
-        token = ''
-        expect( () => {
-            isUserAuthenticated(token)
-        }).to.throw(Error, 'string is empty or blank')
-
-        token= '  '
-        expect( () => {
-            isUserAuthenticated(token)
-        }).to.throw(Error, 'string is empty or blank')
-    })
 })

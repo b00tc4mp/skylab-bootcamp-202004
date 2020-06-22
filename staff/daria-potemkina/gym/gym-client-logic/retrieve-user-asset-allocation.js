@@ -1,8 +1,6 @@
 /**
  * Retrieve the asset allocation of the user portfolio
  * 
- * @param {string} token The user token.
- * 
  * @returns {Promise<Object>} The asset allocation by sector, market and product type if it resolves, an error if it rejects.
  * 
  * @throws {TypeError} If the parameter does not match the corresponding type.
@@ -13,8 +11,9 @@ require('gym-commons/polyfills/string')
 const { utils: { call } } = require('gym-commons')
 const context = require('./context')
 
-module.exports = function (token) {
-    String.validate.notVoid(token)
+module.exports = function () {
+    const { token } = context.storage
+
     return call('GET', `${this.API_URL}/users/trades`,
         undefined,
         { 'Authorization': `Bearer ${token}` })

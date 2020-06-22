@@ -3,7 +3,7 @@ import { addProduct } from 'gym-client-logic'
 import Feedback from './Feedback'
 import './Products.sass'
 
-export default function ({ token, results, handleGoToDetails }) {
+export default function ({results, handleGoToDetails }) {
     const [error, setError] = useState()
     const [success, setSuccess] = useState()
 
@@ -16,7 +16,7 @@ export default function ({ token, results, handleGoToDetails }) {
         side = side.value
 
         try {
-            addProduct(token, id, priceId, side, quantity)
+            addProduct(id, priceId, side, quantity)
                 .then(() => {
                     setSuccess({ id, message: 'trades has been added to your portfolio' })
                     return

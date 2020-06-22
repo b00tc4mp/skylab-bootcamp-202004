@@ -11,6 +11,10 @@ require('gym-commons/polyfills/json')
 require('gym-commons/ponyfills/xhr')
 const { utils: { jwtPromised } } = require('gym-commons')
 
+const context = require('./context')
+
+context.storage = {}
+
 describe('logic - add-product', () => {
     let users, products, contracts, prices
 
@@ -22,7 +26,7 @@ describe('logic - add-product', () => {
             prices = connection.db().collection('prices')
         }))
 
-    let user, product, price, userId, token, _token, productId, priceId, side, _side, quantity
+    let user, product, price, userId, productId, priceId, side, _side, quantity
 
     beforeEach(() => {
         return Promise.all([
@@ -78,7 +82,7 @@ describe('logic - add-product', () => {
                 .then(_user => {
                     userId = _user.insertedId.toString()
                     return jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET)
-                        .then(_token => token = _token)
+                        .then(_token => context.storage.token = _token)
                 })
         }
         )
@@ -86,7 +90,7 @@ describe('logic - add-product', () => {
         it('should create a contact with trade details', () => {
             _side = side[round(random())]
 
-            return addProduct(token, productId, priceId, _side, quantity)
+            return addProduct(productId, priceId, _side, quantity)
                 .then(() => contracts.find().toArray())
                 .then(([contract]) => {
                     debugger
@@ -107,7 +111,7 @@ describe('logic - add-product', () => {
         it('should fail when the user does not have a card added', () => {
             return users.update({ _id: ObjectId(userId) }, { $unset: { card: 1 } })
                 .then(() => {
-                    return addProduct(token, productId, priceId, _side, quantity)
+                    return addProduct(productId, priceId, _side, quantity)
                         .then(() => { throw new Error('should not reach this point') })
                         .catch(error => {
                             expect(error).to.exist
@@ -122,7 +126,7 @@ describe('logic - add-product', () => {
         it('should fail when product does not exist', () => {
             return products.deleteMany()
                 .then(() => {
-                    return addProduct(token, productId, priceId, _side, quantity)
+                    return addProduct(productId, priceId, _side, quantity)
                         .then(() => { throw new Error('should not reach this point') })
                         .catch(error => {
                             expect(error).to.exist
@@ -137,59 +141,44 @@ describe('logic - add-product', () => {
             _side = side[round(random())]
             const productId = ObjectId().toString()
 
-            _token = undefined
-            expect(() => {
-                addProduct(_token, productId, priceId, _side, quantity)
-            }).to.throw(TypeError, `${_token} is not a string`)
-
-            _token = 123
-            expect(() => {
-                addProduct(_token, productId, priceId, _side, quantity)
-            }).to.throw(TypeError, `${_token} is not a string`)
-
-            _token = true
-            expect(() => {
-                addProduct(_token, productId, priceId, _side, quantity)
-            }).to.throw(TypeError, `${_token} is not a string`)
-
             _productId = undefined
             expect(() => {
-                addProduct(token, _productId, priceId, _side, quantity)
+                addProduct(_productId, priceId, _side, quantity)
             }).to.throw(TypeError, `${_productId} is not a string`)
 
             _productId = 123
             expect(() => {
-                addProduct(token, _productId, priceId, _side, quantity)
+                addProduct(_productId, priceId, _side, quantity)
             }).to.throw(TypeError, `${_productId} is not a string`)
 
             _productId = true
             expect(() => {
-                addProduct(token, _productId, priceId, _side, quantity)
+                addProduct(_productId, priceId, _side, quantity)
             }).to.throw(TypeError, `${_productId} is not a string`)
 
             _side = undefined
             expect(() => {
-                addProduct(token, productId, priceId, _side, quantity)
+                addProduct(productId, priceId, _side, quantity)
             }).to.throw(TypeError, `${_side} is not a string`)
 
             _side = 123
             expect(() => {
-                addProduct(token, productId, priceId, _side, quantity)
+                addProduct(productId, priceId, _side, quantity)
             }).to.throw(TypeError, `${_side} is not a string`)
 
             _side = true
             expect(() => {
-                addProduct(token, productId, priceId, _side, quantity)
+                addProduct(productId, priceId, _side, quantity)
             }).to.throw(TypeError, `${_side} is not a string`)
 
             _quantity = undefined
             expect(() => {
-                addProduct(token, productId, priceId, 'Buy', _quantity)
+                addProduct(productId, priceId, 'Buy', _quantity)
             }).to.throw(TypeError, `${_quantity} is not a number`)
 
             _quantity = true
             expect(() => {
-                addProduct(token, productId, priceId, 'Sell', _quantity)
+                addProduct(productId, priceId, 'Sell', _quantity)
             }).to.throw(TypeError, `${_quantity} is not a number`)
 
         })
@@ -200,7 +189,7 @@ describe('logic - add-product', () => {
 
             _quantity = 33.33
             expect(() => {
-                addProduct(token, productId, priceId, _side, _quantity)
+                addProduct(productId, priceId, _side, _quantity)
             }).to.throw(Error, `${_quantity} is not an integer`)
 
         })
@@ -211,9 +200,9 @@ describe('logic - add-product', () => {
         _side = side[round(random())]
 
         return jwtPromised.sign({ sub: _userId }, SECRET)
-            .then(_token => token = _token)
+            .then(_token => context.storage.token = _token)
             .then(() =>
-                addProduct(token, productId, priceId, _side, quantity)
+                addProduct(productId, priceId, _side, quantity)
                     .then(() => { throw new Error('should not reach this point') })
                     .catch(error => {
                         expect(error).to.exist

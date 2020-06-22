@@ -1,7 +1,6 @@
 /**
  * Add user credit card
  * 
- * @param {string} token The user token.
  * @param {string} number The number of the user credit card.
  * @param {string} holder The name and surname of the holder of the credit card.
  * @param {date} expirationDate The expiration date of the credir card.
@@ -16,12 +15,13 @@ require('gym-commons/polyfills/string')
 const { utils: { call } } = require('gym-commons')
 const context = require('./context')
 
-module.exports = function (token, number, holder, expirationDate, cvv) {
-    String.validate(token)
+module.exports = function (number, holder, expirationDate, cvv) {
     String.validate(number)
     String.validate(holder)
     if(expirationDate instanceof Date === false) throw new TypeError ('expiration date is do not have a date format')
     String.validate(cvv)
+
+    const { token } = context.storage
     
     return call('POST', `${this.API_URL}/users/card`,
     `{ "number": "${number}", "holder": "${holder}", "expirationDate": "${expirationDate}", "cvv": "${cvv}" }`,

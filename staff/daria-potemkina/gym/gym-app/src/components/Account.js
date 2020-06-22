@@ -4,7 +4,7 @@ import Feedback from './Feedback'
 import './Account.sass'
 import Spinner from './Spinner'
 
-export default function ({ token }) {
+export default function () {
     const [card, setCard] = useState()
     const [error, setError] = useState()
     const [balance, setBalance] = useState()
@@ -12,7 +12,7 @@ export default function ({ token }) {
 
     useEffect(() => {
         try {
-            retrieveUserCard(token)
+            retrieveUserCard()
                 .then(card => {
                     setCard(card)
                 })
@@ -20,13 +20,13 @@ export default function ({ token }) {
         } catch ({ message }) {
             setError(message)
         }
-    }, [token])
+    }, [])
 
     useEffect(() => {
         const timer = setTimeout(() => {
             (async() => {
                 try {
-                    retrieveUserBalance(token)
+                    retrieveUserBalance()
                         .then(balance => {
                             setBalance(balance)
                             setLoading(false)})
@@ -41,11 +41,12 @@ export default function ({ token }) {
             })()
         }, 1000)
         return() => clearTimeout(timer)
-    }, [token, balance])
+    }, [balance])
 
-
+    
     return <section className="account">
-        {loading && <Spinner />}
+    {loading && <Spinner />}
+    
         {card && balance &&
             <section className="account__card">
                 <h1 className="account__title">Card</h1>

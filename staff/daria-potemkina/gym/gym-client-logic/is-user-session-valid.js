@@ -14,8 +14,8 @@ require('gym-commons/polyfills/function')
 const { utils: { call } } = require('gym-commons')
 const context = require('./context')
 
-module.exports = function (token) {
-    String.validate.notVoid(token)
+module.exports = function () {
+    const { token } = context.storage
 
     return call('GET', `${this.API_URL}/users`,
         undefined,

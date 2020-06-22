@@ -9,49 +9,41 @@ import Landing from './Landing'
 import ProductDetails from './ProductDetails'
 import Account from './Account'
 import Portfolio from './Portfolio'
-// import Notifications from './Notifications'
 import Settings from './Settings'
 import Search from './Search'
-import Spinner from './Spinner'
-import './Footer.sass'
 import { faHome, faBars } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { isUserAuthenticated, retrieveFuturePrices, retrieveUnderlyingPrice } from 'gym-client-logic'
-
+import { isUserSessionValid, isUserLoggedIn, logoutUser } from 'gym-client-logic'
 
 
 function App({ history }) {
-  const [token, setToken] = useState()
   const [error, setError] = useState()
-  const [prices, setPrices] = useState()
-  const [underlying, setUnderlying] = useState()
-  const [item, setItem] = useState()
+  const [ticker, setTicker] = useState()
   const [expanded, setExpanded] = useState()
-  const [loading, setLoading] = useState(true) 
+  const [itemId, setItemId] = useState()
 
   useEffect(() => {
-    if (sessionStorage.token) {
+    if (isUserLoggedIn())
       try {
-        isUserAuthenticated(sessionStorage.token)
+        isUserSessionValid()
           .then(isAuthenticated => {
-            if (isAuthenticated) {
-              setToken(sessionStorage.token)
+            debugger
+            if (!isAuthenticated) {
+              history.push('/')
             }
           })
-          .catch(error => { throw error })
+          .catch(error => setError(error.message))
       } catch (error) {
-        setError(error)
+        setError(error.message)
       }
-    } else history.push('/')
-  }, [history])
+    else history.push('/')
+  }, [])
 
   const handleGoToRegister = () => history.push('/register')
 
   const handleRegister = () => history.push('/login')
 
-  const handleLogin = token => {
-    sessionStorage.token = token
-    setToken(token)
+  const handleLogin = () => {
 
     history.push('/home')
   }
@@ -59,8 +51,7 @@ function App({ history }) {
   const handleGoToLogin = () => history.push('/login')
 
   const handleLogout = () => {
-    setToken()
-    delete sessionStorage.token
+    logoutUser()
 
     history.push('/')
   }
@@ -90,15 +81,6 @@ function App({ history }) {
     history.push('/portfolio')
   }
 
-  // const handleGoToNotifications = (event) => {
-  //   event.preventDefault()
-
-  //   if (expanded) setExpanded(false)
-  //   else setExpanded(true)
-
-  //   history.push('/notifications')
-  // }
-
   const handleGoToSettings = event => {
     event.preventDefault()
 
@@ -118,37 +100,30 @@ function App({ history }) {
   }
 
   const handleGoToDetails = item => {
-    setItem(item)
-    try {
-      retrieveFuturePrices(item._id)
-        .then(prices => setPrices(prices))
-        .then(() => retrieveUnderlyingPrice(item.ticker))
-        .then(underlying => setUnderlying(underlying))
-        .then(() => history.push("/product-details"))
-    } catch (error) {
-      setError(error.message)
-    }
+    setItemId(item._id)
+    setTicker(item.ticker)
+    
+    history.push(`/product-details/${item._id}`)
   }
 
   return (
     <div className="App">
       <header className="App-header">
-        <Route exact path="/" render={() => token ? <Redirect to="/home" /> : <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />} />
+        <Route exact path="/" render={() => isUserLoggedIn() ? <Redirect to="/home" /> : <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />} />
 
         <Route path="/register" render={() =>
-          token ? <Redirect to="/home" /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />} />
+          isUserLoggedIn() ? <Redirect to="/home" /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />} />
 
         <Route path="/login" render={() =>
-          token ? <Redirect to="/home" /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />} />
+          isUserLoggedIn() ? <Redirect to="/home" /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />} />
 
-        {token && <section >
+        {isUserLoggedIn() && <section >
           <nav className="nav-bar">
             <a className="nav-bar__home" href="/">  <FontAwesomeIcon transform="down-6 grow-7" icon={faHome} /></a>
             <button className="nav-bar__menu" href="/"> <FontAwesomeIcon size="sm" icon={faBars} onClick={handleToggle} /></button>
             <ul className={`nav-bar__list${expanded ? '--expanded' : ''}`}>
               <li><a href="/" onClick={handleGoToSearch}>Search</a></li>
               <li><a href="/" onClick={handleGoToPortfolio}>Portfolio</a></li>
-              {/* <li><a href="/" onClick={handleGoToNotifications}>Notifications</a></li> */}
               <li><a href="/" onClick={handleGoToAccount}>Account</a></li>
               <li><a href="/" onClick={handleGoToSettings}>Settings</a></li>
               <li><a href="/" onClick={handleLogout}>Logout</a> </li>
@@ -157,22 +132,18 @@ function App({ history }) {
         </section>}
 
         {!expanded && <Route path="/home" render={() =>
-          token ? <Home expanded={expanded} token={token} handleGoToDetails={handleGoToDetails} /> : <Redirect to="/login" />} />}
+          isUserLoggedIn() ? <Home expanded={expanded} handleGoToDetails={handleGoToDetails} /> : <Redirect to="/login" />} />}
 
-        {!expanded && <Route path="/product-details" render={() =>
-          token && prices && <ProductDetails expanded={expanded} token={token} prices={prices} underlyings={underlying} item={item} />} />}
+        {!expanded && <Route exact path="/product-details/:itemId" render={() =>
+        isUserLoggedIn() &&  <ProductDetails expanded={expanded} history={history} ticker={ticker} id={itemId} />} />}
 
-        {!expanded && <Route path="/search" render={() => <Search handleGoToDetails={handleGoToDetails} token={token} />} />}
+        {!expanded && <Route path="/search" render={() => <Search handleGoToDetails={handleGoToDetails} />} />}
 
-        {!expanded && <Route path="/account" render={() => <Account token={token} />} />}
+        {!expanded && <Route path="/account" render={() => <Account />} />}
 
-        {!expanded && <Route path="/portfolio" render={() => <Portfolio token={token} />} />}
+        {!expanded && <Route path="/portfolio" render={() => <Portfolio />} />}
 
-        {/* {!expanded && <Route path="/notifications" render={() => <Notifications />} />} */}
-
-        {/* {loading && <Spinner />} */}
-
-        {!expanded && <Route path="/settings" render={() => <Settings token={token} />} />}
+        {!expanded && <Route path="/settings" render={() => <Settings />} />}
 
       </header>
 

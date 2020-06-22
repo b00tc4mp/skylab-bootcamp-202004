@@ -7,7 +7,7 @@ import Spinner from './Spinner'
 import './Feedback.sass'
 import './Portfolio.sass'
 
-export default function ({ token }) {
+export default function () {
     const [error, setError] = useState()
     const [allocation, setAllocation] = useState({})
     const [typeData, setTypeData] = useState({})
@@ -22,9 +22,8 @@ export default function ({ token }) {
         const timer = setTimeout(() => {
             (async() => {
                 try {
-                    retrieveUserPortfolio(token)
+                    retrieveUserPortfolio()
                         .then(contracts => {
-                            console.log(contracts)
                             setContracts(contracts)
                             setLoading(false)})
                         .catch(error => setError(error.message))
@@ -35,11 +34,11 @@ export default function ({ token }) {
             })()
         }, 1000)
         return() => clearTimeout(timer)
-    }, [token, contracts])
+    }, [contracts])
 
     useEffect(() => {
         try {
-            retrieveUserAssetAllocation(token)
+            retrieveUserAssetAllocation()
                 .then(async (_allocation) => await setAllocation(_allocation))
                 .then(() => {
                     return setTypeData({
@@ -83,7 +82,7 @@ export default function ({ token }) {
             setError(error.message)
             setLoading(false)
         }
-    }, [token, allocation])
+    }, [allocation])
 
     const handleDetails = (event, id, trades) => {
         event.preventDefault()
@@ -103,11 +102,13 @@ export default function ({ token }) {
                         <ul className="portfolio__trades">
                             {contracts.map(({ _id, product: { ticker, productType, settlementDate }, trades}) =>
                                 <li key={_id} className="portfolio__item">
-                                    <p>{ticker}</p>
+                                    <p className="portfolio__ticker">{ticker}</p>
                                     <p className="portfolio__type">{productType}</p>
-                                    <p>{settlementDate}</p>
+                                    <p className="portfolio__settlementDate">{settlementDate}</p>
                                     <button className="portfolio__button" onClick={event => handleDetails(event, _id, trades)}>More</button>
-                                    {trade && trade.id === _id && details === true && <Trades trades={trade} />}
+                                    <div className="portfolio__trades-item">
+                                        {trade && trade.id === _id && details === true && <Trades trades={trade} />}
+                                    </div>
                                 </li>
                             )}</ul>
                     </section>
