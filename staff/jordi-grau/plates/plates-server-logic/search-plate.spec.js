@@ -67,4 +67,13 @@ describe('server logic: search plate', () =>{
       expect(result.length).to.equal(0)
       
     })
+
+    after(async() => {
+        await Promise.all([
+            User.deleteMany(),
+            Restaurant.deleteMany()
+        ])
+
+        await mongoose.disconnect()
+    })
 })

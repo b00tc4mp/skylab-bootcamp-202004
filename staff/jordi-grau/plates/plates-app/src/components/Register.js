@@ -1,9 +1,11 @@
 import React, {useState} from 'react'
+import Feedback from './feedback'
 import { registerUser} from 'plates-client-logic'
 
-export default function ({ onRegister, onGoToLogin}) {
 
-    const [error, setError] = useState()
+export default function Register({ onGoToLogin}) {
+
+    const [error, setError] = useState() //HOOHKS
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -17,18 +19,13 @@ export default function ({ onRegister, onGoToLogin}) {
 
         try {
             registerUser(name, surname, email, password)
-            .then(onRegister)
+            .then(onGoToLogin)
             .catch(error => setError(error.message))
-        } catch (message) {
+        } catch ({message}) {
             setError(message)
         }
     }        
 
-    const handleGoToLogin = event => {
-        event.preventDefault()
-
-        onGoToLogin()
-    }
 
     return <section className="register">
     <h1>Register</h1>
@@ -38,7 +35,7 @@ export default function ({ onRegister, onGoToLogin}) {
         <input type="email" name="email" placeholder="e-mail" required />
         <input type="password" name="password" placeholder="password" required minLength="8" />
         <button>Submit</button>
-            or <a href="/" onClick={handleGoToLogin}>Login</a>
+        or <a href="" onClick={onGoToLogin}>Login</a>
 
         {error && <Feedback message={error} level="error" />}
     </form>

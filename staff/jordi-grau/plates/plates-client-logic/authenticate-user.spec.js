@@ -6,7 +6,7 @@ require('plates-commons/polyfills/json')
 require('plates-commons/polyfills/xhr')
 debugger
 const { DuplicityError, UnexistenceError, VoidError, CredentialsError } = require('plates-commons/errors')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const { random } = Math
 const { expect } = require('chai')
 const authenticateUser = require('./authenticate-user')

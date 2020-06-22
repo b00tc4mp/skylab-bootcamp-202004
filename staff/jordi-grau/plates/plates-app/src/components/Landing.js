@@ -3,8 +3,8 @@ import './Landing'
 
 import { link } from 'react-router-dom' 
 
-export default function () {
+export default function ({onGoToRegister, onGoToLogin}) {
     return <section className="landing">
-        <link to="/register">Register</link> or <link to="/login">Login</link>
+        <a href="" onClick={onGoToRegister}>Register</a> or <a href="" onClick={onGoToLogin}>Login</a>
     </section>
 }

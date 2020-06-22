@@ -1,4 +1,4 @@
-const { Schema, SchemaTypes: {ObjectId} } = require('mongoose')
+const { Schema, Types: {ObjectId} } = require('mongoose')
 const Restaurant = require('./restaurant')
 const {Email} = require('plates-commons/utils')
 
@@ -28,7 +28,7 @@ module.exports = new Schema({
 
     following: {
         type: ObjectId, 
-        ref: 'Plate'
+        ref: 'Dish'
     },
 
     restaurant: {type: ObjectId, ref: 'Restaurant'}

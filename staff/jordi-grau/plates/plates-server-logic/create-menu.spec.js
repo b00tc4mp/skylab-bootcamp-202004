@@ -26,6 +26,14 @@ describe('server logic: create menu', ()=>{
         
     })
 
+    after(async() => {
+        await Promise.all([
+            User.deleteMany(),
+            Restaurant.deleteMany()
+        ])
+
+        await mongoose.disconnect()
+    })
 
     beforeEach( async () =>{
         restaurantName = `restaurantName-${random()}`
