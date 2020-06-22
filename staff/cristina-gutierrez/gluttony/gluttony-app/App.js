@@ -2,27 +2,35 @@ import React, { useState } from "react";
 import { 
   StyleSheet,
   View,
-  StatusBar,
-  Text
+  StatusBar
 } from "react-native";
-import Modal from "./src/Modal";
+import Home from "./src/Home"
 import MapBar from "./src/MapBar";
 import MapRestaurant from "./src/MapRestaurant";
-import Home from "./src/Home"
+import ProfilePage from "./src/ProfilePage";
+import Favourites from "./src/Favourites";
+import Modal from "./src/Modal";
+import Menu from "./src/Menu"
 
 const App = () => {
   const [view, setView] = useState("home");
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" translucent={true} />
       { view === "home" && <Home 
         onGoToMapBar={ () => setView("mapBar") } 
         onGoToMapRestaurant={ () => setView("mapRestaurant") } 
       /> }
       { view === "mapBar" && <MapBar/> }
       { view === "mapRestaurant" && <MapRestaurant /> }
+      { view === "profilePage" && <ProfilePage 
+        onGoToComments={ () => setView("comments") } 
+        onLogout={ () => setView("logout") }
+      /> }
+      { view === "favourites" && <Favourites /> }
       {/*<Modal />*/}
+      <Menu onGoTo={ setView } />
     </View>
   )
 }

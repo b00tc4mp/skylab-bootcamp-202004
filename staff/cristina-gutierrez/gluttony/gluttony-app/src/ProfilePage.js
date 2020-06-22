@@ -1,20 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     StyleSheet,
     Text,
-    TouchableOpacity,
-    ImageBackground
+    TouchableOpacity
 } from "react-native";
+import Comments from "./Comments";
+import { logout } from "../gluttony-client-logic";
 
-const Home = props => {
+const ProfilePage = () => {
+    const [showComments, setShowComments] = useState("");
+
     return (
         <ImageBackground source={require("../assets/images/final-food-and-drink-pattern-vector-1.png")} style={styles.image}>
-            <TouchableOpacity style={styles.openButton} onPress={props.onGoToMapBar}>
-                <Text style={styles.textStyle}>I'm thirsty</Text>
+            <TouchableOpacity style={styles.openButton} onPress={ () => setShowComments(!showComments) }>
+                <Text style={styles.textStyle}>Comments</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.openButton} onPress={props.onGoToMapRestaurant}>
-                <Text style={styles.textStyle}>I'm hungry</Text>
+            <TouchableOpacity style={styles.openButton} onPress={ () => logout() }>
+                <Text style={styles.textStyle}>Logout</Text>
             </TouchableOpacity>
+            { showComments === "comments" && <Comments /> }
         </ImageBackground>
     )
 }
@@ -31,11 +35,10 @@ const styles = StyleSheet.create({
     },
     openButton: {
         padding: 2,
-        height: 150,
-        width: 150,
-        borderRadius: 400,
+        height: 65,
+        width: 100,
+        borderRadius: 200,
         backgroundColor: "#FFFC87",
-        marginBottom: 25,
         alignItems: "center",
         justifyContent: "center",
         borderColor: "black",
@@ -49,4 +52,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Home
+export default ProfilePage
