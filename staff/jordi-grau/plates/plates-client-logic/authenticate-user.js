@@ -1,5 +1,4 @@
 require('plates-commons/polyfills/string')
-const { models: { User}} = require('plates-data')
 const { utils: { Email,call } } = require('plates-commons')
 const brcypt = require('bcryptjs')
 const context  = require('./context')
@@ -20,7 +19,7 @@ debugger
     .then(({status, body}) => {
         if(status === 200) {
             const {token} = JSON.parse(body)
-            this.storage.token = token
+            this.storage.setItem("token", token) 
 
             return 
         }

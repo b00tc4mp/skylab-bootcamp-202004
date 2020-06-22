@@ -26,11 +26,6 @@ export default function Register({ onGoToLogin}) {
         }
     }        
 
-    const handleGoToLogin = event => {
-        event.preventDefault()
-
-        onGoToLogin()
-    }
 
     return <section className="register">
     <h1>Register</h1>
@@ -40,7 +35,7 @@ export default function Register({ onGoToLogin}) {
         <input type="email" name="email" placeholder="e-mail" required />
         <input type="password" name="password" placeholder="password" required minLength="8" />
         <button>Submit</button>
-        or <a href="/" onClick={handleGoToLogin}>Login</a>
+        or <a href="" onClick={onGoToLogin}>Login</a>
 
         {error && <Feedback message={error} level="error" />}
     </form>

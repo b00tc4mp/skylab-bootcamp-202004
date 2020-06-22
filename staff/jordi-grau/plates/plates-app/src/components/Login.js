@@ -22,20 +22,13 @@ export default function Login({onGoToRegister, onGoToHome}) {
         }
     }
 
-    const handleGotoRegister = event =>{
-        event.preventDefault()
-
-        onGoToRegister()
-    }
-
-   
         return <section className="login">
                 <h1>Login</h1>
                 <form onSubmit={handleSubmit}>
                     <input type="email" name="email" placeholder="e-mail" required />
-                    <input type="text" name="password" placeholder="password" required minLength="6" />
+                    <input type="password" name="password" placeholder="password" required minLength="6" />
                     <button>Submit</button>
-                    or <a href="" onClick={handleGotoRegister}>Register</a>
+                    or <a href="" onClick={onGoToRegister}>Register</a>
 
                     {error &&  <Feedback message={error} level ="error"/> }
 

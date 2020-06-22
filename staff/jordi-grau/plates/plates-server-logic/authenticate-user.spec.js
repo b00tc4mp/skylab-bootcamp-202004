@@ -1,6 +1,6 @@
 require('dotenv').config()
 const {env: { TEST_MONGODB_URL: MONGODB_URL }} = process
-global.fetch  = require('node-fetch')
+// global.fetch  = require('node-fetch')
 const {UnexistenceError, VoidError } = require('plates-commons/errors')
 const bcrypt = require('bcryptjs')
 const { floor, random } = Math

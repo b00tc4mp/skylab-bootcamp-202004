@@ -22,6 +22,15 @@ describe('server logic: create restaurant', () => {
 
     })
 
+    after(async() => {
+        await Promise.all([
+            User.deleteMany(),
+            Restaurant.deleteMany()
+        ])
+
+        await mongoose.disconnect()
+    })
+
     beforeEach(async () => {
         restaurantName = `restaurantname-${random()}`
         restaurantEmail = `restaurantemail-${random()}@gmail.com`
