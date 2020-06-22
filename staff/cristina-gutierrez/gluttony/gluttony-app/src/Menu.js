@@ -16,11 +16,11 @@ const Menu = props => {
             <TouchableOpacity style={styles.openButton} onPress={ () => props.onGoTo("home") }>
                 <Text style={styles.textStyle}>Home</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.openButton} onPress={ () => props.onGoTo("profilePage") }>
-                <Text style={styles.textStyle}>Profile page</Text>
-            </TouchableOpacity>
             <TouchableOpacity style={styles.openButton} onPress={ () => props.onGoTo("favourites") }>
                 <Text style={styles.textStyle}>Favourites</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.openButton} onPress={ () => props.onGoTo("profilePage") }>
+                <Text style={styles.textStyle}>Profile</Text>
             </TouchableOpacity>
         </View>
     )

@@ -45,7 +45,11 @@ const Register = props => {
                 autoCapitalize='none'
                 onChangeText={(text) => setPassword(text)}
             />
-            <TouchableOpacity style={styles.openButton} onPress={() => registerUser(name, surname, email, password)} >
+            <TouchableOpacity style={styles.openButton} onPress={() => {
+                registerUser(name, surname, email, password)
+                    .then(() => props.onGoToLogin())
+                    .catch(console.log)
+            }} >
                 <Text style={styles.textStyle}>Registrarse</Text>
             </TouchableOpacity>
             <Text style={{ ...styles.modalText, marginBottom: 8 }}>o</Text>

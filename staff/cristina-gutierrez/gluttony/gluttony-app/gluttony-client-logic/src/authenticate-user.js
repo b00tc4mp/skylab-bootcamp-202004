@@ -2,27 +2,32 @@ const { API_URL } = require("../../config")
 require("gluttony-commons/polyfills/string")
 const { utils: { Email } } = require("gluttony-commons")
 const axios = require("axios")
+const { AsyncStorage } = require("react-native")
 
-module.exports = (email, password) => {
+module.exports = async (email, password) => {
     Email.validate(email)
-
     String.validate.notVoid(password)
 
-    return axios.get(`${API_URL}/users/auth`, {
+    return await axios.get(`${API_URL}/users/auth`, {
             params: {
                 email,
                 password
             }
         })
-        .then(({ status, data }) => {
+        .then(async ({ status, data }) => {
             if (status === 200) {
-                const { token } = JSON.parse(data)
+                try {
+                    await AsyncStorage.setItem(
+                        "token",
+                        data.token
+                    );
 
-                return token
+                    return data.token
+                } catch (error) {
+                    throw new Error("Error saving data")
+                }
             } else {
-                const { error } = JSON.parse(data)
-
-                throw new Error(error)
+                throw new Error(data.error)
             }
         })
         .catch(console.log)

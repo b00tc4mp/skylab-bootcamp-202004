@@ -12,9 +12,7 @@ module.exports = (latitude, longitude) => {
             if (status === 200) {
                 return data.coordinates
             } else {
-                const { error } = JSON.parse(data)
-
-                throw new Error(error)
+                throw new Error(data.error)
             }
         })
         .catch(console.log)

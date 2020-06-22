@@ -3,52 +3,41 @@ import {
   Alert,
   Modal,
   StyleSheet,
-  Text,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  View,
+  KeyboardAvoidingView
 } from "react-native";
 import Login from "./Login";
 import Register from "./Register";
 
-const ModalAuthentication = () => {
-    const [modalVisible, setModalVisible] = useState(false);
+const ModalAuthentication = (props) => {
     const [view, setView] = useState("login");
 
     return (
-        <View style={styles.centeredView}>
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                    Alert.alert("Modal has been closed.");
-                }}
-            >
-                <KeyboardAvoidingView
-                    behavior='padding' 
-                    style={styles.centeredView}
-                    >
-                    { view === "login" ? <Login 
-                        onGoToRegister={ () => setView("register") } 
-                        onCloseModal={() => setModalVisible(false) }
-                    /> : <Text /> }
-                    { view === "register" ? <Register 
-                        onGoToLogin={ () => setView("login") } 
-                        onCloseModal={() => setModalVisible(false) }
-                    /> : <Text /> }
-                </KeyboardAvoidingView>
-            </Modal>
-
-            <TouchableOpacity
-                style={styles.openButton}
-                onPress={() => {
-                setModalVisible(true);
-                }}
-            >
-                <Text style={styles.textStyle}>Accede a Gluttony</Text>
-            </TouchableOpacity>
-        </View>
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={props.isVisible}
+            onRequestClose={() => {
+                Alert.alert("Modal has been closed.");
+            }}
+        >
+            <KeyboardAvoidingView
+                behavior='padding' 
+                style={styles.centeredView}
+                >
+                { view === "login" && <Login 
+                    onSuccess={() => {
+                        props.onHideModal() 
+                        props.onGoToHome()
+                    }}
+                    onGoToRegister={ () => setView("register") } 
+                    onCloseModal={() => props.onHideModal() }
+                /> }
+                { view === "register" && <Register 
+                    onGoToLogin={ () => setView("login") } 
+                    onCloseModal={() => props.onHideModal() }
+                /> }
+            </KeyboardAvoidingView>
+        </Modal>
     )
 }
 

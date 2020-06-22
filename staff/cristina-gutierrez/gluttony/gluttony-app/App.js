@@ -14,6 +14,7 @@ import Menu from "./src/Menu"
 
 const App = () => {
   const [view, setView] = useState("home");
+  const [modalVisible, setModalVisible] = useState(true);
 
   return (
     <View style={styles.container}>
@@ -25,11 +26,13 @@ const App = () => {
       { view === "mapBar" && <MapBar/> }
       { view === "mapRestaurant" && <MapRestaurant /> }
       { view === "profilePage" && <ProfilePage 
-        onGoToComments={ () => setView("comments") } 
-        onLogout={ () => setView("logout") }
+        onGoToHome={ () => setView("home") }
       /> }
       { view === "favourites" && <Favourites /> }
-      {/*<Modal />*/}
+      <Modal 
+        isVisible={ modalVisible } 
+        onGoToHome={ () => setView("home") }
+        onHideModal={ () => setModalVisible(false) } />
       <Menu onGoTo={ setView } />
     </View>
   )
