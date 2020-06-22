@@ -15,8 +15,8 @@ module.exports = StyleSheet.create({
     },
     date: {
         position: "absolute",
-        right: 20,
-        bottom: 5,
+        right: 5,
+        top: 5,
         color: 'white',
         backgroundColor: '#4ecdc4',
         borderRadius: 10,

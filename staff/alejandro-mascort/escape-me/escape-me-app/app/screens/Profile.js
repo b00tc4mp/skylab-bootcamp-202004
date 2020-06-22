@@ -13,7 +13,7 @@ import { retrieveEscapeRooms, retrieveUser, retrieveFollowing, retrieveEscapeIds
 
 import { Entypo, FontAwesome, MaterialIcons, Ionicons } from '@expo/vector-icons';
 
-export default function Profile() {
+export default function Profile({ navigation }) {
     const [userLists, setUserLists] = useState()
     const [followingIds, setFollowingIds] = useState([])
     const [tag, setTag] = useState('favorites')
@@ -44,6 +44,19 @@ export default function Profile() {
         })()
     }, [])
 
+    useEffect(() => {
+        const reload = navigation.addListener('focus', async () => {
+            const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
+            setUserLists({ participated, pending, favorites })
+
+            escapeList = await retrieveEscapeRooms(tag)
+            setEscapeRooms(escapeList)
+        });
+
+        // Return the function to reload from the event so it gets removed on unmount
+        return reload;
+    }, [navigation]);
+
     return (
         <SafeAreaView style={styles.container} >
             <ScrollView >
@@ -54,6 +67,8 @@ export default function Profile() {
                 </TouchableOpacity>
                 <View style={styles.details}>
                     <TouchableOpacity style={tag === 'favorites' ? [styles.pair, styles.selected] : styles.pair} onPress={async () => {
+                        const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
+                        setUserLists({ participated, pending, favorites })
                         escapeList = await retrieveEscapeRooms('favorites')
                         setEscapeRooms(escapeList)
                         setTag('favorites')
@@ -62,6 +77,8 @@ export default function Profile() {
                         <Text>Favorite</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={tag === 'participated' ? [styles.pair, styles.selected] : styles.pair} onPress={async () => {
+                        const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
+                        setUserLists({ participated, pending, favorites })
                         escapeList = await retrieveEscapeRooms('participated')
                         setEscapeRooms(escapeList)
                         setTag('participated')

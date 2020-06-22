@@ -3,7 +3,7 @@ import { SafeAreaView, ScrollView, Text } from 'react-native'
 import Card from '../components/Card'
 import { retrieveEscapeRooms, retrieveEscapeIds } from 'escape-me-client-logic'
 
-export default function (props) {
+export default function ({ navigation }) {
     const [escapeRooms, setEscapeRooms] = useState([])
     const [escapes, setEscapes] = useState()
 
@@ -14,14 +14,18 @@ export default function (props) {
 
     let escapeList
     useEffect(() => {
-        (async () => {
-            const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
-            setEscapes({ participated, pending, favorites })
+        const unsubscribe = navigation.addListener('focus', async () => {
+            const _escapes = await retrieveEscapeIds()
+            setEscapes(_escapes)
 
             escapeList = await retrieveEscapeRooms('pending')
             setEscapeRooms(escapeList)
-        })()
-    }, [])
+            console.log(escapeRooms)
+        });
+
+        // Return the function to unsubscribe from the event so it gets removed on unmount
+        return unsubscribe;
+    }, [navigation]);
 
     return (
         <SafeAreaView style={{
@@ -53,4 +57,3 @@ export default function (props) {
         </SafeAreaView>
     )
 }
-

@@ -133,7 +133,7 @@ class CardDetails extends Component {
                             {
                                 this.state.reviews.map(({ rating, comment, user }) => {
                                     if (comment) {
-                                        return <Review username={` @${user['username']}`} comment={comment.message} rating={rating} date={comment.date} />
+                                        return <Review key={user['username']} username={` @${user['username']}`} comment={comment.message} rating={rating} date={comment.date} />
                                     }
                                 })}
                             <View style={styles.commentSection}>

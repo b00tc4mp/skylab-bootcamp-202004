@@ -4,7 +4,6 @@ import {
     View,
     ImageBackground,
     Image,
-    Text
 } from "react-native";
 import { Formik } from 'formik'
 import * as Yup from 'yup'

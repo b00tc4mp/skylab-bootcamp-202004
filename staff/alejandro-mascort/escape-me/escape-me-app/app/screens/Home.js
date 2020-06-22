@@ -3,7 +3,7 @@ import { SafeAreaView, ScrollView, Text } from 'react-native'
 import Card from '../components/Card'
 import { suggestEscapeRooms, retrieveEscapeIds } from 'escape-me-client-logic'
 
-export default function (props) {
+export default function ({ navigation }) {
     const [escapeRooms, setEscapeRooms] = useState([])
     const [escapes, setEscapes] = useState()
 
@@ -14,15 +14,19 @@ export default function (props) {
 
     let escapeList
     useEffect(() => {
-        console.log('state: ', props.navigation.state);
-        (async () => {
-            const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
-            setEscapes({ participated, pending, favorites })
+        const reload = navigation.addListener('focus', async () => {
+            const _escapes = await retrieveEscapeIds()
+            setEscapes(_escapes)
 
-            escapeList = await suggestEscapeRooms()
-            setEscapeRooms(escapeList)
-        })()
-    }, [])
+            if (!escapeRooms.length) {
+                escapeList = await suggestEscapeRooms('pending')
+                setEscapeRooms(escapeList)
+            }
+        });
+
+        // Return the function to reload from the event so it gets removed on unmount
+        return reload;
+    }, [navigation]);
 
     return (
         <SafeAreaView style={{
@@ -54,4 +58,3 @@ export default function (props) {
         </SafeAreaView>
     )
 }
-

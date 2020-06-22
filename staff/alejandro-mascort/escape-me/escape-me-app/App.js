@@ -1,24 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 
 import Landing from './app/screens/Landing'
-import Home from './app/screens/Home'
 import Login from './app/screens/Login'
 import Register from './app/screens/Register'
-import CardDetails from './app/screens/CardDetails'
-import Profile from './app/screens/Profile'
-import Search from './app/screens/Search'
-import AddUsers from './app/screens/AddUsers'
-import Pending from './app/screens/Pending'
-
-import { NavigationContainer } from '@react-navigation/native';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { MaterialCommunityIcons, AntDesign, Entypo, Feather } from '@expo/vector-icons';
+import Manager from './app/screens/Manager'
 
 export default function () {
   console.disableYellowBox = true
 
   const [view, setView] = useState('landing')
+  const [value, setValue] = useState(0)
 
   const handleGoToLogin = () => {
     setView('login')
@@ -42,16 +34,7 @@ export default function () {
       {view === 'landing' && <Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister} />}
       {view === 'login' && <Login onRegister={handleGoToRegister} onHome={handleGoToHome} />}
       {view === 'register' && <Register onLogin={handleGoToLogin} />}
-      {view === 'home' &&
-        <View style={styles.appheader}>
-          <Text style={styles.title}>Escape Me</Text>
-          <TouchableOpacity style={styles.logOut} onPress={handleLogOut}>
-            <AntDesign name="logout" size={24} color="white" />
-          </TouchableOpacity>
-        </View>}
-      {view === 'home' && <NavigationContainer>
-        <NavTabs />
-      </NavigationContainer>}
+      {view === 'home' && <Manager />}
     </View>
 
   );
@@ -79,66 +62,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   }
 })
-
-const Tab = createMaterialBottomTabNavigator();
-
-function NavTabs() {
-  return (
-    <Tab.Navigator
-      initialRouteName="Home"
-      activeColor="white"
-      labelStyle={{ fontSize: 12 }}
-      barStyle={{ backgroundColor: "#4ecdc4" }}
-
-    >
-      <Tab.Screen
-        name="Home"
-        component={Home}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Search"
-        component={Search}
-        options={{
-          tabBarLabel: 'Search',
-          tabBarIcon: ({ color }) => (
-            <AntDesign name="search1" size={26} color={color} />),
-        }}
-      />
-      <Tab.Screen
-        name="Pending"
-        component={Pending}
-        options={{
-          tabBarLabel: 'Pending',
-          tabBarIcon: ({ color }) => (
-            <Entypo name="list" size={26} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Follow"
-        component={AddUsers}
-        options={{
-          tabBarLabel: 'Follow',
-          tabBarIcon: ({ color }) => (
-            <Feather name="user-plus" size={24} color={color} />),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          tabBarLabel: 'Profile',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="account" color={color} size={26} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
-  );
-}

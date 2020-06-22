@@ -46,7 +46,7 @@ function Card({ title, rating, people, genre, price, image, participated, pendin
             </TouchableOpacity>
             <Modal visible={modalVisible} animationType="slide">
                 <Button title="Close" onPress={() => setModalVisible(false)} />
-                <CardDetails escapeId={escapeId} onEscapes={onEscapes} pending={pending} favorites={favorites} participated={participated} handleRate={handleRate} rate={rate} />
+                <CardDetails key={escapeId} escapeId={escapeId} onEscapes={onEscapes} pending={pending} favorites={favorites} participated={participated} handleRate={handleRate} rate={rate} />
             </Modal>
             <View style={styles.info}>
                 <View style={styles.pair}>
