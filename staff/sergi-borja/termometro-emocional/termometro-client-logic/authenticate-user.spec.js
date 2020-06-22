@@ -1,34 +1,31 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } } = process
 
 const authenticateUser = require('./authenticate-user')
 const { random } = Math
 const { expect } = require('chai')
-require('termometro-commons/polyfills/json')
-const { mongoose, models: { User } } = require('termometro-data')
+require('misc-commons/polyfills/json')
+const { mongoose, models: { User } } = require('misc-data')
 const bcrypt = require('bcryptjs')
+require('misc-commons/ponyfills/xhr')
+require('misc-commons/ponyfills/atob')
+const context = require('./context')
+
+context.API_URL = API_URL
 
 describe('logic - authenticate user', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let name, surname, email, password, userId, hash, plan, mood, sex, age
-    let genderArray = ['M', 'F']
+    let name, surname, email, password, userId, hash
 
     beforeEach(() =>
         User.deleteMany()
             .then(() => {
                 name = `name-${random()}`
                 surname = `surname-${random()}`
-                age = Math.floor(Math.random() * 100);
-                sex = genderArray[Math.floor(genderArray.length * Math.random())];
                 email = `e-${random()}@mail.com`
                 password = `password-${random()}`
-                mood = {
-                    date: Date.now(),
-                    score: Math.floor(Math.random() * 10)
-                }
-                plan = 'twice';
 
                 return bcrypt.hash(password, 10)
             })
@@ -37,16 +34,23 @@ describe('logic - authenticate user', () => {
 
     describe('when user already exists', () => {
         beforeEach(() =>
-            User.create({ name, surname, age, sex, email, password: hash, plan, mood })
+            User.create({ name, surname, email, password: hash })
                 .then(user => userId = user.id)
         )
 
         it('should succeed on correct credentials', () =>
             authenticateUser(email, password)
-                .then(_userId => {
-                    console.log(_userId)
-                        expect(_userId).to.equal(userId)
-                    })
+                .then(token => {
+                    const [, payloadBase64] = token.split('.')
+
+                    const payloadJson = atob(payloadBase64)
+
+                    const payload = JSON.parse(payloadJson)
+
+                    const { sub: _userId } = payload
+
+                    expect(_userId).to.equal(userId)
+                })
         )
 
         it('should fail on wrong password', () => {
@@ -56,7 +60,7 @@ describe('logic - authenticate user', () => {
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.be.an.instanceof(Error)
-                    expect(error.message).to.equal('Contraseña incorrecta')
+                    expect(error.message).to.equal(`wrong password`)
                 })
         })
     })
@@ -66,7 +70,7 @@ describe('logic - authenticate user', () => {
             .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
                 expect(error).to.be.an.instanceof(Error)
-                expect(error.message).to.equal('Este email no existe')
+                expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
             })
     )
 

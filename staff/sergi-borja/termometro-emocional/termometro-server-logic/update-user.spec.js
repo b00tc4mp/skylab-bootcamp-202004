@@ -38,13 +38,13 @@ describe('logic - update user', () => {
             })
     )
 
-    describe('prove update works',  () => {
+    describe('prove update works', () => {
         beforeEach(() =>
             User.create({ name, surname, age, sex, email, password, plan, mood })
                 .then(user => userId = user.id)
         )
 
-        it('should succeed on updating name', async () => {
+        it('should succeed on updating credentials', async () => {
             const result = await updateUser(userId, data)
 
             expect(result).to.be.undefined
@@ -63,6 +63,31 @@ describe('logic - update user', () => {
 
         })
     })
+
+    describe('if user does not exist', () => {
+        beforeEach(() =>
+            User.deleteMany()
+        )
+
+        it('should fail on updating credentials', () => {
+            updateUser(userId, data)
+                .then(() => { throw new Error('El usuario que quieres actualizar no existe') })
+                .catch(error => {
+                    expect(error).to.be.an.instanceof(Error)
+                    expect(error.message).to.equal('El usuario que quieres actualizar no existe')
+                })
+
+        })
+    })
+    // it('should fail when user does not exist', () =>
+    // authenticateUser(email, password)
+    //     .then(() => { throw new Error('should not reach this point') })
+    //     .catch(error => {
+    //         expect(error).to.be.an.instanceof(Error)
+    //         expect(error.message).to.equal('Este email no existe')
+    //     })
+    // )
+    // })
 
     // it('should fail on trying to remove a whole product that is not already in cart', () =>
     //     updateCart(userId, productId, quantity = 0)
