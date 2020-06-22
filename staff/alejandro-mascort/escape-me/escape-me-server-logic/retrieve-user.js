@@ -1,6 +1,15 @@
 require('escape-me-commons/polyfills/string')
 const { mongoose: { ObjectId }, models: { User } } = require('escape-me-data')
 
+/**
+ * Retrieves user info.
+ * 
+ * @param {String} userId The Id of a user.
+ * 
+ * @returns {Promise<Object>} An Object that contains user information, if not returns an error.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ */
 module.exports = userId => {
     String.validate.notVoid(userId)
 

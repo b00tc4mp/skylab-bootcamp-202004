@@ -2,6 +2,15 @@ require('escape-me-commons/polyfills/string')
 const { utils: { call } } = require('escape-me-commons')
 const context = require('./context')
 
+/**
+ * Retrieves info of the people being followed.
+ * 
+ * @param {String} userId The Id of a user.
+ * 
+ * @returns {Promise<Array>} An array of Objects, if not returns an error.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ */
 module.exports = function (userId) {
     if (userId) String.validate.notVoid(userId)
 

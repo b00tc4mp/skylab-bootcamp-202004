@@ -14,7 +14,7 @@ export default function ({ navigation }) {
 
     let escapeList
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', async () => {
+        const reload = navigation.addListener('focus', async () => {
             const _escapes = await retrieveEscapeIds()
             setEscapes(_escapes)
 
@@ -23,8 +23,8 @@ export default function ({ navigation }) {
             console.log(escapeRooms)
         });
 
-        // Return the function to unsubscribe from the event so it gets removed on unmount
-        return unsubscribe;
+        // Return the function to reload from the event so it gets removed on unmount
+        return reload;
     }, [navigation]);
 
     return (

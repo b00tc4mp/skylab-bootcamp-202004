@@ -4,6 +4,16 @@ const { errors: { UnexistenceError } } = require('escape-me-commons')
 
 const { mongoose: { ObjectId }, models: { User, EscapeRoom } } = require('escape-me-data')
 
+/**
+ * Checks user credentials.
+ * @param {string} userId The user id. 
+ * @param {string} escapeId The escape room id. 
+ * @param {Number} rating The user rating.
+ * 
+ * @returns {Promise} Nothing it all has gone well, if not returns an error.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ */
 module.exports = (userId, escapeId, userRating) => {
     String.validate.notVoid(userId)
     String.validate.notVoid(escapeId)

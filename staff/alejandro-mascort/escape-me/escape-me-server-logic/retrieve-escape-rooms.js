@@ -1,6 +1,16 @@
 require('escape-me-commons/polyfills/string')
 const { mongoose: { ObjectId }, models: { User } } = require('escape-me-data')
 
+/**
+ * Retrieves essential info of different escape rooms.
+ * 
+ * @param {String} userId The id of a user.
+ * @param {string} tag The user relation with a escape room. 
+ * 
+ * @returns {Promise<Array>} An array of Objects, if not returns an error.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ */
 module.exports = (userId, tag) => {
     String.validate.notVoid(userId)
     String.validate.notVoid(tag)

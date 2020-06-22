@@ -2,6 +2,16 @@ require('escape-me-commons/polyfills/string')
 const { utils: { call } } = require('escape-me-commons')
 const context = require('./context')
 
+
+/**
+ * Checks user credentials.
+ * 
+ * @param {string} userId The id of a user. 
+ * 
+ * @returns {Promise<Object>} An object that all the atributes are Arrays, if not returns an error.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ */
 module.exports = function (userId) {
     if (userId) String.validate.notVoid(userId)
 

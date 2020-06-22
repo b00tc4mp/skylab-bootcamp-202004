@@ -2,6 +2,13 @@ require('escape-me-commons/polyfills/string')
 const { utils: { call } } = require('escape-me-commons')
 const context = require('./context')
 
+/**
+ * Suggests potential favorites escape rooms.
+ * 
+ * @returns {Promise<Array>} An array of Objects, if not returns an error.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ */
 module.exports = function () {
     const { token } = context.storage
 

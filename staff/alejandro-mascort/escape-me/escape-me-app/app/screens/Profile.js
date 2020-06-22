@@ -32,14 +32,8 @@ export default function Profile({ navigation }) {
             const { name = '', surname = '', username = '' } = await retrieveUser()
             setUser({ name, surname, username })
 
-            const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
-            setUserLists({ participated, pending, favorites })
-
             const followingUsers = await retrieveFollowingIds()
             setFollowingIds(followingUsers)
-
-            escapeList = await retrieveEscapeRooms(tag)
-            setEscapeRooms(escapeList)
 
         })()
     }, [])
@@ -48,6 +42,8 @@ export default function Profile({ navigation }) {
         const reload = navigation.addListener('focus', async () => {
             const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
             setUserLists({ participated, pending, favorites })
+
+            setTag(tag)
 
             escapeList = await retrieveEscapeRooms(tag)
             setEscapeRooms(escapeList)

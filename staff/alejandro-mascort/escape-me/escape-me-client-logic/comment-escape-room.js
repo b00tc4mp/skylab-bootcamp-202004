@@ -5,6 +5,16 @@ const { utils: { call } } = require('escape-me-commons')
 const context = require('./context')
 const { errors: { UnexistenceError } } = require('escape-me-commons')
 
+/**
+ * Adds comment to escape room.
+ * 
+ * @param {string} escapeId The escape room id. 
+ * @param {string} comment The user comment.
+ * 
+ * @returns {Promise} Nothing it all has gone well, if not returns an error.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ */
 module.exports = function (escapeId, comment) {
     String.validate(escapeId)
     String.validate(comment)

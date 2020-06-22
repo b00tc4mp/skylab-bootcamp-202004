@@ -11,7 +11,7 @@ import { searchEscapeRoom, retrieveEscapeIds } from 'escape-me-client-logic'
 
 import Card from '../components/Card'
 
-export default function () {
+export default function ({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false)
     const [query, setQuery] = useState('')
     const [userLists, setUserLists] = useState()
@@ -32,12 +32,16 @@ export default function () {
     }
 
     let escapeList
+
     useEffect(() => {
-        (async () => {
-            const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
-            setUserLists({ participated, pending, favorites })
-        })()
-    }, [])
+        const reload = navigation.addListener('focus', async () => {
+            const _escapes = await retrieveEscapeIds()
+            setUserLists(_escapes)
+        });
+
+        // Return the function to reload from the event so it gets removed on unmount
+        return reload;
+    }, [navigation]);
 
     return (
         <View style={styles.container}>

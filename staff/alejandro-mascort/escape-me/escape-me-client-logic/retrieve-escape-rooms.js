@@ -1,7 +1,16 @@
 require('escape-me-commons/polyfills/string')
 const { utils: { call } } = require('escape-me-commons')
 const context = require('./context')
-
+/**
+ * Retrieves essential info of different escape rooms.
+ * 
+ * @param {string} tag The user relation with a escape room. 
+ * @param {String} id The id of a user.
+ * 
+ * @returns {Promise<Array>} An array of Objects, if not returns an error.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ */
 module.exports = function (tag, userId) {
     String.validate.notVoid(tag)
 

@@ -13,32 +13,12 @@ import Pending from './Pending'
 import { retrieveEscapeRooms, retrieveEscapeIds, suggestEscapeRooms } from 'escape-me-client-logic'
 
 export default function () {
-    const [escapes, setEscapes] = useState()
-    const [escapeRoomsSuggested, setEscapeRoomsSuggested] = useState([])
-    const [loaded, setLoaded] = useState(false)
-
-    const handleEscapeLists = async () => {
-        const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
-        setEscapes({ participated, pending, favorites })
-        console.log(escapes)
-    }
-
-    useEffect(() => {
-        (async () => {
-            const escapes = await retrieveEscapeIds()
-            setEscapes(escapes)
-            escapeList = await suggestEscapeRooms()
-            setEscapeRoomsSuggested(escapeList)
-            setLoaded(true)
-        })()
-    }, [])
-
     const handleLogOut = () => {
         //   setToken()
         //   setView('landing')
     }
 
-    return (loaded ?
+    return (
         <View style={styles.container}>
             <View style={styles.appheader}>
                 <Text style={styles.title}>Escape Me</Text>
@@ -48,13 +28,9 @@ export default function () {
             </View>
 
             <NavigationContainer>
-                <NavTabs handleEscapeLists={handleEscapeLists}
-                    escapes={escapes}
-                    escapeRoomsSuggested={escapeRoomsSuggested} />
+                <NavTabs />
             </NavigationContainer>
         </View>
-        :
-        <View></View>
     )
 }
 
@@ -94,11 +70,6 @@ function NavTabs({ handleEscapeLists, escapes, escapeRoomsSuggested }) {
             <Tab.Screen
                 name="Home"
                 component={Home}
-                // initialParams={{
-                //     'handleEscapeLists': handleEscapeLists,
-                //     'escapes': escapes,
-                //     'escapeRoomsSuggested': escapeRoomsSuggested
-                // }}
                 options={{
                     tabBarLabel: 'Home',
                     tabBarIcon: ({ color }) => (
