@@ -1,8 +1,8 @@
 require('coohappy-commons/polyfills/string')
-const { utils: { Email, call } } = require('coohappy-commons')
-const { API_URL } = require('./context')
+const { utils: { call } } = require('coohappy-commons')
+const context = require('./context')
 
-module.exports = (name, { street, number, city, country }, laundryNum, token) => {
+module.exports = function(name, { street, number, city, country }, laundryNum) {
 
     number = parseInt(number)
     String.validate.notVoid(name)
@@ -11,23 +11,25 @@ module.exports = (name, { street, number, city, country }, laundryNum, token) =>
     if (typeof laundryNum !== 'number') throw new TypeError(`${laundryNum} is not a number`)
     String.validate.notVoid(city)
     String.validate.notVoid(country)
-    String.validate.notVoid(token)
+
 
     //TODO admin can change this value
 
     return (async () => {
 
+        const token = await this.storage.getItem('TOKEN')
+
         const response = await call(
             'POST',
-            `${API_URL}cohousings`,
+            `${this.API_URL}/cohousings`,
             JSON.stringify({ name, address: { street, number, city, country }, laundryNum }),
             { 'Content-type': 'application/json', 'Authorization': `Bearer ${token}` })
         
         const {status} = response;
         if (status === 201) return;
 
-        const { error } = response;
+        const { error } = JSON.parse(response.body);
 
         throw new Error(error)
     })()
-}
+}.bind(context)

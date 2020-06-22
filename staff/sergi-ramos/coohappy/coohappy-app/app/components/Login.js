@@ -1,25 +1,28 @@
 import React, { useState } from 'react';
-import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView, AsyncStorage } from 'react-native'
+import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView, AsyncStorage,Alert } from 'react-native'
 import SvgUri from "expo-svg-uri"
 import ButtonForm from '../components/ButtonForm'
 import { authenticateUser } from 'coohappy-client-logic'
+
+
+
 
 const Login = function ({ navigation }) {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    
 
     const handleOnSubmitLogin = async () => {
 
         try {
 
-            let resToken = await authenticateUser(email, password)
+            await authenticateUser(email, password)
+            navigation.navigate('Home')
+           // await AsyncStorage.setItem('TOKEN', resToken)
+            // const token = await AsyncStorage.getItem('TOKEN')
+            // if(!token)  navigation.navigate('WellcomePage')
+            // else navigation.navigate('Home')
 
-            await AsyncStorage.setItem('TOKEN', resToken)
-            const token = await AsyncStorage.getItem('TOKEN')
-            if(!token)  navigation.navigate('WellcomePage')
-            else navigation.navigate('Home')
             // const { name } = await retrieveUser(token)
             // await setName(name)
             // navigation.navigate('Home',{
@@ -28,7 +31,10 @@ const Login = function ({ navigation }) {
                 // })
                 
         } catch (error) {
-            console.log(error)
+            if(error.message === 'string is empty or blank') Alert.alert('OOPS!!', 'Some field is empty')
+            if(error.message === `${password} length is not greater or equal than 8`) Alert.alert('OOPS!!', 'Password must be a minimum of 8 letters')
+            else Alert.alert('OOPS!',error.message)
+            
         }
     }
 

@@ -18,7 +18,9 @@ const Register = function({ navigation })  {
             await registerUser(name, surname, email, password, confirmPassword)
             navigation.navigate('Login')
         } catch (error) {
-            console.log(error)
+            if(error.message === 'string is empty or blank') Alert.alert('OOPS!!', 'Some field is empty')
+            if(error.message === `${password} length is not greater or equal than 8`) Alert.alert('OOPS!!', 'Password must be a minimum of 8 letters')
+            else Alert.alert('OOPS!!',error.message)
         }
     }
 

@@ -50,7 +50,7 @@ const CreateCommunity = function ({ route, navigation }) {
 
                     <TextInput style={styles.input} onChangeText={value => setName(value)} placeholder="community name" placeholderTextColor="#81868e" />
                     <TextInput style={styles.input} onChangeText={value => setStreet(value)} placeholder="street" placeholderTextColor="#81868e" />
-                    <TextInput style={styles.input} onChangeText={value => setNumber(value)} placeholder="number" placeholderTextColor="#81868e" />
+                    <TextInput style={styles.input} onChangeText={value => setNumber(value)} keyboardType='numeric' placeholder="number" placeholderTextColor="#81868e" />
                     <TextInput style={styles.input} onChangeText={value => setCity(value)} placeholder="city" placeholderTextColor="#81868e" />
                     <TextInput style={styles.input} onChangeText={value => setCountry(value)} placeholder="country" placeholderTextColor="#81868e" />
                 </View>

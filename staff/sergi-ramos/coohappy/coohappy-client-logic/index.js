@@ -1,6 +1,11 @@
+const context = require('./context')
+
 module.exports = {
-    registerUser: require('./register-user'),
+    get __context__(){
+        return context
+    },
     authenticateUser: require('./authenticate-user'),
+    registerUser: require('./register-user'),
     retrieveUser: require('./retrieve-user'),
     registerCohousing: require('./register-cohousing'),
     updateUser: require('./update-user'),
@@ -11,5 +16,7 @@ module.exports = {
     retrieveMessage: require('./retrieve-messages'),
     addFood: require('./add-food'),
     substractFood: require('./substract-food'),
-    retrieveUserFoodList: require('./retrieve-user-food-list')
+    retrieveUserFoodList: require('./retrieve-user-food-list'),
+    retrieveCohousing: require('./retrieve-cohousing'),
+    updateCohousing: require('./update-cohousing')
 }

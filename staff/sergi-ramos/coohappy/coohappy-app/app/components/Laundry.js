@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, AsyncStorage } from 'react-native'
+import { View, StyleSheet, Text, AsyncStorage, Alert } from 'react-native'
 import HeaderHome from './HeaderHome'
 import WeekDays from './WeekDays'
 import TimeLaundry from './timeLaundry'
-import { retrieveLaundry, addDateLaundry, retrieveUser, deleteDateLaundry } from 'coohappy-client-logic'
+import { retrieveLaundry, addDateLaundry, retrieveUser, deleteDateLaundry, retrieveCohousing } from 'coohappy-client-logic'
 import getDayMonthWeek from 'coohappy-client-logic/helpers/week-month-days'
 import moment from 'moment'
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -18,18 +18,24 @@ const Laundry = function ({ navigation }) {
     const [hour, setHour] = useState()
     const [update, setUpdate] = useState(false)
     const [userId, setUserId] = useState()
+    const [cohousing, setCohousing] = useState()
 
+
+   
     useEffect(() => {
         (async () => {
             try {
                 const updateWeek = getDayMonthWeek()
-
+               
                 setWeek(updateWeek)
+                const token = await AsyncStorage.getItem('TOKEN')
+                const _cohousing = await retrieveCohousing(token)
+                setCohousing(_cohousing)
 
                 await __handleUpdate__()
 
             } catch (error) {
-                console.log(error)
+                Alert.alert('OOPS!!',error.message)
             }
         })()
 
@@ -39,36 +45,44 @@ const Laundry = function ({ navigation }) {
 //TODO delete all laundries when time pass
 
     const __handleUpdate__ = async () => {
-        const token = await AsyncStorage.getItem('TOKEN')
-        const { id } = await retrieveUser(token)
-        const laundriesAmount = await retrieveLaundry(token, day)
-
-        setUserId(id)
-        setLaundries(laundriesAmount)
+        try {
+            const token = await AsyncStorage.getItem('TOKEN')
+            const { id } = await retrieveUser(token)
+            const laundriesAmount = await retrieveLaundry(token, day)
+            setUserId(id)
+            setLaundries(laundriesAmount)
+            
+        } catch (error) {
+            Alert.alert('OOPS!!',error.message)
+        }
     }
 
     const handleDaySelection = async (_day) => setDay(_day.day)
 
 
-
     const handleHourSelection = async (hour) => {
 
-        const token = await AsyncStorage.getItem('TOKEN')
-        await addDateLaundry(day, hour, token)
-        await __handleUpdate__()
+        try {
+            const token = await AsyncStorage.getItem('TOKEN')
+            await addDateLaundry(day, hour, token)
+            await __handleUpdate__()
+            
+        } catch (error) {
+           
+            Alert.alert('OOPS!!',error.message)
+        }
     }
 
     const handleOnCancelLaundry = async () => {
 
         try {
-            debugger
 
             const token = await AsyncStorage.getItem('TOKEN')
             await deleteDateLaundry(token)
             await __handleUpdate__()
 
         } catch (error) {
-            console.log(error)
+            Alert.alert('OOPS!!',error.message)
         }
     }
 
@@ -77,7 +91,7 @@ const Laundry = function ({ navigation }) {
 
         <View style={styles.container}>
 
-            <HeaderHome user={'La Floca'} navigation={navigation} />
+            <HeaderHome navigation={navigation} cohousingInfo={cohousing} />
             <View>
 
 

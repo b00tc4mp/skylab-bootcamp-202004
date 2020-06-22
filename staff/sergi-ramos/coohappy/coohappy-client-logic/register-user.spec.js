@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, API_URL } } = process
 
 const registerUser = require('./register-user')
 const { random } = Math
@@ -8,6 +8,10 @@ const { expect } = require('chai')
 require('coohappy-commons/polyfills/json')
 const { mongoose, models: { User } } = require('coohappy-data')
 const bcrypt = require('bcryptjs')
+const logic = require('.')
+global.fetch = require('node-fetch')
+logic.__context__.API_URL = API_URL
+console.log(API_URL)
 
 describe('logic - register user', () => {
     before(() => mongoose.connect(MONGODB_URL))

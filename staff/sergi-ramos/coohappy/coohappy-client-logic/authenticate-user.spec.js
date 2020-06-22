@@ -1,12 +1,20 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, API_URL } } = process
 
 const authenticateUser = require('./authenticate-user')
 const { random } = Math
 const { expect } = require('chai')
 const { mongoose, models: { User } } = require('coohappy-data')
 const bcrypt = require('bcryptjs')
+
+global.fetch = require('node-fetch')
+const notAsyncStorage = require('not-async-storage')
+const logic = require('.')
+const atob = require('atob')
+
+logic.__context__.API_URL = API_URL
+logic.__context__.storage = notAsyncStorage
 
 describe('logic - authenticate user', () => {
     before(() => mongoose.connect(MONGODB_URL))
@@ -34,7 +42,17 @@ describe('logic - authenticate user', () => {
 
         it('should succeed on correct credentials', () =>
             authenticateUser(email, password)
-                .then(_userId => expect(_userId).to.equal(userId))
+                .then(() => {
+                   return logic.__context__.storage.getItem('TOKEN')
+                   .then(token=>{
+                       debugger
+                       const [, payload] = token.split('.')
+                       const {sub} = JSON.parse(atob(payload))
+   
+                       expect(sub).to.equal(userId)
+
+                   })
+                })
         )
 
         it('should fail on wrong password', () => {

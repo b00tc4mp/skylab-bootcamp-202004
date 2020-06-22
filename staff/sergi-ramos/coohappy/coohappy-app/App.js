@@ -14,7 +14,14 @@ import ShopList from "./app/components/ShopList"
 import WeekDays from "./app/components/WeekDays"
 import TimeLaundry from "./app/components/timeLaundry"
 import SingleFruit from "./app/components/SingleFruit"
+import InfoCommunity from "./app/components/InfoCommunity"
+import InfoCommunityAdmin from "./app/components/InfoCommunityAdmin"
 
+import logic from 'coohappy-client-logic'
+
+
+logic.__context__.storage = AsyncStorage
+logic.__context__.API_URL = 'http://192.168.0.19:8080/api'
 
 // import Navigator from "./routes/home-stack"
 import { NavigationContainer } from '@react-navigation/native'
@@ -25,7 +32,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
 import SvgUri from 'expo-svg-uri';
-import { StyleSheet } from 'react-native';
+import { AsyncStorage } from 'react-native';
 console.disableYellowBox = true
 
 
@@ -62,6 +69,9 @@ export default function App() {
         <Stack.Screen name="UpdateUser">
           {props => <UpdateUser {...props} setName={setName}/>}
         </Stack.Screen>  
+        <Stack.Screen name="InfoCommunity" component={InfoCommunity} />
+        <Stack.Screen name="InfoCommunityAdmin" component={InfoCommunityAdmin} />
+
       </Stack.Navigator>
     </NavigationContainer> 
 
