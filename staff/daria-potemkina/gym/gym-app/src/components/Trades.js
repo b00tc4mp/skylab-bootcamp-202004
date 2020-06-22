@@ -3,7 +3,7 @@ import './Portfolio.sass'
 
 export default function ({ trades }) {
     return <section>
-        <ul className="portfolio__trdaes">
+        <ul className="portfolio__trades">
             {
                 trades.trades.map(({ price: { price }, type, quantity })=> 
                 <li className="portfolio__item">

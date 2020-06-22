@@ -9,7 +9,7 @@ const { mongoose, models: { User, Product, Price, Contract, AccountBalance, Unde
 const { errors: { UnexistenceError } } = require('gym-commons')
 const { ObjectId } = mongoose
 
-describe('logic - closeUserPosition', () => {
+describe.('logic - closeUserPosition', () => {
     before(() => mongoose.connect(MONGODB_URL_TEST))
 
     let optionUnderlying, user, userId, future, option, _option, futureId, optionId, _future, futurePrice, ____optionPrice, ___optionPrice, _optionPriceId, ___futurePrice, futurePriceId, optionPriceId, dateToday, futureBuyContract, futureSellContract, optionBuyPutContract, optionSellCallContract
@@ -21,6 +21,12 @@ describe('logic - closeUserPosition', () => {
         await AccountBalance.deleteMany()
         await Price.deleteMany()
         await Underlying.deleteMany()
+
+        dateToday = new Date().toString().split(' ').slice(1, 4)
+
+        dateToday.push('UTC')
+
+        dateToday = dateToday.join(' ')
 
         user = {
             name: `name-${random()}`,
@@ -41,7 +47,7 @@ describe('logic - closeUserPosition', () => {
             exchange: `exchange-${random()}`,
             sector: `sector-${random()}`,
             contractSize: round(random() * 100),
-            settlementDate: new Date()
+            settlementDate: new Date(dateToday)
         }
 
         _future = {
@@ -59,7 +65,7 @@ describe('logic - closeUserPosition', () => {
             ticker: `ticker-${random()}`,
             sector: `sector-${random()}`,
             contractSize: round(random() * 100),
-            settlementDate: new Date(),
+            settlementDate: new Date(dateToday),
             type: {
                 strike: 9,
                 side: 'call',
@@ -72,14 +78,12 @@ describe('logic - closeUserPosition', () => {
             ticker: `ticker-${random()}`,
             sector: `sector-${random()}`,
             contractSize: round(random() * 100),
-            settlementDate: new Date(),
+            settlementDate: new Date(dateToday),
             type: {
                 strike: 11,
                 side: 'put',
             }
         }
-
-        dateToday = new Date()
 
         guarantee = round(random() * 1000)
         profitAndLoss = round(random() * 1000)
@@ -156,19 +160,17 @@ describe('logic - closeUserPosition', () => {
                 }]
             }
 
-            dateToday = new Date().toString().split(' ').slice(1, 4).join(' ')
-
             await AccountBalance.create({ user: userId, date: new Date('Jun 10 2020'), guarantee, profitAndLoss })
 
             const __futurePrice = await Price.create({ product: futureId, date: new Date(dateToday), price: 8 })
             ___futurePrice = __futurePrice.price
 
-            optionUnderlying = await Underlying.create({ticker: option.ticker})
+            optionUnderlying = await Underlying.create({ ticker: option.ticker })
 
             const optionCallPrice = await Price.create({ product: optionUnderlying._id, date: new Date(dateToday), price: 14 })
             ___optionPrice = optionCallPrice.price
 
-            _optionUnderlying = await Underlying.create({ticker: _option.ticker})
+            _optionUnderlying = await Underlying.create({ ticker: _option.ticker })
 
             const optionPutPrice = await Price.create({ product: _optionUnderlying._id, date: new Date(dateToday), price: 10 })
             ____optionPrice = optionPutPrice.price
@@ -400,18 +402,6 @@ describe('logic - closeUserPosition', () => {
             await Contract.create(futureBuyContract)
             await AccountBalance.create({ user: userId, date: new Date('Jun 10 2020'), guarantee, profitAndLoss })
 
-        })
-        it('should fails in date not today', async () => {
-            try {
-                await closeUserPosition(userId)
-
-                throw new Error('should not reach this point')
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceOf(Error)
-                expect(error.message).to.equal("should not be executed due to not reaching expiration date")
-            }
         })
     })
 

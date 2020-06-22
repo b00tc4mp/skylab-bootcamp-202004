@@ -9,11 +9,10 @@ import Landing from './Landing'
 import ProductDetails from './ProductDetails'
 import Account from './Account'
 import Portfolio from './Portfolio'
-import Notifications from './Notifications'
+// import Notifications from './Notifications'
 import Settings from './Settings'
 import Search from './Search'
 import Spinner from './Spinner'
-import Trades from './Trades'
 import './Footer.sass'
 import { faHome, faBars } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -55,8 +54,6 @@ function App({ history }) {
     setToken(token)
 
     history.push('/home')
-
-    setLoading(false)
   }
 
   const handleGoToLogin = () => history.push('/login')
@@ -159,8 +156,6 @@ function App({ history }) {
           </nav>
         </section>}
 
-       {/* <Spinner /> */}
-
         {!expanded && <Route path="/home" render={() =>
           token ? <Home expanded={expanded} token={token} handleGoToDetails={handleGoToDetails} /> : <Redirect to="/login" />} />}
 
@@ -175,14 +170,12 @@ function App({ history }) {
 
         {/* {!expanded && <Route path="/notifications" render={() => <Notifications />} />} */}
 
+        {/* {loading && <Spinner />} */}
+
         {!expanded && <Route path="/settings" render={() => <Settings token={token} />} />}
 
       </header>
-      {/* {token && <section>
-          <footer className="footer">
-            <p className="footer__text">Skylab Coder Academy</p>
-          </footer>
-        </section>} */}
+
     </div>
   );
 }

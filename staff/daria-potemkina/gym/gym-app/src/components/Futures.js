@@ -16,6 +16,7 @@ export default function ({ futures, handleGoToDetails, token }) {
         side = side.value
 
         try {
+            debugger
             addProduct(token, id, priceId, side, quantity)
                 .then(() => {
                     setSuccess({ id, message: 'trade has been added to your portfolio' })
@@ -33,7 +34,7 @@ export default function ({ futures, handleGoToDetails, token }) {
         <h1 className="products__title">Futures</h1>
         <ul className="products__items">{
             futures.map(item =>
-                <li className='products__item'>
+                <li key={item._id} className='products__item'>
                     <button className="products__details" onClick={event => {
                         event.preventDefault()
 

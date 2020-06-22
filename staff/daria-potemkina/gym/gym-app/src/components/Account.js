@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { retrieveUserBalance, retrieveUserCard } from 'gym-client-logic'
 import Feedback from './Feedback'
 import './Account.sass'
+import Spinner from './Spinner'
 
 export default function ({ token }) {
     const [card, setCard] = useState()
     const [error, setError] = useState()
     const [balance, setBalance] = useState()
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         try {
@@ -21,19 +23,30 @@ export default function ({ token }) {
     }, [token])
 
     useEffect(() => {
-        try {
-            retrieveUserBalance(token)
-                .then(balance => setBalance(balance))
-                .then(() => setError(undefined))
-                .catch(({ message }) => setError(message))
-        } catch ({ message }) {
-            setError(message)
-        }
-    }, [token])
+        const timer = setTimeout(() => {
+            (async() => {
+                try {
+                    retrieveUserBalance(token)
+                        .then(balance => {
+                            setBalance(balance)
+                            setLoading(false)})
+                        .then(() => setError(undefined))
+                        .catch(({ message }) => {
+                            setError(message)
+                            setLoading(false)})
+                } catch ({ message }) {
+                    setError(message)
+                    setLoading(false)
+                }
+            })()
+        }, 1000)
+        return() => clearTimeout(timer)
+    }, [token, balance])
 
 
     return <section className="account">
-        {card &&
+        {loading && <Spinner />}
+        {card && balance &&
             <section className="account__card">
                 <h1 className="account__title">Card</h1>
                 <section className="account__card-details">
@@ -53,7 +66,7 @@ export default function ({ token }) {
                 </ul>
                 <ul>
                     {balance.map(({ date, guarantee, profitAndLoss }) =>
-                        <li className='account__balance-item'>
+                        <li key={`${date}+${guarantee}+${profitAndLoss}`} className='account__balance-item'>
                             <p>{date}</p>
                             <p>{`${guarantee}€`}</p>
                             <p>{`${profitAndLoss}€`}</p>
@@ -62,6 +75,6 @@ export default function ({ token }) {
                 </ul>
             </section>
         }
-        {error && <Feedback message={error} level='error' />}
+        {error && !loading && <Feedback message={error} level='error' />}
     </section>
 }

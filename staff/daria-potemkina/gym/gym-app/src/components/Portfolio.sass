@@ -37,19 +37,20 @@
     
     &__item
         display: grid
-        grid-template-rows: repeat(auto-fill, 50px)
+        grid-template-rows: repeat(auto-fill, minmax(50px, auto))
         grid-auto-flow: column
-        justify-items: end
-        grid-template-columns: auto
+        justify-items: start
+        grid-template-columns: repeat(auto-fit)
         justify-content: space-around
-        align-items: end
+        align-items: center
+        height: 30px
         font-size: 80%
 
     &__type
         text-transform: uppercase
     
     &__button
-        width: 45px
+        width: 43px
         height: 25px
         border: none
         background-color: rgb(165, 96, 114)

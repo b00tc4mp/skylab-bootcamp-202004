@@ -3,11 +3,11 @@ import { retrieveUserAssetAllocation, retrieveUserPortfolio } from 'gym-client-l
 import { Pie } from 'react-chartjs-2'
 import Feedback from './Feedback'
 import Trades from './Trades'
+import Spinner from './Spinner'
 import './Feedback.sass'
 import './Portfolio.sass'
-import { Link } from 'react-router-dom'
 
-export default function ({ token, history }) {
+export default function ({ token }) {
     const [error, setError] = useState()
     const [allocation, setAllocation] = useState({})
     const [typeData, setTypeData] = useState({})
@@ -16,16 +16,26 @@ export default function ({ token, history }) {
     const [contracts, setContracts] = useState()
     const [trade, setTrade] = useState()
     const [details, setDetails] = useState()
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        try {
-            retrieveUserPortfolio(token)
-                .then(contracts => setContracts(contracts))
-                .catch(error => setError(error.message))
-        } catch (error) {
-            setError(error.message)
-        }
-    }, [token])
+        const timer = setTimeout(() => {
+            (async() => {
+                try {
+                    retrieveUserPortfolio(token)
+                        .then(contracts => {
+                            console.log(contracts)
+                            setContracts(contracts)
+                            setLoading(false)})
+                        .catch(error => setError(error.message))
+                } catch (error) {
+                    setLoading(false)
+                    setError(error.message)
+                }
+            })()
+        }, 1000)
+        return() => clearTimeout(timer)
+    }, [token, contracts])
 
     useEffect(() => {
         try {
@@ -66,9 +76,12 @@ export default function ({ token, history }) {
                     })
                 })
                 .then(() => setError(undefined))
-                .catch(error => setError(error.message))
+                .catch(error => {
+                    setError(error.message)
+                    setLoading(false)})
         } catch (error) {
             setError(error.message)
+            setLoading(false)
         }
     }, [token, allocation])
 
@@ -81,14 +94,15 @@ export default function ({ token, history }) {
     }
 
     return <section className='portfolio'>
+        {loading && <Spinner />}
         {allocation && typeData && contracts &&
             <section>
                 <h1 className="portfolio__title">Portfolio</h1>
                 <section className="portfolio__data">
                     <section>
                         <ul className="portfolio__trades">
-                            {contracts.map(({ _id, product: { ticker, productType, settlementDate }, trades }) =>
-                                <li className="portfolio__item">
+                            {contracts.map(({ _id, product: { ticker, productType, settlementDate }, trades}) =>
+                                <li key={_id} className="portfolio__item">
                                     <p>{ticker}</p>
                                     <p className="portfolio__type">{productType}</p>
                                     <p>{settlementDate}</p>
@@ -144,6 +158,6 @@ export default function ({ token, history }) {
                 </section>
             </section>
         }
-        {error && <Feedback message={error} />}
+        {error && !loading && <Feedback message={error} level="error" />}
     </section>
 }
