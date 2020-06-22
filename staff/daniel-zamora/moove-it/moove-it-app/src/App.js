@@ -24,7 +24,7 @@ function App({ history }) {
     else history.push('/')
   },[])
 
-  const handleGoToRegister = () => history.push('/register')
+  const handleGoToRegister = () => history.push('/')
 
   const handleRegister = () => history.push('./login')
 
@@ -43,9 +43,6 @@ function App({ history }) {
         <Container>
           <Route exact path='/' render={() => 
             isSessionActive()? <Redirect to="home" /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>}/>
-
-          <Route path="/register" render={() => 
-          isSessionActive()? <Redirect to="home" /> : <Register onRegister={handleRegister}/>}/>
           
           <Route path="/login" render={() => 
           isSessionActive()? <Redirect to="home" /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister}/>}/>
