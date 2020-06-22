@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "bcrypt": "^5.0.0",
     "chai": "^4.2.0",
     "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
@@ -21,6 +20,7 @@
     "xhr2": "^0.2.0"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "node": "^14.4.0",
     "plates-commons": "file:../plates-commons"
   }

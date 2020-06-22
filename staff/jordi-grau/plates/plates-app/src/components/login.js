@@ -1,14 +1,11 @@
-import React, { component, Component } from 'react'
+import React, {  useState } from 'react'
+import Feedback from './feedback'
 import { authenticateUser } from 'plates-client-logic'
 
-export default class extends Component {
-    constructor(props) {
-        super(props)
+export default function Login({onGoToRegister, onGoToHome}) {
+    const [error, setError] = useState()
 
-        this.state = {error: ''}
-    }
-
-    handleSubmit  = event => {
+    const handleSubmit  = event => {
         event.preventDefault()
 
         let { email, password} = event.target
@@ -18,37 +15,32 @@ export default class extends Component {
 
         try {
             authenticateUser(email, password)
-            .then(this.props.onLogin)
-            .catch(error => this.setState({ error: error.message}))
+            .then(onGoToHome)
+            .catch(error => setError(error.message))
         } catch (error) {
-            this.setState({ error:message})
-            
+           setError(error.message)        
         }
     }
 
-    handleGotoRegister = event =>{
+    const handleGotoRegister = event =>{
         event.preventDefault()
 
-        this.props.onGoToRegister
+        onGoToRegister()
     }
 
-    render() {
-        return 
-            <section className="login">
+   
+        return <section className="login">
                 <h1>Login</h1>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     <input type="email" name="email" placeholder="e-mail" required />
                     <input type="text" name="password" placeholder="password" required minLength="6" />
                     <button>Submit</button>
-                    or <a href="" onClick={this.handleGotoRegister}>Register</a>
+                    or <a href="" onClick={handleGotoRegister}>Register</a>
 
-                    {this.state.error &&  <Feedback message={this.state.error} level ="error"/> }
+                    {error &&  <Feedback message={error} level ="error"/> }
 
                 </form>
             </section>
         
-    }
-
-
-
+        
 }

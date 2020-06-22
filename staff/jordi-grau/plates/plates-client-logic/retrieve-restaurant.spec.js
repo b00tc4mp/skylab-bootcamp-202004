@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 require('plates-commons/polyfills/json')
 require('plates-commons/polyfills/xhr')
 const { DuplicityError, UnexistenceError, VoidError, CredentialsError } = require('plates-commons/errors')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const { random } = Math
 const { expect } = require('chai')
 const retrieveRestaurant = require('./retrieve-restaurant')

@@ -1,6 +1,6 @@
 require('plates-commons/polyfills/string')
 const { utils: { Email, call }} = require('plates-commons')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const context = require('./context')
 
 module.exports = function(userId) {

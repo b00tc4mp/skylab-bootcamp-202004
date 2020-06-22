@@ -1,7 +1,7 @@
 require('plates-commons/polyfills/string')
 const { models: { User}} = require('plates-data')
 const { utils: { Email,call } } = require('plates-commons')
-const brcypt = require('bcrypt')
+const brcypt = require('bcryptjs')
 const context  = require('./context')
 
 
