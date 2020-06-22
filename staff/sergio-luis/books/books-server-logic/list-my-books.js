@@ -16,9 +16,9 @@ const { errors: { UnexistenceError } } = require('books-commons')
 const { models: { User, Book } } = require('books-data')
 
 module.exports = (userId) => {
-    debugger
+   
     String.validate.notVoid(userId)
-
+  
     return (async() => {
         const user = await User.findById(userId)
 

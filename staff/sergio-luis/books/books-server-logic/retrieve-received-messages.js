@@ -28,7 +28,7 @@ module.exports = (userId) => {
         const received = await Message.find({ toUserId: userId })
         .populate('fromUserId', 'name')
         .populate('bookId', 'title image')
-        .sort({date:1})
+        .sort({date:-1})
         .lean()
 
         debugger

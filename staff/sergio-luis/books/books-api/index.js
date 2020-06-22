@@ -277,11 +277,11 @@ try {
                 }
             })
 
-            app.get('/books/list/mybooks/:IdUser?', verifyExtractJwt ,(req, res) => {
+            app.get('/books/list/mybooks/:idUser?', verifyExtractJwt ,(req, res) => {
                 const { payload: { sub: userId } ,params:{idUser}} = req
-              
+        
                 try {
-                    debugger
+    
                     listMyBooks(idUser || userId)
                         .then((books) => res.status(201).send(books))
                         .catch(error => handleError(error, res))
