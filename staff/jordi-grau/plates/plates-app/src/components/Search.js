@@ -18,7 +18,7 @@ export default function Search({onSubmit, onGotoSearch}) {
             })
             .catch(error=> setError(error.message))
         } catch (error) {
-            
+            if(error) throw error
         }
     }
 

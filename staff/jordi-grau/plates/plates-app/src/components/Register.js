@@ -3,10 +3,10 @@ import Feedback from './feedback'
 import { registerUser} from 'plates-client-logic'
 
 
-export default function Register({ onGoToLogin}) {
+export default function Register({ history, onGoToLogin}) {
 
     const [error, setError] = useState() //HOOHKS
-
+debugger
     const handleSubmit = event => {
         event.preventDefault()
 
@@ -19,7 +19,7 @@ export default function Register({ onGoToLogin}) {
 
         try {
             registerUser(name, surname, email, password)
-            .then(onGoToLogin)
+            .then(() => onGoToLogin(event))
             .catch(error => setError(error.message))
         } catch ({message}) {
             setError(message)

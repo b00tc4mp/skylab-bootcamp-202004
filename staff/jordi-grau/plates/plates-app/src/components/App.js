@@ -26,12 +26,11 @@ function App ({history}) {
                 .catch(error => {throw Error})
             } catch (error) {
                 if(error) throw error
-                console.log(error)
             }
             else history.push('/')
 
     }, [])
-
+debugger
     const handleGoToRegister = event =>{
         event.preventDefault()
         history.push('/register')
