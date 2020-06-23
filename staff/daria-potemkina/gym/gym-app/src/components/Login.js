@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Feedback from './Feedback'
 import './Feedback.sass'
 import './Login.sass'
-import { authenticateUser } from 'gym-client-logic'
+import { loginUser } from 'gym-client-logic'
 
 export default class extends Component {
     constructor(props) {
@@ -20,7 +20,7 @@ export default class extends Component {
         password = password.value
 
         try {
-            authenticateUser(email, password)
+            loginUser(email, password)
                 .then(this.props.onLogin)
                 .catch(error => this.setState({ error: error.message }))
         } catch ({ message }) {

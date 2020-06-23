@@ -3,7 +3,7 @@ import { addProduct } from 'gym-client-logic'
 import Feedback from './Feedback'
 import './Products.sass'
 
-export default function ({ token, options, handleGoToDetails }) {
+export default function ({options, handleGoToDetails }) {
     const [error, setError] = useState()
     const [success, setSuccess] = useState()
 
@@ -16,14 +16,18 @@ export default function ({ token, options, handleGoToDetails }) {
         side = side.value
 
         try {
-            addProduct(token, id, priceId, side, quantity)
+            addProduct(id, priceId, side, quantity)
                 .then(() => {
                     setSuccess({ id, message: 'trade has been added to the portfolio' })
+                    setError(undefined)
                     return
                 })
-                .catch(({ message }) => setError([id, message]))
+                .catch(({ message }) => {
+                    setError([id, message])
+                    setSuccess(undefined)})
         } catch ({ message }) {
             setError([id, message])
+            setSuccess(undefined)
         }
     }
 

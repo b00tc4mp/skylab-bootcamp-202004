@@ -1,9 +1,10 @@
 module.exports = {
     context: require('./context'),
     registerUser: require('./register-user'),
-    authenticateUser: require('./authenticate-user'),
+    loginUser: require('./login-user'),
     retrieveUser: require('./retrieve-user'),
-    isUserAuthenticated: require('./is-user-authenticated'),
+    isUserLoggedIn: require('./is-user-logged-in'),
+    isUserSessionValid: require('./is-user-session-valid'),
     retrieveFutures: require('./retrieve-futures'),
     retrieveOptions: require('./retrieve-options'),
     retrieveUserBalance: require('./retrieve-user-balance'),
@@ -14,5 +15,7 @@ module.exports = {
     searchProducts: require('./search-products'),
     addProduct: require('./add-product'),
     addUserCard: require('./add-user-card'),
-    retrieveUserPortfolio: require('./retrieve-user-portfolio')
+    retrieveUserPortfolio: require('./retrieve-user-portfolio'),
+    retrieveProduct: require('./retrieve-product'),
+    logoutUser: require('./logout-user')
 }

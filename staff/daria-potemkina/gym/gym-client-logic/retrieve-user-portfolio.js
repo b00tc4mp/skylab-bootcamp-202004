@@ -1,8 +1,6 @@
 /**
  * Retrieve user portfolio
  * 
- * @param {string} token The user token.
- * 
  * @returns {Promise<Array>} The users trades with products details if it resolves, an error if it rejects.
  * 
  * @throws {TypeError} If parameter does not match the format.
@@ -15,8 +13,8 @@ const {utils: {call}} = require('gym-commons')
 const context = require('./context')
 const moment = require('moment')
 
-module.exports = function(token){
-    String.validate.notVoid(token)
+module.exports = function(){
+    const { token } = context.storage
 
     return call('GET', `${this.API_URL}/users/trades`,
     undefined,

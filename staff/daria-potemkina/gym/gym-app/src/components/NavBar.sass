@@ -1,10 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap')
-    
-*
-    margin: 0
-    padding: 0
-    font-family: 'Lato', sans-serif
-
 li
     padding: 10px 0
 
@@ -64,3 +57,13 @@ li
                 &:hover
                     color: rgb(211, 147, 145)
                     background-color: rgba(211, 147, 145, 0.2)
+
+@media only screen and (min-width: 768px)
+    .nav-bar
+        &__list
+          &--expanded
+            li > a
+                text-decoration: none
+                padding: 1%
+
+        

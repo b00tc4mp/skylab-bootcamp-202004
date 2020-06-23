@@ -10,7 +10,7 @@ const future1 = new Product({
     exchange: 'MEFF',
     sector: 'Banking',
     contractSize: 100,
-    settlementDate: new Date('June 22, 2020 17:45:00')
+    settlementDate: new Date('June 24, 2020 12:45:00')
 })
 
 future1.save()

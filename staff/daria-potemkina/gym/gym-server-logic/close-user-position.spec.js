@@ -9,10 +9,10 @@ const { mongoose, models: { User, Product, Price, Contract, AccountBalance, Unde
 const { errors: { UnexistenceError } } = require('gym-commons')
 const { ObjectId } = mongoose
 
-describe.('logic - closeUserPosition', () => {
+describe('logic - closeUserPosition', () => {
     before(() => mongoose.connect(MONGODB_URL_TEST))
 
-    let optionUnderlying, user, userId, future, option, _option, futureId, optionId, _future, futurePrice, ____optionPrice, ___optionPrice, _optionPriceId, ___futurePrice, futurePriceId, optionPriceId, dateToday, futureBuyContract, futureSellContract, optionBuyPutContract, optionSellCallContract
+    let optionUnderlying, user, userId, future, option, _option, futureId, optionId, _future, optionSellPutContract, optionBuyCallContract
 
     beforeEach(async () => {
         await User.deleteMany()
@@ -149,6 +149,17 @@ describe.('logic - closeUserPosition', () => {
                 }]
             }
 
+            optionBuyCallContract = {
+                user: userId,
+                product: optionId,
+                isValid: true,
+                trades: [{
+                    price: optionPriceId,
+                    type: 'Buy',
+                    quantity: round(random() * 10)
+                }]
+            }
+
             optionBuyPutContract = {
                 user: userId,
                 product: _optionId,
@@ -156,6 +167,17 @@ describe.('logic - closeUserPosition', () => {
                 trades: [{
                     price: _optionPriceId,
                     type: 'Buy',
+                    quantity: round(random() * 10)
+                }]
+            }
+
+            optionSellPutContract = {
+                user: userId,
+                product: _optionId,
+                isValid: true,
+                trades: [{
+                    price: _optionPriceId,
+                    type: 'Sell',
                     quantity: round(random() * 10)
                 }]
             }
@@ -250,6 +272,30 @@ describe.('logic - closeUserPosition', () => {
         })
 
         it('should modify the user profits and losses and delete the trades setteled in short options position', async () => {
+            contract = await Contract.create(optionBuyCallContract)
+
+            await closeUserPosition(userId)
+
+            const balance = await AccountBalance.find({ user: ObjectId(userId) }).sort({ date: -1 })
+
+            expect(balance).to.be.an('array')
+            expect(balance).to.have.lengthOf(2)
+
+            const [_balance] = balance
+
+            expect(_balance).to.be.an.instanceOf(Object)
+            expect(_balance.user.toString()).to.equal(userId)
+            expect(_balance.date).to.be.an.instanceOf(Date)
+            expect(_balance.guarantee).to.equal(0)
+            expect(_balance.profitAndLoss).to.equal(round((profitAndLoss + (___optionPrice - option.type.strike) * option.contractSize * optionBuyCallContract.trades[0].quantity) * 100) / 100)
+
+            const _contract = await Contract.find({ user: ObjectId(userId) })
+
+            expect(_contract).to.have.lengthOf(1)
+            expect(_contract[0].isValid).to.equal(false)
+        })
+
+        it('should modify the user profits and losses and delete the trades setteled in short options position', async () => {
             contract = await Contract.create(optionBuyPutContract)
 
             await closeUserPosition(userId)
@@ -266,6 +312,30 @@ describe.('logic - closeUserPosition', () => {
             expect(_balance.date).to.be.an.instanceOf(Date)
             expect(_balance.guarantee).to.equal(0)
             expect(_balance.profitAndLoss).to.equal(round((profitAndLoss + (_option.type.strike - ____optionPrice) * _option.contractSize * optionBuyPutContract.trades[0].quantity) * 100) / 100)
+
+            const _contract = await Contract.find({ user: ObjectId(userId) })
+
+            expect(_contract).to.have.lengthOf(1)
+            expect(_contract[0].isValid).to.equal(false)
+        })
+
+        it('should modify the user profits and losses and delete the trades setteled in short options position', async () => {
+            contract = await Contract.create(optionSellPutContract)
+
+            await closeUserPosition(userId)
+
+            const balance = await AccountBalance.find({ user: ObjectId(userId) }).sort({ date: -1 })
+
+            expect(balance).to.be.an('array')
+            expect(balance).to.have.lengthOf(2)
+
+            const [_balance] = balance
+
+            expect(_balance).to.be.an.instanceOf(Object)
+            expect(_balance.user.toString()).to.equal(userId)
+            expect(_balance.date).to.be.an.instanceOf(Date)
+            expect(_balance.guarantee).to.equal(0)
+            expect(_balance.profitAndLoss).to.equal(round((profitAndLoss - (_option.type.strike - ____optionPrice) * _option.contractSize * optionSellPutContract.trades[0].quantity) * 100) / 100)
 
             const _contract = await Contract.find({ user: ObjectId(userId) })
 

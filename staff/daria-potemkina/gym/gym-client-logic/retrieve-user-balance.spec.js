@@ -10,6 +10,9 @@ require('gym-commons/ponyfills/xhr')
 const { ObjectId } = mongo
 const { utils: { jwtPromised } } = require('gym-commons')
 const moment = require('moment')
+const context = require('./context')
+
+context.storage = {}
 
 describe('logic - retrieve-user-balance', () => {
     let users, accountbalances
@@ -44,7 +47,7 @@ describe('logic - retrieve-user-balance', () => {
                 return users.insertOne(user).then(({ insertedId }) => {
                     userId = insertedId.toString()
                     return jwtPromised.sign({ sub: insertedId.toString() }, SECRET)
-                        .then(_token => token = _token)
+                        .then(_token => context.storage.token = _token)
                 })
                     .then(() => {
                         balance = {
@@ -75,9 +78,9 @@ describe('logic - retrieve-user-balance', () => {
     it('should fail when user is not exist', () => {
         const _userId = ObjectId().toString()
         return jwtPromised.sign({ sub: _userId }, SECRET)
-            .then(_token => token = _token)
+            .then(_token => context.storage.token = _token)
             .then(() => {
-                return retrieveUserBalance(token)
+                return retrieveUserBalance()
                     .then(() => { throw new Error('should not reach this point') })
                     .catch(error => {
                         expect(error).to.exist
@@ -91,7 +94,7 @@ describe('logic - retrieve-user-balance', () => {
     it('should fail when the balance is empty', () => {
         return accountbalances.deleteMany()
             .then(() => {
-                return retrieveUserBalance(token)
+                return retrieveUserBalance()
                     .then(() => { throw new Error('should not reach this point') })
                     .catch(error => {
                         expect(error).to.exist
@@ -100,36 +103,6 @@ describe('logic - retrieve-user-balance', () => {
                         expect(error.message).to.equal('the balance is empty, there are no operations yet')
                     })
             })
-    })
-
-    it('should return an type error when synchronous error exists', () => {
-        token = undefined
-        expect(() => {
-            retrieveUserBalance(token)
-        }).to.throw(TypeError, `${token} is not a string`)
-
-        token = 123
-        expect(() => {
-            retrieveUserBalance(token)
-        }).to.throw(TypeError, `${token} is not a string`)
-
-        token = true
-        expect(() => {
-            retrieveUserBalance(token)
-        }).to.throw(TypeError, `${token} is not a string`)
-    })
-
-    it('should return an error when synchronous error exists', () => {
-        token = ''
-        expect(() => {
-            retrieveUserBalance(token)
-        }).to.throw(Error, 'string is empty or blank')
-
-        token = '    '
-        expect(() => {
-            retrieveUserBalance(token)
-        }).to.throw(Error, 'string is empty or blank')
-
     })
 
     afterEach(() =>

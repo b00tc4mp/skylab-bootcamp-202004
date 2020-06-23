@@ -1,7 +1,6 @@
 /**
  * Add the product in the user portfolio
  * 
- * @param {string} token The user token
  * @param {string} productId The product id to add in the portfolio
  * @param {string} priceId The priceId of the product added
  * @param {string} side Buy or Sell the product
@@ -17,13 +16,14 @@ require('gym-commons/polyfills/number')
 const { utils: { call } } = require('gym-commons')
 const context = require('./context')
 
-module.exports = function (token, productId, priceId, side, quantity) {
-    String.validate(token)
+module.exports = function (productId, priceId, side, quantity) {
     String.validate(productId)
     String.validate(priceId)
     String.validate(side)
     
     Number.validate.integer(quantity)
+
+    const { token } = context.storage
     
     return call('POST', `${this.API_URL}/users/product`,
     `{ "productId": "${productId}", "priceId": "${priceId}", "side": "${side}", "quantity": ${quantity} }`,

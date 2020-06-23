@@ -3,7 +3,7 @@ import { addProduct } from 'gym-client-logic'
 import Feedback from './Feedback'
 import './Products.sass'
 
-export default function ({ futures, handleGoToDetails, token }) {
+export default function ({ futures, handleGoToDetails }) {
     const [error, setError] = useState()
     const [success, setSuccess] = useState()
 
@@ -16,8 +16,7 @@ export default function ({ futures, handleGoToDetails, token }) {
         side = side.value
 
         try {
-            debugger
-            addProduct(token, id, priceId, side, quantity)
+            addProduct(id, priceId, side, quantity)
                 .then(() => {
                     setSuccess({ id, message: 'trade has been added to your portfolio' })
                     return
@@ -37,7 +36,7 @@ export default function ({ futures, handleGoToDetails, token }) {
                 <li key={item._id} className='products__item'>
                     <button className="products__details" onClick={event => {
                         event.preventDefault()
-
+                        debugger
                         handleGoToDetails(item)
                     }}>
                         <p>{item.ticker}</p>
@@ -65,7 +64,7 @@ export default function ({ futures, handleGoToDetails, token }) {
                                 </select>
                             </section>
                             <button className="products__button">Trade</button>
-                            {error && error[0] === item._id && <Feedback message={error[1]} />}
+                            {error && error[0] === item._id && <Feedback message={error[1]} level="error" />}
                             {success && success.id === item._id && <Feedback message={success.message} />}
                         </form>
                     </section>

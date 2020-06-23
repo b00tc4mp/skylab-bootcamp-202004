@@ -9,6 +9,9 @@ const { mongo } = require('gym-data')
 require('gym-commons/ponyfills/xhr')
 const { ObjectId } = mongo
 const { utils: { jwtPromised } } = require('gym-commons')
+const context = require('./context')
+
+context.storage = {}
 
 describe('logic - retrieveUserAssetAllocation', () => {
     let users, products, prices, contracts
@@ -21,7 +24,7 @@ describe('logic - retrieveUserAssetAllocation', () => {
             prices = connection.db().collection('prices')
         }))
 
-    let user, future, option, userId, token, _token, futureId, optionId, futurePriceId, optionPriceId
+    let user, future, option, userId, futureId, optionId, futurePriceId, optionPriceId
 
     beforeEach(() => {
         return Promise.all([
@@ -92,7 +95,7 @@ describe('logic - retrieveUserAssetAllocation', () => {
                                 .then(_user => {
                                     userId = _user.insertedId.toString()
                                     return jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET)
-                                        .then(_token => token = _token)
+                                        .then(_token => context.storage.token = _token)
                                         .then(() => {
                                             futureContract = {
                                                 user: ObjectId(userId),
@@ -122,8 +125,7 @@ describe('logic - retrieveUserAssetAllocation', () => {
     })
 
     it('should return asset allocation', () => {
-        debugger
-        return retrieveUserAssetAllocation(token)
+        return retrieveUserAssetAllocation()
             .then(allocation => {
                 const { exchange, type, sector } = allocation
 
@@ -147,9 +149,9 @@ describe('logic - retrieveUserAssetAllocation', () => {
         const _userId = ObjectId().toString()
 
         return jwtPromised.sign({ sub: _userId }, SECRET)
-            .then(_token => token = _token)
+            .then(_token => context.storage.token = _token)
             .then(() =>
-                retrieveUserAssetAllocation(token)
+                retrieveUserAssetAllocation()
                     .then(() => { throw new Error('should not reach this point') })
                     .catch(error => {
                         expect(error).to.exist
@@ -163,7 +165,7 @@ describe('logic - retrieveUserAssetAllocation', () => {
     it('should return an error when the user do not have any trade added', () => {
         return contracts.deleteMany()
             .then(() => {
-                return retrieveUserAssetAllocation(token)
+                return retrieveUserAssetAllocation()
                     .then(() => { throw new Error('should not reach this point') })
                     .catch(error => {
                         expect(error).to.exist
@@ -172,35 +174,6 @@ describe('logic - retrieveUserAssetAllocation', () => {
                         expect(error.message).to.equal('user do not have trades yet')
                     })
             })
-    })
-
-    it('should return a type error', () => {
-        token = undefined
-        expect( () => {
-            retrieveUserAssetAllocation(token)
-        }).to.throw(TypeError, `${token} is not a string`)
-
-        token= 123
-        expect( () => {
-            retrieveUserAssetAllocation(token)
-        }).to.throw(TypeError, `${token} is not a string`)
-
-        token = false
-        expect( () => {
-            retrieveUserAssetAllocation(token)
-        }).to.throw(TypeError, `${token} is not a string`)
-    })
-
-    it('should return an error', () => {
-        token = ''
-        expect( () => {
-            retrieveUserAssetAllocation(token)
-        }).to.throw(Error, 'string is empty or blank')
-
-        token= '  '
-        expect( () => {
-            retrieveUserAssetAllocation(token)
-        }).to.throw(Error, 'string is empty or blank')
     })
 
     afterEach(() =>

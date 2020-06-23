@@ -11,13 +11,17 @@ require('gym-commons/polyfills/json')
 require('gym-commons/ponyfills/xhr')
 const { utils: { jwtPromised } } = require('gym-commons')
 
+const context = require('./context')
+
+context.storage = {}
+
 describe('logic - add-user-card', () => {
     let users
 
     before(() => mongo.connect(MONGODB_URL_TEST)
         .then(connection => users = connection.db().collection('users')))
 
-    let name, surname, email, password, card, token, _number, _holder, _expirationDate, _cvv
+    let name, surname, email, password, card, _number, _holder, _expirationDate, _cvv
 
     beforeEach(() => {
         return users.deleteMany()
@@ -42,12 +46,12 @@ describe('logic - add-user-card', () => {
                 .then(user => {
                     userId = user.insertedId.toString()
                     return jwtPromised.sign({ sub: user.insertedId.toString() }, SECRET)
-                        .then(_token => token = _token)
+                        .then(_token => context.storage.token = _token)
                 })
         })
 
         it('should success on add card', () =>
-            addUserCard(token, card.number, card.holder, card.expirationDate, card.cvv)
+            addUserCard(card.number, card.holder, card.expirationDate, card.cvv)
                 .then(() => users.find().toArray())
                 .then(users => {
                     const [user] = users
@@ -62,69 +66,54 @@ describe('logic - add-user-card', () => {
         it('should return a type error', () => {
             let { number, holder, expirationDate, cvv } = card
 
-            _token = undefined
-            expect(() => {
-                addUserCard(_token, number, holder, expirationDate, cvv)
-            }).to.throw(TypeError, `${_token} is not a string`)
-
-            _token = 123
-            expect(() => {
-                addUserCard(_token, number, holder, expirationDate, cvv)
-            }).to.throw(TypeError, `${_token} is not a string`)
-
-            _token = true
-            expect(() => {
-                addUserCard(_token, number, holder, expirationDate, cvv)
-            }).to.throw(TypeError, `${_token} is not a string`)
-
             _number = undefined
             expect(() => {
-                addUserCard(token, _number, holder, expirationDate, cvv)
+                addUserCard(_number, holder, expirationDate, cvv)
             }).to.throw(TypeError, `${_number} is not a string`)
 
             _number = 123
             expect(() => {
-                addUserCard(token, _number, holder, expirationDate, cvv)
+                addUserCard(_number, holder, expirationDate, cvv)
             }).to.throw(TypeError, `${_number} is not a string`)
 
             _number = true
             expect(() => {
-                addUserCard(token, _number, holder, expirationDate, cvv)
+                addUserCard(_number, holder, expirationDate, cvv)
             }).to.throw(TypeError, `${_number} is not a string`)
 
             _holder = undefined
             expect(() => {
-                addUserCard(token, number, _holder, expirationDate, cvv)
+                addUserCard(number, _holder, expirationDate, cvv)
             }).to.throw(TypeError, `${_holder} is not a string`)
 
             _holder = 123
             expect(() => {
-                addUserCard(token, number, _holder, expirationDate, cvv)
+                addUserCard(number, _holder, expirationDate, cvv)
             }).to.throw(TypeError, `${_holder} is not a string`)
 
             _holder = true
             expect(() => {
-                addUserCard(token, number, _holder, expirationDate, cvv)
+                addUserCard(number, _holder, expirationDate, cvv)
             }).to.throw(TypeError, `${_holder} is not a string`)
 
             _expirationDate = undefined
             expect(() => {
-                addUserCard(token, number, holder, _expirationDate, cvv)
+                addUserCard(number, holder, _expirationDate, cvv)
             }).to.throw(TypeError, 'expiration date is do not have a date format')
 
             _expirationDate = true
             expect(() => {
-                addUserCard(token, number, holder, _expirationDate, cvv)
+                addUserCard(number, holder, _expirationDate, cvv)
             }).to.throw(TypeError, 'expiration date is do not have a date format')
 
             _cvv = 234
             expect(() => {
-                addUserCard(token, number, holder, expirationDate, _cvv)
+                addUserCard(number, holder, expirationDate, _cvv)
             }).to.throw(TypeError, `${_cvv} is not a string`)
 
             _cvv = true
             expect(() => {
-                addUserCard(token, number, holder, expirationDate, _cvv)
+                addUserCard(number, holder, expirationDate, _cvv)
             }).to.throw(TypeError, `${_cvv} is not a string`)
         })
     })
@@ -133,9 +122,9 @@ describe('logic - add-user-card', () => {
         const _userId = ObjectId().toString()
 
         return jwtPromised.sign({ sub: _userId }, SECRET)
-            .then(_token => token = _token)
+            .then(_token => context.storage.token = _token)
             .then(() =>
-                addUserCard(token, card.number, card.holder, card.expirationDate, card.cvv)
+                addUserCard(card.number, card.holder, card.expirationDate, card.cvv)
                     .then(() => { throw new Error('should not reach this point') })
                     .catch(error => {
                         expect(error).to.exist

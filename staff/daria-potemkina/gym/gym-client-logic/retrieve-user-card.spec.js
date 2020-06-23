@@ -10,6 +10,9 @@ require('gym-commons/ponyfills/xhr')
 const { ObjectId } = mongo
 const { utils: { jwtPromised } } = require('gym-commons')
 const moment = require('moment')
+const context = require('./context')
+
+context.storage = {}
 
 describe('logic - retrieve-user-card', () => {
     let users
@@ -19,7 +22,7 @@ describe('logic - retrieve-user-card', () => {
             users = connection.db().collection('users')
         }))
 
-    let name, surname, email, password, card, token, userId
+    let name, surname, email, password, card, userId
 
     beforeEach(() => {
         return Promise.all([
@@ -44,25 +47,25 @@ describe('logic - retrieve-user-card', () => {
             return users.insertOne({ name, surname, email, password }).then(({ insertedId }) => {
                 userId = insertedId.toString()
                 return jwtPromised.sign({ sub: insertedId.toString() }, SECRET)
-                    .then(_token => token = _token)
+                    .then(_token => context.storage.token = _token)
             })
         })
 
         it('should return a credit card of user', () => {
             return users.updateOne({ _id: ObjectId(userId) }, { $set: { card } })
                 .then(() => {
-                    return retrieveUserCard(token)
+                    return retrieveUserCard()
                         .then(result => {
                             expect(result.number).to.equal(card.number)
                             expect(result.holder).to.equal(card.holder)
-                            expect(result.expirationDate).to.equal(moment(card.expirationDate).format('MM-YY'))
+                            expect(result.expirationDate).to.equal(moment(card.expirationDate).format('DD-MM-YYYY'))
                             expect(result.cvv).to.be.undefined
                         })
                 })
         })
 
         it('should fail when the card does not exist', () => {
-            return retrieveUserCard(token)
+            return retrieveUserCard()
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.exist
@@ -76,9 +79,9 @@ describe('logic - retrieve-user-card', () => {
     it('should fail when the user does not exist', () => {
         const _userId = ObjectId().toString()
         return jwtPromised.sign({ sub: _userId }, SECRET)
-            .then(_token => token = _token)
+            .then(_token => context.storage.token = _token)
             .then(() => {
-                return retrieveUserCard(token)
+                return retrieveUserCard()
                     .then(() => { throw new Error('should not reach this point') })
                     .catch(error => {
                         expect(error).to.exist
@@ -87,36 +90,6 @@ describe('logic - retrieve-user-card', () => {
                         expect(error.message).to.equal(`user with id ${_userId} does not exist`)
                     })
             })
-    })
-
-    it('should return an type error when synchronous error exists', () => {
-        token = undefined
-        expect(() => {
-            retrieveUserCard(token)
-        }).to.throw(TypeError, `${token} is not a string`)
-
-        token = 123
-        expect(() => {
-            retrieveUserCard(token)
-        }).to.throw(TypeError, `${token} is not a string`)
-
-        token = true
-        expect(() => {
-            retrieveUserCard(token)
-        }).to.throw(TypeError, `${token} is not a string`)
-    })
-
-    it('should return an error when synchronous error exists', () => {
-        token = ''
-        expect(() => {
-            retrieveUserCard(token)
-        }).to.throw(Error, 'string is empty or blank')
-
-        token = '    '
-        expect(() => {
-            retrieveUserCard(token)
-        }).to.throw(Error, 'string is empty or blank')
-
     })
 
     afterEach(() =>
