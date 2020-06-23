@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 
-const retrieveWorkspaceById = require('./retrieve-workspace-by-id')
+const deleteWorkspace = require('./delete-workspace-by-id')
 const { random } = Math
 const { expect } = require('chai')
 require('nomad-commons/polyfills/json')
@@ -13,6 +13,7 @@ describe('logic - retrieve workspace by id', () => {
 
     let workspaceRandom = {}
     let userName, surname, email, password, userId
+    let _userId
     let workspaceId
 
     beforeEach(async () => {
@@ -49,26 +50,12 @@ describe('logic - retrieve workspace by id', () => {
         await Workspace.create(workspaceRandom)
             .then(({ id }) => { workspaceId = id })
     })
-
     it('should succeed on valid workspaceId', async () => {
-        const workspace = await retrieveWorkspaceById(workspaceId)
+        await deleteWorkspace(userId, workspaceId)
 
-        expect(workspace).to.exist
+        const workspace = await Workspace.findOne({ _id: workspaceId })
 
-        expect(workspace.name).to.equal(workspaceRandom.name)
-        expect(workspace.price.amount).to.equal(workspaceRandom.price.amount)
-        expect(workspace.price.term).to.equal(workspaceRandom.price.term)
-        expect(workspace.address.street).to.equal(workspaceRandom.address.street)
-        expect(workspace.address.city).to.equal(workspaceRandom.address.city)
-        expect(workspace.address.country).to.equal(workspaceRandom.address.country)
-        expect(workspace.geoLocation.coordinates[0]).to.equal(workspaceRandom.geoLocation.coordinates[0])
-        expect(workspace.photos[0]).to.equal(workspaceRandom.photos[0])
-        expect(workspace.features.wifi).to.equal(workspaceRandom.features.wifi)
-        expect(workspace.features.parking).to.equal(workspaceRandom.features.parking)
-        expect(workspace.features.coffee).to.equal(workspaceRandom.features.coffee)
-        expect(workspace.features.meetingRooms).to.equal(workspaceRandom.features.meetingRooms)
-        expect(workspace.description).to.equal(workspaceRandom.description)
-        expect(workspace.capacity).to.equal(workspaceRandom.capacity)
+        expect(workspace).to.be.null
     })
 
     describe('when workspace does not exist', () => {
@@ -78,11 +65,32 @@ describe('logic - retrieve workspace by id', () => {
 
         it('should fail on any workspaces to retrieve', async () => {
 
-            const results = await retrieveWorkspaceById(workspaceId)
+            const results = await deleteWorkspace(userId, workspaceId)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.be.an.instanceof(Error)
                     expect(error.message).to.equal(`workspace with id ${workspaceId} does not exist`)
+                })
+        })
+    })
+
+    describe('when user is not the admin', () => {
+        beforeEach(async () => {
+            const name = `name-${random()}`
+            const email = `e-${random()}@mail.com`
+            await User.create({ name, surname, email, password })
+                .then(({ id }) => {
+                    _userId = id
+                })
+        })
+
+        it('should fail if user does not match with creator', async () => {
+
+            const results = await deleteWorkspace(_userId, workspaceId)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    expect(error).to.be.an.instanceof(Error)
+                    expect(error.message).to.equal('Workspace Admin needed to remove.')
                 })
         })
     })

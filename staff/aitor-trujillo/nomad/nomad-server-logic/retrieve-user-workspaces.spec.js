@@ -2,11 +2,12 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 
-const retrieveWorkspaceById = require('./retrieve-workspace-by-id')
+const retrieveUserWorkspaces = require('./retrieve-user-workspaces')
 const { random } = Math
 const { expect } = require('chai')
 require('nomad-commons/polyfills/json')
 const { mongoose, models: { Workspace, User } } = require('nomad-data')
+const { UnexistenceError } = require('nomad-commons/errors')
 
 describe('logic - retrieve workspace by id', () => {
     before(() => mongoose.connect(MONGODB_URL))
@@ -39,7 +40,6 @@ describe('logic - retrieve workspace by id', () => {
             price: { amount: random() + 100, term: 'month' },
             address: { street: `${random()} st`, city: `${random()} city`, country: `${random()} country` },
             geoLocation: { coordinates: [random(), random()] },
-            photos: [`photo-${random()}`],
             phone: `phone-${random()}`,
             features: { wifi: false, parking: false, coffee: true, meetingRooms: true },
             description: `description-${random()}`,
@@ -48,12 +48,18 @@ describe('logic - retrieve workspace by id', () => {
 
         await Workspace.create(workspaceRandom)
             .then(({ id }) => { workspaceId = id })
+
+        const user = await User.findById(userId)
+        user.userWorkspaces.push(workspaceId)
+        await user.save()
     })
 
     it('should succeed on valid workspaceId', async () => {
-        const workspace = await retrieveWorkspaceById(workspaceId)
+        const userWorkspace = await retrieveUserWorkspaces(userId)
 
-        expect(workspace).to.exist
+        expect(userWorkspace).to.exist
+
+        const [workspace] = userWorkspace
 
         expect(workspace.name).to.equal(workspaceRandom.name)
         expect(workspace.price.amount).to.equal(workspaceRandom.price.amount)
@@ -62,7 +68,6 @@ describe('logic - retrieve workspace by id', () => {
         expect(workspace.address.city).to.equal(workspaceRandom.address.city)
         expect(workspace.address.country).to.equal(workspaceRandom.address.country)
         expect(workspace.geoLocation.coordinates[0]).to.equal(workspaceRandom.geoLocation.coordinates[0])
-        expect(workspace.photos[0]).to.equal(workspaceRandom.photos[0])
         expect(workspace.features.wifi).to.equal(workspaceRandom.features.wifi)
         expect(workspace.features.parking).to.equal(workspaceRandom.features.parking)
         expect(workspace.features.coffee).to.equal(workspaceRandom.features.coffee)
@@ -71,18 +76,34 @@ describe('logic - retrieve workspace by id', () => {
         expect(workspace.capacity).to.equal(workspaceRandom.capacity)
     })
 
-    describe('when workspace does not exist', () => {
+    describe('when user has no workspaces', () => {
         beforeEach(async () =>
             await Workspace.deleteMany()
         )
 
         it('should fail on any workspaces to retrieve', async () => {
 
-            const results = await retrieveWorkspaceById(workspaceId)
+            const results = await retrieveUserWorkspaces(userId)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.be.an.instanceof(Error)
-                    expect(error.message).to.equal(`workspace with id ${workspaceId} does not exist`)
+                    expect(error.message).to.equal("You don't have any workspaces :(")
+                })
+        })
+    })
+    describe('when user does not exist', () => {
+        beforeEach(async () =>
+            await User.deleteMany()
+        )
+
+        it('should fail on wrong userId', async () => {
+
+            const results = await retrieveUserWorkspaces(userId)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    console.log(error)
+                    expect(error).to.be.an.instanceof(UnexistenceError)
+                    expect(error.message).to.equal(`user with id ${userId} does not exist`)
                 })
         })
     })

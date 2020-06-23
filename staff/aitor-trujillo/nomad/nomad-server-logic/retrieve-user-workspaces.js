@@ -1,6 +1,7 @@
 require('nomad-commons/polyfills/string')
 
 const { models: { Workspace, User } } = require('nomad-data')
+const { UnexistenceError } = require('nomad-commons/errors')
 
 module.exports = async (userId) => {
 
