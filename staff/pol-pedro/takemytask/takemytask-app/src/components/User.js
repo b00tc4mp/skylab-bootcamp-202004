@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import './User.sass'
 import Feedback from './Feedback'
-import {retriveUser} from 'takemytask-client-logic'
+import {retriveUser, updateUser} from 'takemytask-client-logic'
 
 
 export default function Register({role, onLogout}) {
 
     const [error, setError] = useState('')
+    const [succes, setSucces] = useState('')
     const [results, setResults] = useState('')
 
     useEffect ( () => {
@@ -30,6 +31,48 @@ export default function Register({role, onLogout}) {
         return false
       }
 
+      const handelUserSubmit = (event) =>{
+        event.preventDefault()
+        let { name, surname, email, adress} = event.target
+
+        name = name.value
+        surname = surname.value
+        email = email.value
+        adress = adress.value
+
+        try{
+            updateUser(name, surname, email, adress)
+                .then(() => setSucces('User updated'))
+                .catch((error) => setError(error))
+        }catch({message}){
+            setError(message)
+        }
+      }
+
+      const handelWorkerSubmit = (event) =>{
+        event.preventDefault()
+        let { name, surname, email, adress, bankAcount, description, presentation, pricingHour, workingDistance} = event.target
+
+        name = name.value
+        surname = surname.value
+        email = email.value
+        adress = adress.value
+        bankAcount = bankAcount.value
+        description = description.value
+        presentation = presentation.value
+        pricingHour = Number(pricingHour.value)
+        workingDistance = Number(workingDistance.value)
+
+
+        try{
+            updateUser(name, surname, email, adress, bankAcount, description, presentation, pricingHour, workingDistance)
+                .then(() => setSucces('User updated'))
+                .catch((error) => setError(error))
+        }catch({message}){
+            setError(message)
+        }
+      }
+
     return <section className="user"> 
 
             <div className="user__header" >
@@ -39,7 +82,7 @@ export default function Register({role, onLogout}) {
                     </div>
             </div>
             {role === 'user' && <div>
-                <form>
+                <form onSubmit={handelUserSubmit}>
                     <input type="text" name="name" defaultValue={results.name}></input>
                     <input type="text" name="surname" defaultValue={results.surname}></input>
                     <input type="text" name="email" defaultValue={results.email}></input>
@@ -49,7 +92,7 @@ export default function Register({role, onLogout}) {
             </div>}
 
             {role === 'worker' && <div>
-                <form>
+                <form onSubmit={handelWorkerSubmit}>
 
                     <input type="text" name="name" placeholder="Name" required pattern="[A-Za-z]{1,20}" defaultValue={results.name}/>
 
@@ -67,38 +110,14 @@ export default function Register({role, onLogout}) {
 
                     <input type="number" name="pricingHour" placeholder="pricingHour" min="5" max="50" defaultValue={results.pricingHour}/>
 
-                    <h2>Job categories</h2>
-
-                    <ul className="user__checkbox">
-                        <li>
-                            <input type="checkbox" id="checkboxTwo" name="checkboxTwo" value="Electrician" />
-                            
-                            <label for="checkboxTwo">Electrician</label>
-                        </li>
-                        <li>
-                            <input type="checkbox" id="checkboxThree" name="checkboxThree" value="Cleaning" />
-
-                            <label for="checkboxThree">Cleaning</label>
-                        </li>
-                        <li>
-                            <input type="checkbox" id="checkboxFour" name="checkboxFour" value="Gardening" />
-                            
-                            <label for="checkboxFour">Gardening</label>
-                        </li>
-                        <li>
-                            <input type="checkbox" id="checkboxFive" name="checkboxFive" value="Carpentry" />
-                            <label for="checkboxFive">Carpentry</label>
-                        </li>
-                        
-                    </ul>
-
                     <input type="number" name="workingDistance" placeholder="Moving distance (km)" min="10" max="100"  defaultValue={results.workingDistance}/>
 
                     <button>Upate</button>
 
                 </form>
             </div>}
-            
             {error && <Feedback message={error} level="error" />}
+            {succes && <Feedback message={succes} level="succes" />}
+            
         </section>
 }

@@ -23,6 +23,7 @@ function App({history}) {
   const [mesageReaded, setMesageReaded] = useState(0)
   const [chatId, setChatId] = useState()
   const [userId, setUserId] = useState()
+  const [footerState, setFooterState]= useState('home')
   
   useEffect ( () => {
     if(isUserLogin){
@@ -47,6 +48,7 @@ function App({history}) {
         throw error
       }
     }else{
+      setFooterState('home')
       history.push('/')
     }
   }, [])
@@ -59,13 +61,23 @@ function App({history}) {
 
   const handleGoToLogin = () => history.push('/login')
 
-  const handelGoToHome = () => history.push('/')
+  const handelGoToHome = () => {
+    setFooterState('home')
+    history.push('/')
+  }
 
-  const handelGoToSearch = () => history.push('/search')
+  const handelGoToSearch = () => {
+    setFooterState('search')
+    history.push('/search')
+  }
 
-  const handelGoToChat = () => history.push('/chats')
+  const handelGoToChat = () => {
+    setFooterState('chat')
+    history.push('/chats')
+  }
 
   const handelGoToUser = () => {
+    setFooterState('user')
     if(userName){
       history.push('/profile')
     }else{
@@ -83,8 +95,8 @@ function App({history}) {
   }
 
   const handleLogin = () => {
-
-    history.push('/')
+    setFooterState('home')
+     history.push('/')
 
     try{
 
@@ -109,12 +121,14 @@ function App({history}) {
   }
 
   const handelLogout = () => {
+    setFooterState('home')
     logoutUser()
     setUserName('')
     history.push('/')
   }
 
   const handelSearcher = (query) => {
+    setFooterState('search')
     setSearchQuerry(query)
     history.push('/search')
   }
@@ -132,6 +146,7 @@ function App({history}) {
   }
 
   const handelOnChat = (id) => {
+    setFooterState('chat')
     setChatId(id)
     history.push('/chat')
   }
@@ -161,7 +176,7 @@ useEffect (() => {
 
   return (
     <div className="App">
-        <Container onGoToHome={handelGoToHome} onGoToSearch={handelGoToSearch} onGoToChat={handelGoToChat} messageToRead={mesageToRead} messageReaded={mesageReaded} onGoToUser={handelGoToUser}>
+        <Container onGoToHome={handelGoToHome} onGoToSearch={handelGoToSearch} onGoToChat={handelGoToChat} messageToRead={mesageToRead} messageReaded={mesageReaded} onGoToUser={handelGoToUser} footerState={footerState}>
 
           <Route exact path="/" render={() => <Home onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} userName={userName} onRegister={handleRegister} onSearcher={handelSearcher}/>} />
 

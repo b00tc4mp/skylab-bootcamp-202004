@@ -6,6 +6,8 @@ const { models: {Worker }, mongoose: {ObjectId} } = require('takemytask-data')
 //TODO key words search
 
 module.exports = (userName, jobCategory, words) => {
+    
+    String.validate.notVoid(words)
 
     return (async () => {
         let search 

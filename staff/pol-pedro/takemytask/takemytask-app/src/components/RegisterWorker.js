@@ -9,7 +9,6 @@ export default function Register({onRegister, onGoToLogin, onGoToHome}) {
     
 
     const handleSubmit = (event) => {
-        console.log('onsumbmit')
         event.preventDefault()
         let { name, surname, email, password, adress, bankAcount, description, presentation, pricingHour, checkboxFive, checkboxFour, checkboxThree, checkboxTwo, workingDistance} = event.target
 
@@ -60,7 +59,7 @@ export default function Register({onRegister, onGoToLogin, onGoToHome}) {
 
                 <input type="textarea" name="presentation" placeholder="presentation" maxLength="45"/>
 
-                <input type="textarea" name="description" placeholder="description" />
+                <textarea type="textarea" name="description" placeholder="description" maxLength="250"></textarea>
 
                 <input type="number" name="pricingHour" placeholder="pricingHour" min="5" max="50"/>
 

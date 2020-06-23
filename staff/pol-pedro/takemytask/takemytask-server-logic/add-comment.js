@@ -19,6 +19,8 @@ module.exports = (userId, commentedId, comment) => {
          
         if(!sender ) sender = await Worker.findOne({ _id: ObjectId(userId) }, {password: 0 })
 
+        if (!sender) throw new UnexistenceError(`user with id ${userId} dont exists`)
+
         const user = await Worker.findOne({ _id: ObjectId(commentedId) }, {password: 0 })
 
         if (!user) throw new UnexistenceError(`worker with id ${userId} dont exists`)

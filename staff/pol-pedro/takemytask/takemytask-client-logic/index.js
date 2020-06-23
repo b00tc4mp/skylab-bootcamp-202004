@@ -13,5 +13,6 @@ module.exports = {
     addMessage: require('./add-message'),
     creatChat: require('./creat-chat'),
     addRate: require('./add-rate'), 
-    logoutUser: require('./logout-user')
+    logoutUser: require('./logout-user'),
+    updateUser: require('./update-user')
 }
