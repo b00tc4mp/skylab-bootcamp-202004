@@ -29,10 +29,10 @@ module.exports = (query, userId) => {
                 }
             }).lean()
         if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
-
+         
         let recipesFind = user.recipes.filter(recipe => recipe.name === query
             || recipe.author === query);
-
+        
         if (recipesFind.length === 0) throw new UnexistenceError(`${query} is not found like recipe or author`)
 
         recipesFind.forEach(recipeFind => {

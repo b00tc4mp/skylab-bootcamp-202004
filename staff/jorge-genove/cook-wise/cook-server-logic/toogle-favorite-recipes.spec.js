@@ -153,4 +153,6 @@ it('should throw an error if recipeId its not an string', () => {
     }).to.throw(TypeError, 'true is not a string')
 })    
 
+after(mongoose.disconnect)
+
 })

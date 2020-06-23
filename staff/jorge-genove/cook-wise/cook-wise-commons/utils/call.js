@@ -14,7 +14,8 @@ module.exports = (method, url, body, headers) => {
     
             return await {status: resp.status,body:_body}
         }catch(error){
-            throw new Error('network error')
+        
+            throw new Error(error)
         }
      
     })()

@@ -62,7 +62,8 @@ describe("recipe ideas", () => {
     })
 
     it('should find recipes with any match and return results', async () => {
-        result = await recipeIdeas(userId, ingredients)
+       
+        result = await recipeIdeas(userId, ingredients.ingredients)
 
         expect(result).to.exist
         expect(result).to.be.instanceof(Array)
@@ -75,7 +76,7 @@ describe("recipe ideas", () => {
             ingredients.ingredients[i] = random()
         }
         
-        result = await recipeIdeas(userId, ingredients)
+        result = await recipeIdeas(userId, ingredients.ingredients)
         
         expect(result).to.exist
         expect(result).to.be.instanceof(Array)
@@ -84,10 +85,11 @@ describe("recipe ideas", () => {
     })
 
     it("should throw an error if not match a user", async () => {
+       
         await User.deleteMany()
         let _error;
         try {
-            await recipeIdeas(userId,ingredients)
+            await recipeIdeas(userId,ingredients.ingredients)
         }catch(error) {
             _error = error;
         }

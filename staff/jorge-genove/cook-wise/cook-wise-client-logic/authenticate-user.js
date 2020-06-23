@@ -11,25 +11,32 @@
  */
 require('cook-wise-commons/polyfills/string')
 const { utils: { Email, call } } = require('cook-wise-commons')
+const context = require('./context')
 
 
-module.exports = function (email, password) {debugger
+module.exports = function (email, password) {
     Email.validate(email)
 
     String.validate.notVoid(password)
 
-    return call('POST', `http://192.168.0.17:8080/api/users/auth`,
+return (async() => {
+
+   const res = await call('POST', `${this.API_URL}/users/auth`,
         `{ "email": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json' })
-        .then(({ status, body }) => {
-            if (status === 200) {
-                const { token } = JSON.parse(body)
+        
+            if (res.status === 200) {
+                const { token } = JSON.parse(res.body)
 
-                return token
+                await this.storage.setItem('TOKEN', token)
+
+                return
             } else {
-                const { error } = JSON.parse(body)
+                const { error } = JSON.parse(res.body)
+
+            
 
                 throw new Error(error)
             }
-        })
-}
+        })()
+}.bind(context)
