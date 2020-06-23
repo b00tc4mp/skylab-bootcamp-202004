@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import './FloorPlan.sass'
 import Catalogue from './Catalogue'
 import  './Catalogue.sass'
-// import { v4 as uuidv4 } from 'uuid';
 
  
 export default function PlaneBuilder({blueprint}) {
@@ -12,20 +11,28 @@ export default function PlaneBuilder({blueprint}) {
 
     
     const handleOnDrop = (e) => { debugger
-        const isPlaced = e.dataTransfer.getData('boolean')
-        const catalogueItemId = e.dataTransfer.getData("text")
         let x = e.clientX
         let y = e.clientY
-        if(isPlaced) {
-        return setPlacedItems(prevPlacedItems => ([...prevPlacedItems, {catalogueItemId, x, y, id: Date.now(), isPlaced: true}]))
-        // blueprint.items.push(newItem)
-        // setActualBlueprint(blueprint.items)
+        const _id = e.dataTransfer.getData("text")
+
+        if(e.dataTransfer.getData('boolean') === '') {
+            const planeId = e.id
+            const updated = placedItems.map((element, i) => {
+            if(element.id == _id){
+                element.x = x
+                element.y = y
+            }
+                   
+            return element
+                
+            })
+            return setPlacedItems([...updated])
         }
         else {
-            console.log(e.id)
-            const planeId = e.id
-            const updated = placedItems.filter(element => element.id !== planeId)
-            return setPlacedItems([...updated, { catalogueItemId, x, y, isPlaced: true}])
+            const catalogueItemId = e.dataTransfer.getData("text")
+            setPlacedItems(prevPlacedItems => ([...prevPlacedItems, {catalogueItemId, x, y, id: Date.now(), }]))
+            return e.dataTransfer.setData("text", e.target.id)
+            
         }
     }
 
