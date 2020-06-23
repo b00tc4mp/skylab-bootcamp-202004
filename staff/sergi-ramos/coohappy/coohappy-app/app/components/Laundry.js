@@ -8,6 +8,7 @@ import getDayMonthWeek from 'coohappy-client-logic/helpers/week-month-days'
 import moment from 'moment'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import SvgUri from 'expo-svg-uri';
+import { useFocusEffect } from '@react-navigation/native'
 
 
 const Laundry = function ({ navigation }) {
@@ -20,40 +21,50 @@ const Laundry = function ({ navigation }) {
     const [userId, setUserId] = useState()
     const [cohousing, setCohousing] = useState()
 
+    useFocusEffect(
+        React.useCallback(() => {
+            (async () => {
+                const _cohousing = await retrieveCohousing()
+                setCohousing(_cohousing)
+            })()
 
-   
+            return () => {
+            }
+        }, [])
+    )
+
     useEffect(() => {
         (async () => {
             try {
                 const updateWeek = getDayMonthWeek()
-               
+
                 setWeek(updateWeek)
-                const token = await AsyncStorage.getItem('TOKEN')
-                const _cohousing = await retrieveCohousing(token)
+
+                const _cohousing = await retrieveCohousing()
                 setCohousing(_cohousing)
 
                 await __handleUpdate__()
 
             } catch (error) {
-                Alert.alert('OOPS!!',error.message)
+                Alert.alert('OOPS!!', error.message)
             }
         })()
 
     }, [day])
 
 
-//TODO delete all laundries when time pass
+    //TODO delete all laundries when time pass
 
     const __handleUpdate__ = async () => {
         try {
-            const token = await AsyncStorage.getItem('TOKEN')
-            const { id } = await retrieveUser(token)
-            const laundriesAmount = await retrieveLaundry(token, day)
+
+            const { id } = await retrieveUser()
+            const laundriesAmount = await retrieveLaundry(day)
             setUserId(id)
             setLaundries(laundriesAmount)
-            
+
         } catch (error) {
-            Alert.alert('OOPS!!',error.message)
+            Alert.alert('OOPS!!', error.message)
         }
     }
 
@@ -63,13 +74,13 @@ const Laundry = function ({ navigation }) {
     const handleHourSelection = async (hour) => {
 
         try {
-            const token = await AsyncStorage.getItem('TOKEN')
-            await addDateLaundry(day, hour, token)
+
+            await addDateLaundry(day, hour)
             await __handleUpdate__()
-            
+
         } catch (error) {
-           
-            Alert.alert('OOPS!!',error.message)
+
+            Alert.alert('OOPS!!', error.message)
         }
     }
 
@@ -77,23 +88,21 @@ const Laundry = function ({ navigation }) {
 
         try {
 
-            const token = await AsyncStorage.getItem('TOKEN')
-            await deleteDateLaundry(token)
+
+            await deleteDateLaundry()
             await __handleUpdate__()
 
         } catch (error) {
-            Alert.alert('OOPS!!',error.message)
+            Alert.alert('OOPS!!', error.message)
         }
     }
-
 
     return (
 
         <View style={styles.container}>
 
             <HeaderHome navigation={navigation} cohousingInfo={cohousing} />
-            <View>
-
+            <View style={{ backgroundColor: 'white' }}>
 
                 {
                     laundries.find(laundry => laundry.userId === userId) ?
@@ -115,8 +124,8 @@ const Laundry = function ({ navigation }) {
                                 </TouchableOpacity>
                             </View>
                         </View> :
-                <Text style={styles.textLaundry}>Reserve your washing machine!</Text>
-                      
+                        <Text style={styles.textLaundry}>Reserve your washing machine!</Text>
+
                 }
 
             </View>
@@ -133,6 +142,7 @@ export default Laundry
 const styles = StyleSheet.create({
     container: {
         width: '100%'
+
     },
     header: {
         flex: 1,
@@ -142,16 +152,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#069b69',
     },
     textLaundry: {
-
         fontWeight: '700',
         fontSize: 20,
         width: '100%',
-        marginLeft: 25,
-        marginBottom: 15, 
+        marginLeft: 15,
+        marginBottom: 15,
         marginTop: 15
     },
     daysContainer: {
-        width: '100%'
+        width: '100%',
+        backgroundColor: 'white'
     },
 
     reserve: {

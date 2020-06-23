@@ -2,8 +2,6 @@ import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native'
 
 
-
-
 const ButtonForm = function({text, buttonAction, bgColor})  {
 
     return (
@@ -23,8 +21,5 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 55,
         borderRadius: 5
-
     }
-
-
 })

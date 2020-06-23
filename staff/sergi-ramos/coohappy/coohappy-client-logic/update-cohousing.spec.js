@@ -110,7 +110,7 @@ describe('logic - udpate-cohousing', () => {
 
                 const cohousing = await Cohousing.findOne({ members: userId })
                 expect(error).to.exist
-                expect(error.message).to.equal(`string is empty or blank`)
+                expect(error.message).to.equal(`Some field is empty or blank`)
                 expect(cohousing.name).to.equal(nameCohousing)
                 expect(cohousing.address).to.be.an('object')
                 expect(cohousing.address.street).to.equal(street)

@@ -63,7 +63,7 @@ describe('logic - update-user', () => {
 
                 const user = await User.findById(userId)
                 expect(error).to.exist
-                expect(error.message).to.equal('string is empty or blank')
+                expect(error.message).to.equal('Some field is empty or blank')
                 expect(user.name).to.equal(name)
 
             }
@@ -118,7 +118,7 @@ describe('logic - update-user', () => {
 
         it('on wrong type ofe data', () => {
 
-            expect(() => updateUser('', { name: newName, oldPassword: password, newPassword })).to.throw(VoidError, 'string is empty or blank')
+            expect(() => updateUser('', { name: newName, oldPassword: password, newPassword })).to.throw(VoidError, 'Some field is empty or blank')
             expect(() => updateUser(userId, { name: true, oldPassword: password, newPassword })).to.throw(TypeError, 'true is not a string')
             expect(() => updateUser(2, 'fake')).to.throw(TypeError, 'fake is not an object')
 

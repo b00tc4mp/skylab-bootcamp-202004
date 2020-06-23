@@ -110,7 +110,7 @@ describe('logic - add-date-laundry', () => {
 
         it('on wrong type of data', () => {
 
-            expect(() => deleteDateLaundry('')).to.throw(VoidError, 'string is empty or blank')
+            expect(() => deleteDateLaundry('')).to.throw(VoidError, 'Some field is empty or blank')
             expect(() => deleteDateLaundry(true)).to.throw(TypeError, 'true is not a string')
 
         })

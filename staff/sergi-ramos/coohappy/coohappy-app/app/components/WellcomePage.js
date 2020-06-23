@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView, AsyncStorage } from 'react-native'
+import { TouchableOpacity, View, StyleSheet, Text, Alert } from 'react-native'
 import SvgUri from "expo-svg-uri"
 import ButtonForm from './ButtonForm'
 import { retrieveUser } from 'coohappy-client-logic'
@@ -12,20 +12,16 @@ const WellcomePage = function ({ name: _name, navigation }) {
         try {
             (async () => {
                 if(!_name){
-                    const token = await AsyncStorage.getItem('TOKEN')
-                    const {name} =  await retrieveUser(token)
-                    debugger
+                    
+                    const {name} =  await retrieveUser()
                     setName(name)
                     return 
-                }
-                   
-                setName(_name)
-               
-    
+                }   
+                setName(_name)    
             })()
 
         } catch (error) {
-            console.log(error)
+            Alert.alert('OOPS!!', error.message)
         }
     }, [_name])
 
@@ -49,10 +45,9 @@ const WellcomePage = function ({ name: _name, navigation }) {
                 <View style={{ width: '90%', marginTop: 30 }} >
                     <ButtonForm text='JOIN A COMMUNITY' buttonAction={() => navigation.navigate('JoinCommunity')} bgColor="#003725" />
                 </View>
-
+                
             </View>
         </>
-
     )
 }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, View, StyleSheet, Text, AsyncStorage, Dimensions, Image } from 'react-native'
+import { TouchableOpacity, View, StyleSheet, Text, AsyncStorage, Dimensions, Image, Alert } from 'react-native'
 import { addFood, substractFood, retrieveUserFoodList } from 'coohappy-client-logic'
 
 
@@ -10,12 +10,9 @@ const SingleFruit = function ({ item, updateList }) {
     useEffect(() => {
 
         (async () => {
-            const token = await AsyncStorage.getItem('TOKEN')
          
-            const foodList = await retrieveUserFoodList(token)
-
+            const foodList = await retrieveUserFoodList()
             setUserFoodList(foodList.foodList)
-       
         })()
 
     }, [])
@@ -27,9 +24,8 @@ const SingleFruit = function ({ item, updateList }) {
 
         try {
 
-            const token = await AsyncStorage.getItem('TOKEN')
-            await addFood(food, token)
-            const foodList = await retrieveUserFoodList(token)
+            await addFood(food)
+            const foodList = await retrieveUserFoodList()
             setUserFoodList(foodList.foodList)
             updateList()
         } catch (error) {
@@ -40,16 +36,16 @@ const SingleFruit = function ({ item, updateList }) {
 
         try {
             debugger
-            const token = await AsyncStorage.getItem('TOKEN')
-            await substractFood(food, token)
-            const foodList = await retrieveUserFoodList(token)
+            
+            await substractFood(food)
+            const foodList = await retrieveUserFoodList()
             
             setUserFoodList(foodList.foodList)
             updateList()
  
         } catch (error) {
          
-            console.log(error)
+            Alert.alert('OOPS!!', error.message)
         }
     }
 
@@ -101,7 +97,9 @@ const styles = StyleSheet.create({
     },
     containerFruitItem: {
         alignSelf: 'center',
-        width: Dimensions.get('window').width / 2 - 30,
+        width: Dimensions.get('window').width / 2 - 25,
+        height: Dimensions.get('window').width / 2 - 25,
+        
         borderRadius: 15,
 
     },

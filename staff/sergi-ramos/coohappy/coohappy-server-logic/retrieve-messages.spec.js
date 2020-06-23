@@ -36,7 +36,12 @@ describe('logic - retrieve-messages', () => {
         laundryNum = 4
 
         singleMessage = `message-${random()}`
-        date = (new Date).toString()
+        date = {
+            stringDay: "Tuesday",
+            day: 23,
+            month: "June",
+            hour: "16:34"
+          }
 
 
 
@@ -66,7 +71,7 @@ describe('logic - retrieve-messages', () => {
             expect(messages).to.exist
             expect(messages[0].userId._id.toString()).to.equal(userId)
             expect(messages[0].message).to.equal(singleMessage)
-            expect(messages[0].date).to.equal(date)
+            expect(messages[0].date).to.deep.equal(date)
 
         })
     })

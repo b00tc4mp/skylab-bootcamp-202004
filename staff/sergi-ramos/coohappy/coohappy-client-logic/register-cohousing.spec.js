@@ -81,7 +81,7 @@ describe('logic - register cohousing', () => {
 
                 .catch(error => {
                     expect(error).to.be.an.instanceOf(Error)
-                    expect(error.message).to.equal(`user: ${name} ${surname} already create an cohousing`)
+                    expect(error.message).to.equal(`user: ${name} ${surname} already belongs to a cohousing`)
                 })
         )
     })
@@ -95,7 +95,7 @@ describe('logic - register cohousing', () => {
 
                 .catch(error => {
                     expect(error).to.be.an.instanceOf(Error)
-                    expect(error.message).to.equal(`user: ${name} ${surname} already create an cohousing`)
+                    expect(error.message).to.equal(`user: ${name} ${surname} already belongs to a cohousing`)
                 })
         )
     })

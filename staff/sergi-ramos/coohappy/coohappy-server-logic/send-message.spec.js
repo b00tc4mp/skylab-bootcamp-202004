@@ -34,7 +34,12 @@ describe('logic - send-message', () => {
         laundryNum = 4
 
         message = `message-${random()}`
-        date = (new Date).toString()
+        date = {
+            stringDay: "Tuesday",
+            day: 23,
+            month: "June",
+            hour: "16:34"
+          }
 
         hash = await bcrypt.hash(password, 10)
         const user = await User.create({ name, surname, email, password: hash })
@@ -51,7 +56,6 @@ describe('logic - send-message', () => {
             const cohousing = await Cohousing.findOne({ members: userId })
             expect(cohousing.messages).to.exist
             expect(cohousing.messages[0].message).to.equal(message)
-            expect(cohousing.messages[0].date.toString()).to.equal(date.toString())
             expect(cohousing.messages[0].userId.toString()).to.equal(userId)
 
         })
@@ -83,7 +87,7 @@ describe('logic - send-message', () => {
 
             expect(() => sendMessage(userId, true, date)).to.throw(TypeError, 'true is not a string')
             expect(() => sendMessage(2, message, date)).to.throw(TypeError, '2 is not a string')
-            expect(() => sendMessage(userId, message, undefined)).to.throw(TypeError, 'undefined is not a string')
+            expect(() => sendMessage(message, undefined)).to.throw(TypeError, 'undefined is not a string')
         })
     })
 

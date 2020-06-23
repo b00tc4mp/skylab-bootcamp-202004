@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, View, StyleSheet, Text, AsyncStorage } from 'react-native'
+import { TouchableOpacity, View, StyleSheet, Text, AsyncStorage, Alert } from 'react-native'
 import SvgUri from "expo-svg-uri"
 
 import { retrieveCohousing, retrieveUser } from 'coohappy-client-logic'
@@ -15,19 +15,13 @@ const InfoCommunity = function ({ navigation }) {
         try {
             (async () => {
                 const membersNames = []
-                const token = await AsyncStorage.getItem('TOKEN')
-                // const user = await retrieveUser(token)
-                // const { role } = user
-                // console.log(role)
-                const _cohousing = await retrieveCohousing(token)
+                const _cohousing = await retrieveCohousing()
                 setCohousing(_cohousing)
                 const { members } = _cohousing
                 setMembersCohousing(members)
-
-
             })()
         } catch (error) {
-            console.log(error)
+            Alert.alert('OOPS!!', error.message)
         }
 
     }, [])
@@ -83,10 +77,6 @@ const InfoCommunity = function ({ navigation }) {
                 <View style={styles.barBold}></View>
             </View>
         </View>
-
-
-
-
     )
 }
 

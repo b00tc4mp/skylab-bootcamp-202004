@@ -107,7 +107,7 @@ describe('logic - add-date-laundry', () => {
             } catch (error) {
 
                 expect(error).to.exist
-                expect(error.message).to.equal(`User with id ${userId} already have an hour in the laundry`)
+                expect(error.message).to.equal(`You already have a reservation, can only do one`)
             }
         })
 
@@ -135,7 +135,7 @@ describe('logic - add-date-laundry', () => {
         it('on wrong type of data', () => {
 
             expect(() => addDateLaundry(undefined, undefined, userId)).to.throw(TypeError, 'undefined is not a string')
-            expect(() => addDateLaundry('', '8', userId)).to.throw(VoidError, 'string is empty or blank')
+            expect(() => addDateLaundry('', '8', userId)).to.throw(VoidError, 'Some field is empty or blank')
 
         })
     })

@@ -1,31 +1,25 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity,AsyncStorage } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, AsyncStorage } from 'react-native'
 import SvgUri from 'expo-svg-uri'
 import { retrieveCohousing, retrieveUser } from 'coohappy-client-logic'
 
 const HeaderHome = function ({ user, surname, navigation, cohousingInfo }) {
 
-    const [ cohousing, setCohousing ] = useState()
-    const [ userRole, setUserRole ] = useState()
+    const [cohousing, setCohousing] = useState()
+    const [userRole, setUserRole] = useState()
 
     useEffect(() => {
-
-      
-
     }, [cohousingInfo])
 
     useEffect(() => {
 
         (async () => {
-            const token = await AsyncStorage.getItem('TOKEN')
-
-            const user = await retrieveUser(token)
+            const user = await retrieveUser()
             const { role } = user
             setUserRole(role)
         })()
 
-    },[])
-
+    }, [])
 
 
     return (

@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs')
 
 
 module.exports = (userId, accessCode) => {
-
+console.log(userId, accessCode)
     String.validate.notVoid(userId)
     String.validate.notVoid(accessCode)
 
@@ -21,8 +21,11 @@ module.exports = (userId, accessCode) => {
 
         const cohousing = await Cohousing.findOne({ accessCode: accessCode })
         if(!cohousing) throw new UnexistenceError(`cohousing with access code ${accessCode} does not exist `)
-        cohousing.members.push(userId)
+        await Promise.all([
+            Cohousing.findByIdAndUpdate(cohousing.id, { $addToSet: { members: userId } }),
+            User.findByIdAndUpdate(userId, { $set: { cohousing: cohousing._id } })
+        ])
 
-        return await cohousing.save()
+        return;
     })()
 }

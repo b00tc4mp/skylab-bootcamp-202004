@@ -71,7 +71,7 @@ describe('logic - update-user', () => {
 
                 const user = await User.findById(userId)
                 expect(error).to.exist
-                expect(error.message).to.equal('string is empty or blank')
+                expect(error.message).to.equal('Some field is empty or blank')
                 expect(user.name).to.equal(name)
 
             }

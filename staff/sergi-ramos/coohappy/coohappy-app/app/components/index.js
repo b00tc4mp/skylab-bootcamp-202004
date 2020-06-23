@@ -15,5 +15,4 @@ module.exports = {
     WeekDays: require('./WeekDays'),
     TimeLaundry: require('./TimeLaundry'),
     SingleFruit: require('./SingleFruit')
-
 }

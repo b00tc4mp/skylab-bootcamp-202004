@@ -86,7 +86,7 @@ describe('logic - retrieve-laundry', () => {
 
         it('on wrong type of data', () => {
 
-            expect(() => retrieveLaundry('')).to.throw(VoidError, 'string is empty or blank')
+            expect(() => retrieveLaundry('')).to.throw(VoidError, 'Some field is empty or blank')
             expect(() => retrieveLaundry(true)).to.throw(TypeError, 'true is not a string')
 
         })
