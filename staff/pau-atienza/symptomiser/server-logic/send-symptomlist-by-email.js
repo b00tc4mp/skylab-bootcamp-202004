@@ -1,12 +1,13 @@
 require('dotenv').config()
+require('commons/polyfills/string')
+
 const nodemailer = require("nodemailer");
 const {env: { EMAIL_PASSWORD: PASSWORD, EMAIL_ADRESS: ACCOUNT}} = process
 
-// const email = "pauatro@gmail.com"
-// const text = "hello world"
-// const html = "<p>Hello</p>"
-
 module.exports =  async (email, text, html)=>{
+    String.validate.notVoid(email)
+    String.validate.notVoid(text)
+    String.validate.notVoid(html)
     
     let transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -15,7 +16,6 @@ module.exports =  async (email, text, html)=>{
             pass: PASSWORD
         }
     })
-
    
     let info = await transporter.sendMail({
         from: `Symptomiser App ${ACCOUNT}`, 
@@ -28,5 +28,4 @@ module.exports =  async (email, text, html)=>{
     console.log("Message sent: %s", info.messageId);
 
     console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info))
-
 }
