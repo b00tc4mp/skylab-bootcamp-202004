@@ -31,6 +31,7 @@ function App({history}) {
             if (user) {
               setToken(sessionStorage.token)
               setUserName(user.name)
+
               if(user.admin) setRol(user.admin)
             }
           })
@@ -39,7 +40,7 @@ function App({history}) {
         if (error) throw error
       }
     }else history.push('/')
-  }, [])
+  }, [sessionStorage.token])
 
   const handleGoToHome = (token) => {
     sessionStorage.token = token
@@ -66,6 +67,13 @@ function App({history}) {
     history.push('/edit-member')
   }
 
+  const handleLogout = () => {
+    setRol(undefined);
+    // delete sessionStorage.token;
+    sessionStorage.clear()
+    window.location.reload();
+  }
+
 
   return (
     <div className="App">
@@ -78,7 +86,7 @@ function App({history}) {
           <Route path="/create-member" render={()=> token? <CreateMember token={token} history={history} /> : <Redirect to='/'/>} />
           <Route path="/edit-member" render={()=> token? <EditMember token={token} memberInfo={memberInfo} history={history}/> : <Redirect to='/'/>} />
           <Route path="/set-mood" render={()=> token? <SetMood token={token} /> : <Redirect to='/'/>} />
-          <Route path="/settings" render={()=> token? <Settings rol={rol} /> : <Redirect to='/'/>} />
+          <Route path="/settings" render={()=> token? <Settings rol={rol} handleLogOut={handleLogout} /> : <Redirect to='/'/>} />
           <Route path="/edit-my-info" render={()=> token? <EditMyInfo token={token} /> : <Redirect to='/'/>} />
           <Route path="/main-stats" render={()=> token? <MainStats token={token} rol={rol}/> : <Redirect to='/'/>} />
           <Route path="/handle-accounts" render={()=> token? <HandleAccounts token={token} /> : <Redirect to='/'/>} />

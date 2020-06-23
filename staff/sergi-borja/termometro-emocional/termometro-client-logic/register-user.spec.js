@@ -12,6 +12,7 @@ require('termometro-commons/ponyfills/xhr')
 require('termometro-commons/ponyfills/atob')
 const context = require('./context')
 const { utils: { jwtPromised } } = require('termometro-commons')
+const user = require('termometro-data/models/schemas/user')
 
 
 context.API_URL = API_URL
@@ -90,13 +91,13 @@ describe('logic - register user', () => {
         it('should succes on registering a MEMBER', async () => {
             const admin = await User.findOne({})
 
-            const token = jwtPromised.sign({ sub: admin.id }, SECRET)
+            const token = await jwtPromised.sign({ sub: admin.id }, SECRET)
 
-            registerUser(name, surname, age, sex, location, email, password, token)
+             return registerUser(name, surname, age, sex, location, email, password, token)
                 .then(() => {
-                    User.findOne({ name: name })
+                    return User.findOne({ name: name })
                         .then(member => {
-                            expect(member.admin).to.equal('penis')
+                            expect(member.admin.toString()).to.equal(admin.id.toString())
                         })
                 })
         })

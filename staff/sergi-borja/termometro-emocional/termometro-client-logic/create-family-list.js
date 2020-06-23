@@ -8,29 +8,35 @@ module.exports = function (token) {
 
     return (async () => {
         const response = await call('GET', `${this.API_URL}/users`, undefined, { 'Authorization': `Bearer ${token}` });
-
+        const { status } = response
         const user = JSON.parse(response.body);
+        if (status == 200) {
+            if (!user.admin) {
 
-        if (!user.admin) {
-            let { members } = user;
+                let { members } = user;
 
-            for (let i = 0; i < members.length; i++) {
-                const _response = await call('GET', `${this.API_URL}/users/${members[i]}`);
+                for (let i = 0; i < members.length; i++) {
+                    const _response = await call('GET', `${this.API_URL}/users/${members[i]}`);
 
-                const memberInfo = JSON.parse(_response.body);
+                    const memberInfo = JSON.parse(_response.body);
 
-                members[i] = memberInfo;
+                    members[i] = memberInfo;
+                }
+
+                return members;
+            } else {
+                let { admin } = user;
+
+                const _response = await call('GET', `${this.API_URL}/users/${admin}`);
+
+                const adminInfo = JSON.parse(_response.body);
+
+                return adminInfo;
             }
-
-            return members;
         } else {
-            let { admin } = user;
+            const { error } = JSON.parse(response.body)
 
-            const _response = await call('GET', `${this.API_URL}/users/${admin}`);
-
-            const adminInfo = JSON.parse(_response.body);
-
-            return adminInfo;
+            throw new Error(error)
         }
     })();
 

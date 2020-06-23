@@ -14,7 +14,7 @@ const context = require('./context')
 
 context.API_URL = API_URL
 
-describe.only('logic - authenticate user', () => {
+describe('logic - authenticate user', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let name, surname, email, password, userId, hash, age, sex, location, mood

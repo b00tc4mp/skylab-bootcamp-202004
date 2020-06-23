@@ -10,6 +10,13 @@ module.exports = function (userId, token) {
         undefined,
         undefined
     )
+    .then(({ status, body }) => {
+        if (status === 201) return
+
+        const { error } = JSON.parse(body)
+
+        throw new Error(error)
+    })
     :
     call(
         'DELETE',

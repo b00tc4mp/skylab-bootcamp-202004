@@ -3,7 +3,7 @@ require('termometro-commons/polyfills/json')
 const { utils: {Email}} = require('termometro-commons')
 const { mongoose: { ObjectId }, models: { User } } = require('termometro-data')
 // const bcrypt = require('bcryptjs')
-const {UnexistenceError} = require('termometro-commons/errors')
+const {UnexistenceError, DuplicityError} = require('termometro-commons/errors')
 
 module.exports = (userId, data) => {
 
@@ -12,6 +12,11 @@ module.exports = (userId, data) => {
     return (async() => {
         const user = await User.findById(userId);
         if (!user) throw new UnexistenceError('El usuario que quieres actualizar no existe');
+        if(data.email){
+
+            const emailExists = await User.findOne({email: data.email})
+            if(emailExists) throw new DuplicityError('Este email ya está en uso!')
+        }
 
         let updateData = {}
 

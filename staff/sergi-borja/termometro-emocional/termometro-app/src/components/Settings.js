@@ -4,12 +4,12 @@ import './Settings.sass'
 
 
 
-function Settings ({rol}) {
+function Settings ({rol, handleLogOut}) {
     
-    const handleLogOut = () => {
-        delete sessionStorage.token
-        window.location.reload()
-    }
+    // const handleLogOut = () => {
+    //     delete sessionStorage.token
+    //     window.location.reload()
+    // }
 
     return (
         <section className='settingsContainer'>
