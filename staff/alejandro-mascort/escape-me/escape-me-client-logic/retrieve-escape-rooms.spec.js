@@ -9,11 +9,11 @@ require('escape-me-commons/polyfills/json')
 const { mongo } = require('escape-me-data')
 require('escape-me-commons/ponyfills/xhr')
 const { utils: { jwtPromised } } = require('escape-me-node-commons')
-const context = require('./context')
 const bcrypt = require('bcryptjs')
-
+const context = require('./context')
 context.API_URL = API_URL
-context.storage = {}
+const AsyncStorage = require('not-async-storage')
+context.storage = AsyncStorage
 
 describe('logic - retrieve escape rooms', () => {
     let users
@@ -46,7 +46,7 @@ describe('logic - retrieve escape rooms', () => {
         beforeEach(() =>
             users.insertOne({ name, surname, email, username, password: hash, participated, pending, favorites })
                 .then(_user => jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET))
-                .then(_token => context.storage.token = _token)
+                .then(_token => context.storage.setItem('token', _token))
         )
 
         it('should succeed on correct user id', () =>
@@ -113,7 +113,7 @@ describe('logic - retrieve escape rooms', () => {
             userId = '5ed1204ee99ccf6fae798aef'
 
             return jwtPromised.sign({ sub: userId }, SECRET)
-                .then(_token => context.storage.token = _token)
+                .then(_token => context.storage.setItem('token', _token))
         })
 
         it('should fail when user does not exist', () =>
@@ -130,7 +130,7 @@ describe('logic - retrieve escape rooms', () => {
     it('should fail if token is not a string', () => {
         users.insertOne({ name, surname, email, username, password: hash, participated, pending, favorites })
             .then(_user => jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET))
-            .then(_token => context.storage.token = _token)
+            .then(_token => context.storage.setItem('token', _token))
             .then(() => {
                 expect(() => {
                     retrieveEscapeRooms(1, 'pending')

@@ -20,23 +20,26 @@ module.exports = function (escapeId, rating) {
     String.validate(escapeId)
     Number.validate.positive(rating)
 
-    const { token } = context.storage
+    let token
+    return (async () => {
+        token = await context.storage.getItem('token')
 
-    return call(
-        'POST',
-        `${this.API_URL}/escape/rate/`,
-        `{ "escapeId": "${escapeId}", "rating": ${rating} }`,
-        {
-            'Content-type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        }
-    )
-        .then(({ status, body }) => {
+        return call(
+            'POST',
+            `${this.API_URL}/escape/rate/`,
+            `{ "escapeId": "${escapeId}", "rating": ${rating} }`,
+            {
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        )
+            .then(({ status, body }) => {
 
-            if (status === 204) return
+                if (status === 204) return
 
-            const { error } = JSON.parse(body)
+                const { error } = JSON.parse(body)
 
-            throw new UnexistenceError(error)
-        })
+                throw new UnexistenceError(error)
+            })
+    })();
 }.bind(context)

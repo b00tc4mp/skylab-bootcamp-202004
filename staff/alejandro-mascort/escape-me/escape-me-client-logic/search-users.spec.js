@@ -11,14 +11,14 @@ const { errors: { UnexistenceError } } = require('escape-me-commons')
 const { utils: { jwtPromised } } = require('escape-me-node-commons')
 const bcrypt = require('bcryptjs')
 const context = require('./context')
-
 context.API_URL = API_URL
-context.storage = {}
+const AsyncStorage = require('not-async-storage')
+context.storage = AsyncStorage
 
 describe('logic - search users', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let name, surname, username, email, password, hash, result, userId
+    let name, surname, username, email, password, hash, result, userId, token
     let _name, _surname, _username, _email, _password, _hash
 
     beforeEach(async () => {
@@ -45,7 +45,8 @@ describe('logic - search users', () => {
             await User.create({ name: _name, surname: _surname, username: _username, email: _email, password: _hash })
             const user_ = await User.create({ name, surname, username, email, password: hash })
             userId = user_.id
-            context.storage.token = await jwtPromised.sign({ sub: userId }, SECRET)
+            token = await jwtPromised.sign({ sub: userId }, SECRET)
+            await context.storage.setItem('token', token)
         }
         )
         it('should succeed on retrieving data', async () => {
@@ -90,8 +91,8 @@ describe('logic - search users', () => {
     })
 
     it('should fail when user does not exist', async () => {
-        context.storage.token = await jwtPromised.sign({ sub: '5ed1204ee99ccf6fae798aef' }, SECRET)
-
+        token = await jwtPromised.sign({ sub: '5ed1204ee99ccf6fae798aef' }, SECRET)
+        await context.storage.setItem('token', token)
         try {
             const result = await searchUsers('x')
             throw new Error('should not reach this point')
@@ -108,7 +109,8 @@ describe('logic - search users', () => {
         await User.create({ name: _name, surname: _surname, username: _username, email: _email, password: _hash })
         const user_ = await User.create({ name, surname, username, email, password: hash })
         userId = user_.id
-
+        token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token', token)
         expect(() => {
             searchUsers(1)
         }).to.throw(TypeError, '1 is not a string')

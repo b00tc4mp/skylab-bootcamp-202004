@@ -22,9 +22,11 @@ module.exports = function (email, password) {
         { 'Content-type': 'application/json' })
         .then(({ status, body }) => {
             if (status === 200) {
-                const { token } = JSON.parse(body)
+                const { token } = JSON.parse(body);
 
-                this.storage.token = token
+                (async () => {
+                    context.storage.setItem('token', token)
+                })()
             } else {
                 const { error } = JSON.parse(body)
 

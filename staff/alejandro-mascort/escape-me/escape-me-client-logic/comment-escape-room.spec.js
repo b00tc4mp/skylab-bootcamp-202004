@@ -11,9 +11,9 @@ const { errors: { UnexistenceError } } = require('escape-me-commons')
 const { utils: { jwtPromised } } = require('escape-me-node-commons')
 const bcrypt = require('bcryptjs')
 const context = require('./context')
-
 context.API_URL = API_URL
-context.storage = {}
+const AsyncStorage = require('not-async-storage')
+context.storage = AsyncStorage
 
 describe('logic - comment escape room', () => {
     before(() => {
@@ -24,7 +24,7 @@ describe('logic - comment escape room', () => {
             })
     })
 
-    let name, surname, username, email, password, escapeRoom, hash, escapeId
+    let name, surname, username, email, password, escapeRoom, hash, escapeId, token
 
     beforeEach(async () => {
         await User.deleteMany()
@@ -43,7 +43,9 @@ describe('logic - comment escape room', () => {
         it('should succeed on adding the escape room to the correct tag ', async () => {
             const _user = await User.create({ name, surname, username, email, password: hash })
             userId = _user.id
-            context.storage.token = await jwtPromised.sign({ sub: userId }, SECRET)
+            token = await jwtPromised.sign({ sub: userId }, SECRET)
+            await context.storage.setItem('token', token)
+
             escapeRoom = await EscapeRoom.create(
                 {
                     "name": "catacumbas",
@@ -91,7 +93,8 @@ describe('logic - comment escape room', () => {
     describe('if userId or escapeId are wrong', () => {
         it('should fail when user does not exist', async () => {
             const _userId = '5ee1fa2be1ef46672229f028'
-            context.storage.token = await jwtPromised.sign({ sub: _userId }, SECRET)
+            token = await jwtPromised.sign({ sub: _userId }, SECRET)
+            await context.storage.setItem('token', token)
             const _escapeId = '5ee1fa2be1ef46672229f028'
 
             try {
@@ -108,7 +111,8 @@ describe('logic - comment escape room', () => {
         it('should fail when escape room does not exist', async () => {
             const _user = await User.create({ name, surname, username, email, password: hash })
             userId = _user.id
-            context.storage.token = await jwtPromised.sign({ sub: userId }, SECRET)
+            token = await jwtPromised.sign({ sub: userId }, SECRET)
+            await context.storage.setItem('token', token)
             const _escapeId = '5ee1fa2be1ef46672229f028'
             try {
                 await commentEscapeRoom(_escapeId, 'eyee')
@@ -126,8 +130,8 @@ describe('logic - comment escape room', () => {
     it('should fail when data inputs are wrong', async () => {
         const _user = await User.create({ name, surname, username, email, password: hash })
         userId = _user.id
-        context.storage.token = await jwtPromised.sign({ sub: userId }, SECRET)
-
+        token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token', token)
 
         expect(() => {
             commentEscapeRoom(1, 'eyee')

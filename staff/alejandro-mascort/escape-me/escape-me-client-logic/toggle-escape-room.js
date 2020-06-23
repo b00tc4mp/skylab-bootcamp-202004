@@ -16,23 +16,26 @@ module.exports = function (escapeId, tag) {
     String.validate(escapeId)
     String.validate(tag)
 
-    const { token } = context.storage
+    let token
+    return (async () => {
+        token = await context.storage.getItem('token')
 
-    return call(
-        'PATCH',
-        `${this.API_URL}/users/${tag}`,
-        `{ "escapeId": "${escapeId}" }`,
-        {
-            'Content-type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        }
-    )
-        .then(({ status, body }) => {
+        return call(
+            'PATCH',
+            `${this.API_URL}/users/${tag}`,
+            `{ "escapeId": "${escapeId}" }`,
+            {
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        )
+            .then(({ status, body }) => {
 
-            if (status === 204) return
+                if (status === 204) return
 
-            const { error } = JSON.parse(body)
+                const { error } = JSON.parse(body)
 
-            throw new UnexistenceError(error)
-        })
+                throw new UnexistenceError(error)
+            })
+    })();
 }.bind(context)

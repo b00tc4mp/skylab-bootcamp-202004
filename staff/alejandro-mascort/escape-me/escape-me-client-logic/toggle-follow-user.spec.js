@@ -12,9 +12,9 @@ const { errors: { UnexistenceError } } = require('escape-me-commons')
 
 const bcrypt = require('bcryptjs')
 const context = require('./context')
-
 context.API_URL = API_URL
-context.storage = {}
+const AsyncStorage = require('not-async-storage')
+context.storage = AsyncStorage
 
 describe('logic - toggle follow user', () => {
     let users, escapeRooms
@@ -64,7 +64,7 @@ describe('logic - toggle follow user', () => {
                     userId = _user.insertedId.toString()
                     return jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET)
                 })
-                .then(_token => context.storage.token = _token)
+                .then(_token => context.storage.setItem('token', _token))
                 .then(() => {
                     return users.insertOne({ _name, _surname, _username, _email, password: _hash })
                 })
@@ -103,7 +103,7 @@ describe('logic - toggle follow user', () => {
                     userId = _user.insertedId.toString()
                     return jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET)
                 })
-                .then(_token => context.storage.token = _token)
+                .then(_token => context.storage.setItem('token', _token))
                 .then(() => {
                     return toggleFollowUser(_userId)
                 })
@@ -126,7 +126,8 @@ describe('logic - toggle follow user', () => {
         it('should fail with invalid id', async () => {
             const __user = await users.insertOne({ name, surname, username, email, password: hash })
 
-            context.storage.token = await jwtPromised.sign({ sub: __user.insertedId.toString() }, SECRET)
+            token = await jwtPromised.sign({ sub: __user.insertedId.toString() }, SECRET)
+            await context.storage.setItem('token', token)
 
             const _escapeId = '5ee1fa2be1ef46672229f028'
 
@@ -147,8 +148,8 @@ describe('logic - toggle follow user', () => {
 
         userId = __user.insertedId.toString()
 
-        context.storage.token = await jwtPromised.sign({ sub: __user.insertedId.toString() }, SECRET)
-
+        token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token', token)
         expect(() => {
             toggleFollowUser(1)
         }).to.throw(TypeError, '1 is not a string')

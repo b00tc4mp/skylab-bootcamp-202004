@@ -10,9 +10,9 @@ const { mongoose, models: { User, EscapeRoom } } = require('escape-me-data')
 const { utils: { jwtPromised } } = require('escape-me-node-commons')
 const bcrypt = require('bcryptjs')
 const context = require('./context')
-
 context.API_URL = API_URL
-context.storage = {}
+const AsyncStorage = require('not-async-storage')
+context.storage = AsyncStorage
 
 describe('logic - suggest escape rooms', () => {
     let escapes = []
@@ -263,7 +263,10 @@ describe('logic - suggest escape rooms', () => {
         it('should succeed on correct user id', async () => {
             const user_ = await User.create({ name, surname, username, email, password: hash, participated })
             userId = user_.id
-            context.storage.token = await jwtPromised.sign({ sub: userId }, SECRET)
+
+
+            token = await jwtPromised.sign({ sub: userId }, SECRET)
+            await context.storage.setItem('token', token)
             const escapeRooms = await suggestEscapeRooms()
 
             expect(escapeRooms).to.exist
@@ -273,8 +276,7 @@ describe('logic - suggest escape rooms', () => {
         )
 
         it('should succeed on suggesting escape rooms if no user id is introduced', async () => {
-            delete context.storage.token
-
+            await context.storage.setItem('token', '')
             const escapeRooms = await suggestEscapeRooms()
 
             expect(escapeRooms).to.exist
@@ -285,8 +287,9 @@ describe('logic - suggest escape rooms', () => {
 
     it('should fail if user id is introduced but incorrect', async () => {
         const userId = '5ed1204ee99ccf6fae798aef'
-        context.storage.token = await jwtPromised.sign({ sub: userId }, SECRET)
 
+        token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token', token)
         try {
             const user = await suggestEscapeRooms()
             throw new Error('should not reach this point')

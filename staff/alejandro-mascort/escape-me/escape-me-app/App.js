@@ -7,9 +7,9 @@ import Login from './app/screens/Login'
 import Register from './app/screens/Register'
 import Manager from './app/screens/Manager'
 
-import logic, { isUserLoggedIn, logoutUser } from 'escape-me-client-logic'
+import { context, isUserLoggedIn } from 'escape-me-client-logic'
 
-logic.__context__.storage = AsyncStorage
+context.storage = AsyncStorage
 
 export default function () {
   console.disableYellowBox = true
@@ -36,7 +36,7 @@ export default function () {
   }
 
   const handleLogOut = () => {
-    (async () => { await logoutUser() })()
+    (async () => { await AsyncStorage.removeItem('token') })()
     setView('login')
   }
 

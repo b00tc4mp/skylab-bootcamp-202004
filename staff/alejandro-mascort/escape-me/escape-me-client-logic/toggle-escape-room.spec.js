@@ -12,9 +12,9 @@ const { errors: { UnexistenceError } } = require('escape-me-commons')
 
 const bcrypt = require('bcryptjs')
 const context = require('./context')
-
 context.API_URL = API_URL
-context.storage = {}
+const AsyncStorage = require('not-async-storage')
+context.storage = AsyncStorage
 
 describe('logic - toggle escape room', () => {
     let users, escapeRooms
@@ -71,7 +71,7 @@ describe('logic - toggle escape room', () => {
                     userId = _user.insertedId.toString()
                     return jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET)
                 })
-                .then(_token => context.storage.token = _token)
+                .then(_token => context.storage.setItem('token', _token))
                 .then(() => {
                     return toggleEscapeRoom(escapeId, 'pending')
                 })
@@ -122,7 +122,7 @@ describe('logic - toggle escape room', () => {
                     userId = _user.insertedId.toString()
                     return jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET)
                 })
-                .then(_token => context.storage.token = _token)
+                .then(_token => context.storage.setItem('token', _token))
                 .then(() => {
                     return toggleEscapeRoom(escapeId, 'pending')
                 })
@@ -172,7 +172,8 @@ describe('logic - toggle escape room', () => {
 
             userId = _user.insertedId.toString()
 
-            context.storage.token = await jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET)
+            token = await jwtPromised.sign({ sub: userId }, SECRET)
+            await context.storage.setItem('token', token)
 
             const _escapeId = '5ee1fa2be1ef46672229f028'
 
@@ -194,7 +195,8 @@ describe('logic - toggle escape room', () => {
 
         userId = _user.insertedId.toString()
 
-        context.storage.token = await jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET)
+        token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await context.storage.setItem('token', token)
 
         expect(() => {
             toggleEscapeRoom(1, 'pending')

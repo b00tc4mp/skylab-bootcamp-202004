@@ -13,6 +13,7 @@
     "@react-native-community/masked-view": "0.1.6",
     "@react-navigation/material-bottom-tabs": "^5.2.10",
     "@react-navigation/native": "^5.5.1",
+    "babel-runtime": "^6.26.0",
     "escape-me-client-logic": "file:../escape-me-client-logic",
     "expo": "~37.0.3",
     "formik": "^2.1.4",

@@ -11,9 +11,10 @@ const bcrypt = require('bcryptjs')
 require('escape-me-commons/ponyfills/xhr')
 require('escape-me-commons/ponyfills/atob')
 const context = require('./context')
-
 context.API_URL = API_URL
-context.storage = {}
+const AsyncStorage = require('not-async-storage')
+context.storage = AsyncStorage
+
 
 describe('logic - authenticate user', () => {
     let users
@@ -52,17 +53,22 @@ describe('logic - authenticate user', () => {
         it('should succeed on correct credentials', () =>
             loginUser(email, password)
                 .then(() => {
-                    const { token } = context.storage
+                    let token
 
-                    const [, payloadBase64] = token.split('.')
+                    (async () => {
+                        const token = await context.storage.getItem('token')
 
-                    const payloadJson = atob(payloadBase64)
+                        const [, payloadBase64] = token.split('.')
 
-                    const payload = JSON.parse(payloadJson)
+                        const payloadJson = atob(payloadBase64)
 
-                    const { sub: _userId } = payload
+                        const payload = JSON.parse(payloadJson)
 
-                    expect(_userId).to.equal(userId)
+                        const { sub: _userId } = payload
+
+                        expect(_userId).to.equal(userId)
+                    })()
+
                 })
         )
 
