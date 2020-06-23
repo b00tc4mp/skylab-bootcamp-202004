@@ -10,9 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/runtime": "^7.10.3",
     "bcrypt": "^4.0.1",
+    "bcryptjs": "^2.4.3",
     "cook-wise-commons": "file:../cook-wise-commons",
-    "cook-wise-data": "file:../cook-wise-data"
+    "cook-wise-data": "file:../cook-wise-data",
+    "node": "^14.4.0",
+    "node-fetch": "^2.6.0",
+    "not-async-storage": "^1.0.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",

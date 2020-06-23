@@ -1,10 +1,11 @@
-
+const context = require('./context')
 
 module.exports = {
-    context: require('./context'),
+    get __context__(){
+        return context
+    },
     registerUser: require('./register-user'),
     authenticateUser: require('./authenticate-user'),
-    isUserAuthenticated: require('./is-user-authenticated'),
     retrieveUser: require('./retrieve-user'),
     retrieveDay: require('./retrieve-day'),
     retrieveRecipe: require('./retrieve-recipe'),
@@ -17,5 +18,6 @@ module.exports = {
     toogleMenu: require('./toogle-menu'),
     deleteDayMenu: require('./delete-day-menu'),
     deleteTimeline: require('./delete-timeline-menu'),
-    recipeSearchIdeas: require('./recipe-ideas')
+    recipeSearchIdeas: require('./recipe-ideas'),
+    addRecipe: require('./addRecipe')
 }

@@ -190,4 +190,7 @@ describe("retrieve day", () => {
             retriveDay(true, userId)
         }).to.throw(TypeError, 'true is not a string')
     })    
+
+    after(mongoose.disconnect)
+
 })

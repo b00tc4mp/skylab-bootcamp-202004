@@ -273,6 +273,6 @@ describe("toogle-menu", () => {
     
 
 
-
+    after(mongoose.disconnect)
 
 }) 

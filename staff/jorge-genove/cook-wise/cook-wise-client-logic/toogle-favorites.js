@@ -1,26 +1,23 @@
 require('cook-wise-commons/polyfills/string')
 const { utils: {  call } } = require('cook-wise-commons')
+const context = require('./context')
 
-module.exports = function(token,recipeId) {debugger
-    
-String.validate.notVoid(token)
+module.exports = function(recipeId) {
 String.validate.notVoid(recipeId)
 
+return (async() => {    
 
-    return call('PATCH', `http://192.168.0.17:8080/api/toogle/${recipeId}`,
+const token =  await this.storage.getItem('TOKEN')   
+
+const res = await call('PATCH', `${this.API_URL}/toogle/${recipeId}`,
     undefined,{ 'Content-type': 'application/json', 'Authorization': `Bearer ${token}` }
         )
-        .then(({ status, body }) => {
-            console.log(body,status)
-            if (status === 204) {
-                return
-                
+       if (res.status === 204) {
+            return
+        } else {
+            const { error } = JSON.parse(res.body)
 
-                
-            } else {
-                const { error } = JSON.parse(body)
-
-                throw new Error(error)
-            }
-        })
-}
+            throw new Error(error)
+        }
+    })()
+}.bind(context)
