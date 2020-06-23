@@ -10,7 +10,7 @@ module.exports = function() {
 
     .then(({ status, body }) => {
         if (status === 200) {
-            debugger
+            
             const { name, surname, email } = JSON.parse(body)
 
             return { name, surname, email }

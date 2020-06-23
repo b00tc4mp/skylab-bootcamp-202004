@@ -7,6 +7,7 @@
         "bcryptjs": "^2.4.3",
         "moove-it-commons": "^1.0.0",
         "moove-it-data": "file:../moove-it-data",
+        "nyc": "^15.1.0",
         "xhr2": "^0.2.0"
     },
     "devDependencies": {
@@ -15,7 +16,9 @@
         "mocha": "^8.0.1"
     },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "npx mocha *.spec.js",
+        "test:debug": "npx mocha debug *.spec.js",
+        "test:coverage": "npx nyc --reporter=text --reporter=lcov npm test"
     },
     "keywords": [],
     "author": "",

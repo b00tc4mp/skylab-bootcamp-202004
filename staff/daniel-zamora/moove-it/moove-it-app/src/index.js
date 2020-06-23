@@ -5,7 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import App from './App';
 import { HashRouter as Router } from 'react-router-dom'
 import { context } from 'moove-it-client-logic'
-import Home from './components/Home'
+// import Home from './components/Home'
 
 
 const { REACT_APP_API_URL: API_URL } = process.env
@@ -16,7 +16,7 @@ context.storage = sessionStorage
 
 ReactDOM.render( 
 <React.StrictMode>
-<Router><Home/></Router> 
+<Router><App/></Router> 
 </React.StrictMode>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

@@ -18,7 +18,7 @@ export default function Login({onLogin, onGoToRegister}){
 
         try {
             authenticateUser(email, password)
-                .then(onLogin()) 
+                .then(onLogin) 
                 .catch(error => setError(error.message))
         } catch ({message}) {
             setError(message)

@@ -3,9 +3,10 @@ require('moove-it-commons/polyfills/string')
 require('moove-it-commons/polyfills/number')
 const context = require('./context')
 
+module.exports = function(blueprintId, name, width, height) {
+    
+    const { token } = this.storage
 
-module.exports = function(token, blueprintId, name, width, height) {
-    debugger
     String.validate.notVoid(token)
     if (typeof blueprintId !== 'undefined') String.validate.notVoid(blueprintId)
     String.validate.notVoid(name)

@@ -6,20 +6,22 @@ global.XMLHttpRequest = require('xhr2')
 const retrieveUser = require('./retrieve-user')
 const { random } = Math
 const { expect } = require('chai')
-    // const { errors: { UnexistenceError, CredentialsError } } = require('moove-it-commons')
 const bcrypt = require('bcryptjs')
 const { utils: { jwtPromised } } = require('moove-it-commons')
 const context = require('./context')
 
 context.API_URL = API_URL
+context.storage = {}
 
 describe('logic - retrieve user', () => {
 
-    before(() => mongoose.connect(MONGODB_URL).then(() => User.deleteMany()))
+    before(() => mongoose.connect(MONGODB_URL))
 
-    let name, surname, email, password, token, hash
+    let name, surname, email, password, hash
 
-    beforeEach(() => {
+    beforeEach(() => 
+        User.deleteMany()
+        .then(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `e-${random()}@mail.com`
@@ -27,19 +29,19 @@ describe('logic - retrieve user', () => {
 
         return bcrypt.hash(password, 10)
             .then(_hash => hash = _hash)
-
     })
+    )
 
 
     describe('when user already exists', () => {
         beforeEach(() =>
             User.create({ name, surname, email, password: hash })
             .then(user => jwtPromised.sign({ sub: user.id }, SECRET))
-            .then(_token => token = _token)
+            .then(token => context.storage.token = token)
         )
-        it('should succeed on correct user id', () => {
+        it('should succeed on correct token', () => { debugger
 
-            return retrieveUser(token)
+            return retrieveUser()
                 .then(user => {
                     expect(user.name).to.equal(name)
                     expect(user.surname).to.equal(surname)
@@ -48,17 +50,41 @@ describe('logic - retrieve user', () => {
 
         })
 
-        it('should fail on wrong user id', () =>
-            retrieveUser('5ed43b913578a050d5600ee0')
+        it('should fail on wrong token format', () =>{
+            context.storage.token = "000";
+            return retrieveUser()
             .catch(error => {
                 expect(error).to.exist
                 expect(error).to.be.an.instanceof(Error)
                 expect(error.message).to.equal(`jwt malformed`)
             })
+        })
+
+    })
+
+    describe('when user does not exist', () => {
+        let userId
+
+        beforeEach(() => {
+            userId = '5ed1204ee99ccf6fae798aef'
+
+            return jwtPromised.sign({ sub: userId }, SECRET)
+                .then(token => context.storage.token = token)
+        })
+
+        it('should fail when user does not exist', () =>
+            retrieveUser()
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    expect(error).to.exist
+                    expect(error).to.be.an.instanceof(Error)
+                    expect(error.message).to.equal(`user with id ${userId} does not exist`)
+                })
         )
+    })
 
-
-        it('should fail when incorrect inputs are introduced', () => {
+        describe('Sync errors', () => 
+            it('should fail when incorrect inputs are introduced', () => {
             try {
                 retrieveUser(1)
             } catch (error) {
@@ -73,8 +99,8 @@ describe('logic - retrieve user', () => {
                 expect(error.message).to.equal(` is empty or blank`)
             }
         })
+    )
 
-    })
 
     afterEach(() => User.deleteMany())
     after(() => mongoose.disconnect())
