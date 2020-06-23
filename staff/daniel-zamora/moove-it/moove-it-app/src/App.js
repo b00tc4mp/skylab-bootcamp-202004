@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { Route, withRouter, Redirect} from 'react-router-dom';
 import { isSessionActive, isSessionValid, logoutUser } from 'moove-it-client-logic'
-import Container from './components/Container'
+import FloorPlan from './components/FloorPlan'
 import Register from './components/Register';
 import Login from './components/Login'
 import Home from './components/Home';
+
 
 function App({ history }) {
 
@@ -14,7 +15,6 @@ function App({ history }) {
       isSessionValid()
         .then(authenticated => {
           if(authenticated) {
-            // setToken(sessionStorage.token)
           }
         })
         .catch(error => {throw error})
@@ -32,6 +32,22 @@ function App({ history }) {
 
   const handleGoToLogin = () => history.push('/login')
 
+  const handlePlaneInit = () => history.push('/blueprint')
+
+  const blueprint = {};
+
+  blueprint.items = [];
+
+  blueprint.getItem = function(searchId) {
+    blueprint.items.forEach((element) => {
+      if(element.id == searchId) return element
+    })
+  }
+
+  //TODO function to uptdate blueprint with existing data
+
+  // TODO function to save blueprin on database
+
   const handleLogout = () => {
     logoutUser()
 
@@ -40,7 +56,7 @@ function App({ history }) {
   return (
     <div className="app">
       <header className="app-header">
-        <Container>
+        
           <Route exact path='/' render={() => 
             isSessionActive()? <Redirect to="home" /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>}/>
           
@@ -48,8 +64,11 @@ function App({ history }) {
           isSessionActive()? <Redirect to="home" /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister}/>}/>
           
           <Route path="/home" render={() => 
-          isSessionActive()? <Home onLogout={handleLogout}/> : <Redirect to="/"/> }/>
-        </Container>
+          isSessionActive()? <Home blueprint={blueprint} onLogout={handleLogout} onGoToFloorPlan={handlePlaneInit} /> : <Redirect to="/"/> }/>
+
+          <Route path='/blueprint' render={() => 
+            isSessionActive()? <FloorPlan blueprint={blueprint}/> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>}/>
+        
       </header>
     </div>
   )

@@ -3,11 +3,11 @@ import './Catalogue.sass'
 
 let itemsCatalogue = ['double-bed', 'single-bed']
 
-export default function Catalogue({onDragStart}) {
+export default function Catalogue({}) {
 
   const handleCatalogueDrag = (e) => {
-    const itemId = e.dataTransfer.setData("text", e.target.id)
-    onDragStart(itemId)
+  e.dataTransfer.setData("text", e.target.id)
+  e.dataTransfer.setData("boolean", false)
 }
   return (
     <div className='items'>
@@ -16,7 +16,7 @@ export default function Catalogue({onDragStart}) {
           className={item}
           draggable={true}
           onDragStart={handleCatalogueDrag}
-          id={`${item}_${i}`}
+          id={`${item}`}
         />
       ))}
     </div>
