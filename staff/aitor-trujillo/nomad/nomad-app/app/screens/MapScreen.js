@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, SafeAreaView } from 'react-native'
+import { View, StyleSheet, SafeAreaView, RefreshControl } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 import NomadTitle from '../components/NomadTitle'
 import { FlatList } from 'react-native-gesture-handler'
@@ -12,13 +12,15 @@ import { API_URL } from 'nomad-client-logic/context'
 import retrieveUser from 'nomad-client-logic/retrieve-user'
 import retrieveWorkspaces from 'nomad-client-logic/retrieve-workspaces'
 import Card from '../components/Card'
+import Feedback from '../components/Feedback'
 
 export default ({ navigation }) => {
-
     const [latitude, setLatitude] = useState(41.47566020027821)
     const [longitude, setLongitude] = useState(2.197265625)
     const [workspaces, setWorkspaces] = useState(undefined)
+    const [refresh, setRefresh] = useState(false)
     const [user, setUser] = useState()
+    const [error, setError] = useState()
 
     const getPermissions = async () => {
         const result = await Permissions.askAsync(Permissions.LOCATION)
@@ -27,12 +29,14 @@ export default ({ navigation }) => {
 
     const getLocationWorkspaces = async (location) => {
         try {
+            // setWorkspaces([])
             const user = await retrieveUser()
             setUser(user)
             const result = await retrieveWorkspaces(location)
+            setError()
             setWorkspaces(result)
         } catch (e) {
-            console.log(e) // TODO HANDLE THIS
+            setError(e.message)
         }
     }
 
@@ -67,7 +71,6 @@ export default ({ navigation }) => {
                             }}
                             image={require('../assets/locateuser.png')}
                             onDragEnd={({ nativeEvent: { coordinate } }) => { setLatitude(coordinate.latitude); setLongitude(coordinate.longitude); getLocationWorkspaces(coordinate) }}
-                            onPress={() => console.log('clicked')}
                         />}
                         {workspaces && workspaces.map(ws =>
                             (<Marker coordinate={{
@@ -80,6 +83,7 @@ export default ({ navigation }) => {
                 </View>
                 <View style={styles.listContainer}>
                     <NomadTitle title='Workspaces near you' color='white' />
+                    {error && <Feedback message={error} color='#5d5d5a' />}
                     <FlatList horizontal data={workspaces} keyExtractor={(workspace) => workspace._id + Math.random().toString()}
                         renderItem={({ item }) =>
                             <Card

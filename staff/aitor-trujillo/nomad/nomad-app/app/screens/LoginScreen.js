@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     View,
     Text,
@@ -14,6 +14,7 @@ import * as Yup from "yup";
 const { authenticateUser } = require('nomad-client-logic')
 import colors from '../styles/colors'
 import ErrorMessage from '../components/ErrorMessage'
+import Feedback from '../components/Feedback';
 
 const bgImage = require('../assets/background.jpg')
 
@@ -23,6 +24,7 @@ const validationSchema = Yup.object().shape({
 })
 
 export default ({ onLoggedIn }) => {
+    const [error, setError] = useState()
 
     const handleLogin = ({ email, password }) => {
         (async () => {
@@ -30,7 +32,7 @@ export default ({ onLoggedIn }) => {
                 await authenticateUser(email, password)
                 onLoggedIn()
             } catch (error) {
-                console.log(error) // TODO handle this
+                setError(error.message)
             }
         })()
     }
@@ -78,6 +80,7 @@ export default ({ onLoggedIn }) => {
                                 onBlur={() => setFieldTouched('password')}
                             />
                             <ErrorMessage error={errors.password} visible={touched.password} />
+                            {error && <Feedback message={error} color='#5d5d5a' />}
                             <AppButton title='Sign in!' bgColor='secondary' txtColor='light' onPress={handleSubmit} />
                         </>
                     )}

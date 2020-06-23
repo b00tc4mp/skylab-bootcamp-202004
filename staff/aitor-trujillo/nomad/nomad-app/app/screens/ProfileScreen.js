@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, SafeAreaView, StyleSheet, Image, TouchableHighlight } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, Image, TouchableHighlight, RefreshControl } from 'react-native'
 import { Entypo, AntDesign } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-community/async-storage'
 
 import { API_URL } from 'nomad-client-logic/context'
 import colors from '../styles/colors'
-import { TouchableWithoutFeedback, TouchableOpacity } from 'react-native-gesture-handler'
+import { TouchableWithoutFeedback, TouchableOpacity, ScrollView } from 'react-native-gesture-handler'
 import retrieveUser from 'nomad-client-logic/retrieve-user'
 
-export default function Profile({ handleLogout, navigation }) {
+export default function Profile({ handleLogout, navigation, route }) {
     const [user, setUser] = useState()
     const [image, setImage] = useState()
+    const [refresh, setRefresh] = useState(false)
+    const [error, setError] = useState()
 
     const getUser = async () => {
         try {
@@ -18,7 +20,7 @@ export default function Profile({ handleLogout, navigation }) {
             setUser(user)
             setImage({ uri: `${API_URL}/users/${user.id}.jpg` })
         } catch (e) {
-            console.log(e) // TODO HANDLE THIS
+            setError(e.message)
         }
     }
 
@@ -30,46 +32,52 @@ export default function Profile({ handleLogout, navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            {user && <View style={styles.profile}>
-                <TouchableOpacity onPress={() => navigation.navigate('UploadProfile')}>
-                    <Image source={image} onError={() => setImage(require('../assets/profile.png'))} style={styles.image} />
-                </TouchableOpacity>
-                <View >
-                    <Text style={styles.name}>{user.name}</Text>
-                </View>
-            </View>}
-            <TouchableHighlight onPress={() => navigation.navigate('WorkspaceEditor')} >
+            <ScrollView refreshControl={
+                <RefreshControl
+                    refreshing={refresh}
+                    onRefresh={() => getUser()} />}>
+                {user && <View style={styles.profile}>
+                    <TouchableOpacity onPress={() => navigation.navigate('UploadProfile')}>
+                        <Image source={image} onError={() => setImage(require('../assets/profile.png'))} style={styles.image} />
+                    </TouchableOpacity>
+                    <View >
+                        <Text style={styles.name}>{user.name}</Text>
+                    </View>
+                </View>}
+                {error && <Feedback message={error} color='#5d5d5a' />}
+                <TouchableHighlight onPress={() => navigation.navigate('WorkspaceEditor')} >
 
-                <View style={styles.optionsContainer}>
-                    <View style={styles.iconCircle}>
-                        <Entypo name="location-pin" size={30} color={colors.primary} />
+                    <View style={styles.optionsContainer}>
+                        <View style={styles.iconCircle}>
+                            <Entypo name="location-pin" size={30} color={colors.primary} />
+                        </View>
+                        <View >
+                            <Text style={styles.name}>Manage Workspaces</Text>
+                        </View>
                     </View>
-                    <View >
-                        <Text style={styles.name}>Manage Workspaces</Text>
-                    </View>
-                </View>
-            </TouchableHighlight>
-            <TouchableHighlight onPress={() => navigation.navigate('ManageReviews')} >
+                </TouchableHighlight>
+                {/* <TouchableHighlight onPress={() => navigation.navigate('ManageReviews')} >
 
-                <View style={styles.optionsContainer}>
+                    <View style={styles.optionsContainer}>
+                        <View style={styles.iconCircle}>
+                            < AntDesign name="star" size={30} color={colors.primary} />
+                        </View>
+                        <View >
+                            <Text style={styles.name}>My Reviews</Text>
+                        </View>
+                    </View>
+                </TouchableHighlight> */}
+                <View style={styles.logout}>
                     <View style={styles.iconCircle}>
-                        < AntDesign name="star" size={30} color={colors.primary} />
+                        <AntDesign name="logout" size={30} color={colors.primary} />
                     </View>
-                    <View >
-                        <Text style={styles.name}>My Reviews</Text>
-                    </View>
+                    <TouchableWithoutFeedback onPress={() => handleLogout()}>
+                        <View >
+                            <Text style={styles.name}>Sign Out</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
                 </View>
-            </TouchableHighlight>
-            <View style={styles.logout}>
-                <View style={styles.iconCircle}>
-                    <AntDesign name="logout" size={30} color={colors.primary} />
-                </View>
-                <TouchableWithoutFeedback onPress={() => handleLogout()}>
-                    <View >
-                        <Text style={styles.name}>Sign Out</Text>
-                    </View>
-                </TouchableWithoutFeedback>
-            </View>
+            </ScrollView>
         </SafeAreaView>
     )
 }

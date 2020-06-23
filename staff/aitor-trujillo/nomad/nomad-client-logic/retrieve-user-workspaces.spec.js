@@ -113,7 +113,6 @@ describe('client - create workspace', () => {
             const results = await retrieveUserWorkspaces()
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
-                    console.log(error)
                     expect(error).to.be.an.instanceof(Error)
                     expect(error.message).to.equal(`user with id ${userId} does not exist`)
                 })

@@ -9,34 +9,38 @@ import { API_URL } from 'nomad-client-logic/context'
 import searchFavorites from 'nomad-client-logic/search-favorites'
 import retrieveFavorites from 'nomad-client-logic/retrieve-favorites'
 import retrieveUser from 'nomad-client-logic/retrieve-user'
+import Feedback from '../components/Feedback'
 
 
 
 export default function Favorites({ navigation }) {
     const [favorites, setFavorites] = useState([])
     const [user, setUser] = useState()
+    const [error, setError] = useState()
     const [image, setImage] = useState()
     const [refresh, setRefresh] = useState(false)
 
 
     const getFavorites = async () => {
         try {
+            setFavorites([])
             const user = await retrieveUser()
             setUser(user)
             setImage({ uri: `${API_URL}/users/${user.id}.jpg` })
             const result = await retrieveFavorites()
             if (result) setFavorites(result)
+            if (error) setError()
         } catch (e) {
-            console.log(e) // TODO HANDLE THIS
+            setError(e.message)
         }
     }
 
     const handleSearch = async (query) => {
         try {
             const result = await searchFavorites(query)
-            setFavorites(result || [])
+            setFavorites(result)
         } catch (e) {
-            console.log(e) // TODO HANDLE THIS
+            setError(e.message)
         }
     }
     useEffect(() => {
@@ -68,6 +72,7 @@ export default function Favorites({ navigation }) {
                         onEndEditing={({ nativeEvent: { text } }) => handleSearch(text)}
                     />
                 </View>
+                {error && <Feedback message={error} color='#5d5d5a' />}
                 <View style={styles.containerCards}>
                     {favorites && <FlatList data={favorites} keyExtractor={(workspace) => workspace.name + Math.random().toString()}
                         renderItem={({ item }) =>

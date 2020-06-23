@@ -117,7 +117,6 @@ describe('client - toggle favorites', () => {
             const results = await toggleFavorites(workspaceId)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
-                    console.log(error.message)
                     expect(error).to.be.an.instanceof(Error)
                     expect(error.message).to.equal(`workspace with id ${workspaceId} does not exist`)
                 })

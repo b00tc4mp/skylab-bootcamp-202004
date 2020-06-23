@@ -5,7 +5,8 @@ const { utils: { call } } = require('nomad-commons')
 const context = require('./context')
 
 module.exports = function (query) {
-    String.validate.notVoid(query)
+    String.validate(query)
+    if (query === '') return
 
     return (async () => {
         try {

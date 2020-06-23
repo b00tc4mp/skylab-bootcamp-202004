@@ -17,6 +17,7 @@ import AppTextInput from '../components/NomadTextInput'
 import colors from '../styles/colors'
 import ErrorMessage from '../components/ErrorMessage'
 import postReview from 'nomad-client-logic/post-review';
+import Feedback from '../components/Feedback';
 
 const validationSchema = Yup.object().shape({
     stars: Yup.number().required().min(1).label('Stars'),
@@ -28,6 +29,7 @@ export default ({ navigation, route }) => {
     const workspaceId = route.params
 
     const [stars, setStars] = useState(0)
+    const [error, setError] = useState()
 
     const handleSubmit = async values => {
         try {
@@ -36,7 +38,7 @@ export default ({ navigation, route }) => {
             Alert.alert('Success', 'Review posted in workspace 🤩.')
             navigation.goBack()
         } catch (e) {
-            console.log(e) // TODO HANDLE THIS
+            setError(e.message)
         }
     }
 
@@ -77,6 +79,7 @@ export default ({ navigation, route }) => {
                                     numberOfLines={3}
                                 />
                                 <ErrorMessage error={errors.reviewText} visible={touched.reviewText} />
+                                {error && <Feedback message={error} color='#5d5d5a' />}
                                 <AppButton title='Post Review' bgColor='secondary' txtColor='light' onPress={handleSubmit} />
                             </>
                         )}

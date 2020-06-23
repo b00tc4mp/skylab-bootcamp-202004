@@ -22,6 +22,8 @@ import UploadProfileScreen from './app/screens/UploadProfileScreen';
 
 import { isUserAuthenticated, context } from 'nomad-client-logic'
 import { API_URL } from './.env'
+import Feedback from './app/components/Feedback';
+console.disableYellowBox = true;
 
 context.storage = AsyncStorage
 context.API_URL = API_URL
@@ -116,6 +118,7 @@ const EditorNavigator = () => (
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(null)
+  const [error, setError] = useState()
 
   useEffect(() => {
     getAuthentication()
@@ -127,7 +130,7 @@ export default function App() {
       return setIsAuthenticated(auth)
 
     } catch (e) {
-      console.log(e) // TODO HANDLE THIS
+      setError(e.message)
     }
   }
 
@@ -136,7 +139,7 @@ export default function App() {
       await AsyncStorage.removeItem('token')
       return setIsAuthenticated(false)
     } catch (e) {
-      console.log(e) // TODO HANDLE THIS
+      setError(e.message)
     }
   }
 
@@ -144,6 +147,7 @@ export default function App() {
     <NavigationContainer >
       {isAuthenticated === false && <StackNavigator onLoggedIn={getAuthentication} />}
       {isAuthenticated && <TabNavigator handleLogout={() => handleLogout()} />}
+      {error && <Feedback message={error} color='#5d5d5a' />}
     </NavigationContainer>
   );
 }

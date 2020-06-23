@@ -101,7 +101,6 @@ describe('logic - retrieve workspace by id', () => {
             const results = await retrieveUserWorkspaces(userId)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
-                    console.log(error)
                     expect(error).to.be.an.instanceof(UnexistenceError)
                     expect(error.message).to.equal(`user with id ${userId} does not exist`)
                 })

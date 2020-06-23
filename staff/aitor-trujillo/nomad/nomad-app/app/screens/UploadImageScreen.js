@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import colors from '../styles/colors'
 import ErrorMessage from '../components/ErrorMessage'
 import ImageInput from '../components/ImageInput';
+import Feedback from '../components/Feedback';
 
 const { uploadImage } = require('nomad-client-logic')
 
@@ -27,6 +28,7 @@ const validationSchema = Yup.object().shape({
 export default ({ navigation, route }) => {
     const { id: workspaceId } = route.params
 
+    const [error, setError] = useState()
     const [image1, setImage1] = useState()
     // const [image2, setImage2] = useState()
     // const [image3, setImage3] = useState()
@@ -39,7 +41,7 @@ export default ({ navigation, route }) => {
                 navigation.navigate('Profile')
             }
         } catch (e) {
-            console.log(e) // TODO HANDLE THIS
+            setError(e.message)
         }
     }
 
@@ -67,6 +69,7 @@ export default ({ navigation, route }) => {
                                     <ImageInput imageUri={image3} handleImage={img => { setImage3(img); setFieldValue('image3', img) }} /> */}
                                 </View>
                                 <ErrorMessage error={errors.image1} visible={touched.image1} />
+                                {error && <Feedback message={error} color='#5d5d5a' />}
                                 <AppButton title='Post Image' bgColor='secondary' txtColor='light' onPress={handleSubmit} />
                             </>
                         )}

@@ -12,21 +12,25 @@ import DeleteSwipe from '../components/DeleteSwipe'
 
 import deleteWorkspace from 'nomad-client-logic/delete-workspace'
 import retrieveUserWorkspaces from 'nomad-client-logic/retrieve-user-workspaces'
+import Feedback from '../components/Feedback'
 
 export default function Profile({ navigation }) {
     const [userWorkspaces, setUserWorkspaces] = useState([])
     const [refresh, setRefresh] = useState(false)
+    const [error, setError] = useState()
 
     useEffect(() => {
         retrieveMyWorkspaces()
-    }, [userWorkspaces.length])
+    }, [])
 
     const retrieveMyWorkspaces = async () => {
         try {
+            setUserWorkspaces([])
             const result = await retrieveUserWorkspaces()
-            if (result) setUserWorkspaces(result)
+            setError()
+            setUserWorkspaces(result)
         } catch (e) {
-            console.log(e) // TODO HANDLE THIS
+            setError(e.message)
         }
     }
 
@@ -35,7 +39,7 @@ export default function Profile({ navigation }) {
             await deleteWorkspace(wsId.toString())
             return retrieveMyWorkspaces()
         } catch (e) {
-            console.log(e) // TODO HANDLE THIS
+            setError(e.message)
         }
     }
 
@@ -47,6 +51,7 @@ export default function Profile({ navigation }) {
                     <AppButton title='Create Workspace' bgColor='secondary' txtColor='light' onPress={() => navigation.navigate('CreateWs')} />
                 </View>
                 <NomadTitle title='My Workspaces' fontSize={26} />
+                {error && <Feedback message={error} color='#5d5d5a' />}
             </View>
             <View>
                 {userWorkspaces && <FlatList data={userWorkspaces} keyExtractor={(userWorkspaces) => userWorkspaces._id} refreshControl={

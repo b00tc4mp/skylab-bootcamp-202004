@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text, View, Image, StyleSheet, ScrollView, RefreshControl, FlatList, TouchableOpacity } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 import NomadTitle from '../components/NomadTitle'
@@ -12,19 +12,25 @@ import colors from '../styles/colors'
 import toggleFavorites from 'nomad-client-logic/toggle-favorites'
 import AsyncStorage from '@react-native-community/async-storage'
 import { retrieveWorkspaceById } from 'nomad-client-logic'
+import Feedback from '../components/Feedback'
 
 export default ({ route, navigation }) => {
     const { workspace, user } = route.params
     const [isFav, setIsFav] = useState(user.favorites.indexOf(workspace._id) === -1)
     const [refresh, setRefresh] = useState(false)
     const [ws, setWs] = useState(workspace)
+    const [error, setError] = useState()
+
+    useEffect(() => {
+        (async () => await refreshWorkspace(ws))()
+    }, [])
 
     const refreshWorkspace = async ({ _id }) => {
         try {
             const result = await retrieveWorkspaceById(_id)
             setWs(result)
         } catch (e) {
-            console.log(e) // TODO HANDLE THIS
+            setError(e.message)
         }
 
     }
@@ -34,7 +40,7 @@ export default ({ route, navigation }) => {
             await toggleFavorites(ws._id)
             isFav ? setIsFav(false) : setIsFav(true)
         } catch (e) {
-            console.log(e) // TODO HANDLE THIS
+            setError(e.message)
         }
     }
 
@@ -49,12 +55,12 @@ export default ({ route, navigation }) => {
                     < FontAwesome5 name="phone" size={36} color='forestgreen' />
                 </TouchableOpacity>
                 <View style={styles.detailsContainer}>
+                    {error && <Feedback message={error} color='#5d5d5a' />}
                     <View style={styles.topWrapper}>
                         <NomadTitle title={ws.name} fontSize={32} />
                         <TouchableOpacity style={styles.iconCircle} onPress={() => handleFavoritePress()}>
                             < MaterialCommunityIcons name="bookmark" size={30} color={isFav ? colors.primary : 'tomato'} />
                         </TouchableOpacity>
-
                     </View>
                     <Text style={styles.address}>{ws.address.street}, {ws.address.city}, {ws.address.country}</Text>
                     <Text style={styles.price} >{ws.price.amount}€ / {ws.price.term}</Text>
@@ -78,7 +84,7 @@ export default ({ route, navigation }) => {
                             <Marker coordinate={{
                                 latitude: ws.geoLocation.coordinates[1],
                                 longitude: ws.geoLocation.coordinates[0]
-                            }} onPress={() => console.log('clicked')} />
+                            }} />
                         </MapView>
                     </View>
                     <NomadTitle title='Reviews' />
@@ -86,7 +92,6 @@ export default ({ route, navigation }) => {
                         <AppButton title='Post Review' bgColor='secondary' txtColor='light' onPress={() => navigation.navigate('ReviewPage', ws._id)} />
                         {ws.reviews && <FlatList data={ws.reviews} keyExtractor={(review) => review.name + Math.random().toString()}
                             renderItem={({ item }) => {
-                                console.log(item)
                                 return <Review
                                     image={{ uri: `${API_URL}/users/${item.user._id}.jpg` }}
                                     name={item.user.name}
