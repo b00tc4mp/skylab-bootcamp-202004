@@ -1,16 +1,15 @@
 import React, { useState } from 'react'
 import './FloorPlan.sass'
 import Catalogue from './Catalogue'
-import  './Catalogue.sass'
+import  './Catalogue.sass';
 
  
 export default function PlaneBuilder({blueprint}) {
 
-    const [placedItems, setPlacedItems] = useState([])
-    const [actualBlueprint, setActualBlueprint] = useState()
+    const [placedItems, setPlacedItems] = useState(sessionStorage.blueprints? JSON.parse(sessionStorage.blueprints): [])
 
     
-    const handleOnDrop = (e) => { debugger
+    const handleOnDrop = (e) => { 
         let x = e.clientX
         let y = e.clientY
         const _id = e.dataTransfer.getData("text")
@@ -26,15 +25,19 @@ export default function PlaneBuilder({blueprint}) {
             return element
                 
             })
-            return setPlacedItems([...updated])
+            setPlacedItems([...updated])
+            sessionStorage.blueprints = JSON.stringify([...updated])
+
         }
         else {
             const catalogueItemId = e.dataTransfer.getData("text")
             setPlacedItems(prevPlacedItems => ([...prevPlacedItems, {catalogueItemId, x, y, id: Date.now(), }]))
+            sessionStorage.blueprints = JSON.stringify([...placedItems, {catalogueItemId, x, y, id: Date.now(), }])
             return e.dataTransfer.setData("text", e.target.id)
             
         }
     }
+
 
     const handlePlaneDrag = (e) => {
         const itemId = e.dataTransfer.setData("text", e.target.id)

@@ -67,7 +67,7 @@ function App({ history }) {
           isSessionActive()? <Home blueprint={blueprint} onLogout={handleLogout} onGoToFloorPlan={handlePlaneInit} /> : <Redirect to="/"/> }/>
 
           <Route path='/blueprint' render={() => 
-            isSessionActive()? <FloorPlan blueprint={blueprint}/> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>}/>
+          isSessionActive()? <FloorPlan blueprint={blueprint}/> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>}/>
         
       </header>
     </div>
