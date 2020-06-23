@@ -1,14 +1,28 @@
 .settingsContainer
     display: flex
-    justify-content: center
     align-items: center
     flex-direction: column
     flex: 1 1 0%
     min-height: 100vh
     width: 100%
-    background-image: url('../images/tree-background.jpg')
-    background-size: cover
+    &__title
+        margin-left: 10px
+        font-size: 35px
+    &__container
+        background: rgba(229, 226, 226, 0.7)
+        width: 100%
+        position: relative
+        height: 12vh
+        top: 0
+        display: flex
+        align-items: center
+    &__optionList
+        display: flex
+        flex-direction: column
+        width: 100%
+        font-size: 2.5vh
+        justify-content: center
     &__option
-        font-size: 30px
-    &__logOut
-        font-size: 25px
+        border-bottom: 1px solid #000000
+        text-decoration: none
+        height: 6vh
