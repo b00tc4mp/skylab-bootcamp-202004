@@ -3,14 +3,14 @@ import './Catalogue.sass'
 
 let itemsCatalogue = ['double-bed', 'single-bed']
 
-export default function Catalogue({}) {
+export default function Catalogue() {
 
   const handleCatalogueDrag = (e) => {
   e.dataTransfer.setData("text", e.target.id)
   e.dataTransfer.setData("boolean", false)
 }
   return (
-    <div className='items'>
+    <div className='plane__catalogue'>
       {itemsCatalogue.map((item, i) => (
         <div 
           className={item}

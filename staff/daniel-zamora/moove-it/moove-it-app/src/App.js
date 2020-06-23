@@ -38,11 +38,11 @@ function App({ history }) {
 
   blueprint.items = [];
 
-  blueprint.getItem = function(searchId) {
-    blueprint.items.forEach((element) => {
-      if(element.id == searchId) return element
-    })
-  }
+  // blueprint.getItem = function(searchId) {
+  //   blueprint.items.forEach((element) => {
+  //     if(element.id == searchId) return element
+  //   })
+  // }
 
   //TODO function to uptdate blueprint with existing data
 
