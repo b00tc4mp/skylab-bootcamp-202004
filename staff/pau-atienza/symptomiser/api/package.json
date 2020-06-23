@@ -13,6 +13,7 @@
   "dependencies": {
     "commons": "file:../commons",
     "http": "0.0.1-security",
+    "node-commons": "file:../node-commons",
     "node-fetch": "^2.6.0",
     "nodemailer": "^6.4.10",
     "server-logic": "file:../server-logic"

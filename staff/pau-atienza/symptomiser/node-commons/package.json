@@ -1,5 +1,5 @@
 {
-  "name": "data",
+  "name": "node-commons",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "commons": "file:../commons",
-    "mongoose": "^5.9.20"
+    "nodemailer": "^6.4.10"
   }
 }
