@@ -31,8 +31,10 @@ class CardDetails extends Component {
     componentDidMount() {
         let escape, lists
         (async () => {
-            lists = await retrieveEscapeIds()
-            this.setState({ userLists: lists })
+            if (!this.props.guest) {
+                lists = await retrieveEscapeIds()
+                this.setState({ userLists: lists })
+            }
             escape = await retrieveEscapeRoomDetails(this.props.escapeId)
             this.setState({ escapeRoom: escape })
 
@@ -40,13 +42,16 @@ class CardDetails extends Component {
 
             this.setState({ reviews })
 
-            const { username = '' } = await retrieveUser()
 
-            reviews.forEach(({ user, rating }) => {
-                if (user.username === username) {
-                    this.setState({ starCount: rating })
-                }
-            })
+            if (!this.props.guest) {
+                const { username = '' } = await retrieveUser()
+
+                reviews.forEach(({ user, rating }) => {
+                    if (user.username === username) {
+                        this.setState({ starCount: rating })
+                    }
+                })
+            }
         })()
     }
 
@@ -55,7 +60,7 @@ class CardDetails extends Component {
             <KeyboardAvoidingView style={styles.container} behavior='padding'>
                 <ScrollView>
                     <ImageBackground style={styles.image} source={{ uri: this.state.escapeRoom.image }} >
-                        <View style={styles.personal}>
+                        {!this.props.guest && <View style={styles.personal}>
                             {this.props.favorites ? <AntDesign name="heart" size={24}
                                 color="tomato" style={styles.profile} onPress={() => this.handleToggle('favorites')} />
                                 :
@@ -71,7 +76,7 @@ class CardDetails extends Component {
                                 :
                                 <MaterialIcons name="playlist-add" size={24}
                                     color="black" style={styles.profile} onPress={() => this.handleToggle('pending')} />}
-                        </View>
+                        </View>}
                         <View style={styles.punctuation}>
                             <Text style={{ fontSize: 18 }}>{this.state.rating}</Text>
                             <MaterialCommunityIcons name="star" size={30} color="#FFD300" />
@@ -115,7 +120,7 @@ class CardDetails extends Component {
                                 <MaterialIcons style={styles.icon} name="people" size={24} color="white" />
                             </View>
                         </View>
-                        <View style={styles.rateHeader}>
+                        {!this.props.guest && <View style={styles.rateHeader}>
                             <View style={styles.rate}>
                                 <StarRating style={styles.star} starSize={25} maxStars={5}
                                     rating={this.state.starCount} fullStarColor={'yellow'} halfStarColor={'yellow'} emptyStarColor={'yellow'}
@@ -128,7 +133,7 @@ class CardDetails extends Component {
                                             this.props.handleRate(escape.rating)
                                         })()} />
                             </View>
-                        </View>
+                        </View>}
                         <View style={styles.review}>
                             {
                                 this.state.reviews.map(({ rating, comment, user }) => {
@@ -136,7 +141,7 @@ class CardDetails extends Component {
                                         return <Review key={user['username']} username={` @${user['username']}`} comment={comment.message} rating={rating} date={comment.date} />
                                     }
                                 })}
-                            <View style={styles.commentSection}>
+                            {!this.props.guest && <View style={styles.commentSection}>
                                 <TextInput style={styles.commentInput}
                                     onChangeText={text => this.setState({ comment: text })}
                                     placeholder='Add a comment...'
@@ -152,7 +157,7 @@ class CardDetails extends Component {
                                 }}>
                                     <FontAwesome name="send" size={24} color="white" />
                                 </TouchableOpacity>
-                            </View>
+                            </View>}
                         </View>
                     </View>
                 </ScrollView>

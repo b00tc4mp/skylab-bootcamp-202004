@@ -19,6 +19,7 @@ export default function OthersProfile({ _userId, onEscapes }) {
     const [user, setUser] = useState({})
     const [escapeRooms, setEscapeRooms] = useState([])
     const [followingIds, setFollowingIds] = useState([])
+    const [loaded, setLoaded] = useState(false)
 
     const handleEscapeLists = async () => {
         const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
@@ -48,6 +49,8 @@ export default function OthersProfile({ _userId, onEscapes }) {
 
             const followingUsers = await retrieveFollowingIds()
             setFollowingIds(followingUsers)
+
+            setLoaded(true)
         })()
     }, [])
 
@@ -86,13 +89,13 @@ export default function OthersProfile({ _userId, onEscapes }) {
                         <Text>Done</Text>
                     </TouchableOpacity>
                 </View>
-                {
+                {loaded ?
                     escapeRooms.length ?
-                        escapeRooms.map(({ id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin }) => {
+                        escapeRooms.map(({ id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin, rating }) => {
                             return (<Card
                                 key={id}
                                 title={name}
-                                rating='4.9'
+                                rating={rating}
                                 escapeId={id}
                                 people={`${playersMin}-${playersMax}`}
                                 genre={genre} price={`${priceMin}-${priceMax}€`} image={{ uri: _image }}
@@ -104,7 +107,8 @@ export default function OthersProfile({ _userId, onEscapes }) {
                         })
                         :
                         <Text>No escape rooms added yet.</Text>
-                }
+                    :
+                    <View></View>}
             </ScrollView>
         </SafeAreaView>
     )

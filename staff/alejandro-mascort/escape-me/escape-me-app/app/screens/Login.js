@@ -18,15 +18,17 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required().min(8).label('Password')
 })
 
-export default function Login({ onRegister, onHome }) {
+export default function Login({ onRegister, onHome, handleGuest }) {
+    const [error, setError] = useState()
+
     function handleLogin(values) {
         const { email, password } = values
         try {
             return loginUser(email, password)
                 .then(() => onHome())
-                .catch(error => console.error(error.message))
+                .catch(error => setError(error.message))
         } catch (error) {
-            console.error(error.message)
+            setError(error.message)
         }
     }
 
@@ -54,11 +56,15 @@ export default function Login({ onRegister, onHome }) {
 
                             <AppButton title="Login" onPress={handleSubmit} />
 
+                            {error && <Feedback error={error} />}
                             <AppButton style={styles.register} title='Register' color='#4ecdc4' onPress={onRegister} />
+                            <AppButton title='Join as a Guest' color='#47d7' onPress={handleGuest} />
+
                         </View>
                     </>
                 )}
             </Formik>
+
         </ImageBackground >
     );
 }

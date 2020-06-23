@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { SafeAreaView, ScrollView, Text } from 'react-native'
 import Card from '../components/Card'
 import { suggestEscapeRooms, retrieveEscapeIds } from 'escape-me-client-logic'
+import { useRoute } from '@react-navigation/native'
 
 export default function ({ navigation }) {
+    const route = useRoute()
+    let guest
+    if (route.params) guest = route.params['guest']
     const [escapeRooms, setEscapeRooms] = useState([])
     const [escapes, setEscapes] = useState()
 
@@ -15,8 +19,10 @@ export default function ({ navigation }) {
     let escapeList
     useEffect(() => {
         const reload = navigation.addListener('focus', async () => {
-            const _escapes = await retrieveEscapeIds()
-            setEscapes(_escapes)
+            if (!guest) {
+                const _escapes = await retrieveEscapeIds()
+                setEscapes(_escapes)
+            }
 
             if (!escapeRooms.length) {
                 escapeList = await suggestEscapeRooms('pending')
@@ -44,10 +50,11 @@ export default function ({ navigation }) {
                             escapeId={id}
                             people={`${playersMin}-${playersMax}`}
                             genre={genre} price={`${priceMin}-${priceMax}€`} image={{ uri: _image }}
-                            participated={escapes.participated.includes(id)}
-                            pending={escapes.pending.includes(id)}
-                            favorites={escapes.favorites.includes(id)}
-                            onEscapes={handleEscapeLists}
+                            participated={!guest && escapes.participated.includes(id)}
+                            pending={!guest && escapes.pending.includes(id)}
+                            favorites={!guest && escapes.favorites.includes(id)}
+                            onEscapes={!guest ? handleEscapeLists : () => { }}
+                            guest={guest}
                         />)
                     })
                     :

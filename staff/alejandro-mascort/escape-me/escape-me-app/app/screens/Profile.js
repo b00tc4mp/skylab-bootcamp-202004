@@ -20,10 +20,16 @@ export default function Profile({ navigation }) {
     const [user, setUser] = useState({})
     const [following, setFollowing] = useState([])
     const [escapeRooms, setEscapeRooms] = useState([])
+    const [loaded, setLoaded] = useState(false)
 
     const handleEscapeLists = async () => {
         const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
         setUserLists({ participated, pending, favorites })
+    }
+
+    const handleFollowingIds = async () => {
+        const followingUsers = await retrieveFollowingIds()
+        setFollowingIds(followingUsers)
     }
 
     let escapeList, follow
@@ -31,10 +37,6 @@ export default function Profile({ navigation }) {
         (async () => {
             const { name = '', surname = '', username = '' } = await retrieveUser()
             setUser({ name, surname, username })
-
-            const followingUsers = await retrieveFollowingIds()
-            setFollowingIds(followingUsers)
-
         })()
     }, [])
 
@@ -47,6 +49,11 @@ export default function Profile({ navigation }) {
 
             escapeList = await retrieveEscapeRooms(tag)
             setEscapeRooms(escapeList)
+
+            const followingUsers = await retrieveFollowingIds()
+            setFollowingIds(followingUsers)
+
+            setLoaded(true)
         });
 
         // Return the function to reload from the event so it gets removed on unmount
@@ -91,7 +98,7 @@ export default function Profile({ navigation }) {
                         <Text>Following</Text>
                     </TouchableOpacity>
                 </View>
-                {
+                {loaded ?
                     tag !== '' ?
                         escapeRooms.length ?
                             escapeRooms.map(({ id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin, rating }) => {
@@ -122,11 +129,12 @@ export default function Profile({ navigation }) {
                                     following={followingIds.includes(id)}
                                     userId={id}
                                     onEscapes={handleEscapeLists}
+                                    onFollowing={handleFollowingIds}
                                 />)
                             })
                             :
                             <Text>You're not following people yet.</Text>
-                }
+                    : <View></View>}
             </ScrollView>
         </SafeAreaView>
     );

@@ -7,11 +7,15 @@ import OthersProfile from '../../screens/OthersProfile'
 
 const styles = require('./style')
 
-function UserItem({ name, surname, email, image, main = false, following, userId, onEscapes }) {
+function UserItem({ name, surname, email, image, main = false, following, userId, onEscapes, onFollowing }) {
     const [modalVisible, setModalVisible] = useState(false)
 
     function handleFollowUser(userId) {
-        (async () => await toggleFollowUser(userId))()
+        (async () => {
+            await toggleFollowUser(userId)
+            onFollowing()
+        }
+        )()
     }
 
     return (

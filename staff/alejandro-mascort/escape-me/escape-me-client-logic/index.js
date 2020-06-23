@@ -1,8 +1,13 @@
+const context = require('./context')
+
+
 module.exports = {
+    get __context__() { return context },
+
     context: require('./context'),
     registerUser: require('./register-user'),
     loginUser: require('./login-user'),
-    // isUserAuthenticated: require('./is-user-authenticated'),
+    isUserLoggedIn: require('./is-user-loggedIn'),
     retrieveUser: require('./retrieve-user'),
     toggleEscapeRoom: require('./toggle-escape-room'),
     toggleFollowUser: require('./toggle-follow-user'),
@@ -15,5 +20,6 @@ module.exports = {
     suggestEscapeRooms: require('./suggest-escape-rooms'),
     retrieveEscapeRoomDetails: require('./retrieve-escape-room-details'),
     rateEscapeRoom: require('./rate-escape-room'),
-    commentEscapeRoom: require('./comment-escape-room')
+    commentEscapeRoom: require('./comment-escape-room'),
+    logoutUser: require('./logout-user')
 }
