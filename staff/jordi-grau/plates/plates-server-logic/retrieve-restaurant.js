@@ -6,7 +6,9 @@ const {errors: {UnexistenceError}} = require('plates-commons')
 module.exports = restaurantId => {
     String.validate.notVoid(restaurantId)
 
-    return Restaurant.findOne({ _id: ObjectId(restaurantId) }).lean()
+    return Restaurant.findOne({ _id: ObjectId(restaurantId) })
+        .populate('dishes', 'name')
+        .lean()
         .then(restaurant => {
             if (!restaurant) throw new UnexistenceError(`restaurant with id ${restaurantId} does not exist`)
 

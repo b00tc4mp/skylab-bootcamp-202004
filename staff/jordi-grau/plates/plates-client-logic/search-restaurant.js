@@ -4,7 +4,7 @@ const context = require('./context')
 
 
 module.exports = function(query) {
-    String.validate.notVoid(userId)
+
 debugger
     return call('GET',`${this.API_URL}/search/restaurant?query=${query}`)
         .then(({status, body}) =>{

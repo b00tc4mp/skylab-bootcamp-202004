@@ -39,7 +39,7 @@ describe('client logic. authenticate user',() => {
         .then(_hash => hashedPassword = _hash)
     )
 
-
+debugger
     describe('when user already exists',() =>{
         beforeEach( async() => {
             await User.create({email, password: hashedPassword})

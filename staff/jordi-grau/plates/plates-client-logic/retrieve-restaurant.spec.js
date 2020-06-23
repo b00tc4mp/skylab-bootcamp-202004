@@ -13,7 +13,7 @@ const retrieveRestaurant = require('./retrieve-restaurant')
 const context = require('./context')
 context.API_URL = API_URL
 context.storage = {}
-
+debugger
 describe('client logic: create restaurant', () => {
     let restaurantName, restaurantEmail, cif, address, phone, userEmail, password, userId, restaurantId, result
     
@@ -25,7 +25,7 @@ describe('client logic: create restaurant', () => {
         ])
 
     })
-
+debugger
     beforeEach(async () => {
         restaurantName = `restaurantname-${random()}`
         restaurantEmail = `restaurantemail-${random()}@gmail.com`
@@ -62,13 +62,13 @@ describe('client logic: create restaurant', () => {
         expect(_phone).to.equal(phone);
         expect(_address).to.equal(address);
     })
-debugger
+
     it('should fail on wrong data', async ()=>{
         restaurantId = restaurantId +'wrongId'
         try {
             result = await retrieveRestaurant(restaurantId)
         } catch (error) {
-            debugger
+           
             expect(error).to.exist
             expect(result).to.be.undefined   
         }
