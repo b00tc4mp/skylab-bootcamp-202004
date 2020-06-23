@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useReducer } from 'react';
-import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView, AsyncStorage, Clipboard } from 'react-native'
+import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView, AsyncStorage, Clipboard, Alert } from 'react-native'
 import SvgUri from "expo-svg-uri"
 import ButtonForm from './ButtonForm'
 import { retrieveCohousing, updateCohousing } from 'coohappy-client-logic'
@@ -19,9 +19,8 @@ const InfoCommunityAdmin = function ({ navigation }) {
 
         try {
             (async () => {
-                const token = await AsyncStorage.getItem('TOKEN')
-                const { name, address: { street, number, city, country }, accessCode, members } = await retrieveCohousing(token)
-
+                
+                const { name, address: { street, number, city, country }, accessCode, members } = await retrieveCohousing()
                 setName(name)
                 setStreet(street)
                 setNumber(number.toString())
@@ -33,20 +32,20 @@ const InfoCommunityAdmin = function ({ navigation }) {
             })()
 
         } catch (error) {
-            console.log(error)
+            Alert.alert('OOPS!', error.message)
         }
     }, [])
 
 
     const handleOnUpdateCommunity = async () => {
-        const token = await AsyncStorage.getItem('TOKEN')
+        
         try {
             
-            await updateCohousing(token, { name, address: { street, number, city, country } })
+            await updateCohousing( { name, address: { street, number, city, country } })
+            Alert.alert('DONE!', 'Cohousing update correctly')
         } catch (error) {
-            console.log(error)
+            Alert.alert('OOPS!', error.message)
         }
-
     }
 
 

@@ -29,7 +29,7 @@ String.validate = function (string) {
 }
 
 String.validate.notVoid = function (string) {
-    if (this.isVoid(string)) throw new VoidError(`string is empty or blank`)
+    if (this.isVoid(string)) throw new VoidError(`Some field is empty or blank`)
 }.bind(String)
 
 String.validate.alphabetic = function (string) {
@@ -37,5 +37,5 @@ String.validate.alphabetic = function (string) {
 }.bind(String)
 
 String.validate.lengthGreaterEqualThan = function (string, length) {
-    if (!this.isLengthGreaterEqualThan(string, length)) throw new Error(`${string} length is not greater or equal than ${length}`)
+    if (!this.isLengthGreaterEqualThan(string, length)) throw new Error(`Password must be a minimum of ${length} letters`)
 }.bind(String)

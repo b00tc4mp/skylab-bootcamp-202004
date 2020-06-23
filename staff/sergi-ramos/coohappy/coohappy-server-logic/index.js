@@ -18,5 +18,6 @@ module.exports = {
     addDateLaundry: require('./add-date-laundry'),
     deleteDateLaundry: require('./delete-date-laundry'),
     retrieveLaundry: require('./retrieve-laundry'),
-    retrieveLaundryAmount: require('./retrieve-laundry-amount')
+    retrieveLaundryAmount: require('./retrieve-laundry-amount'),
+    sendFoodList: require('./send-food-list')
 }

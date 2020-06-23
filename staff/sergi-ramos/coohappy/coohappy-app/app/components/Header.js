@@ -2,15 +2,12 @@ import React from 'react';
 import { StyleSheet, Text } from 'react-native'
 
 
-
-
 const Header = function({ text, onPress, bgColor }) {
 
     return (
         <View style={styles.header}>
 
         </View>
-
     )
 }
 

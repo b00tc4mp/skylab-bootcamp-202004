@@ -73,7 +73,7 @@ describe('when user already create any coohousing', () => {
 
             .catch(error => {
                 expect(error).to.be.an.instanceOf(DuplicityError)
-                expect(error.message).to.equal(`user: ${name} ${surname} already create an cohousing`)
+                expect(error.message).to.equal(`user: ${name} ${surname} already belongs to a cohousing`)
             })
     )
 })
@@ -87,7 +87,7 @@ describe('when user already create any coohousing', () => {
 
             .catch(error => {
                 expect(error).to.be.an.instanceOf(DuplicityError)
-                expect(error.message).to.equal(`user: ${name} ${surname} already create an cohousing`)
+                expect(error.message).to.equal(`user: ${name} ${surname} already belongs to a cohousing`)
             })
     )
 })

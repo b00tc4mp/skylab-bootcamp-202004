@@ -26,7 +26,7 @@ module.exports = (day, hour, userId) => {
                 await Cohousing.findOneAndUpdate({ 'members': userId }, { $addToSet: { laundry: { day, hour, user: userId } } })
 
             } else {
-                throw new DuplicityError(`User with id ${userId} already have an hour in the laundry`)
+                throw new DuplicityError(`You already have a reservation, can only do one`)
             }
         } else {
             throw new DuplicityError('sorry all the washing machines are full ')

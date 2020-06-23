@@ -1,5 +1,5 @@
 import React, { useState, useEffect, } from 'react';
-import { TextInput, TouchableOpacity, View, StyleSheet, Text, AsyncStorage } from 'react-native'
+import { TextInput, TouchableOpacity, View, StyleSheet, Text, AsyncStorage, Alert } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import SvgUri from "expo-svg-uri"
 import HeaderHome from './HeaderHome'
@@ -13,14 +13,29 @@ const Chat = function ({ navigation }) {
     const [singleMessage, setSingleMessage] = useState()
     const [userId, setUserId] = useState()
     const [cohousing, setCohousing] = useState()
-    
+
     let interval
+
+    useFocusEffect(
+        React.useCallback(() => {
+            (async () => {
+                const _cohousing = await retrieveCohousing()
+                setCohousing(_cohousing)
+            })()
+
+            return () => {
+            }
+        }, [])
+    )
+
     useFocusEffect(
         React.useCallback(() => {
             interval = setInterval(async () => {
-                const token = await AsyncStorage.getItem('TOKEN')                
-                const _messages = await retrieveMessage(token)
+
+                const _messages = await retrieveMessage()
                 setMessages(_messages.messages.reverse())
+                const cohousing = await retrieveCohousing()
+                setCohousing(cohousing)
             }, 2000)
 
             return () => {
@@ -31,19 +46,18 @@ const Chat = function ({ navigation }) {
 
 
     useEffect(() => {
-    
+
     }, [messages.length])
 
     useEffect(() => {
         (async () => {
-debugger
-            const token = await AsyncStorage.getItem('TOKEN')
-            const user = await retrieveUser(token)
+
+            const user = await retrieveUser()
             setUserId(user.id)
-            const cohousing = await retrieveCohousing(token)
+            const cohousing = await retrieveCohousing()
             setCohousing(cohousing)
-            console.log('hola')
-            const _messages = await retrieveMessage(token)
+
+            const _messages = await retrieveMessage()
             setMessages(_messages.messages.reverse())
         })()
     }, [])
@@ -54,16 +68,16 @@ debugger
 
             (async () => {
                 const date = getNow()
-                const token = await AsyncStorage.getItem('TOKEN')
 
-                await sendMessage(token, singleMessage, date)
-                const _messages = await retrieveMessage(token)
+
+                await sendMessage(singleMessage, date)
+                const _messages = await retrieveMessage()
                 setMessages(_messages.messages.reverse())
 
             })()
 
         } catch (error) {
-            console.log(error)
+            Alert.alert('OOPS!!', error.message)
         }
     }
 
@@ -71,7 +85,7 @@ debugger
 
         <View style={styles.container}>
 
-            <HeaderHome navigation={navigation} cohousingInfo={cohousing}/>
+            <HeaderHome navigation={navigation} cohousingInfo={cohousing} />
 
             <View style={styles.messages}>
 

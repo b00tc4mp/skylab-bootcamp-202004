@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, TextInput, AsyncStorage,TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, TextInput, AsyncStorage,TouchableOpacity, Alert } from 'react-native'
 import SvgUri from "expo-svg-uri"
 import ButtonForm from '../components/ButtonForm'
 import { registerCohousing } from 'coohappy-client-logic'
-
-
 
 
 const CreateCommunity = function ({ route, navigation }) {
@@ -15,25 +13,16 @@ const CreateCommunity = function ({ route, navigation }) {
     const [city, setCity] = useState('')
     const [country, setCountry] = useState('')
 
-   
-
     const handleOnCommunityRegister = async () => {
         try {
-            const token = await AsyncStorage.getItem('TOKEN')
-            // console.log(token)
-            // console.log(name, street, number, city, country)
-            await registerCohousing(name, { street, number, city, country }, 4, token)
+            await registerCohousing(name, { street, number, city, country }, 4)
             navigation.navigate('Home')
 
         } catch (error) {
 
-            console.log(error)
-
+            Alert.alert('OOPS!!', error.message)
         }
-
     }
-
-
 
     return (
 

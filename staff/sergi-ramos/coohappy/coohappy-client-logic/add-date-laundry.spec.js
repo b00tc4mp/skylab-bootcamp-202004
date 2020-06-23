@@ -128,7 +128,7 @@ describe('logic - add-date-laundry', () => {
         it('on wrong type of data', () => {
 
             expect(() => addDateLaundry(8, undefined)).to.throw(TypeError, 'undefined is not a string')
-            expect(() => addDateLaundry('', '8')).to.throw(VoidError, 'string is empty or blank')
+            expect(() => addDateLaundry('', '8')).to.throw(VoidError, 'Some field is empty or blank')
 
         })
     })

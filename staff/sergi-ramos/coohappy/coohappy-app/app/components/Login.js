@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView, AsyncStorage,Alert } from 'react-native'
 import SvgUri from "expo-svg-uri"
 import ButtonForm from '../components/ButtonForm'
-import { authenticateUser } from 'coohappy-client-logic'
+import { authenticateUser, retrieveUser } from 'coohappy-client-logic'
 
 
 
@@ -17,27 +17,16 @@ const Login = function ({ navigation }) {
         try {
 
             await authenticateUser(email, password)
-            navigation.navigate('Home')
-           // await AsyncStorage.setItem('TOKEN', resToken)
-            // const token = await AsyncStorage.getItem('TOKEN')
-            // if(!token)  navigation.navigate('WellcomePage')
-            // else navigation.navigate('Home')
+            const user = await retrieveUser()
 
-            // const { name } = await retrieveUser(token)
-            // await setName(name)
-            // navigation.navigate('Home',{
-                //     screen: 'Chat',
-                //     params: {name, surname}
-                // })
-                
-        } catch (error) {
-            if(error.message === 'string is empty or blank') Alert.alert('OOPS!!', 'Some field is empty')
-            if(error.message === `${password} length is not greater or equal than 8`) Alert.alert('OOPS!!', 'Password must be a minimum of 8 letters')
-            else Alert.alert('OOPS!',error.message)
             
+            if(!user.cohousing) navigation.navigate('WellcomePage')
+            else navigation.navigate('Home')
+  
+        } catch (error) {
+            Alert.alert('OOPS!!', error.message)  
         }
     }
-
 
     return (
 

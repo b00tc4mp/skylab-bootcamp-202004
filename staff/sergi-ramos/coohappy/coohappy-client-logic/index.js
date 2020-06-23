@@ -18,5 +18,8 @@ module.exports = {
     substractFood: require('./substract-food'),
     retrieveUserFoodList: require('./retrieve-user-food-list'),
     retrieveCohousing: require('./retrieve-cohousing'),
-    updateCohousing: require('./update-cohousing')
+    updateCohousing: require('./update-cohousing'),
+    retrieveAllUsersFoodList: require('./retrieve-all-users-food-list'),
+    sendFoodList: require('./send-food-list'),
+    joinCommunity: require('./join-community')
 }

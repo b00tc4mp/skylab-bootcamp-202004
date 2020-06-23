@@ -1,9 +1,29 @@
-import React from 'react';
-import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react';
+import { View, StyleSheet, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
 import SvgUri from "expo-svg-uri"
 import ButtonForm from '../components/ButtonForm'
+import { joinCommunity, retrieveUser, retrieveCohousing } from 'coohappy-client-logic'
 
-const JoinCommunity = function({ navigation }) {
+const JoinCommunity = function ({ navigation }) {
+
+    const [accesCode, setAccesCode] = useState()
+
+    const handleOnJoinCommunity = async () => {
+
+        try {
+                     
+
+                await joinCommunity(accesCode)
+                const user = await retrieveUser()
+                const cohousing = await retrieveCohousing()
+                if(cohousing) navigation.navigate('Home')
+          
+           
+        } catch (error) {
+        
+            Alert.alert('OOPS!', error.message)
+        }
+    }
 
     return (
 
@@ -12,18 +32,18 @@ const JoinCommunity = function({ navigation }) {
                 <View style={styles.header}>
                     <Text style={styles.titleText}>Join a community</Text>
                     <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('UpdateUser')}>
-                    <SvgUri style={styles.userIcon} source={require('../assets/ic-user.svg')} />
+                        <SvgUri style={styles.userIcon} source={require('../assets/ic-user.svg')} />
                     </TouchableOpacity>
                 </View>
 
                 <View style={{ width: '90%' }}>
                     <Text style={[styles.title, { textAlign: 'left' }]}>COMMUNITY PASSWORD</Text>
                     <Text style={styles.text}>Enter the password that your neighbor gave you to join in your commuinty</Text>
-                    <TextInput style={styles.input} placeholder="password" placeholderTextColor="#81868e" />
+                    <TextInput style={styles.input} onChangeText={(value) => setAccesCode(value)} placeholder="password" placeholderTextColor="#81868e" />
                 </View>
 
                 <View style={{ width: '90%' }}>
-                    <ButtonForm text="JOIN A COMMUNITY" bgColor="#009965" />
+                    <ButtonForm buttonAction={handleOnJoinCommunity} text="JOIN A COMMUNITY" bgColor="#009965" /> 
                 </View>
 
                 <View>

@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useReducer } from 'react';
-import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView, AsyncStorage } from 'react-native'
+import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView, AsyncStorage, Alert } from 'react-native'
 import SvgUri from "expo-svg-uri"
 import ButtonForm from './ButtonForm'
 import { retrieveUser, updateUser } from 'coohappy-client-logic'
+import confirmPassword from 'coohappy-client-logic/helpers/confirmPassword'
 
 const UpdateUser = function ({ navigation, setName: _setName }) {
 
@@ -11,14 +12,14 @@ const UpdateUser = function ({ navigation, setName: _setName }) {
     const [email, setEmail] = useState()
     const [oldPassword, setOldPassword] = useState()
     const [newPassword, setNewPassword] = useState()
+    const [passwordConfirm, setPasswordConfirm] = useState()
 
 
     useEffect(() => {
 
         try {
             (async () => {
-                const token = await AsyncStorage.getItem('TOKEN')
-                const { name, surname, email } = await retrieveUser(token)
+                const { name, surname, email } = await retrieveUser()
                 setName(name)
                 setSurname(surname)
                 setEmail(email)
@@ -26,29 +27,31 @@ const UpdateUser = function ({ navigation, setName: _setName }) {
             })()
 
         } catch (error) {
-            console.log(error)
+            Alert.alert('OOPS', error.message)
         }
     }, [])
 
     const handleOnUpdateUser = async () => {
-        const token = await AsyncStorage.getItem('TOKEN')
-        try {
 
-            await updateUser(token, { name, surname, email, oldPassword, newPassword })
+        try {
+            if (newPassword) {
+                confirmPassword(newPassword, passwordConfirm)
+            }
+            await updateUser({ name, surname, email, oldPassword, newPassword })
+            Alert.alert('DONE!', 'User update correctly')
         } catch (error) {
-            debugger
+            Alert.alert('OOPS', error.message)
         }
 
-        const { name: _name } = await retrieveUser(token)
+        const { name: _name } = await retrieveUser()
 
         _setName(_name)
     }
 
     const handleOnLogout = async () => {
 
-        await AsyncStorage.removeItem('TOKEN')
         navigation.navigate('Landing')
-
+        await AsyncStorage.clear()
     }
 
     return (
@@ -56,7 +59,7 @@ const UpdateUser = function ({ navigation, setName: _setName }) {
 
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => {
-               
+
                     navigation.goBack()
                 }}>
                     <SvgUri style={styles.returnIcon} source={require('../assets/ic-arrow-back-yellow.svg')} />
@@ -71,7 +74,7 @@ const UpdateUser = function ({ navigation, setName: _setName }) {
                 <Text style={styles.textPassword}>CHANGE PASSWORD</Text>
                 <TextInput style={styles.input} onChangeText={(value) => setOldPassword(value)} secureTextEntry={true} placeholder="current password" placeholderTextColor="#81868e" />
                 <TextInput style={styles.input} onChangeText={(value) => setNewPassword(value)} secureTextEntry={true} placeholder="new password" placeholderTextColor="#81868e" />
-                <TextInput style={styles.input} secureTextEntry={true} placeholder="confirm new password" placeholderTextColor="#81868e" />
+                <TextInput style={styles.input} onChangeText={(value) => setPasswordConfirm(value)} secureTextEntry={true} placeholder="confirm new password" placeholderTextColor="#81868e" />
             </View>
 
             <View style={{ width: '90%', marginTop: 10 }}>

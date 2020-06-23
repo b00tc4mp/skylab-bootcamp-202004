@@ -17,7 +17,7 @@ module.exports = (name, address, laundryNum, userId) => {
             Cohousing.findOne({ author: userId })
         ])
 
-        if (cohousing) throw new DuplicityError(`user: ${user.name} ${user.surname} already create an cohousing`)
+        if (cohousing) throw new DuplicityError(`user: ${user.name} ${user.surname} already belongs to a cohousing`)
         if (!user) throw new UnexistenceError(`user does not exists`)
 
         const accessCode = randomAccessCode(name)
@@ -26,6 +26,8 @@ module.exports = (name, address, laundryNum, userId) => {
 
         const newCohousing = await Cohousing.create({ author: userId, name, address,laundryNum, members, accessCode})
 
-        await User.updateOne({ role: 'admin', cohousing: newCohousing._id})
+        await User.findByIdAndUpdate(userId, { $set: { cohousing: newCohousing._id, role :'admin' } })
+
+        return
     })()
 }

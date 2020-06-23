@@ -95,7 +95,7 @@ describe('logic - retrieve-user-food-list', () => {
 
         it('on wrong type of data', () => {
 
-            expect(() => retrieveUserFoodList('')).to.throw(VoidError, 'string is empty or blank')
+            expect(() => retrieveUserFoodList('')).to.throw(VoidError, 'Some field is empty or blank')
             expect(() => retrieveUserFoodList(2)).to.throw(TypeError, '2 is not a string')
         })
     })
