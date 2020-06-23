@@ -5,7 +5,7 @@ import logo from '../images/animated-plane-v4-name&shadow.png'
 import userLogo from '../images/user-icon.png';
 import {saveBlueprint, retrieveUserBlueprints} from 'moove-it-client-logic'
 import moment from 'moment';
-import {context} from "moove-it-client-logic"
+import { context } from "moove-it-client-logic"
 
 context.actualBlueprint = {};
 

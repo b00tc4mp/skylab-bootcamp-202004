@@ -15,26 +15,17 @@ export default function PlaneBuilder({blueprint}) {
     // }
 
     const handlePlaneDrag = (e) => {
-        e.dataTransfer.setData("boolean", true)
-
-        let objectId = e.target.id
-        let item = blueprint.getItem(id)
-        e.dataTransfer.setData("object", item)
+        const itemId = e.dataTransfer.setData("text", e.target.id)
     }
     
     const handleCatalogueDragEnd = (e) => { debugger
-        let isAlreadyInFloorPlan = e.dataTransfer.getData("boolean")
-        if(isAlreadyInFloorPlan) {
-            const object = e.dataTransfer.getData("object")
-            //TODO We need a call to the blueprint to UPDATE an existing object
-        }
-        else {
-            let x = e.clientX // map between canvas X and Y positions and real measuraments
-            let y = e.clientY
-            let newItem = {catalogueItemId, x, y, id: uuidv4()}
-            blueprint.items.push(newItem)
-            setPlacedItems(blueprint.items)
-        }
+        const catalogueItemId = e.dataTransfer.getData("text")
+        let x = e.clientX
+        let y = e.clientY
+        let newItem = {catalogueItemId, x, y, id: uuidv4()}
+        // blueprint.items.push(newItem)
+        // setPlacedItems(blueprint.items)
+        setPlacedItems(catalogueItemId)
     }
     // const handleDrop = (e) => {
     //     e.preventDefault()
@@ -62,24 +53,25 @@ export default function PlaneBuilder({blueprint}) {
     // }
 
     return ( <section className="plane">
+        <h2 className="plane__title">Create your blueprint</h2>
         <div className = "plane__container" >
             <div className = "plane__grid"
             onDragOver = { handleDragOver }
             onDrag = {handlePlaneDrag}
             onDrop = { handleCatalogueDragEnd } > 
-            {blueprint.items.map((placed, i) => {
+            {/* {blueprint.items.map((placed, i) => { */}
+            {[1,2,3].map((placed, i) => {
                     console.log(placed)
-                     
-                    
                     return <div key={placed.id} data-placed = { true }
-                    className = {`placed ${(placed.catalogueItemId).split('_')[0]}` }
+                    className = {`placed ${(placed.catalogueItemId)}` }
                     style = {{ left: placed.x, top: placed.y }}
                     draggable = { true }
                     onDragStart = { handlePlaneDrag }
                     id = { `${placed.catalogueItemId}_${i}` } >
                     </div>})} 
         </div>
+      <Catalogue/>  
       </div> 
-      <Catalogue className='catalogue' />  
+
     </section>)
 }
