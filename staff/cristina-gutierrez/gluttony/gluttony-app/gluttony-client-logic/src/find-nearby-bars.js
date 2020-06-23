@@ -10,7 +10,7 @@ module.exports = (latitude, longitude) => {
         })
         .then(({ status, data }) => {
             if (status === 200) {
-                return data.coordinates
+                return data.bar
             } else {
                 throw new Error(data.error)
             }

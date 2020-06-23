@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Callout } from "react-native-maps";
 import {
     StyleSheet,
     View,
     Dimensions
 } from "react-native";
 import { findNearbyRestaurants } from "../gluttony-client-logic"
+import Store from "./Store"
 
 const MapRestaurant = () => {
     const [userLatitude, setUserLatitude] = useState();
     const [userLongitude, setUserLongitude] = useState();
-    const [restaurantLatitude, setRestaurantLatitude] = useState();
-    const [restaurantLongitude, setRestaurantLongitude] = useState();
+    const [restaurant, setRestaurant] = useState();
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(pos => {
@@ -19,10 +19,7 @@ const MapRestaurant = () => {
             setUserLongitude(pos.coords.longitude)
 
             findNearbyRestaurants(pos.coords.latitude, pos.coords.longitude)
-                .then(coordinates => {
-                    setRestaurantLatitude(coordinates.latitude)
-                    setRestaurantLongitude(coordinates.longitude)
-                })
+                .then(restaurant => setRestaurant(restaurant))
         })
     }, [])
 
@@ -46,15 +43,18 @@ const MapRestaurant = () => {
                         longitudeDelta: 0.0421
                     }}  
                 /> }
-                { restaurantLatitude && restaurantLongitude && <Marker
-                    title="Nearest restaurant"
+                { restaurant && <Marker
                     coordinate={{
-                        latitude: restaurantLatitude,
-                        longitude: restaurantLongitude,
+                        latitude: restaurant.coordinates.latitude,
+                        longitude: restaurant.coordinates.longitude,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421
-                    }}  
-                /> }
+                    }}
+                >
+                    <Callout>
+                        <Store store={restaurant}/>
+                    </Callout>
+                </Marker>}
             </MapView>
         </View>
     )

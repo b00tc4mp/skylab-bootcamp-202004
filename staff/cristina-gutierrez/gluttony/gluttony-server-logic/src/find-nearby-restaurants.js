@@ -36,7 +36,7 @@ module.exports = (latitude, longitude) => {
                 if (!persistedStore) Stores.create(store)
             })
 
-            return store.coordinates
+            return store
         })
         .catch(console.log)
 }

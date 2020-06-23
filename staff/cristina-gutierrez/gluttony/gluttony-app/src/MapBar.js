@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Callout } from "react-native-maps";
 import {
     StyleSheet,
     View,
     Dimensions
 } from "react-native";
 import { findNearbyBars } from "../gluttony-client-logic"
+import Store from "./Store"
 
 const MapBar = () => {
     const [userLatitude, setUserLatitude] = useState();
     const [userLongitude, setUserLongitude] = useState();
-    const [barLatitude, setBarLatitude] = useState();
-    const [barLongitude, setBarLongitude] = useState();
+    const [bar, setBar] = useState();
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(pos => {
@@ -19,10 +19,7 @@ const MapBar = () => {
             setUserLongitude(pos.coords.longitude)
 
             findNearbyBars(pos.coords.latitude, pos.coords.longitude)
-                .then(coordinates => {
-                    setBarLatitude(coordinates.latitude)
-                    setBarLongitude(coordinates.longitude)
-                })
+                .then(bar => setBar(bar))
         })
     }, [])
 
@@ -44,17 +41,20 @@ const MapBar = () => {
                         longitude: userLongitude,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421
-                    }}  
-                /> }
-                { barLatitude && barLongitude && <Marker
-                    title="Nearest bar"
+                    }}
+                />}
+                { bar && <Marker
                     coordinate={{
-                        latitude: barLatitude,
-                        longitude: barLongitude,
+                        latitude: bar.coordinates.latitude,
+                        longitude: bar.coordinates.longitude,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421
                     }}  
-                /> }
+                >  
+                    <Callout>
+                        <Store store={bar}/>
+                    </Callout>
+                </Marker> }
             </MapView>
         </View>
     )

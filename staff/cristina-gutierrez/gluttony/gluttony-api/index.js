@@ -64,7 +64,7 @@ mongoose.connect(MONGODB_URL)
         const { query: { latitude, longitude } } = req
     
         findNearbyBars(latitude, longitude)
-          .then(coordinates => res.send({ coordinates }))
+          .then(bar => res.send({ bar }))
           .catch(error => handleError(error, res))
       } catch (error) {
         handleError(error, res)
@@ -76,7 +76,7 @@ mongoose.connect(MONGODB_URL)
         const { query: { latitude, longitude } } = req
     
         findNearbyRestaurants(latitude, longitude)
-          .then(coordinates => res.send({ coordinates }))
+          .then(restaurant => res.send({ restaurant }))
           .catch(error => handleError(error, res))
       } catch (error) {
         handleError(error, res)
