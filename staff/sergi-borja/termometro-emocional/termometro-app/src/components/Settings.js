@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Settings.sass'
 
-function Settings ({rol, handleLogOut}) {
+function Settings({ rol, handleLogOut }) {
 
     return (
         <section className='settingsContainer'>
@@ -10,11 +10,15 @@ function Settings ({rol, handleLogOut}) {
                 <h1 className='settingsContainer__title'>Ajustes</h1>
             </div>
             <div className='settingsContainer__optionList'>
-            <Link className='settingsContainer__option' to='/edit-my-info'>Mis Datos</Link>
-            <br/>
-            <Link className='settingsContainer__option' >Cambiar Contraseña</Link>
-            <br/>
-            {!rol && <Link className='settingsContainer__option' to='handle-accounts'>Gestionar cuentas</Link>}
+                <div className='settingsContainer__optionContainer'>
+                <Link className='settingsContainer__option' to='/edit-my-info'>Mis Datos</Link>
+                </div>
+                <div className='settingsContainer__optionContainer'>
+                <Link className='settingsContainer__option' >Cambiar Contraseña</Link>
+                </div>
+                <div className='settingsContainer__optionContainer'>
+                {!rol && <Link className='settingsContainer__option' to='handle-accounts'>Gestionar cuentas</Link>}
+                </div>
             </div>
             <button className='settingsContainer__option' onClick={handleLogOut}>Log out</button>
         </section>
