@@ -7,6 +7,16 @@ module.exports = new Schema({
         required: true
     },
 
+    name: {
+        type: String,
+        require: true
+    },
+
+    surname: {
+        type: String,
+        require: true
+    },
+
     text: {
         type: String,
         require: true

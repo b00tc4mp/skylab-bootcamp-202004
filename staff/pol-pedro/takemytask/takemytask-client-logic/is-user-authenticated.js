@@ -11,7 +11,7 @@ module.exports = function () {
         undefined,
         { 'Authorization': `Bearer ${token}` })
         .then(({ body }) => {
-            const {name} = JSON.parse(body)
-            return name
+            const {name, role, _id} = JSON.parse(body)
+            return {name, role, _id}
         })
 }.bind(context)

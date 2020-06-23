@@ -9,5 +9,6 @@ module.exports = {
     creatChat: require('./creat-chat'),
     addMessage: require('./add-message'),
     retrieveChat: require('./retrive-chat'),
-    searchWorker: require('./search-worker')
+    searchWorker: require('./search-worker'),
+    retriveChatId: require('./retive-chat-id')
 }

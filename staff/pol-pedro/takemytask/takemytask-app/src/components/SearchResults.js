@@ -10,7 +10,7 @@ export default function SearchResults({results, onGoToWorker}) {
             return <li className="results__container" onClick={ () => onGoToWorker(element.id)}>
                         <div className="results__foto"></div>
                         <h1 className="results__name">{`${element.name} ${element.surname}`}</h1>
-                        <p className="results__description">{`${element.description}`}</p>
+                        <p className="results__description">{`${element.presentation}`}</p>
                         <div className="results__pricing"><p>$ {`${element.pricingHour}`}</p></div>
                 </li>
         })}

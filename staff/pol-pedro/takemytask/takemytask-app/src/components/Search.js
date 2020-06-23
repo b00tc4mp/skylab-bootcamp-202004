@@ -54,6 +54,7 @@ export default function Register({query, userName, onGoToLogin, onSearcher, onGo
                         setResults(body)
                     }else{
                         setError('No results..')
+                        setResults('')
                     }
                 })
                 .catch(error => setError(error.message))

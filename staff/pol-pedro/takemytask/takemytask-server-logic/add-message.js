@@ -30,6 +30,8 @@ module.exports = (userId, chatId, message) => {
 
         chat.messages.unshift( new Comments ({
             userId: ObjectId(userId),
+            name: user.name,
+            surname: user.surname,
             text: message,
             date: new Date
         }))

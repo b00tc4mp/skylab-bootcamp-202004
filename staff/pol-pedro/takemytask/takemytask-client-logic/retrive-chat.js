@@ -2,14 +2,11 @@ require('takemytask-commons/polyfills/string')
 const { utils: { call } } = require('takemytask-commons')
 const context = require('./context')
 
-module.exports = function (searchId) {
-    if(searchId === undefined){
-        searchId = ''
-    }
+module.exports = function (chatId) {
     const { token } = context.storage
 
-    return call('POST', `${this.API_URL}/users/retrive`,
-        `{"searchId": "${searchId}"}`,
+    return call('POST', `${this.API_URL}/chat`,
+        `{"chatId": "${chatId}" }`,
         {'Content-type': 'application/json', 'Authorization': `Bearer ${token}`})
             .then(({status, body}) => {
                 if (status === 200){

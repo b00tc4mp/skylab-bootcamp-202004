@@ -18,7 +18,7 @@ module.exports = (userName, jobCategory, words) => {
                     id: search[i].id,
                     name: search[i].name,
                     surname: search[i].surname,
-                    description: search[i].description,
+                    presentation: search[i].presentation,
                     pricingHour: search[i].pricingHour,
                     workingDistance: search[i].workingDistance
                 })
@@ -34,7 +34,7 @@ module.exports = (userName, jobCategory, words) => {
                         id: search[i].id,
                         name: search[i].name,
                         surname: search[i].surname,
-                        description: search[i].description,
+                        presentation: search[i].presentation,
                         pricingHour: search[i].pricingHour,
                         workingDistance: search[i].workingDistance
                     })

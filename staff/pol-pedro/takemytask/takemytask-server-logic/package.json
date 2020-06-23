@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "moment": "^2.27.0",
     "takemytask-commons": "file:../takemytask-commons",
     "takemytask-data": "file:../takemytask-data"
   }
