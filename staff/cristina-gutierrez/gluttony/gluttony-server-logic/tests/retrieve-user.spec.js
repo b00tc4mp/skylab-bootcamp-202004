@@ -12,7 +12,7 @@ describe("logic - retrieve user", () => {
 
     let id, name, surname, email, password
 
-    beforeEach(() => {
+    beforeEach(done => {
         id = `id-${random()}`
         name = `name-${random()}`
         surname = `surname-${random()}`
@@ -20,6 +20,7 @@ describe("logic - retrieve user", () => {
         password = `password-${random()}`
 
         Users.create({ id, name, surname, email, password })
+            .then(() => done())
     })
 
     it("when user already exists should succeed on correct user id", async () => {
