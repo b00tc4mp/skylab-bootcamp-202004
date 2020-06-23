@@ -2,8 +2,10 @@ require('moove-it-commons/polyfills/string')
 const { utils: { call } } = require('moove-it-commons')
 const context = require('./context')
 
-module.exports = function(token, blueprintId) {
-    debugger
+module.exports = function(blueprintId) {
+    
+    const { token } = this.storage
+
     String.validate.notVoid(token)
     String.validate.notVoid(blueprintId)
 

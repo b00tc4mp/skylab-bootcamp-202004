@@ -8,5 +8,6 @@ module.exports = {
     retrieveBlueprint: require('./retrieve-blueprint'), 
     isSessionValid: require('./is-session-valid'), 
     isSessionActive: require('./is-session-active'),
-    logoutUser: require('./logout-user')
+    logoutUser: require('./logout-user'),
+    createBlueprint: require('./create-blueprint')
 }

@@ -1,16 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './FloorPlan.sass'
 import Catalogue from './Catalogue'
 import './Catalogue.sass';
-import { saveBlueprint } from 'moove-it-client-logic'
+import { saveBlueprint, retrieveBlueprint } from 'moove-it-client-logic'
+// import blueprint from '../../../moove-it-server-logic/node_modules/moove-it-data/models/schemas/blueprint';
+// import { Blueprint } from '../../../moove-it-server-logic/node_modules/moove-it-data/models';
 
 
-export default function PlaneBuilder({ blueprint }) {
+export default function PlaneBuilder({ blueprintId }) {
 
     const [error, setError] = useState()
+    // const [retrievedBlueprint, setretrievedBlueprint] = useState()
     const [placedItems, setPlacedItems] = useState(sessionStorage.items ? JSON.parse(sessionStorage.items) : [])
 
-    let name, width, height, blueprintId;
+    useEffect(() => {
+        try {
+            retrieveBlueprint(blueprintId)
+                .then(blueprint => {
+                    sessionStorage.items = JSON.stringify(blueprint.items)
+                    setPlacedItems(blueprint.items)
+                })
+                .catch(error => setError(error.message))
+        } catch(error) {
+            throw error
+        }
+    },[])
 
     const handleOnDrop = (e) => {
         let x = e.clientX
@@ -52,8 +66,9 @@ export default function PlaneBuilder({ blueprint }) {
 
     const handleSaveBlueprint = (e) => {
         e.preventDefault()
+        const items = JSON.parse(sessionStorage.items)
         try {
-            saveBlueprint(blueprint, name, width, height)
+            saveBlueprint(blueprintId, items)
                 .then(() => {})
                 .catch(error)
         } catch ({ message }) {

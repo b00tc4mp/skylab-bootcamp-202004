@@ -1,7 +1,7 @@
 const { env: { JWT_SECRET: SECRET } } = process
 
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, updateUser, retrieveUserBlueprints, retrieveBlueprint, saveBlueprint } = require('./handlers')
+const { registerUser, authenticateUser, retrieveUser, updateUser, retrieveUserBlueprints, createBlueprint, retrieveBlueprint, saveBlueprint } = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
 const { handleError } = require('../helpers')
@@ -23,7 +23,9 @@ api.get('/user/blueprints', verifyExtractJwt, retrieveUserBlueprints)
 
 api.get('/blueprint/:blueprintId?', verifyExtractJwt, retrieveBlueprint) //TODO busqueda de usuarios para favPlanes(opcional)
 
-api.post('/blueprint', parseBody, verifyExtractJwt, saveBlueprint) //PATCH o POST? la logica si no existe lo crea y si existe actualiza... ??
+api.post('/blueprint/create', parseBody, verifyExtractJwt, createBlueprint) //PATCH o POST? la logica si no existe lo crea y si existe actualiza... ??
+
+api.post('/blueprint/', parseBody, verifyExtractJwt, saveBlueprint) //PATCH o POST? la logica si no existe lo crea y si existe actualiza... ??
 
 module.exports = {
     api

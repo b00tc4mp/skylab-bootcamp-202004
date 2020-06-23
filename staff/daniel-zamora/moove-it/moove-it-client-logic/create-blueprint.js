@@ -3,15 +3,17 @@ require('moove-it-commons/polyfills/string')
 require('moove-it-commons/polyfills/number')
 const context = require('./context')
 
-module.exports = function(blueprintId, items=[]) {
+module.exports = function(name, width, height) {
     
     const { token } = this.storage
 
     String.validate.notVoid(token)
-    String.validate.notVoid(blueprintId)
-    Array.validate(items)
 
-    const data = { blueprintId, items}
+    String.validate.notVoid(name)
+    Number.validate(width)
+    Number.validate(height)
+
+    const data = { name, width, height}
 
 
     return call('POST', `${this.API_URL}/blueprint`,
@@ -20,7 +22,9 @@ module.exports = function(blueprintId, items=[]) {
 
             if (status === 201) {
 
-                return ('Blueprint updated')
+                const { id } = JSON.parse(body)
+
+                return id
 
             } else {
                 const { error } = JSON.parse(body)

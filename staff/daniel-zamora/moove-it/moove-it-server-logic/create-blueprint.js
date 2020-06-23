@@ -4,29 +4,18 @@ require('moove-it-commons/polyfills/array')
 const { models: { Blueprint, User } } = require('moove-it-data')
 const { errors: { UnexistenceError } } = require('moove-it-commons')
 
-module.exports = (userId, blueprintId, items) => {
+module.exports = (userId, name, width, height) => {
 
     String.validate.notVoid(userId)
-    Array.validate(items)
+    String.validate.notVoid(name)
+    Number.validate(width)
+    Number.validate(height)
 
     return (async() => {
         let user = await User.findById(userId)
         if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
-
-        if (blueprintId !== undefined) {
-
-            String.validate.notVoid(blueprintId)
-            const blueprint = await Blueprint.findById(blueprintId)
-    
-            if (blueprint) {
-                await Blueprint.findByIdAndUpdate(blueprintId, { $set: { items } })
-                await User.findByIdAndUpdate(userId, { $addToSet: { blueprints: blueprint } })
-
-                return blueprint.id
-            }
-        }
-
-        const blueprint = await Blueprint.create({ items })
+        
+        const blueprint = await Blueprint.create({ user, name, width, height, items })
 
         await User.findByIdAndUpdate(userId, { $addToSet: { blueprints: blueprint } })
 
