@@ -32,11 +32,12 @@ function App({ history }) {
 
   const handleGoToLogin = () => history.push('/login')
 
-  const handlePlaneInit = () => history.push('/blueprint')
-
+  const handlePlaneInit = (id) => {
+  history.push(`/blueprint/${id}`)
+  }
   const blueprint = {};
 
-  blueprint.items = [];
+  // blueprint.items = [];
 
   // blueprint.getItem = function(searchId) {
   //   blueprint.items.forEach((element) => {
@@ -45,6 +46,7 @@ function App({ history }) {
   // }
 
   //TODO function to uptdate blueprint with existing data
+
 
   // TODO function to save blueprin on database
 
@@ -66,8 +68,8 @@ function App({ history }) {
           <Route path="/home" render={() => 
           isSessionActive()? <Home blueprint={blueprint} onLogout={handleLogout} onGoToFloorPlan={handlePlaneInit} /> : <Redirect to="/"/> }/>
 
-          <Route path='/blueprint' render={() => 
-            isSessionActive()? <FloorPlan blueprint={blueprint}/> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>}/>
+          <Route path='/blueprint/:id' render={props => 
+          isSessionActive()? <FloorPlan blueprintId={props.match.params.id}/> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>}/>
         
       </header>
     </div>

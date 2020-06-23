@@ -6,8 +6,8 @@ let itemsCatalogue = ['double-bed', 'single-bed']
 export default function Catalogue() {
 
   const handleCatalogueDrag = (e) => {
-  e.dataTransfer.setData("text", e.target.id)
-  e.dataTransfer.setData("boolean", false)
+  e.dataTransfer.setData("text", e.target.className)
+  e.dataTransfer.setData("boolean", true)
 }
   return (
     <div className='plane__catalogue'>

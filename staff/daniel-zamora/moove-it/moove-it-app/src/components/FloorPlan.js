@@ -1,77 +1,113 @@
-import React, { useState, Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import './FloorPlan.sass'
 import Catalogue from './Catalogue'
-import  './Catalogue.sass'
-import { v4 as uuidv4 } from 'uuid';
+import './Catalogue.sass';
+import { saveBlueprint, retrieveBlueprint } from 'moove-it-client-logic'
+// import blueprint from '../../../moove-it-server-logic/node_modules/moove-it-data/models/schemas/blueprint';
+// import { Blueprint } from '../../../moove-it-server-logic/node_modules/moove-it-data/models';
 
- 
-export default function PlaneBuilder({blueprint}) {
 
-    const [placedItems, setPlacedItems] = useState([])
-    const [actualBlueprint, setActualBlueprint] = useState()
-    
-    // const handleCatalogueDrag = (e) => {
-    //     const catalogueItemId = e.dataTransfer.getData("catalogueId")
-    // }
+export default function PlaneBuilder({ blueprintId }) {
 
-    const handlePlaneDrag = (e) => {
-        const itemId = e.dataTransfer.setData("text", e.target.id)
-    }
-    
-    const handleCatalogueDragEnd = (e) => { debugger
-        const catalogueItemId = e.dataTransfer.getData("text")
+    const [error, setError] = useState()
+    // const [retrievedBlueprint, setretrievedBlueprint] = useState()
+    const [placedItems, setPlacedItems] = useState(sessionStorage.items ? JSON.parse(sessionStorage.items) : [])
+
+    useEffect(() => {
+        try {
+            retrieveBlueprint(blueprintId)
+                .then(blueprint => {
+                    sessionStorage.items = JSON.stringify(blueprint.items)
+                    setPlacedItems(blueprint.items)
+                })
+                .catch(error => setError(error.message))
+        } catch(error) {
+            throw error
+        }
+    },[])
+
+    const handleOnDrop = (e) => {
         let x = e.clientX
         let y = e.clientY
-        let newItem = {catalogueItemId, x, y, id: uuidv4()}
-        // blueprint.items.push(newItem)
-        // setPlacedItems(blueprint.items)
-        setPlacedItems(catalogueItemId)
+        const _id = e.dataTransfer.getData("text")
+
+        if (e.dataTransfer.getData('boolean') === '') {
+            const planeId = e.id
+            const updated = placedItems.map((element, i) => {
+                if (element.id == _id) {
+                    element.x = x
+                    element.y = y
+                }
+
+                return element
+
+            })
+            setPlacedItems([...updated])
+            sessionStorage.items = JSON.stringify([...updated])
+
+        }
+        else {
+            const catalogueItemId = e.dataTransfer.getData("text")
+            setPlacedItems(prevPlacedItems => ([...prevPlacedItems, { catalogueItemId, x, y, id: Date.now(), }]))
+            sessionStorage.items = JSON.stringify([...placedItems, { catalogueItemId, x, y, id: Date.now(), }])
+            return e.dataTransfer.setData("text", e.target.id)
+
+        }
     }
-    // const handleDrop = (e) => {
-    //     e.preventDefault()
-    //     let item = e.dataTransfer.getData('text')
-    //     // let newItem = {id: uuidv4(), cataloge_id: }
-    //     if (placedItems.find(element => element.item === item)) {
-    //         updateItem(item, e.clientX, e.clientY)
-    //     } else {
-    //         placeItem(item, e.clientX, e.clientY)
-    //     }
-    // }
 
 
-    // const updateItem = (item, x, y) => {
-    //     const updated = placedItems.filter(element => element.item !== item)
-    //     setPlacedItems([...updated, { item, x, y }])
-    // }
+    const handlePlaneDrag = (e) => {
+        e.dataTransfer.setData("text", e.target.id)
+    }
 
     const handleDragOver = (e) => {
         e.preventDefault()
     }
 
-    // const placeItem = (item, x, y) => {
-    //     setPlacedItems(prevPlacedItems => ([...prevPlacedItems, { item, x, y }]))
-    // }
+    const handleSaveBlueprint = (e) => {
+        e.preventDefault()
+        const items = JSON.parse(sessionStorage.items)
+        try {
+            saveBlueprint(blueprintId, items)
+                .then(() => {})
+                .catch(error)
+        } catch ({ message }) {
+            setError(message)
+        }
 
-    return ( <section className="plane">
+
+    }
+
+    const handleClearBlueprint = (e) => {
+        e.preventDefault()
+        delete sessionStorage.items
+        setPlacedItems([])
+    }
+    // TODO function to clear the session storage
+
+    return (<section className="plane">
         <h2 className="plane__title">Create your blueprint</h2>
-        <div className = "plane__container" >
-            <div className = "plane__grid"
-            onDragOver = { handleDragOver }
-            onDrag = {handlePlaneDrag}
-            onDrop = { handleCatalogueDragEnd } > 
-            {/* {blueprint.items.map((placed, i) => { */}
-            {[1,2,3].map((placed, i) => {
-                    console.log(placed)
-                    return <div key={placed.id} data-placed = { true }
-                    className = {`placed ${(placed.catalogueItemId)}` }
-                    style = {{ left: placed.x, top: placed.y }}
-                    draggable = { true }
-                    onDragStart = { handlePlaneDrag }
-                    id = { `${placed.catalogueItemId}_${i}` } >
-                    </div>})} 
-        </div>
-      <Catalogue/>  
-      </div> 
+        <div className="plane__container" >
+            <div className="plane__grid"
+                onDragOver={handleDragOver}
+                onDrag={handlePlaneDrag}
+                onDrop={handleOnDrop} >
+                {placedItems && placedItems.map((placed, i) => {
 
+                    return <div key={placed.id}
+                        className={`placed ${(placed.catalogueItemId)}`}
+                        style={{ left: placed.x, top: placed.y }}
+                        draggable={true}
+                        onDragStart={handlePlaneDrag}
+                        id={placed.id}>
+                    </div>
+                })}
+            </div>
+            <Catalogue />
+        </div>
+        <form className='plane__form'>
+            <button className='plane__button' onClick={handleSaveBlueprint}>Save</button>
+            <button className='plane__button' onClick={handleClearBlueprint}>Clear</button>
+        </form>
     </section>)
 }

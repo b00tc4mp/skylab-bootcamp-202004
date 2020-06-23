@@ -18,18 +18,6 @@ module.exports = new Schema({
         default: 0
     },
 
-    z: {
-        type: Number,
-        required: true,
-        default: 0
-    },
-
-    orientation: {
-        type: Number,
-        required: true,
-        default: 0
-    },
-
     width: {
         type: Number,
         required: true,
@@ -43,4 +31,5 @@ module.exports = new Schema({
     },
 
     // image: String
+    //TODO orientation with transform rotate
 })
