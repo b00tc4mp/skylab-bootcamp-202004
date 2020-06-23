@@ -7,10 +7,10 @@ module.exports = function(name, surname, age, sex, location, email, memberId) {
         `{ "name": "${name}", "surname": "${surname}", "age": "${age}", "sex": "${sex}", "location": "${location}", "email": "${email}"}`,
         { 'Content-type': 'application/json' })
         .then(({ status, body }) => {
+            
             if (status === 201) return
-
-            // const { error } = JSON.parse(body)
-
-            // throw new Error(error)
+            const { error } = JSON.parse(body)
+    
+            throw new Error(error)
         })
 }.bind(context)

@@ -24,7 +24,7 @@ function Register({ onGoToLogin }) {
 
     try {
       registerUser(name, surname, age, sex, location, email, password)
-        .then(() => onGoToLogin())
+        .then(onGoToLogin)
         .catch(error => setError(error.message))
     } catch (error) {
       if (error) throw error

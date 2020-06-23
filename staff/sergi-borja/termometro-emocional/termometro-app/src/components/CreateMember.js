@@ -1,10 +1,13 @@
 import React, {useState} from 'react'
 import { registerUser } from 'termometro-client-logic'
 import './CreateMember.sass'
+import Feedback from './Feedback'
+
 
 function CreateMember({ token, history }) {
 
     const [gender, setGender] = useState()
+    const [error, setError] = useState()
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -22,7 +25,7 @@ function CreateMember({ token, history }) {
         try {
             registerUser(name, surname, age, sex, location, email, password, token)
                 .then(() => history.push('/my-family'))
-                .catch(error => console.log(error))
+                .catch(error => setError(error.message))
         } catch (error) {
             console.log(error)
         }
@@ -51,6 +54,7 @@ function CreateMember({ token, history }) {
                 <button className='createMemberContainer__registerButton'>
                     <span className='createMemberContainer__registerButton--text'>¡Crear!</span>
                 </button>
+                {error && <Feedback message={error} level="error" />}
             </form>
         </section>
     )

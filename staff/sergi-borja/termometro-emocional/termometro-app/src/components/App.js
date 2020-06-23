@@ -7,12 +7,11 @@ import Register from './Register';
 import Home from './Home';
 import MyFamily from './MyFamily';
 import Footer from './Footer'
-import {isAuthenticated} from 'termometro-client-logic'
+import {retrieveUser} from 'termometro-client-logic'
 import CreateMember from './CreateMember';
 import EditMember from './EditMember';
 import SetMood from './SetMood';
 import Settings from './Settings';
-import EditPlan from './EditPlan';
 import EditMyInfo from './EditMyInfo';
 import MainStats from './MainStats';
 import HandleAccounts from './HandleAccounts';
@@ -26,7 +25,7 @@ function App({history}) {
   useEffect(() => {
     if(sessionStorage.token){
       try {
-        isAuthenticated(sessionStorage.token)
+        retrieveUser(sessionStorage.token)
           .then(user => {
             if (user) {
               setToken(sessionStorage.token)
@@ -43,7 +42,7 @@ function App({history}) {
   const handleGoToHome = (token) => {
     sessionStorage.token = token
     try {
-      isAuthenticated(token)
+      retrieveUser(token)
         .then(user => {
           setUserName(user.name)
           setToken(token)
@@ -78,7 +77,6 @@ function App({history}) {
           <Route path="/edit-member" render={()=> token? <EditMember token={token} memberInfo={memberInfo} history={history}/> : <Redirect to='/'/>} />
           <Route path="/set-mood" render={()=> token? <SetMood token={token} /> : <Redirect to='/'/>} />
           <Route path="/settings" render={()=> token? <Settings token={token} /> : <Redirect to='/'/>} />
-          <Route path="/edit-plan" render={()=> token? <EditPlan token={token} /> : <Redirect to='/'/>} />
           <Route path="/edit-my-info" render={()=> token? <EditMyInfo token={token} /> : <Redirect to='/'/>} />
           <Route path="/main-stats" render={()=> token? <MainStats token={token} /> : <Redirect to='/'/>} />
           <Route path="/handle-accounts" render={()=> token? <HandleAccounts token={token} /> : <Redirect to='/'/>} />

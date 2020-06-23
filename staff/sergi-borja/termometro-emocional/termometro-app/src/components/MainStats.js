@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { HorizontalBar, Line } from 'react-chartjs-2'
+import { HorizontalBar, Line, Bar } from 'react-chartjs-2'
 import createMemberList from 'termometro-client-logic/create-member-list'
-import isAuthenticated from 'termometro-client-logic/is-authenticated'
+import retrieveUser from 'termometro-client-logic/retrieve-user'
 import './MainStats.sass'
 import Calendar from 'react-calendar'
 const moment = require('moment')
@@ -58,6 +58,7 @@ function MainStats({ token }) {
     }
 
     useEffect(() => {
+        setHasStats(true)
         if (rolChart === 'admin') adminChart()
         if (rolChart === 'member') handleSeeMemberStats(memberSelected, _dayClicked)
     }, [_dayClicked])
@@ -99,14 +100,18 @@ function MainStats({ token }) {
 
 
     const adminChart = () => {
-        isAuthenticated(token)
+        retrieveUser(token)
             .then(adminInfo => {
                 let dateArray;
                 let scoreArray;
                 if (_dayClicked) {
                     let clickDayInfo = adminInfo.mood.filter((element) => moment(element.date).format('LL') === moment(_dayClicked).format('LL'))
+                    if(clickDayInfo.length===2){
                     dateArray = [moment(clickDayInfo[0].date).format('HH:mm'), moment(clickDayInfo[1].date).format('HH:mm')]
                     scoreArray = [clickDayInfo[0].score, clickDayInfo[1].score]
+                    } else {
+                        setHasStats(false)
+                    }
                 } else if (!_dayClicked) {
                     setChartOfCalendar(false)
                     if(days<=(adminInfo.mood.length/2)){
@@ -135,8 +140,12 @@ function MainStats({ token }) {
 
         if (_dayClicked) {
             let clickDayInfo = member.mood.filter((element) => moment(element.date).format('LL') === moment(_dayClicked).format('LL'))
+            if(clickDayInfo.length===2){
             dateArray = [moment(clickDayInfo[0].date).format('HH:mm'), moment(clickDayInfo[1].date).format('HH:mm')]
             scoreArray = [clickDayInfo[0].score, clickDayInfo[1].score]
+            } else {
+                setHasStats(false)
+            }
         } else if (!_dayClicked) {
             setChartOfCalendar(false)
             if(days<=(member.mood.length/2)){
@@ -216,7 +225,7 @@ function MainStats({ token }) {
                 <button className={`mainStatsContainer__buttonDaysContainer--fiveTeenDays ${displayCalendar || chartOfCalendar ? 'white' : ''}`} onClick={() => setDisplayCalendar(true)}>Calendario</button>
             </div>
 
-            {!hasStats && !displayCalendar && <div><h1>ESTE USUARIO NO TIENE ESTADISTICAS SUFICIENTES</h1></div>}
+            {!hasStats && !displayCalendar && <div  className='mainStatsContainer__errorFeedback'>¡Ups! Aún no hemos reunido datos suficientes..</div>}
 
             {!displayCalendar && !chartOfCalendar && !_dayClicked && hasStats && <div className='mainStatsContainer__chartContainer'>
                 <HorizontalBar data={chartData} options={chartOptions.options} height={500} />
@@ -224,7 +233,7 @@ function MainStats({ token }) {
 
             {!displayCalendar && chartOfCalendar && _dayClicked && hasStats && <div className='mainStatsContainer__chartContainer'>
                 <h1 className='mainStatsContainer__chartContainer--dateTitle'>{moment(_dayClicked).format('ll')}</h1>
-                <Line data={chartData} options={chartOptions.options} height={500} />
+                <Bar data={chartData} options={chartOptions.options} height={500} />
             </div>}
 
             {displayCalendar && <div className='mainStatsContainer__calendarContainer'>

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { isAuthenticated } from 'termometro-client-logic'
+import { retrieveUser } from 'termometro-client-logic'
 
 function EditMyInfo({ token }) {
     const [userInfo, setUserInfo] = useState()
 
     useEffect(() => {
         try {
-            isAuthenticated(token)
+            retrieveUser(token)
                 .then(user => {
                     setUserInfo(user)
                 })

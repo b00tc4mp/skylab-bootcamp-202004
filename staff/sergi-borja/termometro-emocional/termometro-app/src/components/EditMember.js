@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Feedback from './Feedback'
+
 const { editMember } = require('termometro-client-logic')
 
 function EditMember({ token, memberInfo, history }) {
 
     const [gender, setGender] = useState()
+    const [error, setError] = useState()
 
     const handleGoToFamily = () => {
         history.push('/my-family')
@@ -32,10 +35,9 @@ function EditMember({ token, memberInfo, history }) {
         let memberId = memberInfo.id
 
         try {
-            (async () => {
-                await editMember(name, surname, age, sex, location, email, memberId)
-                handleGoToFamily()
-            })()
+            editMember(name, surname, age, sex, location, email, memberId)
+                .then(() => handleGoToFamily())
+                .catch(error => setError(error.message))
         } catch (error) {
             if (error) throw error
         }
@@ -62,6 +64,7 @@ function EditMember({ token, memberInfo, history }) {
                 <button className='createMemberContainer__registerButton'>
                     <span className='createMemberContainer__registerButton--text'>Confirmar</span>
                 </button>
+                {error && <Feedback message={error} level="error" />}
             </form>
         </section>
     );

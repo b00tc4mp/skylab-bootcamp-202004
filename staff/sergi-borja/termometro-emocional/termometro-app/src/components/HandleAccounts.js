@@ -5,7 +5,7 @@ import { createMemberList } from 'termometro-client-logic'
 import { unRegisterUser } from 'termometro-client-logic'
 import deleteIcon from '../images/delete-icon.png'
 import './HandleAccounts.sass'
-import isAuthenticated from 'termometro-client-logic/is-authenticated'
+// import isAuthenticated from 'termometro-client-logic/is-authenticated'
 // import editImg from '../images/editar.png'
 
 

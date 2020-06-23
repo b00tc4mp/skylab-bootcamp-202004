@@ -18,6 +18,13 @@ module.exports = function (name, surname, age, sex, location, email, password, t
         `{ "name": "${name}", "surname": "${surname}", "age": "${age}", "sex": "${sex}",  "location": "${location}", "email": "${email}", "password": "${password}" }`,
         { 'Content-type': 'application/json' }
     )
+    .then(({ status, body }) => {
+        
+        if (status === 201) return
+        const { error } = JSON.parse(body)
+
+        throw new Error(error)
+    })
     :
     call(
         'POST',
@@ -27,8 +34,8 @@ module.exports = function (name, surname, age, sex, location, email, password, t
 
     )
         .then(({ status, body }) => {
+            
             if (status === 201) return
-
             const { error } = JSON.parse(body)
 
             throw new Error(error)

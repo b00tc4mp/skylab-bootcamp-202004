@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, MONGODB_URL } } = process
+const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, MONGODB_URL: MONGODB_URL  } } = process
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const express = require('express')
@@ -22,7 +22,7 @@ try {
             app.get('*', (req, res) => {
                 res.status(404).send('Not Found :(')
             })
-            
+
             app.listen(PORT, () => console.info(`server ${name} ${version} running on port ${PORT}`))
 
             let interrupted = false
