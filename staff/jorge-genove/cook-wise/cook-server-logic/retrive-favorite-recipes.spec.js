@@ -105,4 +105,6 @@ describe("retrieve favorite recipes", () => {
             retrieveFavorite(true, recipeId)
         }).to.throw(TypeError, 'true is not a string')
     })
+    after(mongoose.disconnect)
+
 })

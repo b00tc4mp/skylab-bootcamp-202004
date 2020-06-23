@@ -1,18 +1,25 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL,  API_URL } } = process
 
 const authenticateUser = require('./authenticate-user')
 const { random } = Math
 const { expect } = require('chai')
-require('misc-commons/polyfills/json')
-const { mongoose, models: { User } } = require('misc-data')
+require('cook-wise-commons/polyfills/json')
+const { mongoose, models: { User } } = require('cook-wise-data')
 const bcrypt = require('bcryptjs')
-require('misc-commons/ponyfills/xhr')
-require('misc-commons/ponyfills/atob')
+require('cook-wise-commons/ponyfills/xhr')
+require('cook-wise-commons/ponyfills/atob')
 const context = require('./context')
+const logic = require('.')
+global.fetch = require('node-fetch')
+const notAsyncStorage = require('not-async-storage')
 
-context.API_URL = API_URL
+
+logic.__context__.API_URL = API_URL
+logic.__context__.storage = notAsyncStorage 
+
+
 
 describe('logic - authenticate user', () => {
     before(() => mongoose.connect(MONGODB_URL))
@@ -33,10 +40,12 @@ describe('logic - authenticate user', () => {
     )
 
     describe('when user already exists', () => {
-        beforeEach(() =>
+        beforeEach(() =>{
+          
             User.create({ name, surname, email, password: hash })
-                .then(user => userId = user.id)
-        )
+                .then(user =>{console.log(user);userId = user.id} )
+                
+         } )
 
         it('should succeed on correct credentials', () =>
             authenticateUser(email, password)
