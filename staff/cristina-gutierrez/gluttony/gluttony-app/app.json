@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "gluttony",
+    "slug": "gluttony",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "icon": "./assets/images/logo-with-color-and-without-words-version-png.png",
+    "splash": {
+      "image": "./assets/images/good-logo-without-color-and-with-words-version-png.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFC87"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "gluttony-data",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "crispine",
+  "license": "ISC",
+  "dependencies": {
+    "gluttony-commons": "file:../gluttony-commons",
+    "mongoose": "^5.9.18"
+  }
+}
