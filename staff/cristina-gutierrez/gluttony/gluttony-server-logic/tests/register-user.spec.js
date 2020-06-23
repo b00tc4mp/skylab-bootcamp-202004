@@ -13,7 +13,7 @@ describe("logic - register user", () => {
 
     let id, name, surname, email, password
 
-    beforeEach(() => {
+    beforeEach(done => {
         id = `id-${random()}`
         name = `name-${random()}`
         surname = `surname-${random()}`
@@ -21,6 +21,7 @@ describe("logic - register user", () => {
         password = `password-${random()}`
 
         Users.deleteMany()
+            .then(() => done())
     })
 
     it("should succeed on valid data", done => {
@@ -53,12 +54,13 @@ describe("logic - register user", () => {
     })
 
     describe("when user already exists", () => {
-        it("should fail on trying to register an existing user", done => {
+        it("should fail on trying to register an existing user", async done => {
             try {
-                Users.create({ id, name, surname, email, password })
-                    .then(() => registerUser(id, name, surname, email, password))
-                    .then(() => { throw new Error("should not reach this point") })
-                    .catch(error => { throw error })
+                await Users.create({ id, name, surname, email, password })
+
+                await registerUser(id, name, surname, email, password)
+                
+                throw new Error("should not reach this point")
             } catch (error) {
                 expect(error).toBeDefined()
 
