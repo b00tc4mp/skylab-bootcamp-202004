@@ -2,7 +2,7 @@ import React from "react";
 import {
     View,
     StyleSheet,
-    Text,
+    Image,
     TouchableOpacity,
     Dimensions
 } from "react-native";
@@ -14,13 +14,13 @@ const Menu = props => {
     return (
         <View style={styles.menu} visible={true}>
             <TouchableOpacity style={styles.openButton} onPress={ () => props.onGoTo("home") }>
-                <Text style={styles.textStyle}>Home</Text>
+                <Image source={ require('../assets/images/logo-one.png')} style={styles.icon}/>
             </TouchableOpacity>
             <TouchableOpacity style={styles.openButton} onPress={ () => props.onGoTo("favourites") }>
-                <Text style={styles.textStyle}>Favourites</Text>
+                <Image source={ require('../assets/images/logo-two.png')} style={styles.icon}/>
             </TouchableOpacity>
             <TouchableOpacity style={styles.openButton} onPress={ () => props.onGoTo("profilePage") }>
-                <Text style={styles.textStyle}>Profile</Text>
+                <Image source={ require('../assets/images/logo-three.png')} style={styles.icon}/>
             </TouchableOpacity>
         </View>
     )
@@ -43,11 +43,16 @@ const styles = StyleSheet.create({
         alignSelf: "flex-end",
         borderColor: "black"
     },
-    textStyle: {
+    icon: {
+        width: 50,
+        height: 50,
+        resizeMode: "contain"
+    }
+    /* textStyle: {
         color: "black",
         fontWeight: "500",
         fontSize: 20
-    }
+    } */
 })
 
 export default Menu
