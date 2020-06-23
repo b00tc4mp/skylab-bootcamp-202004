@@ -6,11 +6,9 @@ global.fetch = require('node-fetch')
 
 
 module.exports = function(){
-    debugger
     const symptomList = JSON.parse(this.storage.submittedSymptoms).map(({term:{symptomId}})=>{
-        debugger
-
         String.validate.notVoid(symptomId)
+        
         return symptomId
     })
 

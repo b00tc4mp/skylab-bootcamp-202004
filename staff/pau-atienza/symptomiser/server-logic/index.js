@@ -4,4 +4,5 @@ module.exports = {
     registerSymptom: require('./register-symptom'),
     registerSymptomList: require('./register-symptom-list'),
     updateSymptom: require('./update-symptom'),
+    sendSymptomlistByEmail: require('./send-symptomlist-by-email')
 }
