@@ -4,7 +4,7 @@ import './Settings.sass'
 
 
 
-function Settings ({token}) {
+function Settings ({rol}) {
     
     const handleLogOut = () => {
         delete sessionStorage.token
@@ -19,7 +19,7 @@ function Settings ({token}) {
             <br/>
             <Link className='settingsContainer__option' >Cambiar Contraseña</Link>
             <br/>
-            <Link to='handle-accounts'>Gestionar cuentas</Link>
+            {!rol && <Link to='handle-accounts'>Gestionar cuentas</Link>}
             <br/>
             <button className='settingsContainer__logOut' onClick={handleLogOut}>Log out</button>
         </section>

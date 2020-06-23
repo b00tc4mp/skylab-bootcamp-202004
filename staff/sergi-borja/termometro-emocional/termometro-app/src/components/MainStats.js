@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { HorizontalBar, Line, Bar } from 'react-chartjs-2'
-import createMemberList from 'termometro-client-logic/create-member-list'
+import createFamilyList from 'termometro-client-logic/create-family-list'
 import retrieveUser from 'termometro-client-logic/retrieve-user'
 import './MainStats.sass'
 import Calendar from 'react-calendar'
 const moment = require('moment')
 
 
-function MainStats({ token }) {
+function MainStats({ token, rol }) {
 
     const [chartData, setChartData] = useState({})
-    const [memberList, setMemberList] = useState()
+    const [familyList, setFamilyList] = useState()
     const [days, setDays] = useState(5)
     const [rolChart, setRolChart] = useState('admin')
     const [memberSelected, setMemberSelected] = useState({})
@@ -171,12 +171,14 @@ function MainStats({ token }) {
     }
 
     useEffect(() => {
+        if(!rol) {
         try {
-            createMemberList(token)
-                .then(familyList => setMemberList(familyList))
+            createFamilyList(token)
+                .then(familyList => setFamilyList(familyList))
         } catch (error) {
             if (error) throw error
         }
+    }
     }, [])
 
     useEffect(() => {
@@ -191,7 +193,7 @@ function MainStats({ token }) {
             adminChart()
         } else {
             setRolChart('member')
-            memberList.map(member => {
+            familyList.map(member => {
                 if (member.id === value) {
                     setMemberSelected(member)
                     handleSeeMemberStats(member)
@@ -214,10 +216,11 @@ function MainStats({ token }) {
     return (
         <section className='mainStatsContainer'>
             <div className='mainStatsContainer__selectContainer'>
-                <select className='mainStatsContainer__selectContainer--select' onChange={(event) => handleChangeChart(event)}>
+                {!rol && <select className='mainStatsContainer__selectContainer--select' onChange={(event) => handleChangeChart(event)}>
                     <option value='my_stats' className='mainStatsContainer__selectContainer--adminOption'>Mis estadísticas</option>
-                    {memberList && memberList.map(({ id, name }) => <option value={id} className='mainStatsContainer__selectContainer--memberOption'>{name}</option>)}
-                </select>
+                    {familyList && familyList.map(({ id, name }) => <option value={id} className='mainStatsContainer__selectContainer--memberOption'>{name}</option>)}
+                </select>}
+                {rol && <h1 value='my_stats' className='mainStatsContainer__selectContainer--adminOption'>Mis estadísticas</h1>}
             </div>
             <div className='mainStatsContainer__buttonDaysContainer'>
                 <button className={`mainStatsContainer__buttonDaysContainer--fiveDays ${days === 5 && !chartOfCalendar && !displayCalendar ? 'white' : ''}`} onClick={() => daysSetter(5)}>5 DAYS</button>

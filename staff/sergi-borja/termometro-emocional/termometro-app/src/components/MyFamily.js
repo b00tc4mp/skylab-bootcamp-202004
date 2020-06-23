@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import './MyFamily.sass'
 import { Link } from 'react-router-dom'
-import { createMemberList } from 'termometro-client-logic'
+import { createFamilyList } from 'termometro-client-logic'
 import addLogo from '../images/cool-add.png'
 
 // import editImg from '../images/editar.png'
 
 
-function MyFamily({ token, handleGoToEdit }) {
+function MyFamily({ token, handleGoToEdit, rol }) {
 
-    const [memberList, setMemberList] = useState()
+    const [familyList, setFamilyList] = useState()
 
     useEffect(() => {
+        
         try {
             (async () => {
-                const familyList = await createMemberList(token);
-                await setMemberList(familyList);
+                const familyList = await createFamilyList(token);
+                await setFamilyList(familyList);
             })()
 
         } catch (error) {
@@ -26,17 +27,25 @@ function MyFamily({ token, handleGoToEdit }) {
 
     return (
         <section className='familyContainer'>
-            <div className='familyContainer__container'>
-        <img className='familyContainer__image' src={addLogo}></img>
-        <Link to='/create-member' className='familyContainer__addButton'></Link>
-            <h1 className='familyContainer__title'>Mi Familia</h1>
-            </div>
-            <div className='familyContainer__familyListContainer'>
+            {!rol && <div className='familyContainer__container'>
+                <img className='familyContainer__image' src={addLogo}></img>
+                 <Link to='/create-member' className='familyContainer__addButton'></Link>
+                <h1 className='familyContainer__title'>Mi Familia</h1>
+            </div>}
+            {rol && <div className='familyContainer__container'>
+                <h1 className='familyContainer__title'>Mi administrador</h1>
+            </div>}
+            {!rol && <div className='familyContainer__familyListContainer'>
                 <ul className='familyContainer__familyListContainer--ul'>
-                    {memberList && memberList.map((member) => <li onClick={() => handleGoToEdit(member)} className='familyContainer__familyListContainer--li'>{member.name} </li>)}
+                    {familyList && familyList.map((member) => <li onClick={() => handleGoToEdit(member)} className='familyContainer__familyListContainer--li'>{member.name} </li>)}
                 </ul>
-            </div>
-            
+            </div>}
+            {rol && <div className='familyContainer__familyListContainer'>
+                <ul className='familyContainer__familyListContainer--ul'>
+                    {familyList && <li className='familyContainer__familyListContainer--li'>{familyList.name} {familyList.surname} </li>}
+                </ul>
+            </div>}
+
         </section>
     );
 }

@@ -3,7 +3,7 @@ module.exports = {
     authenticateUser: require('./authenticate-user'),
     registerUser: require('./register-user'),
     retrieveUser: require('./retrieve-user'),
-    createMemberList: require('./create-member-list'),
+    createFamilyList: require('./create-family-list'),
     editMember: require('./edit-member'),
     setMood: require('./set-mood'),
     unRegisterUser: require('./un-register-user')
