@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import {
     StyleSheet,
     Text,
-    ImageBackground
+    ImageBackground,
+    View
 } from "react-native";
 import { retrieveUser } from "../gluttony-client-logic";
 
@@ -17,7 +18,9 @@ const Favourites = (props) => {
 
     return (
         <ImageBackground source={require("../assets/images/final-food-and-drink-pattern-vector-1.png")} style={styles.image}>
-            <Text style={styles.textStyle}>Favourites</Text>
+            <View style={styles.boxOne}>
+                <Text style={styles.textStyle}>Favourites</Text>
+            </View>
         </ImageBackground>
     )
 }
@@ -30,24 +33,19 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         justifyContent: "center",
-        alignItems: "center"
-    },
-    openButton: {
-        padding: 2,
-        height: 65,
-        width: 100,
-        borderRadius: 200,
-        backgroundColor: "#FFFC87",
         alignItems: "center",
-        justifyContent: "center",
-        borderColor: "black",
-        borderWidth: 3
     },
     textStyle: {
         color: "black",
+        backgroundColor: "#FFFC87",
         fontWeight: "800",
         textAlign: "center",
-        fontSize: 30
+        fontSize: 30,
+    },
+    boxOne: {
+        flex: 1,
+        justifyContent: "flex-start",
+        marginTop: 60
     }
 })
 

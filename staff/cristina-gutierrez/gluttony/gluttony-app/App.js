@@ -31,7 +31,8 @@ const App = () => {
       /> }
       { view === "favourites" && <Favourites
         onShowModal={ () => setModalVisible(true) }
-      /> } 
+      /> }
+ 
       <Modal 
         isVisible={ modalVisible } 
         onGoToHome={ () => setView("home") }
@@ -48,7 +49,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginTop: 16
   }
 });
 
