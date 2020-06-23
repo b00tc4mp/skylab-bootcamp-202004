@@ -3,7 +3,9 @@ import MapView, { Marker, Callout } from "react-native-maps";
 import {
     StyleSheet,
     View,
-    Dimensions
+    Dimensions,
+    Text,
+    TextInput
 } from "react-native";
 import { findNearbyRestaurants } from "../gluttony-client-logic"
 import Store from "./Store"
@@ -52,7 +54,9 @@ const MapRestaurant = () => {
                     }}
                 >
                     <Callout>
-                        <Store store={restaurant}/>
+                        <Store style={styles.textStyle} store={restaurant}/>
+                        <Text style={styles.textStyle}>Leave a comment:</Text>
+                        <TextInput style={styles.input} />
                     </Callout>
                 </Marker>}
             </MapView>
@@ -72,6 +76,20 @@ const styles = StyleSheet.create({
         height: Dimensions.get("window").height,
         marginBottom: 60
     },
+    textStyle: {
+        color: "black",
+        fontWeight: "500",
+        textAlign: "left"
+    },
+    input: {
+        height: 40,
+        width: 150,
+        borderColor: "#FFFC87",
+        borderWidth: 3,
+        marginBottom: 11,
+        paddingLeft: 10,
+        paddingRight: 10
+    }
 });
 
 export default MapRestaurant
