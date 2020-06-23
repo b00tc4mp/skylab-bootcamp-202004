@@ -1,12 +1,8 @@
 import React from 'react'
-import './Landing'
-
-import { Link } from 'react-router-dom'
+import './Landing.sass'
 
 export default function () {
   return (
-    <section className='landing'>
-      <Link to='/register'>Register</Link> | <Link to='/login'>Login</Link>
-    </section>
+    <section className='landing' />
   )
 }

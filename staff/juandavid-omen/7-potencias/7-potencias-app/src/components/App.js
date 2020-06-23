@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import './App.sass'
-import Register from './Register'
-import Login from './Login'
-import Landing from './Landing'
-import Home from './Home'
-import Container from './Container'
-import Products from './Products'
-import { Route, withRouter, Redirect } from 'react-router-dom'
+import { App, Card, Login, Register, Home, Landing, NavBar, Products, ShoppingCart, Feedback, Footer } from '../components'
 import { isUserSessionValid, logoutUser, isUserLoggedIn } from '7-potencias-client-logic'
+import { Route, withRouter, Redirect } from 'react-router-dom'
+import './App.sass'
 
-function App ({ history }) {
+export default withRouter(function ({ history }) {
+  const [view, setView] = useState()
+
   useEffect(() => {
-    if (isUserLoggedIn()) {
+    if (sessionStorage.token) {
       try {
-        isUserSessionValid()
+        isUserSessionValid(sessionStorage.token)
           .then(isAuthenticated => {
             if (isAuthenticated) {
+              setView('home')
             }
           })
           .catch(error => { throw error })
@@ -23,15 +21,13 @@ function App ({ history }) {
         if (error) throw error
       }
     } else history.push('/')
-  }, [])
+  }, [history])
 
   const handleGoToRegister = () => history.push('/register')
 
   const handleRegister = () => history.push('./login')
 
-  const handleLogin = () => {
-    history.push('/home')
-  }
+  const handleLogin = () => history.push('/home')
 
   const handleGoToLogin = () => history.push('/login')
 
@@ -42,25 +38,19 @@ function App ({ history }) {
   }
 
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <Container>
-          <Route
-            exact path='/' render={() => isUserLoggedIn() ? <Redirect to='/home' /> : <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
-          />
+    <div className='app'>
+      <NavBar onLogout={handleLogout} token={sessionStorage.token} />
+      <main>
+        <Route exact path='/' render={() => isUserLoggedIn() ? <Redirect to='/home' /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />} />
+        <Route path='/register' render={() => isUserLoggedIn() ? <Redirect to='/home' /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />} />
+        <Route path='/login' render={() => isUserLoggedIn() ? <Redirect to='/home' /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />} />
+        <Route path='/home' render={() => isUserLoggedIn() ? <Home onLogout={handleLogout} /> : <Redirect to='/' />} />
+        <Route path='landing' render={() => <Landing />} />
+        <Route path='/lessons' render={() => <Products token={sessionStorage.token} />} />
+      </main>
 
-          <Route
-            path='/register' render={() => isUserLoggedIn() ? <Redirect to='/home' /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />}
-          />
+      <Footer />
 
-          <Route path='/login' render={() => isUserLoggedIn() ? <Redirect to='/home' /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />} />
-
-          <Route path='/home' render={() => isUserLoggedIn() ? <Home onLogout={handleLogout} /> : <Redirect to='/' />} />
-        </Container>
-        <Products />
-      </header>
     </div>
   )
-}
-
-export default withRouter(App)
+})

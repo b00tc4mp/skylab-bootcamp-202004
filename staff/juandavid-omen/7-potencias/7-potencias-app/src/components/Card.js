@@ -1,17 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Products.sass'
-import { addToCart } from '7-potencias-client-logic'
+import updateCart from '7-potencias-client-logic/update-cart'
 
-export default function ({product}) {
+export default function ({ product, token }) {
+  const [error, setError] = useState()
+  const [cart, setCart] = useState([])
   const { id, name, style, price } = product
 
-  /*try {
-    addToCart(id, token)
-      .then(onAddToCart)
-      .catch(error => setError(error.message))
-  } catch ({ message }) {
-    setError(message)
-  }*/
+  const handleAddToCard = event => {
+    event.preventDefault()
+
+    let quantity = 1
+    const index = cart.findIndex(item => item.productId === id)
+
+    if (index === -1) {
+      cart.push({ productId: id, quantity: quantity })
+    } else {
+      quantity = ++cart[index].quantity
+    }
+
+    try {
+      updateCart(token, id, quantity)
+        .then(() => {
+          setError(undefined)
+          setCart(cart)
+        })
+        .catch(({ message }) => {
+          setError(message)
+        })
+    } catch ({ message }) {
+      setError(message)
+    }
+  }
 
   return (
     <section className='description-table'>
@@ -27,7 +47,7 @@ export default function ({product}) {
             <li>musicality</li>
             <li>Correct execution of the steps</li>
           </ul>
-          <a href='#' className='description-table-button' onClick={addToCart}>Add to cart</a>
+          <a className='description-table-button' onClick={handleAddToCard}>Add to cart</a>
         </div>
       </div>
     </section>

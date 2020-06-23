@@ -1,48 +1,27 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './Products.sass'
 import Card from './Card'
+import { searchLessons } from '7-potencias-client-logic'
 
-export default function () {
-  var products = []
-  products.push({
-    name: 'Salsa Caleña',
-    id: 12,
-    price: 20,
-    style: 'SALSA'
-  })
-  products.push({
-    name: 'Bachata Dominicana',
-    id: 14,
-    price: 25,
-    style: 'BACHATA'
-  })
-  products.push({
-    name: 'Hip Hop',
-    id: 12,
-    price: 20,
-    style: 'URBAN'
-  })
-  products.push({
-    name: 'Hip Hop',
-    id: 12,
-    price: 20,
-    style: 'URBAN'
-  })
-  products.push({
-    name: 'Hip Hop3',
-    id: 12,
-    price: 20,
-    style: 'URBAN'
-  })
-  products.push({
-    name: 'Hip Hop4',
-    id: 12,
-    price: 20,
-    style: 'URBAN'
-  })
-  const cards = products.map((product) => {
-    return ( <Card product = {product} /> )
-  })
+export default function ({ token }) {
+  const [error, setError] = useState()
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    try {
+      searchLessons()
+        .then(products => {
+          setError(undefined)
+          setProducts(products)
+        })
+        .catch(({ message }) => {
+          setError(message)
+          setProducts(undefined)
+        })
+    } catch ({ message }) {
+      setError(message)
+    }
+  }, [])
 
   return (
     <section className='card'>
@@ -52,7 +31,9 @@ export default function () {
         <a>Group</a>
       </section>
       <section className='description-card'>
-        { cards }
+        {products && products.map(product => (<>
+          <Card key={product.id} product={product} token={token} />
+        </>))}
       </section>
     </section>
   )
