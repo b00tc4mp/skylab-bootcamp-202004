@@ -75,7 +75,7 @@ describe('logic - creat chat', () => {
 
         // const chatUserId = [userId] = chat.message
         
-        expect(coments.text).to.equal(chatMessage)
+        expect(coments.text).to.equal(`hello${nameW}`)
         expect(coments.userId.toString()).to.equal(userId.toString())
         expect(chat.user.toString()).to.equal(userId.toString())
         expect(chat.worker.toString()).to.equal(workerId.toString())
