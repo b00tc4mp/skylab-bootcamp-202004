@@ -1,7 +1,7 @@
 const { env: { SECRET } } = process
 
 const { Router } = require('express')
-const { retrieveTermsById, retrieveTermsByQuery, registerSymptom, registerSymptomList, updateSymptom } = require('./handlers')
+const { retrieveTermsById, retrieveTermsByQuery, registerSymptom, registerSymptomList, updateSymptom, sendSymptomlistByEmail } = require('./handlers')
 const bodyParser = require('body-parser')
 // const { jwtVerifierExtractor } = require('../middlewares')
 // const { handleError } = require('../helpers')
@@ -20,6 +20,8 @@ api.post('/symptoms', parseBody, registerSymptom)
 api.post('/symptoms/update', parseBody, updateSymptom)
 
 api.post('/symptomlists', parseBody, registerSymptomList)
+
+api.post('/symptomlists/email', parseBody, sendSymptomlistByEmail)
 
 // api.post('/users/auth', parseBody, authenticateUser)
 

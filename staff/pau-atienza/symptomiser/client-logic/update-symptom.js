@@ -5,24 +5,27 @@ const { utils: { call } } = require('commons')
 const context = require('./context')
 global.fetch = require('node-fetch')
 
-module.exports = async function(comments){
+module.exports = async function(comments = "none"){
 
     const symptomToModify = JSON.parse(this.storage.symptomToModify)
 
-    const {modifiers, term: {symptomId: id}} = symptomToModify
+    const {modifiers = [], term: {symptomId: id}} = symptomToModify
 
     String.validate(id)
 
-    comments && String.validate(comments)
-    if(modifiers){ 
-        JSON.validate(modifiers)
-        modifiers.forEach(({HPO_id, name, confidenceLevel, date})=>{
-            String.validate(HPO_id)
-            String.validate(name)
-            String.validate(confidenceLevel)
-            String.validate.isISODate(date)
-        })
-    }    
+    String.validate(comments)
+
+    
+    JSON.validate(modifiers)
+
+    modifiers.forEach(({HPO_id, name, confidenceLevel, date})=>{
+        String.validate(HPO_id)
+
+        String.validate(name)
+        String.validate(confidenceLevel)
+        String.validate.isISODate(date)
+    })
+     
 
     const {status, body} = await call('POST', `${this.API_URL}/symptoms/update`, JSON.stringify({id, modifiers, comments}), {"Content-type": "application/json"})
     if (status !== 200) {
@@ -31,8 +34,6 @@ module.exports = async function(comments){
         throw new Error(error)
     }
     
-    // JSON.parse(body)
-
     symptomToModify.comments = comments
 
     this.storage.symptomToModify = JSON.stringify(symptomToModify)

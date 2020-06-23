@@ -3,5 +3,6 @@ module.exports = {
     retrieveTermsByQuery: require('./retrieve-terms-by-query'),
     registerSymptom: require('./register-symptom'),
     updateSymptom: require('./update-symptom'),
-    registerSymptomList: require('./register-symptom-list')
+    registerSymptomList: require('./register-symptom-list'),
+    sendSymptomlistByEmail: require('./send-symptomlist-by-email')
 }
