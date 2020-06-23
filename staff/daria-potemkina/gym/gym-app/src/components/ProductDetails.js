@@ -150,6 +150,7 @@ function ProductDetails({ id, ticker, expanded, history }) {
                     <Line
                         data={futureChartData}
                         options={{
+                            maintainAspectRatio: false,
                             layout: {
                                 padding: {
                                     left: 20,
@@ -160,7 +161,7 @@ function ProductDetails({ id, ticker, expanded, history }) {
                             },
                             title: {
                                 display: true,
-                                text: 'Historic future prices',
+                                text: 'Historic prices',
                                 fontSize: 15,
                                 position: 'top'
                             },
@@ -197,7 +198,7 @@ function ProductDetails({ id, ticker, expanded, history }) {
                                 }]
                             }
                         }}
-                        height={250}
+                        height={300}
                     />
                 </section>
             </section>
@@ -248,6 +249,7 @@ function ProductDetails({ id, ticker, expanded, history }) {
             <Line
                 data={underlyingChartData}
                 options={{
+                    maintainAspectRatio: false,
                     layout: {
                         padding: {
                             left: 20,
@@ -301,7 +303,7 @@ function ProductDetails({ id, ticker, expanded, history }) {
                         }]
                     }
                 }}
-                height={250}
+                height={300}
             />
         </section>
 

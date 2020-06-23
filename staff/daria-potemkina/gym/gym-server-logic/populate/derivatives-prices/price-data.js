@@ -94,79 +94,99 @@ Price.create(
 
     {
         product: ObjectId('5eee3cf9042e2ae59798b6d3'),
-        date: new Date('June 01, 2020'),
-        price: randomPrice(2,3)
+        date: new Date('June 01, 2020 UTC'),
+        price: randomPrice(7, 9)
     },
     {
         product: ObjectId('5eee3cf9042e2ae59798b6d3'),
-        date: new Date('June 02, 2020'),
-        price: randomPrice(2,3)
+        date: new Date('June 02, 2020 UTC'),
+        price: randomPrice(7, 9)
     },
     {
         product: ObjectId('5eee3cf9042e2ae59798b6d3'),
-        date: new Date('June 03, 2020'),
-        price: randomPrice(2,3)
+        date: new Date('June 03, 2020 UTC'),
+        price: randomPrice(7, 9)
     },
     {
         product: ObjectId('5eee3cf9042e2ae59798b6d3'),
-        date: new Date('June 04, 2020'),
-        price: randomPrice(2,3)
+        date: new Date('June 04, 2020 UTC'),
+        price: randomPrice(7, 9)
     },
     {
         product: ObjectId('5eee3cf9042e2ae59798b6d3'),
-        date: new Date('June 05, 2020'),
-        price: randomPrice(2,3)
+        date: new Date('June 05, 2020 UTC'),
+        price: randomPrice(7, 9)
     },
     {
         product: ObjectId('5eee3cf9042e2ae59798b6d3'),
-        date: new Date('June 08, 2020'),
-        price: randomPrice(2,3)
+        date: new Date('June 08, 2020 UTC'),
+        price: randomPrice(7, 9)
     },
     {
         product: ObjectId('5eee3cf9042e2ae59798b6d3'),
-        date: new Date('June 09, 2020'),
-        price: randomPrice(2,3)
+        date: new Date('June 09, 2020 UTC'),
+        price: randomPrice(7, 9)
     },
     {
         product: ObjectId('5eee3cf9042e2ae59798b6d3'),
-        date: new Date('June 10, 2020'),
-        price: randomPrice(2,3)
+        date: new Date('June 10, 2020 UTC'),
+        price: randomPrice(7, 9)
     },
     {
         product: ObjectId('5eee3cf9042e2ae59798b6d3'),
-        date: new Date('June 11, 2020'),
-        price: randomPrice(2,3)
+        date: new Date('June 11, 2020 UTC'),
+        price: randomPrice(7, 9)
     },
 
     {
         product: ObjectId('5eee3cf9042e2ae59798b6d3'),
-        date: new Date('June 12, 2020'),
-        price: randomPrice(2,3)
+        date: new Date('June 12, 2020 UTC'),
+        price: randomPrice(7, 9)
     },
     {
         product: ObjectId('5eee3cf9042e2ae59798b6d3'),
-        date: new Date('June 15, 2020'),
-        price: randomPrice(2,3)
+        date: new Date('June 15, 2020 UTC'),
+        price: randomPrice(7, 9)
     },
     {
         product: ObjectId('5eee3cf9042e2ae59798b6d3'),
-        date: new Date('June 16, 2020'),
-        price: randomPrice(2,3)
+        date: new Date('June 16, 2020 UTC'),
+        price: randomPrice(7, 9)
     },
     {
         product: ObjectId('5eee3cf9042e2ae59798b6d3'),
-        date: new Date('June 17, 2020'),
-        price: randomPrice(2,3)
+        date: new Date('June 17, 2020 UTC'),
+        price: randomPrice(7, 9)
     },
     {
         product: ObjectId('5eee3cf9042e2ae59798b6d3'),
-        date: new Date('June 18, 2020'),
-        price: randomPrice(2,3)
+        date: new Date('June 18, 2020 UTC'),
+        price: randomPrice(7, 9)
     },
     {
         product: ObjectId('5eee3cf9042e2ae59798b6d3'),
-        date: new Date('June 19, 2020'),
-        price: randomPrice(2,3)
+        date: new Date('June 19, 2020 UTC'),
+        price: randomPrice(7, 9)
+    },
+    {
+        product: ObjectId('5eee3cf9042e2ae59798b6d3'),
+        date: new Date('June 20, 2020 UTC'),
+        price: randomPrice(7, 9)
+    },
+    {
+        product: ObjectId('5eee3cf9042e2ae59798b6d3'),
+        date: new Date('June 21, 2020 UTC'),
+        price: randomPrice(7, 9)
+    },
+    {
+        product: ObjectId('5eee3cf9042e2ae59798b6d3'),
+        date: new Date('June 22, 2020 UTC'),
+        price: randomPrice(7, 9)
+    },
+    {
+        product: ObjectId('5eee3cf9042e2ae59798b6d3'),
+        date: new Date('June 23, 2020 UTC'),
+        price: randomPrice(8, 11)
     },
 
     //BBVA sep

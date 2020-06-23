@@ -33,7 +33,7 @@ module.exports = (userId, productId, priceId, side, quantity) => {
         const { price } = await Price.findById(priceId)
 
         const balances = await AccountBalance.find({ user: ObjectId(userId) }).sort({ date: -1 })
-debugger
+
         let guarantee = 0
         let profitAndLoss = 0
 
@@ -56,7 +56,7 @@ debugger
         }
 
         let contract = await Contract.findOne({ user: ObjectId(userId), product: ObjectId(productId), isValid: true })
-        debugger
+        
         if (!contract) {
             contract = await Contract.create({ user: ObjectId(userId), product: ObjectId(productId), isValid: true })
             contract.trades.push({ price: ObjectId(priceId), type: side, quantity })
@@ -65,6 +65,7 @@ debugger
             if (index === -1)
                 contract.trades.push({ price: ObjectId(priceId), type: side, quantity })
             else {
+                debugger
                 let { type, quantity: _quantity } = contract.trades[index]
                 if (type === side) _quantity += quantity
                 else {
@@ -74,9 +75,15 @@ debugger
                     } else if (_quantity > quantity) _quantity -= quantity
                     else {
                         await Contract.findByIdAndUpdate(contract._id, { isValid: false })
+
+                        guarantee = await addGuarantee(userId)
+
+                        await AccountBalance.create({ user: userId, date: new Date(), guarantee, profitAndLoss })
+                        
                         return
                     }
                 }
+                debugger
                 contract.trades.splice(index, 1)
                 contract.trades.push({ price: ObjectId(priceId), type, quantity: _quantity })
             }

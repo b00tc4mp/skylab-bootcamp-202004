@@ -16,7 +16,6 @@ export default function ({ futures, handleGoToDetails }) {
         side = side.value
 
         try {
-            debugger
             addProduct(id, priceId, side, quantity)
                 .then(() => {
                     setSuccess({ id, message: 'trade has been added to your portfolio' })

@@ -13,7 +13,7 @@ dateToday.push('UTC')
 
 dateToday = dateToday.join(' ')
 
-cron.schedule("13 09 * * *", async() => {
+cron.schedule("19 09 * * *", async() => {
     try{
         await mongoose.connect('mongodb://localhost:27017/gym-api')
         

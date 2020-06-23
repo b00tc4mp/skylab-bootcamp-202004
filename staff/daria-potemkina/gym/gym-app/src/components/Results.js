@@ -18,7 +18,7 @@ export default function ({results, handleGoToDetails }) {
         try {
             addProduct(id, priceId, side, quantity)
                 .then(() => {
-                    setSuccess({ id, message: 'trades has been added to your portfolio' })
+                    setSuccess({ id, message: 'trade has been added to your portfolio' })
                     return
                 })
                 .catch(({ message }) => setError([id, message]))

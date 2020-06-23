@@ -27,7 +27,7 @@ function Home ({handleGoToDetails, handleShowUnderlyingPrices}) {
     useEffect(() => {
         try {
             retrieveFutures()
-                .then(futures => setFutures(futures))
+                .then(futures => {console.log(futures);setFutures(futures)})
             } catch ({message}) {
                 setError(message)
             }

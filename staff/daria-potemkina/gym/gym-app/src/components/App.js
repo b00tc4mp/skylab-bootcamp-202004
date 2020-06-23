@@ -11,7 +11,7 @@ import Account from './Account'
 import Portfolio from './Portfolio'
 import Settings from './Settings'
 import Search from './Search'
-import { faHome, faBars } from "@fortawesome/free-solid-svg-icons"
+import { faHome, faBars, faSignOutAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { isUserSessionValid, isUserLoggedIn, logoutUser } from 'gym-client-logic'
 
@@ -126,7 +126,7 @@ function App({ history }) {
               <li><a href="/" onClick={handleGoToPortfolio}>Portfolio</a></li>
               <li><a href="/" onClick={handleGoToAccount}>Account</a></li>
               <li><a href="/" onClick={handleGoToSettings}>Settings</a></li>
-              <li><a href="/" onClick={handleLogout}>Logout</a> </li>
+              <li><a href="/" onClick={handleLogout}><FontAwesomeIcon icon={faSignOutAlt} /></a> </li>
             </ul>
           </nav>
         </section>}

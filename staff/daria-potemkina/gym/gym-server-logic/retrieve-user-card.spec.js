@@ -45,26 +45,25 @@ describe('logic - retrieveUserCard', () => {
             expect(expirationDate).to.be.an.instanceOf(Date)
             expect(cvv).to.be.equal(undefined)
         })
-    })
-
-    it('should fail when user does not exists', async () => {
-        userId = '123455678990'
-        try {
-            await retrieveUserCard(userId)
-
-            throw new Error('should not reach this point')
-        } catch (error) {
-            expect(error).to.be.exist
-            expect(error).to.be.an.instanceOf(Error)
-            expect(error.message).to.equal(`user with id ${userId} does not exist`)
-        }
-
-        it('should fail when the card is not added', async () => {
-            await User.updateOne({ _id: userId }, { $unset: { card } })
-
+        it('should fail when user does not exists', async () => {
+            userId = '123455678990'
             try {
                 await retrieveUserCard(userId)
-
+    
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.be.exist
+                expect(error).to.be.an.instanceOf(Error)
+                expect(error.message).to.equal(`user with id ${userId} does not exist`)
+            }
+    
+        })
+        it('should fail when the card is not added', async () => {
+            await User.updateOne({ _id: userId }, { $unset: { card } })
+    
+            try {
+                await retrieveUserCard(userId)
+    
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.exist
@@ -73,6 +72,7 @@ describe('logic - retrieveUserCard', () => {
             }
         })
     })
+
 
     it('should return a type error', () => {
         userId = undefined

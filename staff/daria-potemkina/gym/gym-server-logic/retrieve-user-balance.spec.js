@@ -6,6 +6,7 @@ const retrieveUserBalance = require('./retrieve-user-balance')
 const { random, round } = Math
 const { expect } = require('chai')
 const { mongoose, models: { User, AccountBalance } } = require('gym-data')
+const {errors: { UnexistenceError}} = require('gym-commons')
 
 describe('logic - retrieveUserBalance', () => {
     before(() => mongoose.connect(MONGODB_URL_TEST))
@@ -58,34 +59,38 @@ describe('logic - retrieveUserBalance', () => {
             expect(_guarantee).to.equal(guarantee)
             expect(_profitAndLoss).to.equal(profitAndLoss)
         })
-    })
-
-    it('should fail when user does not exists', async () => {
-        userId = '123455678990'
-        try {
-            await retrieveUserBalance(userId)
-
-            throw new Error('should not reach this point')
-        } catch (error) {
-            expect(error).to.be.exist
-            expect(error).to.be.an.instanceOf(Error)
-            expect(error.message).to.equal(`user with id ${userId} does not exist`)
-        }
-
-        it('should fail when the the balace is not exist', async () => {
-            await AccountBalance.deleteMany()
-
+        it('should fail when user does not exists', async () => {
+            const _userId = '123455678990'
             try {
-                await retrieveUserBalance(userId)
-
+                await retrieveUserBalance(_userId)
+    
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.exist
                 expect(error).to.be.an.instanceOf(Error)
-                expect(error.message).to.equal('the balance is empty, there are no operations')
+                expect(error.message).to.equal(`user with id ${_userId} does not exist`)
             }
+    
+        })
+        it('should fail when the the balace is not exist', async () => {
+            await AccountBalance.deleteMany()
+            let _error;
+            try {
+                await retrieveUserBalance(userId)
+    
+                throw new Error('should not reach this point')
+            } catch (error) {
+                _error = error
+            }
+    
+            debugger
+            expect(_error).to.be.exist
+            expect(_error).to.be.an.instanceOf(UnexistenceError)
+            expect(_error.message).to.equal('the balance is empty, there are no operations yet')
         })
     })
+
+
 
     it('should return a type error', () => {
         userId = undefined

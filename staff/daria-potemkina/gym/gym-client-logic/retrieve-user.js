@@ -13,7 +13,7 @@ const context = require('./context')
 
 module.exports = function () {
     const {token} = this.storage
-    console.log(token)
+    
     return call('GET', `${this.API_URL}/users`,
         undefined,
         { 'Authorization': `Bearer ${token}` })

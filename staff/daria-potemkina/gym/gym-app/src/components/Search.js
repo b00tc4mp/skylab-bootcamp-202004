@@ -50,7 +50,7 @@ function Search({ token, handleGoToDetails }) {
                 </select>
                 <select className="search__select" name="sector">
                     <option value="sector">Sector</option>
-                    <option value="Utilities">Utility</option>
+                    <option value="Utilities">Utilities</option>
                     <option value="Banking">Banking</option>
                     <option value="Industrials">Industrials</option>
                     <option value="Consumer">Consumer</option>

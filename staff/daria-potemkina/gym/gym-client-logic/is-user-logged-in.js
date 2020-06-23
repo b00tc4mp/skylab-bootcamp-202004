@@ -1,7 +1,7 @@
 /**
- * Check if the user token exists
+ * Return the user token when exist
  * 
- * @returns {boolean} true if exists, otherwise false
+ * @returns {string} true if exists, otherwise false
  */
 
 const context = require('./context')

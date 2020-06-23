@@ -22,7 +22,7 @@ module.exports = function () {
             if (status === 200) {
                 let card =  JSON.parse(body)
 
-                card.expirationDate = moment(card.expirationDate).format('MM-YY')
+                card.expirationDate = moment(card.expirationDate).format('DD-MM-YYYY')
 
                 return card
 

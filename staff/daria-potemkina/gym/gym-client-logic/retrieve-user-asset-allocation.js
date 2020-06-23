@@ -32,23 +32,23 @@ module.exports = function () {
 
                     for (let key in product) {
                         if (key === 'exchange') {
-                            allocation.exchange[product[key]] ?
-                                allocation.exchange[product[key]] += trades.map(({ quantity }) => quantity).reduce((acc, currentValue) => acc += currentValue, 0) * product.contractSize
-                                :
+                            // allocation.exchange[product[key]] ?
+                            //     allocation.exchange[product[key]] += trades.map(({ quantity }) => quantity).reduce((acc, currentValue) => acc += currentValue, 0) * product.contractSize
+                            //     :
                                 allocation.exchange[product[key]] = trades.map(({ quantity }) => quantity).reduce((acc, currentValue) => acc += currentValue, 0) * product.contractSize
 
                         }
                         if (key === 'productType') {
-                            allocation.type[product[key]] ?
-                                allocation.type[product[key]] += trades.map(({ quantity }) => quantity).reduce((acc, currentValue) => acc += currentValue, 0) * product.contractSize
-                                :
+                            // allocation.type[product[key]] ?
+                            //     allocation.type[product[key]] += trades.map(({ quantity }) => quantity).reduce((acc, currentValue) => acc += currentValue, 0) * product.contractSize
+                            //     :
                                 allocation.type[product[key]] = trades.map(({ quantity }) => quantity).reduce((acc, currentValue) => acc += currentValue, 0) * product.contractSize
 
                         }
                         if (key === 'sector') {
-                            allocation.sector[product[key]] ?
-                                allocation.sector[product[key]] += trades.map(({ quantity }) => quantity).reduce((acc, currentValue) => acc += currentValue, 0) * product.contractSize
-                                :
+                            // allocation.sector[product[key]] ?
+                            //     allocation.sector[product[key]] += trades.map(({ quantity }) => quantity).reduce((acc, currentValue) => acc += currentValue, 0) * product.contractSize
+                            //     :
                                 allocation.sector[product[key]] = trades.map(({ quantity }) => quantity).reduce((acc, currentValue) => acc += currentValue, 0) * product.contractSize
 
                         }
