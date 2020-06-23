@@ -98,8 +98,6 @@ describe('logic - create workspace', () => {
             }
         })
 
-        // SYNC UNHAPPY PATHS
-
         it('should fail on trying to add number userId', async () => {
             try {
                 await createWorkspace(1, workspaceRandom)

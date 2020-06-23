@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } } = process
 
 const registerUser = require('./register-user')
 const { random } = Math
@@ -11,12 +11,11 @@ const { mongoose, models: { User } } = require('nomad-data')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
 const context = require('./context')
-const { API_URL } = context
 context.API_URL = API_URL
 
 
 
-describe('server-logic register user', () => {
+describe('client - register user', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let name, surname, email, password

@@ -26,9 +26,12 @@ module.exports = function (workspaceId, stars, text) {
             const { status, body } = result
 
             if (status === 201) return
-            else throw new Error('could not create review')
+            else {
+                const { error } = JSON.parse(body)
+                throw new Error(error)
+            }
         } catch (error) {
-            console.log(error) // TODO
+            throw new Error(error.message)
         }
     })()
 }.bind(context)

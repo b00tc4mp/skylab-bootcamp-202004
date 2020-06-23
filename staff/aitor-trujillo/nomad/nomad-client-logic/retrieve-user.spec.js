@@ -1,42 +1,51 @@
 require('dotenv').config()
-
-const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_SECRET: SECRET, TEST_API_URL: API_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL, SECRET } } = process
 
 const retrieveUser = require('./retrieve-user')
 const { random } = Math
 const { expect } = require('chai')
-require('misc-commons/polyfills/json')
-const { mongoose, models: { User } } = require('misc-data')
-require('misc-commons/ponyfills/xhr')
-const { utils: { jwtPromised } } = require('misc-commons')
+require('nomad-commons/polyfills/json')
+const { mongoose, models: { User } } = require('nomad-data')
+require('nomad-commons/ponyfills/xhr')
+global.fetch = require('node-fetch')
+const jwtPromised = require('../nomad-api/helpers/jwt-promised')
 const context = require('./context')
+const bcrypt = require('bcryptjs')
 
+const AsyncStorage = require('not-async-storage')
+context.storage = AsyncStorage
 context.API_URL = API_URL
 
-describe('logic - retrieve user', () => {
+
+describe('client - retrieve user', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let name, surname, email, password, token
+    let name, surname, email, password, token, encryptedPassword, userId
 
-    beforeEach(() =>
-        User.deleteMany()
-            .then(() => {
-                name = `name-${random()}`
-                surname = `surname-${random()}`
-                email = `e-${random()}@mail.com`
-                password = `password-${random()}`
+    beforeEach(async () => {
+        await User.deleteMany()
+            .then(async () => {
+                name = `name-${random()}`;
+                surname = `surname-${random()}`;
+                email = `email-${random()}@gmail.com`;
+                password = `password-${random()}`;
+                encryptedPassword = await bcrypt.hash(password, 10);
             })
-    )
+    })
 
     describe('when user already exists', () => {
-        beforeEach(() =>
-            User.create({ name, surname, email, password })
-                .then(user => jwtPromised.sign({ sub: user.id }, SECRET))
-                .then(_token => token = _token)
-        )
+        beforeEach(async () => {
+            await User.create({ name, surname, email, password: encryptedPassword })
+                .then(({ id }) => {
+                    userId = id
+                })
+
+            token = await jwtPromised.sign({ sub: userId }, SECRET)
+            await context.storage.setItem('token', token)
+        })
 
         it('should succeed on correct user id', () =>
-            retrieveUser(token)
+            retrieveUser()
                 .then(user => {
                     expect(user.name).to.equal(name)
                     expect(user.surname).to.equal(surname)
@@ -49,15 +58,15 @@ describe('logic - retrieve user', () => {
     describe('when user does not exist', () => {
         let userId
 
-        beforeEach(() => {
+        beforeEach(async () => {
             userId = '5ed1204ee99ccf6fae798aef'
 
-            return jwtPromised.sign({ sub: userId }, SECRET)
-                .then(_token => token = _token)
+            await jwtPromised.sign({ sub: userId }, SECRET)
+                .then(token => context.storage.setItem('token', token))
         })
 
         it('should fail when user does not exist', () =>
-            retrieveUser(token)
+            retrieveUser()
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.exist

@@ -5,9 +5,6 @@ const context = require('./context')
 
 module.exports = function () {
 
-
-    // String.validate.notVoid(token)
-
     return (async () => {
         try {
             const token = await this.storage.getItem('token')
@@ -21,7 +18,7 @@ module.exports = function () {
             const { status } = result
             return status === 200
         } catch (error) {
-            console.log(error)
+            throw new Error(error.message)
         }
     })()
 }.bind(context)

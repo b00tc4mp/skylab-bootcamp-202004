@@ -46,9 +46,12 @@ module.exports = function (workspace) {
 
             const { status, body } = result
             if (status === 201) return JSON.parse(body)
-            else throw new Error('could not create workspace')
-        } catch (error) {
-            console.log(error) // TODO
+            else {
+                const { error } = JSON.parse(body)
+                throw new Error(error)
+            }
+        } catch ({ message }) {
+            throw new Error(message)
         }
     })()
 }.bind(context)

@@ -20,9 +20,11 @@ import PostReviewScreen from './app/screens/PostReviewScreen';
 import MapScreen from './app/screens/MapScreen';
 import UploadProfileScreen from './app/screens/UploadProfileScreen';
 
-import logic, { isUserAuthenticated } from 'nomad-client-logic'
+import { isUserAuthenticated, context } from 'nomad-client-logic'
+import { API_URL } from './.env'
 
-logic.__context__.storage = AsyncStorage
+context.storage = AsyncStorage
+context.API_URL = API_URL
 
 const Stack = createStackNavigator();
 const StackNavigator = ({ onLoggedIn }) => (

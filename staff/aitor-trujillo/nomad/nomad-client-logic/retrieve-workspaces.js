@@ -22,9 +22,12 @@ module.exports = function ({ latitude, longitude }, filter) {
             const { status, body } = result
 
             if (status === 200) return JSON.parse(body)
-            else throw new Error('could not retrieve workspaces')
+            else {
+                const { error } = JSON.parse(body)
+                throw new Error(error)
+            }
         } catch (error) {
-            console.log(error) // TODO
+            throw new Error(error.message)
         }
     })()
 }.bind(context)

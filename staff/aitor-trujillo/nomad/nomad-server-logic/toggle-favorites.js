@@ -13,7 +13,7 @@ module.exports = async (userId, workspaceId) => {
     if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
     const ws = await Workspace.findById(workspaceId)
-    if (!ws) throw new UnexistenceError(`workspace with id ${ws} does not exist`)
+    if (!ws) throw new UnexistenceError(`workspace with id ${workspaceId} does not exist`)
 
     const index = user.favorites.indexOf(workspaceId)
     if (index > -1) user.favorites.splice(index, 1)

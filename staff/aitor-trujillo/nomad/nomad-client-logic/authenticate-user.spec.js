@@ -1,11 +1,11 @@
 require('dotenv').config()
 
-const { env: { MONGODB_URL_TEST: MONGODB_URL, TEST_API_URL: API_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } } = process
 
 const authenticateUser = require('./authenticate-user')
 const { random } = Math
 const { expect } = require('chai')
-// require('nomad-commons/ponyfills/atob')
+require('nomad-commons/ponyfills/atob')
 const { mongoose, models: { User } } = require('nomad-data')
 const bcrypt = require('bcryptjs')
 const { errors: { VoidError } } = require('nomad-commons')
@@ -82,7 +82,7 @@ describe('client - authenticate user', () => {
         it('should fail on non-string field', () => {
             expect(() => {
                 authenticateUser(true, password)
-            }).to.throw(TypeError, 'true is not a string')
+            }).to.throw(Error, 'true is not an e-mail')
 
             expect(() => {
                 authenticateUser(email, 12313)
@@ -92,11 +92,11 @@ describe('client - authenticate user', () => {
         it('should fail on void field', () => {
             expect(() => {
                 authenticateUser('', password)
-            }).to.throw(VoidError, 'string is empty or blank')
+            }).to.throw(Error, ' is not an e-mail')
 
             expect(() => {
                 authenticateUser(email, '')
-            }).to.throw(VoidError, 'string is empty or blank')
+            }).to.throw(Error, '"" length is not greater or equal than 8')
 
         })
 

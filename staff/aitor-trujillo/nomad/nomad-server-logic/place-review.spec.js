@@ -7,6 +7,7 @@ const { random } = Math
 const { expect } = require('chai')
 require('nomad-commons/polyfills/json')
 const { mongoose, models: { Workspace, User } } = require('nomad-data')
+const { errors: { UnexistenceError } } = require('nomad-commons')
 
 describe('logic - place review in workspace', () => {
     before(() => mongoose.connect(MONGODB_URL))
@@ -40,8 +41,6 @@ describe('logic - place review in workspace', () => {
             price: { amount: random() + 100, term: 'month' },
             address: { street: `${random()} st`, city: `${random()} city`, country: `${random()} country` },
             geoLocation: { coordinates: [random(), random()] },
-            // timetable = `timetable-${random()}`
-            // photos: [`photo-${random()}`],
             phone: `phone-${random()}`,
             features: { wifi: true, parking: false, coffee: true, meetingRooms: false },
             description: `description-${random()}`,
@@ -66,6 +65,38 @@ describe('logic - place review in workspace', () => {
         expect(review.user.toString()).to.equal(userId)
         expect(review.stars.toFixed(1)).to.equal(stars.toFixed(1))
         expect(review.text).to.equal(text)
+    })
+
+    describe('when user does not exist', () => {
+        beforeEach(async () =>
+            await User.deleteMany()
+        )
+
+        it('should fail on unexisting userid', async () => {
+
+            const results = await placeReview(userId, workspaceId, stars, text)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    expect(error).to.be.an.instanceof(UnexistenceError)
+                    expect(error.message).to.equal(`user with id ${userId} does not exist`)
+                })
+        })
+    })
+
+    describe('when there is no workspace to post', () => {
+        beforeEach(async () =>
+            await Workspace.deleteMany()
+        )
+
+        it('should fail on any workspace reference', async () => {
+
+            const results = await placeReview(userId, workspaceId, stars, text)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    expect(error).to.be.an.instanceof(UnexistenceError)
+                    expect(error.message).to.equal(`workspace with id ${workspaceId} does not exist`)
+                })
+        })
     })
 
     afterEach(() => User.deleteMany().then(() => Workspace.deleteMany()))

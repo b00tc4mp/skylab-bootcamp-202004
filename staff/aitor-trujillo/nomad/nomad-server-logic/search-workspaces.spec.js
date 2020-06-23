@@ -52,7 +52,7 @@ describe('logic - search workspaces', () => {
     })
 
     it('should succeed on valid query', async () => {
-        const workspaces = await searchWorkspaces('city') // ?
+        const workspaces = await searchWorkspaces('city')
 
         expect(workspaces).to.exist
 
@@ -74,6 +74,21 @@ describe('logic - search workspaces', () => {
         expect(workspace.features.meetingRooms).to.equal(workspaceRandom.features.meetingRooms)
         expect(workspace.description).to.equal(workspaceRandom.description)
         expect(workspace.capacity).to.equal(workspaceRandom.capacity)
+    })
+    describe('when there is no workspaces for query', () => {
+        beforeEach(async () =>
+            await Workspace.deleteMany()
+        )
+
+        it('should fail on any workspaces found', async () => {
+
+            const results = await searchWorkspaces('city')
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    expect(error).to.be.an.instanceof(Error)
+                    expect(error.message).to.equal(`no matchings for "city"`)
+                })
+        })
     })
 
     afterEach(() => User.deleteMany().then(() => Workspace.deleteMany()))

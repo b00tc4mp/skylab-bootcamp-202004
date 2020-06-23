@@ -26,7 +26,7 @@ export default function Profile({ handleLogout, navigation }) {
         (async () => {
             await getUser()
         })()
-    }, [image])
+    }, [])
 
     return (
         <SafeAreaView style={styles.container}>

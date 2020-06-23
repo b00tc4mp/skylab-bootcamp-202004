@@ -72,6 +72,22 @@ describe('logic - retrieve workspace by id', () => {
         expect(workspace.capacity).to.equal(workspaceRandom.capacity)
     })
 
+    describe('when workspace does not exist', () => {
+        beforeEach(async () =>
+            await Workspace.deleteMany()
+        )
+
+        it('should fail on any workspaces to retrieve', async () => {
+
+            const results = await retrieveWorkspaceById(workspaceId)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    expect(error).to.be.an.instanceof(Error)
+                    expect(error.message).to.equal(`workspace with id ${workspaceId} does not exist`)
+                })
+        })
+    })
+
     afterEach(() => User.deleteMany().then(() => Workspace.deleteMany()))
 
     after(mongoose.disconnect)

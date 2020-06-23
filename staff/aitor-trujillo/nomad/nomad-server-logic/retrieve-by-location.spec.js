@@ -7,6 +7,7 @@ const { random } = Math
 const { expect } = require('chai')
 require('nomad-commons/polyfills/json')
 const { mongoose, models: { Workspace, User } } = require('nomad-data')
+const { errors: { UnexistenceError } } = require('nomad-commons')
 
 describe('logic - retrieve ws by location', () => {
     before(() => mongoose.connect(MONGODB_URL))
@@ -18,15 +19,14 @@ describe('logic - retrieve ws by location', () => {
     let workspaceId2
     let ws1, ws2
 
-    const generateWorkspace = (id) => {
+    const generateWorkspace = (id, filter) => {
         return {
             creator: id,
             name: `name-${random()}`,
-            category: 'cowork',
+            category: filter,
             price: { amount: random() + 100, term: 'month' },
             address: { street: `${random()} st`, city: `${random()} city`, country: `${random()} country` },
             geoLocation: { coordinates: [random() * 15 + 1, random() * 15 + 1] },
-            // timetable = `timetable-${random()}`
             photos: [`photo-${random()}`],
             phone: `phone-${random()}`,
             features: { wifi: false, parking: false, coffee: true, meetingRooms: false },
@@ -53,8 +53,8 @@ describe('logic - retrieve ws by location', () => {
                 userId = id
             })
 
-        workspace1 = generateWorkspace(userId)
-        workspace2 = generateWorkspace(userId)
+        workspace1 = generateWorkspace(userId, 'cowork')
+        workspace2 = generateWorkspace(userId, 'coffee')
 
         ws1 = await Workspace.create(workspace1)
         ws2 = await Workspace.create(workspace2)
@@ -73,13 +73,11 @@ describe('logic - retrieve ws by location', () => {
 
         expect(results).to.exist
 
-        let _ws1, _ws2
+        let _ws1 = ws1
+        let _ws2 = ws2
 
         const [workspace1, workspace2] = results
-        if (ws1.name === workspace1.name) {
-            _ws1 = ws1
-            _ws2 = ws2
-        } else {
+        if (ws1.name !== workspace1.name) {
             _ws1 = ws2
             _ws2 = ws1
         }
@@ -98,6 +96,8 @@ describe('logic - retrieve ws by location', () => {
         expect(workspace2.address.country).to.equal(_ws2.address.country)
         expect(workspace1.geoLocation.coordinates[0]).to.equal(_ws1.geoLocation.coordinates[0])
         expect(workspace2.geoLocation.coordinates[0]).to.equal(_ws2.geoLocation.coordinates[0])
+        expect(workspace1.geoLocation.coordinates[1]).to.equal(_ws1.geoLocation.coordinates[1])
+        expect(workspace2.geoLocation.coordinates[1]).to.equal(_ws2.geoLocation.coordinates[1])
         expect(workspace1.features.wifi).to.equal(_ws1.features.wifi)
         expect(workspace2.features.wifi).to.equal(_ws2.features.wifi)
         expect(workspace1.features.parking).to.equal(_ws1.features.parking)
@@ -111,6 +111,65 @@ describe('logic - retrieve ws by location', () => {
         expect(workspace1.capacity).to.equal(_ws1.capacity)
         expect(workspace2.capacity).to.equal(_ws2.capacity)
     })
+
+    it('should get the results by location & filter', async () => {
+        let location = [random() * 15 + 1, random() * 15 + 1]
+
+        const results = await retrieveByLocation(userId, location, 'cowork')
+
+        expect(results).to.exist
+
+        expect(results.length).to.equal(1)
+
+        const [workspace] = results
+
+        expect(workspace.name).to.equal(ws1.name)
+        expect(workspace.price.amount).to.equal(ws1.price.amount)
+        expect(workspace.price.term).to.equal(ws1.price.term)
+        expect(workspace.address.street).to.equal(ws1.address.street)
+        expect(workspace.address.city).to.equal(ws1.address.city)
+        expect(workspace.address.country).to.equal(ws1.address.country)
+        expect(workspace.geoLocation.coordinates[0]).to.equal(ws1.geoLocation.coordinates[0])
+        expect(workspace.geoLocation.coordinates[1]).to.equal(ws1.geoLocation.coordinates[1])
+        expect(workspace.features.wifi).to.equal(ws1.features.wifi)
+        expect(workspace.features.parking).to.equal(ws1.features.parking)
+        expect(workspace.features.coffee).to.equal(ws1.features.coffee)
+        expect(workspace.features.meetingRooms).to.equal(ws1.features.meetingRooms)
+        expect(workspace.description).to.equal(ws1.description)
+        expect(workspace.capacity).to.equal(ws1.capacity)
+    })
+    describe('when user does not exist', () => {
+        beforeEach(async () =>
+            await User.deleteMany()
+        )
+
+        it('should fail on unexisting userid', async () => {
+            let location = [random() * 15 + 1, random() * 15 + 1]
+            const results = await retrieveByLocation(userId, location)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    expect(error).to.be.an.instanceof(UnexistenceError)
+                    expect(error.message).to.equal(`user with id ${userId} does not exist`)
+                })
+        })
+    })
+    describe('when there is no workspaces near', () => {
+        beforeEach(async () =>
+            await Workspace.deleteMany()
+        )
+
+        it('should fail on any workspaces to retrieve', async () => {
+            let location = [random() * 15 + 1, random() * 15 + 1]
+            const results = await retrieveByLocation(userId, location)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    expect(error).to.be.an.instanceof(Error)
+                    expect(error.message).to.equal('No workspaces near you')
+                })
+        })
+    })
+
+
 
     afterEach(() => User.deleteMany().then(() => Workspace.deleteMany()))
 
