@@ -30,20 +30,15 @@ function App({ history }) {
 
   const handleLogin = () => history.push('/home')
 
+  const handleGoToHome = () => history.push('/home')
+
   const handleGoToLogin = () => history.push('/login')
 
-  const handlePlaneInit = (id) => {
+  const handlePlaneInit = (id) => { debugger
   history.push(`/blueprint/${id}`)
   }
   const blueprint = {};
 
-  // blueprint.items = [];
-
-  // blueprint.getItem = function(searchId) {
-  //   blueprint.items.forEach((element) => {
-  //     if(element.id == searchId) return element
-  //   })
-  // }
 
   //TODO function to uptdate blueprint with existing data
 
@@ -69,7 +64,7 @@ function App({ history }) {
           isSessionActive()? <Home blueprint={blueprint} onLogout={handleLogout} onGoToFloorPlan={handlePlaneInit} /> : <Redirect to="/"/> }/>
 
           <Route path='/blueprint/:id' render={props => 
-          isSessionActive()? <FloorPlan blueprintId={props.match.params.id}/> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>}/>
+          isSessionActive()? <FloorPlan blueprintId={props.match.params.id} onGoToHome={handleGoToHome}/> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin}/>}/>
         
       </header>
     </div>

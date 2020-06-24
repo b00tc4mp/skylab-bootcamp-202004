@@ -6,6 +6,10 @@ module.exports = new Schema({
         required: true
     },
 
+    catalogueItemId: String,
+
+    id: String,
+
     x: {
         type: Number,
         required: true,

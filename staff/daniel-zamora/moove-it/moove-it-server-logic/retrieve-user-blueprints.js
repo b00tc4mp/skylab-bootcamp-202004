@@ -8,19 +8,21 @@ module.exports = (userId) => {
 
     return (async() => { debugger
 
-        const user = await User.findById(userId).populate('blueprints').lean()
+        const user = await User.findById(userId).populate('blueprints','id name width height date').lean()
         if (!user) throw new UnexistenceError(`User with id ${userId} does not exist`)
 
 
-        user.id = user._id.toString()
-        // user.blueprints.id = user.blueprints._id.toString()
+        const blueprints = user.blueprints.map(blueprint=> {
+            blueprint.id = blueprint._id.toString()
 
-        delete user._id
+            delete blueprint._id
+            return blueprint
+        })
  
 
 
         
-        return user.blueprints
+        return blueprints
         
 
     })()

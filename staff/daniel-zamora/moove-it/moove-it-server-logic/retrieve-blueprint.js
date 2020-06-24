@@ -1,9 +1,10 @@
 require('moove-it-commons/polyfills/string')
 const { errors: { UnexistenceError } } = require('moove-it-commons')
 const { mongoose: { ObjectId }, models: { Blueprint, User } } = require('moove-it-data')
+const item = require('moove-it-data/models/schemas/item')
 
 module.exports = (userId, blueprintId) => {
-    debugger
+    
     String.validate.notVoid(userId)
     String.validate.notVoid(blueprintId)
 
@@ -17,6 +18,8 @@ module.exports = (userId, blueprintId) => {
         if (!blueprint) throw new UnexistenceError(`blueprint with id ${blueprintId} does not exist`)
 
         blueprint.id = blueprint._id.toString()
+
+        blueprint.items.forEach(item => delete item._id)
             //TODO user un populate para traer todos los items
 
         delete blueprint._id

@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { retrieveUser } from 'moove-it-client-logic';
 import './Home.sass'
 import logo from '../images/animated-plane-v4-name&shadow.png'
-import userLogo from '../images/user-icon.png';
+import logoutIcon from '../images/log-out.png';
 import {createBlueprint, retrieveUserBlueprints} from 'moove-it-client-logic'
 import moment from 'moment';
 import { context } from "moove-it-client-logic"
 
 context.actualBlueprint = {};
 
-export default function Home({blueprint, onGoToFloorPlan}) {
+export default function Home({blueprint, onGoToFloorPlan, onLogout}) {
     const [error, setError] = useState()
     const [name, setName] = useState()
     const [userBlueprints, setUserBlueprints] = useState([])
@@ -18,6 +18,7 @@ export default function Home({blueprint, onGoToFloorPlan}) {
         try {
             retrieveUser()
                 .then(user => setName(user.name))
+                .catch(error => setError(error.message))
             retrieveUserBlueprints()
                 .then(blueprints => setUserBlueprints(blueprints))
                 .catch(error => setError(error.message))
@@ -38,6 +39,7 @@ export default function Home({blueprint, onGoToFloorPlan}) {
         blueprint = {name: name, width: width, height: height}
 
         try {
+            debugger
             createBlueprint(name, width,height)
                 .then(id => onGoToFloorPlan(id))
                 .catch(error => setError(error.message))
@@ -46,16 +48,22 @@ export default function Home({blueprint, onGoToFloorPlan}) {
         }
     }
 
+    const handleLogout = (e) =>{
+        sessionStorage.clear()
+        setName()
+        onLogout()
+    }
+
 
 
     return <section className="home">
             <nav className="home__nav">
                 <div className="home__logo">
-                    <img src={logo}></img>
+                    <img src={logo}/>
                 </div>
-                <div className="home__user">
-                    <img src={userLogo}></img>
-                </div>
+                <a className="home__user" >
+                    <img onClick={handleLogout} src={logoutIcon}/>Logout
+                </a>
             </nav>
             <h2 className="home__salute">Nice to see you again, {name}</h2>
             <h4 className="home__title">Create your next layout</h4>
@@ -72,7 +80,7 @@ export default function Home({blueprint, onGoToFloorPlan}) {
                 <h4 className='home__title'>Your last blueprints</h4>
                 <ul className="home__list">{userBlueprints.map(({id, name, width, height, date})=> {
                     date = moment(date).format("DD/MM/YYYY")
-                    return <li key={id}><a onClick={onGoToFloorPlan(id)}>{`Name: ${name}, Width: ${width}, Height: ${height} created on: ${date}`}</a></li>
+                    return <li key={id}><a onClick={()=>onGoToFloorPlan(id)}>{`Name: ${name}, Width: ${width}, Height: ${height} created on: ${date}`}</a></li>
                 })}</ul> 
             </div>
     </section>

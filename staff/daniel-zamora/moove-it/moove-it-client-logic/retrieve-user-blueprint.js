@@ -12,10 +12,10 @@ module.exports = function() {
         debugger
         if (status === 200) {
 
-            const blueprints = JSON.parse(body)
+           return JSON.parse(body)
 
-            return blueprints
 
+          
         } else if (status === 404) {
 
             throw new Error('You dont have any blueprint yet')
