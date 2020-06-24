@@ -11,6 +11,7 @@ module.exports = {
     toggleTableOrder: require('./toggle-table-order'),
     addDishesToOrder: require('./add-dishes-to-order'),
     retrieveTables: require('./retrieve-tables'),
-    retrieveOrders: require('./retrieve-orders')
+    retrieveOrders: require('./retrieve-orders'),
+    retrieveOrderDishes: require('./retrieve-order-dishes')
 
 }

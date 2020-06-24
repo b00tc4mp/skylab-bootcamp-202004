@@ -1,109 +1,103 @@
 require('dotenv').config()
-
-const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL  } } = process
+global.XMLHttpRequest = require('xhr2')
+const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 
 const authenticate = require('./authenticate')
 const { random } = Math
 const { expect } = require('chai')
 require('qrmenu-commons/polyfills/json')
-const {utils: {generateNIF: {generateNIF}}} = require('qrmenu-commons')
-const { mongo, mongo: {ObjectId} } = require('qrmenu-data')
+const { mongoose, models: { Establishment } } = require('qrmenu-data')
 const bcrypt = require('bcryptjs')
-const context = require('./context')
-const staff = require('qrmenu-data/models/schemas/staff')
-require('qrmenu-commons/ponyfills/xhr')
-require('qrmenu-commons/ponyfills/atob')
+const {utils: {generateNIF: {generateNIF}}} = require('qrmenu-commons')
 
-context.API_URL = API_URL
+describe('logic - authenticate', () => {
+    before(() => mongoose.connect(MONGODB_URL))
 
-describe.only('logic - authenticate', () => {
-    let establishments
-    before(() => mongo.connect(MONGODB_URL)
-        .then(connection => establishments = connection.db().collection('establishments'))
-    )
-
-    let  establishment, nif, email, password, _workerId, hash
+    let establishment, nif, email, password, establishmentId, hash
 
     beforeEach(() =>
-        establishments.deleteMany()
-            .then(() => {
-                establishment = `establishment-${random()}`
-                nif = `${generateNIF()}`
-                email = `e-${random()}@mail.com`
-                password = `password-${random()}`
+        Establishment.deleteMany()
+        .then(() => {
+            establishment = `name-${random()}`
+            nif =  generateNIF()
+            email = `e-${random()}@mail.com`
+            password = `password${random()}`
 
-                return bcrypt.hash(password, 10)
-            })
-            .then(_hash => {             
-               
-                hash = _hash
-            })
+            return bcrypt.hash(password, 10)
+        })
+        .then(_hash => hash = _hash)
     )
 
-    
-    describe('when worker already exists', () => {
-        
-        beforeEach(()=>{
-            establishments.deleteMany()
-            .then(() => establishments.insertOne({establishment, nif, staff: [{_id: ObjectId(), email, password: hash}]}))
-            .then(({insertedId}) => {
-                return establishments.findOne({_id: ObjectId(insertedId.toString())})
-            })
-            .then(({staff}) => {
-                _workerId = staff[0]._id.toString()
-            })
-        })
+    describe('when user already exists', () => {
+        debugger
+        beforeEach(() =>
+            Establishment.create({ establishment, nif, staff: [{email, password: hash}] })
+                .then(_establishment => establishmentId = _establishment.id)
+        )
 
-        it('should succeed on valid data', () =>
-            
-            authenticate(nif, email, password)
-                .then(token => { 
-                    expect(token).to.exist
-                    expect(token).to.be.a('string')
-    
-                    const [,payloadBase64] = token.split('.')
-    
-                    const payloadJson = atob(payloadBase64)
-    
-                    const payload = JSON.parse(payloadJson)
-    
-                    const {workerId} = payload
-    
-                    expect(workerId).to.equal(_workerId)
-                })
+        it('should succeed on correct credentials', () => {
+
+            try {
+                debugger
+                authenticate(nif, email, password)
+                    .then(token => {
+                        debugger
+                        expect(token).to.exist
+                        expect(token).to.be.a('string')
+                    })
+            } catch (error) {
+                expect(error).to.be.null
+            }
+        }
         )
 
         it('should fail on wrong password', () => {
-            password += '-wrong'
-
-            return authenticate(nif, email, password)
-            .then(() => { throw new Error('should not reach this point') })
-            .catch(error => {
-                expect(error).to.be.an.instanceof(Error)
-                expect(error.message).to.equal('wrong password')
-            })
-
+            password += 'wrong-'
+            debugger
+            return authenticate(nif,email, password)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    expect(error).to.be.an.instanceof(Error)
+                    expect(error.message).to.equal(`wrong password`)
+                })
         })
-    });
-        
 
-
-    describe('when worker does not exist', () => {
-        
-        beforeEach(() => establishments.insertOne({establishment, nif, staff: [{_id: ObjectId(), email, password: hash}]}))
-        
-        it('should fail on worker does not exist', () => {
-            email = 'wrong-' + email 
-            return authenticate(nif, email, password)
-            .then(() => { throw new Error('should not reach this point') })
-            .catch(error => {
+    
+        it('should fail on wrong email', () => {
+            email = 'wrong-' + email
+            debugger
+            try {
+                authenticate(nif,email, password)
+                    .then(() => { throw new Error('should not reach this point') })
+                    
+            } catch (error) {
+                    
+   
                 expect(error).to.be.an.instanceof(Error)
                 expect(error.message).to.equal(`User with e-mail ${email} does not exist`)
-            })
+                  
+            }
         })
+        
+        it('should fail on passing a wrong type of value as arguments' , () => {
+            debugger
+            
+            expect(()=> authenticate(null,email, password)).to.throw(Error, 'null is not a NIF')
+            expect(()=> authenticate(nif,null, password)).to.throw(Error, 'null is not an e-mail')
+            expect(()=> authenticate(nif,email, null)).to.throw(Error, 'null is not a string')
+                    
+    
+        })
+
+
+
+
     })
 
-    afterEach(() => establishments.deleteMany())
 
-    after(() => establishments.deleteMany({}).then(mongo.disconnect))
+
+
+    afterEach(() => Establishment.deleteMany())
+
+    after(mongoose.disconnect)
 })

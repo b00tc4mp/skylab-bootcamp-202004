@@ -12,7 +12,6 @@ export default function() {
     useEffect(() => {
         retrieveOrders(sessionStorage.token)
         .then(_orders => setOrders(_orders))
-        .catch(error => console.log(error))
     },[])
 
     useEffect(()=>{
@@ -26,7 +25,7 @@ export default function() {
         console.log(_dishStatus)
         
         setActive(!active)
-        setDishStatus(_dishStatus)
+        setDishStatus(_dishStatus.map(item=> item.dish))
     }
 
     return  <section class="orders">

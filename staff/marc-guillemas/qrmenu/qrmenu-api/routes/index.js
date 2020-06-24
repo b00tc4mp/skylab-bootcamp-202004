@@ -14,7 +14,8 @@ const {
     toggleTableOrder,
     addDishesToOrder,
     retrieveTables,
-    retrieveOrders
+    retrieveOrders,
+    retrieveOrderDishes
 } = require('./handlers')
 
 const bodyParser = require('body-parser')
@@ -33,7 +34,7 @@ api.post('/user/auth', parseBody, authenticate)
 api.get('/worker', verifyExtractJwt, retrieveWorker)
 api.post('/worker', parseBody, verifyExtractJwt, registerWorker)
 api.post('/dishes', parseBody, verifyExtractJwt, addDish)
-// api.get('/dishes', verifyExtractJwt, retrieveDishes)
+api.post('/dish', verifyExtractJwt, parseBody, retrieveOrderDishes)
 api.get('/establishment', verifyExtractJwt, retrieveEstablishment)
 api.post('/qtytables', parseBody, verifyExtractJwt, assignNumOfTables)
 api.post('/open', parseBody, verifyExtractJwt, toggleTableOrder)

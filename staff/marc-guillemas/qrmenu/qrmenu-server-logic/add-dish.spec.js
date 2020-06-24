@@ -6,6 +6,7 @@ const addDish = require('./add-dish')
 const {random} = Math
 const bcrypt = require('bcryptjs')
 const {expect} = require('chai')
+const { UnexistenceError, CredentialsError } = require('qrmenu-commons/errors')
 
 describe('server-logic add dish ',() => {
     
@@ -83,6 +84,57 @@ describe('server-logic add dish ',() => {
                 
             
         })
+
+        it('should fail on non passing a string as arguments', () => {
+         
+            try {
+                
+                addDish("5ef30217e22a4608f83d5d8f", workerId, dishName, description, price, tags)
+                    .then(() => {
+                        throw new Error('should not reach this point')
+                    })
+            } catch (error) {
+                expect(error).to.exist
+                expect(error).to.be.an.instanceOf(UnexistenceError)
+                expect(error.message).to.equal('Establishment with id 5ef30217e22a4608f83d5d8f does not exist')
+
+            }
+                    
+                
+            
+        })
+        
+        it('should fail on non passing a string as arguments', () => {
+         
+            try {
+                
+                addDish(establishmentId, "5ef30217e22a4608f83d5d8f", dishName, description, price, tags)
+                    .then(() => {
+                        throw new Error('should not reach this point')
+                    })
+            } catch (error) {
+                expect(error).to.exist
+                expect(error).to.be.an.instanceOf(CredentialsError)
+                expect(error.message).to.equal('can not add dishes to the menu with your working role')
+
+            }
+                    
+                
+            
+        })
+        
+    
+        
+        it('should fail on non passing a string as arguments', () => {
+                 
+            expect(()=> addDish(null, workerId, dishName, description, price, tags)).to.throw(TypeError, "is not a string")
+            expect(()=> addDish(establishmentId, null, dishName, description, price, tags)).to.throw(TypeError, "is not a string")
+            expect(()=> addDish(establishmentId, workerId, null, description, price, tags)).to.throw(TypeError, "is not a string")
+            expect(()=> addDish(establishmentId, workerId, dishName, null, price, tags)).to.throw(TypeError, "is not a string")
+            expect(()=> addDish(establishmentId, workerId, dishName, description, price, null)).to.throw(TypeError, "is not an array")
+        
+        })
+                
     })
 
 

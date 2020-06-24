@@ -6,9 +6,13 @@ const {random} = Math
 const bcrypt = require('bcryptjs')
 const {expect} = require('chai')
 const {utils: {generateNIF: {generateNIF}}} = require('qrmenu-commons')
+const { UnexistenceError } = require('qrmenu-commons/errors')
 
 describe('server-logic register worker', () => {
-    before(() => mongoose.connect(MONGODB_URL).then(()=> Establishment.deleteMany()))
+    before(async() => {
+        await mongoose.connect(MONGODB_URL)
+        await Establishment.deleteMany()
+     })
 
     let establishment, nif, email, password, newEmail, role, _password, establishmentId, workerId
 
@@ -24,42 +28,18 @@ describe('server-logic register worker', () => {
     })
 
     describe('when the establishment exists', ()=>{
-        beforeEach(() => 
-            bcrypt.hash(password, 10)
-                    .then(hash =>  Establishment.create({establishment, nif, staff: [{email, role: 'owner', password: hash}]}))
-                    .then(_establishment => {
-                        establishmentId = _establishment.id
-                        workerId = _establishment.staff[0].id
-                    })                
-        )
+        beforeEach(async() => {
+            const hash = await bcrypt.hash(password, 10)
+            const _establishment =  await Establishment.create({establishment, nif, staff: [{email, role: 'owner', password: hash}]})
+              
+            establishmentId = _establishment.id
+            workerId = _establishment.staff[0].id
+                              
+        })
         
         
         it('should succed on register worker', async() => { 
             await registerWorker(establishmentId, workerId, newEmail, role, _password)
-                // .then(() => {debugger
-                //     return Establishment.findById(establishmentId)
-                // })
-                // .then(({staff}) => {debugger
-                //     return staff.find(_worker => _worker.email === newEmail &&  _worker.role === role)
-                // })
-                // .then(worker => {
-                //     debugger
-                //     expect(worker.email).to.exist
-                //     expect(worker.email).to.be.a('string')
-                //     expect(worker.email).to.equal(newEmail)
-                //     expect(worker.role).to.exist
-                //     expect(worker.role).to.be.a('string')
-                //     expect(worker.role).to.equal(role)
-
-                //     return bcrypt.compare(_password, worker.password)
-                //         .then(match => {
-                //             expect(worker.password).to.exist
-                //             expect(worker.password).to.be.a('string')
-                //             expect(match).to.exist
-                //             expect(match).to.be.true
-                //         })
-
-                // })
                
             const {staff} = await Establishment.findById(establishmentId)
                
@@ -82,7 +62,23 @@ describe('server-logic register worker', () => {
             expect(match).to.be.true
                
         })
+
+
+        it('should fail on wrong establishment id', async() => {
+            try {
+                await registerWorker("5eedfc3256012e6c3dbb7cbe", workerId, newEmail, role, _password)
+                throw new Error('Should not reach this point')
+            } catch (error) {
+                debugger
+                expect(error).to.exist
+                expect(error).to.be.an.instanceOf(UnexistenceError)
+                expect(error.message).to.equal("Establishment with id 5eedfc3256012e6c3dbb7cbe does not exist")
+            }          
+        })
     })
 
-    after(() => mongoose.disconnect().then(() => Establishment.deleteMany()))
+    after(async() => {
+        await Establishment.deleteMany()
+        await mongoose.disconnect()
+    })
 })

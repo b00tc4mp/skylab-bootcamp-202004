@@ -9,5 +9,6 @@ module.exports = {
     toggleTableOrder: require('./toggle-table-order'),
     retrieveOrders: require('./retrieve-orders'),
     retrieveDishes: require('./retrieve-dishes'),
-    addDishesToOrder: require('./add-dishes-to-order')
+    addDishesToOrder: require('./add-dishes-to-order'),
+    retrieveOrderDishes: require('./retrieve-order-dishes')
 }

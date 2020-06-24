@@ -2,6 +2,7 @@
 import React, {useState} from 'react'
 import './Login.sass'
 import {authenticate} from 'qrmenu-client-logic'
+import Feedback from './Feedback'
 
 
 export default function ({onLogin, onGoToRegister}) {
@@ -28,8 +29,9 @@ export default function ({onLogin, onGoToRegister}) {
             authenticate(nif, email, password)
                 .then(token => onLogin(token))
                 
-        } catch (error) {
-            setError(error)
+        } catch ({message}) {
+            debugger
+            setError(message)
         }
     }
 
@@ -45,5 +47,6 @@ export default function ({onLogin, onGoToRegister}) {
             <a href="" className="login__toregister"onClick={handleGoToRegister}>Not a member yet? Register now!</a>     
             <button className="login__button">Login</button>
         </form>
+        {error && <Feedback message={error} level="error"/> }
     </section> 
 }

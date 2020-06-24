@@ -2,6 +2,7 @@ require('../qrmenu-commons/polyfills/string')
 const {models: {Establishment}} = require('qrmenu-data')
 const {errors: {UnexistenceError}} = require('qrmenu-commons')
 module.exports = (establishmentId, workerId) => {
+    
     String.validate.notVoid(establishmentId)
     String.validate.notVoid(workerId)
     

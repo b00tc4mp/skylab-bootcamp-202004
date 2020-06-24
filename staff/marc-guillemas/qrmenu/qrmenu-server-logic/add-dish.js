@@ -5,11 +5,11 @@ const { errors: { UnexistenceError, CredentialsError } } = require('qrmenu-commo
 const { models: {Establishment} } = require('qrmenu-data')
 
 module.exports = (establishmentId, workerId, name, description, price, tags) => {
-    String.validate.notVoid(establishmentId)
-    String.validate.notVoid(workerId)
-    String.validate.notVoid(name)
-    String.validate.notVoid(description)
-    Number.validate.positive(price)
+    String.validate(establishmentId)
+    String.validate(workerId)
+    String.validate(name)
+    String.validate(description)
+    Number.validate(price)
     Array.validate(tags)
     Array.validate.notVoid(tags)
     debugger

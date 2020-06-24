@@ -51,20 +51,13 @@ describe('server-logic assign-num-of-tables ',() => {
         it('should fail on wrong establishment id', async() => {
            
             try {
-              await assignNumOfTables("5reb9bfb7b07e61ba82ae452", workerId, ntables)
+              await assignNumOfTables("5ef30217e22a4608f83d5d8f", workerId, ntables)
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.exist
-                // expect(error).to.be.an.instanceOf(UnexistenceError)
-                // expect(error.message).to.equal(`Establishment with id ${establishmentId} does not exist`)
+                expect(error).to.be.an.instanceOf(UnexistenceError)
+                expect(error.message).to.equal("Establishment with id 5ef30217e22a4608f83d5d8f does not exist")
             }
-    
-            // const _establishment = await Establishment.findById(establishmentId)
-    
-            // const {tables} = _establishment
-    
-            // expect(error).to.exist
-            // expect(tables).to.have.lengthOf(0)
         })
 
 

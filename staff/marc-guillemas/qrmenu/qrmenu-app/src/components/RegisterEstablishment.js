@@ -1,6 +1,8 @@
 import './Register.sass'
 import {registerEstablishment} from 'qrmenu-client-logic'
 import React, {useState} from 'react'
+import Feedback from './Feedback'
+
 export default function ({onRegister, onGoToLogin}) {
 
     
@@ -50,5 +52,7 @@ export default function ({onRegister, onGoToLogin}) {
             <a href="" className="register__tologin" onClick={handleGoToLogin}>Already registered? Sign In now! </a>
             <button className="register__button">Register</button>
         </form>
+
+        {error && <Feedback message={error} level="error"/> }
     </section> 
 }

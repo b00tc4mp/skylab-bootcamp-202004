@@ -1,10 +1,13 @@
 const {models: {Establishment, Dish, DishStatus}} = require('qrmenu-data')
 const {errors: {UnexistenceError, CredentialsError}} = require('qrmenu-commons')
+require('qrmenu-commons/polyfills/string')
+require('qrmenu-commons/polyfills/array')
+
 
 module.exports = (establishmentId, tableId, userDishes) => {
-    console.log(establishmentId)
-    console.log(tableId)
-    console.log(userDishes)
+    String.validate(establishmentId)
+    String.validate(tableId)
+    Array.validate(userDishes)
     debugger
     return (async() => {
         debugger
