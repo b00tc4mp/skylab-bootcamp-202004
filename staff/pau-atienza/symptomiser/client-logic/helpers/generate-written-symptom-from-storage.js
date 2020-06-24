@@ -17,14 +17,16 @@ module.exports = symptom => {
                 symptomString += `Term: \n${HPO_id}: ${name}`
                 break
             case 'modifiers':
-                symptomString += ', \n\nModifiers:'
-
-                symptom[key].forEach(({HPO_id, name}) => {
-                    String.validate.notVoid(HPO_id)
-
-                    String.validate.notVoid(name)
-                    symptomString += ` \n${HPO_id}: ${name}`
-                } )
+                if(symptom[key].length){
+                    symptomString += ', \n\nModifiers:'
+    
+                    symptom[key].forEach(({HPO_id, name}) => {
+                        String.validate.notVoid(HPO_id)
+    
+                        String.validate.notVoid(name)
+                        symptomString += ` \n${HPO_id}: ${name}`
+                    } )
+                }
                 break
             case 'comments':
                 const comments = symptom[key]

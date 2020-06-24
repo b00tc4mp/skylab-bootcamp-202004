@@ -49,8 +49,6 @@ describe('server logic - register admin', () => {
         it('should fail on trying to register an existing admin', async () => {
             try {
                 await registerAdmin(username, email, password)
-
-                throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.exist
 

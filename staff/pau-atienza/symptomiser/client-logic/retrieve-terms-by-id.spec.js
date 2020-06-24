@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { env: { MONGODB_URL, API_URL } } = process
+const { env: { API_URL } } = process
 const context = require('./context')
 context.API_URL = API_URL
 
@@ -13,8 +13,10 @@ describe('client logic - retrieve-terms-by-id', () => {
 
     describe('when the term exists', () => {
 
-        it('should succeed on correct id', () =>
-            retrieveTermsById(HPO_id)
+        it('should succeed on correct id', () =>{
+            context.API_URL = API_URL
+
+            return retrieveTermsById(HPO_id)
                 .then(result => {
                     expect(result.term).to.exist
 
@@ -34,16 +36,15 @@ describe('client logic - retrieve-terms-by-id', () => {
                     expect(result.lower[0]._id).to.not.exist
                     expect(result.lower[0].__v).to.not.exist
                     expect(result.lower[0].xref).to.not.exist
-                    return
                 })
-        )
+        })
     })
 
     it('should fail when term does not exist', () => {
         const newHPO_id = "HP:1000010"
+        context.API_URL = API_URL
 
         return retrieveTermsById(newHPO_id)
-            .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
                 expect(error).to.exist
 
@@ -51,16 +52,16 @@ describe('client logic - retrieve-terms-by-id', () => {
             })
     })
 
-    it('should fail when input does not fit the format', () => {
+    it('should fail when input does not fit the format', async () => {
         try{
-            retrieveTermsById("")
+            await retrieveTermsById("")
         }catch(error){
             expect(error).to.be.an.instanceof(VoidError)
             expect(error.message).to.equal(`string is empty or blank`)
         }
 
         try{
-            retrieveTermsById([])
+            await retrieveTermsById([])
         }catch(error){
             expect(error).to.be.an.instanceof(TypeError)
             expect(error.message).to.equal(` is not a string`)

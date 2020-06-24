@@ -57,9 +57,6 @@ describe('server logic - update symptom', () => {
 
     it('should succeed to update modifiers and comments without altering previous data of the symptom', async () => {
 
-        symptom.modifiers = modifiers
-        symptom.comments = comments
-
         const _id = await updateSymptom(id, modifiers, comments)
 
         expect(_id).to.equal(id)
@@ -101,6 +98,50 @@ describe('server logic - update symptom', () => {
 
     })
 
+    it('should erase modifiers and comments when they are undefined without altering previous data of the symptom', async () => {
+
+        const _id = await updateSymptom(id)
+
+        expect(_id).to.equal(id)
+
+        const updatedSymptoms = await Symptom.find()
+
+        expect(updatedSymptoms.length).to.equal(1)
+
+        const [updatedSymptom] = updatedSymptoms
+
+        const {navigation: {predictorInput: {content: _content, limit: _limit, date: _date}, predictorOutput: {prediction: _prediction, date: _date2}, clicks: _clicks}} = updatedSymptom
+
+        const {submittedTerm: {HPO_id: _HPO_id, name: _name, confidenceLevel: _confidenceLevel, date: _date3}} = updatedSymptom
+        const {comment: _comments, modifiers: _modifiers} = updatedSymptom
+
+        expect(updatedSymptom.id).to.equal(id)
+
+        expect(_content).to.equal(content)
+        expect(_limit).to.equal(limit)
+        expect(_prediction[0].predictionName).to.equal(predictionName)
+        expect(_prediction[0].predictionCode).to.equal(predictionCode)
+
+        expect(_date.toISOString()).to.equal(date)
+        expect(_date2.toISOString()).to.equal(date2)
+        expect(_date3.toISOString()).to.equal(date3)
+        expect(_clicks[0].date.toISOString()).to.equal(clicks[0].date)
+        
+        
+        expect(_clicks[0].HPO_id).to.equal(clicks[0].HPO_id)
+        expect(_HPO_id).to.equal(HPO_id)
+
+        expect(_name).to.equal(name)
+        
+        
+        expect(_confidenceLevel).to.equal(confidenceLevel)
+        
+        
+        expect(_comments).to.not.exist
+        expect(_modifiers).to.be.an.instanceof(Array)
+        expect(_modifiers.length).to.equal(0)
+    })
+
     describe('when inputs with incorrect format are introduced', async () => {
         
         it('should fail when empty strings are introduced', async () => {
@@ -111,7 +152,6 @@ describe('server logic - update symptom', () => {
 
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
                 updateSymptom(id, modifiers, comments)
-                    .then(()=>{throw Error('should not reach this point')})
             } catch (error) {
                 expect(error).to.exist
 
@@ -125,7 +165,6 @@ describe('server logic - update symptom', () => {
 
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
                 updateSymptom(id, modifiers, comments)
-                    .then(()=>{throw Error('should not reach this point')})
             } catch (error) {
                 expect(error).to.exist
 
@@ -139,7 +178,6 @@ describe('server logic - update symptom', () => {
 
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
                 updateSymptom(id, modifiers, comments)
-                    .then(()=>{throw Error('should not reach this point')})
             } catch (error) {
                 expect(error).to.exist
 
@@ -151,7 +189,6 @@ describe('server logic - update symptom', () => {
                 modifiers = "hi"
 
                 updateSymptom(id, modifiers, comments)
-                    .then(()=>{throw Error('should not reach this point')})
             } catch (error) {
                 expect(error).to.exist
 
@@ -168,7 +205,6 @@ describe('server logic - update symptom', () => {
 
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
                 updateSymptom(id, modifiers, comments)
-                    .then(()=>{throw Error('should not reach this point')})
             } catch (error) {
                 expect(error).to.exist
 
@@ -182,7 +218,6 @@ describe('server logic - update symptom', () => {
 
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
                 updateSymptom(id, modifiers, comments)
-                    .then(()=>{throw Error('should not reach this point')})
             } catch (error) {
                 expect(error).to.exist
 
@@ -196,7 +231,6 @@ describe('server logic - update symptom', () => {
 
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
                 updateSymptom(id, modifiers, comments)
-                    .then(()=>{throw Error('should not reach this point')})
             } catch (error) {
                 expect(error).to.exist
 
@@ -213,7 +247,6 @@ describe('server logic - update symptom', () => {
 
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}, modifiers, comments}                
                 updateSymptom(id, modifiers, comments)
-                    .then(()=>{throw Error('should not reach this point')})
 
             } catch (error) {
                 expect(error).to.exist

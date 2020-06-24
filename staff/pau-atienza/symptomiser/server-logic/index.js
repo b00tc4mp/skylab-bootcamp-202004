@@ -5,5 +5,8 @@ module.exports = {
     registerSymptom: require('./register-symptom'),
     registerSymptomList: require('./register-symptom-list'),
     updateSymptom: require('./update-symptom'),
-    sendSymptomlistByEmail: require('./send-symptomlist-by-email')
+    sendSymptomlistByEmail: require('./send-symptomlist-by-email'),
+    registerAdmin: require('./register-admin'),
+    authenticateAdmin: require('./authenticate-admin'),
+    retrieveAllSymptoms: require('./retrieve-all-symptoms')
 }

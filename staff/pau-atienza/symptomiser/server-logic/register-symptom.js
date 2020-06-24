@@ -5,7 +5,7 @@ require('commons/polyfills/date')
 const { models: { Symptom } } = require('data')
 
 module.exports = (symptom) => {
-    debugger
+    
     JSON.validateNotArray(symptom)
 
     let {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}} = symptom
@@ -37,7 +37,7 @@ module.exports = (symptom) => {
     date2 = new Date(date2)
     date3 = new Date(date3)
 
-    symptom.navigation.serverResponseTime = date - date2
+    symptom.navigation.serverResponseTime = date2 - date
 
     symptom.navigation.userNavigationTime = clicks[clicks.length-1].date - date2
     

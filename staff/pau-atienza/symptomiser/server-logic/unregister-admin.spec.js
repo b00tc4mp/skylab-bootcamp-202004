@@ -47,7 +47,6 @@ describe('server logic - unregister admin', () => {
             (async ()=>{
                 try{
                     await unregisterAdmin(adminId, email, 'wrong-' + password)
-                    throw new Error('should not reach this point')
                 }catch(error){
                     expect(error).to.be.an.instanceof(CredentialsError)
                         
@@ -56,7 +55,6 @@ describe('server logic - unregister admin', () => {
 
                 try{
                     await unregisterAdmin(adminId, 'wrong-' + email, password)
-                    throw new Error('should not reach this point')
                 }catch(error){
                     expect(error).to.be.an.instanceof(CredentialsError)
                         
@@ -69,7 +67,6 @@ describe('server logic - unregister admin', () => {
 
     it('should fail when admin does not exist', () =>
         unregisterAdmin( "5edfd817d242780ac65bc59c",email, password)
-            .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
                 expect(error).to.be.an.instanceof(UnexistenceError)
                 expect(error.message).to.equal(`admin with id 5edfd817d242780ac65bc59c does not exist`)

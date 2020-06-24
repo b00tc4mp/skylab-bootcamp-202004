@@ -39,11 +39,7 @@ describe('client logic - save predictor input', ()=>{
 
         expect(limit).to.equal(LIMIT)
 
-        try{
-            String.validate.isISODate(date)
-        }catch(error){
-            expect(error).to.not.exist
-        }
+        String.validate.isISODate(date)
     })
 
     it('should fail on invalid inputs', ()=>{

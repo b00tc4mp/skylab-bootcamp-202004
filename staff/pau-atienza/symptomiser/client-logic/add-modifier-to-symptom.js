@@ -11,7 +11,7 @@ module.exports = function(confidenceLevel, modifier){
 
     JSON.validateNotArray(symptomToModify)
 
-    const { modifiers = [] } =symptomToModify
+    const { modifiers = [] } = symptomToModify
 
     Array.validate(modifiers)
 

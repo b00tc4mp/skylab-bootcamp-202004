@@ -63,13 +63,7 @@ describe('client logic - save click', ()=>{
 
         expect(_HPO_id).to.equal(HPO_id)
         
-        try{
-            String.validate.isISODate(date3)
-        }catch(error){
-            expect(error).to.not.exist
-        }
-
-
+        String.validate.isISODate(date3)
     })
 
     it('should succeed to push a new click on valid inputs without modifying the prediction inputs', ()=>{
@@ -115,13 +109,8 @@ describe('client logic - save click', ()=>{
         expect(_date3).to.equal(date3)
         
         expect(_HPO_id).to.equal(HPO_id)
-        try{
-            String.validate.isISODate(date4)
-        }catch(error){
-            expect(error).to.not.exist
-        }
-
-
+        
+        String.validate.isISODate(date4)
     })
 
     describe('when invalid inputs are introduced', ()=>{

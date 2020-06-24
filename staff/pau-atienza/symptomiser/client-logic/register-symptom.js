@@ -41,9 +41,7 @@ module.exports = function(HPO_id, name, confidenceLevel){
     return (async ()=>{
         const {status, body} = await call('POST', `${this.API_URL}/symptoms/`, JSON.stringify(symptom), {"Content-type": "application/json"})
         if (status !== 200) {
-            const {error} = JSON.parse(body)
-
-            throw new Error(error)
+            throw new Error("Internal server error")
         }
         return JSON.parse(body)
     })()

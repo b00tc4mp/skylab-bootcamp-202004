@@ -3,6 +3,7 @@ require('commons/polyfills/string')
 const { models: { Symptom } } = require('data')
 
 module.exports = (id, modifiers = [], comments = "none") => {
+    debugger
     String.validate(id)
 
     String.validate(comments)

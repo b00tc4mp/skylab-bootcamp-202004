@@ -1,39 +1,31 @@
 require('dotenv').config()
-const { env: { MONGODB_URL } } = process
+const { env: { MONGODB_URL, PREDICTOR_URL, LIMIT } } = process
 const { expect } = require('chai')
-const { mongoose, models: { Term } } = require('data')
-const { errors: { UnexistenceError, VoidError } } = require('commons')
+const { mongoose } = require('data')
+const { errors: { VoidError } } = require('commons')
+const context = require('./context')
+
+context.PREDICTOR_URL = PREDICTOR_URL
+context.LIMIT = LIMIT
 
 const retrieveTermsByQuery = require('./retrieve-terms-by-query')
 
 describe('server logic - retrieve-terms-by-query', () => {
     let query = "sore throat"
 
-    before(() => {
-        console.debug('connecting to database')
-        return mongoose.connect(MONGODB_URL)
-            .then(()=>{
-                console.info(`connected to database ${MONGODB_URL}`)
+    it('should succeed on correct inputs', () =>{
 
-                return
+        return retrieveTermsByQuery(query)
+            .then(result => {
+                expect(result).to.exist
+
+                expect(result.prediction).to.be.an.instanceof(Array)
+                expect(result.prediction[0].predictionName).to.exist
+                expect(result.prediction[0].predictionCode).to.exist
+                expect(typeof result.prediction[0].predictionName).to.equal("string")
+                expect(typeof result.prediction[0].predictionCode).to.equal("string")
             })
-    })
-
-    describe('when the term exists', () => {
-
-        it('should succeed on correct inputs', () =>
-            retrieveTermsByQuery(query)
-                .then(result => {
-                    expect(result).to.exist
-
-                    expect(result.prediction).to.be.an.instanceof(Array)
-                    expect(result.prediction[0].predictionName).to.exist
-                    expect(result.prediction[0].predictionCode).to.exist
-                    expect(typeof result.prediction[0].predictionName).to.equal("string")
-                    expect(typeof result.prediction[0].predictionCode).to.equal("string")
-                })
-        ).timeout(8000)
-    })
+    }).timeout(8000)
 
     it('should fail when input does not fit the format', () => {
         try{
@@ -52,5 +44,12 @@ describe('server logic - retrieve-terms-by-query', () => {
     
     })
 
-    after(mongoose.disconnect)
+    it('should fail when weird strings are introduced', () =>{
+        query = "?????"
+        return retrieveTermsByQuery(query)
+            .catch(error=>{
+                expect(error).to.exist
+            })
+    }).timeout(8000)
+
 })

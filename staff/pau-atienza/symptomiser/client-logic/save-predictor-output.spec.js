@@ -54,13 +54,7 @@ describe('client logic - save predictor input', ()=>{
         expect(_predictionName).to.equal(predictionName)
         expect(_predictionCode).to.equal(predictionCode)
         
-        try{
-            String.validate.isISODate(date2)
-        }catch(error){
-            expect(error).to.not.exist
-        }
-
-
+        String.validate.isISODate(date2)
     })
 
     describe('when invalid inputs are introduced', ()=>{

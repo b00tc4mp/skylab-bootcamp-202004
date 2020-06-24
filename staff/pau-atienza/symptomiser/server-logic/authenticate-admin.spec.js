@@ -42,7 +42,6 @@ describe('server logic - authenticate admin', () => {
             password += 'wrong-'
 
             return authenticateAdmin(email, password)
-                .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.be.an.instanceof(CredentialsError)
                     expect(error.message).to.equal(`wrong password`)
@@ -52,7 +51,6 @@ describe('server logic - authenticate admin', () => {
 
     it('should fail when admin does not exist', () =>
         authenticateAdmin(email, password)
-            .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
                 expect(error).to.be.an.instanceof(UnexistenceError)
                 expect(error.message).to.equal(`Admin with e-mail ${email} does not exist`)
