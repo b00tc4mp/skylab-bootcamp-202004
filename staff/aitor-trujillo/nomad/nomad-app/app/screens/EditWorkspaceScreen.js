@@ -225,7 +225,7 @@ export default ({ navigation }) => {
                                     placeholder='Description'
                                     autoCorrect={false}
                                     textContentType='name'
-                                    maxLength={200}
+                                    maxLength={400}
                                     onChangeText={handleChange('description')}
                                     onBlur={() => setFieldTouched('description')}
                                     multiline

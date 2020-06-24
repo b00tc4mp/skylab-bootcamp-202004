@@ -18,7 +18,7 @@ const AsyncStorage = require('not-async-storage')
 context.storage = AsyncStorage
 
 
-describe('logic - retrieve workspace by id', () => {
+describe('client - search workspaces', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let workspaceRandom = {}
@@ -86,6 +86,12 @@ describe('logic - retrieve workspace by id', () => {
         expect(workspace.features.meetingRooms).to.equal(workspaceRandom.features.meetingRooms)
         expect(workspace.description).to.equal(workspaceRandom.description)
         expect(workspace.capacity).to.equal(workspaceRandom.capacity)
+    })
+
+    it('should return if query is empty', async () => {
+        const result = await searchWorkspaces('')
+
+        expect(result).to.be.undefined
     })
     describe('when there is no workspaces for query', () => {
         beforeEach(async () =>

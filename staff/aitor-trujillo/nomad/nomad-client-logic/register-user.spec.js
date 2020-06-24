@@ -110,7 +110,7 @@ describe('client - register user', () => {
 
             expect(() => {
                 registerUser(name, surname, email, '')
-            }).to.throw(Error, '"" length is not greater or equal than 8')
+            }).to.throw(Error, 'string is empty or blank')
         })
 
         it('should fail on incorrect email', () => {
@@ -119,15 +119,6 @@ describe('client - register user', () => {
             expect(() => {
                 registerUser(name, surname, email, password)
             }).to.throw(Error, `${email} is not an e-mail`)
-        })
-
-        it('should fail on password minlength of 8', () => {
-            password = `123123`
-
-            expect(() => {
-                registerUser(name, surname, email, password)
-            }).to.throw(Error, `"${password}" length is not greater or equal than 8`)
-
         })
 
     })

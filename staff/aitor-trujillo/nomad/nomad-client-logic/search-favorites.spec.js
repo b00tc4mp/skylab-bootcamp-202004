@@ -101,6 +101,11 @@ describe('logic - retrieve workspace by id', () => {
 
 
     })
+    it('should return if query is empty', async () => {
+        const result = await searchFavorites('')
+
+        expect(result).to.be.undefined
+    })
 
     afterEach(() => User.deleteMany().then(() => Workspace.deleteMany()))
 
