@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import Dishes from './Dishes'
 import {retrieveRestaurant} from 'plates-client-logic'
+import Feedback from './Feedback'
 
 export default function ({currentId}){
     const [restaurant, setRestaurant] = useState()
+    const [error, setError] = useState()
     
    
     useEffect(()=>{
-        retrieveRestaurant(currentId)
-        .then(_details => {
-            console.log(_details)
-            setRestaurant(_details)
-        })
+        try {
+            retrieveRestaurant(currentId)
+            .then(_details => {
+                console.log(_details)
+                setRestaurant(_details)
+            })
+            .catch(error=> setError(error.message))
+            
+        } catch (error) {
+            setError(error.message)
+        }
 
     }, [])
 
@@ -27,6 +35,7 @@ export default function ({currentId}){
         </div> : null}
 
          {restaurant && <Dishes dishes={restaurant.dishes}/>} 
+         {error && <Feedback message={error} level="error" />}
 
     </div>
     

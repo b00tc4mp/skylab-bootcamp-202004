@@ -4,7 +4,7 @@ const { mongoose, models: { User}} = require('plates-data')
 global.fetch  = require('node-fetch')
 require('plates-commons/polyfills/json')
 require('plates-commons/polyfills/xhr')
-debugger
+ 
 const { DuplicityError, UnexistenceError, VoidError, CredentialsError } = require('plates-commons/errors')
 const bcrypt = require('bcryptjs')
 const { random } = Math
@@ -19,7 +19,7 @@ context.storage = {};
 describe('client logic. authenticate user',() => {
     let email, password, hash, name, surname
 
-debugger
+ 
     before( async()=> {
         await mongoose.connect(MONGODB_URL)
     })

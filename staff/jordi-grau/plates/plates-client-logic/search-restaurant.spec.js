@@ -13,7 +13,7 @@ const searchRestaurant = require('./search-restaurant')
 const context = require('./context')
 context.API_URL = API_URL
 context.storage = {}
-debugger
+ 
 
 describe('search ', () =>{
     let restaurantName, restaurantEmail, cif, address, phone, userEmail, password, query

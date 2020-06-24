@@ -17,7 +17,7 @@ module.exports = (email) => {
     
 
     return(async () => {
-      debugger 
+        
         if(!email) throw new VoidError('Please type an e-mail')
         
         const user = await User.findOne({email})

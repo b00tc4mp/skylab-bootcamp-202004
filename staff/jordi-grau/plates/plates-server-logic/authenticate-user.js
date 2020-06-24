@@ -22,7 +22,7 @@ module.exports = (email, password)=>{
      */
     .then(user => {
         if (!user) throw new UnexistenceError(`user with e-mail ${email} does not exist`)
-debugger
+ 
         return bcrypt.compare(password, user.password)
             .then(match => {
                 if (!match) throw new CredentialsError('wrong password')

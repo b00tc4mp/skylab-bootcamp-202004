@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
-import Feedback from './feedback'
+import Feedback from './Feedback'
 import { registerUser} from 'plates-client-logic'
 
 
 export default function Register({ history, onGoToLogin}) {
 
     const [error, setError] = useState() //HOOHKS
-debugger
+ 
     const handleSubmit = event => {
         event.preventDefault()
 

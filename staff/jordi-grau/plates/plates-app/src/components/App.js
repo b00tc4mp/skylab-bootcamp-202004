@@ -5,13 +5,15 @@ import Login from './Login'
 import Home from './Home'
 import Landing from './Landing'
 import '../App.css';
-import {isUserAuthenticated} from 'plates-client-logic'
+import {isUserAuthenticated, logoutUser} from 'plates-client-logic'
+import Feedback from './Feedback'
 
 
 import {Route,  Redirect, withRouter } from 'react-router-dom'
 
 function App ({history}) {
     const [ view, serView ] = useState()
+    const [error, setError] = useState()
 
     useEffect(() =>{
         if(sessionStorage.token)
@@ -19,9 +21,9 @@ function App ({history}) {
             try {
                 isUserAuthenticated(sessionStorage.token)
                 .then(isAuthenticated => {
-                    // if(isAuthenticated) {
-                    //     history.push('/home')
-                    // }
+                    if(isAuthenticated) {
+                        history.push('/home')
+                    }
                 })
                 .catch(error => {throw Error})
             } catch (error) {
@@ -30,14 +32,13 @@ function App ({history}) {
             else history.push('/')
 
     }, [])
-debugger
+ 
     const handleGoToRegister = event =>{
         event.preventDefault()
         history.push('/register')
     }
 
-    const handleGoToHome = (token) => {
-        sessionStorage.token = token
+    const handleGoToHome = () => {
         history.push('/home')
     }
 
@@ -45,11 +46,9 @@ debugger
         event.preventDefault()
         history.push('/login')}
 
-    const handleLogout = () =>{
-
-    // TODO logoutUser()
-
-     history.push('/')
+    const handleLogout =  () =>{
+        logoutUser()
+        history.push('/')
     
     }
 
@@ -64,6 +63,8 @@ debugger
                     <Route exact path="/login" render={ () => 
                          sessionStorage.token ? <Redirect to="/home" /> : <Login onGoToHome={handleGoToHome} onGoToRegister={handleGoToRegister}/> } />
                     <Route path="/home" render = { () => sessionStorage.token ? <Home onLogout={handleLogout} history={history}/> : <Redirect to="/"/>} />               
+                    
+                    {error && <Feedback message={error} level="error" />}
                 </Container>
             </header>
         </div>
