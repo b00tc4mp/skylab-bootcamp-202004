@@ -1,6 +1,8 @@
 import React, {  useState } from 'react'
 import Feedback from './Feedback'
 import { authenticateUser } from 'plates-client-logic'
+import './Login.sass'
+
 
 export default function Login({onGoToRegister, onGoToHome}) {
     const [error, setError] = useState()
@@ -22,18 +24,19 @@ export default function Login({onGoToRegister, onGoToHome}) {
         }
     }
 
-        return <section className="login">
-                <h1>Login</h1>
-                <form onSubmit={handleSubmit}>
-                    <input type="email" name="email" placeholder="e-mail" required />
-                    <input type="password" name="password" placeholder="password" required minLength="6" />
-                    <button>Submit</button>
-                    or <a href="" onClick={onGoToRegister}>Register</a>
+        return (<>
+                <section className="login">
+                <div className="login__top">Login</div>
+                <form className="login__form" onSubmit={handleSubmit}>
+                    <input className="login__input" type="email" name="email" placeholder="e-mail" required />
+                    <input className="login__input" type="password" name="password" placeholder="password" required minLength="6" />
+                    <button className="login__button" >Submit</button>
+                    <a className="login__register" href="" onClick={onGoToRegister}>Register</a>
 
                     {error &&  <Feedback message={error} level ="error"/> }
-
                 </form>
             </section>
+            </>)
         
         
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Register from './Register'
 import Container from './Container'
+import Header from './Header'
 import Login from './Login'
 import Home from './Home'
 import Landing from './Landing'
@@ -8,27 +9,31 @@ import {isUserAuthenticated, logoutUser} from 'plates-client-logic'
 import Feedback from './Feedback'
 
 
+
 import {Route,  Redirect, withRouter } from 'react-router-dom'
+import Navbar from './Navbar';
 
 function App ({history}) {
     const [ view, serView ] = useState()
     const [error, setError] = useState()
+    const [enabled, setEnabled] = useState(false)
 
     useEffect(() =>{
-        if(sessionStorage.token)
+        // if(sessionStorage.token)
 
-            try {
-                isUserAuthenticated(sessionStorage.token)
-                .then(isAuthenticated => {
-                    if(isAuthenticated) {
+        //     try {
+        //         isUserAuthenticated(sessionStorage.token)
+        //         .then(isAuthenticated => {
+        //             if(isAuthenticated) {
+        //                 setEnabled(true)
                         history.push('/home')
-                    }
-                })
-                .catch(error => {throw Error})
-            } catch (error) {
-                if(error) throw error
-            }
-        else history.push('/')
+        //             }
+        //         })
+        //         .catch(error => {throw Error})
+        //     } catch (error) {
+        //         if(error) throw error
+        //     }
+        // else history.push('/')
 
     }, [])
  
@@ -55,6 +60,7 @@ function App ({history}) {
         
         <div className ="App">
             <header className="App-header">
+            <Header />
                 <Container>
                     <Route exact path="/" render={()=> sessionStorage.token ? <Redirect to="/home" /> : <Landing onGoToRegister ={handleGoToRegister} onGoToLogin={handleGoToLogin} />} />
                     <Route exact path="/register" render={ () =>
@@ -65,6 +71,7 @@ function App ({history}) {
                     
                     {error && <Feedback message={error} level="error" />}
                 </Container>
+              
             </header>
         </div>
     )
