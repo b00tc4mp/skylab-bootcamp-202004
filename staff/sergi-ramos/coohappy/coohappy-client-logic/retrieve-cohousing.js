@@ -2,6 +2,13 @@ require('coohappy-commons/polyfills/string')
 const { utils: { call } } = require('coohappy-commons')
 const context = require('./context')
 
+/**
+ * Retrieve info cohousing.
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
 module.exports = function() {
 
 

@@ -2,6 +2,22 @@ require('coohappy-commons/polyfills/string')
 const { utils: { call } } = require('coohappy-commons')
 const context = require('./context')
 
+/**
+ * Register new  cohousing.
+ * 
+ * @param {string} name Cohousing name. 
+ * @param {Object} address - cohousing address
+ * @param {string} address.street - cohousing street
+ * @param {string} address.number - cohousing address
+ * @param {string} address.city - cohousing city
+ * @param {string} address.country - cohousing country
+ * @param {number} laundryNem - num of laundries
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
+
 module.exports = function(name, { street, number, city, country }, laundryNum) {
 
     number = parseInt(number)

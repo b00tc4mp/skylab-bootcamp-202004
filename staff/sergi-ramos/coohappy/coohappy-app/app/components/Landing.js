@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import { SafeAreaView, StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ActivityIndicator, AsyncStorage } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, View, Dimensions, TouchableOpacity, AsyncStorage } from 'react-native'
 import SvgUri from "expo-svg-uri"
 
 const Landing = function ({ navigation }) {
-  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     (async () => {
@@ -13,8 +12,6 @@ const Landing = function ({ navigation }) {
     })()
   }, [])
 
-
-  // if (loading) return <ActivityIndicator />
 
   return (
 

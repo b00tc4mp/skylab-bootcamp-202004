@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs')
 
 
 module.exports = (userId, accessCode) => {
-console.log(userId, accessCode)
+
     String.validate.notVoid(userId)
     String.validate.notVoid(accessCode)
 

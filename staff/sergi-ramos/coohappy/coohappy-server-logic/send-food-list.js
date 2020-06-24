@@ -6,6 +6,17 @@ const { models: { User} } = require('coohappy-data')
 const { mongoose: { ObjectId } } = require('coohappy-data')
 const nodemailer = require('nodemailer')
 
+/**
+ * Add food to user food list and cohousing food list.
+ * 
+ * @param {string} message Reservation day. 
+ * @param {string} email Reservation hour.
+ * @param {string} userId id of the current user.
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
 module.exports = ((userId, html, email) => {
 
     String.validate.notVoid(userId)

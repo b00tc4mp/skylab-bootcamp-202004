@@ -2,6 +2,16 @@ require('coohappy-commons/polyfills/string')
 const { utils: { Email, call } } = require('coohappy-commons')
 const context = require('./context')
 
+/**
+ * Add food to user food list and cohousing food list.
+ * 
+ * @param {string} message Reservation day. 
+ * @param {string} email Reservation hour.
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
 module.exports = function (message, email) {
 
     const { foodList } = message

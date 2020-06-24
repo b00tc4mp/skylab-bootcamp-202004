@@ -6,6 +6,16 @@ const { errors: { CredentialsError, UnexistenceError } } = require('coohappy-com
 const { models: { User } } = require('coohappy-data')
 const bcrypt = require('bcryptjs')
 
+/**
+ * Add reservation date laundry.
+ * 
+ * @param {object} dataToUpdate all data user want to update user. 
+ * @param {string} userId all data user want to update user. 
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
 module.exports = (userId, dataToUpdate) => {
 
     if(typeof dataToUpdate !== 'object') throw new TypeError(`${dataToUpdate} is not an object`)

@@ -2,6 +2,14 @@ require('coohappy-commons/polyfills/string')
 const { utils: { call } } = require('coohappy-commons')
 const context = require('./context')
 
+
+/**
+ * Returns all user food list.
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
 module.exports = function() {
 
 

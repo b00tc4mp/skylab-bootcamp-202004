@@ -2,6 +2,16 @@ require('coohappy-commons/polyfills/string')
 const { utils: { Email, call } } = require('coohappy-commons')
 const context = require('./context')
 
+/**
+ * Add message to cohousing messages.
+ * 
+ * @param {string} message Chat message. 
+ * @param {Object} date - The date of user send the message.
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
 module.exports = function(message, date) {
 
     String.validate.notVoid(message)

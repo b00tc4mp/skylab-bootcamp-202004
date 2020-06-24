@@ -4,6 +4,7 @@ import SvgUri from "expo-svg-uri"
 import ButtonForm from './ButtonForm'
 import { retrieveUser } from 'coohappy-client-logic'
 
+
 const WellcomePage = function ({ name: _name, navigation }) {
     const [name, setName] = useState()
 
@@ -29,13 +30,12 @@ const WellcomePage = function ({ name: _name, navigation }) {
 
         <>
             <View style={styles.container}>
+                
                 <View style={styles.header}>
                     <Text style={styles.titleText}>Wellcome {name}!</Text>
                     <TouchableOpacity onPress={ () => navigation.navigate('UpdateUser')} activeOpacity={0.8}>
                     <SvgUri style={styles.userIcon} source={require('../assets/ic-user.svg')} />
                     </TouchableOpacity>
-
-
                 </View>
 
                 <View style={{ width: '90%' }}>

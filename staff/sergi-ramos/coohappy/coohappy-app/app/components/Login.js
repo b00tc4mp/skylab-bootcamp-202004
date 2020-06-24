@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView, AsyncStorage,Alert } from 'react-native'
+import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView, Alert } from 'react-native'
 import SvgUri from "expo-svg-uri"
 import ButtonForm from '../components/ButtonForm'
 import { authenticateUser, retrieveUser } from 'coohappy-client-logic'

@@ -2,6 +2,16 @@ require('coohappy-commons/polyfills/string')
 const { utils: { Email, call } } = require('coohappy-commons')
 const context = require('./context')
 
+/**
+ * Add reservation date laundry.
+ * 
+ * @param {string} day Reservation day. 
+ * @param {string} hour Reservation hour.
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
 module.exports = function (day, hour) {
     
     day = day.toString()

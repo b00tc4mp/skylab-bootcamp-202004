@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, AsyncStorage, Alert } from 'react-native'
+import { View, StyleSheet, Text, Alert } from 'react-native'
 import HeaderHome from './HeaderHome'
 import WeekDays from './WeekDays'
 import TimeLaundry from './timeLaundry'
@@ -52,8 +52,6 @@ const Laundry = function ({ navigation }) {
 
     }, [day])
 
-
-    //TODO delete all laundries when time pass
 
     const __handleUpdate__ = async () => {
         try {

@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 
-const Header = function({ text, onPress, bgColor }) {
+const Header = function() {
 
     return (
         <View style={styles.header}>

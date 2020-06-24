@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { TouchableOpacity, View, StyleSheet, Text, ScrollView } from 'react-native'
 
 
-
 const WeekDays = function ({ currentWeek, onSelectedDay, daySelected }) {
-
-
 
 
     return (
@@ -14,20 +11,6 @@ const WeekDays = function ({ currentWeek, onSelectedDay, daySelected }) {
             <View>
                 <View style={styles.bar}></View>
             </View>
-
-            {/* <FlatList
-            
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-                data={week}
-                renderItem={({ item }) => (
-                    <View style={styles.dayContainer}>
-                        <Text style={styles.day}>{item.day}</Text>
-                        <Text style={styles.dayName}>{item.dayName}</Text>
-                    </View>
-                )}
-            /> */}
-
 
 
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} bouncesZoom={true}>
@@ -50,7 +33,6 @@ const WeekDays = function ({ currentWeek, onSelectedDay, daySelected }) {
                                     <Text style={styles.dayName}>{day.dayString}</Text>
                                 </View>
                             }
-
 
                         </TouchableOpacity>
                     )

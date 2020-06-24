@@ -2,10 +2,14 @@ require('coohappy-commons/polyfills/string')
 const { utils: { Email, call } } = require('coohappy-commons')
 const context = require('./context')
 
+/**
+ * Retrieve all user messages.
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
 module.exports = function()  {
-
-
-
 
   return (async () => {
 

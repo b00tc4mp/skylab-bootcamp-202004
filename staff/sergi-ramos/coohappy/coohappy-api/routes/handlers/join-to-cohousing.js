@@ -6,7 +6,6 @@ module.exports = (req, res) => {
     const { payload: { sub: userId } } = req
     const { body: { accessCode } } = req
 
-    console.log(userId)
     try {
         joinToCohousing(userId, accessCode)
             .then(() => res.status(201).end())

@@ -2,6 +2,16 @@ require('coohappy-commons/polyfills/string')
 const { utils: { Email, call } } = require('coohappy-commons')
 const context = require('./context')
 
+
+/**
+ * Add food to list.
+ * 
+ * @param {string} foodItem Food name. 
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
 module.exports = function(foodItem) {
    
     String.validate.notVoid(foodItem)    

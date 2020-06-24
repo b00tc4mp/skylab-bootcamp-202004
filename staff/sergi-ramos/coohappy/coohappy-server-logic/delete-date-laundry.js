@@ -4,6 +4,16 @@ const { errors: { UnexistenceError, DuplicityError} } = require('coohappy-common
 const { models: { Cohousing } } = require('coohappy-data')
 const { mongoose: { ObjectId } } = require('coohappy-data')
 
+/**
+ * Delete reservation date laundry.
+ * 
+ * @param {string} userId id of the current user 
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
+
 module.exports = (userId) => {
 
     String.validate.notVoid(userId)

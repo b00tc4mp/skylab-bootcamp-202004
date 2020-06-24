@@ -113,12 +113,57 @@ describe('logic - substract-food', () => {
 
 
         it('should not change anything', async () => {
+
+            const user2 = await User.findOne({ _id: userId })
+            user2.foodList.push({ name: foodItem_2, weight: 2 })
+
+
             try {
 
                 await substractFood(foodItem_2, userId)
             } catch (error) {
                 expect(error).to.exist
                 expect(error.message).to.equal(`you can not substract ${foodItem_2}, you still don't have it on the list`)
+            }
+        })
+
+        it('should not change anything', async () => {
+            try {
+
+                await substractFood(foodItem_2, userId)
+            } catch (error) {
+                expect(error).to.exist
+                expect(error.message).to.equal(`you can not substract ${foodItem_2}, you still don't have it on the list`)
+            }
+        })
+    })
+
+    describe('when user or cohousing does not exist ', () => {
+
+
+        it('should fail on user does not exist', async () => {
+
+         const fakeId = '5ef21304128395ac41cc78f9'
+
+
+            try {
+
+                await substractFood(foodItem_2, fakeId)
+            } catch (error) {
+                expect(error).to.exist
+                expect(error.message).to.equal(`User with id ${fakeId} does not exist`)
+            }
+        })
+
+        it('should fail on cohousing does not exist', async () => {
+
+            await Cohousing.deleteMany()
+            try {
+
+                await substractFood(foodItem_2, userId)
+            } catch (error) {
+                expect(error).to.exist
+                expect(error.message).to.equal(`There is no cohousing with a user with an id ${userId}`)
             }
         })
     })

@@ -9,7 +9,6 @@ return (async () => {
 
     try {
         const messages = await retrieveAllUsersFoodList('5ee20f8f16e2e8439c96c3e1')
-        console.log(messages)
 
     } catch (error) {
         console.error('KO sync', error.message)

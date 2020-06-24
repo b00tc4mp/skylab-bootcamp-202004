@@ -2,8 +2,14 @@ require('coohappy-commons/polyfills/string')
 const { utils: { Email, call } } = require('coohappy-commons')
 const context = require('./context')
 
-module.exports = function() {
+/**
+ * Retrieve user food list.
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
 
+module.exports = function() {
 
   return (async () => {
 

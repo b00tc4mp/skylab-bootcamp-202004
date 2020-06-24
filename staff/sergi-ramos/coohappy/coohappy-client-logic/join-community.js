@@ -2,6 +2,16 @@ require('coohappy-commons/polyfills/string')
 const { utils: { Email, call } } = require('coohappy-commons')
 const context = require('./context')
 
+
+/**
+ * Join user to laundry.
+ * 
+ * @param {string} accesCode Code for new user can access to community day. 
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
 module.exports = function(accessCode) {
 
     String.validate.notVoid(accessCode)

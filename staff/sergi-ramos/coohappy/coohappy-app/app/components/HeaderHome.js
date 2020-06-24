@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, AsyncStorage } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import SvgUri from 'expo-svg-uri'
-import { retrieveCohousing, retrieveUser } from 'coohappy-client-logic'
+import { retrieveUser } from 'coohappy-client-logic'
 
-const HeaderHome = function ({ user, surname, navigation, cohousingInfo }) {
+const HeaderHome = function ({navigation, cohousingInfo }) {
 
     const [cohousing, setCohousing] = useState()
     const [userRole, setUserRole] = useState()

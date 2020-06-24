@@ -11,8 +11,7 @@ const JoinCommunity = function ({ navigation }) {
     const handleOnJoinCommunity = async () => {
 
         try {
-                     
-
+                    
                 await joinCommunity(accesCode)
                 const user = await retrieveUser()
                 const cohousing = await retrieveCohousing()

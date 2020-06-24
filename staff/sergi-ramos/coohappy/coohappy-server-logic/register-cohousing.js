@@ -4,6 +4,22 @@ const { errors: { UnexistenceError, DuplicityError } } = require('coohappy-commo
 const { models: { Cohousing, User } } = require('coohappy-data')
 const { utils: { randomAccessCode } } = require('coohappy-commons')
 
+/**
+ * Register new  cohousing.
+ * 
+ * @param {string} name Cohousing name. 
+ * @param {Object} address - cohousing address
+ * @param {string} address.street - cohousing street
+ * @param {string} address.number - cohousing address
+ * @param {string} address.city - cohousing city
+ * @param {string} address.country - cohousing country
+ * @param {number} laundryNem - num of laundries
+ * @param {string} userId - id of the current
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
 
 module.exports = (name, address, laundryNum, userId) => {
     String.validate.notVoid(name)

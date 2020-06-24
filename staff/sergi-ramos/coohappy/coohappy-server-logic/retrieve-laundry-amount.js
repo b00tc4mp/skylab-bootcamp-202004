@@ -4,8 +4,19 @@ const { errors: { UnexistenceError } } = require('coohappy-commons')
 const { index } = require('coohappy-data/models/schemas/user')
 const retrieveLaundry = require('../coohappy-app/node_modules/coohappy-client-logic/retrieve-laundry')
 
+
+/**
+ * Retrieve all users laundries.
+ * 
+ * @param {string} day Reservation day. 
+ * @param {string} userId id of the current user. 
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
 module.exports = (userId, day) => {
-debugger
+
     String.validate.notVoid(userId)
 
     return (async () => {
