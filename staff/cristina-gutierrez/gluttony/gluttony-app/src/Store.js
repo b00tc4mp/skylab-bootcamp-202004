@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     View,
     StyleSheet,
@@ -10,6 +10,8 @@ import {
 import { addFavourite } from "../gluttony-client-logic";
 
 const Store = props => {
+    const [comment, setComment] = useState("");
+
     return (
         <View style={styles.store}>
             <Image source={{uri: props.store.thumbnail}} style = {{height: 50, width: 50, margin: 5 }} />
@@ -25,11 +27,16 @@ const Store = props => {
                 <Text style={{ ...styles.textStyle, textAlign: "center" }}>Add to favourites</Text>
             </TouchableOpacity>}
             <Text style={styles.textStyle}>Leave a comment:</Text>
-            <TextInput style={styles.input} />
-            <TouchableOpacity style={{ ...styles.button, marginTop: 0 }} title= "Send comment" onPress={() => {
+            <TextInput
+                placeholder="Give your opinion"
+                value={comment}
+                style={styles.input}
+                onChangeText={ text => setComment(text) } 
+            />
+            <TouchableOpacity style={{ ...styles.button, marginTop: 0, width: 70 }} title= "Send" onPress={() => {
                 addFavourite(props.store.id).catch(props.onShowModal)
             }} >
-                <Text style={{ ...styles.textStyle, textAlign: "center" }}>Send comment</Text>
+                <Text style={{ ...styles.textStyle, textAlign: "center" }}>Send</Text>
             </TouchableOpacity>
         </View>
     )

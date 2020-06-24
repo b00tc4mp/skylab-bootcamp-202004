@@ -15,18 +15,19 @@ const MapRestaurant = props => {
     const [isFavourite, setIsFavourite] = useState(false);
 
     useEffect(() => {
-            navigator.geolocation.getCurrentPosition(pos => {
-                setUserLatitude(pos.coords.latitude)
-                setUserLongitude(pos.coords.longitude)
-    
-                findNearbyRestaurants(pos.coords.latitude, pos.coords.longitude)
-                    .then(restaurant => setRestaurant(restaurant))
-                    .then(() => getFavourites())
-                    .then(favourites => {
-                        if (!Array.isArray(favourites)) return
-                        setIsFavourite(!!favourites.find(favourite => favourite.id === restaurant.id))
-                    })
-            })
+        navigator.geolocation.getCurrentPosition(pos => {
+            setUserLatitude(pos.coords.latitude)
+            setUserLongitude(pos.coords.longitude)
+
+            findNearbyRestaurants(pos.coords.latitude, pos.coords.longitude)
+                .then(restaurant =>  {
+                    setRestaurant(restaurant)
+                    
+                    getFavourites()
+                        .then(favourites => setIsFavourite(!!favourites.find(favourite => favourite.id === restaurant.id)))
+                        .catch(console.log)
+                })
+        })
     }, [])
 
     return (

@@ -1,6 +1,8 @@
 require("gluttony-commons/polyfills/string")
 const { models: { Users } } = require("gluttony-data")
-
+/**
+ * @param  {string} userId
+ */
 module.exports = (userId) => {
     String.validate.notVoid(userId)
 

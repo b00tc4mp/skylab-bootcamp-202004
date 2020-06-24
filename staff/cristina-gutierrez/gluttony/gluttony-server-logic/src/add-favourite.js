@@ -1,9 +1,8 @@
 const { models: { Users } } = require("gluttony-data")
 const { errors: { DuplicityError } } = require("gluttony-commons")
-
 /**
- * @param {string} storeId
- * @param {string} userId
+ * @param  {string} storeId
+ * @param  {string} userId
  */
 module.exports = (storeId, userId) => {
     String.validate.notVoid(storeId)
