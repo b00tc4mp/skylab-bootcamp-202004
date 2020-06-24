@@ -3,10 +3,7 @@ import MapView, { Marker, Callout } from "react-native-maps";
 import {
     StyleSheet,
     View,
-    Dimensions,
-    TouchableOpacity,
-    Text,
-    TextInput
+    Dimensions
 } from "react-native";
 import { findNearbyRestaurants } from "../gluttony-client-logic"
 import Store from "./Store"
@@ -55,12 +52,7 @@ const MapRestaurant = () => {
                     }}
                 >
                     <Callout>
-                        <Store style={styles.textStyle} store={restaurant}/>
-                        <TouchableOpacity style={styles.button} title= "Add to favourites" onPress={ () => props.onGoTo("home") }>
-                            <Text style={{ ...styles.textStyle, textAlign: "center" }}>Add to favourites</Text>
-                        </TouchableOpacity>
-                        <Text style={styles.textStyle}>Leave a comment:</Text>
-                        <TextInput style={styles.input} />
+                        <Store store={restaurant}/>
                     </Callout>
                 </Marker>}
             </MapView>
@@ -79,29 +71,6 @@ const styles = StyleSheet.create({
         width: Dimensions.get("window").width,
         height: Dimensions.get("window").height,
         marginBottom: 60
-    },
-    button: {
-        backgroundColor: "#FFFC87",
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2,
-        marginBottom: 8,
-        marginTop: 8,
-        width: 140,
-    },
-    textStyle: {
-        color: "black",
-        fontWeight: "500",
-        textAlign: "left"
-    },
-    input: {
-        height: 40,
-        width: 150,
-        borderColor: "#FFFC87",
-        borderWidth: 3,
-        marginBottom: 11,
-        paddingLeft: 10,
-        paddingRight: 10
     }
 });
 

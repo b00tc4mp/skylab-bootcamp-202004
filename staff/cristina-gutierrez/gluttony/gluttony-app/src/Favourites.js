@@ -3,16 +3,18 @@ import {
     StyleSheet,
     Text,
     ImageBackground,
-    View
+    View,
+    Image
 } from "react-native";
-import { retrieveUser } from "../gluttony-client-logic";
+import { getFavourites } from "../gluttony-client-logic";
+import Store from "./Store";
 
 const Favourites = (props) => {
-    const [user, setUser] = useState();
+    const [favourites, setFavourites] = useState();
 
     useEffect(() => {
-        retrieveUser()
-            .then(user => setUser(user))
+        getFavourites()
+            .then(favourites => setFavourites(favourites))
             .catch(() => props.onShowModal())
     }, [])
 
@@ -20,12 +22,22 @@ const Favourites = (props) => {
         <ImageBackground source={require("../assets/images/final-food-and-drink-pattern-vector-1.png")} style={styles.image}>
             <View style={styles.boxOne}>
                 <Text style={styles.textStyle}>Favourites</Text>
+                { favourites && favourites.map(favourite =>
+                    <View style={styles.store}>
+                        <Image source={{uri: favourite.thumbnail}} style = {{height: 50, width: 50, margin: 5 }} />
+                        <Text>{favourite.name}</Text>
+                        <Text>{favourite.type}</Text>
+                    </View>
+                )}
             </View>
         </ImageBackground>
     )
 }
 
 const styles = StyleSheet.create({
+    store: {
+        backgroundColor: "#FFFFFF",
+    },
     image: {
         flex: 1,
         resizeMode: "cover",

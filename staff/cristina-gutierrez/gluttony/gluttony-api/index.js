@@ -16,7 +16,9 @@ const {
   registerUser,
   retrieveUser,
   findNearbyBars,
-  findNearbyRestaurants
+  findNearbyRestaurants,
+  addFavourite,
+  getFavourites
 } = require("gluttony-server-logic")
 const { mongoose } = require("gluttony-data")
 
@@ -69,7 +71,7 @@ mongoose.connect(MONGODB_URL)
       } catch (error) {
         handleError(error, res)
       }
-    })
+    });
 
     router.get("/restaurants", (req, res) => {
       try {
@@ -81,7 +83,31 @@ mongoose.connect(MONGODB_URL)
       } catch (error) {
         handleError(error, res)
       }
-    })
+    });
+
+    router.post("/favourites", verifyExtractJwt, (req, res) => {
+      const { payload: { sub: userId }, body: { storeId } } = req
+      
+      try {
+        addFavourite(storeId, userId)
+          .then(() => res.status(201).send())
+          .catch(error => handleError(error, res))
+      } catch (error) {
+        handleError(error, res)
+      }  
+    });
+
+    router.get("/favourites", verifyExtractJwt, (req, res) => {
+      const { payload: { sub: userId } } = req
+
+      try {   
+        getFavourites(userId)
+          .then(favouriteStores => res.send({ favouriteStores }))
+          .catch(error => handleError(error, res))
+      } catch (error) {
+        handleError(error, res)
+      }
+    });
     
     app.use("/api", router)
     

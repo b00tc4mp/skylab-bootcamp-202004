@@ -4,5 +4,7 @@ module.exports = {
     retrieveUser: require("./retrieve-user"),
     findNearbyBars: require("./find-nearby-bars"),
     findNearbyRestaurants: require("./find-nearby-restaurants"),
+    addFavourite: require("./add-favourite"),
+    getFavourites: require("./get-favourites"),
     logout: require("./logout")
 }
