@@ -18,7 +18,7 @@
     "scripts": {
         "test": "npx mocha *.spec.js",
         "test:debug": "npx mocha debug *.spec.js",
-        "test:coverage": "npx nyc --reporter=text --reporter=lcov npm test"
+        "test:coverage": "npx nyc --reporter=text --reporter=html mocha *.spec.js"
     },
     "keywords": [],
     "author": "",

@@ -20,8 +20,7 @@ module.exports = (userId, blueprintId) => {
         blueprint.id = blueprint._id.toString()
 
         blueprint.items.forEach(item => delete item._id)
-            //TODO user un populate para traer todos los items
-
+        
         delete blueprint._id
 
         return blueprint

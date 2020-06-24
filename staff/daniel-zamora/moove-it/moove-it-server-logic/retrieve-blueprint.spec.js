@@ -12,7 +12,7 @@ describe('logic - retrieve blueprint', () => {
 
     before(() => mongoose.connect(MONGODB_URL).then(() => User.deleteMany()))
 
-    let name, surname, email, password, userId, planeName, width, height;
+    let name, surname, email, password, userId, blueprintId, planeName, width, height;
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -28,19 +28,19 @@ describe('logic - retrieve blueprint', () => {
 
 
     describe('when user already exists and had an existing blueprint', () => {
-        beforeEach(() => {
-            const user = { name, surname, email, password: hash }
-            User.create(user).then(user => userId = user.id)
-
-            Blueprint.create({ userId, name: planeName, width, height })
-                .then(blueprint => blueprintId = blueprint.id)
-                .then(() => User.findByIdAndUpdate(userId, { $addToSet: { blueprints: blueprint } }))
+        beforeEach( async ()=> { debugger
+            
+            const user = await User.create({ name, surname, email, password })
+            userId = user.id
+            const blueprint = await Blueprint.create({ userId, name: planeName, width, height })
+            blueprintId = blueprint.id
+            await User.findByIdAndUpdate(userId, { $addToSet: { blueprints: blueprint } })
 
         })
 
         it('should succeed on correct user id', () => {
 
-            return retrieveBlueprint(userId)
+            return retrieveBlueprint(userId, blueprintId)
                 .then(blueprint => {
                     expect(blueprint.name).to.equal(planeName)
                     expect(blueprint.width).to.equal(width)
@@ -50,32 +50,46 @@ describe('logic - retrieve blueprint', () => {
 
         })
 
-        //     it('should fail on wrong user id', () =>
-        //         retrieveUser('5ed43b913578a050d5600ee0')
-        //         .catch(error => {
-        //             expect(error).to.exist
-        //             expect(error).to.be.an.instanceof(UnexistenceError)
-        //             expect(error.message).to.equal(`user with id 5ed43b913578a050d5600ee0 does not exist`)
-        //         })
-        //     )
-        // })
+            it('should fail on wrong user id', () =>
+                retrieveBlueprint('5ed43b913578a050d5600ee0', blueprintId)
+                .catch(error => {
+                    expect(error).to.exist
+                    expect(error).to.be.an.instanceof(UnexistenceError)
+                    expect(error.message).to.equal(`User with id 5ed43b913578a050d5600ee0 does not exist`)
+                })
+            )
+        
 
 
-        // it('should fail when incorrect inputs are introduced', () => {
-        //     try {
-        //         retrieveUser(1)
-        //     } catch (error) {
-        //         expect(error).to.be.an.instanceof(TypeError)
-        //         expect(error.message).to.equal(`1 is not a string`)
-        //     }
+        it('should fail when incorrect inputs are introduced', () => {
+            try {
+                retrieveBlueprint(1, blueprintId)
+            } catch (error) {
+                expect(error).to.be.an.instanceof(TypeError)
+                expect(error.message).to.equal(`1 is not a string`)
+            }
 
-        //     try {
-        //         retrieveUser('')
-        //     } catch (error) {
-        //         expect(error).to.be.an.instanceof(Error)
-        //         expect(error.message).to.equal(` is empty or blank`)
-        //     }
-        // })
+            try {
+                retrieveBlueprint('', blueprintId)
+            } catch (error) {
+                expect(error).to.be.an.instanceof(Error)
+                expect(error.message).to.equal(` is empty or blank`)
+            }
+
+            try {
+                retrieveBlueprint(userId, 1)
+            } catch (error) {
+                expect(error).to.be.an.instanceof(TypeError)
+                expect(error.message).to.equal(`1 is not a string`)
+            }
+
+            try {
+                retrieveBlueprint(userId, '')
+            } catch (error) {
+                expect(error).to.be.an.instanceof(Error)
+                expect(error.message).to.equal(` is empty or blank`)
+            }
+        })
 
 
     })
