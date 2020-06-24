@@ -1,3 +1,11 @@
+/**
+ * Retrieves user info.
+ * 
+ * @returns {Promise<String>} The user object if it resolves, an error if it rejects.
+ * 
+ * @throws {Error} If something went unexpected.
+ */
+
 require('nomad-commons/polyfills/string')
 const { utils: { call } } = require('nomad-commons')
 const context = require('./context')

@@ -1,3 +1,15 @@
+/**
+ * Creates new workspace.
+ * 
+ * @param {string} userId The workspace values. 
+ * @param {object} workspace The workspace values. 
+ * 
+ * @returns {Promise<String>} The workspace object created if it resolves, an error if it rejects.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {DuplicityError} If phone is already registered for other workspace.
+ */
+
 require('nomad-commons/polyfills/string')
 require('nomad-commons/polyfills/number')
 require('nomad-commons/polyfills/json')

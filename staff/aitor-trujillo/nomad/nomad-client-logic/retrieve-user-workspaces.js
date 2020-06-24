@@ -1,3 +1,11 @@
+/**
+ * Retrieves user created workspaces.
+ * 
+ * @returns {Promise<String>} The workspaces array if it resolves, an error if it rejects.
+ * 
+ * @throws {Error} If something went unexpected, or is there is no workspaces created to retrieve.
+ */
+
 require('nomad-commons/polyfills/string')
 require('nomad-commons/polyfills/function')
 const { utils: { call } } = require('nomad-commons')

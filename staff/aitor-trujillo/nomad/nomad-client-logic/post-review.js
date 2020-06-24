@@ -1,3 +1,16 @@
+/**
+ * Checks user credentials.
+ * 
+ * @param {string} workspaceId The workspace id. 
+ * @param {number} stars The punctuation for the workspace. 
+ * @param {string} text The user review for the workspace.
+ * 
+ * @returns {Promise<String>} Nothing if it resolves, an error if it rejects.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {Error} If review was not successfuly posted.
+ */
+
 require('nomad-commons/polyfills/string')
 require('nomad-commons/polyfills/function')
 require('nomad-commons/polyfills/number')

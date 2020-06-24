@@ -1,3 +1,14 @@
+/**
+ * Search workspaces that matches a query, by name, city or country in user favorites.
+ * 
+ * @param {string} query The query to filter workspaces and retrieve. 
+ * 
+ * @returns {Promise<String>} Workspace array if it resolves, an error if it rejects.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {Error} If there is no results for the query, user has no favorites, or other unexpected errors.
+ */
+
 require('nomad-commons/polyfills/string')
 require('nomad-commons/polyfills/number')
 require('nomad-commons/polyfills/function')

@@ -1,3 +1,13 @@
+/**
+ * Creates new workspace.
+ * 
+ * @param {object} workspace The workspace values. 
+ * 
+ * @returns {Promise<String>} The workspace object created if it resolves, an error if it rejects.
+ * 
+ * @throws {Error} If there was a problem resolving.
+ */
+
 require('nomad-commons/polyfills/string')
 require('nomad-commons/polyfills/function')
 const { utils: { call } } = require('nomad-commons')

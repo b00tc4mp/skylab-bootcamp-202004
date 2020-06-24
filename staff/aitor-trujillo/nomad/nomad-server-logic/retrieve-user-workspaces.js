@@ -1,5 +1,15 @@
-require('nomad-commons/polyfills/string')
+/**
+ * Retrieves user created workspaces.
+ * 
+ * @param {string} userId The workspace values. 
+ * 
+ * @returns {Promise<String>} The workspaces array if it resolves, an error if it rejects.
+ * 
+ * @throws {UnexistenceError} If cannot find user with userId.
+ * @throws {Error} If there is no workspaces created to retrieve.
+ */
 
+require('nomad-commons/polyfills/string')
 const { models: { Workspace, User } } = require('nomad-data')
 const { UnexistenceError } = require('nomad-commons/errors')
 

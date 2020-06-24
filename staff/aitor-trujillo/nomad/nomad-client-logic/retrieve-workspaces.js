@@ -1,3 +1,15 @@
+/**
+ * Retrieves workspaces array sorted by location.
+ * 
+ * @param {object} location Object including latitude & longitude for the position to retrieve. 
+ * @param {string} filter Optional parameter for retrieving workspaces that matches category property. 
+ * 
+ * @returns {Promise<String>} The workspace objects array up to length 20 if it resolves, an error if it rejects.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {Error} If can not find any workspace by location, or other unexpected errors.
+ */
+
 require('nomad-commons/polyfills/string')
 require('nomad-commons/polyfills/number')
 require('nomad-commons/polyfills/function')

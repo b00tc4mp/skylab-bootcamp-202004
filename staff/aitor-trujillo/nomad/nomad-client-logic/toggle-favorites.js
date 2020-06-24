@@ -1,3 +1,14 @@
+/**
+ * Saves workspaceId to user favorites array, or removes it if it's already included.
+ * 
+ * @param {string} workspaceId The workspace id to retrieve. 
+ * 
+ * @returns {Promise<String>} Nothing if it resolves, an error if it rejects.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {Error} If can not find the workspace by it's id, or other unexpected errors.
+ */
+
 require('nomad-commons/polyfills/string')
 require('nomad-commons/polyfills/function')
 require('nomad-commons/polyfills/number')

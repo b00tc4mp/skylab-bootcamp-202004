@@ -1,3 +1,14 @@
+/**
+ * Deletes existing workspace, only possible for it's creator.
+ * 
+ * @param {string} workspaceId The workspace id to delete. 
+ * 
+ * @returns {Promise<String>} Returns nothing if it resolves, an error if it rejects.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {Error} If could not delete the workspace.
+ */
+
 require('nomad-commons/polyfills/string')
 require('nomad-commons/polyfills/number')
 require('nomad-commons/polyfills/function')

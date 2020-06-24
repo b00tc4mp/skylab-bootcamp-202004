@@ -1,3 +1,11 @@
+/**
+ * Checks if user has access with valid token.
+ * 
+ * @returns {Promise<String>} true if it resolves, false if it rejects.
+ * 
+ * @throws {Error} If something went wrong calling the api.
+ */
+
 require('nomad-commons/polyfills/string')
 require('nomad-commons/polyfills/function')
 const { utils: { call } } = require('nomad-commons')

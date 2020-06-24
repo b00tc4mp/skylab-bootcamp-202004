@@ -1,3 +1,15 @@
+/**
+ * Sends image to upload for workspace.
+ * 
+ * @param {string} workspaceId The workspace id corresponding to image selected. 
+ * @param {string} workspace The values submited in the image form, it includes image uri. 
+ * 
+ * @returns {Promise<String>} True if it resolves, an error if it rejects.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {Error} If can not find the workspace by it's id, or other unexpected errors.
+ */
+
 require('nomad-commons/polyfills/string')
 require('nomad-commons/polyfills/function')
 const { utils: { call } } = require('nomad-commons')

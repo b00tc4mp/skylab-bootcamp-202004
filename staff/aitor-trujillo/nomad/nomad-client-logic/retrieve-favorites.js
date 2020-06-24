@@ -1,3 +1,11 @@
+/**
+ * Retrieves user favorites.
+ * 
+ * @returns {Promise<String>} The workspaces marked as favorite if it resolves, an error if it rejects.
+ * 
+ * @throws {Error} If something went unexpected, or if there is no favorite workspaces.
+ */
+
 require('nomad-commons/polyfills/string')
 require('nomad-commons/polyfills/function')
 const { utils: { call } } = require('nomad-commons')

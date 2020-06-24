@@ -1,3 +1,14 @@
+/**
+ * Search workspaces that matches a query, by name, city or country.
+ * 
+ * @param {string} query The query to filter workspaces and retrieve. 
+ * 
+ * @returns {Promise<String>} Workspace array if it resolves, an error if it rejects.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {Error} If there is no results for the query, or other unexpected errors.
+ */
+
 require('nomad-commons/polyfills/string')
 require('nomad-commons/polyfills/number')
 require('nomad-commons/polyfills/function')
@@ -6,6 +17,7 @@ const context = require('./context')
 
 module.exports = function (query) {
     String.validate.notVoid(query)
+    if (query === '') return
 
     return (async () => {
         try {
