@@ -1,7 +1,6 @@
 /**
- * Changes the status of the user registered between enable and disable
- * default is enable
- * 
+ * Changes the confirmation of the user register
+ * default is false
  * @param {string} userId user's id
  * @throws {TypeError} if user's id is not a string nor empty
  * 
@@ -13,12 +12,10 @@ const __context__ = require('./context')
 
 module.exports = function (userId) {
     String.validate.notVoid(userId)
-    
-    debugger
+   
     return call(
         'PATCH',
-        `${this.API_URL}/users/revoke/${userId}`,
-         undefined, undefined)
+        `${this.API_URL}/users/confirm/${userId}`,undefined,undefined)
         .then(({ status, body }) => {
             if (status === 204) return
             else {

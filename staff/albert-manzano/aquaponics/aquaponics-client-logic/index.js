@@ -13,9 +13,11 @@ module.exports = {
     retrieveLastTemperature : require('./retrieve-last-temperature'),
     retrieveLastPh : require('./retrieve-last-ph'),
     isUserSessionValid : require ('./is-usersession-valid'),
-    forcastDays: require('./forecast-days'),
+    forecastDays: require('./forecast-days'),
     retrieveTemperature:require('./retrieve-temperature'),
     retrievePh:require('./retrieve-ph'),
     retrieveAllUsers:require('./retrieve-all-users'),
-    updateUser:require('./update-user')
+    updateUser:require('./update-user'),
+    revokeUnrevokeUser:require('./revoke-unrevoke-user'),
+    confirmUser:require('./confirm-user')
 }

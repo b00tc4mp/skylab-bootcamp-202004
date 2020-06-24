@@ -16,12 +16,15 @@ export default Feedback
 
 const styles = StyleSheet.create({
     success: {
-        
-        color: '#66cc00'
+        fontWeight:"bold",
+        alignSelf:"center",
+        color: '#66cc00',
+
     },
     error: {
         fontWeight:"bold",
-        
-        color: 'red'
+        alignSelf:"center",
+        color: 'red',
+      
     }
 });

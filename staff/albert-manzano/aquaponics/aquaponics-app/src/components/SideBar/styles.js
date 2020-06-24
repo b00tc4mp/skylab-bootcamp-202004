@@ -33,6 +33,13 @@ const styles = StyleSheet.create({
         
     },
 
+    iconWarn:{
+        alignSelf:"center",
+        bottom:30,
+        height: 40,
+        width: 40,  
+    },
+
     item:{
         marginTop:-30,
         

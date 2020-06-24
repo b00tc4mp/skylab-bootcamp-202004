@@ -14,8 +14,7 @@ module.exports = async function () {
     const { status, body } = await call('GET', `${this.API_URL}/usersall`,
         undefined,
         { 'Authorization': `Bearer ${token}` })
-        debugger
-        console.log(body)
+        
     if (status === 200) {
         return JSON.parse(body)
     } else {

@@ -1,13 +1,11 @@
 /**
  * retrieve the last ph in the collection of phs listed in the app,
- * 
- * @param {string} userId user's id
  * @throws {TypeError} if user's id is not a string nor empty
  */
 
 require('aquaponics-commons/polyfills/string')
 const { utils: { call } } = require('aquaponics-commons')
-const context = require('./context')
+const __context__ = require('./context')
 
 module.exports = async function () {
     const token = await this.storage.getItem("token")
@@ -23,7 +21,7 @@ module.exports = async function () {
         throw new Error(error)
     }
 
-}.bind(context)
+}.bind(__context__)
 
 /**
  * @async returns:

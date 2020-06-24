@@ -2,8 +2,8 @@
  * checks if user is logged
  */
 
-const context = require('./context')
+const __context__ = require('./context')
 
 module.exports = function () {
     return this.storage.getItem('id').then(id => !!this.id)
-}.bind(context)
+}.bind(__context__)

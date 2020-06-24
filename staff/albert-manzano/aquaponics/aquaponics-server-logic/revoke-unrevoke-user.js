@@ -13,7 +13,7 @@ const { errors: { UnexistenceError } } = require('aquaponics-commons')
 
 module.exports = userId => {
     String.validate.notVoid(userId)
-
+    
     return User.findById(userId)
         .then(user => {
             if (!user) throw new UnexistenceError(`user with ${userId} does not exist`)
@@ -21,7 +21,7 @@ module.exports = userId => {
             if (user.status === "enable") user.status="disable"
             else user.status="enable"
 
-            return user.save()
+            return User.findByIdAndUpdate(userId, { $set: { status: user.status } })
         })
 }
 

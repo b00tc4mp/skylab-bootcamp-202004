@@ -32,24 +32,20 @@ describe('logic-updateUser', () => {
                 .then(result => userId = result.id)
         })
 
-        it('should update the user data', () => {
-            _name = `name-${random()}`
-            _surname = `surname-${random()}`
+        it('should update the user data', async () => {
+            _name = `newname-${random()}`
+            _surname = `newsurname-${random()}`
 
-            const updates = { name: _name, surname: _surname, email, password, phone }
+            const userUpdate = { name: _name, surname: _surname, email, password, phone }
 
-            return updateUser(userId, updates)
-                .then(() => User.find())
-                .then(results => {
-                    expect(results).to.have.lengthOf(1)
+            await updateUser(userId, userUpdate)
+            debugger
+            const results = await User.findById(userId)    
+            expect(results.name).to.equal(_name)
+            expect(results.surname).to.equal(_surname)
+            expect(results.email).to.equal(email)
+            expect(results.password).to.equal(password)
 
-                    const [user] = results
-
-                    expect(user.name).to.equal(_name)
-                    expect(user.surname).to.equal(_surname)
-                    expect(user.email).to.equal(email)
-                    expect(user.password).to.equal(password)
-                })
         })
     })
 
@@ -110,7 +106,7 @@ describe('logic-updateUser', () => {
         }).to.throw(TypeError, `hello is not a number`)
 
     })
-    afterEach(async() =>await User.deleteMany())
+    afterEach(async () => await User.deleteMany())
 
-    after(async() => await mongoose.disconnect)
+    after(async () => await mongoose.disconnect)
 })

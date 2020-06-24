@@ -10,7 +10,7 @@
 
 require('aquaponics-commons/polyfills/string')
 const { utils: { Email, call } } = require('aquaponics-commons')
-const context = require('./context')
+const __context__ = require('./context')
 
 module.exports = function (email, password) {
     Email.validate(email)
@@ -35,7 +35,7 @@ module.exports = function (email, password) {
                 throw new Error(error)
             }
         })
-}.bind(context)
+}.bind(__context__)
 
 /**
  * @async returns:

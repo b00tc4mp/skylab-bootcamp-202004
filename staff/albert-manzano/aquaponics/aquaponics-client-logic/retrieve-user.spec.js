@@ -9,12 +9,12 @@ require('aquaponics-commons/polyfills/json')
 const { mongoose, models: { User } } = require('aquaponics-data')
 const { jwtPromised } = require('aquaponics-node-commons')
 global.fetch = require('node-fetch')
-const context = require('./context')
+const __context__ = require('./context')
 const AsyncStorage = require('not-async-storage')
 const { API_URL } = require('./context')
 
-context.storage = AsyncStorage
-context.API_URL = API_URL
+__context__.storage = AsyncStorage
+__context__.API_URL = API_URL
 
 describe('client-logic-retrieve user', () => {
     before(() => mongoose.connect(MONGODB_URL))
@@ -37,7 +37,7 @@ describe('client-logic-retrieve user', () => {
             userId = user.id
             token = await jwtPromised.sign({ sub: userId }, SECRET)
 
-            await context.storage.setItem('token', token)
+            await __context__.storage.setItem('token', token)
         })
 
         it('should succeed on correct user id', async () => {
@@ -55,7 +55,7 @@ describe('client-logic-retrieve user', () => {
         userId = '5ed1204ee99ccf6fae798aef'
 
         const _token = await jwtPromised.sign({ sub: userId }, SECRET)
-        await context.storage.setItem('token', _token)
+        await __context__.storage.setItem('token', _token)
 
         try {
             await retrieveUser()

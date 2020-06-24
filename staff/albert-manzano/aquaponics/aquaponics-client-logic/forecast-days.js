@@ -7,7 +7,7 @@
 
 require('aquaponics-commons/polyfills/string')
 const { utils: { call } } = require('aquaponics-commons')
-const context = require('./context')
+const __context__ = require('./context')
 
 module.exports = async function () {   
     const { status, body } = await call('GET', "https://community-open-weather-map.p.rapidapi.com/forecast?q=tagaytay&units=metric",
@@ -32,4 +32,4 @@ module.exports = async function () {
         throw new Error(error)
     }
 
-}.bind(context)
+}.bind(__context__)

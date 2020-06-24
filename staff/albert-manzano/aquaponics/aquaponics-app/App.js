@@ -9,7 +9,8 @@ import {
   AsyncStorage,
 } from 'react-native';
 
-import { Landing, Home, Charts, Forecast, Manager, Greenhouse } from './src/components';
+import { Landing, Home, Charts, Forecast, Manager, Greenhouse} from './src/components';
+
 
 import logic, { retrieveUser, logout, retrieveLastTemperature, retrieveLastPh, isUserLoggedIn, isUserSessionValid } from 'aquaponics-client-logic'
 
@@ -22,6 +23,7 @@ export default function App() {
   const [role, setRole] = useState('')
   const [lastTemp, setLastTemp] = useState('')
   const [lastPh, setLastPh] = useState('')
+  const [confirmed,setConfirm] = useState ('')
 
   useEffect(() => {
     if (isUserLoggedIn())
@@ -30,7 +32,7 @@ export default function App() {
           .then(isAuthenticated => {
             if (isAuthenticated) {
               handleAuthorized()
-              setView('home')
+              
             } else setView('landing')
           })
           .catch(error => { throw error })
@@ -46,10 +48,11 @@ export default function App() {
         try {
           const lastTemp = await retrieveLastTemperature()
           const lastPh = await retrieveLastPh()
+          
           setLastTemp(lastTemp)
           setLastPh(lastPh)
         } catch (error) {
-          throw new Error('something wrong happened')
+          setError('Warning! Could not retrieve last data from greenhouse')
         }
       })()
     }, 10000);
@@ -58,13 +61,13 @@ export default function App() {
 
   const handleAuthorized = async () => {
     const { name, confirmed, role, status } = await retrieveUser()
+    
     if (confirmed && status === 'enable') {
       setName(name)
       setRole(role)
       setView('home')
     } else {
-      setView('landing')
-      setError('Contact your provider to confirm your registration')
+      setConfirm('Wait for your provider to confirm your profile')
     }
   }
 
@@ -95,7 +98,7 @@ export default function App() {
 
   return (<>
     <SafeAreaView style={styles.container}>
-      {view === 'landing' && <Landing  error={error} onAuthorized={handleAuthorized} />}
+      {view === 'landing' && <Landing  confirmed={confirmed} error={error} onAuthorized={handleAuthorized} />}
       {view === 'home' && <Home role={role} name={name} error={error} onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
       {view === 'charts' && <Charts role={role} onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
       {view === 'manager' && <Manager role={role} onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}

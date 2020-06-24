@@ -8,9 +8,7 @@ module.exports = {
     retrieveAllUsers:require('./retrieve-all-users'), 
     revokeUnrevokeUser:require('./revoke-unrevoke-user'),
     unregisterUser:require('./unregister-user'),
-    updateUser:require('./update-user'),
-    //searchUser
-        
+    updateUser:require('./update-user'),        
     //arduino
 
     logPh:require('./log-ph'),
@@ -19,7 +17,6 @@ module.exports = {
     retrievePhs:require('./retrieve-phs'),
     retrieveLastTemperature:require('./retrieve-last-temperature'),
     retrieveLastPh:require('./retrieve-last-ph'),
-
     //event
 
     createEvent:require('./create-event'),

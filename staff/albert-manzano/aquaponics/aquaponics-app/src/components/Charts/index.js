@@ -63,7 +63,7 @@ function Charts({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToForec
                                     datasets: [
                                         {
                                             data: temperatures
-
+                                            
                                         }
                                     ]
                                 }}
@@ -89,6 +89,7 @@ function Charts({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToForec
                                 }}
 
                                 style={{
+                                    marginLeft:10,
                                     marginTop: 15,
                                     alignSelf: "center",
                                     marginVertical: 8,
@@ -103,6 +104,7 @@ function Charts({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToForec
                         <ScrollView horizontal={true}>
                             <LineChart
                                 data={{
+                                    segments:10,
                                     // labels: ["January", "February", "March", "April", "May", "June"],
                                     datasets: [
                                         {
@@ -133,7 +135,7 @@ function Charts({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToForec
                                 }}
 
                                 style={{
-                                    marginTop: 15,
+                                    margin:10,
                                     alignSelf: "center",
                                     marginVertical: 8,
                                     borderRadius: 16

@@ -13,12 +13,13 @@ const styles = StyleSheet.create({
 
   weatherContainer: {
     width: '80%',
-    height: '60%',
+    height: '70%',
     backgroundColor: '#c4c4c4',
     alignSelf: 'center',
     alignContent: "center",
     justifyContent: "center",
     marginTop: '10%',
+    borderRadius:10,
   },
 
   headerContainer: {
@@ -42,7 +43,6 @@ const styles = StyleSheet.create({
   temp: {
     fontSize: 20,
     marginTop: 10,
-
   },
 
   canvas: {
@@ -50,27 +50,38 @@ const styles = StyleSheet.create({
     backgroundColor: "#c4c4c4",
     height: 531,
     width: 279,
-
     alignSelf: 'center',
-    // marginTop:"5%",
   },
 
   icon: {
     alignSelf: "center",
-   
   },
 
   bodyContainer: {
-    // alignContent:'center',
     flexDirection: 'row',
-    // alignItems:"center",
     marginLeft: '6%',
     alignContent: 'flex-end',
     padding: 10,
     borderRadius: 10,
   },
 
+  iconDays: {
+    alignSelf: "center",
+    flexDirection:'column',
+    alignContent:'space-between'
+  },
 
+  days:{
+    alignSelf: "center",
+    flexDirection:'column',
+    alignContent:'space-between',
+    marginTop:'10%',
+  },
+
+  date:{
+    fontSize:40,
+    color:'white',
+  }
 
 });
 

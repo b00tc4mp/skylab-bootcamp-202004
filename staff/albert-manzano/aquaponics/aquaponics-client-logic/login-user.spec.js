@@ -49,7 +49,7 @@ describe('logic - authenticate user', () => {
                 .then(() => {
                     logic.__context__.storage.getItem('token')
                     .then(token=>{
-                        debugger
+                       
                         const [, payloadBase64] = token.split('.')
     
                         const payloadJson = atob(payloadBase64)

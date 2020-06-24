@@ -7,14 +7,15 @@
  * @throws {TypeError} If any of the parameters does not match the corresponding type.
  * @throws {Error} If e-mail does not match the expected format.
  */
-
+require('aquaponics-commons/polyfills/number')
 require('aquaponics-commons/polyfills/string')
 const { utils: { Email, call } } = require('aquaponics-commons')
-const context = require('./context')
+const __context__ = require('./context')
 
-module.exports = function (userId,updateUser) {
-    const { name, surname, email, password, phone, role, status, confirmed } = updateUser
-    console.log(userId)
+module.exports = function (userId,userUpdate) {
+    if(!userUpdate instanceof Object)throw new Error('hola')
+    let { name, surname, email, password, phone, role, status, confirmed } = userUpdate
+    
     if (name) String.validate.notVoid(name)
     if (surname) String.validate.notVoid(surname)
     if (phone) Number.validate(phone)
@@ -27,14 +28,11 @@ module.exports = function (userId,updateUser) {
 
     if (role) {
         String.validate.notVoid(role)
-        if (role === 'admin') role = 'user'
-        else role = 'admin'
+        
     }
     if (status) {
         String.validate.notVoid(status)
-        if (status === 'disable') status = 'enable'
-        else status === ' disable'
-    }
+            }
 
     if (password) {
         String.validate.notVoid(password)
@@ -43,18 +41,18 @@ module.exports = function (userId,updateUser) {
     return call(
         'PATCH',
         `${this.API_URL}/users/${userId}`,
-        { name, surname, email, password, role, status, confirmed },
+        { userUpdate },
         { 'Content-type': 'application/json' })
         .then(({ status, body }) => {
 
-            if (status === 204) return (() => { })
+            if (status === 204) return 
             else {
                 const { error } = JSON.parse(body)
 
                 throw new Error(error)
             }
         })
-}.bind(context)
+}.bind(__context__)
 
 /**
  * @async returns:

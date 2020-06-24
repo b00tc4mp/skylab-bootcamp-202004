@@ -10,8 +10,9 @@ import styles from './styles';
 
 import SideBar from '../SideBar';
 import Navbar from '../Navbar';
+import Feedback from '../Feedback'
 
-function Home({name,role,onGoToManager,onGoToCalendar,onGoToCharts,onGoToForecast,onGoToGreenhouse,onGoToLogout}) {
+function Home({error,name,role,onGoToManager,onGoToCalendar,onGoToCharts,onGoToForecast,onGoToGreenhouse,onGoToLogout}) {
   
     const [displayed, setSide] = useState(false);
 
@@ -23,7 +24,8 @@ function Home({name,role,onGoToManager,onGoToCalendar,onGoToCharts,onGoToForecas
             <ImageBackground source={require('../../../assets/images/lettuce1.jpg')} style={styles.image}>
             <Navbar  onDisplaySide={handleSide} />
             <Text style={styles.name}>Welcome {name} !</Text>
-            {displayed && <SideBar role={role} onGoToCalendar={onGoToCalendar} onGoToManager={onGoToManager} onGoToCharts={onGoToCharts} onGoToGreenhouse={onGoToGreenhouse} onGoToForecast={onGoToForecast} onGoToLogout={onGoToLogout} />}
+            {error ? <Feedback message={error} level={"error"} />:null}
+            {displayed && <SideBar error={error} role={role} onGoToCalendar={onGoToCalendar} onGoToManager={onGoToManager} onGoToCharts={onGoToCharts} onGoToGreenhouse={onGoToGreenhouse} onGoToForecast={onGoToForecast} onGoToLogout={onGoToLogout} />}
             </ImageBackground>
         </View>
     </>)

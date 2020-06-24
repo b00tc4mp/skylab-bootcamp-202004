@@ -20,6 +20,7 @@ const { errors: { UnexistenceError } } = require('aquaponics-commons')
 require('aquaponics-commons/polyfills/number')
 
 module.exports = (userId, updateUser) => {
+    debugger
     if (typeof updateUser !== 'object') throw new TypeError(`${updateUser} is not an object`)
 
     const { name, surname, email, password, phone, role, status, confirmed } = updateUser
@@ -39,18 +40,15 @@ module.exports = (userId, updateUser) => {
         String.validate.notVoid(password)
     }
 
-    return User.findByIdAndUpdate(userId, {
-        $set: { name, surname, email, password, role, status, confirmed }
-    })
+    return User.findById(userId)
         .then(user => {
             if (!user) throw new UnexistenceError(`user with userId ${userId} does not exist`)
 
-            return user.save(updateUser)
+            return User.findByIdAndUpdate(userId, {$set: {...updateUser}})
+            
         })
         .then(() => { })
 }
-
-
 /**
  * @promise returns:
  * @returns {UnexistenceError} if user's id does not match.

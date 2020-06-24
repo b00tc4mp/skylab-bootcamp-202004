@@ -8,12 +8,12 @@ require('aquaponics-commons/polyfills/json')
 const { mongoose, models: { User } } = require('aquaponics-data')
 const bcrypt = require('bcryptjs')
 global.fetch = require('node-fetch')
-const context = require('./context')
+const __context__ = require('./context')
 const AsyncStorage = require('not-async-storage')
 const { API_URL } = require('./context')
 
-context.__storage__ = AsyncStorage
-context.API_URL = API_URL
+__context__.storage = AsyncStorage
+__context__.API_URL = API_URL
 
 describe('logic - authenticate user', () => {
     before(() => mongoose.connect(MONGODB_URL))

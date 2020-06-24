@@ -3,5 +3,6 @@ module.exports = {
     // jwtPromised: require('../utils/jwt-promised'),
     Http: require('./http'),
     call: require('./call'),
-    Password:require('./password')
+    Password:require('./password'),
+    getIdFromToken:require('./get-id-from-token')
 }

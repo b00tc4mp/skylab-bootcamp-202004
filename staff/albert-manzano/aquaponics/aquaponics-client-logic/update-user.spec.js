@@ -7,14 +7,15 @@ require('aquaponics-commons/polyfills/json')
 const updateUser = require('./update-user')
 const { expect } = require('chai')
 const { random } = Math
-const { mongoose, models: { User, Temperature } } = require('aquaponics-data')
+const { mongoose, models: { User } } = require('aquaponics-data')
 global.fetch = require('node-fetch')
-const context = require('./context')
+const __context__ = require('./context')
 const AsyncStorage = require('not-async-storage')
 const { API_URL } = require('./context')
 
-context.__storage__ = AsyncStorage
-context.API_URL = API_URL
+__context__.storage = AsyncStorage
+__context__.API_URL = API_URL
+
 describe("update-user", () => {
     let name, surname, email, password, encryptedPassword, userId, token, phone
     let _name, _surname, _email;
@@ -32,38 +33,41 @@ describe("update-user", () => {
         password = `password-${random()}`;
         phone = random()
         encryptedPassword = await bcrypt.hash(password, 10);
+        role= 'user'
 
-        const user = await User.create({ name, surname, email, password: encryptedPassword, phone });
+        const user = await User.create({ name, surname, email, password: encryptedPassword, phone ,role});
+        debugger
         userId = user.id;
         token = await jwtPromised.sign({ sub: userId }, SECRET)
-        await context.__storage__.setItem('token', token)
+        await __context__.storage.setItem('token', token)
 
         _name = `name-${random()}`;
         _surname = `surname-${random()}`;
         _email = `email-${random()}@gmail.com`;
     })
 
-    it('should update the user data', () => {
+    it('should update the user data', async () => {
         _name = `name-${random()}`
         _surname = `surname-${random()}`
+        debugger
+        const userUpdate = { name: _name, surname: _surname, email: _email, role: "admin" }
 
-        const updates = { name: _name, surname: _surname, email, password, phone }
+        await updateUser(userId, userUpdate)
+        const results = await User.find()
 
-        return updateUser(userId, updates)
-            .then(() => User.find())
-            .then(results => {
-                expect(results).to.have.lengthOf(1)
+        expect(results).to.have.lengthOf(1)
+        
+        expect(results[0].name).to.equal(_name)
+        expect(results[0].surname).to.equal(_surname)
+        expect(results[0].email).to.equal(_email)
+        expect(results[0].password).to.equal(encryptedPassword)
+        expect(results[0].role).to.equal("admin")
+        expect(results[0].phone).to.equal(phone)
 
-                const [user] = results
-
-                expect(user.name).to.equal(_name)
-                expect(user.surname).to.equal(_surname)
-                expect(user.email).to.equal(email)
-                expect(user.password).to.equal(password)
-            })
     })
 
-    it('should fail when user does not exist', () => {
+    it('should fail when user does not exist', async () => {
+        await User.deleteMany()
         return updateUser(userId, { name, surname, email, password })
             .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
@@ -88,18 +92,6 @@ describe("update-user", () => {
         }).to.throw(TypeError, `${9} is not a string`)
 
         expect(() => {
-            updateUser(userId, true)
-        }).to.throw(TypeError, `${true} is not an object`)
-
-        expect(() => {
-            updateUser(userId, undefined)
-        }).to.throw(TypeError, `${undefined} is not an object`)
-
-        expect(() => {
-            updateUser(userId, 9)
-        }).to.throw(TypeError, `${9} is not an object`)
-
-        expect(() => {
             updateUser(userId, { surname: true })
         }).to.throw(TypeError, `${true} is not a string`)
 
@@ -121,4 +113,9 @@ describe("update-user", () => {
 
     })
 
+    afterEach(async () => {
+        await User.deleteMany()
+    })
+
+    after(async () => await mongoose.disconnect)
 })

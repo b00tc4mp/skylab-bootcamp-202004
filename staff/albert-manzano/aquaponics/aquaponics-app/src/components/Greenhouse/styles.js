@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
         margin: '10%',
         alignItems:'center',
         marginTop: '10%',
+        borderRadius: 10,
     },
 
     bgcolorgGreen:{

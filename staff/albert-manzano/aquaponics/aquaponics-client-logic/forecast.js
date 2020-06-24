@@ -19,12 +19,15 @@ module.exports = async function (index) {
 
     if (status === 200) {
         const { list } = JSON.parse(body)
-
+        const { dt_txt } = list[0]
         const { temp, temp_min, temp_max } = list[index].main
         const { main } = list[index].weather[0]
         const { speed: wind } = list[index].wind
         
-        return { temp, temp_max, temp_min, main, wind }
+        const [, , text] = dt_txt.split('-')
+        const [date]= text.split(' ')
+        
+        return { temp, temp_max, temp_min, main, wind, date }
     } else {
         const { error } = JSON.parse(body)
 

@@ -1,87 +1,77 @@
 require('dotenv').config()
 
-const { env: { MONGODB_URL_TEST: MONGODB_URL } } = process
+const bcrypt = require('bcryptjs')
+const { jwtPromised } = require('aquaponics-node-commons')
+const { env: { MONGODB_URL_TEST: MONGODB_URL, SECRET } } = process
 require('aquaponics-commons/polyfills/json')
 const retrieveLastTemperature = require('./retrieve-last-temperature')
 const { expect } = require('chai')
 const { random } = Math
-const { mongoose, models: { User, Temperature } } = require('aquaponics-data')
+const { mongoose, models: { User,Temperature } } = require('aquaponics-data')
 global.fetch = require('node-fetch')
-const context = require('./context')
+const __context__ = require('./context')
 const AsyncStorage = require('not-async-storage')
 const { API_URL } = require('./context')
 
-context.__storage__ = AsyncStorage
-context.API_URL = API_URL
+__context__.storage = AsyncStorage
+__context__.API_URL = API_URL
 
-describe('logic - retrieveLastTemperature', () => {
+describe('logic - retrieve last temperature', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let name, surname, email, password, userId, role, phone, date
-    beforeEach(() =>
-        User.deleteMany()
-            .then(() => {
-                name = `name-${random()}`
-                surname = `surname-${random()}`
-                email = `e-${random()}@mail.com`
-                password = `password-${random()}`
-                role = 'admin'
-                phone = random()
-                Temperature.deleteMany()
-                date = new Date()
-            })
-    )
+    let name, surname, email, password, userId, role, phone,  admin,date
+
+    beforeEach(async () => {
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `e-${random()}@mail.com`
+        password = `password-${random()}`
+        role = 'admin'
+        phone = random()
+        encryptedPassword = await bcrypt.hash(password, 10);
+        date=new Date()
+        admin = await User.create({ name, surname, email, password: encryptedPassword, phone, role });
+        userId = admin.id;
+        token = await jwtPromised.sign({ sub: userId }, SECRET)
+        await __context__.storage.setItem('token', token)
+
+    })
 
     describe('when user already exist', () => {
         beforeEach(() => {
-            const admin = { name, surname, email, password, role, phone }
+            admin = { name, surname, email, password, role, phone }
             return Promise.all([
-                User.create(admin),
-                Temperature.create({ temperature: 25, date }),
-                Temperature.create({ temperature: 20, date }),
-                Temperature.create({ temperature: 26, date })
+                Temperature.create({ temperature:26, date }),
+                Temperature.create({ temperature:25, date }),
+                Temperature.create({ temperature:24, date })
             ])
                 .then(([result]) => userId = result.id)
-                
         })
 
         it('should return last temperature', () => {
-            return retrieveLastTemperature(userId)
+            return retrieveLastTemperature()
                 .then(lastTemperature => {
                     expect(lastTemperature).to.be.an.instanceOf(Object)
                     expect(lastTemperature.date).to.exist
-                    expect(lastTemperature.date).to.be.an.instanceOf(Date)
                     expect(lastTemperature.temperature).to.exist
                     expect(lastTemperature.temperature).to.be.a('number')
-                    expect(lastTemperature.temperature).to.equal(26)
-                })
-        })
-
-        it('use app as user should fail', () => {
-            const user = { name, surname, email: "hello@gmail.com", password, role: "user", phone }
-            return User.create(user)
-                .then(result => userId = result.id)
-                .then()
-                .catch(error => {
-                    expect(error).to.be.an.instanceof(Error)
-                    expect(error.message).to.equal(`your role does not allow you to acces here`)
+                    expect(lastTemperature.temperature).to.equal(24)
                 })
         })
     })
 
-      describe('when user does not exist', () => {
-        it('should fail when user does not exists', () => {
-            userId = '123455678990'
-            return retrieveLastTemperature(userId)
-                .then(() => { throw new Error('should not reach this point') })
-                .catch(error => {
-                    expect(error).to.be.exist
-                    expect(error).to.be.an.instanceOf(Error)
-                    expect(error.message).to.equal(`user with ${userId} does not exist`)
-                })
+    describe('when user does not exist', () => {
+        it('should fail when user does not exists', async () => {
+            await User.deleteMany()
+            try {
+                await retrieveLastTemperature()
+            } catch (error) {
+                expect(error).to.be.exist
+                expect(error.message).to.equal(`user with ${userId} does not exist`)
+
+            }
         })
     })
-
 
     afterEach(async () => {
         await User.deleteMany()

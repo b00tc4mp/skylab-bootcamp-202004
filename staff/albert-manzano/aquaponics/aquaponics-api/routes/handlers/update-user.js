@@ -3,10 +3,9 @@ const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
     try {
-        const { payload: { sub: userId } } = req
-        const { body: { name, surname, email, password, phone, role, status, confirmed } } = req
-        const userUpdate = { name, surname, email, password, phone, role, status, confirmed }
-
+        const { params: { userId } } = req
+        const { body: { userUpdate } } = req
+        debugger
         updateUser(userId, userUpdate)
             .then(() => res.status(204).send())
             .catch(error => handleError(error, res))

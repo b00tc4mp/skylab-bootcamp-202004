@@ -15,7 +15,7 @@ import Navbar from '../Navbar'
 import Register from '../Register'
 import Feedback from '../Feedback';
 
-function Landing({ onAuthorized }) {
+function Landing({confirmed,onAuthorized }) {
     const [view, setView] = useState('landing')
     const [displayed, setSide] = useState(false);
     const [error, setError] = useState('')
@@ -60,9 +60,10 @@ function Landing({ onAuthorized }) {
             <Navbar onDisplaySide={handleSide} />
             <ImageBackground source={require('../../../assets/images/lettuce1.jpg')} style={styles.image}>
                 {view === 'landing' && <Text style={styles.title} >Welcome to Red Rock Aquaponics</Text>}
-                {error ? <Feedback message={error.message} level={"error"} />:null}
+                {confirmed ? <Feedback message={confirmed} level={"error"} />:null}
                 {view === 'landing' && (<>
                     {displayed && < SideIntro onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
+                   
                 </>)}
                 {view === 'login' && (<>
                     {/* <Navbar onDisplaySide={handleSide} /> */}
@@ -74,6 +75,7 @@ function Landing({ onAuthorized }) {
                     <Register error={error} onRegister={handleRegister} />
                     {displayed && <SideIntro onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
                 </>)}
+                
             </ImageBackground>
         </SafeAreaView>
     </>)

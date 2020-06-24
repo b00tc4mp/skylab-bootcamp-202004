@@ -10,10 +10,10 @@ import {
     ScrollView,
 } from "react-native";
 
-import styles from './styles'
+import styles from './styles';
 import Feedback from "../Feedback";
 
-import {registerUser} from 'aquaponics-client-logic'
+import {registerUser} from 'aquaponics-client-logic';
 
 
 function Add({ handleGoToBack }) {
