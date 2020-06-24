@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, View, StyleSheet, Text, AsyncStorage, Dimensions, Image, Alert } from 'react-native'
+import { TouchableOpacity, View, StyleSheet, Text, Dimensions, Image, Alert } from 'react-native'
 import { addFood, substractFood, retrieveUserFoodList } from 'coohappy-client-logic'
 
 
@@ -29,7 +29,7 @@ const SingleFruit = function ({ item, updateList }) {
             setUserFoodList(foodList.foodList)
             updateList()
         } catch (error) {
-            console.log(error)
+            Alert.alert('OOPS!!', error.message)
         }
     }
     const handleOnSubstractFood = async (food) => {

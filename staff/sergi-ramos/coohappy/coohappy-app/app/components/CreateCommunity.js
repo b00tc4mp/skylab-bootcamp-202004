@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, TextInput, AsyncStorage,TouchableOpacity, Alert } from 'react-native'
+import { View, StyleSheet, Text, TextInput,TouchableOpacity, Alert } from 'react-native'
 import SvgUri from "expo-svg-uri"
 import ButtonForm from '../components/ButtonForm'
 import { registerCohousing } from 'coohappy-client-logic'
 
 
-const CreateCommunity = function ({ route, navigation }) {
+const CreateCommunity = function ({ navigation }) {
 
     const [name, setName] = useState('')
     const [street, setStreet] = useState('')

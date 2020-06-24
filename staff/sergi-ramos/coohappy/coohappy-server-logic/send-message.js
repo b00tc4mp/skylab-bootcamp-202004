@@ -5,6 +5,18 @@ const { errors: { UnexistenceError } } = require('coohappy-commons')
 const { models: { Message, Cohousing } } = require('coohappy-data')
 const message = require('coohappy-data/models/schemas/message')
 
+/**
+ * Add message to cohousing messages.
+ * 
+ * @param {string} message Chat message. 
+ * @param {string} userId id of the current user. 
+ * @param {Object} date - The date of user send the message.
+ * 
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
 
 module.exports = ((userId, message, date) => {
 

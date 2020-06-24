@@ -1,5 +1,5 @@
 import React, { useState, useEffect, } from 'react';
-import { TextInput, TouchableOpacity, View, StyleSheet, Text, AsyncStorage, Alert } from 'react-native'
+import { TextInput, TouchableOpacity, View, StyleSheet, Text, Alert } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import SvgUri from "expo-svg-uri"
 import HeaderHome from './HeaderHome'

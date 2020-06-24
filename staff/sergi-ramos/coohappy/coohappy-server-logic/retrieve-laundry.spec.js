@@ -72,13 +72,32 @@ describe('logic - retrieve-laundry', () => {
 
         it('should fail on retrieve reservation', async () => {
 
-            const cohousing = await Cohousing.findOneAndUpdate({'members' : userId }, { $pull: { laundry: {user: userId } } } )
+            const cohousing = await Cohousing.findOneAndUpdate({ 'members': userId }, { $pull: { laundry: { user: userId } } })
 
             const allLaundry = await retrieveLaundry(userId)
             expect(allLaundry.laundry.length).to.equal(0)
             expect(allLaundry.laundryNum).to.exist
             expect(allLaundry.laundryNum).to.equal(laundryNum)
             expect(allLaundry.laundryNum).to.exist
+        })
+    })
+
+    describe('when cohousing does not exist', () => {
+
+        beforeEach(async () => {
+            await Cohousing.deleteMany()
+        })
+
+        it('should fail on unnexistence cohousing', async () => {
+            try {
+                const allLaundry = await retrieveLaundry(userId)
+
+            } catch (error) {
+                expect(error).to.exist
+                expect(error.message).to.be.equal(`cohousing of user with id ${userId} does not exist`)
+            }
+
+
         })
     })
 

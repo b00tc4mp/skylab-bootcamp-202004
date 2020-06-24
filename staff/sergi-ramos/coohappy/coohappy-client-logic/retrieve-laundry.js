@@ -2,9 +2,17 @@ require('coohappy-commons/polyfills/string')
 const { utils: { Email, call } } = require('coohappy-commons')
 const context = require('./context')
 
+
+/**
+ * Retrieve all users laundries.
+ * 
+ * @param {string} day Reservation day. 
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
 module.exports = function(day) {
-
-
 
   return (async () => {
 

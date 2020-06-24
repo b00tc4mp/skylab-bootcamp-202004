@@ -2,6 +2,15 @@ require('coohappy-commons/polyfills/string')
 const { utils: { Email, call } } = require('coohappy-commons')
 const context = require('./context')
 
+/**
+ * Update user.
+ * 
+ * @param {object} dataToUpdate all data user want to update user. 
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
 module.exports = function(dataToUpdate) {
     
     return (async () => {

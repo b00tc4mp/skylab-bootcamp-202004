@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useReducer } from 'react';
-import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView, AsyncStorage, Alert } from 'react-native'
+import React, { useEffect, useState } from 'react';
+import { TextInput, TouchableOpacity, View, StyleSheet, Text, AsyncStorage, Alert } from 'react-native'
 import SvgUri from "expo-svg-uri"
 import ButtonForm from './ButtonForm'
 import { retrieveUser, updateUser } from 'coohappy-client-logic'
@@ -23,7 +23,6 @@ const UpdateUser = function ({ navigation, setName: _setName }) {
                 setName(name)
                 setSurname(surname)
                 setEmail(email)
-
             })()
 
         } catch (error) {

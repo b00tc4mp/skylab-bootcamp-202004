@@ -2,6 +2,21 @@ require('coohappy-commons/polyfills/string')
 const { utils: { Email, call } } = require('coohappy-commons')
 const context = require('./context')
 
+
+
+/**
+ * Register user.
+ * 
+ * @param {string} name User name. 
+ * @param {string} surname User surname. 
+ * @param {string} email USer email. 
+ * @param {string} password User password. 
+ * @param {string} confirmPassword confirm password.
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
 module.exports = function(name, surname, email, password, confirmPassword) {
 
     String.validate.notVoid(name)

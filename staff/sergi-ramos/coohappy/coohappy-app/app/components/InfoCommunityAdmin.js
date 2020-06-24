@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useReducer } from 'react';
-import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, SafeAreaView, AsyncStorage, Clipboard, Alert } from 'react-native'
+import React, { useEffect, useState } from 'react';
+import { TextInput, TouchableOpacity, View, StyleSheet, Text, ScrollView, Clipboard, Alert } from 'react-native'
 import SvgUri from "expo-svg-uri"
 import ButtonForm from './ButtonForm'
 import { retrieveCohousing, updateCohousing } from 'coohappy-client-logic'

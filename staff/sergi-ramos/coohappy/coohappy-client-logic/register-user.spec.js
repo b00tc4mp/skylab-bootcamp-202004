@@ -11,7 +11,7 @@ const bcrypt = require('bcryptjs')
 const logic = require('.')
 global.fetch = require('node-fetch')
 logic.__context__.API_URL = API_URL
-console.log(API_URL)
+
 
 describe('logic - register user', () => {
     before(() => mongoose.connect(MONGODB_URL))

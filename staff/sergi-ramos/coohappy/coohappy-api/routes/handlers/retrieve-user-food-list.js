@@ -8,11 +8,10 @@ module.exports = (req, res) => {
         retrieveUserFoodList(userId)
             .then(foodList => res.status(200).json(foodList))
             .catch(error => {
-                console.log(error)
 
-                handleError(error, res)})
+                handleError(error, res)
+            })
     } catch (error) {
-        console.log(error)
         handleError(error, res)
     }
 }

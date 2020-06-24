@@ -4,6 +4,15 @@ const { errors: { UnexistenceError } } = require('coohappy-commons')
 const { models: { User, Cohousing } } = require('coohappy-data')
 const { mongoose: { ObjectId } } = require('coohappy-data')
 
+/**
+ * Substract food from food list.
+ * 
+ * @param {string} foodItem Food name. 
+ * @param {string} userId id from current user. 
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
 
 module.exports = (foodItem, userId) => {
 

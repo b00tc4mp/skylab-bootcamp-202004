@@ -2,6 +2,14 @@ require('coohappy-commons/polyfills/string')
 const { utils: { call } } = require('coohappy-commons')
 const context = require('./context')
 
+/**
+ * Delete reservation date laundry.
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
+
 module.exports = function() {
     
     return (async () => {

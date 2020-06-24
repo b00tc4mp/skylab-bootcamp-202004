@@ -1,42 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { TouchableOpacity, View, StyleSheet, Text, ScrollView } from 'react-native'
-import weekDays from 'coohappy-client-logic/helpers/week-month-days'
 import { timeFrames } from '../constants/time-frames'
 
 
 const TimeLaundry = function ({ laundriesAmount, onSelectedHour, currentUserId }) {
 
 
-    //     const [ laundries, setLaundries ] = useState(laundriesAmount)
-    //useEffect(() => {
-
-    // setLaundries(laundriesAmount)
-
-    // }, [])
-
-    //if(!laundriesAmount) return <Text>Loading</Text>
-
     return (<>
-
-        {/* 
-              <FlatList
-              
-              showsHorizontalScrollIndicator={false}
-              data={timeFrames}
-              renderItem={({ item }) => (
-                  <View style={styles.hourContainer}>
-                  <Text style={styles.hour}>{item.day}</Text>
-                  
-                  </View>
-                  )}
-                />  */}
 
         <ScrollView style={styles.scrollView}>
             <View style={styles.container}>
 
                 {
                     timeFrames && timeFrames.map(time =>
-                        //console.log(time)
+                       
                         (laundriesAmount && laundriesAmount.findIndex(x => x.hour === time && x.amount === 4)) === -1 ?
                             <TouchableOpacity onPress={() => onSelectedHour(time)} activeOpacity={0.7} >
                                 {
@@ -48,7 +25,6 @@ const TimeLaundry = function ({ laundriesAmount, onSelectedHour, currentUserId }
                                             <Text style={styles.hourSelected}>{time}</Text>
                                             <Text style={styles.availabilitySelected}>Your reservation</Text>
                                         </View> :
-
 
                                         <View style={styles.hourContainer}>
 
@@ -69,7 +45,6 @@ const TimeLaundry = function ({ laundriesAmount, onSelectedHour, currentUserId }
                                             <Text style={styles.availabilitySelected}>Your reservation</Text>
                                         </View> :
 
-
                                         <View style={styles.hourContainerComplete}>
 
                                             <Text style={styles.hour}>{time}</Text>
@@ -77,8 +52,6 @@ const TimeLaundry = function ({ laundriesAmount, onSelectedHour, currentUserId }
                                         </View>
                                 }
                             </TouchableOpacity>
-
-
                     )
                 }
             </View>

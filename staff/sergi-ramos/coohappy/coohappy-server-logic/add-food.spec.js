@@ -36,7 +36,7 @@ describe('logic - add-food', () => {
 
         foodItem = `fruit-${random()}`
         foodItem_2 = `fruit-${random()}`
-        
+
 
         hash = await bcrypt.hash(password, 10)
         const user = await User.create({ name, surname, email, password: hash })
@@ -122,19 +122,48 @@ describe('logic - add-food', () => {
             expect(cohousing.foodList[1].weight).to.equal(0.5)
         })
     })
+    describe('when user o cohousing does not exist', () => {
+        const fakeId = '5ef21304128395ac41cc78f9'
+
+        it('should fail when user does not exist', async () => {
+            try {
+                await addFood(foodItem_2, fakeId)
+
+            } catch (error) {
+                expect(error).to.exist
+                expect(error.message).to.equal(`User with id ${fakeId} does not exist`)
+            }
+        })
+        it('should fail when cohousing does not exist', async () => {
+
+            beforeEach(async () => {
+                const user = await User.create({ name, surname, email, password: hash })
+                userId = user.id
+            })
+            try {
+                await addFood(foodItem_2, userId)
+
+            } catch (error) {
+                expect(error).to.exist
+                expect(error.message).to.equal(`There is no cohousing with a user with an id ${userId}`)
+            }
+        })
+
+    })
+
 
     describe('sync errors', () => {
 
         it('on wrong type of data', () => {
 
-            expect(() => addFood(true , userId)).to.throw(TypeError, 'true is not a string')
+            expect(() => addFood(true, userId)).to.throw(TypeError, 'true is not a string')
             expect(() => addFood(foodItem, 2)).to.throw(TypeError, '2 is not a string')
         })
     })
-    
-    
+
+
     afterEach(() => User.deleteMany())
-    
+
     after(mongoose.disconnect)
-    
+
 })

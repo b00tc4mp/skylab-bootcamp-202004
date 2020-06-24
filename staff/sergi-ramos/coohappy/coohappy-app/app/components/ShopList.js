@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, FlatList, Dimensions, AsyncStorage } from 'react-native'
+import { View, StyleSheet, Text, FlatList, Dimensions } from 'react-native'
 import HeaderHome from './HeaderHome'
 import SingleFruit from './SingleFruit'
 import ShopListAdmin from './ShopListAdmin'

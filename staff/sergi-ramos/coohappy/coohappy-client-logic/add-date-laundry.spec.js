@@ -116,7 +116,7 @@ describe('logic - add-date-laundry', () => {
             } catch (error) {
 
                 expect(error).to.exist
-                expect(error.message).to.equal(`User with id ${userId} already have an hour in the laundry`)
+                expect(error.message).to.equal(`You already have a reservation, can only do one`)
             }
         })
 

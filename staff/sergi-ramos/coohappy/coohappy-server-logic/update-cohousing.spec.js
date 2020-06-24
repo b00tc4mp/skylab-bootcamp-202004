@@ -118,6 +118,7 @@ describe('logic - udpate-cohousing', () => {
             expect(() => updateCohousing(userId, true)).to.throw(TypeError, 'true is not an object')
             expect(() => updateCohousing(true, { name: 'hola' })).to.throw(TypeError, 'true is not a string')
         })
+      
     })
 
 

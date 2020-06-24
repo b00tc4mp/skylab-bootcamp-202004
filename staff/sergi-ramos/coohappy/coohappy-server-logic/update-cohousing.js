@@ -4,6 +4,15 @@ require('coohappy-commons/polyfills/number')
 const { errors: { UnexistenceError } } = require('coohappy-commons')
 const { mongoose: { ObjectId }, models: { User, Cohousing } } = require('coohappy-data')
 
+/**
+ * Update cohousing.
+ * 
+ * @param {object} dataToUpdate all data user want to change of cohousing. 
+ * @param {string} userId user id of current user. 
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
 
 module.exports = (userId, dataToUpdate) => {
 

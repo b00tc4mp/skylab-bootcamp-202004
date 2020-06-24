@@ -2,6 +2,15 @@ require('coohappy-commons/polyfills/string')
 const { mongoose: { ObjectId }, models: { Cohousing } } = require('coohappy-data')
 const { errors : { UnexistenceError } } = require('coohappy-commons')
 
+/**
+ * Retrieve user food list.
+ * 
+ * @param {string} userId id of the current user
+ * 
+ * @throws {Error} When api return some error 
+ *
+ */
+
 module.exports = userId => {
     String.validate.notVoid(userId)
 
