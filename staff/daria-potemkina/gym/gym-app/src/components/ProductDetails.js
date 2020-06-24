@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Line } from 'react-chartjs-2'
 import { addProduct, retrieveProduct, retrieveUnderlyingPrice, retrieveFuturePrices } from 'gym-client-logic'
-import './ProductDatails.sass'
+import './ProductDetails.sass'
 import Spinner from './Spinner'
 import Feedback from './Feedback'
 
@@ -23,11 +23,11 @@ function ProductDetails({ id, ticker, expanded, history }) {
         try {
             retrieveProduct(id || _itemId)
                 .then(_product => {
-                    debugger
+                    
                     setProduct(_product)
                     return retrieveFuturePrices(id || _itemId)
                     .then(prices => {
-                        debugger
+                        
                         const futurePrice = prices.map(({ price }) => price)
                         const futureDate = prices.map(({ date }) => date)
                         setFutureDate(futureDate)
@@ -54,7 +54,7 @@ function ProductDetails({ id, ticker, expanded, history }) {
     }, [])
 
     const Chart = () => {
-        debugger
+        
         setFutureChartData({
             labels: futureDate,
             datasets: [

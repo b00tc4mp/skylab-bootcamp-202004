@@ -93,7 +93,7 @@ describe('logic - add-product', () => {
             return addProduct(productId, priceId, _side, quantity)
                 .then(() => contracts.find().toArray())
                 .then(([contract]) => {
-                    debugger
+                    
                     expect(contract.user.toString()).to.equal(userId)
                     expect(contract.product.toString()).to.equal(productId)
                     expect(contract.trades).to.be.an('array')

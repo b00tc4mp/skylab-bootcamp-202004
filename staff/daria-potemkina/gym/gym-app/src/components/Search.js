@@ -1,12 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { searchProducts } from 'gym-client-logic'
 import './Search.sass'
 import Results from './Results'
 import Feedback from './Feedback'
+import queryString from 'query-string';
 
-function Search({ handleGoToDetails }) {
+function Search({ handleGoToDetails, history }) {
     const [results, setResults] = useState()
     const [error, setError] = useState()
+
+    useEffect(() => {
+        if(history.location.search){
+            const {type, ticker, sector, exchange} = queryString.parse(history.location.search)
+            try{
+                searchProducts(type, sector,ticker,exchange)
+                .then(result => {
+                    setResults(result)
+                    setError(undefined)
+                })
+                .catch(({ message }) => {
+                    setError(message)
+                    setResults(undefined)
+                })
+
+            }catch({message}){
+                setError(error)
+            }
+        }
+    }, [])
 
     const handleSearch = event => {
         event.preventDefault()
@@ -28,6 +49,14 @@ function Search({ handleGoToDetails }) {
                 .then(results => {
                     setError(undefined)
                     setResults(results)
+                    
+                    const queryObj = {type, sector, ticker, market}
+
+                    let query = '';
+                    for (const key in queryObj) {
+                        if (typeof queryObj[key] !== 'undefined') query += `${key}=${queryObj[key]}&`;
+                    }
+                    history.push(`/search?${query}`)
                 })
                 .catch(({ message }) => {
                     setError(message)
@@ -44,7 +73,7 @@ function Search({ handleGoToDetails }) {
         <form className="search__form" onSubmit={handleSearch}>
             <section className="search__input">
                 <select className="search__select" name="type">
-                    <option value="product-type">Prodyct type</option>
+                    <option value="product-type">Product type</option>
                     <option value="future">Future</option>
                     <option value="option">Option</option>
                 </select>

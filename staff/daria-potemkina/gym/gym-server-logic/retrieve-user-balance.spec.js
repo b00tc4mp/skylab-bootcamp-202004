@@ -83,7 +83,6 @@ describe('logic - retrieveUserBalance', () => {
                 _error = error
             }
     
-            debugger
             expect(_error).to.be.exist
             expect(_error).to.be.an.instanceOf(UnexistenceError)
             expect(_error.message).to.equal('the balance is empty, there are no operations yet')

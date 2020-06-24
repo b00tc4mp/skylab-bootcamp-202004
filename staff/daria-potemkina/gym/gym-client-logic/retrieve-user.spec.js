@@ -44,7 +44,7 @@ describe('logic - retrieve user', () => {
         it('should succeed on correct user id', () =>
             retrieveUser()
                 .then(user => {
-                    debugger
+                    
                     expect(user.name).to.equal(name)
                     expect(user.surname).to.equal(surname)
                     expect(user.email).to.equal(email)

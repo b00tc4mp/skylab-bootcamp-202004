@@ -7,7 +7,7 @@
 const context = require('./context')
 
 module.exports = function () {
-    debugger
+    
     const token = this.storage.token;
 
     return !!token

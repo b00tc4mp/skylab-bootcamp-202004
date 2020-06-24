@@ -13,7 +13,7 @@ export default function () {
         try {
             retrieveUserCard()
                 .then(card => {
-                    debugger
+                    
                     if (typeof card !== 'undefined') setCard(card)
                 })
                 .catch(error => setCardError(error.message))

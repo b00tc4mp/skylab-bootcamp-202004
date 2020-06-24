@@ -36,7 +36,7 @@ export default function ({ futures, handleGoToDetails }) {
                 <li key={item._id} className='products__item'>
                     <button className="products__details" onClick={event => {
                         event.preventDefault()
-                        debugger
+                        
                         handleGoToDetails(item)
                     }}>
                         <p>{item.ticker}</p>

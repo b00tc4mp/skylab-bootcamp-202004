@@ -27,7 +27,7 @@ function App({ history }) {
       try {
         isUserSessionValid()
           .then(isAuthenticated => {
-            debugger
+            
             if (!isAuthenticated) {
               history.push('/')
             }
@@ -137,7 +137,7 @@ function App({ history }) {
         {!expanded && <Route exact path="/product-details/:itemId" render={() =>
         isUserLoggedIn() &&  <ProductDetails expanded={expanded} history={history} ticker={ticker} id={itemId} />} />}
 
-        {!expanded && <Route path="/search" render={() => <Search handleGoToDetails={handleGoToDetails} />} />}
+        {!expanded && <Route path="/search" render={() => <Search history={history} handleGoToDetails={handleGoToDetails} />} />}
 
         {!expanded && <Route path="/account" render={() => <Account />} />}
 
@@ -146,7 +146,8 @@ function App({ history }) {
         {!expanded && <Route path="/settings" render={() => <Settings />} />}
 
       </header>
-
+      
+      {error && <Feedback message={error} level="error" />}
     </div>
   );
 }

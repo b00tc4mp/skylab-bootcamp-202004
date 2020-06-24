@@ -21,7 +21,7 @@ describe('call', () => {
         call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users', `{ "username": "${username}", "password": "grillo" }`, { 'Content-type': 'application/json' }, (error, status, body) => {
             if (error) return done(new Error(error))
 
-            debugger
+            
 
             //console.log(status, body)
             expect(status).to.equal(201)

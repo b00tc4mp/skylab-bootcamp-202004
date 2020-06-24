@@ -19,13 +19,13 @@ const context = require('./context')
 const moment = require('moment')
 
 module.exports = function (type, sector, ticker, market) {
-    if (type !== undefined)
+    if (typeof type !== "undefined")
         String.validate.notVoid(type)
-    if (sector !== undefined)
+    if (typeof sector !== "undefined")
         String.validate.notVoid(sector)
-    if (ticker !== undefined)
+    if (typeof ticker !== "undefined")
         String.validate.notVoid(ticker)
-    if (market !== undefined)
+    if (typeof market !== "undefined")
         String.validate.notVoid(market)
     
     return call('GET', `${this.API_URL}/products?${type && `type=${type}`}&${sector && `sector=${sector}`}&${ticker && `ticker=${ticker}`}&${market && `market=${market}`}`,
