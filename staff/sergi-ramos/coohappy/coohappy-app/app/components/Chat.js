@@ -15,7 +15,8 @@ const Chat = function ({ navigation }) {
     const [cohousing, setCohousing] = useState()
 
     let interval
-
+    let textInputRef
+    
     useFocusEffect(
         React.useCallback(() => {
             (async () => {
@@ -46,7 +47,7 @@ const Chat = function ({ navigation }) {
 
 
     useEffect(() => {
-
+        textInputRef.clear();
     }, [messages.length])
 
     useEffect(() => {
@@ -111,7 +112,7 @@ const Chat = function ({ navigation }) {
             </View>
             <View style={styles.chat}>
 
-                <TextInput onChangeText={(value) => setSingleMessage(value)} style={styles.input} placeholder="Say something to your neighbors" placeholderTextColor="#81868e" />
+                <TextInput ref={ref => textInputRef = ref}  onChangeText={(value) => setSingleMessage(value)} style={styles.input} placeholder="Say something to your neighbors" placeholderTextColor="#81868e" />
 
                 <TouchableOpacity activeOpacity={0.2} style={styles.send} onPress={() => handleOnSubmitSendMessage()}>
                     <SvgUri width='50' height='50' source={require('../assets/btn-send.svg')} />
