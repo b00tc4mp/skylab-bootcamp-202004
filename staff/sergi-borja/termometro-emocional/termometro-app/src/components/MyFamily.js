@@ -3,6 +3,7 @@ import './MyFamily.sass'
 import { Link } from 'react-router-dom'
 import { createFamilyList } from 'termometro-client-logic'
 import addLogo from '../images/cool-add.png'
+import arrowIcon from '../images/arrow.png'
 
 // import editImg from '../images/editar.png'
 
@@ -37,7 +38,7 @@ function MyFamily({ token, handleGoToEdit, rol }) {
             </div>}
             {!rol && <div className='familyContainer__familyListContainer'>
                 <ul className='familyContainer__familyListContainer--ul'>
-                    {familyList && familyList.map((member) => <li onClick={() => handleGoToEdit(member)} className='familyContainer__familyListContainer--li'>{member.name} </li>)}
+                    {familyList && familyList.map((member) => <li onClick={() => handleGoToEdit(member)} className='familyContainer__familyListContainer--li'>{member.name} {member.surname} <img className='familyContainer__arrowIcon' src={arrowIcon}></img></li>)}
                 </ul>
             </div>}
             {rol && <div className='familyContainer__familyListContainer'>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import './MyFamily.sass'
-import { Link } from 'react-router-dom'
 import { createFamilyList } from 'termometro-client-logic'
 import { unRegisterUser } from 'termometro-client-logic'
 import deleteIcon from '../images/delete-icon.png'
@@ -9,9 +8,11 @@ import './HandleAccounts.sass'
 // import editImg from '../images/editar.png'
 
 
-function HandleAccounts({ token }) {
+function HandleAccounts({ token, history }) {
 
     const [familyList, setFamilyList] = useState()
+    const [userDeleted, setUserDeleted] = useState(false)
+
 
     useEffect(() => {
         try {
@@ -23,7 +24,7 @@ function HandleAccounts({ token }) {
         } catch (error) {
             if (error) throw error;
         }
-    }, [])
+    }, [userDeleted])
 
     const handleDeleteAccount = (userId) => {
         try {
@@ -41,7 +42,7 @@ function HandleAccounts({ token }) {
     const handleDeleteMember = (member) => {
         try {
             unRegisterUser(member.id)
-                .then(() => window.location.reload())
+                .then(setUserDeleted(true))
                 .catch(error => console.log(error.message))
         } catch (error){
             if(error) throw error
@@ -50,19 +51,21 @@ function HandleAccounts({ token }) {
 
 
     return (
-        <section className='familyContainer'>
-            <div className='familyContainer__container'>
-            <h1 className='familyContainer__title'>Mi Familia</h1>
+        <section className='handleAccountsContainer'>
+            <div className='handleAccountsContainer__container'>
+            <h1 className='handleAccountsContainer__title'>Mi Familia</h1>
             </div>
-            <div className='familyContainer__familyListContainer'>
-                <ul className='familyContainer__familyListContainer--ul'>
-                    {familyList && familyList.map((member) => <li className='familyContainer__familyListContainer--li'>{member.name} <img onClick={()=>handleDeleteMember(member)} className='familyContainer__deleteIcon' src={deleteIcon}></img></li>)}
+            <div className='handleAccountsContainer__familyListContainer'>
+                <ul className='handleAccountsContainer__familyListContainer--ul'>
+                    {familyList && familyList.map((member) => <li className='handleAccountsContainer__familyListContainer--li'>{member.name} <img onClick={()=>handleDeleteMember(member)} className='handleAccountsContainer__deleteIcon' src={deleteIcon}></img></li>)}
                 </ul>
             </div>
-            <div className='familyContainer__container'>
-            <h1 className='familyContainer__title'>Mi Cuenta</h1>
+            <div className='handleAccountsContainer__myUserTitle'>
+            <h1 className='handleAccountsContainer__title'>Mi Cuenta</h1>
             </div>
-            <h1 className='familyContainer__familyListContainer--li' onClick={handleDeleteAccount}>Eliminar mi cuenta <img className='familyContainer__deleteIcon' src={deleteIcon}></img></h1>
+            <div className='handleAccountsContainer__myUserContainer'>
+            <h1 className='handleAccountsContainer__myUser' onClick={handleDeleteAccount}>Eliminar mi cuenta <img className='handleAccountsContainer__deleteIcon' src={deleteIcon}></img></h1>
+            </div>
         </section>
     );
 }

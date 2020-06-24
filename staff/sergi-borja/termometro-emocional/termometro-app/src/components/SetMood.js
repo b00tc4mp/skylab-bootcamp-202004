@@ -1,10 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './SetMood.sass'
 import thermometer from '../images/thermometer_1.png'
+import retrieveUser from 'termometro-client-logic/retrieve-user'
 const { setMood } = require('termometro-client-logic')
+const moment = require('moment')
 
 
-function SetMood({ token }) {
+
+function SetMood({ token, history }) {
+    const [tooManyMoods, setTooManyMoods] = useState(false)
+
+    useEffect(() => {
+        try {
+            retrieveUser(token)
+                .then(({ mood }) => {
+                    let dateNow = moment(new Date).format('L')
+
+                    const moodsToday = mood.filter(element => (moment(element.date).format('L')) === dateNow)
+
+                    if (moodsToday.length >= 2) setTooManyMoods(true)
+                })
+        } catch (error) {
+            if (error) throw error
+        }
+    }, [])
 
     const [value, setValue] = useState('7')
 
@@ -16,6 +35,7 @@ function SetMood({ token }) {
 
         try {
             setMood(token, moodScore)
+                .then(history.push('/main-stats'))
         } catch (error) {
             if (error) throw error
         }
@@ -29,22 +49,25 @@ function SetMood({ token }) {
 
     return (
         <section className="sliderContainer">
-            <div className='sliderContainer__whiteContainer'>
-            <div className='sliderContainer__formContainer'>
+        
+            {!tooManyMoods && <div className='sliderContainer__titleContainer'>
                 <h1>Qué tal está tu autoestima hoy?</h1>
-            </div>
-            <div className='sliderContainer__thermoContainer'>
+            </div>}
+            {!tooManyMoods && <div className='sliderContainer__thermoContainer'>
                 <img src={thermometer} className='sliderContainer__thermoContainer--thermoImg'></img>
                 <div className={`sliderContainer__thermoContainer--progress ${value === '1' && 'height1'} ${value === '2' && 'height2'} ${value === '3' && 'height3'} ${value === '4' && 'height4'} ${value === '5' && 'height5'} ${value === '6' && 'height6'} ${value === '7' && 'height7'} ${value === '8' && 'height8'} ${value === '9' && 'height9'} ${value === '10' && 'height10'} `}></div>
                 <div className='sliderContainer__value'>{value}</div>
-            </div>
-            <div className='sliderContainer__slider'>
+            </div>}
+            {!tooManyMoods && <div className='sliderContainer__slider'>
                 <input type="range" min="0" max="10" className="sliderContainer__thermoContainer--slider" value={value} onChange={handleOnChange}></input>
-                </div>
-                <form className='sliderContainer__buttonContainer' onSubmit={handleSetMood}>
-                    <button className='sliderContainer__button'>SUBMIT</button>
-                </form>
-        </div>
+            </div>}
+            {!tooManyMoods && <button onClick={handleSetMood} className='sliderContainer__button'>Enviar</button>}
+
+
+            {tooManyMoods && <div className='tooManyMoodsContainer'>
+                <h1 className='tooManyMoodsContainer__tooManyMoodsFeedback'>Espera a mañana para volver a puntuar como te sientes!</h1>
+            </div>}
+        
         </section>
     )
 }

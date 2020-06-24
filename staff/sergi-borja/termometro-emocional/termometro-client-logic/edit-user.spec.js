@@ -10,7 +10,7 @@ require('termometro-commons/ponyfills/xhr')
 const { utils: { jwtPromised } } = require('termometro-commons')
 const context = require('./context')
 const bcrypt = require('bcryptjs')
-const editMember = require('./edit-user')
+const editUser = require('./edit-user')
 
 context.API_URL = API_URL
 
@@ -58,7 +58,7 @@ describe('logic - edit-member', () => {
         _email = `e-${random()}@mail.com`
         _location = 'Barcelona'
 
-        await editMember(_name, _surname, _age, _sex, _location, _email, memberId)
+        await editUser(_name, _surname, _age, _sex, _location, _email, memberId)
 
         user = await User.findById(memberId)
 
@@ -82,7 +82,7 @@ describe('logic - edit-member', () => {
         user = await User.create({ name, surname, age, sex, location, email, password: hash })
 
         try {
-            await editMember(name, surname, age, sex, location, user.email, memberId)
+            await editUser(name, surname, age, sex, location, user.email, memberId)
             throw new Error ('Should not reach this point')
         } catch (error) {
             expect(error.message).to.equal('Este email ya está en uso!')
@@ -97,7 +97,7 @@ describe('logic - edit-member', () => {
         })
 
         it('should fail when user does not exist', () =>
-            editMember(name, surname, age, sex, location, email, userId)
+            editUser(name, surname, age, sex, location, email, userId)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.exist

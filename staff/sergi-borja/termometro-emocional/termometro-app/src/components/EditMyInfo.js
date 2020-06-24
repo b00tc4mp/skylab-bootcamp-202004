@@ -10,6 +10,7 @@ function EditMyInfo({ token, history }) {
     const [gender, setGender] = useState()
     const [error, setError] = useState()
     const [userInfo, setUserInfo] = useState()
+    const [userEdited, setUserEdited] = useState(false)
 
     useEffect(() => {
         if(token){
@@ -25,7 +26,7 @@ function EditMyInfo({ token, history }) {
             if (error) throw error
           }
         }else history.push('/')
-      }, [userInfo])
+      }, [userEdited])
 
     const handleConfirmEdit = (event) => {
         event.preventDefault()
@@ -50,7 +51,11 @@ function EditMyInfo({ token, history }) {
 
         try {
             editUser(name, surname, age, sex, location, email, memberId)
-                .then(() => history.push('/settings'))
+                .then(() => {
+                  setUserEdited(true)
+                  // history.push('/settings')
+                  window.location.reload()
+                })
                 .catch(error => setError(error.message))
         } catch (error) {
             if (error) throw error

@@ -1,25 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import './Footer.sass'
-import homeIcon from '../images/home.png'
-import myFamilyIcon from '../images/familia.png'
+import homeIcon from '../images/black-home.png'
+import myFamilyIcon from '../images/white-family.png'
 import heartIcon from '../images/heart.png'
-import settingsIcon from '../images/ajustes.png'
+import settingsIcon from '../images/white-settings.png'
+import homeIconColor from '../images/white-home.png'
+import familyIconColor from '../images/black-family.png'
+import heartIconColor from '../images/heart-white.png'
+import colorSettings from '../images/settings-black.png'
 
-function Footer() {
+function Footer({history}) {
+    useEffect(()=>{
+
+    },[history])
+    // debugger
     return (
         <section className='footerContainer'>
             <div className="footerContainer__home">
-                <Link  to="/home"><img className='footerContainer__home--homeIcon' src={homeIcon}></img></Link>
+                {history.location.pathname === '/home' && <Link to="/home"><img className='footerContainer__home--homeIcon' src={homeIcon}></img></Link>}
+                {history.location.pathname !== '/home' && <Link to="/home"><img className='footerContainer__home--homeIcon' src={homeIconColor}></img></Link>}
             </div>
             <div className="footerContainer__myFamily">
-                <Link  to="/my-family"><img className='footerContainer__home--homeIcon' src={myFamilyIcon}></img></Link>
+                {history.location.pathname !== '/my-family' && <Link to="/my-family"><img className='footerContainer__home--homeIcon' src={myFamilyIcon}></img></Link>}
+                {history.location.pathname === '/my-family'  && <Link to="/my-family"><img className='footerContainer__home--homeIcon' src={familyIconColor}></img></Link>}
             </div>
             <div className="footerContainer__stats">
-                <Link  to="/main-stats"><img className='footerContainer__home--homeIcon' src={heartIcon}></img></Link>
+            {history.location.pathname === '/main-stats' && <Link to="/main-stats"><img className='footerContainer__home--homeIcon' src={heartIcon}></img></Link>}
+            {history.location.pathname !== '/main-stats' && <Link to="/main-stats"><img className='footerContainer__home--homeIcon' src={heartIconColor}></img></Link>}
             </div>
             <div className="footerContainer__settings">
-                <Link  to="/settings"><img className='footerContainer__home--homeIcon' src={settingsIcon}></img></Link>
+            {history.location.pathname !== '/settings' && <Link to="/settings"><img className='footerContainer__home--homeIcon' src={settingsIcon}></img></Link>}
+            {history.location.pathname === '/settings' && <Link to="/settings"><img className='footerContainer__home--homeIcon' src={colorSettings}></img></Link>}
             </div>
         </section>
     );

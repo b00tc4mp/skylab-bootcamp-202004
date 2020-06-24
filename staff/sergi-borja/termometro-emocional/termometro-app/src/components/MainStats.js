@@ -5,6 +5,7 @@ import retrieveUser from 'termometro-client-logic/retrieve-user'
 import './MainStats.sass'
 import Calendar from 'react-calendar'
 const moment = require('moment')
+moment.locale('es')
 
 
 function MainStats({ token, rol }) {
@@ -32,7 +33,8 @@ function MainStats({ token, rol }) {
                     ticks: {
                         beginAtZero: true,
                         max: 10,
-                        fontSize: 20
+                        fontSize: 20,
+                        color: 'rgba(0,0,0,1)'
                     }
                 }],
                 yAxes: [{
@@ -43,7 +45,7 @@ function MainStats({ token, rol }) {
                         mirror: true,
                         beginAtZero: true,
                         max: 10,
-                        fontSize: 15
+                        fontSize: 18
                     }
                 }]
             },
@@ -104,20 +106,23 @@ function MainStats({ token, rol }) {
             .then(adminInfo => {
                 let dateArray;
                 let scoreArray;
+                let scoreColors;
                 if (_dayClicked) {
                     let clickDayInfo = adminInfo.mood.filter((element) => moment(element.date).format('LL') === moment(_dayClicked).format('LL'))
                     if(clickDayInfo.length===2){
                     dateArray = [moment(clickDayInfo[0].date).format('HH:mm'), moment(clickDayInfo[1].date).format('HH:mm')]
                     scoreArray = [clickDayInfo[0].score, clickDayInfo[1].score]
+                    scoreColors = colorBars(scoreArray)
                     } else {
                         setHasStats(false)
                     }
                 } else if (!_dayClicked) {
                     setChartOfCalendar(false)
                     if(days<=(adminInfo.mood.length/2)){
-                    setHasStats(true)   
+                    setHasStats(true)
                     dateArray = settingDateArray(adminInfo);
                     scoreArray = settingScoreArray(adminInfo);
+                    scoreColors = colorBars(scoreArray)
                     } else {
                         setHasStats(false)
                     }
@@ -125,8 +130,8 @@ function MainStats({ token, rol }) {
                 setChartData({
                     labels: dateArray,
                     datasets: [{
-                        // label: 'level of mood',
                         data: scoreArray,
+                        backgroundColor: scoreColors,
                         borderWidth: 4
                     }]
                 })
@@ -134,15 +139,33 @@ function MainStats({ token, rol }) {
             })
     }
 
+    const colorBars = (scoreArray) => {
+        let scoreColorsArray = scoreArray.map((score)=>{
+            if(score>9) return 'rgba(75, 253, 93, 0.5)'
+            else if(score>8) return 'rgba(111, 239, 75, 0.5)'
+            else if(score>7) return 'rgba(147, 225, 57, 0.5)'
+            else if(score>6) return 'rgba(213, 212, 66, 0.5)'
+            else if(score>5) return 'rgba(234, 197, 35, 0.5)'
+            else if(score>4) return 'rgba(255, 187, 129, 0.5)'
+            else if(score>3) return 'rgba(255, 183, 3, 0.5)'
+            else if(score>2) return 'rgba(255, 140, 107, 0.5)'
+            else if(score>1) return 'rgba(255, 0, 43, 0.5)'
+            else if(score>0) return 'rgba(211, 52, 20, 0.5)'
+            // else if(score>0) return 'rgba(37, 247, 72, 0.5)'
+        })
+        return scoreColorsArray
+    }
+
     const handleSeeMemberStats = (member) => {
         let dateArray; 
         let scoreArray;
-
+        let scoreColors;
         if (_dayClicked) {
             let clickDayInfo = member.mood.filter((element) => moment(element.date).format('LL') === moment(_dayClicked).format('LL'))
             if(clickDayInfo.length===2){
             dateArray = [moment(clickDayInfo[0].date).format('HH:mm'), moment(clickDayInfo[1].date).format('HH:mm')]
             scoreArray = [clickDayInfo[0].score, clickDayInfo[1].score]
+            scoreColors = colorBars(scoreArray)
             } else {
                 setHasStats(false)
             }
@@ -152,6 +175,7 @@ function MainStats({ token, rol }) {
             setHasStats(true)
             dateArray = settingDateArray(member);
             scoreArray = settingScoreArray(member);
+            scoreColors = colorBars(scoreArray)
             } else {
                 setHasStats(false)
             }
@@ -160,11 +184,8 @@ function MainStats({ token, rol }) {
         setChartData({
             labels: dateArray,
             datasets: [{
-                // label: 'level of mood',
                 data: scoreArray,
-                fillColor: [
-                    'rgba(76,192,192,0.6)'
-                ],
+                backgroundColor: scoreColors,
                 borderWidth: 4
             }],
         })
@@ -183,7 +204,8 @@ function MainStats({ token, rol }) {
 
     useEffect(() => {
         if(rolChart==='admin') adminChart()
-        daysSetter(days)
+        else handleSeeMemberStats(memberSelected, _dayClicked)
+        // daysSetter(days)
     }, [days])
 
     const handleChangeChart = ({ target: { value } }) => {

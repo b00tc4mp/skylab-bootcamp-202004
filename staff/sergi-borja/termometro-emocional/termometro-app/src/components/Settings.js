@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Settings.sass'
+import logo from '../images/logo-lagranja.png'
+import arrowIcon from '../images/arrow.png'
 
 function Settings({ rol, handleLogOut }) {
 
@@ -11,16 +13,21 @@ function Settings({ rol, handleLogOut }) {
             </div>
             <div className='settingsContainer__optionList'>
                 <div className='settingsContainer__optionContainer'>
-                <Link className='settingsContainer__option' to='/edit-my-info'>Mis Datos</Link>
+                <Link className='settingsContainer__option' to='/edit-my-info'>Mis Datos <img className='settingsContainer__arrowIcon' src={arrowIcon}></img></Link>
                 </div>
                 <div className='settingsContainer__optionContainer'>
-                <Link className='settingsContainer__option' to='/change-password'>Cambiar Contraseña</Link>
+                <Link className='settingsContainer__option' to='/change-password'>Cambiar Contraseña <img className='settingsContainer__arrowIcon' src={arrowIcon}></img></Link>
                 </div>
-                <div className='settingsContainer__optionContainer'>
-                {!rol && <Link className='settingsContainer__option' to='handle-accounts'>Gestionar cuentas</Link>}
-                </div>
+                {!rol &&<div className='settingsContainer__optionContainer'>
+                 <Link className='settingsContainer__option' to='handle-accounts'>Gestionar cuentas <img className='settingsContainer__arrowIcon' src={arrowIcon}></img></Link>
+                </div>}
             </div>
             <button className='settingsContainer__logOut' onClick={handleLogOut}>Salir</button>
+            <div className='settingsContainer__creditsContainer' >
+            <p>This App has been developed by Sergi Borja</p>
+            <p>Powered by:</p>
+            <img src={logo} className='settingsContainer__logo'></img>
+            </div>
         </section>
 
 

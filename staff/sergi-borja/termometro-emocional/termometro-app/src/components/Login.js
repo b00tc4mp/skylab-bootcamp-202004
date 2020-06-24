@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import logo from '../images/logo-lagranja.png'
 import { authenticateUser } from 'termometro-client-logic'
 import Feedback from './Feedback'
-// import treeBackground from '../images/tree-background.jpg'
 
 function Login({onLogin}) {
 

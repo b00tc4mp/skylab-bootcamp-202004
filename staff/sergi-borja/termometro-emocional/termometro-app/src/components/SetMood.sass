@@ -1,109 +1,97 @@
 .sliderContainer
     margin: 0
     padding: 0
-    height: 100vh
+    height: 92vh
     display: flex
+    flex-direction: column
     position: relative
-    &__whiteContainer
-        top: 0
-        left: 0
-        margin: auto
+    background: rgba(255, 255, 255, 0.5)
+    align-items: center
+    justify-content: space-around
+    &__titleContainer
+        display: flex
+        font-size: 2.5vh
+        text-align: center
+        width: 96vw
+        position: relative
+    &__slider
         display: flex
         justify-content: center
-        flex-direction: column
-        flex: 1 1 0%
-        height: 70vh
-        width: 90vw
-        background: rgba(255, 255, 255, 0.5)
-        position: relative
-    &__formContainer
-        height: 15vh
-        position: absolute
-        top: 0
-        margin: 10px
-    &__slider
-        position: absolute
-        top: 77%
-        left: 13px
-    &__buttonContainer
-        width: 154px
-        height: 52px
-        background-color: #E6E6E6
-        border-radius: 12px
-        border-width: 1px
-        border-color: #000000
-        flex-direction: column
-        display: flex
-        margin-top: 28px
-        border-style: solid 
-        margin-left: 30%
+        align-items: center
+        width: 100vw
+        margin-top: 5vh
     &__button
         color: #121212
-        height: 25px
-        width: 73px
         font-family: 'Raleway', sans-serif
         font-weight: 700
         font-size: 22px
-        margin-top: 13px
-        margin-left: 31px
-        border: none
-        background: none
+        border: 1px solid black
+        background: white
+        padding: 1.7vh
+        border-radius: 1.5vh
+        margin-top: -8vh
     &__value
         position: absolute
-        height: 50px
-        width: 50px
-        left: 29px
-        bottom: -55px
+        height: 6vh
+        width: 6vh
+        left: 3.7vh
+        bottom: -6.5vh
         z-index: 1
         font-weight: 600
-        font-size: 35px
+        font-size: 4.8vh
         text-align: center
         font-family: Arial, Helvetica, sans-serif
     &__thermoContainer
-        margin: 10px
+        display: flex
         position: relative
-        height: 250px
+        height: 31vh
         top: 0
         left: -11%
-        margin: auto
         &--progress
-            width: 25px
+            width: 3.2vh
             background: #EF3636
             position: absolute
             bottom: 0
-            left: 42px
+            left: 5.2vh
             border-top-left-radius: 15px
             border-top-right-radius: 15px
         &--slider
-            position: absolute
-            // transform: rotate(-90deg) translate(-50%, -50%)
-            width: 345px
-            margin-top: 4.5vh
-            z-index: 2
+            width: 70vw
         &--thermoImg
             position: absolute
-            height: 320px
-            width: 110px
-            margin-top: 10px
+            height: 39.5vh
+            width: 13.7vh
+            margin-top: 1.4vh
             left: 0
             z-index: 1
 .height1
-    height: 22px
+    height: 3vh
 .height2
-    height: 44px
+    height: 5.5vh
 .height3
-    height: 66px
+    height: 8.5vh
 .height4
-    height: 88px
+    height: 11vh
 .height5
-    height: 110px
+    height: 13.5vh
 .height6
-    height: 132px
+    height: 16vh
 .height7
-    height: 154px
+    height: 19.5vh
 .height8
-    height: 176px
+    height: 22vh
 .height9
-    height: 198px
+    height: 24.5vh
 .height10
-    height: 220px
+    height: 27vh
+.tooManyMoodsContainer
+    top: 0
+    left: 0
+    margin: auto
+    border-top: 1px solid black
+    border-bottom: 1px solid black
+    width: 90vw
+    &__tooManyMoodsFeedback
+        text-align: center
+        font-size: 2.5vh
+        font-weight: 400
