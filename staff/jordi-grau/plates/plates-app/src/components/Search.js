@@ -1,5 +1,6 @@
 import React, {useState}  from 'react'
 import { searchRestaurant, searchDishes }  from 'plates-client-logic'
+import './Search.sass'
 
 export default function Search({onSubmit}) {
     const [error, setError] = useState()

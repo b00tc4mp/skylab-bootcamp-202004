@@ -7,7 +7,6 @@ import Header from './Header'
 
 export default function ({ onGoToRegister, onGoToLogin }) {
     return <div className="landing">
-        <Header />
         <div className="landing__top">
             <div className="landing__item" href="" onClick={onGoToRegister}>Register</div>
             <div className="landing__item" href="" onClick={onGoToLogin}>Login</div>

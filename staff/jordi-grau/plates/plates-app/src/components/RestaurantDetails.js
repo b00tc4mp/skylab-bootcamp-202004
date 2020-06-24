@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Dishes from './Dishes'
 import {retrieveRestaurant} from 'plates-client-logic'
 import Feedback from './Feedback'
+import './RestaurantDetails.sass'
 
 export default function ({currentId}){
     const [restaurant, setRestaurant] = useState()
@@ -25,12 +26,12 @@ export default function ({currentId}){
 
     // if(!restaurant) return <div>Loading...</div>
 
-   return <div>
-              { restaurant ? <div className="restaurant_details">
-            <p className="restaurant_name">{restaurant.name}</p>
-            <p className="restaurant_phone">{restaurant.phone}</p>      
-            <p className="restautant_email">{restaurant.email}</p>
-            <p className="restaurant_address">{restaurant.address}</p>
+   return <div className="restaurant">
+              { restaurant ? <div className="restaurant__one">
+            <p className="restaurant__one__info">{restaurant.name}</p>
+            <p className="restaurant__one__info">{restaurant.phone}</p>      
+            <p className="restautant__one__info">{restaurant.email}</p>
+            <p className="restaurant__one__info">{restaurant.address}</p>
             
         </div> : null}
 

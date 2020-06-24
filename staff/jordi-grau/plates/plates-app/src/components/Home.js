@@ -6,6 +6,8 @@ import {retrieveRestaurant, searchRestaurant} from 'plates-client-logic'
 import {Route, useLocation} from 'react-router-dom'
 import Navbar from './Navbar'
 import Feedback from './Feedback'
+import './Home.sass'
+
 
 
 
@@ -14,6 +16,7 @@ export default function({history, onLogout}){
     const [restaurant, setRestaurant] = useState()
     const [error, setError] = useState()
     const location = useLocation()
+    const [enabled, setEnabled] = useState(true)
 
     useEffect(()=>{
         const [,query] = location.search.split('=')
@@ -44,16 +47,18 @@ export default function({history, onLogout}){
       history.push(`/home/details/${restaurantId}`)
    
     }
-
-    return <div>
-        <Navbar onLogout={onLogout}/>
-         {!restaurant && <Search onSubmit={handleSubmit}/>}
+    
+    return <div clasName="container">
+        <header className="container__top">Search</header>
+       
+         {!restaurant && <Search clasName="container__search"  onSubmit={handleSubmit}/>}
 
 
         <Route path="/home/restaurants" render={()=> <RestaurantResults error={error} goToDetails={handleGoToDetails} results={restaurants}/>}/>
         <Route path="/home/details/:restaurantId" render={props => <RestaurantDetails data={restaurant} currentId={props.match.params.restaurantId}/> }/>
       
         {error && <Feedback message={error} level="error" />}
+        {enabled &&  <Navbar onLogout={onLogout}/>}
     </div>
     
  }

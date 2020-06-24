@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Feedback from './Feedback'
 import { registerUser } from 'plates-client-logic'
-import Header from './Header'
 import './Register.sass'
 
 
@@ -32,7 +31,6 @@ export default function Register({ history, onGoToLogin }) {
 
 
     return <div className="register">
-        <Header />
         <div className="register__top">Register</div>
             <form className="register__form" onSubmit={handleSubmit}>             
                 <input className="register__input" type="text" name="name" placeholder="name" required pattern="[A-Za-z]{1,20}" />
