@@ -3,26 +3,28 @@ import './FloorPlan.sass'
 import Catalogue from './Catalogue'
 import './Catalogue.sass';
 import { saveBlueprint, retrieveBlueprint } from 'moove-it-client-logic'
+import Feedback from './Feedback'
 
 
-export default function PlaneBuilder({ blueprintId }) {
+export default function PlaneBuilder({ blueprintId, onGoToHome}) {
 
     const [error, setError] = useState()
-    // const [retrievedBlueprint, setretrievedBlueprint] = useState()
-    const [placedItems, setPlacedItems] = useState(sessionStorage.items ? JSON.parse(sessionStorage.items) : [])
+    const [feedback, setFeedback] = useState()
+    const [placedItems, setPlacedItems] = useState()
 
     useEffect(() => {
-        if(typeof blueprintId !== 'undefined')
-        try {
-            retrieveBlueprint(blueprintId)
-                .then(blueprint => {
-                    sessionStorage.items = JSON.stringify(blueprint.items)
-                    setPlacedItems(blueprint.items)
-                })
-                .catch(error => setError(error.message))
-        } catch(error) {
-            throw error
-        }
+   
+        if(blueprintId)
+            try {
+                retrieveBlueprint(blueprintId)
+                    .then(blueprint => {
+                        sessionStorage.items = JSON.stringify(blueprint.items)
+                        setPlacedItems(blueprint.items)
+                    })
+                    .catch(error => setError(error.message))
+            } catch(error) {
+                throw error
+            }
     },[])
 
     const handleOnDrop = (e) => {
@@ -68,7 +70,8 @@ export default function PlaneBuilder({ blueprintId }) {
         const items = JSON.parse(sessionStorage.items)
         try {
             saveBlueprint(blueprintId, items)
-                .then(() => {})
+                .then(() => setFeedback('Saved'))
+                .then(()=> onGoToHome)
                 .catch(error)
         } catch ({ message }) {
             setError(message)
@@ -82,7 +85,13 @@ export default function PlaneBuilder({ blueprintId }) {
         delete sessionStorage.items
         setPlacedItems([])
     }
-    // TODO function to clear the session storage
+
+    const hanbleGoToHome = (e) => {
+        e.preventDefault()
+        onGoToHome()
+    }
+
+    if(!placedItems) return <div>Loading</div>
 
     return (<section className="plane">
         <h2 className="plane__title">Create your blueprint</h2>
@@ -92,7 +101,7 @@ export default function PlaneBuilder({ blueprintId }) {
                 onDrag={handlePlaneDrag}
                 onDrop={handleOnDrop} >
                 {placedItems && placedItems.map((placed, i) => {
-
+                        debugger
                     return <div key={placed.id}
                         className={`placed ${(placed.catalogueItemId)}`}
                         style={{ left: placed.x, top: placed.y }}
@@ -107,6 +116,9 @@ export default function PlaneBuilder({ blueprintId }) {
         <form className='plane__form'>
             <button className='plane__button' onClick={handleSaveBlueprint}>Save</button>
             <button className='plane__button' onClick={handleClearBlueprint}>Clear</button>
+            <button className='plane__button' onClick={hanbleGoToHome}>Back</button>
         </form>
+        {error && <Feedback message={error} level="error" />}
+        {feedback && <Feedback message={feedback} level="success" />}
     </section>)
 }

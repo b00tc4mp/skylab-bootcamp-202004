@@ -16,7 +16,7 @@ module.exports = function(name, width, height) {
     const data = { name, width, height}
 
 
-    return call('POST', `${this.API_URL}/blueprint`,
+    return call('POST', `${this.API_URL}/blueprint/create`,
             JSON.stringify(data), { 'Content-type': 'application/json', Authorization: `Bearer ${token}` })
         .then(({ status, body }) => {
 

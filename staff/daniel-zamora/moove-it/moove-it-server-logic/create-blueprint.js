@@ -15,7 +15,7 @@ module.exports = (userId, name, width, height) => {
         let user = await User.findById(userId)
         if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
         
-        const blueprint = await Blueprint.create({ user, name, width, height, items })
+        const blueprint = await Blueprint.create({ user, name, width, height })
 
         await User.findByIdAndUpdate(userId, { $addToSet: { blueprints: blueprint } })
 

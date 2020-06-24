@@ -25,7 +25,7 @@ api.get('/blueprint/:blueprintId?', verifyExtractJwt, retrieveBlueprint) //TODO 
 
 api.post('/blueprint/create', parseBody, verifyExtractJwt, createBlueprint) //PATCH o POST? la logica si no existe lo crea y si existe actualiza... ??
 
-api.post('/blueprint/', parseBody, verifyExtractJwt, saveBlueprint) //PATCH o POST? la logica si no existe lo crea y si existe actualiza... ??
+api.patch('/blueprint/save', parseBody, verifyExtractJwt, saveBlueprint) //PATCH o POST? la logica si no existe lo crea y si existe actualiza... ??
 
 module.exports = {
     api
