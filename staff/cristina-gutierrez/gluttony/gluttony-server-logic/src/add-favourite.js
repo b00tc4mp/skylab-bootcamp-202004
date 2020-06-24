@@ -1,5 +1,6 @@
 const { models: { Users } } = require("gluttony-data")
 const { errors: { DuplicityError } } = require("gluttony-commons")
+
 /**
  * @param  {string} storeId
  * @param  {string} userId
@@ -8,12 +9,11 @@ module.exports = (storeId, userId) => {
     String.validate.notVoid(storeId)
     String.validate.notVoid(userId)
 
-    Users.findOne({ id: userId, favouriteStores: storeId })
-        .then(user => {
-            if (user) {
-                throw new DuplicityError(`${storeId} already exists`)
-            }
-        })
+    return (async () => {
+        const user = await Users.findOne({ _id: userId, favouriteStores: storeId }, "favouriteStores").lean()
 
-    return Users.findByIdAndUpdate(userId, {$push: { favouriteStores: storeId }})
+        if (user) throw new DuplicityError(`${storeId} already exists`)
+
+        await Users.findByIdAndUpdate(userId, {$push: { favouriteStores: storeId }})
+    })()
 }
