@@ -20,5 +20,4 @@ module.exports = function (userId, challengeId, solution) {
                 }
             );
         }).catch(error => console.log(error))
-
 }

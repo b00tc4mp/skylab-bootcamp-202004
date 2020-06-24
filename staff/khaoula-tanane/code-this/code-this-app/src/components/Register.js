@@ -23,6 +23,12 @@ function Register (props) {
         }
     }
 
+    const handleGoToLogin = event => {
+      event.preventDefault()
+      props.history.push('/Signin')
+  }
+
+
     return (
         <div className="auth">
           <div className="auth__bg">
@@ -44,6 +50,7 @@ function Register (props) {
               </div>
               <div className="container-button">
                 <button name="submit_btn" className="btn">SIGN UP </button>
+                <a href="" onClick={handleGoToLogin}>Already registered? Sign In now! </a>
                 {error && <Feedback message={error} level="error" />}
               </div>
             </form>

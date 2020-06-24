@@ -9,6 +9,6 @@ module.exports = {
     checkTest: require('./check-test'),
     savePossibleSolution: require('./save-possible-solution'),
     createChallenge: require('./create-challenge'), 
-    createCategory: require('./create-category')
-
+    createCategory: require('./create-category'),
+    deletecategory: require('./delete-category')
 }

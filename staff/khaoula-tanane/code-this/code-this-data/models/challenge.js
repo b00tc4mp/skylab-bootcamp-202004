@@ -1,6 +1,6 @@
 const { Schema } = require('mongoose')
 const mongoose = require('mongoose')
-const { ObjectId } = require('../mongoose')
+
 
 const Challenge = new Schema({
     description: {
@@ -34,3 +34,4 @@ const Challenge = new Schema({
     }
 })
 module.exports = mongoose.model('Challenge',  Challenge)
+

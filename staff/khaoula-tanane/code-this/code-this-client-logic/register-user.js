@@ -1,3 +1,10 @@
+/**
+ * resgister sends data to make an api call.
+ * @param {string} name -data to create user's info in api.
+ * @param {string} surname -data to create user's info in api.
+ * @param {email} email -data required to create user in api.
+ * @param {string} password -data required to create user in api.
+ */
 require('code-this-commons/polyfills/string')
 const { utils: { Email, call } } = require('code-this-commons')
 const context = require('./context')

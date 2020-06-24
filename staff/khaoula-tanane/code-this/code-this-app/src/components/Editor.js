@@ -1,7 +1,8 @@
-import React, { useState } from "react"
+import React from "react"
 import { ControlledEditor } from "@monaco-editor/react"
 
 function Editor({onChange, initialCode}) {
+
 
   return (
       <ControlledEditor

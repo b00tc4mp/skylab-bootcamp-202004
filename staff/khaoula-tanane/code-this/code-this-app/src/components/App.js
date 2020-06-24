@@ -4,7 +4,7 @@ import Register from './Register';
 import Login from './Login';
 import Editor from './Editor';
 import Panel from './Panel';
-// import Challenge from './Challenge';
+import '../styles/App.sass'
 
 function App() {
 
@@ -17,8 +17,6 @@ function App() {
                 <Route path='/signup' component={Register} />
                 <Route path='/panel' component={Panel} />
                 <Route path='/editor' component={Editor} />
-
-                {/* <Route path='/challenge' component={Challenge} /> */}
             </BrowserRouter>
      </>
 )

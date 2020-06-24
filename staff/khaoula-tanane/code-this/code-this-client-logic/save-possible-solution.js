@@ -1,3 +1,11 @@
+/**
+ * Checks user's answer.
+ * 
+ * @param {string} userId The user to whom associate the response. 
+ * @param {string} challengeId The challenge that the user wants to save.
+ * @param {string} solution The user's answer to the challenge that will be shared. 
+ * 
+ */
 const { utils: { call } } = require('code-this-commons')
 const context = require('./context')
 

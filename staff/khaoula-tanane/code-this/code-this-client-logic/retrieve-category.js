@@ -1,3 +1,8 @@
+/**
+ * gets category's info after api's call.
+ * @param {string} name -required to make the api call to get the category wanted.
+ */
+
 const context = require('./context')
 const { utils: { call } } = require('code-this-commons')
 

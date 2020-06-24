@@ -1,9 +1,16 @@
+/**
+ * Creates challenge cateogries.
+ * 
+ * @param {string} name -data to create category's info in api.
+ * @param {string} challenges The challenges that the admin wants to include in the created category.
+ * 
+ */
 const context = require('./context')
 const { utils: { call } } = require('code-this-commons')
 
 
-module.exports = function (name) {
-    const body = JSON.stringify({name}) 
+module.exports = function (name, challenges) {
+    const body = JSON.stringify({name, challenges}) 
     const headers = { 'Content-type': 'application/json' }
     
     return call(

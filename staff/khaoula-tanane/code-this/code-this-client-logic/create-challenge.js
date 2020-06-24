@@ -1,3 +1,12 @@
+/**
+ * Creates challenge for student.
+ * 
+ * @param {string} initialCode -data to create challenge's info in api, code to help user start the challenge.
+ * @param {string} description -data to create challenge's info in api, what the challenge consists of.
+ * @param {string} difficulty -data to create challenge's info in api, the punctuation depends on it. 
+ * @param {string} tests The tests that the user should pass to succeed in the challenge.
+ *
+ */
 const context = require('./context')
 const { utils: { call } } = require('code-this-commons')
 

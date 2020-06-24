@@ -9,6 +9,8 @@ require('code-this-commons/polyfills/json')
 
 require('code-this-commons/ponyfills/xhr')
 const { mongo } = require('../code-this-data')
+const bcrypt = require('bcryptjs')
+require('code-this-commons/ponyfills/atob')
 
 describe('logic - authenticate user', () => {
     let users
@@ -18,17 +20,18 @@ describe('logic - authenticate user', () => {
     let name, email, password, userId
 
     beforeEach(() =>
-        users.deleteMany()
+    users.deleteMany()
             .then(() => {
                 name = `name-${random()}`
                 email = `e-${random()}@mail.com`
                 password = `password-${random()}`
-            })
+                return bcrypt.hash(password, 10)
+            }).then(_hash => hash = _hash)
     )
 
     describe('when user already exists', () => {
         beforeEach(() => {
-            const user = { name, surname, email, password }
+            const user = { name, email, password: hash }
 
             return users.insertOne(user)
                 .then(result => userId = result.insertedId.toString())
@@ -36,7 +39,17 @@ describe('logic - authenticate user', () => {
 
         it('should succeed on correct credentials', () =>
             authenticateUser(email, password)
-                .then(_userId => expect(_userId).to.equal(userId))
+                .then(token => {
+                    const [, payloadBase64] = token.split('.')
+
+                    const payloadJson = atob(payloadBase64)
+
+                    const payload = JSON.parse(payloadJson)
+
+                    const { sub: _userId } = payload
+
+                    expect(_userId).to.equal(userId)
+                })
         )
 
         it('should fail on wrong password', () => {

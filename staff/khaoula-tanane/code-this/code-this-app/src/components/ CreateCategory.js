@@ -1,34 +1,103 @@
-import React, { useState } from "react"
-import { createCategory } from "code-this-client-logic";
+import React, { useState, useEffect } from "react"
+import { createCategory, retrieveChallenges } from "code-this-client-logic";
+import MultiSelect from "react-multi-select-component";
+import  Categories from './Categories'
+import Alert from './Alert'
 
+function CreateCategory(props) {
+    const [ message, setMessage ] = useState(null)
+    const [ categoryName, setCategoryName] = useState('')
+    const [ challenges, setChallenges] = useState([])
+    const [selected, setSelected] = useState([]);
+    const [loadCategories, setLoadCategories] = useState(true)
+    
 
-function CreateCategory() {
+    useEffect(() => {
+        handleRetrieveChallenges()
+    }, [])
 
-    const [ error, setError ] = useState(null)
-    const [ categoryName, setCategoryName] = useState(null)
 
     const handleOnChange = (event) => {
         const {target: {value}} = event
         setCategoryName(value)
-        console.log(value)
     }
 
     const handleSaveCategory = () => {
+        const selectedChallenges = selected.map(({value}) => value)
         try {
-            createCategory(categoryName)
-                .then(()=> console.log('saved'))
-                .catch(error => setError(error.message))
+            createCategory(categoryName, selectedChallenges)
+                .then(()=> {
+                    setLoadCategories(false)
+                    setCategoryName('')
+                    setSelected([])
+                    setLoadCategories(true)
+                    handleAlert({
+                        message: 'Category created successfully',
+                        status: 'success'
+                    })
+                })
+                .catch(({message}) => {
+                    handleAlert({
+                        message,
+                        status: 'error'
+                    })
+                })
         } catch ({message}) {
-            console.log(message)
-            setError(message)
+            handleAlert({
+                message,
+                status: 'error'
+            })
         }
     }
 
+    const handleRetrieveChallenges = async ()=> {
+        try {
+            retrieveChallenges()
+                .then(_challenges=> setChallenges(_challenges))
+                .catch(({message}) => {
+                    handleAlert({
+                        message,
+                        status: 'error'
+                    })
+                })
+        } catch ({message}) {
+            handleAlert({
+                message,
+                status: 'error'
+            })
+        }
+    }
+
+    const handleAlert = (alertInfo) => {
+        setMessage(alertInfo)
+        setTimeout(() => {
+            setMessage(null)
+        }, 10000)
+    }
+
     return (
-          <div className="form-container">
-            <input placeholder="category" name='category' onChange={handleOnChange} />
-            <button onClick={handleSaveCategory}>SAVE</button>
-          </div>
+        <>
+            {message && <Alert {...message}/>}
+            <div className="widget">
+                <div className="title">Add Category</div>
+                <input className="add-category" placeholder="Category name" name='category' value={categoryName} onChange={handleOnChange} />
+                <MultiSelect
+                    options={challenges.map(({description, _id}) => ({label: description, value: _id}))}
+                    value={selected}
+                    onChange={setSelected}
+                    labelledBy={"Select"}
+                />
+                <button className="add-category" onClick={handleSaveCategory}>SAVE</button>
+            </div>
+
+            <div className="widget widget--categories">
+                <div className="title">All Categories</div>
+                <div className="categories-container">
+                    {loadCategories && <Categories isAdmin handleAlert={handleAlert}/>}
+                </div>
+            </div>
+
+        </>
     )
 }
 

@@ -1,0 +1,413 @@
+*
+  box-sizing: border-box
+
+body
+  margin: 0
+  paddin: 0
+  font-family: 'Source Sans Pro', sans-serif
+  background-color: #d5dae5
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
+.header
+  position: absolute
+  width: 100%
+  z-index: 3
+  height: 44px
+  background-color: #fff
+  border-bottom: 3px solid #2d3d51
+
+
+.logo
+  height: 44px
+  padding: 10px
+  font-weight: 700
+
+.header .logo
+  color: #233245
+
+.side-nav .logo
+  background-color: #233245
+  color: #fff
+
+.header .logo
+  float: left
+  height: 44px
+  z-index: 1
+  padding: 10px
+  font-weight: 700
+  color: #233245
+
+.logo
+  cursor: pointer
+  a
+    color: white
+  i
+    font-size: 22px
+
+  span
+    margin-left: 5px
+    text-transform: uppercase
+
+.nav-trigger
+  position: relative
+  float: right
+  width: 20px
+  height: 44px
+  right: 30px
+  display: block
+
+  span
+    width: 20px
+    height: 2px
+    background-color: #35475e
+    position: absolute
+
+    &:before
+      width: 20px
+      height: 2px
+      background-color: #35475e
+      position: absolute
+
+span:after
+  width: 20px
+  height: 2px
+  background-color: #35475e
+  position: absolute
+
+.nav-trigger span
+  top: 50%
+
+  &:before, &:after
+    content: ''
+
+  &:before
+    top: -6px
+
+  &:after
+    top: 6px
+
+
+.side-nav
+  position: absolute
+  width: 100%
+  height: 100vh
+  background-color: #35475e
+  z-index: 1
+  display: none
+
+  &.visible
+    display: block
+
+  ul
+    margin: 0
+    padding: 0
+
+    li
+      padding: 16px 16px
+      border-bottom: 1px solid #3c506a
+      position: relative
+
+      &.active:before
+        content: ''
+        position: absolute
+        width: 4px
+        height: 100%
+        top: 0
+        left: 0
+        background-color: #fff
+
+      a
+        color: #fff
+        display: block
+        text-decoration: none
+
+      i
+        color: #0497df
+        min-width: 20px
+        text-align: center
+
+      span:nth-child(2)
+        margin-left: 10px
+        font-size: 14px
+        font-weight: 600
+
+
+.main-content
+  padding: 40px
+  margin-top: 0
+  padding: 0
+  padding-top: 44px
+  height: 100%
+  overflow: scroll
+
+  .title
+    background-color: #eef1f7
+    border-bottom: 1px solid #b8bec9
+    padding: 10px 20px
+    font-weight: 700
+    color: #333
+    font-size: 18px
+
+@media screen and (min-width: 600px)
+  .header
+    background-color: #35475e
+    z-index: 1
+
+    .logo
+      display: none
+
+  .nav-trigger
+    display: none
+
+    span
+      background-color: #fff
+
+      &:before
+        background-color: #fff
+
+  span:after
+    background-color: #fff
+
+  .side-nav
+    display: block
+    width: 70px
+    z-index: 2
+
+    ul li span:nth-child(2)
+      display: none
+
+    .logo
+      i
+        padding-left: 12px
+
+      span
+        display: none
+
+    ul li
+      i
+        font-size: 26px
+
+      a
+        text-align: center
+
+  .main-content
+    margin-left: 70px
+
+@media screen and (min-width: 800px)
+  .side-nav
+    width: 200px
+
+    ul li
+      span:nth-child(2)
+        display: inline-block
+
+      i
+        font-size: 16px
+
+      a
+        text-align: left
+
+    .logo
+      i
+        padding-left: 0
+
+      span
+        display: inline-block
+
+  .main-content
+    margin-left: 200px
+
+.dashboard
+  position: relative
+  margin: 15px
+  border-radius: 6px
+  background-color: #ffffff
+  width: calc(100%  -  30px)
+  overflow: hidden
+  .select
+    width: calc( 100% -  20px)
+    height: 35px
+    margin: 10px    
+  .add-category
+    width: 100%
+    height: 35px
+    margin: 10px  0
+  button
+    width: calc( 100% -  20px)
+    margin: 10px
+    height: 35px
+    cursor: pointer
+  .add-category
+    width: 100%
+    margin: 10px 0
+
+.run-test
+    width: calc( 100% -  20px)
+    margin: 10px
+    height: 35px
+    cursor: pointer
+
+.main
+  display: flex
+  flex-flow: row wrap
+
+.categories-panel
+  display: flex
+  justify-content: space-around
+  align-items: center
+  overflow-x: auto
+  margin: 0 40px
+  &::-webkit-scrollbar 
+    width: 20px
+    height: 4px
+
+  &::-webkit-scrollbar-track 
+    border-radius: 10px
+  &::-webkit-scrollbar-thumb 
+    border-radius: 10px
+    background-color: #9b9b9b
+    outline: 1px solid slategrey
+
+  &::-webkit-scrollbar:vertical 
+    display: none;
+  .category-link
+    margin: 20px 30px
+    text-decoration: none
+    font-weight: bold
+    color: #0497df
+
+
+.widget
+  flex-basis: 250px
+  flex-grow: 10
+  height: 200px
+  margin: 15px
+  border-radius: 6px
+  background-color: #ffffff
+  position: relative
+  &--full
+    height: auto
+    min-height: 300px
+  .test
+    background: rgba(0, 0, 0, .8)
+    margin: 20px
+    color: white
+    font-size: 16px
+    height: 100%
+    padding: 20px
+    min-height: 200px
+    overflow-x: auto
+
+    hr
+      border: 0;
+      border-bottom: 1px dashed #ccc;
+      background: #999;
+    &--error
+      box-shadow: 0px 0px 6px 0px rgba(255,25,48,1)
+    &--succes
+      box-shadow: 0px 0px 6px 0px rgba(25,255,198,1)
+  &--categories
+    height: auto
+  .categories-container
+    display: flex
+    justify-content: space-around
+    flex-wrap: wrap
+
+  .title
+    background-color: #eef1f7
+    border-bottom: 1px solid #dfe4ec
+    padding: 10px
+    border-top-left-radius: 6px
+    border-top-right-radius: 6px
+    color: #617085
+    font-weight: 600
+
+.card
+  width: auto
+  margin: 10px 20px
+  border-radius: 1rem
+  background: white
+  box-shadow: 4px 4px 15px rgba(#000, 0.15)
+  position: relative
+  color: #434343
+
+
+  .card__container
+    padding: 2rem
+    // width: 100%
+    // height: 100%
+    background: white
+    border-radius: 1rem
+    position: relative
+
+    h4, h5
+      text-align: center
+
+  &::before
+    position: absolute
+    top: 2rem
+    right: -0.5rem
+    content: ''
+    background: #35475e
+    height: 28px
+    width: 28px
+    transform: rotate(45deg)
+
+  &::after
+    position: absolute
+    cursor: pointer
+    content: attr(data-label)
+    top: 11px
+    right: -14px
+    padding: 0.5rem
+    width: 100%
+    background: #35475e
+    color: white
+    text-align: center
+    font-family: 'Roboto', sans-serif
+    box-shadow: 4px 4px 15px rgba(26, 35, 126, 0.2)
+
+.solutions-container
+
+  .challenge-solution
+    padding: 10px
+
+    .challenge-avatar
+      display: flex
+      align-items: center
+      img
+        width: 3.5rem
+        height: 3.5rem
+        border-radius: 50%
+      span 
+        margin-left: 10px
+        font-weight: bold
+    
+    pre 
+      background: whiteSmoke
+      padding: 20px
+      position: relative
+      // box-shadow: inset 0 1px 5px gray
+      border-radius: 5px
+      margin: 10px 0
+      button
+        position: absolute
+        right: 0
+        top: 0
+        padding: 5px 10px
+        border-radius: 0 0 0 10px
+        border: 1px solid gray
+
+.alert
+  padding: 5px
+  background: white
+  border: 1px whiteSmoke
+  box-shadow: 0px 0px 5px 0px rgba(150,150,150,1)
+  font-weight: bold
+  &--success
+    p
+      color: green
+  &--error
+    p
+      color: crimson

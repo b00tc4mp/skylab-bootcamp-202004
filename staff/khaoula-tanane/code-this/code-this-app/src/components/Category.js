@@ -1,25 +1,24 @@
 import React from 'react'
-import './Category.sass'
 import { Link, withRouter } from 'react-router-dom'
 
-function Category({ name, match }) {
+function Category({ name, match, isAdmin, _id, handeDeleteCategory, challenges }) {
+    
+   return (
+    <>
+    {!isAdmin && <Link className="category-link" to={`${match.path}/${name}`}>{name}</Link>}
+    
 
-    // return <div className="item">
-    //         <p className="item_info">{description}</p>
-    //         <p className="item_info">{difficulty}</p>
-    //         <p className="item_info">{tests}</p>
-    //     </div>
-      
-   return <div className="container">
-   <div className="section-wrapper">
-     <div className="section">
-     <Link to={`${match.path}/${name}`}>{name}</Link>
-       <div>
-       </div>
-     </div>
+    {isAdmin && (
+      <div className="card"  onClick={() => handeDeleteCategory(_id)} data-label="DELETE">
+        <div className="card__container">
+          <h4>{name}</h4>
+          <h5>{challenges.length} challenges</h5>
+        </div>
+      </div>
+    )}
+      </>
+   )
 
-   </div>
- </div>
 
 
 } 
