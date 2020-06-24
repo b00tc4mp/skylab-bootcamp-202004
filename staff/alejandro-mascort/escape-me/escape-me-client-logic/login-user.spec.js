@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } } = process
 
-const authenticateUser = require('./authenticate-user')
+const loginUser = require('./login-user')
 const { random } = Math
 const { expect } = require('chai')
 require('escape-me-commons/polyfills/json')
@@ -11,8 +11,10 @@ const bcrypt = require('bcryptjs')
 require('escape-me-commons/ponyfills/xhr')
 require('escape-me-commons/ponyfills/atob')
 const context = require('./context')
-
 context.API_URL = API_URL
+const AsyncStorage = require('not-async-storage')
+context.storage = AsyncStorage
+
 
 describe('logic - authenticate user', () => {
     let users
@@ -49,24 +51,31 @@ describe('logic - authenticate user', () => {
         )
 
         it('should succeed on correct credentials', () =>
-            authenticateUser(email, password)
-                .then(token => {
-                    const [, payloadBase64] = token.split('.')
+            loginUser(email, password)
+                .then(() => {
+                    let token
 
-                    const payloadJson = atob(payloadBase64)
+                    (async () => {
+                        const token = await context.storage.getItem('token')
 
-                    const payload = JSON.parse(payloadJson)
+                        const [, payloadBase64] = token.split('.')
 
-                    const { sub: _userId } = payload
+                        const payloadJson = atob(payloadBase64)
 
-                    expect(_userId).to.equal(userId)
+                        const payload = JSON.parse(payloadJson)
+
+                        const { sub: _userId } = payload
+
+                        expect(_userId).to.equal(userId)
+                    })()
+
                 })
         )
 
         it('should fail on wrong password', () => {
             password += 'wrong-'
-            debugger
-            return authenticateUser(email, password)
+
+            return loginUser(email, password)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.be.an.instanceof(Error)
@@ -76,7 +85,7 @@ describe('logic - authenticate user', () => {
     })
 
     it('should fail when user does not exist', () =>
-        authenticateUser(email, password)
+        loginUser(email, password)
             .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
                 expect(error).to.be.an.instanceof(Error)
@@ -86,19 +95,19 @@ describe('logic - authenticate user', () => {
 
     it('should fail when inputs are incorrect', () => {
         expect(() => {
-            authenticateUser(email, 1)
+            loginUser(email, 1)
         }).to.throw(TypeError, '1 is not a string')
 
         expect(() => {
-            authenticateUser(email, true)
+            loginUser(email, true)
         }).to.throw(TypeError, 'true is not a string')
 
         expect(() => {
-            authenticateUser('amail.com', password)
+            loginUser('amail.com', password)
         }).to.throw(Error, 'amail.com is not an e-mail')
 
         expect(() => {
-            authenticateUser(true, password)
+            loginUser(true, password)
         }).to.throw(Error, 'true is not an e-mail')
 
     })

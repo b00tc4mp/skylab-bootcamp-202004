@@ -2,20 +2,33 @@ require('escape-me-commons/polyfills/string')
 const { utils: { call } } = require('escape-me-commons')
 const context = require('./context')
 
-module.exports = function (token, userId) {
-    String.validate.notVoid(token)
+/**
+ * Retrieves info of the people being followed.
+ * 
+ * @param {String} userId The Id of a user.
+ * 
+ * @returns {Promise<Array>} An array of Objects, if not returns an error.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ */
+module.exports = function (userId) {
     if (userId) String.validate.notVoid(userId)
 
-    return call('GET', `${this.API_URL}/following/${userId ? userId : ''}`,
-        undefined,
-        { 'Authorization': `Bearer ${token}` })
-        .then(({ status, body }) => {
-            if (status === 200) {
-                return JSON.parse(body)
-            } else {
-                const { error } = JSON.parse(body)
+    let token
+    return (async () => {
+        token = await context.storage.getItem('token')
 
-                throw new Error(error)
-            }
-        })
+        return call('GET', `${this.API_URL}/following/${userId ? userId : ''}`,
+            undefined,
+            { 'Authorization': `Bearer ${token}` })
+            .then(({ status, body }) => {
+                if (status === 200) {
+                    return JSON.parse(body)
+                } else {
+                    const { error } = JSON.parse(body)
+
+                    throw new Error(error)
+                }
+            })
+    })();
 }.bind(context)

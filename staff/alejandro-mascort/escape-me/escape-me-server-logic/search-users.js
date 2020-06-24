@@ -4,6 +4,15 @@ require('escape-me-commons/polyfills/json')
 const { errors: { UnexistenceError } } = require('escape-me-commons')
 const { models: { User }, mongoose: { ObjectId } } = require('escape-me-data')
 
+/**
+ * Search users.
+ * @param {String} userId The id of a user.
+ * @param {String} query The query searched.
+ * 
+ * @returns {Promise<Array>} An array of Objects, if not returns an error.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ */
 module.exports = (userId, query) => {
     String.validate.notVoid(userId)
     String.validate.notVoid(query)

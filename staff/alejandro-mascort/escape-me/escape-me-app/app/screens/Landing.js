@@ -2,7 +2,7 @@ import React from 'react'
 import { ImageBackground, StyleSheet, View, Image, Text, Platform } from 'react-native'
 import AppButton from '../components/AppButton'
 
-export default function ({ onLogin, onRegister }) {
+export default function ({ onLogin, onRegister, handleGuest }) {
     return (
         <ImageBackground
             blurRadius={10}
@@ -16,6 +16,7 @@ export default function ({ onLogin, onRegister }) {
             <View style={styles.buttonsContainer}>
                 <AppButton title='Login' onPress={onLogin} />
                 <AppButton title='Register' color='#4ecdc4' onPress={onRegister} />
+                <AppButton title='Join as a Guest' color='#47d7' onPress={handleGuest} />
             </View>
 
         </ImageBackground>

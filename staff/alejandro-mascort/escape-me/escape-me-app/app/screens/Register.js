@@ -3,7 +3,6 @@ import {
     StyleSheet,
     View,
     ImageBackground,
-    Alert,
 } from "react-native";
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -19,7 +18,7 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required().min(8).label('Password')
 })
 
-export default function Register({ onLogin }) {
+export default function Register({ onLogin, handleGuest }) {
     const [error, setError] = useState()
 
     function handleRegister(values) {
@@ -67,7 +66,9 @@ export default function Register({ onLogin }) {
                         </>
                     )}
                 </Formik>
+                {error && <Feedback error={error} />}
                 <AppButton title="Login" onPress={onLogin}></AppButton>
+                <AppButton title='Join as a Guest' color='#47d7' onPress={handleGuest} />
             </View>
         </ImageBackground>
     );

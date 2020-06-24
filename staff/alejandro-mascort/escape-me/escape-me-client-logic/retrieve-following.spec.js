@@ -9,10 +9,14 @@ require('escape-me-commons/polyfills/json')
 const { mongo } = require('escape-me-data')
 require('escape-me-commons/ponyfills/xhr')
 const { utils: { jwtPromised } } = require('escape-me-node-commons')
-const context = require('./context')
 const bcrypt = require('bcryptjs')
 
+const context = require('./context')
 context.API_URL = API_URL
+const logic = require('.')
+const AsyncStorage = require('not-async-storage')
+logic.__context__.storage = AsyncStorage
+
 
 describe('logic - retrieve following', () => {
     let users
@@ -43,11 +47,11 @@ describe('logic - retrieve following', () => {
         beforeEach(() =>
             users.insertOne({ name, surname, email, username, password: hash, following })
                 .then(_user => jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET))
-                .then(_token => token = _token)
+                .then(_token => context.storage.setItem('token', _token))
         )
 
         it('should succeed on correct user id', () =>
-            retrieveFollowing(token)
+            retrieveFollowing()
                 .then(list => {
                     expect(list).to.be.an.instanceOf(Array)
                     expect(list).to.have.lengthOf(0)
@@ -66,7 +70,7 @@ describe('logic - retrieve following', () => {
                 .then(_hash => hash = _hash)
                 .then(() => users.insertOne({ name, surname, email, username, password: hash, following }))
                 .then(_user => userId = _user.insertedId.toString())
-                .then(() => retrieveFollowing(token, userId))
+                .then(() => retrieveFollowing(userId))
                 .then(list => {
                     expect(list).to.be.an.instanceOf(Array)
                     expect(list).to.have.lengthOf(0)
@@ -81,7 +85,7 @@ describe('logic - retrieve following', () => {
             userId = '5ed1204ee99ccf6fae798aef'
 
             return jwtPromised.sign({ sub: userId }, SECRET)
-                .then(_token => token = _token)
+                .then(_token => context.storage.setItem('token', _token))
         })
 
         it('should fail when user does not exist', () =>
@@ -93,17 +97,6 @@ describe('logic - retrieve following', () => {
                     expect(error.message).to.equal(`user with id ${userId} does not exist`)
                 })
         )
-    })
-
-    it('should fail if token is not a string', () => {
-        expect(() => {
-            retrieveFollowing(1)
-        }).to.throw(TypeError, '1 is not a string')
-
-        expect(() => {
-            retrieveFollowing(true)
-        }).to.throw(TypeError, 'true is not a string')
-
     })
 
     afterEach(() => users.deleteMany())

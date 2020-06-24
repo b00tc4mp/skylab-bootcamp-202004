@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, SafeAreaView, Modal, Button } from 'react-native'
 
-import { useRoute } from '@react-navigation/native'
 import { AntDesign } from '@expo/vector-icons';
 import { SearchBar } from 'react-native-elements';
 
@@ -9,13 +8,14 @@ import AppPicker from '../components/AppPicker'
 import AppTextInput from '../components/AppTextInput'
 
 import { searchEscapeRoom, retrieveEscapeIds } from 'escape-me-client-logic'
+import { useRoute } from '@react-navigation/native'
 
 import Card from '../components/Card'
 
-export default function () {
+export default function ({ navigation }) {
     const route = useRoute()
-    const token = route.params['token']
-
+    let guest
+    if (route.params) guest = route.params['guest']
     const [modalVisible, setModalVisible] = useState(false)
     const [query, setQuery] = useState('')
     const [userLists, setUserLists] = useState()
@@ -30,13 +30,24 @@ export default function () {
     const [moreThanPlayersMin, setMoreThanPlayersMin] = useState()
     const [moreThanPriceMin, setMoreThanPriceMin] = useState()
 
+    const handleEscapeLists = async () => {
+        const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
+        setUserLists({ participated, pending, favorites })
+    }
+
     let escapeList
+
     useEffect(() => {
-        (async () => {
-            const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds(token)
-            setUserLists({ participated, pending, favorites })
-        })()
-    }, [userLists, escapeRooms])
+        const reload = navigation.addListener('focus', async () => {
+            if (!guest) {
+                const _escapes = await retrieveEscapeIds()
+                setUserLists(_escapes)
+            }
+        });
+
+        // Return the function to reload from the event so it gets removed on unmount
+        return reload;
+    }, [navigation]);
 
     return (
         <View style={styles.container}>
@@ -52,23 +63,24 @@ export default function () {
                     value={query}
                     platform="ios"
                 />
+                <TouchableOpacity>
+                    <AntDesign name="search1" size={26} color={'black'}
+                        onPress={async () => {
+                            let filter = {}
 
-                <AntDesign name="search1" size={26} color={'black'}
-                    onPress={async () => {
-                        let filter = {}
+                            if (ratio) filter['moreThanRating'] = ratio.value
+                            if (difficulty) filter['difficulty'] = [difficulty.value]
+                            if (genre) filter['genre'] = [genre.value]
+                            if (moreThanPriceMin) filter['moreThanPriceMin'] = moreThanPriceMin
+                            if (lessThanPriceMax) filter['lessThanPriceMax'] = lessThanPriceMax
+                            if (moreThanPlayersMin) filter['moreThanPlayersMin'] = moreThanPlayersMin
+                            if (lessThanPlayersMax) filter['lessThanPlayersMax'] = lessThanPlayersMax
 
-                        if (ratio) filter['moreThanRating'] = ratio.value
-                        if (difficulty) filter['difficulty'] = [difficulty.value]
-                        if (genre) filter['genre'] = [genre.value]
-                        if (moreThanPriceMin) filter['moreThanPriceMin'] = moreThanPriceMin
-                        if (lessThanPriceMax) filter['lessThanPriceMax'] = lessThanPriceMax
-                        if (moreThanPlayersMin) filter['moreThanPlayersMin'] = moreThanPlayersMin
-                        if (lessThanPlayersMax) filter['lessThanPlayersMax'] = lessThanPlayersMax
-
-                        escapeList = await searchEscapeRoom(query, filter)
-                        setEscapeRooms(escapeList)
-                        setSearched(true)
-                    }} />
+                            escapeList = await searchEscapeRoom(query.toLowerCase(), filter)
+                            setEscapeRooms(escapeList)
+                            setSearched(true)
+                        }} />
+                </TouchableOpacity>
             </View>
             <View style={styles.buttonContainer}>
                 <Modal visible={modalVisible} animationType='slide'>
@@ -84,7 +96,9 @@ export default function () {
                             <AppPicker style={{ width: '60%', heightt: 30 }} icon="city" placeholder="Genre" items={[
                                 { label: "Terror", value: 'terror' },
                                 { label: "Adventures", value: 'aventuras' },
-                                { label: "Historical", value: 'historico' }
+                                { label: "Historical", value: 'historico' },
+                                { label: "Fiction", value: 'ficcion' },
+                                { label: "Criminal", value: 'criminal' }
                             ]}
                                 selectedItem={genre} onSelectItem={item => setGenre(item)} />
                             <AppPicker style={{ width: '60%', heightt: 30 }} icon="city" placeholder="Ratio" items={[
@@ -158,18 +172,19 @@ export default function () {
                 {
                     searched ?
                         escapeRooms.length ?
-                            escapeRooms.map(({ city, id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin }) => {
+                            escapeRooms.map(({ id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin, rating }) => {
                                 return (<Card
                                     key={id}
                                     title={name}
-                                    rating='4.9'
+                                    rating={rating}
                                     escapeId={id}
-                                    token={token}
                                     people={`${playersMin}-${playersMax}`}
                                     genre={genre} price={`${priceMin}-${priceMax}€`} image={{ uri: _image }}
-                                    participated={userLists.participated.includes(id)}
-                                    pending={userLists.pending.includes(id)}
-                                    favorites={userLists.favorites.includes(id)}
+                                    participated={!guest && userLists.participated.includes(id)}
+                                    pending={!guest && userLists.pending.includes(id)}
+                                    favorites={!guest && userLists.favorites.includes(id)}
+                                    onEscapes={!guest ? handleEscapeLists : () => { }}
+                                    guest={guest}
                                 />)
                             })
                             :

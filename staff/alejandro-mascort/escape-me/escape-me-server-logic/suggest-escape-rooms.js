@@ -4,6 +4,13 @@ require('escape-me-commons/polyfills/json')
 const { errors: { UnexistenceError } } = require('escape-me-commons')
 const { models: { User, EscapeRoom }, mongoose: { ObjectId } } = require('escape-me-data')
 
+/**
+ * Suggests potential favorites escape rooms.
+ * @param {String} userId The id of a user.
+ * @returns {Promise<Array>} An array of Objects, if not returns an error.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ */
 module.exports = (userId) => {
     if (userId) String.validate.notVoid(userId)
 

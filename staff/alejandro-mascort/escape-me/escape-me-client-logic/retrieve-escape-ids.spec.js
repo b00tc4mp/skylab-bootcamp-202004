@@ -11,9 +11,9 @@ require('escape-me-commons/ponyfills/xhr')
 const { utils: { jwtPromised } } = require('escape-me-node-commons')
 const context = require('./context')
 const bcrypt = require('bcryptjs')
-
 context.API_URL = API_URL
-
+const AsyncStorage = require('not-async-storage')
+context.storage = AsyncStorage
 describe('logic - retrieve escape ids', () => {
     let users
 
@@ -45,11 +45,11 @@ describe('logic - retrieve escape ids', () => {
         beforeEach(() =>
             users.insertOne({ name, surname, email, username, password: hash, participated, pending, favorites })
                 .then(_user => jwtPromised.sign({ sub: _user.insertedId.toString() }, SECRET))
-                .then(_token => token = _token)
+                .then(_token => context.storage.setItem('token', _token))
         )
 
         it('should succeed on correct user id', () =>
-            retrieveEscapeIds(token)
+            retrieveEscapeIds()
                 .then(user => {
                     expect(user['participated']).to.be.an.instanceOf(Array)
                     expect(user['pending']).to.be.an.instanceOf(Array)
@@ -74,7 +74,7 @@ describe('logic - retrieve escape ids', () => {
                 .then(_hash => hash = _hash)
                 .then(() => users.insertOne({ name, surname, email, username, password: hash, participated, pending, favorites }))
                 .then(_user => userId = _user.insertedId.toString())
-                .then(() => retrieveEscapeIds(token, userId))
+                .then(() => retrieveEscapeIds(userId))
                 .then(user => {
                     expect(user['participated']).to.be.an.instanceOf(Array)
                     expect(user['pending']).to.be.an.instanceOf(Array)
@@ -93,11 +93,11 @@ describe('logic - retrieve escape ids', () => {
             userId = '5ed1204ee99ccf6fae798aef'
 
             return jwtPromised.sign({ sub: userId }, SECRET)
-                .then(_token => token = _token)
+                .then(_token => context.storage.setItem('token', _token))
         })
 
         it('should fail when user does not exist', () =>
-            retrieveEscapeIds(token)
+            retrieveEscapeIds()
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.exist
@@ -105,17 +105,6 @@ describe('logic - retrieve escape ids', () => {
                     expect(error.message).to.equal(`user with id ${userId} does not exist`)
                 })
         )
-    })
-
-    it('should fail if token is not a string', () => {
-        expect(() => {
-            retrieveEscapeIds(1)
-        }).to.throw(TypeError, '1 is not a string')
-
-        expect(() => {
-            retrieveEscapeIds(true)
-        }).to.throw(TypeError, 'true is not a string')
-
     })
 
     afterEach(() => users.deleteMany())

@@ -4,7 +4,11 @@ module.exports = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: 5
+        marginVertical: 5,
+    },
+    containerItem: {
+        borderRadius: 50,
+        backgroundColor: 'white'
     },
     follow: {
         position: 'absolute',

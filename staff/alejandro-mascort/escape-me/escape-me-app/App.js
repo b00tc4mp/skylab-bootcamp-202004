@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import Landing from './app/screens/Landing'
-import Home from './app/screens/Home'
 import Login from './app/screens/Login'
 import Register from './app/screens/Register'
-import CardDetails from './app/screens/CardDetails'
-import Profile from './app/screens/Profile'
-import Search from './app/screens/Search'
-import AddUsers from './app/screens/AddUsers'
-import Pending from './app/screens/Pending'
+import Manager from './app/screens/Manager'
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { MaterialCommunityIcons, AntDesign, Entypo, Feather } from '@expo/vector-icons';
+import { context, isUserLoggedIn } from 'escape-me-client-logic'
+
+context.storage = AsyncStorage
 
 export default function () {
   console.disableYellowBox = true
 
   const [view, setView] = useState('landing')
-  const [token, setToken] = useState()
+  const [guest, setGuest] = useState(false)
+
+  const handleGuest = () => {
+    setGuest(true)
+    setView('home')
+  }
 
   const handleGoToLogin = () => {
     setView('login')
@@ -30,33 +31,30 @@ export default function () {
   }
 
   const handleGoToHome = () => {
+    setGuest(false)
     setView('home')
   }
 
-  const handleToken = token => {
-    setToken(token)
+  const handleLogOut = () => {
+    (async () => { await AsyncStorage.removeItem('token') })()
+    setView('login')
   }
 
-  const handleLogOut = () => {
-    setToken()
-    setView('landing')
-  }
+  useEffect(() => {
+    (async () => {
+      if (await isUserLoggedIn()) {
+        setGuest(false)
+        setView('home')
+      }
+    })()
+  }, [])
 
   return (
     <View style={styles.container}>
-      {view === 'landing' && <Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister} />}
-      {view === 'login' && <Login onRegister={handleGoToRegister} onHome={handleGoToHome} handleToken={handleToken} />}
-      {view === 'register' && <Register onLogin={handleGoToLogin} />}
-      {token &&
-        <View style={styles.appheader}>
-          <Text style={styles.title}>Escape Me</Text>
-          <TouchableOpacity style={styles.logOut} onPress={handleLogOut}>
-            <AntDesign name="logout" size={24} color="white" />
-          </TouchableOpacity>
-        </View>}
-      {token && <NavigationContainer>
-        <NavTabs token={token} />
-      </NavigationContainer>}
+      {view === 'landing' && <Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister} handleGuest={handleGuest} />}
+      {view === 'login' && <Login onRegister={handleGoToRegister} onHome={handleGoToHome} handleGuest={handleGuest} />}
+      {view === 'register' && <Register onLogin={handleGoToLogin} handleGuest={handleGuest} />}
+      {view === 'home' && <Manager onLogOut={handleLogOut} guest={guest} />}
     </View>
 
   );
@@ -84,71 +82,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   }
 })
-
-const Tab = createMaterialBottomTabNavigator();
-
-function NavTabs({ token }) {
-  return (
-    <Tab.Navigator
-      initialRouteName="Home"
-      activeColor="white"
-      labelStyle={{ fontSize: 12 }}
-      barStyle={{ backgroundColor: "#4ecdc4" }}
-
-    >
-      <Tab.Screen
-        name="Home"
-        component={Home}
-        initialParams={{ 'token': token }}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Search"
-        component={Search}
-        initialParams={{ 'token': token }}
-        options={{
-          tabBarLabel: 'Search',
-          tabBarIcon: ({ color }) => (
-            <AntDesign name="search1" size={26} color={color} />),
-        }}
-      />
-      <Tab.Screen
-        name="Pending"
-        component={Pending}
-        initialParams={{ 'token': token }}
-        options={{
-          tabBarLabel: 'Pending',
-          tabBarIcon: ({ color }) => (
-            <Entypo name="list" size={26} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Follow"
-        component={AddUsers}
-        initialParams={{ 'token': token }}
-        options={{
-          tabBarLabel: 'Follow',
-          tabBarIcon: ({ color }) => (
-            <Feather name="user-plus" size={24} color={color} />),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        initialParams={{ 'token': token }}
-        options={{
-          tabBarLabel: 'Profile',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="account" color={color} size={26} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
-  );
-}

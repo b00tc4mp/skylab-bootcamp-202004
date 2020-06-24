@@ -4,7 +4,26 @@ require('escape-me-commons/polyfills/number')
 const { utils: { call }, errors: { UnexistenceError } } = require('escape-me-commons')
 
 const context = require('./context')
-
+/**
+ * Searches escape rooms.
+ * 
+ * @param {String} query The query searched.
+ * @param { Number} moreThanPriceMin A price above the minimal.
+ * @param { Number} lessThanPriceMax A price under the maximum.
+ * @param { Number} moreThanPriceMax A price above the maximum.
+ * @param { Number} lessThanPriceMin A price under the minimal.
+ * @param { Number} moreThanPlayersMin Players above the minimal.
+ * @param { Number} lessThanPlayersMax Players under the maximum.
+ * @param { Number} moreThanPlayersMax Players above the maximum.
+ * @param { Number} lessThanPlayersMin Players under the minimal.
+ * @param {Array} genre An array of Strings.
+ * @param {Array} difficulty An array of Strings.
+ * @param { Number} moreThanRating A rating above the maximum.
+ * @param { Number} lessThanRating A rating under the minimal.
+ * @returns {Promise<Array>} An array of Objects, if not returns an error.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ */
 module.exports = function (query = '', { moreThanPriceMin, lessThanPriceMin, moreThanPriceMax, lessThanPriceMax, moreThanPlayersMin, lessThanPlayersMin, moreThanPlayersMax, lessThanPlayersMax, genre, difficulty, moreThanRating, lessThanRating }) {
     if (query) String.validate.notVoid(query)
 

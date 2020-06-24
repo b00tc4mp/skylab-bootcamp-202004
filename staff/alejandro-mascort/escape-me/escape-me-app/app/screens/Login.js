@@ -4,7 +4,6 @@ import {
     View,
     ImageBackground,
     Image,
-    Text
 } from "react-native";
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -12,25 +11,24 @@ import * as Yup from 'yup'
 import AppButton from '../components/AppButton'
 import AppTextInput from '../components/AppTextInput'
 import Feedback from '../components/Feedback'
-import { authenticateUser } from 'escape-me-client-logic'
+import { loginUser } from 'escape-me-client-logic'
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
     password: Yup.string().required().min(8).label('Password')
 })
 
-export default function Login({ onRegister, onHome, handleToken }) {
+export default function Login({ onRegister, onHome, handleGuest }) {
+    const [error, setError] = useState()
+
     function handleLogin(values) {
         const { email, password } = values
         try {
-            return authenticateUser(email, password)
-                .then(token => {
-                    handleToken(token)
-                    onHome()
-                })
-                .catch(error => console.error(error.message))
+            return loginUser(email, password)
+                .then(() => onHome())
+                .catch(error => setError(error.message))
         } catch (error) {
-            console.error(error.message)
+            setError(error.message)
         }
     }
 
@@ -58,11 +56,15 @@ export default function Login({ onRegister, onHome, handleToken }) {
 
                             <AppButton title="Login" onPress={handleSubmit} />
 
+                            {error && <Feedback error={error} />}
                             <AppButton style={styles.register} title='Register' color='#4ecdc4' onPress={onRegister} />
+                            <AppButton title='Join as a Guest' color='#47d7' onPress={handleGuest} />
+
                         </View>
                     </>
                 )}
             </Formik>
+
         </ImageBackground >
     );
 }

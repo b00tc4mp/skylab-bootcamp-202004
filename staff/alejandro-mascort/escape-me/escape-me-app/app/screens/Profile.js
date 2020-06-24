@@ -7,89 +7,122 @@ import {
     View,
     Text
 } from "react-native";
-import { useRoute } from '@react-navigation/native'
 import UserItem from '../components/UserItem'
 import Card from '../components/Card'
 import { retrieveEscapeRooms, retrieveUser, retrieveFollowing, retrieveEscapeIds, retrieveFollowingIds } from 'escape-me-client-logic'
+import Feedback from '../components/Feedback'
 
 import { Entypo, FontAwesome, MaterialIcons, Ionicons } from '@expo/vector-icons';
 
-export default function Profile() {
-    const route = useRoute()
-    const token = route.params['token']
-
+export default function Profile({ navigation }) {
     const [userLists, setUserLists] = useState()
-    const [followingIds, setFollowingIds] = useState()
+    const [followingIds, setFollowingIds] = useState([])
     const [tag, setTag] = useState('favorites')
     const [user, setUser] = useState({})
     const [following, setFollowing] = useState([])
     const [escapeRooms, setEscapeRooms] = useState([])
+    const [loaded, setLoaded] = useState(false)
+    const [error, setError] = useState()
+
+    const handleEscapeLists = async () => {
+        const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
+        setUserLists({ participated, pending, favorites })
+    }
+
+    const handleFollowingIds = async () => {
+        const followingUsers = await retrieveFollowingIds()
+        setFollowingIds(followingUsers)
+    }
 
     let escapeList, follow
     useEffect(() => {
-        (async () => {
-            if (!user.username) {
-                const { name = '', surname = '', username = '' } = await retrieveUser(token)
-
+        try {
+            (async () => {
+                const { name = '', surname = '', username = '' } = await retrieveUser()
                 setUser({ name, surname, username })
-            }
+            })()
+        } catch (error) {
+            setError(error.message)
+        }
+    }, [])
 
-            const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds(token)
-            setUserLists({ participated, pending, favorites })
+    useEffect(() => {
+        try {
+            const reload = navigation.addListener('focus', async () => {
+                const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
+                setUserLists({ participated, pending, favorites })
 
-            const { followingIds = [] } = await retrieveFollowingIds(token)
-            setFollowingIds(followingIds)
+                setTag(tag)
 
-            if (tag !== '') {
-
-                escapeList = await retrieveEscapeRooms(token, tag)
+                escapeList = await retrieveEscapeRooms(tag)
                 setEscapeRooms(escapeList)
-            }
-            else {
-                follow = await retrieveFollowing(token)
-                setFollowing(follow)
-            }
-        })()
-    }, [userLists])
+
+                const followingUsers = await retrieveFollowingIds()
+                setFollowingIds(followingUsers)
+
+                setLoaded(true)
+            });
+
+            // Return the function to reload from the event so it gets removed on unmount
+            return reload;
+        } catch (error) {
+            setError(error.message)
+        }
+    }, [navigation]);
 
     return (
         <SafeAreaView style={styles.container} >
             <ScrollView >
-                <UserItem name={user.name ? user.name : ''} surname={user.surname ? user.surname : ''} email={`@${user.username}`} image={require('../assets/tyler.jpg')} main={true} />
+                <UserItem name={user.name ? user.name : ''} surname={user.surname ? user.surname : ''} email={`@${user.username}`} image={require('../assets/user.jpg')} main={true} />
                 <TouchableOpacity style={styles.edit}>
                     <Entypo name="pencil" size={30} color="white" />
                     <Text style={styles.text}>Edit profile</Text>
                 </TouchableOpacity>
                 <View style={styles.details}>
-                    <TouchableOpacity style={tag === 'favorites' ? [styles.pair, styles.selected] : styles.pair} onPress={() => setTag('favorites')}>
+                    <TouchableOpacity style={tag === 'favorites' ? [styles.pair, styles.selected] : styles.pair} onPress={async () => {
+                        const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
+                        setUserLists({ participated, pending, favorites })
+                        escapeList = await retrieveEscapeRooms('favorites')
+                        setEscapeRooms(escapeList)
+                        setTag('favorites')
+                    }}>
                         <FontAwesome name="heart" size={24} color={'#fc5c65'} />
                         <Text>Favorite</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={tag === 'participated' ? [styles.pair, styles.selected] : styles.pair} onPress={() => setTag('participated')}>
+                    <TouchableOpacity style={tag === 'participated' ? [styles.pair, styles.selected] : styles.pair} onPress={async () => {
+                        const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
+                        setUserLists({ participated, pending, favorites })
+                        escapeList = await retrieveEscapeRooms('participated')
+                        setEscapeRooms(escapeList)
+                        setTag('participated')
+                    }}>
                         <MaterialIcons name="done-all" size={24} color="black" />
                         <Text>Done</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={tag === '' ? [styles.pair, styles.selected] : styles.pair} onPress={() => setTag('')}>
+                    <TouchableOpacity style={tag === '' ? [styles.pair, styles.selected] : styles.pair} onPress={async () => {
+                        follow = await retrieveFollowing()
+                        setFollowing(follow)
+                        setTag('')
+                    }}>
                         <Ionicons name="md-contacts" size={24} color="black" />
                         <Text>Following</Text>
                     </TouchableOpacity>
                 </View>
-                {
+                {loaded ?
                     tag !== '' ?
-
                         escapeRooms.length ?
-                            escapeRooms.map(({ city, id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin }) => {
+                            escapeRooms.map(({ id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin, rating }) => {
                                 return (<Card
                                     key={id}
-                                    title={name}
-                                    rating='4.9'
+                                    title={name.toUpperCase()}
+                                    rating={rating}
                                     escapeId={id}
-                                    token={token}
                                     people={`${playersMin}-${playersMax}`}
                                     genre={genre} price={`${priceMin}-${priceMax}€`} image={{ uri: _image }}
                                     participated={userLists.participated.includes(id)}
                                     pending={userLists.pending.includes(id)}
                                     favorites={userLists.favorites.includes(id)}
+                                    onEscapes={handleEscapeLists}
                                 />)
                             })
                             :
@@ -102,16 +135,19 @@ export default function Profile() {
                                     name={name ? name : ''}
                                     surname={surname ? surname : ''}
                                     email={`@${username}`}
-                                    image={require('../assets/tyler.jpg')}
+                                    image={require('../assets/user.jpg')}
                                     following={followingIds.includes(id)}
                                     userId={id}
-                                    token={token}
+                                    onEscapes={handleEscapeLists}
+                                    onFollowing={handleFollowingIds}
                                 />)
                             })
                             :
                             <Text>You're not following people yet.</Text>
-                }
+                    : <View></View>}
             </ScrollView>
+            {error && <Feedback error={error} />}
+
         </SafeAreaView>
     );
 }

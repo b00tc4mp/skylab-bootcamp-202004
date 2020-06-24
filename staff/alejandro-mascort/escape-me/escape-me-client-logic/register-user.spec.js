@@ -10,9 +10,7 @@ const { mongo } = require('escape-me-data')
 const { errors: { DuplicityError } } = require('escape-me-commons')
 const bcrypt = require('bcryptjs')
 require('escape-me-commons/ponyfills/xhr')
-const context = require('./context')
 
-context.API_URL = API_URL
 
 describe('logic - register user', () => {
     let users
