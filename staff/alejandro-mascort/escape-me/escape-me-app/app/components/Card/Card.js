@@ -23,34 +23,33 @@ function Card({ title, rating, people, genre, price, image, participated, pendin
 
     return (
         <View style={styles.card}>
-            {!guest ?
-                <View style={styles.header}>
-                    <Text style={[styles.text, styles.title]}>{title}</Text>
-                    {favorites ? <AntDesign name="heart" size={24}
-                        color="tomato" style={styles.icon} onPress={() => handleToggle('favorites')} />
-                        :
-                        <SimpleLineIcons name="heart" size={24}
-                            color="tomato" style={styles.icon} onPress={() => handleToggle('favorites')} />}
-                    {participated ? <Feather name="check-square" size={24}
-                        color="black" style={styles.icon} onPress={() => handleToggle('participated')} />
-                        :
-                        <MaterialIcons name="check-box-outline-blank" size={24}
-                            color="black" style={styles.icon} onPress={() => handleToggle('participated')} />}
-                    {pending ? <MaterialIcons name="playlist-add-check" size={24}
-                        color="black" style={styles.icon} onPress={() => handleToggle('pending')} />
-                        :
-                        <MaterialIcons name="playlist-add" size={24}
-                            color="black" style={styles.icon} onPress={() => handleToggle('pending')} />}
-                </View>
-                :
-                <View style={styles.header}>
-                    <Text style={[styles.text, styles.title]}>{title}</Text>
-                    <MaterialIcons name="playlist-add" size={24}
-                        color="white" style={styles.icon} />
-                </View>
-            }
+
+            <View style={styles.header}>
+                <Text style={[styles.text, styles.title]}>{title}</Text>
+                <MaterialIcons name="playlist-add" size={24}
+                    color="white" style={styles.icon} />
+            </View>
+
             <TouchableOpacity activeOpacity={0.8} onPress={() => setModalVisible(true)} >
-                <ImageBackground style={styles.image} source={image} resizeMode={'contain'} />
+                <ImageBackground style={styles.image} source={image} resizeMode={'contain'} >
+                    {!guest && <View style={styles.icons}>
+                        {favorites ? <AntDesign name="heart" size={24}
+                            color="tomato" style={styles.icon} onPress={() => handleToggle('favorites')} />
+                            :
+                            <SimpleLineIcons name="heart" size={24}
+                                color="tomato" style={styles.icon} onPress={() => handleToggle('favorites')} />}
+                        {participated ? <Feather name="check-square" size={24}
+                            color="black" style={styles.icon} onPress={() => handleToggle('participated')} />
+                            :
+                            <MaterialIcons name="check-box-outline-blank" size={24}
+                                color="black" style={styles.icon} onPress={() => handleToggle('participated')} />}
+                        {pending ? <MaterialIcons name="playlist-add-check" size={24}
+                            color="black" style={styles.icon} onPress={() => handleToggle('pending')} />
+                            :
+                            <MaterialIcons name="playlist-add" size={24}
+                                color="black" style={styles.icon} onPress={() => handleToggle('pending')} />}
+                    </View>}
+                </ImageBackground>
             </TouchableOpacity>
             <Modal visible={modalVisible} animationType="slide">
                 <Button title="Close" onPress={() => setModalVisible(false)} />

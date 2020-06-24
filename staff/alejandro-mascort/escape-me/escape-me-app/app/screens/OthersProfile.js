@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Card from '../components/Card'
 import { retrieveEscapeRooms, retrieveUser, retrieveEscapeIds, retrieveFollowingIds, toggleFollowUser } from 'escape-me-client-logic'
-
+import Feedback from '../components/Feedback'
 import { FontAwesome, MaterialIcons, Feather } from '@expo/vector-icons';
 
 export default function OthersProfile({ _userId, onEscapes }) {
@@ -20,6 +20,7 @@ export default function OthersProfile({ _userId, onEscapes }) {
     const [escapeRooms, setEscapeRooms] = useState([])
     const [followingIds, setFollowingIds] = useState([])
     const [loaded, setLoaded] = useState(false)
+    const [error, setError] = useState()
 
     const handleEscapeLists = async () => {
         const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
@@ -37,21 +38,25 @@ export default function OthersProfile({ _userId, onEscapes }) {
 
     let escapeList
     useEffect(() => {
-        (async () => {
-            const { name = '', surname = '', username = '' } = await retrieveUser(_userId)
-            setUser({ name, surname, username })
+        try {
+            (async () => {
+                const { name = '', surname = '', username = '' } = await retrieveUser(_userId)
+                setUser({ name, surname, username })
 
-            const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
-            setUserLists({ participated, pending, favorites })
+                const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
+                setUserLists({ participated, pending, favorites })
 
-            escapeList = await retrieveEscapeRooms(tag, _userId)
-            setEscapeRooms(escapeList)
+                escapeList = await retrieveEscapeRooms(tag, _userId)
+                setEscapeRooms(escapeList)
 
-            const followingUsers = await retrieveFollowingIds()
-            setFollowingIds(followingUsers)
+                const followingUsers = await retrieveFollowingIds()
+                setFollowingIds(followingUsers)
 
-            setLoaded(true)
-        })()
+                setLoaded(true)
+            })()
+        } catch (error) {
+            setError(error.message)
+        }
     }, [])
 
     return (
@@ -59,7 +64,7 @@ export default function OthersProfile({ _userId, onEscapes }) {
             <ScrollView style={{ width: '75%' }}>
                 <View style={styles.userContainer}>
                     <TouchableOpacity onPress={() => setModalVisible(true)} >
-                        <Image style={styles.image} source={require('../assets/tyler.jpg')} />
+                        <Image style={styles.image} source={require('../assets/user.jpg')} />
                     </TouchableOpacity>
                     <View>
                         <Text style={styles.username}>{user.username}</Text>
@@ -94,7 +99,7 @@ export default function OthersProfile({ _userId, onEscapes }) {
                         escapeRooms.map(({ id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin, rating }) => {
                             return (<Card
                                 key={id}
-                                title={name}
+                                title={name.toUpperCase()}
                                 rating={rating}
                                 escapeId={id}
                                 people={`${playersMin}-${playersMax}`}
@@ -110,6 +115,8 @@ export default function OthersProfile({ _userId, onEscapes }) {
                     :
                     <View></View>}
             </ScrollView>
+            {error && <Feedback error={error} />}
+
         </SafeAreaView>
     )
 
@@ -167,7 +174,7 @@ const styles = StyleSheet.create({
         right: 20
     },
     image: {
-        width: 100,
+        width: 110,
         height: 100,
         borderRadius: 50,
         marginRight: 10

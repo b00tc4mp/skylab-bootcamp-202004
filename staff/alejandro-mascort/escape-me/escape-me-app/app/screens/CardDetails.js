@@ -3,6 +3,7 @@ import { ImageBackground, StyleSheet, SafeAreaView, View, Text, Linking, Button,
 import { FontAwesome, MaterialIcons, AntDesign, SimpleLineIcons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating'
 import Review from '../components/Review/'
+import Feedback from '../components/Feedback'
 import { retrieveEscapeRoomDetails, toggleEscapeRoom, retrieveEscapeIds, rateEscapeRoom, retrieveUser, commentEscapeRoom } from 'escape-me-client-logic'
 
 class CardDetails extends Component {
@@ -10,6 +11,7 @@ class CardDetails extends Component {
         super(props)
 
         this.state = {
+            error: undefined,
             escapeRoom: {},
             userLists: {},
             starCount: 0,
@@ -29,30 +31,35 @@ class CardDetails extends Component {
     }
 
     componentDidMount() {
-        let escape, lists
-        (async () => {
-            if (!this.props.guest) {
-                lists = await retrieveEscapeIds()
-                this.setState({ userLists: lists })
-            }
-            escape = await retrieveEscapeRoomDetails(this.props.escapeId)
-            this.setState({ escapeRoom: escape })
+        try {
+            let escape, lists
+            (async () => {
+                if (!this.props.guest) {
+                    lists = await retrieveEscapeIds()
+                    this.setState({ userLists: lists })
+                }
+                escape = await retrieveEscapeRoomDetails(this.props.escapeId)
+                this.setState({ escapeRoom: escape })
 
-            const { reviews } = escape
+                const { reviews } = escape
 
-            this.setState({ reviews })
+                this.setState({ reviews })
 
 
-            if (!this.props.guest) {
-                const { username = '' } = await retrieveUser()
+                if (!this.props.guest) {
+                    const { username = '' } = await retrieveUser()
 
-                reviews.forEach(({ user, rating }) => {
-                    if (user.username === username) {
-                        this.setState({ starCount: rating })
-                    }
-                })
-            }
-        })()
+                    reviews.forEach(({ user, rating }) => {
+                        if (user.username === username) {
+                            this.setState({ starCount: rating })
+                        }
+                    })
+                }
+            })()
+        } catch (error) {
+            this.setState({ error: error.message })
+        }
+
     }
 
     render() {
@@ -95,7 +102,7 @@ class CardDetails extends Component {
                             </View>
                         </View>
                         <View style={styles.header}>
-                            <Text style={styles.title}>{this.state.escapeRoom.name}</Text>
+                            <Text style={styles.title}>{this.state.escapeRoom.name && this.state.escapeRoom.name.toUpperCase()}</Text>
                         </View>
                         <Text style={styles.introduction}>
                             {this.state.escapeRoom.description}
@@ -161,6 +168,7 @@ class CardDetails extends Component {
                         </View>
                     </View>
                 </ScrollView>
+                {this.state.error && <Feedback error={this.state.error} />}
             </KeyboardAvoidingView>
         );
     }

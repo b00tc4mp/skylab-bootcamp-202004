@@ -21,5 +21,4 @@ module.exports = {
     retrieveEscapeRoomDetails: require('./retrieve-escape-room-details'),
     rateEscapeRoom: require('./rate-escape-room'),
     commentEscapeRoom: require('./comment-escape-room'),
-    logoutUser: require('./logout-user')
 }

@@ -3,6 +3,7 @@ import { SafeAreaView, ScrollView, Text } from 'react-native'
 import Card from '../components/Card'
 import { suggestEscapeRooms, retrieveEscapeIds } from 'escape-me-client-logic'
 import { useRoute } from '@react-navigation/native'
+import Feedback from '../components/Feedback'
 
 export default function ({ navigation }) {
     const route = useRoute()
@@ -10,6 +11,7 @@ export default function ({ navigation }) {
     if (route.params) guest = route.params['guest']
     const [escapeRooms, setEscapeRooms] = useState([])
     const [escapes, setEscapes] = useState()
+    const [error, setError] = useState()
 
     const handleEscapeLists = async () => {
         const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
@@ -18,20 +20,23 @@ export default function ({ navigation }) {
 
     let escapeList
     useEffect(() => {
-        const reload = navigation.addListener('focus', async () => {
-            if (!guest) {
-                const _escapes = await retrieveEscapeIds()
-                setEscapes(_escapes)
-            }
+        try {
+            const reload = navigation.addListener('focus', async () => {
+                if (!guest) {
+                    const _escapes = await retrieveEscapeIds()
+                    setEscapes(_escapes)
+                }
 
-            if (!escapeRooms.length) {
-                escapeList = await suggestEscapeRooms('pending')
-                setEscapeRooms(escapeList)
-            }
-        });
-
-        // Return the function to reload from the event so it gets removed on unmount
-        return reload;
+                if (!escapeRooms.length) {
+                    escapeList = await suggestEscapeRooms('pending')
+                    setEscapeRooms(escapeList)
+                }
+            });
+            // Return the function to reload from the event so it gets removed on unmount
+            return reload;
+        } catch (error) {
+            setError(error.message)
+        }
     }, [navigation]);
 
     return (
@@ -45,7 +50,7 @@ export default function ({ navigation }) {
                     escapeRooms.map(({ id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin, rating }) => {
                         return (<Card
                             key={id}
-                            title={name}
+                            title={name.toUpperCase()}
                             rating={rating}
                             escapeId={id}
                             people={`${playersMin}-${playersMax}`}
@@ -61,6 +66,7 @@ export default function ({ navigation }) {
                     <Text></Text>
                 }
             </ScrollView>
+            {error && <Feedback error={error} />}
 
         </SafeAreaView>
     )

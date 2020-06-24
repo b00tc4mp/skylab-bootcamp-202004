@@ -70,7 +70,7 @@ export default function ({ navigation }) {
                                     name={name ? name : ''}
                                     surname={surname ? surname : ''}
                                     email={`@${username}`}
-                                    image={require('../assets/tyler.jpg')}
+                                    image={require('../assets/user.jpg')}
                                     following={following.includes(id)}
                                     userId={id}
                                     onEscapes={() => { }}

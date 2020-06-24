@@ -10,6 +10,7 @@ import {
 import UserItem from '../components/UserItem'
 import Card from '../components/Card'
 import { retrieveEscapeRooms, retrieveUser, retrieveFollowing, retrieveEscapeIds, retrieveFollowingIds } from 'escape-me-client-logic'
+import Feedback from '../components/Feedback'
 
 import { Entypo, FontAwesome, MaterialIcons, Ionicons } from '@expo/vector-icons';
 
@@ -21,6 +22,7 @@ export default function Profile({ navigation }) {
     const [following, setFollowing] = useState([])
     const [escapeRooms, setEscapeRooms] = useState([])
     const [loaded, setLoaded] = useState(false)
+    const [error, setError] = useState()
 
     const handleEscapeLists = async () => {
         const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
@@ -34,36 +36,44 @@ export default function Profile({ navigation }) {
 
     let escapeList, follow
     useEffect(() => {
-        (async () => {
-            const { name = '', surname = '', username = '' } = await retrieveUser()
-            setUser({ name, surname, username })
-        })()
+        try {
+            (async () => {
+                const { name = '', surname = '', username = '' } = await retrieveUser()
+                setUser({ name, surname, username })
+            })()
+        } catch (error) {
+            setError(error.message)
+        }
     }, [])
 
     useEffect(() => {
-        const reload = navigation.addListener('focus', async () => {
-            const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
-            setUserLists({ participated, pending, favorites })
+        try {
+            const reload = navigation.addListener('focus', async () => {
+                const { participated = [], pending = [], favorites = [] } = await retrieveEscapeIds()
+                setUserLists({ participated, pending, favorites })
 
-            setTag(tag)
+                setTag(tag)
 
-            escapeList = await retrieveEscapeRooms(tag)
-            setEscapeRooms(escapeList)
+                escapeList = await retrieveEscapeRooms(tag)
+                setEscapeRooms(escapeList)
 
-            const followingUsers = await retrieveFollowingIds()
-            setFollowingIds(followingUsers)
+                const followingUsers = await retrieveFollowingIds()
+                setFollowingIds(followingUsers)
 
-            setLoaded(true)
-        });
+                setLoaded(true)
+            });
 
-        // Return the function to reload from the event so it gets removed on unmount
-        return reload;
+            // Return the function to reload from the event so it gets removed on unmount
+            return reload;
+        } catch (error) {
+            setError(error.message)
+        }
     }, [navigation]);
 
     return (
         <SafeAreaView style={styles.container} >
             <ScrollView >
-                <UserItem name={user.name ? user.name : ''} surname={user.surname ? user.surname : ''} email={`@${user.username}`} image={require('../assets/tyler.jpg')} main={true} />
+                <UserItem name={user.name ? user.name : ''} surname={user.surname ? user.surname : ''} email={`@${user.username}`} image={require('../assets/user.jpg')} main={true} />
                 <TouchableOpacity style={styles.edit}>
                     <Entypo name="pencil" size={30} color="white" />
                     <Text style={styles.text}>Edit profile</Text>
@@ -104,7 +114,7 @@ export default function Profile({ navigation }) {
                             escapeRooms.map(({ id, genre, image: _image, name, playersMax, playersMin, priceMax, priceMin, rating }) => {
                                 return (<Card
                                     key={id}
-                                    title={name}
+                                    title={name.toUpperCase()}
                                     rating={rating}
                                     escapeId={id}
                                     people={`${playersMin}-${playersMax}`}
@@ -125,7 +135,7 @@ export default function Profile({ navigation }) {
                                     name={name ? name : ''}
                                     surname={surname ? surname : ''}
                                     email={`@${username}`}
-                                    image={require('../assets/tyler.jpg')}
+                                    image={require('../assets/user.jpg')}
                                     following={followingIds.includes(id)}
                                     userId={id}
                                     onEscapes={handleEscapeLists}
@@ -136,6 +146,8 @@ export default function Profile({ navigation }) {
                             <Text>You're not following people yet.</Text>
                     : <View></View>}
             </ScrollView>
+            {error && <Feedback error={error} />}
+
         </SafeAreaView>
     );
 }

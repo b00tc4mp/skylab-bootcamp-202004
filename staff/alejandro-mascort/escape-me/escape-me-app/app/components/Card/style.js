@@ -17,6 +17,15 @@ module.exports = StyleSheet.create({
     icon: {
         marginHorizontal: 5
     },
+    icons: {
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        borderRadius: 20,
+        width: '50%',
+        justifyContent: "space-around",
+        position: 'absolute',
+        bottom: '5%'
+    },
     info: {
         flexDirection: 'row',
         justifyContent: 'space-around'

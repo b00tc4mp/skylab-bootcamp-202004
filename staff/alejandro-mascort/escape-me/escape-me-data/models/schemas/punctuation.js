@@ -13,5 +13,9 @@ module.exports = new Schema({
         required: true
     },
 
-    comment: comment
+    comment: {
+        message: String,
+
+        date: String
+    }
 })
