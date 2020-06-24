@@ -1,6 +1,6 @@
 const {errors: {DuplicityError, VoidError, UnexistenceError, CredentialsError}} = require('plates-commons')
 const { JsonWebTokenError } = require('jsonwebtoken')
-debugger
+ 
 module.exports = function (error, res) {
     let status = 500
 

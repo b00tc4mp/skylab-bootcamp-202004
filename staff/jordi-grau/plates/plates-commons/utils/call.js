@@ -9,7 +9,7 @@ module.exports = (method, url, body, headers) => {
     URL.validate(url)
 
     return (async()=>{
-        debugger
+         
         try{
             const resp = await fetch(url,{method,headers,body})
             const _body = await resp.text()

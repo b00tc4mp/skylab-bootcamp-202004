@@ -27,7 +27,7 @@ mongoose.connect(MONGODB_URL)
 
 
         app.post('/users', parseBody, (req, res) =>{
-            debugger
+             
             const { body: { name, surname, email, password }} = req
 
             try {
@@ -55,7 +55,7 @@ mongoose.connect(MONGODB_URL)
         app.post('/users/restaurant', verifyExtractJwt, parseBody, (req, res) => {
 
             const {payload: { sub: userId}, body: { name, email, cif, address, phone } } = req
-           debugger 
+             
             try {
                 createRestaurant(userId, name, email, cif, address, phone)    
                 .then(()=> res.status(201).end()) 
@@ -88,7 +88,7 @@ mongoose.connect(MONGODB_URL)
                 handleError(error, res)               
             }
         })
-debugger
+ 
         app.get('/search/restaurant?', (req, res) => {
             const { query:{query} }   = req
             
@@ -103,7 +103,7 @@ debugger
 
         app.get('/users', verifyExtractJwt, (req, res) => {
             const { payload: {sub: userId} } = req
-            debugger
+             
             try {
                 retrieveUser(userId)
                     .then(user => res.status(200).json(user))
@@ -117,7 +117,7 @@ debugger
 
         app.get('/restaurant/:restaurantId',(req, res) => {
             const { params: {restaurantId} } = req
-            debugger
+             
             try {
                 retrieveRestaurant(restaurantId)
                     .then(restaurants => res.status(200).json(restaurants))

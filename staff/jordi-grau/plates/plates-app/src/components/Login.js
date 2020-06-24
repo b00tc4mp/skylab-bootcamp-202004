@@ -1,5 +1,5 @@
 import React, {  useState } from 'react'
-import Feedback from './feedback'
+import Feedback from './Feedback'
 import { authenticateUser } from 'plates-client-logic'
 
 export default function Login({onGoToRegister, onGoToHome}) {
@@ -15,7 +15,7 @@ export default function Login({onGoToRegister, onGoToHome}) {
 
         try {
             authenticateUser(email, password)
-            .then(() => onGoToHome(event))
+            .then(token => onGoToHome(token))
             .catch(error => setError(error.message))
         } catch (error) {
            setError(error.message)        

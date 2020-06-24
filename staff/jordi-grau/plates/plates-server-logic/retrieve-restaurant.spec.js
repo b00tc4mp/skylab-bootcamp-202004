@@ -64,7 +64,7 @@ describe('search ', () =>{
      
 
     it('should fail on wrong data', async() => { 
-        debugger
+         
         restaurantId = restaurantId +'wrongValue'
 
         try {

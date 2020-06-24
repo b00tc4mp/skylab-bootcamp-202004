@@ -4,7 +4,7 @@ const  context  = require('./context')
 
 
 
-debugger
+ 
 module.exports= function ( name, email, cif, address, phone) {
     String.validate.notVoid(name)
     String.validate.notVoid(email)
@@ -13,7 +13,7 @@ module.exports= function ( name, email, cif, address, phone) {
     String.validate.notVoid(address)
    const { token } = this.storage
     
-debugger
+ 
 return call(
         'POST',
         `${this.API_URL}/users/restaurant`,
@@ -22,7 +22,7 @@ return call(
     )
 
     .then(({status, body}) => {
-        debugger
+         
         if(status === 201) return
      
         const { error } = JSON.parse(body)

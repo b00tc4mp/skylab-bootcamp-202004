@@ -49,7 +49,7 @@ describe('call', () => {
         try{
             await call('GET', 'https://www.google.com.xy', undefined, undefined)
         }catch(error){
-            debugger
+             
             expect(error).to.exist
             expect(error.message).to.equal('network error')
         }

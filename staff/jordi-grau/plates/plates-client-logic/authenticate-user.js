@@ -8,7 +8,7 @@ module.exports = function(email, password){
     String.validate.notVoid(email)
     Email.validate(email)
     String.validate.notVoid(password)
-debugger
+ 
     return call(
         'POST',
         `${this.API_URL}/users/auth`,

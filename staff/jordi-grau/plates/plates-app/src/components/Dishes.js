@@ -6,10 +6,10 @@ export default function ({dishes}) {
             {dishes && dishes.map(dish=> {
               return  <li>
                   <p>{dish.name}</p>
-                  {dish.tags.map(tag=><p>{tag}</p>)}
                   </li>
             })}
         </ul>
     </section>
     
 }
+{/* {dish.tags.map(tag=><p>{tag}</p>)} */}

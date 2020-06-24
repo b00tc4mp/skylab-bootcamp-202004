@@ -5,10 +5,11 @@ import Search from './Search'
 import {retrieveRestaurant, searchRestaurant} from 'plates-client-logic'
 import {Route, useLocation} from 'react-router-dom'
 import Navbar from './Navbar'
+import Feedback from './Feedback'
 
 
 
-export default function({history}){
+export default function({history, onLogout}){
     const [restaurants, setRestaurants] = useState()
     const [restaurant, setRestaurant] = useState()
     const [error, setError] = useState()
@@ -19,9 +20,14 @@ export default function({history}){
         
         if(query){
             (async()=>{
-                const results = await searchRestaurant(query)
-                
-                setRestaurants(results)
+                try {
+                    const results = await searchRestaurant(query)
+                    
+                    setRestaurants(results)
+                    
+                } catch (error) {
+                    setError(error.message)
+                }
             })()
         }
     }, [])
@@ -34,24 +40,20 @@ export default function({history}){
     }
 
     const handleGoToDetails = (restaurantId) =>{
-       // try {
-           // const result = await retrieveRestaurant(restaurantId)
-            
-        //     setRestaurant(result)
+    
       history.push(`/home/details/${restaurantId}`)
-        // } catch (error) {
-        //    console.log(error)
-        // }
-       
+   
     }
 
     return <div>
-        <Navbar/>
+        <Navbar onLogout={onLogout}/>
          {!restaurant && <Search onSubmit={handleSubmit}/>}
 
 
-        <Route path="/home/restaurants" render={()=> <RestaurantResults goToDetails={handleGoToDetails} results={restaurants}/>}/>
+        <Route path="/home/restaurants" render={()=> <RestaurantResults error={error} goToDetails={handleGoToDetails} results={restaurants}/>}/>
         <Route path="/home/details/:restaurantId" render={props => <RestaurantDetails data={restaurant} currentId={props.match.params.restaurantId}/> }/>
+      
+        {error && <Feedback message={error} level="error" />}
     </div>
     
  }

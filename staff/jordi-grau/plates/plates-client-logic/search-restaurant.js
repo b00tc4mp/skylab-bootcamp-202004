@@ -5,7 +5,7 @@ const context = require('./context')
 
 module.exports = function(query) {
 
-debugger
+ 
     return call('GET',`${this.API_URL}/search/restaurant?query=${query}`)
         .then(({status, body}) =>{
             if(status === 200) { 

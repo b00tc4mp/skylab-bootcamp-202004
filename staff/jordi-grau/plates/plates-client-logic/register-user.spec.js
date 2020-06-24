@@ -1,6 +1,6 @@
 require('dotenv').config()
 const {env: {TEST_MONGODB_URL: MONGODB_URL, API_URL}} = process
-debugger
+ 
 const { DuplicityError, UnexistenceError, VoidError } = require('plates-commons/errors')
 const {floor, random} = Math
 const { expect } = require('chai')
