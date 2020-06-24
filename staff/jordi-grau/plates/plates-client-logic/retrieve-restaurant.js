@@ -9,9 +9,7 @@ debugger
     return (async() => {
         const response = await call(
             'GET',
-            `${this.API_URL}/restaurant/${restaurantId}`,
-            undefined,
-            null);
+            `${this.API_URL}/restaurant/${restaurantId}`);
 
         const { status, body } = response;
         

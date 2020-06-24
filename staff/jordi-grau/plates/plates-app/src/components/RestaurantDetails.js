@@ -1,22 +1,33 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Dishes from './Dishes'
+import {retrieveRestaurant} from 'plates-client-logic'
 
-export default function ({restaurant:{name, phone, email, address, dishes}}){
-    <div>
-        <div className="restaurant_details">
-            <span className="restaurant_name">{name}</span>
-            <span className="restaurant_phone">{phone}</span>      
-            <span className="restautant_email">{email}</span>
-            <span className="restaurant_address">{address}</span>
-        </div>
-
-        <Dishes dishes={dishes}/>
+export default function ({currentId}){
+    const [restaurant, setRestaurant] = useState()
     
-        {/* <div className="menu">
-            <span></span>
-        </div> */}
+   
+    useEffect(()=>{
+        retrieveRestaurant(currentId)
+        .then(_details => {
+            console.log(_details)
+            setRestaurant(_details)
+        })
 
-        <button className="buttonHome" onClick={onGotoHome}>Home</button>
-        <button className="buttonLogout" onClick={onLogout}>Logout</button>
+    }, [])
+
+    // if(!restaurant) return <div>Loading...</div>
+
+   return <div>
+              { restaurant ? <div className="restaurant_details">
+            <p className="restaurant_name">{restaurant.name}</p>
+            <p className="restaurant_phone">{restaurant.phone}</p>      
+            <p className="restautant_email">{restaurant.email}</p>
+            <p className="restaurant_address">{restaurant.address}</p>
+            
+        </div> : null}
+
+         {restaurant && <Dishes dishes={restaurant.dishes}/>} 
+
     </div>
     
     

@@ -11,8 +11,9 @@ export default function Search({onSubmit}) {
         query = query.value
 
         try {
+          
             searchRestaurant(query)
-            .then(restaurants=> onSubmit(restaurants))
+            .then(restaurants=> onSubmit(restaurants, query))
             .catch(error=> setError(error.message))
         } catch (error) {
             if(error) throw error
@@ -21,11 +22,10 @@ export default function Search({onSubmit}) {
     return<section className="search">
     <form onSubmit={handleSubmit}>
         <input type="text" name="query"/>
-        <button>🔍</button>
+        <button type="submit">🔍</button>
     </form>
 
-       
-    <button className="buttonLogout" onClick={onLogout}>Logout</button>
+    
 </section>
 
 }

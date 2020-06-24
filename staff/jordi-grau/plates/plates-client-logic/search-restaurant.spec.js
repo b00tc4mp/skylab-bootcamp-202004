@@ -92,6 +92,15 @@ describe('search ', () =>{
         }
     })
 
+    it('should fail when query is not a string', async() =>{
+        query = ()=>console.log("i'm not a query")
+        try {
+            searchRestaurant(query)
+        } catch (error) {
+            expect(error).to.be.instanceof(Error)
+        }
+    })
+
 
     
        

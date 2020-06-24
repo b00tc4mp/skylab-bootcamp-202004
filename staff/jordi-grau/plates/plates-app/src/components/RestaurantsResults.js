@@ -1,19 +1,21 @@
 import React, {useState} from 'react'
-import DishesResults from './Dishes'
+import RestaurantItem from './RestaurantItem'
 
 
-export default function ({restaurants, goToDetails}) {
+
+export default function ({results, goToDetails}) {
+    debugger
     return <section>
         <ul>
-            {restaurants.map(restaurant =>{
+            {results && results.map(restaurant =>{
                 
-                <RestaurantItem key={restaurant.id} data={restaurant} onToDetails={goToDetails}/>
-                //return <p>{restaurant.name}</p>
+               return <RestaurantItem key={restaurant.id} data={restaurant} onToDetails={goToDetails}/>
+               
             })}
         </ul>
     </section>
         
     
-    // div className="restaurants">{restaurants}</div>
+ 
    
 }

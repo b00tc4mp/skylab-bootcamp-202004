@@ -1,4 +1,5 @@
-const {mongoose, models:{Dish}} = require('plates-data')
+const {Dish} = require('../models')
+const mongoose = require('../mongoose')
 
 
 async function createDishes(){

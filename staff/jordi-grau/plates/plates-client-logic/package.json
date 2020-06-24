@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test:coverage": "npx nyc --reporter=text --reporter=lcov npm test"
+    "test:coverage": "npx nyc --reporter=html --reporter=text mocha *.spec.js"
   },
   "keywords": [],
   "author": "",
