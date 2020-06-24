@@ -58,7 +58,7 @@ const MapRestaurant = props => {
                     }}
                 >
                     <Callout>
-                        <Store store={bar} isFavourite={isFavourite} onShowModal={props.onShowModal} />
+                        <Store store={restaurant} isFavourite={isFavourite} onShowModal={props.onShowModal} />
                     </Callout>
                 </Marker>}
             </MapView>

@@ -26,6 +26,11 @@ const Store = props => {
             </TouchableOpacity>}
             <Text style={styles.textStyle}>Leave a comment:</Text>
             <TextInput style={styles.input} />
+            <TouchableOpacity style={{ ...styles.button, marginTop: 0 }} title= "Send comment" onPress={() => {
+                addFavourite(props.store.id).catch(props.onShowModal)
+            }} >
+                <Text style={{ ...styles.textStyle, textAlign: "center" }}>Send comment</Text>
+            </TouchableOpacity>
         </View>
     )
 }

@@ -36,6 +36,7 @@ const Favourites = (props) => {
 const styles = StyleSheet.create({
     store: {
         backgroundColor: "#FFFFFF",
+        marginTop: 30
     },
     image: {
         flex: 1,
