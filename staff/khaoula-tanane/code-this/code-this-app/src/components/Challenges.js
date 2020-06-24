@@ -13,6 +13,7 @@ function Challenges({
 
   useEffect(() => {
     handleRetrieveCategory();
+    setSelectedChallenge(0)
   }, [categoryName]);
 
   useEffect(() => {
@@ -45,13 +46,13 @@ function Challenges({
       {category && (
         <>
           <button onClick={previous} disabled={selectedChallenge <= 0}>
-            Previous
+          <i className="fa fa-chevron-left" aria-hidden="true"></i>
           </button>
           <button
             onClick={next}
             disabled={selectedChallenge >= category.challenges.length - 1}
           >
-            Next
+            <i className="fa fa-chevron-right" aria-hidden="true"></i>
           </button>
         </>
       )}

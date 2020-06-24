@@ -16,7 +16,6 @@ module.exports = function (userId, challengeId, solution) {
     { 'Content-type': 'application/json' })
 
     .then(({ status, body }) => {
-        console.log(status, body)
         if (status === 200) {
             return JSON.parse(body)
         } else {

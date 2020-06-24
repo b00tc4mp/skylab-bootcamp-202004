@@ -1,101 +1,116 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 // import './Panel.sass'
-import Challenges from './Challenges'
-import { Route } from 'react-router-dom'
-import Categories from './Categories'
-import Profile from './Profile'
-import { Link } from 'react-router-dom'
-import {retrieveUser} from 'code-this-client-logic'
-import CreateChallenge from './CreateChallenge'
-import CreateCategory from './ CreateCategory'
-
+import Challenges from "./Challenges";
+import { Route } from "react-router-dom";
+import Categories from "./Categories";
+import Profile from "./Profile";
+import { Link } from "react-router-dom";
+import { retrieveUser } from "code-this-client-logic";
+import CreateChallenge from "./CreateChallenge";
+import CreateCategory from "./ CreateCategory";
 
 function Panel(props) {
-  const [burger, setBurger] = useState(false)
-  const [user, setUser] = useState(null)
+  const [burger, setBurger] = useState(false);
+  const [user, setUser] = useState(null);
 
-  useEffect(()=>{
-    handleRetrieveUser()
-  }, [])  
+  useEffect(() => {
+    handleRetrieveUser();
+  }, []);
 
   const handleRetrieveUser = () => {
-      retrieveUser().then(_user => {
-        setUser(_user)
-      }).catch(() => props.history.push('/signin'))
-  }
+    retrieveUser()
+      .then((_user) => {
+        setUser(_user);
+      })
+      .catch(() => props.history.push("/signin"));
+  };
 
-  const isAdmin = user?.role === 'admin'
+  const isAdmin = user?.role === "admin";
 
-    return (<>
-        {user && (
-          <>
-            <div className="header">
-			<div className="logo">
-				<i className="fa fa-tachometer"></i>
-				<span>Brand</span>
-			</div>
-			<a href="#" className="nav-trigger"><span></span></a>
-		</div>
-		<div className="side-nav">
-			<div className="logo">
-        <Link to='/panel/profile'>
-				  <i className="fa fa-tachometer"></i>
-        </Link>
-				<span>Brand</span>
-			</div>
-			<nav>
-				<ul>
-					<li>
-						<a href="#">
-							<span><i className="fa fa-user"></i></span>
-							<span>Users</span>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-
-							<span><i className="fa fa-envelope"></i></span>
-							<span>Messages</span>
-						</a>
-					</li>
-					<li className="active">
-						<a href="#">
-							<span><i className="fa fa-bar-chart"></i></span>
-							<span>Analytics</span>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<span><i className="fa fa-credit-card-alt"></i></span>
-							<span>Payments</span>
-						</a>
-					</li>
-				</ul>
-			</nav>
-		</div>
-		<div className="main-content">
-        {isAdmin && (
-          <div className="dashboard">
-                <Route path={`${props.match.path}/challenges`} component={CreateChallenge} />
-                <Route path={`${props.match.path}/categories`} component={CreateCategory} />
-                <Route path="/reload" component={null} key="reload" />
-          </div>
-        )}
-        {!isAdmin && (
-          <>
-          <div className="categories-panel">
-                <Route path={`${props.match.path}/categories`} component={Categories} />
+  return (
+    <>
+      {user && (
+        <>
+          <div className="side-nav">
+            <div className="side-nav__logo">
+                <span>CODE THIS</span>
             </div>
-            <Route path={`${props.match.path}/categories/:category`} component={Challenges} />
-          </>
-        )}
-		</div>
-          </>
-        )}
-    </>);
-}
-export default Panel
+            <nav>
+              <ul>
+                <li>
+                    <img
+                      src={`https://api.adorable.io/avatars/${user?._id}@adorable.png`}
+                      alt={user?.name}
+                    />
+                    <span>{user?.name}</span>
+                </li>
+                {!isAdmin ? (
+                  <>
+                    <li>
+                  <Link to="/panel/categories">
+                    Categories
+                  </Link>
+                </li>
+                <li>
+                  <span>
+                      <i className="fa fa-trophy"></i>
+                    </span>
+                    <span>{user?.score}</span>
+                </li>
+                  </>
+                ) : (
+                  <>
+                    <li>
+                  <Link to="/panel/categories">
+                  Category
+                  </Link>
+                </li>
 
+                <li>
+                  <Link to="/panel/challenges">
+                  Challenge
+                  </Link>
+                </li>
+                  </>
+                )}
+              </ul>
+            </nav>
+          </div>
+          <div className="container">
+            {isAdmin && (
+              <div className="dashboard">
+                <Route
+                  path={`${props.match.path}/challenges`}
+                  component={CreateChallenge}
+                />
+                <Route
+                  path={`${props.match.path}/categories`}
+                  component={CreateCategory}
+                />
+                <Route path="/reload" component={null} key="reload" />
+              </div>
+            )}
+            {!isAdmin && (
+              <>
+                <div className="categories-panel">
+                  <Route
+                    path={`${props.match.path}/categories`}
+                    component={Categories}
+                  />
+                </div>
+                <Route
+                  path={`${props.match.path}/categories/:category`}
+                  component={Challenges}
+                />
+              </>
+            )}
+          </div>
+        </>
+      )}
+    </>
+  );
+}
+export default Panel;
 
 /*
 

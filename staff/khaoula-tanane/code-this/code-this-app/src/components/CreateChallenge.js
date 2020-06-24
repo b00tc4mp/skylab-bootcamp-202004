@@ -59,7 +59,7 @@ function CreateChallenge() {
                     })
                     setShowForm(true)
                 })
-                .catch((message) => handleAlert({
+                .catch(({message}) => handleAlert({
                     message,
                     status: 'error'
                 }))
@@ -81,8 +81,6 @@ function CreateChallenge() {
     return (
         <>
             {message && <Alert {...message}/>}
-            <div className="title">Add Challennge</div>
-
             {showForm && (
                 <>
                     <div className="widget">

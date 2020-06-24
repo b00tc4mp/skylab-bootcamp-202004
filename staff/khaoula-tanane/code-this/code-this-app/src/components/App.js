@@ -4,7 +4,7 @@ import Register from './Register';
 import Login from './Login';
 import Editor from './Editor';
 import Panel from './Panel';
-import '../styles/App.sass'
+import '../styles/Main.sass'
 
 function App() {
 

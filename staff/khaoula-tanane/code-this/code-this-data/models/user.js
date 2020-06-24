@@ -23,9 +23,9 @@ const User = new Schema({
         type: String,
         required: true
     },
-    completedChallenges: {
-        type: [ObjectId],
-        ref: 'challenge'
+    score: {
+        type: Number,
+        default: 0
     }
 })
 

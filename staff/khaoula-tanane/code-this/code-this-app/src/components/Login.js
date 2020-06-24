@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import './Login.sass'
 import { authenticateUser } from 'code-this-client-logic'
 import Feedback from './Feedback'
 
@@ -15,16 +14,18 @@ function Login (props) {
 
         try{
           authenticateUser(email, password)
-            .then(()=> props.history.push('/Panel/categories'))
+            .then(()=> props.history.push('/Panel'))
             .catch(error=> setError(error.message))
         } catch ({message}){
             setError(message)
         }
     }
+    
     const handleGoToRegister = event => {
       event.preventDefault()
-      props.history.push('/Signup')
+      props.history.push('/signup')
   }
+
     return (
 
         <div className="auth">
@@ -43,7 +44,7 @@ function Login (props) {
               </div>
               <div className="container-button">
                 <button name="submit_btn" className="btn">SIGN IN</button>
-                <a href="" onClick={handleGoToRegister}>Not registered? Sign Up now! </a>
+                <a href="" onClick={handleGoToRegister}>Not a member yet? Sign Up now!</a>     
                 {error && <Feedback message={error} level="error" />}
               </div>
             </form>
