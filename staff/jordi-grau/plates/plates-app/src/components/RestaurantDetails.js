@@ -27,15 +27,15 @@ export default function ({currentId}){
     // if(!restaurant) return <div>Loading...</div>
 
    return <div className="restaurant">
-              { restaurant ? <div className="restaurant__one">
-            <p className="restaurant__one__info">{restaurant.name}</p>
-            <p className="restaurant__one__info">{restaurant.phone}</p>      
-            <p className="restautant__one__info">{restaurant.email}</p>
-            <p className="restaurant__one__info">{restaurant.address}</p>
+              { restaurant ? <div className="restaurant__info">
+            <p className="restaurant__info__name">{restaurant.name}</p>
+            <p className="restaurant__info__contact">telf.: {restaurant.phone}</p>      
+            <p className="restautant__info__contact">@: {restaurant.email}</p>
+            <p className="restaurant__info__contact">dir.: {restaurant.address}</p>
             
         </div> : null}
 
-         {restaurant && <Dishes dishes={restaurant.dishes}/>} 
+         {restaurant && <Dishes  dishes={restaurant.dishes}/>} 
          {error && <Feedback message={error} level="error" />}
 
     </div>

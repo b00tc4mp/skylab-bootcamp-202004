@@ -19,21 +19,21 @@ function App ({history}) {
     const [enabled, setEnabled] = useState(false)
 
     useEffect(() =>{
-        if(sessionStorage.token)
+        // if(sessionStorage.token)
 
-            try {
-                isUserAuthenticated(sessionStorage.token)
-                .then(isAuthenticated => {
-                    if(isAuthenticated) {
-                        setEnabled(true)
-                        history.push('/home')
-                    }
-                })
-                .catch(error => {throw Error})
-            } catch (error) {
-                if(error) throw error
-            }
-        else history.push('/')
+        //     try {
+        //         isUserAuthenticated(sessionStorage.token)
+        //         .then(isAuthenticated => {
+        //             if(isAuthenticated) {
+        //                 setEnabled(true)
+        //                 history.push('/home')
+        //             }
+        //         })
+        //         .catch(error => {throw Error})
+        //     } catch (error) {
+        //         if(error) throw error
+        //     }
+        // else history.push('/')
 
     }, [])
  
