@@ -19,7 +19,7 @@ const { ObjectId } = mongoose
 
 const { errors: { UnexistenceError } } = require('gym-commons')
 
-const addGuarantee = require('./add-guarantee')
+const { addGuarantee } = require('./helpers')
 
 module.exports = (userId, productId, priceId, side, quantity) => {
     String.validate.notVoid(userId)
@@ -33,7 +33,7 @@ module.exports = (userId, productId, priceId, side, quantity) => {
 
         if (!user) throw new UnexistenceError(`user with id ${userId} is not exist`)
 
-        if(!user.card) throw new UnexistenceError('user does not have a card added')
+        if (!user.card) throw new UnexistenceError('user does not have a card added')
 
         const { card: { number, holder, expirationDate, cvv } } = user
 
@@ -65,11 +65,11 @@ module.exports = (userId, productId, priceId, side, quantity) => {
             } else {
                 profitAndLoss += (quantity * _contractSize * price).toFixed(2) * 1
             }
-
         }
 
         let contract = await Contract.findOne({ user: ObjectId(userId), product: ObjectId(productId), isValid: true })
-        
+        const contracts = await Contract.find({ user: userId, isValid: true }).populate('product')
+
         if (!contract) {
             contract = await Contract.create({ user: ObjectId(userId), product: ObjectId(productId), isValid: true })
             contract.trades.push({ price: ObjectId(priceId), type: side, quantity })
@@ -78,7 +78,7 @@ module.exports = (userId, productId, priceId, side, quantity) => {
             if (index === -1)
                 contract.trades.push({ price: ObjectId(priceId), type: side, quantity })
             else {
-                debugger
+                
                 let { type, quantity: _quantity } = contract.trades[index]
                 if (type === side) _quantity += quantity
                 else {
@@ -89,14 +89,16 @@ module.exports = (userId, productId, priceId, side, quantity) => {
                     else {
                         await Contract.findByIdAndUpdate(contract._id, { isValid: false })
 
-                        guarantee = await addGuarantee(userId)
+                        const contracts = await Contract.find({ user: userId, isValid: true }).populate('product')
+
+                        guarantee = addGuarantee(contracts)
 
                         await AccountBalance.create({ user: userId, date: new Date(), guarantee, profitAndLoss })
-                        
+
                         return
                     }
                 }
-                debugger
+
                 contract.trades.splice(index, 1)
                 contract.trades.push({ price: ObjectId(priceId), type, quantity: _quantity })
             }
@@ -104,7 +106,9 @@ module.exports = (userId, productId, priceId, side, quantity) => {
 
         await contract.save()
 
-        guarantee = await addGuarantee(userId)
+        const _contracts = await Contract.find({ user: userId, isValid: true }).populate('product')
+
+        guarantee = addGuarantee(_contracts)
 
         await AccountBalance.create({ user: userId, date: new Date(), guarantee, profitAndLoss })
     })()

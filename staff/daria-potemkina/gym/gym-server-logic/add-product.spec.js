@@ -13,7 +13,7 @@ const bcrypt = require('bcryptjs')
 describe('logic - addProduct', () => {
     before(() => mongoose.connect(MONGODB_URL_TEST))
 
-    let name, surname, email, password, userId, future, option, card, futureId, optionId, sellBuy, quantity, _futureId, _optionId, _sellBuy, _quantity, _productId, price, priceId, optionPriceId, optionPrice, _trade, dateToday
+    let name, surname, email, password, userId, future, option, card, futureId, optionId, sellBuy, quantity, _futureId, _optionId, _sellBuy, _quantity, _productId, price, priceId, optionPriceId, optionPrice, _trade, dateToday, guarantee
 
     beforeEach(async () => {
         await User.deleteMany()
@@ -382,6 +382,8 @@ describe('logic - addProduct', () => {
             contract.trades.push(_trade)
 
             await contract.save()
+
+            // guarantee = await AccountBalance.create({user: ObjectId(userId), date: new Date(), guarantee: round(random() * 100), profitAndLoss: round(random()*100)})
         })
 
         it('should add more amount of guarantee when more than product is added', async () => {
@@ -538,11 +540,12 @@ describe('logic - addProduct', () => {
             const accountBalance = await AccountBalance.find()
 
             expect(accountBalance).to.be.an('array')
-            expect(accountBalance).to.have.lengthOf(0)
+            expect(accountBalance).to.have.lengthOf(1)
 
             const [balance] = accountBalance
 
-            expect(balance).to.be.undefined
+            expect(balance.guarantee).to.equal(0)
+            expect(balance.profitAndLoss).to.equal(0)
 
             const contract = await Contract.find()
 

@@ -12,8 +12,8 @@
 
 require('gym-commons/polyfills/string')
 const { mongoose: { ObjectId }, models: { User, Contract, Price, AccountBalance, Product, Underlying } } = require('gym-data')
-const { errors: { UnexistenceError, ValueError } } = require('gym-commons')
-const addGuarantee = require('./add-guarantee')
+const { errors: { UnexistenceError } } = require('gym-commons')
+const { addGuarantee } = require('./helpers')
 
 module.exports = (userId) => {
     String.validate.notVoid(userId)
@@ -103,7 +103,9 @@ module.exports = (userId) => {
             }
         }
 
-        guarantee = await addGuarantee(userId)
+        const _contracts = await Contract.find({ user: userId, isValid: true }).populate('product')
+
+        guarantee = addGuarantee(_contracts)
 
         await AccountBalance.create({ user: userId, date: new Date(), guarantee, profitAndLoss })
     })()

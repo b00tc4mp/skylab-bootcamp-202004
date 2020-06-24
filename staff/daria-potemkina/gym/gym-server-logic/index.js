@@ -14,6 +14,5 @@ module.exports = {
     retrievePrices: require('./retrieve-prices'),
     searchProducts: require('./search-products'),
     retrieveUnderlyings: require('./retrieve-underlyings'),
-    addGuarantee: require('./add-guarantee'),
     retrieveProduct: require('./retrieve-product')
 }

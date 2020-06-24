@@ -4,7 +4,7 @@ import './Search.sass'
 import Results from './Results'
 import Feedback from './Feedback'
 
-function Search({ token, handleGoToDetails }) {
+function Search({ handleGoToDetails }) {
     const [results, setResults] = useState()
     const [error, setError] = useState()
 
@@ -74,7 +74,7 @@ function Search({ token, handleGoToDetails }) {
             </section>
             <button className="search__button">Search</button>
         </form>
-        {results && <Results token = {token} results={results} handleGoToDetails={handleGoToDetails} />}
+        {results && <Results results={results} handleGoToDetails={handleGoToDetails} />}
         {error && <Feedback message={error} />}
     </section>
 }

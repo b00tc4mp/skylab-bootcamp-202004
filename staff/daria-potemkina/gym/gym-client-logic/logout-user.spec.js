@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const { env: { MONGODB_URL_TEST, TEST_API_URL: API_URL, SECRET_TEST: SECRET } } = process
 
-const isUserLoggedIn = require('./is-user-logged-in')
+const logoutUser = require('./logout-user')
 const { random } = Math
 const { expect } = require('chai')
 const { mongo } = require('gym-data')
@@ -13,7 +13,7 @@ const context = require('./context')
 context.API_URL = API_URL
 context.storage = {}
 
-describe('logic - isUserLoggedIn', () => {
+describe('logic - logoutUser', () => {
     let users
 
     before(() => mongo.connect(MONGODB_URL_TEST)
@@ -36,18 +36,10 @@ describe('logic - isUserLoggedIn', () => {
                     .then(_token => context.storage.token = _token)
             })
     )
-    it('should return true when user is logged in', () => {
-        const result = isUserLoggedIn()
-        expect(result).to.be.true;
+    it('should remove the token', () => {
+        logoutUser()
+        expect(context.storage.token).to.be.undefined;
     })
-
-    it('should return false if the user is not logged in,', () => {
-        context.storage.token = undefined
-
-        const result = isUserLoggedIn()
-        expect(result).to.equal(false)
-    })
-
 
     afterEach(() => users.deleteMany())
 

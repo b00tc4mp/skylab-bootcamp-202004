@@ -52,4 +52,8 @@ describe('logic - isUserSessionValid', () => {
                 .then(result => expect(result).to.equal(false)))
     })
 
+    afterEach(() => users.deleteMany())
+
+    after(mongo.disconnect)
+
 })

@@ -88,8 +88,8 @@ export default function () {
                     })
                 })
                 .then(() => {
-                    setLoading(false)
                     setError(undefined)
+                    setLoading(false)
                 })
                 .catch(error => {
                     setError(error.message)
