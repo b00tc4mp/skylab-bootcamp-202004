@@ -52,6 +52,15 @@ describe('client logic: register user', () =>{
                 expect(error.message).to.equal(`${email} is not an e-mail`)
             }
         })
+
+        it('should fail on existing email', async () =>{
+           await User.create({name, surname, email, password})
+            try {
+                registerUser(name, surname, email, password)
+            } catch (error) {
+                expect(error).to.be.instanceOf(Error)
+            }
+        })
     })
 
 

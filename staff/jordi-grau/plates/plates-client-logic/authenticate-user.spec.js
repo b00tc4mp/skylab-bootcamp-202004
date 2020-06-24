@@ -13,37 +13,33 @@ const authenticateUser = require('./authenticate-user')
 const context = require('./context')
 
 context.API_URL = API_URL
+context.storage = {};
 
 
 describe('client logic. authenticate user',() => {
-    let email, password, hashedPassword
+    let email, password, hash, name, surname
 
-
+debugger
     before( async()=> {
         await mongoose.connect(MONGODB_URL)
     })
 
-    beforeEach(async() =>
-    User.deleteMany()
-        .then(() =>{
+    beforeEach(async() => {
+        await User.deleteMany()
+           
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `email.${random()}@mail.com`
+        password = `password-${random()}`
             
-            name = `name-${random()}`
-            surname = `surname-${random()}`
-            email = `email.${random()}@mail.com`
-            password = `password-${random()}`
-             
 
-            return bcrypt.hash(password, 10)
-        })
-
-        .then(_hash => hashedPassword = _hash)
-    )
-
+        hash = await bcrypt.hash(password, 10)
+    })
 
     describe('when user already exists',() =>{
         beforeEach( async() => {
-            await User.create({email, password: hashedPassword})
-            .then ( user => userId = user.id)
+            const user = await User.create({name, surname, email, password: hash})
+            userId = user.id
         })
 
         it('should authenticate user on correct credentials', async () =>{

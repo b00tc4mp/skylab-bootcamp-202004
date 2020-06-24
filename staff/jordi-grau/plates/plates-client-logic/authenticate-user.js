@@ -19,7 +19,7 @@ debugger
     .then(({status, body}) => {
         if(status === 200) {
             const {token} = JSON.parse(body)
-            this.storage.setItem("token", token) 
+            this.storage.token = token;
 
             return 
         }

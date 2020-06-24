@@ -6,9 +6,9 @@ import Home from './Home'
 import Landing from './Landing'
 import '../App.css';
 import {isUserAuthenticated} from 'plates-client-logic'
-import {registerUser } from 'plates-client-logic'
 
-import {Route,  Redirect, withRouter, BrowserRouter } from 'react-router-dom'
+
+import {Route,  Redirect, withRouter } from 'react-router-dom'
 
 function App ({history}) {
     const [ view, serView ] = useState()
@@ -19,9 +19,9 @@ function App ({history}) {
             try {
                 isUserAuthenticated(sessionStorage.token)
                 .then(isAuthenticated => {
-                    if(isAuthenticated) {
-                        history.push('/home')
-                    }
+                    // if(isAuthenticated) {
+                    //     history.push('/home')
+                    // }
                 })
                 .catch(error => {throw Error})
             } catch (error) {
@@ -63,7 +63,7 @@ debugger
                          sessionStorage.token ? <Redirect to="/home" /> : <Register onGoToLogin={handleGoToLogin}/>  }/>
                     <Route exact path="/login" render={ () => 
                          sessionStorage.token ? <Redirect to="/home" /> : <Login onGoToHome={handleGoToHome} onGoToRegister={handleGoToRegister}/> } />
-                    <Route exact path="/home" render = { () => sessionStorage.token ? <Home onLogout={handleLogout} /> : <Redirect to="/"/>} />               
+                    <Route path="/home" render = { () => sessionStorage.token ? <Home onLogout={handleLogout} history={history}/> : <Redirect to="/"/>} />               
                 </Container>
             </header>
         </div>

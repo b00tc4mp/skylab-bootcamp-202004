@@ -88,7 +88,7 @@ mongoose.connect(MONGODB_URL)
                 handleError(error, res)               
             }
         })
-
+debugger
         app.get('/search/restaurant?', (req, res) => {
             const { query:{query} }   = req
             
