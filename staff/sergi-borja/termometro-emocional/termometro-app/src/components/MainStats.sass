@@ -4,7 +4,6 @@
     align-items: center
     flex-direction: column
     flex: 1 1 0%
-    // min-height: 100vh
     height: 100vh
     width: 100%
     margin:0
@@ -15,7 +14,8 @@
         margin: auto
         border-top: 1px solid black
         border-bottom: 1px solid black
-        padding: 12px
+        padding: 2vh
+        font-size: 1.9vh
     &__selectContainer
         position: sticky
         top: 0
@@ -23,28 +23,13 @@
         &--select
             height: 7vh
             width: 100%
-            font-size: 20px
+            font-size: 3vh
             background:  rgba(192, 190, 190, 1)
-        &--adminOption
-        &--memberOption
-    
     &__buttonDaysContainer
         width: 100%
         background-color: rgba(192, 190, 190, 1)
         border: none
         position: relative
-        // margin-top: 450px
-        &--yesterday
-            width: 33.33%
-            height: 5vh
-            text-decoration: none
-            border: none
-            font-family: 'Raleway', sans-serif
-            font-weight: 1000
-            background: none
-            border-radius: 15px
-        &--yesterday:focus
-            background: #e7e7e7
         &--fiveDays
             width: 33.33%
             text-decoration: none
@@ -53,6 +38,7 @@
             height: 5vh
             font-family: 'Raleway', sans-serif
             font-weight: 1000
+            font-size: 1.85vh
             background: none
         &--fiveTeenDays
             width: 33.33%
@@ -63,6 +49,7 @@
             font-weight: 1000
             border-radius: 15px
             background: none
+            font-size: 1.85vh
         &--fiveTeenDays:focus
             background: #e7e7e7
     &__chartContainer

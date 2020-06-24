@@ -40,17 +40,17 @@ function CreateMember({ token, history }) {
         <section className='createMemberContainer'>
             <h1 className='createMemberContainer__title'>¡Registra a un miembro de tu familia!</h1>
             <form className='createMemberContainer__form' onSubmit={handleSubmit}>
-                <input type="text" name="name" className='createMemberContainer__emailInput' placeholder='Nombre' required></input>
-                <input type="text" name="surname" className='createMemberContainer__emailInput' placeholder='Apellido' required></input>
-                <input name="age" className='createMemberContainer__emailInput' placeholder='Edad' required></input>
-                <select className='registerContainer__emailInput' onChange={(event) => handleGender(event)} name='sex' required>
+                <input type="text" name="name" className='createMemberContainer__input' placeholder='Nombre' required></input>
+                <input type="text" name="surname" className='createMemberContainer__input' placeholder='Apellido' required></input>
+                <input name="age" className='createMemberContainer__input' placeholder='Edad' required></input>
+                <select className='createMemberContainer__input' onChange={(event) => handleGender(event)} name='sex' required>
                     <option value=''>Género</option>
                     <option value='M'>Masculino</option>
                     <option value='F'>Femenino</option>
                 </select>
-                <input type="text" name="location" className='registerContainer__emailInput' placeholder='Província' required></input>
-                <input type="email" name="email" className='createMemberContainer__emailInput' placeholder='Email' required></input>
-                <input type="password" name="password" className='createMemberContainer__passInput' placeholder='Contraseña' required minLength="8"></input>
+                <input type="text" name="location" className='createMemberContainer__input' placeholder='Província' required></input>
+                <input type="email" name="email" className='createMemberContainer__input' placeholder='Email' required></input>
+                <input type="password" name="password" className='createMemberContainer__input' placeholder='Contraseña' required minLength="8"></input>
                 <button className='createMemberContainer__registerButton'>
                     <span className='createMemberContainer__registerButton--text'>¡Crear!</span>
                 </button>

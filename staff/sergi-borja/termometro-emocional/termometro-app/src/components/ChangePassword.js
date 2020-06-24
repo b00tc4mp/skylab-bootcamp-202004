@@ -4,7 +4,7 @@ import './EditMember.sass'
 
 const { editUser } = require('termometro-client-logic')
 
-function EditMember({ memberInfo, history }) {
+function ChangePassword({ memberInfo, history }) {
 
     const [gender, setGender] = useState()
     const [error, setError] = useState()
@@ -49,18 +49,10 @@ function EditMember({ memberInfo, history }) {
 
     return (
         <section className='editMemberContainer'>
-            <h1 className='editMemberContainer__title'>¡Edita los datos de {memberInfo.name} que quieras actualizar!</h1>
+            <h1 className='editMemberContainer__title'>¡Este espacio es para que puedas actualizar tu contraseña!</h1>
             <form className='editMemberContainer__form' onSubmit={handleConfirmEdit}>
-                <input className='editMemberContainer__input' name='name' placeholder={memberInfo.name}></input>
-                <input className='editMemberContainer__input' name='surname' placeholder={memberInfo.surname}></input>
-                <input className='editMemberContainer__input' name='age' placeholder={memberInfo.age}></input>
-                <select className='editMemberContainer__input' onChange={(event) => handleGender(event)} name='sex'>
-                    <option value=''>Género: {memberInfo.sex}</option>
-                    <option value='M'>Masculino</option>
-                    <option value='F'>Femenino</option>
-                </select>
-                <input type="text" name="location" className='editMemberContainer__input' placeholder={memberInfo.location}></input>
-                <input className='editMemberContainer__input' name='email' type='email' placeholder={memberInfo.email}></input>
+                <input className='editMemberContainer__input' name='email' type='email' placeholder='Contrasña actual..'></input>
+                <input className='editMemberContainer__input' name='email' type='email' placeholder='Nueva contraseña..'></input>
                 <button className='editMemberContainer__registerButton'>
                     <span className='editMemberContainer__registerButton--text'>Confirmar</span>
                 </button>
@@ -70,4 +62,4 @@ function EditMember({ memberInfo, history }) {
     );
 }
 
-export default EditMember;
+export default ChangePassword;

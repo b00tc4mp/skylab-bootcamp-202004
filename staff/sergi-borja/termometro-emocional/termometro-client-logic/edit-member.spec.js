@@ -10,7 +10,7 @@ require('termometro-commons/ponyfills/xhr')
 const { utils: { jwtPromised } } = require('termometro-commons')
 const context = require('./context')
 const bcrypt = require('bcryptjs')
-const editMember = require('./edit-member')
+const editMember = require('./edit-user')
 
 context.API_URL = API_URL
 

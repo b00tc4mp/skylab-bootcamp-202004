@@ -15,6 +15,7 @@ import Settings from './Settings';
 import EditMyInfo from './EditMyInfo';
 import MainStats from './MainStats';
 import HandleAccounts from './HandleAccounts';
+import ChangePassord from './ChangePassword';
 
 function App({history}) {
 
@@ -90,6 +91,7 @@ function App({history}) {
           <Route path="/edit-my-info" render={()=> token? <EditMyInfo token={token} /> : <Redirect to='/'/>} />
           <Route path="/main-stats" render={()=> token? <MainStats token={token} rol={rol}/> : <Redirect to='/'/>} />
           <Route path="/handle-accounts" render={()=> token? <HandleAccounts token={token} /> : <Redirect to='/'/>} />
+          <Route path="/change-password" render={()=> token? <ChangePassord token={token} /> : <Redirect to='/'/>} />
           {token && <Footer/>}
         </Container>
       </header>

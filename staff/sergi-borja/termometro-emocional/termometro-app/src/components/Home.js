@@ -6,7 +6,7 @@ function Home({userName}) {
   return (
     <section className='homeContainer'>
       <h1 className='homeContainer__title'>Bienvenido al termometro de la autoestima, {userName} </h1>
-  <p className='homeContainer__text'>Es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto.{'\n'}-Ander, 7 años</p>
+  <p className='homeContainer__text'>Es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto.{<br/>}-Ander, 7 años</p>
     </section>
   );
 }

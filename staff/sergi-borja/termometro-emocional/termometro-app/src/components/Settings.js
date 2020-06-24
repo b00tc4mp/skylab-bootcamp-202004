@@ -14,13 +14,13 @@ function Settings({ rol, handleLogOut }) {
                 <Link className='settingsContainer__option' to='/edit-my-info'>Mis Datos</Link>
                 </div>
                 <div className='settingsContainer__optionContainer'>
-                <Link className='settingsContainer__option' >Cambiar Contraseña</Link>
+                <Link className='settingsContainer__option' to='/change-password'>Cambiar Contraseña</Link>
                 </div>
                 <div className='settingsContainer__optionContainer'>
                 {!rol && <Link className='settingsContainer__option' to='handle-accounts'>Gestionar cuentas</Link>}
                 </div>
             </div>
-            <button className='settingsContainer__option' onClick={handleLogOut}>Log out</button>
+            <button className='settingsContainer__logOut' onClick={handleLogOut}>Salir</button>
         </section>
 
 
