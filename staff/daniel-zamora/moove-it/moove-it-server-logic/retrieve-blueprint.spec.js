@@ -1,18 +1,19 @@
 require('dotenv').config()
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
-const { mongoose, models: { User, Blueprint } } = require('moove-it-data')
+const { mongoose, models: { User, Blueprint, Item } } = require('moove-it-data')
 
 const retrieveBlueprint = require('./retrieve-blueprint')
 const { random } = Math
 const { expect } = require('chai')
 const { errors: { UnexistenceError } } = require('moove-it-commons')
 const bcrypt = require('bcryptjs')
+const blueprint = require('moove-it-data/models/schemas/blueprint')
 
 describe('logic - retrieve blueprint', () => {
 
     before(() => mongoose.connect(MONGODB_URL).then(() => User.deleteMany()))
 
-    let name, surname, email, password, userId, blueprintId, planeName, width, height;
+    let name, surname, email, password, userId, blueprintId, planeName, width, height, itemName, catalogueItemId;
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -22,17 +23,21 @@ describe('logic - retrieve blueprint', () => {
         planeName = `plane-${random()}`
         width = random()
         height = random()
-
+        itemName = `item-${random()}`
+        catalogueItemId = random()
+        x = random()
+        y = random()
 
     })
 
 
-    describe('when user already exists and had an existing blueprint', () => {
+    describe('when user already exists and had an existing blueprint with items on it', () => {
         beforeEach( async ()=> { debugger
             
+            const items = await Item.create({name: itemName, catalogueItemId,x, y, width, height })
             const user = await User.create({ name, surname, email, password })
             userId = user.id
-            const blueprint = await Blueprint.create({ userId, name: planeName, width, height })
+            const blueprint = await Blueprint.create({ userId, name: planeName, width, height, items })
             blueprintId = blueprint.id
             await User.findByIdAndUpdate(userId, { $addToSet: { blueprints: blueprint } })
 
@@ -50,16 +55,31 @@ describe('logic - retrieve blueprint', () => {
 
         })
 
-            it('should fail on wrong user id', () =>
-                retrieveBlueprint('5ed43b913578a050d5600ee0', blueprintId)
-                .catch(error => {
-                    expect(error).to.exist
-                    expect(error).to.be.an.instanceof(UnexistenceError)
-                    expect(error.message).to.equal(`User with id 5ed43b913578a050d5600ee0 does not exist`)
-                })
-            )
-        
+        it('should delete the items Id', () =>
+        retrieveBlueprint(userId, blueprintId)
+        .then(blueprint => {
+            expect(blueprint.items._id).to.not.exist
+            })
+        )
 
+        it('should fail on wrong user id', () =>
+            retrieveBlueprint('5ed43b913578a050d5600ee0', blueprintId)
+            .catch(error => {
+                expect(error).to.exist
+                expect(error).to.be.an.instanceof(UnexistenceError)
+                expect(error.message).to.equal(`User with id 5ed43b913578a050d5600ee0 does not exist`)
+            })
+        )
+
+            it('should fail when blueprint does not exist', () =>
+            retrieveBlueprint(userId, '5ed43b913578a050d5600ee0')
+            .catch(error => {
+                expect(error).to.exist
+                expect(error).to.be.an.instanceof(UnexistenceError)
+                expect(error.message).to.equal(`blueprint with id 5ed43b913578a050d5600ee0 does not exist`)
+            })
+        )
+        
 
         it('should fail when incorrect inputs are introduced', () => {
             try {
