@@ -3,14 +3,20 @@ const {errors: {UnexistenceError, CredentialsError}} = require('qrmenu-commons')
 require('qrmenu-commons/polyfills/string')
 require('qrmenu-commons/polyfills/array')
 
+/**
+ * 
+ * @param {string} establishmentId id from the establishment
+ * @param {string} tableId id from the table
+ * @param {array} userDishes array of multiple dishes id's
+ */
 
 module.exports = (establishmentId, tableId, userDishes) => {
     String.validate(establishmentId)
     String.validate(tableId)
     Array.validate(userDishes)
-    debugger
+    
     return (async() => {
-        debugger
+        
      
         const establishment = await Establishment.findById(establishmentId)
 
@@ -31,7 +37,7 @@ module.exports = (establishmentId, tableId, userDishes) => {
         const {dishStatus} = order
 
         await Promise.all(userDishes.map(async dish => {
-            debugger
+            
             const match = dishes.find(_dish => _dish.id === dish)
 
             order.total = order.total + match.price
@@ -42,7 +48,7 @@ module.exports = (establishmentId, tableId, userDishes) => {
                 dish
             }))
         }));
-        debugger
+        
 
         await establishment.save()
         

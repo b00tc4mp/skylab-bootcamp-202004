@@ -3,8 +3,17 @@ const { models: {Establishment}, mongoose: {ObjectId} } = require('qrmenu-data')
 const { errors: { UnexistenceError, CredentialsError, DuplicityError } } = require('qrmenu-commons')
 const bcrypt = require('bcryptjs')
 
+/**
+ * 
+ * @param {string} establishmentId id of the establishment
+ * @param {string} workerId id of the worker
+ * @param {string} email email of the worker
+ * @param {string} role role of the worker
+ * @param {string} password password of the worker
+ */
+
 module.exports = (establishmentId, workerId, email, role, password) => {
-    debugger
+    
     String.validate.notVoid(establishmentId)
     String.validate.notVoid(workerId)
     String.validate.notVoid(email)
@@ -13,10 +22,10 @@ module.exports = (establishmentId, workerId, email, role, password) => {
 
     return (async() => {
 
-        debugger
+        
         const establishment = await Establishment.findById(establishmentId)
         if(!establishment) throw new UnexistenceError(`Establishment with id ${establishmentId} does not exist`)
-        debugger
+        
         const {staff} = establishment
         
         const allowed = staff.find(user => user.id === workerId && user.role === 'owner')
@@ -30,7 +39,7 @@ module.exports = (establishmentId, workerId, email, role, password) => {
         const hash = await bcrypt.hash(password,10)
         
         const worker = {email, role, password: hash}
-        debugger
+        
         staff.push(worker)
 
         await Establishment.findByIdAndUpdate(establishmentId, {$set: {staff}})

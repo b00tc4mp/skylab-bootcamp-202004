@@ -41,11 +41,11 @@ describe('logic - authenticate user', () => {
     )
 
     describe('when user already exists', () => {
-        debugger
+        
         beforeEach(() =>
             Establishment.create({ establishment, nif, staff: [{email, password: hash}], tables: [{active, table}] })
                 .then(_establishment =>{
-                    debugger
+                    
                     establishmentId = _establishment.id 
                     workerId = _establishment.staff[0].id
                     tableId = _establishment.tables[0].id
@@ -62,7 +62,7 @@ describe('logic - authenticate user', () => {
                 
             
             const _orders = await retrieveOrders(token)
-            debugger
+            
             expect(_orders).to.exist
             expect(_orders[0]._id).to.equal(orderId)
 
@@ -72,11 +72,11 @@ describe('logic - authenticate user', () => {
         it('should fail on wrong establisment Id', async() => {
             token = "wrong"+token 
             try {
-                debugger
+                
                 await retrieveOrders(token)
                 throw new Error('Should not reach this point')
             } catch (error) {
-                debugger
+                
                 expect(error).to.exist
                 expect(error).to.be.an.instanceOf(Error)
             }            

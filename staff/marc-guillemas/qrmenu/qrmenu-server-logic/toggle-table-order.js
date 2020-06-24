@@ -2,6 +2,12 @@ const {models: {Establishment, Order}} = require('qrmenu-data')
 const {errors: {UnexistenceError}} = require('qrmenu-commons')
 require('qrmenu-commons/polyfills/string')
 
+/**
+ * 
+ * @param {string} establishmentId id of the establishment
+ * @param {string} workerId id of the worker
+ * @param {string} tableId id of the table
+ */
 
 module.exports = (establishmentId, workerId, tableId) => {
 
@@ -26,11 +32,11 @@ module.exports = (establishmentId, workerId, tableId) => {
 
         if(!match.active) {
             match.active = true
-            debugger
+            
             orders.push(new Order({tableId, table: match.table}))
         }else{
             match.active = false
-            debugger
+            
             const order = orders.find(_order => _order.tableId === tableId && _order.payed === false)
             
             if(!order) throw new UnexistenceError(`Order assigned at the table with id ${tableId} does not exist`)

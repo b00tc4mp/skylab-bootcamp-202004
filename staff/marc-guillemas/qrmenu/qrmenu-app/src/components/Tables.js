@@ -8,7 +8,7 @@ export default function({onToggleTable}) {
     
     useEffect(() => {
         try {
-            debugger
+            
             retrieveTables(sessionStorage.token)
             .then(_tables => {
                 return setTables(_tables)

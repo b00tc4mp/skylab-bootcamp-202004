@@ -5,7 +5,7 @@ const tableActive = require('./table-active')
 
 mongoose.connect(MONGODB_URL)
     .then(() => {
-        debugger
+        
         return tableActive("5ee0c36131134f2af580ce7e", "5ee0c4dd871d182e8c81d3a6", 4)
     })
     .then(console.log)

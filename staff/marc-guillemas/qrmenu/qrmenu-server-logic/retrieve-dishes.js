@@ -1,10 +1,15 @@
 const {models: {Establishment}} = require('qrmenu-data')
 const {errors: {UnexistenceError, CredentialsError}} = require('qrmenu-commons')
 
+/**
+ * 
+ * @param {string} establishmentId id of the establishment
+ * @param {string} tableId id of the table
+ */
 module.exports = (establishmentId, tableId) => {
 
     return (async() => {
-        debugger
+        
         const establishment = await Establishment.findById(establishmentId)
 
         if(!establishment) throw new UnexistenceError(`Establishment with id ${establishmentId} does not exist`)

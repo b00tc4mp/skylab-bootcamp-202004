@@ -59,7 +59,7 @@ describe('server-logic add-dishes-to-order', () => {
             await addDishesToOrder(establishmentId, tableId, [dishId])
 
             const {orders: _orders} = await Establishment.findById(establishmentId)
-            debugger
+            
             expect(_orders).to.exist
             expect(_orders).to.be.an('array')
             expect(_orders[0]).to.exist
@@ -76,7 +76,7 @@ describe('server-logic add-dishes-to-order', () => {
                 await addDishesToOrder("5eedfc3256012e6c3dbb7cbe", tableId,[dishId])
                 throw new Error('Should not reach this point')
             } catch (error) {
-                debugger
+                
                 expect(error).to.exist
                 expect(error).to.be.an.instanceOf(UnexistenceError)
                 expect(error.message).to.equal("Establishment with id 5eedfc3256012e6c3dbb7cbe does not exist")
@@ -91,7 +91,7 @@ describe('server-logic add-dishes-to-order', () => {
                 await addDishesToOrder(establishmentId, "5eedfc3256012e6c3dbb7cbe", [dishId])
                 throw new Error('Should not reach this point')
             } catch (error) {
-                debugger
+                
                 expect(error).to.exist
                 expect(error).to.be.an.instanceOf(UnexistenceError)
                 expect(error.message).to.equal("Table with id 5eedfc3256012e6c3dbb7cbe does not exist")

@@ -3,6 +3,7 @@ import React, {useState} from 'react'
 import './Login.sass'
 import {authenticate} from 'qrmenu-client-logic'
 import Feedback from './Feedback'
+import { set } from '../../../qrmenu-api/node_modules/qrmenu-data/models/schemas/dish'
 
 
 export default function ({onLogin, onGoToRegister}) {
@@ -25,12 +26,13 @@ export default function ({onLogin, onGoToRegister}) {
         password = password.value
 
         try {
-            debugger
+            
             authenticate(nif, email, password)
                 .then(token => onLogin(token))
+                .catch(({message}) => setError(message))
                 
         } catch ({message}) {
-            debugger
+            
             setError(message)
         }
     }

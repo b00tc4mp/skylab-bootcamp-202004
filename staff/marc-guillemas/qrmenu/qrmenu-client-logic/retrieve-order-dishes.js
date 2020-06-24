@@ -3,9 +3,13 @@ require('qrmenu-commons/polyfills/string')
 require('qrmenu-commons/polyfills/array')
 const {utils: {call}} = require('qrmenu-commons')
 
+/**
+ * @param {string} token of the current worker
+ */
+
 module.exports = function(token, dishesIds) {
     String.validate(token)
-    debugger
+    
     Array.validate(dishesIds)
 
     return call(
@@ -15,7 +19,7 @@ module.exports = function(token, dishesIds) {
         { 'Content-type': 'application/json', 'Authorization': `Bearer ${token}` }
     )
     .then(({status, body}) => {
-        if(status === 200) {  debugger
+        if(status === 200) {  
             return JSON.parse(body)
         }
         const {error} = JSON.parse(body)

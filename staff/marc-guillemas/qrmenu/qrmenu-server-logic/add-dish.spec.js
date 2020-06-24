@@ -60,7 +60,7 @@ describe('server-logic add dish ',() => {
          
             addDish(establishmentId, workerId, dishName, description, price, tags)
                 .then(() => {
-                    debugger
+                    
                     Establishment.findById(establishmentId)
                 })
                 .then(({dishes}) => {

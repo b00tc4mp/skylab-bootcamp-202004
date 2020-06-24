@@ -71,7 +71,7 @@ describe('server-logic retrieve-order-dishes', () => {
                 await retrieveOrderDishes("5eedfc3256012e6c3dbb7cbe", tableId, [dishId, dishId])
                 throw new Error('Should not reach this point')
             } catch (error) {
-                debugger
+                
                 expect(error).to.exist
                 expect(error).to.be.an.instanceOf(UnexistenceError)
                 expect(error.message).to.equal("Establishment with id 5eedfc3256012e6c3dbb7cbe does not exist")
@@ -86,7 +86,7 @@ describe('server-logic retrieve-order-dishes', () => {
                 await retrieveOrderDishes(establishmentId, tableId, ["5ef21de56317a5415dc2baae"])
                 throw new Error('Should not reach this point')
             } catch (error) {
-                debugger
+                
                 expect(error).to.exist
                 expect(error).to.be.an.instanceOf(UnexistenceError)
                 expect(error.message).to.equal('No dishes with this ids')

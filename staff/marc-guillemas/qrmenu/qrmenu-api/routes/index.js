@@ -26,7 +26,7 @@ const parseBody = bodyParser.json()
 const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
 
 const api = new Router()
-debugger
+
 
 
 api.post('/establishment', parseBody, registerEstablishment)

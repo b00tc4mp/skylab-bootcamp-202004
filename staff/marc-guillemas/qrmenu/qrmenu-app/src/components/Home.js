@@ -18,7 +18,6 @@ export default function({onLogout, history, onScan }) {
     const [qrcode, setQrCode] = useState()
     
     useEffect(() => {
-        // setBurguerActive(false)
        if (!isGuestUser(history.location.pathname)) history.push('/login')
     },[])
 
@@ -27,7 +26,6 @@ export default function({onLogout, history, onScan }) {
     }
 
     const handleToggleTable = _qrcode => {
-        console.log(_qrcode)
         setQrCode(_qrcode)
         onScan(_qrcode)
         history.push('/qrcode')
@@ -43,9 +41,8 @@ export default function({onLogout, history, onScan }) {
  
             <Route path="/orders" render={() => <Orders /> } />
             <Route path="/tables" render={() => <Tables onToggleTable={handleToggleTable}/> } />
-        {/* <Route path="/dishes" render={() => <Dishes /> } /> */}
             <Route path="/qrcode" render={() => <QrCodes qrcode={qrcode}/> } />
-        <Route path="/admin" render={() => <Admin /> } />
+            <Route path="/admin" render={() => <Admin /> } />
 
         </div>
         }

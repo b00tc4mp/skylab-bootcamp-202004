@@ -72,7 +72,7 @@ describe('server-logic retrieve-tables', () => {
                 await retrieveDishes("5eedfc3256012e6c3dbb7cbe", tableId)
                 throw new Error('Should not reach this point')
             } catch (error) {
-                debugger
+                
                 expect(error).to.exist
                 expect(error).to.be.an.instanceOf(UnexistenceError)
                 expect(error.message).to.equal("Establishment with id 5eedfc3256012e6c3dbb7cbe does not exist")
@@ -87,7 +87,7 @@ describe('server-logic retrieve-tables', () => {
                 await retrieveDishes(establishmentId, "5eedfc3256012e6c3dbb7cbe")
                 throw new Error('Should not reach this point')
             } catch (error) {
-                debugger
+                
                 expect(error).to.exist
                 expect(error).to.be.an.instanceOf(UnexistenceError)
                 expect(error.message).to.equal("Table with id 5eedfc3256012e6c3dbb7cbe does not exist")

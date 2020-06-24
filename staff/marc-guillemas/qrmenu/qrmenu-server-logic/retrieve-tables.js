@@ -2,6 +2,11 @@ const {models: {Establishment, Order}} = require('qrmenu-data')
 const {errors: {UnexistenceError}} = require('qrmenu-commons')
 require('qrmenu-commons/polyfills/string')
 
+/**
+ * 
+ * @param {string} establishmentId id of the establishment
+ * @param {string} workerId id of the worker
+ */
 
 module.exports = (establishmentId, workerId) => {
 

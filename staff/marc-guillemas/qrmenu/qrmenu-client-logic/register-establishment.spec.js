@@ -37,7 +37,7 @@ describe('logic - register establishment', () => {
         registerEstablishment(establishment, nif, email, password)
             .then(() => establishments.find().toArray())
             .then(establishments => {
-                debugger
+                
                 expect(establishments.length).to.equal(1)
 
                 const [_establishment] = establishments
@@ -51,22 +51,6 @@ describe('logic - register establishment', () => {
             .then(match => expect(match).to.be.true)
     )
 
-    // describe('when user already exists', () => {
-    //     beforeEach(() => User.create({ nif, email, password }))
-
-    //     it('should fail on trying to register an existing user', () =>
-    //         registerUser(establishment, nif, email, password)
-    //             .then(() => { throw new Error('should not reach this point') })
-    //             .catch(error => {
-    //                 expect(error).to.exist
-
-    //                 expect(error).to.be.an.instanceof(Error)
-    //                 expect(error.message).to.equal(`user with e-mail ${email} already exists`)
-    //             })
-    //     )
-    // })
-
-    // afterEach(() => establishments.deleteMany())
 
     after(() => establishments.deleteMany({}).then(mongo.disconnect))
 })

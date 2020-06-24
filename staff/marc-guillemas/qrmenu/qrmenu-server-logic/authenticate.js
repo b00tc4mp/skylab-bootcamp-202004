@@ -3,18 +3,24 @@ require('qrmenu-commons/polyfills/json')
 const { utils: {Email, NIF}, errors: { UnexistenceError, CredentialsError } } = require('qrmenu-commons')
 const { models: {Establishment} } = require('qrmenu-data')
 const bcrypt = require('bcryptjs')
-
+/**
+ * 
+ * @param {string} nif nif of the establishment  
+ * @param {string} email email of the worker
+ * @param {string} password password of the worker
+ */
 module.exports = (nif, email, password) => {
-    debugger
+    
     String.validate.notVoid(nif)
     NIF.validate(nif)
     String.validate.notVoid(email)
     Email.validate(email)
     String.validate.notVoid(password)
 
+    
     return (async() => {
         const establishment = await Establishment.findOne({ nif })
-        debugger
+        
         if(!establishment) throw new UnexistenceError(`Establishment with nif ${nif} does not exist`)
         
         const {staff} = establishment

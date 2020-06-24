@@ -7,7 +7,7 @@ module.exports = (req, res) => {
     const {body: {nif, email, password}} = req
     
     try {
-        debugger
+        
         authenticate(nif,email,password)
             .then(({establishmentId, workerId}) => jwtPromised.sign({establishmentId, workerId}, SECRET, {expiresIn: '1d'}))
             .then(token => res.send({token}))

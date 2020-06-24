@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Total.sass'
 import {addDishesToOrder} from 'qrmenu-client-logic'
 
 
 export default function({history, addDish, active, toggleBack, deleteOrder}) {
-    
+    const [error, setError] = useState()
     const onSendOrder = () => {
         let arr = addDish.map(item => {
             return item._id
@@ -12,12 +12,12 @@ export default function({history, addDish, active, toggleBack, deleteOrder}) {
         const [,,establishmentId,,tableId] = history.location.pathname.split('/')
 
         try {
-            debugger
+            
             addDishesToOrder(establishmentId, tableId, arr)
             .then(() => deleteOrder())
             
         } catch (error) {
-            console.log(error.message)
+            setError(error.message)
         }
     
         

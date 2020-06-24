@@ -10,14 +10,10 @@ export default function({history}) {
     const [active, setActive] = useState(false)
 
     useEffect(() => {
-        console.log(history.location.pathname)
         const [,,establishmentId,,tableId] = history.location.pathname.split('/')
-        console.log(establishmentId, tableId)
         return retrieveDishes(establishmentId, tableId)
         .then(_dishes =>{
-            console.log(_dishes)
             return setDishes(_dishes)})
-        .then(console.log(dishes))
     },[])
 
     const onSubstract = id => {
@@ -37,7 +33,7 @@ export default function({history}) {
 
 
     const handleActive = ()=>{
-        debugger
+        
         setActive(!active)
     }
 
@@ -63,9 +59,7 @@ export default function({history}) {
                             <div className="dishes__toggle">
                                 <div className="dishes__substract" onClick={() => onSubstract(_id)}>_</div>
                                 <div className="dishes__add" onClick={() => {
-                                    console.log(_id)
                                     setAddDish([...addDish, {name, price, _id}])
-                                    console.log(addDish)
                                     }}>+</div>
                             </div>
                         </div>

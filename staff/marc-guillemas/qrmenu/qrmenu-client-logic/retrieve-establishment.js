@@ -2,6 +2,10 @@ const context = require('./context')
 require('qrmenu-commons/polyfills/string')
 const {utils: {call}} = require('qrmenu-commons')
 
+/**
+ * @param {string} token of the current worker
+ */
+
 module.exports = function(token) {
     String.validate(token)
 

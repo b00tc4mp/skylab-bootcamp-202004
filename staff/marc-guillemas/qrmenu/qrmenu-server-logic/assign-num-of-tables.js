@@ -3,16 +3,23 @@ require('qrmenu-commons/polyfills/number')
 const { errors: { UnexistenceError, CredentialsError } } = require('qrmenu-commons')
 const { models: {Establishment} } = require('qrmenu-data')
 
+/**
+ * 
+ * @param {string} establishmentId id of establishment 
+ * @param {string} workerId id of the worker
+ * @param {number} numTables number of tables to set
+ */
+
 module.exports = (establishmentId, workerId, numTables) => {
     String.validate.notVoid(establishmentId)
     String.validate.notVoid(workerId)
     Number.validate.positive(numTables)
-    debugger
+    
     return (async() => {
         const establishment = await Establishment.findById(establishmentId)
         
         if(!establishment) throw new UnexistenceError(`Establishment with id ${establishmentId} does not exist`)
-        debugger
+        
         const {staff, tables} = establishment
 
         const worker = staff.find(_worker => _worker._id.toString() === workerId)

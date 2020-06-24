@@ -5,7 +5,7 @@ const retrieveDishes = require('./retrieve-dishes')
 
 mongoose.connect(MONGODB_URL)
     .then(() => {
-        debugger
+        
         return retrieveDishes("5ee250262efaee3a31235a02")
     })
     .then(console.log)

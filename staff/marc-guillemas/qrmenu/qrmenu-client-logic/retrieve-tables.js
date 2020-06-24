@@ -3,15 +3,19 @@ require('qrmenu-commons/polyfills/string')
 const { utils: { call } } = require('qrmenu-commons')
 const context = require('./context')
 
+/**
+ * @param {string} token of the current worker
+ */
+
 module.exports = function (token) {
 
     String.validate.notVoid(token)
-    debugger
+    
     return call('GET', `${this.API_URL}/tables`,
         undefined,
         { 'Authorization': `Bearer ${token}` })
         .then(({ status, body }) => {
-            debugger
+            
             if(status === 200) {
                 const tables = JSON.parse(body)
                 return tables

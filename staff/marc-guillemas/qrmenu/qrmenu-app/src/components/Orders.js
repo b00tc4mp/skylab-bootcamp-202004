@@ -21,8 +21,6 @@ export default function() {
     //setTimeout(retrieveOrders(sessionStorage.token), 10000)
 
     const onView = _dishStatus => {
-        console.log('clicked')
-        console.log(_dishStatus)
         
         setActive(!active)
         setDishStatus(_dishStatus.map(item=> item.dish))

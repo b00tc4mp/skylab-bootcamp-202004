@@ -55,7 +55,7 @@ describe('server-logic retrieve-orders', () => {
             
             const _orders = await Establishment.findById(establishmentId)
 
-            debugger
+            
             orderId = _orders.orders[0].id
         })
 
@@ -78,7 +78,7 @@ describe('server-logic retrieve-orders', () => {
                 await retrieveOrders("5eedfc3256012e6c3dbb7cbe", workerId)
                 throw new Error('Should not reach this point')
             } catch (error) {
-                debugger
+                
                 expect(error).to.exist
                 expect(error).to.be.an.instanceOf(UnexistenceError)
                 expect(error.message).to.equal("Establishment with id 5eedfc3256012e6c3dbb7cbe does not exist")
@@ -93,7 +93,7 @@ describe('server-logic retrieve-orders', () => {
                 await retrieveOrders(establishmentId, "5eedfc3256012e6c3dbb7cbe")
                 throw new Error('Should not reach this point')
             } catch (error) {
-                debugger
+                
                 expect(error).to.exist
                 expect(error).to.be.an.instanceOf(UnexistenceError)
                 expect(error.message).to.equal('worker with id 5eedfc3256012e6c3dbb7cbe does not exist')

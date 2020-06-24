@@ -32,7 +32,7 @@ describe('logic - authenticate user', () => {
     )
     // {establishmentId: establishment._id, workerId: user._id}
     describe('when user already exists', () => {
-        debugger
+        
         beforeEach(() =>
             Establishment.create({ establishment, nif, staff: [{email, password: hash}] })
                 .then(_establishment =>{ 

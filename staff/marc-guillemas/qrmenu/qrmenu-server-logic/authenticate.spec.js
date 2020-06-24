@@ -29,7 +29,7 @@ describe('logic - authenticate user', () => {
     )
 
     describe('when user already exists', () => {
-        debugger
+        
         beforeEach(() =>
             Establishment.create({ establishment, nif, staff: [{email, password: hash}] })
                 .then(_establishment => establishmentId = _establishment.id)
@@ -38,7 +38,7 @@ describe('logic - authenticate user', () => {
         it('should succeed on correct credentials', () => {
 
             try {
-                debugger
+                
                 authenticate(nif, email, password)
                     .then(token => {
                         expect(token).to.exist
@@ -53,7 +53,7 @@ describe('logic - authenticate user', () => {
 
         it('should fail on wrong password', () => {
             password += 'wrong-'
-            debugger
+            
             return authenticate(nif,email, password)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
@@ -64,7 +64,7 @@ describe('logic - authenticate user', () => {
 
         it('should fail on wrong email', () => {
             email = 'wrong-' + email
-            debugger
+            
             return authenticate(nif,email, password)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {

@@ -3,8 +3,14 @@ require('qrmenu-commons/polyfills/string')
 require('qrmenu-commons/polyfills/array')
 const {utils: {call}} = require('qrmenu-commons')
 
+/**
+ * @param {string} establishmentId id of the establishment
+ * @param {string} tableId id of the table
+ * @param {array} dishes multiple dishes id's
+ */
+
 module.exports = function(establishmentId, tableId, dishes) {
-    debugger
+    
     String.validate(establishmentId)
     String.validate(tableId)
     Array.validate(dishes)
@@ -12,7 +18,7 @@ module.exports = function(establishmentId, tableId, dishes) {
     `{"dishes": "${dishes}" }`,
     {'Content-type' : 'application/json'})
         .then(({status}) => {
-            debugger
+            
             
             if(status === 200) {
                 return

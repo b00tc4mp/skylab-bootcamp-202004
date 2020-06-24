@@ -3,9 +3,9 @@ const { handleError } = require('../../helpers')
 
 module.exports = (req,res) => {
     const {body: {tables}, payload: {establishmentId, workerId}} = req
-    debugger
+    
     try {
-        debugger
+        
         assignNumOfTables(establishmentId,workerId,tables)
             .then(() => res.send())
             .catch(error => handleError(error,res))

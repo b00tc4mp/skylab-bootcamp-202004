@@ -29,7 +29,7 @@ describe('logic - authenticate', () => {
     )
 
     describe('when user already exists', () => {
-        debugger
+        
         beforeEach(() =>
             Establishment.create({ establishment, nif, staff: [{email, password: hash}] })
                 .then(_establishment => establishmentId = _establishment.id)
@@ -38,10 +38,10 @@ describe('logic - authenticate', () => {
         it('should succeed on correct credentials', () => {
 
             try {
-                debugger
+                
                 authenticate(nif, email, password)
                     .then(token => {
-                        debugger
+                        
                         expect(token).to.exist
                         expect(token).to.be.a('string')
                     })
@@ -53,7 +53,7 @@ describe('logic - authenticate', () => {
 
         it('should fail on wrong password', () => {
             password += 'wrong-'
-            debugger
+            
             return authenticate(nif,email, password)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
@@ -65,7 +65,7 @@ describe('logic - authenticate', () => {
     
         it('should fail on wrong email', () => {
             email = 'wrong-' + email
-            debugger
+            
             try {
                 authenticate(nif,email, password)
                     .then(() => { throw new Error('should not reach this point') })
@@ -80,7 +80,7 @@ describe('logic - authenticate', () => {
         })
         
         it('should fail on passing a wrong type of value as arguments' , () => {
-            debugger
+            
             
             expect(()=> authenticate(null,email, password)).to.throw(Error, 'null is not a NIF')
             expect(()=> authenticate(nif,null, password)).to.throw(Error, 'null is not an e-mail')

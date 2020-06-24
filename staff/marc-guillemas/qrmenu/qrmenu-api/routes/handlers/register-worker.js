@@ -4,7 +4,7 @@ const {utils: {jwtPromised}} = require('qrmenu-commons')
 const { registerWorker } = require('qrmenu-server-logic')
 
 module.exports = (req, res) => {
-    debugger
+    
     const {body: {email, role, password}, payload: {establishmentId, workerId}} = req
     
     try {

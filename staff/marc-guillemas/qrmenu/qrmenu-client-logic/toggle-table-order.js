@@ -3,16 +3,21 @@ require('qrmenu-commons/polyfills/string')
 const { utils: { call } } = require('qrmenu-commons')
 const context = require('./context')
 
+/**
+ * @param {string} token of the current worker
+ * @param {string} tableId id of the table to activate
+ */
+
 module.exports = function (token, tableId) {
 
     String.validate.notVoid(token)
     String.validate.notVoid(tableId)
-    debugger
+    
     return call('POST', `${this.API_URL}/open`,
         `{"tableId": "${tableId}"}`,
         { 'Content-type' : 'application/json','Authorization': `Bearer ${token}` })
         .then(({ status }) => {
-            debugger
+            
             if(status === 200) {
             
                 const [,payloadBase64] = token.split('.')
@@ -22,7 +27,7 @@ module.exports = function (token, tableId) {
                 const payload = JSON.parse(payloadJson)
     
                 const {establishmentId} = payload
-                debugger
+                
                 return {establishmentId, tableId}
             }
 

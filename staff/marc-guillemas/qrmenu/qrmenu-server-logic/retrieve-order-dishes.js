@@ -2,7 +2,12 @@ const {models: {Establishment, Dish}} = require('qrmenu-data')
 const {errors: {UnexistenceError, CredentialsError}} = require('qrmenu-commons')
 require('qrmenu-commons/polyfills/string')
 require('qrmenu-commons/polyfills/array')
-
+/**
+ * 
+ * @param {string} establishmentId id of the establishment
+ * @param {string} tableId id of the table
+ * @param {string} dishesIds multiple dishes id's
+ */
 module.exports = (establishmentId, tableId, dishesIds) => {
     
     String.validate(establishmentId)
@@ -10,7 +15,7 @@ module.exports = (establishmentId, tableId, dishesIds) => {
     Array.validate(dishesIds)
 
     return (async() => {
-        debugger
+        
         const establishment = await Establishment.findById(establishmentId)
 
         if(!establishment) throw new UnexistenceError(`Establishment with id ${establishmentId} does not exist`)
@@ -26,10 +31,10 @@ module.exports = (establishmentId, tableId, dishesIds) => {
                 _dishes.push(name)
             }
         });
-        debugger
+        
         if(!_dishes.length) throw new UnexistenceError('No dishes with this ids')
         
-        debugger
+        
         return _dishes
     })()
 }

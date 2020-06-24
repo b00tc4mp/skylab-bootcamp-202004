@@ -12,7 +12,7 @@ const console = singletonConsoleLogger()
 file.level = Logger.WARN
 console.level = Logger.DEBUG
 
-const { api } = require('./routes') //----------------------------------------------- 
+const { api } = require('./routes')  
 
 const {name, version} = require('./package.json')
 const { cors } = require('./middlewares')
@@ -31,7 +31,7 @@ try {
 
 
         app.use(cors)
-        debugger
+        
         app.use('/api', api)
         
         app.get('*', (req, res) => {

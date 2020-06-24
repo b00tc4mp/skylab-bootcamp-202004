@@ -3,7 +3,7 @@ const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
     const {payload: {establishmentId, workerId}, body: {dishesIds}} = req
-    debugger
+    
     try {
         retrieveOrderDishes(establishmentId, workerId, dishesIds)
             .then(dishes => res.send(dishes))

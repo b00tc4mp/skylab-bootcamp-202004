@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "jsdoc": "^3.6.4",
     "json-web-token": "^3.2.0",
     "node-fetch": "^2.6.0",
     "qrmenu-commons": "file:../qrmenu-commons"

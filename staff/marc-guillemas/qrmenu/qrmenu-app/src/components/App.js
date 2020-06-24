@@ -47,7 +47,6 @@ function App({history}) {
   const handleOnScan = (qrlink) => {
     console.info(qrlink)
     setUserRoute(qrlink)
-    console.log(userRoute)
   }
 
   return (

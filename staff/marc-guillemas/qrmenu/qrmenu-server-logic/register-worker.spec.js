@@ -69,7 +69,7 @@ describe('server-logic register worker', () => {
                 await registerWorker("5eedfc3256012e6c3dbb7cbe", workerId, newEmail, role, _password)
                 throw new Error('Should not reach this point')
             } catch (error) {
-                debugger
+                
                 expect(error).to.exist
                 expect(error).to.be.an.instanceOf(UnexistenceError)
                 expect(error.message).to.equal("Establishment with id 5eedfc3256012e6c3dbb7cbe does not exist")
