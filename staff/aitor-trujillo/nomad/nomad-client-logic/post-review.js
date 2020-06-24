@@ -1,21 +1,34 @@
+/**
+ * Checks user credentials.
+ * 
+ * @param {string} workspaceId The workspace id. 
+ * @param {number} stars The punctuation for the workspace. 
+ * @param {string} text The user review for the workspace.
+ * 
+ * @returns {Promise<String>} Nothing if it resolves, an error if it rejects.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {Error} If review was not successfuly posted.
+ */
+
 require('nomad-commons/polyfills/string')
 require('nomad-commons/polyfills/function')
 require('nomad-commons/polyfills/number')
 const { utils: { call } } = require('nomad-commons')
 const context = require('./context')
 
-module.exports = function (token, workspaceId, stars, text) {
-    String.validate.notVoid(token)
+module.exports = function (workspaceId, stars, text) {
     String.validate.notVoid(workspaceId)
     Number.validate(stars)
     String.validate.notVoid(text)
 
     const review = { workspaceId, stars, text }
 
-    const headers = { Authorization: `Bearer ${token}`, 'Content-type': 'application/json' }
 
     return (async () => {
         try {
+            const token = await this.storage.getItem('token')
+            const headers = { Authorization: `Bearer ${token}`, 'Content-type': 'application/json' }
             const result = await call(
                 'POST',
                 `${this.API_URL}/reviews`,
@@ -26,9 +39,12 @@ module.exports = function (token, workspaceId, stars, text) {
             const { status, body } = result
 
             if (status === 201) return
-            else throw new Error('could not create review')
+            else {
+                const { error } = JSON.parse(body)
+                throw new Error(error)
+            }
         } catch (error) {
-            console.log(error) // TODO
+            throw new Error(error.message)
         }
     })()
 }.bind(context)

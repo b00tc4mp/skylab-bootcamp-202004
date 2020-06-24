@@ -8,7 +8,7 @@ const { expect } = require('chai')
 require('nomad-commons/polyfills/json')
 const { mongoose, models: { Workspace, User } } = require('nomad-data')
 
-describe('logic - create workspace', () => {
+describe('logic - retrieve workspace by id', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let workspaceRandom = {}
@@ -39,10 +39,9 @@ describe('logic - create workspace', () => {
             price: { amount: random() + 100, term: 'month' },
             address: { street: `${random()} st`, city: `${random()} city`, country: `${random()} country` },
             geoLocation: { coordinates: [random(), random()] },
-            // timetable = `timetable-${random()}`
             photos: [`photo-${random()}`],
             phone: `phone-${random()}`,
-            features: { wifi: '100mb', parking: `km-${random()}`, coffee: true, meetingRooms: random() },
+            features: { wifi: false, parking: false, coffee: true, meetingRooms: true },
             description: `description-${random()}`,
             capacity: random(),
         }
@@ -70,6 +69,22 @@ describe('logic - create workspace', () => {
         expect(workspace.features.meetingRooms).to.equal(workspaceRandom.features.meetingRooms)
         expect(workspace.description).to.equal(workspaceRandom.description)
         expect(workspace.capacity).to.equal(workspaceRandom.capacity)
+    })
+
+    describe('when workspace does not exist', () => {
+        beforeEach(async () =>
+            await Workspace.deleteMany()
+        )
+
+        it('should fail on any workspaces to retrieve', async () => {
+
+            const results = await retrieveWorkspaceById(workspaceId)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    expect(error).to.be.an.instanceof(Error)
+                    expect(error.message).to.equal(`workspace with id ${workspaceId} does not exist`)
+                })
+        })
     })
 
     afterEach(() => User.deleteMany().then(() => Workspace.deleteMany()))

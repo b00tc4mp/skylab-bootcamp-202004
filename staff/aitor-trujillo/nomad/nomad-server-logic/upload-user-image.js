@@ -1,3 +1,16 @@
+/**
+ * Sends image to upload for user profile.
+ * 
+ * @param {string} userId The user id corresponding to image selected. 
+ * @param {string} file The file sent to api. 
+ * @param {string} filename The file name to save into public folder. 
+ * 
+ * @returns {Promise<String>} True if it resolves, an error if it rejects.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ */
+
+
 require('nomad-commons/polyfills/string')
 require('nomad-commons/polyfills/number')
 require('nomad-commons/polyfills/json')

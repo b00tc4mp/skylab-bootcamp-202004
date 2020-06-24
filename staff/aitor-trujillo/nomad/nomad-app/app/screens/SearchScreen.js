@@ -8,25 +8,24 @@ import retrieveUser from 'nomad-client-logic/retrieve-user'
 import AppTextInput from '../components/NomadTextInput'
 import { API_URL } from 'nomad-client-logic/context'
 import searchWorkspaces from 'nomad-client-logic/search-workspaces'
+import Feedback from '../components/Feedback'
 
 export default function Search({ navigation }) {
     const [workspaces, setWorkspaces] = useState([])
     const [user, setUser] = useState()
     const [refresh, setRefresh] = useState(false)
+    const [error, setError] = useState()
 
     const handleSearch = async (query) => {
         try {
-            const token = await AsyncStorage.getItem('token')
-            if (token !== null) {
-                const user = await retrieveUser(token)
-                setUser(user)
-                const result = await searchWorkspaces(token, query)
-                setWorkspaces(result)
-            } else {
-                console.log('error, token not found in homescreen') // TODO
-            }
+            setWorkspaces([])
+            const user = await retrieveUser()
+            setUser(user)
+            const result = await searchWorkspaces(query)
+            setError()
+            setWorkspaces(result)
         } catch (e) {
-            console.log(e) // TODO HANDLE THIS
+            setError(e.message)
         }
     }
 
@@ -53,6 +52,7 @@ export default function Search({ navigation }) {
                         onEndEditing={({ nativeEvent: { text } }) => handleSearch(text)}
                     />
                 </View>
+                {error && <Feedback message={error} color='#5d5d5a' />}
                 <View style={styles.containerCards}>
                     {workspaces && <FlatList data={workspaces} keyExtractor={(workspace) => workspace.name + Math.random().toString()}
                         renderItem={({ item }) =>

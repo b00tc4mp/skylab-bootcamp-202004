@@ -32,7 +32,6 @@ describe('logic - retrieve user', () => {
         it('should succeed on correct user id', () =>
             retrieveUser(userId)
                 .then(user => {
-                    console.log(user)
 
                     expect(user.name).to.equal(name)
                     expect(user.surname).to.equal(surname)

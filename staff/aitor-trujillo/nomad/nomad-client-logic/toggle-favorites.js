@@ -1,17 +1,29 @@
+/**
+ * Saves workspaceId to user favorites array, or removes it if it's already included.
+ * 
+ * @param {string} workspaceId The workspace id to retrieve. 
+ * 
+ * @returns {Promise<String>} Nothing if it resolves, an error if it rejects.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {Error} If can not find the workspace by it's id, or other unexpected errors.
+ */
+
 require('nomad-commons/polyfills/string')
 require('nomad-commons/polyfills/function')
 require('nomad-commons/polyfills/number')
 const { utils: { call } } = require('nomad-commons')
 const context = require('./context')
 
-module.exports = function (token, workspaceId) {
-    String.validate.notVoid(token)
+module.exports = function (workspaceId) {
+
     String.validate.notVoid(workspaceId)
 
-    const headers = { Authorization: `Bearer ${token}` }
 
     return (async () => {
         try {
+            const token = await this.storage.getItem('token')
+            const headers = { Authorization: `Bearer ${token}` }
             const result = await call(
                 'POST',
                 `${this.API_URL}/favorites/add/${workspaceId}`,
@@ -19,12 +31,15 @@ module.exports = function (token, workspaceId) {
                 headers
             )
 
-            const { status } = result
+            const { status, body } = result
 
             if (status === 201) return
-            else throw new Error('could not create workspace')
+            else {
+                const { error } = JSON.parse(body)
+                throw new Error(error)
+            }
         } catch (error) {
-            console.log(error) // TODO
+            throw new Error(error.message)
         }
     })()
 }.bind(context)

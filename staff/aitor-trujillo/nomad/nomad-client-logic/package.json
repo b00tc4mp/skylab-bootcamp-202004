@@ -23,6 +23,7 @@
   "dependencies": {
     "@babel/runtime": "^7.10.2",
     "node-fetch": "^2.6.0",
-    "nomad-commons": "file:../nomad-commons"
+    "nomad-commons": "file:../nomad-commons",
+    "not-async-storage": "^1.0.1"
   }
 }

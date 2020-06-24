@@ -15,6 +15,7 @@ import AppButton from '../components/Button'
 import colors from '../styles/colors'
 import ErrorMessage from '../components/ErrorMessage'
 import ImageInput from '../components/ImageInput';
+import Feedback from '../components/Feedback';
 
 const { uploadUserImage } = require('nomad-client-logic')
 
@@ -25,23 +26,18 @@ const validationSchema = Yup.object().shape({
 export default ({ navigation }) => {
 
     const [image1, setImage1] = useState()
+    const [error, setError] = useState()
 
     const handleSubmit = async values => {
-        console.log(values)
-        try {
-            const token = await AsyncStorage.getItem('token')
-            if (token !== null) {
-                const result = await uploadUserImage(token, values)
-                if (result) {
-                    Alert.alert('Success', 'Profile image delivered successfuly to the warehouse gnome.')
-                    navigation.navigate('Profile')
-                }
 
-            } else {
-                console.log('error, in uploadimagescreen') //TODO
+        try {
+            const result = await uploadUserImage(values)
+            if (result) {
+                Alert.alert('Success', 'Profile image delivered successfuly to the warehouse gnome.')
+                navigation.navigate('Profile')
             }
         } catch (e) {
-            console.log(e) // TODO HANDLE THIS
+            setError(e.message)
         }
     }
 
@@ -64,6 +60,7 @@ export default ({ navigation }) => {
                                     <ImageInput imageUri={image1} handleImage={img => { setImage1(img); setFieldValue('image1', img) }} />
                                 </View>
                                 <ErrorMessage error={errors.image1} visible={touched.image1} />
+                                {error && <Feedback message={error} color='#5d5d5a' />}
                                 <AppButton title='Post Image' bgColor='secondary' txtColor='light' onPress={handleSubmit} />
                             </>
                         )}

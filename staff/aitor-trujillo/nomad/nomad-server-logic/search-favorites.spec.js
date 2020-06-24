@@ -40,10 +40,9 @@ describe('logic - search in user favorites', () => {
             price: { amount: random() + 100, term: 'month' },
             address: { street: `${random()} st`, city: `${random()} city`, country: `${random()} country` },
             geoLocation: { coordinates: [random(), random()] },
-            // timetable = `timetable-${random()}`
             photos: [`photo-${random()}`],
             phone: `phone-${random()}`,
-            features: { wifi: '100mb', parking: `km-${random()}`, coffee: true, meetingRooms: random() },
+            features: { wifi: false, parking: false, coffee: true, meetingRooms: false },
             description: `description-${random()}`,
             capacity: random(),
         }
@@ -64,10 +63,8 @@ describe('logic - search in user favorites', () => {
         const result = await searchFavorites(userId, 'name')
 
         expect(result).to.exist
-        debugger
 
         const [workspace] = result
-        debugger
 
         expect(workspace.name).to.equal(workspaceRandom.name)
         expect(workspace.category).to.equal(workspaceRandom.category)

@@ -1,3 +1,13 @@
+/**
+ * Retrieves user info.
+ * 
+ * @param {string} userId The workspace values. 
+ * 
+ * @returns {Promise<String>} The user object if it resolves, an error if it rejects.
+ * 
+ * @throws {Error} If userId does not matches any user.
+ */
+
 require('nomad-commons/polyfills/string')
 const { mongoose: { ObjectId }, models: { User } } = require('nomad-data')
 

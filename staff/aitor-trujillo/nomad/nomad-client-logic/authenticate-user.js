@@ -15,7 +15,7 @@ const context = require('./context')
 
 module.exports = function (email, password) {
     Email.validate(email)
-    String.validate.notVoid(password)
+    String.validate.lengthGreaterEqualThan(password, 8)
 
     return (async () => {
         const result = await call(
@@ -27,7 +27,9 @@ module.exports = function (email, password) {
 
         const { status, body } = result
         if (status === 200) {
+
             const { token } = JSON.parse(body)
+            await this.storage.setItem('token', token)
             return token
         } else {
             const { error } = JSON.parse(body)

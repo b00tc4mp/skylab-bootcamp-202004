@@ -1,14 +1,20 @@
+/**
+ * Retrieves user info.
+ * 
+ * @returns {Promise<String>} The user object if it resolves, an error if it rejects.
+ * 
+ * @throws {Error} If something went unexpected.
+ */
+
 require('nomad-commons/polyfills/string')
 const { utils: { call } } = require('nomad-commons')
 const context = require('./context')
 
-module.exports = function (token) {
-    String.validate.notVoid(token)
-
-    const headers = { Authorization: `Bearer ${token}` }
-
+module.exports = function () {
     return (async () => {
         try {
+            const token = await this.storage.getItem('token')
+            const headers = { Authorization: `Bearer ${token}` }
             const result = await call(
                 'GET',
                 `${this.API_URL}/users/`,
@@ -18,9 +24,12 @@ module.exports = function (token) {
             const { status, body } = result
 
             if (status === 200) return JSON.parse(body)
-            else throw new Error('could not retrieve user')
+            else {
+                const { error } = JSON.parse(body)
+                throw new Error(error)
+            }
         } catch (error) {
-            console.log(error) // TODO
+            throw new Error(error.message)
         }
     })()
 }.bind(context)

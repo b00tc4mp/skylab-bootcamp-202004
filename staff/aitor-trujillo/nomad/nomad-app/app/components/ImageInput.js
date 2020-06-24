@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, StyleSheet, Image, Alert, TouchableWithoutFeedback } from 'react-native'
 import colors from '../styles/colors'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -6,6 +6,7 @@ import * as ImagePicker from 'expo-image-picker'
 import * as Permissions from 'expo-permissions'
 
 export default function ImageInput({ imageUri, handleImage }) {
+    const [error, setError] = useState()
 
     const getPermissions = async () => {
         const result = await Permissions.askAsync(Permissions.CAMERA_ROLL)
@@ -32,7 +33,7 @@ export default function ImageInput({ imageUri, handleImage }) {
             })
             if (!getImage.cancelled) handleImage(getImage)
         } catch (error) {
-            console.log('something went wrong', error)
+            setError(error.message)
         }
     }
 
@@ -41,6 +42,7 @@ export default function ImageInput({ imageUri, handleImage }) {
             <View style={styles.container} >
                 {!imageUri && <MaterialCommunityIcons name='camera' size={24} color={colors.secondary} />}
                 {imageUri && <Image style={styles.image} source={imageUri} />}
+                {error && <Feedback message={error} color='#5d5d5a' />}
             </View>
         </TouchableWithoutFeedback>
     )

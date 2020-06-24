@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { View, StyleSheet, FlatList, Platform, ScrollView, RefreshControl, Image, TouchableOpacity } from 'react-native'
 import * as Permissions from 'expo-permissions'
 import * as Location from "expo-location";
-import AsyncStorage from '@react-native-community/async-storage'
 
 import { API_URL } from 'nomad-client-logic/context'
 import NomadHeader from '../components/NomadHeader'
@@ -11,6 +10,7 @@ import AppTextInput from '../components/NomadTextInput'
 import NomadTitle from '../components/NomadTitle'
 import retrieveWorkspaces from 'nomad-client-logic/retrieve-workspaces'
 import retrieveUser from 'nomad-client-logic/retrieve-user'
+import Feedback from '../components/Feedback';
 
 
 
@@ -19,6 +19,7 @@ export default function Home({ navigation }) {
     const [workspaces, setWorkspaces] = useState([])
     const [user, setUser] = useState()
     const [image, setImage] = useState()
+    const [error, setError] = useState()
     const [refresh, setRefresh] = useState(false)
     const [categoryPressed, setCategoryPressed] = useState('')
 
@@ -29,19 +30,17 @@ export default function Home({ navigation }) {
 
     const getLocationWorkspaces = async (filter) => {
         try {
-            const token = await AsyncStorage.getItem('token')
-            if (token !== null) {
-                const user = await retrieveUser(token)
-                setUser(user)
-                setImage({ uri: `${API_URL}/users/${user.id}.jpg` })
-                const { coords: { latitude, longitude } } = await Location.getLastKnownPositionAsync()
-                const result = await retrieveWorkspaces(token, { latitude, longitude }, filter)
-                if (result) setWorkspaces(result)
-            } else {
-                console.log('error, token not found in homescreen') // TODO
-            }
+            setWorkspaces([])
+            const user = await retrieveUser()
+            setUser(user)
+            setImage({ uri: `${API_URL}/users/${user.id}.jpg` })
+            const { coords: { latitude, longitude } } = await Location.getLastKnownPositionAsync()
+            const result = await retrieveWorkspaces({ latitude, longitude }, filter)
+            setError()
+            setWorkspaces(result)
+
         } catch (e) {
-            console.log(e) // TODO HANDLE THIS
+            setError(e.message)
         }
     }
 
@@ -98,6 +97,7 @@ export default function Home({ navigation }) {
 
 
                     <NomadTitle title='Popular near you' />
+                    {error && <Feedback message={error} color='#5d5d5a' />}
                 </View>
                 <View style={styles.containerCards}>
                     <FlatList data={workspaces} keyExtractor={(workspace) => { return workspace._id + Math.random().toString() }}

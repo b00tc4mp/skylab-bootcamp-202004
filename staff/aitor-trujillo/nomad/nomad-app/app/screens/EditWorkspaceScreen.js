@@ -15,13 +15,13 @@ import { Formik } from 'formik'
 import * as Yup from "yup";
 import * as Permissions from "expo-permissions";
 import * as Location from "expo-location";
-import AsyncStorage from '@react-native-community/async-storage';
 
 import colors from '../styles/colors'
 import ErrorMessage from '../components/ErrorMessage'
 import AppPicker from '../components/Picker'
 import MapView, { Marker } from 'react-native-maps';
 import NomadTitle from '../components/NomadTitle';
+import Feedback from '../components/Feedback';
 
 const { createWorkspace } = require('nomad-client-logic')
 
@@ -58,6 +58,7 @@ const term = [
 export default ({ navigation }) => {
     const [location, setLocation] = useState()
     const [featureWifi, setFeatureWifi] = useState(false)
+    const [error, setError] = useState()
     const [featureParking, setFeatureParking] = useState(false)
     const [featureCoffee, setFeatureCoffee] = useState(false)
     const [featureMeetingRooms, setFeatureMeetingRooms] = useState(false)
@@ -77,15 +78,10 @@ export default ({ navigation }) => {
 
     const handleSubmit = async values => {
         try {
-            const token = await AsyncStorage.getItem('token')
-            if (token !== null) {
-                const result = await createWorkspace(token, values)
-                navigation.navigate('UploadImage', { id: result.id })
-            } else {
-                console.log('error, token not found in editworkspacescreen')
-            }
+            const result = await createWorkspace(values)
+            navigation.navigate('UploadImage', { id: result.id })
         } catch (e) {
-            console.log(e) // TODO HANDLE THIS
+            setError(e.message)
         }
     }
 
@@ -229,7 +225,7 @@ export default ({ navigation }) => {
                                     placeholder='Description'
                                     autoCorrect={false}
                                     textContentType='name'
-                                    maxLength={200}
+                                    maxLength={400}
                                     onChangeText={handleChange('description')}
                                     onBlur={() => setFieldTouched('description')}
                                     multiline
@@ -277,7 +273,7 @@ export default ({ navigation }) => {
                                         />
                                     </Text>
                                 </View>
-
+                                {error && <Feedback message={error} color='#5d5d5a' />}
                                 <AppButton title='Post' bgColor='secondary' txtColor='light' onPress={handleSubmit} />
                             </>
                         )}

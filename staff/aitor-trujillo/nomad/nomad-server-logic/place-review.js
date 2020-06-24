@@ -1,3 +1,18 @@
+/**
+ * Checks user credentials.
+ * 
+ * @param {string} userId The user id. 
+ * @param {string} workspaceId The workspace id. 
+ * @param {number} stars The punctuation for the workspace. 
+ * @param {string} text The user review for the workspace.
+ * 
+ * @returns {Promise<String>} Nothing if it resolves, an error if it rejects.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {UnexistenceError} Cannot find workspace by workspaceId.
+ * @throws {UnexistenceError} Cannot find user by userId.
+ */
+
 require('nomad-commons/polyfills/string')
 require('nomad-commons/polyfills/number')
 require('nomad-commons/polyfills/json')

@@ -8,7 +8,7 @@ const { expect } = require('chai')
 require('nomad-commons/polyfills/json')
 const { mongoose, models: { Workspace, User } } = require('nomad-data')
 
-describe('logic - create workspace', () => {
+describe('logic - search workspaces', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let workspaceRandom = {}
@@ -42,7 +42,7 @@ describe('logic - create workspace', () => {
             // timetable = `timetable-${random()}`
             photos: [`photo-${random()}`],
             phone: `phone-${random()}`,
-            features: { wifi: '100mb', parking: `km-${random()}`, coffee: true, meetingRooms: random() },
+            features: { wifi: true, parking: true, coffee: false, meetingRooms: true },
             description: `description-${random()}`,
             capacity: random(),
         }
@@ -52,9 +52,7 @@ describe('logic - create workspace', () => {
     })
 
     it('should succeed on valid query', async () => {
-        const workspaces = await searchWorkspaces('city') // ?
-
-        console.log(workspaces)
+        const workspaces = await searchWorkspaces('city')
 
         expect(workspaces).to.exist
 
@@ -76,6 +74,21 @@ describe('logic - create workspace', () => {
         expect(workspace.features.meetingRooms).to.equal(workspaceRandom.features.meetingRooms)
         expect(workspace.description).to.equal(workspaceRandom.description)
         expect(workspace.capacity).to.equal(workspaceRandom.capacity)
+    })
+    describe('when there is no workspaces for query', () => {
+        beforeEach(async () =>
+            await Workspace.deleteMany()
+        )
+
+        it('should fail on any workspaces found', async () => {
+
+            const results = await searchWorkspaces('city')
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    expect(error).to.be.an.instanceof(Error)
+                    expect(error.message).to.equal(`no matchings for "city"`)
+                })
+        })
     })
 
     afterEach(() => User.deleteMany().then(() => Workspace.deleteMany()))

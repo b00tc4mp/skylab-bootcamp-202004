@@ -14,6 +14,7 @@ import * as Yup from "yup";
 const { registerUser } = require('nomad-client-logic')
 import colors from '../styles/colors'
 import ErrorMessage from '../components/ErrorMessage'
+import Feedback from '../components/Feedback';
 
 const bgImage = require('../assets/background.jpg')
 
@@ -33,7 +34,7 @@ export default ({ navigation }) => {
                 await registerUser(name, surname, email, password)
                 navigation.navigate('Login')
             } catch (error) {
-                setError(error)
+                setError(error.message)
             }
         })()
     }
@@ -99,6 +100,7 @@ export default ({ navigation }) => {
                                 onBlur={() => setFieldTouched('password')}
                             />
                             <ErrorMessage error={errors.password} visible={touched.password} />
+                            {error && <Feedback message={error} color='#5d5d5a' />}
                             <AppButton title='Sign up!' bgColor='secondary' txtColor='light' onPress={handleSubmit} />
                         </>
                     )}
