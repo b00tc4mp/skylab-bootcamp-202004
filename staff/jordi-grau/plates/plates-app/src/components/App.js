@@ -4,7 +4,6 @@ import Container from './Container'
 import Login from './Login'
 import Home from './Home'
 import Landing from './Landing'
-import '../App.css';
 import {isUserAuthenticated, logoutUser} from 'plates-client-logic'
 import Feedback from './Feedback'
 
@@ -29,7 +28,7 @@ function App ({history}) {
             } catch (error) {
                 if(error) throw error
             }
-            else history.push('/')
+        else history.push('/')
 
     }, [])
  
