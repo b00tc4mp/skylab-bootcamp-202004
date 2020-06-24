@@ -11,6 +11,7 @@ import Account from './Account'
 import Portfolio from './Portfolio'
 import Settings from './Settings'
 import Search from './Search'
+import Feedback from './Feedback'
 import { faHome, faBars, faSignOutAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { isUserSessionValid, isUserLoggedIn, logoutUser } from 'gym-client-logic'

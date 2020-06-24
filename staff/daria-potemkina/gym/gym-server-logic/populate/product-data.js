@@ -4,27 +4,27 @@ const { mongoose, models: { Product, Option, Underlying } } = require('gym-data'
 
 mongoose.connect('mongodb://localhost:27017/gym-api')
 
-const future1 = new Product({
-    productType: 'future',
-    ticker: "BBVA",
-    exchange: 'MEFF',
-    sector: 'Banking',
-    contractSize: 100,
-    settlementDate: new Date('June 24, 2020 12:45:00')
-})
-
-future1.save()
-
-// const future2 = new Product({
+// const future1 = new Product({
 //     productType: 'future',
-//     ticker: "IBE",
-//     exchange: "MEFF",
-//     sector: 'Utilities',
+//     ticker: "BBVA",
+//     exchange: 'MEFF',
+//     sector: 'Banking',
 //     contractSize: 100,
-//     settlementDate: new Date('June 25, 2020 17:30:00')
+//     settlementDate: new Date('June 24, 2020 12:45:00')
 // })
 
-// future2.save()
+// future1.save()
+
+const future2 = new Product({
+    productType: 'future',
+    ticker: "IBE",
+    exchange: "MEFF",
+    sector: 'Utilities',
+    contractSize: 100,
+    settlementDate: new Date('June 24, 2020 23:59:00')
+})
+
+future2.save()
 
 // const future3 = new Product({
 //     productType: 'future',
