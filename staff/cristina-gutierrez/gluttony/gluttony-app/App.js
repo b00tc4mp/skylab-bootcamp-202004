@@ -23,8 +23,12 @@ const App = () => {
         onGoToMapBar={ () => setView("mapBar") } 
         onGoToMapRestaurant={ () => setView("mapRestaurant") } 
       /> }
-      { view === "mapBar" && <MapBar/> }
-      { view === "mapRestaurant" && <MapRestaurant /> }
+      { view === "mapBar" && <MapBar
+        onShowModal={ () => setModalVisible(true) }
+      /> }
+      { view === "mapRestaurant" && <MapRestaurant 
+        onShowModal={ () => setModalVisible(true) }
+      /> }
       { view === "profilePage" && <ProfilePage 
         onShowModal={ () => setModalVisible(true) }
         onGoToHome={ () => setView("home") }

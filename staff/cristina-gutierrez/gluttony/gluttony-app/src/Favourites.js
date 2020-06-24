@@ -7,7 +7,6 @@ import {
     Image
 } from "react-native";
 import { getFavourites } from "../gluttony-client-logic";
-import Store from "./Store";
 
 const Favourites = (props) => {
     const [favourites, setFavourites] = useState();

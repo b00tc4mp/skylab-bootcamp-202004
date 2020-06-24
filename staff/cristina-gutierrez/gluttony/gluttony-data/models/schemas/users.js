@@ -31,7 +31,6 @@ module.exports = new Schema({
 
     favouriteStores: [{
         type: String,
-        ref: "Stores",
-        unique: true
+        ref: "Stores"
     }]
 })

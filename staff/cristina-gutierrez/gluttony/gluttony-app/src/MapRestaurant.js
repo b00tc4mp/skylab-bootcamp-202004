@@ -5,22 +5,28 @@ import {
     View,
     Dimensions
 } from "react-native";
-import { findNearbyRestaurants } from "../gluttony-client-logic"
+import { findNearbyRestaurants, getFavourites } from "../gluttony-client-logic"
 import Store from "./Store"
 
-const MapRestaurant = () => {
+const MapRestaurant = props => {
     const [userLatitude, setUserLatitude] = useState();
     const [userLongitude, setUserLongitude] = useState();
     const [restaurant, setRestaurant] = useState();
+    const [isFavourite, setIsFavourite] = useState(false);
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition(pos => {
-            setUserLatitude(pos.coords.latitude)
-            setUserLongitude(pos.coords.longitude)
-
-            findNearbyRestaurants(pos.coords.latitude, pos.coords.longitude)
-                .then(restaurant => setRestaurant(restaurant))
-        })
+            navigator.geolocation.getCurrentPosition(pos => {
+                setUserLatitude(pos.coords.latitude)
+                setUserLongitude(pos.coords.longitude)
+    
+                findNearbyRestaurants(pos.coords.latitude, pos.coords.longitude)
+                    .then(restaurant => setRestaurant(restaurant))
+                    .then(() => getFavourites())
+                    .then(favourites => {
+                        if (!Array.isArray(favourites)) return
+                        setIsFavourite(!!favourites.find(favourite => favourite.id === restaurant.id))
+                    })
+            })
     }, [])
 
     return (
@@ -52,7 +58,7 @@ const MapRestaurant = () => {
                     }}
                 >
                     <Callout>
-                        <Store store={restaurant}/>
+                        <Store store={bar} isFavourite={isFavourite} onShowModal={props.onShowModal} />
                     </Callout>
                 </Marker>}
             </MapView>

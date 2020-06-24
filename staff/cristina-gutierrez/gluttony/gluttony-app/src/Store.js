@@ -9,15 +9,21 @@ import {
 } from "react-native";
 import { addFavourite } from "../gluttony-client-logic";
 
-const Store = (props) => {
+const Store = props => {
     return (
         <View style={styles.store}>
             <Image source={{uri: props.store.thumbnail}} style = {{height: 50, width: 50, margin: 5 }} />
             <Text>{props.store.name}</Text>
             <Text>{props.store.type}</Text>
-            <TouchableOpacity style={styles.button} title= "Add to favourites" onPress={ () => addFavourite(props.store.id) }>
+            { props.isFavourite ? <TouchableOpacity style={styles.button} title= "Remove favourite" onPress={() => {
+                addFavourite(props.store.id).catch(props.onShowModal)
+            }} >
+                <Text style={{ ...styles.textStyle, textAlign: "center" }}>Remove favourite</Text>
+            </TouchableOpacity> : <TouchableOpacity style={styles.button} title= "Add to favourites" onPress={() => {
+                addFavourite(props.store.id).catch(props.onShowModal)
+            }} >
                 <Text style={{ ...styles.textStyle, textAlign: "center" }}>Add to favourites</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>}
             <Text style={styles.textStyle}>Leave a comment:</Text>
             <TextInput style={styles.input} />
         </View>
