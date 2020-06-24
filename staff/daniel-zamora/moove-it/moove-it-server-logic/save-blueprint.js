@@ -5,14 +5,10 @@ const { models: { Blueprint, User } } = require('moove-it-data')
 const { errors: { UnexistenceError } } = require('moove-it-commons')
 
 module.exports = (userId, blueprintId, items) => {
-    debugger
-
-    console.log(blueprintId)
+    
     String.validate.notVoid(userId)
-    // items= new Array(items)
-    console.log(typeof items)
-    // Array.validate(items)
-    // return items
+    String.validate.notVoid(blueprintId)
+    Array.validate(items)
 
     return (async() => {
         let user = await User.findById(userId)
