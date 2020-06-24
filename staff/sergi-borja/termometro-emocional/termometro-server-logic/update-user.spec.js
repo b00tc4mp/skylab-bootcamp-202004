@@ -15,7 +15,7 @@ const updateUser = require('./update-user')
 describe('logic - update user', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let name, surname, email, password, userId, plan, mood, sex, age, data
+    let name, surname, email, password, userId, mood, sex, age, data, location, userToUpdate
     let genderArray = ['M', 'F']
 
     beforeEach(() =>
@@ -31,16 +31,16 @@ describe('logic - update user', () => {
                     date: Date.now(),
                     score: Math.floor(Math.random() * 10)
                 }
-                plan = 'twice';
                 data = {
                     name: 'Sergi'
                 }
+                location = 'Barcelona'
             })
     )
 
     describe('prove update works', () => {
         beforeEach(() =>
-            User.create({ name, surname, age, sex, email, password, plan, mood })
+            User.create({ name, surname, age, sex, location, email, password, mood })
                 .then(user => userId = user.id)
         )
 
@@ -79,82 +79,46 @@ describe('logic - update user', () => {
 
         })
     })
-    // it('should fail when user does not exist', () =>
-    // authenticateUser(email, password)
-    //     .then(() => { throw new Error('should not reach this point') })
-    //     .catch(error => {
-    //         expect(error).to.be.an.instanceof(Error)
-    //         expect(error.message).to.equal('Este email no existe')
-    //     })
-    // )
-    // })
 
-    // it('should fail on trying to remove a whole product that is not already in cart', () =>
-    //     updateCart(userId, productId, quantity = 0)
-    //         .then(() => { throw new Error('it should not reach this point') })
-    //         .catch(error => {
-    //             expect(error).to.exist
+    describe('if email already exists', () => {
+        beforeEach(async () => {
+            const userCreated = await User.create({ name, surname, age, sex, location, email, password, mood })
 
-    //             expect(error).to.be.instanceOf(UnexistenceError)
-    //             expect(error.message).to.equal(`product with id ${productId} does not exist in cart for user with id ${userId}`)
-    //         })
-    // )
+            data = {
+                email: userCreated.email
+            }
 
-    // it('should fail on negative quantity', () => {
-    //     quantity = -1
+            name = `name-${random()}`
+            surname = `surname-${random()}`
+            age = Math.floor(Math.random() * 100);
+            sex = genderArray[Math.floor(genderArray.length * Math.random())];
+            email = `e-${random()}@mail.com`
+            password = `password-${random()}`
+            mood = {
+                date: Date.now(),
+                score: Math.floor(Math.random() * 10)
+            }
+            data = {
+                name: 'Sergi'
+            }
+            location = 'Barcelona'
 
-    //     expect(() => updateCart(userId, productId, quantity))
-    //         .to.throw(ValueError, `${quantity} is not a positive number`)
-    // })
+            userToUpdate = await User.create({ name, surname, age, sex, location, email, password, mood })
 
-    // it('should fail on non-string user id', () => {
-    //     expect(() => updateCart(true, productId, quantity))
-    //         .to.throw(TypeError, `true is not a string`)
+        })
 
-    //     expect(() => updateCart(1, productId, quantity))
-    //         .to.throw(TypeError, `1 is not a string`)
-    // })
 
-    // it('should fail on non-string product id', () => {
-    //     expect(() => updateCart(userId, true, quantity))
-    //         .to.throw(TypeError, `true is not a string`)
+        it('should fail on updating credentials', () => {
+            updateUser(userToUpdate.id, data)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(error => {
+                    expect(error).to.be.an.instanceof(Error)
+                    expect(error.message).to.equal('Este email ya está en uso!')
+                })
 
-    //     expect(() => updateCart(userId, 1, quantity))
-    //         .to.throw(TypeError, `1 is not a string`)
-    // })
+        })
+    })
 
-    // it('should fail on non-numeric quantity', () => {
-    //     expect(() => updateCart(userId, productId, true))
-    //         .to.throw(TypeError, `true is not a number`)
-
-    //     expect(() => updateCart(userId, productId, 'abc'))
-    //         .to.throw(TypeError, `abc is not a number`)
-
-    //     expect(() => updateCart(userId, productId, NaN))
-    //         .to.throw(TypeError, `NaN is not a number`)
-    // })
-
-    // it('should fail when user does not exist', () =>
-    //     updateCart(userId = ObjectId().toString(), productId, 1)
-    //         .then(() => { throw new Error('it should not reach this point') })
-    //         .catch(error => {
-    //             expect(error).to.exist
-
-    //             expect(error).to.be.instanceOf(UnexistenceError)
-    //             expect(error.message).to.equal(`user with id ${userId} does not exist`)
-    //         })
-    // )
-
-    // it('should fail when product does not exist', () =>
-    //     updateCart(userId, productId = ObjectId().toString(), 1)
-    //         .then(() => { throw new Error('it should not reach this point') })
-    //         .catch(error => {
-    //             expect(error).to.exist
-
-    //             expect(error).to.be.instanceOf(UnexistenceError)
-    //             expect(error.message).to.equal(`product with id ${productId} does not exist`)
-    //         })
-    // )
 
     afterEach(() => User.deleteMany())
 

@@ -3,6 +3,15 @@ require('termometro-commons/polyfills/function')
 const { utils: { call } } = require('termometro-commons')
 const context = require('./context')
 
+/**
+ * Searches and get the user from the api using the token
+ * 
+ * @param {string} token the token 
+ * 
+ * @returns {Object} returns the object of the user found 
+ * 
+ * @throws {Error} if the token is invalid.
+ */
 
 module.exports = function (token) {
     String.validate.notVoid(token)

@@ -1,6 +1,16 @@
 const { utils: { call } } = require('termometro-commons')
 const context = require('./context')
 
+/**
+ * Deletes an existing user. If the token is defined, it deletes an admin account, otherwise, deletes a member accound using the id.
+ * 
+ * @param {string} userId The id of the member.
+ * @param {string} token the token.
+ * 
+ * 
+ * @throws {Error} If userId or token are invalid
+ */
+
 module.exports = function (userId, token) {
 
     return !token?

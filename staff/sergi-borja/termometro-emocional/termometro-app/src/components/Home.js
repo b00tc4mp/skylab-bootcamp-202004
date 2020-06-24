@@ -9,7 +9,7 @@ function Home({ userName }) {
   return (
     <section className='homeContainer'>
       <h1 className='homeContainer__title'>Bienvenido al termometro de la autoestima, {userName} </h1>
-      <p className='homeContainer__text'>{randomSentence}</p>
+  <p className='homeContainer__text'>{randomSentence.sentence}<br/><br/>{randomSentence.author}</p>
     </section>
   );
 }

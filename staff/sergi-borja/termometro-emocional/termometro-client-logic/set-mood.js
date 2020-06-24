@@ -2,6 +2,16 @@ const { utils: { call } } = require('termometro-commons')
 const context = require('./context')
 const moment = require('moment')
 
+/**
+ * Get the user logged and updates it with the new mood score
+ * 
+ * @param {string} token The token.
+ * @param {Number} moodScore The score user chose.
+ * 
+ * 
+ * @throws {Error} If token or moodScore are invalid.
+ */
+
 module.exports = function (token, moodScore) {
 
     return call('GET', `${this.API_URL}/users`,
