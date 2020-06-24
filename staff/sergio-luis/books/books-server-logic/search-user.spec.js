@@ -33,7 +33,7 @@ describe('server-logic-search-user', () => {
     })
 
     it('Sould success to find a owner user', async () => {
-        query = 'name'
+        query = 'mail'
 
         const [user] = await searchUser(query)
 
@@ -41,7 +41,7 @@ describe('server-logic-search-user', () => {
         expect(user.name).to.equal(name)
         expect(user.surname).to.equal(surname)
         expect(user.email).to.equal(email)
-        expect(user._id.toString()).to.equal(userId)
+        expect(user.id).to.equal(userId)
     })
 
     it('Sould succed to no find any user', async () => {

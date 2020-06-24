@@ -51,9 +51,8 @@ describe("sendMessage", () => {
     })
 
     it("should succeed on sending a message", async() => {
-        const _message = await sendMessage(userId, secondUserId, bookId, textMessage)
-        messageId = _message.id
-
+        messageId = await sendMessage(userId, secondUserId, bookId, textMessage)
+      
         const [message] = await Message.find({ _id: messageId})
 
         expect(message).to.exist

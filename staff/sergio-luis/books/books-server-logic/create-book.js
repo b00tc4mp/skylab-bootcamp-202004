@@ -43,7 +43,7 @@ module.exports = (userId, title, image, description, barCode) => {
             travelKm: 0,
         })
       
-        return await  createdBook._id.toString()
+        return createdBook._id.toString()
     })()
 }
 

@@ -65,7 +65,7 @@ describe("client-logic-list-share-books", () => {
 
         books.forEach(book=>{
             expect(book).to.exist
-            expect(book._id.toString()).to.equal(bookId)
+            expect(book.id).to.equal(bookId)
             expect(book.ownerUserId.toString()).to.equal(userId)
             expect(book.actualUserId.toString()).to.equal(secondUserId)
         })
@@ -83,6 +83,7 @@ describe("client-logic-list-share-books", () => {
         await context.storage.setItem('token',_token)
         try {
             await listShareBooks(_token)
+            throw new Error('Sould not arrive to this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
@@ -94,10 +95,11 @@ describe("client-logic-list-share-books", () => {
 
         try {
             await listShareBooks(token)
+            throw new Error('Sould not arrive to this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
-            expect(error.message).to.equal("Dont`t have books in your library")
+            expect(error.message).to.equal("You have no shared books")
         }
     })
 

@@ -55,7 +55,7 @@ describe("list-share-books", () => {
 
         books.forEach(book=>{
             expect(book).to.exist
-            expect(book._id.toString()).to.equal(bookId)
+            expect(book.id).to.equal(bookId)
             expect(book.ownerUserId.toString()).to.equal(userId)
             expect(book.actualUserId.toString()).to.equal(secondUserId)
         })
@@ -82,10 +82,11 @@ describe("list-share-books", () => {
 
         try {
             await listShareBooks(userId)
+            
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
-            expect(error.message).to.equal("Dont`t have books in your library")
+            expect(error.message).to.equal("You have no shared books")
         }
     })
 

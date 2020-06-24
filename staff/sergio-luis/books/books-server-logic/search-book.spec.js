@@ -50,16 +50,32 @@ describe('server-logic-search-book', () => {
 
     })
 
-    it('Sould success to find a book', async() => {
+    it('Sould success no find a book because is your', async() => {
         query = 'lord'
 
         const [books] = await searchBook(userId,query)
+        expect(books).to.be.undefined
+    
+    })
+    it('Sould success to find a book ', async() => {
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `e-${random()}@mail.com`
+        password = `password-${random()}`
+        hash = await bcrypt.hash(password, 10)
+        const user = await User.create({ name, surname, email, password: hash })
 
-        expect(books).to.exist
-        expect(books.title).to.equal(createdBook.title)
-        expect(books.image).to.equal(createdBook.image)
-        expect(books.barCode).to.equal(createdBook.barCode)
-        expect(books.actualUserId.toString()).to.equal(userId)
+        userId = user.id
+        query = 'lord'
+
+
+        const [books] = await searchBook(userId,query)
+        expect(books).to.be.exist
+        expect(books.title).to.equal(title)
+        expect(books.image).to.equal(image)
+        expect(books.description).to.equal(description)
+        expect(books.barCode).to.equal(barCode)
+    
     })
 
     it('Sould fail on no find any book', async() => {

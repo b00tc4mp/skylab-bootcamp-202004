@@ -54,7 +54,7 @@ describe("retrieve-requested-book", () => {
 debugger
         books.forEach(book=>{
             expect(book).to.exist
-            expect(book._id.toString()).to.equal(bookId)
+            expect(book.id).to.equal(bookId)
             expect(book.ownerUserId.toString()).to.equal(secondUserId)
             expect(book.actualUserId.toString()).to.equal(secondUserId)
             expect(book.title.toString()).to.equal(title)

@@ -59,7 +59,7 @@ describe('server-logic-create-book', () => {
             userId='5edfa731dc7edc93965e8f68'
 
             try{
-                await createBook(userId, book.title,book.image,book.description,book.barCode)
+                await createBook(userId, title,image,description,barCode)
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.exist
@@ -74,31 +74,31 @@ describe('server-logic-create-book', () => {
 
             it('should fail on non-string field', () => {
                 expect(() => {
-                    createBook(true, book.title,book.image,book.description,book.barCode)
+                    createBook(true, title,image,description,barCode)
                 }).to.throw(TypeError, 'true is not a string')
                 expect(() => {
-                    createBook(userId, 123,book.image,book.description,book.barCode)
+                    createBook(userId, 123,image,description,barCode)
                 }).to.throw(TypeError, '123 is not a string')
                 expect(() => {
-                    createBook(userId, book.title,book.image,book.description,false)
+                    createBook(userId, title,image,description,false)
                 }).to.throw(TypeError, 'false is not a string')
                 expect(() => {
-                    createBook(userId, book.title,123,book.description,book.barCode)
+                    createBook(userId, title,123,description,barCode)
                 }).to.throw(TypeError, '123 is not a string')
             })
 
             it('should fail on empty field', () => {
                 expect(() => {
-                    createBook('', book.title,book.image,book.description,book.barCode)
+                    createBook('', title,image,description,barCode)
                 }).to.throw(VoidError, 'string is empty or blank')
                 expect(() => {
-                    createBook(userId, '',book.image,book.description,book.barCode)
+                    createBook(userId, '',image,description,barCode)
                 }).to.throw(VoidError, 'string is empty or blank')
                 expect(() => {
-                    createBook(userId, book.title,book.image,book.description,'')
+                    createBook(userId, title,image,description,'')
                 }).to.throw(VoidError, 'string is empty or blank')
                 expect(() => {
-                    createBook(userId, book.title,'',book.description,book.barCode)
+                    createBook(userId, title,'',description,barCode)
                 }).to.throw(VoidError, 'string is empty or blank')
             })
     

@@ -33,7 +33,13 @@ module.exports = (userId) => {
 
         debugger
         if(!received.length)throw new UnexistenceError("the user don`t have recieved messages");
-
-         return received
+        const _received = received.map(message => {
+            message.id = message._id.toString();
+            delete message._id;
+            delete message.__v;
+            return message
+        })
+  
+          return await _received
     })()
 }

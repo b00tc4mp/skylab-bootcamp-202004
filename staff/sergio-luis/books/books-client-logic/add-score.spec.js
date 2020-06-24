@@ -71,7 +71,7 @@ describe("client-logic-add-score", () => {
         const secondUser = await User.findById(secondUserId)
         
         const [{user,points}] = secondUser.score
-   
+     
         expect(user.toString()).to.equal(userId)
         expect(points).to.equal(points)
         expect(secondUser.avgScore).to.equal(_points)

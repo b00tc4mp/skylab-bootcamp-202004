@@ -15,7 +15,6 @@ const { utils: {call} } = require('books-commons')
 const context = require('./context')
 
 module.exports = function (query) {
-    
     if(query)String.validate.notVoid(query)
 
     return (async()=>{

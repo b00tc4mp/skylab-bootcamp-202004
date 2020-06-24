@@ -57,14 +57,14 @@ describe("client-logic-retrieve-requested-book", () => {
         await context.storage.setItem('token',token)
     })
 
-    it("should succeed add a accept share book", async() => {
-        await User.findByIdAndUpdate(userId, {$push: {requestedBooks : bookId }})
+    it("should succeed retrieve a requested book", async() => {
+        await User.findByIdAndUpdate(secondUserId, {$addToSet: {requestedBooks : bookId }})
 
         const books = await retrieveRequestedBooks()
 
         books.forEach(book=>{
             expect(book).to.exist
-            expect(book._id.toString()).to.equal(bookId)
+            expect(book.id).to.equal(bookId)
             expect(book.ownerUserId.toString()).to.equal(secondUserId)
             expect(book.actualUserId.toString()).to.equal(secondUserId)
             expect(book.title.toString()).to.equal(title)
@@ -74,10 +74,11 @@ describe("client-logic-retrieve-requested-book", () => {
     it('Sould fail dont find userId', async () => {
         userId = '5edf984ec1be038dc909f783'
 
-        const _token = await jwtPromised.sign({ sub: secondUserId}, SECRET)
+        const _token = await jwtPromised.sign({ sub: userId}, SECRET)
         await context.storage.setItem('token',_token)
         try {
             await retrieveRequestedBooks()
+            throw new Error ('Sould not arraive to this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)
@@ -89,6 +90,7 @@ describe("client-logic-retrieve-requested-book", () => {
 
         try {
             await retrieveRequestedBooks()
+            throw new Error ('Sould not arraive to this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceof(Error)

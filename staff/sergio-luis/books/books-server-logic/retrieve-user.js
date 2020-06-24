@@ -23,6 +23,8 @@ module.exports = userId => {
             user.id = user._id.toString()
 
             delete user._id
+            delete user.password
+            delete user.__v
       
             return user
         })

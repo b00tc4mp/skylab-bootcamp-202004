@@ -60,7 +60,7 @@ describe("client-logic-accept-share-book", () => {
         await shareBook(secondUserId,bookId)
 
         const book = await Book.findById(bookId)
-
+   
         expect(book).to.exist
         expect(book.actualUserId.toString()).to.equal(secondUserId)
         expect(book.ownerUserId.toString()).to.equal(userId) 

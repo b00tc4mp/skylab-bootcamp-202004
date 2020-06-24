@@ -34,7 +34,7 @@ describe('call', () => {
         const resp3 = await call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined, { 'Authorization': `Bearer ${token}` })
         const {status:status3,body:body3}= resp3
 
-                    //console.log(status, body)
+                
                     expect(status3).to.equal(200)
                     expect(body3).to.exist
 

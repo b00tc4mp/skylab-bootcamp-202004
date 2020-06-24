@@ -31,13 +31,13 @@ module.exports = (userId) => {
         if(!followingUsers.length)throw new UnexistenceError("you don`t have any users following");
         
 
-        followingUsers.forEach(user => {
+        const _followingUsers = followingUsers.map(user => {
             user.id = user._id.toString();
-
             delete user._id;
             delete user.__v;
             delete user.password;
+            return user
         })
-        return followingUsers
+        return _followingUsers
     })()
 }

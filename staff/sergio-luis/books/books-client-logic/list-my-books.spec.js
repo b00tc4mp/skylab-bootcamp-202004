@@ -57,12 +57,12 @@ describe("client-logic-list-my-books", () => {
         await context.storage.setItem('token',token)
     })
 
-    it("should succeed add a accept share book", async() => {
+    it("should succeed to list books", async() => {
         const books = await listMyBooks()
 
         books.forEach(book=>{
             expect(book).to.exist
-            expect(book._id.toString()).to.equal(bookId)
+            expect(book.id).to.equal(bookId)
             expect(book.ownerUserId.toString()).to.equal(userId)
             expect(book.actualUserId.toString()).to.equal(userId)
         })

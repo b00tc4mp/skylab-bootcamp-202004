@@ -11,7 +11,7 @@
 const { utils: { call } } = require('books-commons')
 const context = require('./context')
 
-module.exports = function (token) {
+module.exports = function () {
 
     return (async() => { 
         const token = await this.storage.getItem('token')

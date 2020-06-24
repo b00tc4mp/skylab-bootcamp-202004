@@ -1,7 +1,6 @@
 require('dotenv').config()
 
 const { env: { MONGODB_URL_TEST: MONGODB_URL , TEST_API_URL: API_URL,SECRET} } = process
-console.log(SECRET)
 
 const retrieveUser = require('./retrieve-user')
 const { random } = Math

@@ -39,4 +39,6 @@ module.exports = {
     addScore: require('./add-score'),
     retrieveAvgScore: require('./retrieve-avg-score'),
     //---------------------------------
+    isUserSessionValid: require('./is-user-session-valid'),
+    isUserLoggedIn: require('./is-user-logged-in')
 }

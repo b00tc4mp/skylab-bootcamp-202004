@@ -31,14 +31,14 @@ module.exports = (userId, query) => {
  
         const _books = books.map(book => {
             if(userId !== book.actualUserId.toString()){
-
                 book.id = book._id.toString();
                 delete book._id;
                 delete book.__v;
                 return book
             }
         })
-        return await _books
+        
+        return _books
     })()
 }
 

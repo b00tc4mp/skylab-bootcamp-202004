@@ -25,23 +25,19 @@ module.exports = (userId) => {
 
         if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`);
 
-        let books = await Book.find({ ownerUserId: userId  })
-        const book = await Book.find({ toUserId: userId })
-        .populate('fromUserId', 'name')
-        .populate('bookId', 'title image')
-        .lean()
+        let books = await Book.find({ ownerUserId: userId  }).lean()
 
-        books = books.filter(book=> book.actualUserId !== userId)
+        books = books.filter(book=> book.actualUserId.toString() !== userId)
 
-        if (!books.length) throw new UnexistenceError("Dont`t have books sharing")
+        if (!books.length) throw new UnexistenceError("You have no shared books")
 
-        books.forEach(book => {
+        const _books = books.map(book => {
             book.id = book._id.toString();
-  
             delete book._id;
             delete book.__v;
+            return book
         })
-
-        return books
+        
+          return _books
     })()
 }

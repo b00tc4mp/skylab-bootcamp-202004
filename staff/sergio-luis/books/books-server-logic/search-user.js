@@ -24,11 +24,14 @@ module.exports = (query) => {
         user = await User.find({ email: { $regex: `${query}`, $options: 'i' } }).lean().sort({ email: 1 }).limit(10)
         if (!user.length) throw new UnexistenceError("This user search don`t find any results")
     
-        user.forEach(user=>{
+        const _user = user.map(user=>{
+            user.id = user._id.toString()
+            delete user._id;
             delete user.password
             delete user.__v
+            return user
         })
- 
-        return user
+       
+        return _user
     })()
 }

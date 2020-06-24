@@ -42,7 +42,7 @@ module.exports = (fromUserId, toUserId, bookId, textMessage) => {
             User.findByIdAndUpdate(fromUserId, {$addToSet: { sendMessages: message.id }}),
             User.findByIdAndUpdate(toUserId, {$addToSet: {receivedMessages: message.id}})
         ])
-
+     
         return message.id
     })()
 }

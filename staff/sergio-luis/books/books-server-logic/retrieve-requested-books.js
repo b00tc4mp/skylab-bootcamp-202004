@@ -19,18 +19,19 @@ module.exports = (userId) => {
     String.validate.notVoid(userId)
 
     return (async() => {
-        const user = await User.findById(userId).populate('requestedBooks')
+        const user = await User.findById(userId).populate('requestedBooks').lean()
+  
         if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`);
 
-        if(!user.requestedBooks.length)new UnexistenceError("you don`t have any books requested");
+        if(!user.requestedBooks.length) throw new UnexistenceError("you don`t have any books requested");
 
-        user.requestedBooks.forEach(book =>{
+        const request = user.requestedBooks.map(book =>{
             book.id = book._id.toString();
-
             delete book._id;
             delete book.__v;
+            return book
         })
 
-        return user.requestedBooks
+        return request
     })()
 }

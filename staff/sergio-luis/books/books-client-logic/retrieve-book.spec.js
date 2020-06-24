@@ -46,7 +46,7 @@ describe("client-logic-retrieve-book", () => {
         expect(book.title).to.equal(title)
         expect(book.barCode).to.equal(barCode)
         expect(book.travelKm).to.equal(travelKm)
-        expect(book.ownerUserId.toString()).to.equal(userId)
+        expect(book.ownerUserId._id.toString()).to.equal(userId)
       
     })
 

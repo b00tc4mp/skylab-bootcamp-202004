@@ -1,4 +1,3 @@
-
 const context = require('./context')
 
 module.exports = async function () {

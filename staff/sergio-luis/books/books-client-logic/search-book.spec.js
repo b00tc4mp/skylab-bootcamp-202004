@@ -46,7 +46,27 @@ describe('client-logic-search-book', () => {
         await context.storage.setItem('token',token)
     })
 
-    it('Sould success to find a book', async() => {
+    it('Sould success no to find a book because it is your', async() => {
+        query = 'title'
+
+        const [books] = await searchBook(query)
+
+        expect(books).to.be.null
+    })
+
+    it('Sould success no to find a book another user', async() => {
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `e-${random()}@mail.com`
+        password = `password-${random()}`
+        hash = await bcrypt.hash(password, 10)
+
+        const _user = await User.create({ name, surname, email, password: hash })
+        const _userId = _user.id
+
+        const _token = await jwtPromised.sign({ sub: _userId}, SECRET)
+        await context.storage.setItem('token',_token)
+
         query = 'title'
 
         const [books] = await searchBook(query)
@@ -55,7 +75,6 @@ describe('client-logic-search-book', () => {
         expect(books.title).to.equal(title)
         expect(books.image).to.equal(image)
         expect(books.barCode).to.equal(barCode)
-        expect(books.actualUserId.toString()).to.equal(userId)
     })
 
     it('Sould fail on no find any book', async() => {

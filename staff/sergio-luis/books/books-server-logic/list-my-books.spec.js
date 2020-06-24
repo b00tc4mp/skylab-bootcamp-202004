@@ -52,7 +52,7 @@ describe("list-my-books", () => {
 
         books.forEach(book=>{
             expect(book).to.exist
-            expect(book._id.toString()).to.equal(bookId)
+            expect(book.id).to.equal(bookId)
             expect(book.ownerUserId.toString()).to.equal(userId)
             expect(book.actualUserId.toString()).to.equal(userId)
         })
