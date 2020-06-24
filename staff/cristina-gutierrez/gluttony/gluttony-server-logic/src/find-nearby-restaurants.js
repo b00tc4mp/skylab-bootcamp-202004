@@ -38,5 +38,4 @@ module.exports = (latitude, longitude) => {
 
             return store
         })
-        .catch(console.log)
 }
