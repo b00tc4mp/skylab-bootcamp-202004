@@ -3,6 +3,13 @@ require('plates-commons/utils/email')
 const {utils: { Email }, errors: { DuplicityError, VoidError, UnexsitenceError } } = require('plates-commons')
 const {mongoose, models: { User }} = require('plates-data')
 
+/**
+ * function makes a search on db, with passed query. Returns user's email.
+ * @param {email} email 
+ * 
+ * @throws error if a no valid type of email is passed.
+ * @throws error if user's email is not registered in db.
+ */
 module.exports = (email) => {
     
     String.validate.notVoid(email)

@@ -12,7 +12,7 @@ module.exports = (email, password)=>{
     return User.findOne({ email })
 
     /**
-     * Promise funcition, sends info needed to api for authentication.
+     * Promise funcition, sends info needed to api for authentication. A promise is passed
      * @param {string} email required data for authentication.
      * @param {string} password required data for authentication, encrypted with bcrypt.
      * 

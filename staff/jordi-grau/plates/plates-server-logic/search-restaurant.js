@@ -2,7 +2,12 @@ require('plates-commons/polyfills/string')
 require('plates-commons/utils/email')
 const {utils: { Email }, errors: { DuplicityError, VoidError, UnexsitenceError } } = require('plates-commons')
 const {mongoose, models: {  Restaurant, Dish }} = require('plates-data')
-
+/**
+ * Function makes a search with passed query. Returns all restaurants that macth with query.
+ * @param {string} query  data required to succes in search function.
+ * 
+ * @throws UnexistenceError if no match is founded.
+ */
 module.exports = (query) => {
     
     String.validate.notVoid(query)
