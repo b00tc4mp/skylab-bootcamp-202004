@@ -1,10 +1,11 @@
 import React from 'react'
+import './RestaurantItem.sass'
 
 
 export default function RestaurantItem({data:{_id, name, address}, onToDetails}){
      
-    return <div className="restaurantItem">
-        <button className="restaurant_item" onClick={()=>onToDetails(_id)}>{name}</button>
+    return <div  className="restaurantitem">
+        <a href="#"  className="restaurantitem__data" onClick={()=>onToDetails(_id)}>{name}</a>
         <span>{address}</span>
     </div>
 
