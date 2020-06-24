@@ -2,7 +2,6 @@ const { env: { MAIL_SERVICE, MAIL_USER, MAIL_PASS } } = process
 const { context, sendSymptomlistByEmail } = require('server-logic')
 const { handleError } = require('../../helpers')
 const { utils: { mailer } } = require('node-commons')
-const context = require('./context')
 
 context.mailer = mailer(MAIL_SERVICE, MAIL_USER, MAIL_PASS)
 

@@ -12,7 +12,7 @@ context.mailer = mailer(MAIL_SERVICE, MAIL_USER, MAIL_PASS)
 
 const sendSymptomlistByEmail = require('./send-symptomlist-by-email')
 
-describe.only('server logic - retrieve-terms-by-query', () => {
+describe('server logic - retrieve-terms-by-query', () => {
     let email, text, html
 
     beforeEach(() => {
@@ -30,51 +30,69 @@ describe.only('server logic - retrieve-terms-by-query', () => {
     it('should fail when input does not fit the format', () => {
         email = ""
 
-        sendSymptomlistByEmail(email, text, html)
-            .catch(error => {
-                expect(error).to.be.an.instanceof(VoidError)
-                expect(error.message).to.equal(`string is empty or blank`)
-            })
+        try{
+            sendSymptomlistByEmail(email, text, html)
+
+        }catch(error){
+            expect(error).to.be.an.instanceof(VoidError)
+
+            expect(error.message).to.equal(`string is empty or blank`)
+        }
 
         email = []
 
-        sendSymptomlistByEmail(email, text, html)
-            .catch(error => {
-                expect(error).to.be.an.instanceof(TypeError)
-                expect(error.message).to.equal(` is not a string`)
-            })
+        try{
+            sendSymptomlistByEmail(email, text, html)
+
+        }catch(error){
+            expect(error).to.be.an.instanceof(TypeError)
+
+            expect(error.message).to.equal(' is not a string')
+        }
 
         text = ""
 
-        sendSymptomlistByEmail(email, text, html)
-            .catch(error => {
-                expect(error).to.be.an.instanceof(VoidError)
-                expect(error.message).to.equal(`string is empty or blank`)
-            })
+        try{
+            sendSymptomlistByEmail(email, text, html)
+
+        }catch(error){
+            expect(error).to.be.an.instanceof(TypeError)
+
+            expect(error.message).to.equal(' is not a string')
+        }
 
         text = []
 
-        sendSymptomlistByEmail(email, text, html)
-            .catch(error => {
-                expect(error).to.be.an.instanceof(TypeError)
-                expect(error.message).to.equal(` is not a string`)
-            })
+        try{
+            sendSymptomlistByEmail(email, text, html)
+
+        }catch(error){
+            expect(error).to.be.an.instanceof(TypeError)
+
+            expect(error.message).to.equal(' is not a string')
+        }
+
 
         html = ""
 
-        sendSymptomlistByEmail(email, text, html)
-            .catch(error => {
-                expect(error).to.be.an.instanceof(VoidError)
-                expect(error.message).to.equal(`string is empty or blank`)
-            })
+        try{
+            sendSymptomlistByEmail(email, text, html)
+
+        }catch(error){
+            expect(error).to.be.an.instanceof(TypeError)
+
+            expect(error.message).to.equal(' is not a string')
+        }
 
         html = []
 
-        sendSymptomlistByEmail(email, text, html)
-            .catch(error => {
-                expect(error).to.be.an.instanceof(TypeError)
-                expect(error.message).to.equal(` is not a string`)
-            })
+        try{
+            sendSymptomlistByEmail(email, text, html)
 
+        }catch(error){
+            expect(error).to.be.an.instanceof(TypeError)
+
+            expect(error.message).to.equal(' is not a string')
+        }
     })
 })

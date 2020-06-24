@@ -53,7 +53,6 @@ describe('logic - register symptom list', () => {
 
                 symptoms = {symptomList, date}
                 registerSymptomList(symptoms)
-                    .then(()=>{throw Error('should not reach this point')})
 
             } catch (error) {
                 expect(error).to.exist
@@ -71,7 +70,6 @@ describe('logic - register symptom list', () => {
                 symptomList = [HPO_id]
                 symptoms = {symptomList, date}
                 registerSymptomList(symptoms)
-                    .then(()=>{throw Error('should not reach this point')})
 
             } catch (error) {
                 expect(error).to.exist
@@ -87,7 +85,6 @@ describe('logic - register symptom list', () => {
                 symptomList = [HPO_id]
                 symptoms = {symptomList, date}                
                 registerSymptomList(symptoms)
-                    .then(()=>{throw Error('should not reach this point')})
 
             } catch (error) {
                 expect(error).to.exist

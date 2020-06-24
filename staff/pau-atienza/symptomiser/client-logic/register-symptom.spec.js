@@ -3,6 +3,7 @@ require('dotenv').config()
 const { env: { TEST_MONGODB_URL: MONGODB_URL , API_URL } } = process
 const context = require('./context')
 context.API_URL = API_URL
+context.storage = {}
 
 const registerSymptom = require('./register-symptom')
 const { random } = Math
@@ -24,7 +25,6 @@ describe('client logic - register symptom', () => {
         limit = 1
         date = new Date().toISOString()
         date2 = new Date().toISOString()
-        date3 = new Date().toISOString()
         date4 = new Date().toISOString()
 
         HPO_id = `id-${random()}`
@@ -39,11 +39,12 @@ describe('client logic - register symptom', () => {
         clicks = [{HPO_id: HPO_id2, date: date4}]
         prediction = [{predictionCode, predictionName}]
 
-        symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
+        context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+        context.API_URL = API_URL
     })
 
     it('should succeed on valid data', async () => {
-        const {id} = await registerSymptom(symptom)
+        const {id} = await registerSymptom(HPO_id, name, confidenceLevel)
 
         expect(typeof id).to.equal('string')
 
@@ -87,7 +88,7 @@ describe('client logic - register symptom', () => {
 
         symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
 
-        const {id} = await registerSymptom(symptom)
+        const {id} = await registerSymptom(HPO_id, name, confidenceLevel)
         
         expect(typeof id).to.equal('string')
 
@@ -110,10 +111,8 @@ describe('client logic - register symptom', () => {
                 predictionCode = ""
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)
             } catch (error) {
                 expect(error).to.exist
 
@@ -125,10 +124,8 @@ describe('client logic - register symptom', () => {
                 predictionName = ""
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)
 
             } catch (error) {
                 expect(error).to.exist
@@ -141,10 +138,8 @@ describe('client logic - register symptom', () => {
                 HPO_id2 = ""
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)
 
             } catch (error) {
                 expect(error).to.exist
@@ -156,10 +151,8 @@ describe('client logic - register symptom', () => {
                 content = ""
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)
 
             } catch (error) {
                 expect(error).to.exist
@@ -172,10 +165,8 @@ describe('client logic - register symptom', () => {
                 HPO_id = ""
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)
 
             } catch (error) {
                 expect(error).to.exist
@@ -188,10 +179,8 @@ describe('client logic - register symptom', () => {
                 name = ""
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)
 
             } catch (error) {
                 expect(error).to.exist
@@ -204,10 +193,8 @@ describe('client logic - register symptom', () => {
                 confidenceLevel = ""
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-            } catch (error) {
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)            } catch (error) {
                 expect(error).to.exist
 
                 expect(error).to.be.an.instanceof(VoidError)
@@ -220,10 +207,8 @@ describe('client logic - register symptom', () => {
                 predictionCode = []
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)
             } catch (error) {
                 expect(error).to.exist
 
@@ -235,10 +220,8 @@ describe('client logic - register symptom', () => {
                 predictionName = []
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)
 
             } catch (error) {
                 expect(error).to.exist
@@ -251,10 +234,8 @@ describe('client logic - register symptom', () => {
                 HPO_id2 = []
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)
 
             } catch (error) {
                 expect(error).to.exist
@@ -266,10 +247,8 @@ describe('client logic - register symptom', () => {
                 content = []
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)
 
             } catch (error) {
                 expect(error).to.exist
@@ -282,10 +261,8 @@ describe('client logic - register symptom', () => {
                 HPO_id = []
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)
 
             } catch (error) {
                 expect(error).to.exist
@@ -298,10 +275,8 @@ describe('client logic - register symptom', () => {
                 name = []
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)
 
             } catch (error) {
                 expect(error).to.exist
@@ -314,10 +289,8 @@ describe('client logic - register symptom', () => {
                 confidenceLevel = []
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-            } catch (error) {
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)            } catch (error) {
                 expect(error).to.exist
 
                 expect(error).to.be.an.instanceof(TypeError)
@@ -330,10 +303,8 @@ describe('client logic - register symptom', () => {
                 limit = []
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)
             } catch (error) {
                 expect(error).to.exist
 
@@ -347,10 +318,8 @@ describe('client logic - register symptom', () => {
                 date = []
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)
             } catch (error) {
                 expect(error).to.exist
 
@@ -362,10 +331,8 @@ describe('client logic - register symptom', () => {
                 date2 = []
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)
             } catch (error) {
                 expect(error).to.exist
 
@@ -377,10 +344,8 @@ describe('client logic - register symptom', () => {
                 date3 = []
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)
             } catch (error) {
                 expect(error).to.exist
 
@@ -392,16 +357,21 @@ describe('client logic - register symptom', () => {
                 date4 = []
                 clicks = [{HPO_id: HPO_id2, date: date4}]
                 prediction = [{predictionCode, predictionName}]
-                symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
-                registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
-
+                context.storage.navigation = JSON.stringify({predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks})
+                registerSymptom(HPO_id, name, confidenceLevel)
             } catch (error) {
                 expect(error).to.exist
 
                 expect(error).to.be.an.instanceof(TypeError)
                 expect(error.message).to.equal(` is not a string`)
             }
+        })
+
+        it('should fail whenan HPO_id that doesn\'t fit the format is introduced', async () => {
+            context.API_URL = "http://localhost:8080/api/random"
+
+            registerSymptom(HPO_id, name, confidenceLevel)
+                .catch(error=>expect(error).to.exist)
         })
 
     })

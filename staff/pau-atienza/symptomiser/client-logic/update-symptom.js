@@ -15,26 +15,24 @@ module.exports = async function(comments = "none"){
 
     String.validate(comments)
 
-    
     JSON.validate(modifiers)
 
     modifiers.forEach(({HPO_id, name, confidenceLevel, date})=>{
-        String.validate(HPO_id)
+        String.validate.notVoid(HPO_id)
 
-        String.validate(name)
-        String.validate(confidenceLevel)
+        String.validate.notVoid(name)
+        String.validate.notVoid(confidenceLevel)
         String.validate.isISODate(date)
     })
      
 
     const {status, body} = await call('POST', `${this.API_URL}/symptoms/update`, JSON.stringify({id, modifiers, comments}), {"Content-type": "application/json"})
     if (status !== 200) {
-        const {error} = JSON.parse(body)
-
-        throw new Error(error)
+        throw new Error("There was a server error")
     }
     
     symptomToModify.comments = comments
+    symptomToModify.modifiers = modifiers
 
     this.storage.symptomToModify = JSON.stringify(symptomToModify)
 

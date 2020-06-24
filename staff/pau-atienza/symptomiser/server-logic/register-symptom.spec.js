@@ -110,7 +110,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
 
             } catch (error) {
                 expect(error).to.exist
@@ -125,7 +124,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
 
 
             } catch (error) {
@@ -141,7 +139,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
 
 
             } catch (error) {
@@ -156,7 +153,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
 
 
             } catch (error) {
@@ -172,7 +168,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
 
 
             } catch (error) {
@@ -188,7 +183,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
 
 
             } catch (error) {
@@ -204,7 +198,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
             } catch (error) {
                 expect(error).to.exist
 
@@ -220,7 +213,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
 
             } catch (error) {
                 expect(error).to.exist
@@ -235,7 +227,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
 
 
             } catch (error) {
@@ -251,7 +242,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
 
 
             } catch (error) {
@@ -266,7 +256,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
 
 
             } catch (error) {
@@ -282,7 +271,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
 
 
             } catch (error) {
@@ -298,7 +286,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
 
 
             } catch (error) {
@@ -314,7 +301,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
             } catch (error) {
                 expect(error).to.exist
 
@@ -330,7 +316,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
 
             } catch (error) {
                 expect(error).to.exist
@@ -347,7 +332,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
 
             } catch (error) {
                 expect(error).to.exist
@@ -362,7 +346,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
 
             } catch (error) {
                 expect(error).to.exist
@@ -377,7 +360,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
 
             } catch (error) {
                 expect(error).to.exist
@@ -392,7 +374,6 @@ describe('server logic - register symptom', () => {
                 prediction = [{predictionCode, predictionName}]
                 symptom = {navigation: {predictorInput: {content, limit, date}, predictorOutput: {prediction, date: date2}, clicks}, submittedTerm: {HPO_id, name, confidenceLevel, date: date3}}
                 registerSymptom(symptom)
-                    .then(()=>{throw Error('should not reach this point')})
 
             } catch (error) {
                 expect(error).to.exist

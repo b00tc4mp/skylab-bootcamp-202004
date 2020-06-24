@@ -1,7 +1,10 @@
 require('dotenv').config()
 
-const { env: { MONGODB_URL } } = process
+const { env: { MONGODB_URL, PREDICTOR_URL, LIMIT  } } = process
 const { mongoose } = require('data')
+
+context.PREDICTOR_URL = PREDICTOR_URL
+context.LIMIT = LIMIT
 
 const retrieveTermsByQuery = require('./retrieve-terms-by-query')
 

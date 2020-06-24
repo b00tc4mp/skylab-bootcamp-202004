@@ -8,7 +8,7 @@ module.exports = function (HPO_id) {
 
     return (async ()=>{
         const {status, body} = await call('GET', `${this.API_URL}/terms/${HPO_id}`, undefined, undefined)
-        if (status !== 200) {
+        if(status === 409) {
             const {error} = JSON.parse(body)
 
             throw new Error(error)

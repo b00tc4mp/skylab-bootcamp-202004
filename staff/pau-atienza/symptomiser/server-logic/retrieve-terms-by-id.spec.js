@@ -44,15 +44,37 @@ describe('server logic - retrieve-terms-by-HPO_id', () => {
                     expect(result.lower[0].xref).to.not.exist
                     return
                 })
-                .catch(error => {throw error})
         )
+
+        it('should not retrieve higher when symptom does not have the is_a property', () =>{
+            HPO_id = "HP:0000001"
+            debugger
+
+            return retrieveTermsById(HPO_id)
+                .then(result => {
+                    expect(result.term).to.exist
+
+                    expect(result.term.HPO_id).to.equal(HPO_id)
+                    expect(result.term._id).to.not.exist
+                    expect(result.term.__v).to.not.exist
+                    expect(result.term.xref).to.not.exist
+                    expect(result.lower).to.be.an.instanceof(Array)
+                    expect(result.higher).to.be.an.instanceof(Array)
+                    expect(result.higher.length).to.equal(0)
+
+                    expect(result.lower[0].HPO_id).to.exist
+                    expect(result.lower[0]._id).to.not.exist
+                    expect(result.lower[0].__v).to.not.exist
+                    expect(result.lower[0].xref).to.not.exist
+                    return
+                })
+            })
     })
 
     it('should fail when term does not exist', () => {
         const newHPO_id = "HP:1000010"
 
         return retrieveTermsById(newHPO_id)
-            .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
                 expect(error).to.exist
 

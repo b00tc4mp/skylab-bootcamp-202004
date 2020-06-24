@@ -18,5 +18,6 @@ module.exports = (username, email, password) => {
         const hash = await bcrypt.hash(password, 10)
 
         await Admin.create({ username, email, password: hash })
+        return
     })()
 }

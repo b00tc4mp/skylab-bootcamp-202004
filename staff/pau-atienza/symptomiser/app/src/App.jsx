@@ -8,7 +8,7 @@ import Results from './components/Results'
 import Symptom from './components/Symptom'
 import ModifiersForm from './components/ModifiersForm'
 import { retrieveTermsByQuery, retrieveTermsById, savePredictorInput, savePredictorOutput, saveNavigationClick, registerSymptom, 
-  updateSymptom, saveSymptom,setSymptomToModify, retrieveResultsFromStorage } from 'client-logic'
+  updateSymptom, saveSymptom, setSymptomToModify, retrieveResultsFromStorage } from 'client-logic'
 
 import { Route, withRouter } from 'react-router-dom'
 
@@ -85,12 +85,12 @@ function App({ history }) {
     history.push('/details')
   }
   
-  const saveModifiedSymptom = event =>{
+  const saveModifiedSymptom = async event =>{
     event.preventDefault()
 
     const comments = event.target.form.comment.value
     try{
-      updateSymptom(comments)
+      await updateSymptom(comments)
   
       history.push('/symptomlist')
       setFeedback({ level: "success", message: "The changes were saved"})

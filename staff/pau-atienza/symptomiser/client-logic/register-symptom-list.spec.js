@@ -3,6 +3,7 @@ require('dotenv').config()
 const { env: { TEST_MONGODB_URL: MONGODB_URL , API_URL } } = process
 const context = require('./context')
 context.API_URL = API_URL
+context.storage = {}
 
 const registerSymptomList = require('./register-symptom-list')
 const { expect } = require('chai')
@@ -16,17 +17,19 @@ describe('client logic - register symptom list', () => {
     let date, HPO_id, symptomList, symptoms
 
     beforeEach(async () => {
+        context.API_URL = API_URL
+
         await SymptomList.deleteMany()
 
-        HPO_id = "5edfd817d242780ac65bc59c"
+        symptomId = "5edfd817d242780ac65bc59c"
 
-        symptomList = [HPO_id]
+        symptomList = [{term: {symptomId}}]
 
-        symptoms = {symptomList}
+        context.storage.submittedSymptoms = JSON.stringify(symptomList)
     })
 
     it('should succeed on valid data', async () => {
-        const result = await registerSymptomList(symptoms)
+        const result = await registerSymptomList()
 
         expect(result).to.exist
 
@@ -36,25 +39,34 @@ describe('client logic - register symptom list', () => {
 
         const [retrievedSymptoms] = retrievedsymptomList
 
-        const {symptomList: [_HPO_id], date: _date} = retrievedSymptoms
+        const {symptomList: [_symptomId], date: _date} = retrievedSymptoms
 
         expect(retrievedSymptoms.id).to.exist
 
         expect(_date).to.be.an.instanceof(Date)
-        expect(JSON.stringify(_HPO_id)).to.equal(`"${HPO_id}"`)
+        expect(JSON.stringify(_symptomId)).to.equal(`"${symptomId}"`)
     })
 
     describe('when inputs with incorrect format are introduced', async () => {
         
         it('should fail when empty strings are introduced', async () => {
             try {
-                HPO_id = ""
-                symptomList = [HPO_id]
+                symptomId = ""
 
-                symptoms = {symptomList, date}
-                registerSymptomList(symptoms)
-                    .then(()=>{throw Error('should not reach this point')})
+                symptomList = [{term: {symptomId}}]
+                context.storage.submittedSymptoms = JSON.stringify(symptomList)
+                await registerSymptomList()
+            } catch (error) {
+                expect(error).to.exist
 
+                expect(error).to.be.an.instanceof(VoidError)
+                expect(error.message).to.equal(`string is empty or blank`)
+            }
+
+            try {
+                symptomList = ""
+                context.storage.submittedSymptoms = symptomList
+                await registerSymptomList()
             } catch (error) {
                 expect(error).to.exist
 
@@ -62,24 +74,16 @@ describe('client logic - register symptom list', () => {
                 expect(error.message).to.equal(`string is empty or blank`)
             }
         })
+    })
 
-        it('should fail when non-string inputs are introduced', async () => {
-
-            try {
-                HPO_id = []
-
-                symptomList = [HPO_id]
-                symptoms = {symptomList, date}
-                registerSymptomList(symptoms)
-                    .then(()=>{throw Error('should not reach this point')})
-
-            } catch (error) {
-                expect(error).to.exist
-
-                expect(error).to.be.an.instanceof(TypeError)
-                expect(error.message).to.equal(` is not a string`)
-            }
-        })  
+    it('should fail when an incorrect url is introduced', async () => {
+        context.API_URL = "http://localhost:8080/api/random"
+        debugger
+        try{
+            await registerSymptomList()
+        }catch(error){
+            expect(error).to.exist
+        }
     })
 
     afterEach(() => SymptomList.deleteMany())

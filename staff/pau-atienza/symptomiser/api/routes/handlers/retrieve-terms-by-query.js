@@ -1,5 +1,10 @@
-const { retrieveTermsByQuery } = require('../../../server-logic')
+require('dotenv').config()
+const { env: { PREDICTOR_URL, LIMIT } } = process
+const { retrieveTermsByQuery, context } = require('server-logic')
 const { handleError } = require('../../helpers')
+
+context.PREDICTOR_URL = PREDICTOR_URL
+context.LIMIT = LIMIT
 
 module.exports = (req, res) => {
     try {
