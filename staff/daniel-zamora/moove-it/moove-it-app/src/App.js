@@ -37,13 +37,6 @@ function App({ history }) {
   }
   const blueprint = {};
 
-  // blueprint.items = [];
-
-  // blueprint.getItem = function(searchId) {
-  //   blueprint.items.forEach((element) => {
-  //     if(element.id == searchId) return element
-  //   })
-  // }
 
   //TODO function to uptdate blueprint with existing data
 

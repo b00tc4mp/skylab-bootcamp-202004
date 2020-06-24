@@ -7,7 +7,10 @@ const { errors: { UnexistenceError } } = require('moove-it-commons')
 module.exports = (userId, blueprintId, items) => {
 
     String.validate.notVoid(userId)
+    items= new Array(items)
+    console.log(typeof items)
     Array.validate(items)
+    // return items
 
     return (async() => {
         let user = await User.findById(userId)

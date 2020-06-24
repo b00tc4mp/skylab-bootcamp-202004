@@ -9,7 +9,7 @@ module.exports = (email, password) => {
     String.validate.notVoid(password)
 
     return (async() => {
-        debugger
+    
         const user = await User.findOne({ email })
 
         if (!user) throw new UnexistenceError(`user with e-mail ${email} does not exist`)

@@ -3,8 +3,6 @@ import './FloorPlan.sass'
 import Catalogue from './Catalogue'
 import './Catalogue.sass';
 import { saveBlueprint, retrieveBlueprint } from 'moove-it-client-logic'
-// import blueprint from '../../../moove-it-server-logic/node_modules/moove-it-data/models/schemas/blueprint';
-// import { Blueprint } from '../../../moove-it-server-logic/node_modules/moove-it-data/models';
 
 
 export default function PlaneBuilder({ blueprintId }) {
@@ -14,6 +12,7 @@ export default function PlaneBuilder({ blueprintId }) {
     const [placedItems, setPlacedItems] = useState(sessionStorage.items ? JSON.parse(sessionStorage.items) : [])
 
     useEffect(() => {
+        if(typeof blueprintId !== 'undefined')
         try {
             retrieveBlueprint(blueprintId)
                 .then(blueprint => {

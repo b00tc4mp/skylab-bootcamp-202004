@@ -18,6 +18,7 @@ export default function Home({blueprint, onGoToFloorPlan}) {
         try {
             retrieveUser()
                 .then(user => setName(user.name))
+                .catch(error => setError(error.message))
             retrieveUserBlueprints()
                 .then(blueprints => setUserBlueprints(blueprints))
                 .catch(error => setError(error.message))
