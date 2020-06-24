@@ -13,13 +13,18 @@ dateToday.push('UTC')
 
 dateToday = dateToday.join(' ')
 
-cron.schedule("19 09 * * *", async() => {
+cron.schedule("45 08 * * *", async() => {
     try{
         await mongoose.connect('mongodb://localhost:27017/gym-api')
         
         console.log('connected')
 
         await Price.create(
+            {
+                product: ObjectId('5ef24a6955d4824a5b12434b'),
+                date: new Date(dateToday),
+                price: randomPrice(3, 4)
+            },
             {
                 product: ObjectId('5ef118713211394184e93ee8'),
                 date: new Date(dateToday),
@@ -68,7 +73,7 @@ cron.schedule("19 09 * * *", async() => {
             {
                 product: ObjectId('5eee3cf9042e2ae59798b6d3'),
                 date: new Date(dateToday),
-                price: randomPrice(2,3)
+                price: randomPrice(7,9)
             },
             {
                 product: ObjectId('5eee3cf9042e2ae59798b6d4'),
