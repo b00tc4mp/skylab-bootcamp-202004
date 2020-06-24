@@ -16,6 +16,7 @@ module.exports = function(name, surname, email, password, passwordConfirmation) 
     return call('POST', `${this.API_URL}/users`,
             `{"name": "${name}", "surname": "${surname}", "email": "${email}", "password": "${password}"}`, { 'Content-type': 'application/json' })
         .then(({ status, body }) => {
+            debugger
 
             if (status === 201) return ('User crated')
 
