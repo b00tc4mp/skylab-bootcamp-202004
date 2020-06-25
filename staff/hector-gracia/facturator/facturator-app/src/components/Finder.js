@@ -5,7 +5,7 @@ import "./Commons.sass"
 const {retrieveAllClients,retrieveAllProducts,makeDeliveryNote}= require("facturator-client-logic")
 
 
-export default function ({goToEdition, type, allFinds,delivery, addTo ,back, remove}) {
+export default function ({goToEdition, type, allFinds,delivery, addTo ,back, remove, onError}) {
 
     //Multi use variables
     const [query,setQuery]=useState("")
@@ -64,17 +64,20 @@ export default function ({goToEdition, type, allFinds,delivery, addTo ,back, rem
     useEffect(()=>{filterFind()},[query])//Update the find as you writte
     
     const filterFind=()=>{
-        if(type!=="delivery/edit"){
-            if(query){
-                const filteredClients=allFinds.filter((currentFind)=>{ return currentFind.name.toLowerCase().includes(query.toLowerCase())})
-                setResults(filteredClients)
+        try {
+            if(type!=="delivery/edit"){
+                if(query){
+                    const filteredClients=allFinds.filter((currentFind)=>{ return currentFind.name.toLowerCase().includes(query.toLowerCase())})
+                    setResults(filteredClients)
+                }else{
+                    setResults(allFinds)
+                }
             }else{
-                setResults(allFinds)
+                const res= allFinds.products.map(current=>{return current})
+                setResults(res)   
             }
-        }else{
-            const res= allFinds.products.map(current=>{return current})
-            setResults(res)
-            
+        } catch (error) {
+            onError(error)
         }
     }
     const changeQuery=({target})=>{
@@ -94,7 +97,7 @@ export default function ({goToEdition, type, allFinds,delivery, addTo ,back, rem
         addTo(useTemplate)
     }
     const handleAddTo=()=>{
-        const productQuantity={productId:selectedId,quantity:5}
+        const productQuantity={productId:selectedId,quantity:1}
         addTo(productQuantity)
     }
     
