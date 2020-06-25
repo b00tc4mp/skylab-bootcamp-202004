@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Cart, Login, Register, Home, Landing, NavBar, Products, ShoppingCart, Feedback, Footer, CartDropdown } from '../components'
+import { Login, Register, Home, Landing, NavBar, Products, ShoppingCart, Feedback, Footer, CartDropdown } from '../components'
 import { isUserSessionValid, logoutUser, isUserLoggedIn, updateCart } from '7-potencias-client-logic'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 import './App.sass'
@@ -82,7 +82,6 @@ export default withRouter(function ({ history }) {
         <Route path='/home' render={() => isUserLoggedIn() ? <Home onLogout={handleLogout} /> : <Redirect to='/' />} />
         <Route path='landing' render={() => <Landing />} />
         <Route path='/lessons' render={() => <Products token={sessionStorage.token} addToCart={addToCart} />} />
-        <Route path='carts' render={() => <Cart />} />
       </main>
 
       <Footer />
