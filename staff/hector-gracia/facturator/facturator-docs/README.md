@@ -4,7 +4,7 @@
 
 Full-stack app developed to help the management of a business.
 
-### Features 
+### Features  
     - Create delivery notes
     - Save new clients and client's info
     - Keep track of past sells
@@ -20,36 +20,44 @@ Full-stack app developed to help the management of a business.
 
 ### Use cases
 
-![Use cases]()
+![Use cases](./images/facturator-use-cases.png)
 
 ### Activity diagram
 
-![Activity diagram]()
+![Activity diagram](./images/facturator-activities.png)
 
 ## Technical description
 
 ### Blocks
 
-![Blocks]()
+![Blocks](./images/facturator-blocks.png)
+
 
 ### Components
 
-![Components]()
+![Components](./images/facturator-modules.png)
 
 ### Classes (funcitons)
 
-![classes]()
+![classes](./images/facturator-classes.png)
 
 ### Sequences
 
-![sequence1]()
+![sequence1](./images/facturator-sequence-testing.png)
+![sequence2](./images/facturator-sequence-runtime.png)
 
 ### Data model
 
-![Data model]()
+![Data model](./images/facturator-data-model.png)
 
 ### Test
-![Test]()
+![clienttest1](./images/client-test-1.png)
+![clienttest2](./images/client-test-2.png)
+![clienttest3](./images/client-test-3.png)
+![servertest1](./images/server-test-1.png)
+![servertest2](./images/server-test-2.png)
+![servertest3](./images/server-test-3.png)
+![servertest4](./images/server-test-4.png)
 
 
 ## Misc
