@@ -3,6 +3,17 @@ require('takemytask-commons/polyfills/json')
 const { errors: { UnexistenceError } } = require('takemytask-commons')
 const { models: { User, Worker }, mongoose: {ObjectId} } = require('takemytask-data')
 
+/**
+ * Updates the user or worker params sended
+ *
+ * @param {string} userId worker name
+ * @param {object} body worker surname 
+ * 
+ * @returns {undefined}
+ *
+ * @throws {UnexistenceError} if user or worker dont existsd
+ */
+
 
 module.exports = (userId, body) => {
 

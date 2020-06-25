@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, MONGODB_URL } } = process
+const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, MONGODB_URL, FILE_LOGGER_LEVEL, CONSOLE_LOGGER_LEVEL } } = process
 const PORT = PORT_CLI || PORT_ENV || 8080
 
 const path = require('path')
@@ -8,8 +8,8 @@ const { Logger, singletonFileLogger, singletonConsoleLogger } = require('./logge
 
 const file = singletonFileLogger(path.join(__dirname, 'server.log'))
 const console = singletonConsoleLogger()
-file.level = Logger.WARN
-console.level = Logger.DEBUG
+file.level = Logger[FILE_LOGGER_LEVEL]
+console.level = Logger[CONSOLE_LOGGER_LEVEL]
 
 const { api } = require('./routes')
 

@@ -8,5 +8,7 @@ module.exports = {
     addComments: require('./add-comments'),
     creatChat: require('./creat-chat'),
     addMessage: require('./add-message'),
-    retrieveChat: require('./retrive-chat')
+    retrieveChat: require('./retrive-chat'),
+    searchWorker: require('./search-worker'),
+    retriveChatId: require('./retive-chat-id')
 }

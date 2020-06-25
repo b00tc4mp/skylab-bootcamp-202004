@@ -4,6 +4,17 @@ const { utils: { Email }, errors: { CredentialsError } } = require('takemytask-c
 const { models: { User , Worker} } = require('takemytask-data')
 const bcrypt = require('bcryptjs')
 
+/**
+ * autenticate users or workers credentials
+ *
+ * @param {string} email users or worker email
+ * @param {string} password users or worker password 
+ * 
+ * @returns {undefined}
+ *
+ * @throws {CredentialsError} if server throws errror
+ */
+
 module.exports = (email, password) => {
     String.validate.notVoid(email)
     Email.validate(email)

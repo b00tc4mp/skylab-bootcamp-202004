@@ -23,14 +23,15 @@ describe('logic - register worker', () => {
         password = `password-${random()}`
         adress = `street-${random()}`
         bankAcount = `bankAcount-${random()}`
+        presentation = `presentation-${random()}`
         description = `description-${random()}`
         pricingHour = parseInt(random()*100)
-        jobCategories = `jobCategories-${random()}`
+        jobCategories = [`"jobCategories-${random()}"`]
         workingDistance = parseInt(random()*100)
     })
 
     it('should succeed on valid data', async () => {
-        const result = await registerWorker(name, surname, email, password, adress, bankAcount, description, pricingHour, jobCategories, workingDistance)
+        const result = await registerWorker(name, surname, email, password, adress, bankAcount, description, presentation, pricingHour, jobCategories, workingDistance)
 
         expect(result).to.be.undefined
 
@@ -47,7 +48,7 @@ describe('logic - register worker', () => {
         expect(user.bankAcount).to.equal(bankAcount)
         expect(user.description).to.equal(description)
         expect(user.pricingHour).to.equal(pricingHour)
-        expect(user.jobCategories).to.equal(jobCategories)
+        expect(user.jobCategories.toString()).to.equal(jobCategories.toString())
         expect(user.workingDistance).to.equal(workingDistance)
 
         const match = await bcrypt.compare(password, user.password)
@@ -69,18 +70,18 @@ describe('logic - register worker', () => {
 
 
     describe('when user already exists', () => {
-        beforeEach(() => Worker.create({ name, surname, email, password, adress, bankAcount, description, pricingHour, jobCategories, workingDistance }))
+        beforeEach(() => Worker.create({ name, surname, email, password, adress, bankAcount, description, presentation, pricingHour, jobCategories, workingDistance }))
 
         it('should fail on trying to register an existing user', async () => {
             try {
-                await registerWorker(name, surname, email, password, adress, bankAcount, description, pricingHour, jobCategories, workingDistance)
+                await registerWorker(name, surname, email, password, adress, bankAcount, description, presentation, pricingHour, jobCategories, workingDistance)
 
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.exist
 
                 expect(error).to.be.an.instanceof(Error)
-                expect(error.message).to.equal(`user with e-mail ${email} already exists`)
+                expect(error.message).to.equal(`worker with e-mail ${email} already exists`)
             }
         })
     })

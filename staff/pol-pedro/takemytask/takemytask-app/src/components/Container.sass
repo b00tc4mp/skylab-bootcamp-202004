@@ -1,0 +1,58 @@
+
+*
+    margin: 0
+    box-sizing: border-box
+    -webkit-tap-highlight-color: transparent
+
+*:focus 
+    outline: none
+
+*:-webkit-autofill
+    background: transparent
+    border: red
+
+.container
+
+    &__footer
+        border-top-left-radius: 25px
+        border-top-right-radius: 25px
+        display: flex
+        height: 6vh
+        width: 100vw
+        background-color: lightblue
+        bottom: 0
+        position: fixed
+
+    &__home
+        width: 4vh
+        margin: 0 8vw
+    &__search
+        width: 4vh
+        margin: 0 8vw
+    &__message
+        width: 4vh
+        margin: 0 8vw
+    &__user
+        width: 4vh
+        margin: 0 8vw
+    &__chat
+        display: flex
+        align-items: center
+
+    &__notification
+        display: flex
+        justify-content: center
+        align-items: center
+        width: 1rem
+        height: 1rem
+        background-color: red
+        position: absolute
+        left: 15.3rem
+        bottom: 1.9rem
+        border-radius: 100%
+
+        p
+            font-family: 'Roboto', sans-serif
+            color: white
+            font-size: 0.8rem
+            

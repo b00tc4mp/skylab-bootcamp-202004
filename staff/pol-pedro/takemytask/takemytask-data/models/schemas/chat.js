@@ -1,16 +1,18 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
-const coments = require('./comments')
+const coments = require('./coments')
 
 module.exports = new Schema ({
 
     user: {
         type: ObjectId,
-        require: true
+        require: true,
+        ref: 'User'
     },
 
     worker: {
         type: ObjectId,
-        require: true
+        require: true,
+        ref: 'Worker'
     },
 
     messages : [coments],

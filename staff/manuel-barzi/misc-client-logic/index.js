@@ -1,8 +1,9 @@
 module.exports = {
     context: require('./context'),
-    salute: require('./salute'),
     registerUser: require('./register-user'),
-    authenticateUser: require('./authenticate-user'),
-    isUserAuthenticated: require('./is-user-authenticated'),
-    retrieveUser: require('./retrieve-user')
+    loginUser: require('./login-user'),
+    isUserSessionValid: require('./is-user-session-valid'),
+    retrieveUser: require('./retrieve-user'),
+    isUserLoggedIn: require('./is-user-logged-in'),
+    logoutUser: require('./logout-user')
 }

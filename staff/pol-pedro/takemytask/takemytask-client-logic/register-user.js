@@ -1,31 +1,41 @@
-function registerUser(name, surname, email, password, callback) {
-    if (typeof name !== 'string') throw new TypeError(name + ' is not a string')
-    if (!TEXT_REGEX.test(name)) throw new Error(name + ' is not alphabetic')
+require('takemytask-commons/polyfills/string')
 
-    if (typeof surname !== 'string') throw new TypeError(surname + ' is not a string')
-    if (!TEXT_REGEX.test(surname)) throw new Error(surname + ' is not alphabetic')
+const { utils: { Email, call }} = require('takemytask-commons')
+const context = require('./context')
 
-    if (typeof email !== 'string') throw new TypeError(email + ' is not a string')
-    if (!EMAIL_REGEX.test(email)) throw new Error(email + ' is not an e-mail')
+/**
+ * calls  the api to register a user with the given name surname ...
+ *
+ * @param {string} name users name
+ * @param {string} surname users surname 
+ * @param {string} email users email
+ * @param {string} password users password
+ * @param {string} adress users adress
+ * 
+ * @returns {undefined}
+ *
+ * @throws {Error} if server throws errror
+ */
 
-    if (typeof password !== 'string') throw new TypeError(password + ' is not a string')
-    if (password.length < 8) throw new Error('password does not have the min length')
 
-    if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
+module.exports = function (name, surname, email, password, adress) {
+    String.validate.notVoid(name)
+    String.validate.notVoid(surname)
+    String.validate.notVoid(email)
+    Email.validate(email)
+    String.validate.notVoid(password)
 
-    call('POST',
-        'https://skylabcoders.herokuapp.com/api/v2/users',
-        `{ "thElement": "true", "name": "${name}", "surname": "${surname}", "username": "${email}", "password": "${password}" }`,
-        { 'Content-type': 'application/json' },
-        (error, status, body) => {
-            if (error) return callback(error)
-
-            if (status === 201)
-                callback()
-            else {
+       return call(
+        'POST', 
+        `${this.API_URL}/users`, 
+        `{"name":"${name}", "surname":"${surname}", "email":"${email}", "password":"${password}", "adress":"${adress}"}`,
+            {'Content-Type':'application/json'}) 
+            .then( ({status, body}) => {
+    
+                if (status === 201) return 
+               
                 const { error } = JSON.parse(body)
 
-                callback(new Error(error))
-            }
-        })
-}
+                throw new Error (error)
+            })
+}.bind(context)
