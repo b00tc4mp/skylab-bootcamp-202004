@@ -18,8 +18,8 @@ module.exports = function(restaurantId) {
             return restaurant;
         }
         else{
-            const {error} = JSON.parse(body)
-                throw new Error(error)
+            // const {error} = JSON.parse(body)
+                throw new Error(status, body)
         }
     })();
 }.bind(context)

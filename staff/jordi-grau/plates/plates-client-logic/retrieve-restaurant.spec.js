@@ -14,7 +14,7 @@ const context = require('./context')
 context.API_URL = API_URL
 context.storage = {}
  
-describe('client logic: create restaurant', () => {
+describe('client logic: retrieve restaurant', () => {
     let restaurantName, restaurantEmail, cif, address, phone, userEmail, password, userId, restaurantId, result
     
     before(async () => {
