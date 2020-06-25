@@ -1,9 +1,11 @@
 import React from 'react'
-// import { Link } from 'react-router-dom'
 
-export default function( { results, onClick, clickedSymptom, goToSymptom } ) {
+import Feedback from './Feedback'
+
+export default function( { feedback, results, onClick, clickedSymptom, goToSymptom } ) {
 
     return <section className="results">
+    {feedback && <Feedback message = {feedback.message} level = {feedback.level?feedback.level:null}/>}
     <p className = 'results__list--title'>Proposed terms</p>
     <ul className="results__list">
       {results?results.prediction.map(symptom => <li key={symptom.predictionCode}>

@@ -9,7 +9,7 @@
  * @throws {Error} If there is a server error.
  */
 
- require('commons/polyfills/string')
+require('commons/polyfills/string')
 require('commons/polyfills/json')
 const { utils: { call } } = require('commons')
 const context = require('./context')
