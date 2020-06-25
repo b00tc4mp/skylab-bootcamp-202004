@@ -37,3 +37,15 @@ This app were inspirated on my personal neccesity to sometimes change my room, b
 ### Blocks
 
 ![blocks](images/blocks.png)
+
+### Module/components
+
+![modules](images/module-components.png)
+
+### Code Coverage
+
+##### Client Side
+![client-side](images/client-logic-coverage.png)
+
+##### Server Side
+![server-side](images/server-logic-coverage.png)
