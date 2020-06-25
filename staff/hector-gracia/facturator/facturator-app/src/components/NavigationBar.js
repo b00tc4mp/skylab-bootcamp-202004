@@ -11,6 +11,6 @@ export default function ({currentView, changeView}) {
     <div className={`navigation-link navigation-link--${currentView==="clients"?"selected":"unselected" }`} onClick={handleToClients}>Clientes</div>
     <div className={`navigation-link navigation-link--${currentView==="products"?"selected":"unselected" }`} onClick={handleToProducts}>Productos</div>
     <div className={`navigation-link navigation-link--${currentView==="deliveries"?"selected":"unselected" }`} onClick={handleToDeliveries}>Albaranes</div>
-    <div className={`navigation-link navigation-link--${currentView==="templates"?"selected":"unselected" }`} onClick={handleToTemplates}>Plantillas</div>
+    <div className={`navigation-link navigation-link--${currentView==="templates"?"selected":"unselected" }`} >Plantillas</div>
 </div>
 }

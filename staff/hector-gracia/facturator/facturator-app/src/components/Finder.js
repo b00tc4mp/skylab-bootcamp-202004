@@ -54,10 +54,18 @@ export default function ({goToEdition, type, allFinds,delivery, addTo ,back, rem
                 setFindInstruction("Buscar cliente: ")
                 setFindHint("Nombre del cliente")
                 setHeader("Nuevo albarán")
+                break;
+            case "delivery/templates":
+                setFindInstruction("Buscar plantilla: ")
+                setFindHint("Nombre de la plantilla")
+                setHeader("Plantillas")
+                break
             case "templates":
                 setFindInstruction("Buscar plantilla: ")
                 setFindHint("Nombre de la plantilla")
                 setHeader("Plantillas")
+                break
+
         }
         filterFind()
     },[])
@@ -140,9 +148,9 @@ export default function ({goToEdition, type, allFinds,delivery, addTo ,back, rem
                     <button className="search-button" onClick={handleGoToDeliveryCreation} >
                         Crear nuevo albarán
                     </button>
-                    <button className="search-button" onClick={()=>{return handleGoToDeliveryCreation(true)}} >
+                    {false&&<button className="search-button" onClick={()=>{return handleGoToDeliveryCreation(true)}} >
                         Crear albarán con plantilla
-                    </button>
+                    </button>}
                     <button className="search-button" disabled={!selectedId} onClick={handleGoToResultEdition} >
                         Editar albarán
                     </button>
@@ -184,8 +192,16 @@ export default function ({goToEdition, type, allFinds,delivery, addTo ,back, rem
                     <button className="search-button" onClick={addTo}>
                         Añadir plantilla
                     </button>
-                    <button className="search-button" disabled={!selectedId} onClick={()=>{addTo(selectedId)}} >
+                    {false&&<button className="search-button" disabled={!selectedId} onClick={()=>{addTo(selectedId)}} >
                         Editar plantilla
+                    </button>}
+                </div>}
+                {type ==="delivery/templates" && <div className="search-panel__search-buttons">
+                    <button className="search-button" disabled={!selectedId} onClick={()=>{addTo(selectedId)}} >
+                        Usar plantilla
+                    </button>
+                    <button className="search-button" onClick={back}>
+                        Volver
                     </button>
                 </div>}
             </div>
