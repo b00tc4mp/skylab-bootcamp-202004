@@ -1,36 +1,13 @@
 import React, { useState } from 'react'
 import './Products.sass'
-import updateCart from '7-potencias-client-logic/update-cart'
 
-export default function ({ product, token }) {
-  const [error, setError] = useState()
-  const [cart, setCart] = useState([])
+export default function ({ product, addToCart }) {
   const { id, name, style, price } = product
 
   const handleAddToCard = event => {
     event.preventDefault()
 
-    let quantity = 1
-    const index = cart.findIndex(item => item.productId === id)
-
-    if (index === -1) {
-      cart.push({ productId: id, quantity: quantity })
-    } else {
-      quantity = ++cart[index].quantity
-    }
-
-    try {
-      updateCart(token, id, quantity)
-        .then(() => {
-          setError(undefined)
-          setCart(cart)
-        })
-        .catch(({ message }) => {
-          setError(message)
-        })
-    } catch ({ message }) {
-      setError(message)
-    }
+    addToCart(id, name, price)
   }
 
   return (

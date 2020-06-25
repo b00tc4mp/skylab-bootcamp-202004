@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './NavBar.sass'
 import { Link } from 'react-router-dom'
+import CartToggle from './CartToggle'
 
-export default function ({ onLogout, token }) {
+export default function ({ onLogout, token, toggleHiddenDropdown }) {
   return (
     <header className='toolbar'>
       <nav className='toolbar__navigation'>
@@ -31,7 +32,7 @@ export default function ({ onLogout, token }) {
           </div>
         </>)}
         <div className='icons-container'>
-          <div className='shopping_cart' />
+          <CartToggle toggleHiddenDropdown={toggleHiddenDropdown} />
           <div className='shopping_amount'>
             <div className='amount'>0</div>
           </div>

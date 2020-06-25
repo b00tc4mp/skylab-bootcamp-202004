@@ -1,4 +1,4 @@
-import App from './App'
+import CartToggle from './CartToggle'
 import Card from './Card'
 import Login from './Login'
 import Register from './Register'
@@ -8,9 +8,10 @@ import NavBar from './NavBar'
 import Products from './Products'
 import Feedback from './Feedback'
 import Footer from './Footer'
+import CartDropdown from './CartDropdown'
 
 export {
-  App,
+  CartToggle,
   Card,
   Login,
   Register,
@@ -19,5 +20,6 @@ export {
   NavBar,
   Products,
   Feedback,
-  Footer
+  Footer,
+  CartDropdown
 }

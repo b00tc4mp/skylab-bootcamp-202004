@@ -3,7 +3,7 @@ import './Products.sass'
 import Card from './Card'
 import { searchLessons } from '7-potencias-client-logic'
 
-export default function ({ token }) {
+export default function ({ token, addToCart }) {
   const [error, setError] = useState()
   const [products, setProducts] = useState([])
 
@@ -12,7 +12,7 @@ export default function ({ token }) {
       searchLessons()
         .then(products => {
           setError(undefined)
-          setProducts(products)
+          return setProducts(products)
         })
         .catch(({ message }) => {
           setError(message)
@@ -32,7 +32,7 @@ export default function ({ token }) {
       </section>
       <section className='description-card'>
         {products && products.map(product => (<>
-          <Card key={product.id} product={product} token={token} />
+          <Card key={product.id} product={product} addToCart={addToCart} />
         </>))}
       </section>
     </section>
