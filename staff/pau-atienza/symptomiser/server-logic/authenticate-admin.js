@@ -1,3 +1,16 @@
+/**
+ * Checks user credentials and compares them with the user in the database.
+ * 
+ * @param {string} email The user e-mail. 
+ * @param {string} password The user password.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {VoidError} If any of the parameters expected to be a string is an empty string.
+ * @throws {UnexistenceError} If the user does not exist in the database.
+ * @throws {CredentialsError} If the credentials are wrong.
+ * @throws {Error} If e-mail does not match the expected format.
+ */
+
 require('commons/polyfills/string')
 const { models: { Admin } } = require('data')
 const { utils: { Email }, errors: { UnexistenceError, CredentialsError } } = require('commons')

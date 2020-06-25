@@ -1,3 +1,17 @@
+/**
+ * Deletes a modifier from the symptom to modify in the context storage, if present.
+ * 
+ * @param {string} modifierName the name of the modifier that needs to be deleted.
+ * @param {Object} modifiers an array containing JSON objects with the modifier information.
+ * 
+ * @param {string} HPO_id the id of the submitted term in the HPO database.
+ * @param {string} name the name of the submitted term in the HPO database.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {VoidError} If any of the parameters expected to be a string is an empty string.
+ * @throws {Error} If the modifier is not present in the symptom to modify, or if there are no modifiers.
+ */
+
 
 require('commons/polyfills/string')
 require('commons/polyfills/json')

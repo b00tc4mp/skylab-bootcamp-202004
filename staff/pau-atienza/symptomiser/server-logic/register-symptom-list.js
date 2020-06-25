@@ -1,3 +1,15 @@
+/**
+ * Saves the submitted symptom list in the MongoDB database
+ * 
+ * @param {Object} symptomList a JSON object containing the list of symptoms and the date of submission.
+ * @param {Array} symptoms an array containing the mongoDB ids of the symptoms in the list.
+ * @param {string} date date of the query in ISOString.
+ * @param {Object} symptom the mongoDB id of a symptom in the list.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {VoidError} If any of the parameters expected to be a string is an empty string.
+ */
+
 require('commons/polyfills/json')
 require('commons/polyfills/string')
 require('commons/polyfills/date')

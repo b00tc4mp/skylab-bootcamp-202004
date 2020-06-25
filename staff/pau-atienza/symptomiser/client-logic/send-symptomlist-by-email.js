@@ -1,3 +1,13 @@
+/**
+ * It generates a message in html and text format based on the symptom list and calls the API to send an email to the introduced address.
+ * 
+ * @param {string} email the address to which the email will be sent
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {VoidError} If any of the parameters expected to be a string is an empty string.
+ * @throws {Error} If the e-mail does not fit the format..
+ */
+
 require('commons/polyfills/string')
 require('commons/polyfills/json')
 const { utils: { call, Email } } = require('commons')

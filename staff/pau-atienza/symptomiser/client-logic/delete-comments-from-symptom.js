@@ -1,3 +1,8 @@
+/**
+ * Deletes the comments from the symptom to modify in the context storage.
+ * 
+ */
+
 require('commons/polyfills/string')
 require('commons/polyfills/json')
 require('commons/polyfills/array')
