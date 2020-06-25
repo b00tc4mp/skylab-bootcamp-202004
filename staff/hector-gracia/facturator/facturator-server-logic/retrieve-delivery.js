@@ -19,7 +19,6 @@ module.exports=(deliveryId)=>{//TODO get the date of the delivery
     })()
 }
 const sanitize=(delivery)=>{
-    console.log(delivery)
     const result={}
     result.id= delivery._id.toString()
     result.client=delivery.client

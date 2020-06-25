@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npx mocha *.spec.js",
-    "test:debug": "npx mocha --inspect=7000 --inspect-brk *.spec.js"
+    "test:debug": "npx mocha --inspect=7000 --inspect-brk *.spec.js",
+    "test:coverage": "npx nyc --reporter=text --reporter=lcov npm test"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +18,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "dotenv": "^8.2.0",
-    "mocha": "^7.2.0"
+    "mocha": "^7.2.0",
+    "nyc": "^15.1.0"
   }
 }
