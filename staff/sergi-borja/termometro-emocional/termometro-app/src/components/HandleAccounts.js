@@ -4,8 +4,7 @@ import { createFamilyList } from 'termometro-client-logic'
 import { unRegisterUser } from 'termometro-client-logic'
 import deleteIcon from '../images/delete-icon.png'
 import './HandleAccounts.sass'
-// import isAuthenticated from 'termometro-client-logic/is-authenticated'
-// import editImg from '../images/editar.png'
+import backButton from '../images/back-icon.png'
 
 
 function HandleAccounts({ token, history }) {
@@ -52,7 +51,9 @@ function HandleAccounts({ token, history }) {
 
     return (
         <section className='handleAccountsContainer'>
+            
             <div className='handleAccountsContainer__container'>
+            <img className='editMemberContainer__backIcon' src={backButton} onClick={()=>history.push('/settings')}></img>
             <h1 className='handleAccountsContainer__title'>Mi Familia</h1>
             </div>
             <div className='handleAccountsContainer__familyListContainer'>

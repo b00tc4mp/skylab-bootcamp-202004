@@ -91,7 +91,7 @@ function App({history}) {
           <Route path="/edit-my-info" render={()=> token? <EditMyInfo token={token} history={history} /> : <Redirect to='/'/>} />
           <Route path="/main-stats" render={()=> token? <MainStats token={token} rol={rol}/> : <Redirect to='/'/>} />
           <Route path="/handle-accounts" render={()=> token? <HandleAccounts token={token} history={history}/> : <Redirect to='/'/>} />
-          <Route path="/change-password" render={()=> token? <ChangePassord token={token} /> : <Redirect to='/'/>} />
+          <Route path="/change-password" render={()=> token? <ChangePassord token={token} history={history} /> : <Redirect to='/'/>} />
           {token && <Footer history={history}/>}
         </Container>
       </header>

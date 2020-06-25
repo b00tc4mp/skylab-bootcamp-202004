@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Feedback from './Feedback'
 import './EditMember.sass'
+import backButton from '../images/back-icon.png'
 
 const { editUser } = require('termometro-client-logic')
 
@@ -49,6 +50,7 @@ function EditMember({ memberInfo, history }) {
 
     return (
         <section className='editMemberContainer'>
+            <img className='editMemberContainer__backIcon' src={backButton} onClick={()=>history.push('/my-family')}></img>
             <h1 className='editMemberContainer__title'>¡Edita los datos de {memberInfo.name} que quieras actualizar!</h1>
             <form className='editMemberContainer__form' onSubmit={handleConfirmEdit}>
                 <input className='editMemberContainer__input' name='name' placeholder={memberInfo.name}></input>

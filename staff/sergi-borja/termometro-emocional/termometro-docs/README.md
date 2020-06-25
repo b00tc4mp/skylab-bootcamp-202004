@@ -61,3 +61,4 @@ HOPE YOU ENJOY IT!
 ![](./images/day-specs-template.jpg)
 ![](./images/settings-template.jpg)
 ![](./images/handle-account-template.jpg)
+![](./images/set-mood.jpg)
