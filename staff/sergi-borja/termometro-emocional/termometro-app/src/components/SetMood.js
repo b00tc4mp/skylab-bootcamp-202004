@@ -54,7 +54,7 @@ function SetMood({ token, history }) {
                 <h1>Qué tal está tu autoestima hoy?</h1>
             </div>}
             {!tooManyMoods && <div className='sliderContainer__thermoContainer'>
-                <img src={thermometer} className='sliderContainer__thermoContainer--thermoImg'></img>
+                <img alt='the thermometer' src={thermometer} className='sliderContainer__thermoContainer--thermoImg'></img>
                 <div className={`sliderContainer__thermoContainer--progress ${value === '1' && 'height1'} ${value === '2' && 'height2'} ${value === '3' && 'height3'} ${value === '4' && 'height4'} ${value === '5' && 'height5'} ${value === '6' && 'height6'} ${value === '7' && 'height7'} ${value === '8' && 'height8'} ${value === '9' && 'height9'} ${value === '10' && 'height10'} `}></div>
                 <div className='sliderContainer__value'>{value}</div>
             </div>}

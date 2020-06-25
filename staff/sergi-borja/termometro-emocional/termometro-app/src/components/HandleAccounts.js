@@ -32,7 +32,7 @@ function HandleAccounts({ token, history }) {
                     delete sessionStorage.token
                     window.location.reload()
                 })
-                .catch(error => console.log(error.message))
+                .catch(error => console.error(error.message))
         } catch (error){
             if(error) throw error
         }
@@ -42,7 +42,7 @@ function HandleAccounts({ token, history }) {
         try {
             unRegisterUser(member.id)
                 .then(setUserDeleted(true))
-                .catch(error => console.log(error.message))
+                .catch(error => console.error(error.message))
         } catch (error){
             if(error) throw error
         }
@@ -58,14 +58,14 @@ function HandleAccounts({ token, history }) {
             </div>
             <div className='handleAccountsContainer__familyListContainer'>
                 <ul className='handleAccountsContainer__familyListContainer--ul'>
-                    {familyList && familyList.map((member) => <li className='handleAccountsContainer__familyListContainer--li'>{member.name} <img onClick={()=>handleDeleteMember(member)} className='handleAccountsContainer__deleteIcon' src={deleteIcon}></img></li>)}
+                    {familyList && familyList.map((member) => <li key={member.id} className='handleAccountsContainer__familyListContainer--li'>{member.name} <img onClick={()=>handleDeleteMember(member)} className='handleAccountsContainer__deleteIcon' src={deleteIcon}></img></li>)}
                 </ul>
             </div>
             <div className='handleAccountsContainer__myUserTitle'>
             <h1 className='handleAccountsContainer__title'>Mi Cuenta</h1>
             </div>
             <div className='handleAccountsContainer__myUserContainer'>
-            <h1 className='handleAccountsContainer__myUser' onClick={handleDeleteAccount}>Eliminar mi cuenta <img className='handleAccountsContainer__deleteIcon' src={deleteIcon}></img></h1>
+            <h1 className='handleAccountsContainer__myUser' onClick={handleDeleteAccount}>Eliminar mi cuenta</h1>
             </div>
         </section>
     );

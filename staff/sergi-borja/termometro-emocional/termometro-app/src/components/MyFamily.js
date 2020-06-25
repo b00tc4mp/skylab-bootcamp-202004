@@ -38,12 +38,12 @@ function MyFamily({ token, handleGoToEdit, rol }) {
             </div>}
             {!rol && <div className='familyContainer__familyListContainer'>
                 <ul className='familyContainer__familyListContainer--ul'>
-                    {familyList && familyList.map((member) => <li onClick={() => handleGoToEdit(member)} className='familyContainer__familyListContainer--li'>{member.name} {member.surname} <img className='familyContainer__arrowIcon' src={arrowIcon}></img></li>)}
+                    {familyList && familyList.map((member) => <li key={member.id} onClick={() => handleGoToEdit(member)} className='familyContainer__familyListContainer--li'>{member.name} {member.surname} <img className='familyContainer__arrowIcon' src={arrowIcon}></img></li>)}
                 </ul>
             </div>}
             {rol && <div className='familyContainer__familyListContainer'>
                 <ul className='familyContainer__familyListContainer--ul'>
-                    {familyList && <li className='familyContainer__familyListContainer--li'>{familyList.name} {familyList.surname} </li>}
+                    {familyList && <li key={familyList.id} className='familyContainer__familyListContainer--li'>{familyList.name} {familyList.surname} </li>}
                 </ul>
             </div>}
 

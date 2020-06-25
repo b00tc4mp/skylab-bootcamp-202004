@@ -39,11 +39,9 @@ describe('logic - set-mood', () => {
 
     it('should succeed on setting mood', async () => {
         let user = await User.findById(userId)
-        console.log(user)
         await setMood(token, moodScore)
 
         user = await User.findById(userId)
-        console.log(user)
         expect(user.name).to.equal(name)
 
         expect(user.mood[0].score).to.equal(moodScore)

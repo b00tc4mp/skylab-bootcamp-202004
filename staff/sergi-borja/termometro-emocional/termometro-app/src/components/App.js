@@ -70,7 +70,6 @@ function App({history}) {
 
   const handleLogout = () => {
     setRol(undefined);
-    // delete sessionStorage.token;
     sessionStorage.clear()
     window.location.reload();
   }

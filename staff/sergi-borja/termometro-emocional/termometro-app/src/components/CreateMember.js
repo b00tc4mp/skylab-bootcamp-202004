@@ -28,7 +28,7 @@ function CreateMember({ token, history }) {
                 .then(() => history.push('/my-family'))
                 .catch(error => setError(error.message))
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
 
     }

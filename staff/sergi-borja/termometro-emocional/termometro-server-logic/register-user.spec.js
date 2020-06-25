@@ -63,7 +63,6 @@ describe('logic - register user', () => {
                 expect(error).to.exist
 
                 expect(error).to.be.an.instanceof(Error)
-                console.log(error.message)
                 // expect(error.message).to.equal(`user with e-mail ${email} already exists`)
             }
         })

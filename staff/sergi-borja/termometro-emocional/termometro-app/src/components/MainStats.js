@@ -230,17 +230,12 @@ function MainStats({ token, rol }) {
         setDisplayCalendar(false)
     }
 
-    const handleTileBackground = ({ date, view }) => {
-        // console.log(date)
-        // console.log(view)
-    }
-
     return (
         <section className='mainStatsContainer'>
             <div className='mainStatsContainer__selectContainer'>
                 {!rol && <select className='mainStatsContainer__selectContainer--select' onChange={(event) => handleChangeChart(event)}>
                     <option value='my_stats' className='mainStatsContainer__selectContainer--adminOption'>Mis estadísticas</option>
-                    {familyList && familyList.map(({ id, name }) => <option value={id} className='mainStatsContainer__selectContainer--memberOption'>{name}</option>)}
+                    {familyList && familyList.map(({ id, name }) => <option value={id} key={id} className='mainStatsContainer__selectContainer--memberOption'>{name}</option>)}
                 </select>}
                 {rol && <h1 value='my_stats' className='mainStatsContainer__selectContainer--adminOption'>Mis estadísticas</h1>}
             </div>
@@ -262,7 +257,7 @@ function MainStats({ token, rol }) {
             </div>}
 
             {displayCalendar && <div className='mainStatsContainer__calendarContainer'>
-                <Calendar className='mainStatsContainer__calendarContainer--calendar' tileClassName={handleTileBackground} onClickDay={(dayClicked) => handleDayClicked(dayClicked)} />
+                <Calendar className='mainStatsContainer__calendarContainer--calendar' onClickDay={(dayClicked) => handleDayClicked(dayClicked)} />
             </div>}
 
         </section>

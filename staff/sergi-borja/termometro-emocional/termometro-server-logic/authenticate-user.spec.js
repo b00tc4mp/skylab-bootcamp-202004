@@ -44,7 +44,6 @@ describe('logic - authenticate user', () => {
         it('should succeed on correct credentials', () =>
             authenticateUser(email, password)
                 .then(_userId => {
-                    console.log(_userId)
                         expect(_userId).to.equal(userId)
                     })
         )

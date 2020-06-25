@@ -14,24 +14,24 @@ function Footer({history}) {
     useEffect(()=>{
 
     },[history])
-    // debugger
+    
     return (
         <section className='footerContainer'>
             <div className="footerContainer__home">
-                {history.location.pathname === '/home' && <Link to="/home"><img className='footerContainer__home--homeIcon' src={homeIcon}></img></Link>}
-                {history.location.pathname !== '/home' && <Link to="/home"><img className='footerContainer__home--homeIcon' src={homeIconColor}></img></Link>}
+                {history.location.pathname === '/home' && <Link to="/home"><img alt='home icon' className='footerContainer__home--homeIcon' src={homeIcon}></img></Link>}
+                {history.location.pathname !== '/home' && <Link to="/home"><img alt='home icon' className='footerContainer__home--homeIcon' src={homeIconColor}></img></Link>}
             </div>
             <div className="footerContainer__myFamily">
-                {history.location.pathname !== '/my-family' && <Link to="/my-family"><img className='footerContainer__home--homeIcon' src={myFamilyIcon}></img></Link>}
-                {history.location.pathname === '/my-family'  && <Link to="/my-family"><img className='footerContainer__home--homeIcon' src={familyIconColor}></img></Link>}
+                {history.location.pathname !== '/my-family' && <Link to="/my-family"><img alt='mt family icon' className='footerContainer__home--homeIcon' src={myFamilyIcon}></img></Link>}
+                {history.location.pathname === '/my-family'  && <Link to="/my-family"><img alt='mt family icon' className='footerContainer__home--homeIcon' src={familyIconColor}></img></Link>}
             </div>
             <div className="footerContainer__stats">
-            {history.location.pathname === '/main-stats' && <Link to="/main-stats"><img className='footerContainer__home--homeIcon' src={heartIcon}></img></Link>}
-            {history.location.pathname !== '/main-stats' && <Link to="/main-stats"><img className='footerContainer__home--homeIcon' src={heartIconColor}></img></Link>}
+            {history.location.pathname === '/main-stats' && <Link to="/main-stats"><img alt='stats icon' className='footerContainer__home--homeIcon' src={heartIcon}></img></Link>}
+            {history.location.pathname !== '/main-stats' && <Link to="/main-stats"><img alt='stats icon' className='footerContainer__home--homeIcon' src={heartIconColor}></img></Link>}
             </div>
             <div className="footerContainer__settings">
-            {history.location.pathname !== '/settings' && <Link to="/settings"><img className='footerContainer__home--homeIcon' src={settingsIcon}></img></Link>}
-            {history.location.pathname === '/settings' && <Link to="/settings"><img className='footerContainer__home--homeIcon' src={colorSettings}></img></Link>}
+            {history.location.pathname !== '/settings' && <Link to="/settings"><img alt='setttings icon' className='footerContainer__home--homeIcon' src={settingsIcon}></img></Link>}
+            {history.location.pathname === '/settings' && <Link to="/settings"><img alt='settings icon' className='footerContainer__home--homeIcon' src={colorSettings}></img></Link>}
             </div>
         </section>
     );
