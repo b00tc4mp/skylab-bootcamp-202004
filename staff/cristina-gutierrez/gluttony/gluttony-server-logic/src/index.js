@@ -5,5 +5,6 @@ module.exports = {
     findNearbyBars: require("./find-nearby-bars"),
     findNearbyRestaurants: require("./find-nearby-restaurants"),
     addFavourite: require("./add-favourite"),
-    getFavourites: require("./get-favourites")
+    getFavourites: require("./get-favourites"),
+    removeFavourites: require("./remove-favourite")
 }

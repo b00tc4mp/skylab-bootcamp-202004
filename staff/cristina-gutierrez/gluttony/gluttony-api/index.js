@@ -21,6 +21,7 @@ const {
   getFavourites
 } = require("gluttony-server-logic")
 const { mongoose } = require("gluttony-data")
+const removeFavourite = require("gluttony-server-logic/src/remove-favourite")
 
 mongoose.connect(MONGODB_URL)
   .then(() => {
@@ -103,6 +104,18 @@ mongoose.connect(MONGODB_URL)
       try {   
         getFavourites(userId)
           .then(favouriteStores => res.send({ favouriteStores }))
+          .catch(error => handleError(error, res))
+      } catch (error) {
+        handleError(error, res)
+      }
+    });
+
+    router.delete("/favourites", verifyExtractJwt, (req, res) => {
+      const { payload: { sub: userId }, body: { storeId } } = req
+
+      try {   
+        removeFavourite(storeId, userId)
+          .then(() => res.status(204).send())
           .catch(error => handleError(error, res))
       } catch (error) {
         handleError(error, res)

@@ -7,7 +7,7 @@ import {
     TextInput,
     TouchableOpacity
 } from "react-native";
-import { addFavourite } from "../gluttony-client-logic";
+import { addFavourite, removeFavourite } from "../gluttony-client-logic";
 
 const Store = props => {
     const [comment, setComment] = useState("");
@@ -18,7 +18,7 @@ const Store = props => {
             <Text>{props.store.name}</Text>
             <Text>{props.store.type}</Text>
             { props.isFavourite ? <TouchableOpacity style={styles.button} title= "Remove favourite" onPress={() => {
-                addFavourite(props.store.id).catch(props.onShowModal)
+                removeFavourite(props.store.id).catch(props.onShowModal)
             }} >
                 <Text style={{ ...styles.textStyle, textAlign: "center" }}>Remove favourite</Text>
             </TouchableOpacity> : <TouchableOpacity style={styles.button} title= "Add to favourites" onPress={() => {
