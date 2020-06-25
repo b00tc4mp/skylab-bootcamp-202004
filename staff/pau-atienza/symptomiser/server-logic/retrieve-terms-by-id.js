@@ -28,8 +28,6 @@ module.exports = HPO_id => {
         const lower = await Term.find({is_a: HPO_id}).lean()
         lower && lower.forEach(term =>result.lower.push(cleanTerm(term)))
 
-        debugger
-
         if(result.term.is_a.length) {
             higher = await Term.find({HPO_id: result.term.is_a}).lean()
         }

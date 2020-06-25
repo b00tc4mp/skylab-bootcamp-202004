@@ -78,7 +78,7 @@ describe('client logic - register symptom list', () => {
 
     it('should fail when an incorrect url is introduced', async () => {
         context.API_URL = "http://localhost:8080/api/random"
-        debugger
+        
         try{
             await registerSymptomList()
         }catch(error){

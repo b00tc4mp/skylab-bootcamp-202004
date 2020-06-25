@@ -115,8 +115,6 @@ describe('client logic - update symptom', () => {
 
         const [updatedSymptomFromStorage] = JSON.parse(context.storage.submittedSymptoms)
 
-        debugger
-
         let {navigation: {predictorInput: {content: __content, limit: __limit, date: __date}, predictorOutput: {prediction: __prediction, date: __date2}, clicks: __clicks}} = updatedSymptomFromStorage
 
         let {term: {HPO_id: __HPO_id, name: __name, confidenceLevel: __confidenceLevel, date: __date3}} = updatedSymptomFromStorage
@@ -193,8 +191,6 @@ describe('client logic - update symptom', () => {
         expect(_confidenceLevel).to.equal(confidenceLevel)
 
         const [updatedSymptomFromStorage] = JSON.parse(context.storage.submittedSymptoms)
-
-        debugger
 
         let {navigation: {predictorInput: {content: __content, limit: __limit, date: __date}, predictorOutput: {prediction: __prediction, date: __date2}, clicks: __clicks}} = updatedSymptomFromStorage
 
