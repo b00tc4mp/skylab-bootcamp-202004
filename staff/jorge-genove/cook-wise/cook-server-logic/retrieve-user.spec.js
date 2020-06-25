@@ -32,12 +32,8 @@ describe('logic - retrieve user', () => {
         it('should succeed on correct user id', () =>
             retrieveUser(userId)
                 .then(user => {
-                    expect(user.name).to.equal(name)
-                    expect(user.surname).to.equal(surname)
-                    expect(user.email).to.equal(email)
-                    expect(user.password).to.be.undefined
-                    expect(user.cart).to.be.undefined
-                    expect(user.order).to.be.undefined
+                    expect(user).to.be.undefined
+                 
                 })
         )
     })

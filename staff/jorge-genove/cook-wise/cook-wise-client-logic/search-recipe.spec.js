@@ -1,19 +1,26 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, API_URL, SECRET } } = process
 
-const searchRecipes = require('./search-recipe')
+const searchRecipe = require('./search-recipe')
 const { random } = Math
 const { expect } = require('chai')
 require('cook-wise-commons/polyfills/json')
 const { mongoose, models: { User, Recipes, Ingredients } } = require('cook-wise-data')
 const bcrypt = require('bcryptjs')
-const { DuplicityError, UnexistenceError } = require('cook-wise-commons/errors')
+const { UnexistenceError } = require('cook-wise-commons/errors')
+const logic = require('.')
+global.fetch = require('node-fetch')
+const notAsyncStorage = require('not-async-storage')
+const jwt = require('jsonwebtoken')
+
+logic.__context__.API_URL = API_URL
+logic.__context__.storage = notAsyncStorage 
 
 describe("search-recipe", () => {
     let name, surname, email, password, encryptedPassword, userId
     let recipeName, recipeAuthor, description, time, ingredients = [], recipeId;
-    let ingridient, ingredientId
+    let ingredientId
     let quantity, ingredientType;
     let query
     let user
@@ -32,6 +39,8 @@ describe("search-recipe", () => {
 
         user = await User.create({ name, surname, email, password, encryptedPassword })
         userId = user.id
+        const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
+        await logic.__context__.storage.setItem('TOKEN', token)
 
         ingredientName = `ingredientName-${random()}`;
         const newIngredient = await Ingredients.create({ name: ingredientName });
@@ -60,7 +69,7 @@ describe("search-recipe", () => {
     it('must find a recipes matching recipe autho with the query', async () => {
         query = recipeAuthor
 
-        const result = await searchRecipes(query, userId)
+        const result = await searchRecipe(query)
 
         expect(result).to.exist
         expect(result).to.be.instanceof(Array)
@@ -78,7 +87,7 @@ describe("search-recipe", () => {
     it('must find a recipes matching recipe name with the query', async () => {
         query = recipeName
 
-        const result = await searchRecipes(query, userId)
+        const result = await searchRecipe(query)
 
         expect(result).to.exist
         expect(result).to.be.instanceof(Array)
@@ -95,68 +104,49 @@ describe("search-recipe", () => {
 
     it("shold throw an error if not match a user", async () => {
         await User.deleteMany()
-    
+      
         try {
-            await searchRecipes(query,userId)
+            await searchRecipe(query)
         }catch(error) {
             expect(error).to.exist;
-            expect(error).to.be.instanceof(UnexistenceError);
+            expect(error).to.be.instanceof(Error);
             expect(error.message).to.equal(`user with id ${userId} does not exist`); 
+        }
+    })
+
+    it("shold throw an error if recipes not be found", async () => {
+        query = 'hola'
+      
+        try {
+            await searchRecipe(query)
+        }catch(error) {
+            expect(error).to.exist;
+            expect(error).to.be.instanceof(Error);
+            expect(error.message).to.equal(`${query} is not found like recipe or author`); 
         }
 
        
     })
 
-    it("shold throw an error if recipes not be found", async () => {
-        query = 'hola'
-        
-        try {
-            await searchRecipes(query,userId)
-        }catch(error) {
-           
-        expect(error).to.exist;
-        expect(error).to.be.instanceof(UnexistenceError);
-        expect(error.message).to.equal(`${query} is not found like recipe or author`); 
-        }
-
-    })
-
     it('should throw an error if query its not an string', () => {
         expect(function () {
-            searchRecipes(query, undefined)
+            searchRecipe(undefined)
         }).to.throw(TypeError, 'undefined is not a string')
 
         expect(function () {
-            searchRecipes(query, 1)
+            searchRecipe(1)
         }).to.throw(TypeError, '1 is not a string')
 
         expect(function () {
-            searchRecipes(query, null)
+            searchRecipe(null)
         }).to.throw(TypeError, 'null is not a string')
 
         expect(function () {
-            searchRecipes(query, true)
+            searchRecipe(true)
         }).to.throw(TypeError, 'true is not a string')
     })
 
-it('should throw an error if userId its not an string', () => {
-        expect(function () {
-            searchRecipes(undefined, userId)
-        }).to.throw(TypeError, 'undefined is not a string')
-    
-        expect(function () {
-            searchRecipes(1, userId)
-        }).to.throw(TypeError, '1 is not a string')
-    
-        expect(function () {
-            searchRecipes(null, userId)
-        }).to.throw(TypeError, 'null is not a string')
-    
-        expect(function () {
-            searchRecipes(true, userId)
-        }).to.throw(TypeError, 'true is not a string')
-})    
-   
+
     after(async () => {
         await Promise.all([User.deleteMany(), Ingredients.deleteMany(), Recipes.deleteMany(),]);
         await mongoose.disconnect();

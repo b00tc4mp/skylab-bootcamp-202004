@@ -1,3 +1,12 @@
+
+/**
+ *It will mark or unmark a recipe as favorite
+ * 
+ *  @param {String} recipeId
+ * 
+ * @throws {error} if status its not 204
+ */
+
 require('cook-wise-commons/polyfills/string')
 const { utils: {  call } } = require('cook-wise-commons')
 const context = require('./context')

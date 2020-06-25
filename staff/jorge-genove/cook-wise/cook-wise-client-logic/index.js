@@ -1,5 +1,6 @@
 const context = require('./context')
 
+
 module.exports = {
     get __context__(){
         return context
@@ -19,5 +20,7 @@ module.exports = {
     deleteDayMenu: require('./delete-day-menu'),
     deleteTimeline: require('./delete-timeline-menu'),
     recipeSearchIdeas: require('./recipe-ideas'),
-    addRecipe: require('./addRecipe')
+    addRecipe: require('./add-recipe'),
+    isLoggedIn: require('./is-user-logged-in'),
+    logout: require('./logout')
 }

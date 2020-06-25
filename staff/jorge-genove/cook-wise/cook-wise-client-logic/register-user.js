@@ -1,3 +1,21 @@
+/**
+ * 
+ * it must recive the user params and send it to the DB
+ * 
+ * @param {String} name will be the name of the user
+ * 
+ * @param {String} surname will be the surname of the user
+ * 
+ * @param {String} email will be the username of the user
+ * 
+ * @param {String} password will be the key for authenticate the user
+ * 
+ * 
+ */
+
+
+
+
 require('cook-wise-commons/polyfills/string')
 const { utils: { Email, call } } = require('cook-wise-commons')
 const context = require('./context')

@@ -1,3 +1,14 @@
+/**
+ * 
+ * it must retrive the day and the recipes
+ * 
+ *@throws {error} if status its not 200
+ * 
+ * 
+ */
+
+
+
 require('cook-wise-commons/polyfills/string')
 const {getDate} = require('./helpers')
 const { utils: {  call } } = require('cook-wise-commons')

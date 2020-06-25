@@ -1,19 +1,30 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, API_URL, SECRET } } = process
 
-const retrieveFavorite = require('./retrieve-favorite')
+const retrieveFavorites = require('./retrieve-favorites')
 const { random } = Math
 const { expect } = require('chai')
 require('cook-wise-commons/polyfills/json')
 const { mongoose, models: { User, Recipes, Ingredients } } = require('cook-wise-data')
 const bcrypt = require('bcryptjs')
 const {UnexistenceError } = require('cook-wise-commons/errors')
+const logic = require('.')
+global.fetch = require('node-fetch')
+const notAsyncStorage = require('not-async-storage')
+const jwt = require('jsonwebtoken')
+
+logic.__context__.API_URL = API_URL
+logic.__context__.storage = notAsyncStorage 
+
+
+
+
 
 describe("retrieve favorite recipes", () => {
     let name, surname, email, password, encryptedPassword, userId
     let recipeName, recipeAuthor, description, time, ingredients = [], recipeId;
-    let ingridient, ingredientId
+    let ingredientId
     let quantity, ingredientType;
     let user
 
@@ -31,6 +42,8 @@ describe("retrieve favorite recipes", () => {
 
         user = await User.create({ name, surname, email, password, encryptedPassword })
         userId = user.id
+        const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
+        await logic.__context__.storage.setItem('TOKEN', token)
         
         ingredientName = `ingredientName-${random()}`;
         const newIngredient = await Ingredients.create({ name: ingredientName });
@@ -60,7 +73,7 @@ describe("retrieve favorite recipes", () => {
 })
 
     it('should retrieve all favorite recipes of the user', async () => {
-        const result = await retrieveFavorite(userId)
+        const result = await retrieveFavorites(userId)
 
         expect(result).to.exist
         expect(result).to.be.instanceof(Array)
@@ -76,33 +89,17 @@ describe("retrieve favorite recipes", () => {
 
     it("shold throw an error if not match a user", async () => {
         await User.deleteMany()
-       
+      
         try {
-            await retrieveFavorite(userId)
+            await retrieveFavorites(userId)
         }catch(error) {
             expect(error).to.exist;
-            expect(error).to.be.instanceof(UnexistenceError);
+            expect(error).to.be.instanceof(Error);
             expect(error.message).to.equal(`user with id ${userId} does not exist`); 
         }
     })
 
-    it('should throw an error if userId its not an string', () => {
-        expect(function () {
-            retrieveFavorite(undefined, recipeId)
-        }).to.throw(TypeError, 'undefined is not a string')
-    
-        expect(function () {
-            retrieveFavorite(1, recipeId)
-        }).to.throw(TypeError, '1 is not a string')
-    
-        expect(function () {
-            retrieveFavorite(null, recipeId)
-        }).to.throw(TypeError, 'null is not a string')
-    
-        expect(function () {
-            retrieveFavorite(true, recipeId)
-        }).to.throw(TypeError, 'true is not a string')
-    })
+   
     after(mongoose.disconnect)
 
 })

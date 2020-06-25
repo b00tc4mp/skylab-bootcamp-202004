@@ -1,9 +1,21 @@
+
+/**
+ * 
+ * it will retrive ideas for add to the menu
+ * 
+ * @param {Object} something the recipeId that will be deleted
+ * 
+ * 
+ * @throw {Error} if status is not 200
+ */
+
 require('cook-wise-commons/polyfills/string')
 const { utils: {  call } } = require('cook-wise-commons')
 const context = require('./context')
 
 module.exports = function(something) {
-    
+
+    if (!(something instanceof Array)) throw new TypeError('you must put ingredients on the recipe')
 return (async() => {
 
     const token = await this.storage.getItem('TOKEN')

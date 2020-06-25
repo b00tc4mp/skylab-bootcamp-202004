@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, API_URL } } = process
 
 const registerUser = require('./register-user')
 const { random } = Math
@@ -40,7 +40,7 @@ describe('logic - register user', () => {
 
                 const [user] = users
 
-                debugger
+               
 
                 expect(user.name).to.equal(name)
                 expect(user.surname).to.equal(surname)

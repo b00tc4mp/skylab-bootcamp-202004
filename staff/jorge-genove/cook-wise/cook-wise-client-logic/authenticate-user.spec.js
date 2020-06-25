@@ -1,24 +1,19 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL,  API_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, API_URL } } = process
 
 const authenticateUser = require('./authenticate-user')
 const { random } = Math
 const { expect } = require('chai')
-require('cook-wise-commons/polyfills/json')
 const { mongoose, models: { User } } = require('cook-wise-data')
 const bcrypt = require('bcryptjs')
-require('cook-wise-commons/ponyfills/xhr')
-require('cook-wise-commons/ponyfills/atob')
-const context = require('./context')
 const logic = require('.')
 global.fetch = require('node-fetch')
 const notAsyncStorage = require('not-async-storage')
 
 
-logic.__context__.API_URL = API_URL
 logic.__context__.storage = notAsyncStorage 
-
+logic.__context__.API_URL = API_URL
 
 
 describe('logic - authenticate user', () => {
@@ -40,26 +35,14 @@ describe('logic - authenticate user', () => {
     )
 
     describe('when user already exists', () => {
-        beforeEach(() =>{
-          
+        beforeEach(() =>
             User.create({ name, surname, email, password: hash })
-                .then(user =>{console.log(user);userId = user.id} )
-                
-         } )
+                .then(user => userId = user.id)
+        )
 
         it('should succeed on correct credentials', () =>
             authenticateUser(email, password)
-                .then(token => {
-                    const [, payloadBase64] = token.split('.')
-
-                    const payloadJson = atob(payloadBase64)
-
-                    const payload = JSON.parse(payloadJson)
-
-                    const { sub: _userId } = payload
-
-                    expect(_userId).to.equal(userId)
-                })
+                .then(_userId => expect(_userId).to.equal(userId))
         )
 
         it('should fail on wrong password', () => {
@@ -84,6 +67,11 @@ describe('logic - authenticate user', () => {
     )
 
     afterEach(() => User.deleteMany())
+        })
 
-    after(mongoose.disconnect)
-})
+
+
+
+
+
+
