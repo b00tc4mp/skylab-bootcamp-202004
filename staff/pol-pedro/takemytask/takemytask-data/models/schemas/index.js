@@ -4,5 +4,5 @@ module.exports = {
     chat: require('./chat'),
     rates: require('./rates'),
     contract: require('./contract'),
-    coments: require('./comments')
+    coments: require('./coments')
 }

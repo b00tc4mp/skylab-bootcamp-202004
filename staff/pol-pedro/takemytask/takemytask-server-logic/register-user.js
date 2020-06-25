@@ -4,6 +4,20 @@ const { utils: { Email }, errors: { DuplicityError } } = require('takemytask-com
 const { models: { User } } = require('takemytask-data')
 const bcrypt = require('bcryptjs')
 
+/**
+ * Register User
+ *
+ * @param {string} name users name
+ * @param {string} surname users surname 
+ * @param {string} email users email
+ * @param {string} password users password
+ * @param {string} adress users adress
+ * 
+ * @returns {undefined}
+ *
+ * @throws {DuplicityError} if user already exists
+ */
+
 module.exports = (name, surname, email, password, adress) => {
     String.validate.notVoid(name)
     String.validate.notVoid(surname)

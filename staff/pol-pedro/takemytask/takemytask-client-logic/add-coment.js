@@ -2,6 +2,17 @@ require('takemytask-commons/polyfills/string')
 const { utils: { call }} = require('takemytask-commons')
 const context = require('./context')
 
+/**
+ * calls the api to add a comment to the specific worker id
+ *
+ * @param {string} commentedId workers unique id
+ * @param {string} comment users comment 
+ * 
+ * @returns {undefined}
+ *
+ * @throws {Error} if server throws errror
+ */
+
 
 module.exports = function (commentedId, comment) {
     String.validate.notVoid(commentedId)

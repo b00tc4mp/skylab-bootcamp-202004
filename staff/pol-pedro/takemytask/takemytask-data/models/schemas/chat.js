@@ -1,5 +1,5 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
-const coments = require('./comments')
+const coments = require('./coments')
 
 module.exports = new Schema ({
 

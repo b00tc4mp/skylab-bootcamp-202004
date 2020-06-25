@@ -1,6 +1,6 @@
 const { utils: { Email } } = require('takemytask-commons')
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
-const coments = require('./comments')
+const coments = require('./coments')
 const rates = require('./rates')
 
 module.exports = new Schema({

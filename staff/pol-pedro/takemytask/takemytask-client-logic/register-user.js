@@ -3,6 +3,20 @@ require('takemytask-commons/polyfills/string')
 const { utils: { Email, call }} = require('takemytask-commons')
 const context = require('./context')
 
+/**
+ * calls  the api to register a user with the given name surname ...
+ *
+ * @param {string} name users name
+ * @param {string} surname users surname 
+ * @param {string} email users email
+ * @param {string} password users password
+ * @param {string} adress users adress
+ * 
+ * @returns {undefined}
+ *
+ * @throws {Error} if server throws errror
+ */
+
 
 module.exports = function (name, surname, email, password, adress) {
     String.validate.notVoid(name)

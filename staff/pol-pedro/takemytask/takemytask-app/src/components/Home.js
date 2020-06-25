@@ -3,6 +3,10 @@ import './Home.sass'
 import searchIcon from './images/search.svg'
 import wave from './images/wave.svg'
 import RegisterWorker from './RegisterWorker'
+import mail from './images/mail.svg'
+import insta from './images/insta.svg'
+import twitter from './images/twitter.svg'
+import contact from './images/contact-us.svg'
 
 export default function Home({token, userName, onGoToLogin, onRegister, onSearcher}) {
 
@@ -89,7 +93,14 @@ export default function Home({token, userName, onGoToLogin, onRegister, onSearch
                 </div>
 
                 <div className="home__social">
-
+                    <div className="home__socialTop">
+                        <img src={twitter}></img>
+                        <img src={insta}></img>
+                    </div>
+                    <div className="home__socialBotom">
+                        <img src={mail}></img>
+                        <img src={contact}></img>
+                    </div>
                 </div>
 
             </div>

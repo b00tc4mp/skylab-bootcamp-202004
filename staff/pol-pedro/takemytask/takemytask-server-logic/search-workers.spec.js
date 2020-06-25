@@ -61,17 +61,6 @@ describe('logic - search worker', () => {
         }
     })
 
-    // it('sould fail when empty non existant chat id', async () => {
-        
-    //     const result = await retriveChat("5ef1152a504970548076a9a5")
-    //         .then()
-    //         .catch(error => {
-    //             expect(error).to.exist
-    //             expect(error.message).to.equal(`chat with id: 5ef1152a504970548076a9a5 dont exists`)
-    //         })
-        
-    // })
-
     afterEach(() => Worker.deleteMany())
 
     after(mongoose.disconnect)

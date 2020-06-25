@@ -4,6 +4,17 @@ var moment = require('moment')
 const { errors: { UnexistenceError } } = require('takemytask-commons')
 const { models: { Worker, Comments, User }, mongoose: {ObjectId} } = require('takemytask-data')
 
+/**
+ * Adds a coment to worker
+* @param {string} userId user unique id
+ * @param {string} commentedId workers unique id
+ * @param {string} comment users comment 
+ * 
+ * @returns {undefined}
+ *
+ * @throws {UnexistenceError} if user or worker dont exist
+ */
+
 
 module.exports = (userId, commentedId, comment) => {
 

@@ -2,6 +2,17 @@ require('takemytask-commons/polyfills/string')
 const { utils: { Email, call } } = require('takemytask-commons')
 const context = require('./context')
 
+/**
+ * calls the api with the email and password given and if matches returns a token
+ *
+ * @param {string} email users or worker email
+ * @param {string} password users or worker password 
+ * 
+ * @returns {string}
+ *
+ * @throws {Error} if server throws errror
+ */
+
 module.exports = function (email, password) {
     Email.validate(email)
 

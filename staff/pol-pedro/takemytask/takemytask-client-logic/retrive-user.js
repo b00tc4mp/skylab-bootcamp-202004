@@ -2,6 +2,16 @@ require('takemytask-commons/polyfills/string')
 const { utils: { call } } = require('takemytask-commons')
 const context = require('./context')
 
+/**
+ * calls the api and returns the user or worker 
+ *
+ * @param {string} searchId worker unique id
+ * 
+ * @returns {object}
+ *
+ * @throws {Error} if server throws errror
+ */
+
 module.exports = function (searchId) {
     if(searchId === undefined){
         searchId = ''

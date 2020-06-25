@@ -3,6 +3,15 @@ require('takemytask-commons/polyfills/json')
 const { errors: { UnexistenceError } } = require('takemytask-commons')
 const { models: { User, Worker, Chat }, mongoose: {ObjectId} } = require('takemytask-data')
 
+/**
+ * retrive users chats 
+ * 
+ *@param {string} userId worker name
+*
+* @returns {object}
+*
+* @throws {Error} if server throws errror
+*/
 
 module.exports = (userId) => {
 

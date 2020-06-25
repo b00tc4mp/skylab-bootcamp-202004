@@ -3,7 +3,18 @@ require('takemytask-commons/polyfills/json')
 const { errors: { UnexistenceError } } = require('takemytask-commons')
 const { models: {Worker }, mongoose: {ObjectId} } = require('takemytask-data')
 
-//TODO key words search
+/**
+ * search worker by a string and return all the mathches
+ *
+ * @param {boolean} userName if search by username
+ * @param {boolean} jobCategory if search by category
+ * @param {string} words word to search entered by the user
+ * 
+ * @returns {object}
+ *
+ */
+
+
 
 module.exports = (userName, jobCategory, words) => {
     

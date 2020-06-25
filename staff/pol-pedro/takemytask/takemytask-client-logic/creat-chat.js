@@ -2,6 +2,15 @@ require('takemytask-commons/polyfills/string')
 const { utils: { call }} = require('takemytask-commons')
 const context = require('./context')
 
+/**
+ * calls the api and  creats a new chat with the uses and sended workers id and returns the created chat id
+ *
+ * @param {string} destinatorId worker unique id 
+ * 
+ * @returns {string} chate id
+ *
+ * @throws {Error} if server throws errror
+ */
 
 module.exports = function (destinatorId) {
     String.validate.notVoid(destinatorId) 

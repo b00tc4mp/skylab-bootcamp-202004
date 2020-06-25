@@ -1,8 +1,17 @@
 require('takemytask-commons/polyfills/string')
 require('takemytask-commons/polyfills/json')
-const { errors: { UnexistenceError, DuplicityError } } = require('takemytask-commons')
+const { errors: { UnexistenceError } } = require('takemytask-commons')
 const { models: { Chat, User, Worker, Comments }, mongoose: {ObjectId} } = require('takemytask-data')
 
+/**
+ * creat a chat with a worker
+* @param {string} creatorId user unique id
+* @param {string} destinatorId worker unique id 
+* 
+* @returns {string} chate id
+*
+* @throws {UnexistenceError} if user or worker dont exists
+*/
 
 module.exports = (creatorId, destinatorId) => {
 

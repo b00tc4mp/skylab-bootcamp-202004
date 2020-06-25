@@ -2,6 +2,16 @@ require('takemytask-commons/polyfills/string')
 const { utils: { call } } = require('takemytask-commons')
 const context = require('./context')
 
+/**
+ * calls the api and return the chat with the id passed
+ *
+ * @param {string} chatId chat unique id
+ * 
+ * @returns {object}
+ *
+ * @throws {Error} if server throws errror
+ */
+
 module.exports = function (chatId) {
     const { token } = context.storage
 

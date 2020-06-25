@@ -6,6 +6,26 @@ const { utils: { Email }, errors: { DuplicityError } } = require('takemytask-com
 const { models: { Worker, User } } = require('takemytask-data')
 const bcrypt = require('bcryptjs')
 
+/**
+ * Register worker
+ *
+ * @param {string} name worker name
+ * @param {string} surname worker surname 
+ * @param {string} email worker email
+ * @param {string} password worker password
+ * @param {string} adress worker adress
+ * @param {string} bankAcount worker bankacoutn
+ * @param {string} description worker description 
+ * @param {string} presentation worker presentation 
+ * @param {string} pricingHour worker pricing
+ * @param {string} jobArray worker job categories
+ * @param {string} workingDistance worker working distance
+ * 
+ * @returns {undefined}
+ *
+ * @throws {DuplicityError} if worker already exists
+ */
+
 module.exports = (name, surname, email, password, adress, bankAcount, description, presentation, pricingHour, jobCategories, workingDistance) => {
     String.validate.notVoid(name)
     String.validate.notVoid(surname)
