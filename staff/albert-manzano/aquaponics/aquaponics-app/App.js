@@ -2,10 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
-  View,
-  Dimensions,
   SafeAreaView,
-  Alert,
   AsyncStorage,
 } from 'react-native';
 import Constants from 'expo-constants';
@@ -19,10 +16,8 @@ import logic, { retrieveUser, logout, retrieveLastTemperature, retrieveLastPh, i
 logic.__context__.storage = AsyncStorage;
 
 const askNotification = async () => {
-  // We need to ask for Notification permissions for ios devices
   const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-  if (Constants.isDevice && status === 'granted')
-    console.log('Notification permissions granted.');
+  if (Constants.isDevice && status === 'granted');
 };
 
 export default function App() {
@@ -33,8 +28,6 @@ export default function App() {
   const [lastTemp, setLastTemp] = useState('')
   const [lastPh, setLastPh] = useState('')
   const [confirmed, setConfirm] = useState('')
-
-
 
   useEffect(() => {
     if (isUserLoggedIn())
@@ -62,14 +55,16 @@ export default function App() {
           const lastPh = await retrieveLastPh()
           setLastTemp(lastTemp)
           setLastPh(lastPh)
-          if (lastTemp > 30 || lastTemp < 25) Notifications.presentLocalNotificationAsync({ title: 'Alert', body: 'Temperature exceeded the standards, please check it', sound: true })
-          if (lastPh < 4 || lastPh < 7) Notifications.presentLocalNotificationAsync({ title: 'Alert', body: 'Ph exceeded the standards, please check it', sound: true })
         } catch (error) {
-          Notifications.presentLocalNotificationAsync({ title: 'Alert', body: 'Problem connecting with the greenhouse', sound: true })
+          Notifications.presentLocalNotificationAsync({ title: 'Alert', body: 'Problem connecting with the greenhouse', sound: true, vibrate: [0, 250, 250, 250], })
+
         }
+
       })()
+
     }, 10000);
     return () => clearTimeout(timer);
+
   }, [lastTemp]);
 
   const handleAuthorized = async () => {

@@ -16,7 +16,6 @@ const context = require('./context')
 require('aquaponics-commons/polyfills/number')
 
 module.exports = async function (name, surname, email, password, _password, phone) {
-    debugger
     String.validate(name)
     String.validate.notVoid(name)
     String.validate(surname)

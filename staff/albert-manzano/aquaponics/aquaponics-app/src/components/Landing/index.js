@@ -66,12 +66,10 @@ function Landing({confirmed,onAuthorized }) {
                    
                 </>)}
                 {view === 'login' && (<>
-                    {/* <Navbar onDisplaySide={handleSide} /> */}
                     <Login error={error} onLogin={handleLogin} />
                     {displayed && <SideIntro onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
                 </>)}
                 {view === 'register' && (<>
-                    {/* <Navbar onDisplaySide={handleSide} /> */}
                     <Register error={error} onRegister={handleRegister} />
                     {displayed && <SideIntro onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />}
                 </>)}

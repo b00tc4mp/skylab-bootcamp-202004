@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import styles from './styles';
 

@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         position:"absolute",
-        // top:80,
         width: "70%",
         height:"100%",
         backgroundColor: "rgba(196,196,196,0.6)",
@@ -30,14 +29,12 @@ const styles = StyleSheet.create({
     },
     
     iconRegister:{
-        // position:"absolute",
         zIndex:3,
         height: 40,
         width: 40,
     },
 
     iconLogin:{
-        // position:"absolute",
         zIndex:3,
         height: 40,
         width: 40,

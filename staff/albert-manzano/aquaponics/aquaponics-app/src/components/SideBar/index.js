@@ -1,7 +1,6 @@
 import React from 'react'
 import {
     Text,
-    SafeAreaView,
     View,
     TouchableOpacity,
     Image
@@ -35,8 +34,6 @@ function SideBar({ error, onGoToCharts, onGoToManager, onGoToGreenhouse, onGoToF
                     <TouchableOpacity onPress={onGoToGreenhouse}>
                         <Image source={require('../../../assets/images/greenhouse.png')} style={styles.icon} />
                     </TouchableOpacity>
-
-
                 </View>
             </>)}
             <View>

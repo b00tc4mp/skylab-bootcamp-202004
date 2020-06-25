@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
   image: {
     height: Dimensions.get('window').height,
     width: Dimensions.get('window').width,
-    // resizeMode:"cover"
   },
 
   weatherContainer: {
@@ -82,7 +81,6 @@ const styles = StyleSheet.create({
     fontSize:40,
     color:'white',
   }
-
 });
 
 export default styles;

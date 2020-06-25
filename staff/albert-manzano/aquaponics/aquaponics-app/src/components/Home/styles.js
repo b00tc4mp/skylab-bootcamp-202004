@@ -7,13 +7,13 @@ const styles = StyleSheet.create({
     
     image: {
       height: Dimensions.get('window').height,
-      width: Dimensions.get('window').width,
-      // resizeMode:"cover"
+      width: Dimensions.get('window').width
     },
 
     name:{
       fontSize:40,
       color:'#F0FFFF',
+      marginLeft:4,
     }
   });
 

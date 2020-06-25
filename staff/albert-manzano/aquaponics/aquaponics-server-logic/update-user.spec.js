@@ -39,7 +39,6 @@ describe('logic-updateUser', () => {
             const userUpdate = { name: _name, surname: _surname, email, password, phone }
 
             await updateUser(userId, userUpdate)
-            debugger
             const results = await User.findById(userId)    
             expect(results.name).to.equal(_name)
             expect(results.surname).to.equal(_surname)

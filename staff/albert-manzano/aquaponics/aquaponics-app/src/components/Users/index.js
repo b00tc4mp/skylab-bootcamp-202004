@@ -6,12 +6,10 @@ import {
     TouchableOpacity,
     Image,
     FlatList,
-    AsyncStorage,
 } from "react-native";
 
 import styles from './styles'
 
-import { getIdFromToken } from '../../../../aquaponics-commons/utils'
 import { retrieveAllUsers, updateUser, revokeUnrevokeUser, confirmUser, retrieveUser } from 'aquaponics-client-logic'
 
 function Users({ handleGoToBack }) {
@@ -22,7 +20,6 @@ function Users({ handleGoToBack }) {
     useEffect(() => {
         try {
             (async () => {
-               
                 const { email } = await retrieveUser()
                 const users = await retrieveAllUsers()
                 const listOfUsers = users.filter(user => user.email!==email)
@@ -82,7 +79,6 @@ function Users({ handleGoToBack }) {
                 onPress={handleGoToBack}>
                 <Image source={require('../../../assets/images/arrow.png')} style={styles.arrow} />
             </TouchableOpacity>
-
             {listOfUsers && <FlatList data={listOfUsers} keyExtractor={(users) => users.id} renderItem={({ item }) =>
                 <View style={styles.container}>
                     <Text >Name : {item.name}</Text>

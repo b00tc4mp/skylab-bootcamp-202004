@@ -27,6 +27,5 @@ export {
     Register,
     Feedback,
     Add,
-    Users,
-    
+    Users
 }

@@ -9,7 +9,7 @@ module.exports = (req, res) => {
 
     try {
         logTemperature(temperature)
-            .then(() =>{debugger
+            .then(() =>{
             return res.status(201).send()
             })    
             .catch(error => handleError(error, res))

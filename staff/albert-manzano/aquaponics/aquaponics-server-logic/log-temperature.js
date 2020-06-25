@@ -10,7 +10,7 @@ module.exports = (temperature) => {
 
     Number.validate(temperature)
     const date = new Date 
-debugger
+    
     return Temperature.create({ temperature, date })
         .then(() => { })
 }

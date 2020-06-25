@@ -9,13 +9,6 @@ const styles = StyleSheet.create({
     
   },
 
-  image: {
-    // height: Dimensions.get('window').height,
-    // width: Dimensions.get('window').width,
-    // resizeMode:"cover"
-  },
-
-
   placeholder:{
     position:"absolute",
     alignSelf:'center',
@@ -30,12 +23,10 @@ input: {
     marginBottom: 10,
     width: 160,
     height: 30,
-    // left: -40,
     backgroundColor: "#E6E6E6",
     borderWidth: 1,
     borderColor: "rgba(196,196,196,1)",
     borderRadius: 5,
-    // position: "absolute",
     alignItems: "center",
 },
 
@@ -48,7 +39,6 @@ button: {
     borderRadius: 5,
     marginTop: '10%',
     paddingTop:3,
-
     alignSelf: "center",
     alignItems: 'center'
 },

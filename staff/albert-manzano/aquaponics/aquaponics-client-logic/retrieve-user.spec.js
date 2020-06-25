@@ -1,7 +1,6 @@
 require('dotenv').config()
 
 const { env: { MONGODB_URL_TEST: MONGODB_URL, SECRET } } = process
-debugger
 const retrieveUser = require('./retrieve-user')
 const { random } = Math
 const { expect } = require('chai')

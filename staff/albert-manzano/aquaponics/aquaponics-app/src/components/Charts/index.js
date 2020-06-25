@@ -30,7 +30,6 @@ function Charts({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToForec
     const handleSide = () => setSide(!displayed);
 
     useEffect(() => {
-        // const timer = setTimeout(() => {
             (async () => {
                 try {
                     let tempResult = await retrieveTemperature()
@@ -43,8 +42,6 @@ function Charts({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToForec
                     throw new Error('something wrong happened')
                 }
             })()
-        // }, 10000);
-        // return () => clearTimeout(timer);
     }, []);
 
     return (
@@ -89,8 +86,7 @@ function Charts({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToForec
                                 }}
 
                                 style={{
-                                    marginLeft:10,
-                                    marginTop: 15,
+                                    margin:10,
                                     alignSelf: "center",
                                     marginVertical: 8,
                                     borderRadius: 16
@@ -105,7 +101,6 @@ function Charts({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToForec
                             <LineChart
                                 data={{
                                     segments:10,
-                                    // labels: ["January", "February", "March", "April", "May", "June"],
                                     datasets: [
                                         {
                                             data: phs

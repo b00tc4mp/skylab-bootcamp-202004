@@ -36,7 +36,6 @@ describe("update-user", () => {
         role= 'user'
 
         const user = await User.create({ name, surname, email, password: encryptedPassword, phone ,role});
-        debugger
         userId = user.id;
         token = await jwtPromised.sign({ sub: userId }, SECRET)
         await __context__.storage.setItem('token', token)
@@ -49,7 +48,6 @@ describe("update-user", () => {
     it('should update the user data', async () => {
         _name = `name-${random()}`
         _surname = `surname-${random()}`
-        debugger
         const userUpdate = { name: _name, surname: _surname, email: _email, role: "admin" }
 
         await updateUser(userId, userUpdate)

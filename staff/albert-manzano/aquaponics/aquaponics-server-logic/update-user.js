@@ -20,7 +20,6 @@ const { errors: { UnexistenceError } } = require('aquaponics-commons')
 require('aquaponics-commons/polyfills/number')
 
 module.exports = (userId, updateUser) => {
-    debugger
     if (typeof updateUser !== 'object') throw new TypeError(`${updateUser} is not an object`)
 
     const { name, surname, email, password, phone, role, status, confirmed } = updateUser

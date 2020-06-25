@@ -1,7 +1,6 @@
 import React from 'react'
 import {
     Text,
-    SafeAreaView,
     View,
     TouchableOpacity,
     Image

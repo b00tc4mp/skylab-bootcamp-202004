@@ -14,10 +14,8 @@ import SideBar from '../SideBar'
 import Feedback from '../Feedback'
 
 import { forecast, forecastDays } from 'aquaponics-client-logic'
-// import PropTypes from 'prop-types';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { ReloadInstructions } from "react-native/Libraries/NewAppScreen";
 
 function Forecast({ role, onGoToManager, onGoToCalendar, onGoToCharts, onGoToForecast, onGoToGreenhouse, onGoToLogout }) {
     const [view, setView] = useState('today')

@@ -9,9 +9,8 @@ const styles = StyleSheet.create({
     },
 
     image: {
-        height: Dimensions.get('window').height*0.9,
-        width: Dimensions.get('window').width,
-       
+        height: Dimensions.get('window').height * 0.9,
+        width: Dimensions.get('window').width
     },
 
     wrap: {
@@ -19,47 +18,50 @@ const styles = StyleSheet.create({
         height: '70%',
         backgroundColor: '#c4c4c4',
         margin: '10%',
-        alignItems:'center',
+        alignItems: 'center',
         marginTop: '10%',
         borderRadius: 10,
     },
 
-    bgcolorgGreen:{
-        backgroundColor:'green',
-        marginTop:30,
-        width:'100%',
-        textAlign:"center",
-        height:100,
-        color:'white',
-        textAlignVertical:'center',
-        fontSize:30
+    bgcolorgGreen: {
+        backgroundColor: 'green',
+        marginTop: 30,
+        width: '100%',
+        textAlign: "center",
+        height: 100,
+        color: 'white',
+        textAlignVertical: 'center',
+        fontSize: 30
     },
 
-    ph:{
-        marginTop:'20%',
+    ph: {
+        marginTop: '20%',
     },
 
-    bgcolorRed:{
-        backgroundColor:'red',
-        marginTop:30,
-        width:'100%',
-        textAlign:"center",
-        height:100,
-        color:'white',
-        textAlignVertical:'center',
-        fontSize:30
+    bgcolorRed: {
+        backgroundColor: 'red',
+        marginTop: 30,
+        width: '100%',
+        textAlign: "center",
+        height: 100,
+        color: 'white',
+        textAlignVertical: 'center',
+        fontSize: 30
     },
 
-    icon:{
-        height:40,
-        width:40,
+    icon: {
+        height: 40,
+        width: 40,
     },
 
-    battery:{
-        marginTop:'20%',
-        marginBottom:'20%'
+    battery: {
+        marginTop: '20%',
+        marginBottom: '20%'
+    },
+
+    wifi:{
+        marginTop: 10,
     }
-
 })
 
 export default styles

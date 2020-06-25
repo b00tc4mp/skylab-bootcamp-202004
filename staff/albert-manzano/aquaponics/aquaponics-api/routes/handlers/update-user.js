@@ -5,7 +5,7 @@ module.exports = (req, res) => {
     try {
         const { params: { userId } } = req
         const { body: { userUpdate } } = req
-        debugger
+        
         updateUser(userId, userUpdate)
             .then(() => res.status(204).send())
             .catch(error => handleError(error, res))

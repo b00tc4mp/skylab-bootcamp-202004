@@ -3,8 +3,6 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     alignSelf: 'stretch',
-    // minHeight:70,
-    // flex: 0.11,
     paddingTop: 25,
     flexDirection: 'row',
     justifyContent: "space-between",

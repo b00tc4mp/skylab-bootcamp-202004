@@ -12,8 +12,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "space-evenly",
         alignItems: "center",
-        zIndex:3,
-        
+        zIndex:3
     },
 
     text:{
@@ -21,16 +20,14 @@ const styles = StyleSheet.create({
         height: 20,
         width: 90,
         fontWeight: 'bold',
-        bottom:30,
-        // marginLeft:12,
+        bottom:30
     },
 
     icon:{
         alignSelf:"center",
         bottom:30,
         height: 40,
-        width: 40,
-        
+        width: 40
     },
 
     iconWarn:{
@@ -46,10 +43,8 @@ const styles = StyleSheet.create({
     },
 
     last:{
-        marginBottom:10
-
+        marginBottom:10,
     }
 })
-
 
 export default styles;

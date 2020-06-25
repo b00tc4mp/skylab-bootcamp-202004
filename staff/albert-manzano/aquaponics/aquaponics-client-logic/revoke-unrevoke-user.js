@@ -13,8 +13,6 @@ const __context__ = require('./context')
 
 module.exports = function (userId) {
     String.validate.notVoid(userId)
-    
-    debugger
     return call(
         'PATCH',
         `${this.API_URL}/users/revoke/${userId}`,

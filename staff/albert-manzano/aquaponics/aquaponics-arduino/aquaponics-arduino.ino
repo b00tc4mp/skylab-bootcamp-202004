@@ -1,4 +1,3 @@
-// watch board !
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #define ONE_WIRE_BUS D4
@@ -35,8 +34,6 @@ void setup() {
   pinMode(VCC2,OUTPUT);
   digitalWrite(VCC2, HIGH);
   
-  
-
   WiFi.begin(ssid, password);
   Serial.println("Connecting");
   while (WiFi.status() != WL_CONNECTED) {
@@ -44,30 +41,27 @@ void setup() {
     Serial.print(".");
      
   }
+
   Serial.println("");
   Serial.print("Connected to WiFi network with IP Address: ");
   Serial.println(WiFi.localIP());
-
- 
 }
 
 void loop() {
  
   if ((millis() - lastTime) > timerDelay) {
-
-   
-
-
-    if (WiFi.status() == WL_CONNECTED) {
+    if(WiFi.status() == WL_CONNECTED) {
       sensors.requestTemperatures();
       data = (sensors.getTempCByIndex(0));
+      
       {
-  for(int i=0;i<10;i++)       //Get 10 sample value from the sensor for smooth the value
+  for(int i=0;i<10;i++)       
   { 
     buf[i]=analogRead(SensorPin);
     delay(10);
   }
-  for(int i=0;i<9;i++)        //sort the analog from small to large
+
+  for(int i=0;i<9;i++)      
   {
     for(int j=i+1;j<10;j++)
     {
@@ -81,7 +75,7 @@ void loop() {
   }
   avgValue=0;
   for(int i=2;i<8;i++)                      
-    avgValue+=buf[i];
+  avgValue+=buf[i];
   float phValue=(float)avgValue*5.0/1024/6; 
   ph=3.5*phValue+Offset;  
 //     Serial.println(readBattery());
@@ -95,9 +89,7 @@ void loop() {
       int httpResponseTemp = http.POST("{\"temperature\":"+data+"}");
 
       Serial.println(httpResponseTemp);
-     
-      
-
+ 
       http.begin(serverNamePh);
       Serial.println(ph);
       http.addHeader("Content-Type", "application/json");

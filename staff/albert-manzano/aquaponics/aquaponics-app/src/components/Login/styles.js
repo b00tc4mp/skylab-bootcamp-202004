@@ -5,14 +5,12 @@ const styles = StyleSheet.create({
     flex: 0.65,
     alignItems: "center",
     flexDirection: "column",
-    justifyContent: "space-evenly",
-
+    justifyContent: "space-evenly"
   },
 
   image: {
     height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width,
-    // resizeMode:"cover"
+    width: Dimensions.get('window').width
   },
 
   text: {
@@ -25,12 +23,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: 160,
     height: 30,
-    // left: -40,
     backgroundColor: "#E6E6E6",
     borderWidth: 1,
     borderColor: "rgba(196,196,196,1)",
     borderRadius: 5,
-    // position: "absolute",
     alignItems: "center",
   },
 
