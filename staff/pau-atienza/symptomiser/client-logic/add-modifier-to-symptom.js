@@ -15,7 +15,7 @@ module.exports = function(confidenceLevel, modifier){
 
     Array.validate(modifiers)
 
-    const { term: { HPO_id, name } } = modifier
+    const { term: { HPO_id, name} } = modifier
 
     String.validate.notVoid(HPO_id)
     String.validate.notVoid(name)

@@ -10,7 +10,7 @@ import {generateWrittenSymptom} from 'client-logic/helpers'
 export default function( {  saveModifiedSymptom, feedback } ) {
 
     const [modifier, setModifier] = useState(null)
-    const [writtenSymptom, setWrittenSymptom] = useState(null)
+    const [writtenSymptom, setWrittenSymptom] = useState(generateWrittenSymptom(retrieveSymptomToModifyFromStorage()))
     const [showConfidence, setShowConfidence] = useState(null)
     const [symptomToModify, setSymptomToModify] = useState(retrieveSymptomToModifyFromStorage())
     const [deleteMode, setDeleteMode] = useState(false)
@@ -20,29 +20,16 @@ export default function( {  saveModifiedSymptom, feedback } ) {
     useEffect(()=>{
         try{
             updateModifier("HP:0012823")
-
         }catch(error){
-          const { message } = error
+            const { message } = error
     
-          setModifiersFeedback({level: "error", message})
-        }
-    }, [])
-
-    useEffect(()=>{
-        try{
-            setWrittenSymptom(generateWrittenSymptom(symptomToModify))
-
-        }catch(error){
-          const { message } = error
-    
-          setModifiersFeedback({level: "error", message})
+            setModifiersFeedback({level: "error", message})
         }
     }, [symptomToModify])
-   
+
     const updateModifier = async (id) =>{
         try{
             setModifier(await retrieveTermsById(id))
-
         }catch(error){
           const { message } = error
     
@@ -53,10 +40,11 @@ export default function( {  saveModifiedSymptom, feedback } ) {
     const submitModifier = (confidenceLevel)=>{
         try{
             const modifiedSymptom = addModifierToSymptom(confidenceLevel, modifier)
-    
-            setSymptomToModify(modifiedSymptom)
-            setModifiersFeedback({ level: "success", message: "The modifier was added. Don't forget to save the changes before you continue."})
 
+            setSymptomToModify(modifiedSymptom)
+            setShowConfidence(false)
+            setWrittenSymptom(generateWrittenSymptom(modifiedSymptom))
+            setModifiersFeedback({ level: "success", message: "The modifier was added. Don't forget to save the changes before you continue."})
         }catch(error){
           const { message } = error
     
@@ -70,6 +58,7 @@ export default function( {  saveModifiedSymptom, feedback } ) {
         setModifiersFeedback(null)
 
         setDeleteMode(!deleteMode)
+        setWrittenSymptom(generateWrittenSymptom(symptomToModify))
     }
 
     const deleteModifier = name=>{
@@ -77,6 +66,7 @@ export default function( {  saveModifiedSymptom, feedback } ) {
             const modifiedSymptom = deleteModifierFromSymptom(name)
     
             setSymptomToModify(modifiedSymptom)
+            setWrittenSymptom(generateWrittenSymptom(modifiedSymptom))
             setModifiersFeedback({ level: "success", message: "The modifier was deleted. Don't forget to save the changes in the details section before you continue."})
 
         }catch(error){
@@ -91,9 +81,8 @@ export default function( {  saveModifiedSymptom, feedback } ) {
             const modifiedSymptom = deleteCommentsFromSymptom()
     
             setSymptomToModify(modifiedSymptom)
+            setWrittenSymptom(generateWrittenSymptom(modifiedSymptom))
             setModifiersFeedback({ level: "success", message: "The comments were deleted. Don't forget to save the changes in the details section before you continue."})
-
-
         }catch(error){
           const { message } = error
     
@@ -107,13 +96,15 @@ export default function( {  saveModifiedSymptom, feedback } ) {
         {symptomToModify?<form className="form__main">
             <div className="form__element"> 
                 <h2 className="form__element--name">Symptom Information</h2>
-                <textarea cols = "10" rows = "20" wrap = "soft" className="form__element--input" name="symptom" spellCheck = 'false' defaultValue={writtenSymptom}/>
-                <button className="symptom__term" onClick = {toggleAllowDeletion}>Delete comments or modifiers</button>
+                <textarea readOnly cols = "10" rows = "20" wrap = "soft" className="form__element--input" name="symptom" spellCheck = 'false' value={writtenSymptom}/>
             </div>
             <div className="form__element"> 
                 <textarea cols = "10" rows = "20" wrap = "soft" className="form__element--input" spellCheck = 'false' type = "text" name="comment" placeholder = "Write any additional comments here" defaultValue = {symptomToModify.comments?symptomToModify.comments:''}/>
             </div>
-            <button type = 'submit' onClick = {event =>saveModifiedSymptom(event)}>Save changes</button>
+            <div className = "form__element">
+                <button className="symptom__term" onClick = {toggleAllowDeletion}>Delete comments or modifiers</button>
+                <button type = 'submit' onClick = {event =>saveModifiedSymptom(event)}>Save changes</button>
+            </div>
         </form>: <p>You didn't select a symptom to add details to.</p>}
 
         <section className="symptom">
@@ -172,24 +163,21 @@ export default function( {  saveModifiedSymptom, feedback } ) {
         {feedback && <Feedback message = {feedback.message} level = {feedback.level}/>}
         {modifiersFeedback && <Feedback message = {modifiersFeedback.message} level = {modifiersFeedback.level}/>}
         <div className = "form__symptom">
-            <p>Term:</p>
-            <p>{symptomToModify.term.HPO_id}: {symptomToModify.term.name}</p>
+            <p>Term: {symptomToModify.term.HPO_id}: {symptomToModify.term.name}</p>
         </div >
         <ul className = "form__modifiers">
             {symptomToModify.modifiers && symptomToModify.modifiers.length?<>
-                <p>Modifiers: </p>
+                <p>Modifiers:</p>
                 {symptomToModify.modifiers.map(modifier=><li key = {modifier.HPO_id}>
                     <p>{modifier.HPO_id}: {modifier.name}</p>
                     <button className="symptom__term" onClick = {()=>deleteModifier(modifier.name)}>Delete</button>
                 </li>)}
             </>: ""}
         </ul>
-        <div className = "form__comments">
-            {symptomToModify.comments && <div>
-                <p>Comments: {symptomToModify.comments}</p>
-                <button className="symptom__term" onClick = {deleteComments}>Delete</button>
-            </div>}
-        </div>
+        {symptomToModify.comments && <div className = "form__comments">
+            <p>Comments:</p> <p>{symptomToModify.comments}</p>
+            <button className="symptom__term" onClick = {deleteComments}>Delete</button>
+        </div>}
         <button className="symptom__term" onClick = {toggleAllowDeletion}>Back to Symptom Details</button>
     </section>
 }

@@ -1,3 +1,4 @@
+
 require('commons/polyfills/string')
 require('commons/polyfills/json')
 require('commons/polyfills/array')
@@ -11,7 +12,9 @@ module.exports = function(modifierName){
 
     JSON.validateNotArray(symptomToModify)
 
-    const { modifiers = [], term } =symptomToModify
+    const { modifiers, term } =symptomToModify
+ 
+    if (!modifiers || !modifiers.length) throw new Error("There are no modifiers to delete")
 
     Array.validate(modifiers)
     JSON.validateNotArray(term)
@@ -29,7 +32,7 @@ module.exports = function(modifierName){
         if(!modifiers.length) delete symptomToModify.modifiers
 
         this.storage.symptomToModify = JSON.stringify(symptomToModify)
-    }
+    } else throw new Error("This modifier does not exist")
 
     return symptomToModify
     

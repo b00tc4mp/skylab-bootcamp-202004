@@ -11,9 +11,13 @@ module.exports = function(HPO_id, name, confidenceLevel, symptomId){
     if(!this.storage.submittedSymptoms) this.storage.submittedSymptoms = JSON.stringify([])
 
     let newSymptomList = JSON.parse(this.storage.submittedSymptoms)
-    
-    newSymptomList.push({term: {HPO_id, name, confidenceLevel, symptomId}})
 
-    this.storage.submittedSymptoms = JSON.stringify(newSymptomList)
+    const index = newSymptomList.findIndex(({term: {HPO_id: id}})=>id===HPO_id)
+
+    if (index === -1){
+        newSymptomList.push({term: {HPO_id, name, confidenceLevel, symptomId}})
+
+        this.storage.submittedSymptoms = JSON.stringify(newSymptomList)
+    } else throw new Error("This symptom has already been submitted")
 
 }.bind(context)

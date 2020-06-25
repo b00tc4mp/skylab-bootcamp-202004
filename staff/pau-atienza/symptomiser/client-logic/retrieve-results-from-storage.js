@@ -13,6 +13,9 @@ module.exports = function(){
             JSON.validateNotArray(predictorOutput)
             return predictorOutput
         }
+        
     }
+
     return null
+    
 }.bind(context)

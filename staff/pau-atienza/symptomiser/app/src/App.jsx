@@ -74,10 +74,6 @@ function App({ history }) {
     history.push('/symptom')
   }
 
-  const goToSymptomList = ()=>{
-    history.push('/symptomlist')
-  }
-
   const goToDetails = symptomName=>{
     setFeedback(null)
     setSymptomToModify(symptomName)
@@ -101,10 +97,14 @@ function App({ history }) {
     }
   }
 
+  const  clearFeedback = ()=>{
+    setFeedback(null)
+  }
+
   return<div className="App">
     <Route exact path="/" render={() => <Landing feedback = {feedback} onSubmit = {symptomQuery}/>} />
-    {history.location.pathname !== '/' && <NavBar history = {history}>
-      <Route exact path="/symptomlist" render={() => <SymptomList feedback = {feedback} goToDetails = {goToDetails} onDelete = {goToSymptomList}/>} />
+    {history.location.pathname !== '/' && <NavBar history = {history} clearFeedback = {clearFeedback}>
+      <Route exact path="/symptomlist" render={() => <SymptomList feedback = {feedback} goToDetails = {goToDetails}/>} />
       <Route exact path="/results" render={() => <Results results = {results} onClick = {retrieveSymptom} clickedSymptom = {highlightedSymptom} goToSymptom = {goToSymptom}/>} />
       <Route exact path="/about" render={() => <About/>} />
       <Route exact path="/symptom" render={() => <Symptom symptom = {highlightedSymptom} goToSymptom = {retrieveSymptom} submitSymptom = {submitSymptom}/>} />

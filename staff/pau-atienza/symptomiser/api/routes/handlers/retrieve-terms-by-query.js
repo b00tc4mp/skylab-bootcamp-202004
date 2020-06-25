@@ -11,7 +11,7 @@ module.exports = (req, res) => {
         const { params: { query } } = req
         
         retrieveTermsByQuery( query )
-            .then(result => res.send(result))
+            .then(result => res.status(200).send(result))
             .catch(error => handleError(error, res))
     } catch (error) {
         handleError(error, res)

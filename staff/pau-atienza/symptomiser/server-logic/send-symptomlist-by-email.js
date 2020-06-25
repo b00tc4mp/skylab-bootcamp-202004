@@ -1,9 +1,10 @@
 require('dotenv').config()
 require('commons/polyfills/string')
+const {utils: {Email}} = require('commons')
 const context = require('./context')
 
 module.exports = function (email, text, html) {
-    String.validate.notVoid(email)
+    Email.validate(email)
     String.validate.notVoid(text)
     String.validate.notVoid(html)
 
