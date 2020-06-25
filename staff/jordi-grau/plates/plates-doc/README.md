@@ -3,8 +3,7 @@
 
 ## Introduction 
  
- With Plates you'll be able to find restaurants in any location you want to search or by name  and will allows you to see all plates from their menus. With features like search a restaurant for a single plate or recibe a notification if a restaurant runs out of a choosen plate.
-
+ Dishes is an aplication that allows to search restaurants and see their menus. 
  ![](https://media.giphy.com/media/7JzHsh3UTip20/giphy.gif)
 
 
@@ -20,7 +19,7 @@
 
 ## Use cases
 
-![](platesUseCases.jpg)
+![](dishes-use-cases.jpg)
 
 ## Activity diagram
-![](platesActivityDiagram.png)
+![](dishes-activity-diagram.jpg)
