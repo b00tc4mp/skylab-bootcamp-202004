@@ -1,21 +1,26 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, API_URL, SECRET } } = process
 
 const groceryList = require('./grocery-list')
-const {  random } = Math
+const { random } = Math
 const { expect } = require('chai')
 require('cook-wise-commons/polyfills/json')
 const { mongoose, models: { User, Recipes, Ingredients } } = require('cook-wise-data')
 const bcrypt = require('bcryptjs')
 const {  UnexistenceError } = require('cook-wise-commons/errors')
+const logic = require('.')
+global.fetch = require('node-fetch')
+const notAsyncStorage = require('not-async-storage')
+const jwt = require('jsonwebtoken')
+
+logic.__context__.API_URL = API_URL
+logic.__context__.storage = notAsyncStorage 
 
 
 describe("grocery list", () => {
     let name, surname, email, password, encryptedPassword, userId
     let recipeName, recipeAuthor, description, time, ingredients = [], recipeId;
-    let weekday
-    let ingridient, ingredientId
     let quantity, ingredientType;
     let schedule = {}
     let user
@@ -34,6 +39,9 @@ describe("grocery list", () => {
 
         user = await User.create({ name, surname, email, password, encryptedPassword })
         userId = user.id
+        const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
+        await logic.__context__.storage.setItem('TOKEN', token)
+        
 
         ingredientName = `ingredientName-${random()}`;
         const newIngredient = await Ingredients.create({ name: ingredientName });
@@ -97,7 +105,7 @@ describe("grocery list", () => {
     it ('should organize the grocery list without repeat any ingredient',async() =>{
         
         
-        const result = await groceryList(userId)
+        const result = await groceryList()
 
         expect(result).to.exist
         expect(result).to.be.an('array')
@@ -110,52 +118,28 @@ describe("grocery list", () => {
        
         await User.findByIdAndUpdate(userId, {$set : {schedule: []}})
         
-        const result = await groceryList(userId)
+        const result = await groceryList()
 
         expect(result).to.exist
         expect(result).to.be.an('array')
         expect(result.length).to.equal(0)
-        /* for (let pos of array) {
-            array.filter(string => string === pos).length > 1 && return true;
-          }
-        
-          return false; */
-        
-
-
+       
     })
     
     it("shold throw an error if not match a user", async () => {
         await User.deleteMany()
-        
         try {
-            await groceryList(userId)
+            await groceryList()
         }catch(error) {
             expect(error).to.exist;
-            expect(error).to.be.instanceof(UnexistenceError);
+            expect(error).to.be.instanceof(Error);
             expect(error.message).to.equal(`user with id ${userId} does not exist`); 
         }
 
-      
+       
     })
 
-    it('should throw an error if userId its not an string', () => {
-        expect(function () {
-            groceryList( undefined)
-        }).to.throw(TypeError, 'undefined is not a string')
     
-        expect(function () {
-            groceryList(1)
-        }).to.throw(TypeError, '1 is not a string')
-    
-        expect(function () {
-            groceryList( null)
-        }).to.throw(TypeError, 'null is not a string')
-    
-        expect(function () {
-            groceryList( true)
-        }).to.throw(TypeError, 'true is not a string')
-    })     
     
     after(async() => {
         await Promise.all([User.deleteMany(), Ingredients.deleteMany(), Recipes.deleteMany(), ]);

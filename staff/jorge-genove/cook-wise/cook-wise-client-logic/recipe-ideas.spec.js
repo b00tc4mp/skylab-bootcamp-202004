@@ -1,19 +1,26 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, API_URL, SECRET } } = process
 
-const recipeIdeas = require('./recipe-ideas')
+const recipeSearchIdeas = require('./recipe-ideas')
 const { random } = Math
 const { expect } = require('chai')
 require('cook-wise-commons/polyfills/json')
 const { mongoose, models: { User, Recipes, Ingredients } } = require('cook-wise-data')
 const bcrypt = require('bcryptjs')
-const { UnexistenceError } = require('cook-wise-commons/errors')
+const logic = require('.')
+global.fetch = require('node-fetch')
+const notAsyncStorage = require('not-async-storage')
+const jwt = require('jsonwebtoken')
+
+logic.__context__.API_URL = API_URL
+logic.__context__.storage = notAsyncStorage 
+
 
 
 describe("recipe ideas", () => {
     let name, surname, email, password, encryptedPassword, userId
-    let description, time, _ingredients = []
+    let description, time = []
     let ingredients = { ingredients: [] }
     let recipes = {};
 
@@ -33,6 +40,8 @@ describe("recipe ideas", () => {
 
         user = await User.create({ name, surname, email, password, encryptedPassword })
         userId = user.id
+        const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
+        await logic.__context__.storage.setItem('TOKEN', token)
 
         for (let i = 0; i < 3; i++) {
             name = `recipeName-${random()}`;
@@ -63,7 +72,7 @@ describe("recipe ideas", () => {
 
     it('should find recipes with any match and return results', async () => {
        
-        result = await recipeIdeas(userId, ingredients.ingredients)
+        result = await recipeSearchIdeas( ingredients.ingredients)
 
         expect(result).to.exist
         expect(result).to.be.instanceof(Array)
@@ -76,7 +85,7 @@ describe("recipe ideas", () => {
             ingredients.ingredients[i] = random()
         }
         
-        result = await recipeIdeas(userId, ingredients.ingredients)
+        result = await recipeSearchIdeas(ingredients.ingredients)
         
         expect(result).to.exist
         expect(result).to.be.instanceof(Array)
@@ -87,53 +96,36 @@ describe("recipe ideas", () => {
     it("should throw an error if not match a user", async () => {
        
         await User.deleteMany()
-       
-        try {
-            await recipeIdeas(userId,ingredients.ingredients)
-        }catch(error) {
-            expect(error).to.exist;
-            expect(error).to.be.instanceof(UnexistenceError);
-            expect(error.message).to.equal(`user with id ${userId} does not exist`); 
-        }
-
         
+        try {
+            await recipeSearchIdeas(ingredients.ingredients)
+        }catch(error) {
+        expect(error).to.exist;
+        expect(error).to.be.instanceof(Error);
+        expect(error.message).to.equal(`user with id ${userId} does not exist`); 
+    
+        }
     })
     
-    it('should throw an error if userId its not an string', () => {
-        expect(function () {
-            recipeIdeas(undefined, ingredients)
-        }).to.throw(TypeError, 'undefined is not a string')
     
-        expect(function () {
-            recipeIdeas(1, ingredients)
-        }).to.throw(TypeError, '1 is not a string')
-    
-        expect(function () {
-            recipeIdeas(null, ingredients)
-        }).to.throw(TypeError, 'null is not a string')
-    
-        expect(function () {
-            recipeIdeas(true, ingredients)
-        }).to.throw(TypeError, 'true is not a string')
-    })
 
     it('should throw an error if ingredients its not an array', () =>{
     
         expect(function () {
-            recipeIdeas(userId, {ingredients : undefined})
-        }).to.throw(TypeError, 'ingredients must be an array')
+            recipeSearchIdeas( {ingredients : undefined})
+        }).to.throw(TypeError, 'you must put ingredients on the recipe')
     
         expect(function () {
-            recipeIdeas(userId, {ingredients : 'hola'})
-        }).to.throw(TypeError, 'ingredients must be an array')
+            recipeSearchIdeas( {ingredients : 'hola'})
+        }).to.throw(TypeError, 'you must put ingredients on the recipe')
     
         expect(function () {
-            recipeIdeas(userId,{ingredients : null})
-        }).to.throw(TypeError, 'ingredients must be an array')
+            recipeSearchIdeas({ingredients : null})
+        }).to.throw(TypeError, 'you must put ingredients on the recipe')
     
         expect(function () {
-            recipeIdeas(userId, {ingredients : true})
-        }).to.throw(TypeError, 'ingredients must be an array')
+            recipeSearchIdeas( {ingredients : true})
+        }).to.throw(TypeError, 'you must put ingredients on the recipe')
         
     })
 

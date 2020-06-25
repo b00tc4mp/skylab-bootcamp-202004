@@ -1,12 +1,17 @@
-require('cook-wise-commons/polyfills/string')
+
+/**
+ * it will delete a recipes of one day
+ * 
+ * @param {String} weekday it will mark what day will be deleted
+ */
+
+ require('cook-wise-commons/polyfills/string')
 const { utils: {  call } } = require('cook-wise-commons')
 const context = require('./context')
 
 module.exports = function(weekday) {
     
-
 String.validate.notVoid(weekday)
-console.log(weekday)
 
 return (async() => {
 

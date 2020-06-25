@@ -1,3 +1,13 @@
+/**
+ * 
+ * throw a recipeId for delete a recipe
+ * 
+ * @param {String} recipeId the recipeId that will be deleted
+ * 
+ * @throw {Error} if status is not 200
+ */
+
+
 require('cook-wise-commons/polyfills/string')
 const {getDate} = require('./helpers')
 const { utils: {  call } } = require('cook-wise-commons')
@@ -19,7 +29,7 @@ return (async() => {
                return
             } else {
                 const { error } = JSON.parse(res.body)
-
+                
                 throw new Error(error)
         }
     })()

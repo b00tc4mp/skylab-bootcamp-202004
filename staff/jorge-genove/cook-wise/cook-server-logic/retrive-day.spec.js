@@ -131,30 +131,28 @@ describe("retrieve day", () => {
 
     it("shold throw an error if not match a recipe", async () => {
         await Recipes.deleteMany()
-        let _error;
+       
         try {
             await retriveDay(weekday,userId)
         }catch(error) {
-            _error = error;
+            expect(error).to.exist;
+            expect(error).to.be.instanceof(UnexistenceError);
+            expect(error.message).to.equal(`recipe with id ${recipeId} does not exist`);
         }
-
-        expect(_error).to.exist;
-        expect(_error).to.be.instanceof(UnexistenceError);
-        expect(_error.message).to.equal(`recipe with id ${recipeId} does not exist`); 
     })
 
     it("shold throw an error if not match a user", async () => {
         await User.deleteMany()
-        let _error;
+        
         try {
             await retriveDay(weekday, userId)
         }catch(error) {
-            _error = error;
+            expect(error).to.exist;
+            expect(error).to.be.instanceof(UnexistenceError);
+            expect(error.message).to.equal(`user with id ${userId} does not exist`); 
         }
 
-        expect(_error).to.exist;
-        expect(_error).to.be.instanceof(UnexistenceError);
-        expect(_error.message).to.equal(`user with id ${userId} does not exist`); 
+      
     })
     it('should throw an error if userId its not an string', () => {
         expect(function () {

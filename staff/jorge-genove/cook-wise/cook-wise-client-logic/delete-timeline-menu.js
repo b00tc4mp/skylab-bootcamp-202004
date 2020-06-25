@@ -1,3 +1,16 @@
+/**
+ * 
+ * it will delete th recipes of one day on each timeline
+ * 
+ * @param {String} weekday the recipeId that will be deleted
+ * 
+ * @param {String} timeline
+ * 
+ * @throw {Error} if status is not 200
+ */
+
+
+
 require('cook-wise-commons/polyfills/string')
 const { utils: {  call } } = require('cook-wise-commons')
 const context = require('./context')

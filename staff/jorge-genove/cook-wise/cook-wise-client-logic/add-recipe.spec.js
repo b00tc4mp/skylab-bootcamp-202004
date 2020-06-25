@@ -1,14 +1,21 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, API_URL, SECRET } } = process
 
-const createRecipe = require('./create-recipe')
+const addRecipe = require('./add-recipe')
 const { random } = Math
 const { expect } = require('chai')
 require('cook-wise-commons/polyfills/json')
 const { mongoose, models: { User, Recipes, Ingredients } } = require('cook-wise-data')
 const bcrypt = require('bcryptjs')
 const {DuplicityError,UnexistenceError} = require('cook-wise-commons/errors')
+const logic = require('.')
+global.fetch = require('node-fetch')
+const notAsyncStorage = require('not-async-storage')
+const jwt = require('jsonwebtoken')
+
+logic.__context__.API_URL = API_URL
+logic.__context__.storage = notAsyncStorage 
 
 describe("createRecipe", () => {
     let name, surname, email, password, encryptedPassword, userId;
@@ -31,6 +38,8 @@ describe("createRecipe", () => {
 
         const user = await User.create({name, surname, email, password: encryptedPassword});
         userId = user.id;
+        const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
+        await logic.__context__.storage.setItem('TOKEN', token)
 
         //INGREDIENT-ORIENTED DATA
         ingredientName = `ingredientName-${random()}`;
@@ -56,7 +65,7 @@ describe("createRecipe", () => {
     });
 
     it("should suceed on creating a new recipe based on all the previous data", async() => {
-        const result = await createRecipe({ name: recipeName, author: recipeAuthor, description, time, ingredients, userId });
+        const result = await addRecipe(recipeName,  recipeAuthor, description, time, ingredients);
 
         expect(result).to.be.undefined;
         
@@ -94,149 +103,128 @@ describe("createRecipe", () => {
         expect(user.recipes[0]._id.toString()).to.equal(singleRecipe._id.toString())
     });
 
-    it("shold throw an error when recipe with same name an author already exist", async () => {
-        await Recipes.create({name: recipeName, author: recipeAuthor, description, time, ingredients})
+    it("should throw an error when recipe with same name an author already exist", async () => {
+        await Recipes.create({ name: recipeName,  author :recipeAuthor, description, time, ingredients})
 
-       
         try {
-            await createRecipe({ name: recipeName, author: recipeAuthor, description, time, ingredients, userId })
+            await addRecipe( recipeName, recipeAuthor, description, time, ingredients)
         }catch(error) {
             expect(error).to.exist;
-            expect(error).to.be.instanceof(DuplicityError);
-            expect(error.message).to.equal(`${recipeName} of ${recipeAuthor} already exist` ); 
+            expect(error).to.be.instanceof(Error);
+            expect(error.message).to.equal(`${recipeName} of ${recipeAuthor} already exist` );
         }
 
-       
     })
 
     it("should fail to create the recipe if the user doesnt exist", async () => {
         await User.deleteMany();
 
         try {
-            await createRecipe({ name: recipeName, author: recipeAuthor, description, time, ingredients, userId })
+            await addRecipe(recipeName, recipeAuthor, description, time, ingredients)
         }catch(error) {
             expect(error).to.exist;
-            expect(error).to.be.instanceof(UnexistenceError);
+            expect(error).to.be.instanceof(Error);
             expect(error.message).to.equal(`user with id ${userId} does not exist`);
         }
 
-        
     })
 
     it("should fail if ingredients have no quantity or quantity under 0", async () => {
        ingredients.quantity = 0
-      
+       console.log(ingredients.quantity)
    
         try {
-            await createRecipe({name: recipeName, author: recipeAuthor, description, time, ingredients, userId })
+            await addRecipe(recipeName, recipeAuthor, description, time, ingredients)
         }catch(error) {
             expect(error).to.exist 
             expect(error).to.be.instanceof(UnexistenceError)
             expect(error.message).to.equal(`ingredient must have a quantity`)
-    
         }
-       
     })
 
 it('should throw an error if author its not an string', () => {
         expect(function () {
-            createRecipe({ name: recipeName, author: undefined, description, time, ingredients, userId })
+            addRecipe(recipeName, undefined, description, time, ingredients)
         }).to.throw(TypeError, 'undefined is not a string')
 
         expect(function () {
-            createRecipe({ name: recipeName , author: 1, description, time, ingredients, userId })
+            addRecipe(recipeName ,  1, description, time, ingredients)
         }).to.throw(TypeError, '1 is not a string')
 
         expect(function () {
-            createRecipe({ name: recipeName, author: null, description, time, ingredients, userId })
+            addRecipe( recipeName, null, description, time, ingredients)
         }).to.throw(TypeError, 'null is not a string')
 
         expect(function () {
-            createRecipe({ name: recipeName, author: true, description, time, ingredients, userId })
+            addRecipe(recipeName, true, description, time, ingredients)
         }).to.throw(TypeError, 'true is not a string')
     })
 
 it('should throw an error if name its not an string', () => {
         expect(function () {
-            createRecipe({ name: undefined, author: recipeAuthor, description, time, ingredients, userId })
+        return     addRecipe(undefined,recipeAuthor, description, time, ingredients)
         }).to.throw(TypeError, 'undefined is not a string')
     
         expect(function () {
-            createRecipe({ name: 1 , author: recipeAuthor, description, time, ingredients, userId })
+            addRecipe(1 , recipeAuthor, description, time, ingredients)
         }).to.throw(TypeError, '1 is not a string')
     
         expect(function () {
-            createRecipe({ name: null, author: recipeAuthor, description, time, ingredients, userId })
+            addRecipe(null,recipeAuthor, description, time, ingredients)
         }).to.throw(TypeError, 'null is not a string')
     
         expect(function () {
-            createRecipe({ name: true, author: recipeAuthor, description, time, ingredients, userId })
+            addRecipe(true, recipeAuthor, description, time, ingredients)
         }).to.throw(TypeError, 'true is not a string')
 })    
     
 it('should throw an error if description its not an string', () => {
     expect(function () {
-        createRecipe({ name: recipeName, author: recipeAuthor, description : undefined, time, ingredients, userId })
+        addRecipe(recipeName, recipeAuthor, undefined, time, ingredients)
     }).to.throw(TypeError, 'undefined is not a string')
 
     expect(function () {
-        createRecipe({ name: recipeName, author: recipeAuthor, description : 1, time, ingredients, userId })
+        addRecipe(recipeName, recipeAuthor, 1, time, ingredients)
     }).to.throw(TypeError, '1 is not a string')
 
     expect(function () {
-        createRecipe({ name: recipeName, author: recipeAuthor, description : null, time, ingredients, userId })
+        addRecipe(recipeName, recipeAuthor, null, time, ingredients)
     }).to.throw(TypeError, 'null is not a string')
 
     expect(function () {
-        createRecipe({ name: recipeName, author: recipeAuthor, description : true, time, ingredients, userId })
+        addRecipe(recipeName, recipeAuthor, true, time, ingredients)
     }).to.throw(TypeError, 'true is not a string')
 })
     
     
  it('should throw an error if time its not a number', () => {
     expect(function () {
-        createRecipe({ name: recipeName, author: recipeAuthor, description, time : undefined, ingredients, userId })
+     return   addRecipe(recipeName, recipeAuthor, description, undefined, ingredients)
     }).to.throw(TypeError, 'undefined is not a number')
     
     expect(function () {
-        createRecipe({ name: recipeName, author: recipeAuthor, description, time: 'hola', ingredients, userId })
+     return  addRecipe(recipeName, recipeAuthor, description, 'hola', ingredients)
     }).to.throw(TypeError, 'hola is not a number')
  })
     
-it('should throw an error if description its not an string', () => {
+it('should throw an error if ingredients its not an Array', () => {
         expect(function () {
-            createRecipe({ name: recipeName, author: recipeAuthor, description , time, ingredients : undefined , userId })
+            addRecipe(recipeName, recipeAuthor, description , time, undefined )
         }).to.throw(Error, 'you must put ingredients on the recipe')
     
         expect(function () {
-            createRecipe({ name: recipeName, author: recipeAuthor, description, time, ingredients : 1, userId })
+            addRecipe(recipeName, recipeAuthor, description, time, 1)
         }).to.throw(Error, 'you must put ingredients on the recipe')
     
         expect(function () {
-            createRecipe({ name: recipeName, author: recipeAuthor, description, time, ingredients : 1, userId })
+            addRecipe(recipeName,recipeAuthor, description, time, null)
         }).to.throw(Error, 'you must put ingredients on the recipe')
     
         expect(function () {
-            createRecipe({ name: recipeName, author: recipeAuthor, description, time, ingredients : true, userId })
+            addRecipe(recipeName, recipeAuthor, description, time, true)
         }).to.throw(Error, 'you must put ingredients on the recipe')
     })
-    it('should throw an error if userid its not an string', () => {
-        expect(function () {
-            createRecipe({ name: recipeName, author : recipeAuthor, description, time, ingredients, userId : undefined })
-        }).to.throw(TypeError, 'undefined is not a string')
-
-        expect(function () {
-            createRecipe({ name: recipeName , author :recipeAuthor , description, time, ingredients, userId: 1 })
-        }).to.throw(TypeError, '1 is not a string')
-
-        expect(function () {
-            createRecipe({ name: recipeName, author : recipeAuthor, description, time, ingredients, userId : null})
-        }).to.throw(TypeError, 'null is not a string')
-
-        expect(function () {
-            createRecipe({ name: recipeName, author : recipeAuthor, description, time, ingredients, userId : true})
-        }).to.throw(TypeError, 'true is not a string')
-    })
+    
   
   after(async() => {
         await Promise.all([User.deleteMany(), Ingredients.deleteMany(), Recipes.deleteMany(), ]);
