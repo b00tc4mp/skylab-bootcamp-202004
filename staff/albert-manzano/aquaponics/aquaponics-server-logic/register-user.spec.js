@@ -8,6 +8,7 @@ const { expect } = require('chai')
 require('aquaponics-commons/polyfills/json')
 const { mongoose, models: { User } } = require('aquaponics-data')
 const bcrypt = require('bcryptjs')
+global.fetch = require('node-fetch')
 
 describe('logic - register user', () => {
     before(() => mongoose.connect(MONGODB_URL))

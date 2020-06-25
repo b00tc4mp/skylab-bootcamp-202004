@@ -1,61 +1,66 @@
-describe('call', () =>{
-    it('shoul suceed on correct parameters in Google', done=>{
-        call('GET','https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com',undefined,undefined,(error,status,body)=>{
-            if(error) return done(new Error (error));
+const call = require('./call')
+global.fetch = require('node-fetch')
+const { expect } = require('chai')
 
-            expect(status).to.equal(200);
-            expect(body).to.exist;
+describe('call', () => {
+    it('shoul suceed on correct parameters in Google', () => {
+        call('GET', 'https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com', undefined, undefined)
+            .then(response => {
+                if (response.error) return new Error(error);
 
-            done();
-        })
+                expect(response.status).to.equal(200);
+                expect(response.body).to.exist;
+
+            })
     })
 
-    it('should suceed on correct parameters in User API', done =>{
+    it('should suceed on correct parameters in User API', () => {
         const username = `pepito-${Math.random()}`;
         const password = 'grillo'
 
-        call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users',`{"username":"${username}","password":"${password}"}`,{"Content-type":"application/json"},(error,status,body)=>{
-            if(error) return done(new Error(error));
+        call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users', `{"username":"${username}","password":"${password}"}`, { "Content-type": "application/json" })
+            .then(response => {
+                if (response.error) return new Error(error);
 
-            expect(status).to.equal(201);
-            expect(body).to.equal('');
+                expect(res.status).to.equal(201);
+                expect(response.body).to.equal('');
 
-            call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth',`{"username":"${username}","password":"${password}"}`, {"Content-type":"application/json"}, (error,status,body)=>{
-                if(error) return done(new Error(error));
+                call('POST', 'https://skylabcoders.herokuapp.com/api/v2/users/auth', `{"username":"${username}","password":"${password}"}`, { "Content-type": "application/json" })
+                    .then(response => {
+                        if (response.error) return new Error(error);
 
-                expect(status).to.equal(200);
-                expect(body).to.exist;
+                        expect(response.status).to.equal(200);
+                        expect(response.body).to.exist;
 
-                const {token} = JSON.parse(body);
+                        const { token } = JSON.parse(response.body);
 
-                expect(token).to.be.a('string');
+                        expect(token).to.be.a('string');
 
-                call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users',undefined,{"Authorization":`Bearer ${token}`},(error,status,body)=>{
-                    if(error) return done(new Error(error));
+                        call('GET', 'https://skylabcoders.herokuapp.com/api/v2/users', undefined, { "Authorization": `Bearer ${token}` })
+                            .then(response => {
+                                if (response.error) return new Error(error);
 
-                    expect(status).to.equal(200);
-                    expect(body).to.exist;
+                                expect(response.status).to.equal(200);
+                                expect(response.body).to.exist;
 
-                    call('DELETE','https://skylabcoders.herokuapp.com/app/v2/users',`{"password":"${password}"}`,{"Authorization":`Bearer ${token}`},(error,status,body)=>{
-                        if (error) return done(new Error(error));
+                                call('DELETE', 'https://skylabcoders.herokuapp.com/app/v2/users', `{"password":"${password}"}`, { "Authorization": `Bearer ${token}` })
+                                    .then(response => {
+                                        if (response.error) return new Error(error);
 
-                        expect(status).to.equal(204);
-                        expect(body).to.equal('')
+                                        expect(response.status).to.equal(204);
+                                        expect(response.body).to.equal('')
 
-                        done();
+                                    })
+                            })
                     })
-                })
             })
-        })
     })
 
-    it('should fail on wrong url', done =>{
-        call('GET', 'https://www.google.com.xy', undefined,undefined,(error,status,body)=>{
-
-        expect(error).to.exist;
-        expect(error.message).to.equal('network error');
-        
-        done()
+    it('should fail on wrong url', () => {
+        call('GET', 'https://www.google.com.xy', undefined, undefined)
+            .then(({error})=>{
+            expect(error).to.exist;
+            expect(error.message).to.equal('network error');
         })
     })
 })

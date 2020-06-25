@@ -6,7 +6,7 @@ const { random } = Math
 const { mongoose, models: { User } } = require('aquaponics-data')
 const revokeUnrevokeUser = require('./revoke-unrevoke-user.js')
 
-describe('logic - confirm-user', () => {
+describe('logic - revoke-unrevoke', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
     let name, surname, email, password, role, phone
@@ -21,32 +21,27 @@ describe('logic - confirm-user', () => {
                 password = `password-${random()}`
                 role = 'user'
                 phone = random()
+                status = 'enable'
             })
     )
 
     describe('when user exist', () => {
         beforeEach(() => {
-            const user = { name, surname, email, password, role, phone }
+            let user = { name, surname, email, password, role, phone }
 
             return User.create(user)
                 .then(result => userId = result.id)
         })
 
-        it('should change from enable to disable status', () => {
-            return revokeUnrevokeUser(userId)
-                .then(user => {
-                    expect(user.status).to.equal("disable")
-                })
+        it('should change from enable to disable status', async () => {
+            await revokeUnrevokeUser(userId)
+            let user = await User.find()
+            expect(user.status).to.equal("disable")
+            revokeUnrevokeUser(userId)
+            user = await User.find()
+            expect(user.status).to.equal("enable")
+                
         })
-
-        it('should change from disable to enable status', () => {
-            return revokeUnrevokeUser(userId)
-                .then(()=>revokeUnrevokeUser(userId))
-                .then(user => {
-                    expect(user.status).to.equal("enable")
-                })
-        })
-
     })
 
     it('should return a type error', () => {
@@ -76,7 +71,7 @@ describe('logic - confirm-user', () => {
                 expect(error.message).to.equal(`user with ${userId} does not exist`)
             })
     })
-    afterEach(async() =>await User.deleteMany())
+    afterEach(async () => await User.deleteMany())
 
-    after(async() => await mongoose.disconnect)
+    after(async () => await mongoose.disconnect)
 })

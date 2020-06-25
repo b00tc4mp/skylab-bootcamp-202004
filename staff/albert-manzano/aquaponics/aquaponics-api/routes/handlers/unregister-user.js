@@ -3,8 +3,9 @@ const {handleError} = require ('../../helpers')
 
 module.exports = (req, res) => {
     try {
-        const { payload: { sub: userId }, params: { userId: otherUserId } } = req
-
+        let { payload, params: { userId: otherUserId } } = req
+        if(payload) userId = payload.sub
+        
         unregisterUser(otherUserId || userId)
             .then(() => res.status(204).send())
             .catch(error => handleError(error, res))

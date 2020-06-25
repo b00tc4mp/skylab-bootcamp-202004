@@ -24,13 +24,13 @@ api.get('/users/:userId?', verifyExtractJwt, retrieveUser)
 
 api.get('/usersall', verifyExtractJwt, retrieveAllUsers)
 
-api.post('/users/confirm/:userId?', verifyExtractJwt, confirmUser)
+api.patch('/users/confirm/:userId?',  confirmUser)
 
-api.post('/users/revoke/:userId?', verifyExtractJwt, revokeUnrevokeUser)
+api.patch('/users/revoke/:userId?', revokeUnrevokeUser)
 
 api.delete('/users/:userId?', verifyExtractJwt, unregisterUser)
 
-api.patch('/users/:userId?', parseBody, verifyExtractJwt, updateUser)
+api.patch('/users/:userId?', parseBody,updateUser)
 
 //arduino//
 

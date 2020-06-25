@@ -1,6 +1,5 @@
 /**
  * retrieve the last temperature in the collection of temperatures listed in the app,
- * is conditioned by role admin
  * 
  * @param {string} userId user's id
  * @throws {TypeError} if user's id is not a string nor empty
