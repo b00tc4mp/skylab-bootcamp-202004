@@ -9,8 +9,10 @@ const { random } = Math
 const { expect } = require('chai')
 const bcrypt = require('bcryptjs')
 const context = require('./context')
+require('moove-it-commons/polyfills/atob')
 
 context.API_URL = API_URL
+context.storage = {}
 
 describe('logic - authenticate user', () => {
 
@@ -34,14 +36,34 @@ describe('logic - authenticate user', () => {
         debugger
         beforeEach(() => {
             const user = { name, surname, email, password: hash }
-            return User.create(user)
+            User.create(user)
                 .then(user => userId = user.id)
         })
 
         it('should succeed on correct credentials', () =>
+        authenticateUser(email, password)
+            .then(() => {
+
+                const { token } = context.storage
+                
+                const [, payloadBase64] = token.split('.')
+
+                const payloadJson = atob(payloadBase64)
+
+                const payload = JSON.parse(payloadJson)
+
+                const { sub: _userId } = payload
+
+                expect(_userId).to.equal(userId)
+            })
+    )
+        it('should succeed on correct credentials', () =>
             authenticateUser(email, password)
-            .then(token =>
-                expect(token).to.exist)
+            .then(() => {
+                const { token } = context.storage
+
+                expect(token).to.exist
+            })
         )
 
         it('should fail on wrong password', () =>
