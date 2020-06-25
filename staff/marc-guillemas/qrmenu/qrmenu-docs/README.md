@@ -25,7 +25,7 @@ from the establishment, view orders from the clients and open it to view the dis
 Search products and add to cart
 
 ![](./images/activity-diagram-client.png)
-![](./images/activity-diagram-server.png)
+![](./images/activity-diagram-establishment.png)
 
 ...
 
