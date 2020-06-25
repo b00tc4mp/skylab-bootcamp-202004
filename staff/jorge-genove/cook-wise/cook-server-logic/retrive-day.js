@@ -20,11 +20,11 @@ module.exports = (weekday, userId) => {debugger
     
     return (async () => {
        
-        const user = await User.findById(userId).populate('user.schedule').lean()
+        const user = await User.findById(userId).lean().populate('user.schedule')
         if(!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
         let recipeArray = []
         let result = []
-
+        
         for (var i = 0; i < user.schedule.length; i++) {
             if (user.schedule[i].weekday === weekday) {
                 recipeArray.push(user.schedule[i].recipe)
@@ -32,21 +32,21 @@ module.exports = (weekday, userId) => {debugger
         }
         for (var j = 0; j < recipeArray.length; j++) {
 
-            const recipe = await Recipes.findById(recipeArray[j]).populate("ingredients.ingredient", "name").lean()
+            const recipe = await Recipes.findById(recipeArray[j]).lean().populate("ingredients.ingredient", "name")
 
             if (!recipe) throw new UnexistenceError(`recipe with id ${recipeArray[j]} does not exist`)
-
+            
             recipe.id = recipe._id.toString()
 
             delete recipe._id
             delete recipe.__v
-
-            recipe.ingredients.forEach(singleIng => {
+         
+            recipe.ingredients.forEach(singleIng => {debugger
                 delete singleIng._id
                 const name = singleIng.ingredient.name
 
                 singleIng.ingredient = name
-
+              
                 result.push(recipe)
             })
 

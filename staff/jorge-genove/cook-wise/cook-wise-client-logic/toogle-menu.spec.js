@@ -1,21 +1,28 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { TEST_MONGODB_URL: MONGODB_URL, API_URL, SECRET } } = process
 
-const toogleMenu= require('./toogle-menu-day')
+const toogleMenu = require('./toogle-menu')
 const { floor, random } = Math
 const { expect } = require('chai')
 require('cook-wise-commons/polyfills/json')
 const { mongoose, models: { User, Recipes, Ingredients } } = require('cook-wise-data')
 const bcrypt = require('bcryptjs')
-const { DuplicityError, UnexistenceError } = require('cook-wise-commons/errors')
+const {  UnexistenceError } = require('cook-wise-commons/errors')
+const logic = require('.')
+global.fetch = require('node-fetch')
+const notAsyncStorage = require('not-async-storage')
+const jwt = require('jsonwebtoken')
+
+logic.__context__.API_URL = API_URL
+logic.__context__.storage = notAsyncStorage 
 
 describe("toogle-menu", () => {
     const WEEKDAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
     const TIMELINE = ["lunch", "dinner"]    
     let name, surname, email, password, encryptedPassword, userId
     let recipeName, recipeAuthor, description, time, ingredients = [], recipeId;
-    let ingridient, ingredientId
+    let ingredientId
     let quantity, ingredientType;
     let schedule = {}
     let user
@@ -34,6 +41,9 @@ describe("toogle-menu", () => {
 
         user = await User.create({ name, surname, email, password, encryptedPassword })
         userId = user.id
+        const token = jwt.sign({ sub: userId }, SECRET, { expiresIn: '1d' })
+        await logic.__context__.storage.setItem('TOKEN', token)
+
 
         ingredientName = `ingredientName-${random()}`;
         const newIngredient = await Ingredients.create({ name: ingredientName });
@@ -55,9 +65,9 @@ describe("toogle-menu", () => {
 
         await User.findByIdAndUpdate(userId, { $addToSet: { recipes: recipe } });
 
-        schedule.weekday = WEEKDAYS[floor(random() * WEEKDAYS.length)];
-        schedule.timeline = TIMELINE[floor(random() * TIMELINE.length)];
-        schedule.recipe = recipeId
+        weekday = WEEKDAYS[floor(random() * WEEKDAYS.length)];
+        timeline = TIMELINE[floor(random() * TIMELINE.length)];
+        
 
 
         
@@ -69,7 +79,7 @@ describe("toogle-menu", () => {
     })
 
     it('should add day and timeline', async () => {
-        await toogleMenu(schedule, userId)
+        await toogleMenu(weekday,timeline,recipeId)
        
         const user = await User.findById(userId)
         
@@ -78,14 +88,15 @@ describe("toogle-menu", () => {
         expect(user.schedule).to.be.an('array')
         expect(user.schedule.length).to.be.equal(1)
         
-        expect(user.schedule[0].weekday).to.equal(schedule.weekday)
-        expect(user.schedule[0].timeline).to.equal(schedule.timeline)  
+        expect(user.schedule[0].weekday).to.equal(weekday)
+        expect(user.schedule[0].timeline).to.equal(timeline)  
 
     })
 
     it('should remove if day and timeline exist', async () => {
+        schedule = {weekday, timeline, recipe : recipeId}
         await User.findByIdAndUpdate(userId, {$addToSet:  {schedule: schedule}});
-        await toogleMenu(schedule,userId)
+        await toogleMenu(weekday,timeline,recipeId)
 
         const user = await User.findById(userId)
 
@@ -99,176 +110,83 @@ describe("toogle-menu", () => {
     
      it("shold throw an error if not match a recipe", async () => {
         await Recipes.deleteMany()
-      
+        
         try {
-            await toogleMenu(schedule,userId)
+            await toogleMenu(weekday,timeline,recipeId)
         }catch(error) {
             expect(error).to.exist;
-            expect(error).to.be.instanceof(UnexistenceError);
+            expect(error).to.be.instanceof(Error);
             expect(error.message).to.equal(`recipe with id ${recipeId} does not exist`); 
         }
-
-     
     })
 
     it("shold throw an error if not match a user", async () => {
         await User.deleteMany()
        
         try {
-            await toogleMenu(schedule, userId)
+            await toogleMenu(weekday,timeline,recipeId)
         }catch(error) {
             expect(error).to.exist;
-            expect(error).to.be.instanceof(UnexistenceError);
+            expect(error).to.be.instanceof(Error);
             expect(error.message).to.equal(`user with id ${userId} does not exist`); 
         }
-
-     })
-
-     it('should throw an error if userId its not an string', () => {
-        expect(function () {
-            toogleMenu(schedule, undefined)
-        }).to.throw(TypeError, 'undefined is not a string')
-    
-        expect(function () {
-            toogleMenu(schedule,1)
-        }).to.throw(TypeError, '1 is not a string')
-    
-        expect(function () {
-            toogleMenu(schedule, null)
-        }).to.throw(TypeError, 'null is not a string')
-    
-        expect(function () {
-            toogleMenu(schedule, true)
-        }).to.throw(TypeError, 'true is not a string')
-    })    
-    
-     it('should throw an error if schedule its not an object', () => {
-         expect(function () {
-            toogleMenu(undefined, userId)
-        }).to.throw(TypeError, 'undefined must be an object')
-    
-        expect(function () {
-            toogleMenu(1, userId)
-        }).to.throw(TypeError, '1 must be an object') 
-    
-        expect(function () {
-            toogleMenu(null, userId)
-        }).to.throw(TypeError, 'null must be an object')
-    
-        expect(function () {
-            toogleMenu(true, userId)
-        }).to.throw(TypeError, 'true must be an object')
     })
+
 
      it('should throw an error if timeline its not an string', () => {
         
-        schedule.weekday =  WEEKDAYS[floor(random() * WEEKDAYS.length)],
-        schedule.timeline = undefined
-        schedule.recipe = recipeId
-        
         expect(function () {
-            toogleMenu(schedule, userId)
+            toogleMenu(weekday,undefined,recipeId)
         }).to.throw(TypeError, 'undefined is not a string')
   
-        schedule.weekday =  WEEKDAYS[floor(random() * WEEKDAYS.length)],
-        schedule.timeline = 1
-        schedule.recipe = recipeId
   
         expect(function () {
-            toogleMenu(schedule, userId)
+            toogleMenu(weekday,1,recipeId)
         }).to.throw(TypeError, '1 is not a string')
     
-        
-        schedule.weekday =  WEEKDAYS[floor(random() * WEEKDAYS.length)],
-        schedule.timeline = null
-        schedule.recipe = recipeId
-        
         expect(function () {
-            toogleMenu(schedule,userId)
+            toogleMenu(weekday,null,recipeId)
         }).to.throw(TypeError, 'null is not a string')
     
-        
-        schedule.weekday =  WEEKDAYS[floor(random() * WEEKDAYS.length)],
-        schedule.timeline = true
-        schedule.recipe = recipeId
-        
         expect(function () {
-            toogleMenu(schedule,userId)
+            toogleMenu(weekday,true,recipeId)
         }).to.throw(TypeError, 'true is not a string')
     })     
     
      it('should throw an error if weekday its not an string', () => {
-        
-        schedule.timeline =  WEEKDAYS[floor(random() * WEEKDAYS.length)],
-        schedule.weekday = undefined
-        schedule.recipe = recipeId
-        
         expect(function () {
-            toogleMenu(schedule, userId)
+            toogleMenu(undefined,timeline,recipeId)
         }).to.throw(TypeError, 'undefined is not a string')
   
-        schedule.timeline =  WEEKDAYS[floor(random() * WEEKDAYS.length)],
-        schedule.weekday = 1   
-        schedule.recipe = recipeId
-  
         expect(function () {
-            toogleMenu(schedule, userId)
+            toogleMenu(1,timeline,recipeId)
         }).to.throw(TypeError, '1 is not a string')
     
-        
-        schedule.timeline =  WEEKDAYS[floor(random() * WEEKDAYS.length)],
-        schedule.weekday = null
-        schedule.recipe = recipeId
-        
         expect(function () {
-            toogleMenu(schedule,userId)
+            toogleMenu(null,timeline,recipeId)
         }).to.throw(TypeError, 'null is not a string')
     
-        
-        schedule.timeline =  WEEKDAYS[floor(random() * WEEKDAYS.length)],
-        schedule.weekday = true
-        schedule.recipe = recipeId
-        
         expect(function () {
-            toogleMenu(schedule, userId)
+            toogleMenu(true,timeline,recipeId)
         }).to.throw(TypeError, 'true is not a string')
-    })      
-    it('should throw an error if recipeId its not an string', () => {
-        
-        schedule.timeline =  WEEKDAYS[floor(random() * WEEKDAYS.length)],
-        schedule.weekday = WEEKDAYS[floor(random() * WEEKDAYS.length)]
-        schedule.recipe = undefined
-        
+    })     
+    it('should throw an error if weekday its not an string', () => {
         expect(function () {
-            toogleMenu(schedule, userId)
+            toogleMenu(weekday,timeline,undefined)
         }).to.throw(TypeError, 'undefined is not a string')
   
-        schedule.timeline =  WEEKDAYS[floor(random() * WEEKDAYS.length)],
-        schedule.weekday = WEEKDAYS[floor(random() * WEEKDAYS.length)]
-        schedule.recipe = 1
-  
         expect(function () {
-            toogleMenu(schedule, userId)
+            toogleMenu(weekday,timeline,1)
         }).to.throw(TypeError, '1 is not a string')
     
-        
-        schedule.timeline =  WEEKDAYS[floor(random() * WEEKDAYS.length)],
-        schedule.weekday = WEEKDAYS[floor(random() * WEEKDAYS.length)]
-        schedule.recipe = null
-        
         expect(function () {
-            toogleMenu(schedule,userId)
+            toogleMenu(weekday,timeline,null)
         }).to.throw(TypeError, 'null is not a string')
     
-        
-        schedule.timeline =  WEEKDAYS[floor(random() * WEEKDAYS.length)],
-        schedule.weekday = WEEKDAYS[floor(random() * WEEKDAYS.length)]
-        schedule.recipe = true
-        
         expect(function () {
-            toogleMenu(schedule, userId)
+            toogleMenu(weekday,timeline,true)
         }).to.throw(TypeError, 'true is not a string')
-    })      
+    })     
     
 
 

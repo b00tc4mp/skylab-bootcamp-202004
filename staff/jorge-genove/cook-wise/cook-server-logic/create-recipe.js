@@ -19,9 +19,7 @@ const { models: { Recipes, User, Ingredients} } = require('cook-wise-data')
 
 
 module.exports = ({name, author, time, ingredients, description,userId}) => {debugger
-
- 
-    
+   
     String.validate.notVoid(name)
     String.validate.notVoid(author)
     String.validate.notVoid(userId)
@@ -29,12 +27,12 @@ module.exports = ({name, author, time, ingredients, description,userId}) => {deb
     if (!(ingredients instanceof Array)) throw new Error('you must put ingredients on the recipe')
     String.validate.notVoid(description)
 
-    
-    return (async () => {
+   
+    return (async () => {debugger
         const _ingredients = []
         ingredients.forEach(async (ingredient) =>{
-            const {selectedIngredients: name, selectedQuantity: quantity} = ingredient
-
+            const {selectedValue: name, selectedQuantity: quantity} = ingredient
+            console.log(name,'name')
             const ingredientsFind = await Ingredients.findOne({name}).lean()
 
             if (!ingredientsFind) throw new UnexistenceError(`that ingredient does not exist`);
@@ -60,6 +58,7 @@ module.exports = ({name, author, time, ingredients, description,userId}) => {deb
 
         const recipes = await Recipes.findOne({name, author})
         if(recipes) throw new DuplicityError(`${name} of ${author} already exist` )
+        console.log(_ingredients,'soy yo')
         
         const recipe = await Recipes.create({
             name, author, description, time, ingredients : _ingredients

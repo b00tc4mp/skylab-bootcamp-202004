@@ -1,3 +1,11 @@
+/**
+ * @param {String} recipeId the recipeId
+ * 
+ * @throws {error} if status its not 200
+ * 
+ */
+
+
 require('cook-wise-commons/polyfills/string')
 const { utils: {  call } } = require('cook-wise-commons')
 const context = require('./context')
