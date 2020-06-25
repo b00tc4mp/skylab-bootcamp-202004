@@ -6,7 +6,7 @@ import './Catalogue.sass'
 //   {name: 'single-bed', url: '../images/single-bed.png'}
 // ]
 
-let itemsCatalogue = ['double-bed','single-bed', 'chair', 'small-table']
+let itemsCatalogue = ['double-bed', 'deskt', 'couch', 'dresser', 'tv']
 
 export default function Catalogue() {
 
@@ -20,7 +20,7 @@ export default function Catalogue() {
       {itemsCatalogue.map((item, i) => {
         return <div 
           key={item}
-          className={item}
+          className={`${item} catalogue`}
           draggable={true}
           onDragStart={handleCatalogueDrag}/>
             {/* <img src={itemsCatalogue.url}/></div> */}
