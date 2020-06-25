@@ -47,11 +47,11 @@ Search products and add to cart
 
 Client-side
 
-![](./images/client-side-code-coverage.png)
+![](./images/client-testing.png)
 
 Server-side
 
-![](./images/server-side-code-coverage.png)
+![](./images/server-testing.png)
 
 
 
