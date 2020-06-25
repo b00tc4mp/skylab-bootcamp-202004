@@ -1,6 +1,10 @@
 const { API_URL } = require("../../config")
 const axios = require("axios")
-
+/**
+ * @param  {float} latitude
+ * @param  {float} longitude
+ * @returns Promise
+ */
 module.exports = (latitude, longitude) => {
     return axios.get(`${API_URL}/bars`, {
             params: {

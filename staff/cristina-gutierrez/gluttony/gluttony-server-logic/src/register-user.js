@@ -10,6 +10,8 @@ const { v4: uuidv4 } = require("uuid")
  * @param  {string} surname
  * @param  {string} email
  * @param  {string} password
+ * @returns void
+ * @throws DuplicityError
  */
 module.exports = (id, name, surname, email, password) => {
     id = id || uuidv4()

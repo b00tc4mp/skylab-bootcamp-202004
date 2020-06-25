@@ -3,6 +3,7 @@ const { models: { Users } } = require("gluttony-data")
 
 /**
  * @param  {string} userId
+ * @returns Promise
  */
 module.exports = userId => {
     String.validate.notVoid(userId)

@@ -8,7 +8,7 @@ const { mongoose, models: { Users, Stores } } = require("gluttony-data")
 const removeFavourite = require("../src/remove-favourite")
 const addFavourite = require("../src/add-favourite")
 
-describe("logic - add favourite", () => {
+describe("logic - remove favourite", () => {
     beforeAll(() => mongoose.connect(MONGODB_URL))
 
     let userId, storeId

@@ -2,7 +2,10 @@ const { API_URL } = require("../../config")
 require("gluttony-commons/polyfills/string")
 const axios = require("axios")
 const { AsyncStorage } = require("react-native")
-
+/**
+ * @param  {string} storeId
+ * @returns Promise
+ */
 module.exports = async (storeId) => {
     let token
 
@@ -22,5 +25,5 @@ module.exports = async (storeId) => {
             if (status === 201) return
             throw new Error(data.error)
         })
-        .catch(console.log)
+        .catch(error => error)
 }

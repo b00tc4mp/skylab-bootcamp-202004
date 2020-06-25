@@ -8,7 +8,7 @@ const { mongoose, models: { Users, Stores } } = require("gluttony-data")
 const addFavourite = require('../src/add-favourite')
 const getFavourites = require('../src/get-favourites')
 
-describe("logic - retrieve user", () => {
+describe("logic - get favourites", () => {
     beforeAll(() => mongoose.connect(MONGODB_URL))
 
     let storeId, name, type, location, latitude, longitude, userId

@@ -1,65 +1,39 @@
-require('dotenv').config()
-
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
-
 const { random } = Math
 require("gluttony-commons/polyfills/json")
-const { mongoose, models: { Users, Stores } } = require("gluttony-data")
 const addFavourite = require('../src/add-favourite')
 const getFavourites = require('../src/get-favourites')
 
-describe("logic - retrieve user", () => {
-    beforeAll(() => mongoose.connect(MONGODB_URL))
+describe("logic - get favourite", () => {
+    let name, surname, email, password, storeId
 
-    let storeId, name, type, location, latitude, longitude, userId
-
-    beforeEach(done => {
-        storeId = `id-${random()}`
+    beforeEach(async done => {
         name = `name-${random()}`
-        type = `type-${random()}`
-        location = `location-${random()}`
-        latitude = random()
-        longitude = random()
-        userId = `id-${random()}`
+        surname = `surname-${random()}`
+        email = `e-${random()}@mail.com`
+        password = `password-${random()}`
+        storeId = `id-${random()}`
 
-        Users.create({ 
-                id: userId, 
-                name: "name", 
-                surname: "surname", 
-                email: `e-${random()}@mail.com`,
-                password: "password"
-            })
-            .then(() => Stores.create({ id: storeId, name, type, location, coordinates: { latitude, longitude } }))
-            .then(() => done())
+        await registerUser(name, surname, email, password)
+        await authenticateUser(email, password)
+
+        done()
     })
 
-    it("should succeed when user has favourites", async () => {
-        await addFavourite(storeId, userId)
-
-        const favourites = await getFavourites(userId)
-
-        expect(favourites).toHaveLength(1)
-
-        const favourite = favourites[0]
-
-        expect(favourite.id).toBe(storeId)
-        expect(favourite.name).toBe(name)
-        expect(favourite.type).toBe(type)
-        expect(favourite.location).toBe(location)
-        expect(favourite.coordinates.latitude).toBe(latitude)
-        expect(favourite.coordinates.longitude).toBe(longitude)
-    })
-
-    it("should return empty array when user has no favourites", async () => {
+    it("should return empty array when user has no favourites", async done => {
         const favourites = await getFavourites(userId)
 
         expect(favourites).toHaveLength(0)
+
+        done()
     })
 
-    afterEach(() => {
-        Users.deleteMany()
-        Stores.deleteMany()
-    })
+    it("should succeed when user has favourites", async done => {
+        await addFavourite(storeId)
 
-    afterAll(mongoose.disconnect)
+        const favourites = await getFavourites()
+
+        expect(favourites).toHaveLength(1)
+
+        done()
+    })
 })

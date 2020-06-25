@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs")
 /**
  * @param  {string} email
  * @param  {string} password
+ * @returns Promise
  */
 module.exports = (email, password) => {
     Email.validate(email)

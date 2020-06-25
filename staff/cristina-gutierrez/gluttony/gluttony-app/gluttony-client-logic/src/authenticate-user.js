@@ -3,7 +3,11 @@ require("gluttony-commons/polyfills/string")
 const { utils: { Email } } = require("gluttony-commons")
 const axios = require("axios")
 const { AsyncStorage } = require("react-native")
-
+/**
+ * @param  {string} email
+ * @param  {string} password
+ * @returns Promise
+ */
 module.exports = async (email, password) => {
     Email.validate(email)
     String.validate.notVoid(password)
@@ -30,5 +34,5 @@ module.exports = async (email, password) => {
                 throw new Error(data.error)
             }
         })
-        .catch(console.log)
+        .catch(error => error)
 }

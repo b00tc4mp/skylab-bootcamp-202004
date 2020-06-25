@@ -1,34 +1,25 @@
-require("dotenv").config()
-
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
-
 const authenticateUser = require("../src/authenticate-user")
 const { random } = Math
 require("gluttony-commons/polyfills/json")
-const { mongoose, models: { Users } } = require("gluttony-data")
-const bcrypt = require("bcryptjs")
 
 describe("logic - authenticate user", () => {
-    beforeAll(() => mongoose.connect(MONGODB_URL))
+    let name, surname, email, password
 
-    let id, name, surname, email, password
-
-    beforeEach(done => {
-        id = `id-${random()}`
+    beforeEach(async done => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `e-${random()}@mail.com`
         password = `password-${random()}`
 
-        bcrypt.hash(password, 10)
-            .then(hash => Users.create({ id, name, surname, email, password: hash }))
-            .then(() => done())
+        await registerUser(name, surname, email, password)
+
+        done()
     })
 
     describe("when user already exists", () => {
         it("should succeed on correct credentials", () => {
             authenticateUser(email, password)
-                .then(_id => expect(_id).toBe(id))
+                .then(token => expect(token).toBeDefined())
         })
 
         it("should fail on wrong password", () => {
@@ -36,10 +27,7 @@ describe("logic - authenticate user", () => {
 
             authenticateUser(email, password)
                 .then(() => { throw new Error("should not reach this point") })
-                .catch(error => {
-                    expect(error).toBeInstanceOf(Error)
-                    expect(error.message).toBe("wrong password")
-                })
+                .catch(error => expect(error).toBeDefined())
         })
     })
 
@@ -53,8 +41,4 @@ describe("logic - authenticate user", () => {
                 expect(error.message).toBe(`user with e-mail ${email} does not exist`)
             })
     })
-
-    afterEach(() => Users.deleteMany())
-    
-    afterAll(mongoose.disconnect)
 })

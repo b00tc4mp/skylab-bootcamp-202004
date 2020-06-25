@@ -4,6 +4,7 @@ const { errors: { DuplicityError } } = require("gluttony-commons")
 /**
  * @param  {string} storeId
  * @param  {string} userId
+ * @returns void
  */
 module.exports = (storeId, userId) => {
     String.validate.notVoid(storeId)

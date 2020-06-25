@@ -21,3 +21,25 @@ With Gluttony, you can easily search the nearest bar or restaurant - you just ha
 
 ### Use cases
 
+![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-develop/staff/cristina-gutierrez/gluttony/gluttony-app/assets/images/logo-color-version-png.png)
+
+
+### Flow
+
+![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-develop/staff/cristina-gutierrez/gluttony/gluttony-app/assets/images/logo-color-version-png.png)
+
+
+## Technical description
+
+
+### Blocks
+
+![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-develop/staff/cristina-gutierrez/gluttony/gluttony-app/assets/images/logo-color-version-png.png)
+
+### Data model
+
+![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-develop/staff/cristina-gutierrez/gluttony/gluttony-app/assets/images/logo-color-version-png.png)
+
+### Code coverage
+
+![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-develop/staff/cristina-gutierrez/gluttony/gluttony-app/assets/images/logo-color-version-png.png)
