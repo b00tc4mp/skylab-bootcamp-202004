@@ -1,6 +1,6 @@
 # Nomad App
 
-![alt text](./mockup.png)
+![img](https://media.giphy.com/media/26ufbEZ0kdpOKokgM/giphy.gif)
 
 ## Introduction
 
