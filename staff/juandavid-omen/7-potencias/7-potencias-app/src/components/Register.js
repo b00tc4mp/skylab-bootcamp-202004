@@ -3,7 +3,7 @@ import Feedback from './Feedback'
 import './Register.sass'
 import { registerUser } from '7-potencias-client-logic'
 
-export default function ({ onRegister, onGoToLogin}) {
+export default function ({ onRegister, onGoToLogin }) {
   const [error, setError] = useState()
 
   const handleSubmit = event => {

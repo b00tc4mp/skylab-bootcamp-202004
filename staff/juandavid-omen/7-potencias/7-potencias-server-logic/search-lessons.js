@@ -2,12 +2,17 @@ require('7-potencias-commons/polyfills/string')
 const { models: { Lesson } } = require('7-potencias-data')
 
 module.exports = query => {
-  String.validate.notVoid(query)
+
+  var criteria = {}
+
+  if (query) {
+    criteria = {
+      $or: [{ name: new RegExp(query, 'i') }]
+    }
+  }
 
   return (async () => {
-    let lessons = await Lesson.find({
-      $or: [{ name: new RegExp(query, 'i') }]
-    }).lean()
+    let lessons = await Lesson.find(criteria).lean()
 
     lessons = lessons.map(lesson => {
       lesson.id = lesson._id.toString()

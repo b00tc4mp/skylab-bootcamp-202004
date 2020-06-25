@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react'
+import { Cart, Login, Register, Home, Landing, NavBar, Products, ShoppingCart, Feedback, Footer, CartDropdown } from '../components'
+import { isUserSessionValid, logoutUser, isUserLoggedIn, updateCart } from '7-potencias-client-logic'
+import { Route, withRouter, Redirect } from 'react-router-dom'
 import './App.sass'
-import Register from './Register'
-import Login from './Login'
-import Landing from './Landing'
-import Home from './Home'
-import NavBar from './NavBar'
-import logo from '../images/logo.png'
-import { Link, Route, withRouter, Redirect } from 'react-router-dom'
-import { isUserAuthenticated } from '7-potencias-client-logic'
 
-function App ({ history }) {
-  const [token, setToken] = useState()
+export default withRouter(function ({ history }) {
+  const [view, setView] = useState()
+  const [cart, setCart] = useState([])
+  const [error, setError] = useState()
+  const [cartDropdownHidden, setCartDropdownHidden] = useState()
 
   useEffect(() => {
+    setCartDropdownHidden(false)
+
     if (sessionStorage.token) {
       try {
-        isUserAuthenticated(sessionStorage.token)
+        isUserSessionValid(sessionStorage.token)
           .then(isAuthenticated => {
             if (isAuthenticated) {
-              setToken(sessionStorage.token)
+              setView('home')
             }
           })
           .catch(error => { throw error })
@@ -26,55 +26,67 @@ function App ({ history }) {
         if (error) throw error
       }
     } else history.push('/')
-  }, [])
+  }, [history])
 
   const handleGoToRegister = () => history.push('/register')
 
   const handleRegister = () => history.push('./login')
 
-  const handleLogin = token => {
-    sessionStorage.token = token
-    setToken(token)
-
-    history.push('/home')
-  }
+  const handleLogin = () => history.push('/home')
 
   const handleGoToLogin = () => history.push('/login')
 
   const handleLogout = () => {
-    setToken()
-    delete sessionStorage.token
+    logoutUser()
 
     history.push('/')
   }
 
+  const toggleHiddenDropdown = () => {
+    setCartDropdownHidden(!cartDropdownHidden)
+  }
+
+  const addToCart = (id, name, price) => {
+    let quantity = 1
+
+    const index = cart.findIndex(item => item.productId === id)
+
+    if (index === -1) {
+      cart.push({ productId: id, quantity: quantity, name: name, price: price })
+    } else {
+      quantity = ++cart[index].quantity
+    }
+
+    try {
+      updateCart(sessionStorage.token, id, quantity)
+        .then(() => {
+          setError(undefined)
+          setCart(cart)
+        })
+        .catch(({ message }) => {
+          setError(message)
+        })
+    } catch ({ message }) {
+      setError(message)
+    }
+  }
+
   return (
-    <div className='App'>
-      <header className='App-header'>
+    <div className='app'>
+      <NavBar onLogout={handleLogout} token={sessionStorage.token} toggleHiddenDropdown={toggleHiddenDropdown} />
+      <main>
+        {cartDropdownHidden ? null : (<CartDropdown cart={cart} toggleHidden={toggleHiddenDropdown} />)}
+        <Route exact path='/' render={() => isUserLoggedIn() ? <Redirect to='/home' /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />} />
+        <Route path='/register' render={() => isUserLoggedIn() ? <Redirect to='/home' /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />} />
+        <Route path='/login' render={() => isUserLoggedIn() ? <Redirect to='/home' /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />} />
+        <Route path='/home' render={() => isUserLoggedIn() ? <Home onLogout={handleLogout} /> : <Redirect to='/' />} />
+        <Route path='landing' render={() => <Landing />} />
+        <Route path='/lessons' render={() => <Products token={sessionStorage.token} addToCart={addToCart} />} />
+        <Route path='carts' render={() => <Cart />} />
+      </main>
 
-        <NavBar>
-          <Link to='/'><img classNameName='nav_log-img' src={logo} alt='7Potencias' /></Link>
-          <Route exact path='/' render={() => token ? <Redirect to='/home' /> : <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />} />
+      <Footer />
 
-          <Route
-            path='/register' render={() =>
-              token ? <Redirect to='/home' /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />}
-          />
-
-          <Route
-            path='/login' render={() =>
-              token ? <Redirect to='/home' /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />}
-          />
-
-          <Route
-            path='/home' render={() =>
-              token ? <Home onLogout={handleLogout} token={token} /> : <Redirect to='/' />}
-          />
-
-        </NavBar>
-      </header>
     </div>
   )
-}
-
-export default withRouter(App)
+})

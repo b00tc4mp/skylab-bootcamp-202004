@@ -4,18 +4,20 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } } = process
 
-const authenticateUser = require('./authenticate-user')
+const loginUser = require('./login-user')
 const { random } = Math
 const { expect } = require('chai')
 require('7-potencias-commons/polyfills/json')
 const { mongoose, models: { User } } = require('7-potencias-data')
 const bcrypt = require('bcryptjs')
 require('7-potencias-commons/ponyfills/xhr')
+require('7-potencias-commons/ponyfills/atob')
 const context = require('./context')
 
 context.API_URL = API_URL
+context.storage = {}
 
-describe('logic - authenticate user', () => {
+describe('login user', () => {
   before(() => mongoose.connect(MONGODB_URL))
 
   let name, surname, email, password, userId, hash
@@ -39,8 +41,8 @@ describe('logic - authenticate user', () => {
         .then(user => userId = user.id)
     )
 
-    it('should succeed on correct credentials', done =>
-      authenticateUser(email, password)
+    it('should succeed on correct credentials', () => {
+      loginUser(email, password)
         .then(token => {
           const [, payloadBase64] = token.split('.')
 
@@ -52,30 +54,27 @@ describe('logic - authenticate user', () => {
 
           expect(_userId).to.equal(userId)
         })
-        .then(done())
-    )
+    })
 
-    it('should fail on wrong password', done => {
+    it('should fail on wrong password', () => {
       password += 'wrong-'
 
-      authenticateUser(email, password)
+      loginUser(email, password)
         .then(() => { throw new Error('should not reach this point') })
         .catch(error => {
           expect(error).to.be.an.instanceof(Error)
           expect(error.message).to.equal('wrong password')
         })
-        .then(done())
     })
   })
 
-  it('should fail when user does not exist', done =>
-    authenticateUser(email, password)
+  it('should fail when user does not exist', () =>
+    loginUser(email, password)
       .then(() => { throw new Error('should not reach this point') })
       .catch(error => {
         expect(error).to.be.an.instanceof(Error)
         expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
       })
-      .then(done())
   )
 
   afterEach(() => User.deleteMany())

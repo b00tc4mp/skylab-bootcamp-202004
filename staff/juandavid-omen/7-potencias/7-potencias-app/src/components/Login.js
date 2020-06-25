@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './Login.sass'
 import Feedback from './Feedback'
 import './Feedback.sass'
-import { authenticateUser } from '7-potencias-client-logic'
+import { loginUser } from '7-potencias-client-logic'
 
 export default function ({ onLogin, onGoToRegister }) {
   const [error, setError] = useState()
@@ -15,7 +15,7 @@ export default function ({ onLogin, onGoToRegister }) {
     password = password.value
 
     try {
-      authenticateUser(email, password)
+      loginUser(email, password)
         .then(onLogin)
         .catch(error => setError(error.message))
     } catch (message) {

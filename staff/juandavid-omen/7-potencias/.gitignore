@@ -233,5 +233,6 @@ temp/
 
 package-lock.json
 yarn.lock
+.editorconfig
 
 # End Other

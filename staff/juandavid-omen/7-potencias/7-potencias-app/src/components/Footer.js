@@ -1,8 +1,8 @@
 import React from 'react'
-import './Landing.sass'
+import './Footer.sass'
 
 export default function () {
   return (
-    <section className='landing' />
+    <footer className='diagonal' />
   )
 }
