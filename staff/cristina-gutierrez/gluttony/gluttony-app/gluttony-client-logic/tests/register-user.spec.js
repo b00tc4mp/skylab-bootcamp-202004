@@ -18,12 +18,11 @@ describe("logic - register user", () => {
     })
 
     describe("when user already exists", () => {
-        it("should fail on trying to register an existing user", async done => {
+        it("should fail on trying to register an existing user", async () => {
             await registerUser(name, surname, email, password)
             
             registerUser(name, surname, email, password)
                 .catch(error => expect(error).toBeDefined())
-                .then(done)
         })
     })
 })

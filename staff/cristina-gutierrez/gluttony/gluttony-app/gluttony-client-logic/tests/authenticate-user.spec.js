@@ -5,15 +5,13 @@ require("gluttony-commons/polyfills/json")
 describe("logic - authenticate user", () => {
     let name, surname, email, password
 
-    beforeEach(async done => {
+    beforeEach(async () => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `e-${random()}@mail.com`
         password = `password-${random()}`
 
         await registerUser(name, surname, email, password)
-
-        done()
     })
 
     describe("when user already exists", () => {

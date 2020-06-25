@@ -6,7 +6,7 @@ const getFavourites = require('../src/get-favourites')
 describe("logic - get favourite", () => {
     let name, surname, email, password, storeId
 
-    beforeEach(async done => {
+    beforeEach(async () => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `e-${random()}@mail.com`
@@ -15,25 +15,19 @@ describe("logic - get favourite", () => {
 
         await registerUser(name, surname, email, password)
         await authenticateUser(email, password)
-
-        done()
     })
 
-    it("should return empty array when user has no favourites", async done => {
+    it("should return an empty array when user has no favourites", async () => {
         const favourites = await getFavourites(userId)
 
         expect(favourites).toHaveLength(0)
-
-        done()
     })
 
-    it("should succeed when user has favourites", async done => {
+    it("should succeed when user has favourites", async () => {
         await addFavourite(storeId)
 
         const favourites = await getFavourites()
 
         expect(favourites).toHaveLength(1)
-
-        done()
     })
 })

@@ -5,7 +5,7 @@ require("gluttony-commons/polyfills/json")
 describe("logic - add favourite", () => {
     let name, surname, email, password, storeId
 
-    beforeEach(async done => {
+    beforeEach(async () => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `e-${random()}@mail.com`
@@ -14,8 +14,6 @@ describe("logic - add favourite", () => {
 
         await registerUser(name, surname, email, password)
         await authenticateUser(email, password)
-
-        done()
     })
 
     it("should succeed on valid data", () => {

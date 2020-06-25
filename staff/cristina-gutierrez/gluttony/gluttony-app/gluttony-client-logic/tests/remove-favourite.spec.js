@@ -5,7 +5,7 @@ const removeFavourite = require("../src/remove-favourite")
 describe("logic - remove favourite", () => {
     let name, surname, email, password, storeId
 
-    beforeEach(async done => {
+    beforeEach(async () => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `e-${random()}@mail.com`
@@ -14,8 +14,6 @@ describe("logic - remove favourite", () => {
 
         await registerUser(name, surname, email, password)
         await authenticateUser(email, password)
-
-        done()
     })
 
     it("should succeed", () => {
