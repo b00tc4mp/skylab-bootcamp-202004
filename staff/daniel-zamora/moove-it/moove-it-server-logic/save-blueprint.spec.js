@@ -37,7 +37,6 @@ describe('logic - save blueprint', () => {
             userId = user.id
             const blueprint = await Blueprint.create({ userId, name: planeName, width, height, items: [item] })
             blueprintId = blueprint.id
-            // blueprint.items.push(items)
             await User.findByIdAndUpdate(userId, { $addToSet: { blueprints: blueprint } })
 
         })

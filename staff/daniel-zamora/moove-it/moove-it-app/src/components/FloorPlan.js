@@ -15,11 +15,14 @@ export default function PlaneBuilder({ blueprintId, onGoToHome}) {
 
     useEffect(() => {
    
-        if(blueprintId)
+     const { blueprintId: previousBlueprintId } = sessionStorage
+
+        if (blueprintId &&( !previousBlueprintId || blueprintId !== previousBlueprintId))   
             try {
                 retrieveBlueprint(blueprintId)
                     .then(blueprint => {
                         sessionStorage.items = JSON.stringify(blueprint.items)
+                        sessionStorage.blueprintId = blueprintId
                         setPlacedItems(blueprint.items)
                     })
                     .catch(error => setError(error.message))

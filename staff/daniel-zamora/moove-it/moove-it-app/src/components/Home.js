@@ -66,7 +66,7 @@ export default function Home({blueprint, onGoToFloorPlan, onLogout}) {
                 </a>
             </nav>
             <h2 className="home__salute">Nice to see you again, {name}</h2>
-            <h4 className="home__title">Create your next layout</h4>
+            <h4 className="home__title">Create a new space</h4>
             <form onSubmit={handlePlaneInit} className='home__form'>
                 <input className="home__input" name="name" type="text" placeholder="blueprint name"/>
                 <input className="home__input" name="width" type="number"  placeholder="width in metters"></input>
@@ -81,7 +81,8 @@ export default function Home({blueprint, onGoToFloorPlan, onLogout}) {
                 <ul className="home__list">{userBlueprints.map(({id, name, width, height, date})=> {
                     date = moment(date).format("DD/MM/YYYY")
                     return <li key={id}><a onClick={()=>onGoToFloorPlan(id)}>{`Name: ${name}, Width: ${width}, Height: ${height} created on: ${date}`}</a>
-                    <button>Delete</button> </li>
+                    {/* <button>Delete</button>  */}
+                    </li>
                 })}</ul> 
             </div>
     </section>
