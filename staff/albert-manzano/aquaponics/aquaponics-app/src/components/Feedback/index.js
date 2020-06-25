@@ -19,8 +19,9 @@ const styles = StyleSheet.create({
         fontWeight:"bold",
         alignSelf:"center",
         color: '#66cc00',
-
+        width:'100%',
     },
+    
     error: {
         fontWeight:"bold",
         alignSelf:"center",

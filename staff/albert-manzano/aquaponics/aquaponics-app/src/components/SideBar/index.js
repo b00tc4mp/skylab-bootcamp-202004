@@ -31,11 +31,11 @@ function SideBar({ error, onGoToCharts, onGoToManager, onGoToGreenhouse, onGoToF
             {role === "admin" && (<>
                 <View>
                     <Text style={styles.text}> Greenhouse </Text>
-                    {error ? <TouchableOpacity onPress={onGoToGreenhouse}>
-                        <Image source={require('../../../assets/images/greenhouse.png')} style={styles.iconWarn} />
-                    </TouchableOpacity> : <TouchableOpacity onPress={onGoToGreenhouse}>
-                            <Image source={require('../../../assets/images/greenhouse.png')} style={styles.icon} />
-                        </TouchableOpacity>}
+
+                    <TouchableOpacity onPress={onGoToGreenhouse}>
+                        <Image source={require('../../../assets/images/greenhouse.png')} style={styles.icon} />
+                    </TouchableOpacity>
+
 
                 </View>
             </>)}

@@ -40,7 +40,12 @@ Hope you enjoy it!
 
 ## Modules/Components
 
+![arrow](diagrams/arrow-flow.png)
+
+## Modules/Components
+
 ![modules-components](diagrams/modules-components.png)
+
 
 ## Testing 
 

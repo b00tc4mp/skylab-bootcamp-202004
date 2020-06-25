@@ -8,13 +8,22 @@ import {
   Alert,
   AsyncStorage,
 } from 'react-native';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
+import { Landing, Home, Charts, Forecast, Manager, Greenhouse } from './src/components';
 
-import { Landing, Home, Charts, Forecast, Manager, Greenhouse} from './src/components';
-
+import { Notifications } from 'expo'
 
 import logic, { retrieveUser, logout, retrieveLastTemperature, retrieveLastPh, isUserLoggedIn, isUserSessionValid } from 'aquaponics-client-logic'
 
 logic.__context__.storage = AsyncStorage;
+
+const askNotification = async () => {
+  // We need to ask for Notification permissions for ios devices
+  const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+  if (Constants.isDevice && status === 'granted')
+    console.log('Notification permissions granted.');
+};
 
 export default function App() {
   const [view, setView] = useState('landing')
@@ -23,7 +32,9 @@ export default function App() {
   const [role, setRole] = useState('')
   const [lastTemp, setLastTemp] = useState('')
   const [lastPh, setLastPh] = useState('')
-  const [confirmed,setConfirm] = useState ('')
+  const [confirmed, setConfirm] = useState('')
+
+
 
   useEffect(() => {
     if (isUserLoggedIn())
@@ -32,7 +43,7 @@ export default function App() {
           .then(isAuthenticated => {
             if (isAuthenticated) {
               handleAuthorized()
-              
+
             } else setView('landing')
           })
           .catch(error => { throw error })
@@ -46,13 +57,15 @@ export default function App() {
     const timer = setTimeout(() => {
       (async () => {
         try {
+          await askNotification()
           const lastTemp = await retrieveLastTemperature()
           const lastPh = await retrieveLastPh()
-          
           setLastTemp(lastTemp)
           setLastPh(lastPh)
+          if (lastTemp > 30 || lastTemp < 25) Notifications.presentLocalNotificationAsync({ title: 'Alert', body: 'Temperature exceeded the standards, please check it', sound: true })
+          if (lastPh < 4 || lastPh < 7) Notifications.presentLocalNotificationAsync({ title: 'Alert', body: 'Ph exceeded the standards, please check it', sound: true })
         } catch (error) {
-          setError('Warning! Could not retrieve last data from greenhouse')
+          Notifications.presentLocalNotificationAsync({ title: 'Alert', body: 'Problem connecting with the greenhouse', sound: true })
         }
       })()
     }, 10000);
@@ -61,7 +74,7 @@ export default function App() {
 
   const handleAuthorized = async () => {
     const { name, confirmed, role, status } = await retrieveUser()
-    
+
     if (confirmed && status === 'enable') {
       setName(name)
       setRole(role)
@@ -90,15 +103,16 @@ export default function App() {
   }
 
   const handleGoToLogout = async (event) => {
-
     event.preventDefault()
+    setRole('')
+    setError('')
     logout()
     setView('landing')
   }
 
   return (<>
     <SafeAreaView style={styles.container}>
-      {view === 'landing' && <Landing  confirmed={confirmed} error={error} onAuthorized={handleAuthorized} />}
+      {view === 'landing' && <Landing confirmed={confirmed} error={error} onAuthorized={handleAuthorized} />}
       {view === 'home' && <Home role={role} name={name} error={error} onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
       {view === 'charts' && <Charts role={role} onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
       {view === 'manager' && <Manager role={role} onGoToManager={handleGoToManager} onGoToCharts={handleGoToCharts} onGoToGreenhouse={handleGoToGreenhouse} onGoToForecast={handleGoToForecast} onGoToCalendar={handleGoToCalendar} onGoToLogout={handleGoToLogout} />}
