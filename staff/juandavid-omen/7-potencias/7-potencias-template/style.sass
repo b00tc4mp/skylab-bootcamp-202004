@@ -1,26 +1,13 @@
-$tomato: #FF5959
-$white: #ffffff
-$slateGrey: #708090
-$gainsboro: #DCDCDC
-$floralWhite: #FFFAF0
-$black: solid #0000
-$translucent:rgba(255,255,255,0.8)
+@import components/utils
+@import components/Panel
+@import components/StyleColors
 
-@mixin flex-row
-    display: flex
-    justify-content: space-around
-    align-items: center
-    flex-direction: row
-
-.navbar
-    @include flex-row
-    width: 100% 
-    height: 3rem
-    background-color: white
-    position: fixed
-    z-index: 9999
-    top: 0
-    &__item
-        width: 2rem
-        height: 2rem
-        background-color:$translucent
+@import components/Landing
+@import components/Login
+@import components/Register
+@import components/Home
+@import components/Feedback
+@import components/Products
+@import components/CartDropdown
+@import components/NavBar
+@import components/Footer
