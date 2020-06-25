@@ -1,7 +1,7 @@
 const { retrieveRecipe } = require('cook-server-logic')
 const { handleError } = require('../../helpers')
 
-module.exports = (req, res) => {debugger
+module.exports = (req, res) => {
     try {
         const { params : {recipeId} } = req
         

@@ -1,8 +1,7 @@
-  
-const context = require('./context')
+const context = require("./context");
 
 module.exports = async function () {
-    const token = await this.storage.getItem('TOKEN')
+  const token = await this.storage.getItem("TOKEN");
 
-    return !!token
-}.bind(context)
+  return !!token;
+}.bind(context);

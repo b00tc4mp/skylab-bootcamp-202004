@@ -1,7 +1,7 @@
 const { groceryList } = require('cook-server-logic')
 const { handleError } = require('../../helpers')
 
-module.exports = (req, res) => {debugger
+module.exports = (req, res) => {
     try {
         const { payload: { sub: userId } } = req
         

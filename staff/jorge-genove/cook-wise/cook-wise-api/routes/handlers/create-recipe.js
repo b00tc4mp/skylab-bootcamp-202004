@@ -4,7 +4,7 @@ const { handleError } = require('../../helpers')
 
 
 
-module.exports = (req, res) => {debugger
+module.exports = (req, res) => {
     const { payload: { sub: userId }, body: { name, author, time, ingredients, description} } = req
 
     try {

@@ -1,16 +1,11 @@
-require('cook-wise-commons/polyfills/string')
+require("cook-wise-commons/polyfills/string");
 
-const context = require('./context')
+const context = require("./context");
 
+module.exports = function () {
+  return (async () => {
+    await this.storage.clear();
 
-module.exports = function() {
-    
-return (async() => {
-    
-    await this.storage.clear()  
-    
-    
-    return
-        })()
-}.bind(context)
-
+    return;
+  })();
+}.bind(context);
