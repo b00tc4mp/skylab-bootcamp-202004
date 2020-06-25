@@ -21,12 +21,12 @@ With Gluttony, you can easily search the nearest bar or restaurant - you just ha
 
 ### Use cases
 
-![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-develop/staff/cristina-gutierrez/gluttony/gluttony-app/assets/images/logo-color-version-png.png)
+![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-feature/compo-styles/staff/cristina-gutierrez/gluttony/gluttony-docs/assets/images/use-cases-diagram.png)
 
 
 ### Flow
 
-![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-develop/staff/cristina-gutierrez/gluttony/gluttony-app/assets/images/logo-color-version-png.png)
+![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-feature/compo-styles/staff/cristina-gutierrez/gluttony/gluttony-docs/assets/images/flowchart-diagram.png)
 
 
 ## Technical description
@@ -34,11 +34,11 @@ With Gluttony, you can easily search the nearest bar or restaurant - you just ha
 
 ### Blocks
 
-![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-develop/staff/cristina-gutierrez/gluttony/gluttony-app/assets/images/logo-color-version-png.png)
+![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-feature/compo-styles/staff/cristina-gutierrez/gluttony/gluttony-docs/assets/images/blocks-diagram.png)
 
 ### Data model
 
-![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-develop/staff/cristina-gutierrez/gluttony/gluttony-app/assets/images/logo-color-version-png.png)
+![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-feature/compo-styles/staff/cristina-gutierrez/gluttony/gluttony-docs/assets/images/data-model-diagram.png)
 
 ### Code coverage
 
