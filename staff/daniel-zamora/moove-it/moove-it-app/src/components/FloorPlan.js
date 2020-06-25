@@ -17,7 +17,7 @@ export default function PlaneBuilder({ blueprintId, onGoToHome}) {
    
      const { blueprintId: previousBlueprintId } = sessionStorage
 
-        if (blueprintId &&( !previousBlueprintId || blueprintId !== previousBlueprintId))   
+        if (blueprintId &&( !previousBlueprintId || blueprintId == previousBlueprintId))   
             try {
                 retrieveBlueprint(blueprintId)
                     .then(blueprint => {
