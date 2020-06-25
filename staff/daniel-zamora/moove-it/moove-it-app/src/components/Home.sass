@@ -18,17 +18,21 @@ body
         top: 0
         z-index: 3
     &__logo
-        width: 15vh
+        width: 18vh
         height: inherit
         margin: 1rem
-        display: inline
+        display: flex
     &__logo>img
         height: 100%
         width: 100%
     &__user
-        width: 10vh
-        height: inherit
+        height: fit-content
         margin: 1rem
+        display: flex
+        align-items: center
+        color: #F4F5F7
+        margin-top: 4vh
+        width: 17vh
     &__user>img
         height: 100%
         width: 100%
@@ -43,6 +47,7 @@ body
         margin-top: 20px
         text-align: center
         padding: 5px
+        margin: 1vh
     &__form
         display: flex
         flex-direction: column
@@ -62,6 +67,22 @@ body
         opacity: 0.7
     &__input:focus
         opacity: 1   
+    &__form> button
+        width: 40%
+        border-radius: 20px
+        padding: 0.5rem
+        outline: none
+        user-select: none
+        appearance: media-slider
+        font-size: 1.1rem
+        color: #F4F5F7
+        background-color:#3A86FF
+        min-width: 41px
+    &__form>button:hover
+        box-shadow: 0px 0px 2px white
+        cursor: pointer
+    &__form>button:active
+        opacity: 0.8
     &__line     
         display: flex
         justify-content: center

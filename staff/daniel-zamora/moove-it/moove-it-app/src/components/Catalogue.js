@@ -19,6 +19,7 @@ export default function Catalogue() {
       {/* {Object.keys(itemsCatalogue).map((item, i) => { */}
       {itemsCatalogue.map((item, i) => {
         return <div 
+          key={item}
           className={item}
           draggable={true}
           onDragStart={handleCatalogueDrag}/>

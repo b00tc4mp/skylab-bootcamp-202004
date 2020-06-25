@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Feedback from './Feedback';
 import './Login.sass'
-import logo from '../images/animated-plane-v4-name&shadow.png';
+import logo from '../images/name-logo.png'
 import { authenticateUser } from 'moove-it-client-logic';
 
 

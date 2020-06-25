@@ -10,7 +10,8 @@ export default function PlaneBuilder({ blueprintId, onGoToHome}) {
 
     const [error, setError] = useState()
     const [feedback, setFeedback] = useState()
-    const [placedItems, setPlacedItems] = useState()
+    const [placedItems, setPlacedItems] = useState(sessionStorage.items? JSON.parse(sessionStorage.items) : [])
+    // TODO check why session storage doesn't keep the items
 
     useEffect(() => {
    
@@ -88,6 +89,7 @@ export default function PlaneBuilder({ blueprintId, onGoToHome}) {
 
     const hanbleGoToHome = (e) => {
         e.preventDefault()
+        //TODO se guarda automaticamente
         onGoToHome()
     }
 

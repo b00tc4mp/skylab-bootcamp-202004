@@ -4,7 +4,7 @@ require('moove-it-commons/polyfills/number')
 require('moove-it-commons/polyfills/array')
 const context = require('./context')
 
-module.exports = function(blueprintId, items=[]) {
+module.exports = function(blueprintId, items) {
     debugger
     const { token } = this.storage
 
