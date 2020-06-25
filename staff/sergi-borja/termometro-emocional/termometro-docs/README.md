@@ -62,3 +62,56 @@ HOPE YOU ENJOY IT!
 ![](./images/settings-template.jpg)
 ![](./images/handle-account-template.jpg)
 ![](./images/set-mood.jpg)
+
+# Instructions
+
+### Server-side
+
+#### Testing
+
+Go to module books-server-logic
+
+$ npm test
+
+
+#### Code Coverage
+
+$ npm run test:coverage
+
+
+### Run
+
+Go to module books-api
+
+$ npm start
+
+
+#### Watching (development only)
+
+$ npm run watch
+
+
+### Client-side
+
+#### Testing
+
+Go to module books-client-logic
+
+$ npm test
+
+
+#####  Code Coverage
+
+$ npm run test:coverage
+
+
+### Run
+
+Go to module books-app
+
+$ npm start
+
+
+#### Enter
+
+$ open http://localhost:8080/

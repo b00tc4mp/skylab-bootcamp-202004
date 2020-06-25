@@ -10,7 +10,7 @@ import backButton from '../images/back-icon.png'
 function HandleAccounts({ token, history }) {
 
     const [familyList, setFamilyList] = useState()
-    const [userDeleted, setUserDeleted] = useState(false)
+    const [userDeleted, setUserDeleted] = useState()
 
 
     useEffect(() => {
@@ -41,7 +41,7 @@ function HandleAccounts({ token, history }) {
     const handleDeleteMember = (member) => {
         try {
             unRegisterUser(member.id)
-                .then(setUserDeleted(true))
+                .then(()=> setUserDeleted(member.id))
                 .catch(error => console.error(error.message))
         } catch (error){
             if(error) throw error
@@ -51,7 +51,6 @@ function HandleAccounts({ token, history }) {
 
     return (
         <section className='handleAccountsContainer'>
-            
             <div className='handleAccountsContainer__container'>
             <img className='editMemberContainer__backIcon' src={backButton} onClick={()=>history.push('/settings')}></img>
             <h1 className='handleAccountsContainer__title'>Mi Familia</h1>
