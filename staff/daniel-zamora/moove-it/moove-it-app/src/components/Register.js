@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import Feedback from './Feedback'
-import logo from '../images/animated-plane-v4-name&shadow.png'
+import logo from '../images/name-logo.png'
 import { registerUser } from 'moove-it-client-logic'
 import './Register.sass'
 
