@@ -8,7 +8,6 @@ require('facturator-commons/ponyfills/xhr')
 const {utils:{Rounder:{round}}}= require("facturator-commons")
 
 const context = require('./context')
-const template = require('facturator-data/models/schemas/template')
 
 describe("retrieveDeliveryTemplate",()=>{
     before(()=>{mongoose.connect(MONGODB_URL)})

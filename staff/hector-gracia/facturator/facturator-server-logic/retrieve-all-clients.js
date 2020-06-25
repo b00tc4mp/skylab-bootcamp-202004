@@ -1,5 +1,3 @@
-require('facturator-commons/polyfills/string')
-
 const { models: { Client } } = require('facturator-data')
 
 module.exports = () => {

@@ -4,12 +4,12 @@ const {
     addclient,retrieveClient,updateClient,removeClient,retrieveAllClients, addClientDiscount,retrieveClientDiscountList,
     addProduct,retrieveProduct,retrieveAllProducts,
     addProductToDelivery,makeDeliveryFromTemplate, makeEmptyDelivery, removeProductFromDelivery, updateProductInDelivery, retrieveDelivery, retrieveDeliveryList,
-    addDeliveryTemplate, retrieveDeliveryTemplate}= require("./handlers")
+    addDeliveryTemplate, retrieveDeliveryTemplate, retrieveAllDeliveryTemplates}= require("./handlers")
 const bodyParser= require("body-parser")
 const {jwtVerifierExtractor}= require("../middlewares")
 const {hanleError}= require("../helpers")
 const parseBody= bodyParser.json()
-const verifyExtractJwt= jwtVerifierExtractor(SECRET,hanleError)
+//const verifyExtractJwt= jwtVerifierExtractor(SECRET,hanleError)
 
 const api= new Router
 //Clients
@@ -28,13 +28,14 @@ api.get("/products",parseBody,retrieveAllProducts)
 api.post("/deliveries/products",parseBody,addProductToDelivery)
 api.post("/deliveries/templates",parseBody,makeDeliveryFromTemplate)
 api.post("/deliveries",parseBody,makeEmptyDelivery)
-api.delete("/delieveries/products",parseBody,removeProductFromDelivery)
+api.delete("/deliveries/remove",parseBody,removeProductFromDelivery)
 api.patch("/deliveries/products",parseBody,updateProductInDelivery)
 api.get("/deliveries/id/:deliveryId",parseBody,retrieveDelivery)
 api.get("/deliveries",parseBody,retrieveDeliveryList)
 //Templates
 api.post("/templates",parseBody,addDeliveryTemplate)
 api.get("/templates/:templateId",parseBody,retrieveDeliveryTemplate)
+api.get("/templates",parseBody,retrieveAllDeliveryTemplates)
 
 module.exports={
     api

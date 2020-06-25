@@ -21,5 +21,6 @@ module.exports={
     retrieveDeliveryList: require("./retrieve-delivery-list"),
     //Template
     addDeliveryTemplate: require("./add-delivery-template"),
-    retrieveDeliveryTemplate: require("./retrieve-delivery-template")
+    retrieveDeliveryTemplate: require("./retrieve-delivery-template"),
+    retrieveAllDeliveryTemplates: require("./retrieve-all-delivery-templates")
 }

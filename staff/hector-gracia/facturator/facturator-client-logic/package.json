@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npx mocha *.spec.js",
-    "test:debug": "npx mocha --inspect=7000 --inspect-brk *.spec.js"
+    "test:debug": "npx mocha --inspect=7000 --inspect-brk *.spec.js",
+    "test:coverage": "npx nyc --reporter=text --reporter=lcov npm test"
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +19,7 @@
     "chai": "^4.2.0",
     "facturator-data": "file:../facturator-data",
     "mocha": "^8.0.1",
+    "nyc": "^15.1.0",
     "xhr2": "^0.2.0"
   }
 }

@@ -4,9 +4,11 @@ var pdfFonts = require('pdfmake/build/vfs_fonts.js');
 const retrieveDelivery= require("./retrieve-delivery")
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 const {utils:{Rounder:{round}}}= require("facturator-commons")
+require("facturator-commons/polyfills/string")
 
-module.exports= function(){
-  return retrieveDelivery("5eebc2bcaad90c306cfbfd57")
+module.exports= function(deliveryId){
+  String.validate.notVoid(deliveryId)
+  return retrieveDelivery(deliveryId)
   .then(delivery=>{
 
     //Recibe el albaran
