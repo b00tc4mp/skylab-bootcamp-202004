@@ -26,6 +26,14 @@ This app were inspirated on my personal neccesity to sometimes change my room, b
 
 ![use-cases](images/use-cases.png)
 
+### Data Model
 
+![data-model](images/data-model.png)
 
+### Activities
 
+![activities](images/activities.png)
+
+### Blocks
+
+![blocks](images/blocks.png)
