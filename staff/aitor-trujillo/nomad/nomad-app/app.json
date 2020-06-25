@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "nomad",
-    "slug": "nomad",
+    "name": "nomad-app",
+    "slug": "nomad-app",
     "platforms": [
       "ios",
       "android",
@@ -23,6 +23,7 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": ""
   }
 }
