@@ -1,3 +1,14 @@
+/**
+ * Retrieves a symptom from the HPO database uploaded to mongoDB using the HPO_id. I also retrieves all symptoms above and below it in the relational database.
+ * 
+ * @param {string} HPO_id the id of the symptom in the HPO database
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {VoidError} If any of the parameters expected to be a string is an empty string.
+ * @throws {UnexistenceError} If the symptom does not exist in the database.
+ * @throws {CredentialsError} If the credentials are wrong.
+ */
+
 require('commons/polyfills/string')
 const { models: { Term }, cleanTerm } = require('data')
 const { errors: { UnexistenceError } } = require('commons')

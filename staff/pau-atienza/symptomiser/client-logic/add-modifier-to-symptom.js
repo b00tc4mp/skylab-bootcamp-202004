@@ -1,3 +1,17 @@
+/**
+ * Adds a modifier to the symptom to modify in the context storage, if that modifier is not already in the symptom.
+ * 
+ * @param {string} confidenceLevel the level of confidence introduced by the patiend during submission.
+ * @param {Object} modifier a JSON object with all the modifier information.
+ * 
+ * @param {string} HPO_id the id of the submitted term in the HPO database.
+ * @param {string} name the name of the submitted term in the HPO database.
+ * @param {string} date date of the query in ISOString.
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {VoidError} If any of the parameters expected to be a string is an empty string.
+ */
+
 require('commons/polyfills/string')
 require('commons/polyfills/json')
 require('commons/polyfills/array')
@@ -15,7 +29,7 @@ module.exports = function(confidenceLevel, modifier){
 
     Array.validate(modifiers)
 
-    const { term: { HPO_id, name } } = modifier
+    const { term: { HPO_id, name} } = modifier
 
     String.validate.notVoid(HPO_id)
     String.validate.notVoid(name)

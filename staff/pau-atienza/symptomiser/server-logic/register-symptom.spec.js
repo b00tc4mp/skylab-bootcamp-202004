@@ -71,8 +71,8 @@ describe('server logic - register symptom', () => {
         expect(_name).to.equal(name)
         expect(_confidenceLevel).to.equal(confidenceLevel)
 
-        expect(userNavigationTime).to.equal(0)
-        expect(serverResponseTime).to.equal(0)
+        expect(typeof userNavigationTime).to.equal("number")
+        expect(typeof serverResponseTime).to.equal("number")
     })
 
     it('should register navigation and response times', async () => {

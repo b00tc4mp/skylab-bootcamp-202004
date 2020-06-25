@@ -1,12 +1,21 @@
+/**
+ * It generates a message in html and text format based on the symptom list and calls the API to send an email to the introduced address.
+ * 
+ * @param {string} email the address to which the email will be sent
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {VoidError} If any of the parameters expected to be a string is an empty string.
+ * @throws {Error} If the e-mail does not fit the format..
+ */
+
 require('commons/polyfills/string')
 require('commons/polyfills/json')
-const { utils: { call } } = require('commons')
+const { utils: { call, Email } } = require('commons')
 const context = require('./context')
 global.fetch = require('node-fetch')
 
-
 module.exports = function(email){
-    String.validate.notVoid(email)
+    Email.validate(email)
 
     const symptomList = JSON.parse(this.storage.submittedSymptoms)
 
@@ -56,14 +65,8 @@ module.exports = function(email){
     return (async ()=>{
         const {status, body} = await call('POST', `${this.API_URL}/symptomlists/email`, JSON.stringify({email, text, html}), {"Content-type": "application/json"})
         if (status !== 200) {
-            const {error} = JSON.parse(body)
-
-            throw new Error(error)
+            throw new Error("There was a server error")
         }
-
-        // JSON.parse(body)
-
-        return 
     })()
 
 }.bind(context)

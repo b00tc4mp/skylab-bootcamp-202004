@@ -1,4 +1,14 @@
-require('commons/polyfills/string')
+/**
+ * Calls the the API to receive predictions and provides it with the query introduced by the user.
+ * 
+ * @param {string} query the query submitted by the user
+ * 
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {VoidError} If any of the parameters expected to be a string is an empty string.
+ * @throws {Error} If there is a server error.
+ */
+
+ require('commons/polyfills/string')
 const { utils: { call } } = require('commons')
 const context = require('./context')
 global.fetch = require('node-fetch')

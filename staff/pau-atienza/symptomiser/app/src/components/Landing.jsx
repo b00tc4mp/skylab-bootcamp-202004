@@ -11,7 +11,7 @@ export default function({onSubmit, feedback}) {
         <h1 className="landing__title">Symptomiser</h1>
         <main className="landing__main">
             <form className="landing__main--form" onSubmit = {onSubmit}>
-                <input className="landing__main--input" name="query" required minlength = "2" placeholder="Describe your symptom in a few words" />
+                <input className="landing__main--input" name="query" required minLength = "2" spellCheck = 'false' placeholder="Describe your symptom in a few words" />
                 <button className="landing__main--button" type = "submit">
                     <img alt = "" className="landing__main--image" src = {search}></img>
                 </button>
