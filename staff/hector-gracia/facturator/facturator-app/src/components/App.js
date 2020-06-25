@@ -88,7 +88,8 @@ function App() {
       })
       .catch(error=>setError(error.message))
   }
-  const handleFindDeliveryClients=()=>{
+  const handleFindDeliveryClients=(useTemplate)=>{
+    //if(useTemplate) return handelFindDeliveryTemplates(useTemplate)
     try {
       return retrieveAllClients()
         .then(clients=>{
@@ -101,12 +102,12 @@ function App() {
       setError(error.message)
     }
   }
-  const handelFindDeliveryTemplates=()=>{
+  const handelFindDeliveryTemplates=(forDelivery)=>{
     try {
       return retrieveAllDeliveryTemplates()
         .then(templates=>{
           setAllFinds(templates)
-          setView("templates")
+          setView(forDelivery? "delivery/templates":"templates")
           setAction("find")
         })
         .catch(error=>{setError(error.message)})
@@ -179,6 +180,11 @@ function App() {
       setError(error.message)
     }
   }
+  const handleSelectTemplate=(templateId)=>{
+    setSelection(templateId)
+    return handleFindDeliveryClients()
+  }
+  
   const handleRemoveFeedback=()=>{
     setError()
   }
@@ -196,9 +202,10 @@ function App() {
       {view==="delivery/clients" && action==="find" && <Searcher type={view} goToEdition={handleGoToDeliveryEdition}  onError={handleOnError} addTo={handleNewDelivery} back={handleFindDeliveries} allFinds={allFinds}></Searcher>}
       {view==="delivery/edit" && action==="find" && <Searcher type={view} goToEdition={handleFindProductToDelivery} onError={handleOnError}  back={()=>{handleChangeview("deliveries")}} remove={handleRemoveFromDelivery} allFinds={allFinds}></Searcher>}
       {view==="delivery/add" && action==="find" && <Searcher type={view} goToEdition={()=>{handleGoToDeliveryEdition(selection)}} onError={handleOnError}  addTo={handleAddToDelivery} delivery={selection} allFinds={allFinds}></Searcher>}
+      {false && view==="delivery/templates" && action==="find" && <Searcher type={view} goToEdition={()=>{handleGoToDeliveryEdition(selection)}} onError={handleOnError} back={()=>{handleChangeview("deliveries")}}  addTo={handleSelectTemplate} delivery={selection} allFinds={allFinds}></Searcher>}
       {view==="clients" && action==="edit" && <Editor type={view} backToFinder={handelFindClients}  onError={handleOnError} client={selection}></Editor>}
       {view==="products" && action==="edit" && <Editor type={view} backToFinder={handleFindProducts}  onError={handleOnError} product={selection}></Editor>}
-      {view==="templates" && action==="edit" && <Editor type={view} backToFinder={handelFindDeliveryTemplates} onError={handleOnError}  ></Editor>}
+      {false && view==="templates" && action==="edit" && <Editor type={view} backToFinder={handelFindDeliveryTemplates} onError={handleOnError}  ></Editor>}
 
     </div>
   );

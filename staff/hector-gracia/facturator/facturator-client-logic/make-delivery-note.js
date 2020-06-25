@@ -14,11 +14,15 @@ module.exports= function(deliveryId){
     //Recibe el albaran
     if(typeof delivery!=="object") throw new TypeError(delivery+" is not an object")
     const{client,products}= delivery
-    console.log(delivery)
     const productQuantity=[[ 'Producto', 'Descripción',"Cantidad","Precio","Total"]]
+    let totalPayment=0
     for(let i=0; i<products.length;i++){
       productQuantity.push([products[i].product.name,products[i].product.description, products[i].quantity,products[i].product.price,round(products[i].quantity*products[i].product.price,2)])
     }
+    for(j=1;j<productQuantity.length;j++){
+      totalPayment+=productQuantity[j][4]
+    }
+    productQuantity.push(["Total","","","",totalPayment])
     //Comprueba que es el albaran
 
     //Rellena la info del cliente
@@ -38,9 +42,12 @@ module.exports= function(deliveryId){
                     [ 'Empresa', `${client.establishment ? client.establishment : " "}`],
                     [ 'Direccion', `${client.direction ? client.direction : " "}`],
                     [ 'Teléfono', `${client.contactNumber ? client.contactNumber : " "}`],
-                    [ 'Email', `${client.email ? client.email : " "}`]
+                    [ 'Email', `${client.email ? client.email : " "}`],
+                    [ "Fecha",new Date().toJSON().slice(0,10).replace(/-/g,'/').toString()]
                   ]
                 }
+              },{
+                text: "\n \n \n"
               },{
                 layout: 'lightHorizontalLines', // optional
                 table: {
