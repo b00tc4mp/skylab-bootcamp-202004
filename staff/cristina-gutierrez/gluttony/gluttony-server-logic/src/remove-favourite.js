@@ -10,10 +10,6 @@ module.exports = (storeId, userId) => {
     String.validate.notVoid(userId)
 
     return (async () => {
-        const user = await Users.findOne({ _id: userId, favouriteStores: storeId }, "favouriteStores").lean()
-
-        if (user) throw new DuplicityError(`${storeId} already exists`)
-
-        await Users.findByIdAndUpdate(userId, { $push: { favouriteStores: storeId }})
+        await Users.findByIdAndUpdate(userId, { $pull: { favouriteStores: storeId }})
     })()
 }
