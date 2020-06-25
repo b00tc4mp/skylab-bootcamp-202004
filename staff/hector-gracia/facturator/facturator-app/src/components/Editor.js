@@ -6,7 +6,7 @@ const {updateClient,addClient,removeClient,addProduct}= require("facturator-clie
 
 
 
-export default function ({client,product,backToFinder,type}) {
+export default function ({client,product,backToFinder,type, onError}) {
 
     //////Multiple uses//////
     //////Client//////
@@ -59,33 +59,33 @@ export default function ({client,product,backToFinder,type}) {
                         const updatedClient={name,establishment,direction,contactNumber:Number.parseInt(contactNumber) ,email,paymentMethod,paymentInfo,clientId:client.id}
                         return updateClient(updatedClient)
                             .then(()=>backToFinder())
-                            .catch(error=>console.log(error))
+                            .catch(error=>onError(error))
                     }
                     else{
                         const newClient={name,establishment,direction,contactNumber:Number.parseInt(contactNumber),email,paymentInfo,paymentMethod}
                         return addClient(newClient)
                             .then(()=>backToFinder())
-                            .catch(error=>console.log(error))
+                            .catch(error=>onError(error))
         
                     }
                 case "products":{
                     const newProduct={name,price:Number.parseFloat(price),description,alergens}
                     return addProduct(newProduct)
                         .then(()=>backToFinder())
-                        .catch(error=>console.log(error))
+                        .catch(error=>onError(error))
                 }
             }
         } catch (error) {
-            console.log(error)
+            onError(error)
         }
     }
     const remove=()=>{
         try{
             removeClient(client.id)
                 .then(()=>{backToFinder()})
-                .catch(error=>console.log(error))
+                .catch(error=>onError(error))
         }catch(error){
-            console.log(error)
+            onError(error)
         }
     }
 
