@@ -6,7 +6,7 @@
 
 The world is changing, the current situation has made us take new perspectives on how we conceive the way to exercise our professions. Working remotely has come to our reality to stay, and that implies the possibility of working with **geographic freedom**. Long ago the freelance people who began to combine their work with traveling and exploring the world, began to call themselves *digital nomads* and now becoming one of them is more possible than ever. **This is why *Nomad* was born.**
 
-**_Nomad_** was made with the purpose of facilitating the lives of nomads and freelancers. By finding spaces to work with people, share moments and experiences, free workers will be able to choose the best place for their work and inspiration. Wherever you go, you are just a click away from finding the perfect place to work today. 
+**_Nomad_** was made with the purpose of making easier working for nomads and freelancers. By finding spaces to work with people, share moments and experiences, free workers will be able to choose the best place for their work and inspiration. Wherever you go, you are just a click away from finding the perfect place to work today. 
 
 *Choose your next work environment, create your day with Nomad.*
 
