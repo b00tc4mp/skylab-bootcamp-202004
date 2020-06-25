@@ -5,7 +5,7 @@ module.exports = function (userId, challengeId, solution) {
         .then(challenge => {
             if (!challenge) throw new Error(`challenge with id ${challengeId} does not exist`)
 
-            let {solutions} = challenge
+            let {solutions = []} = challenge
             solutions.push({userId, solution})
 
             solutions = [...new Set(solutions.map(_solution => JSON.stringify(_solution)))].map(_solution => JSON.parse(_solution))

@@ -29,7 +29,7 @@ describe('logic - retrieve user', () => {
         )
 
         it('should succeed on correct user id', () =>
-            retrieveUser(userId)
+            retrieveUser(localStorage.token, userId)
                 .then(user => {
                     expect(user.name).to.equal(name)
                     expect(user.email).to.equal(email)

@@ -5,7 +5,7 @@ function Category({ name, match, isAdmin, _id, handeDeleteCategory, challenges }
     
    return (
     <>
-    {!isAdmin && <Link className="category-link" to={`${match.path}/${name}`}>{name}</Link>}
+    {!isAdmin && <Link to={`${match.path}/${name}`}>{name}</Link>}
     
 
     {isAdmin && (

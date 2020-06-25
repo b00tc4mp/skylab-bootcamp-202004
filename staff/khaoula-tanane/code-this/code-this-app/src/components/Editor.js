@@ -6,6 +6,7 @@ function Editor({onChange, initialCode}) {
 
   return (
       <ControlledEditor
+        height="85%"
         onChange={onChange}
         theme='light'
         language='javascript'

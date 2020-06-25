@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import Editor from "./Editor";
 import { checkTest } from "code-this-client-logic";
 import { savePossibleSolution, retrieveUser } from "code-this-client-logic";
+import MarkdownIt from 'markdown-it'
+const mdParser = new MarkdownIt();
 
 function Challenge({
   description,
@@ -43,7 +45,7 @@ function Challenge({
   const handleSavePossibleSolution = () => {
     savePossibleSolution(user.id, challengeId, answer).then(() =>
     handleRetrieveCategory()
-    );
+    ).catch(error => {});
   };
 
   const runTests = () => {
@@ -69,7 +71,7 @@ function Challenge({
   const getUsersSolution = async () => {
     if (!userSolution) return null
       const _solutions = solutions.map(currentSolution => {
-      return retrieveUser(currentSolution.userId).then(_user => {
+      return retrieveUser( localStorage.token, currentSolution.userId).then(_user => {
         currentSolution.user = _user
         return currentSolution
       }).catch(() => {
@@ -86,18 +88,23 @@ function Challenge({
 
   return (
     <>
-            <div className="dashboard-header">
+            <div className="dashboard__header">
               <span>{categoryName}</span>
               <span>{buttons}</span>
               <span className={difficulty?.toLowerCase()}>{difficulty}</span>
             </div>
-            <div className="widget">
+
+            <div className="dashboard__widget dashboard__widget--full">
+                <div className="title">Description</div>
+                <div className="dashboard__widget--content" dangerouslySetInnerHTML={{__html: mdParser.render(description)}}/>
+            </div>
+
+            <div className="dashboard__rows">
+            <div className="dashboard__widget">
                 <div className="title">Code your answer</div>
                 <Editor onChange={handleOnChange} initialCode={answer} />
             </div>
-
-
-            <div className="widget widget--full">
+            <div className="dashboard__widget">
                 <div className="title">Tests to pass</div>
                 <div className={`test test--${testStatus.status}`}>
                   <pre>
@@ -134,14 +141,16 @@ function Challenge({
                           </button>}
                   </>
                 ): (
-                   <h5>Congratulations!</h5>
+                   <h4>Congratulations!</h4>
                 )}
 
             </div>
+            </div>
+
 
             {userSolution && usersSolution && (
 
-            <div class="widget widget--full">
+            <div class="dashboard__widget dashboard__widget--comments">
                 <div class="title">Other solutions</div>
 
                 <div className="solutions-container">

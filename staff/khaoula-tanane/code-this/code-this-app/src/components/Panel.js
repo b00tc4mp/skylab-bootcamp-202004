@@ -18,7 +18,7 @@ function Panel(props) {
   }, []);
 
   const handleRetrieveUser = () => {
-    retrieveUser()
+    retrieveUser(localStorage.token)
       .then((_user) => {
         setUser(_user);
       })
@@ -78,6 +78,8 @@ function Panel(props) {
           </div>
           <div className="container">
             {isAdmin && (
+              <>
+               <div className="dashboard__categories" />
               <div className="dashboard">
                 <Route
                   path={`${props.match.path}/challenges`}
@@ -89,10 +91,11 @@ function Panel(props) {
                 />
                 <Route path="/reload" component={null} key="reload" />
               </div>
+              </>
             )}
             {!isAdmin && (
               <>
-                <div className="categories-panel">
+                <div className="dashboard__categories">
                   <Route
                     path={`${props.match.path}/categories`}
                     component={Categories}
@@ -123,7 +126,7 @@ function Panel(props) {
   }, [])  
 
   const handleRetrieveUser = async ()=> {
-      const _user = await retrieveUser()
+      const _user = await 
       setUser(_user)
   }
 

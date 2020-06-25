@@ -21,7 +21,7 @@ function Challenges({
   }, []);
 
   const handleRetrieveUser = async () => {
-    const _user = await retrieveUser();
+    const _user = await retrieveUser(localStorage.token);
     setUser(_user);
   };
 

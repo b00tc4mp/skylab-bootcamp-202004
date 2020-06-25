@@ -14,7 +14,10 @@ function Login (props) {
 
         try{
           authenticateUser(email, password)
-            .then(()=> props.history.push('/Panel'))
+            .then((token)=> {
+              localStorage.token = token
+              props.history.push('/panel/categories')
+            })
             .catch(error=> setError(error.message))
         } catch ({message}){
             setError(message)

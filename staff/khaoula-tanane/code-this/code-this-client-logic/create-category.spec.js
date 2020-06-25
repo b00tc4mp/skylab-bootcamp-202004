@@ -10,7 +10,7 @@ const { init } = require('code-this-data/models/user')
 
 context.API_URL = API_URL
 
-describe.only('logic - create category', () => {
+describe('logic - create category', () => {
     before(() =>
     mongo.connect(MONGODB_URL)
         .then(connection => categories = connection.db().collection('categories'))

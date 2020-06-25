@@ -83,30 +83,33 @@ function CreateChallenge() {
             {message && <Alert {...message}/>}
             {showForm && (
                 <>
-                    <div className="widget">
+                <div className="dashboard__rows">
+                <div className="dashboard__widget ">
                 <div className="title">Intial code to guide user</div>
                     <Editor onChange={handleOnInitialCodeChange} />
             </div>
 
 
-            <div className="widget">
+            <div className="dashboard__widget">
                 <div className="title">Tests to pass</div>
                     <Editor onChange={handleOnTestChange} />
             </div>
-
-            <MdEditor
+                </div>
+                    
+            <div className="dashboard__widget dashboard__widget--full">
+                    <MdEditor
                 value=""
                 style={{ height: "200px" }}
                 renderHTML={(text) => mdParser.render(text)}
                 onChange={handleMdEditorOnChange}
                 />
-
-            <select className="select" selected={form.difficulty} name='difficulty' onChange={handleOnChange}>
+                <select className="select" selected={form.difficulty} name='difficulty' onChange={handleOnChange}>
                 <option value="Easy">Easy</option>
                 <option value="Medium">Medium</option>
                 <option value="Advanced">Advanced</option>
             </select>
             <button onClick={handleSaveChallenge}> SAVE </button>
+            </div>
                 </>
             )}
         </>

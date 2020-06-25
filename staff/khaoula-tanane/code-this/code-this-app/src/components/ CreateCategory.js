@@ -78,8 +78,9 @@ function CreateCategory(props) {
     return (
         <>
             {message && <Alert {...message}/>}
-            <div className="widget">
+            <div className="dashboard__widget dashboard__widget--full">
                 <div className="title">Add Category</div>
+                <div className="dashboard__form">
                 <input className="add-category" placeholder="Category name" name='category' value={categoryName} onChange={handleOnChange} />
                 <MultiSelect
                     options={challenges.map(({description, _id}) => ({label: description, value: _id}))}
@@ -88,9 +89,10 @@ function CreateCategory(props) {
                     labelledBy={"Select"}
                 />
                 <button className="add-category" onClick={handleSaveCategory}>SAVE</button>
+                </div>
             </div>
 
-            <div className="widget widget--categories">
+            <div className="dashboard__widget widget--categories dashboard__widget--full">
                 <div className="title">All Categories</div>
                 <div className="categories-container">
                     {loadCategories && <Categories isAdmin handleAlert={handleAlert}/>}

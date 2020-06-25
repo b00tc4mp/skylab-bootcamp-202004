@@ -34,7 +34,7 @@ describe('logic - retrieve user', () => {
         })
 
         it('should succeed on correct user id', () =>
-            retrieveUser(userId)
+            retrieveUser(localStorage.token, userId)
                 .then(user => {
                     expect(user.name).to.equal(name)
                     expect(user.email).to.equal(email)
@@ -46,7 +46,7 @@ describe('logic - retrieve user', () => {
     it('should fail when user does not exist', () => {
         const userId = '5ed1204ee99ccf6fae798aef'
 
-        return retrieveUser(userId)
+        return retrieveUser(localStorage.token, userId)
             .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
                 expect(error).to.exist
