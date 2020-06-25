@@ -71,14 +71,6 @@ module.exports = new Schema({
             required: true
         }
     },
-    // timetable: { // TODO is this ok?
-    //     type: String, // openig closing days
-    //     required: true
-    // },
-    photos: [{
-        type: String,
-        // required: true
-    }],
     phone: {
         type: String,
         unique: true
@@ -110,4 +102,7 @@ module.exports = new Schema({
         required: true
     },
     reviews: [review]
+    // photos: [{
+    //     type: String,
+    // }],
 })

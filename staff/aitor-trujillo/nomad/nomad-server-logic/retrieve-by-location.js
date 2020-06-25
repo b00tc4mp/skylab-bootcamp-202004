@@ -37,6 +37,6 @@ module.exports = async (userId, location, filter) => { // location = [lat-lon]
 
     if (filter) geoWorkspaces = geoWorkspaces.filter(({ category }) => category === filter)
 
-    return geoWorkspaces.slice(0, 20)
+    return geoWorkspaces.slice(0, 10)
 }
 

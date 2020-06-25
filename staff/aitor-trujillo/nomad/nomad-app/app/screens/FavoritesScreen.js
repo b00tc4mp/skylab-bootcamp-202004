@@ -36,8 +36,11 @@ export default function Favorites({ navigation }) {
     }
 
     const handleSearch = async (query) => {
+        if (query === '') return getFavorites()
         try {
+            setFavorites([])
             const result = await searchFavorites(query)
+            setError()
             setFavorites(result)
         } catch (e) {
             setError(e.message)
