@@ -50,11 +50,11 @@ const Register = props => {
                     .then(() => props.onGoToLogin())
                     .catch(console.log)
             }} >
-                <Text style={styles.textStyle}>Registrarse</Text>
+                <Text style={styles.textStyle}>Register</Text>
             </TouchableOpacity>
             <Text style={{ ...styles.modalText, marginBottom: 8 }}>o</Text>
             <Text style={{ ...styles.textStyle, textDecorationLine: "underline" }} onPress={props.onGoToLogin}>
-                ¿Ya tienes una cuenta? Inicia sesión
+                Already have an account? Log in
             </Text>
         </View>
     )
