@@ -27,17 +27,99 @@ In this web site will be shown all relevant information about the school, like t
 
 ### Use cases
 
-![use](./images/7-potencias-use-cases.png)
+![use](./images/use-cases.png)
 
+### Activities
+<!-- TODO -->
 ## Technical description
 
 ### Blocks
 
-![blocks](./images/7-potencias-blocks.png)
+![blocks](./images/blocks.png)
 
-### Data model
+## Modules / Components
 
-![data](./images/7-potencias-data-model.png)
+![modules](./images/modules-components.png)
+
+## Classes
+<!-- TODO -->
+## Sequences
+
+Testing
+
+![sequences](./images/testing-sequence.png)
+
+### Data Model
+
+![data](./images/data-model.png)
+
+## Code Coverage
+
+Client-side
+Server-side
+
+## Instructions
+
+### Server-side
+
+#### Testing
+
+Go to module `7-potencias-server-logic`
+
+```sh
+$: npm test
+```
+
+#### Code Coverage
+
+
+```sh
+$ npm run test:coverage
+```
+
+### Run
+
+Go to module `7-potencias-api`
+
+```sh
+$ npm start
+```
+
+#### Watching (development only)
+
+```sh
+$ npm run watch
+```
+
+### Client-side
+
+#### Testing
+
+Go to module `7-potencias-client-logic`
+
+```sh
+$ npm test
+```
+
+##### Code Coverage
+
+```sh
+$ npm run test:coverage
+```
+
+### Run
+
+Go to module `7-potenicias-app`
+
+```sh
+$ npm start
+```
+
+#### Enter
+
+```sh
+$ open http://localhost:3000/
+```
 
 ## Link to Trello
 
