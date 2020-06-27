@@ -6,11 +6,9 @@ import {
     ImageBackground,
     View
 } from "react-native";
-import Comments from "./Comments";
 import { retrieveUser, logout } from "../gluttony-client-logic";
 
 const ProfilePage = (props) => {
-    const [showComments, setShowComments] = useState(false);
     const [user, setUser] = useState();
 
     useEffect(() => {
@@ -25,7 +23,7 @@ const ProfilePage = (props) => {
                 { user && <Text style={{ ...styles.textStyle, backgroundColor: "#FFFC87" }}>Welcome {user.name} {user.surname}</Text> }
             </View>
             <View style={styles.boxTwo}>
-                <TouchableOpacity style={styles.openButton} onPress={ () => setShowComments(!showComments) }>
+                <TouchableOpacity style={styles.openButton} onPress={ () => props.onGoToComments() }>
                     <Text style={{ ...styles.textStyle, fontSize: 24 }}>Comments</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.openButton} onPress={() => {
@@ -33,7 +31,6 @@ const ProfilePage = (props) => {
                 }}>
                     <Text style={{ ...styles.textStyle, fontSize: 24 }}>Logout</Text>
                 </TouchableOpacity>
-                { showComments === "comments" && <Comments /> }
             </View>
         </ImageBackground>
     )

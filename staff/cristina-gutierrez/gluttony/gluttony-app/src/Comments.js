@@ -1,16 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
     StyleSheet,
     Text,
     ImageBackground,
-    View
+    View,
+    ScrollView
 } from "react-native";
+import { getUserComments } from "../gluttony-client-logic"
+require("gluttony-commons/polyfills/date")
 
 const Comments = () => {
+    const [comments, setComments] = useState();
+
+    useEffect(() => {
+        getUserComments()
+            .then(comments => setComments(comments))
+            .catch(() => props.onShowModal())
+    }, [])
+
     return (
         <ImageBackground source={require("../assets/images/final-food-and-drink-pattern-vector-1.png")} style={styles.image}>
-            <View style={styles.boxOne}>
+            <View style={styles.box}>
                 <Text style={styles.textStyle}>Comments</Text>
+                <ScrollView>
+                    { comments && comments.map(comment => {
+                        comment.creationDate = new Date(comment.creationDate).toHumanFormat()
+                        
+                        return <View style={styles.comment} key={comment.id}>
+                            <Text>{comment.store.name}</Text>
+                            <Text>{comment.creationDate}</Text>
+                            <Text>{comment.text}</Text>
+                        </View>
+                    }
+                    )}
+                </ScrollView>
             </View>
         </ImageBackground>
     )
@@ -26,17 +49,22 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
+    box: {
+        flex: 1,
+        justifyContent: "flex-start",
+        marginTop: 60
+    },
+    comment: {
+        backgroundColor: "#FFFFFF",
+        marginTop: 30,
+        padding: 10
+    },
     textStyle: {
         color: "black",
         backgroundColor: "#FFFC87",
         fontWeight: "800",
         textAlign: "center",
         fontSize: 30,
-    },
-    boxOne: {
-        flex: 1,
-        justifyContent: "flex-start",
-        marginTop: 60
     }
 })
 

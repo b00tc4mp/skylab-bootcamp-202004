@@ -2,6 +2,7 @@ const { API_URL } = require("../../config")
 require("gluttony-commons/polyfills/string")
 const axios = require("axios")
 const { AsyncStorage } = require("react-native")
+
 /**
  * @returns Promise
  */

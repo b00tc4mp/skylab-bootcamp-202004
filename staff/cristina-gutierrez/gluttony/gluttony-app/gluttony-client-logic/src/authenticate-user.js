@@ -3,6 +3,7 @@ require("gluttony-commons/polyfills/string")
 const { utils: { Email } } = require("gluttony-commons")
 const axios = require("axios")
 const { AsyncStorage } = require("react-native")
+
 /**
  * @param  {string} email
  * @param  {string} password

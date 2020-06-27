@@ -1,4 +1,5 @@
 const { AsyncStorage } = require("react-native")
+
 /**
  * @returns Promise
  */

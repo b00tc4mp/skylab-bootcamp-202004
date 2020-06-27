@@ -18,7 +18,9 @@ const {
   findNearbyBars,
   findNearbyRestaurants,
   addFavourite,
-  getFavourites
+  getFavourites,
+  postComment,
+  getUserComments
 } = require("gluttony-server-logic")
 const { mongoose } = require("gluttony-data")
 const removeFavourite = require("gluttony-server-logic/src/remove-favourite")
@@ -116,6 +118,30 @@ mongoose.connect(MONGODB_URL)
       try {   
         removeFavourite(storeId, userId)
           .then(() => res.status(204).send())
+          .catch(error => handleError(error, res))
+      } catch (error) {
+        handleError(error, res)
+      }
+    });
+
+    router.post("/comments", verifyExtractJwt, (req, res) => {
+      const { payload: { sub: userId }, body: { id, text, creationDate, storeId } } = req
+      
+      try {
+        postComment(id, text, creationDate, userId, storeId)
+          .then(() => res.status(201).send())
+          .catch(error => handleError(error, res))
+      } catch (error) {
+        handleError(error, res)
+      }  
+    });
+
+    router.get("/comments", verifyExtractJwt, (req, res) => {
+      const { payload: { sub: userId } } = req
+
+      try {   
+        getUserComments(userId)
+          .then(comments => res.send({ comments }))
           .catch(error => handleError(error, res))
       } catch (error) {
         handleError(error, res)

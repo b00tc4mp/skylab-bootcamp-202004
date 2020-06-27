@@ -10,7 +10,8 @@ import MapRestaurant from "./src/MapRestaurant";
 import ProfilePage from "./src/ProfilePage";
 import Favourites from "./src/Favourites";
 import Modal from "./src/Modal";
-import Menu from "./src/Menu"
+import Menu from "./src/Menu";
+import Comments from "./src/Comments";
 
 const App = () => {
   const [view, setView] = useState("home");
@@ -32,6 +33,10 @@ const App = () => {
       { view === "profilePage" && <ProfilePage 
         onShowModal={ () => setModalVisible(true) }
         onGoToHome={ () => setView("home") }
+        onGoToComments={ () => setView("comments") } 
+      /> }
+      { view === "comments" && <Comments 
+        onShowModal={ () => setModalVisible(true) }
       /> }
       { view === "favourites" && <Favourites
         onShowModal={ () => setModalVisible(true) }

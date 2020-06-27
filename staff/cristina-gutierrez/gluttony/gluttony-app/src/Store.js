@@ -8,6 +8,7 @@ import {
     TouchableOpacity
 } from "react-native";
 import { addFavourite, removeFavourite } from "../gluttony-client-logic";
+import postComment from "../gluttony-client-logic/src/post-comment";
 
 const Store = props => {
     const [comment, setComment] = useState("");
@@ -34,7 +35,7 @@ const Store = props => {
                 onChangeText={ text => setComment(text) } 
             />
             <TouchableOpacity style={{ ...styles.button, marginTop: 0, width: 70 }} title= "Send" onPress={() => {
-                addFavourite(props.store.id).catch(props.onShowModal)
+                postComment(comment, props.store.id).catch(props.onShowModal)
             }} >
                 <Text style={{ ...styles.textStyle, textAlign: "center" }}>Send</Text>
             </TouchableOpacity>

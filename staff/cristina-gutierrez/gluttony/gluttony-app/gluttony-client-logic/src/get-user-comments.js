@@ -4,10 +4,9 @@ const axios = require("axios")
 const { AsyncStorage } = require("react-native")
 
 /**
- * @param  {string[]} storeId
  * @returns Promise
  */
-module.exports = async (storeId) => {
+module.exports = async () => {
     let token
 
     try {
@@ -17,14 +16,15 @@ module.exports = async (storeId) => {
         throw new Error("Error retrieving data")
     }
 
-    return await axios.post(`${API_URL}/favourites`, {
-            storeId
-        }, {
+    return await axios.get(`${API_URL}/comments`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
         .then(({ status, data }) => {
-            if (status === 201) return
-            throw new Error(data.error)
+            if (status === 200) {
+                return data.comments
+            } else {
+                throw new Error(data.error)
+            }
         })
         .catch(error => error)
 }

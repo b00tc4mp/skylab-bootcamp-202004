@@ -1,5 +1,6 @@
 const { API_URL } = require("../../config")
 const axios = require("axios")
+
 /**
  * @param  {float} latitude
  * @param  {float} longitude

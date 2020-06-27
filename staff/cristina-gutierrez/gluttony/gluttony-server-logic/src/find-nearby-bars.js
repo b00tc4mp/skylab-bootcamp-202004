@@ -1,5 +1,6 @@
 const { models: { Stores } } = require("gluttony-data")
 const axios = require("axios")
+
 /**
  * @param  {float} latitude
  * @param  {float} longitude

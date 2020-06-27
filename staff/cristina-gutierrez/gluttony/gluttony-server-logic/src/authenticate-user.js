@@ -2,6 +2,7 @@ require("gluttony-commons/polyfills/string")
 const { utils: { Email }, errors: { UnexistenceError, CredentialsError } } = require("gluttony-commons")
 const { models: { Users } } = require("gluttony-data")
 const bcrypt = require("bcryptjs")
+
 /**
  * @param  {string} email
  * @param  {string} password

@@ -35,11 +35,6 @@ const Favourites = (props) => {
 }
 
 const styles = StyleSheet.create({
-    store: {
-        backgroundColor: "#FFFFFF",
-        marginTop: 30,
-        padding: 10
-    },
     image: {
         flex: 1,
         resizeMode: "cover",
@@ -49,18 +44,24 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
+    box: {
+        flex: 1,
+        justifyContent: "flex-start",
+        marginTop: 40,
+        marginBottom: 100,
+        width: "75%"
+    },
+    store: {
+        backgroundColor: "#FFFFFF",
+        marginTop: 30,
+        padding: 10
+    },
     textStyle: {
         color: "black",
         backgroundColor: "#FFFC87",
         fontWeight: "800",
         textAlign: "center",
         fontSize: 30,
-    },
-    box: {
-        flex: 1,
-        justifyContent: "flex-start",
-        marginTop: 40,
-        marginBottom: 100
     }
 })
 
