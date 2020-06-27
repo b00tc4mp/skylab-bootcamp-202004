@@ -13,7 +13,7 @@ const Store = props => {
     const [comment, setComment] = useState("");
 
     return (
-        <View style={styles.store}>
+        <View>
             <Image source={{uri: props.store.thumbnail}} style = {{height: 50, width: 50, margin: 5 }} />
             <Text>{props.store.name}</Text>
             <Text>{props.store.type}</Text>

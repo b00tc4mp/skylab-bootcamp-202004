@@ -4,9 +4,10 @@ import {
     Text,
     ImageBackground,
     View,
-    Image
+    ScrollView
 } from "react-native";
 import { getFavourites } from "../gluttony-client-logic";
+import Store from "./Store"
 
 const Favourites = (props) => {
     const [favourites, setFavourites] = useState();
@@ -19,15 +20,15 @@ const Favourites = (props) => {
 
     return (
         <ImageBackground source={require("../assets/images/final-food-and-drink-pattern-vector-1.png")} style={styles.image}>
-            <View style={styles.boxOne}>
+            <View style={styles.box}>
                 <Text style={styles.textStyle}>Favourites</Text>
-                { favourites && favourites.map(favourite =>
-                    <View style={styles.store}>
-                        <Image source={{uri: favourite.thumbnail}} style = {{height: 50, width: 50, margin: 5 }} />
-                        <Text>{favourite.name}</Text>
-                        <Text>{favourite.type}</Text>
-                    </View>
-                )}
+                <ScrollView>
+                    { favourites && favourites.map(favourite => 
+                        <View style={styles.store} key={favourite.id}>
+                            <Store store={favourite} isFavourite={true} onShowModal={props.onShowModal} />
+                        </View>
+                    )}
+                </ScrollView>
             </View>
         </ImageBackground>
     )
@@ -36,7 +37,8 @@ const Favourites = (props) => {
 const styles = StyleSheet.create({
     store: {
         backgroundColor: "#FFFFFF",
-        marginTop: 30
+        marginTop: 30,
+        padding: 10
     },
     image: {
         flex: 1,
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "center"
     },
     textStyle: {
         color: "black",
@@ -54,10 +56,11 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontSize: 30,
     },
-    boxOne: {
+    box: {
         flex: 1,
         justifyContent: "flex-start",
-        marginTop: 60
+        marginTop: 40,
+        marginBottom: 100
     }
 })
 

@@ -3,7 +3,7 @@ require("gluttony-commons/polyfills/string")
 const axios = require("axios")
 const { AsyncStorage } = require("react-native")
 /**
- * @param  {string} storeId
+ * @param  {string[]} storeId
  * @returns Promise
  */
 module.exports = async (storeId) => {

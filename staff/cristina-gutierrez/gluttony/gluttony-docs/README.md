@@ -42,4 +42,4 @@ With Gluttony, you can easily search the nearest bar or restaurant - you just ha
 
 ### Code coverage
 
-![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-develop/staff/cristina-gutierrez/gluttony/gluttony-app/assets/images/logo-color-version-png.png)
+![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-feature/compo-styles/staff/cristina-gutierrez/gluttony/gluttony-docs/assets/images/code-coverage-1.png)
