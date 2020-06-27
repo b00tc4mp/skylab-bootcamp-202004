@@ -5,6 +5,15 @@ const { models: { Users } } = require("gluttony-data")
 const bcrypt = require("bcryptjs")
 const { v4: uuidv4 } = require("uuid")
 
+/**
+ * @param  {string} id
+ * @param  {string} name
+ * @param  {string} surname
+ * @param  {string} email
+ * @param  {string} password
+ * @returns void
+ * @throws DuplicityError
+ */
 module.exports = (id, name, surname, email, password) => {
     id = id || uuidv4()
     String.validate.notVoid(id)

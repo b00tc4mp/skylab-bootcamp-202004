@@ -10,7 +10,8 @@ import MapRestaurant from "./src/MapRestaurant";
 import ProfilePage from "./src/ProfilePage";
 import Favourites from "./src/Favourites";
 import Modal from "./src/Modal";
-import Menu from "./src/Menu"
+import Menu from "./src/Menu";
+import Comments from "./src/Comments";
 
 const App = () => {
   const [view, setView] = useState("home");
@@ -23,15 +24,24 @@ const App = () => {
         onGoToMapBar={ () => setView("mapBar") } 
         onGoToMapRestaurant={ () => setView("mapRestaurant") } 
       /> }
-      { view === "mapBar" && <MapBar/> }
-      { view === "mapRestaurant" && <MapRestaurant /> }
+      { view === "mapBar" && <MapBar
+        onShowModal={ () => setModalVisible(true) }
+      /> }
+      { view === "mapRestaurant" && <MapRestaurant 
+        onShowModal={ () => setModalVisible(true) }
+      /> }
       { view === "profilePage" && <ProfilePage 
         onShowModal={ () => setModalVisible(true) }
         onGoToHome={ () => setView("home") }
+        onGoToComments={ () => setView("comments") } 
+      /> }
+      { view === "comments" && <Comments 
+        onShowModal={ () => setModalVisible(true) }
       /> }
       { view === "favourites" && <Favourites
         onShowModal={ () => setModalVisible(true) }
-      /> } 
+      /> }
+ 
       <Modal 
         isVisible={ modalVisible } 
         onGoToHome={ () => setView("home") }
@@ -48,7 +58,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginTop: 20
   }
 });
 

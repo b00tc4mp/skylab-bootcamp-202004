@@ -3,6 +3,9 @@ require("gluttony-commons/polyfills/string")
 const axios = require("axios")
 const { AsyncStorage } = require("react-native")
 
+/**
+ * @returns Promise
+ */
 module.exports = async () => {
     let token
 
@@ -23,5 +26,5 @@ module.exports = async () => {
                 throw new Error(data.error)
             }
         })
-        .catch(console.log)
+        .catch(error => error)
 }

@@ -2,22 +2,34 @@ import React, { useState, useEffect } from "react";
 import {
     StyleSheet,
     Text,
-    ImageBackground
+    ImageBackground,
+    View,
+    ScrollView
 } from "react-native";
-import { retrieveUser } from "../gluttony-client-logic";
+import { getFavourites } from "../gluttony-client-logic";
+import Store from "./Store"
 
 const Favourites = (props) => {
-    const [user, setUser] = useState();
+    const [favourites, setFavourites] = useState();
 
     useEffect(() => {
-        retrieveUser()
-            .then(user => setUser(user))
+        getFavourites()
+            .then(favourites => setFavourites(favourites))
             .catch(() => props.onShowModal())
     }, [])
 
     return (
         <ImageBackground source={require("../assets/images/final-food-and-drink-pattern-vector-1.png")} style={styles.image}>
-            <Text style={styles.textStyle}>Favourites</Text>
+            <View style={styles.box}>
+                <Text style={styles.textStyle}>Favourites</Text>
+                <ScrollView>
+                    { favourites && favourites.map(favourite => 
+                        <View style={styles.store} key={favourite.id}>
+                            <Store store={favourite} isFavourite={true} onShowModal={props.onShowModal} />
+                        </View>
+                    )}
+                </ScrollView>
+            </View>
         </ImageBackground>
     )
 }
@@ -32,22 +44,24 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-    openButton: {
-        padding: 2,
-        height: 65,
-        width: 100,
-        borderRadius: 200,
-        backgroundColor: "#FFFC87",
-        alignItems: "center",
-        justifyContent: "center",
-        borderColor: "black",
-        borderWidth: 3
+    box: {
+        flex: 1,
+        justifyContent: "flex-start",
+        marginTop: 40,
+        marginBottom: 100,
+        width: "75%"
+    },
+    store: {
+        backgroundColor: "#FFFFFF",
+        marginTop: 30,
+        padding: 10
     },
     textStyle: {
         color: "black",
+        backgroundColor: "#FFFC87",
         fontWeight: "800",
         textAlign: "center",
-        fontSize: 30
+        fontSize: 30,
     }
 })
 

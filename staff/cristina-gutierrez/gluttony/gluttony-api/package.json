@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon .",
-    "test": "jest"
+    "start": "nodemon ."
   },
   "author": "crispine",
   "license": "ISC",

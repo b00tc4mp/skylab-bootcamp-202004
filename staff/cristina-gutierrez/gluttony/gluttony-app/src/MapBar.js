@@ -5,13 +5,14 @@ import {
     View,
     Dimensions
 } from "react-native";
-import { findNearbyBars } from "../gluttony-client-logic"
+import { findNearbyBars, getFavourites } from "../gluttony-client-logic"
 import Store from "./Store"
 
-const MapBar = () => {
+const MapBar = props => {
     const [userLatitude, setUserLatitude] = useState();
     const [userLongitude, setUserLongitude] = useState();
     const [bar, setBar] = useState();
+    const [isFavourite, setIsFavourite] = useState(false);
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(pos => {
@@ -19,7 +20,13 @@ const MapBar = () => {
             setUserLongitude(pos.coords.longitude)
 
             findNearbyBars(pos.coords.latitude, pos.coords.longitude)
-                .then(bar => setBar(bar))
+                .then(bar =>  {
+                    setBar(bar)
+                    
+                    getFavourites()
+                        .then(favourites => setIsFavourite(!!favourites.find(favourite => favourite.id === bar.id)))
+                        .catch(console.log)
+                })
         })
     }, [])
 
@@ -52,7 +59,7 @@ const MapBar = () => {
                     }}  
                 >  
                     <Callout>
-                        <Store store={bar}/>
+                        <Store store={bar} isFavourite={isFavourite} onShowModal={props.onShowModal} />
                     </Callout>
                 </Marker> }
             </MapView>
@@ -70,7 +77,8 @@ const styles = StyleSheet.create({
     mapStyle: {
         width: Dimensions.get("window").width,
         height: Dimensions.get("window").height,
-    },
+        marginBottom: 60
+    }
 });
 
 export default MapBar

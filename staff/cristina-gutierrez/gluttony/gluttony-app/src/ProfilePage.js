@@ -3,13 +3,12 @@ import {
     StyleSheet,
     Text,
     TouchableOpacity,
-    ImageBackground
+    ImageBackground,
+    View
 } from "react-native";
-import Comments from "./Comments";
 import { retrieveUser, logout } from "../gluttony-client-logic";
 
 const ProfilePage = (props) => {
-    const [showComments, setShowComments] = useState(false);
     const [user, setUser] = useState();
 
     useEffect(() => {
@@ -20,16 +19,19 @@ const ProfilePage = (props) => {
 
     return (
         <ImageBackground source={require("../assets/images/final-food-and-drink-pattern-vector-1.png")} style={styles.image}>
-            { user && <Text style={styles.textStyle}>Welcome {user.name} {user.surname}</Text> }
-            <TouchableOpacity style={styles.openButton} onPress={ () => setShowComments(!showComments) }>
-                <Text style={styles.textStyle}>Comments</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.openButton} onPress={() => {
-                logout().then(() => props.onGoToHome())
-            }}>
-                <Text style={styles.textStyle}>Logout</Text>
-            </TouchableOpacity>
-            { showComments === "comments" && <Comments /> }
+            <View style={styles.boxOne}>
+                { user && <Text style={{ ...styles.textStyle, backgroundColor: "#FFFC87" }}>Welcome {user.name} {user.surname}</Text> }
+            </View>
+            <View style={styles.boxTwo}>
+                <TouchableOpacity style={styles.openButton} onPress={ () => props.onGoToComments() }>
+                    <Text style={{ ...styles.textStyle, fontSize: 24 }}>Comments</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.openButton} onPress={() => {
+                    logout().then(() => props.onGoToHome())
+                }}>
+                    <Text style={{ ...styles.textStyle, fontSize: 24 }}>Logout</Text>
+                </TouchableOpacity>
+            </View>
         </ImageBackground>
     )
 }
@@ -47,19 +49,29 @@ const styles = StyleSheet.create({
     openButton: {
         padding: 2,
         height: 65,
-        width: 100,
+        width: 150,
         borderRadius: 200,
         backgroundColor: "#FFFC87",
         alignItems: "center",
         justifyContent: "center",
         borderColor: "black",
-        borderWidth: 3
+        borderWidth: 3,
+        marginBottom: 18
     },
     textStyle: {
         color: "black",
         fontWeight: "800",
         textAlign: "center",
         fontSize: 30
+    },
+    boxOne: {
+        flex: 0.4,
+        justifyContent: "flex-start",
+        marginTop: 60
+    },
+    boxTwo: {
+        flex: 1,
+        justifyContent: "flex-start"
     }
 })
 

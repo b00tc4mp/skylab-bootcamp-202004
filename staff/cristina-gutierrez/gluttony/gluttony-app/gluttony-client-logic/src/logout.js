@@ -1,5 +1,8 @@
 const { AsyncStorage } = require("react-native")
 
+/**
+ * @returns Promise
+ */
 module.exports = async () => {
     try {
         await AsyncStorage.removeItem("token");

@@ -3,6 +3,11 @@ const { utils: { Email }, errors: { UnexistenceError, CredentialsError } } = req
 const { models: { Users } } = require("gluttony-data")
 const bcrypt = require("bcryptjs")
 
+/**
+ * @param  {string} email
+ * @param  {string} password
+ * @returns Promise
+ */
 module.exports = (email, password) => {
     Email.validate(email)
     String.validate.notVoid(password)

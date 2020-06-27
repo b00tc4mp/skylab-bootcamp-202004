@@ -5,13 +5,14 @@ import {
     View,
     Dimensions
 } from "react-native";
-import { findNearbyRestaurants } from "../gluttony-client-logic"
+import { findNearbyRestaurants, getFavourites } from "../gluttony-client-logic"
 import Store from "./Store"
 
-const MapRestaurant = () => {
+const MapRestaurant = props => {
     const [userLatitude, setUserLatitude] = useState();
     const [userLongitude, setUserLongitude] = useState();
     const [restaurant, setRestaurant] = useState();
+    const [isFavourite, setIsFavourite] = useState(false);
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(pos => {
@@ -19,7 +20,13 @@ const MapRestaurant = () => {
             setUserLongitude(pos.coords.longitude)
 
             findNearbyRestaurants(pos.coords.latitude, pos.coords.longitude)
-                .then(restaurant => setRestaurant(restaurant))
+                .then(restaurant =>  {
+                    setRestaurant(restaurant)
+                    
+                    getFavourites()
+                        .then(favourites => setIsFavourite(!!favourites.find(favourite => favourite.id === restaurant.id)))
+                        .catch(console.log)
+                })
         })
     }, [])
 
@@ -52,7 +59,7 @@ const MapRestaurant = () => {
                     }}
                 >
                     <Callout>
-                        <Store store={restaurant}/>
+                        <Store store={restaurant} isFavourite={isFavourite} onShowModal={props.onShowModal} />
                     </Callout>
                 </Marker>}
             </MapView>
@@ -70,7 +77,8 @@ const styles = StyleSheet.create({
     mapStyle: {
         width: Dimensions.get("window").width,
         height: Dimensions.get("window").height,
-    },
+        marginBottom: 60
+    }
 });
 
 export default MapRestaurant

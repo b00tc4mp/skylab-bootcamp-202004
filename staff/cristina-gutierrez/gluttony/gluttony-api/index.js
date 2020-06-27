@@ -16,9 +16,14 @@ const {
   registerUser,
   retrieveUser,
   findNearbyBars,
-  findNearbyRestaurants
+  findNearbyRestaurants,
+  addFavourite,
+  getFavourites,
+  postComment,
+  getUserComments
 } = require("gluttony-server-logic")
 const { mongoose } = require("gluttony-data")
+const removeFavourite = require("gluttony-server-logic/src/remove-favourite")
 
 mongoose.connect(MONGODB_URL)
   .then(() => {
@@ -69,7 +74,7 @@ mongoose.connect(MONGODB_URL)
       } catch (error) {
         handleError(error, res)
       }
-    })
+    });
 
     router.get("/restaurants", (req, res) => {
       try {
@@ -81,7 +86,67 @@ mongoose.connect(MONGODB_URL)
       } catch (error) {
         handleError(error, res)
       }
-    })
+    });
+
+    router.post("/favourites", verifyExtractJwt, (req, res) => {
+      const { payload: { sub: userId }, body: { storeId } } = req
+      
+      try {
+        addFavourite(storeId, userId)
+          .then(() => res.status(201).send())
+          .catch(error => handleError(error, res))
+      } catch (error) {
+        handleError(error, res)
+      }  
+    });
+
+    router.get("/favourites", verifyExtractJwt, (req, res) => {
+      const { payload: { sub: userId } } = req
+
+      try {   
+        getFavourites(userId)
+          .then(favouriteStores => res.send({ favouriteStores }))
+          .catch(error => handleError(error, res))
+      } catch (error) {
+        handleError(error, res)
+      }
+    });
+
+    router.delete("/favourites", verifyExtractJwt, (req, res) => {
+      const { payload: { sub: userId }, body: { storeId } } = req
+
+      try {   
+        removeFavourite(storeId, userId)
+          .then(() => res.status(204).send())
+          .catch(error => handleError(error, res))
+      } catch (error) {
+        handleError(error, res)
+      }
+    });
+
+    router.post("/comments", verifyExtractJwt, (req, res) => {
+      const { payload: { sub: userId }, body: { id, text, creationDate, storeId } } = req
+      
+      try {
+        postComment(id, text, creationDate, userId, storeId)
+          .then(() => res.status(201).send())
+          .catch(error => handleError(error, res))
+      } catch (error) {
+        handleError(error, res)
+      }  
+    });
+
+    router.get("/comments", verifyExtractJwt, (req, res) => {
+      const { payload: { sub: userId } } = req
+
+      try {   
+        getUserComments(userId)
+          .then(comments => res.send({ comments }))
+          .catch(error => handleError(error, res))
+      } catch (error) {
+        handleError(error, res)
+      }
+    });
     
     app.use("/api", router)
     
