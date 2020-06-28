@@ -7,11 +7,11 @@ import {
 import Home from "./src/Home"
 import MapBar from "./src/MapBar";
 import MapRestaurant from "./src/MapRestaurant";
-import ProfilePage from "./src/ProfilePage";
 import Favourites from "./src/Favourites";
+import ProfilePage from "./src/ProfilePage";
+import Comments from "./src/Comments";
 import Modal from "./src/Modal";
 import Menu from "./src/Menu";
-import Comments from "./src/Comments";
 import logic from "./gluttony-client-logic"
 
 logic.__context__.httpClient = require("axios")
@@ -34,6 +34,9 @@ const App = () => {
       { view === "mapRestaurant" && <MapRestaurant 
         onShowModal={ () => setModalVisible(true) }
       /> }
+      { view === "favourites" && <Favourites
+        onShowModal={ () => setModalVisible(true) }
+      /> }
       { view === "profilePage" && <ProfilePage 
         onShowModal={ () => setModalVisible(true) }
         onGoToHome={ () => setView("home") }
@@ -42,14 +45,12 @@ const App = () => {
       { view === "comments" && <Comments 
         onShowModal={ () => setModalVisible(true) }
       /> }
-      { view === "favourites" && <Favourites
-        onShowModal={ () => setModalVisible(true) }
-      /> }
  
       <Modal 
         isVisible={ modalVisible } 
         onGoToHome={ () => setView("home") }
-        onHideModal={ () => setModalVisible(false) } />
+        onHideModal={ () => setModalVisible(false) }
+      />
       <Menu onGoTo={ setView } />
     </View>
   )

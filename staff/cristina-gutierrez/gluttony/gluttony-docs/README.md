@@ -21,12 +21,12 @@ With Gluttony, you can easily search the nearest bar or restaurant - you just ha
 
 ### Use cases
 
-![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-feature/compo-styles/staff/cristina-gutierrez/gluttony/gluttony-docs/assets/images/use-cases-diagram.png)
+![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-develop/staff/cristina-gutierrez/gluttony/gluttony-docs/assets/images/use-cases-diagram.png)
 
 
 ### Flow
 
-![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-feature/compo-styles/staff/cristina-gutierrez/gluttony/gluttony-docs/assets/images/flowchart-diagram.png)
+![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-develop/staff/cristina-gutierrez/gluttony/gluttony-docs/assets/images/flowchart-diagram.png)
 
 
 ## Technical description
@@ -34,12 +34,18 @@ With Gluttony, you can easily search the nearest bar or restaurant - you just ha
 
 ### Blocks
 
-![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-feature/compo-styles/staff/cristina-gutierrez/gluttony/gluttony-docs/assets/images/blocks-diagram.png)
+![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-develop/staff/cristina-gutierrez/gluttony/gluttony-docs/assets/images/blocks-diagram.png)
 
 ### Data model
 
-![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-feature/compo-styles/staff/cristina-gutierrez/gluttony/gluttony-docs/assets/images/data-model-diagram.png)
+![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-develop/staff/cristina-gutierrez/gluttony/gluttony-docs/assets/images/data-model-diagram.png)
 
 ### Code coverage
 
-![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-feature/compo-styles/staff/cristina-gutierrez/gluttony/gluttony-docs/assets/images/code-coverage-1.png)
+#### Server logic
+
+![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-develop/staff/cristina-gutierrez/gluttony/gluttony-docs/assets/images/server-logic-tests.png)
+
+#### Client logic
+
+![alt text](https://github.com/crispine/skylab-bootcamp-202004/blob/gluttony-develop/staff/cristina-gutierrez/gluttony/gluttony-docs/assets/images/client-logic-tests.png)
