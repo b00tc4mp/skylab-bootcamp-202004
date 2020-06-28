@@ -1,6 +1,8 @@
-const registerUser = require("../src/register-user")
 const { random } = Math
-require("gluttony-commons/polyfills/json")
+const { __context__, registerUser } = require("../src/")
+
+__context__.httpClient = require("./mocks/fake-client")
+__context__.storage = require("./mocks/fake-storage")
 
 describe("logic - register user", () => {
     let name, surname, email, password
@@ -18,9 +20,7 @@ describe("logic - register user", () => {
     })
 
     describe("when user already exists", () => {
-        it("should fail on trying to register an existing user", async () => {
-            await registerUser(name, surname, email, password)
-            
+        it("should fail on trying to register an existing user", () => {
             registerUser(name, surname, email, password)
                 .catch(error => expect(error).toBeDefined())
         })

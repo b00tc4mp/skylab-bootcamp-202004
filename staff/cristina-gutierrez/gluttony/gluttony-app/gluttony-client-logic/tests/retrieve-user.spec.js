@@ -1,27 +1,18 @@
-const retrieveUser = require('../src/retrieve-user')
 const { random } = Math
-require("gluttony-commons/polyfills/json")
+const { __context__, retrieveUser } = require("../src/")
+
+__context__.httpClient = require("./mocks/fake-client")
+__context__.storage = require("./mocks/fake-storage")
 
 describe("logic - retrieve user", () => {
-    let name, surname, email, password
-
-    beforeEach(async () => {
-        name = `name-${random()}`
-        surname = `surname-${random()}`
-        email = `e-${random()}@mail.com`
-        password = `password-${random()}`
-
-        await registerUser(name, surname, email, password)
-        await authenticateUser(email, password)
-    })
-
-    it("when user already exists should succeed on correct user id", async () => {
-        const user = await retrieveUser()
-
-        expect(user.id).toBeDefined()
-        expect(user.name).toBe(name)
-        expect(user.surname).toBe(surname)
-        expect(user.email).toBe(email)
-        expect(user.password).toBeUndefined()
+    it("when user already exists should succeed on correct user id", () => {
+        retrieveUser()
+            .then(user => {
+                expect(user.id).toBeDefined()
+                expect(user.name).toBe(name)
+                expect(user.surname).toBe(surname)
+                expect(user.email).toBe(email)
+                expect(user.password).toBeUndefined()
+            })
     })
 })

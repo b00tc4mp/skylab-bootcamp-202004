@@ -1,17 +1,15 @@
-const authenticateUser = require("../src/authenticate-user")
 const { random } = Math
-require("gluttony-commons/polyfills/json")
+const { __context__, authenticateUser } = require("../src/")
+
+__context__.httpClient = require("./mocks/fake-client")
+__context__.storage = require("./mocks/fake-storage")
 
 describe("logic - authenticate user", () => {
-    let name, surname, email, password
+    let email, password
 
     beforeEach(async () => {
-        name = `name-${random()}`
-        surname = `surname-${random()}`
         email = `e-${random()}@mail.com`
         password = `password-${random()}`
-
-        await registerUser(name, surname, email, password)
     })
 
     describe("when user already exists", () => {

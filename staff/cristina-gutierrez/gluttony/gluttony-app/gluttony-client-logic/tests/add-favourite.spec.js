@@ -1,19 +1,14 @@
-const addFavourite = require("../src/add-favourite")
 const { random } = Math
-require("gluttony-commons/polyfills/json")
+const { __context__, addFavourite } = require("../src/")
+
+__context__.httpClient = require("./mocks/fake-client")
+__context__.storage = require("./mocks/fake-storage")
 
 describe("logic - add favourite", () => {
-    let name, surname, email, password, storeId
+    let storeId
 
-    beforeEach(async () => {
-        name = `name-${random()}`
-        surname = `surname-${random()}`
-        email = `e-${random()}@mail.com`
-        password = `password-${random()}`
+    beforeEach(() => {
         storeId = `id-${random()}`
-
-        await registerUser(name, surname, email, password)
-        await authenticateUser(email, password)
     })
 
     it("should succeed on valid data", () => {
@@ -22,12 +17,9 @@ describe("logic - add favourite", () => {
     })
 
     describe("when favourite already exists", () => {
-        it("should fail on trying to add favourite", async done => {
-            await addFavourite(storeId)
-            
+        it("should fail on trying to add favourite", () => {
             addFavourite(storeId)
                 .then(error => expect(error).toBeDefined())
-                .then(done)
         })
     })
 })
