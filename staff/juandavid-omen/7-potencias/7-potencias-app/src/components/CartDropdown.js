@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './CartDropdown.sass'
 
-export default function ({ cart, toggleHidden }) {
+export default function ({ cart, toggleHidden, reference }) {
   const handleGoToCheckOut = event => {
     event.preventDefault()
 
     toggleHidden()
   }
   return (
-    <section className='cart-dropdown'>
+    <section className='cart-dropdown' ref={reference}>
       <div className='cart-items'>
         {cart && cart.length ? (cart.map(item => (<>
           <p>{item.name}</p>

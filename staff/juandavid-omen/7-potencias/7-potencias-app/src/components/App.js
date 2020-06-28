@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { Login, Register, Home, Landing, NavBar, Products, ShoppingCart, Feedback, Footer, CartDropdown } from '../components'
+import { Login, Register, Home, NavBar, Products, Footer, CartDropdown } from '../components'
 import { isUserSessionValid, logoutUser, isUserLoggedIn, updateCart } from '7-potencias-client-logic'
 import { Route, withRouter, Redirect } from 'react-router-dom'
+import { useOutsideClick } from '../hooks/outsideClick'
 import './App.sass'
 
 export default withRouter(function ({ history }) {
   const [view, setView] = useState()
   const [cart, setCart] = useState([])
   const [error, setError] = useState()
-  const [cartDropdownHidden, setCartDropdownHidden] = useState()
+
+  const { hidden: cartDropdownHidden, setHidden: setCartDropdownHidden, ref } = useOutsideClick(true)
 
   useEffect(() => {
-    setCartDropdownHidden(false)
+    setCartDropdownHidden(true)
 
     if (sessionStorage.token) {
       try {
@@ -43,25 +45,26 @@ export default withRouter(function ({ history }) {
   }
 
   const toggleHiddenDropdown = () => {
-    setCartDropdownHidden(!cartDropdownHidden)
+    setCartDropdownHidden(prevState => !prevState)
   }
 
   const addToCart = (id, name, price) => {
+    const newCart = cart.slice()
     let quantity = 1
 
-    const index = cart.findIndex(item => item.productId === id)
+    const index = newCart.findIndex(item => item.productId === id)
 
     if (index === -1) {
-      cart.push({ productId: id, quantity: quantity, name: name, price: price })
+      newCart.push({ productId: id, quantity: quantity, name: name, price: price })
     } else {
-      quantity = ++cart[index].quantity
+      quantity = ++newCart[index].quantity
     }
 
     try {
       updateCart(sessionStorage.token, id, quantity)
         .then(() => {
           setError(undefined)
-          setCart(cart)
+          setCart(newCart)
         })
         .catch(({ message }) => {
           setError(message)
@@ -73,14 +76,14 @@ export default withRouter(function ({ history }) {
 
   return (
     <div className='app'>
-      <NavBar onLogout={handleLogout} token={sessionStorage.token} toggleHiddenDropdown={toggleHiddenDropdown} />
+      <NavBar onLogout={handleLogout} token={sessionStorage.token} toggleHiddenDropdown={toggleHiddenDropdown} cartToggleRef={ref} />
       <main>
-        {cartDropdownHidden ? null : (<CartDropdown cart={cart} toggleHidden={toggleHiddenDropdown} />)}
-        <Route exact path='/' render={() => isUserLoggedIn() ? <Redirect to='/home' /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />} />
+        {cartDropdownHidden ? null : (<CartDropdown reference={ref} cart={cart} toggleHidden={toggleHiddenDropdown} />)}
+        <Route exact path='/' render={() => <Redirect to='landing' />} />
         <Route path='/register' render={() => isUserLoggedIn() ? <Redirect to='/home' /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />} />
         <Route path='/login' render={() => isUserLoggedIn() ? <Redirect to='/home' /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />} />
         <Route path='/home' render={() => isUserLoggedIn() ? <Home onLogout={handleLogout} /> : <Redirect to='/' />} />
-        <Route path='landing' render={() => <Landing />} />
+
         <Route path='/lessons' render={() => <Products token={sessionStorage.token} addToCart={addToCart} />} />
       </main>
 

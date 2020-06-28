@@ -3,7 +3,7 @@ import './Products.sass'
 import Card from './Card'
 import { searchLessons } from '7-potencias-client-logic'
 
-export default function ({ token, addToCart }) {
+export default function ({ addToCart }) {
   const [error, setError] = useState()
   const [products, setProducts] = useState([])
 
