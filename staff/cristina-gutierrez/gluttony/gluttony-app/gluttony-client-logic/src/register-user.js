@@ -1,7 +1,7 @@
 const { API_URL } = require("../../config")
 require("gluttony-commons/polyfills/string")
 const { utils: { Email } } = require("gluttony-commons")
-const axios = require("axios")
+const context = require("./context")
 
 /**
  * @param  {string} name
@@ -10,13 +10,13 @@ const axios = require("axios")
  * @param  {string} password
  * @returns Promise
  */
-module.exports = async (name, surname, email, password) => {
+module.exports = async function(name, surname, email, password) {
     String.validate(name)
     String.validate(surname)
     Email.validate(email)
     String.validate.lengthGreaterEqualThan(password, 8)
 
-    return await axios.post(`${API_URL}/users`, {
+    return await this.httpClient.post(`${API_URL}/users`, {
             name,
             surname,
             email,
@@ -27,4 +27,4 @@ module.exports = async (name, surname, email, password) => {
             throw new Error(data.error)
         })
         .catch(error => error)
-}
+}.bind(context)

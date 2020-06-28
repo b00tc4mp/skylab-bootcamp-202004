@@ -1,12 +1,12 @@
-const { AsyncStorage } = require("react-native")
+const context = require("./context")
 
 /**
  * @returns Promise
  */
-module.exports = async () => {
+module.exports = async function() {
     try {
-        await AsyncStorage.removeItem("token");
+        await this.storage.removeItem("token");
     } catch (error) {
         throw new Error("Error removing token")
     }
-}
+}.bind(context)

@@ -10,7 +10,12 @@ module.exports = (userId) => {
     return Comments.find({ user: userId }, "text creationDate user store")
         .populate({ path: "store", options: { lean: true } }).lean()
         .then(comments => comments.map(comment => {
+            comment.id = comment._id
             comment.store.id = comment.store._id
+
+            delete comment._id
+            delete comment.store.id
+
             return comment
         }))
 }
