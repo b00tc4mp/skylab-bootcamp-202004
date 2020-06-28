@@ -1,33 +1,49 @@
-const addFavourite = require("../src/add-favourite")
 const { random } = Math
-require("gluttony-commons/polyfills/json")
+const { __context__, addFavourite } = require("../src/")
+
+__context__.httpClient = require("./mocks/fake-client")
+__context__.storage = require("./mocks/fake-storage")
 
 describe("logic - add favourite", () => {
-    let name, surname, email, password, storeId
+    let storeId
 
-    beforeEach(async () => {
-        name = `name-${random()}`
-        surname = `surname-${random()}`
-        email = `e-${random()}@mail.com`
-        password = `password-${random()}`
+    beforeEach(() => {
         storeId = `id-${random()}`
-
-        await registerUser(name, surname, email, password)
-        await authenticateUser(email, password)
     })
 
-    it("should succeed on valid data", () => {
+    it("should fail on trying to add favourite without token", () => {
         addFavourite(storeId)
-            .then(result => expect(result).toBeUndefined())
+            .then(() => { throw new Error("should not reach this point") })
+            .catch(error => {
+                expect(error).toBeDefined()
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe("Error retrieving data")
+            })
     })
 
-    describe("when favourite already exists", () => {
-        it("should fail on trying to add favourite", async done => {
-            await addFavourite(storeId)
-            
-            addFavourite(storeId)
-                .then(error => expect(error).toBeDefined())
-                .then(done)
-        })
+    it("should succeed on valid data", async done => {
+        __context__.storage.setItem("token", storeId)
+
+        await addFavourite(storeId)
+            .then(result => expect(result).toBeUndefined())
+        
+        done()
+    })
+
+    it("should fail", async done => {
+        const ERROR = "error"
+
+        __context__.httpClient.fail(ERROR)
+        __context__.storage.setItem("token", storeId)
+
+        await addFavourite(storeId)
+            .then(() => { throw new Error("should not reach this point") })
+            .catch(error => {
+                expect(error).toBeDefined()
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe(ERROR)
+            })
+        
+        done()
     })
 })

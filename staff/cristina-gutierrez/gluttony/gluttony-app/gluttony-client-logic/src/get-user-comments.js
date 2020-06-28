@@ -1,22 +1,21 @@
 const { API_URL } = require("../../config")
 require("gluttony-commons/polyfills/string")
-const axios = require("axios")
-const { AsyncStorage } = require("react-native")
+const context = require("./context")
 
 /**
  * @returns Promise
  */
-module.exports = async () => {
+module.exports = async function() {
     let token
 
     try {
-        token = await AsyncStorage.getItem("token");
+        token = await this.storage.getItem("token");
         String.validate.notVoid(token);
     } catch (error) {
         throw new Error("Error retrieving data")
     }
 
-    return await axios.get(`${API_URL}/comments`, {
+    return await this.httpClient.get(`${API_URL}/comments`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
         .then(({ status, data }) => {
@@ -26,5 +25,4 @@ module.exports = async () => {
                 throw new Error(data.error)
             }
         })
-        .catch(error => error)
-}
+}.bind(context)

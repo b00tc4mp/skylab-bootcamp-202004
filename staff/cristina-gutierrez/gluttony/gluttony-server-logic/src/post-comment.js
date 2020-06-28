@@ -15,5 +15,7 @@ module.exports = (id, text, creationDate, user, store) => {
     String.validate.notVoid(user)
     String.validate.notVoid(store)
 
-    return Comments.create({ id, text, creationDate, user, store })
+    return (async () => {
+        await Comments.create({ id, text, creationDate, user, store })
+    })()
 }

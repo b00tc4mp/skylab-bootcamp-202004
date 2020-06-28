@@ -1,33 +1,45 @@
-const { random } = Math
-require("gluttony-commons/polyfills/json")
-const addFavourite = require('../src/add-favourite')
-const getFavourites = require('../src/get-favourites')
+const { __context__, getFavourites } = require("../src/")
+
+__context__.httpClient = require("./mocks/fake-client")
+__context__.storage = require("./mocks/fake-storage")
 
 describe("logic - get favourite", () => {
-    let name, surname, email, password, storeId
-
-    beforeEach(async () => {
-        name = `name-${random()}`
-        surname = `surname-${random()}`
-        email = `e-${random()}@mail.com`
-        password = `password-${random()}`
-        storeId = `id-${random()}`
-
-        await registerUser(name, surname, email, password)
-        await authenticateUser(email, password)
+    it("should fail on trying to add favourite without token", () => {
+        getFavourites()
+            .then(() => { throw new Error("should not reach this point") })
+            .catch(error => {
+                expect(error).toBeDefined()
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe("Error retrieving data")
+            })
     })
 
-    it("should return an empty array when user has no favourites", async () => {
-        const favourites = await getFavourites(userId)
+    it("should succeed on valid data", async done => {
+        const FAVOURITES = 'favourite'
 
-        expect(favourites).toHaveLength(0)
+        __context__.httpClient.succeed({ favouriteStores: FAVOURITES })
+        __context__.storage.setItem("token", "token")
+
+        await getFavourites()
+            .then(favourites => expect(favourites).toBe(FAVOURITES))
+        
+        done()
     })
 
-    it("should succeed when user has favourites", async () => {
-        await addFavourite(storeId)
+    it("should fail", async done => {
+        const ERROR = "error"
 
-        const favourites = await getFavourites()
+        __context__.httpClient.fail(ERROR)
+        __context__.storage.setItem("token", "token")
 
-        expect(favourites).toHaveLength(1)
+        await getFavourites()
+            .then(() => { throw new Error("should not reach this point") })
+            .catch(error => {
+                expect(error).toBeDefined()
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe(ERROR)
+            })
+        
+        done()
     })
 })

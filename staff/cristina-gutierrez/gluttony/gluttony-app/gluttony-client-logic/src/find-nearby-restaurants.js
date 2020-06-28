@@ -1,13 +1,13 @@
 const { API_URL } = require("../../config")
-const axios = require("axios")
+const context = require("./context")
 
 /**
  * @param  {float} latitude
  * @param  {float} longitude
  * @returns Promise
  */
-module.exports = (latitude, longitude) => {
-    return axios.get(`${API_URL}/restaurants`, {
+module.exports = function(latitude, longitude) {
+    return this.httpClient.get(`${API_URL}/restaurants`, {
             params: {
                 latitude,
                 longitude
@@ -20,5 +20,5 @@ module.exports = (latitude, longitude) => {
                 throw new Error(data.error)
             }
         })
-        .catch(console.log)
-}
+        .catch(console.error)
+}.bind(context)

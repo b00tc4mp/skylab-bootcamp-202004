@@ -12,6 +12,10 @@ import Favourites from "./src/Favourites";
 import Modal from "./src/Modal";
 import Menu from "./src/Menu";
 import Comments from "./src/Comments";
+import logic from "./gluttony-client-logic"
+
+logic.__context__.httpClient = require("axios")
+logic.__context__.storage = require("react-native").AsyncStorage
 
 const App = () => {
   const [view, setView] = useState("home");
