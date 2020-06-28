@@ -31,8 +31,7 @@ const Comments = () => {
                             <Text>{comment.creationDate}</Text>
                             <Text>{comment.text}</Text>
                         </View>
-                    }
-                    )}
+                    })}
                 </ScrollView>
             </View>
         </ImageBackground>

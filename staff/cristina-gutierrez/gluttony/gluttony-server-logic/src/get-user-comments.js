@@ -14,7 +14,7 @@ module.exports = (userId) => {
             comment.store.id = comment.store._id
 
             delete comment._id
-            delete comment.store.id
+            delete comment.store._id
 
             return comment
         }))
