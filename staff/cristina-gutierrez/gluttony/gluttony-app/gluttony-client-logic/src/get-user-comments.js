@@ -25,5 +25,4 @@ module.exports = async function() {
                 throw new Error(data.error)
             }
         })
-        .catch(error => error)
 }.bind(context)

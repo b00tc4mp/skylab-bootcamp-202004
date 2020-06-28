@@ -29,5 +29,4 @@ module.exports = async function(text, storeId) {
             if (status === 201) return
             throw new Error(data.error)
         })
-        .catch(error => error)
 }.bind(context)

@@ -7,34 +7,65 @@ __context__.storage = require("./mocks/fake-storage")
 describe("logic - authenticate user", () => {
     let email, password
 
-    beforeEach(async () => {
+    beforeEach(() => {
         email = `e-${random()}@mail.com`
         password = `password-${random()}`
     })
 
-    describe("when user already exists", () => {
-        it("should succeed on correct credentials", () => {
-            authenticateUser(email, password)
-                .then(token => expect(token).toBeDefined())
-        })
+    it("should succeed on correct credentials", async done => {
+        const TOKEN = "token"
 
-        it("should fail on wrong password", () => {
-            password += "wrong"
+        __context__.httpClient.succeed({ token: TOKEN })
 
-            authenticateUser(email, password)
-                .then(() => { throw new Error("should not reach this point") })
-                .catch(error => expect(error).toBeDefined())
-        })
+        await authenticateUser(email, password)
+            .then(token => {
+                expect(token).toBe(TOKEN)
+
+                const persistedToken = __context__.storage.getItem("token")
+
+                expect(persistedToken).toBe(TOKEN)
+            })
+
+        done()
     })
 
-    it("should fail when user does not exist", () => {
-        email = "e-wrong@mail.com"
+    it("should fail", async done => {
+        const ERROR = "error"
 
-        authenticateUser(email, password)
+        __context__.httpClient.fail(ERROR)
+        
+        await authenticateUser(email, password)
             .then(() => { throw new Error("should not reach this point") })
             .catch(error => {
+                expect(error).toBeDefined()
                 expect(error).toBeInstanceOf(Error)
-                expect(error.message).toBe(`user with e-mail ${email} does not exist`)
+                expect(error.message).toBe(ERROR)
             })
+        
+        done()
+    })
+
+    describe("should fail on validation", () => {
+        it("when is not a valid email", () => {
+            const EMAIL = "email"
+
+            authenticateUser(EMAIL, password)
+                .then(() => { throw new Error("should not reach this point") })
+                .catch(error => {
+                    expect(error).toBeDefined()
+                    expect(error).toBeInstanceOf(Error)
+                    expect(error.message).toBe(`${EMAIL} is not an e-mail`)
+                })
+        })
+
+        it("when is not a valid password", () => {
+            authenticateUser(email, "")
+                .then(() => { throw new Error("should not reach this point") })
+                .catch(error => {
+                    expect(error).toBeDefined()
+                    expect(error).toBeInstanceOf(Error)
+                    expect(error.message).toBe(`string is empty or blank`)
+                })
+        })
     })
 })

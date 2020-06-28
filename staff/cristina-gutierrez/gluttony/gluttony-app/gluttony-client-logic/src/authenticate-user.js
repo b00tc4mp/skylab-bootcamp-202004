@@ -20,19 +20,14 @@ module.exports = async function(email, password) {
         })
         .then(async ({ status, data }) => {
             if (status === 200) {
-                try {
-                    await this.storage.setItem(
-                        "token",
-                        data.token
-                    );
+                await this.storage.setItem(
+                    "token",
+                    data.token
+                );
 
-                    return data.token
-                } catch (error) {
-                    throw new Error("Error saving data")
-                }
+                return data.token
             } else {
                 throw new Error(data.error)
             }
         })
-        .catch(error => error)
 }.bind(context)

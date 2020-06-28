@@ -1,5 +1,32 @@
 module.exports = {
-    post: async () => ({ status: 201, data }),
-    get: async () => ({ status, data }),
-    delete: async () => ({ status: 204, data })
+    succeed(data, status = 200) {
+        this._status = status
+        this._data = data
+    },
+
+    fail(error, status = 500) {
+        this._status = status
+        this._data = { error }
+    },
+
+    async post() {
+        return { 
+            status: this._status || 201, 
+            data: this._data 
+        }
+    },
+
+    async get() {
+        return { 
+            status: this._status || 200, 
+            data: this._data 
+        }
+    },
+
+    async delete() {
+        return { 
+            status: this._status || 204, 
+            data: this._data 
+        }
+    }
 }

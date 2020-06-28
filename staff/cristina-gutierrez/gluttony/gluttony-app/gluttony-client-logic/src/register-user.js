@@ -26,5 +26,4 @@ module.exports = async function(name, surname, email, password) {
             if (status === 201) return
             throw new Error(data.error)
         })
-        .catch(error => error)
 }.bind(context)
