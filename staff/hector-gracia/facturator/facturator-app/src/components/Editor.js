@@ -125,7 +125,7 @@ export default function ({client,product,backToFinder,type, onError}) {
                 { client && <button className="search-button" onClick={backToFinder}>
                     Descartar
                 </button>}
-                { client && <button className="search-button">
+                { false && client && <button className="search-button">
                     Gestionar descuentos
                 </button>}
                 { !client && <button className="search-button" onClick={backToFinder}>
