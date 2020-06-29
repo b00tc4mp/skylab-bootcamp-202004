@@ -16,24 +16,24 @@ import Navbar from './Navbar';
 function App ({history}) {
     const [ view, serView ] = useState()
     const [error, setError] = useState()
-    const [enabled, setEnabled] = useState(false)
+
 
     useEffect(() =>{
-        // if(sessionStorage.token)
+        if(sessionStorage.token)
 
-        //     try {
-        //         isUserAuthenticated(sessionStorage.token)
-        //         .then(isAuthenticated => {
-        //             if(isAuthenticated) {
-        //                 setEnabled(true)
-        //                 history.push('/home')
-        //             }
-        //         })
-        //         .catch(error => {throw Error})
-        //     } catch (error) {
-        //         if(error) throw error
-        //     }
-        // else history.push('/')
+            try {
+                isUserAuthenticated(sessionStorage.token)
+                .then(isAuthenticated => {
+                    if(!isAuthenticated) {
+                       
+                        history.push('/')
+                    }
+                })
+                .catch(error => {throw Error})
+            } catch (error) {
+                if(error) throw error
+            }
+        else history.push('/')
 
     }, [])
  
@@ -62,7 +62,7 @@ function App ({history}) {
             <header className="App-header">
             <Header />
                 <Container>
-                    <Route exact path="/" render={()=> sessionStorage.token ? <Redirect to="/home" /> : <Landing onGoToRegister ={handleGoToRegister} onGoToLogin={handleGoToLogin} />} />
+                   <Route exact path="/" render={()=> sessionStorage.token ? <Redirect to="/home" /> : <Landing onGoToRegister ={handleGoToRegister} onGoToLogin={handleGoToLogin} />} />
                     <Route exact path="/register" render={ () =>
                          sessionStorage.token ? <Redirect to="/home" /> : <Register onGoToLogin={handleGoToLogin}/>  }/>
                     <Route exact path="/login" render={ () => 
