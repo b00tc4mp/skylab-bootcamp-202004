@@ -1,10 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './Products.sass'
-import Feedback from './Feedback'
-import './Feedback.sass'
 
 export default function ({ product, addToCart }) {
-  const [error, setError] = useState()
   const { id, name, style, price } = product
 
   const handleAddToCard = event => {
@@ -28,7 +25,6 @@ export default function ({ product, addToCart }) {
             <li>Correct execution of the steps</li>
           </ul>
           <a className='description-table-button' onClick={handleAddToCard}>Add to cart</a>
-          {error && <Feedback message={error} level='error' />}
         </div>
       </div>
     </section>

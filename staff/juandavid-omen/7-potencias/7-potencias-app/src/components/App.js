@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Login, Register, Home, NavBar, Products, Footer, CartDropdown } from '../components'
-import { isUserSessionValid, logoutUser, isUserLoggedIn, updateCart } from '7-potencias-client-logic'
+import { isUserSessionValid, logoutUser, isUserLoggedIn, updateCart, retrieveCart, retrieveUser } from '7-potencias-client-logic'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 import { useOutsideClick } from '../hooks/outsideClick'
 import './App.sass'
@@ -9,6 +9,8 @@ export default withRouter(function ({ history }) {
   const [view, setView] = useState()
   const [cart, setCart] = useState([])
   const [error, setError] = useState()
+  const [token, setToken] = useState()
+  const [name, setName] = useState()
 
   const { hidden: cartDropdownHidden, setHidden: setCartDropdownHidden, ref } = useOutsideClick(true)
 
@@ -20,6 +22,9 @@ export default withRouter(function ({ history }) {
         isUserSessionValid(sessionStorage.token)
           .then(isAuthenticated => {
             if (isAuthenticated) {
+              retrieveCart(sessionStorage.token)
+                .then(cart => setCart(cart))
+                .catch(error => { throw error })
               setView('home')
             }
           })
@@ -34,7 +39,22 @@ export default withRouter(function ({ history }) {
 
   const handleRegister = () => history.push('./login')
 
-  const handleLogin = () => history.push('/home')
+  const handleLogin = () => {
+    try {
+      retrieveUser(sessionStorage.token)
+        .then(({ name }) => {
+          setName(name)
+          retrieveCart(sessionStorage.token)
+            .then(cart => {
+              setCart(cart)
+            })
+            .catch(error => { throw error })})
+        .catch(error => setError(error.message))
+    } catch ({ message }) {
+      setError(message)
+    }
+    history.push('/home')
+  }
 
   const handleGoToLogin = () => history.push('/login')
 
@@ -80,9 +100,10 @@ export default withRouter(function ({ history }) {
       <main>
         {cartDropdownHidden ? null : (<CartDropdown reference={ref} cart={cart} toggleHidden={toggleHiddenDropdown} />)}
         <Route exact path='/' render={() => <Redirect to='landing' />} />
+        {/* <Route exact path='/' render={()=> token ? <Redirect to ='/home'}  /> : < */}
         <Route path='/register' render={() => isUserLoggedIn() ? <Redirect to='/home' /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />} />
         <Route path='/login' render={() => isUserLoggedIn() ? <Redirect to='/home' /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />} />
-        <Route path='/home' render={() => isUserLoggedIn() ? <Home onLogout={handleLogout} /> : <Redirect to='/' />} />
+        <Route path='/home' render={() => isUserLoggedIn() ? <Home name={name} cart={cart} onLogout={handleLogout} /> : <Redirect to='/' />} />
 
         <Route path='/lessons' render={() => <Products token={sessionStorage.token} addToCart={addToCart} />} />
       </main>

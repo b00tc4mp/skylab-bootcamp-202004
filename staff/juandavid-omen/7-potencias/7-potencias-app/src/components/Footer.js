@@ -4,17 +4,17 @@ import './Footer.sass'
 export default function () {
   return (
     <footer>
-      <section className="footer">
-        <div className="footer__info" />
-        <div className="footer__table" />
+      <section className='footer'>
+        <div className='footer__info' />
+        <div className='footer__table' />
         <p className='text'>Amo la quimica, programar lo hago por obligacion de mi esposa</p>
       </section>
-      <section className="copyright">
+      <section className='copyright'>
         Copyright ©2020 Juan Omen
       </section>
     </footer>
 
-   /*  <footer className='page-footer'>
+  /*  <footer className='page-footer'>
       <div className='container'>
         <div className='row'>
           <div className='col l6 s12'>
