@@ -20,7 +20,7 @@ module.exports= function(deliveryId){
       productQuantity.push([products[i].product.name,products[i].product.description, products[i].quantity,products[i].product.price,round(products[i].quantity*products[i].product.price,2)])
     }
     for(j=1;j<productQuantity.length;j++){
-      totalPayment+=productQuantity[j][4]
+      totalPayment+=round(productQuantity[j][4],2)
     }
     productQuantity.push(["Total","","","",totalPayment])
     //Comprueba que es el albaran

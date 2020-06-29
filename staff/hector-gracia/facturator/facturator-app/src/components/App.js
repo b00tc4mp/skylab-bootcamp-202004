@@ -153,6 +153,7 @@ function App() {
   //////////////////
   const handleAddToDelivery=(productQuantity)=>{
     try {
+      productQuantity.quantity=Number.parseFloat(productQuantity.quantity)
       return addProductToDelivery(selection.id,productQuantity)
         .then(()=>{
            return handleGoToDeliveryEdition(selection)

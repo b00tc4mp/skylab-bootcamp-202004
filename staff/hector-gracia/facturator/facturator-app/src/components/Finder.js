@@ -7,22 +7,14 @@ const {retrieveAllClients,retrieveAllProducts,makeDeliveryNote}= require("factur
 
 export default function ({goToEdition, type, allFinds,delivery, addTo ,back, remove, onError}) {
 
-    //Multi use variables
     const [query,setQuery]=useState("")
     const [selectedId,setSelection]=useState()
     const [results,setResults]= useState(allFinds)
-    const [allResults, setAllResults]= useState()
-    const [types, setTypes] = useState(type)
+    const [quantity, setQuantity]= useState()
 
     const [findInstruction,setFindInstruction]=useState("")
     const [findHint,setFindHint]=useState("")
     const [header,setHeader]=useState("")
-    
-
-    //Client variables
-    //Product variables
-    //Delivery variables
-    //Template variables
 
     useEffect(()=>{
         switch (type){
@@ -49,6 +41,7 @@ export default function ({goToEdition, type, allFinds,delivery, addTo ,back, rem
                 setHeader(delivery.client.name)
                 setFindInstruction("Buscar producto: ")
                 setFindHint("Nombre del producto")
+                setQuantity(1)
                 break;
             case "delivery/clients":
                 setFindInstruction("Buscar cliente: ")
@@ -91,6 +84,9 @@ export default function ({goToEdition, type, allFinds,delivery, addTo ,back, rem
     const changeQuery=({target})=>{
         setQuery(target.value)
     }
+    const changeQuantity=(({target})=>{
+        setQuantity(target.value)
+    })
     const handleGoToResultEdition=()=>{
         const result= results.find((current)=>{return current.id===selectedId})
         goToEdition(result)
@@ -105,7 +101,7 @@ export default function ({goToEdition, type, allFinds,delivery, addTo ,back, rem
         addTo(useTemplate)
     }
     const handleAddTo=()=>{
-        const productQuantity={productId:selectedId,quantity:1}
+        const productQuantity={productId:selectedId,quantity:quantity?quantity:1}
         addTo(productQuantity)
     }
     
@@ -116,6 +112,7 @@ export default function ({goToEdition, type, allFinds,delivery, addTo ,back, rem
                 <div className="search-panel__search-input">
                     {findInstruction}
                     {type!=="delivery/edit" && <input type="text" name="clientName" placeholder={findHint} value={query}  onChange={changeQuery} ></input>}
+                    {type==="delivery/add" && <p>Cantidad:<input type="number" name ="Quantity" placeholder={1} value={quantity} onChange={changeQuantity}></input> </p>}
                 </div>
                 <div className="search-panel__search-result">
                     {results.length>0 && type!=="delivery/edit" &&
