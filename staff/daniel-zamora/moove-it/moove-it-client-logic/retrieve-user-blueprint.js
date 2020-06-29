@@ -9,7 +9,7 @@ module.exports = function() {
     return call('GET', `${this.API_URL}/user/blueprints`, undefined, { Authorization: `Bearer ${token}` })
 
     .then(({ status, body }) => {
-        debugger
+        
         if (status === 200) {
 
            return JSON.parse(body)

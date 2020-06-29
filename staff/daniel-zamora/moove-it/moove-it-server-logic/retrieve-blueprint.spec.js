@@ -32,7 +32,7 @@ describe('logic - retrieve blueprint', () => {
 
 
     describe('when user already exists and had an existing blueprint with items on it', () => {
-        beforeEach( async ()=> { debugger
+        beforeEach( async ()=> { 
             
             const items = await Item.create({name: itemName, catalogueItemId,x, y, width, height })
             const user = await User.create({ name, surname, email, password })

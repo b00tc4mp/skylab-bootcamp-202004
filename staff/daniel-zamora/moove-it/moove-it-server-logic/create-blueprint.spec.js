@@ -47,7 +47,7 @@ describe('logic - save blueprint', () => {
 
 
         it('should fail on wrong user id', () => {
-            debugger
+            
 
             createBlueprint('5ed43b913578a050d5600ee0', name, width, height)
                 .catch(error => {

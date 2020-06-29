@@ -11,7 +11,7 @@ module.exports = (itemId, userId, blueprintId) => {
     String.validate.notVoid(blueprintId)
 
     return (async() => {
-        debugger
+        
 
         const user = await User.findById(userId)
         if (!user) throw new UnexistenceError(`User with id ${userId} does not exist`)

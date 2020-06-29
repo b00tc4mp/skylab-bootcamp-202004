@@ -11,9 +11,9 @@ module.exports = function(blueprintId) {
 
     return call('GET', `${this.API_URL}/blueprint/${blueprintId}`, undefined, { Authorization: `Bearer ${token}` })
         .then(({ status, body }) => {
-            debugger
+            
             if (status === 200) {
-                debugger
+                
 
                 const { name, width, height, date, items, id } = JSON.parse(body)
 

@@ -34,7 +34,7 @@ function App({ history }) {
 
   const handleGoToLogin = () => history.push('/login')
 
-  const handlePlaneInit = (id) => { debugger
+  const handlePlaneInit = (id) => { 
   history.push(`/blueprint/${id}`)
   }
   const blueprint = {};

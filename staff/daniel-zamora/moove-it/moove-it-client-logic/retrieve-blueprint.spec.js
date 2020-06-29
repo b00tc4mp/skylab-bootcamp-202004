@@ -42,7 +42,7 @@ describe('logic - retrieve user', () => {
     describe('when user already exists', () => {
 
         it('should succeed on correct blueprint id', () => {
-            debugger
+            
 
             return retrieveBlueprint( blueprintId)
                 .then(blueprint => {

@@ -2,7 +2,7 @@ const { createBlueprint } = require('moove-it-server-logic')
 const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
-    debugger
+    
     const { body: { name, width, height }, payload: { sub: userId } } = req
 
     try {

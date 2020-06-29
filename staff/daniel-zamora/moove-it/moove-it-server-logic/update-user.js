@@ -3,7 +3,7 @@ const { mongoose: { ObjectId }, models: { User } } = require('moove-it-data')
 const { errors: { UnexistenceError, CredentialsError, ForbiddenError } } = require('moove-it-commons')
 
 module.exports = (userId, data) => {
-    debugger
+    
     String.validate.notVoid(userId)
     if (typeof data !== 'object') throw new TypeError(`${data} is not an object`)
     if (data.password && !data.oldPassword) throw new CredentialsError("Old password is required")
@@ -15,7 +15,7 @@ module.exports = (userId, data) => {
         if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
         if (data.password && data.oldPassword) {
-            debugger
+            
             if (data.oldPassword !== user.password) throw new CredentialsError('Wrong old password')
 
             delete data.oldPassword

@@ -18,7 +18,7 @@ describe('logic - register user', () => {
     let name, surname, email, password, passwordConfirmation
 
     beforeEach(() => {
-        debugger
+        
 
         name = `name`
         surname = `surname`
@@ -29,7 +29,7 @@ describe('logic - register user', () => {
 
 
     it('should succeed on valid data', async () => {
-        debugger
+        
         await registerUser(name, surname, email, password, passwordConfirmation)
         const user = await User.findOne({email})
         // const [user] = users

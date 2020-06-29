@@ -39,7 +39,7 @@ export default function Home({blueprint, onGoToFloorPlan, onLogout}) {
         blueprint = {name: name, width: width, height: height}
 
         try {
-            debugger
+            
             createBlueprint(name, width,height)
                 .then(id => onGoToFloorPlan(id))
                 .catch(error => setError(error.message))

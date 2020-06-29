@@ -30,7 +30,7 @@ describe('logic - save blueprint', () => {
 
 
     describe('when user already exists and had an existing blueprint with items on it', () => {
-        beforeEach( async ()=> { debugger
+        beforeEach( async ()=> { 
             
             item = await new Item({name: itemName,id, catalogueItemId,x, y, width, height })
             const user = await User.create({ name, surname, email, password })
@@ -49,7 +49,7 @@ describe('logic - save blueprint', () => {
         })
 
 
-        it('should fail on wrong user id', () => { debugger
+        it('should fail on wrong user id', () => { 
            
             saveBlueprint('5ed43b913578a050d5600ee0', blueprintId, [item])
             .catch(error => {

@@ -2,7 +2,7 @@ const { utils: { jwtPromised } } = require('moove-it-commons')
 
 module.exports = (secret, errorHandler) =>
     (req, res, next) => {
-        debugger
+        
         try {
             const [, token] = req.header('authorization').split(' ')
 

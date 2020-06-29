@@ -40,7 +40,7 @@ describe('logic - save blueprint', () => {
     describe('when user already exists', () => {
 
         it('should create a new item on an existing user blueprint', async() => {
-            debugger
+            
 
             await saveItem(itemId, userId, blueprintId, itemName, x, y, z, orientation, width, height)
 
@@ -93,7 +93,7 @@ describe('logic - save blueprint', () => {
         })
 
         it('should update an existing item on blueprint', async() => {
-            debugger
+            
 
             await saveItem(itemId, userId, blueprintId, "update item", 32, 14, 0, 3, 20, 10)
 

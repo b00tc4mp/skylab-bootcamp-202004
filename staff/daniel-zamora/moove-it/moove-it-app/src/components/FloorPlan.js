@@ -17,7 +17,7 @@ export default function PlaneBuilder({ blueprintId, onGoToHome}) {
    
      const { blueprintId: previousBlueprintId } = sessionStorage
 
-        if (blueprintId &&( !previousBlueprintId || blueprintId == previousBlueprintId))   
+        if (blueprintId &&( !previousBlueprintId || blueprintId !== previousBlueprintId))   
             try {
                 retrieveBlueprint(blueprintId)
                     .then(blueprint => {
@@ -106,7 +106,7 @@ export default function PlaneBuilder({ blueprintId, onGoToHome}) {
                 onDrag={handlePlaneDrag}
                 onDrop={handleOnDrop} >
                 {placedItems && placedItems.map((placed, i) => {
-                        debugger
+                        
                     return <div key={placed.id}
                         className={`placed ${(placed.catalogueItemId)}`}
                         style={{ left: placed.x, top: placed.y }}

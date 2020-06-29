@@ -39,7 +39,7 @@ describe('logic - retrieve user', () => {
             .then(user => jwtPromised.sign({ sub: user.id }, SECRET))
             .then(token => context.storage.token = token)
         )
-        it('should succeed on correct token', () => { debugger
+        it('should succeed on correct token', () => { 
 
             return retrieveUser()
                 .then(user => {

@@ -33,7 +33,7 @@ describe('logic - authenticate user', () => {
     })
 
     describe('when user already exists', () => {
-        debugger
+        
         beforeEach(() => {
             const user = { name, surname, email, password: hash }
             User.create(user)

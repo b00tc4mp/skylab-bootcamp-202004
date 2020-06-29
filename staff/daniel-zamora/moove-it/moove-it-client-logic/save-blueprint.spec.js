@@ -23,7 +23,7 @@ describe('logic - save blueprint', () => {
     describe('When user already have blueprints on it and are modified', () => {
 
         beforeEach(async() => {
-            debugger
+            
 
             name = `name-${random()}`
             surname = `surname-${random()}`
