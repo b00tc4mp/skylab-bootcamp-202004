@@ -12,7 +12,6 @@ import { authenticateUser } from "../gluttony-client-logic"
 const Login = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [feedback, setFeedback] = useState();
 
     return (
         <View style={styles.modalView}>
@@ -34,15 +33,11 @@ const Login = (props) => {
             />
 
             <TouchableOpacity style={styles.openButton} onPress={() => {
-                try {authenticateUser(email, password)
+                authenticateUser(email, password)
                     .then(() => props.onCloseModal())
                     .catch(error => setFeedback(error.message))
-                } catch (error) {
-                    setFeedback(error.message)
-                }
             }}>
                 <Text style={styles.textStyle}>Log in</Text>
-                {feedback && <Text style={styles.textStyle}>{feedback}</Text>}
             </TouchableOpacity>
             <Text style={{ ...styles.modalText, marginBottom: 8 }}>o</Text>
             <TouchableOpacity style={styles.openButton} onPress={props.onGoToRegister}>
