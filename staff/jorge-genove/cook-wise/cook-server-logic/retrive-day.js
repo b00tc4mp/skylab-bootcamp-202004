@@ -55,8 +55,9 @@ module.exports = (weekday, userId) => {
 
         singleIng.ingredient = name;
 
-        result.push(recipe);
+        ;
       });
+      result.push(recipe)
     }
 
     return result;
