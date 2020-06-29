@@ -6,7 +6,7 @@ module.exports = userId => {
   String.validate.notVoid(userId)
 
   return (async () => {
-    const user = await User.findById(userId).lean()
+    const user = await User.findById(userId).populate('cart.product')
 
     if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
 
