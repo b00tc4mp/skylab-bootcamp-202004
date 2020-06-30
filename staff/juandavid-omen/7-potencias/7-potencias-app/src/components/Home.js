@@ -1,14 +1,29 @@
-import React, { useState, useEffect } from 'react'
+import React, { Component } from 'react'
 import './Home.sass'
+import { retrieveUser } from '7-potencias-client-logic'
 
-export default function Home ({ name }) {
-  const [error, setError] = useState()
+export default class extends Component {
+  constructor () {
+    super()
 
-  return (
-    <section className='home'>
-      <h1>{name}</h1>
-      <h1>Introduction</h1>
-      <p>
+    this.state = {}
+  }
+
+  componentDidMount () {
+    try {
+      retrieveUser()
+        .then(user => this.setState({ name: user.name }))
+    } catch (error) {
+      throw error
+    }
+  }
+
+  render () {
+    return (
+      <section className='home'>
+        <h1>{this.state.name}</h1>
+        <h1>Introduction</h1>
+        <p>
         Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br />
         Aenean commodo ligula eget dolor. Aenean massa.<br />
         Cum sociis natoque penatibus et magnis dis parturient montes,<br />
@@ -33,7 +48,8 @@ export default function Home ({ name }) {
         Etiam sit amet orci eget eros faucibus tincidunt.<br />
         Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.<br />
         Sed consequat, leo eget bibendum sodales, augue velit cursus nunc.<br />
-      </p>
-    </section>
-  )
+        </p>
+      </section>
+    )
+  }
 }
