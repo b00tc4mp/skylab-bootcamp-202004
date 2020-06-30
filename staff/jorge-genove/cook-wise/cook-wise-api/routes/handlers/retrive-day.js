@@ -1,7 +1,7 @@
 const { retriveDay } = require('cook-server-logic')
 const { handleError } = require('../../helpers')
 
-module.exports = (req, res) => {debugger
+module.exports = (req, res) => {
     try {
         const { params : {weekday}, payload: { sub: userId } } = req
         
