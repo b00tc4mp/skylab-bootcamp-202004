@@ -8,7 +8,7 @@ module.exports = (req, res) => {
     const { payload: { sub: userId } } = req
 
     updateCart(userId, productId, parseInt(quantity))
-      .then(() => res.status(200).send())
+      .then((cart) => res.status(200).send(cart))
       .catch(error => handleError(error, res))
   } catch (error) {
     handleError(error, res)

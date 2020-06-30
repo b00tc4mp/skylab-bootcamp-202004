@@ -32,6 +32,8 @@ module.exports = (userId, productId, quantity) => {
         cart.push(productSelection)
       } else cart[index].quantity = quantity
     }
-    return user.save()
+    await user.save()
+    await user.populate('cart.product').execPopulate()
+    return user.cart
   })()
 }

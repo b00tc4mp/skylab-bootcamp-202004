@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './Products.sass'
 
 export default function ({ product, addToCart }) {

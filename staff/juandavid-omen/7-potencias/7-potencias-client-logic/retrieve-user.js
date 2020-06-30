@@ -8,7 +8,7 @@ module.exports = function () {
     .then(({ status, body }) => {
       if (status === 200) {
         const user = JSON.parse(body)
-        this.storage.cart = user.cart
+        return user
       } else {
         const { error } = JSON.parse(body)
 
