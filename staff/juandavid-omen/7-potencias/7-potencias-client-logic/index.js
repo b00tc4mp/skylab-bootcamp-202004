@@ -9,5 +9,6 @@ module.exports = {
   searchLessons: require('./search-lessons'),
   placeOrder: require('./place-order'),
   updateCart: require('./update-cart'),
-  retrieveCart: require('./retrieve-cart')
+  retrieveCart: require('./retrieve-cart'),
+  deleteCart: require('./delete-cart')
 }
