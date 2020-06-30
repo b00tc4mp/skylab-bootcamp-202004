@@ -107,10 +107,7 @@ describe('Update cart', () => {
     productId = _lesson._id.toString()
     quantity = 3
 
-    const _user = await updateCart(userId, productId, quantity)
-    expect(_user).to.exist
-
-    const { cart } = _user
+    const cart = await updateCart(userId, productId, quantity)
 
     expect(cart).to.exist
     expect(cart).to.have.lengthOf(2)
