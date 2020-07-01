@@ -6,8 +6,7 @@ module.exports = function () {
 
   return call('POST', `${this.API_URL}/orders`, undefined, { Authorization: `Bearer ${token}` })
     .then(({ status, body }) => {
-      if (status === 200) return JSON.parse(body)
-      else {
+      if (status !== 201) {
         const { error } = JSON.parse(body)
         throw new Error(error)
       }
