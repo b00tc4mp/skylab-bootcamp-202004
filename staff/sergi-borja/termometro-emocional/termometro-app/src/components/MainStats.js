@@ -59,11 +59,6 @@ function MainStats({ token, rol }) {
         setDayClicked(false)
     }
 
-    useEffect(() => {
-        setHasStats(true)
-        if (rolChart === 'admin') adminChart()
-        if (rolChart === 'member') handleSeeMemberStats(memberSelected, _dayClicked)
-    }, [_dayClicked])
 
     const settingDateArray = (userInfo) => {
         const { mood } = userInfo
@@ -101,81 +96,33 @@ function MainStats({ token, rol }) {
     }
 
 
-    const adminChart = () => {
-        retrieveUser(token)
-            .then(adminInfo => {
-                let dateArray;
-                let scoreArray;
-                let scoreColors;
-                if (_dayClicked) {
-                    let clickDayInfo = adminInfo.mood.filter((element) => moment(element.date).format('LL') === moment(_dayClicked).format('LL'))
-                    if(clickDayInfo.length===2){
-                    dateArray = [moment(clickDayInfo[0].date).format('HH:mm'), moment(clickDayInfo[1].date).format('HH:mm')]
-                    scoreArray = [clickDayInfo[0].score, clickDayInfo[1].score]
-                    scoreColors = colorBars(scoreArray)
-                    } else {
-                        setHasStats(false)
-                    }
-                } else if (!_dayClicked) {
-                    setChartOfCalendar(false)
-                    if(days<=(adminInfo.mood.length/2)){
-                    setHasStats(true)
-                    dateArray = settingDateArray(adminInfo);
-                    scoreArray = settingScoreArray(adminInfo);
-                    scoreColors = colorBars(scoreArray)
-                    } else {
-                        setHasStats(false)
-                    }
-                }
-                setChartData({
-                    labels: dateArray,
-                    datasets: [{
-                        data: scoreArray,
-                        backgroundColor: scoreColors,
-                        borderWidth: 4
-                    }]
-                })
+    const handleChartCreation = async (member) => {
+        const adminInfo = await retrieveUser(token)
 
-            })
-    }
-
-    const colorBars = (scoreArray) => {
-        let scoreColorsArray = scoreArray.map((score)=>{
-            if(score>9) return 'rgba(75, 253, 93, 0.5)'
-            else if(score>8) return 'rgba(111, 239, 75, 0.5)'
-            else if(score>7) return 'rgba(147, 225, 57, 0.5)'
-            else if(score>6) return 'rgba(213, 212, 66, 0.5)'
-            else if(score>5) return 'rgba(234, 197, 35, 0.5)'
-            else if(score>4) return 'rgba(255, 187, 129, 0.5)'
-            else if(score>3) return 'rgba(255, 183, 3, 0.5)'
-            else if(score>2) return 'rgba(255, 140, 107, 0.5)'
-            else if(score>1) return 'rgba(255, 0, 43, 0.5)'
-            else if(score>0) return 'rgba(211, 52, 20, 0.5)'
-            // else if(score>0) return 'rgba(37, 247, 72, 0.5)'
-        })
-        return scoreColorsArray
-    }
-
-    const handleSeeMemberStats = (member) => {
-        let dateArray; 
+        let dateArray;
         let scoreArray;
         let scoreColors;
+        let userInfo;
+
+        if (member) userInfo = member
+        else userInfo = adminInfo
+
         if (_dayClicked) {
-            let clickDayInfo = member.mood.filter((element) => moment(element.date).format('LL') === moment(_dayClicked).format('LL'))
-            if(clickDayInfo.length===2){
-            dateArray = [moment(clickDayInfo[0].date).format('HH:mm'), moment(clickDayInfo[1].date).format('HH:mm')]
-            scoreArray = [clickDayInfo[0].score, clickDayInfo[1].score]
-            scoreColors = colorBars(scoreArray)
+            let clickDayInfo = userInfo.mood.filter((element) => moment(element.date).format('LL') === moment(_dayClicked).format('LL'))
+            if (clickDayInfo.length === 2) {
+                dateArray = [moment(clickDayInfo[0].date).format('HH:mm'), moment(clickDayInfo[1].date).format('HH:mm')]
+                scoreArray = [clickDayInfo[0].score, clickDayInfo[1].score]
+                scoreColors = colorBars(scoreArray)
             } else {
                 setHasStats(false)
             }
         } else if (!_dayClicked) {
             setChartOfCalendar(false)
-            if(days<=(member.mood.length/2)){
-            setHasStats(true)
-            dateArray = settingDateArray(member);
-            scoreArray = settingScoreArray(member);
-            scoreColors = colorBars(scoreArray)
+            if (days <= (userInfo.mood.length / 2)) {
+                setHasStats(true)
+                dateArray = settingDateArray(userInfo);
+                scoreArray = settingScoreArray(userInfo);
+                scoreColors = colorBars(scoreArray)
             } else {
                 setHasStats(false)
             }
@@ -191,34 +138,34 @@ function MainStats({ token, rol }) {
         })
     }
 
-    useEffect(() => {
-        if(!rol) {
-        try {
-            createFamilyList(token)
-                .then(familyList => setFamilyList(familyList))
-        } catch (error) {
-            if (error) throw error
-        }
+    const colorBars = (scoreArray) => {
+        let scoreColorsArray = scoreArray.map((score) => {
+            if (score > 9) return 'rgba(75, 253, 93, 0.5)'
+            else if (score > 8) return 'rgba(111, 239, 75, 0.5)'
+            else if (score > 7) return 'rgba(147, 225, 57, 0.5)'
+            else if (score > 6) return 'rgba(213, 212, 66, 0.5)'
+            else if (score > 5) return 'rgba(234, 197, 35, 0.5)'
+            else if (score > 4) return 'rgba(255, 187, 129, 0.5)'
+            else if (score > 3) return 'rgba(255, 183, 3, 0.5)'
+            else if (score > 2) return 'rgba(255, 140, 107, 0.5)'
+            else if (score > 1) return 'rgba(255, 0, 43, 0.5)'
+            else if (score > 0) return 'rgba(211, 52, 20, 0.5)'
+            // else if(score>0) return 'rgba(37, 247, 72, 0.5)'
+        })
+        return scoreColorsArray
     }
-    }, [])
-
-    useEffect(() => {
-        if(rolChart==='admin') adminChart()
-        else handleSeeMemberStats(memberSelected, _dayClicked)
-        // daysSetter(days)
-    }, [days])
 
     const handleChangeChart = ({ target: { value } }) => {
 
         if (value === 'my_stats') {
             setRolChart('admin')
-            adminChart()
+            handleChartCreation()
         } else {
             setRolChart('member')
             familyList.map(member => {
                 if (member.id === value) {
                     setMemberSelected(member)
-                    handleSeeMemberStats(member)
+                    handleChartCreation(member)
                 }
             })
         }
@@ -229,6 +176,29 @@ function MainStats({ token, rol }) {
         setDayClicked(dayClicked)
         setDisplayCalendar(false)
     }
+
+    useEffect(() => {
+        setHasStats(true)
+        if (rolChart === 'admin') handleChartCreation()
+        if (rolChart === 'member') handleChartCreation(memberSelected)
+    }, [_dayClicked])
+
+    useEffect(() => {
+        if (!rol) {
+            try {
+                createFamilyList(token)
+                    .then(familyList => setFamilyList(familyList))
+            } catch (error) {
+                if (error) throw error
+            }
+        }
+    }, [])
+
+    useEffect(() => {
+        if (rolChart === 'admin') handleChartCreation()
+        else handleChartCreation(memberSelected)
+    }, [days])
+
 
     return (
         <section className='mainStatsContainer'>
@@ -245,10 +215,10 @@ function MainStats({ token, rol }) {
                 <button className={`mainStatsContainer__buttonDaysContainer--fiveTeenDays ${displayCalendar || chartOfCalendar ? 'white' : ''}`} onClick={() => setDisplayCalendar(true)}>Calendario</button>
             </div>
 
-            {!hasStats && !displayCalendar && <div  className='mainStatsContainer__errorFeedback'>¡Ups! Aún no hemos reunido datos suficientes..</div>}
+            {!hasStats && !displayCalendar && <div className='mainStatsContainer__errorFeedback'>¡Ups! Aún no hemos reunido datos suficientes..</div>}
 
             {!displayCalendar && !chartOfCalendar && !_dayClicked && hasStats && <div className='mainStatsContainer__chartContainer'>
-                <HorizontalBar data={chartData} options={chartOptions.options} height={500} />
+                <HorizontalBar data={chartData} options={chartOptions.options} height={530} />
             </div>}
 
             {!displayCalendar && chartOfCalendar && _dayClicked && hasStats && <div className='mainStatsContainer__chartContainer'>
