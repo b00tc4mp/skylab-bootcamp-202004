@@ -50,7 +50,10 @@ function ChangePassword({ memberInfo, history }) {
 
     return (
         <section className='editMemberContainer'>
-            <img className='editMemberContainer__backIcon' src={backButton} onClick={()=>history.push('/settings')}></img>
+            <div className='createMemberContainer__header'>
+            <img className='createMemberContainer__backIcon' src={backButton} onClick={()=>history.push('/settings')}></img>
+            <h1 className='createMemberContainer__headerTitle'>Editar</h1>
+            </div>
             <h1 className='editMemberContainer__title'>¡Este espacio es para que puedas actualizar tu contraseña!</h1>
             <form className='editMemberContainer__form' onSubmit={handleConfirmEdit}>
                 <input className='editMemberContainer__input' name='email' type='email' placeholder='Contrasña actual..'></input>

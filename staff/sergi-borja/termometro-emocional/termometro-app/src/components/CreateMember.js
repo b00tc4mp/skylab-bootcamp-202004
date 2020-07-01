@@ -39,7 +39,10 @@ function CreateMember({ token, history }) {
 
     return (
         <section className='createMemberContainer'>
-            <img className='editMemberContainer__backIcon' src={backButton} onClick={()=>history.push('/my-family')}></img>
+            <div className='createMemberContainer__header'>
+            <img className='createMemberContainer__backIcon' src={backButton} onClick={()=>history.push('/my-family')}></img>
+            <h1 className='createMemberContainer__headerTitle'>Crear</h1>
+            </div>
             <h1 className='createMemberContainer__title'>¡Registra a un miembro de tu familia!</h1>
             <form className='createMemberContainer__form' onSubmit={handleSubmit}>
                 <input type="text" name="name" className='createMemberContainer__input' placeholder='Nombre' required></input>

@@ -69,7 +69,10 @@ function EditMyInfo({ token, history }) {
 
     return (
         <section className='editMemberContainer'>
-          <img className='editMemberContainer__backIcon' src={backButton} onClick={()=>history.push('/settings')}></img>
+          <div className='createMemberContainer__header'>
+            <img className='createMemberContainer__backIcon' src={backButton} onClick={()=>history.push('/settings')}></img>
+            <h1 className='createMemberContainer__headerTitle'>Editar</h1>
+            </div>
             <h1 className='editMemberContainer__title'>¡Aquí tienes la oportunidad de editar tus datos!</h1>
             {userInfo && <form className='editMemberContainer__form' onSubmit={handleConfirmEdit}>
                 <input className='editMemberContainer__input' name='name' placeholder={userInfo.name}></input>

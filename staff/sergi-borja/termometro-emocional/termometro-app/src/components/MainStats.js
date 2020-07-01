@@ -19,6 +19,8 @@ function MainStats({ token, rol }) {
     const [chartOfCalendar, setChartOfCalendar] = useState()
     const [_dayClicked, setDayClicked] = useState()
     const [hasStats, setHasStats] = useState(true)
+    const [windowHeigth, setWindowHeigth] = useState()
+
 
     const chartOptions = {
         options: {
@@ -97,6 +99,11 @@ function MainStats({ token, rol }) {
 
 
     const handleChartCreation = async (member) => {
+
+        if(window.screen.height < 750) setWindowHeigth(430)
+        else if(window.screen.height < 850) setWindowHeigth(520)
+        else setWindowHeigth(320)
+
         const adminInfo = await retrieveUser(token)
 
         let dateArray;
@@ -156,7 +163,6 @@ function MainStats({ token, rol }) {
     }
 
     const handleChangeChart = ({ target: { value } }) => {
-
         if (value === 'my_stats') {
             setRolChart('admin')
             handleChartCreation()
@@ -210,15 +216,15 @@ function MainStats({ token, rol }) {
                 {rol && <h1 value='my_stats' className='mainStatsContainer__selectContainer--adminOption'>Mis estadísticas</h1>}
             </div>
             <div className='mainStatsContainer__buttonDaysContainer'>
-                <button className={`mainStatsContainer__buttonDaysContainer--fiveDays ${days === 5 && !chartOfCalendar && !displayCalendar ? 'white' : ''}`} onClick={() => daysSetter(5)}>5 DAYS</button>
-                <button className={`mainStatsContainer__buttonDaysContainer--fiveTeenDays ${days === 15 && !chartOfCalendar && !displayCalendar ? 'white' : ''}`} onClick={() => daysSetter(15)}>15 DAYS</button>
+                <button className={`mainStatsContainer__buttonDaysContainer--fiveDays ${days === 5 && !chartOfCalendar && !displayCalendar ? 'white' : ''}`} onClick={() => daysSetter(5)}>5 DÍAS</button>
+                <button className={`mainStatsContainer__buttonDaysContainer--fiveTeenDays ${days === 15 && !chartOfCalendar && !displayCalendar ? 'white' : ''}`} onClick={() => daysSetter(15)}>15 DÍAS</button>
                 <button className={`mainStatsContainer__buttonDaysContainer--fiveTeenDays ${displayCalendar || chartOfCalendar ? 'white' : ''}`} onClick={() => setDisplayCalendar(true)}>Calendario</button>
             </div>
 
             {!hasStats && !displayCalendar && <div className='mainStatsContainer__errorFeedback'>¡Ups! Aún no hemos reunido datos suficientes..</div>}
 
-            {!displayCalendar && !chartOfCalendar && !_dayClicked && hasStats && <div className='mainStatsContainer__chartContainer'>
-                <HorizontalBar data={chartData} options={chartOptions.options} height={530} />
+            {!displayCalendar && !chartOfCalendar && !_dayClicked && hasStats && windowHeigth && <div className='mainStatsContainer__chartContainer'>
+                <HorizontalBar data={chartData} options={chartOptions.options} height={windowHeigth} />
             </div>}
 
             {!displayCalendar && chartOfCalendar && _dayClicked && hasStats && <div className='mainStatsContainer__chartContainer'>
