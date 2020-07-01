@@ -21,8 +21,8 @@ export default class extends Component {
   render () {
     return (
       <section className='home'>
-        <h1>{this.state.name}</h1>
-        <h1>Introduction</h1>
+        <h1 className='salute'>Hello! {this.state.name}, welcome to your dance school 7 Potencias.</h1>
+        <h2>Introduction</h2>
         <p>
         Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br />
         Aenean commodo ligula eget dolor. Aenean massa.<br />
@@ -48,6 +48,7 @@ export default class extends Component {
         Etiam sit amet orci eget eros faucibus tincidunt.<br />
         Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.<br />
         Sed consequat, leo eget bibendum sodales, augue velit cursus nunc.<br />
+          <br />
         </p>
       </section>
     )
