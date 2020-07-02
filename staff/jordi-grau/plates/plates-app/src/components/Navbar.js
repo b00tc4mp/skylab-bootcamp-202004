@@ -4,8 +4,8 @@ import './Navbar.sass'
 
 export default function ({ onGoToHome, onLogout}) {
     return <nav className="navbar">
-        <a href="#" className="navbar__item" onClick={onGoToHome}>Home</a>
-        <a herf="#" className="navbar__item" onClick={onLogout}>Logout</a>        
+        <img src="home-icon.png"  className="navbar__item" onClick={onGoToHome} />
+        <a  className="navbar__item" onClick={onLogout}>Logout</a>        
         </nav>
            
 }

@@ -48,7 +48,7 @@ export default function({history, onLogout}){
    
     }
     
-    return <div clasName="container">
+    return <div className="container">
         <header className="container__top">Search</header>
        
          {!restaurant && <Search clasName="container__search"  onSubmit={handleSubmit}/>}
