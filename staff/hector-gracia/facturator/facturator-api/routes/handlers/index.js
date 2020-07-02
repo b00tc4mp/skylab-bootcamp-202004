@@ -22,5 +22,7 @@ module.exports={
     //Template
     addDeliveryTemplate: require("./add-delivery-template"),
     retrieveDeliveryTemplate: require("./retrieve-delivery-template"),
-    retrieveAllDeliveryTemplates: require("./retrieve-all-delivery-templates")
+    retrieveAllDeliveryTemplates: require("./retrieve-all-delivery-templates"),
+    addProductToDeliveryTemplate: require("./add-product-to-delivery-template"),
+    removeProductFromDeliveryTemplate: require("./remove-product-from-delivery-template")
 }
