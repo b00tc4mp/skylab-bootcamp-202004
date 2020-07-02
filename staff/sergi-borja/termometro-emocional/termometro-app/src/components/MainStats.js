@@ -100,8 +100,8 @@ function MainStats({ token, rol }) {
 
     const handleChartCreation = async (member) => {
 
-        if(window.screen.height < 750) setWindowHeigth(430)
-        else if(window.screen.height < 850) setWindowHeigth(520)
+        if (window.screen.height < 750) setWindowHeigth(430)
+        else if (window.screen.height < 850) setWindowHeigth(520)
         else setWindowHeigth(320)
 
         const adminInfo = await retrieveUser(token)
@@ -205,6 +205,13 @@ function MainStats({ token, rol }) {
         else handleChartCreation(memberSelected)
     }, [days])
 
+    const getHtml = () => {
+        __html: 'First &middot; Second'
+        console.log('')
+    }
+
+
+
 
     return (
         <section className='mainStatsContainer'>
@@ -235,6 +242,8 @@ function MainStats({ token, rol }) {
             {displayCalendar && <div className='mainStatsContainer__calendarContainer'>
                 <Calendar className='mainStatsContainer__calendarContainer--calendar' onClickDay={(dayClicked) => handleDayClicked(dayClicked)} />
             </div>}
+
+            <div dangerouslySetInnerHTML={getHtml()}></div>
 
         </section>
     );

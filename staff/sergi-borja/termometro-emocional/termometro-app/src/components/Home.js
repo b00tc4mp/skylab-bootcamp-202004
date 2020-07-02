@@ -20,8 +20,9 @@ function Home() {
 
   return (
     <section className='homeContainer'>
-      {user && !user.mood && <h1 className='homeContainer__title'>Bienvenido al termometro de la autoestima, {user.name} </h1>}
-      {user && user.mood[user.mood.length-1].score <5 && <h1 className='homeContainer__title'>Hoy será un buen día, {user.name} </h1>}
+      {user && <h1 className='homeContainer__title'>Bienvenido al termometro de la autoestima, {user.name} </h1>}
+      {/* {user && !user.mood && <h1 className='homeContainer__title'>Bienvenido al termometro de la autoestima, {user.name} </h1>}
+      {user && user.mood[user.mood.length-1].score <5 && <h1 className='homeContainer__title'>Hoy será un buen día, {user.name} </h1>} */}
       <p className='homeContainer__text'>{randomSentence.sentence}<br /><br />{randomSentence.author}</p>
     </section>
   );
