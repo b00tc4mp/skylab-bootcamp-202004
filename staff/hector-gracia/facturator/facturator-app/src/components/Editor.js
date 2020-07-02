@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import './SearchPanel.sass'
 import "./Commons.sass"
-const {updateClient,addClient,removeClient,addProduct}= require("facturator-client-logic")
+const {updateClient,addClient,removeClient,addProduct,addDeliveryTemplate}= require("facturator-client-logic")
 
 
 
@@ -68,12 +68,16 @@ export default function ({client,product,backToFinder,type, onError}) {
                             .catch(error=>onError(error))
         
                     }
-                case "products":{
+                case "products":
                     const newProduct={name,price:Number.parseFloat(price),description,alergens}
                     return addProduct(newProduct)
                         .then(()=>backToFinder())
                         .catch(error=>onError(error))
-                }
+                
+                case "templates":
+                    return addDeliveryTemplate(name)
+                        .then(()=>backToFinder())
+                        .catch(error=>onError(error))
             }
         } catch (error) {
             onError(error)

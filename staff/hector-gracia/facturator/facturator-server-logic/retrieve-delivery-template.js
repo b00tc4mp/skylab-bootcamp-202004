@@ -28,6 +28,7 @@ const sanitize=(template)=>{
         let product={}
         product.id=template.products[i].product._id.toString()
         product.name=template.products[i].product.name
+        product.price=template.products[i].product.price//TODO Test should expect price and description
         productQuantity.product=product
         result.products.push(productQuantity)
     }

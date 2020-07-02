@@ -58,6 +58,16 @@ export default function ({goToEdition, type, allFinds,delivery, addTo ,back, rem
                 setFindHint("Nombre de la plantilla")
                 setHeader("Plantillas")
                 break
+            case "templates/edit":
+                setHeader("Productos de la plantilla")
+                setFindInstruction("Buscar producto")
+                setFindHint("Nombre del producto")
+                break
+            case "templates/add":
+                setHeader("Productos para la plantilla")
+                setFindInstruction("Buscar producto")
+                setFindHint("Nombre del producto")
+                break
 
         }
         filterFind()
@@ -66,7 +76,7 @@ export default function ({goToEdition, type, allFinds,delivery, addTo ,back, rem
     
     const filterFind=()=>{
         try {
-            if(type!=="delivery/edit"){
+            if(type!=="delivery/edit" && type!=="templates/edit"){
                 if(query){
                     const filteredClients=allFinds.filter((currentFind)=>{ return currentFind.name.toLowerCase().includes(query.toLowerCase())})
                     setResults(filteredClients)
@@ -111,15 +121,15 @@ export default function ({goToEdition, type, allFinds,delivery, addTo ,back, rem
                 </div>
                 <div className="search-panel__search-input">
                     {findInstruction}
-                    {type!=="delivery/edit" && <input type="text" name="clientName" placeholder={findHint} value={query}  onChange={changeQuery} ></input>}
-                    {type==="delivery/add" && <p>Cantidad:<input type="number" name ="Quantity" placeholder={1} value={quantity} onChange={changeQuantity}></input> </p>}
+                    {(type!=="delivery/edit" && type!=="templates/edit") && <input type="text" name="clientName" placeholder={findHint} value={query}  onChange={changeQuery} ></input>}
+                    {(type==="delivery/add" || type==="templates/add") && <p>Cantidad:<input type="number" name ="Quantity" placeholder={1} value={quantity} onChange={changeQuantity}></input> </p>}
                 </div>
                 <div className="search-panel__search-result">
-                    {results.length>0 && type!=="delivery/edit" &&
+                    {results.length>0 && (type!=="delivery/edit" || type!=="templates/edit") &&
                         <ul>{results.map((value,index) => <div key={value.id} onClick={()=>{setSelection(value.id)}} className={ `search-result search-result__${(index % 2 ==0) ? "even" : "odd"} ${selectedId===value.id ? "search-result__highlighted" : ""}`}>
                             {type!=="deliveries" ? value.name: value.client.name}
                         </div> )}</ul>}
-                    {results.length>0 && type==="delivery/edit" &&
+                    {results.length>0 && (type==="delivery/edit" || type==="templates/edit") &&
                         <ul>{results.map((value,index) => <div key={value.id} onClick={()=>{setSelection(value.id)}} className={ `search-result search-result__${(index % 2 ==0) ? "even" : "odd"} ${selectedId===value.id ? "search-result__highlighted" : ""}`}>
                             {`${value.product.name} -------------------------------------${value.product.price}€/unidad------------------------------------------------------- ${value.quantity}Uds------------${value.quantity*value.product.price}€ `}
                         </div> )}</ul>}
@@ -179,17 +189,20 @@ export default function ({goToEdition, type, allFinds,delivery, addTo ,back, rem
                 </div>}
                 {type ==="delivery/clients" && <div className="search-panel__search-buttons">
                     <button className="search-button" disabled={!selectedId} onClick={()=>{addTo(selectedId)}} >
-                        Seleccionar cliente
+                        Crear albaran desde cero
+                    </button>
+                    <button className="search-button" disabled={!selectedId} onClick={()=>{addTo(selectedId,true)}} >
+                        Crear albaran con plantilla
                     </button>
                     <button className="search-button" onClick={back}>
                         Descartar
                     </button>
                 </div>}
                 {type ==="templates" && <div className="search-panel__search-buttons">
-                    <button className="search-button" onClick={addTo}>
+                    <button className="search-button" onClick={()=>goToEdition()}>
                         Añadir plantilla
                     </button>
-                    {false&&<button className="search-button" disabled={!selectedId} onClick={()=>{addTo(selectedId)}} >
+                    {<button className="search-button" disabled={!selectedId} onClick={()=>{addTo(selectedId)}} >
                         Editar plantilla
                     </button>}
                 </div>}
@@ -199,6 +212,26 @@ export default function ({goToEdition, type, allFinds,delivery, addTo ,back, rem
                     </button>
                     <button className="search-button" onClick={back}>
                         Volver
+                    </button>
+                </div>}
+                {type ==="templates/edit" && <div className="search-panel__search-buttons">
+                    
+                    <button className="search-button" onClick={()=>{addTo(selectedId)}} >
+                        Añadir nuevo producto
+                    </button>
+                    <button className="search-button" disabled={!selectedId} onClick={()=>{return remove(allFinds.id,selectedId).then(()=>{setSelection();setQuery(query+"a")})}}>
+                        Quitar de la plantilla
+                    </button>
+                    <button className="search-button" onClick={back}>
+                        Salir
+                    </button>
+                </div>}
+                {type ==="templates/add" && <div className="search-panel__search-buttons">
+                    <button className="search-button" disabled={!selectedId} onClick={handleAddTo} >
+                        Añadir a la plantilla
+                    </button>
+                    <button className="search-button" onClick={goToEdition}>
+                        Salir
                     </button>
                 </div>}
             </div>
