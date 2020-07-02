@@ -3,7 +3,9 @@ import { HorizontalBar, Line, Bar } from 'react-chartjs-2'
 import createFamilyList from 'termometro-client-logic/create-family-list'
 import retrieveUser from 'termometro-client-logic/retrieve-user'
 import './MainStats.sass'
-import Calendar from 'react-calendar'
+// import Calendar from 'react-calendar'
+import { Calendar} from './calendar'
+import reactDom from 'react-dom'
 const moment = require('moment')
 moment.locale('es')
 
@@ -20,6 +22,7 @@ function MainStats({ token, rol }) {
     const [_dayClicked, setDayClicked] = useState()
     const [hasStats, setHasStats] = useState(true)
     const [windowHeigth, setWindowHeigth] = useState()
+    const [myHtmlString, setMyHtmlString] = useState()
 
 
     const chartOptions = {
@@ -205,13 +208,6 @@ function MainStats({ token, rol }) {
         else handleChartCreation(memberSelected)
     }, [days])
 
-    const getHtml = () => {
-        __html: 'First &middot; Second'
-        console.log('')
-    }
-
-
-
 
     return (
         <section className='mainStatsContainer'>
@@ -243,10 +239,12 @@ function MainStats({ token, rol }) {
                 <Calendar className='mainStatsContainer__calendarContainer--calendar' onClickDay={(dayClicked) => handleDayClicked(dayClicked)} />
             </div>}
 
-            <div dangerouslySetInnerHTML={getHtml()}></div>
 
+            <div dangerouslySetInnerHTML={{__html: '<button>'}} />
         </section>
     );
+
+
 
 }
 
