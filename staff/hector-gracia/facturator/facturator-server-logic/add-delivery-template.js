@@ -1,17 +1,9 @@
 require("facturator-commons/polyfills/string")
 const {errors:{UnexistenceError}}= require("facturator-commons")
 const{mongoose:{ObjectId},models:{Product,Template}}= require("facturator-data")
-module.exports=(template)=>{
-    if(typeof template!=="object") throw new TypeError(template+" is not an object")
-    const{name,products}= template
+module.exports=(name)=>{ //Now works by creating an empty delivery an then you add or substract products of that delivery
     String.validate.notVoid(name)
-    if(!Array.isArray(products)) throw new TypeError(products+" is not an array")
     return (async()=>{
-        for(let i=0;i<products.length;i++){
-            const productDb= await Product.findOne({_id:ObjectId(products[i].product)})
-            if(!productDb) throw new UnexistenceError(`product with id ${products[i].product} does not exist`)
-            if(typeof products[i].quantity!=="number") throw new TypeError(products[i].quantity+" is not a number")
-        }
-        await Template.create({name,products})
+        await Template.create({name,products:[]})
     })()
 }

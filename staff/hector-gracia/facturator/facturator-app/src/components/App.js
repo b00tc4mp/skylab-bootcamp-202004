@@ -6,7 +6,8 @@ import NavigationBar from "./NavigationBar"
 import Searcher from "./Finder"
 import Editor from "./Editor" 
 import Feedback from "./Feedback"
-const {retrieveAllClients,retrieveAllProducts,retrieveAllDeliveries, retrieveDelivery, addProductToDelivery,removeProductFromDelivery,makeEmptyDelivery, retrieveAllDeliveryTemplates}= require("facturator-client-logic")
+const {retrieveAllClients,retrieveAllProducts,retrieveAllDeliveries, retrieveDelivery, addProductToDelivery,removeProductFromDelivery,makeEmptyDelivery, retrieveAllDeliveryTemplates,retrieveDeliveryTemplate,
+      addProductToDeliveryTemplate,removeProductFromDeliveryTemplate,makeDeliveryFromTemplate}= require("facturator-client-logic")
 function App() {
   const[view, setView]= useState("landing") // If the View is from clients, products, deliverys or templates
   const[action, setAction]= useState() // If finding, editing or creating new data
@@ -115,7 +116,15 @@ function App() {
       setError(error.message) 
     }
   }
-  
+  const handleFindProductToDeliveryTemplates=(_template)=>{
+    return retrieveAllProducts()
+      .then(products=>{
+        setAllFinds(products)
+        setView("templates/add")
+        setAction("find")
+      })
+      .catch(error=>setError(error.message))
+  }
   //////////////////
   //Handle editors//
   //////////////////
@@ -144,8 +153,25 @@ function App() {
       setError(error.message)
     }
   }
-  const handleGoToTemplateAdition=()=>{
-    setAction("edit")
+  const handleGoToTemplateEdition=(_template)=>{
+    try{
+      return retrieveDeliveryTemplate(_template)
+        .then(template=>{
+          setSelection(_template)
+          setAllFinds(template)
+          setView("templates/edit")
+          setAction("find")
+        })
+    }catch(error){
+      setError(error.message)
+    }
+  }
+  const handleGoToTemplateCreation=()=>{
+    try{
+      setAction("edit")
+    }catch(error){
+      setError(error.message)
+    }
   }
 
   //////////////////
@@ -172,18 +198,51 @@ function App() {
       setError(error.message)
     }
   }
-  const handleNewDelivery=(clientId)=>{
+  const handleNewDelivery=(clientId,useTemplate=false)=>{
+    setSelection(clientId)
     try {
-      return makeEmptyDelivery(clientId)
-        .then(()=>{return handleFindDeliveries()})
-        .catch(error=>{setError(error.message)})
+      if(!useTemplate){
+        return makeEmptyDelivery(clientId)
+          .then(()=>{return handleFindDeliveries()})
+          .catch(error=>{setError(error.message)})
+      }else{
+        return handelFindDeliveryTemplates(useTemplate)
+      }
     } catch (error) {
       setError(error.message)
     }
   }
   const handleSelectTemplate=(templateId)=>{
+    try {
+      return makeDeliveryFromTemplate(selection,templateId)
+        .then(()=>handleFindDeliveries())
+        .catch(error=>{setError(error.message)})
+    } catch (error) {
+      setError(error)
+    }
     setSelection(templateId)
     return handleFindDeliveryClients()
+  }
+  const handleAddToDeliveryTemplate=(productQuantity)=>{
+    try {
+      productQuantity.quantity=Number.parseFloat(productQuantity.quantity)
+      return addProductToDeliveryTemplate(selection,productQuantity)
+        .then(()=>{
+           return handleGoToTemplateEdition(selection)
+        })
+        .catch(error=>{setError(error.message)})
+    } catch (error) {
+      setError(error.message)
+    }
+  }
+  const handleRemoveFromDeliveryTemplate=(templateId,productQuantityId)=>{
+    try{
+      return removeProductFromDeliveryTemplate(templateId,productQuantityId)
+        .then(()=>{return handleGoToTemplateEdition(templateId)})
+        .catch(error=>setError(error.message))
+    }catch(error){
+      setError(error.message)
+    }
   }
   
   const handleRemoveFeedback=()=>{
@@ -199,14 +258,16 @@ function App() {
       {view==="clients" && action==="find" && <Searcher type={view} goToEdition={handleGoToClientEdition} onError={handleOnError} allFinds={allFinds}></Searcher>}
       {view==="products" && action==="find" && <Searcher type={view} goToEdition={handleGoToProductEdition}  onError={handleOnError} allFinds={allFinds}></Searcher>}
       {view==="deliveries" && action==="find" && <Searcher type={view} goToEdition={handleGoToDeliveryEdition}  onError={handleOnError} addTo={handleFindDeliveryClients} allFinds={allFinds}></Searcher>}
-      {view==="templates" && action==="find" && <Searcher type={view} goToEdition={handleGoToDeliveryEdition}  onError={handleOnError} addTo={handleGoToTemplateAdition} allFinds={allFinds}></Searcher>}
       {view==="delivery/clients" && action==="find" && <Searcher type={view} goToEdition={handleGoToDeliveryEdition}  onError={handleOnError} addTo={handleNewDelivery} back={handleFindDeliveries} allFinds={allFinds}></Searcher>}
       {view==="delivery/edit" && action==="find" && <Searcher type={view} goToEdition={handleFindProductToDelivery} onError={handleOnError}  back={()=>{handleChangeview("deliveries")}} remove={handleRemoveFromDelivery} allFinds={allFinds}></Searcher>}
       {view==="delivery/add" && action==="find" && <Searcher type={view} goToEdition={()=>{handleGoToDeliveryEdition(selection)}} onError={handleOnError}  addTo={handleAddToDelivery} delivery={selection} allFinds={allFinds}></Searcher>}
-      {false && view==="delivery/templates" && action==="find" && <Searcher type={view} goToEdition={()=>{handleGoToDeliveryEdition(selection)}} onError={handleOnError} back={()=>{handleChangeview("deliveries")}}  addTo={handleSelectTemplate} delivery={selection} allFinds={allFinds}></Searcher>}
+      {view==="delivery/templates" && action==="find" && <Searcher type={view} goToEdition={()=>{handleGoToDeliveryEdition(selection)}} onError={handleOnError} back={()=>{handleChangeview("deliveries")}}  addTo={handleSelectTemplate} delivery={selection} allFinds={allFinds}></Searcher>}
+      {view==="templates" && action==="find" && <Searcher type={view} goToEdition={handleGoToTemplateCreation}  onError={handleOnError} addTo={handleGoToTemplateEdition} allFinds={allFinds}></Searcher>}
+      {view==="templates/edit" && action==="find" && <Searcher type={view} goToEdition={handleFindProductToDelivery} addTo={handleFindProductToDeliveryTemplates} onError={handleOnError}  back={()=>{handleChangeview("templates")}} remove={handleRemoveFromDeliveryTemplate} allFinds={allFinds} ></Searcher>}
+      {view==="templates/add" && action==="find" && <Searcher type={view} onError={handleOnError} allFinds={allFinds} addTo={handleAddToDeliveryTemplate} back={()=>{handleChangeview("templates")}} ></Searcher>}
       {view==="clients" && action==="edit" && <Editor type={view} backToFinder={handelFindClients}  onError={handleOnError} client={selection}></Editor>}
       {view==="products" && action==="edit" && <Editor type={view} backToFinder={handleFindProducts}  onError={handleOnError} product={selection}></Editor>}
-      {false && view==="templates" && action==="edit" && <Editor type={view} backToFinder={handelFindDeliveryTemplates} onError={handleOnError}  ></Editor>}
+      {view==="templates" && action==="edit" && <Editor type={view} backToFinder={handelFindDeliveryTemplates} onError={handleOnError}  ></Editor>}
 
     </div>
   );
