@@ -12,11 +12,9 @@ module.exports = async function(email, password) {
     Email.validate(email)
     String.validate.notVoid(password)
 
-    return await this.httpClient.get(`${API_URL}/users/auth`, {
-            params: {
-                email,
-                password
-            }
+    return await this.httpClient.post(`${API_URL}/users/auth`, {
+            email,
+            password
         })
         .then(async ({ status, data }) => {
             if (status === 200) {

@@ -1,6 +1,5 @@
 require("dotenv").config()
-const MONGODB_URL = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@gluttony-stegt.gcp.mongodb.net/${process.env.MONGODB_DATABASE}?retryWrites=true&w=majority`
-const { env: { PORT: port, SECRET } } = process
+const { env: { PORT: port, SECRET, MONGODB_URI } } = process
 
 const express = require("express")
 const app = express()
@@ -25,10 +24,10 @@ const {
 const { mongoose } = require("gluttony-data")
 const removeFavourite = require("gluttony-server-logic/src/remove-favourite")
 
-mongoose.connect(MONGODB_URL)
+mongoose.connect(MONGODB_URI)
   .then(() => {
-    router.get("/users/auth", (req, res) => {
-      const { query: { email, password } } = req
+    router.post("/users/auth", (req, res) => {
+      const { body: { email, password } } = req
     
       try {
         authenticateUser(email, password)
