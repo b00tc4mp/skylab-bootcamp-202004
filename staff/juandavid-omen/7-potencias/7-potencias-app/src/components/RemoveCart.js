@@ -8,6 +8,6 @@ export default function ({ clearCart }) {
   }
 
   return (
-    <button onClick={handleRemoveCart}>Clear Cart</button>
+    <button className='clear-cart' onClick={handleRemoveCart}>Clear Cart</button>
   )
 }

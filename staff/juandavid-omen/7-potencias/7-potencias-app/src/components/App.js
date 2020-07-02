@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Login, Register, Home, NavBar, Products, Footer, CartDropdown } from '../components'
-import { isUserSessionValid, logoutUser, isUserLoggedIn, updateCart, retrieveCart, retrieveUser, deleteCart } from '7-potencias-client-logic'
+import { Login, Register, Home, NavBar, Products, Footer, CartDropdown, Checkout, Order } from '../components'
+import { isUserSessionValid, logoutUser, isUserLoggedIn, updateCart, retrieveCart, retrieveUser, deleteCart, placeOrder } from '7-potencias-client-logic'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 import { useOutsideClick } from '../hooks/outsideClick'
 import './App.sass'
@@ -13,7 +13,6 @@ export default withRouter(function ({ history }) {
   const [numItemsCart, setNumItemsCart] = useState(0)
 
   const { hidden: cartDropdownHidden, setHidden: setCartDropdownHidden, ref } = useOutsideClick(true)
-
 
   useEffect(() => {
     setCartDropdownHidden(true)
@@ -39,7 +38,7 @@ export default withRouter(function ({ history }) {
       .then(cart => {
         setCart(cart)
         let total = 0
-        for (let productSelection of cart) {
+        for (const productSelection of cart) {
           total += productSelection.quantity
         }
         setNumItemsCart(total)
@@ -68,12 +67,13 @@ export default withRouter(function ({ history }) {
 
   const handleLogout = () => {
     logoutUser()
-
+    setCart([])
+    setNumItemsCart(0)
     history.push('/')
   }
 
   const toggleHiddenDropdown = () => {
-      setCartDropdownHidden(!cartDropdownHidden)
+    setCartDropdownHidden(!cartDropdownHidden)
   }
 
   const addToCart = (id, name, price) => {
@@ -121,18 +121,37 @@ export default withRouter(function ({ history }) {
     }
   }
 
+  const handlePlacerOrder = () => {
+    if (isUserLoggedIn()) {
+      try {
+        placeOrder()
+          .then(() => {
+            setError(undefined)
+            setCart([])
+            setNumItemsCart(0)
+          })
+          .catch(({ message }) => {
+            setError(message)
+          })
+      } catch ({ message }) {
+        setError(message)
+      }
+      history.push('/order')
+    }
+  }
+
   return (
     <div className='app'>
       <NavBar onLogout={handleLogout} validateUserLogged={isUserLoggedIn} toggleHiddenDropdown={toggleHiddenDropdown} cartToggleRef={ref} quantityCart={numItemsCart} />
       <main>
         {cartDropdownHidden ? null : (<CartDropdown key='cartDropdown' reference={ref} cart={cart} toggleHidden={toggleHiddenDropdown} removeCart={handleDeleteCart} />)}
         <Route exact path='/' render={() => <Redirect to='landing' />} />
-        {/* <Route exact path='/' render={()=> token ? <Redirect to ='/home'}  /> : < */}
         <Route path='/register' render={() => isUserLoggedIn() ? <Redirect to='/home' /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />} />
         <Route path='/login' render={() => isUserLoggedIn() ? <Redirect to='/home' /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />} />
         <Route path='/home' render={() => isUserLoggedIn() ? <Home name={name} cart={cart} onLogout={handleLogout} /> : <Redirect to='/' />} />
-
-        <Route path='/lessons' render={() => <Products key='products' addToCart={addToCart} />} />
+        <Route path='/lessons' render={() => <Products key='products' addToCart={addToCart} removeCart={handleDeleteCart} />} />
+        <Route path='/checkout' render={() => <Checkout cart={cart} removeCart={handleDeleteCart} checkout={handlePlacerOrder} />} />
+        <Route path='/order' render={() => <Order />} />
       </main>
 
       <Footer />

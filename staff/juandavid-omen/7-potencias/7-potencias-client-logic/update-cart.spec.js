@@ -19,7 +19,7 @@ context.storage = {}
 describe('update cart', () => {
   before(() => mongoose.connect(MONGODB_URL))
 
-  let name, surname, email, password, token, lessonName, price, style, hour, minute, day, month, year
+  let name, surname, email, password, lessonName, price, style, hour, minute, day, month, year, productId, quantity
 
   beforeEach(() =>
     Lesson.deleteMany()
@@ -44,23 +44,25 @@ describe('update cart', () => {
     beforeEach(() =>
       Lesson.create({ lessonName, price, style, hour, minute, day, month, year })
         .then((lesson) => {
-          const productSelection = new ProductSelection({product: lesson, quantity: 1})
-          User.create({ name, surname, email, password, cart:[productSelection] }
-        }))
-        .then(_token => token = _token)
-    )
+          productId = lesson._id
+          const productSelection = new ProductSelection({ product: lesson, quantity: 1 })
 
-    it('should succeed on correct user id', done =>
-      updateCart(token)
-        .then(user => {
-          expect(user.name).to.equal(name)
-          expect(user.surname).to.equal(surname)
-          expect(user.email).to.equal(email)
-          expect(user.password).to.be.undefined
+          return User.create({ name, surname, email, password, cart: [productSelection] })
         })
-        .then(done())
-    )
+        .then(user => jwtPromised.sign({ sub: user.id }, SECRET))
+        .then(token => context.storage.token = token))
   })
+
+  it('should succeed on correct user id', () =>
+  
+    updateCart(productId, quantity = 2)
+      .then(cart => {
+        expect(cart._).to.equal(name)
+        expect(user.surname).to.equal(surname)
+        expect(user.email).to.equal(email)
+        expect(user.password).to.be.undefined
+      })
+  )
 
   describe('when user does not exist', () => {
     let userId
@@ -69,11 +71,11 @@ describe('update cart', () => {
       userId = '5ed1204ee99ccf6fae798aef'
 
       return jwtPromised.sign({ sub: userId }, SECRET)
-        .then(_token => token = _token)
+        .then(token => context.storage.token = token)
     })
 
     it('should fail when user does not exist', () =>
-      updateCart(token)
+      updateCart(productId, quantity)
         .then(() => { throw new Error('should not reach this point') })
         .catch(error => {
           expect(error).to.exist
@@ -84,7 +86,7 @@ describe('update cart', () => {
   })
 
   afterEach(() => User.deleteMany()
-  .then(() => Lesson.deleteMany))
+    .then(() => Lesson.deleteMany))
 
   after(mongoose.disconnect)
 })

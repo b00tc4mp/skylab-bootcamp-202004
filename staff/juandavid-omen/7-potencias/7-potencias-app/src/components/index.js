@@ -9,6 +9,8 @@ import Products from './Products'
 import Feedback from './Feedback'
 import Footer from './Footer'
 import CartDropdown from './CartDropdown'
+import Checkout from './Checkout'
+import Order from './Order'
 
 export {
   CartToggle,
@@ -21,5 +23,7 @@ export {
   Products,
   Feedback,
   Footer,
-  CartDropdown
+  CartDropdown,
+  Checkout,
+  Order
 }
