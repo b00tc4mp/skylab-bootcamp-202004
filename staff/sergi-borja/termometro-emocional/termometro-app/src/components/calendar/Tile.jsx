@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import mergeClassNames from 'merge-class-names';
-
+import { retrieveUser } from 'termometro-client-logic'
 import { tileProps } from './shared/propTypes';
+const moment = require('moment')
 
 function getValue(nextProps, prop) {
   const { activeStartDate, date, view } = nextProps;
@@ -50,9 +51,20 @@ export default class Tile extends Component {
       style,
       tileDisabled,
       view,
+      mood,
     } = this.props;
     const { tileClassName, tileContent } = this.state;
-    style.backgroundColor = 'red'
+
+    if (mood) {
+      let filteredDate = mood.filter(element => moment(element.date).format('LL') === moment(date).format('LL'))
+      if(filteredDate.length === 2){
+        if((filteredDate[0].score+filteredDate[1].score)/2 > 7) style.backgroundColor = 'rgba(147, 225, 57, 0.5)'
+        else if((filteredDate[0].score+filteredDate[1].score)/2 > 4) style.backgroundColor = 'rgba(255, 187, 129, 0.5)'
+        else if((filteredDate[0].score+filteredDate[1].score)/2 > 0) style.backgroundColor = 'rgba(211, 52, 20, 0.5)'
+      }
+    }
+
+
     return (
       <button
         className={mergeClassNames(classes, tileClassName)}
@@ -67,15 +79,16 @@ export default class Tile extends Component {
         style={style}
         type="button"
       >
-        {formatAbbr
-          ? (
-            <abbr aria-label={formatAbbr(locale, date)}>
-              {children}
-            </abbr>
-          )
-          : children}
+        {
+          formatAbbr
+            ? (
+              <abbr aria- label={formatAbbr(locale, date)}>
+                {children}
+              </abbr >
+            )
+            : children}
         {tileContent}
-      </button>
+      </button >
     );
   }
 }

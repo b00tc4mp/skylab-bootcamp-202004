@@ -15,6 +15,7 @@ export default function Day({
   calendarType,
   classes,
   currentMonthIndex,
+  mood,
   ...otherProps
 }) {
   const { date } = otherProps;
@@ -32,6 +33,7 @@ export default function Day({
       maxDateTransform={getDayEnd}
       minDateTransform={getDayStart}
       view="month"
+      mood= {mood}
     >
       {getDate(date)}
     </Tile>

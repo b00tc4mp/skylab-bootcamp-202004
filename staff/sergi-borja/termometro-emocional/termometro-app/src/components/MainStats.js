@@ -238,9 +238,6 @@ function MainStats({ token, rol }) {
             {displayCalendar && <div className='mainStatsContainer__calendarContainer'>
                 <Calendar className='mainStatsContainer__calendarContainer--calendar' onClickDay={(dayClicked) => handleDayClicked(dayClicked)} />
             </div>}
-
-
-            <div dangerouslySetInnerHTML={{__html: '<button>'}} />
         </section>
     );
 

@@ -589,6 +589,7 @@ export default class Calendar extends Component {
       />
     );
   }
+  
 
   render() {
     const { className, selectRange, showDoubleView } = this.props;

@@ -7,6 +7,9 @@ import WeekNumbers from './MonthView/WeekNumbers';
 
 import { CALENDAR_TYPES, CALENDAR_TYPE_LOCALES } from './shared/const';
 import { isCalendarType } from './shared/propTypes';
+import { useEffect } from 'react';
+import { retrieveUser } from 'termometro-client-logic';
+import { useState } from 'react';
 
 function getCalendarTypeFromLocale(locale) {
   return (
@@ -57,12 +60,23 @@ export default function MonthView(props) {
       />
     );
   }
-
+  const [mood, setMood] = useState()
+  useEffect(() => {
+    try {
+      retrieveUser(sessionStorage.token)
+        .then(({ mood }) => {
+          setMood(mood)
+        })
+    } catch (error) {
+      if (error) throw error
+    }
+  }, [])
   function renderDays() {
     return (
       <Days
         calendarType={calendarType}
         {...childProps}
+        mood={mood}
       />
     );
   }

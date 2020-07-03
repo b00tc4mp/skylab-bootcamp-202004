@@ -12,10 +12,13 @@ import Day from './Day';
 import { getDayOfWeek } from '../shared/dates';
 import { isCalendarType, tileGroupProps } from '../shared/propTypes';
 
+
 export default function Days(props) {
+  
   const {
     activeStartDate,
     calendarType,
+    mood,
   } = props;
   const {
     showFixedNumberOfWeeks,
@@ -62,6 +65,8 @@ export default function Days(props) {
     return daysInMonth;
   })();
 
+
+
   return (
     <TileGroup
       {...otherProps}
@@ -78,6 +83,7 @@ export default function Days(props) {
       end={end}
       offset={offset}
       start={start}
+      mood = {mood}
       tile={Day}
     />
   );
