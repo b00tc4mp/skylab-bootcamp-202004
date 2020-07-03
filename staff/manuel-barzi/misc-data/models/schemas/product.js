@@ -1,5 +1,5 @@
 const { Schema } = require('mongoose')
-require('misc-commons/polyfills/URL')
+require('misc-commons/polyfills/url')
 
 module.exports = new Schema({
     name: {
