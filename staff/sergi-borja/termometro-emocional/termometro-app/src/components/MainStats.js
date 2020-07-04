@@ -4,7 +4,7 @@ import createFamilyList from 'termometro-client-logic/create-family-list'
 import retrieveUser from 'termometro-client-logic/retrieve-user'
 import './MainStats.sass'
 // import Calendar from 'react-calendar'
-import { Calendar} from './calendar'
+import { Calendar } from './calendar'
 import reactDom from 'react-dom'
 const moment = require('moment')
 moment.locale('es')
@@ -103,10 +103,6 @@ function MainStats({ token, rol }) {
 
     const handleChartCreation = async (member) => {
 
-        if (window.screen.height < 750) setWindowHeigth(430)
-        else if (window.screen.height < 850) setWindowHeigth(520)
-        else setWindowHeigth(320)
-
         const adminInfo = await retrieveUser(token)
 
         let dateArray;
@@ -118,6 +114,10 @@ function MainStats({ token, rol }) {
         else userInfo = adminInfo
 
         if (_dayClicked) {
+            if (window.screen.height < 750) setWindowHeigth(400)
+            else if (window.screen.height < 850) setWindowHeigth(520)
+            else setWindowHeigth(320)
+
             let clickDayInfo = userInfo.mood.filter((element) => moment(element.date).format('LL') === moment(_dayClicked).format('LL'))
             if (clickDayInfo.length === 2) {
                 dateArray = [moment(clickDayInfo[0].date).format('HH:mm'), moment(clickDayInfo[1].date).format('HH:mm')]
@@ -127,7 +127,11 @@ function MainStats({ token, rol }) {
                 setHasStats(false)
             }
         } else if (!_dayClicked) {
+            if (window.screen.height < 750) setWindowHeigth(430)
+            else if (window.screen.height < 850) setWindowHeigth(520)
+            else setWindowHeigth(320)
             setChartOfCalendar(false)
+
             if (days <= (userInfo.mood.length / 2)) {
                 setHasStats(true)
                 dateArray = settingDateArray(userInfo);
@@ -232,7 +236,7 @@ function MainStats({ token, rol }) {
 
             {!displayCalendar && chartOfCalendar && _dayClicked && hasStats && <div className='mainStatsContainer__chartContainer'>
                 <h1 className='mainStatsContainer__chartContainer--dateTitle'>{moment(_dayClicked).format('ll')}</h1>
-                <Bar data={chartData} options={chartOptions.options} height={500} />
+                <Bar data={chartData} options={chartOptions.options} height={windowHeigth} />
             </div>}
 
             {displayCalendar && <div className='mainStatsContainer__calendarContainer'>
