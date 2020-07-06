@@ -29,7 +29,7 @@ String.validate = function (string) {
 }
 
 String.validate.notVoid = function (string) {
-    if (this.isVoid(string)) throw new VoidError(`string is empty or blank`)
+    if (this.isVoid(string)) throw new VoidError("String is empty or blank")
 }.bind(String)
 
 String.validate.alphabetic = function (string) {

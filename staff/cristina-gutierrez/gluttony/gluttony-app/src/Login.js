@@ -12,6 +12,7 @@ import { authenticateUser } from "../gluttony-client-logic"
 const Login = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [feedback, setFeedback] = useState();
 
     return (
         <View style={styles.modalView}>
@@ -31,11 +32,14 @@ const Login = (props) => {
                 style={styles.input}
                 onChangeText={(text) => setPassword(text)}
             />
-
+            {feedback && <Text style={styles.feedbackText}>{feedback}</Text>}
             <TouchableOpacity style={styles.openButton} onPress={() => {
-                authenticateUser(email, password)
-                    .then(() => props.onCloseModal())
-                    .catch(error => setFeedback(error.message))
+                try {
+                    authenticateUser(email, password)
+                        .then(() => props.onCloseModal(), error => setFeedback(error.message))
+                } catch(error) {
+                    setFeedback(error.message)
+                }
             }}>
                 <Text style={styles.textStyle}>Log in</Text>
             </TouchableOpacity>
@@ -85,6 +89,13 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         fontWeight: "600",
         textAlign: "center"
+    },
+    feedbackText: {
+        marginBottom: 15,
+        marginTop: 4,
+        fontWeight: "500",
+        textAlign: "center",
+        color: "red"
     },
     logo: {
         width: 200,

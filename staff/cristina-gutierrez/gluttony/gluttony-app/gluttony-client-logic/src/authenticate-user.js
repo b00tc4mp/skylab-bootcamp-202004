@@ -10,7 +10,11 @@ const context = require("./context")
  */
 module.exports = async function(email, password) {
     Email.validate(email)
-    String.validate.notVoid(password)
+    try {
+        String.validate.notVoid(password)
+    } catch(error) {
+        throw new Error("Password is empty")
+    }
 
     return await this.httpClient.post(`${API_URL}/users/auth`, {
             email,
@@ -28,4 +32,5 @@ module.exports = async function(email, password) {
                 throw new Error(data.error)
             }
         })
+        .catch(() => {throw new Error("Email or password is not valid")})
 }.bind(context)

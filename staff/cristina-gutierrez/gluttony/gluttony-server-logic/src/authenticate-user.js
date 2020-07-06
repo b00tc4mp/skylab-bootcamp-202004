@@ -11,15 +11,14 @@ const bcrypt = require("bcryptjs")
 module.exports = (email, password) => {
     Email.validate(email)
     String.validate.notVoid(password)
-    String.validate.notVoid(password)
 
     return Users.findOne({ email })
         .then(user => {
-            if (!user) throw new UnexistenceError(`user with e-mail ${email} does not exist`)
+            if (!user) throw new UnexistenceError(`User with e-mail ${email} does not exist`)
 
             return bcrypt.compare(password, user.password)
                 .then(match => {
-                    if (!match) throw new CredentialsError("wrong password")
+                    if (!match) throw new CredentialsError("Wrong password")
 
                     return user.id
                 })
