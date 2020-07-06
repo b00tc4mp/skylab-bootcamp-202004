@@ -15,12 +15,13 @@ float b;
 int buf[10],temp;
 String data;
 String ph;
-
-const char* ssid = "skylabCodersAcademy";
-const char* password = "skylabRocks";
+String batLevel;
 
 const char* serverNameTemp = "http://192.168.0.35:8080/api/temperature/123123123";
 const char* serverNamePh = "http://192.168.0.35:8080/api/ph/123123123";
+const char* serverBattery = "http://192.168.0.35:8080/api/battery/123123123";
+const char* ssid = "";
+const char* password = "";
 
 unsigned long lastTime = 0;
 
@@ -51,7 +52,9 @@ void loop() {
  
   if ((millis() - lastTime) > timerDelay) {
     if(WiFi.status() == WL_CONNECTED) {
+
       sensors.requestTemperatures();
+      batLevel= readBattery();
       data = (sensors.getTempCByIndex(0));
       
       {
@@ -97,9 +100,14 @@ void loop() {
       int httpResponsePh = http.POST("{\"ph\":"+ph+"}");
 
       Serial.println(httpResponsePh);
-      Serial.println("WiFi Disconnected");
-      http.end();
       
+      http.begin(serverBattery);
+      Serial.println(batLevel);
+      http.addHeader("Content-Type", "application/json");
+      int httpResponseBat = http.PATCH("{\"battery\":"+batLevel+"}");
+
+      http.end();
+      Serial.println("WiFi Disconnected");
     }
      
     }
@@ -107,17 +115,15 @@ void loop() {
   }
 }
 
-
-
-//String readBattery(){
-//  uint8_t percentage = 100;
-//  float voltage = analogRead(A0) / 4096.0 * 4.24;    // Wemos / Lolin D1 Mini 100K series resistor added
-//  Serial.println("Voltage = " + String(voltage));
-//  percentage = 2808.3808 * pow(voltage, 4) - 43560.9157 * pow(voltage, 3) + 252848.5888 * pow(voltage, 2) - 650767.4615 * voltage + 626532.5703;
-//  if (voltage > 4.19) percentage = 100;
-//  else if (voltage <= 3.50) percentage = 0;
-//  return String(percentage)+"%";
-//}
+String readBattery(){
+ uint8_t percentage = 100;
+ float voltage = analogRead(A0) / 4096.0 * 4.24;    // Wemos / Lolin D1 Mini 100K series resistor added
+ Serial.println("Voltage = " + String(voltage));
+ percentage = 2808.3808 * pow(voltage, 4) - 43560.9157 * pow(voltage, 3) + 252848.5888 * pow(voltage, 2) - 650767.4615 * voltage + 626532.5703;
+ if (voltage > 4.19) percentage = 100;
+ else if (voltage <= 3.50) percentage = 0;
+ return String(percentage)+"%";
+}
 
 
 
