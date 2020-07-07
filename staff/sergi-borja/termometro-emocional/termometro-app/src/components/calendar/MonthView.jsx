@@ -25,6 +25,7 @@ export default function MonthView(props) {
     locale,
     onMouseLeave,
     showFixedNumberOfWeeks,
+    memberSelected,
   } = props;
   const {
     calendarType = getCalendarTypeFromLocale(locale),
@@ -62,15 +63,23 @@ export default function MonthView(props) {
   }
   const [mood, setMood] = useState()
   useEffect(() => {
-    try {
-      retrieveUser(sessionStorage.token)
-        .then(({ mood }) => {
-          setMood(mood)
-        })
-    } catch (error) {
-      if (error) throw error
+
+    if (!memberSelected.mood) {
+
+      try {
+        retrieveUser(sessionStorage.token)
+          .then(({ mood }) => {
+            setMood(mood)
+          })
+      } catch (error) {
+        if (error) throw error
+      }
+
+    } else {
+      setMood(memberSelected.mood)
     }
   }, [])
+
   function renderDays() {
     return (
       <Days

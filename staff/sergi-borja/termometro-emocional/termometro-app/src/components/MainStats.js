@@ -22,10 +22,12 @@ function MainStats({ token, rol }) {
     const [_dayClicked, setDayClicked] = useState()
     const [hasStats, setHasStats] = useState(true)
     const [windowHeigth, setWindowHeigth] = useState()
-    const [myHtmlString, setMyHtmlString] = useState()
+    const [_windowHeigth, set_WindowHeigth] = useState()
+    const [chartFontSize, setChartFontSize] = useState()
 
 
     const chartOptions = {
+
         options: {
             legend: {
                 display: false
@@ -38,8 +40,8 @@ function MainStats({ token, rol }) {
                     ticks: {
                         beginAtZero: true,
                         max: 10,
-                        fontSize: 20,
-                        color: 'rgba(0,0,0,1)'
+                        color: 'rgba(0,0,0,1)',
+                        fontSize: chartFontSize
                     }
                 }],
                 yAxes: [{
@@ -50,7 +52,7 @@ function MainStats({ token, rol }) {
                         mirror: true,
                         beginAtZero: true,
                         max: 10,
-                        fontSize: 18
+                        fontSize: chartFontSize
                     }
                 }]
             },
@@ -63,6 +65,7 @@ function MainStats({ token, rol }) {
         setDisplayCalendar(false)
         setDayClicked(false)
     }
+
 
 
     const settingDateArray = (userInfo) => {
@@ -113,10 +116,13 @@ function MainStats({ token, rol }) {
         if (member) userInfo = member
         else userInfo = adminInfo
 
+        if(window.screen.height < 850) setChartFontSize(18)
+        else setChartFontSize(27)
+
         if (_dayClicked) {
-            if (window.screen.height < 750) setWindowHeigth(400)
-            else if (window.screen.height < 850) setWindowHeigth(520)
-            else setWindowHeigth(320)
+            if (window.screen.height < 750) set_WindowHeigth(405)
+            else if (window.screen.height < 850) set_WindowHeigth(500)
+            else set_WindowHeigth(310)
 
             let clickDayInfo = userInfo.mood.filter((element) => moment(element.date).format('LL') === moment(_dayClicked).format('LL'))
             if (clickDayInfo.length === 2) {
@@ -234,13 +240,13 @@ function MainStats({ token, rol }) {
                 <HorizontalBar data={chartData} options={chartOptions.options} height={windowHeigth} />
             </div>}
 
-            {!displayCalendar && chartOfCalendar && _dayClicked && hasStats && <div className='mainStatsContainer__chartContainer'>
+            {!displayCalendar && chartOfCalendar && _dayClicked && hasStats && _windowHeigth && <div className='mainStatsContainer__chartContainer'>
                 <h1 className='mainStatsContainer__chartContainer--dateTitle'>{moment(_dayClicked).format('ll')}</h1>
-                <Bar data={chartData} options={chartOptions.options} height={windowHeigth} />
+                <Bar data={chartData} options={chartOptions.options} height={_windowHeigth} />
             </div>}
 
             {displayCalendar && <div className='mainStatsContainer__calendarContainer'>
-                <Calendar className='mainStatsContainer__calendarContainer--calendar' onClickDay={(dayClicked) => handleDayClicked(dayClicked)} />
+                <Calendar className='mainStatsContainer__calendarContainer--calendar' memberSelected={memberSelected} onClickDay={(dayClicked) => handleDayClicked(dayClicked)} />
             </div>}
         </section>
     );
@@ -250,6 +256,8 @@ function MainStats({ token, rol }) {
 }
 
 export default MainStats;
+
+
 
 
 

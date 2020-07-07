@@ -29,7 +29,6 @@ function Login({onLogin}) {
 
   return (
     <section className='loginContainer'>
-      <div className='loginContainer__grayBackground'></div>
       <img src={logo} className='loginContainer__logo'></img>
       <h1 className='loginContainer__title'>El termometro del autoestima</h1>
         <span className='loginContainer__loginText'>Alguien de mi familia ya me ha registrado:</span>

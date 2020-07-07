@@ -52,9 +52,12 @@ function HandleAccounts({ token, history }) {
     return (
         <section className='handleAccountsContainer'>
             <div className='handleAccountsContainer__container'>
-            <img className='editMemberContainer__backIcon' src={backButton} onClick={()=>history.push('/settings')}></img>
-            <h1 className='handleAccountsContainer__title'>Mi Familia</h1>
+            <img className='handleAccountsContainer__backIcon' src={backButton} onClick={()=>history.push('/settings')}></img>
+            <h1 className='handleAccountsContainer__title'>Gestionar</h1>
             </div>
+            {familyList &&  familyList.length > 0 && <div className='handleAccountsContainer__myUserTitle'>
+            <h1 className='handleAccountsContainer__title'>Mi Familia</h1>
+            </div>}
             <div className='handleAccountsContainer__familyListContainer'>
                 <ul className='handleAccountsContainer__familyListContainer--ul'>
                     {familyList && familyList.map((member) => <li key={member.id} className='handleAccountsContainer__familyListContainer--li'>{member.name} <img onClick={()=>handleDeleteMember(member)} className='handleAccountsContainer__deleteIcon' src={deleteIcon}></img></li>)}
