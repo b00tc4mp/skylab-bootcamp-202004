@@ -1,5 +1,6 @@
 const { API_URL } = require("../../config")
 require("gluttony-commons/polyfills/string")
+const { errors: { AuthenticationError } } = require("gluttony-commons")
 const context = require("./context")
 
 /**
@@ -15,7 +16,7 @@ module.exports = async function(text, storeId) {
         token = await this.storage.getItem("token");
         String.validate.notVoid(token);
     } catch (error) {
-        throw new Error("Error retrieving data")
+        throw new AuthenticationError("User is not authenticated")
     }
 
     return await this.httpClient.post(`${API_URL}/comments`, {
@@ -29,4 +30,5 @@ module.exports = async function(text, storeId) {
             if (status === 201) return
             throw new Error(data.error)
         })
+        .catch(() => {throw new Error("Comment is not valid")})
 }.bind(context)
