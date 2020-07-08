@@ -8,7 +8,7 @@
  * @throws {Error} If there is a server error.
  */
 
- require('commons/polyfills/string')
+require('commons/polyfills/string')
 const { utils: { call } } = require('commons')
 const context = require('./context')
 global.fetch = require('node-fetch')

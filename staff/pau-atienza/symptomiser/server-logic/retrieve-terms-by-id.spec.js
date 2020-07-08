@@ -48,7 +48,6 @@ describe('server logic - retrieve-terms-by-HPO_id', () => {
 
         it('should not retrieve higher when symptom does not have the is_a property', () =>{
             HPO_id = "HP:0000001"
-            debugger
 
             return retrieveTermsById(HPO_id)
                 .then(result => {

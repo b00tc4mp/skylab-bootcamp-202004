@@ -11,12 +11,24 @@ import { retrieveTermsByQuery, retrieveTermsById, savePredictorInput, savePredic
   updateSymptom, saveSymptom, setSymptomToModify, retrieveResultsFromStorage } from 'client-logic'
 
 import { Route, withRouter } from 'react-router-dom'
+import { useEffect } from 'react'
 
 function App({ history }) {
   
-  const [results, setResults] = useState(retrieveResultsFromStorage())
+  const [results, setResults] = useState(null)
   const [highlightedSymptom, setHighlightedSymptom] = useState(null)
   const [feedback, setFeedback] = useState(null)
+
+  useEffect(()=>{
+    try{
+      setResults(retrieveResultsFromStorage())
+
+    }catch(error){
+      const { message } = error
+
+      setFeedback({level: "error", message})
+    }
+  }, [])
 
   const symptomQuery = async event =>{
     event.preventDefault()
@@ -105,7 +117,7 @@ function App({ history }) {
     <Route exact path="/" render={() => <Landing feedback = {feedback} onSubmit = {symptomQuery}/>} />
     {history.location.pathname !== '/' && <NavBar history = {history} clearFeedback = {clearFeedback}>
       <Route exact path="/symptomlist" render={() => <SymptomList feedback = {feedback} goToDetails = {goToDetails}/>} />
-      <Route exact path="/results" render={() => <Results results = {results} onClick = {retrieveSymptom} clickedSymptom = {highlightedSymptom} goToSymptom = {goToSymptom}/>} />
+      <Route exact path="/results" render={() => <Results feedback = {feedback} results = {results} onClick = {retrieveSymptom} clickedSymptom = {highlightedSymptom} goToSymptom = {goToSymptom}/>} />
       <Route exact path="/about" render={() => <About/>} />
       <Route exact path="/symptom" render={() => <Symptom symptom = {highlightedSymptom} goToSymptom = {retrieveSymptom} submitSymptom = {submitSymptom}/>} />
       <Route exact path="/details" render={() => <ModifiersForm feedback = {feedback} saveModifiedSymptom = {saveModifiedSymptom}/>} />

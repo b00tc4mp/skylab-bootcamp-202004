@@ -19,7 +19,7 @@
  * 
  * @throws {TypeError} If any of the parameters does not match the corresponding type.
  * @throws {VoidError} If any of the parameters expected to be a string is an empty string.
- * @throws {Error} If there is a server error.
+ * @throws {Error} If there is missing information in the navigation.
  */
 
 require('commons/polyfills/string')
