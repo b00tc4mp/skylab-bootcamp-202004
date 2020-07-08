@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, Alert } from 'react-native'
+import { View, StyleSheet, Text, Alert, Dimensions } from 'react-native'
 import HeaderHome from './HeaderHome'
 import WeekDays from './WeekDays'
 import TimeLaundry from './timeLaundry'
@@ -13,19 +13,33 @@ import { useFocusEffect } from '@react-navigation/native'
 
 const Laundry = function ({ navigation }) {
     const [week, setWeek] = useState()
-    const [day, setDay] = useState(moment().date())
+    const [dayNow, setDay] = useState(moment().date())
     const [result, setResults] = useState()
     const [laundries, setLaundries] = useState([])
-    const [hour, setHour] = useState()
+    const [hourSelected, setHour] = useState()
     const [update, setUpdate] = useState(false)
     const [userId, setUserId] = useState()
     const [cohousing, setCohousing] = useState()
+    const [dayCancel, setDayCancel] = useState('')
+    const [hourCancel, setHourCancel] = useState('')
+    const [cohousingLaundries, setCohousingLaundries] = useState([])
 
     useFocusEffect(
         React.useCallback(() => {
             (async () => {
+
+                const { id } = await retrieveUser()
                 const _cohousing = await retrieveCohousing()
                 setCohousing(_cohousing)
+
+                const { laundry } = _cohousing
+                const { hour, day } = laundry.find(laundry => laundry.user === id)
+                console.log(hour)
+                setHourCancel(hour)
+                setDayCancel(day)
+                setCohousingLaundries(laundry)
+
+
             })()
 
             return () => {
@@ -50,14 +64,19 @@ const Laundry = function ({ navigation }) {
             }
         })()
 
-    }, [day])
+    }, [dayNow, cohousingLaundries.length])
 
 
     const __handleUpdate__ = async () => {
         try {
-
+            debugger
             const { id } = await retrieveUser()
-            const laundriesAmount = await retrieveLaundry(day)
+            const laundriesAmount = await retrieveLaundry(dayNow)
+
+            const _cohousing = await retrieveCohousing()
+            const { laundry } = _cohousing
+            setCohousingLaundries(laundry)
+
             setUserId(id)
             setLaundries(laundriesAmount)
 
@@ -69,11 +88,15 @@ const Laundry = function ({ navigation }) {
     const handleDaySelection = async (_day) => setDay(_day.day)
 
 
-    const handleHourSelection = async (hour) => {
+    const handleHourSelection = async (hourSelected) => {
+
 
         try {
 
-            await addDateLaundry(day, hour)
+            await addDateLaundry(dayNow, hourSelected)
+            setHourCancel(hourSelected)
+            setDayCancel(dayNow)
+
             await __handleUpdate__()
 
         } catch (error) {
@@ -103,33 +126,37 @@ const Laundry = function ({ navigation }) {
             <View style={{ backgroundColor: 'white' }}>
 
                 {
-                    laundries.find(laundry => laundry.userId === userId) ?
+                    cohousingLaundries.find(laundry => { return laundry.user === userId }) ?// prova
+                        //laundries.find(laundry => { return laundry.userId === userId }) ?
+                        <>
+                            <Text style={styles.textLaundry}>Your reservation</Text>
+                            <View style={styles.reserve}>
 
 
-                        <View style={styles.reserve}>
+                                <View style={styles.dayContainer}>
+                                    <Text style={styles.day}>Day & Hour:</Text>
+                                    <Text style={styles.hour}>{dayCancel},  {hourCancel}</Text>
+                                </View>
 
-                            <View>
-                                <SvgUri source={require('../assets/ic-whasing-machine-black.svg')} />
+                                <View style={styles.verticalLine}></View>
+
+                                <View style={styles.cancelContainer}>
+                                    <TouchableOpacity activeOpacity={0.8} onPress={() => handleOnCancelLaundry()}>
+                                        <Text style={styles.cancel}>CANCEL</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
+                        </>
+                        :
 
-                            <View style={styles.dayContainer}>
-                                <Text style={styles.day}>Do you want to cancel?</Text>
-                            </View>
-
-                            <View style={styles.cancelContainer}>
-                                <TouchableOpacity activeOpacity={0.8} onPress={() => handleOnCancelLaundry()}>
-                                    <Text style={styles.cancel}>CANCEL</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View> :
                         <Text style={styles.textLaundry}>Reserve your washing machine!</Text>
 
                 }
 
             </View>
             <View style={styles.daysContainer}>
-                <WeekDays daySelected={day} currentWeek={week} onSelectedDay={handleDaySelection} />
-                <TimeLaundry currentUserId={userId} onSelectedHour={handleHourSelection} laundriesAmount={laundries} />
+                <WeekDays daySelected={dayNow} currentWeek={week} onSelectedDay={handleDaySelection} />
+                <TimeLaundry currentUserId={userId} onSelectedHour={handleHourSelection} laundriesAmount={laundries} cohousing={cohousingLaundries} daySelected={dayNow} />
             </View>
         </View>
     )
@@ -166,12 +193,26 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         borderTopWidth: 0.7,
-        marginTop: 15,
         alignItems: 'center',
         height: 100
     },
+    verticalLine: {
+        width: 1,
+        height: 100,
+        backgroundColor: 'black'
+    },
+    dayContainer: {
+        width: Dimensions.get('window').width / 2
+
+    },
+    cancelContainer: {
+        width: Dimensions.get('window').width / 2,
+        flex: 1,
+        alignItems: 'center'
+
+    },
     cancel: {
-        width: 90,
+        width: 180,
         height: 50,
         backgroundColor: '#003725',
         color: 'white',
@@ -182,7 +223,16 @@ const styles = StyleSheet.create({
     },
 
     day: {
-        fontSize: 20
+        fontSize: 17,
+        marginLeft: 20,
+        marginBottom: 2,
+
+    },
+    hour: {
+        fontSize: 18,
+        marginLeft: 20,
+        marginTop: 2,
+        fontWeight: '700'
     }
 
 

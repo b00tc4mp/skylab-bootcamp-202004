@@ -12,11 +12,9 @@ import { useFocusEffect } from '@react-navigation/native'
 
 const ShopList = function ({ navigation }) {
 
-
     const [userFoodList, setUserFoodList] = useState([])
     const [cohousing, setCohousing] = useState()
     const [userRole, setUserRole] = useState()
-
 
     useFocusEffect(
         React.useCallback(() => {
@@ -155,8 +153,6 @@ const styles = StyleSheet.create({
         marginTop: 40
     },
     weight: {
-
-
         marginLeft: 15,
         fontWeight: '700',
         fontSize: 17

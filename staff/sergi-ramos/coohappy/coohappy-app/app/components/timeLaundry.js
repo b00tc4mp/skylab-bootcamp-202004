@@ -1,11 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TouchableOpacity, View, StyleSheet, Text, ScrollView } from 'react-native'
 import { timeFrames } from '../constants/time-frames'
 
 
-const TimeLaundry = function ({ laundriesAmount, onSelectedHour, currentUserId }) {
+const TimeLaundry = function ({ laundriesAmount, onSelectedHour, currentUserId, cohousing, daySelected }) {
 
+    const [cohousingLaundries, setCohousingLaundries] = useState()
 
+    //prova linia 9-25
+    useEffect(() => {
+
+        (async () => {
+            debugger
+    
+            const _cohousing = await retrieveCohousing()
+            setCohousing(_cohousing)
+            const { laundry } = _cohousing
+            setCohousingLaundries(laundry)
+            
+        })
+
+    }, [])
+
+    useEffect(() => {
+       
+    }, [cohousingLaundries])
+
+//    console.log(daySelected)
+   // console.log(cohousing)
+    //console.log(laundriesAmount)
+//     console.log(daySelected === cohousing[3].day)
+//   console.log(typeof(daySelected))
     return (<>
 
         <ScrollView style={styles.scrollView}>
@@ -13,13 +38,15 @@ const TimeLaundry = function ({ laundriesAmount, onSelectedHour, currentUserId }
 
                 {
                     timeFrames && timeFrames.map(time =>
-                       
+
                         (laundriesAmount && laundriesAmount.findIndex(x => x.hour === time && x.amount === 4)) === -1 ?
                             <TouchableOpacity onPress={() => onSelectedHour(time)} activeOpacity={0.7} >
                                 {
 
-                                    laundriesAmount.find(laundry => laundry.userId === currentUserId && time === laundry.hour) ?
-
+                                    //laundriesAmount.find(laundry => laundry.userId === currentUserId && time === laundry.hour) ?
+                            
+                                    cohousing && cohousing.find(laundry => laundry.user === currentUserId && time === laundry.hour && daySelected.toString() === laundry.day  ) ?//prova
+                                  
                                         <View style={styles.hourContainerSelected}>
 
                                             <Text style={styles.hourSelected}>{time}</Text>
@@ -37,7 +64,9 @@ const TimeLaundry = function ({ laundriesAmount, onSelectedHour, currentUserId }
                             <TouchableOpacity activeOpacity={0.7} >
 
                                 {
-                                    laundriesAmount.find(laundry => laundry.userId === currentUserId && time === laundry.hour) ?
+                                    //laundriesAmount.find(laundry => laundry.userId === currentUserId && time === laundry.hour) ?
+
+                                    cohousing && cohousing.find(laundry => laundry.user === currentUserId && time === laundry.hour ) ?//prova
 
                                         <View style={styles.hourContainerSelected}>
 
@@ -48,7 +77,7 @@ const TimeLaundry = function ({ laundriesAmount, onSelectedHour, currentUserId }
                                         <View style={styles.hourContainerComplete}>
 
                                             <Text style={styles.hour}>{time}</Text>
-                                            <Text style={styles.availability}>Complete</Text>
+                                            <Text style={styles.availabilityComplete}>Complete</Text>
                                         </View>
                                 }
                             </TouchableOpacity>
@@ -89,13 +118,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#069b69',
         marginLeft: 20,
-        fontWeight:'700',
+        fontWeight: '700',
         width: 120
     },
     availabilitySelected: {
         color: '#069b69',
         marginRight: 20,
-        fontWeight:'700',
+        fontWeight: '700',
         width: 109
     },
     hourContainerComplete: {
@@ -111,10 +140,14 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#81868e',
         marginLeft: 20,
-        width:112
+        width: 112
     },
     availability: {
         color: '#069b69',
+        marginRight: 20
+    },
+    availabilityComplete: {
+        color: '#81868e',
         marginRight: 20
     },
     scrollView: {

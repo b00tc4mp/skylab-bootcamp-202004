@@ -14,7 +14,7 @@ import ShopListAdmin from './app/components/ShopListAdmin'
 import logic from 'coohappy-client-logic'
 
 logic.__context__.storage = AsyncStorage
-logic.__context__.API_URL = 'http://192.168.0.19:8080/api'
+logic.__context__.API_URL = 'http://192.168.1.111:8080/api'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'

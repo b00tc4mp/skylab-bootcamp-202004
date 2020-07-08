@@ -32,7 +32,7 @@ const WellcomePage = function ({ name: _name, navigation }) {
             <View style={styles.container}>
                 
                 <View style={styles.header}>
-                    <Text style={styles.titleText}>Wellcome {name}!</Text>
+                    <Text style={styles.titleText}>Welcome {name}!</Text>
                     <TouchableOpacity onPress={ () => navigation.navigate('UpdateUser')} activeOpacity={0.8}>
                     <SvgUri style={styles.userIcon} source={require('../assets/ic-user.svg')} />
                     </TouchableOpacity>

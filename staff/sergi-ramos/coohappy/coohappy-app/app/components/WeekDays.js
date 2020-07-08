@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
         fontSize: 25,
         color: '#81868e',
         fontWeight: '700',
-        width: 32
+        width: 32,
+        textAlign: 'center'
     },
     dayName: {
         color: '#797979',
@@ -81,7 +82,8 @@ const styles = StyleSheet.create({
         fontSize: 25,
         color: 'white',
         fontWeight: '700',
-        width: 32
+        width: 32,
+        textAlign: 'center'
     },
     dayNameSelected: {
         color: 'white',
