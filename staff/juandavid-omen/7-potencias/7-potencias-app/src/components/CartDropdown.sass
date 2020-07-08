@@ -13,32 +13,44 @@
 	background: rgba(230, 214, 211, 0.95)
 
 	.cart-items
-		height: 240px
+		height: 100%
 		display: flex
 		flex-direction: column
 		overflow-y: auto
 		color: black
+
+		&__wrapper
+			height: 100%
 
 		&__item
 			display: flex
 			justify-content: space-between
 			margin: 0.7rem 0
 
-		&__title
+		&__item-title
 			font-size: 1rem
 			min-width: 5rem
 			max-width: 5rem
+			font-weight: bold
 
-		&__amount span
+		&__item-amount span
 			margin: 0.3rem
 
-		&__total
+		&__item-total
 			font-size: 1rem
 			margin-left: 1rem
 			
-	.empty-message
-		font-size: 1.1rem
-		margin: 50px auto
+		&__empty-message
+			font-size: 1.1rem
+			margin: 50px auto
+	
+		&__total
+			width: 100%
+			border-top: 0.1rem solid #c0b7bb
+			color: grey
+			display: flex
+			justify-content: space-between
+			padding: 1rem
 
 	.button-items
 		height: 2rem
@@ -57,7 +69,6 @@
 			&:hover
 				cursor: pointer
 				background-color: #ceaab2
-
 
 		.checkout-button
 			height: 2rem
