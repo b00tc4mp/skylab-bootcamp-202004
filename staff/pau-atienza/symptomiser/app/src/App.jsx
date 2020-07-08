@@ -27,7 +27,6 @@ function App({ history }) {
       const { message } = error
 
       setFeedback({level: "error", message})
-      history.push('/')
     }
   }, [])
 
