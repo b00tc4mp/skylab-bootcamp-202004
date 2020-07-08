@@ -11,6 +11,8 @@ import Footer from './Footer'
 import CartDropdown from './CartDropdown'
 import Checkout from './Checkout'
 import Order from './Order'
+import SideBar from './SideBar'
+import SideBarToggle from './SideBarToggle'
 
 export {
   CartToggle,
@@ -25,5 +27,7 @@ export {
   Footer,
   CartDropdown,
   Checkout,
-  Order
+  Order,
+  SideBar,
+  SideBarToggle
 }

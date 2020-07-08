@@ -21,8 +21,10 @@ export default function ({ cart, removeCart, checkout }) {
         <CartItems cart={cart} />
       </div>
       <div className='checkout__button-items'>
-        <RemoveCart clearCart={removeCart} />
-        <Link className='continue-btn' to='/lessons'>Continue Shopping</Link>
+        <div className='checkout__extra-buttons'>
+          <RemoveCart clearCart={removeCart} />
+          <Link className='continue-btn' to='/lessons'>Continue Shopping</Link>
+        </div>
         <Link className='checkout__btn' onClick={handleCheckout} to='/order'>Check Out</Link>
       </div>
 

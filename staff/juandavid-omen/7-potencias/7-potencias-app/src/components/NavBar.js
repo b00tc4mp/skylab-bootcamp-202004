@@ -3,8 +3,9 @@ import './NavBar.sass'
 import { Link } from 'react-router-dom'
 import CartToggle from './CartToggle'
 import CartQuantityIcon from './CartQuantityIcon'
+import SideBarToggle from './SideBarToggle'
 
-export default function ({ onLogout, validateUserLogged, toggleHiddenDropdown, cartToggleRef, quantityCart }) {
+export default function ({ onLogout, validateUserLogged, toggleHiddenDropdown, cartToggleRef, quantityCart, toggleSideBar }) {
   return (
     <header className='toolbar'>
       <nav className='toolbar__navigation'>
@@ -34,11 +35,7 @@ export default function ({ onLogout, validateUserLogged, toggleHiddenDropdown, c
           <CartToggle toggleHiddenDropdown={toggleHiddenDropdown} reference={cartToggleRef} />
           <CartQuantityIcon quantity={quantityCart} />
         </div>
-        <button className='toggle-button'>
-          <div className='toggle-button__line' />
-          <div className='toggle-button__line' />
-          <div className='toggle-button__line' />
-        </button>
+        <SideBarToggle toggleSideBar={toggleSideBar} />
       </nav>
     </header>
   )
