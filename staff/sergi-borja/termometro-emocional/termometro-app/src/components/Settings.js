@@ -15,9 +15,6 @@ function Settings({ rol, handleLogOut }) {
                 <div className='settingsContainer__optionContainer'>
                 <Link className='settingsContainer__option' to='/edit-my-info'>Mis Datos <img className='settingsContainer__arrowIcon' src={arrowIcon} alt='back button'></img></Link>
                 </div>
-                <div className='settingsContainer__optionContainer'>
-                <Link className='settingsContainer__option' to='/change-password'>Cambiar Contraseña <img className='settingsContainer__arrowIcon' src={arrowIcon} alt='arrow'></img></Link>
-                </div>
                 {!rol &&<div className='settingsContainer__optionContainer'>
                  <Link className='settingsContainer__option' to='handle-accounts'>Gestionar cuentas <img className='settingsContainer__arrowIcon' src={arrowIcon} alt='arrow'></img></Link>
                 </div>}

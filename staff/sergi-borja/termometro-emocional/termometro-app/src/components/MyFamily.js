@@ -34,16 +34,16 @@ function MyFamily({ token, handleGoToEdit, rol }) {
             {rol && <div className='familyContainer__container'>
                 <h1 className='familyContainer__title'>Mi administrador</h1>
             </div>}
-            {!rol && <div className='familyContainer__familyListContainer'>
-                <ul className='familyContainer__familyListContainer--ul'>
-                    {familyList && familyList.map((member) => <li key={member.id} onClick={() => handleGoToEdit(member)} className='familyContainer__familyListContainer--li'>{member.name} {member.surname} <img className='familyContainer__arrowIcon' src={arrowIcon}></img></li>)}
-                </ul>
             {rol && <div className='familyContainer__familyListContainer'>
                 <ul className='familyContainer__familyListContainer--ul'>
                     {familyList && <li key={familyList.id} className='familyContainer__familyListContainer--li'>{familyList.name} {familyList.surname} </li>}
                 </ul>
             </div>}
-                {familyList && familyList.length === 0 && <div className='familyContainer__ContainerErrorFeedback'> 
+            {!rol && <div className='familyContainer__familyListContainer'>
+                <ul className='familyContainer__familyListContainer--ul'>
+                    {familyList && familyList.map((member) => <li key={member.id} onClick={() => handleGoToEdit(member)} className='familyContainer__familyListContainer--li'>{member.name} {member.surname} <img className='familyContainer__arrowIcon' src={arrowIcon}></img></li>)}
+                </ul>
+                {!rol && familyList && familyList.length === 0 && <div className='familyContainer__ContainerErrorFeedback'> 
                     <div className='familyContainer__errorFeedback'>Empieza a añadir miembros de tu familia!</div>
                 </div>}
             </div>}

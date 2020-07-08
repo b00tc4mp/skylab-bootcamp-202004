@@ -78,7 +78,7 @@ export default function MonthView(props) {
     } else {
       setMood(memberSelected.mood)
     }
-  }, [])
+  }, [memberSelected])
 
   function renderDays() {
     return (

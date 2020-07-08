@@ -6,11 +6,13 @@ import './MainStats.sass'
 // import Calendar from 'react-calendar'
 import { Calendar } from './calendar'
 import reactDom from 'react-dom'
+import 'moment/locale/es'
 const moment = require('moment')
-moment.locale('es')
+
 
 
 function MainStats({ token, rol }) {
+    moment.locale('es')
 
     const [chartData, setChartData] = useState({})
     const [familyList, setFamilyList] = useState()
@@ -74,7 +76,8 @@ function MainStats({ token, rol }) {
         let acc = 1
         while (dateArray.length < days) {
             if (moment(mood[mood.length - acc].date).format('L') !== moment(mood[mood.length - (acc + 1)].date).format('L')) {
-                dateArray.unshift(moment(mood[mood.length - acc].date).format('MMM Do'))
+                if(days === 5) dateArray.unshift(moment(mood[mood.length - acc].date).format('dddd, D [de] MMMM'))
+                else dateArray.unshift(moment(mood[mood.length - acc].date).format('D [de] MMMM'))
             }
             acc++
         }
@@ -179,6 +182,7 @@ function MainStats({ token, rol }) {
         if (value === 'my_stats') {
             setRolChart('admin')
             handleChartCreation()
+            setMemberSelected({})
         } else {
             setRolChart('member')
             familyList.map(member => {
@@ -218,12 +222,14 @@ function MainStats({ token, rol }) {
         else handleChartCreation(memberSelected)
     }, [days])
 
+    useEffect(() => {    }, [memberSelected])
+
 
     return (
         <section className='mainStatsContainer'>
             <div className='mainStatsContainer__selectContainer'>
                 {!rol && <select className='mainStatsContainer__selectContainer--select' onChange={(event) => handleChangeChart(event)}>
-                    <option value='my_stats' className='mainStatsContainer__selectContainer--adminOption'>Mis estadísticas</option>
+                    <option value='my_stats' >Mis estadísticas</option>
                     {familyList && familyList.map(({ id, name }) => <option value={id} key={id} className='mainStatsContainer__selectContainer--memberOption'>{name}</option>)}
                 </select>}
                 {rol && <h1 value='my_stats' className='mainStatsContainer__selectContainer--adminOption'>Mis estadísticas</h1>}

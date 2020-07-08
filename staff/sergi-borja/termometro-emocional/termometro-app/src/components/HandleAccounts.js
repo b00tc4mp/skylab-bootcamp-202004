@@ -53,7 +53,7 @@ function HandleAccounts({ token, history }) {
         <section className='handleAccountsContainer'>
             <div className='handleAccountsContainer__container'>
             <img className='handleAccountsContainer__backIcon' src={backButton} onClick={()=>history.push('/settings')}></img>
-            <h1 className='handleAccountsContainer__title'>Gestionar</h1>
+            <h1 className='handleAccountsContainer__headerTitle'>Gestionar</h1>
             </div>
             {familyList &&  familyList.length > 0 && <div className='handleAccountsContainer__myUserTitle'>
             <h1 className='handleAccountsContainer__title'>Mi Familia</h1>
