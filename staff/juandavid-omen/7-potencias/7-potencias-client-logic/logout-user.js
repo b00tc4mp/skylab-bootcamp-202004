@@ -1,3 +1,7 @@
+/**
+* Logout the user.
+*
+*/
 const context = require('./context')
 
 module.exports = function () {

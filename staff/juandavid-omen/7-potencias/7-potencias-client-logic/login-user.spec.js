@@ -17,65 +17,61 @@ const context = require('./context')
 context.API_URL = API_URL
 context.storage = {}
 
-describe('login user', () => {
+describe('loginUser', () => {
   before(() => mongoose.connect(MONGODB_URL))
 
   let name, surname, email, password, userId, hash
 
-  beforeEach(() =>
-    User.deleteMany()
-      .then(() => {
-        name = `name-${random()}`
-        surname = `surname-${random()}`
-        email = `e-${random()}@mail.com`
-        password = `password-${random()}`
+  beforeEach(async () => {
+    await User.deleteMany()
 
-        return bcrypt.hash(password, 10)
-      })
-      .then(_hash => hash = _hash)
-  )
+    name = `name-${random()}`
+    surname = `surname-${random()}`
+    email = `e-${random()}@mail.com`
+    password = `password-${random()}`
+
+    hash = await bcrypt.hash(password, 10)
+  })
 
   describe('when user already exists', () => {
-    beforeEach(() =>
-      User.create({ name, surname, email, password: hash })
-        .then(user => userId = user.id)
-    )
-
-    it('should succeed on correct credentials', () => {
-      loginUser(email, password)
-        .then(token => {
-          const [, payloadBase64] = token.split('.')
-
-          const payloadJson = atob(payloadBase64)
-
-          const payload = JSON.parse(payloadJson)
-
-          const { sub: _userId } = payload
-
-          expect(_userId).to.equal(userId)
-        })
+    beforeEach(async () => {
+      const user = await User.create({ name, surname, email, password: hash })
+      userId = user.id
     })
 
-    it('should fail on wrong password', () => {
-      password += 'wrong-'
+    it('should succeed on correct credentials', async () => {
+      await loginUser(email, password)
+      const token = context.storage.token
+      const [, payloadBase64] = token.split('.')
 
-      loginUser(email, password)
-        .then(() => { throw new Error('should not reach this point') })
-        .catch(error => {
-          expect(error).to.be.an.instanceof(Error)
-          expect(error.message).to.equal('wrong password')
-        })
+      const payloadJson = atob(payloadBase64)
+
+      const payload = JSON.parse(payloadJson)
+
+      const { sub: _userId } = payload
+
+      expect(_userId).to.equal(userId)
+    })
+
+    it('should fail on wrong password', async () => {
+      password += 'wrong-'
+      try {
+        await loginUser(email, password)
+      } catch (error) {
+        expect(error).to.be.an.instanceof(Error)
+        expect(error.message).to.equal('wrong password')
+      }
     })
   })
 
-  it('should fail when user does not exist', () =>
-    loginUser(email, password)
-      .then(() => { throw new Error('should not reach this point') })
-      .catch(error => {
-        expect(error).to.be.an.instanceof(Error)
-        expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
-      })
-  )
+  it('should fail when user does not exist', async () => {
+    try {
+      await loginUser(email, password)
+    } catch (error) {
+      expect(error).to.be.an.instanceof(Error)
+      expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
+    }
+  })
 
   afterEach(() => User.deleteMany())
 

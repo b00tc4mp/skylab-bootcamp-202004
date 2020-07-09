@@ -4,18 +4,18 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_SECRET: SECRET, TEST_API_URL: API_URL } } = process
 
-const isUserLoggedIn = require('./is-user-logged-in')
+const logoutUser = require('./logout-user')
 const { random } = Math
 const { expect } = require('chai')
 const { mongoose, models: { User } } = require('7-potencias-data')
-const { utils: { jwtPromised } } = require('7-potencias-commons')
 require('7-potencias-commons/ponyfills/xhr')
+const { utils: { jwtPromised } } = require('7-potencias-commons')
 const context = require('./context')
 
 context.API_URL = API_URL
 context.storage = {}
 
-describe('isUserLoggedIn', () => {
+describe('logoutUser', () => {
   before(() => mongoose.connect(MONGODB_URL))
 
   let name, surname, email, password
@@ -32,16 +32,9 @@ describe('isUserLoggedIn', () => {
     context.storage.token = await jwtPromised.sign({ sub: user.id }, SECRET)
   })
 
-  it('Should return true when the user is logged in', async () => {
-    const result = await isUserLoggedIn()
-    expect(result).to.be.true
-  })
-
-  it('Should return false when user is not logged in', async () => {
-    context.storage.token = undefined
-
-    const result = await isUserLoggedIn()
-    expect(result).to.equal(false)
+  it('should remove the token', async () => {
+    await logoutUser()
+    expect(context.storage.token).to.be.undefined
   })
 
   afterEach(() => User.deleteMany())

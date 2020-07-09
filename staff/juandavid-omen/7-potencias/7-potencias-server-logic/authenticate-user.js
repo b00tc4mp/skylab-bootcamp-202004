@@ -1,3 +1,13 @@
+/**
+ * check user credentials
+ *
+ * @param {string} email the user e-mail.
+ * @param {string} password the user password.
+ *
+ * @throws {UnexistanceError} if the user with e-mail does not exist.
+ * @throws {CredentialsError} If password is wrong.
+ */
+
 require('7-potencias-commons/polyfills/string')
 const { models: { User } } = require('7-potencias-data')
 const { utils: { Email }, errors: { UnexistenceError, CredentialsError } } = require('7-potencias-commons')

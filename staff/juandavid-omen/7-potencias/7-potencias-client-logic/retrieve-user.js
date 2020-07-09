@@ -1,3 +1,12 @@
+/**
+* Return the user data
+*
+* @param {string} token the user token
+*
+* @throws {TypeError} If the parameter does not match the corresponding type.
+* @throws {Error} If the parameter is empty or blank.
+*/
+
 const { utils: { call } } = require('7-potencias-commons')
 const context = require('./context')
 

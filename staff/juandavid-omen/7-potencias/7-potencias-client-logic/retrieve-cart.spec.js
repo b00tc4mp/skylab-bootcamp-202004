@@ -4,7 +4,7 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_SECRET: SECRET, TEST_API_URL: API_URL } } = process
 
-const updateCart = require('./update-cart')
+const retrieveCart = require('./retrieve-cart')
 require('7-potencias-commons/polyfills/math')
 const { random } = Math
 const { expect } = require('chai')
@@ -21,7 +21,7 @@ context.storage = {}
 describe('updateCart', () => {
   before(() => mongoose.connect(MONGODB_URL))
 
-  let productId, quantity, name, surname, email, password
+  let productId, name, surname, email, password, quantity
 
   beforeEach(async () => {
     await User.deleteMany()
@@ -41,7 +41,8 @@ describe('updateCart', () => {
     const newLesson = await Lesson.create(lesson)
     productId = newLesson._id.toString()
 
-    const productSelection = new ProductSelection({ product: newLesson, quantity: 1 })
+    quantity = 1
+    const productSelection = new ProductSelection({ product: newLesson, quantity: quantity })
 
     name = `name-${random()}`
     surname = `surname-${random()}`
@@ -55,9 +56,9 @@ describe('updateCart', () => {
 
   describe('when user already exists', () => {
     it('should succeed on correct user id', async () => {
-      const quantity = 2
-      const cart = await updateCart(productId, quantity)
+      const cart = await retrieveCart()
       expect(cart).to.be.an('array').of.length(1)
+
       const [productSelection] = cart
       expect(productSelection.product._id.toString()).to.equal(productId)
       expect(productSelection.quantity).to.be.equal(quantity)
@@ -75,7 +76,7 @@ describe('updateCart', () => {
 
     it('should fail when user does not exist', async () => {
       try {
-        await updateCart(productId, quantity)
+        await retrieveCart()
       } catch (error) {
         expect(error).to.exist
         expect(error).to.be.an.instanceof(Error)

@@ -4,7 +4,7 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL: MONGODB_URL, TEST_SECRET: SECRET, TEST_API_URL: API_URL } } = process
 
-const updateCart = require('./update-cart')
+const deleteCart = require('./delete-cart')
 require('7-potencias-commons/polyfills/math')
 const { random } = Math
 const { expect } = require('chai')
@@ -18,10 +18,10 @@ const { ObjectId } = require('7-potencias-data/mongo')
 context.API_URL = API_URL
 context.storage = {}
 
-describe('updateCart', () => {
+describe('deleteCart', () => {
   before(() => mongoose.connect(MONGODB_URL))
 
-  let productId, quantity, name, surname, email, password
+  let userId, name, surname, email, password
 
   beforeEach(async () => {
     await User.deleteMany()
@@ -39,7 +39,6 @@ describe('updateCart', () => {
     }
 
     const newLesson = await Lesson.create(lesson)
-    productId = newLesson._id.toString()
 
     const productSelection = new ProductSelection({ product: newLesson, quantity: 1 })
 
@@ -49,18 +48,16 @@ describe('updateCart', () => {
     password = `password-${random()}`
 
     const user = await User.create({ name, surname, email, password, cart: [productSelection] })
-
+    userId = user.id
     context.storage.token = await jwtPromised.sign({ sub: user.id }, SECRET)
   })
 
   describe('when user already exists', () => {
     it('should succeed on correct user id', async () => {
-      const quantity = 2
-      const cart = await updateCart(productId, quantity)
-      expect(cart).to.be.an('array').of.length(1)
-      const [productSelection] = cart
-      expect(productSelection.product._id.toString()).to.equal(productId)
-      expect(productSelection.quantity).to.be.equal(quantity)
+      await deleteCart()
+      const user = await User.findById(userId)
+      const { cart } = user
+      expect(cart).to.be.an('array').of.length(0)
     })
   })
 
@@ -75,7 +72,7 @@ describe('updateCart', () => {
 
     it('should fail when user does not exist', async () => {
       try {
-        await updateCart(productId, quantity)
+        await deleteCart()
       } catch (error) {
         expect(error).to.exist
         expect(error).to.be.an.instanceof(Error)

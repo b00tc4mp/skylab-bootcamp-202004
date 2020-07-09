@@ -88,8 +88,6 @@ describe('logic - register user', () => {
     it('should fail on trying to register an existing user', async () => {
       try {
         await registerUser(name, surname, email, password)
-
-        throw new Error('should not reach this point')
       } catch (error) {
         expect(error).to.exist
 

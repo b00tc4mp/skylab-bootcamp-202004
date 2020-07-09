@@ -16,61 +16,52 @@ const context = require('./context')
 context.API_URL = API_URL
 context.storage = {}
 
-describe(' retrieve user', () => {
+describe(' retrieveUser', () => {
   before(() => mongoose.connect(MONGODB_URL))
 
   let name, surname, email, password
 
-  beforeEach((done) => {
-    User.deleteMany()
-      .then(() => {
-        name = `name-${random()}`
-        surname = `surname-${random()}`
-        email = `e-${random()}@mail.com`
-        password = `password-${random()}`
-      }).then(done())
-  }
-  )
+  beforeEach(async () => {
+    await User.deleteMany()
+    name = `name-${random()}`
+    surname = `surname-${random()}`
+    email = `e-${random()}@mail.com`
+    password = `password-${random()}`
+  })
 
   describe('when user already exists', () => {
-    beforeEach((done) =>
-      User.create({ name, surname, email, password })
-        .then(user => jwtPromised.sign({ sub: user.id }, SECRET))
-        .then(token => context.storage.token = token)
-        .then(done())
-    )
+    beforeEach(async () => {
+      const user = await User.create({ name, surname, email, password })
+      context.storage.token = await jwtPromised.sign({ sub: user.id }, SECRET)
+    })
 
-    it('should succeed on correct user id', done =>
-      retrieveUser()
-        .then(user => {
-          expect(user.name).to.equal(name)
-          expect(user.surname).to.equal(surname)
-          expect(user.email).to.equal(email)
-          expect(user.password).to.be.undefined
-        })
-        .then(done())
-    )
+    it('should succeed on correct user id', async () => {
+      const user = await retrieveUser()
+      expect(user.name).to.equal(name)
+      expect(user.surname).to.equal(surname)
+      expect(user.email).to.equal(email)
+      expect(user.password).to.be.undefined
+    })
   })
 
   describe('when user does not exist', () => {
     let userId
 
-    beforeEach(() => {
+    beforeEach(async () => {
       userId = '5ed1204ee99ccf6fae798aef'
 
-      return jwtPromised.sign({ sub: userId }, SECRET)
-        .then(token => context.storage.token = token)
+      context.storage.token = await jwtPromised.sign({ sub: userId }, SECRET)
     })
 
-    it('should fail when user does not exist', () =>
-      retrieveUser()
-        .then(() => { throw new Error('should not reach this point') })
-        .catch(error => {
-          expect(error).to.exist
-          expect(error).to.be.an.instanceof(Error)
-          expect(error.message).to.equal(`user with id ${userId} does not exist`)
-        })
-    )
+    it('should fail when user does not exist', async () => {
+      try {
+        await retrieveUser()
+      } catch (error) {
+        expect(error).to.exist
+        expect(error).to.be.an.instanceof(Error)
+        expect(error.message).to.equal(`user with id ${userId} does not exist`)
+      }
+    })
   })
 
   afterEach(() => User.deleteMany())
