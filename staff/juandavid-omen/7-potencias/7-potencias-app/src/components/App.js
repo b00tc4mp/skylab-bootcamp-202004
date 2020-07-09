@@ -157,7 +157,7 @@ export default withRouter(function ({ history }) {
         <Route path='/register' render={() => isUserLoggedIn() ? <Redirect to='/home' /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} />} />
         <Route path='/login' render={() => isUserLoggedIn() ? <Redirect to='/home' /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} />} />
         <Route path='/home' render={() => isUserLoggedIn() ? <Home name={name} cart={cart} onLogout={handleLogout} /> : <Redirect to='/' />} />
-        <Route path='/lessons' render={() => <Products key='products' addToCart={addToCart} removeCart={handleDeleteCart} />} />
+        <Route path='/lessons' render={() => <Products key='products' addToCart={addToCart} removeCart={handleDeleteCart} addToCartError={error} isLoggedIn={isUserLoggedIn} />} />
         <Route path='/checkout' render={() => <Checkout cart={cart} removeCart={handleDeleteCart} checkout={handlePlacerOrder} />} />
         <Route path='/order' render={() => <Order />} />
       </main>

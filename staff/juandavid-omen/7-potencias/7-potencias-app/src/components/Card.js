@@ -1,13 +1,16 @@
 import React from 'react'
 import './Products.sass'
+import { useAlert } from 'react-alert'
 
-export default function ({ product, addToCart }) {
+export default function ({ product, addToCart, isLoggedIn }) {
   const { id, name, style, price } = product
+  const alert = useAlert()
 
   const handleAddToCard = event => {
     event.preventDefault()
 
-    addToCart(id, name, price)
+    if (isLoggedIn()) addToCart(id, name, price)
+    else alert.show('You need to LOGIN to add lessons to the cart')
   }
 
   return (
