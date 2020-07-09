@@ -9,7 +9,7 @@ const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 const placeOrder = require('./place-order')
 const { expect } = require('chai')
 const { random } = Math
-const { mongoose, models: { User, Lesson, Order } } = require('7-potencias-data')
+const { mongoose, models: { User, Lesson } } = require('7-potencias-data')
 const { errors: { UnexistenceError, VoidError } } = require('7-potencias-commons')
 const { ObjectId } = require('7-potencias-data/mongo')
 
@@ -114,9 +114,6 @@ describe('Place order', () => {
     expect(amount).to.be.equal(6)
     expect(productSelections).to.be.an('array').to.lengthOf(1)
     expect(cart).to.be.an('array').to.be.empty
-
-  // carrito = [] si esta vacio;  a place order=[poner product]; carrito [] quede vacio
-  // buscar en el usuario el price (calcular) order (cart=== oder.cart)
   })
 
   afterEach(async () => {

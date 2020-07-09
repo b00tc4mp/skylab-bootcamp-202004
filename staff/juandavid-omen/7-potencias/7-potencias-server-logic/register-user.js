@@ -1,3 +1,14 @@
+/**
+ * create a new user.
+ *
+ * @param {string} name the user name.
+ * @param {string} surname the user surname.
+ * @param {string} email the user e-mail.
+ * @param {string} password the user password.
+ *
+ * @throws {DuplicityError} if the user with the same e-mail already exists.
+ */
+
 require('7-potencias-commons/polyfills/string')
 const { utils: { Email }, errors: { DuplicityError } } = require('7-potencias-commons')
 const { models: { User } } = require('7-potencias-data')
