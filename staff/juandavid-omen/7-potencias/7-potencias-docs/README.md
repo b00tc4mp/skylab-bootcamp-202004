@@ -30,7 +30,9 @@ In this web site will be shown all relevant information about the school, like t
 ![use](./images/use-cases.png)
 
 ### Activities
-<!-- TODO -->
+
+![activities](./images/activity-functional-app.png)
+
 ## Technical description
 
 ### Blocks
@@ -41,8 +43,7 @@ In this web site will be shown all relevant information about the school, like t
 
 ![modules](./images/modules-components.png)
 
-## Classes
-<!-- TODO -->
+<!--## Classes TODO -->
 ## Sequences
 
 Testing
@@ -56,6 +57,9 @@ Testing
 ## Code Coverage
 
 Client-side
+
+![coverage](./images/client-side-code-coverage.png)
+
 Server-side
 
 ## Instructions
