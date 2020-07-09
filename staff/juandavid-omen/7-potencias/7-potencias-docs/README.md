@@ -62,6 +62,8 @@ Client-side
 
 Server-side
 
+![coverage](./images/server-side-code-coverage.png)
+
 ## Instructions
 
 ### Server-side
