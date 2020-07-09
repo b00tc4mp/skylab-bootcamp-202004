@@ -9,9 +9,11 @@ import {
 } from "react-native";
 import { addFavourite, removeFavourite } from "../gluttony-client-logic";
 import postComment from "../gluttony-client-logic/src/post-comment";
+const { errors: { AuthenticationError } } = require("gluttony-commons")
 
 const Store = props => {
     const [comment, setComment] = useState("");
+    const [feedback, setFeedback] = useState();
 
     return (
         <View>
@@ -34,8 +36,20 @@ const Store = props => {
                 style={styles.input}
                 onChangeText={ text => setComment(text) } 
             />
+            {feedback && <Text style={styles.feedbackText}>{feedback}</Text>}
             <TouchableOpacity style={{ ...styles.button, marginTop: 0, width: 70 }} title= "Send" onPress={() => {
-                postComment(comment, props.store.id).catch(props.onShowModal)
+                try {
+                    postComment(comment, props.store.id)
+                        .then(() => setFeedback(undefined), error => {
+                            if (error instanceof AuthenticationError) {
+                                props.onShowModal()
+                            }
+
+                            setFeedback(error.message)
+                        })
+                } catch(error) {
+                    setFeedback(error.message)
+                }
             }} >
                 <Text style={{ ...styles.textStyle, textAlign: "center" }}>Send</Text>
             </TouchableOpacity>
@@ -66,6 +80,15 @@ const styles = StyleSheet.create({
         marginBottom: 11,
         paddingLeft: 10,
         paddingRight: 10
+    },
+    feedbackText: {
+        marginBottom: 8,
+        marginTop: 1,
+        fontWeight: "500",
+        textAlign: "left",
+        paddingLeft: 8,
+        paddingRight: 8,
+        color: "red"
     }
 })
 

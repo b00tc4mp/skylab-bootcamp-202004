@@ -7,7 +7,7 @@ const Email = {
 }
 
 Email.validate = function (email) {
-    if (!this.isEmail(email)) throw new Error(`${email} is not an e-mail`)
+    if (!this.isEmail(email)) throw new Error(`'${email}' is not an e-mail`)
 }.bind(Email)
 
 

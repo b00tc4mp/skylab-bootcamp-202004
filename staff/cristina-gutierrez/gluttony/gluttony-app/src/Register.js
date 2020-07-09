@@ -14,6 +14,7 @@ const Register = props => {
     const [surname, setSurname] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [feedback, setFeedback] = useState();
 
     return (
         <View style={styles.modalView}>
@@ -45,10 +46,14 @@ const Register = props => {
                 autoCapitalize='none'
                 onChangeText={(text) => setPassword(text)}
             />
+            {feedback && <Text style={styles.feedbackText}>{feedback}</Text>}
             <TouchableOpacity style={styles.openButton} onPress={() => {
-                registerUser(name, surname, email, password)
-                    .then(() => props.onGoToLogin())
-                    .catch(console.log)
+                try {
+                    registerUser(name, surname, email, password)
+                        .then(() => props.onGoToLogin(), error => setFeedback(error.message))
+                } catch(error) {
+                    setFeedback(error.message)
+                }
             }} >
                 <Text style={styles.textStyle}>Register</Text>
             </TouchableOpacity>
@@ -92,7 +97,14 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         fontWeight: "600",
         textAlign: "center"
-    },  
+    },
+    feedbackText: {
+        marginBottom: 15,
+        marginTop: 4,
+        fontWeight: "500",
+        textAlign: "center",
+        color: "red"
+    },
     logo: {
         width: 200,
         height: 100,
