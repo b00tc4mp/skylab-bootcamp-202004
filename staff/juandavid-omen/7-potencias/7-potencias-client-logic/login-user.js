@@ -1,3 +1,13 @@
+/**
+ * Checks user credentials.
+ *
+ * @param {string} email the user e-mail.
+ * @param {string} password the user password.
+*
+ * @throws {TypeError} If any of the parameters does not match the corresponding type.
+ * @throws {Error} If the password is empty.
+ */
+
 require('7-potencias-commons/polyfills/string')
 const { utils: { Email, call } } = require('7-potencias-commons')
 const context = require('./context')

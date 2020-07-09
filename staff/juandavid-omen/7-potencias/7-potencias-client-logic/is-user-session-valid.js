@@ -1,3 +1,9 @@
+/** Check if the user is authenticated
+*
+* @param {string} token the user token
+*
+*/
+
 const { utils: { call } } = require('7-potencias-commons')
 const context = require('./context')
 
