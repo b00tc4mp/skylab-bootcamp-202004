@@ -10,9 +10,12 @@ module.exports = {
     Home: require('./Home'),
     Chat: require('./Chat'),
     HeaderHome: require('./HeaderHome'),
-    Laundry: require('./Laundry'),
+    Laundry: require('./Laundry/'),
     ShopList: require('./ShopList'),
-    WeekDays: require('./WeekDays'),
-    TimeLaundry: require('./TimeLaundry'),
-    SingleFruit: require('./SingleFruit')
+    ShopListAdmin: require('./ShopListAdmin'),
+    WeekDays: require('./Laundry/'),
+    TimeLaundry: require('./Laundry/'),
+    SingleFruit: require('./SingleFruit'),
+    InfoCommunity: require('./InfoCommunity'),
+    InfoCommunityAdmin: require('./InfoCommunity')
 }
