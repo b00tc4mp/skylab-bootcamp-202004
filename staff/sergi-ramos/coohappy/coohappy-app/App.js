@@ -14,7 +14,9 @@ import ShopListAdmin from './app/components/ShopList/ShopListAdmin'
 import logic from 'coohappy-client-logic'
 
 logic.__context__.storage = AsyncStorage
-logic.__context__.API_URL = 'http://192.168.1.38:8080/api'
+
+logic.__context__.API_URL = 'https://salty-spire-86945.herokuapp.com/api'
+
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
