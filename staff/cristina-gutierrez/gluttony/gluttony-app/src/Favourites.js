@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         width: "75%"
     },
     store: {
-        backgroundColor: "#FFFFFF",
+        backgroundColor: "#D9D9D9",
         marginTop: 30,
         padding: 10
     },

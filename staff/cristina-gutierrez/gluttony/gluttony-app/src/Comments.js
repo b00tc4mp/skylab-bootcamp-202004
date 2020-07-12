@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         marginTop: 60
     },
     comment: {
-        backgroundColor: "#FFFFFF",
+        backgroundColor: "#D9D9D9",
         marginTop: 30,
         padding: 10
     },

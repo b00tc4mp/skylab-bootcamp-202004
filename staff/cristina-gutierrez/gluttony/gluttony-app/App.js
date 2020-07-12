@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { 
   StyleSheet,
   View,
-  StatusBar
+  StatusBar,
+  AsyncStorage
 } from "react-native";
 import Home from "./src/Home"
 import MapBar from "./src/MapBar";
@@ -15,7 +16,7 @@ import Menu from "./src/Menu";
 import logic from "./gluttony-client-logic"
 
 logic.__context__.httpClient = require("axios")
-logic.__context__.storage = require("react-native").AsyncStorage
+logic.__context__.storage = AsyncStorage
 
 const App = () => {
   const [view, setView] = useState("home");
