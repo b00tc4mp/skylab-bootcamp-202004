@@ -6,7 +6,7 @@ import {
     Dimensions,
     Image
 } from "react-native";
-import { findNearbyRestaurants, getFavourites } from "../gluttony-client-logic"
+import { findNearbyRestaurants, getFavourites } from "gluttony-client-logic"
 import Store from "./Store"
 
 const MapRestaurant = props => {

@@ -7,7 +7,7 @@ import {
   View,
   TextInput
 } from "react-native";
-import { registerUser } from "../gluttony-client-logic"
+import { registerUser } from "gluttony-client-logic"
 
 const Register = props => {
     const [name, setName] = useState("");

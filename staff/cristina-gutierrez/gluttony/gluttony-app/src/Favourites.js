@@ -6,7 +6,7 @@ import {
     View,
     ScrollView
 } from "react-native";
-import { getFavourites } from "../gluttony-client-logic";
+import { getFavourites } from "gluttony-client-logic";
 import Store from "./Store"
 
 const Favourites = (props) => {

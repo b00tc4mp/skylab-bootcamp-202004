@@ -1,4 +1,4 @@
-const { API_URL } = require("../../config")
+const { API_URL } = require("../config")
 const context = require("./context")
 
 /**

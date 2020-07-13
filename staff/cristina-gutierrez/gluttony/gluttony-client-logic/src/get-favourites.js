@@ -1,4 +1,4 @@
-const { API_URL } = require("../../config")
+const { API_URL } = require("../config")
 require("gluttony-commons/polyfills/string")
 const { errors: { AuthenticationError } } = require("gluttony-commons")
 const context = require("./context")
@@ -16,12 +16,12 @@ module.exports = async function() {
         throw new AuthenticationError("User is not authenticated")
     }
 
-    return await this.httpClient.get(`${API_URL}/comments`, {
+    return await this.httpClient.get(`${API_URL}/favourites`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
         .then(({ status, data }) => {
             if (status === 200) {
-                return data.comments
+                return data.favouriteStores
             } else {
                 throw new Error(data.error)
             }

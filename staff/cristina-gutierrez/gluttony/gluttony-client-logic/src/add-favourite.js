@@ -1,12 +1,13 @@
-const { API_URL } = require("../../config")
+const { API_URL } = require("../config")
 require("gluttony-commons/polyfills/string")
 const { errors: { AuthenticationError } } = require("gluttony-commons")
 const context = require("./context")
 
 /**
+ * @param  {string[]} storeId
  * @returns Promise
  */
-module.exports = async function() {
+module.exports = async function(storeId) {
     let token
 
     try {
@@ -16,14 +17,13 @@ module.exports = async function() {
         throw new AuthenticationError("User is not authenticated")
     }
 
-    return await this.httpClient.get(`${API_URL}/users`, {
+    return await this.httpClient.post(`${API_URL}/favourites`, {
+            storeId
+        }, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
-        .then(({ status, data }) => {
-            if (status === 200) {
-                return data
-            } else {
-                throw new Error(data.error)
-            }
+        .then(({ status, data }) => {   
+            if (status === 201) return
+            throw new Error(data.error)
         })
 }.bind(context)

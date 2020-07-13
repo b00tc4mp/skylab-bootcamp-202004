@@ -7,7 +7,7 @@ import {
   View,
   TextInput
 } from "react-native";
-import { authenticateUser } from "../gluttony-client-logic"
+import { authenticateUser } from "gluttony-client-logic"
 
 const Login = (props) => {
     const [email, setEmail] = useState("");

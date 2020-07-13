@@ -6,7 +6,7 @@ import {
     ImageBackground,
     View
 } from "react-native";
-import { retrieveUser, logout } from "../gluttony-client-logic";
+import { retrieveUser, logout } from "gluttony-client-logic";
 
 const ProfilePage = (props) => {
     const [user, setUser] = useState();

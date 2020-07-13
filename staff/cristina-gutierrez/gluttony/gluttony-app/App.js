@@ -13,7 +13,7 @@ import ProfilePage from "./src/ProfilePage";
 import Comments from "./src/Comments";
 import Modal from "./src/Modal";
 import Menu from "./src/Menu";
-import logic from "./gluttony-client-logic"
+import logic from "gluttony-client-logic"
 
 logic.__context__.httpClient = require("axios")
 logic.__context__.storage = AsyncStorage

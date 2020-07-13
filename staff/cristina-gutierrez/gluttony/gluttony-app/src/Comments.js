@@ -6,7 +6,7 @@ import {
     View,
     ScrollView
 } from "react-native";
-import { getUserComments } from "../gluttony-client-logic"
+import { getUserComments } from "gluttony-client-logic"
 require("gluttony-commons/polyfills/date")
 
 const Comments = () => {
