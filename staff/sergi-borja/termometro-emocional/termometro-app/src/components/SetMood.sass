@@ -1,0 +1,98 @@
+.sliderContainer
+    margin: 0
+    padding: 0
+    height: 92vh
+    display: flex
+    flex-direction: column
+    background: rgba(255, 255, 255, 0.5)
+    align-items: center
+    justify-content: center
+    background-image: url('../images/tree-background.jpg')
+    background-size: cover
+    &__titleContainer
+        display: flex
+        font-size: 2.5vh
+        justify-content: center
+    &__title
+        text-align: center
+    &__slider
+        display: flex
+        justify-content: center
+        align-items: center
+        width: 100vw
+        margin-top: 20vh
+    &__button
+        font-family: 'Raleway', sans-serif
+        font-weight: 700
+        font-size: 3vh
+        border: 1px solid black
+        background: white
+        padding: 1.7vh
+        border-radius: 1.5vh
+        margin-top: 2vh
+    &__value
+        position: absolute
+        height: 6vh
+        width: 6vh
+        left: 3.7vh
+        bottom: -6.5vh
+        z-index: 1
+        font-weight: 600
+        font-size: 4.8vh
+        text-align: center
+        font-family: Arial, Helvetica, sans-serif
+    &__thermoContainer
+        display: flex
+        position: relative
+        height: 31vh
+        top: 0
+        left: -11%
+        &--progress
+            width: 3.2vh
+            background: #EF3636
+            position: absolute
+            bottom: 0
+            left: 5.2vh
+            border-top-left-radius: 15px
+            border-top-right-radius: 15px
+        &--slider
+            width: 70vw
+            margin-top: 13vh
+        &--thermoImg
+            position: absolute
+            height: 39.5vh
+            width: 13.7vh
+            margin-top: 1.4vh
+            left: 0
+            z-index: 1
+.height1
+    height: 3vh
+.height2
+    height: 5.5vh
+.height3
+    height: 8.5vh
+.height4
+    height: 11vh
+.height5
+    height: 13.5vh
+.height6
+    height: 16vh
+.height7
+    height: 19.5vh
+.height8
+    height: 22vh
+.height9
+    height: 24.5vh
+.height10
+    height: 27vh
+.tooManyMoodsContainer
+    top: 0
+    left: 0
+    margin: auto
+    border-top: 1px solid black
+    border-bottom: 1px solid black
+    width: 90vw
+    &__tooManyMoodsFeedback
+        text-align: center
+        font-size: 2.5vh
+        font-weight: 600

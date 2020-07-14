@@ -1,0 +1,106 @@
+.mainStatsContainer
+    display: flex
+    justify-items: center
+    align-items: center
+    flex-direction: column
+    flex: 1 1 0%
+    height: 100vh
+    width: 100%
+    margin:0
+    background-color: #eff7f6
+    &__errorFeedback
+        top: 0
+        left: 0
+        margin: auto
+        border-top: 1px solid black
+        border-bottom: 1px solid black
+        padding: 2vh
+        font-size: 1.9vh
+    &__selectContainer
+        position: sticky
+        top: 0
+        width: 100%
+        background:  #b7e4c7
+        &--adminOption
+            margin-left: 1vh
+        &--select
+            height: 7vh
+            width: 100%
+            font-size: 3vh
+            background:  #b7e4c7
+            font-family: 'Raleway', sans-serif
+            font-weight: 600
+    &__buttonDaysContainer
+        width: 100%
+        background-color: #b7e4c7
+        border: none
+        position: relative
+        &--fiveDays
+            width: 33.33%
+            text-decoration: none
+            border: none
+            border-radius: 15px
+            height: 5.3vh
+            font-family: 'Raleway', sans-serif
+            font-weight: 1000
+            font-size: 1.85vh
+            background: none
+        &--fiveTeenDays
+            width: 33.33%
+            text-decoration: none
+            border: none
+            height: 5.8vh
+            font-family: 'Raleway', sans-serif
+            font-weight: 1000
+            border-radius: 15px
+            background: none
+            font-size: 1.85vh
+        &--fiveTeenDays:focus
+            background: #e7e7e7
+    &__chartContainer
+        width: 100%
+        bottom: 8vh
+        &--dateTitle
+            margin: 0
+            background:  rgba(192, 190, 190, 1)
+            border: none
+            width: 100%
+            text-align: center
+    &__calendarContainer
+        width: 100%
+        margin-top: 0.1vh                    
+        &--calendar
+            width:  100vw
+            font-size: 25px
+.react-calendar__tile
+    height: 13.5vh
+    width: 30vw
+    background-color: rgba(230, 230, 230, 0.5)
+    border: none
+    border-bottom: 1px solid black
+    font-size: 2vh
+    border-radius: 5px
+.react-calendar__navigation
+    height: 8vh
+.react-calendar__navigation__label__labelText
+    font-size:  3.5vh
+    font-family: 'Raleway', sans-serif
+.white
+    background: #e7e7e7
+abbr
+    color: black
+    text-decoration: none
+.react-calendar__month-view__weekdays
+    font-size: 3vh
+    text-align: center
+.react-calendar__navigation__arrow
+    width: 11vw
+    font-size: 2.5vh
+
+
+
+// [aria-label^='8 de julio de 2020']
+//     color: blue
+
+                
+        
