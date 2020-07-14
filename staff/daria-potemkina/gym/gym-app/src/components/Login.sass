@@ -1,0 +1,68 @@
+.login
+
+    &__form
+        display: flex
+        flex-direction: column
+        align-items: center
+        
+
+        >input
+            width: 60%
+            height: 30px
+            margin: 10px
+            border-radius: 5px
+            border: 1px solid rgb(48, 74, 101)
+            font-size: 80%
+            text-indent: 10px
+    
+    &__title
+        font-size: 100%
+        margin-top: 7%
+        margin-bottom: 5%
+        text-align: center
+    
+    &__logo
+        margin-top: 80px
+        width: 100vw
+    
+    &__link
+        margin-top: 10px
+        display: flex
+
+        > a
+            text-decoration: none
+            padding: 0.5em
+            margin-left: 15px
+            margin-right: 15px
+            font-size: 18px
+            border-bottom: 1px solid rgb(165, 96, 114)
+        
+            &:hover
+                background: rgb(165, 96, 114)
+
+            &:visited
+                color: black
+        
+        >button
+            width: 70px
+            background-color: rgb(165, 96, 114)
+            color: white
+            border: none
+            border-radius: 10px
+            font-size: 100%
+
+@media only screen and (min-width: 768px)
+    .login
+
+        &__logo
+            width: 60%
+            margin-top: 1%
+            margin-left: 20%
+        
+        &__title
+            margin-top: 1%
+            margin-bottom: 1%
+        
+        &__form
+            >input
+                width: 35%
