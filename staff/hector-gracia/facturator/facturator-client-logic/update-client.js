@@ -1,0 +1,30 @@
+const {utils:{call}} = require("facturator-commons")
+const { utils: { Email }} = require('facturator-commons')
+require('facturator-commons/polyfills/string')
+const context = require('./context')
+module.exports=function(updatedClient){
+    if(typeof updatedClient!=="object") throw new TypeError(updatedClient+" is not an object")
+    const{name, establishment, contactNumber, email, direction, paymentMethod, paymentInfo,clientId}= updatedClient
+    String.validate.notVoid(clientId)
+    if(name)
+        String.validate.notVoid(name)
+    if(paymentMethod)
+        String.validate.notVoid(paymentMethod)
+    if(establishment)
+        String.validate.notVoid(establishment)
+    if(contactNumber)
+        if(typeof contactNumber!=="number") throw new TypeError(contactNumber+" is not a number")
+    if(email)
+        Email.validate(email)
+    if(direction)
+        String.validate.notVoid(direction)
+    if(paymentInfo)
+        String.validate.notVoid(paymentInfo)
+
+    return call("POST",`${this.API_URL}/clients/update`,JSON.stringify(updatedClient),{ 'Content-type': 'application/json' })
+        .then(({status,body})=>{
+            if(status ===201) return 
+            const {error}= JSON.parse(body)
+            throw new Error(error)
+        })
+}.bind(context)
