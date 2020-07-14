@@ -1,0 +1,112 @@
+.symptom
+    height: 93vh
+    display: flex
+    flex-direction: column
+    align-items: center
+    &__term
+        padding: 0.5rem
+        color: white
+        background-color: #a45ba2
+        border-radius: 1rem
+        text-decoration: none
+        display: flex
+        align-items: center
+        justify-content: center
+        border: none
+        margin: 0.1rem
+
+        &:hover
+            background-color: #5c728f
+    &__top
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        width: 90%
+        border-bottom: solid grey 0.2px
+        &--arrow
+            width: 5rem
+        p
+           margin-block-start: 0px
+           margin-block-end: 0px
+           font-style: italic
+    &__initialmain
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        margin-top: 1rem
+        margin-bottom: 1rem
+    &__main    
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        flex-grow: 1
+        margin-top: 1rem
+        margin-bottom: 1rem
+        &--identifiers
+            width: 80%
+            display: flex
+            flex-direction: column
+            justify-content: center
+            align-items: center
+            font-weight: bold
+            text-align: center
+            margin-bottom: 0.5rem
+        &--description
+            flex-grow: 1
+            display: flex
+            justify-content: center
+            align-items: center
+            text-align: center
+        &--links
+            width: 10rem
+            padding: 1rem
+            display: flex
+            justify-content: center
+            align-items: center
+            div
+                display: flex
+                flex-direction: column
+                // align-items: center
+        // .symptom__term
+        //     width: 8rem
+        //     height: 1.3rem
+    &__bottom
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        width: 90%
+        border-top: solid grey 0.2px
+        &--terms
+            width: 99%
+            display: flex
+            flex-flow: wrap row
+            justify-content: center
+            margin-block-start: 0.5em
+            margin-block-end: 0.5em  
+            padding-inline-start: 0px
+            li
+                list-style-type: none
+        .symptom__term
+            margin-left: 0.2rem
+            margin-bottom: 0.2rem
+        &--arrow
+            width: 5rem
+            transform: scaleY(-1)
+            z-index: -1
+        p
+           margin-block-start: 0px
+           margin-block-end: 0px
+           font-style: italic
+           text-align: center
+    
+@media only screen and (min-width: 768px)
+    .symptom__main
+        flex-direction: row
+
+@media only screen and (min-width: 968px)
+    .symptom
+        width: 80%

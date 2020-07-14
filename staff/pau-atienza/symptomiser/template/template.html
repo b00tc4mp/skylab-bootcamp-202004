@@ -1,0 +1,147 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptomiser</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class='navigation'>
+        <a href = '' class = 'navigation__link'>Search</a>
+        <a href = '' class = 'navigation__link'>List</a>
+        <a href = '' class = 'navigation__link'>About</a>
+    </section>
+
+    <section class='landing'>
+        <h1 class='landing__title'>Symptomiser</h1>
+        <main class='landing__main'>
+            <form class = 'landing__main--form'>
+                <input name = 'query' placeholder = "Describe your symptom in a few words">
+            </form>
+            <div class='landing__main--nav'>
+                <a href = '' class = 'landing__main--link'>Your Symptom List</a>
+                <a href = '' class = 'landing__main--link'>About the Symptomiser</a>
+            </div>
+        </main>
+        
+    </section>
+
+    <section class='results'>
+        <p class = 'results__list--title'>
+            Proposed terms:
+        </p>
+        <ul class='results__list'>
+            
+            <li>
+                <button class='results__list--item'>Symptom</button>
+            </li>
+            <li>
+                <button class='results__list--item'>Symptom</button>
+            </li>
+            <li>
+                <button class='results__list--item'>Symptom</button>
+            </li>
+            <li>
+                <button class='results__list--item'>Symptom</button>
+            </li>
+            <li>
+                <button class='results__list--item'>Symptom</button>
+            </li>
+        </ul>
+
+        <main class='results__main'>
+            <div class = 'results__main--name'>
+                Name of the Symptom
+            </div>
+            <div class='results__main--definition'>
+                Definition of the Symptom
+            </div>
+        </main>
+    </section>
+
+    <section class='symptom'>
+        <header class='symptom__top'>
+            <ul class ='symptom__bottom--terms'>
+                <li>
+                    <button href = '' class = 'symptom__term'>Abnormal nervous system physiology</button>
+                </li>
+            </ul>
+            <img class ='symptom__top--arrow' src = './images/up-arrow.svg'>
+            <p>Less specific term</p>
+        </header>
+        <main class='symptom__main'>
+            <div class='symptom__main--identifiers'>
+                <div class='symptom__main--name'>Headache</div>
+            </div>
+            <div class='symptom__main--description'> Cephalgia, or pain sensed in various parts of the head, not confined to the area of distribution of any nerve.</div>
+            <div class='symptom__main--links'>
+                <button href = '' class = 'symptom__term'>That's it</button>
+            </div>
+            
+        </main>
+        <footer class='symptom__bottom'>
+            <p>More specific terms: check if any of these fit with your symptom</p>
+            <img class ='symptom__bottom--arrow' src = './images/up-arrow.svg'>
+            <ul class ='symptom__bottom--terms'>
+                <li>
+                    <button href = '' class = 'symptom__term'>Abnormal nervous system physiology</button>
+                </li>
+            </ul>
+            
+        </footer>
+    </section>
+
+    <section class = 'form'>
+        <h1 class = 'form__title'>Details</h1>
+        <form class = 'form__main'>
+            <div class = 'form__element'> 
+                <h2 class = 'form__element--name'>Position</h2>
+                <input  class = 'form__element--input' type = 'text' name = '' placeholder = ''>
+            </div>
+            <div class = 'form__element'> 
+                <h2 class = 'form__element--name'>Triggered by</h2>
+                <input  class = 'form__element--input' type = 'text' name = '' placeholder = ''>
+            </div>
+            <div class = 'form__element'> 
+                <h2 class = 'form__element--name'>Severity</h2>
+                <input  class = 'form__element--input' type = 'text' name = '' placeholder = ''>
+            </div>
+            <div class = 'form__element'> 
+                <h2 class = 'form__element--name'>Pain characteristics</h2>
+                <input  class = 'form__element--input' type = 'text' name = '' placeholder = ''>
+            </div>
+            <div class = 'form__element'> 
+                <h2 class = 'form__element--name'>Affected by</h2>
+                <input  class = 'form__element--input' type = 'text' name = '' placeholder = ''>
+            </div>
+            <button>Submit</button>
+        </form>
+    </section>
+
+    <section class='list'>
+        <h1 class = 'list__title'>Submitted symptoms</h1>
+        <ul class = 'list__list'>
+            <li>
+                <form class = 'list__symptom'>
+                    <input  class = 'list__symptom--text' name = 'symptom' class = 'list__symptom--name' value = 'Name and code of the symptom'>
+                    <div class = 'list__symptom--buttons'>
+                        <button class = 'list__symptom--item'>Copy</button>
+                        <button class = 'list__symptom--item'>Add details</button>
+                    </div>
+                </form>
+            </li>
+        </ul>
+    </section>
+
+    <section class='about'>
+        <h1>About the Symptomiser</h1>
+        <p>Description of the Symtomiser, who participated, other projects from the same group...</p>
+        <div class = 'about__links'>
+            <a href = 'http://b2slab.upc.edu/' class = 'about__links--item'>B2S Research Group</a>
+            <a href = 'https://www.share4rare.org/' class = 'about__links--item'>Share4Rare</a>
+            <a href = '' class = 'about__links--item'>Pau Atienza</a>
+            <a href = 'https://hpo.jax.org/app/' class = 'about__links--item'>HPO</a>
+        </div>
+    </section>
+</body>
+</html>

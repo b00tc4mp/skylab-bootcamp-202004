@@ -1,0 +1,67 @@
+.list
+    width: 100%
+    height: 93vh
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: flex-start
+    &__list
+        display: flex
+        flex-flow: wrap column
+        justify-content: space-between
+        align-items: center
+        width: 100%
+        padding-inline-start: 0px
+        margin-block-start: 0.5em
+        margin-block-end: 0.5em 
+        li
+            list-style-type: none
+            width: 100%
+            display: flex
+            justify-content: center
+        p
+            text-align: center
+    &__symptom
+        width: 95%
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        margin-block-end: 0em
+        margin-bottom: 0.5rem
+        &--buttons
+            display: flex  
+        &--text
+            height: 2.5rem
+            width: 90%
+            padding: 0.2rem
+            margin-bottom: 0.2rem
+            text-align: center
+            border: solid black 0.5px
+        &--item
+            padding: 0.5rem
+            color: white
+            background-color: #a45ba2
+            border-radius: 1rem
+            text-decoration: none
+            display: flex
+            align-items: center
+            justify-content: center
+            margin-left: 0.2rem
+            border: none
+            
+
+@media only screen and (min-width: 768px)
+    .list
+        &__symptom
+            flex-direction: row
+            &--text
+                width: 60%
+            
+
+@media only screen and (min-width: 968px)
+    .list
+        width: 80%
+        
+            
+    
