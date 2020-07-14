@@ -1,0 +1,27 @@
+{
+  "name": "takemytask-client-logic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "debug": "node --inspect=7000 .",
+    "test": "npx mocha *.spec.js",
+    "test:debug": "npx mocha --inspect-brk *.spec.js",
+    "test:coverage": "npx nyc --reporter=text --reporter=lcov npm test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "takemytask-commons": "file:../takemytask-commons"
+  },
+  "devDependencies": {
+    "bcryptjs": "^2.4.3",
+    "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
+    "mocha": "^8.0.1",
+    "nyc": "^15.1.0",
+    "takemytask-data": "file:../takemytask-data",
+    "xhr2": "^0.2.0"
+  }
+}
