@@ -1,0 +1,141 @@
+.dishes
+    // border: 2px dashed red
+    // height: 90vh
+    width: 100vw
+
+    &__list
+        // position: absolute
+        height: 85vh
+        width: 100%
+        bottom: 0
+        position: absolute
+        // border: 2px solid black
+        overflow-y: auto
+        padding-bottom: 20vh
+    &__item
+        margin: 1rem
+        display: flex
+        justify-content: space-between
+        align-items: center
+        width: 90%
+        height: 10rem
+        // border: 2px solid black
+        border-radius: 20px
+        box-shadow: 0px 0px 10px #0000002d
+        // padding: 1em
+    &__left
+        width: 60%
+        height: 100%
+        text-decoration: none
+        display: flex
+        justify-content: flex-start
+        align-items: flex-start
+        // padding: 1rem
+
+
+    &__dish
+        height: 50%
+        width: 100%
+        margin: 1rem
+        display: flex
+        color: #000000b2
+
+
+    &__right
+        width: 40%
+        height: 100%
+        display: flex
+        flex-direction: column
+        justify-content: space-around
+        align-items: flex-end 
+        
+
+    &__toggle
+        display: flex
+        justify-content: space-around
+        align-items: center
+        width: 8rem
+        height: 4rem
+        margin: .6em
+        padding: .1rem
+        background-color: #ffffff1e
+        // box-shadow: 0px 0px 10px #0000003f
+        transition: all .3s ease
+        
+        &--active
+            transition: all .3s ease
+            background-color: #1e8fff
+            box-shadow: 0px 0px 10px #49494983
+        
+
+
+    &__add
+        display: flex
+        justify-content: center
+        align-items: center
+        background-color: #ffffff
+        box-shadow: 0px 0px 10px #00000062
+        width: 3rem
+        height: 3rem
+        right: 0
+        font-size: 2rem
+        border-radius: 10px
+        position: relative   
+
+    
+    &__substract
+        display: flex
+        justify-content: center
+        align-items: center
+        background-color: #ffffff
+        box-shadow: 0px 0px 10px #00000062
+        width: 3rem
+        height: 3rem
+        left: 0
+        font-size: 1.8rem
+        border-radius: 10px
+        position: relative 
+        padding-bottom: 1.5rem  
+
+
+
+    &__price
+        display: flex
+        justify-content: center
+        align-items: center
+        font-size: 2rem
+        margin: .6rem
+        height: 4rem
+        width: 8rem        
+    
+
+    &__button
+        position: absolute
+        // border: 1px solid black
+        // z-index: 1
+        border-radius: 50px
+        width: 4.5rem
+        height: 4.5rem
+        right: 3rem
+        bottom: 3rem
+        display: flex
+        justify-content: center
+        align-items: center
+        flex-direction: column
+        font-size: 3rem
+        background-color: #ffffff
+        box-shadow: 0px 0px 10px #a3a3a380
+        border: none
+        color: #00000070
+
+    &__establishment
+        display: flex
+        justify-content: center
+        font-size: 2rem
+        align-items: center
+        width: 100vw
+        height: 15vh
+        background-color: #00000010
+        // border-bottom-left-radius: 20px
+        // border-bottom-right-radius: 20px
+        

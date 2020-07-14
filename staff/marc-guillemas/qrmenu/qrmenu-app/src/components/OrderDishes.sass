@@ -1,0 +1,115 @@
+.order-dish
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 100vw
+    height: 80vh
+    bottom: -100rem
+    position: absolute
+    transition: all .3s ease
+    &--active
+        transition: all .3s ease
+        bottom: 1rem
+    
+
+    &__all
+        display: flex
+        flex-direction: column
+        width: 95%
+        height: 95%
+        // border: 1px solid red
+        background-color: #ffffff
+        box-shadow: 0px 0px 10px #00000085
+        border-radius: 20px
+        align-items: center
+    
+    &__header
+        display: flex
+        justify-content: center
+        align-items: center
+        width: 100%
+        color: #00000096
+        height: 9%
+    &__back
+        display: flex
+        width: 4rem
+        height: .3rem
+        border-radius: 50px
+        background-color: #00000069
+    // &__back
+    //     position: absolute
+    //     display: flex
+    //     left: 2rem
+    //     text-decoration: none
+    //     font-size: 2rem
+    //     color: #00000096
+        
+    &__list
+        display: flex
+        flex-direction: column
+        width: 100%
+        height: 85%
+        align-items: center
+        // overflow-y: auto
+        // border: 2px solid blue
+        // overflow-y: auto
+
+    &__dishes
+        // position: absolute
+        height: 95%
+        width: 90%
+        top: 1rem
+        // position: absolute
+        // border: 2px solid black
+        overflow-y: auto
+        // padding-bottom: 20vh
+    &__item
+        margin: 1rem
+        display: flex
+        justify-content: space-between
+        align-items: center
+        width: 90%
+        height: 5rem
+        padding: .5rem
+        // border: 2px solid black
+        border-radius: 20px
+        box-shadow: 0px 0px 10px #0000002d
+        // padding: 1em
+        
+
+    &__dish
+        display: flex
+        justify-content: flex-start
+        align-items: center
+        width: 80%
+        height: 100%
+        padding-left: .2rem
+        font-size: 1.4rem
+    &__price
+        width: 20%
+        height: 100%
+        display: flex
+        justify-content: center
+        align-items: center
+        font-size: 1.4rem
+
+    &__info
+        width: 100%
+        height: 15%
+        display: flex
+        justify-content: space-around
+        align-items: center
+
+    &__amount
+        display: flex
+        justify-content: center
+        align-items: center
+        height: 100%
+        width: 20%
+        font-size: 1.6rem 
+    &__submit
+        width: 40%
+        height: 50%
+        border: none
+        border-radius: 20px
+        background-color: #ff9100

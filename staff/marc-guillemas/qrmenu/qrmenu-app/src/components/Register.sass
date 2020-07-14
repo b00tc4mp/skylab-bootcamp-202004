@@ -1,0 +1,111 @@
+*
+    overflow: hidden
+    box-sizing: border-box
+    margin: 0
+    padding: 0
+
+.register
+    display: flex
+    flex-direction: column
+    // background-image:  linear-gradient(to bottom, #1E1B33,#393458)
+    flex-direction: column
+    backdrop-filter: blur(8px)
+    height: 100vh
+    width: 100vw
+    // justify-content: space-between
+    align-items: center
+    
+    &__header
+        color: #0000008e
+        font-size: 2rem
+        z-index: -1
+
+        // border: 1px solid black
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+        display: flex
+        justify-content:  center
+        align-items: flex-start
+        padding-top: 4rem
+        width: 100vw
+        height: 100vh
+        position: fixed
+        // box-shadow: 2px 2px 10px 4px #f8bf75
+        // box-shadow: 0px 0px 0px 0px #c7c7c7 inset
+
+        background-image:  linear-gradient(to right, #e65c00,#F9D423)
+        // background-color: #fca311
+        // background-color: #fca211f8
+        // border-bottom-left-radius: 50px
+        // border-bottom-right-radius: 50px
+
+   
+    &__form
+        display: flex
+        flex-direction: column
+        justify-content: center
+        position: fixed
+        bottom: 0px
+        align-items: center
+        z-index: 1
+        background-color: #ffffff
+        border-top-left-radius: 60px
+        border-top-right-radius: 60px
+        height: 80vh
+        width: 100vw
+        box-shadow: 0px 0px 20px  #3535355e 
+
+    
+        
+    label
+        display: flex
+        align-self: center
+        color: #00000088
+        margin: .5rem
+        content-shadow: 0 0 10px dodgerBlue
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+    &__input
+        margin: .5rem
+        width: 85%
+        height: 3rem
+        padding-left: 1rem 
+        border-radius: 10px
+        // border: 1px solid red
+        border: 0
+        background-color: #ffffff
+        // transition: 1s 
+    &__input:valid 
+        box-shadow: 1px 1px 8px 1px #c7c7c7
+        background-color:  #f1f1f1be
+    &__input:focus
+        transition: all 1s ease  
+        box-shadow: 0 0 8px dodgerBlue
+    &--mail:hover + label[for=email]
+        color: red
+    &__button
+        justify-content: center
+        border-radius: 10px
+        font-size: 1.08rem
+        border: 0
+        color: #00000098
+        font-weight: bold 
+        margin: .5rem 1rem 1rem 1rem
+        background-image: linear-gradient(to right, #e69600,#F9D423) 
+        box-shadow: 5px 5px 10px #6e44009f
+        height: 3rem
+        width: 35%
+    &__button:hover
+        transition: .4s ease all
+        width: 40%
+
+    a 
+        cursor: pointer
+        height: 2rem
+        margin: .5rem 0 0 0
+        color: black
+        font-size: 1em
+        text-decoration: none
+    a:active
+        transition: .35s ease
+        color: blue
+
+    

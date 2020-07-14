@@ -30,10 +30,4 @@ function retrieveHolaNews(callback) {
    
         callback(undefined, data)
     }
-
-    xhr.onerror = function(error) {
-        callback(new Error('network error'))
-    }
-
-    xhr.send()
 }

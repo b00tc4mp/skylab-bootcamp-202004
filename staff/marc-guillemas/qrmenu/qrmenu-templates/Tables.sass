@@ -1,0 +1,178 @@
+// .tables 
+//     // border: 1px solid red
+//     // width: 100vw
+//     // height: 400rem
+//     // overflow-y: auto
+//     // display: flex
+//     &__list
+//         display: flex
+//         flex-direction: column
+//         justify-content: flex-start
+//         align-items: center
+//         width: 100vw
+        
+//         margin-top: 1rem
+        
+//         // overflow-y: scroll
+//         // white-space: nowrap
+//         max-height: 10rem
+//         overflow: auto
+
+//     &__item
+//         position: relative
+//         margin: 1rem
+//         display: flex
+//         justify-content: space-between
+//         align-items: center
+//         width: 90%
+//         height: 10rem
+//         // border: 2px solid black
+//         border-radius: 20px
+//         box-shadow: 0px 0px 10px #0000002d
+
+//     &__number
+//         height: 100%
+//         width: 10rem
+//         display: flex
+
+//     &__toggle
+//         display: flex
+//         justify-content: flex-start
+//         align-items: center
+//         width: 6rem
+//         height: 3rem
+//         // border: 1px solid black
+//         border-radius: 50rem
+//         padding: .1rem
+//         background-color: #ffffff1e
+//         box-shadow: 0px 0px 10px #0000003f
+//         transition: all 3s ease
+//         &--active
+//             background-color: dodgerBlue
+//             box-shadow: 0px 0px 10px #00000083
+
+
+//     &__switch
+//         display: flex
+//         justify-content: center
+//         align-items: center
+//         background-color: #00000018
+//         width: 50%
+//         height: 90%
+//         left: 0px
+//         border-radius: 100px
+//         transition: all .3s ease    
+
+
+//         &--active
+//             transform: translate(100%) 
+//             transition: all .3s ease    
+
+.tables
+    // border: 2px dashed red
+    // height: 90vh
+    width: 100vw
+
+    &__list
+        // position: absolute
+        height: 92vh
+        width: 100%
+        // border: 2px solid black
+        overflow-y: auto
+
+    &__item
+        margin: 1rem
+        display: flex
+        justify-content: space-between
+        align-items: center
+        width: 90%
+        height: 10rem
+        // border: 2px solid black
+        border-radius: 20px
+        box-shadow: 0px 0px 10px #0000002d
+        // padding: 1em
+    &__left
+        width: 50%
+        height: 100%
+        text-decoration: none
+        display: flex
+        justify-content: space-between
+        align-items: center
+
+    &__status
+        background-color: #00ff00
+        box-shadow: 0px 0px 8px #00ff00
+        height: 65%
+        width: .2rem
+        border-radius: 20px
+        // margin-left: 1rem
+        transition: all .5s ease
+        &--active
+            transition: all .5s ease
+            background-color: #ff0000
+            box-shadow: 0px 0px 8px #ff0000
+    &__num
+        display: flex
+        flex-direction: column
+        justify-content: flex-start
+        align-items: left
+        height: 90%
+        width: 90%
+        padding: 1em
+
+    &__table
+        height: 20%
+        width: 10rem
+        display: flex
+        color: #000000b2
+    
+    &__number
+        height: 80%
+        width: 80%
+        display: flex
+        justify-content: flex-start
+        align-items: flex-end
+        text-align: right
+        font-size: 5rem
+        color: #0000008a
+
+    &__right
+        width: 50%
+        height: 100%
+        display: flex
+        justify-content: flex-end
+        align-items: center 
+        
+
+    &__toggle
+        display: flex
+        justify-content: center
+        align-items: flex-start
+        width: 3.5rem
+        height: 6.5rem
+        margin: 1em
+        border-radius: 50rem
+        padding: .1rem
+        background-color: #ffffff1e
+        box-shadow: 0px 0px 10px #0000003f
+        transition: all 3s ease
+        &--active
+            background-color: dodgerBlue
+            box-shadow: 0px 0px 10px #00000083
+
+
+    &__switch
+        display: flex
+        justify-content: center
+        align-items: center
+        background-color: #00000018
+        width: 90%
+        height: 50%
+        left: 0px
+        border-radius: 100px
+        transition: all .3s ease    
+
+
+        &--active
+            transform: translate(100%) 
+            transition: all .3s ease 
