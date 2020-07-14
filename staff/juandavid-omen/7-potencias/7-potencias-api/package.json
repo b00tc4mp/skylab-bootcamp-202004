@@ -1,0 +1,26 @@
+{
+    "name": "7-potencias-api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node .",
+        "watch": "npx nodemon --ignore ./data .",
+        "debug": "node debug ."
+    },
+    "keywords": [],
+    "author": "anvidmen",
+    "license": "ISC",
+    "dependencies": {
+        "7-potencias-commons": "file:../7-potencias-commons",
+        "7-potencias-data": "file:../7-potencias-data",
+        "7-potencias-server-logic": "file:../7-potencias-server-logic",
+        "body-parser": "^1.19.0",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "jsonwebtoken": "^8.5.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.4"
+    }
+}

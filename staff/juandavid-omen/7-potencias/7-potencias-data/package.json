@@ -1,0 +1,16 @@
+{
+  "name": "7-potencias-data",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "anvidmen",
+  "license": "ISC",
+  "dependencies": {
+    "7-potencias-commons": "file:../7-potencias-commons",
+    "mongoose": "^5.9.18"
+  }
+}

@@ -1,0 +1,85 @@
+.cart-dropdown
+	position: fixed
+	width: 19rem
+	height: 23rem
+	display: flex
+	flex-direction: column
+	padding: 20px
+	border-radius: 1rem
+	top: 4.5em
+	right: 0
+	z-index: 5
+	transition: all 0.3s ease-in-out
+	background: rgba(230, 214, 211, 0.95)
+
+	.cart-items
+		height: 100%
+		display: flex
+		flex-direction: column
+		overflow-y: auto
+		color: black
+
+		&__wrapper
+			height: 100%
+
+		&__item
+			display: flex
+			justify-content: space-between
+			margin: 0.7rem 0
+
+		&__item-title
+			font-size: 1rem
+			min-width: 5rem
+			max-width: 5rem
+			font-weight: bold
+
+		&__item-amount span
+			margin: 0.3rem
+
+		&__item-total
+			font-size: 1rem
+			margin-left: 1rem
+			
+		&__empty-message
+			font-size: 1.1rem
+			margin: 50px auto
+	
+		&__total
+			width: 100%
+			border-top: 0.1rem solid #c0b7bb
+			color: grey
+			display: flex
+			justify-content: space-between
+			padding: 1rem
+
+	.button-items
+		height: 2rem
+		margin-top: auto
+		display: flex
+		flex-direction: row
+		justify-content: space-between
+
+		.clear-cart
+			margin-top: auto
+			height: 2rem
+			padding: 0.5rem 0.8rem
+			border-radius: 2rem
+			background-color: #a87d87
+			color: white
+			&:hover
+				cursor: pointer
+				background-color: #ceaab2
+
+		.checkout-button
+			height: 2rem
+			padding: 0.5rem 0.8rem
+			border: 0.02rem solid black
+			border-radius: 2rem
+			background-color: #b3576b
+			color: white
+			font: 400 13.3333px Arial
+			border-style: outset
+			border-width: 2px
+			&:hover
+				background-color: #ce516c
+

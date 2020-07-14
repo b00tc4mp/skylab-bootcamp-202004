@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>7 Potencias</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    
+    <body>
+        <header class="toolbar">
+            <nav class="toolbar__navigation">
+                <div class="toolbar__logo">
+                    <a></a>
+                </div>
+                <div class="spacer"></div>
+                <div class="toolbar__navigation-items">
+                    <ul>
+                        <li><a>Inicio</a></li>
+                        <li><a>Clases online</a></li>
+                        <li><a>Horarios</a></li>
+                    </ul>
+                </div>
+                <div class="spacer2"></div>
+                <div class="register-container">
+                    <div class="register-icon"></div>
+                    <a>LOGIN</a>
+                    <a>REGISTER</a>
+                </div>
+                <div class="checkout-container">
+                    <div class="checkout-icon"></div>
+                    <a>CHECKOUT</a>
+                </div>
+                <div class="icons-container">
+                    <div class="shopping_cart"></div>
+                    <div class="shopping_amount">
+                        <div class="amount">0</div>
+                    </div>
+                </div>
+                <button class="toggle-button">
+                    <div class="toggle-button__line"></div>
+                    <div class="toggle-button__line"></div>
+                    <div class="toggle-button__line"></div>
+                </button>
+            </nav>
+        </header>
+        <nav class="sidebar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/">Classes</a></li>
+                <li><a href="/">Horarios</a></li>
+            </ul>
+        </nav>
+
+        <section class='landing'>
+        </section>
+
+        <section class='login'>
+            <form class='login__container' onSubmit={handleSubmit}>
+                <h2 class='login__h2'>Log Into 7 Potencias </h2>
+                <input class='login__input' type='email' name='email' placeholder='e-mail' required />
+                <input class='login__input' type='password' name='password' placeholder='password' required minLength='8' />
+                <button class='login__log'>Log in</button>
+                <Feedback message={error} level='error' />
+                <button class='login__newAccount' onClick={handleGoToRegister}>Create New Account</button>
+            </form>
+        </section>
+
+        <section class='register'>
+            <form class='register__container' onSubmit={handleSubmit}>
+                <h2 class='register__h2'>Create an account</h2>
+                <input class='register__input' type='text' name='name' placeholder='name' required pattern='[A-Za-z]{1,20}' />
+                <input class='register__input' type='text' name='surname' placeholder='surname' required pattern='[A-Za-z]{1,20}' />
+                <input class='register__input' type='email' name='email' placeholder='e-mail' required />
+                <input class='register__input' type='password' name='password' placeholder='password' required minLength='8' />
+                <button class='register__singUp'>Sign Up</button>
+                <Feedback message={error} level='error' />
+                <button class='register__toLogin' onClick={handleGoToLogin}>Log Into Existing Account</button>
+            </form>
+        </section>
+
+        <section class='home'>
+        </section>
+
+        <section class='card'>
+            <section class='miswitch'>
+                <div class='swicht-btn' id='swicht-btn'>
+                <a>Individual</a>
+                <a>Group</a>
+            </section>
+            <section class='description-card'>
+            </section>
+        </section>
+
+        <section class='card'>
+            <section class='miswitch'>
+                <div class='swicht-btn' id='swicht-btn'>
+                    <a>Individual</a>
+                    <a>Group</a>
+            </section>
+            <section class='description-card'>
+                <section class='description-table'>
+                    <div class='description-table-cont'>
+                        <div class='description-table-indiv'>
+                            <div class='description-table-head'>
+                                <h2>DANCE SALSA</h2>
+                                <h3><sup>$ </sup>20<sub>/Mil</sub></h3>
+                            </div>
+                            <ul class='description-table-list'>
+                                <li>Salsa Caleña</li>
+                                <li>Bodily dissociation</li>
+                                <li>musicality</li>
+                                <li>Correct execution of the steps</li>
+                            </ul>
+                            <a href='#' class='description-table-button'>Add to cart</a>
+                        </div>
+                        <div class='description-table-group'>
+                            <div class='description-table-head'>
+                                <h2>SALSA</h2>
+                                <h3><sup>$ </sup>35<sub>/Mil</sub></h3>
+                            </div>
+                            <ul class='description-table-list'>
+                                <li>Salsa Caleña</li>
+                                <li>Bodily dissociation</li>
+                                <li>musicality</li>
+                                <li>Correct execution of the steps</li>
+                            </ul>
+                            <a href='#' class='description-table-button'>Add to Cart</a>
+                        </div>
+                    </div>
+                </section>
+                <section class='description-table'>
+                    <div class='description-table-cont'>
+                        <div class='description-table-indiv'>
+                            <div class='description-table-head estandar-title'>
+                                <h2>DANCE BACHATA</h2>
+                                <h3><sup>$ </sup>25<sub>/Mil</sub></h3>
+                            </div>
+                            <ul class='description-table-list'>
+                                <li>Bachata Dominicana</li>
+                                <li>Bodily dissociation</li>
+                                <li>musicality</li>
+                                <li>Correct execution of the steps</li>
+                            </ul>
+                            <a href='#' class='description-table-button estandar'>Add to Cart</a>
+                        </div>
+                        <div class='description-table-group'>
+                            <div class='description-table-head estandar-title'>
+                                <h2>DANCE BACHATA</h2>
+                                <h3><sup>$ </sup>35<sub>/Mil</sub></h3>
+                            </div>
+                            <ul class='description-table-list'>
+                                <li>Bachata Dominicana</li>
+                                <li>Bodily dissociation</li>
+                                <li>musicality</li>
+                                <li>Correct execution of the steps</li>
+                            </ul>
+                            <a href='#' class='description-table-button estandar'>Add to Cart</a>
+                        </div>
+                    </div>
+                </section>
+                <section class='description-table'>
+                    <div class='description-table-cont'>
+                        <div class='description-table-indiv'>
+                            <div class='description-table-head'>
+                                <h2>DANCE URBAN</h2>
+                                <h3><sup>$ </sup>20<sub>/Mil</sub></h3>
+                            </div>
+                            <ul class='description-table-list'>
+                                <li>Hip Hop</li>
+                                <li>Bodily dissociation</li>
+                                <li>musicality</li>
+                                <li>Correct execution of the steps</li>
+                            </ul>
+                            <a href='#' class='description-table-button'>Add to cart</a>
+                        </div>
+                        <div class='description-table-group'>
+                            <div class='description-table-head'>
+                                <h2>DANCE URBAN</h2>
+                                <h3><sup>$ </sup>35<sub>/Mil</sub></h3>
+                            </div>
+                            <ul class='description-table-list'>
+                                <li>Hip Hop</li>
+                                <li>Bodily dissociation</li>
+                                <li>musicality</li>
+                                <li>Correct execution of the steps</li>
+                            </ul>
+                            <a href='#' class='description-table-button'>Add to Cart</a>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </section>
+        <section class='cart-dropdown'>
+            <div class='cart-items'>
+                <a > <span class='empty-message'> Your cart is empty </span> </a>
+            </div>
+            <div onClick={}>
+                GO TO CHECKOUT
+            </div>
+        </section>
+        <footer class='diagonal'> </footer>
+        <p class={`feedback feedback--${level}`}>{message}</p>
+
+    </body>
+
+</html>

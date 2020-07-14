@@ -1,0 +1,27 @@
+{
+  "name": "7-potencias-client-logic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx mocha *.spec.js",
+    "test:debug": "npx mocha debug *.spec.js",
+    "test:coverage": "npx nyc --reporter=text --reporter=lcov npm test"
+  },
+  "keywords": [],
+  "author": "anvidmen",
+  "license": "ISC",
+  "devDependencies": {
+    "bcryptjs": "^2.4.3",
+    "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
+    "7-potencias-data": "file:../7-potencias-data",
+    "mocha": "^7.2.0",
+    "nyc": "^15.1.0",
+    "xhr2": "^0.2.0"
+  },
+  "dependencies": {
+    "7-potencias-commons": "file:../7-potencias-commons",
+    "snazzy": "^8.0.0"
+  }
+}

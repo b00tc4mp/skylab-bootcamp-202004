@@ -1,0 +1,83 @@
+.sidebar
+  background: #890620
+  box-shadow: 2px 0px 5px rgba(245, 124, 124, 0.5)
+  position: fixed
+  top: 4.5rem
+  right: 0
+  z-index: 222
+  height: fit-content
+  display: none
+  padding: 0
+
+  ul
+    list-style: none
+    display: flex
+    flex-direction: column
+    justify-content: center
+    height: fit-content
+    width: fit-content
+    left: 0
+    padding: 0
+
+    li
+      height: 5rem
+      width: 15rem
+      display: flex
+      background: #890620
+      justify-content: center
+      align-content: center
+      line-height: 5rem
+      border: 0.1px solid rgba(255, 255, 255, 0.5)
+
+      a
+        text-decoration: none
+        font-size: 1.2rem
+        text-align: center
+        height: fit-content
+        color: white
+      
+      button
+        font-size: 1.2rem
+        align-self: center
+        background: transparent
+        height: fit-content
+        color: white
+        border: none
+
+      button:hover, button:active
+        border: none
+        outline: none
+        cursor: pointer
+
+
+    .sidebar-separator
+      background: rgba(255, 255, 255, 0.5)
+      height: 0.2rem
+      width: 100%
+      display: none
+    
+    .register, .login, .cart, .logout
+      display: none
+
+    li:hover
+      background: rgba(245, 124, 124, 0.5)
+
+@media (max-width: 993px)
+  .sidebar
+    display: flex !important
+
+@media (max-width: 767px)
+  .sidebar
+    .sidebar-separator
+      display: flex !important
+      
+    .register, .login, .logout
+      display: flex !important
+
+@media (max-width: 560px)
+  .sidebar
+    .sidebar-separator
+      display: flex !important
+      
+    .cart
+      display: flex !important

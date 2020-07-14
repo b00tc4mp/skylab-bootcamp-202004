@@ -1,0 +1,55 @@
+@import Panel
+@import StyleColors
+
+.register
+    display: flex
+    flex-direction: column
+    justify-content: flex-start
+    align-items: center
+    text-align: center
+    background-color: $bg-color-body
+    height: 100vh
+    width: 100%
+
+    &__container
+        border-radius: 0.5em
+        padding: 3.5em
+
+    &__h2
+        @extend %text-h2
+        padding: 0.5em
+
+    &__input
+        text-align: center
+        background-color: $bg-color-form-input
+        border: 1px solid black
+        outline-color: $color-outline
+        font-size: 1.25em
+        width: 50%
+        border-radius: 0.5em
+        padding: 0.5em
+        margin: 0.5em
+
+    &__singUp
+        text-align: center
+        background-color: $bg-color-btn
+        color: $btn-color-font
+        border: 1px solid black
+        outline-color: $color-outline
+        font-size: 1.5em
+        width: 50%
+        border-radius: 0.5em
+        padding: 0.5em
+        margin: 0.5em
+
+    &__toLogin
+        @extend %text-description
+        text-align: center
+        background-color: $color-light-gray
+        border: 1px solid #b85b6d
+        outline-color: $color-outline
+        font-size: 1em
+        width: 48%
+        border-radius: 0.5em
+        padding: 0.5em
+        margin: 0.5em

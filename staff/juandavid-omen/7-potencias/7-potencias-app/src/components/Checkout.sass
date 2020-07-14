@@ -1,0 +1,153 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400,900)
+
+.checkout 
+  width: 85% 
+  max-width: 1024px 
+  margin: 0 auto 
+  padding: 5rem 0
+  font-family:'Lato', 'helvetica', arial, sans-serif !important
+ 
+  &__header 
+    border-bottom: 1px solid #ccc 
+    padding-bottom: 20px 
+    position: relative 
+    strong 
+      font-size: 1.8em 
+      position: relative 
+      font-weight: 400 
+      line-height: 1 
+
+  &__divider
+    border: 1px solid #ccc
+    border-top: none
+    padding: 15px
+    background: rgba(0,0,0,0.05)  
+
+  .cart-block
+    min-height: 10rem
+    margin-top: 10%
+
+  .cart-items
+    padding: 10px 0 0
+    display: flex
+    justify-content: space-around
+    flex-direction: column
+
+    &__wrapper
+      height: 100%
+      min-height: 20vh
+
+    &__item
+      border-bottom: 1px solid #ccc
+      margin-bottom: 10px 
+      display: flex
+      justify-content: space-between
+      min-height: 4rem
+
+      &:last-child 
+        border-bottom: none 
+        padding-bottom: 0 
+        margin-bottom: 0 
+
+    &__item-title
+      display: block
+      margin-bottom: 3px
+      font-size: 1em
+
+    &__item-amount
+      display: inline-flex
+      flex-wrap: wrap
+      justify-content: space-between
+      width: 20%
+
+      span
+        vertical-align: middle
+
+    &__item-qty
+      text-align: right
+      text-align: center
+      font-size: 16px
+      border-radius: 0
+      outline: none
+      height: 40px
+      vertical-align: middle
+      color: #555
+
+    &__item-price
+      width: 20%
+      text-align: right
+      padding-top: 6px
+      position: relative
+      font-size: 1.4em
+      font-weight: 900
+      color: #555
+
+    &__total
+      width: 100%
+      color: grey
+      display: flex
+      justify-content: space-between
+      padding: 1rem
+      border-top: 1px solid #ccc
+
+  .empty-message
+    text-align: center
+    min-height: inherit
+    margin-top: 10%
+
+  &__button-items
+    display: flex
+    justify-content: space-between
+    text-align: center
+    flex-wrap: wrap
+  
+  &__extra-buttons
+    display: flex
+    justify-content: flex-start
+    flex-wrap: nowrap
+
+
+  &__btn
+    left: 0
+    font-size: .9em 
+    padding: 12px 30px 
+    background: #83194a 
+    color: white
+    font-weight: 900 
+    cursor: pointer 
+    text-transform: uppercase 
+    font-weight: 700 
+    letter-spacing: 2px 
+    opacity: 1 
+    transition: opacity .3s
+    border-radius: 1rem
+    border: white
+    margin-top: 1rem
+    margin-bottom: 1rem
+    
+    &:hover
+      opacity: .8
+      background: #9e1957 
+ 
+  .clear-cart, .continue-btn
+      font-size: .9em 
+      padding: 8px 25px 
+      background: #c9b8c0 
+      color: white
+      font-weight: 900 
+      cursor: pointer  
+      font-weight: 700 
+      letter-spacing: 2px 
+      opacity: 1 
+      transition: opacity .3s
+      border-radius: 1rem
+      border: white
+      margin-right: 1rem
+      display: flex
+      flex-wrap: wrap
+      margin-top: 1rem
+      margin-bottom: 1rem
+
+      &:hover
+        opacity: .8
+        background: #7a636e 
