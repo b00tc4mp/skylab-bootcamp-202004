@@ -1,5 +1,5 @@
-const { API_URL } = require("../config")
 const context = require("./context")
+const { API_URL } = context
 
 /**
  * @param  {float} latitude

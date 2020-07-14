@@ -1,7 +1,7 @@
-const { API_URL } = require("../config")
+const context = require("./context")
+const { API_URL } = context
 require("gluttony-commons/polyfills/string")
 const { errors: { AuthenticationError } } = require("gluttony-commons")
-const context = require("./context")
 
 /**
  * @param  {string} text

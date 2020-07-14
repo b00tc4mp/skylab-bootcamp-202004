@@ -1,3 +1,5 @@
+const config = require("../config")
+
 module.exports = {
-    API_URL:"http://192.168.0.25:8085/api"
+    API_URL: config.API_URL
 }
