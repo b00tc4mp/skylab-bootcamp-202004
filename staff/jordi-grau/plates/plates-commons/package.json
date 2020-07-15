@@ -1,0 +1,22 @@
+{
+  "name": "plates-commons",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/runtime": "^7.10.4",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.18"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.2.0",
+    "xhr2": "^0.2.0"
+  }
+}

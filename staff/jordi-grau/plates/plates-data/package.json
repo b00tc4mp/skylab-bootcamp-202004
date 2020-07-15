@@ -1,0 +1,20 @@
+{
+  "name": "plates-data",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^3.5.8",
+    "mongoose": "^5.9.18",
+    "plates-commons": "file:../plates-commons"
+  },
+  "devDependencies": {
+    "bcryptjs": "^2.4.3"
+  }
+}
