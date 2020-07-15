@@ -1,0 +1,14 @@
+extend App
+
+block body 
+
+  section.home
+    h2 HOME
+    ul.link-list
+      a(href='/add-contact') Add Contacs
+      a(href='/contacts') List Contacts
+      a(href='/search') Search Contacts
+      a(href='/add-stickies') Add-stikies
+      a(href='/stickies') Stickies
+    form(action='/logout' method='POST')
+      button LOGOUT

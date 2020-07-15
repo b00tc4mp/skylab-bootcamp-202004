@@ -1,0 +1,12 @@
+extend App
+
+block body
+
+  section.add-stickie
+    h2 Add Sticky
+    form#textarea(action='/add-stickie' method='POST')
+      | Tag: 
+      input(type='text' name='tag' placeholder='tag')
+      input(type='submit')
+    br
+    textarea(rows='4' cols='30' name='message' form='textarea' placeholder='Introduce your sticky!!!')
