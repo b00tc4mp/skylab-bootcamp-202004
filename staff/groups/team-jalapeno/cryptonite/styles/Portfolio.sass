@@ -1,0 +1,28 @@
+.wallet
+    padding: 0.5em 0
+    background: #424242
+    display: flex
+    flex-wrap: wrap
+    width: 100%
+    justify-content: space-between
+    border-radius: 1em
+    margin-bottom: 1em
+
+    &__head
+        margin-left: 1.2em
+        display: flex
+        flex-direction: column
+
+    &__body
+        display: flex
+        flex-direction: column
+        margin-right: 1.2em
+        align-items: flex-end
+
+@media (min-width: 768px)
+    .wallet
+        max-width: 80%
+
+@media (min-width: 992px)
+    .wallet
+        max-width: 48%

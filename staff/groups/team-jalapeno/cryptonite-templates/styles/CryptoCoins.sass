@@ -1,0 +1,81 @@
+.crypto-coins
+    display: flex
+    flex-direction: column
+
+    &__title
+        width: 80%
+        margin: 0 auto
+        color: lightgrey
+
+    &__search
+        border: 1em solid white
+        border-radius: 20px
+        margin: 1em auto
+        width: 80%
+        display: flex
+        justify-content: center
+
+        & input
+            // font-size: 1em
+            // width: 100%
+            width: 100%
+            border-style: none
+            color: inherit
+            font-size: 1em
+            outline: none
+            color: black
+
+.coins-container
+    margin: 0 auto
+    width: 90%
+    margin-top: 20px
+    background-color: #1c1c1c
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-around
+    .coin
+        width: 12em
+        height: 200px
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+        background: $secondary-color
+        border-radius: 25px
+        margin: 15px 0
+        padding: 15px
+
+        &--large
+            width: 95%
+            height: 145px
+
+        &__head
+            display: flex
+            justify-content: space-between
+            color: black
+            font-size: 1.5em
+        &__body
+            margin-bottom: 0.4em
+
+        span
+            height: 25px
+            display: flex
+            justify-content: space-between
+            font-size: 1.1em
+
+        &__img
+            // justify-self: center TODO MOVE IMAGE TO TOP OF DIV
+            width: 50px
+            border-radius: 25px
+
+        &__name
+            color: #dd7631
+
+        &__price
+            font-weight: bold
+            color: black
+
+            &--light
+                color: white
+
+        &__percentage
+            color: #dd7631

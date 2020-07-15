@@ -1,0 +1,63 @@
+.coinpage-header
+    background: $secondary-color
+    color: black
+    border-radius: 0 0 3em 3em
+
+    & .nav__item
+        color: black
+
+    &__name
+        font-size: 2em
+        margin: 1em 0
+
+    &__button
+        font-size: 1em
+        padding: 0.8em
+        margin: 1em auto
+        width: 50%
+        background: #1c1c1c
+        border-color: #1c1c1c
+        border-radius: 0.3em
+        color: $secondary-color
+        outline: 0
+
+        &--contrast
+            color: #1c1c1c
+            background: $secondary-color
+            margin: 0.5em
+            max-width: 15em
+
+    &__stats
+
+        display: flex
+        justify-content: space-around
+        width: 100%
+        align-items: center
+        flex-wrap: wrap
+
+.coinpage-body
+    display: flex
+    flex-direction: column
+    align-items: center
+    width: 100%
+
+    &__form
+        display: flex
+        align-items: center
+        flex-direction: column
+        width: 100%
+
+        & div
+            width: 70%
+            display: flex
+            align-items: center
+
+    &__input
+        border: 1em solid white
+        border-radius: 3em
+        margin: 1em auto
+        width: 70%
+        display: flex
+        justify-content: center
+        font-size: 1em
+        outline: 0

@@ -1,0 +1,47 @@
+
+.nav
+    padding-top: 1em
+    font-size: 1.2em
+    display: flex
+    justify-content: flex-end
+
+    &__item
+        margin-right: 5%
+        text-decoration: none
+        color: white
+        font-weight: bold
+
+        &--contrast
+            color: $secondary-color
+
+.brand
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    margin: 5em 10%
+
+    &__title
+        font-size: 2em
+        margin: 1em 0
+
+    &__description
+        text-align: center
+
+.nav-bar
+    background: $secondary-color
+    padding: 0.5em 3em
+    position: sticky
+    bottom: 0
+    display: flex
+    justify-content: space-around
+
+    &__item
+        text-decoration: none
+        display: flex
+        flex-direction: column
+        align-items: center
+        color: black
+
+        & i
+            font-size: 2em
