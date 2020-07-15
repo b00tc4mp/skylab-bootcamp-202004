@@ -1,0 +1,182 @@
+require('dotenv').config()
+
+const { argv: [, , PORT_CLI], env: { PORT: PORT_ENV, JWT_SECRET, MONGODB_URL } } = process
+const PORT = PORT_CLI || PORT_ENV || 8080
+
+const express = require('express')
+const { registerUser, authenticateUser, retrieveUser, searchUsers, unregisterUser, updateUser, retrieveCart, addProduct, searchProducts } = require('misc-server-logic')
+const bodyParser = require('body-parser')
+const { name, version } = require('./package.json')
+const { handleError } = require('./helpers')
+const { jwtVerifierExtractor, cors } = require('./middlewares')
+const { utils: { jwtPromised } } = require('misc-commons')
+const { mongoose } = require('misc-data')
+
+const app = express()
+const parseBody = bodyParser.json()
+
+
+
+mongoose.connect(MONGODB_URL)
+    .then(() => {
+
+        const verifyToken = jwtVerifierExtractor(JWT_SECRET, handleError)
+
+        app.use(cors)
+
+        app.post('/users', parseBody, (req, res) => {
+            const { body: { name, surname, email, password } } = req
+
+            try {
+                registerUser(name, surname, email, password)
+                    .then(() => res.status(201).send())
+                    .catch(error => handleError(error, res))
+
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+        // users
+
+        app.post('/users/auth', parseBody, (req, res) => {
+            const { body: { email, password } } = req
+
+            try {
+                authenticateUser(email, password)
+                    .then(userId => jwtPromised.sign({ sub: userId }, JWT_SECRET, { expiresIn: '1d' }))
+                    .then(token => res.send({ token }))
+                    .catch(error => handleError(error, res))
+
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        app.get('/users/:userId?', verifyToken, (req, res) => {
+            try {
+
+                const { payload: { sub: userId }, params: { userId: otherUserId } } = req
+
+                retrieveUser(otherUserId || userId)
+                    .then(user => res.send(user))
+                    .catch(error => handleError(error, res))
+
+            } catch (error) {
+                handleError(error, res)
+
+            }
+        })
+
+
+        app.get('/users/search', verifyToken, (req, res) => {
+
+            try {
+
+                const { payload: { sub: userId }, query: { q } } = req
+
+                searchUsers(userId, q)
+                    .then(users => {
+                        //console.log(users)
+                        res.send(users)
+                    })
+                    .catch(error => handleError(error, res))
+
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+
+        app.delete('/users/delete', parseBody, (req, res) => {
+            debugger
+            try {
+                const { payload: { sub: userId }, params: { userId: otherUserId } } = req
+
+
+                const { body: { email, password } } = req
+
+                unregisterUser(email, password, userId)
+                    .then(() => res.status(204).send())
+                    .catch(error => handleError(error, res))
+
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        app.patch('/users/update', verifyToken, parseBody, (req, res) => {
+
+            try {
+
+                const { payload: { sub: userId }, body } = req
+
+
+                updateUser(userId, body)
+                    .then((message) => res.status(201).send({ message: message }))
+                    .catch(error => handleError(error, res))
+
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        // cart
+
+        app.post('/cart/add', verifyToken, parseBody, (req, res) => {
+
+            const { payload: { sub: userId }, body: { id: productId } } = req
+
+            addToCart(userId, productId)
+                .then(message => res.status(201).send({ message: message }))
+                .catch(error => handleError(error, res))
+
+        })
+
+        app.get('/cart', verifyToken, (req, res) => {
+            const { payload: { sub: userId } } = req
+            retrieveCart(userId)
+                .then(items => res.status(201).send({ cart: items }))
+                .catch(error => handleError(error, res))
+        })
+
+
+
+        app.post('/product', parseBody, (req, res) => {
+
+            const { body: product } = req
+
+            addProduct(product)
+                .then(() => res.status(201).send())
+
+        })
+
+        app.get('/products/:product?', verifyToken, (req, res) => {
+            const { params: { product: query } } = req
+            debugger
+            searchProducts(query)
+                .then(productList => {
+                    console.log(productList)
+                    res.status(201).send(productList)
+                })
+                .catch(error => handleError(error, res))
+
+        })
+
+
+        app.listen(PORT, () => console.log(`${name} ${version} running in ${PORT}`))
+
+        process.on('SIGINT', () => {   //TODO
+            mongoose.disconnect()
+                .then(() => console.log('\ndisconnected'))
+                .catch(error => console.error('could not disconnect from mongo', error))
+                .finally(() => {
+                    console.log(`${name} ${version} stopped`)
+
+                    process.exit()
+                })
+        })
+    })
+
+    .catch(error => {
+        console.error('coulud not connect to mongo', error)
+    })
