@@ -1,0 +1,67 @@
+.button
+    &__navigation
+        font-size: 1.5rem
+        border: none
+        text-align: center
+
+        font-family: Georgia
+        border-radius: 10px
+        font-weight: bold
+
+        &--regular
+            background-color: white
+            color: salmon
+            
+            &:hover
+                background-color: #C16156
+                color: white
+
+        &--inverted    
+            background-color: #C16156
+            color: white
+        
+            &:hover
+                background-color: white
+                color: salmon
+
+    &__card
+        text-align: justify
+        font-size: 1.5rem
+        border: none
+        text-align: center
+        font-family: Georgia
+        border-radius: 0.3rem
+        font-weight: bold
+
+        &--regular
+            background-color: white
+            color: salmon
+
+            &:hover       
+                background-color: #C16156
+                color: white
+
+        &--inverted
+            background-color: #C16156
+            color: white
+
+            &:hover
+                background-color: white
+                color: salmon
+
+        &--back
+            grid-column-start: 1
+            
+        &--edit
+            grid-column-start: 2
+
+        &--save
+            grid-column-start: 2
+
+        &--delete
+            grid-column-start: 4
+
+        &--configuration
+            justify-self: end
+            margin: 3%
+            font-size: 1.5rem

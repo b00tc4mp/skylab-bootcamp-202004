@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Mocha Tests</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="vendor/mocha/mocha.css" />
+</head>
+
+<body>
+    <div id="mocha"></div>
+    <script src="vendor/jquery/jquery-3.3.1.min.js"></script>
+    <script src="vendor/trello/client.js"></script>
+    <script src="vendor/mocha/mocha.js"></script>
+    <script src="vendor/chai/chai.js"></script>
+
+    <script class="mocha-init">
+        mocha.setup('bdd')
+        mocha.checkLeaks()
+        mocha.timeout(50000)
+
+        const {
+            expect
+        } = chai
+    </script>
+    <!-- utils -->
+    <script src="utils/function.js"></script>
+    <script src="utils/string.js"></script>
+    <script src="utils/url.js"></script>
+    <script src="utils/http.js"></script>
+    <script src="utils/call.js"></script>
+    <!-- logic -->
+    <script src="logic/register-user.js"></script>
+    <script src="logic/authenticate-user.js"></script>
+    <script src="logic/get-current-user.js"></script>
+    <script src="logic/retrieve-trello-from-skylab.js"></script>
+    <script src="logic/link-skylab-trello.js"></script>
+    <script src="logic/create-new-activity.js"></script>
+    <script src="logic/create-new-group.js"></script>
+    <script src="logic/create-new-list.js"></script>
+    <script src="logic/delete-activity.js"></script>
+    <script src="logic/retrieve-group-activity.js"></script>
+    <script src="logic/retrieve-user-groups.js"></script>
+    <script src="logic/update-activity.js"></script>
+    <script src="logic/invite-to-group.js"></script>
+    <script src="logic/leave-group.js"></script>
+    <script src="logic/update-group.js"></script>
+    <script src="logic/delete-group.js"></script>
+    <!-- specs -->
+    <script src="logic/authenticate-user.spec.js"></script>
+    <script src="logic/get-current-user.spec.js"></script>
+    <script src="logic/retrieve-trello-from-skylab.spec.js"></script>
+    <script src="logic/link-skylab-trello.spec.js"></script>
+    <script src="logic/create-new-activity.spec.js"></script>
+    <script src="logic/create-new-group.spec.js"></script>
+    <script src="logic/create-new-list.spec.js"></script>
+    <script src="logic/delete-activity.spec.js"></script>
+    <script src="logic/retrieve-group-activity.spec.js"></script>
+    <script src="logic/retrieve-user-groups.spec.js"></script>
+    <script src="logic/update-activity.spec.js"></script>
+    <script src="logic/invite-to-group.spec.js"></script>
+    <script src="logic/leave-group.spec.js"></script>
+    <script src="logic/update-group.spec.js"></script>
+    <script src="logic/delete-group.spec.js"></script>
+
+    <script class="mocha-exec">
+        mocha.run()
+    </script>
+</body>
+
+</html>

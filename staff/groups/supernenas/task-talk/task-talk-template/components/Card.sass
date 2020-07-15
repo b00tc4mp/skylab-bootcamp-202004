@@ -1,0 +1,56 @@
+.card
+    box-sizing: border-box
+    background-color: white
+    border-style: solid
+    border-color: salmon
+    border-width: 0.5rem
+    border-radius: 1rem
+    margin-top: 0.6rem
+    margin-left: 2%
+    width: 96%
+
+    &--highlighted
+        background-color: white
+
+    &--preview
+        background-color: white
+
+    &__grid
+        display: grid
+        grid-template-columns: 1fr 1fr 5fr 1fr
+        grid-column-gap: 5px
+        justify-content: left
+        margin-bottom: 0.5rem
+        margin-top: 0.5rem
+        
+.card__title
+    width: 100%
+    background-color: salmon
+    color: white
+    border-style: solid
+    border-color: salmon
+    border-width: 2px
+    text-align: center
+    font-size: 1rem
+    font-style: italic
+    font-family: Georgia
+    font-weight: bold
+    padding: 0px
+    margin: -2px
+
+.card__message
+    color: black
+    text-align: justify
+    font-family: Georgia
+    margin: 0.5rem
+
+.card__input
+    border: none
+    font-size: 1rem
+    text-align: justify
+    font-family: Georgia
+    &--text
+        margin-left: 0%
+        width: 100%
+        resize: none
+        text-align: justify   
