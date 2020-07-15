@@ -1,0 +1,12 @@
+.feedback {
+  color: green;
+}
+
+.feedback--warning {
+  color: orange;
+}
+
+.feedback--error {
+  color: red;
+}
+/*# sourceMappingURL=Feedback.css.map */
