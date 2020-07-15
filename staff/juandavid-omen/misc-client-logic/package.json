@@ -1,0 +1,24 @@
+{
+  "name": "misc-client-logic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx mocha *.spec.js",
+    "test:debug": "npx mocha debug *.spec.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "bcryptjs": "^2.4.3",
+    "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
+    "misc-data": "file:../misc-data",
+    "mocha": "^7.2.0",
+    "xhr2": "^0.2.0"
+  },
+  "dependencies": {
+    "misc-commons": "file:../misc-commons"
+  }
+}
