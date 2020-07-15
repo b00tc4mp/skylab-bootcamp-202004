@@ -1,4 +1,4 @@
-const {find}=require('../data/users')
+const {find}=require('misc-data/users')
 
 module.exports = (req, callback)=>{  
     

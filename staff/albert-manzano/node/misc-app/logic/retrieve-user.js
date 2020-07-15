@@ -1,6 +1,6 @@
-require('../utils/polyfills/string')
+require('misc-commons/polyfills/string')
 require('../utils/polyfills/function')
-const { users: { find } } = require('../data')
+const { users: { find } } = require('misc-data')
 
 module.exports = (userId, callback) => {
     String.validate.notVoid(userId)

@@ -1,6 +1,6 @@
-const { sessions: { find } } = require('../data')
+const { sessions: { find } } = require('misc-data')
 require('../utils/polyfills/function')
-require('../utils/polyfills/string')
+require('misc-commons/polyfills/string')
 
 module.exports = (sessionId, callback) => {
     String.validate(sessionId)

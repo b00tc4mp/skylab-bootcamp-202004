@@ -1,4 +1,4 @@
-const { sessions: { create } } = require('../data')
+const { sessions: { create } } = require('misc-data')
 require('../utils/polyfills/function')
 
 module.exports = callback => {

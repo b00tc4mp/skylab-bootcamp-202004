@@ -1,8 +1,8 @@
-require('../../utils/polyfills/string')
+require('../misc-commons/polyfills/string')
 const fs = require('fs')
 require('../../utils/polyfills/function')
 const path = require('path')
-require('../../utils/polyfills/json')
+require('../misc-commons/polyfills/json')
 const { Files: { deleteFilesByExtensionFromDirectory }, uid } = require('../../utils')
 
 function find(filter, callback) { // filter => { name: 'pepito', surname: 'grillo' }

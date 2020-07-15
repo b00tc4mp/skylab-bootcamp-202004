@@ -1,7 +1,7 @@
 require('../utils/string')
 const fs = require('fs')
 const path = require('path')
-const { find } = require('../data/users')
+const { find } = require('misc-data/users')
 
 module.exports = (_userId, callback) => {
     String.validate.notVoid(userId)
