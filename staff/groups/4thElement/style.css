@@ -1,0 +1,765 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Carter+One&family=Kalam:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap");
+* {
+  margin: 0;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f2f2f2;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-ms-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-moz-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-o-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-ms-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.Home {
+  height: 94vh;
+  margin-top: 6vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.Home .Home--Surf {
+  transition: 1s;
+  height: 94vh;
+  background-size: cover;
+  background-image: url("./app/images/fondo.jpg");
+}
+.Home .Home--Snow {
+  transition: 1s;
+  height: 94vh;
+  background-size: cover;
+  background-image: url("./app/images/fondoSnow.jpg");
+}
+.Home__Selection {
+  display: flex;
+  background-color: white;
+  height: 17vh;
+  font-family: "PT Sans", sans-serif;
+  font-weight: 700;
+  color: white;
+}
+.Home__Selection--surf {
+  display: flex;
+  width: 50vw;
+  text-align: center;
+  transition: 1.5s;
+  border-top: 0.3rem solid;
+  background-size: cover;
+  background-image: url("./app/images/surfSelection.jpg");
+  border-top: 1vh solid white;
+  border-bottom: 1vh solid white;
+}
+.Home__Selection--surfclikedSurf {
+  color: black;
+  background-size: cover;
+  background-image: url("./app/images/surfSelection.jpg");
+  transition: 1s;
+  width: 200vw;
+  border-top: 1vh solid white;
+  border-bottom: 1vh solid white;
+}
+.Home__Selection--surf:hover {
+  color: black;
+  width: 200vw;
+}
+.Home__Selection--snow {
+  background-size: cover;
+  background-image: url("./app/images/snowSelection.jpg");
+  display: flex;
+  width: 50vw;
+  text-align: center;
+  transition: 1.5s;
+  border-top: 1vh solid white;
+  border-bottom: 1vh solid white;
+}
+.Home__Selection--snowclikedsnow {
+  color: black;
+  background-size: cover;
+  background-image: url("./app/images/snowSelection.jpg");
+  transition: 1s;
+  width: 200vw;
+  border-top: 1vh solid white;
+  border-bottom: 1vh solid white;
+}
+.Home__Selection--snow:hover {
+  color: black;
+  width: 200vw;
+}
+.Home__pointerResult--element {
+  font-family: "Carter One", cursive;
+  position: absolute;
+  height: 15vh;
+  width: 100vw;
+  background-color: gray;
+  border-bottom: 1vh solid white;
+}
+.Home__pointerResult--element p {
+  text-align: center;
+  margin-top: 2vh;
+  font-size: 2rem;
+}
+.Home__pointerResult--element--snow1 {
+  background-size: cover;
+  background-image: url("./app/images/2-alpes-recortado.jpg");
+}
+.Home__pointerResult--element--surf4 {
+  background-color: white;
+  background-size: 100%;
+  background-image: url("./app/images/mavericks.jpg");
+}
+.Home__map {
+  margin-top: 10vh;
+  height: 50vh;
+  background-size: 130vw;
+  background-position: center;
+  background-image: url("./app/images/mundo.png");
+}
+.Home__map--surf {
+  animation: fadeIn ease 0.5s;
+  margin-top: 10vh;
+  height: 50vh;
+  background-size: 130vw;
+  background-position: center;
+  background-image: url("./app/images/mundo.png");
+}
+.Home__map--surf i {
+  animation: fadeIn ease 0.5s;
+  position: relative;
+  color: gray;
+}
+.Home__map--surf i:nth-child(1) {
+  top: 28%;
+  left: 60%;
+}
+.Home__map--surf i:nth-child(2) {
+  top: 62%;
+  left: 62%;
+}
+.Home__map--surf i:nth-child(3) {
+  top: 48%;
+  left: 10%;
+}
+.Home__map--surf i:nth-child(4) {
+  top: 30%;
+  left: -5%;
+}
+.Home__map--snow {
+  animation: fadeIn ease 1.5s;
+  margin-top: 10vh;
+  height: 50vh;
+  background-size: 130%;
+  background-position: center;
+  background-image: url("./app/images/mundoSnow.png");
+}
+.Home__map--snow i {
+  position: relative;
+  color: darkblue;
+}
+.Home__map--snow i:nth-child(1) {
+  top: 25%;
+  left: 65%;
+}
+.Home__map--snow i:nth-child(2) {
+  top: 28%;
+  left: 80%;
+}
+.Home__map--snow i:nth-child(3) {
+  top: 72%;
+  left: 21%;
+}
+.Home__map--snow i:nth-child(4) {
+  top: 30%;
+  left: 0%;
+}
+.Home__map--snow--out {
+  animation: fadeOut ease 1.5s;
+  margin-top: 10vh;
+  height: 50vh;
+  background-size: 130%;
+  background-position: center;
+  background-image: url("./app/images/mundoSnow.png");
+}
+
+.Footer {
+  bottom: 0;
+  height: 6.5vh;
+  width: 100vw;
+  position: fixed;
+  background-color: green;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.Footer__container {
+  display: flex;
+  align-items: center;
+}
+.Footer .fas {
+  margin: 0.8vh 7.5vw;
+}
+.Footer .fa-homeSurf--active {
+  color: #43a1b1;
+}
+.Footer .fa-homeSnow--active {
+  color: #a1eefc;
+}
+.Footer .fa-searchSurf--active {
+  color: #43a1b1;
+}
+.Footer .fa-searchSnow--active {
+  color: #a1eefc;
+}
+.Footer .fa-map-marked-altSurf--active {
+  color: #43a1b1;
+}
+.Footer .fa-map-marked-altSnow--active {
+  color: #a1eefc;
+}
+.Footer .fa-starSurf--active {
+  color: #43a1b1;
+}
+.Footer .fa-starSnow--active {
+  color: #a1eefc;
+}
+
+.Header {
+  top: 0;
+  position: fixed;
+  width: 100vw;
+}
+.Header__container {
+  transition: background-color 1.5s ease;
+  display: flex;
+  height: 6vh;
+  font-family: "Noto Sans JP", sans-serif;
+  background-color: #43a1b1;
+  font-weight: 700;
+  align-items: center;
+}
+.Header__container--name {
+  font-weight: 400;
+  font-family: "Carter One", cursive;
+  padding: 0.8vh;
+  width: 70vw;
+  height: 6vh;
+  margin-left: 1vw;
+  color: white;
+  overflow: hidden;
+}
+.Header__container a {
+  text-decoration: none;
+}
+.Header__container--login {
+  font-family: "PT Sans", sans-serif;
+  margin-left: auto;
+  margin-right: 2vw;
+}
+.Header__container--register {
+  margin-right: 2vw;
+}
+.Header__container--snow {
+  background-color: #a1eefc;
+}
+
+.login {
+  font-family: "PT Sans", sans-serif;
+  text-align: center;
+  margin-top: 40vh;
+  justify-content: center;
+}
+
+form {
+  margin-top: 5vh;
+}
+
+.register {
+  font-family: "Source Sans Pro", sans-serif;
+  text-align: center;
+  margin-top: 40vh;
+  justify-content: center;
+}
+
+form {
+  margin-top: 4vh;
+}
+
+.Searcher--surf {
+  background-color: #43a1b1;
+  height: 10.5vh;
+}
+.Searcher--snow {
+  background-color: #a1eefc;
+  height: 10.5vh;
+}
+.Searcher__input-container {
+  position: absolute;
+  margin-top: 3vh;
+  margin-left: 7vw;
+  background: white;
+  min-width: 85vw;
+  height: 6vh;
+  border-radius: 10px;
+}
+.Searcher__input-container__type {
+  position: absolute;
+  font-size: 20px;
+  border: none;
+  height: 6vh;
+}
+.Searcher__input-container__image {
+  height: 4vh;
+  margin: 1vh;
+}
+.Searcher__input-container__button {
+  background: none;
+  border: none;
+}
+.Searcher__selector {
+  font-family: "PT Sans", sans-serif;
+  font-size: 1.3rem;
+  display: flex;
+  width: 100%;
+  position: absolute;
+  margin-top: 10.5vh;
+  justify-content: center;
+  background-color: #e4e4e4;
+}
+.Searcher__selector div {
+  text-align: center;
+  width: 50vw;
+}
+.Searcher__selectorSpotSurf--active {
+  background-color: #43a1b1;
+}
+.Searcher__selectorUserSurf--active {
+  background-color: #43a1b1;
+}
+.Searcher__selectorSpotSnow--active {
+  background-color: #a1eefc;
+}
+.Searcher__selectorUserSnow--active {
+  background-color: #a1eefc;
+}
+
+.SpotSearched {
+  margin-top: 2.5vh;
+  height: 75vh;
+  overflow: scroll;
+  list-style-type: none;
+  text-align: center;
+  padding: 0;
+  font-family: "PT Sans", sans-serif;
+  font-size: 1.5rem;
+}
+.SpotSearched__item {
+  border-bottom: 1px solid black;
+  width: 100vw;
+  padding: 3vh;
+}
+.SpotSearched__item:hover {
+  background: gray;
+}
+.SpotSearched__spiner {
+  position: relative;
+  margin-top: 5vh;
+}
+
+.forecast {
+  margin-right: auto;
+  margin-left: auto;
+}
+.forecast__ul {
+  height: 85vh;
+  overflow: scroll;
+  list-style-type: none;
+  font-family: "PT Sans", sans-serif;
+  padding: 0;
+}
+.forecast__date {
+  color: black;
+  margin-bottom: 5vh;
+}
+.forecast__info {
+  display: flex;
+  justify-content: center;
+  padding: 3vh 0vw;
+  border-bottom: 1px solid black;
+  font-size: 20px;
+}
+.forecast__favButton {
+  background: yellow;
+  border-radius: 50%;
+  height: 8vh;
+  width: 8vh;
+  position: fixed;
+  margin-top: 65vh;
+  margin-left: 75vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.forecast__favButton:hover {
+  background: white;
+}
+.forecast__titles {
+  background: white;
+  display: flex;
+  height: 3.5vh;
+  font-family: "PT Sans", sans-serif;
+  font-size: 13px;
+  width: 100vw;
+}
+.forecast__titles--element {
+  margin: 0;
+  text-align: center;
+  width: 25vw;
+}
+.forecast__selector {
+  font-family: "PT Sans", sans-serif;
+  font-size: 1.3rem;
+  display: flex;
+  width: 100%;
+  background-color: #e4e4e4;
+  margin-top: 6vh;
+  justify-content: center;
+}
+.forecast__selector div {
+  text-align: center;
+  width: 50vw;
+}
+.forecast__selectorForecast--active {
+  background-color: #43a1b1;
+}
+.forecast__selectorReviews--active {
+  background-color: #43a1b1;
+}
+.forecast__spiner {
+  margin-top: 10vh;
+  margin-left: 40vw;
+}
+
+p {
+  margin: 0;
+  width: 25vw;
+  text-align: center;
+}
+
+span {
+  text-align: center;
+  width: 100vw;
+  padding: 0vh 4.6vh;
+  color: white;
+  background: #43a1b1;
+  font-size: 1.4rem;
+}
+
+.feedback {
+  font-family: "PT Sans", sans-serif;
+  width: 100vw;
+  top: 10vh;
+  color: green;
+  position: relative;
+  text-align: center;
+  font-size: 1.5rem;
+}
+.feedback--warning {
+  color: orange;
+}
+.feedback--error {
+  text-align: center;
+  color: red;
+}
+
+.Favorites {
+  display: flex;
+  flex-direction: column;
+}
+.Favorites__List {
+  list-style-type: none;
+  margin-top: 6vh;
+  padding: 0;
+  font-family: "PT Sans", sans-serif;
+  font-size: 25px;
+}
+.Favorites__List--title {
+  font-family: "PT Sans", sans-serif;
+  background: #e4e4e4;
+  font-size: 20px;
+  height: 4vh;
+  text-align: center;
+}
+.Favorites__List--elements {
+  font-weight: 400;
+  border-bottom: 1px solid black;
+  width: 100vw;
+  padding: 3vh;
+  display: flex;
+}
+.Favorites__List--elements:hover {
+  background-color: gray;
+}
+.Favorites__List--xButton {
+  border: none;
+  background: none;
+  margin-left: auto;
+}
+.Favorites__List--xImage {
+  border: none;
+  height: 2vh;
+}
+.Favorites__List h1 {
+  color: red;
+  font-size: 30px;
+}
+.Favorites__Spiner {
+  margin-top: 10vh;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.forecastInfoSnow {
+  margin-top: 6vh;
+  height: 80vh;
+  font-family: "PT Sans", sans-serif;
+}
+.forecastInfoSnow__day {
+  overflow: scroll;
+  height: 80vh;
+}
+.forecastInfoSnow__day h2 {
+  padding-top: 1vh;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: bold;
+  height: 3.5vh;
+}
+.forecastInfoSnow__day h4 {
+  padding-top: 1vh;
+  text-align: center;
+  font-size: 20px;
+  height: 3.5vh;
+}
+.forecastInfoSnow__hour {
+  margin-top: 2vh;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.forecastInfoSnow__list {
+  border-bottom: 1px solid black;
+  width: 100vw;
+  padding: 3vh 0vh;
+}
+.forecastInfoSnow__time {
+  width: 50vw;
+  font-size: 1.4rem;
+  text-align: center;
+  background-color: #a1eefc;
+}
+.forecastInfoSnow__overAllInfo {
+  font-family: "PT Sans", sans-serif;
+  font-size: 1.2rem;
+  padding: 0 5vw;
+  margin-bottom: 2vh;
+  background-color: white;
+  font-weight: bold;
+}
+.forecastInfoSnow__temp {
+  padding: 0.5vh 5vw;
+}
+.forecastInfoSnow__windDir {
+  padding: 0.5vh 5vw;
+}
+.forecastInfoSnow__windSpeed {
+  padding: 0.5vh 5vw;
+}
+.forecastInfoSnow__selector {
+  font-size: 1.3rem;
+  display: flex;
+  width: 100%;
+  background-color: #e4e4e4;
+  margin-top: 6vh;
+  justify-content: center;
+}
+.forecastInfoSnow__selector div {
+  text-align: center;
+  width: 50vw;
+}
+.forecastInfoSnow__selectorForecast--active {
+  background-color: #a1eefc;
+}
+.forecastInfoSnow__selectorReviews--active {
+  background-color: #a1eefc;
+}
+.forecastInfoSnow__spiner {
+  margin-top: 10vh;
+  margin-left: 40vw;
+}
+
+.foro {
+  height: 100vw;
+  font-family: "PT Sans", sans-serif;
+}
+.foro__reviews {
+  margin: 1 vh;
+  height: 84vh;
+  width: 90vw;
+  overflow: scroll;
+  list-style-type: none;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0;
+}
+.foro__reviewList {
+  padding: 5vh 0;
+  border-bottom: 0.3rem solid black;
+}
+.foro__userInfo {
+  font-weight: bolder;
+  font-size: 1.3rem;
+  width: 65vw;
+  border-bottom: 0.1rem solid black;
+  margin-bottom: 1vh;
+}
+.foro__element {
+  margin-top: 2vh;
+  font-size: 1.15rem;
+  color: grey;
+}
+.foro__element h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 10vh;
+  color: black;
+  margin: 0;
+  padding: 0;
+}
+.foro__newReview {
+  display: flex;
+  flex-direction: column;
+  border-top: 0.5rem solid white;
+  background-color: #bdbdbd;
+  width: 100vw;
+  top: 39.5vh;
+  height: 50vh;
+  position: absolute;
+}
+.foro__newReview textarea {
+  height: 5vh;
+  border: none;
+  margin-right: auto;
+  margin-left: auto;
+  width: 90vw;
+  margin-bottom: 2vh;
+}
+.foro__newReview label {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-left: 1.5vw;
+  margin-bottom: 1vh;
+}
+.foro__newReview button {
+  border: none;
+  width: 50vw;
+  height: 5vh;
+  margin-right: auto;
+  margin-left: auto;
+}
+.foro__newReview button:hover {
+  background-color: lightgreen;
+}
+.foro .fa-plus-circle {
+  position: absolute;
+  top: 80vh;
+  left: 80vw;
+  color: black;
+}
+.foro__spiner {
+  margin-top: 10vh;
+  margin-left: 38vw;
+}
+
+.Spiner {
+  margin: 10vh auto;
+}
+
+/*# sourceMappingURL=style.css.map */
