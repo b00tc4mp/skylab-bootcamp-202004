@@ -1,0 +1,43 @@
+/**
+ * list my books sharing.
+ * 
+ * @param {string} userId take by token.  
+ *
+ * @throws {UnexistenceError} if don`t find userId in data base.
+ * @throws {VoidError} if the input fiels ar empty.
+ * 
+ * @return {Object}  return an array of books.
+ *
+ */
+
+require('books-commons/polyfills/string')
+
+const { errors: { UnexistenceError } } = require('books-commons')
+const { models: { User, Book } } = require('books-data')
+
+module.exports = (userId) => {
+
+    String.validate.notVoid(userId)
+
+    return (async() => {
+
+        const user = await User.findById(userId)
+
+        if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`);
+
+        let books = await Book.find({ ownerUserId: userId  }).lean()
+
+        books = books.filter(book=> book.actualUserId.toString() !== userId)
+
+        if (!books.length) throw new UnexistenceError("You have no shared books")
+
+        const _books = books.map(book => {
+            book.id = book._id.toString();
+            delete book._id;
+            delete book.__v;
+            return book
+        })
+        
+          return _books
+    })()
+}

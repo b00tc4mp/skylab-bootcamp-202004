@@ -1,0 +1,30 @@
+{
+  "name": "books-client-logic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx mocha *.spec.js",
+    "test:debug": "npx mocha debug *.spec.js",
+    "test:coverage": "npx nyc --reporter=text --reporter=lcov npm test"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "bcryptjs": "^2.4.3",
+    "books-data": "file:../books-data",
+    "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
+    "mocha": "^8.0.1",
+    "node-fetch": "^2.6.0",
+    "not-async-storage": "^1.0.1",
+    "nyc": "^15.1.0",
+    "xhr2": "^0.2.0"
+
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.10.2",
+    "books-commons": "file:../books-commons",
+    "books-node-commons": "file:../books-node-commons"
+  }
+}
