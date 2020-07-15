@@ -1,5 +1,5 @@
 {
-  "name": "rest-api",
+  "name": "misc-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,6 +14,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4",
+    "pug": "^3.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "git+https://github.com/mochajs/mocha.git"
   }
 }
