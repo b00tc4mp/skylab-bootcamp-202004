@@ -1,0 +1,30 @@
+.playlists-results
+    display: flex
+    position: absolute
+    justify-content: center
+    top: 50vh
+    left: 10vw
+    
+    h2
+        font-size: 12px
+        text-align: center
+    &__list
+        display: grid
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr
+        grid-template-rows: 1fr
+        overflow-x: visible
+        align-items: center
+        justify-items: center
+        list-style: none
+        border: 1px dashed red
+        width: 80vw
+        height: 50vh
+
+    &__item
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        border: 1px dashed black
+        width: 150px
+        height: 150px

@@ -1,0 +1,110 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.home {
+  height: 100vh;
+  width: 100vw;
+  background-color: #222831;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-image {
+  width: 100vw;
+}
+
+.hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 2.2rem;
+  width: 1.7rem;
+  cursor: pointer;
+  margin-left: 0.4rem;
+  padding-top: 0.2rem;
+  position: absolute;
+}
+
+.hamburger-menu .bar {
+  height: 3px;
+  background: black;
+  border-radius: 5px;
+  margin: 3px 0px;
+  transform-origin: left;
+  transition: all 0.5s;
+}
+
+.hamburger-menu:hover .top {
+  transform: rotate(45deg);
+}
+
+.hamburger-menu:hover .middle {
+  opacity: 0;
+}
+
+.hamburger-menu:hover .bottom {
+  transform: rotate(-45deg);
+}
+
+.daylist {
+  background-color: purple;
+}
+
+.contacts {
+  height: 200px;
+  width: 265px;
+  background-color: orange;
+  margin-top: 15px;
+  align-self: flex-end;
+  font-family: Montserrat;
+  font-size: 34px;
+  justify-content: space-around;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  background-image: url("utils/images/shutterstock_1375698434.jpg");
+}
+.contacts__button {
+  border-radius: 5px;
+  width: 100px;
+  height: 42px;
+  margin-left: 81px;
+}
+
+.toggleUser {
+  grid-area: toggleUser;
+}
+
+.searchUser {
+  grid-area: searchUsers;
+}
+
+.results {
+  grid-area: results;
+}
+
+.mymusic {
+  height: 279px;
+  width: 265px;
+  background-color: orange;
+  margin-top: 15px;
+  align-self: flex-end;
+  font-family: Montserrat;
+  font-size: 34px;
+  margin-top: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  background-image: url(utils/images/shutterstock_276803282.jpg);
+}
+
+.bottom-bar {
+  background-color: #1b1b1b;
+  height: 33px;
+  text-align: center;
+  padding-top: 8px;
+}
+
+/*# sourceMappingURL=home.css.map */
