@@ -4,7 +4,7 @@ var semanticsTag = ['BODY', 'HTML', 'HEAD', "ARTICLE", "AUDIO", "BUTTON", "FORM"
 
 function semantic(tag) {
     if(semanticsTagClosed.includes(tag.tagName)){
-        semantics.push(`\n <${tag.tagName.toLowerCase()}>`)  
+        semantics.push(`<${tag.tagName.toLowerCase()}>\n`)  
   }  
     for (var element of tag.children) {
         semantic(element)
