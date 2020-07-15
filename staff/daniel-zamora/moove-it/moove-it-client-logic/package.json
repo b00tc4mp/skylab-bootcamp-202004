@@ -1,0 +1,26 @@
+{
+    "name": "moove-it-client-logic",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "moove-it-commons": "^1.0.0",
+        "moove-it-data": "file:../moove-it-data",
+        "nyc": "^15.1.0",
+        "xhr2": "^0.2.0"
+    },
+    "devDependencies": {
+        "chai": "^4.2.0",
+        "dotenv": "^8.2.0",
+        "mocha": "^8.0.1"
+    },
+    "scripts": {
+        "test": "npx mocha *.spec.js",
+        "test:debug": "npx mocha debug *.spec.js",
+        "test:coverage": "npx nyc --reporter=text --reporter=html mocha *.spec.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}

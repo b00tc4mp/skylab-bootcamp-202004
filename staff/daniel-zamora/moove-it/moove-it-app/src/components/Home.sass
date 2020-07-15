@@ -1,0 +1,114 @@
+body
+    background-color: #8338EC
+
+.home
+    display: flex
+    justify-content: center
+    align-content: center
+    flex-direction: column
+    font-family: Raleway
+    &__nav
+        display: flex 
+        justify-content: space-between
+        height: 10%
+        width: 100vw 
+        background-color: #3A86FF
+        border-radius: 0 0px 20px 20px
+        position: sticky
+        top: 0
+        border-bottom: solid white
+        z-index: 3
+    &__logo
+        width: 18vh
+        height: inherit
+        margin: 1rem
+        display: flex
+    &__logo>img
+        height: 100%
+        width: 100%
+    &__user
+        height: fit-content
+        margin: 1rem
+        display: flex
+        align-items: center
+        color: #F4F5F7
+        margin-top: 4vh
+        width: 15vh
+    &__user>img
+        height: 100%
+        width: 100%
+        overflow: hidden
+        cursor: pointer
+    &__salute
+        color: #F4F5F7
+        margin: 10px
+        font-size: 1.5rem
+    &__title
+        color: #F4F5F7
+        font-size: 1.4rem
+        margin-top: 20px
+        text-align: center
+        padding: 5px
+        margin: 1vh
+    &__form
+        display: flex
+        flex-direction: column
+        justify-content: space-evenly
+        align-items: center
+        height: 35vh
+        z-index: 0
+    &__input
+        width: 40%
+        height: 2rem
+        border-radius: 10px
+        padding: 0.5rem
+        outline: none
+        user-select: none
+        appearance: media-slider
+        text-align: center
+        opacity: 0.7
+    &__input:focus
+        opacity: 1   
+    &__form> button
+        width: 40%
+        border-radius: 20px
+        padding: 0.5rem
+        outline: none
+        user-select: none
+        appearance: media-slider
+        font-size: 1.1rem
+        color: #F4F5F7
+        background-color:#3A86FF
+        min-width: 41px
+    &__form>button:hover
+        box-shadow: 0px 0px 2px white
+        cursor: pointer
+    &__form>button:active
+        opacity: 0.8
+    &__line     
+        display: flex
+        justify-content: center
+        align-items: center
+    &__line>hr
+        width: 80%
+        height: 0.3rem
+        border-top: 0.3rem solid #F4F5F7
+        border-radius: 30px
+    &__list
+        display: flex
+        flex-direction: column
+        color: #F4F5F7
+        font-size: 1.1rem
+        justify-content: center
+        align-items: center
+        list-style: none
+    &__list>li
+        justify-content: space-around
+        margin: 12px
+    &__list>li:hover
+        opacity: 0.7
+        cursor: pointer
+
+
+
+    
