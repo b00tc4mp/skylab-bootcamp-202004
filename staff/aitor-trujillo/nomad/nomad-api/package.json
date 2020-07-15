@@ -1,0 +1,24 @@
+{
+  "name": "nomad-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "busboy": "^0.3.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "nomad-commons": "file:../nomad-commons",
+    "nomad-data": "file:../nomad-data",
+    "nomad-server-logic": "file:../nomad-server-logic"
+  }
+}
