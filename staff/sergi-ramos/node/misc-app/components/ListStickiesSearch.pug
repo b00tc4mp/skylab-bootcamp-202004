@@ -1,0 +1,10 @@
+
+mixin listStickiesSearch(stickies)
+
+  section.stickies
+    h2 Stickies list
+    ul
+      each sticky in stickies
+        li= 'Title:' + sticky.title  + '  Comment: ' + sticky.comment
+        
+          

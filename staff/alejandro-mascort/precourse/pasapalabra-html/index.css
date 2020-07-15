@@ -1,0 +1,426 @@
+body {
+    background-color: rgb(94, 94, 196);
+    font-family: 'Righteous';
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: 49.5vw 49.5vw;
+    grid-template-rows: 95.8vh;
+    grid-template-areas: "game-screen instructions-screen";
+}
+
+#game-screen {
+    position: relative;
+    grid-area: game-screen;
+}
+
+#instructions-screen {
+    grid-area: instructions-screen;
+}
+
+#circle {
+    box-sizing: border-box;
+    border-radius: 35vw;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 35vw;
+    height: 35vw;
+    margin: auto;    
+}
+
+ul {
+    box-sizing: border-box;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    list-style: none;
+    padding: 0;
+    border-radius: 100%;
+}
+
+#game-title {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: table;
+}
+
+#game-title p {
+    font-size: 4vw;
+    color: white;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#timer {
+    display: none;
+    text-align: center;
+    position: absolute;
+    left: 3vh;
+    bottom: 3vh;
+    color: white;
+    background-color: rgb(48, 48, 146);
+    font-size: 4vh;
+    width: 8vh;
+    padding: 1vh;
+    border: 2px solid white;
+}
+
+li {
+    position: absolute;
+    top: 16vw;
+    right: 16vw;
+    height: 3vw;
+    width: 3vw;
+    border-radius: 5vw;
+    background-color: rgb(48, 48, 146);
+    border: 2px solid white;
+    margin: 0vw;
+}
+
+.letter {
+    box-sizing: border-box;
+    margin: 0;
+    font-size: 2vw;
+    color: white;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+span {
+    display: inline-block;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+#instructions {
+    margin: auto;
+    width: 75%;
+    height: 100%;
+    display: table;
+    color: white;
+}
+
+p {
+    font-size: 1em;
+    vertical-align: middle;
+    text-align: justify;
+    display: table-cell;
+}
+
+p span {
+    font-size: large;
+    font-weight: 600;
+}
+
+button {
+    font-size: large;
+}
+
+button:hover {
+    color: white;
+    background-color: orange;
+    cursor: pointer;
+}
+
+#login {
+    display: none;
+    vertical-align: middle;
+    text-align: justify;
+    font-size: large;
+}
+
+input[type=text] {
+    font-size: large;
+}
+
+#login button {
+    font-size: large;
+}
+
+#playing-screen {
+    display: none;
+    vertical-align: middle;
+    text-align: justify;
+    font-size: large;
+}
+
+#playing-screen span {
+    box-sizing: border-box;
+    border: 2px solid white;
+    background-color: rgb(48, 48, 146);
+    width: 100%;
+    padding: 3vh;
+    margin: 5vh;
+}
+
+#show-user, #points, #last-mistake {
+    display: block;
+}
+
+#playing-screen button {
+    font-size: large;
+}
+
+#ranking-screen {
+    display: none;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#ranking {
+    background-color: rgb(48, 48, 146);
+    border: 2px solid white;
+    border-collapse: collapse;
+    width: 100%
+} 
+
+tr {
+   border: 2px solid white;
+}
+
+th, td {
+    padding: 1vh;
+}
+
+#atras {
+    position: absolute;
+    bottom: 3vh;
+    right: 3vh;
+}
+
+#exit {
+    display: none;
+    position: absolute;
+    bottom: 3vh;
+    right: 3vh;
+    border: 2px solid white;
+}
+
+@media screen and (max-width: 850px) {
+    #user-results {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 567px) {
+    #grid {
+        grid-template-columns: 95vw;
+        grid-template-rows: 49.5vh 49.5vh;
+        grid-template-areas: 
+        "game-screen" 
+        "instructions-screen";
+    }
+    
+    #circle {
+        box-sizing: border-box;
+        border-radius: 35vw;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 70vw;
+        height: 70vw;
+        margin: auto;    
+    }
+    
+    ul {
+        box-sizing: border-box;
+        position: relative;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        list-style: none;
+        padding: 0;
+        border-radius: 100%;
+    }
+    
+    #game-title {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: table;
+    }
+    
+    #game-title p {
+        font-size: 8vw;
+        color: white;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+    }
+    
+    #timer {
+        display: none;
+        text-align: center;
+        position: absolute;
+        left: 3vh;
+        top: 3vh;
+        color: white;
+        background-color: rgb(48, 48, 146);
+        font-size: 4vh;
+        width: 8vh;
+        padding: 1vh;
+        border: 2px solid white;
+        height: 5vh;
+    }
+    
+    li {
+        position: absolute;
+        top: 31.5vw;
+        right: 31.5vw;
+        height: 5vw;
+        width: 5vw;
+        border-radius: 5vh;
+        background-color: rgb(48, 48, 146);
+        border: 2px solid white;
+        margin: 0vw;
+    }
+    
+    .letter {
+        box-sizing: border-box;
+        margin: 0;
+        font-size: 4vw;
+        color: white;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+    }
+    
+    span {
+        display: inline-block;
+        box-sizing: border-box;
+        vertical-align: middle;
+    }
+    
+    #instructions {
+        margin: auto;
+        width: 75%;
+        height: 100%;
+        display: table;
+        color: white;
+    }
+    
+    p {
+        font-size: 1em;
+        vertical-align: middle;
+        text-align: justify;
+        display: table-cell;
+    }
+    
+    p span {
+        font-size: large;
+        font-weight: 600;
+    }
+    
+    button {
+        font-size: large;
+    }
+    
+    button:hover {
+        color: white;
+        background-color: orange;
+        cursor: pointer;
+    }
+    
+    #login {
+        display: none;
+        vertical-align: middle;
+        text-align: justify;
+        font-size: large;
+    }
+    
+    input[type=text] {
+        font-size: large;
+        width: 35vw;
+    }
+    
+    #login button {
+        font-size: large;
+    }
+    
+    #playing-screen {
+        display: none;
+        vertical-align: middle;
+        text-align: left;
+        font-size: large;
+    }
+    
+    #playing-screen span {
+        box-sizing: border-box;
+        border: 2px solid white;
+        background-color: rgb(48, 48, 146);
+        width: 85%;
+        padding: 3vh;
+        margin: 5vw;
+    }
+    
+    #user-results {
+        display: none;
+    }
+
+    #answer {
+        width: 60%;
+        font-size: 2vh;
+    }
+
+    #playing-screen button {
+        font-size: 2vh;
+    }
+    
+    #ranking-screen {
+        display: none;
+        vertical-align: middle;
+        text-align: center;
+    }
+    
+    #ranking {
+        background-color: rgb(48, 48, 146);
+        border: 2px solid white;
+        border-collapse: collapse;
+        width: 100%
+    } 
+    
+    tr {
+       border: 2px solid white;
+    }
+    
+    th, td {
+        padding: 1vh;
+    }
+    
+    #atras {
+        position: absolute;
+        top: 2vh;
+        right: 2vh;
+        height: 3.5vh;
+    }
+    
+    #exit {
+        display: none;
+        position: absolute;
+        height: 3.5vh;
+        top: 2vh;
+        right: 2vh;
+        border: 2px solid white;
+    }
+    
+}

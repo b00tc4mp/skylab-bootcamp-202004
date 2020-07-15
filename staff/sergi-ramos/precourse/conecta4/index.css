@@ -1,0 +1,124 @@
+@font-face {
+    font-family: graphic-bold;
+    src: url(font/Graphik-Bold.otf);
+  }
+html {
+    height: 100%;
+}
+body {
+    display: flex;
+    height: 100%;
+    font-family: Graphic-bold;
+    font-size: 27px;
+    background-color: #96e1f4;
+}
+#container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+}
+#container-header {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+ 
+}
+#logo {
+    
+    padding-left: 20px;
+    width: 220px; 
+}
+#restart {
+    
+    width: 50px;
+}
+#close { 
+   
+    padding-left: 10px;
+    padding-right: 20px;  
+    width: 50px;
+}
+#container-pointers {
+    display: flex;
+    justify-content: center;
+}
+.pointer {
+    padding-left: 46px;
+    padding-right: 46px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+#game {
+    display: flex;
+    background-color: #004a8f;
+    width: 700px;
+    height: 600px;
+    flex-wrap: wrap;
+    justify-content: space-around; 
+    align-items: space-around;     
+}
+/*#game .circle:nth-child(1):hover {
+    background-color: beige;
+
+}*/
+.circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 35px;
+    background-color: #96e1f4;
+    margin: 14px 10px 14px 10px;
+    
+}
+#container-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 320px;
+    height: 40px;
+    margin-top: 15px;
+    border-radius: 160px;
+}
+
+#colorPlayer {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #c53500;
+    margin-left: 15px;
+}
+
+.put {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #c53500;
+    margin-left: 35px;
+    margin-right: 35px;
+    margin-bottom: 4px;
+}
+
+#footer-winner {
+    color: #004a8f;
+  margin-top: 10px;
+    display: flex;
+}
+
+
+#trumpet1 {
+    width: 55px;
+    padding-right: 50px;
+    display: none;
+  
+}#trumpet2 {
+    width: 55px;
+   padding-left: 50px;
+   display: none;
+}
+
+
+

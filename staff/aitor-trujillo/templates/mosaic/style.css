@@ -1,0 +1,133 @@
+:root {
+  font-size: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+div {
+  font-size: 120px;
+}
+
+/* COLORS */
+
+.tile:nth-child(1) {
+  background-color: #263238;
+}
+.tile:nth-child(2) {
+  background-color: #455a64;
+}
+.tile:nth-child(3) {
+  background-color: #607d8b;
+}
+.tile:nth-child(4) {
+  background-color: #b0bec5;
+}
+.tile:nth-child(5) {
+  background-color: #eceff1;
+}
+.tile:nth-child(6) {
+  background-color: #b0bec5;
+}
+.tile:nth-child(7) {
+  background-color: #607d8b;
+}
+.tile:nth-child(8) {
+  background-color: #455a64;
+}
+.tile:nth-child(9) {
+  background-color: #263238;
+}
+
+/* MOBILE SIZE */
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(5, 1fr);
+  height: 100vh;
+}
+
+.tile {
+  height: 12rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile:nth-child(1) {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  position: sticky;
+  top: 0;
+}
+
+/* TABLET DISPLAY */
+
+@media screen and (min-width: 768px) {
+  .container {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
+
+  .tile:nth-child(1) {
+    grid-column-start: auto;
+    grid-column-end: auto;
+  }
+
+  .tile {
+    height: auto;
+  }
+}
+
+/* DESKTOP DISPLAY */
+
+@media screen and (min-width: 1224px) {
+  .container {
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+  .tile {
+    height: 14rem;
+  }
+
+  .tile:nth-child(1) {
+    grid-column: 1/13;
+    position: unset;
+  }
+  .tile:nth-child(2) {
+    grid-column: 1/5;
+    grid-row: 2/3;
+  }
+  .tile:nth-child(3) {
+    grid-column: 5/9;
+    grid-row: 2/3;
+  }
+  .tile:nth-child(4) {
+    grid-column: 9/13;
+    grid-row: 2/3;
+  }
+  .tile:nth-child(5) {
+    grid-column: 1/4;
+    grid-row: 3/4;
+  }
+  .tile:nth-child(6) {
+    grid-column: 4/7;
+    grid-row: 3/4;
+  }
+  .tile:nth-child(7) {
+    grid-column: 7/10;
+    grid-row: 3/4;
+  }
+  .tile:nth-child(8) {
+    grid-column: 10/13;
+    grid-row: 3/4;
+  }
+  .tile:nth-child(9) {
+    grid-column: 1/13;
+    grid-row: 4/5;
+    position: sticky;
+    bottom: 0;
+  }
+}

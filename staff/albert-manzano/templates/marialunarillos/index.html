@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>marialunarillos.com 🍰 </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="main-header__static-nav static-nav">
+            <img class="static-nav__hamburger" src="https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/burger_menu.png" alt="hamburger">
+            <img class="static-nav__user" src="data:image/png;base64,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" alt="user icon">
+            <div class="static-nav__but-menu  buy-menu">
+                <img class="buy-menu__search" src="data:image/png;base64,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" alt="search icon">
+                <img class="buy-menu__trolley" src="data:image/jpeg;base64,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" alt="cart icon">
+                <p class="buy-menu__qty">0</p>
+            </div>
+        </div>
+        
+        <img class="main-header__logo"src="https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/logo-small.svg" alt="logo marialunarillos">
+        
+    </header>
+
+    <div class="slider-wrapper">
+        <div class="slider-wrapper__images-display">
+            <img class="slider-wrapper__images-display--image1" src="https://static3.marialunarillos.com/media/custom/advancedslider/resized/slide-5c2f5c969f181-png/1080X600.png" alt="" class="slider-wrapper__image-display--images">
+            <img src="" alt="" class="slider-wrapper__image-display--images">
+            <img src="" alt="" class="slider-wrapper__image-display--images">
+        <div class="slider-wrapper__image-display">
+        <div class="slide-wrapper_nav nav-list" >
+            <input class="nav-list__slide" type="radio" name="" id="">
+            <input class="nav-list__slide" type="radio" name="" id="">
+            <input class="nav-list__slide" type="radio" name="" id="">
+        </div>    
+    </div>
+
+    <main>
+        <div class="category">
+            <div class="category__header">
+                <img class="category__image-title" src="https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/icons/utensiliosML.png">
+                <h2 class="category__title">REPOSTERIA</h2>
+            </div>
+
+            <div class="category__images category__images--utensilios">
+                <div class="item category__image--moldes-tablet" >
+                    <img class="item__image item__image--long" src="https://static3.marialunarillos.com/media/catalog/category/moldesnordic.jpg" alt="moldes">
+                    <h2 class="item__title" >MOLTRESS DE REPOSTERIA</h2>
+                </div> 
+                <div class="item category__images--utilidades-tablet" >
+                    <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/utensiliosbasicos.jpg" alt="utilidades">
+                    <h2 class="item__title" >UTILIDADES BASCAS</h2>
+                </div>
+                <div class="item category__images--pequenos-tablet" >
+                    <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/pequenoelectrodomestico2.jpg" alt="electrodomesticos">
+                    <h2 class="item__title" >PETITE ELECTRODOMESTICO</h2>
+                </div>
+                <div class="item category__images--capsulas-tablet" >
+                    <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/capsulas-cupcakes.jpg" alt="cupcakes">
+                    <h2 class="item__title" >CAPSULA DEL TIEMPO</h2>
+                </div>
+                <div class="item category__images--cajas-tablet" >
+                    <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/cajas3.jpg" alt="cajas">
+                    <h2 class="item__title" >CAJAS Y VATERES</h2>
+                </div>
+                <div class="item category__images--cortadors-tablet" >
+                    <img class="item__image item__image--crop item__image--long" src="https://static3.marialunarillos.com/media/wysiwyg/cortadoresgalletas2.jpg" alt="contador">
+                    <h2 class="item__title" >CONTADOR DE GALLETAS</h2>
+                </div>
+                <div class="item category__images--cera-tablet" >
+                    <img class="item__image item__image--crop item__image--long" src="https://static3.marialunarillos.com/media/wysiwyg/stands.jpg" alt="ceraytex">
+                    <h2 class="item__title" >CERA Y TEXT</h2>
+                </div>
+                <div class="item category__images--panones-tablet" >
+                    <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/banetones.jpg" alt="panones">
+                    <h2 class="item__title" >PANONES DE PAN</h2>
+                </div>
+                <div class="item category__images--toppers-tablet" >
+                    <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/toppers3.jpg" alt="toppers" >
+                    <h2 class="item__title" >STOPPER Y FIGURES</h2>
+                </div>
+            </div>
+            <button class="category__click">
+                CLICK
+            </button>
+            
+        <div class="category ">
+            <div class="category__header">
+                <img class="category__image-title" src="https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/icons/magdalena.png">
+                <h2 class="category__title">GRADIENTES</h2>
+            </div>
+
+            <div class="category__images category__images--ingredientes">
+                <div class="item category__image--fondon-tablet " >
+                    <img class="item__image  item__image--crop item__image--long" src="https://static3.marialunarillos.com/media/wysiwyg/fondant2.jpg" alt="fondant">
+                    <h2 class="item__title" >FONDON</h2>
+                </div> 
+                <div class="item category__images--ingredientes-tablet" >
+                    <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/ingredientesreposteria.jpg" alt="ingredientesreposteria">
+                    <h2 class="item__title" >INGREDIENTES DE REPORTERIA</h2>
+                </div>
+                <div class="item category__images--presion-tablet" >
+                    <img class="item__image item__image--wide " src="https://static3.marialunarillos.com/media/wysiwyg/impresionpersonalizada.jpg" alt="impresionpersonalizada">
+                    <h2 class="item__title" >PRESION PERSONALIZADA</h2>
+                </div>
+                <div class="item category__images--pintores-tablet" >
+                    <img class="item__image item__image--wide " src="https://static3.marialunarillos.com/media/wysiwyg/Colorantes-alimentarios.jpg" alt="Colorantes-alimentarios">
+                    <h2 class="item__title" >PINTORES ALIMENTARIOS</h2>
+                </div>
+                <div class="item category__images--papel-tablet" >
+                    <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/papelcomestible.jpg" alt="nordic wtf dessert">
+                    <h2 class="item__title" >PAPEL COMESTIBLE?</h2>
+                </div>
+                <div class="item category__images--sprinkles-tablet" >
+                    <img class="item__image item__image--crop item__image--long" src="https://static3.marialunarillos.com/media/wysiwyg/sprinkles3.jpg" alt="nordic wtf dessert">
+                    <h2 class="item__title" >SPRINKLES Y JARDINERIA</h2>
+                </div>
+            </div>
+            <button class="category__click">
+                CLICK
+            </button>
+
+         <div class="category " >
+            <div class="category__header">
+                <img class="category__image-title" src="https://www.marialunarillos.com/skin/frontend/default/newdesign2017/images/icons/tarta-cumpleanos.png">
+                <h2 class="category__title">PARTY/FIESTA</h2>
+            </div>
+
+            <div class="category__images category__images--fiestas">
+                <div class="item category__images--fiesta-tablet" >
+                    <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/fiestastematicas.jpg" alt="nordic wtf dessert">
+                    <h2 class="item__title" >RAVE TEMATICA</h2>
+                </div> 
+                <div class="item category__images--personajes-tablet" >
+                    <img class="item__image item__image--wide" src="https://static3.marialunarillos.com/media/wysiwyg/fiestaspersonajes.jpg" alt="nordic wtf dessert">
+                    <h2 class="item__title" >FIESTAS DE PERSONAJES</h2>
+                </div>
+                <div class="item category__images--accesorios-tablet" >
+                    <img class="item__image item__image--crop item__image--long" src="https://static3.marialunarillos.com/media/wysiwyg/pompones.jpg" alt="nordic wtf dessert">
+                    <h2 class="item__title" >ACCESOS PARA FIESTAS</h2>
+                </div>
+               
+            <button class="category__click">
+                CLICK
+            </button>   
+        </div>
+
+        <div class="category">
+            <div class="category__header">
+                <img class="category__image-title" src="https://static3.marialunarillos.com/media/wysiwyg/blog.svg">
+                <h2 class="category__title">BLOCK</h2>
+            </div>
+
+            <div class="category">
+                <button class="category__click">
+                        ULTIMAS ENTRADAS
+                </button>
+                    <div class="category__blog-wrapper">
+                    <div class="item" >
+                        <img class="item__image item__image--blog" src="https://www.marialunarillos.com/blog/wp-content/uploads/2020/03/receta-galletas-pims-naranja-1.jpg" >
+                        <h2 class="item__description" >GALLETAS DE PIM</h2>
+                    </div> 
+                    <div class="item hidden" >
+                        <img class="item__image item__image--blog" src="https://www.marialunarillos.com/blog/wp-content/uploads/2020/03/receta-panecillos-leche-0.jpg" >
+                        <h2 class="item__description" >MADALENAS DEL NENG</h2>
+                    </div> 
+                    <div class="item hidden" >
+                        <img class="item__image item__image--blog" src="https://www.marialunarillos.com/blog/wp-content/uploads/2020/03/receta-farinosa-cabello-angel-1.jpg" >
+                        <h2 class="item__description" >PAN TALLAZO</h2>
+                    </div> 
+                    </div>
+                <button class="category__click">
+                    IR A BLOG
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="contact" >
+
+    </footer>
+    <div class="copyright">
+        Copyright ©2020 María Lunarillos
+    </div>
+</body>
+
+</html>

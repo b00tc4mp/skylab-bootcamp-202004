@@ -1,0 +1,79 @@
+body{
+    background-color: rgb(0, 0, 0);
+}
+
+.calculator{
+    width:10em;
+    height: 12.5em;
+    background-color: rgb(94, 94, 94);
+    border-radius: 8px;
+    position:relative;
+}
+
+.buttons{
+    margin-left: 5%;
+    margin-bottom: 5%;
+    margin-right: 5%;  
+}
+
+.screen {
+    position:relative;
+    height:2em;
+    width: 8.66em;
+    margin-top: 1em;
+    margin-bottom: 0.2em;
+    margin-left: 5%;
+    text-align: right;
+    border-radius: 2px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0.5px;
+    background: linear-gradient(180deg, rgba(227,229,237,1) 0%, rgba(87,146,214,1) 100%);
+    padding: 1%;
+}
+
+.screen:after{
+    content: '';
+    position:absolute;
+    top: 2px;
+	left: 2px;
+	width: calc(100% - 4px);
+	height: calc(100% - 4px);
+	background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.2));
+}
+
+.row {
+    height:2em;
+    margin-top: 0.02em;
+    margin-bottom: 0.02em;
+    
+}
+
+button {
+    position: relative;
+    height:2em;
+    margin-top: 0.02em;
+    margin-bottom: 0.02em;
+    margin-right: 0.02em;
+    margin-left: 0.02em;
+    width: 2.40em;
+    border-radius: 2px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0.5px;
+    background: radial-gradient(circle, rgb(199, 199, 199) 60%, rgb(236, 240, 243) 100%);
+}
+
+button.ac, button.zero {
+    width: 5.14em;
+}
+
+button:after{
+    content: '';
+    position:absolute;
+    top: 2px;
+	left: 2px;
+	width: calc(100% - 4px);
+	height: calc(100% - 4px);
+	background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255,255,255,0.2));
+}

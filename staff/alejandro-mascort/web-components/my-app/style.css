@@ -1,0 +1,85 @@
+.home, .register, .login {
+  display: inline-block;
+  border: 1rem solid gray;
+  border: 1rem dashed gray;
+  border-radius: 2rem;
+  padding: 1rem;
+}
+
+.landing {
+  background-color: orange;
+  text-align: center;
+}
+
+.home, .register, .login {
+  display: inline-block;
+  border: 1rem solid gray;
+  border: 1rem dashed gray;
+  border-radius: 2rem;
+  padding: 1rem;
+}
+
+.login {
+  border-color: blue;
+}
+
+.home, .register, .login {
+  display: inline-block;
+  border: 1rem solid gray;
+  border: 1rem dashed gray;
+  border-radius: 2rem;
+  padding: 1rem;
+}
+
+.register {
+  border-color: red;
+}
+
+.home, .login, .register {
+  display: inline-block;
+  border: 1rem solid gray;
+  border: 1rem dashed gray;
+  border-radius: 2rem;
+  padding: 1rem;
+}
+
+.home {
+  border-color: yellow;
+}
+
+.results__list {
+  border: 1rem solid green;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.anchors {
+  text-decoration: none;
+  padding: 5px;
+  margin: 10px;
+  background-color: #FFA07A;
+  color: white;
+}
+
+.feedback {
+  color: green;
+}
+.feedback--warning {
+  color: orange;
+}
+.feedback--error {
+  color: red;
+}
+
+.google-results {
+  border: 1rem dashed Aquamarine;
+  border-radius: 1rem;
+}
+
+.results {
+  border: 1rem dashed BlanchedAlmond;
+  border-radius: 1rem;
+}
+
+/*# sourceMappingURL=style.css.map */

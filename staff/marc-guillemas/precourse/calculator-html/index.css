@@ -1,0 +1,122 @@
+.calc-format {
+    margin-top: 100px;
+    width: 300px;
+    height: 450px;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+    margin-left: calc(46% - 100px); 
+}
+
+.calc-format div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    
+}
+.calc-btn {
+    background-color: rgba(0, 0, 0, 0.815);
+    border: 1px solid rgb(206, 206, 206);
+    cursor: pointer;
+}
+.calc-btn:hover{
+    background-color: rgba(0, 0, 0, 0.917);
+}
+.calc-btn:active{
+    font-size: 30px;
+}
+.btn-operator {
+    color: rgb(43, 43, 43) !important;
+    font-weight: bold;
+    font-size: 45px !important;
+    background-color: rgb(255, 174, 0) !important;
+}
+.btn-operator:hover {
+    background-color: rgb(241, 157, 0)!important;
+}
+.btn-operator:active {
+    font-size: 30px !important;
+}
+#calc-display {
+    grid-area: 1 / 1 / span 2  / span 8;
+    border: 1px solid rgb(206, 206, 206);
+    background-color: rgb(0, 0, 0);
+    /* background-color: rgba(0, 0, 0, 0.39); */
+
+    /* text-align: right !important; */
+    justify-content: flex-end;
+    padding-left: 20px;
+    padding-right: 25px;
+    padding-top: 50px;
+    /* align-items: right; */
+    /* justify-items: right !important; */
+    overflow: hidden;
+    font-size: 50px;
+    display: flex;
+
+}
+#calc-clear {
+    grid-area: 3/ 1 / 4 / span 2;
+}
+#calc-backspace {
+    grid-area: 3/ 3 / 4 / span 1;
+}
+#calc-div {
+    grid-area: 3/ 4 / 4 / span 1;
+}
+#calc-mult {
+    grid-area: 4/ 4 / span 1/ span 1;
+
+}
+#calc-minus {
+    grid-area: 5/ 4 / span 1/ span 1;
+
+}
+#calc-plus {
+    grid-area: 6/ 4 / span 1/ span 1;
+
+}
+#calc-equal {
+    grid-area: 7/ 4 / span 1/ span 1;
+
+}
+#calc-coma {
+    grid-area: 7/ 3 / span 1/ span 1;
+}
+
+
+#calc-nine {
+    grid-area: 4/ 3 / span 1/ span 1;
+}
+#calc-eight {
+    
+    grid-area: 4/ 2 / span 1/ span 1;
+}
+#calc-seven {
+    grid-area: 4/ 1 / span 1/ span 1;
+}
+#calc-six {
+    grid-area: 5/ 3 / span 1/ span 1;
+}
+#calc-five {
+    grid-area: 5/ 2 / span 1/ span 1 ;
+}
+#calc-four {
+    grid-area: 5/ 1 / span 1/ span 1 ;
+}
+#calc-three {
+    grid-area: 6/ 3 / span 1/ span 1 ;
+}
+#calc-two {
+    grid-area: 6/ 2 / span 1/ span 1 ;
+}
+#calc-one {
+    grid-area: 6/ 1 / span 1/ span 1 ;
+}
+#calc-zero {
+    grid-area: 7/ 1/ span 1/ span 2 ;
+}

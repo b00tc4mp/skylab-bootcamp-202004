@@ -1,0 +1,384 @@
+/* ----- ----- general ----- ----- */
+
+* {
+    padding: 0;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-size: 16px;
+    color: #2c3e50;
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#3498db+0,2ecc71+50,e74c3c+100 */
+    background: #3498db;
+    /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #3498db 0%, #2ecc71 50%, #e74c3c 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, #3498db 0%, #2ecc71 50%, #e74c3c 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, #3498db 0%, #2ecc71 50%, #e74c3c 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3498db', endColorstr='#e74c3c', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
+    border-top: 10px solid #e74c3c;
+    border-bottom: 10px solid #e74c3c;
+  }
+  
+  .glass {
+    margin: 20px auto;
+    width: 90%;
+    max-width: 1000px;
+    min-width: 355px;
+  }
+  
+  h1,
+  h3 {
+    font-family: 'Pacifico', cursive;
+  }
+  
+  h2,
+  p,
+  ul {
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  ul {
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .code {
+    font-family: 'Courier New', Courier, monospace;
+    padding: 10px;
+    background: #34495e;
+    border-radius: 6px;
+    color: #ecf0f1;
+    line-height: 30px;
+    margin-bottom: 10px;
+  }
+  
+  .code>.code__coments {
+    color: #7f8c8d;
+  }
+  
+  .code>.code__class {
+    color: #f1c40f;
+  }
+  
+  .code__tags {
+    font-family: 'Courier New', Courier, monospace;
+    color: #e74c3c;
+    font-weight: 700px;
+  }
+  
+  h1 {
+    font-size: 2.5em;
+  }
+  
+  h3 {
+    font-size: 1.5em;
+    padding-bottom: 10px;
+  }
+  
+  h2 {
+    font-style: italic;
+  }
+  
+  strong {
+    font-weight: 700;
+  }
+  
+  /* ----- ----- container ----- ----- */
+  
+  .box {
+    border: 1px white dashed;
+    border-radius: 6px;
+  }
+  
+  .box>.box__back {
+    margin: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 6px;
+  }
+  
+  /* ----- ----- header ----- ----- */
+  
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px 0px;
+    width: 100%;
+  }
+  
+  .top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .top__container {
+    width: 100%;
+  }
+  
+  .top>.top__title {
+    margin: 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .top>.top__title>h1 {
+    margin-bottom: 10px;
+  }
+  
+  .top>.top__title>h1,
+  .top>.top__title>h2 {
+    text-align: center;
+  }
+  
+  .top>.top__box {
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+  }
+  
+  .top>.top__box>.top__item {
+    padding: 20px;
+    margin: 5px;
+    border-radius: 6px;
+  }
+  
+  /* ----- ----- main ----- ----- */
+  
+  main {
+    width: 100%;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  
+  .container__child {
+    width: 100%;
+    padding: 10px;
+  }
+  
+  .container__title {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .container__description {
+    margin-bottom: 10px;
+  }
+  
+  .container__item {
+    width: 20%;
+    height: 100px;
+  }
+  
+  /* ----- ----- BOXES ----- ----- */
+  
+  .boxes__container {
+    border-radius: 6px;
+    padding: 10px;
+  }
+  
+  .boxes__item {
+    border-radius: 6px;
+    padding: 10px;
+    margin-top: 10px;
+  }
+  
+  .boxes__wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+  
+  .boxes__wrap>p {
+    width: 100%;
+  }
+  
+  .boxes__wrap>.boxes__item {
+    margin-right: 10px;
+  }
+  
+  .boxes__wrap>.boxes__item:last-child {
+    margin-right: 0px;
+  }
+  
+  /* ----- ----- BOXES - color ----- ----- */
+  /* ----- ----- BOXES - color - container ----- ----- */
+  
+  .boxes__container--red {
+    background: #e74c3c;
+    color: #ecf0f1;
+  }
+  
+  .boxes__container--yellow {
+    background: #f9ca24;
+    color: #2c3e50;
+  }
+  
+  .boxes__container--orange {
+    background: #f0932b;
+    color: #ecf0f1;
+  }
+  
+  .boxes__container--green {
+    background: #6ab04c;
+    color: #ecf0f1;
+  }
+  
+  .boxes__container--blue {
+    background: #22a6b3;
+    color: #ecf0f1;
+  }
+  
+  .boxes__container--purple {
+    background: #be2edd;
+    color: #ecf0f1;
+  }
+  
+  /* ----- ----- BOXES - color - item ----- ----- */
+  
+  .boxes__item--red {
+    background: #ff7979;
+    color: #ecf0f1;
+  }
+  
+  .boxes__item--yellow {
+    background: #f6e58d;
+    color: #2c3e50;
+  }
+  
+  .boxes__item--orange {
+    background: #ffbe76;
+    color: #ecf0f1;
+  }
+  
+  .boxes__item--green {
+    background: #badc58;
+    color: #ecf0f1;
+  }
+  
+  .boxes__item--blue {
+    background: #7ed6df;
+    color: #ecf0f1;
+  }
+  
+  .boxes__item--purple {
+    background: #e056fd;
+    color: #ecf0f1;
+  }
+  
+  /* ----- ----- arrow ----- ----- */
+  
+  hr {
+    position: relative;
+    border: 0px;
+    height: 5px;
+  }
+  
+  /* ----- ----- flags ----- ----- */
+  
+  .flag {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.7em;
+    border-radius: 4px;
+    padding: 4px;
+    height: 19px;
+    font-weight: 600;
+  }
+  
+  .flag__container {
+    background-color: #FD7272;
+    color: #ecf0f1;
+  }
+  
+  .flag__item {
+    background-color: #9AECDB;
+    color: #2c3e50;
+  }
+  
+  .flag__relation {
+    background-color: #f9ca24;
+    color: #2c3e50;
+  }
+  
+  .flag__cross-axis {
+    background-color: #FD7272;
+    color: #ecf0f1;
+  }
+  
+  .flag__main-axis {
+    background-color: #D6A2E8;
+    color: #ecf0f1;
+  }
+  
+  /* ----------------------------- */
+  /* EXERCICES */
+  /* ----------------------------- */
+  
+  /* ----- ----- Main Axis y Cross Axis ----- ----- */
+  
+  .boxes__item--one {
+    flex-grow: 30;
+  }
+  
+  .boxes__item--two {
+    flex-grow: 70;
+  }
+  
+  .maincross-arrow__main {
+    background-color: #FD7272;
+    top: -60px;
+    width: 100%;
+  }
+  
+  .maincross-arrow__cross {
+    background-color: #D6A2E8;
+    width: 93px;
+    transform: rotate(90deg);
+    top: -53px;
+    left: 80px;
+  }
+  
+  .maincross-arrow__main-box {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: #FD7272;
+    border-radius: 4px;
+  }
+  
+  .maincross-arrow__cross-box {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: #D6A2E8;
+    border-radius: 4px;
+  }
+  
+  /* ----------------------------- */
+  /* MEDIA QUERIES */
+  /* ----------------------------- */
+  
+  @media only screen and (min-width: 768px) {
+    .top__container {
+      width: 50%;
+    }
+  }

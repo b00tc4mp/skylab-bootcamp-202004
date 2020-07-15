@@ -1,0 +1,13 @@
+extend App
+
+block body
+  section.login
+    h2 Login
+    form(action='/login', method='POST')
+      | E-mail: 
+      input(type='email', name='email', required='', placeholder='e-mail')
+      |     Password: 
+      input(type='password', name='password', minlength='8', required='', placeholder='password')
+      button Submit
+      |  or 
+      a(href='/register') Register

@@ -1,0 +1,16 @@
+extend App
+
+block body
+  section.register
+    h1 Register
+    form(action='/register', method='POST')
+      input(type='text', name='name', placeholder='name', required='', pattern='[A-Za-z]{1,20}')
+      input(type='text', name='surname', placeholder='surname', required='', pattern='[A-Za-z]{1,20}')
+      input(type='email', name='email', placeholder='e-mail', required='')
+      input(type='password', name='password', placeholder='password', required='', minlength='8')
+      button Submit
+      |     or 
+      a(href='/login') Login
+    if feedback
+        include Feedback.pug
+        

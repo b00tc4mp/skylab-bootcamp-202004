@@ -1,0 +1,85 @@
+*{
+    margin: 0;
+}
+body {
+    font-size: 40px;
+}
+.container {
+    display: grid;
+    grid-template-areas: 'item1 item1'
+    'item2 item3'
+    'item4 item5'
+    'item6 item7'
+    'item8 item9'; 
+}
+.square {
+    text-align: center;
+    line-height: 200px;
+    border: 1px solid black;   
+}
+#square-1 {
+    background-color: blue;
+    grid-area: item1;
+    position: sticky;
+    top: 0;
+}
+#square-2 {
+    background-color: red;
+    grid-area: item2;
+}
+#square-3 {
+    background-color: green;
+    grid-area: item3;
+}
+#square-4 {
+    background-color: yellow;
+    grid-area: item4;
+}
+#square-5 {
+    background-color: orange;
+    grid-area: item5;
+}
+#square-6 {
+    background-color: white;
+    grid-area: item6;
+}
+#square-7 {
+    background-color: blue;
+    grid-area: item7;
+}
+#square-8 {
+    background-color: green;
+    grid-area: item8;
+}
+#square-9 {
+    background-color: orange;
+    grid-area: item9;
+}
+
+@media only screen and (min-width: 768px) {
+   
+.container {
+    display: grid;
+    grid-template-areas: 'item1 item2 item3'
+        'item4 item5 item6'
+        'item7 item8 item9';
+    }
+#square-1 {
+    position: relative;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+
+#square-9 {
+    position: sticky;
+    bottom: 0;
+   }
+.container {
+    display: grid;
+    grid-template-areas: 'item1 item1 item1 item1 item1 item1 item1 item1 item1 item1 item1 item1'
+        'item2 item2 item2 item2 item3 item3 item3 item3 item4 item4 item4 item4'
+        'item5 item5 item5 item6 item6 item6 item7 item7 item7 item8 item8 item8'
+        'item9 item9 item9 item9 item9 item9 item9 item9 item9 item9 item9 item9'; 
+    }
+}

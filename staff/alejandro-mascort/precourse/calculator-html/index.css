@@ -1,0 +1,197 @@
+body {
+    position: absolute;
+    left:0;
+    width: 98%;
+}
+#site {
+    margin: 0;
+    width:100%;
+    height: 98vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.grid {
+    color: white;
+    border: 1px solid black;
+    position: relative;
+    top: 48%;
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+
+    display: grid;
+    width: 60vh;
+    height: 90vh;
+    margin: auto;
+    grid-template-rows: 2fr repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas: 
+    "screen screen screen screen" 
+    "numbers numbers numbers numbers" 
+    "numbers numbers numbers numbers" 
+    "numbers numbers numbers numbers"
+    "numbers numbers numbers numbers" 
+    "numbers numbers numbers numbers";
+}
+
+@media all and (max-width: 600px) {
+
+    .grid {
+        margin: 0;
+        color: white;
+        border: 1px solid black;
+        position: relative;
+        top: 48%;
+        -ms-transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+    
+        display: grid;
+        width: 95vw;
+        height: 95vh;
+        margin: auto;
+        grid-template-rows: 2fr repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas: 
+        "screen screen screen screen" 
+        "numbers numbers numbers numbers" 
+        "numbers numbers numbers numbers" 
+        "numbers numbers numbers numbers"
+        "numbers numbers numbers numbers" 
+        "numbers numbers numbers numbers";
+    }
+}
+
+.grid .screen span {
+    font-size: 2em;
+    position: relative;
+    top:45%;
+}
+
+.screen {
+    background-color: black;
+    grid-area: screen;
+}
+
+.numbers {
+    box-sizing: border-box;
+    background-color: grey;
+    border: 1px solid rgb(59, 58, 58);
+    grid-area: numbers;
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas: 
+    "ac ac remove division"
+    "seven eight nine multiplication"
+    "four five six extraction"
+    "one two three sum"
+    "zero zero separator equal";
+    grid-gap: 1px;
+    justify-items: center;
+    align-items: center;
+}
+
+.operations {
+    color: white;
+    background-color: orange;
+}
+
+.btn {
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    border: 1px solid rgb(59, 58, 58);
+}
+
+.btn:hover {
+    background-color: rgb(250, 95, 95);
+}
+
+span {
+    font-size: xx-large;
+    text-align: center;
+    position: relative;
+    display: table;
+    margin: 0 auto;
+    top: 25%;
+}
+
+
+#ac {
+    grid-area: ac;
+}
+
+#remove span{
+    font-size: x-large;
+    grid-area: remove;
+    position: relative;
+    display: table;
+    margin: 0 auto;
+    top: 35%
+}
+
+#seven {
+    grid-area: seven;
+}
+
+#eight {
+    grid-area: eight;
+}
+
+#nine {
+    grid-area: nine;
+}
+
+#four {
+    grid-area: four;
+}
+
+#five {
+    grid-area: five;
+}
+
+#six {
+    grid-area: six;
+}
+
+#one {
+    grid-area: one;
+}
+
+#two {
+    grid-area: two;
+}
+
+#three {
+    grid-area: three;
+}
+
+#zero {
+    grid-area: zero;
+}
+
+#separator {
+    grid-area: separator;
+}
+
+#division {
+    grid-area: division;
+}
+
+#multiplication {
+    grid-area: multiplication;
+}
+
+#extraction {
+    grid-area: extraction;
+}
+
+#sum {
+    grid-area: sum;
+}
+
+#equal {
+    grid-area: equal;
+}

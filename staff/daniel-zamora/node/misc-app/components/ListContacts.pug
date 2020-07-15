@@ -1,0 +1,14 @@
+
+section.contacts
+    h2 Contact list
+    a.home__link(href='/add-contact') Add contact
+    if contacts
+        ul
+            each val in contacts
+                li=val.name
+                    form(method='POST')
+                        input(type='hidden', name='contact', value=JSON.stringify(val))
+                        button(name='details', formaction='/contact-details') Details
+                        button(name='delete', formaction='/contact-delete') Delete
+    else
+        p you jave 0 contactssssss... loser!!

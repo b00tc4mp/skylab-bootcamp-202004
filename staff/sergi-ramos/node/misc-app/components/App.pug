@@ -1,0 +1,12 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    title Hello World
+    link(rel='stylesheet', href='style.css')
+  body
+    if !cookiesAccepted
+      include Cookies.pug
+
+    block body
+

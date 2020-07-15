@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="index.css" rel="stylesheet">
+
+    </script>
+    <title>Skylab Calculator</title>
+</head>
+
+<body>
+    <div class="calculator">
+        <table>
+            <tr>
+                <td colspan="4"><button id="result" class="result" disabled>0</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="add('7')" class="butNumbers">7</button></td>
+                <td><button onclick="add('8')" class="butNumbers">8</button></td>
+                <td><button onclick="add('9')" class="butNumbers">9</button></td>
+                <td><button onclick="add('+')" class="butOperators">+</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="add('4')" class="butNumbers">4</button></td>
+                <td><button onclick="add('5')" class="butNumbers">5</button></td>
+                <td><button onclick="add('6')" class="butNumbers">6</button></td>
+                <td><button onclick="add('-')" class="butOperators">-</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="add('1')" class="butNumbers">1</button></td>
+                <td><button onclick="add('2')" class="butNumbers">2</button></td>
+                <td><button onclick="add('3')" class="butNumbers">3</button></td>
+                <td><button onclick="add('*')" class="butOperators">*</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="add('.')" class="butOperators">.</button></td>
+                <td><button onclick="add('0')" class="butNumbers">0</button></td>
+                <td><button onclick="back()" class="butOperators">R</button></td>
+                <td><button onclick="add('/')" class="butOperators">/</button></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button onclick="del()" class="ac">AC</button></td>
+                <td colspan="2"><button onclick="calc()" class="butOperators">=</button></td>
+            </tr>
+        </table>
+    </div>
+    <script src="index.js"></script>
+</body>
+
+</html>

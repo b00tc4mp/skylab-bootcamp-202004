@@ -1,0 +1,100 @@
+.numbers{
+    display: grid;
+    max-width: 250px;
+    height: 350px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+}
+
+.num{
+    display: grid;
+    background-color: lightgrey;
+    color: midnightblue;
+}
+
+.but{
+    display: grid;
+    background-color: sandybrown;
+    color:midnightblue;
+}
+
+#cero{
+    grid-area: 7 / 1 / span 1 / span 2;
+}
+
+#uno{
+    grid-area: 6 / 1 / span 1 / span 1;
+}
+
+#dos{
+    grid-area: 6 / 2 / span 1 / span 1;
+}
+
+#tres{
+    grid-area: 6 / 3 / span 1 / span 1;
+}
+
+#cuatro{
+    grid-area: 5 / 1 / span 1 / span 1; 
+}
+
+#cinco{
+    grid-area: 5 / 2 / span 1 / span 1;
+}
+
+#seis{
+    grid-area: 5 / 3 / span 1 / span 1;
+}
+
+#siete{
+    grid-area: 4 / 1 / span 1 / span 1;
+}
+
+#ocho{
+    grid-area: 4 / 2 / span 1 / span 1;
+}
+
+#nueve{
+    grid-area: 4 / 3 / span 1 / span 1;
+}
+
+#dec{
+    grid-area: 7 / 3 / span 1 / span 1;
+}
+
+#ac{
+    grid-area: 3 / 1 / span 1 / span 2;
+}
+
+#ret{
+    grid-area: 3 / 3 / span 1 / span 1;
+}
+
+#div{
+    grid-area: 3 / 4 / span 1 / span 1; 
+}
+
+#mult{
+    grid-area: 4 / 4 / span 1 / span 1;  
+}
+
+#rest{
+    grid-area: 5 / 4 / span 1 / span 1; 
+}
+
+#sum{
+    grid-area: 6 / 4 / span 1 / span 1; 
+}
+
+#equal{
+    grid-area: 7 / 4 / span 1 / span 1; 
+}
+
+#result{
+    grid-area: 1 / 1 / span 2/ span 4;
+    color: white;
+    background-color:  rgb(7, 7, 63);
+    font-size: 150%;
+    text-align: end;
+
+}

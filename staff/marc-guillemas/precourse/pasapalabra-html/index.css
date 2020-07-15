@@ -1,0 +1,457 @@
+.background {
+    background-image: linear-gradient(135deg, rgb(122, 133, 253), rgb(77, 86, 255), rgb(0, 64, 255),rgb(122, 133, 253));
+    height: 100vh;
+}
+#container {
+    display: flex;
+    margin-top: 30px;
+    height: 600px;
+    position: fixed;
+}
+.list-container {
+    display: flex;
+    margin-left: 100px;
+    margin-top: 50px;
+    justify-items: center;
+    width: 500px;
+    height: 500px;
+
+}
+#rosco-letters {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 400px;
+    position: relative;
+    border-radius: 100%;
+    list-style: none;
+    left: 42%;
+    top: 8%;
+    visibility: hidden; 
+}
+#timer-container{
+    margin-top: -100px;
+    margin-left: -850px;
+    display: flex;
+    width: 100px;
+    height: 130px;
+    background-color: rgba(34, 5, 255, 0.347);
+    border-radius: 50%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+#timer {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+#logo {
+    display: flex;
+    width: 600px;
+    height: 200px;
+    top: 25%;
+    left: -15%;
+    position: relative;
+    visibility: visible;
+}
+.letters {
+    background-image: linear-gradient(135deg, rgb(98, 132, 255), rgb(0, 41, 191));
+    border: 0.5px solid rgb(255, 255, 255);
+    color: white;
+    font-family: 'Baloo 2', cursive;
+    vertical-align: middle;
+    font-size: 23px;
+    text-align: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 100px;
+    position: absolute;
+    top: 46%;
+    left: 46%;
+
+}
+.row {
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+}
+
+#intro {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    border-radius: 30px;
+    width: 550px;
+    height: 600px;
+    margin-left: 30%;
+    margin-top: 10px;
+    text-align: center;
+    font-family: 'Baloo 2', cursive;
+    color: rgb(255, 255, 255);
+   
+} 
+.card {
+    transform-style: preserve-3d;
+    transition: all 0.8s ease;
+    position: relative;
+}
+.front {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.156);
+    height: 100%;
+    border-radius: 30px;
+    backface-visibility: hidden;
+
+}
+.rear {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.156);
+    height: 100%;
+    width: 100%;
+    border-radius: 30px;
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
+}
+#username {
+    height: 30px;
+    width: 200px;
+    margin-top: -30px;
+    border-radius: 20px;
+    padding-left: 10px;
+    background-color: rgba(8, 0, 248, 0.272);
+    border: none;
+    color: white;
+    transition: all 1.5s ease;
+}
+
+#username::placeholder{
+    color: rgba(255, 255, 255, 0.68);
+}
+ul {
+    list-style: none;
+}
+#text {
+    margin: 20px;
+}
+#showRanking {
+    display: flex;
+    width: 70px;
+    height: 70px;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.347);
+    font-size: 8px;
+    top: -10px;
+    transition: all 1s ease;
+}
+#showRanking:hover {
+    display: flex;
+    width: 70px;
+    height: 70px;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.66);
+    font-size: 8px;
+    top: -20px;
+}
+#startGamebtn{
+    margin-top: 20px;
+    width: 150px;
+    background-color: rgba(255, 0, 55, 0.7);
+    font-size: 20px;
+}
+#startGamebtn:hover{
+    background-color: rgba(255, 30, 30, 0.959);
+    
+    width: 170px;
+    height: 40px;
+    transition: 1s;
+}
+#startGamebtn:active{
+    font-size: 17px;
+}
+#home-page {
+    display: flex;
+    width: 90px;
+    height: 60px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    bottom: 20%;
+    font-size: 24px;
+    background-color: rgba(0, 0, 255, 0.333);
+    color: rgba(255, 255, 255, 0.496);
+    visibility: hidden;
+
+}
+#home-page:hover {
+    width: 100px;
+    transition: 1s;
+    color: rgba(255, 255, 255, 0.816);
+    background-color: rgba(0, 0, 255, 0.714);
+}
+.started-tittle {
+    font-size: 60px;
+    font-family: 'Baloo 2';
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+
+#started-part{
+    display: flex; 
+    flex-direction: column;
+    position: absolute;
+    top: 0%;
+    margin-bottom:200px ;
+    left: 60%;
+    width: 600px;
+    height: 600px;
+    padding: 10px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    visibility: hidden;
+    color: rgb(255, 255, 255);
+    font-family: 'baloo 2', normal;
+}
+#exitBtn {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    margin-left: 700px;
+    padding-right: 30px;
+    width: 30px;
+    background-color: rgba(220, 20, 60, 0.714);
+    transition: all 1s ease;
+    margin-bottom: 0;
+}
+#exitBtn:hover {
+    width: 60px;
+    margin-right: 60px;
+    padding-right: 20px;
+    text-indent: 1em;
+    background-color: crimson;
+    transition: all 0.5s ease;
+
+}
+.hoverable{
+    visibility: hidden;
+}
+#exitBtn:hover .hoverable{
+    visibility: visible;
+    animation: fadeIn 1.5s;
+
+}
+
+
+#question {
+    display: flex;
+    margin: 40px;
+    width: 750px;
+    padding: 10px;
+    height: 200px;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 0.115);
+    border-radius: 30px;
+    font-family: 'Share Tech Mono', monospace;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+
+
+
+.game {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    margin-left: 200px;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+
+.btn{
+    font-family: 'Baloo 2', cursive;
+    margin: 20px;
+    border: none;
+    height: 40px; 
+    width: 100px;
+    border-radius: 10px;
+    color:white;
+    background-color: black;  
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#checkAnswer{
+    background-color: rgba(208, 255, 0, 0.7);
+}
+#pasapalabraBtn{
+    background-color: rgb(68, 79, 202);
+}
+#checkAnswer:hover{
+    background-color: rgb(1, 228, 65);
+}
+#pasapalabraBtn:hover{
+    background-color: rgb(0, 174, 248);
+}
+
+#userAnswr {
+    border:none;
+    height: 40px;
+    width: 250px;
+    font-size: 100%;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
+
+#showRankingBox {
+    width: 500px;
+    height: 500px;
+    border: 1px solid black;
+    background-color: whitesmoke;
+}
+
+
+.rank{
+    padding-left: 10px;
+    margin-left: -40px;
+}
+#top {
+    margin-top: -50px;
+    margin-bottom: -20px;
+}
+@keyframes fadeIn {
+    0% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
+
+#exitRanking {
+    display: flex;
+    height:  70px;
+    width: 70px;
+    padding: 0%;
+    justify-content: center;
+    margin-top: 20px;
+    margin-left: 20px;
+    font-size: 50px;
+    border: none;
+    background-color: rgba(0, 0, 255, 0);
+    color: rgba(0, 60, 255, 0.657);
+}
+#exitRanking:hover {
+    font-size: 70px;
+    transition: 0.5s;
+    color: rgba(0, 0, 0, 0.48)
+}
+/*
+@-moz-keyframes fadeIn {
+    0% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
+
+@-o-keyframes fadeIn {
+    0% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
+
+@-ms-keyframes fadeIn {
+    0% {
+        opacity:0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+.fade-out {
+    animation: fadeOut ease 8s;
+    -webkit-animation: fadeOut ease 8s;
+    -moz-animation: fadeOut ease 8s;
+    -o-animation: fadeOut ease 8s;
+    -ms-animation: fadeOut ease 8s;
+}
+*/
+@keyframes fadeOut {
+    0% {
+        opacity:1;
+    }
+    100% {
+        opacity:0;
+    }
+}
+
+@-moz-keyframes fadeOut {
+    0% {
+        opacity:1;
+    }
+    100% {
+        opacity:0;
+    }
+}
+
+@-webkit-keyframes fadeOut {
+    0% {
+        opacity:1;
+    }
+    100% {
+        opacity:0;
+    }
+}
+
+@-o-keyframes fadeOut {
+    0% {
+        opacity:1;
+    }
+    100% {
+        opacity:0;
+    }
+}
+
+@-ms-keyframes fadeOut {
+    0% {
+        opacity:1;
+    }
+    100% {
+        opacity:0;
+    }
+} 
+/*
+*/
+
+/* .fade-in {
+    opacity: 0;
+}
+.fade-in::before{
+    opacity: 100%;
+} */

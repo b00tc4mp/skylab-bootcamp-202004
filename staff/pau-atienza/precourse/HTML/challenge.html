@@ -1,0 +1,64 @@
+HTML
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>HTML introduction</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<!--  ----------------------------------------------------------------------  -->
+<!--  HTML INTRODUCTION  -->
+<!--  ----------------------------------------------------------------------  -->
+<body class="background">
+  <main class="flex-center">
+    <header>
+      <h1 class="title">HTML INTRODUCTION</h1>
+    </header>
+<!--  ----------------------------------------------------------------------  -->
+<!--   1. Forms   -->
+<!--  ----------------------------------------------------------------------  -->
+    <section class="separation">
+      <h2 class="subtitle">1. Forms</h2>
+      <form class="form-data flex-center" id="loginForm" 
+onsubmit="onLogin(event)">
+        <h3 class="subtitle">Login form example</h3>
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" />
+        <br />
+        <label for="user-password">Password:</label>
+        <input type="password" id="user-password" name="user-password" />
+        <button>Login</button>
+      </form>
+      <span class="hidden" id="message">Message here</span>
+    </section>
+<!--  ----------------------------------------------------------------------  -->
+<!--  2. Event Handlers  -->
+<!--  ----------------------------------------------------------------------  -->
+    <section class="separation">
+      <h2 class="subtitle">2. Event Handlers</h2>
+      <button id="view-button">View next section</button>
+      <button class="hidden" id="close-button">
+        Close Keyboard Events Section
+      </button>
+    </section>
+  </main>
+<!--  ----------------------------------------------------------------------  -->
+<!--  3. Keyboard Events  -->
+<!--  ----------------------------------------------------------------------  -->
+  <section class="hidden" id="keyboard-events-section">
+    <h2 class="side-subtitle">3. Keyboard Events</h2>
+    <div>
+      <div id="float-circle"></div>
+      <div id="platform"></div>
+      <div id="floor"></div>
+    </div>
+  </section>
+
+</body>
+
+<script src="main.js"></script>
+
+</html>

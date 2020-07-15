@@ -1,0 +1,19 @@
+.background {
+    background-image: linear-gradient(to bottom, rgb(0, 153, 255),rgb(145, 246, 255));
+    height: 100vh;
+    color: white;
+    letter-spacing: 10px;
+}
+.flex-center {
+    /* border: 2px solid red; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-data{
+    border: 1px solid white;
+    padding: 10px;
+    width: 500px;
+    height: 200px;
+}
