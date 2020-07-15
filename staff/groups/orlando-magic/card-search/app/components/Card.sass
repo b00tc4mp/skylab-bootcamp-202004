@@ -1,0 +1,132 @@
+.card
+    width: 100%
+    padding: 1%
+    display: flex
+    flex-flow: column
+    box-sizing: border-box
+    &__info
+        display: flex
+        flex-direction: column
+    &__image
+        width: 100%
+    &__content
+        width: 100%
+        border: solid brown 3px
+        box-sizing: border-box
+        margin-top: 1rem
+        background-color: whitesmoke
+        border-radius: 0.3rem
+        & > *
+            padding: 0.2rem
+            display: flex
+            align-items: center
+        &--top
+            border-bottom: solid brown 0.2px
+        &--name
+            font-size: 1.5rem
+            flex-grow: 1
+            font-weight: bold
+        &--typeline
+            font-size: 1.5rem
+            border-bottom: solid brown 0.2px
+        &--content
+            font-size: 1.5rem
+            list-style-type: none
+            flex-flow: column
+            align-items: flex-start
+            border-bottom: solid brown 0.2px
+            margin-block-start: 0
+            margin-block-end: 0
+            &>li
+                margin: 0.2rem
+        &--flavortext
+            font-size: 1.5rem
+            font-style: italic
+        &--stats
+            font-size: 1.5rem
+            border-bottom: solid brown 0.2px
+        &--artist
+            font-size: 1.5rem
+            border-bottom: solid brown 0.2px
+        &--legalities
+            flex-flow: wrap column
+            height: 13.5rem
+        &--legalityelement
+            width: 48%
+            display: flex
+            justify-content: space-around
+            align-items: center
+            font-size: 0.8rem
+            margin: 0.1rem
+        &--format
+            font-size: 1.2rem
+            width: 50%
+            margin-block-start: 0em
+            margin-block-end: 0em
+        &--legal, &--illegal
+               border: solid black 1px 
+               color: whitesmoke
+               width: 50%
+               text-align: center
+        &--legal
+            background-color: #4caf50
+        &--illegal
+            background-color: #d32f2f
+    &__tools
+        display: flex
+        flex-direction: column
+        width: 100%
+        &--toolbox, &--shopping
+            display: flex
+            flex-direction: column
+        &--title
+            font-weight: bold
+            font-size: 1.5rem
+            margin-top: 0.5rem
+            margin-bottom: 0.5rem
+        &--link
+            font-size: 1.5rem
+            border: solid brown 1px
+            padding: 0.2rem
+            margin-top: 0.2rem
+            margin-bottom: 0.2rem
+            text-decoration: none
+            color: brown
+
+@media only screen and (min-width: 768px)
+    .card
+        &__info
+            flex-direction: row
+            align-items: center
+        &__image
+            width: 48%
+            margin-right: 2%
+        &__content
+            width: 48%
+            height: 100%
+            margin-top: 0rem
+        &__tools
+            flex-direction: row
+            &--toolbox
+                margin-right: 2%
+            &--toolbox, &--shopping
+                width: 49%
+
+@media only screen and (min-width: 968px)
+    .card
+        width: 80%
+
+
+    
+@media only screen and (min-width: 1025px)
+    .card
+        width: 98%
+        align-items: center
+        flex-direction: row
+        &__info
+            flex-grow: 1
+        &__tools
+            flex-direction: column
+            width: 30%
+            &--toolbox, &--shopping
+                width: 100%

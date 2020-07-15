@@ -1,0 +1,73 @@
+.navigation
+    &__basic
+        display: flex
+        height: 3.5rem
+        align-items: center
+        background-color: black
+        a
+            width: 15%
+            height: 100%
+            display: flex
+            align-items: center
+            justify-content: center
+            img
+                height: 80%
+            &:hover
+                background-color: grey
+    &--searchbar
+        flex-grow: 1
+        display: flex
+        height: 3.5rem
+        input
+            flex-grow: 1
+            color: white
+            background-color: black
+            border: none
+            text-align: center
+            &:hover
+                background-color: grey
+            &::placeholder
+                color: white
+                text-align: center
+                font-size: 1rem   
+    &__extended
+        display: flex
+        flex-flow: column
+        align-items: center
+        justify-content: center
+        background-color: black
+        border-top: solid white 0.5px
+        a
+            text-decoration: none
+            color: white
+            text-align: center
+            height: 1.5rem
+            padding-top: 1rem
+            padding-bottom: 1rem
+            border-top: solid white 0.5px
+            width: 40%
+            &:first-child
+                border-top: none
+            &:hover
+                background-color: grey
+
+@media only screen and (min-width: 810px)
+    .navigation__extended
+        flex-flow: row
+        height: 3.6rem
+        a
+            padding-right: 1rem
+            padding-left: 1rem
+            border-left: solid white 0.5px
+            padding-top: 0rem
+            padding-bottom: 0rem
+            border-top: none
+            border-bottom: none
+            width: auto
+            &:last-child
+                border-right: solid white 0.5px
+            
+                
+@media only screen and (min-width: 968px)
+    .navigation
+        width: 100%

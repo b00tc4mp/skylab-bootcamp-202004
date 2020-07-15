@@ -1,0 +1,50 @@
+.login-card-container
+    border: 0.5rem solid black
+    width: 95vw
+    margin: 0 auto
+    margin-top: 0.5rem
+    border-radius: 1rem
+    box-sizing: border-box
+    box-shadow: -8px 9px 16px -3px gray
+    background: #171314
+    z-index: 0
+
+    .card-container__title, .card-container__nav-item
+        box-shadow: 0 0 0 2px #171314, 0 0 0 5px #2e70b3, -3px 3px 2px 5px #171314
+
+
+    .card-container__form-container
+        width: 100%
+
+    .card-container__form  
+        box-shadow: 0 0 0 5px #2e70b3, -3px 3px 2px 5px #171314
+
+    .card-container__frame-art 
+        box-shadow: 0 0 0 2px #171314,0 0 0 5px #2e70b3,-3px 3px 2px 5px #171314
+
+@media only screen and (min-width: 768px)
+    .login-card-container
+        font-size: 0.8rem
+
+@media only screen and (min-width: 968px)
+    .login-card-container
+        font-size: 2rem
+        
+        .card-container__nav-item
+            font-size: 2rem
+
+    
+@media only screen and (min-width: 1025px)
+    .login-card-container
+        width: 30%
+        font-size: 0.8rem
+
+        .card-container__form
+            &-item
+                font-size: 0.8rem
+                height: 1.35rem
+    
+        .card-container__nav
+            margin-top: 0.8rem
+            &-item
+                font-size: 0.8rem

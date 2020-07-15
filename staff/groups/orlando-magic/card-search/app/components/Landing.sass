@@ -1,0 +1,79 @@
+.card-container__type > form 
+    display: flex
+    justify-content: center
+    height: 1.5rem
+    margin: auto
+    font-size: 1rem
+
+.landing-card-container
+    border: 0.5rem solid black
+    width: 95vw
+    margin: 0 auto
+    margin-top: 0.5rem
+    border-radius: 1rem
+    box-sizing: border-box
+    box-shadow: -8px 9px 16px -3px gray
+    background: #171314
+    z-index: 0
+
+    .card-container__title
+        height: 1.5rem
+        display: flex
+        justify-content: center
+        align-items: center
+
+    .card-container__nav-item
+        margin-bottom: 0.6rem
+
+    .card-container__title, .card-container__nav-item
+        box-shadow: 0 0 0 2px #171314, 0 0 0 5px #deddc5, -3px 3px 2px 5px #171314
+
+        button
+            height: 1.4rem
+        input
+            height: 1.2rem
+
+    .card-container__form-container
+        width: 100%
+
+    .card-container__form
+        box-shadow: 0 0 0 5px #deddc5, -3px 3px 2px 5px #171314
+
+    .card-container__frame-art 
+        box-shadow: 0 0 0 2px #171314,0 0 0 5px #deddc5,-3px 3px 2px 5px #171314
+
+@media only screen and (min-width: 768px)
+    .card-container__type > form 
+        height: 2rem
+        margin: auto
+        font-size: 2rem
+    .landing-card-container
+        font-size: 1.5rem
+
+@media only screen and (min-width: 968px)
+    .landing-card-container
+        font-size: 2rem
+
+        .card-container__form
+            &-item
+                font-size: 2rem
+                height: 2.5rem
+        
+        .card-container__nav-item
+            font-size: 2rem
+
+    
+@media only screen and (min-width: 1025px)
+    .landing-card-container
+        width: 30%
+        font-size: 0.8rem
+
+        .card-container__form
+            &-item
+                font-size: 0.8rem
+                height: 1.35rem
+    
+        .card-container__nav
+            margin-top: 0.8rem
+            &-item
+                font-size: 0.8rem
