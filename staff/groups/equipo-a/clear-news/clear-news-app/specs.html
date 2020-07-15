@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Mocha Tests</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="vendor/mocha/mocha.css" />
+</head>
+
+<body>
+    <div id="mocha"></div>
+
+    <script src="vendor/mocha/mocha.js"></script>
+    <script src="vendor/chai/chai.js"></script>
+
+    <script class="mocha-init">
+        mocha.setup('bdd')
+        // mocha.checkLeaks()
+        mocha.timeout(150000)
+
+        const { expect } = chai
+    </script>
+
+    <script src="utils/string.js"></script>
+    <script src="utils/email.js"></script>
+    <script src="utils/url.js"></script>
+    <script src="utils/http.js"></script>
+    <script src="utils/function.js"></script>
+    <script src="utils/array.prototype.random-polyfill.js"></script>
+    <script src="utils/test.js"></script>
+    <script src="utils/call.js"></script>
+
+    <script src="utils/call.spec.js"></script>
+    <script src="utils/unique-value.js"></script>
+
+   <!--  <script src="utils/call.spec.js"></script> -->
+
+
+    <script src="logic/authenticate-user.js"></script>
+    <script src="logic/authenticate-user.spec.js"></script>
+    <script src="logic/register-user.js"></script>
+    <script src="logic/register-user.spec.js"></script>
+    <script src="logic/retrieve-user.js"></script>
+    <script src="logic/retrieve-user.spec.js"></script>
+    <script src="logic/search-news.js"></script>
+    <script src="logic/search-news.spec.js"></script>
+    <script src="logic/retrieve-news.js"></script>
+    <script src="logic/retrieve-news.spec.js"></script>
+    <script src="logic/store-news.js"></script>
+    <script src="logic/store-news.spec.js"></script>
+    <script src="logic/change-profile.js"></script>
+    <script src="logic/change-profile.spec.js"></script> 
+    <script src="logic/is-user-authenticated.js"></script>
+    <script src="logic/is-user-authenticated.spec.js"></script>
+    <script src="logic/store-top-headlines.js"></script>
+    <script src="logic/store-top-headlines.spec.js"></script>
+    <script src="logic/retrieve-favorite-news.js"></script>
+    <script src="logic/retrieve-favorite-news.spec.js"></script>
+    <script src="logic/retrieve-favorite-top-headlines.js"></script>
+    <script src="logic/retrieve-favorite-top-headlines.spec.js"></script>
+    
+    
+    <script class="mocha-exec">
+        mocha.run()
+    </script>
+</body>
+
+</html>

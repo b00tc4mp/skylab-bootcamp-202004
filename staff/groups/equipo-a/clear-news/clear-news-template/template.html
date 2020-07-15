@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <section class='landing'>
+        <img class='landing__image' src="images/logo.png"></img>
+        <section class='landing__navigation'>
+            <a href="">Register</a>
+            <a href="">Login</a>
+        </section>
+    </section>
+
+
+    <section class="register">
+        <img class="register__logo" src="images/logo.png">
+        <h1>Register</h1>
+        <form class="register__input">
+            <input type="text" name="name" placeholder="name">
+            <input type="text" name="surname" placeholder="surname">
+            <input type="email" name="email" placeholder="e-mail">
+            <input type="password" name="password" placeholder="password"><br><br>
+            <label>Choose your country</label><br>
+            <select class="register__country" name="country">
+                <option value="spain">Spain</option>
+                <option value="england">England</option>
+                <option value="united-states">United States</option>
+                <option value="russia">Russia</option>
+                <option value="france">France</option>
+                <option value="germany">Germany</option>
+            </select>
+            <br>
+            <br>
+            <fieldset class="register__checkbox">
+                <legend>Choose your favorite topics</legend>
+                <input type="checkbox" id="checkbox1" value="business">Business<br>
+                <input type="checkbox" id="checkbox2" value="entertainment">Entertainment<br>
+                <input type="checkbox" id="checkbox3" value="general">General<br>
+                <input type="checkbox" id="checkbox4" value="health">Health<br>
+                <input type="checkbox" id="checkbox4" value="science">Science<br>
+                <input type="checkbox" id="checkbox4" value="sports">Sports<br>
+                <input type="checkbox" id="checkbox4" value="technology">Technology<br>
+            </fieldset>
+            <class class="resister__nav-button">
+                <button class="register__button">Submit</button> or <a href="">Login</a>
+            </class>
+        </form>
+        <p class="feedback" level="error">Wrong credencials</p>
+    </section>
+
+    <section class="login">
+        <img class="login__logo" src="images/logo.png">
+        <h1>Log in</h1>
+        <form>
+            <secction class="login__input">
+                <input type="email" name="email" placeholder="e-mail">
+                <input type="password" name="password" placeholder="password">
+            </secction>
+            <button class="login__button">Submit</button> or
+            <a href="">Register</a>
+        </form>
+        <p class="feedback" level="error">Wrong credencials</p>
+    </section>
+
+    <section class="home">
+        <header>
+            <section>
+                <nav class="home__nav-bar">
+                    <a class='home__link'>Profile </a>
+                    <a class="home__link">Favorites </a>
+                    <a class="home__link--active">Top headlines</a>
+                    <a class="home__link">Search </a>
+                    <h1 class="home__user-name">User name</h1>
+                    <button class="home__logout">Logout</button>
+                </nav>
+                <img className="home__logo" src="images/logo.png"></img>
+            </section>
+            <section class="news">
+                <ul class="news__container">
+                    <li class='news__item'>
+                        <a href="https://cointelegraph.com/news/novogratz-alludes-stimulus-causing-recent-bitcoin-uptrend"
+                            target='_blank'><img class="news__images"
+                                src="https://s3.eu-central-1.amazonaws.com/s3.cointelegraph.com/uploads/2020-05/b9215f0a-f74e-45c4-b3fd-8c14d26472f4.jpg"
+                                alt="Image not available for your region">
+                            <div class='news__title'>
+                                <p>Novogratz Alludes Stimulus Causing Recent Bitcoin Uptrend</p>
+                                <p>By Benjamin Pirus</p>
+                            </div>
+                        </a>
+                        <div class="news__button"><input type="image" class="news__followIMG"><img
+                                src="images/heart-follow.png" alt=""></div>
+                    </li>
+                    <li class='news__item'>
+                        <a href="https://www.coindesk.com/bitcoin-revenues-in-squares-cash-app-top-fiat-revenues-for-first-time-in-q1"
+                            target='_blank'><img class="news__images"
+                                src="https://www.coindesk.com/wp-content/uploads/2020/05/shutterstock_1707415642-1200x628.jpeg" alt="Image not available for your region">
+                                <div class="news__title">
+                            <p>Bitcoin Revenue in Square’s Cash App Top Fiat Revenue for First Time in Q1</p>
+                            <p>Coindesk.com</p>
+                            </div>
+                        </a>
+                        <div class="news__button"><input type="image" class="news__followIMG"><img
+                            src="images/heart-unfollow.png" alt=""></div>
+                    </li>
+                </ul>
+            </section>
+    </section>
+
+</body>
+
+</html>
