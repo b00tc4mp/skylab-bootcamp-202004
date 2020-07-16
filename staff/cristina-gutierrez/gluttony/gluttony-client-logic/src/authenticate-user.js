@@ -30,5 +30,6 @@ module.exports = async function(email, password) {
                 throw new Error(data.error)
             }
         })
-        .catch(() => {throw new Error("Email or password is not valid")})
+        .catch((error) => {console.log(error.message)
+            throw new Error("Email or password is not valid")})
 }.bind(context)

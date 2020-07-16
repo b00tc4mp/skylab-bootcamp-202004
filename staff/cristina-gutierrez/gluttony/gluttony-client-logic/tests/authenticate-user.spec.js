@@ -25,7 +25,6 @@ describe("logic - authenticate user", () => {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 		});
-		return await Promise.resolve(Users.deleteMany());
 	});
 
     let id, name, surname, email, password
@@ -80,7 +79,11 @@ describe("logic - authenticate user", () => {
 				expect(error).toBeInstanceOf(Error);
 				expect(error.message).toEqual("Email or password is not valid");
 			}
-		});
+        });
+        
+        afterEach(async () => {
+            return await Users.deleteOne({id})
+        });
     })
 
     it("should fail on non-string password", async () => {
@@ -133,7 +136,6 @@ describe("logic - authenticate user", () => {
 	});
 
 	afterAll(async () => {
-		await Users.deleteMany();
 		return await mongoose.disconnect();
 	});
 })
