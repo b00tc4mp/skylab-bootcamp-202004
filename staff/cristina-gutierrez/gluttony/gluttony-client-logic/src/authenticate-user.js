@@ -26,8 +26,6 @@ module.exports = async function(email, password) {
                     "token",
                     data.token
                 );
-
-                return data.token
             } else {
                 throw new Error(data.error)
             }

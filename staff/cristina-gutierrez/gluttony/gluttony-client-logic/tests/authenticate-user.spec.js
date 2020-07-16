@@ -1,71 +1,139 @@
-const { random } = Math
-const { __context__, authenticateUser } = require("../src/")
+/**
+ * @jest-environment node
+ */
 
-__context__.httpClient = require("./mocks/fake-client")
-__context__.storage = require("./mocks/fake-storage")
+const bcrypt = require("bcryptjs");
+const AsyncStorage = require("not-async-storage")
+const { __context__, authenticateUser } = require("../src/")
+const { random } = Math
+const {
+	mongoose,
+	models: { Users },
+} = require("gluttony-data");
+const {
+	TEST_MONGODB_URL: MONGODB_URL,
+	TEST_API_URL: API_URL,
+} = require("../config");
+
+__context__.storage = AsyncStorage;
+__context__.API_URL = API_URL;
+__context__.httpClient = require("axios")
 
 describe("logic - authenticate user", () => {
-    let email, password
+    beforeAll(async () => {
+		await mongoose.connect(MONGODB_URL, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+		});
+		return await Promise.resolve(Users.deleteMany());
+	});
+
+    let id, name, surname, email, password
 
     beforeEach(() => {
+        id = `id-${random()}`
+        name = `name-${random()}`
+		surname = `surname-${random()}`
         email = `e-${random()}@mail.com`
         password = `password-${random()}`
     })
 
-    it("should succeed on correct credentials", async done => {
-        const TOKEN = "token"
+    describe("when user already exists", () => {
+		beforeEach(async () => {
+			const _password = await bcrypt.hash(password, 10);
 
-        __context__.httpClient.succeed({ token: TOKEN })
+			await Users.create(
+				new Users({ id, name, surname, email, password: _password })
+			);
+        });
 
-        await authenticateUser(email, password)
-            .then(token => {
-                expect(token).toBe(TOKEN)
+        it("should succeed on correct credentials", async () => {
+            const returnValue = await authenticateUser(email, password);
 
-                const persistedToken = __context__.storage.getItem("token")
+			const token = await __context__.storage.getItem("token");
 
-                expect(persistedToken).toBe(TOKEN)
-            })
+			const [header, payload, signature] = token.split(".");
 
-        done()
-    })
-
-    it("should fail", async done => {
-        const ERROR = "error"
-
-        __context__.httpClient.fail(ERROR)
-        
-        await authenticateUser(email, password)
-            .then(() => { throw new Error("should not reach this point") })
-            .catch(error => {
-                expect(error).toBeDefined()
-                expect(error).toBeInstanceOf(Error)
-                expect(error.message).toBe(ERROR)
-            })
-        
-        done()
-    })
-
-    describe("should fail on validation", () => {
-        it("when is not a valid email", () => {
-            const EMAIL = "email"
-
-            authenticateUser(EMAIL, password)
-                .then(() => { throw new Error("should not reach this point") })
-                .catch(error => {
-                    expect(error).toBeDefined()
-                    expect(error).toBeInstanceOf(Error)
-                    expect(error.message).toBe(`${EMAIL} is not an e-mail`)
-                })
+			expect(returnValue).toBeUndefined();
+			expect(header.length).toBeGreaterThan(0);
+			expect(payload.length).toBeGreaterThan(0);
+			expect(signature.length).toBeGreaterThan(0);
         })
 
-        it("when is not a valid password", () => {
-            authenticateUser(email, "")
-                .then(() => { throw new Error("should not reach this point") })
-                .catch(error => {
-                    expect(error).toBeDefined()
-                    expect(error).toBeInstanceOf(Error)
-                    expect(error.message).toBe(`string is empty or blank`)
-                })
-        })
+        it("should fail on incorrect password", async () => {
+			password = `${password}-wrong`;
+			try {
+				await authenticateUser(email, password);
+				throw new Error("should not reach this point");
+			} catch (error) {
+				expect(error).toBeInstanceOf(Error);
+				expect(error.message).toEqual("Email or password is not valid");
+			}
+        });
+        
+        it("should fail on incorrect email", async () => {
+			email = `wrong-${email}`;
+			try {
+				await authenticateUser(email, password);
+				throw new Error("should not reach this point");
+			} catch (error) {
+				expect(error).toBeInstanceOf(Error);
+				expect(error.message).toEqual("Email or password is not valid");
+			}
+		});
     })
+
+    it("should fail on non-string password", async () => {
+        password = undefined; 
+        try {
+            await authenticateUser(email, password)
+            throw new Error("should not reach this point");
+        } catch(error) {
+            expect(error).toBeInstanceOf(Error);
+			expect(error.message).toEqual("Password is empty");
+        }
+
+        password = "";
+        try {
+            await authenticateUser(email, password)
+            throw new Error("should not reach this point");
+        } catch(error) {
+            expect(error).toBeInstanceOf(Error);
+			expect(error.message).toEqual("Password is empty");
+        }
+    });
+    
+    it("should fail on non-email email", async () => {
+        email = undefined; 
+        try {
+            await authenticateUser(email, password)
+            throw new Error("should not reach this point");
+        } catch(error) {
+            expect(error).toBeInstanceOf(Error);
+			expect(error.message).toEqual(`'${email}' is not an e-mail`);
+        }
+
+        email = "";
+        try {
+            await authenticateUser(email, password)
+            throw new Error("should not reach this point");
+        } catch(error) {
+            expect(error).toBeInstanceOf(Error);
+			expect(error.message).toEqual(`'${email}' is not an e-mail`);
+        }
+
+        email = "email";
+        try {
+            await authenticateUser(email, password)
+            throw new Error("should not reach this point");
+        } catch(error) {
+            expect(error).toBeInstanceOf(Error);
+			expect(error.message).toEqual(`'${email}' is not an e-mail`);
+        }
+	});
+
+	afterAll(async () => {
+		await Users.deleteMany();
+		return await mongoose.disconnect();
+	});
 })
