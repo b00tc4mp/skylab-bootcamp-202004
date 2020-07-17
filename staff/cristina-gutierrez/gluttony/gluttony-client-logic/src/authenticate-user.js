@@ -20,16 +20,11 @@ module.exports = async function(email, password) {
             email,
             password
         })
-        .then(async ({ status, data }) => {
-            if (status === 200) {
-                await this.storage.setItem(
-                    "token",
-                    data.token
-                );
-            } else {
-                throw new Error(data.error)
-            }
+        .then(async ({ data }) => {
+            await this.storage.setItem(
+                "token",
+                data.token
+            );
         })
-        .catch((error) => {console.log(error.message)
-            throw new Error("Email or password is not valid")})
+        .catch(() => {throw new Error("Email or password is not valid")})
 }.bind(context)

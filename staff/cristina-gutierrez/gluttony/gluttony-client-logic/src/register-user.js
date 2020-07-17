@@ -34,9 +34,6 @@ module.exports = async function(name, surname, email, password) {
             email,
             password
         })
-        .then(({ status, data }) => {
-            if (status === 201) return
-            throw new Error(data.error)
-        })
+        .then(() => undefined)
         .catch(() => {throw new Error("Could not register user")})
 }.bind(context)

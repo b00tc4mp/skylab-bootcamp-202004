@@ -1,10 +1,28 @@
-const { random } = Math
-const { __context__, registerUser } = require("../src/")
+/**
+ * @jest-environment node
+ */
 
-__context__.httpClient = require("./mocks/fake-client")
-__context__.storage = require("./mocks/fake-storage")
+const AsyncStorage = require("not-async-storage")
+const { __context__, registerUser } = require("../src/")
+const { random } = Math
+const { mongoose } = require("gluttony-data");
+const {
+	TEST_MONGODB_URL: MONGODB_URL,
+	TEST_API_URL: API_URL,
+} = require("../config");
+
+__context__.storage = AsyncStorage;
+__context__.API_URL = API_URL;
+__context__.httpClient = require("axios")
 
 describe("logic - register user", () => {
+    beforeAll(async () => {
+		await mongoose.connect(MONGODB_URL, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+		});
+    });
+    
     let name, surname, email, password
 
     beforeEach(() => {
@@ -14,26 +32,101 @@ describe("logic - register user", () => {
         password = `password-${random()}`
     })
 
-    it("should succeed on valid data", async done => {
+    it("should succeed on valid data", async () => {
         await registerUser(name, surname, email, password)
             .then(result => expect(result).toBeUndefined())
-        
-        done()
     })
 
-    it("should fail", async done => {
-        const ERROR = "error"
+    it("should fail on non-string name", async () => {
+        name = undefined; 
+        try {
+            await registerUser(name, surname, email, password)
+            throw new Error("should not reach this point");
+        } catch(error) {
+            expect(error).toBeInstanceOf(Error);
+			expect(error.message).toEqual("Name is empty");
+        }
 
-        __context__.httpClient.fail(ERROR)
+        name = "";
+        try {
+            await registerUser(name, surname, email, password)
+            throw new Error("should not reach this point");
+        } catch(error) {
+            expect(error).toBeInstanceOf(Error);
+			expect(error.message).toEqual("Name is empty");
+        }
+    });
+    
+    it("should fail on non-string surname", async () => {
+        surname = undefined; 
+        try {
+            await registerUser(name, surname, email, password)
+            throw new Error("should not reach this point");
+        } catch(error) {
+            expect(error).toBeInstanceOf(Error);
+			expect(error.message).toEqual("Surname is empty");
+        }
 
-        await registerUser(name, surname, email, password)
-            .then(() => { throw new Error("should not reach this point") })
-            .catch(error => {
-                expect(error).toBeDefined()
-                expect(error).toBeInstanceOf(Error)
-                expect(error.message).toBe(ERROR)
-            })
-        
-        done()
-    })
+        surname = "";
+        try {
+            await registerUser(name, surname, email, password)
+            throw new Error("should not reach this point");
+        } catch(error) {
+            expect(error).toBeInstanceOf(Error);
+			expect(error.message).toEqual("Surname is empty");
+        }
+    });
+
+    it("should fail on non-email email", async () => {
+        email = undefined; 
+        try {
+            await registerUser(name, surname, email, password)
+            throw new Error("should not reach this point");
+        } catch(error) {
+            expect(error).toBeInstanceOf(Error);
+			expect(error.message).toEqual(`'${email}' is not an e-mail`);
+        }
+
+        email = "";
+        try {
+            await registerUser(name, surname, email, password)
+            throw new Error("should not reach this point");
+        } catch(error) {
+            expect(error).toBeInstanceOf(Error);
+			expect(error.message).toEqual(`'${email}' is not an e-mail`);
+        }
+
+        email = "email";
+        try {
+            await registerUser(name, surname, email, password)
+            throw new Error("should not reach this point");
+        } catch(error) {
+            expect(error).toBeInstanceOf(Error);
+			expect(error.message).toEqual(`'${email}' is not an e-mail`);
+        }
+    });
+
+    it("should fail on non-string password", async () => {
+        password = undefined; 
+        try {
+            await registerUser(name, surname, email, password)
+            throw new Error("should not reach this point");
+        } catch(error) {
+            expect(error).toBeInstanceOf(Error);
+			expect(error.message).toEqual("Password should be at least 8 characters long");
+        }
+
+        password = "";
+        try {
+            await registerUser(name, surname, email, password)
+            throw new Error("should not reach this point");
+        } catch(error) {
+            expect(error).toBeInstanceOf(Error);
+			expect(error.message).toEqual("Password should be at least 8 characters long");
+        }
+    });
+    
+    afterAll(async () => {
+		return await mongoose.disconnect();
+	});
 })
