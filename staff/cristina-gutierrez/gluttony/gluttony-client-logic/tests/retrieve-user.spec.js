@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs")
 const AsyncStorage = require("not-async-storage")
 const { __context__, retrieveUser } = require("../src/")
 const jwt = require("jsonwebtoken")
@@ -10,15 +10,15 @@ const { random } = Math
 const {
 	mongoose,
 	models: { Users },
-} = require("gluttony-data");
+} = require("gluttony-data")
 const {
 	TEST_MONGODB_URL: MONGODB_URL,
     TEST_API_URL: API_URL,
     SECRET: JWT_SECRET
-} = require("../config");
+} = require("../config")
 
-__context__.storage = AsyncStorage;
-__context__.API_URL = API_URL;
+__context__.storage = AsyncStorage
+__context__.API_URL = API_URL
 __context__.httpClient = require("axios")
 
 describe("logic - retrieve user", () => {
@@ -29,7 +29,7 @@ describe("logic - retrieve user", () => {
         });
     });
     
-    describe('when user exists', () => {
+    describe("when user exists", () => {
         let id, name, surname, email, password
 
         beforeEach(async () => {
@@ -46,8 +46,8 @@ describe("logic - retrieve user", () => {
             );
 
             const _token = jwt.sign({ sub: id }, JWT_SECRET);
-            await __context__.storage.setItem('token', _token);
-        })
+            await __context__.storage.setItem("token", _token);
+        });
 
         it("should succeed on valid data and returning it", async () => {
             const user = await retrieveUser();
@@ -56,14 +56,14 @@ describe("logic - retrieve user", () => {
             expect(user.name).toBe(name);
             expect(user.surname).toBe(surname);
             expect(user.email).toBe(email);
-            expect(user.password).toBeUndefined;
+            expect(user.password).toBeUndefined();
         })
 
         afterEach(async () => {
             await __context__.storage.clear()
             return await Users.deleteOne({id})
         });
-    })
+    });
 
     it("should fail on trying to retrieve user", async () => {
         await retrieveUser()
@@ -73,9 +73,9 @@ describe("logic - retrieve user", () => {
                 expect(error).toBeInstanceOf(Error)
                 expect(error.message).toBe("User is not authenticated")
             })
-    })
+    });
 
     afterAll(async () => {
-		return await mongoose.disconnect();
+		return await mongoose.disconnect()
 	});
 })

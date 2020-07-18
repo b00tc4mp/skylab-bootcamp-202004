@@ -2,21 +2,21 @@
  * @jest-environment node
  */
 
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs")
 const AsyncStorage = require("not-async-storage")
 const { __context__, authenticateUser } = require("../src/")
 const { random } = Math
 const {
 	mongoose,
 	models: { Users },
-} = require("gluttony-data");
+} = require("gluttony-data")
 const {
 	TEST_MONGODB_URL: MONGODB_URL,
 	TEST_API_URL: API_URL,
-} = require("../config");
+} = require("../config")
 
-__context__.storage = AsyncStorage;
-__context__.API_URL = API_URL;
+__context__.storage = AsyncStorage
+__context__.API_URL = API_URL
 __context__.httpClient = require("axios")
 
 describe("logic - authenticate user", () => {
@@ -35,7 +35,7 @@ describe("logic - authenticate user", () => {
 		surname = `surname-${random()}`
         email = `e-${random()}@mail.com`
         password = `password-${random()}`
-    })
+    });
 
     describe("when user already exists", () => {
 		beforeEach(async () => {
@@ -57,7 +57,7 @@ describe("logic - authenticate user", () => {
 			expect(header.length).toBeGreaterThan(0);
 			expect(payload.length).toBeGreaterThan(0);
 			expect(signature.length).toBeGreaterThan(0);
-        })
+        });
 
         it("should fail on incorrect password", async () => {
 			password = `${password}-wrong`;
@@ -84,7 +84,7 @@ describe("logic - authenticate user", () => {
         afterEach(async () => {
             return await Users.deleteOne({id})
         });
-    })
+    });
 
     it("should fail on non-string password", async () => {
         password = undefined; 
@@ -136,6 +136,6 @@ describe("logic - authenticate user", () => {
 	});
 
 	afterAll(async () => {
-		return await mongoose.disconnect();
+		return await mongoose.disconnect()
 	});
 })

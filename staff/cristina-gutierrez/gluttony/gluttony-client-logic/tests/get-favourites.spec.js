@@ -1,10 +1,32 @@
-const { __context__, getFavourites } = require("../src/")
+/**
+ * @jest-environment node
+ */
 
-__context__.httpClient = require("./mocks/fake-client")
-__context__.storage = require("./mocks/fake-storage")
+const bcrypt = require("bcryptjs")
+const AsyncStorage = require("not-async-storage")
+const { __context__, getFavourites } = require("../src/")
+const { random } = Math
+const {
+	mongoose,
+	models: { Users },
+} = require("gluttony-data")
+const {
+	TEST_MONGODB_URL: MONGODB_URL,
+	TEST_API_URL: API_URL,
+} = require("../config")
+
+__context__.storage = AsyncStorage
+__context__.API_URL = API_URL
+__context__.httpClient = require("axios")
+
+
+
+
+
+
 
 describe("logic - get favourite", () => {
-    it("should fail on trying to add favourite without token", () => {
+    it("should fail on trying to get favourites without token", () => {
         getFavourites()
             .then(() => { throw new Error("should not reach this point") })
             .catch(error => {

@@ -5,14 +5,17 @@
 const AsyncStorage = require("not-async-storage")
 const { __context__, registerUser } = require("../src/")
 const { random } = Math
-const { mongoose } = require("gluttony-data");
+const {
+	mongoose,
+	models: { Users },
+} = require("gluttony-data")
 const {
 	TEST_MONGODB_URL: MONGODB_URL,
 	TEST_API_URL: API_URL,
-} = require("../config");
+} = require("../config")
 
-__context__.storage = AsyncStorage;
-__context__.API_URL = API_URL;
+__context__.storage = AsyncStorage
+__context__.API_URL = API_URL
 __context__.httpClient = require("axios")
 
 describe("logic - register user", () => {
@@ -30,12 +33,21 @@ describe("logic - register user", () => {
         surname = `surname-${random()}`
         email = `e-${random()}@mail.com`
         password = `password-${random()}`
-    })
+    });
 
     it("should succeed on valid data", async () => {
         await registerUser(name, surname, email, password)
-            .then(result => expect(result).toBeUndefined())
-    })
+            .then(async result => {
+                expect(result).toBeUndefined()
+                const user = await Users.findOne({ email }).exec()
+                expect(user._id).toBeDefined()
+                expect(user.name).toBe(name)
+                expect(user.surname).toBe(surname)
+                expect(user.email).toBe(email)
+                expect(user.password).toBeDefined()
+                expect(user.password).not.toBe(password)
+            })
+    });
 
     it("should fail on non-string name", async () => {
         name = undefined; 

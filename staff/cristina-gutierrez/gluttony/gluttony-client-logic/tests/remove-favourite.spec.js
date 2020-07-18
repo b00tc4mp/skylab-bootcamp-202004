@@ -1,8 +1,30 @@
-const { random } = Math
-const { __context__, removeFavourite } = require("../src/")
+/**
+ * @jest-environment node
+ */
 
-__context__.httpClient = require("./mocks/fake-client")
-__context__.storage = require("./mocks/fake-storage")
+const bcrypt = require("bcryptjs")
+const AsyncStorage = require("not-async-storage")
+const { __context__, removeFavourite } = require("../src/")
+const { random } = Math
+const {
+	mongoose,
+	models: { Users },
+} = require("gluttony-data")
+const {
+	TEST_MONGODB_URL: MONGODB_URL,
+	TEST_API_URL: API_URL,
+} = require("../config")
+
+__context__.storage = AsyncStorage
+__context__.API_URL = API_URL
+__context__.httpClient = require("axios")
+
+
+
+
+
+
+const { random } = Math
 
 describe("logic - remove favourite", () => {
     let storeId
