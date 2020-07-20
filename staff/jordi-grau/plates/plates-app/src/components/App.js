@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Register from './register'
+import Landing from './landing'
+import Login from './login'
 import logo from './logo.svg';
 import './App.css';
 import {Route, withRoute, Redirect, withRouter } from 'react-router-dom'
