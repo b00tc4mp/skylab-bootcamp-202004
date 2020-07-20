@@ -2,18 +2,15 @@ require('work-meeting-commons/polyfills/string')
 const { utils: { Email, call } } = require('work-meeting-commons')
 const context = require('./context')
 
-module.exports = function (name, surname, email, password) {
+module.exports = function (name, userId) {
     String.validate(name)
-    String.validate(surname)
+    String.validate(userId)
 
-    Email.validate(email)
-
-    String.validate.lengthGreaterEqualThan(password, 8)
 
     return call(
         'POST',
-        `${this.API_URL}/users`,
-        `{ "name": "${name}", "surname": "${surname}", "email": "${email}", "password": "${password}" }`,
+        `${this.API_URL}/workgroup`,
+        `{ "name": "${name}", "userId": "${userId}" }`,
         { 'Content-type': 'application/json' }
     )
         .then(({ status, body }) => {

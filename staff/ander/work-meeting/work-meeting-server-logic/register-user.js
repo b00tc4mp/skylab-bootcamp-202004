@@ -1,3 +1,11 @@
+/**
+ * register the user
+ * @param {string} name name of user
+ * @param {string} surname surname of user
+ * @param {string} email email of user
+ * @param {string} password password of user
+ * @throws {TypeError} Throws an error if user with email already exist
+ */
 require('work-meeting-commons/polyfills/string')
 require('work-meeting-commons/polyfills/json')
 const { utils: { Email }, errors: { DuplicityError } } = require('work-meeting-commons')

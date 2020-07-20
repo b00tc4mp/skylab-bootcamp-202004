@@ -1,7 +1,8 @@
 const { handleError } = require('../../helpers')
 
 module.exports = (req, res) => {
-    const { body: { departmentId} } = req
+    const { params: {departmentId} } = req
+    
 
     try {
         registerUser(departmentId)

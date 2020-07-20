@@ -1,14 +1,15 @@
-require('misc-commons/polyfills/string')
-const { utils: { call } } = require('misc-commons')
+require('work-meeting-commons/polyfills/string')
+const { utils: { call } } = require('work-meeting-commons')
 const context = require('./context')
+debugger
+module.exports = function (query) {
+    String.validate.notVoid(query)
 
-module.exports = function (token) {
-    String.validate.notVoid(token)
-
-    return call('GET', `${this.API_URL}/users`,
+    return call('GET', `${this.API_URL}/workgroup/search?name=${query}`,
         undefined,
-        { 'Authorization': `Bearer ${token}` })
+        undefined)
         .then(({ status, body }) => {
+            debugger
             if (status === 200) {
                 return JSON.parse(body)
             } else {

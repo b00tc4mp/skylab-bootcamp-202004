@@ -5,8 +5,8 @@ const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 const registerUser = require('./register-user')
 const { random } = Math
 const { expect } = require('chai')
-require('misc-commons/polyfills/json')
-const { mongoose, models: { User } } = require('misc-data')
+require('work-meeting-commons/polyfills/json')
+const { mongoose, models: { User } } = require('work-meeting-data')
 const bcrypt = require('bcryptjs')
 
 describe('logic - register user', () => {
@@ -39,7 +39,7 @@ describe('logic - register user', () => {
         expect(user.email).to.equal(email)
 
         const match = await bcrypt.compare(password, user.password)
-
+          
         expect(match).to.be.true
     })
 
@@ -63,5 +63,5 @@ describe('logic - register user', () => {
 
     afterEach(() => User.deleteMany())
 
-    after(mongoose.disconnect)
+    after(async ()=> await mongoose.disconnect)
 })

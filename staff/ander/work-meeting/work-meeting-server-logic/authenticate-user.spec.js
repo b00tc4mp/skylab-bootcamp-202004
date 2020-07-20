@@ -1,12 +1,11 @@
 require('dotenv').config()
-
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 
 const authenticateUser = require('./authenticate-user')
 const { random } = Math
 const { expect } = require('chai')
-require('misc-commons/polyfills/json')
-const { mongoose, models: { User } } = require('misc-data')
+require('work-meeting-commons/polyfills/json')
+const { mongoose, models: { User } } = require('work-meeting-data')
 const bcrypt = require('bcryptjs')
 
 describe('logic - authenticate user', () => {
@@ -61,5 +60,5 @@ describe('logic - authenticate user', () => {
 
     afterEach(() => User.deleteMany())
 
-    after(mongoose.disconnect)
+    after(async ()=> await mongoose.disconnect)
 })

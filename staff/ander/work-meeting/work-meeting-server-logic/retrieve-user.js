@@ -1,3 +1,8 @@
+/**
+ * returns user parametres
+ * @param {string} userId Id of user
+ * @throws {TypeError} Throws an error if user not exist
+ */
 require('work-meeting-commons/polyfills/string')
 const { mongoose: { ObjectId }, models: { User } } = require('work-meeting-data')
 
