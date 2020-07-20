@@ -28,7 +28,7 @@ describe('Retrieve user', () => {
             User.create({ name, surname, email, password })
                 .then(user => userId = user.id)
         )
-debugger
+ 
         it('should succeed on correct user id', () =>
             retrieveUser(userId)
                 .then(user => {

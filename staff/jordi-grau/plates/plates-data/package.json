@@ -11,6 +11,10 @@
   "license": "ISC",
   "dependencies": {
     "mongodb": "^3.5.8",
-    "mongoose": "^5.9.18"
+    "mongoose": "^5.9.18",
+    "plates-commons": "file:../plates-commons"
+  },
+  "devDependencies": {
+    "bcryptjs": "^2.4.3"
   }
 }

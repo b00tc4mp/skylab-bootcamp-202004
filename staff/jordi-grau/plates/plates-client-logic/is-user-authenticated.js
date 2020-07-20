@@ -1,6 +1,6 @@
 require('plates-commons/polyfills/string')
 require('plates-commons/polyfills/function')
-const { utils: {call}} = require('plates-commonjs')
+const { utils: {call}} = require('plates-commons')
 const context = require('./context')
 
 module.exports = function(token){

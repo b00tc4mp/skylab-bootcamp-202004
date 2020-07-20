@@ -4,7 +4,7 @@ const { mongoose, models: { User}} = require('plates-data')
 global.fetch  = require('node-fetch')
 require('plates-commons/polyfills/json')
 require('plates-commons/polyfills/xhr')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const { random } = Math
 const { expect } = require('chai')
 const authenticateUser = require('./authenticate-user')
@@ -16,7 +16,7 @@ context.API_URL = API_URL
 
 describe('client logic: retrieve user', () =>{
     before(async () => await mongoose.connect(MONGODB_URL))
-    let name, surname, email, password, hashedPassword, _userId
+    let name, surname, email, password, hashedPassword, _userId, result
     beforeEach(async() =>
     User.deleteMany()
         .then(() =>{
@@ -32,7 +32,7 @@ describe('client logic: retrieve user', () =>{
 
         .then(_hash => hashedPassword = _hash)
     )
-debugger
+ 
     describe('when user already exists', () => {
         beforeEach( async() => {
             const user = await User.create({email, password: hashedPassword})
@@ -57,11 +57,10 @@ debugger
             userId = _userId + 'wrongId'
 
             try {
-                retrieveUser(userId)
+               result =  retrieveUser(userId)
             } catch (error) {
                 expect(error).to.exist
-                expect(error.message).to.equal('Argument passed in must be a single String of 12 bytes or a string of 24 hex characters')
-                
+                expect(result).to.be.undefined
             }
         })
     })

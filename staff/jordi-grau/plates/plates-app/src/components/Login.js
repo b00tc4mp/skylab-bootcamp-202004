@@ -1,14 +1,15 @@
-import React, { component, Component } from 'react'
+
+import React, {  useState } from 'react'
+import Feedback from './Feedback'
 import { authenticateUser } from 'plates-client-logic'
+import './Login.sass'
 
-export default class extends Component {
-    constructor(props) {
-        super(props)
 
-        this.state = {error: ''}
-    }
+export default function Login({onGoToRegister, onGoToHome}) {
+    const [error, setError] = useState()
 
-    handleSubmit  = event => {
+    const handleSubmit  = event => {
+
         event.preventDefault()
 
         let { email, password} = event.target
@@ -18,6 +19,7 @@ export default class extends Component {
 
         try {
             authenticateUser(email, password)
+
             .then(this.props.onLogin)
             .catch(error => this.setState({ error: error.message}))
         } catch (error) {
@@ -51,4 +53,4 @@ export default class extends Component {
 
 
 
-}
+

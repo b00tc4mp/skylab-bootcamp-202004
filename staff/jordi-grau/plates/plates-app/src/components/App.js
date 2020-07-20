@@ -1,18 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import Register from './register'
-import Landing from './landing'
-import Login from './login'
-import logo from './logo.svg';
-import './App.css';
-import {Route, withRoute, Redirect, withRouter } from 'react-router-dom'
-import { isUserAuthenticated } from 'plates-client-logic'
+
+import Register from './Register'
+import Container from './Container'
+import Header from './Header'
+import Login from './Login'
+import Home from './Home'
+import Landing from './Landing'
+import {isUserAuthenticated, logoutUser} from 'plates-client-logic'
+import Feedback from './Feedback'
+
+
+
+import {Route,  Redirect, withRouter } from 'react-router-dom'
+import Navbar from './Navbar';
 
 function App ({history}) {
-    const [ token, setToken ] = useState
+    const [ view, serView ] = useState()
+    const [error, setError] = useState()
+
 
 
     useEffect(() =>{
         if(sessionStorage.token)
+
         try {
             isUserAuthenticated(sessionStorage.token)
             .then(isAuthenticated => {
@@ -69,3 +79,4 @@ function App ({history}) {
 }
 
 export default withRouter(App)
+
