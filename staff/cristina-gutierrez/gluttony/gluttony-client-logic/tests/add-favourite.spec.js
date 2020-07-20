@@ -63,11 +63,12 @@ describe("logic - add favourite", () => {
 
         afterEach(async () => {
             await __context__.storage.clear()
+            return await Users.deleteOne({id})
         });
     });
 
-    it("should fail on trying to add favourite without token", () => {
-        addFavourite(storeId)
+    it("should fail on trying to add favourite without token", async () => {
+        await addFavourite(storeId)
             .then(() => { throw new Error("should not reach this point") })
             .catch(error => {
                 expect(error).toBeDefined()

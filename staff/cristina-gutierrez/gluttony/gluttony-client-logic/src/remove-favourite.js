@@ -20,8 +20,5 @@ module.exports = async function(storeId) {
             headers: { 'Authorization': `Bearer ${token}` },
             data: { storeId }
         })
-        .then(({ status, data }) => {
-            if (status === 204) return
-            throw new Error(data.error)
-        })
+        .then(() => {})
 }.bind(context)

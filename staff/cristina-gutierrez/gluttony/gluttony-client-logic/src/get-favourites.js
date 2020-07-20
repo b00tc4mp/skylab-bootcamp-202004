@@ -19,7 +19,7 @@ module.exports = async function() {
     return await this.httpClient.get(`${API_URL}/favourites`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
-        .then(({ data }) => {
+        .then(({ data }) => {            
             return data.favouriteStores
         })
 }.bind(context)
