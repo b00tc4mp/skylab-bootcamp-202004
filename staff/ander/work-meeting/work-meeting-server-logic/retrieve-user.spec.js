@@ -5,8 +5,8 @@ const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 const retrieveUser = require('./retrieve-user')
 const { random } = Math
 const { expect } = require('chai')
-require('misc-commons/polyfills/json')
-const { mongoose, models: { User } } = require('misc-data')
+require('work-meeting-commons/polyfills/json')
+const { mongoose, models: { User } } = require('work-meeting-data')
 
 describe('logic - retrieve user', () => {
     before(() => mongoose.connect(MONGODB_URL))
@@ -57,5 +57,5 @@ describe('logic - retrieve user', () => {
 
     afterEach(() => User.deleteMany())
 
-    after(mongoose.disconnect)
+    after(async ()=> await mongoose.disconnect)
 })

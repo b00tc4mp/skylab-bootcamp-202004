@@ -24,7 +24,7 @@ module.exports = (workGroupId,departmentId, userId ) =>{
 
         await workGroup.save()
         
-    })
+    })()
 
 
 }

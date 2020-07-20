@@ -2,7 +2,7 @@ const {searchUsers} = require('work-meeting-server-logic')
 const { handleError } = require('../../helpers')
 module.exports = (req, res) => {
     try {
-        const { body:{query, workGroupId}} = req
+        const {query, params: {workGroupId}} = req
 
         searchUsers(query, workGroupId)
             .then(users => res.send(users))

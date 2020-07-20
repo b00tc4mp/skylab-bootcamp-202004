@@ -1,3 +1,5 @@
+
+
 module.exports = {
     registerUser: require('./register-user'),
     authenticateUser: require('./authenticate-user'),
@@ -12,5 +14,14 @@ module.exports = {
     retrievePetitionAll:require('./retrieve-petitionAll'),
     retrieveWorkGroup:require('./retrieve-work-group'),
     searchUser: require('./search-users'),
-    searchWorkGroup: require('./search-work-groups')
+    searchWorkGroup: require('./search-work-groups'),
+    updatePetition: require('./update-petition'),
+    updateSummary: require('./update-summary'),
+    updateUser: require('./update-user'),
+    retrieveWorkGroupPref: require('./retrieve-work-group-pref'),
+    changeWorkGroup: require('./change-work-group-pref'),
+    addReadBy: require('./add-read-by'),
+    retrieveReadBy: require('./retrieve-read-by')
+
+
 }

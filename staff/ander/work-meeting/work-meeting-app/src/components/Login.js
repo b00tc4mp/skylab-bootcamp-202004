@@ -19,8 +19,7 @@ export default class extends Component {
 
         try {
             authenticateUser(email, password)
-               /*  .then(this.props.onLogin) */
-               .then(token=>{debugger;})
+               .then(token=>{this.props.onLogin(token)})
                 .catch(error => this.setState({ error: error.message }))
         } catch ({ message }) {
             this.setState({ error: message })

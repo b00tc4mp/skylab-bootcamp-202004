@@ -1,3 +1,8 @@
+/**
+ * how many users match the query
+ * @param {string} query word that we are going to search
+ * @throws {TypeError} Throws an error if user not exist
+ */
 require('work-meeting-commons/polyfills/string')
 const {mongoose:{ObjectId}, models: {WorkGroup, Department}}= require('work-meeting-data')
 

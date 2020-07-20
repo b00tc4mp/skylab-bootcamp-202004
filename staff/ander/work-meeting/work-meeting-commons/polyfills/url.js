@@ -1,4 +1,4 @@
-URL.isUrl = function (url) {
+(()=>{URL.isUrl = function (url) {
     try {
         new URL(url)
 
@@ -10,4 +10,5 @@ URL.isUrl = function (url) {
 
 URL.validate = function (url) {
     if (!this.isUrl(url)) throw new Error(`${url} is not a url`)
-}.bind(URL)
+}
+})()

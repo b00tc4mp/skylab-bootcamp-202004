@@ -1,7 +1,5 @@
 const { Schema , Types: {ObjectId}} = require('mongoose')
 
-//const order = require('./order')
-
 module.exports = new Schema({
     user: {
         type: ObjectId,

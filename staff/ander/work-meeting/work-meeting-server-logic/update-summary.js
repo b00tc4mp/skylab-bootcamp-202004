@@ -36,7 +36,7 @@ module.exports = (summaryId, title, content, participants) =>{ //participants= a
 
         await Summary.findByIdAndUpdate(summaryId,updateSummary)
         
-    })
+    })()
 
 
 }

@@ -1,5 +1,3 @@
-const createMeeting = require('../work-meeting-api/routes/handlers/create-meeting');
-const updateSummary = require('./update-summary');
 
 module.exports = {
     registerUser: require('./register-user'),
@@ -13,12 +11,15 @@ module.exports = {
     createSummary: require('./create-summary'),
     createWorkGroup: require('./create-work-group'),
     retrieveDepartmentAll: require('./retrieve-departmentsAll'),
-    retrievePetitionAll: require('./retrieve-petitionsAll'),
+    retrievePetitionAll: require('./retrieve-all-petitions'),
     retrieveWorkGroup: require('./retrieve-work-group'),
     searchUser: require('./search-users'),
     searchWorkGroup: require('./search-work-group'),
     updatePetition: require('./update-petition'),
     updateSummary: require('./update-summary'),
-    updateUser: require('./update-user')
+    updateUser: require('./update-user'),
+    retrieveSoloWorkGroup: require('./retrieve-solo-work-group'),
+    changeWorkGroup: require('./change-work-group-pref'),
+    readByUsers: require('./read-by-users')
 
 }

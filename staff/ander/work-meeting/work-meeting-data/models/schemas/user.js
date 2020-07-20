@@ -29,6 +29,19 @@ module.exports = new Schema({
     workGroups:[{
         type: ObjectId,
         ref: 'WorkGroup'
+    }],
+    workGroupPref:{
+        type: ObjectId,
+        ref: 'WorkGroup'
+    },
+    host:[{
+        type: ObjectId,
+        ref: 'Meeting'
+    }],
+    summaries:[{
+        type: ObjectId,
+        ref: 'Summary'
     }]
+    
     
 })

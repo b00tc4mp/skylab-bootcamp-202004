@@ -1,18 +1,21 @@
 const { Schema , Types: {ObjectId}} = require('mongoose')
-const participant = require('./meeting')
+
 
 module.exports = new Schema({
     title: {
         type: String,
         required: true
     },
-
-
     content: {
         type: String,
         required: true,
     },
+    members:[{
+        type: ObjectId,
+        ref: 'User'}],
     
-    participants:[participant]
+    readBy:[{
+        type: ObjectId,
+        ref: 'User'}]
     
-})  //marketing de la empresa noseke 
+})  

@@ -5,7 +5,7 @@ module.exports = (req, res) => {
         const { payload: { sub: userId }} = req
 
         retrieveWorkGroup(userId)
-            .then(workGroups => res.send(workGroups))
+            .then(workGroups => res.status(200).send(workGroups))
             .catch(error => handleError(error, res))
     } catch (error) {
         handleError(error, res)

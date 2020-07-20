@@ -36,7 +36,7 @@ module.exports = (userId, name, surname, email, password, oldPassword) =>{
 
         await User.findByIdAndUpdate(userId,updateUser)
         
-    })
+    })()
 
 
 }

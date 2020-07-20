@@ -2,7 +2,7 @@ const {retrievePetitionAll} = require('work-meeting-server-logic')
 const { handleError } = require('../../helpers')
 module.exports = (req, res) => {
     try {
-        const { body: { workGroupId } ,payload:{ sub: userId} } = req
+        const { params: { workGroupId } ,payload:{ sub: userId} } = req
         
 
         retrievePetitionAll(workGroupId ,userId)

@@ -1,6 +1,6 @@
-require('misc-commons/polyfills/string')
-require('misc-commons/polyfills/function')
-const { utils: { call } } = require('misc-commons')
+require('work-meeting-commons/polyfills/string')
+require('work-meeting-commons/polyfills/function')
+const { utils: { call } } = require('work-meeting-commons')
 const context = require('./context')
 
 module.exports = function (token) {

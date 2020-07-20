@@ -19,7 +19,6 @@ module.exports = function (name, surname, email, password) {
         .then(({ status, body }) => {
             if (status === 201) return
 
-            debugger
 
             const { error } = JSON.parse(body)
 

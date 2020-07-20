@@ -8,5 +8,5 @@ module.exports = {
     Meeting: model('Meeting', meeting),
     Department: model('Department', department),
     Petition: model('Petition', petition),
-    Participant: model('Participant', participant)
+    
 }
