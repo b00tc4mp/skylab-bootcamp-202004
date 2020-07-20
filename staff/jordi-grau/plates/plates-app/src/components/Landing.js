@@ -5,6 +5,7 @@ import Header from './Header'
 
 
 
+
 export default function ({ onGoToRegister, onGoToLogin }) {
     return <div className="landing">
         <div className="landing__top">
@@ -14,5 +15,6 @@ export default function ({ onGoToRegister, onGoToLogin }) {
         <div>
             <img src={landingImage} className="landing__image"/>
         </div>
+
     </div>
 }

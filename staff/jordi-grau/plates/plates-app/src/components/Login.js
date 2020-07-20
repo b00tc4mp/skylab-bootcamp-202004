@@ -1,3 +1,4 @@
+
 import React, {  useState } from 'react'
 import Feedback from './Feedback'
 import { authenticateUser } from 'plates-client-logic'
@@ -8,6 +9,7 @@ export default function Login({onGoToRegister, onGoToHome}) {
     const [error, setError] = useState()
 
     const handleSubmit  = event => {
+
         event.preventDefault()
 
         let { email, password} = event.target
@@ -17,26 +19,38 @@ export default function Login({onGoToRegister, onGoToHome}) {
 
         try {
             authenticateUser(email, password)
-            .then(token => onGoToHome(token))
-            .catch(error => setError(error.message))
+
+            .then(this.props.onLogin)
+            .catch(error => this.setState({ error: error.message}))
         } catch (error) {
-           setError(error.message)        
+            this.setState({ error:message})
+            
         }
     }
 
-        return (<>
-                <section className="login">
-                <div className="login__top">Login</div>
-                <form className="login__form" onSubmit={handleSubmit}>
-                    <input className="login__input" type="email" name="email" placeholder="e-mail" required />
-                    <input className="login__input" type="password" name="password" placeholder="password" required minLength="6" />
-                    <button className="login__button" >Submit</button>
-                    <a className="login__register" href="" onClick={onGoToRegister}>Register</a>
+    handleGotoRegister = event =>{
+        event.preventDefault()
 
-                    {error &&  <Feedback message={error} level ="error"/> }
+        this.props.onGoToRegister
+    }
+
+    render() {
+        return 
+            <section className="login">
+                <h1>Login</h1>
+                <form onSubmit={this.handleSubmit}>
+                    <input type="email" name="email" placeholder="e-mail" required />
+                    <input type="text" name="password" placeholder="password" required minLength="6" />
+                    <button>Submit</button>
+                    or <a href="" onClick={this.handleGotoRegister}>Register</a>
+
+                    {this.state.error &&  <Feedback message={this.state.error} level ="error"/> }
+
                 </form>
             </section>
-            </>)
         
-        
-}
+    }
+
+
+
+

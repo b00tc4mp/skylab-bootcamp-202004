@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import Register from './Register'
 import Container from './Container'
 import Header from './Header'
@@ -18,65 +19,64 @@ function App ({history}) {
     const [error, setError] = useState()
 
 
+
     useEffect(() =>{
         if(sessionStorage.token)
 
-            try {
-                isUserAuthenticated(sessionStorage.token)
-                .then(isAuthenticated => {
-                    if(!isAuthenticated) {
-                       
-                        history.push('/')
-                    }
-                })
-                .catch(error => {throw Error})
-            } catch (error) {
-                if(error) throw error
-            }
+        try {
+            isUserAuthenticated(sessionStorage.token)
+            .then(isAuthenticated => {
+                if(isAuthenticated) {
+                    setToken(sessionStorage.token)
+                }
+            })
+            .catch(error => {throw error})
+        } catch (error) {
+            if (error) throw error    
+        }
         else history.push('/')
-
     }, [])
- 
-    const handleGoToRegister = event =>{
-        event.preventDefault()
-        history.push('/register')
-    }
 
-    const handleGoToHome = () => {
+    const handleGoToRegister = () => history.push('/register')
+
+    const handleRegister = () => history.push('/login')
+
+    const handleLogin = token => {
+        sessionStorage.token(token)
+        setToken(token)
         history.push('/home')
     }
 
-    const handleGoToLogin = event => {
-        event.preventDefault()
-        history.push('/login')}
+    const handleGoToLogin = () => history.pussh('/login')
 
-    const handleLogout =  () =>{
-        logoutUser()
+    const handleLogOut = () => {
+        setToken()
+        delete sessionStorage(token)
         history.push('/')
-    
     }
 
-    return(
-        
-        <div className ="App">
-            <header className="App-header">
-            <Header />
-                <Container>
-                   <Route exact path="/" render={()=> sessionStorage.token ? <Redirect to="/home" /> : <Landing onGoToRegister ={handleGoToRegister} onGoToLogin={handleGoToLogin} />} />
-                    <Route exact path="/register" render={ () =>
-                         sessionStorage.token ? <Redirect to="/home" /> : <Register onGoToLogin={handleGoToLogin}/>  }/>
-                    <Route exact path="/login" render={ () => 
-                         sessionStorage.token ? <Redirect to="/home" /> : <Login onGoToHome={handleGoToHome} onGoToRegister={handleGoToRegister}/> } />
-                    <Route path="/home" render = { () => sessionStorage.token ? <Home onLogout={handleLogout} history={history}/> : <Redirect to="/"/>} />               
-                    
-                    {error && <Feedback message={error} level="error" />}
-                </Container>
-              
-            </header>
-        </div>
-    )
+    return (
+    <div className="App" >
+        <header className="HEADER!!!"> 
+            <container>
+                <Route exact path="/" render={()=> token ? <Redirect to="/home"/> : <Landing onGoToRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />} />
+
+                <Route path="/register" render={() => 
+                    token ? <Redirect to="/home"/> : <Register onRegister={handleGoToRegister} onGoToLogin={handleGoToLogin} />
+                } />
+
+                <Route path="/login" render ={()=>
+                    token ? <Redirect to="/home"/> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister}/>
+                }/>
+
+                <Route path="/home" render={()=> 
+                    token ? <Home onLogout={handleLogOut} token={token}/> : <Redirect to="/" />
+                } />
+            </container>
+        </header>
+    </div>
+    )  
 }
 
 export default withRouter(App)
-
 
