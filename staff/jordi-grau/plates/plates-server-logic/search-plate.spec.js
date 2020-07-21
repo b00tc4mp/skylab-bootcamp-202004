@@ -6,7 +6,7 @@ const { random } = Math
 const { expect } = require('chai')
 const bcrypt = require('bcryptjs')
 const searchPlate = require('./search-plate')
-debugger
+ 
 describe('server logic: search plate', () =>{
     let restaurantName, restaurantEmail, cif, address, phone, userEmail, password, query 
     let dishesIds =[]
@@ -47,11 +47,11 @@ describe('server logic: search plate', () =>{
     })
 
     it('should succeed on correct data', async () =>{
-        debugger
+         
         query = dishes[0].name
 
         const _dish = await searchPlate(query)
-        debugger
+         
         
         expect(_dish).to.exist
         expect(_dish[0].name).to.be.equal('name-0')
@@ -66,5 +66,14 @@ describe('server logic: search plate', () =>{
 
       expect(result.length).to.equal(0)
       
+    })
+
+    after(async() => {
+        await Promise.all([
+            User.deleteMany(),
+            Restaurant.deleteMany()
+        ])
+
+        await mongoose.disconnect()
     })
 })

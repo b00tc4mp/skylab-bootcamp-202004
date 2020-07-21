@@ -26,6 +26,14 @@ describe('server logic: create menu', ()=>{
         
     })
 
+    after(async() => {
+        await Promise.all([
+            User.deleteMany(),
+            Restaurant.deleteMany()
+        ])
+
+        await mongoose.disconnect()
+    })
 
     beforeEach( async () =>{
         restaurantName = `restaurantName-${random()}`
@@ -75,8 +83,42 @@ describe('server logic: create menu', ()=>{
         expect(error.message).to.equal(`restaurant with id ${restaurantId} doesn't exist`)
         
         }
-    
     })
+  
+  
+        it('should fail if no user is finded', async ()=>{
+        
+
+            restaurantName = `restaurantName-${random()}`
+            restaurantEmail = `restaurantEmail-${random()}@email.com`
+            cif = `cif-${random()}`
+            address = `address-${random()}`
+            phone = random() * 100000000
+            userEmail = `useremail-${random()}@email.com`
+            password = `password-${random()}`
+            const hash = await bcrypt.hash(password, 10)
+            const dish = Dish.create({name: 'Tortilla de patatas'})
+            let dishId = dish.id
+            const { id } = await User.create({ email: userEmail, password: hash })
+            userId = id + 'wrongId'
+            const restaurant = await Restaurant.create({ owner: userId, name: restaurantName, email: restaurantEmail, cif, address, phone, dishes: dishId })
+             restaurantId = restaurant.id
+            for(let i = 0; i < 5; i++){ 
+                const dish = new Dish({name: `name-${i}`})
+    
+                dishesIds.push(dish.id)
+                _dish.push(dish)
+            }
+                userId = userId + "jjj"
+        try {
+            createMenu(userId, restaurantId, dishesIds)
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.instanceof(UnexistanceError)    
+        }
+    })
+
+    
 
 
 

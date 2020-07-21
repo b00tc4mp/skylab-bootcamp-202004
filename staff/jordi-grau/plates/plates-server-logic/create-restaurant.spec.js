@@ -17,10 +17,18 @@ describe('server logic: create restaurant', () => {
         await Promise.all([
             User.deleteMany(),
             Restaurant.deleteMany(),
-            Menu.deleteMany(),
             Dish.deleteMany()
         ])
 
+    })
+
+    after(async() => {
+        await Promise.all([
+            User.deleteMany(),
+            Restaurant.deleteMany()
+        ])
+
+        await mongoose.disconnect()
     })
 
     beforeEach(async () => {
@@ -86,7 +94,7 @@ describe('server logic: create restaurant', () => {
             } catch (error) {
                 expect(error).to.exist
                 expect(error).to.be.instanceof(DuplicityError)
-                expect(error.message).to.equal(`restaurant cif with ${cif} already exist`)
+                expect(error.message).to.equal(`restaurant cif with ${cif} already exists`)
 
             }
         })

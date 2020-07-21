@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx mocha *.spec.js",
+    "test:coverage": "npx nyc --reporter=html --reporter=text mocha *.spec.js"
   },
   "keywords": [],
   "author": "",

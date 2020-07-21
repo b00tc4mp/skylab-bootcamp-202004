@@ -1,6 +1,6 @@
 require('dotenv').config()
 const {  env: {TEST_MONGODB_URL: MONGODB_URL} } = process
-const { errors: { UnexistanceError }} = require('plates-commons')
+const { errors: { UnexistenceError }} = require('plates-commons')
 const  { mongoose , models:{ User, Restaurant, Dish }}  = require('plates-data')
 const {floor, random } = Math
 const { expect } = require('chai')
@@ -80,9 +80,30 @@ describe('search ', () =>{
         } catch (error) {
             expect(error).to.exist
             expect(restaurant).to.be.null
-            expect(error).to.be.instanceof(UnexistanceError)
+            expect(error).to.be.instanceof(UnexistenceError)
             expect(error.message).to.equal(`no results with ${query} search`)
         }
     })
 
+    it('should not find a restaurant if there is no matching', async()=>{
+        let _error 
+
+        try {
+            searchRestaurant(query)
+        } catch (error) {
+            _error = error
+            expect(error).to.exist
+            expect(error).to.be.instanceof(UnexistenceError)
+            expect(error.message).to.equal(`no results with ${query} search`)
+        }
+    })
+
+    after(async() => {
+        await Promise.all([
+            User.deleteMany(),
+            Restaurant.deleteMany()
+        ])
+
+        await mongoose.disconnect()
+    })
 })

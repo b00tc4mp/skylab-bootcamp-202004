@@ -1,6 +1,6 @@
 require('dotenv').config()
 const {  env: {TEST_MONGODB_URL: MONGODB_URL} } = process
-const { errors: { UnexistanceError }} = require('plates-commons')
+const { errors: { UnexistenceError }} = require('plates-commons')
 const  { mongoose , models:{ User, Restaurant, Dish }}  = require('plates-data')
 const {floor, random } = Math
 const { expect } = require('chai')
@@ -64,7 +64,7 @@ describe('search ', () =>{
      
 
     it('should fail on wrong data', async() => { 
-        debugger
+         
         restaurantId = restaurantId +'wrongValue'
 
         try {
@@ -79,6 +79,29 @@ describe('search ', () =>{
         }
 
     })
-    
 
+    it("should fail to retrieve the restaurant if the restaurant does not exist", async() => {
+        await Restaurant.deleteMany();
+
+        let _error;
+
+        try {
+            await retrieveRestaurant(restaurantId);
+        } catch(error){
+            _error = error;
+        }
+
+        expect(_error).to.exist;
+        expect(_error).to.be.instanceof(UnexistenceError);
+        expect(_error.message).to.equal(`restaurant with id ${restaurantId} does not exist`)
+    })
+    
+    after(async() => {
+        await Promise.all([
+            User.deleteMany(),
+            Restaurant.deleteMany()
+        ])
+
+        await mongoose.disconnect()
+    })
 })

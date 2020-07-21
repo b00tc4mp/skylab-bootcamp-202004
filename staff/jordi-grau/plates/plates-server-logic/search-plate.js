@@ -3,6 +3,10 @@ require('plates-commons/utils/email')
 const {utils: { Email }, errors: { DuplicityError, VoidError, UnexsitenceError } } = require('plates-commons')
 const {mongoose, models: {  Restaurant, Dish }} = require('plates-data')
 
+/**
+ * function makes a search on passed query. Return matched results.
+ * @param {string} query data required to make a search. 
+ */
 
 module.exports = (query) => {
     String.validate.notVoid(query)
