@@ -18,7 +18,6 @@ function App ({history}) {
 
     useEffect(() =>{
         if(isUserLoggedIn())
-
             try {
                 isUserSessionValid()
                 .then(isAuthenticated => {
@@ -74,5 +73,4 @@ function App ({history}) {
 }
 
 export default withRouter(App)
-
 

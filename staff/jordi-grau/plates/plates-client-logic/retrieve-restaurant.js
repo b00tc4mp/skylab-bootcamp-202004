@@ -5,8 +5,9 @@ const context = require('./context');
 
 module.exports = function(restaurantId) {
     String.validate.notVoid(restaurantId);
+
     const { token } = this.storage
- 
+
     return (async() => {
         const response = await call(
             'GET',

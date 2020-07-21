@@ -18,14 +18,13 @@ module.exports = function (email, password){
     .then(({status, body}) => {
         if(status === 200) {
             const {token} = JSON.parse(body)
-            
+
             this.storage.token = token;
 
             return 
-        } else {
-            const { error } = JSON.parse(body)
-            
-            throw new Error(error)
         }
-    })    
+
+        const { error } = JSON.parse(body)
+        throw new Error(error)
+    })
     }.bind(context)
