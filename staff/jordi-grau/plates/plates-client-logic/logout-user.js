@@ -1,6 +1,5 @@
 const context = require('./context')
-module.exports = function(){
-     
-    this.storage.removeItem('token')
-    return
+
+module.exports = function() {     
+    delete this.storage.token
 }.bind(context)
