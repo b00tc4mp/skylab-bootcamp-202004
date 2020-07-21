@@ -5,31 +5,26 @@ import Header from './Header'
 import Login from './Login'
 import Home from './Home'
 import Landing from './Landing'
-import {isUserAuthenticated, logoutUser} from 'plates-client-logic'
+import { isUserLoggedIn, logoutUser, isUserSessionValid } from 'plates-client-logic'
 import Feedback from './Feedback'
 
-
-
-import {Route,  Redirect, withRouter } from 'react-router-dom'
-import Navbar from './Navbar';
+import { Route,  Redirect, withRouter } from 'react-router-dom'
+// import Navbar from './Navbar';
 
 function App ({history}) {
-    const [ view, serView ] = useState()
-    const [error, setError] = useState()
+    const [ view, setView ] = useState()
+    const [ error, setError ] = useState()
 
 
     useEffect(() =>{
-        if(sessionStorage.token)
-
+        if(isUserLoggedIn())
             try {
-                isUserAuthenticated(sessionStorage.token)
+                isUserSessionValid()
                 .then(isAuthenticated => {
                     if(!isAuthenticated) {
-                       
                         history.push('/')
-                    }
+                    } 
                 })
-                .catch(error => {throw Error})
             } catch (error) {
                 if(error) throw error
             }
@@ -62,12 +57,12 @@ function App ({history}) {
             <header className="App-header">
             <Header />
                 <Container>
-                   <Route exact path="/" render={()=> sessionStorage.token ? <Redirect to="/home" /> : <Landing onGoToRegister ={handleGoToRegister} onGoToLogin={handleGoToLogin} />} />
+                   <Route exact path="/" render={()=> isUserLoggedIn() ? <Redirect to="/home" /> : <Landing onGoToRegister ={handleGoToRegister} onGoToLogin={handleGoToLogin} />} />
                     <Route exact path="/register" render={ () =>
-                         sessionStorage.token ? <Redirect to="/home" /> : <Register onGoToLogin={handleGoToLogin}/>  }/>
+                         isUserLoggedIn() ? <Redirect to="/home" /> : <Register onGoToLogin={handleGoToLogin}/>  }/>
                     <Route exact path="/login" render={ () => 
-                         sessionStorage.token ? <Redirect to="/home" /> : <Login onGoToHome={handleGoToHome} onGoToRegister={handleGoToRegister}/> } />
-                    <Route path="/home" render = { () => sessionStorage.token ? <Home onLogout={handleLogout} history={history}/> : <Redirect to="/"/>} />               
+                         isUserLoggedIn() ? <Redirect to="/home" /> : <Login onGoToHome={handleGoToHome} onGoToRegister={handleGoToRegister}/> } />
+                    <Route path="/home" render = { () => isUserLoggedIn() ? <Home onLogout={handleLogout} history={history}/> : <Redirect to="/"/>} />               
                     
                     {error && <Feedback message={error} level="error" />}
                 </Container>
@@ -78,5 +73,4 @@ function App ({history}) {
 }
 
 export default withRouter(App)
-
 

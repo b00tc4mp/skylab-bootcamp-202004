@@ -3,8 +3,6 @@ import './Landing.sass'
 import landingImage from '../assets/dishes-landing-03.jpg'
 import Header from './Header'
 
-
-
 export default function ({ onGoToRegister, onGoToLogin }) {
     return <div className="landing">
         <div className="landing__top">
