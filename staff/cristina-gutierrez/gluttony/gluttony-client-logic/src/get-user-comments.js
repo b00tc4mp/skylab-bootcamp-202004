@@ -19,11 +19,7 @@ module.exports = async function() {
     return await this.httpClient.get(`${API_URL}/comments`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
-        .then(({ status, data }) => {
-            if (status === 200) {
-                return data.comments
-            } else {
-                throw new Error(data.error)
-            }
+        .then(({ data }) => {            
+            return data.comments
         })
 }.bind(context)

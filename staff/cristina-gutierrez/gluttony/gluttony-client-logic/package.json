@@ -24,5 +24,10 @@
   "dependencies": {
     "axios": "^0.19.2",
     "gluttony-commons": "file:../gluttony-commons"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**"
+    ]
   }
 }

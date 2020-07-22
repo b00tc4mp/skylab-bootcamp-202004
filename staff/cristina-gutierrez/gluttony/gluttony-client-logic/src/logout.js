@@ -4,10 +4,6 @@ const { API_URL } = context
 /**
  * @returns Promise
  */
-module.exports = async function() {
-    try {
-        await this.storage.removeItem("token");
-    } catch (error) {
-        throw new Error("Error removing token")
-    }
+module.exports = async function () {
+    return await this.storage.removeItem("token")
 }.bind(context)

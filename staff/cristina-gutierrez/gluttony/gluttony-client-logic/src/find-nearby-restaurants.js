@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 const context = require("./context")
 const { API_URL } = context
 

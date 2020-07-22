@@ -1,19 +1,28 @@
-const { random } = Math
-const { __context__, logout } = require("../src/")
+/**
+ * @jest-environment node
+ */
 
-__context__.httpClient = require("./mocks/fake-client")
-__context__.storage = require("./mocks/fake-storage")
+const AsyncStorage = require("not-async-storage")
+const { __context__, logout} = require("../src/")
+const { random } = Math
+
+__context__.storage = AsyncStorage
 
 describe("logic - logout", () => {
-    it("should succeed", () => {
-        __context__.storage.setItem("token", "token")
-        
-        logout().then(result => {
+    let token
+
+    beforeEach(() => {
+        token = `token-${random()}`
+        __context__.storage.setItem("token", token)
+    });
+
+    it("should succeed on logging out", () => {
+       logout().then(async result => {
             expect(result).toBeUndefined()
 
-            const stored = __context__.storage._items
+            const token = await __context__.storage.getItem("token")
 
-            expect(stored).toHaveLenght(0)
+            expect(token).toBeUndefined()
         })
-    })
+    });
 })
