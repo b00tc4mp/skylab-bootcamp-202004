@@ -15,12 +15,8 @@ module.exports = function(latitude, longitude) {
                 longitude
             }
         })
-        .then(({ status, data }) => {
-            if (status === 200) {
-                return data.restaurant
-            } else {
-                throw new Error(data.error)
-            }
+        .then(({ data }) => {
+            return data.restaurant
         })
         .catch(console.error)
 }.bind(context)
