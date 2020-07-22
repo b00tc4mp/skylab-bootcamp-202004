@@ -13,11 +13,11 @@ describe("logic - remove favourite", () => {
 
     let userId, storeId
 
-    beforeEach(done => {
+    beforeEach(async () => {
         userId = `id-${random()}`
         storeId = `id-${random()}`
 
-        Users.create({ 
+        await Users.create({ 
                 id: userId, 
                 name: "name", 
                 surname: "surname", 
@@ -35,11 +35,10 @@ describe("logic - remove favourite", () => {
                 } 
             }))
             .then(() => addFavourite(storeId, userId))
-            .then(() => done())
-    })
+    });
 
-    it("should succeed", done => {
-        removeFavourite(storeId, userId)
+    it("should succeed", async () => {
+        await removeFavourite(storeId, userId)
             .then(result => {
                 expect(result).toBeUndefined()
 
@@ -48,14 +47,13 @@ describe("logic - remove favourite", () => {
             .then(user => user.favouriteStores)
             .then(favourites => {
                 expect(favourites).toHaveLength(0)
-                done()
             })
-    })
+    });
 
     afterEach(() => {
         Users.deleteMany()
         Stores.deleteMany()
-    })
+    });
 
-    afterAll(mongoose.disconnect)
+    afterAll(mongoose.disconnect);
 })

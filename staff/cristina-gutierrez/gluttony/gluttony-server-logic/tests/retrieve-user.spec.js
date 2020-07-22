@@ -12,16 +12,15 @@ describe("logic - retrieve user", () => {
 
     let id, name, surname, email, password
 
-    beforeEach(done => {
+    beforeEach(async () => {
         id = `id-${random()}`
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `e-${random()}@mail.com`
         password = `password-${random()}`
 
-        Users.create({ id, name, surname, email, password })
-            .then(() => done())
-    })
+        await Users.create({ id, name, surname, email, password })
+    });
 
     it("when user already exists should succeed on correct user id", async () => {
         const user = await retrieveUser(id)
@@ -31,12 +30,12 @@ describe("logic - retrieve user", () => {
         expect(user.surname).toBe(surname)
         expect(user.email).toBe(email)
         expect(user.password).toBeUndefined()
-    })
+    });
 
-    it("should fail when user does not exist", () => {
+    it("should fail when user does not exist", async () => {
         const userId = '5ed1204ee99ccf6fae798aef'
 
-        retrieveUser(userId)
+        await retrieveUser(userId)
             .then(() => { throw new Error("should not reach this point") })
             .catch(error => {
                 expect(error).toBeDefined()
@@ -44,9 +43,9 @@ describe("logic - retrieve user", () => {
                 expect(error).toBeInstanceOf(Error)
                 expect(error.message).toBe(`user with id ${userId} does not exist`)
             })
-    })
+    });
 
-    afterEach(() => Users.deleteMany())
+    afterEach(() => Users.deleteMany());
 
-    afterAll(mongoose.disconnect)
+    afterAll(mongoose.disconnect);
 })

@@ -12,11 +12,11 @@ describe("logic - add favourite", () => {
 
     let userId, storeId
 
-    beforeEach(done => {
+    beforeEach(async () => {
         userId = `id-${random()}`
         storeId = `id-${random()}`
 
-        Users.create({ 
+        await Users.create({ 
                 id: userId, 
                 name: "name", 
                 surname: "surname", 
@@ -33,11 +33,10 @@ describe("logic - add favourite", () => {
                     longitude: random() 
                 } 
             }))
-            .then(() => done())
-    })
+    });
 
-    it("should succeed on valid data", done => {
-        addFavourite(storeId, userId)
+    it("should succeed on valid data", async () => {
+        await addFavourite(storeId, userId)
             .then(result => {
                 expect(result).toBeUndefined()
 
@@ -47,34 +46,29 @@ describe("logic - add favourite", () => {
             .then(favourites => {
                 expect(favourites).toHaveLength(1)
                 expect(favourites).toContain(storeId);
-
-                done()
             })
-    })
+    });
 
-    describe("when favourite already exists", () => {
-        it("should fail on trying to add favourite", async done => {
+    it("should fail on trying to add favourite", async () => {
             
-            try {
-                await addFavourite(storeId, userId)
-                
-                await addFavourite(storeId, userId)
-                
-                throw new Error("should not reach this point")
-            } catch (error) {
-                expect(error).toBeDefined()
+        try {
+            await addFavourite(storeId, userId)
+            
+            await addFavourite(storeId, userId)
+            
+            throw new Error("should not reach this point")
+        } catch (error) {
+            expect(error).toBeDefined()
 
-                expect(error).toBeInstanceOf(Error)
-                expect(error.message).toBe(`${storeId} already exists`)
-                done()
-            }
-        })
-    })
+            expect(error).toBeInstanceOf(Error)
+            expect(error.message).toBe(`${storeId} already exists`)
+        }
+    });
 
     afterEach(() => {
         Users.deleteMany()
         Stores.deleteMany()
-    })
+    });
 
-    afterAll(mongoose.disconnect)
+    afterAll(mongoose.disconnect);
 })
