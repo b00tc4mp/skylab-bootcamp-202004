@@ -6,7 +6,7 @@ import {
     View,
     ScrollView
 } from "react-native";
-import { getFavourites } from "../gluttony-client-logic";
+import { getFavourites } from "gluttony-client-logic";
 import Store from "./Store"
 
 const Favourites = (props) => {
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         width: "75%"
     },
     store: {
-        backgroundColor: "#FFFFFF",
+        backgroundColor: "#D9D9D9",
         marginTop: 30,
         padding: 10
     },

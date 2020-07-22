@@ -1,7 +1,7 @@
-const { API_URL } = require("../../config")
+const context = require("./context")
+const { API_URL } = context
 require("gluttony-commons/polyfills/string")
 const { utils: { Email } } = require("gluttony-commons")
-const context = require("./context")
 
 /**
  * @param  {string} email
@@ -20,17 +20,11 @@ module.exports = async function(email, password) {
             email,
             password
         })
-        .then(async ({ status, data }) => {
-            if (status === 200) {
-                await this.storage.setItem(
-                    "token",
-                    data.token
-                );
-
-                return data.token
-            } else {
-                throw new Error(data.error)
-            }
+        .then(async ({ data }) => {
+            await this.storage.setItem(
+                "token",
+                data.token
+            );
         })
         .catch(() => {throw new Error("Email or password is not valid")})
 }.bind(context)

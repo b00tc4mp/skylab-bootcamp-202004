@@ -13,7 +13,7 @@ describe("logic - get favourites", () => {
 
     let storeId, name, type, location, latitude, longitude, userId
 
-    beforeEach(done => {
+    beforeEach(async () => {
         storeId = `id-${random()}`
         name = `name-${random()}`
         type = `type-${random()}`
@@ -22,7 +22,7 @@ describe("logic - get favourites", () => {
         longitude = random()
         userId = `id-${random()}`
 
-        Users.create({ 
+        await Users.create({ 
                 id: userId, 
                 name: "name", 
                 surname: "surname", 
@@ -30,8 +30,7 @@ describe("logic - get favourites", () => {
                 password: "password"
             })
             .then(() => Stores.create({ id: storeId, name, type, location, coordinates: { latitude, longitude } }))
-            .then(() => done())
-    })
+    });
 
     it("should succeed when user has favourites", async () => {
         await addFavourite(storeId, userId)
@@ -48,18 +47,18 @@ describe("logic - get favourites", () => {
         expect(favourite.location).toBe(location)
         expect(favourite.coordinates.latitude).toBe(latitude)
         expect(favourite.coordinates.longitude).toBe(longitude)
-    })
+    });
 
     it("should return empty array when user has no favourites", async () => {
         const favourites = await getFavourites(userId)
 
         expect(favourites).toHaveLength(0)
-    })
+    });
 
     afterEach(() => {
         Users.deleteMany()
         Stores.deleteMany()
-    })
+    });
 
-    afterAll(mongoose.disconnect)
+    afterAll(mongoose.disconnect);
 })

@@ -1,7 +1,7 @@
-const { API_URL } = require("../../config")
+const context = require("./context")
+const { API_URL } = context
 require("gluttony-commons/polyfills/string")
 const { errors: { AuthenticationError } } = require("gluttony-commons")
-const context = require("./context")
 
 /**
  * @param  {string} text
@@ -18,6 +18,16 @@ module.exports = async function(text, storeId) {
     } catch (error) {
         throw new AuthenticationError("User is not authenticated")
     }
+    try {
+        String.validate.notVoid(text)
+    } catch(error) {
+        throw new Error("Comment is empty")
+    }
+    try {
+        String.validate.notVoid(storeId)
+    } catch(error) {
+        throw new Error("Store is not valid")
+    } 
 
     return await this.httpClient.post(`${API_URL}/comments`, {
             text, 
@@ -26,9 +36,5 @@ module.exports = async function(text, storeId) {
         }, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
-        .then(({ status, data }) => {
-            if (status === 201) return
-            throw new Error(data.error)
-        })
-        .catch(() => {throw new Error("Comment is not valid")})
+        .then(() => {})
 }.bind(context)

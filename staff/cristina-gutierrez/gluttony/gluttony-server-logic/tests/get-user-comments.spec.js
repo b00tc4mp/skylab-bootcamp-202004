@@ -13,14 +13,14 @@ describe("logic - get user comments", () => {
 
     let id, text, creationDate, userId, storeId
 
-    beforeEach(done => {
+    beforeEach(async () => {
         id = `id-${random()}`
         text = `text-${random()}`
         creationDate = Date.now()
         userId = `id-${random()}`
         storeId = `id-${random()}`
 
-        Stores.create({ 
+        await Stores.create({ 
                 id: storeId, 
                 name: "name", 
                 type: "bar", 
@@ -30,8 +30,7 @@ describe("logic - get user comments", () => {
                     longitude: random() 
                 } 
             })
-            .then(() => done())
-    })
+    });
 
     it("should succeed when user has favourites", async () => {
         await postComment(id, text, creationDate, userId, storeId)
@@ -47,18 +46,18 @@ describe("logic - get user comments", () => {
         expect(comment.creationDate.getTime()).toEqual(creationDate)
         expect(comment.user).toBe(userId)
         expect(comment.store.id).toBe(storeId)
-    })
+    });
 
     it("should return empty array when user has no favourites", async () => {
         const comments = await getUserComments(userId)
 
         expect(comments).toHaveLength(0)
-    })
+    });
 
     afterEach(() => {
         Stores.deleteMany()
         Comments.deleteMany()
-    })
+    });
 
-    afterAll(mongoose.disconnect)
+    afterAll(mongoose.disconnect);
 })

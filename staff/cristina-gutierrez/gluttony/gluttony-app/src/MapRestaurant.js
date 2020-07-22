@@ -3,9 +3,10 @@ import MapView, { Marker, Callout } from "react-native-maps";
 import {
     StyleSheet,
     View,
-    Dimensions
+    Dimensions,
+    Image
 } from "react-native";
-import { findNearbyRestaurants, getFavourites } from "../gluttony-client-logic"
+import { findNearbyRestaurants, getFavourites } from "gluttony-client-logic"
 import Store from "./Store"
 
 const MapRestaurant = props => {
@@ -49,7 +50,9 @@ const MapRestaurant = props => {
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421
                     }}  
-                /> }
+                > 
+                    <Image source={ require('../assets/images/person-eating.png')} style={styles.marker}/>
+                </Marker>}
                 { restaurant && <Marker
                     coordinate={{
                         latitude: restaurant.coordinates.latitude,
@@ -78,6 +81,11 @@ const styles = StyleSheet.create({
         width: Dimensions.get("window").width,
         height: Dimensions.get("window").height,
         marginBottom: 60
+    },
+    marker: {
+        width: 50,
+        height: 50,
+        resizeMode: "contain"
     }
 });
 

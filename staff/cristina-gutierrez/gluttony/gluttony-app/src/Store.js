@@ -7,8 +7,8 @@ import {
     TextInput,
     TouchableOpacity
 } from "react-native";
-import { addFavourite, removeFavourite } from "../gluttony-client-logic";
-import postComment from "../gluttony-client-logic/src/post-comment";
+import { addFavourite, removeFavourite } from "gluttony-client-logic";
+import postComment from "gluttony-client-logic/src/post-comment";
 const { errors: { AuthenticationError } } = require("gluttony-commons")
 
 const Store = props => {

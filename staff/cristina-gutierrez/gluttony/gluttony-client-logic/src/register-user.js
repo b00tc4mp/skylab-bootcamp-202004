@@ -1,7 +1,7 @@
-const { API_URL } = require("../../config")
+const context = require("./context")
+const { API_URL } = context
 require("gluttony-commons/polyfills/string")
 const { utils: { Email } } = require("gluttony-commons")
-const context = require("./context")
 
 /**
  * @param  {string} name
@@ -34,9 +34,6 @@ module.exports = async function(name, surname, email, password) {
             email,
             password
         })
-        .then(({ status, data }) => {
-            if (status === 201) return
-            throw new Error(data.error)
-        })
+        .then(() => undefined)
         .catch(() => {throw new Error("Could not register user")})
 }.bind(context)

@@ -13,48 +13,47 @@ describe("logic - authenticate user", () => {
 
     let id, name, surname, email, password
 
-    beforeEach(done => {
+    beforeEach(async () => {
         id = `id-${random()}`
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `e-${random()}@mail.com`
         password = `password-${random()}`
 
-        bcrypt.hash(password, 10)
+        await bcrypt.hash(password, 10)
             .then(hash => Users.create({ id, name, surname, email, password: hash }))
-            .then(() => done())
-    })
+    });
 
     describe("when user already exists", () => {
-        it("should succeed on correct credentials", () => {
-            authenticateUser(email, password)
+        it("should succeed on correct credentials", async () => {
+            await authenticateUser(email, password)
                 .then(_id => expect(_id).toBe(id))
         })
 
-        it("should fail on wrong password", () => {
+        it("should fail on wrong password", async () => {
             password += "wrong"
 
-            authenticateUser(email, password)
+            await authenticateUser(email, password)
                 .then(() => { throw new Error("should not reach this point") })
                 .catch(error => {
                     expect(error).toBeInstanceOf(Error)
-                    expect(error.message).toBe("wrong password")
+                    expect(error.message).toBe("Wrong password")
                 })
         })
-    })
+    });
 
-    it("should fail when user does not exist", () => {
+    it("should fail when user does not exist", async () => {
         email = "e-wrong@mail.com"
 
-        authenticateUser(email, password)
+        await authenticateUser(email, password)
             .then(() => { throw new Error("should not reach this point") })
             .catch(error => {
                 expect(error).toBeInstanceOf(Error)
-                expect(error.message).toBe(`user with e-mail ${email} does not exist`)
+                expect(error.message).toBe(`User with e-mail ${email} does not exist`)
             })
-    })
+    });
 
-    afterEach(() => Users.deleteMany())
+    afterEach(() => Users.deleteMany());
     
-    afterAll(mongoose.disconnect)
+    afterAll(mongoose.disconnect);
 })
