@@ -17,30 +17,35 @@ module.exports = (latitude, longitude) => {
         })
         .then(({ data: { results }, status }) => {
             if (status === 200 && results.length) {
-                return results[0]
+                return results.slice(0, 3)
             } else {
                 throw new Error('Nothing found')
             }
         })
-        .then(result => {
-            return {
-                id: result.id,
-                name: result.name,
-                type: "restaurant",
-                location: result.place_id,
-                coordinates: {
-                    latitude: result.geometry.location.lat,
-                    longitude: result.geometry.location.lng
-                },
-                thumbnail: result.icon
-            }
-        })
-        .then(store => {
-            Stores.findById(store.id, (error, persistedStore) => {
-                if (error) throw error
-                if (!persistedStore) Stores.create(store)
+        .then(results => {
+            return results.map(result => {
+                return {
+                    id: result.id,
+                    name: result.name,
+                    type: "restaurant",
+                    location: result.place_id,
+                    coordinates: {
+                        latitude: result.geometry.location.lat,
+                        longitude: result.geometry.location.lng
+                    },
+                    thumbnail: result.icon
+                }
             })
-
-            return store
         })
+        .then(stores => {
+            stores.forEach(store => {
+                Stores.findById(store.id, (error, persistedStore) => {
+                    if (error) throw error
+                    if (!persistedStore) Stores.create(store)
+                })
+            });
+
+            return stores
+        })
+        
 }

@@ -16,7 +16,7 @@ module.exports = function(latitude, longitude) {
             }
         })
         .then(({ data }) => {    
-            return data.bar
+            return data.bars
         })
         .catch(console.error)
 }.bind(context)

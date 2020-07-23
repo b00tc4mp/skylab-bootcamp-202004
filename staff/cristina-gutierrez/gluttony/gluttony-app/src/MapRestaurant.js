@@ -12,22 +12,21 @@ import Store from "./Store"
 const MapRestaurant = props => {
     const [userLatitude, setUserLatitude] = useState();
     const [userLongitude, setUserLongitude] = useState();
-    const [restaurant, setRestaurant] = useState();
-    const [isFavourite, setIsFavourite] = useState(false);
+    const [restaurants, setRestaurants] = useState();
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition(pos => {
+        navigator.geolocation.getCurrentPosition(async pos => {
             setUserLatitude(pos.coords.latitude)
             setUserLongitude(pos.coords.longitude)
 
-            findNearbyRestaurants(pos.coords.latitude, pos.coords.longitude)
-                .then(restaurant =>  {
-                    setRestaurant(restaurant)
-                    
-                    getFavourites()
-                        .then(favourites => setIsFavourite(!!favourites.find(favourite => favourite.id === restaurant.id)))
-                        .catch(console.log)
-                })
+            const restaurants = await findNearbyRestaurants(pos.coords.latitude, pos.coords.longitude)
+            const favourites = await getFavourites()
+
+            restaurants && restaurants.forEach(restaurant => {
+                restaurant.favourite = !!favourites.find(favourite => favourite.id === restaurant.id)
+            })
+
+            setRestaurants(restaurants)
         })
     }, [])
 
@@ -53,7 +52,8 @@ const MapRestaurant = props => {
                 > 
                     <Image source={ require('../assets/images/person-eating.png')} style={styles.marker}/>
                 </Marker>}
-                { restaurant && <Marker
+                { restaurants && restaurants.map(restaurant => <Marker
+                    key={ restaurant.id }
                     coordinate={{
                         latitude: restaurant.coordinates.latitude,
                         longitude: restaurant.coordinates.longitude,
@@ -62,9 +62,9 @@ const MapRestaurant = props => {
                     }}
                 >
                     <Callout>
-                        <Store store={restaurant} isFavourite={isFavourite} onShowModal={props.onShowModal} />
+                        <Store store={restaurant} isFavourite={restaurant.favourite} onShowModal={props.onShowModal} />
                     </Callout>
-                </Marker>}
+                </Marker>)}
             </MapView>
         </View>
     )

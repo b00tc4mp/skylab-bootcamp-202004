@@ -12,22 +12,21 @@ import Store from "./Store"
 const MapBar = props => {
     const [userLatitude, setUserLatitude] = useState();
     const [userLongitude, setUserLongitude] = useState();
-    const [bar, setBar] = useState();
-    const [isFavourite, setIsFavourite] = useState(false);
+    const [bars, setBars] = useState();
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition(pos => {
+        navigator.geolocation.getCurrentPosition(async pos => {
             setUserLatitude(pos.coords.latitude)
             setUserLongitude(pos.coords.longitude)
 
-            findNearbyBars(pos.coords.latitude, pos.coords.longitude)
-                .then(bar =>  {
-                    setBar(bar)
-                    
-                    getFavourites()
-                        .then(favourites => setIsFavourite(!!favourites.find(favourite => favourite.id === bar.id)))
-                        .catch(console.log)
-                })
+            const bars = await findNearbyBars(pos.coords.latitude, pos.coords.longitude)
+            const favourites = await getFavourites()
+
+            bars && bars.forEach(bar => {
+                bar.favourite = !!favourites.find(favourite => favourite.id === bar.id)
+            })
+
+            setBars(bars)
         })
     }, [])
 
@@ -53,7 +52,8 @@ const MapBar = props => {
                 >
                     <Image source={ require('../assets/images/person-drinking.png')} style={styles.marker}/>
                 </Marker>}
-                { bar && <Marker
+                { bars && bars.map(bar => <Marker
+                    key={ bar.id }
                     coordinate={{
                         latitude: bar.coordinates.latitude,
                         longitude: bar.coordinates.longitude,
@@ -62,9 +62,9 @@ const MapBar = props => {
                     }}  
                 >  
                     <Callout>
-                        <Store store={bar} isFavourite={isFavourite} onShowModal={props.onShowModal} />
+                        <Store store={bar} isFavourite={bar.favourite} onShowModal={props.onShowModal} />
                     </Callout>
-                </Marker> }
+                </Marker> )}
             </MapView>
         </View>
     )

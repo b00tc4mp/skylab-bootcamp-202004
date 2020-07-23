@@ -50,7 +50,7 @@ describe("logic - register user", () => {
     });
 
     it("should fail on non-string name", async () => {
-        name = undefined; 
+        name = undefined 
         try {
             await registerUser(name, surname, email, password)
             throw new Error("should not reach this point");
