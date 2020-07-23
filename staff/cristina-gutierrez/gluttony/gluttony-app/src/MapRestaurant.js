@@ -20,14 +20,15 @@ const MapRestaurant = props => {
             setUserLongitude(pos.coords.longitude)
 
             const restaurants = await findNearbyRestaurants(pos.coords.latitude, pos.coords.longitude)
-            const favourites = await getFavourites()
-
-            restaurants && restaurants.forEach(restaurant => {
-                restaurant.favourite = !!favourites.find(favourite => favourite.id === restaurant.id)
+            getFavourites()
+                .then(favourites => {
+                    restaurants && restaurants.forEach(restaurant => {
+                        restaurant.favourite = !!favourites.find(favourite => favourite.id === restaurant.id)
+                    })
+                })
+                .catch(() => {})
+                .finally(() => setRestaurants(restaurants))
             })
-
-            setRestaurants(restaurants)
-        })
     }, [])
 
     return (

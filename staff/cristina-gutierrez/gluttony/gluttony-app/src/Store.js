@@ -40,7 +40,7 @@ const Store = props => {
             <TouchableOpacity style={{ ...styles.button, marginTop: 0, width: 70 }} title= "Send" onPress={() => {
                 try {
                     postComment(comment, props.store.id)
-                        .then(() => setFeedback(undefined), error => {
+                        .then(() => setFeedback("Comment sent"), error => {
                             if (error instanceof AuthenticationError) {
                                 props.onShowModal()
                             }

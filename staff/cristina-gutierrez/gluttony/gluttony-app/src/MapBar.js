@@ -20,14 +20,15 @@ const MapBar = props => {
             setUserLongitude(pos.coords.longitude)
 
             const bars = await findNearbyBars(pos.coords.latitude, pos.coords.longitude)
-            const favourites = await getFavourites()
-
-            bars && bars.forEach(bar => {
-                bar.favourite = !!favourites.find(favourite => favourite.id === bar.id)
+            getFavourites()
+                .then(favourites => {
+                    bars && bars.forEach(bar => {
+                        bar.favourite = !!favourites.find(favourite => favourite.id === bar.id)
+                    })
+                })
+                .catch(() => {})
+                .finally(() => setBars(bars))
             })
-
-            setBars(bars)
-        })
     }, [])
 
     return (
