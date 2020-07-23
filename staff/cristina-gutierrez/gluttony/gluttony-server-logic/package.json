@@ -1,0 +1,24 @@
+{
+  "name": "gluttony-server-logic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --runInBand",
+    "test:coverage": "npm test -- --coverage"
+  },
+  "author": "crispine",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
+    "gluttony-commons": "file:../gluttony-commons",
+    "gluttony-data": "file:../gluttony-data",
+    "jsonwebtoken": "^8.5.1",
+    "uuid": "^8.1.0"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "jest": "^26.0.1"
+  }
+}

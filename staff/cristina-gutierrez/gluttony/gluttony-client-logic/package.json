@@ -1,0 +1,33 @@
+{
+  "name": "gluttony-client-logic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "npm test -- --coverage"
+  },
+  "author": "crispi",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.10.4",
+    "@babel/runtime": "^7.10.4",
+    "bcryptjs": "^2.4.3",
+    "gluttony-data": "file:../gluttony-data",
+    "jest": "^26.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "not-async-storage": "^1.0.1"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "gluttony-commons": "file:../gluttony-commons"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**"
+    ]
+  }
+}
