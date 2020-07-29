@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap')
+    
 *
     box-sizing: border-box 
     margin: 0
@@ -7,6 +9,9 @@
 .login
    height: 1000vh
    width: 100vw
+   font-family: 'Open Sans'
+   background: url('../assets/dishes-landing-04.jpg') no-repeat center/190% fixed
+   background-size: cover
 
    &__top
        
@@ -21,25 +26,37 @@
        
 
    &__form
-       height: 85vh
+       height: 82vh
        display: flex
        flex-direction: column     
        align-items: center
        justify-content: space-evenly
-       background: #003366
+       
     
    &__input
+       
        border-radius: 10px
        text-align: center
+       font-size: 1em
+       background-color: #FFCC66
+       color: #003366
+
+
 
    &__button
-       border-radius: 6px
-       background: #FFCC66
+       box-sizing: border-box
        color: #003366
+       font-size: 1.2em
+       text-decoration: underline
+       border: none
+       background-color: transparent
+       font-family: inherit
+       padding: 0
+       cursor: pointer
 
    &__register
        color: #FFCC66
-       text-decoration: none
+       text-decoration: underline
        font-size: 1.2em
     
         
