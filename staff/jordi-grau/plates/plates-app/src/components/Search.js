@@ -21,10 +21,10 @@ export default function Search({onSubmit}) {
         }
     }
     return<section className="search">
-    <form onSubmit={handleSubmit}>
-        <input type="text" name="query"/>
-        <button type="submit">🔍</button>
-    </form>
+            <form className="search__form" onSubmit={handleSubmit}>
+                <input className="search__input"  type="text" name="query" placeholder="Search restaurant" />
+                <button className="search__button" type="submit">🔍</button>
+            </form>
 
     
 </section>
