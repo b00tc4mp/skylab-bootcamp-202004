@@ -31,10 +31,8 @@ module.exports = new Schema({
         validate: [Email.validate, 'invalid e-mail']
     },
 
-    // TODO mapLocation
-
-    dishes: [{
-        type: ObjectId,
-        ref: 'Dish'
-    }]
+     dishes: [{
+         type: ObjectId,
+         ref: 'Dish'
+        }]
 })

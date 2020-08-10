@@ -12,19 +12,18 @@ const {errors: {UnexistenceError}} = require('plates-commons')
  */
 module.exports = restaurantId => {
     String.validate.notVoid(restaurantId)
-    debugger
+    
     return Restaurant.findOne({ _id: ObjectId(restaurantId) })
         .populate('dishes', 'name tags')
         .lean()
         .then(restaurant => {
-            debugger
+            
             if (!restaurant) throw new UnexistenceError(`restaurant with id ${restaurantId} does not exist`)
 
             restaurant.id = restaurant._id.toString()
 
             delete restaurant._id
            
-            debugger
             return restaurant
         })
 }

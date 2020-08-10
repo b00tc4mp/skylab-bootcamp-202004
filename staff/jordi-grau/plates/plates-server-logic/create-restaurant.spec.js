@@ -1,10 +1,10 @@
 require('dotenv').config()
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
-const { UnexistenceError, DuplicityError, VoidError } = require('plates-commons/errors')
+const { DuplicityError } = require('plates-commons/errors')
 const bcrypt = require('bcryptjs')
-const { floor, random } = Math
+const { random } = Math
 const { expect } = require('chai')
-const { mongoose, models: { User, Restaurant, Menu, Dish } } = require('plates-data')
+const { mongoose, models: { User, Restaurant, Dish } } = require('plates-data')
 const createRestaurant = require('./create-restaurant')
 
 
