@@ -2,7 +2,7 @@ require('dotenv').config()
 const { env: { TEST_MONGODB_URL: MONGODB_URL} } = process
 const { expect } = require('chai')
 const { mongoose, models: { User, Restaurant, Dish }} = require('plates-data')
-const { UnexistenceError, DuplicityError, VoidError} = require('plates-commons/errors')
+const { UnexistenceError } = require('plates-commons/errors')
 const { random } =  Math
 const bcrypt = require('bcryptjs')
 const retrieveDish = require('./retrieve-dish')
@@ -39,7 +39,6 @@ describe('retrieve all info of a chosen dish', ()=>{
         const restaurantId = _id.toString()
 
         for(let i=0; i<9; i++){
-            debugger
             const {_id, price} =  await Dish.create({restaurantId, name: `dishName-${i}`, position: `${i}`, tags, price:i })
             dishId = _id.toString()
             dishesIds.push(dishId)

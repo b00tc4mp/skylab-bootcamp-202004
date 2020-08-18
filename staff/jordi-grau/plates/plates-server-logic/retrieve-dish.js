@@ -1,6 +1,6 @@
 require('plates-commons/polyfills/string')
 const { mongoose, models: {Restaurant, Dish} } = require('plates-data')
-const { DuplicityError, UnexistenceError, VoidError } = require('plates-commons/errors')
+const { UnexistenceError } = require('plates-commons/errors')
 
 module.exports = dishId => {
     String.validate.notVoid(dishId)

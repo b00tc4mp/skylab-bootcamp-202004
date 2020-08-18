@@ -6,5 +6,10 @@ module.exports = {
     searchPlate: require('./search-plate'),
     searchRestaurant: require('./search-restaurant'),
     retrieveUser: require('./retrieve-user'),
-    retrieveRestaurant: require('./retrieve-restaurant')
+    retrieveRestaurant: require('./retrieve-restaurant'),
+    createDish: require('./create-dish'),
+    retrieveDish: require('./retrieve-dish'),
+    searchDishByQuery: require('./search-dish-by-query'),
+    searchDishByPostion: require('./search-dish-by-position'),
+    searchDishByPrice: require('./search-dish-by-price')
 }
