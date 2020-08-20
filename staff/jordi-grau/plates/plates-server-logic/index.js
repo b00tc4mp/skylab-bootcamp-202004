@@ -11,5 +11,7 @@ module.exports = {
     retrieveDish: require('./retrieve-dish'),
     searchDishByQuery: require('./search-dish-by-query'),
     searchDishByPostion: require('./search-dish-by-position'),
-    searchDishByPrice: require('./search-dish-by-price')
+    searchDishByPrice: require('./search-dish-by-price'),
+    addToFollowedDishes: require('./add-to-followed-dishes'),
+    retrieveFollowedDishes: require('./retrieve-followed-dishes')
 }

@@ -30,13 +30,12 @@ describe('Search dish by position', () => {
     })
 
     beforeEach(async () => {
-        debugger
         userEmail = `userEmail${random()}@mail.com`
         password = `password${random()}`
         hash = await bcrypt.hash(password, 10)
         const { id } = await User.create({ email: userEmail, password: hash })
         const userId = id
-        users.push(userId)
+        
 
         restaurantName = `restaurantName${random()}`
         restaurantEmail = `restaurantEmail${random()}@mail.com`
@@ -64,7 +63,7 @@ describe('Search dish by position', () => {
     describe('Asynchronous test', () => {
         it('should do a search on correct dish position', async () => {
             position = testDishes[0].position
-debugger
+
             const dishes = await searchDishByPosition(position)
 
             expect(dishes[0].position).to.equal(testDishes[0].position)

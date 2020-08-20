@@ -17,5 +17,10 @@ module.exports = new Schema({
     
     price:{
         type: Number
+    },
+
+    followers: {
+        type: [String], 
+        index: true
     }
 })
