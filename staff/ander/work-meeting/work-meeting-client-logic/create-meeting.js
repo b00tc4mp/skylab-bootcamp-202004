@@ -1,18 +1,19 @@
 require('work-meeting-commons/polyfills/string')
 const { utils: { Email, call } } = require('work-meeting-commons')
 const context = require('./context')
-
-module.exports = function (title,content, userId) {
+module.exports = function (workGroupId,title,content) {
     String.validate.notVoid(title)
     String.validate.notVoid(content)
-    String.validate.notVoid(userId)
+    String.validate.notVoid(workGroupId)
+    const { token } = context.storage
+    
+    String.validate.notVoid(token)
 
     return call(
         'POST',
         `${this.API_URL}/meeting`,
-        `{ "title": "${title}", "content": "${content}", "userId": "${userId}" }`,
-        { 'Content-type': 'application/json' }
-    )
+        `{ "workGroupId": "${workGroupId}","title": "${title}", "content": "${content}" }`,
+        { 'Content-type': 'application/json','Authorization': `Bearer ${token}` })
         .then(({ status, body }) => {
             if (status === 201) return
 

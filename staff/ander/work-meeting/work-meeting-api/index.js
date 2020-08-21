@@ -5,9 +5,6 @@ const PORT = PORT_CLI || PORT_ENV || 8080
 
 const path = require('path')
 
-/* const file = singletonFileLogger(path.join(__dirname, 'server.log'))
-const console = singletonConsoleLogger() */
-
 const { api } = require('./routes')
 
 const express = require('express')
@@ -49,30 +46,21 @@ try {
 
                     console.log('disconnecting database')
 
-                    mongoose.disconnect()
+                    return mongoose.disconnect()
                         .then(() => console.log('disconnected database'))
-                        /* .catch(error => file.error('could not disconnect from mongo', error))
+                        /* .catch(error => file.error('could not disconnect from mongo', error)) */
                         .finally(() => {
-                            console.info(`server ${name} ${version} stopped`)
-
-                            setTimeout(() => {
-                                file.close()
 
                                 setTimeout(() => {
                                     process.exit()
                                 }, 500)
-                            }, 500)
                         })
                 }
             })
         })
         .catch(error => {
-            file.error('could not connect to mongo', error)
-        }) */
-
-                }
-            })
-        })
+            /* file.error('could not connect to mongo', error) */
+        }) 
 } catch (error) {
     console.log(error)
     /* file.error(error) */

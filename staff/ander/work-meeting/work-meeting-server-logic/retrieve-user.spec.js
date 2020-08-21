@@ -10,12 +10,13 @@ const { mongoose, models: { User } } = require('work-meeting-data')
 
 describe('logic - retrieve user', () => {
     before(() => mongoose.connect(MONGODB_URL))
-
+    //user-oriented variables
     let name, surname, email, password, userId
 
     beforeEach(() =>
         User.deleteMany()
             .then(() => {
+                //user-oriented
                 name = `name-${random()}`
                 surname = `surname-${random()}`
                 email = `e-${random()}@mail.com`
@@ -35,7 +36,6 @@ describe('logic - retrieve user', () => {
                     expect(user.name).to.equal(name)
                     expect(user.surname).to.equal(surname)
                     expect(user.email).to.equal(email)
-                    expect(user.password).to.be.undefined
                     expect(user.cart).to.be.undefined
                     expect(user.order).to.be.undefined
                 })
@@ -55,7 +55,7 @@ describe('logic - retrieve user', () => {
             })
     })
 
-    afterEach(() => User.deleteMany())
+    afterEach(async() => await User.deleteMany())
 
-    after(async ()=> await mongoose.disconnect)
+    after(async ()=> await mongoose.disconnect())
 })

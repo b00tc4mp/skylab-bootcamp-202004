@@ -1,0 +1,39 @@
+*
+    box-sizing: border-box
+    margin: 0
+    padding: 0
+.meetings
+    display: flex
+    flex-direction: row-reverse
+    justify-content: space-between
+    
+    &__field
+        grid-column: 2
+        display: inlines
+        flex-direction: row
+        text-decoration: none
+        border-radius: 10px
+        font-size: 2vw
+        padding: 0.5rem
+        width: 98%
+        margin: 5px
+        justify-content: center
+        text-align: center
+        border-width: 4px
+        border-color: #1958a4
+    &__grap
+        width: 33%
+        display: flex
+        flex-direction: column
+    ul
+        list-style: none
+    &__item
+        padding: 2px
+        &:hover
+            border: 3px solid #1958a4
+            border-radius: 10px
+            background-color: #1958a4
+            color: white
+    legend
+        color: #1958a4
+        font-weight: bold

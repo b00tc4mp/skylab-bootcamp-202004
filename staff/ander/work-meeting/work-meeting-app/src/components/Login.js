@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import Feedback from './Feedback'
+import logo from '../assets/logo1.png'
 import { authenticateUser } from 'work-meeting-client-logic'
-
+import "./Login.sass"
 export default class extends Component {
     constructor(props) {
         super(props)
@@ -19,7 +20,7 @@ export default class extends Component {
 
         try {
             authenticateUser(email, password)
-               .then(token=>{this.props.onLogin(token)})
+               .then(()=>{this.props.onLogin()})
                 .catch(error => this.setState({ error: error.message }))
         } catch ({ message }) {
             this.setState({ error: message })
@@ -34,15 +35,18 @@ export default class extends Component {
 
     render() {
         return <section className="login">
-            <h1>Login</h1>
+            <img className='login__image' src={logo}></img>
+        <fieldset className="login__form">
+        <legend>Login</legend> 
             <form onSubmit={this.handleSubmit}>
                 <input type="email" name="email" placeholder="e-mail" required />
                 <input type="password" name="password" placeholder="password" required minLength="8" />
                 <button>Submit</button>
-                or <a href="" onClick={this.handeGoToRegister}>Register</a>
+                <a href="" onClick={this.handeGoToRegister}>Register</a>
 
                 {this.state.error && <Feedback message={this.state.error} level="error" />}
             </form>
+            </fieldset>
         </section>
     }
 }

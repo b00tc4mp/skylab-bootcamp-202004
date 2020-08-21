@@ -12,11 +12,3 @@ module.exports = (req, res) => {
         handleError(error, res)
     }
 }
-/* return updatePetition()
-        .then(accepted=>{
-            if(accepted){
-                addMemeber()
-                .then(()=> res.status(200).send({message: 'user added to workgroup'}))
-            }
-
-            return res.status(200).send({message: 'user petition rejected'}) */

@@ -1,82 +1,150 @@
-require('dotenv').config()
+require('dotenv').config();
+const {env:{TEST_MONGODB_URL: MONGODB_URL}} = process
+const {random} = Math;
+const changeWorkGroup = require('./change-work-group-pref')
+const {errors:{UnexistenceError,DuplicityError}} = require('work-meeting-commons')
+const {expect} = require('chai')
+const {mongoose, models:{User,WorkGroup}} = require('work-meeting-data')
+const bcrypt = require('bcryptjs')
 
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+describe('change work group', () => {
+    //user-oriented variables
+    let name,surname,email,password, encryptedPassword, userId
 
-const changeWorkGroupPref= require('./change-work-group-pref')
-const { random } = Math
-const { expect } = require('chai')
-require('work-meeting-commons/polyfills/json')
-const { mongoose, models: { User, WorkGroup } } = require('work-meeting-data')
+    //workGroup-oriented variables
+    let _name, workGroupId
 
-describe('logic - change work group pref', () => {
-    before(() => mongoose.connect(MONGODB_URL))
 
-    let name, surname, email, password, userId, workGroupName, workGroupId
-
-    beforeEach(() =>
-        User.deleteMany()
-            .then(() => {
-                name = `name-${random()}`
-                surname = `surname-${random()}`
-                email = `e-${random()}@mail.com`
-                password = `password-${random()}`
-                workGroupName = "dreamTeam"
-            })
-    )
-
-    describe('when user already exists', () => {
-        beforeEach(async() =>{
-            const user = await User.create({ name, surname, email, password })
-            userId = user.id
-            const workGroup= await WorkGroup.create({name: workGroupName, creator: userId })
-            workGroupId = workGroup.id
-       } )
-     
-        it('should succeed on correct user id', async () =>{
-            const result = await changeWorkGroupPref( userId, workGroupId)
-            
-            expect(result).to.equal(undefined)
-            // tira la base 
-            const {workGroupPref} = await User.findById(userId)
-            console.log(workGroupPref)
-            expect(workGroupPref.toString()).to.equal(workGroupId)                
-        })
-        
-        //es npm run test:coverage (el newyork npm instalado) newyork se llama asi el npm
-       
-        
-        it('should fail when user does not exist', () => {
-            const userId = '5ed1204ee99ccf6fae798aef'
-    
-            changeWorkGroupPref( userId, workGroupId)
-                .then(() => { throw new Error('should not reach this point') })
-                .catch(error => {
-                    expect(error).to.exist
-    
-                    expect(error).to.be.an.instanceof(Error)
-                    expect(error.message).to.equal(`user with Id ${userId} not exist`)
-                })
-        })
-        it('should fail when work group does not exist', () => {
-            const workGroupId = '5ed1204ee99ccf6fae798aef'
-    
-            changeWorkGroupPref( userId, workGroupId)
-                .then(() => { throw new Error('should not reach this point') })
-                .catch(error => {
-                    expect(error).to.exist
-    
-                    expect(error).to.be.an.instanceof(Error)
-                    expect(error.message).to.equal(`workgroup with Id ${workGroupId} not exist`)
-                })
-        })
-        })
-        
-
-    afterEach(() => {
-        User.deleteMany()
-        WorkGroup.deleteMany()
-    
+    before(async()=>{
+        await mongoose.connect(MONGODB_URL)
+        await Promise.all([User.deleteMany(), 
+                        WorkGroup.deleteMany()]
+                        )
     })
+    beforeEach(async()=>{
+        //user-oriented
+        name=`name-${random()}`
+        surname=`surname-${random()}`
+        email=`email-${random()}@mail.com`
+        password=`pass-${random()}`
+        encryptedPassword= await bcrypt.hash(password,10)
 
-    after(async ()=> await mongoose.disconnect)
-})
+        //workGroup-oriented
+        _name=`name-${random()}`
+
+        const user = await User.create({name,surname,email,password : encryptedPassword})
+        userId= user._id.toString()
+
+        const workGroup = await WorkGroup.create({name :_name, creator: userId})
+        workGroupId= workGroup._id.toString()
+
+    })
+    describe('asynchrous paths', () => {
+        it('should succes to change work group with a valid data ', async() => {
+            const result= await changeWorkGroup(userId,workGroupId)
+            expect(result).to.be.undefined
+            const user= await User.findById(userId).lean()
+            expect(user).to.exist
+            expect(user.constructor.name).to.equal('Object')
+            expect(user.workGroupPref.toString()).to.equal(workGroupId)
+      
+
+        });
+        it('should fail to change work group when user not exist', async()=>{
+            await User.deleteMany()
+            try {
+                await changeWorkGroup(userId, workGroupId)
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.exist
+                expect(error).to.be.instanceOf(UnexistenceError)
+                expect(error.message).to.equal(`user with id ${userId} does not exist`)
+            }
+        })
+        it('should fail to change work group when workgroup not exist', async()=>{
+            await WorkGroup.deleteMany()
+            try {
+                await changeWorkGroup(userId, workGroupId)
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.exist
+                expect(error).to.be.instanceOf(UnexistenceError)
+                expect(error.message).to.equal(`workgroup with id ${workGroupId} does not exist`)
+            }
+        })
+    });
+
+        describe('synchronous paths', () => {
+            it('should fail on a non-string userId', () => {
+                userId= random()
+                expect(()=>changeWorkGroup(userId,workGroupId)).to.throw(TypeError,`${userId} is not a string`)
+                
+                userId= undefined
+                expect(()=>changeWorkGroup(userId,workGroupId)).to.throw(TypeError,`${userId} is not a string`)
+                
+                userId= null
+                expect(()=>changeWorkGroup(userId,workGroupId)).to.throw(TypeError,`${userId} is not a string`)
+                
+                userId= []
+                expect(()=>changeWorkGroup(userId,workGroupId)).to.throw(TypeError,`${userId} is not a string`)
+                
+                userId= {}
+                expect(()=>changeWorkGroup(userId,workGroupId)).to.throw(TypeError,`${userId} is not a string`)
+                
+                userId= false
+                expect(()=>changeWorkGroup(userId,workGroupId)).to.throw(TypeError,`${userId} is not a string`)
+                
+                userId= ''
+                expect(()=>changeWorkGroup(userId,workGroupId)).to.throw(Error, `string is empty or blank`)
+                
+                userId= '    '
+                expect(()=>changeWorkGroup(userId,workGroupId)).to.throw(Error, `string is empty or blank`)
+               
+                
+            });
+            it('should fail on a non-string workgroupId', () => {
+                userId = 'random user'
+                workGroupId= random()
+                expect(()=>changeWorkGroup(userId,workGroupId)).to.throw(TypeError,`${workGroupId} is not a string`)
+                
+                workGroupId= undefined
+                expect(()=>changeWorkGroup(userId,workGroupId)).to.throw(TypeError,`${workGroupId} is not a string`)
+                
+                workGroupId= null
+                expect(()=>changeWorkGroup(userId,workGroupId)).to.throw(TypeError,`${workGroupId} is not a string`)
+                
+                workGroupId= []
+                expect(()=>changeWorkGroup(userId,workGroupId)).to.throw(TypeError,`${workGroupId} is not a string`)
+                
+                workGroupId= {}
+                expect(()=>changeWorkGroup(userId,workGroupId)).to.throw(TypeError,`${workGroupId} is not a string`)
+                
+                workGroupId= false
+                expect(()=>changeWorkGroup(userId,workGroupId)).to.throw(TypeError,`${workGroupId} is not a string`)
+                
+                workGroupId= ''
+                expect(()=>changeWorkGroup(userId,workGroupId)).to.throw(Error, `string is empty or blank`)
+                
+                workGroupId= '    '
+                expect(()=>changeWorkGroup(userId,workGroupId)).to.throw(Error, `string is empty or blank`)
+               
+                
+            });
+            
+            
+        });
+        afterEach(async () => {
+            await Promise.all([
+                User.deleteMany(),
+                WorkGroup.deleteMany()
+            ]);
+        })
+    
+        after(async () => {
+            await Promise.all([
+                User.deleteMany(),
+                WorkGroup.deleteMany()
+            ]);
+            await mongoose.disconnect();
+        })
+});

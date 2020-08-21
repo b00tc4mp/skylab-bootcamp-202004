@@ -11,7 +11,7 @@ const bcrypt = require('bcryptjs')
 describe('logic - authenticate user', () => {
     before(() => mongoose.connect(MONGODB_URL))
 
-    let name, surname, email, password, userId, hash
+    let name, surname, email, password, userId, hash,_email, _password
 
     beforeEach(() =>
         User.deleteMany()
@@ -57,8 +57,51 @@ describe('logic - authenticate user', () => {
                 expect(error.message).to.equal(`user with e-mail ${email} does not exist`)
             })
     )
+    it('should return an error when synchronous error exists', () => {
+        _email = ''
+        expect(() => {
+            authenticateUser(_email, password)
+        }).to.throw(Error, 'string is empty or blank')
+
+        _email= '    '
+        expect(() => {
+            authenticateUser(_email, password)
+        }).to.throw(Error, 'string is empty or blank')
+        
+        _password = ''
+        expect(() => {
+            authenticateUser(email, _password)
+        }).to.throw(Error, 'string is empty or blank')
+
+        _password= '    '
+        expect(() => {
+            authenticateUser(email, _password)
+        }).to.throw(Error, 'string is empty or blank')
+
+        _password= undefined
+        expect(() => {
+            authenticateUser(email, _password)
+        }).to.throw(Error, `${_password} is not a string`)
+
+        _password = true
+        expect(() => {
+            authenticateUser(email, _password)
+        }).to.throw(Error, `${_password} is not a string`)
+
+        _email= undefined
+        expect(() => { debugger
+            authenticateUser(_email, password)
+        }).to.throw(Error,`${_email} is not a string` )
+
+        _email = true
+        expect(() => {
+            authenticateUser(_email, password)
+        }).to.throw(Error, `${_email} is not a string`)
+
+
+    })
 
     afterEach(() => User.deleteMany())
 
-    after(async ()=> await mongoose.disconnect)
+    after(async ()=> await mongoose.disconnect())
 })

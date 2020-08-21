@@ -10,6 +10,11 @@ module.exports = new Schema({
     members:[{
             type: ObjectId,
             ref: 'User',
-                }]
+                }],
+    workGroup:{
+            type: ObjectId,
+            ref: 'WorkGroup',
+            required: true
+                }
     
 })

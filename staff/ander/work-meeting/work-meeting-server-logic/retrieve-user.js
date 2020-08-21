@@ -4,12 +4,12 @@
  * @throws {TypeError} Throws an error if user not exist
  */
 require('work-meeting-commons/polyfills/string')
-const { mongoose: { ObjectId }, models: { User } } = require('work-meeting-data')
+const { models: { User } } = require('work-meeting-data')
 
 module.exports = userId => {
     String.validate.notVoid(userId)
 
-    return User.findOne({ _id: ObjectId(userId) }, { __v: 0, cart: 0, orders: 0, password: 0 }).lean()
+    return User.findById(userId).lean()
         .then(user => {
             if (!user) throw new Error(`user with id ${userId} does not exist`)
 

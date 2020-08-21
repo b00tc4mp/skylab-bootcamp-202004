@@ -1,69 +1,116 @@
 require('dotenv').config()
-
 const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
-
-const retrieveWorkGroup= require('./retrieve-solo-work-group')
+const retrieveWorkGroup = require('./retrieve-solo-work-group')
 const { random } = Math
 const { expect } = require('chai')
+const  bcrypt  = require('bcryptjs')
 require('work-meeting-commons/polyfills/json')
 const { mongoose, models: { User, WorkGroup } } = require('work-meeting-data')
+const { UnexistenceError } = require('work-meeting-commons/errors')
 
 describe('logic - retrieve solo work Group', () => {
-    before(() => mongoose.connect(MONGODB_URL))
+    //user-oriented variables
+    let name, surname, email, password, encryptedPassword, userId
 
-    let name, surname, email, password, userId, workGroupName, workGroupId
+    //workGroup-oriented variables
+    let workGroupName, workGroupId
 
-    beforeEach(() =>
-        User.deleteMany()
-        .then(()=>WorkGroup.deleteMany())
-            .then(() => {
-                name = `name-${random()}`
-                surname = `surname-${random()}`
-                email = `e-${random()}@mail.com`
-                password = `password-${random()}`
-                workGroupName = "dreamTeam"  
-            })
-    )
-   
-    describe('when user already exists', async() => {
-        beforeEach(async () =>{
-            const workGroup = await WorkGroup.create({name:workGroupName, creator:'5ed1204ee99ccf6fae798abf'})
-            workGroupId= workGroup._id
-            const user= await User.create({name, surname, email, password, workGroupPref: workGroupId})
-            userId = user._id.toString()
-            })
+    //random
+    let _email, _userId
 
-        it('should succeed on correct data', async () =>{
-            const result = await retrieveWorkGroup(userId)
 
-            expect(result).to.not.be.undefined
-            expect(result._id.toString()).to.equal(workGroupId.toString())
+    before(async () => {
+        await mongoose.connect(MONGODB_URL)
+        await Promise.all([User.deleteMany(), WorkGroup.deleteMany()])
+    })
+
+    beforeEach(async () => {
+
+        //user-oriented
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `email-${random()}@mail.com`
+        password = `password-${random()}`
+        encryptedPassword = await bcrypt.hash(password, 10)
+
+        const user = await User.create({ name, surname, email, password: encryptedPassword, workGroupPref:workGroupId })
+        userId = user.id.toString()
+
+        //workgroup-oriented
+        workGroupName = `name-${random()}`
+        const workGroup = await WorkGroup.create({ name: workGroupName, creator: userId })
+        workGroupId = workGroup.id.toString()
+
+        //secondUser-oriented
+        _email= `email-${random()}@gmail.com`
+
+
+        const _user = await User.create({ name, surname, email:_email, password: encryptedPassword, workGroupPref:workGroupId })
+        _userId = _user.id.toString()
+
+
+
+    })
+    describe('asynchronous paths', () => {
+        it('should success to retrieve workGroup pref with a valid data', async () => {
+            debugger
+            const result = await retrieveWorkGroup(_userId)
+            expect(result).to.be.not.undefined
+            expect(result.constructor.name).to.be.equal('Object')
+            expect(result).to.be.instanceOf(Object)
             expect(result.name).to.equal(workGroupName)
+            expect(result.id).to.equal(workGroupId)
+            expect(result.creator.toString()).to.equal(userId)
 
+        });
+        it('should fail to retrieve workGroup Pref when user not exist ', async() => {
+            await User.deleteMany()
+            try {
+                await retrieveWorkGroup(_userId)
+            } catch (error) {
+                expect(error).to.exist
+                expect(error).to.be.instanceOf(UnexistenceError)
+                expect(error.message).to.equal(`user with id ${_userId} does not exist`)
+            }
+        });
+        describe('synchronous paths', () => {
+            it('should fail with a non-string user', () => {
 
+                _userId= random()
+                expect(()=>retrieveWorkGroup(_userId)).throw(TypeError, `${_userId} is not a string`)
+
+                _userId= undefined
+                expect(()=>retrieveWorkGroup(_userId)).throw(TypeError, `${_userId} is not a string`)
+
+                _userId= null
+                expect(()=>retrieveWorkGroup(_userId)).throw(TypeError, `${_userId} is not a string`)
+
+                _userId= []
+                expect(()=>retrieveWorkGroup(_userId)).throw(TypeError, `${_userId} is not a string`)
+
+                _userId= {}
+                expect(()=>retrieveWorkGroup(_userId)).throw(TypeError, `${_userId} is not a string`)
+
+                _userId= false
+                expect(()=>retrieveWorkGroup(_userId)).throw(TypeError, `${_userId} is not a string`)
+
+                _userId= '    '
+                expect(()=>retrieveWorkGroup(_userId)).throw(Error, `string is empty or blank`)
+
+                _userId= ''
+                expect(()=>retrieveWorkGroup(_userId)).throw(Error, `string is empty or blank`)
                 
-        })
-        it('should fail when user does not exist', () => {
+            });
             
-            const userId = '5ed1204ee99ccf6fae798aaf'
-             return retrieveWorkGroup(userId)
-                .then(() => { throw new Error('should not reach this point') })
-                .catch(error => {
-                    expect(error).to.exist
-    
-                    expect(error).to.be.an.instanceof(Error)
-                    expect(error.message).to.equal(`user with id ${userId } does not exist`)
-                })
-        })
+        });
 
+    });
+    afterEach(async()=>{
+        await Promise.all([User.deleteMany(), WorkGroup.deleteMany()])
+    })
+    after(async()=>{
+        await Promise.all([User.deleteMany(), WorkGroup.deleteMany()])
+        await mongoose.disconnect()
     })
 
- 
-    afterEach(() => {
-        User.deleteMany()
-        WorkGroup.deleteMany()
-    
-    })
-
-    after(async ()=> await mongoose.disconnect)
 })

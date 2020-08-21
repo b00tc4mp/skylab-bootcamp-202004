@@ -1,30 +1,35 @@
-const { Schema, Types: {ObjectId} } = require('mongoose')
+const { Schema, Types: { ObjectId } } = require('mongoose')
 
 
 module.exports = new Schema({
     host: {
-            type: ObjectId,
-            ref: 'User',
-            required: true
-        
+        type: ObjectId,
+        ref: 'User',
+        required: true
+
     },
     title: {
         type: String,
         required: true
     },
 
-    content:{
-        type:String,
+    content: {
+        type: String,
         required: true
     },
     date: {
         type: Date,
-        default:'1/1/2992'
+        default: Date
     },
 
-    summaries:[{
+    summaries: [{
         type: ObjectId,
-        ref: 'Summary' 
-}]
+        ref: 'Summary'
+    }],
+    workGroup: {
+        type: ObjectId,
+        ref: 'WorkGroup'
+    }
+
 
 })

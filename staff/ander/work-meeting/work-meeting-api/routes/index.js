@@ -1,45 +1,90 @@
-const { env: { JWT_SECRET:SECRET } } = process
+const { env: { JWT_SECRET: SECRET } } = process
 
 const { Router } = require('express')
-const { registerUser, addReadBy, retrieveReadBy, authenticateUser,addMemberDepartment , addPetition , createDepartment,createMeeting,createSummary,createWorkGroup,retrieveDepartmentAll,retrievePetitionAll, retrieveWorkGroup,searchUser,searchWorkGroup,retrieveUser,updatePetition,updateSummary, updateUser , changeWorkGroup, retrieveWorkGroupPref} = require('./handlers')
+const {
+    //User-oriented
+    registerUser,
+    authenticateUser,
+    searchUser,
+    retrieveUser,
+    //department-oriented
+    addMemberDepartment,
+    retrieveDepartMembers,
+    createDepartment,
+    retrieveDepartments,
+    //summary-oriented
+    createSummary,
+    retrieveSummaries,
+    retrieveSummarys,
+    updateSummary,
+    addMemberSummary,
+    addDepartmentSummary,
+    retrieveSummaryMembers,
+    //workGroup-oriented
+    createWorkGroup,
+    retrieveWorkGroups,
+    searchWorkGroups,
+    changeWorkGroup,
+    retrieveWorkGroupPref,
+    retrieveWorkGroup,
+    //readBy-oriented
+    addReadBy,
+    retrieveReadBy,
+    //petition-oriented
+    addPetition,
+    retrieveAllPetitions,
+    updatePetition,
+    //meeting-oriented
+    createMeeting,
+    retrieveMeetings
+} = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierExtractor } = require('../middlewares')
+
+
 const { handleError } = require('../helpers')
+
 const parseBody = bodyParser.json()
 const verifyExtractJwt = jwtVerifierExtractor(SECRET, handleError)
 
 const api = new Router()
-
+//user-oriented
 api.post('/users', parseBody, registerUser)
 api.post('/users/auth', parseBody, authenticateUser)
-api.post('/department/addmem', verifyExtractJwt, parseBody, addMemberDepartment)
-api.post('/petition', verifyExtractJwt, parseBody, addPetition)
-api.post('/department',verifyExtractJwt, parseBody, createDepartment)
-api.post('/meeting', verifyExtractJwt, parseBody, createMeeting)
+api.get('/users/search/:workGroupId/:query?', searchUser)
+api.get('/users/:userId?', verifyExtractJwt, parseBody, retrieveUser)
+//department-oriented
+api.post('/department', verifyExtractJwt, parseBody, createDepartment)
+api.post('/department/addMember', parseBody, addMemberDepartment)
+api.get('/department/:workGroupId', verifyExtractJwt, retrieveDepartments)
+api.get('/departmentMembers/:workGroupId/:departmentId', retrieveDepartMembers)
+//summary-oriented
+api.post('/summary/addMember', parseBody, addMemberSummary)
+api.post('/summary/addDepartment', parseBody, addDepartmentSummary)
 api.post('/summary', verifyExtractJwt, parseBody, createSummary)
-api.post('/workgroup', parseBody, createWorkGroup)
-api.post('/readBy', parseBody, verifyExtractJwt, addReadBy)
-api.get('/readBy', parseBody , retrieveReadBy)
-api.get('/deparment/:workGroupId', retrieveDepartmentAll)
-api.get('/petition/:workGroupId', verifyExtractJwt, retrievePetitionAll)
-api.get('/workgroup',verifyExtractJwt, retrieveWorkGroup)
-
-api.get('/users/:userId?', verifyExtractJwt, retrieveUser)
-api.get('/users/search/:workGroupId', searchUser) //no tengo Id ni nada
-api.get('/workgroup/search?', searchWorkGroup) 
-api.patch('/users/update', verifyExtractJwt, parseBody, updateUser)
-api.patch('/petition/update/', parseBody, updatePetition)
+api.get('/summarys/:meetingId', verifyExtractJwt, retrieveSummarys)
+api.get('/summaries/:workGroupId', verifyExtractJwt, retrieveSummaries)
+api.get('/summary/members/:summaryId', retrieveSummaryMembers)
 api.patch('/summary/update', parseBody, updateSummary)
-api.patch('/workgroup/change', verifyExtractJwt, parseBody, changeWorkGroup)
-api.get('/workgrouppref',verifyExtractJwt, retrieveWorkGroupPref)
+//workGroup-oriented
+api.post('/workgroup', verifyExtractJwt, parseBody, createWorkGroup)
+api.get('/workgroups', verifyExtractJwt, retrieveWorkGroups)
+api.get('/workgroup/search?', verifyExtractJwt, searchWorkGroups)
+api.get('/workGroupPref', verifyExtractJwt, retrieveWorkGroupPref)
+api.get('/workGroup/:workGroupId', retrieveWorkGroup)
+api.patch('/workGroupPref', verifyExtractJwt, parseBody, changeWorkGroup)
+//readBy-oriented
+api.post('/readBy', verifyExtractJwt, parseBody, addReadBy)
+api.get('/readBy/:summaryId', retrieveReadBy)
+//petitions-oriented
+api.post('/petition', verifyExtractJwt, parseBody, addPetition)
+api.get('/petition/:workGroupId', verifyExtractJwt, retrieveAllPetitions)
+api.patch('/petition', parseBody, updatePetition)
+//meeting-oriented
+api.post('/meeting', verifyExtractJwt, parseBody, createMeeting)
+api.get('/meeting/:workGroupId', verifyExtractJwt, parseBody, retrieveMeetings)
 
 
-
-
-
-/* api.get('/users/addMemberDepart?', parseBody, addMemberDepartment)
-
-api.get('/users/:userId?', verifyExtractJwt,retrieveUser ) */
 
 
 module.exports = {

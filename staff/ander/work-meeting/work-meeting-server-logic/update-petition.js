@@ -1,3 +1,7 @@
+require('work-meeting-commons/polyfills/string')
+require('work-meeting-commons/polyfills/json')
+const { models: { User, WorkGroup } } = require('work-meeting-data')
+const { errors: { DuplicityError, UnexistenceError } } = require('work-meeting-commons')
 /**
  * how many work group match the query
  * @param {string} userId Id of user made de petition
@@ -8,44 +12,40 @@
  * @throws {TypeError} Throws an error if work group not exists
  * @throws {TypeError} Throws an error if petition not exists
  */
-require('work-meeting-commons/polyfills/string')
-require('work-meeting-commons/polyfills/json')
-const {mongoose:{ObjectId} ,models:{User,WorkGroup}} = require('work-meeting-data')
-const {errors:{DuplicityError, UnexistenceError}} = require('work-meeting-commons')
-module.exports=(userId, workGroupId, petitionId, status) =>{ //status value is (accepted/dennied)
+
+module.exports = (userId, workGroupId, petitionId, status) => { //status value is (accepted/dennied)
     String.validate.notVoid(userId)
     String.validate.notVoid(petitionId)
     String.validate.notVoid(workGroupId)
     String.validate.notVoid(status)
-    
-    return (async ()=>{
-        debugger
+
+    return (async () => {
+        
         const user = await User.findById(userId)
-            if(!user) throw new UnexistenceError(`user with Id: ${userId} dont exist`)
+        if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
+
         const workGroup = await WorkGroup.findById(workGroupId)
-            if(!workGroup) throw new UnexistenceError(`workGroup with Id: ${workGroupId} dont exist`)
-        let {members, petitions} = workGroup
-        
-        const petition =  petitions.some((petit)=>petit._id==petitionId) // why fukin include no found?
-            if(!petition) throw new UnexistenceError(`petition with Id: ${petitionId} not exist`)
-                    
-      
-        if(status==='accepted'){
-        
-        workGroup.members.push(userId)
-        }
+        if (!workGroup) throw new UnexistenceError(`workGroup with id ${workGroupId} does not exist`)
+        let { members, petitions } = workGroup
 
-        for(let i=0;i<petitions.length;i++){
+        const petition = petitions.some(petition => petition._id == petitionId)
+        if (!petition) throw new UnexistenceError(`petition with id ${petitionId} does not exist`)
+
+        const alreadyExist = members.some(member => member.toString()===userId)
+        if(alreadyExist) throw new DuplicityError(`user with id ${userId} already exist`)
+
+        if (status === 'accepted'){
             
-            if(petitions[i]._id==petitionId) { console.log('entra')
-                petitions[i].status="accepted";
-            }
-           
-        }
+            await User.findByIdAndUpdate(userId,{$addToSet:{workGroups: workGroupId}})
+            await WorkGroup.findByIdAndUpdate(workGroupId,{$addToSet:{members: userId}})
+            
+        } 
         
-        await workGroup.save()
+        await WorkGroup.findByIdAndUpdate(workGroupId, {$pull: {petitions:{user:userId}}})
        
 
-       
+
+
+
     })()
 }

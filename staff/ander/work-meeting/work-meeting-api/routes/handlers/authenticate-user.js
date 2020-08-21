@@ -1,5 +1,5 @@
 const { env: { JWT_SECRET: SECRET } } = process
-debugger
+
 const { authenticateUser } = require('work-meeting-server-logic')
 const { handleError } = require('../../helpers')
 const { utils: { jwtPromised } } = require('work-meeting-commons')

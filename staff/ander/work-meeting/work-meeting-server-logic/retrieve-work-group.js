@@ -1,19 +1,19 @@
 /**
  * returns work groups array
- * @param {string} userId Id of user
+ * @param {string}  Id of user
  * @throws {TypeError} Throws an error if user not exist
  */
 require('work-meeting-commons/polyfills/string')
-const { mongoose: { ObjectId }, models: { User} } = require('work-meeting-data')
+const {models: { WorkGroup} } = require('work-meeting-data')
+const { UnexistenceError } = require('work-meeting-commons/errors')
 
-module.exports = userId => {
-    String.validate.notVoid(userId)
+module.exports = workGroupId => {
+    String.validate.notVoid(workGroupId)
 
-    return User.findOne({ _id: ObjectId(userId)}).populate('workGroups')
-        .then(user => {
-            if (!user) throw new Error(`user with id ${userId} does not exist`)
-            const {workGroups} = user
-            return workGroups
+    return WorkGroup.findById(workGroupId)
+        .then(workGroup => {
+            if (!workGroup) throw new UnexistenceError(`workGroup with id ${workGroupId} does not exist`)
+            return workGroup
 
         })
 }

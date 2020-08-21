@@ -19,7 +19,9 @@ module.exports = new Schema({
         type: ObjectId,
         ref: 'User'}],
 
-    departments:[department]
+    departments:[{
+            type:ObjectId,
+            ref:'Department'}]
 
 })
 

@@ -1,5 +1,4 @@
 
-
 module.exports = {
     registerUser: require('./register-user'),
     authenticateUser: require('./authenticate-user'),
@@ -10,18 +9,23 @@ module.exports = {
     createMeeting: require('./create-meeting'),
     createSummary: require('./create-summary'),
     createWorkGroup:require('./create-work-group'),
-    retrieveDepartmentAll: require('./retrieve-departmentAll'),
-    retrievePetitionAll:require('./retrieve-petitionAll'),
-    retrieveWorkGroup:require('./retrieve-work-group'),
+    retrieveDepartments: require('./retrieve-departments'),
+    retrieveAllPetitions:require('./retrieve-all-petitions'),
+    retrieveWorkGroups:require('./retrieve-work-groups'),
     searchUser: require('./search-users'),
-    searchWorkGroup: require('./search-work-groups'),
+    searchWorkGroups: require('./search-work-groups'),
     updatePetition: require('./update-petition'),
     updateSummary: require('./update-summary'),
-    updateUser: require('./update-user'),
     retrieveWorkGroupPref: require('./retrieve-work-group-pref'),
     changeWorkGroup: require('./change-work-group-pref'),
     addReadBy: require('./add-read-by'),
-    retrieveReadBy: require('./retrieve-read-by')
-
-
+    retrieveReadBy: require('./retrieve-read-by'),
+    retrieveMeetings: require('./retrieve-meetings'),
+    retrieveDepartMembers: require('./retrieve-depart-members'),
+    retrieveSummaries: require('./retrieve-summaries'),
+    retrieveSummarys: require('./retrieve-summarys'),
+    retrieveWorkGroup: require('./retrieve-work-group'),
+    addMemberSummary: require('./add-member-summary'),
+    addDepartmentSummary: require('./add-departmembers-summary'),
+    retrieveSummaryMembers: require('./retrieve-summary-members')
 }

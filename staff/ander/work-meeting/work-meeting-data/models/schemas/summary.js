@@ -1,4 +1,4 @@
-const { Schema , Types: {ObjectId}} = require('mongoose')
+const { Schema, Types: { ObjectId } } = require('mongoose')
 
 
 module.exports = new Schema({
@@ -10,12 +10,27 @@ module.exports = new Schema({
         type: String,
         required: true,
     },
-    members:[{
+    meeting: {
         type: ObjectId,
-        ref: 'User'}],
-    
-    readBy:[{
+        ref: 'Meeting',
+        required: true
+    },
+    members: [{
         type: ObjectId,
-        ref: 'User'}]
-    
+        ref: 'User'
+    }],
+
+    readBy: [{
+        type: ObjectId,
+        ref: 'User'
+    }],
+    workGroup: {
+        type: ObjectId,
+        ref: 'WorkGroup'
+    },
+    date: {
+        type: Date,
+        default: Date
+    }
+
 })  

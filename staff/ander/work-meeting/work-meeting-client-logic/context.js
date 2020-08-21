@@ -1,3 +1,4 @@
 module.exports = {
-    API_URL: 'http://localhost:8083/api'
+    storage: {token: null},
+    API_URL: null 
 }

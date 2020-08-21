@@ -2,7 +2,8 @@ require('work-meeting-commons/polyfills/string')
 const { utils: { call } } = require('work-meeting-commons')
 const context = require('./context')
 
-module.exports = function (token) {
+module.exports = function () {
+    const {token} = context.storage
     String.validate.notVoid(token)
 
     return call('GET', `${this.API_URL}/workgrouppref`,

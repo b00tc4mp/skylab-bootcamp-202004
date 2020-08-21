@@ -1,0 +1,86 @@
+*
+    box-sizing: border-box
+    margin: 0
+    padding: 0
+
+.workGroup
+    &__container
+        display: flex
+        flex-direction: row
+        grid-template-columns: repeat(6, 1fr)
+        height: 50px
+        width: 100%
+        margin-bottom: 1rem
+        justify-content: center
+
+    &__item
+        display: flex
+        justify-content: center
+        align-items: center
+        text-decoration: none
+        font-size: 150%
+        width: 16.66%
+        font-weight: bold
+        border: 0.2rem solid #1958a4
+        border-top: 0.5rem
+        color: #1958a4
+
+        &--active
+            background-color: #1958a4
+            color: white
+    &__form
+        display: flex
+        flex-direction: row
+        text-decoration: none
+        border-radius: 10px
+        font-size: 2vw
+        padding: 0.5rem
+        width: 80%
+        margin: 5px
+        justify-content: center
+        text-align: center
+        border-width: 2px
+        border-color: #1958a4
+        &--div
+            width: 80%
+    &__formex
+        text-decoration: none
+        border-radius: 10px
+        font-size: 2vw
+        padding: 0.5rem
+        width: 80%
+        margin: 5px
+        text-align: center
+        border-bottom: none
+        border-left: none
+        border-right: none
+        border-top-width: 2px
+        border-top-color: #1958a4
+        
+
+
+    legend
+        color: #1958a4
+        border: 1px solid #1958a4
+        padding: 4px
+    form
+
+        display: flex
+        justify-content: center
+        align-items: center
+        align-content: center
+        flex-direction: column
+        width: 100%
+    input
+        width: 80%
+        text-align: center
+        margin: 10px
+        font-size: 1.7vw
+        align-self: center
+    button
+        font-size: 90%
+        margin: 5px
+        background-color: #d4e7ff
+        padding: 2px
+        &:hover
+            border: 3px solid #1958a4

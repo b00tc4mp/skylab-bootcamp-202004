@@ -1,0 +1,34 @@
+*
+    box-sizing: border-box
+    margin: 0
+    padding: 0
+
+.home
+    &__navbar
+        display: grid
+        grid-template-columns: repeat(6, 1fr)
+        height: 75px
+        width: 100%
+        margin-bottom: 0rem
+        border: 0.1rem solid #1958a4
+        
+    &__image
+        width: 60%
+        height: 100%
+        margin-left: auto
+        margin-right: auto
+        
+        
+    &__link
+        display: flex
+        justify-content: center
+        align-items: center
+        text-decoration: none
+        font-size: 150%
+        font-weight: bold
+        border: 0.1rem solid #1958a4
+        color: #1958a4
+
+        &--active
+            background-color: #1958a4
+            color: white

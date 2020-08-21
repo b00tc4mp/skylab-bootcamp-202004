@@ -1,3 +1,6 @@
+require('work-meeting-commons/polyfills/string')
+const {errors: { DuplicityError, UnexistenceError } } = require('work-meeting-commons')
+const {models: { User, WorkGroup } } = require('work-meeting-data')
 /**
  * create a new meeting with title, content and user Id
  * @param {string} name name of a new work group
@@ -6,38 +9,28 @@
  * @throws {TypeError} Throws an error if workgroup is already exist
  * 
  */
-require('work-meeting-commons/polyfills/string')
-require('work-meeting-commons/polyfills/json')
-const {errors: { DuplicityError, UnexistenceError } } = require('work-meeting-commons')
-const { mongoose: { ObjectId },models: { User, WorkGroup } } = require('work-meeting-data')
 
-module.exports = (name, userId) => {
-    String.validate.notVoid(name)
+module.exports = (userId,name) => {
     String.validate.notVoid(userId)
+    String.validate.notVoid(name)
     
 
     return (async () => {
         debugger
-        const workGroup = await WorkGroup.findOne({name})
-        if(workGroup)
-            throw new DuplicityError(`workgroup ${name} is already exist`)
 
-        const newWorkGroup = new WorkGroup({name, creator: userId})
-        await WorkGroup.create(newWorkGroup)
+        const [user, workGroup] = await Promise.all([User.findById(userId), WorkGroup.findOne({name})])
+        if(!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
+        if(workGroup) throw new DuplicityError(`workgroup with name ${name} already exist`)
 
-        const user = await User.findOne({_id: ObjectId(userId)})
-        if(!user)
-        throw new UnexistenceError(`user ${userId} not exist`)
+        const _workGroup = await WorkGroup.create({name, creator: userId})
+        const workGroupId = _workGroup.id.toString()
 
-        const _workGroup = await WorkGroup.findOne({name})
-        if(!_workGroup)
-        throw new UnexistenceError(`workgroup ${name} not exist`)
-        const {_id} =_workGroup
-        user.workGroups.push(ObjectId(_id))
-        user.workGroupPref=ObjectId(_id)
-        const result = await user.save() 
-        console.log(result)
+        await User.findByIdAndUpdate(userId,{$addToSet:{workGroups: workGroupId}})
+        await User.findByIdAndUpdate(userId,{workGroupPref: workGroupId})
+        return;
         
        
     })()
+
+    
 }

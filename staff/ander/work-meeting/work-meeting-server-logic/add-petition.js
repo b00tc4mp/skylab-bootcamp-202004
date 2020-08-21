@@ -1,43 +1,46 @@
+require('work-meeting-commons/polyfills/string')
+const { UnexistenceError, DuplicityError } = require('work-meeting-commons/errors')
+const { models: { User, WorkGroup, Petition } } = require('work-meeting-data')
 /**
  * Add petition in selected work group.
  * @param {string} workGroupId Id of the work group to which we are going to make the petition
  * @param {string} userId Id of the user
- * @throws {TypeError} Throws an error if user not exist
- * @throws {TypeError} Throws an error workgroup not exist
- * @throws {TypeError} Throws an error petition already exist
+ * @returns {Promise<void>} return empty promise of succesfull creation
+ * @throws {TypeError} Throws an error if user not a string
+ * @throws {TypeError} Throws an error if workgroup not a string
+ * @throws {UnexistenceError} Throws an error if user not exist
+ * @throws {UnexistenceError} Throws an error if workgroup not exist
+ * @throws {DuplicityError} Throws an error if user already send petition
+ * @throws {DuplicityError} Throws an error if user is already member in workgroup
  * 
  */
-require('work-meeting-commons/polyfills/string')
-require('work-meeting-commons/polyfills/json')
-const {mongoose: { ObjectId }, models:{User,WorkGroup, Petition}} = require('work-meeting-data')
-const {errors:{DuplicityError,UnexistenceError}} = require('work-meeting-commons')
 
-module.exports=(workGroupId,userId) =>{
+
+
+module.exports = (userId, workGroupId) => {
     String.validate.notVoid(userId)
     String.validate.notVoid(workGroupId)
-    
-    return (async ()=>{
-        const user = await User.findOne({_id: ObjectId(userId)})
-        if(!user)
-        throw new UnexistenceError(`user ${userId} not exist`)
-        const workGroup = await WorkGroup.findOne({ _id: ObjectId(workGroupId)})
-        if(!workGroup)
-            throw new UnexistenceError(`workgroup with id ${workGroupId} not exist`)
-        const {petitions} = workGroup
-        for(let petition in petitions){
-            if(petition.status=='pending'){
-                if(petition.user.toString()===userId)
-                throw new DuplicityError(`petition with user ${userId} is already exist`)    //change 
-            }
-                  
-        }
-        workGroup.members.forEach(element => {
-            if(element.toString()===userId)
-            throw new DuplicityError(`user with id ${userId} already in workgroup`)
-        });
-        const petition= new Petition({user: userId})
-        workGroup.petitions.push(petition)
-        await workGroup.save()
+
+    return (async () => {
+
+        const [user, workGroup] = await Promise.all([User.findById(userId),
+        WorkGroup.findById(workGroupId)])
+
+        if (!user) throw new UnexistenceError(`user with id ${userId} does not exist`)
+        if (!workGroup) throw new UnexistenceError(`workgroup with id ${workGroupId} does not exist`)
         
+        const {members} = workGroup
+        const alreadyMember=members.some(member => member.toString() === userId )
+        if(alreadyMember) throw new DuplicityError(`user with id ${userId} is already a member`)
+
+        const { petitions } = workGroup
+        const alreadyExist=petitions.some(petition => (petition.user.toString() === userId && petition.status == 'pending') )
+        if(alreadyExist) throw new DuplicityError(`user with id ${userId} already send petition`)
+        
+        const newPetition = new Petition({ user: userId })
+
+        await WorkGroup.findByIdAndUpdate(workGroupId, { $addToSet: { petitions: newPetition } })
+
+        return;
     })()
 }

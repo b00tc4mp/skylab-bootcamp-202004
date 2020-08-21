@@ -9,7 +9,7 @@ module.exports = function (name, surname, email, password) {
     Email.validate(email)
 
     String.validate.lengthGreaterEqualThan(password, 8)
-
+     
     return call(
         'POST',
         `${this.API_URL}/users`,
