@@ -13,5 +13,9 @@ module.exports = {
     searchDishByPostion: require('./search-dish-by-position'),
     searchDishByPrice: require('./search-dish-by-price'),
     addToFollowedDishes: require('./add-to-followed-dishes'),
-    retrieveFollowedDishes: require('./retrieve-followed-dishes')
+    retrieveFollowedDishes: require('./retrieve-followed-dishes'), 
+    unfollowDish: require('./unfollow-dish'),
+    setDishUnavailable: require('./set-dish-unavailable'),
+    setDishAvailable: require('./set-dish-available'),
+    isDishAvailable: require('./is-dish-available')
 }

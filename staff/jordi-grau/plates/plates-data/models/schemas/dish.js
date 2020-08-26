@@ -22,5 +22,10 @@ module.exports = new Schema({
     followers: {
         type: [String], 
         index: true
+    },
+
+    available: {
+        type: Boolean,
+        default: true
     }
 })
