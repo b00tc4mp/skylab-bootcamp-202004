@@ -13,7 +13,7 @@ module.exports = new Schema({
     position:{
         type: String
     },
-    tags: { type: [String], index: true},
+    tags: [{ type: [String], index: true}],
     
     price:{
         type: Number

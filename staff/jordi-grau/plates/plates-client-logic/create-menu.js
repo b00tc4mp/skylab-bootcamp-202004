@@ -1,0 +1,1 @@
+require('plates-commons/polyfills/string')

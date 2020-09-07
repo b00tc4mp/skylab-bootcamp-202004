@@ -3,7 +3,7 @@ require('plates-commons/polyfills/json')
 require('plates-commons/polyfills/number')
 const {utils: {Email }, errors:{DuplicityError, VoidError, UnexsistenceError} } = require('plates-commons')
 const {models: { User, Restaurant}} = require('plates-data')
-
+debugger
 /**
  * function sends data needed to create a restaurant.
  * @param {string} userId required to create a restaurant.
@@ -35,7 +35,7 @@ module.exports = (userId, name, email,cif, address, phone)=>{
 
         if(restaurant) throw new DuplicityError(`restaurant cif with ${cif} already exists`)
 
-        const newRestaurant = await Restaurant.create({owner:user, name, address, cif, phone, email})
+        const newRestaurant = await Restaurant.create({ name, address, cif, phone, email })
 
         user.restaurant = newRestaurant
 

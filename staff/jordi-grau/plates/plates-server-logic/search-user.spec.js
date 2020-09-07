@@ -2,7 +2,7 @@ require('dotenv').config()
 const {  env: {TEST_MONGODB_URL: MONGODB_URL} } = process
 const {utils: { Email }, errors: {DuplicityError, UnexistenceError, VoidError}} = require('plates-commons')
 const  { mongoose , models:{ User, Restaurant, Dish }}  = require('plates-data')
-const {floor, random } = Math
+const { random } = Math
 const { expect } = require('chai')
 const bcrypt = require('bcryptjs')
 const searchUser = require('./search-user')

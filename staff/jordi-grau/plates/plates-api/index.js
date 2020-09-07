@@ -1,18 +1,14 @@
 require('dotenv').config()
-
 const { argv: [ , , PORT_CLI], env: {PORT: PORT_ENV, JWT_SECRET, MONGODB_URL} } = process
 const PORT = PORT_CLI || PORT_ENV || 8080
-
 const express = require ('express')
-const { registerUser, authenticateUser, createRestaurant, createMenu, searchPlate, searchRestaurant } = require('plates-server-logic')
+const { registerUser, authenticateUser, createRestaurant, createMenu, searchPlate, searchRestaurant, retrieveUser, retrieveRestaurant, addToFollowedDishes, createDish } = require('plates-server-logic')
 const bodyParser = require('body-parser')
 const { handleError } = require('./helpers')
 const { utils: {  jwtPromised }} = require('plates-commons')
 const { jwtVerifierExtractor, cors } = require('./middlewares')
 const { name, version } = require('./package.json')
 const { mongoose }  = require('plates-data')
-const retrieveUser = require('plates-server-logic/retrieve-user')
-const retrieveRestaurant = require('plates-server-logic/retrieve-restaurant')
 
 mongoose.connect(MONGODB_URL)
     .then(()=>{
@@ -128,6 +124,33 @@ mongoose.connect(MONGODB_URL)
             }
         })
 
+        app.post('/users/dishes', verifyExtractJwt, parseBody, (req, res) => {
+            const { payload: { sub: userId }, body: {  dishId }}   = req
+            
+            try {
+                addToFollowedDishes(dishId, userId)
+                .then(()=> res.status(201).end())
+                .catch(error => handleError(error,res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+        app.post('/restaurant/dishes', verifyExtractJwt, parseBody, (req, res) => {
+            const {  body: {  restaurantId, name, position, tags, price }}   = req
+          debugger  
+            try {
+                createDish(restaurantId, name, position, tags, price)
+                .then(()=> res.status(201).end())
+                .catch(error => handleError(error,res))
+            } catch (error) {
+                handleError(error, res)
+            }
+        })
+
+
+
+
 
         app.listen(PORT, () => console.log(`${name} ${version} running on port ${PORT}`))
 
@@ -141,7 +164,6 @@ mongoose.connect(MONGODB_URL)
                     process.exit()
                 })
         })
-
     })
 
     .catch(error => {

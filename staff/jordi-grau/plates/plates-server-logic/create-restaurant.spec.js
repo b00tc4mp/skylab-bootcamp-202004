@@ -42,16 +42,13 @@ describe('server logic: create restaurant', () => {
         password = `password-${random()}`
         const hash = await bcrypt.hash(password, 10)
 
-
         const { id } = await User.create({ email: userEmail, password: hash })
         userId = id
     })
 
 
     it('should create a restaurant on correct data', async () => {
-        const result = await createRestaurant(userId, restaurantName, restaurantEmail, cif, address, phone)
-
-        expect(result).to.be.undefined
+        const result = await createRestaurant( userId, restaurantName, restaurantEmail, cif, address, phone)
 
         const restaurant = await Restaurant.findOne({ cif })
 
@@ -82,22 +79,18 @@ describe('server logic: create restaurant', () => {
 
         beforeEach(async () => {
 
-            await Restaurant.create({ owner: userId, name: restaurantName, email: restaurantEmail, cif, address, phone })
+            await Restaurant.create({  name: restaurantName, email: restaurantEmail, cif, address, phone })
 
         })
 
         it('should fail and throw error on restaurant duplicity', async () => {
             try {
-
-                const result = await createRestaurant(userId, restaurantName, restaurantEmail, cif, address, phone)
-
+               const result = await createRestaurant(userId, restaurantName, restaurantEmail, cif, address, phone)
             } catch (error) {
                 expect(error).to.exist
                 expect(error).to.be.instanceof(DuplicityError)
                 expect(error.message).to.equal(`restaurant cif with ${cif} already exists`)
-
             }
         })
     })
-
 })

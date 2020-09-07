@@ -123,7 +123,7 @@ describe('asyncronous test',() =>{
         }
 
     })
-    })
+})
   
     after(async() =>{
         await Promise.all([

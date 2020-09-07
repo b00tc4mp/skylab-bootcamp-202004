@@ -13,7 +13,7 @@ const createRestaurant = require('./create-restaurant')
 const context = require('./context')
 context.API_URL = API_URL
 context.storage = {}
-
+debugger
 describe('client logic: create restaurant', () => {
     let restaurantName, restaurantEmail, cif, address, phone, userEmail, password, userId
     
@@ -37,7 +37,6 @@ describe('client logic: create restaurant', () => {
         password = `password-${random()}`
         const hash = await bcrypt.hash(password, 10)
 
-
         const { id } = await User.create({ email: userEmail, password: hash })
         userId = id
 
@@ -49,14 +48,10 @@ describe('client logic: create restaurant', () => {
     it('should create a restaurant on correct data', async()=>{
         
         await createRestaurant( restaurantName, restaurantEmail, cif, address, phone)
-
         const restaurant = await Restaurant.findOne({name: restaurantName})
-        
-       
+               
         expect(restaurant).to.exist
         expect(restaurant.name).to.equal(restaurantName)
-       
-
     })
     
     it('should fail when restaurant already exists', async() =>{

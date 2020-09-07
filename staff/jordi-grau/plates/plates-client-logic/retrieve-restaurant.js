@@ -20,7 +20,6 @@ module.exports = function(restaurantId) {
             return restaurant;
         }
         else{
-            // const {error} = JSON.parse(body)
                 throw new Error(status, body)
         }
     })();
