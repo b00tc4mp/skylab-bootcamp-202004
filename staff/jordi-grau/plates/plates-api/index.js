@@ -138,7 +138,7 @@ mongoose.connect(MONGODB_URL)
 
         app.post('/restaurant/dishes', verifyExtractJwt, parseBody, (req, res) => {
             const {  body: {  restaurantId, name, position, tags, price }}   = req
-          debugger  
+          
             try {
                 createDish(restaurantId, name, position, tags, price)
                 .then(()=> res.status(201).end())
@@ -147,6 +147,18 @@ mongoose.connect(MONGODB_URL)
                 handleError(error, res)
             }
         })
+
+        // app.post('/restauant/menu', verifyExtractJwt, parseBody, (req, res)=> {
+        //     const { payload: { sub: userId}, body: { restaurantId, dishId}} = req
+
+        //     try {
+        //         createMenu(userId, restaurantId, dishId)
+        //         .then(() => res.status(201).end())
+        //         .catch(error => handleError(error, res))
+        //     } catch (error) {
+        //         handleError(error, res)
+        //     }
+        // })
 
 
 

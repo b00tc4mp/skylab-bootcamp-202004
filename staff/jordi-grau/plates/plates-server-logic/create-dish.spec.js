@@ -47,10 +47,10 @@ describe('create dish inserts a new dish on dishes db',() =>{
 
 describe('asyncronous test',() =>{
     it('should create a new dish on db dishes', async() => {
-        
+        debugger
         await createDish(restaurantId, dishName ,position, tags, price)
         const dish  = await Dish.findOne({restaurantId, name: dishName})
-
+debugger
             expect(dish.restaurantId).to.equal(restaurantId)
             expect(dish.name).to.equal(dishName)
             expect(dish.position).to.equal(position)

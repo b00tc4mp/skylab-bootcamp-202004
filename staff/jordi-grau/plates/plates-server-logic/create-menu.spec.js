@@ -49,7 +49,7 @@ describe('server logic: create menu', ()=>{
         const { id } = await User.create({ email: userEmail, password: hash })
         userId = id
         const restaurant = await Restaurant.create({ owner: userId, name: restaurantName, email: restaurantEmail, cif, address, phone, dishes: dishId })
-         restaurantId = restaurant.id
+         restaurantId = restaurant._id.toString()
         for(let i = 0; i < 5; i++){ 
             const dish = new Dish({name: `name-${i}`})
 
@@ -60,8 +60,8 @@ describe('server logic: create menu', ()=>{
     })
     
     it('when menu not exists, should create a menu on correct data', async() => {
-        
-        const _dish =  await Dish.create({name: 'Arroz'})
+        debugger
+        const _dish =  await Dish.create({restaurantId: restaurantId, name: 'Arroz'})
         let _dishId = _dish.id
         const result = await createMenu(userId, restaurantId, _dishId)  
         const restaurant = await Restaurant.findById(restaurantId)   
@@ -70,7 +70,7 @@ describe('server logic: create menu', ()=>{
         expect(restaurant.dishes[0].toString()).to.equal(_dishId)
         
     })
-
+debugger
     it('should fail on wrong data', async () =>{
         try{
         restaurantId = '5ee328fad4e15914a3946a68'

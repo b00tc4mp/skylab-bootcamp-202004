@@ -40,6 +40,7 @@ describe(' add to followed dishes', () =>{
         const user = await User.create({ email: userEmail, password: hash })
         userId = user.id
         users.push(user)
+        debugger
         const token = jwt.sign( {sub: userId}, TEST_SECRET, { expiresIn: '1d'})
         context.storage.token = token
 
@@ -67,6 +68,7 @@ describe(' add to followed dishes', () =>{
     
         
     it('should add a dish to followed dishes', async() =>{
+        debugger
             await addToFollowedDishes(dishId, userId)
             const followedDishes = await Dish.find({_id: dishId ,followers: userId})
             expect(followedDishes.length).to.equal(0) 

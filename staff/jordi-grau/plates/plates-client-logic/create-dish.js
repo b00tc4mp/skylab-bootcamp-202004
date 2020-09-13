@@ -9,10 +9,9 @@ module.exports = function (restaurantId, name, position, tags, price){
     String.validate.notVoid(position)
     Number.validate(price)
     const { token }  = this.storage
-    tags = JSON.stringify(tags)
     
     return (async() =>{
-        
+        debugger
         const response = await call(
             'POST',
             `${this.API_URL}/restaurant/dishes`, 
